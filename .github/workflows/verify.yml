@@ -15,5 +15,7 @@ jobs:
       - run: git diff --exit-code -- audit/local-validation.json
       - run: mkdir -p work && rustc --edition 2021 -O programs/pump-fees/recovered/fee_selection_host.rs -o work/fee-selector-host
       - run: python scripts/validate_fee_selection.py --host work/fee-selector-host --output work/fee-selector-validation.json
+      - run: python scripts/build_quote_host.py --output work/quote-host
+      - run: python scripts/validate_quote_fees.py --host work/quote-host/quote-fees-host --output work/quote-validation.json
       - run: git clone https://github.com/pump-fun/pump-public-docs.git work/pump-public-docs
       - run: python scripts/verify_imported_lab.py --docs-checkout work/pump-public-docs --output work/lab-saved-verification

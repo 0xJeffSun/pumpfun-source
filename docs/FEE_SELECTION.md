@@ -62,3 +62,50 @@ Pump, PumpSwap and Pump Fees, plus 25 Mayhem discriminator hypotheses derived fr
 instruction log names and confirmed as comparison constants in the binary. The
 map locates wrapper entrypoints for subsequent recovery; it is not recovered
 handler source or a claim of complete dispatch coverage.
+
+## Quote-mint routing recovery
+
+`quote_fees.rs` now recovers the routing behavior at `0x3f748..0x3f9d8`,
+called by the original `get_fees_with_quote_mint` wrapper at `0x9bb18`.
+Non-Pump pools return flat fees. For Pump pools, the default (zero) key, wrapped
+SOL, and `9pan9bMn5HatX4EJdBwg9VgCa7Uz5HL8N1m5D3NdXejP` select the normal
+schedule; USDC selects the stable schedule. Other quotes select exotic fees,
+falling back to flat fees only if all three exotic fee fields are zero. The
+third normal-quote constant's identity is not inferred from its address.
+
+The native recovered routing matches **9,428** original SBF queries, including
+empty schedules/panics, unsorted schedules, boundary market caps through u128 max,
+non-Pump pools, partial-zero exotic fees, and mutations of every byte of the four
+recognized quote constants. The deterministic complete case report is gzip-compressed
+at `repro/experiments/quote-selector-differential.json.gz`. Native Rust and original
+SBF behavior agree within these cases; the reconstructed account layout is an
+observed internal layout, not a recovery of the complete account parser.
+
+The original calls a comparison shim at `0xc2730`; its relocation names the
+`sol_memcmp_` syscall. `memory_compare.rs` recovers that shim's semantics and
+uses a native byte loop for the host harness. An opaque Rust-ABI declaration
+keeps the recovered router's comparisons out of line. This is an explicit
+reconstruction boundary, not evidence of the original source's declaration or
+symbol name. Ordinary Rust slice comparison instead compiled into inline loads.
+The selected SBF builds preserve both unlinked objects without patching.
+
+Platform-tools v1.43 produces a **656-byte** router, equal in length to the
+original but **not equal in instructions**. v1.52 produces **648 bytes** and also
+differs. Their manifests are `repro/experiments/quote-selector-v143.json` and
+`quote-selector-v152.json`; objects are in the corresponding experimental binary
+directories. Neither compiler has been established as the historical compiler.
+The recovered comparison shim also differs from the original's 64-byte function.
+Linking, relocations, full handler validation, and whole-program identity remain
+unresolved. These objects are not deployable replacements.
+
+```sh
+python3 scripts/build_quote_host.py --output work/quote-host
+python3 scripts/validate_quote_fees.py --host work/quote-host/quote-fees-host \
+  --output work/quote-validation.json
+python3 scripts/build_quote_fees.py --toolchain /path/to/platform-tools-v1.43 \
+  --output work/quote-sbf
+```
+
+Synthetic empty/unsorted configurations are deliberate semantic probes;
+reachability through the actual administration instructions remains unproven.
+No vulnerability is established by those injected states.

@@ -61,3 +61,14 @@ The tests use the captured core executables with the harness/runtime dependency
 configuration; no whole external-dependency version equivalence is claimed. No
 additional vulnerability finding or completed source audit follows from these
 successful paths.
+
+### Quote-mint fee routing
+
+The recovered native router was compared with 9,428 local original-program
+queries covering quote classification, schedule boundaries, exotic fee fallback,
+and injected empty/unsorted schedules. No behavioral mismatch was observed.
+See `docs/FEE_SELECTION.md` and the complete compressed differential receipt.
+The two SBF compiler candidates still differ from the original router; this is
+partial implementation evidence, not whole-program equivalence or completed
+audit coverage. Empty-schedule panics in directly injected state are not a
+confirmed vulnerability without a reachable configuration path.

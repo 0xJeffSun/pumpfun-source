@@ -17,7 +17,8 @@ python3 scripts/test_tooling.py
 
 A partial Rust fee-tier selector now matches the original instruction sequence except
 for unresolved relocations with platform-tools v1.43, and passes 1,215 local
-differential cases. See [the recovery experiment](docs/FEE_SELECTION.md).
+differential cases. Recovered quote-mint routing additionally passes 9,428 original-program
+queries, but its compiled instructions still differ. See [the recovery experiment](docs/FEE_SELECTION.md).
 
 [Recovery status](docs/RECOVERY.md) separates observed evidence from unresolved work.
 [Tooling](docs/TOOLING.md) covers recapture, disassembly and strict candidate comparison.
