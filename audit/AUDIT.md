@@ -72,3 +72,13 @@ The two SBF compiler candidates still differ from the original router; this is
 partial implementation evidence, not whole-program equivalence or completed
 audit coverage. Empty-schedule panics in directly injected state are not a
 confirmed vulnerability without a reachable configuration path.
+
+### Executing recovered handlers
+
+Pump Fees now has two independently compiled query handlers tested in 10,789
+original-versus-candidate SBF cases. Account error precedence and malformed-vector
+errors were refined from observed mismatches; the final tested binary matches
+those return/error/state assertions. The remaining 29 handlers are unsupported,
+and the complete executable differs from the captured original. Selected Anchor
+and dependency versions are candidates, not the recovered historical graph.
+This does not extend a security conclusion to the other handlers or deployments.

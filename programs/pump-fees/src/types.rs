@@ -1,0 +1,67 @@
+//! IDL argument types needed for instruction deserialization.
+use anchor_lang::prelude::*;
+
+#[derive(AnchorSerialize, AnchorDeserialize, Clone)]
+pub struct FeeTier {
+    pub market_cap_lamports_threshold: u128,
+    pub fees: Fees,
+}
+
+#[derive(AnchorSerialize, AnchorDeserialize, Clone)]
+pub struct Fees {
+    pub lp_fee_bps: u64,
+    pub protocol_fee_bps: u64,
+    pub creator_fee_bps: u64,
+}
+
+#[derive(AnchorSerialize, Clone)]
+pub struct OptionBool(pub bool);
+
+#[derive(AnchorSerialize, AnchorDeserialize, Clone)]
+pub struct Shareholder {
+    pub address: Pubkey,
+    pub share_bps: u16,
+}
+
+impl AnchorDeserialize for OptionBool {
+    fn deserialize_reader<R: std::io::Read>(reader: &mut R) -> std::io::Result<Self> {
+        let mut flag = [0u8];
+        match reader.read(&mut flag)? {
+            0 => Ok(Self(false)),
+            _ if flag[0] <= 1 => Ok(Self(flag[0] == 1)),
+            _ => Err(std::io::Error::new(std::io::ErrorKind::InvalidData, "invalid bool")),
+        }
+    }
+}
+
+#[derive(AnchorSerialize, AnchorDeserialize, Clone)]
+pub struct FeeConfig {
+    pub bump: u8,
+    pub admin: Pubkey,
+    pub flat_fees: Fees,
+    pub fee_tiers: Vec<FeeTier>,
+    pub stable_fee_tiers: Vec<FeeTier>,
+    pub exotic_flat_fees: Fees,
+}
+impl Owner for FeeConfig { fn owner() -> Pubkey { crate::ID } }
+impl anchor_lang::Discriminator for FeeConfig {
+    const DISCRIMINATOR: &'static [u8] = &[143, 52, 146, 187, 219, 123, 76, 155];
+}
+impl AccountSerialize for FeeConfig {
+    fn try_serialize<W: std::io::Write>(&self, writer: &mut W) -> Result<()> {
+        use anchor_lang::Discriminator;
+        writer.write_all(&Self::DISCRIMINATOR).map_err(|_| ProgramError::InvalidAccountData)?;
+        self.serialize(writer).map_err(|e| ProgramError::BorshIoError(e.to_string()).into())
+    }
+}
+impl AccountDeserialize for FeeConfig {
+    fn try_deserialize(buf: &mut &[u8]) -> Result<Self> {
+        use anchor_lang::Discriminator;
+        if buf.len() < 8 || &buf[..8] != Self::DISCRIMINATOR { return Err(ProgramError::InvalidAccountData.into()); }
+        Self::try_deserialize_unchecked(buf)
+    }
+    fn try_deserialize_unchecked(buf: &mut &[u8]) -> Result<Self> {
+        if buf.len() < 2512 { return Err(ProgramError::InvalidAccountData.into()); }
+        Self::deserialize(&mut &buf[8..]).map_err(|e| ProgramError::BorshIoError(e.to_string()).into())
+    }
+}

@@ -1,9 +1,11 @@
 # Reconstruction status
 
-No program has been reconstructed. All four comparisons are **NOT RUN: no rebuilt
-artifact**, not a match and not a measured mismatch. `repro/status.json` is the
-machine-readable record. No complete generated executable is published under `binaries/`. Partial compiler
-objects are kept under `binaries/experimental/`; see `docs/FEE_SELECTION.md`.
+No program has been fully reconstructed. Partial executables for all four programs
+now build and run local differential cases; their whole-file comparisons differ.
+`repro/status.json` records the exact implemented handlers, artifacts and comparison
+reports. Original captures are immutable comparison inputs, never build inputs.
+Standalone compiler experiments remain under `binaries/experimental/`.
+
 
 The official public documentation repository supplies three IDLs: Pump (56
 instructions), PumpSwap (38), and Pump Fees (31). The pinned tree has no deployed

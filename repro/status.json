@@ -1,46 +1,92 @@
 {
   "pump": {
-    "source_reconstruction": "not_implemented",
+    "source_reconstruction": "partial_handlers_compiled",
     "historical_source_recovered": false,
     "compiler": "unresolved",
     "dependencies": "unresolved",
     "build_flags": "unresolved",
-    "candidate_artifact": null,
-    "full_byte_equality": null,
-    "comparison_status": "NOT_RUN_NO_REBUILT_ARTIFACT"
+    "candidate_artifact": "repro/pump/admin-candidate.so",
+    "full_byte_equality": false,
+    "comparison_status": "DIFFERS_PARTIAL_IMPLEMENTATION",
+    "implemented_handlers": [
+      "toggle_create_v2",
+      "toggle_mayhem_mode",
+      "toggle_cashback_enabled",
+      "set_max_curve_depth"
+    ],
+    "comparison_report": "repro/pump/admin-build-comparison.json",
+    "build_log": "repro/pump/admin-build.log",
+    "validation_report": "repro/pump/admin-differential.json",
+    "validated_cases": 93
   },
   "pump_amm": {
-    "source_reconstruction": "not_implemented",
+    "source_reconstruction": "partial_handlers_compiled",
     "historical_source_recovered": false,
     "compiler": "unresolved",
     "dependencies": "unresolved",
     "build_flags": "unresolved",
-    "candidate_artifact": null,
-    "full_byte_equality": null,
-    "comparison_status": "NOT_RUN_NO_REBUILT_ARTIFACT"
+    "candidate_artifact": "repro/pump_amm/admin-five/pump_amm_recovered.so",
+    "full_byte_equality": false,
+    "comparison_status": "DIFFERS_PARTIAL_IMPLEMENTATION",
+    "implemented_handlers": [
+      "disable",
+      "update_admin",
+      "toggle_mayhem_mode",
+      "toggle_cashback_enabled",
+      "toggle_boost"
+    ],
+    "comparison_report": "repro/pump_amm/admin-five/build-comparison.json",
+    "build_log": "repro/pump_amm/admin-five/build.log",
+    "validation_report": "repro/pump_amm/admin-five/differential.json.gz",
+    "validated_cases": 8331
   },
   "pump_fees": {
-    "source_reconstruction": "partial_fee_tier_selector_and_quote_routing",
+    "source_reconstruction": "partial_handlers_compiled",
     "historical_source_recovered": false,
     "compiler": "unresolved",
     "dependencies": "unresolved",
     "build_flags": "unresolved",
-    "candidate_artifact": null,
-    "full_byte_equality": null,
-    "comparison_status": "NOT_RUN_NO_REBUILT_ARTIFACT",
+    "candidate_artifact": "repro/pump_fees/query-candidate.so",
+    "full_byte_equality": false,
+    "comparison_status": "DIFFERS_PARTIAL_IMPLEMENTATION",
     "compiler_candidates": [
       "platform-tools v1.43: one 376-byte selector matches apart from unresolved relocations",
       "platform-tools v1.52: selector differs"
-    ]
+    ],
+    "implemented_handlers": [
+      "get_fees",
+      "get_fees_with_quote_mint"
+    ],
+    "comparison_report": "repro/pump_fees/query-build-comparison.json",
+    "build_log": "repro/pump_fees/query-build.log",
+    "validation_report": "repro/pump_fees/query-differential.json.gz",
+    "validated_cases": 10789
   },
   "mayhem": {
-    "source_reconstruction": "not_implemented",
+    "source_reconstruction": "partial_handlers_compiled",
     "historical_source_recovered": false,
     "compiler": "unresolved",
     "dependencies": "unresolved",
     "build_flags": "unresolved",
-    "candidate_artifact": null,
-    "full_byte_equality": null,
-    "comparison_status": "NOT_RUN_NO_REBUILT_ARTIFACT"
+    "candidate_artifact": "repro/mayhem/mayhem_recovered.so",
+    "full_byte_equality": false,
+    "comparison_status": "DIFFERS_PARTIAL_IMPLEMENTATION",
+    "implemented_handlers": [
+      "initialize_global_params",
+      "update_global_params",
+      "update_admin",
+      "update_trader",
+      "update_max_sol_per_sweep",
+      "update_max_stable_per_sweep",
+      "reset_sol_deployed",
+      "reset_stable_deployed",
+      "reset_state",
+      "stop_trading",
+      "resume_trading"
+    ],
+    "comparison_report": "repro/mayhem/build-comparison.json",
+    "build_log": "repro/mayhem/build.log.gz",
+    "validation_report": "repro/mayhem/differential.json.gz",
+    "validated_cases": 1051
   }
 }

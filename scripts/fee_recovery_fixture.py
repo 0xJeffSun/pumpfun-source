@@ -9,13 +9,13 @@ from solders.transaction import Transaction
 from solders.transaction_metadata import FailedTransactionMetadata
 ROOT=pathlib.Path(__file__).resolve().parents[1]
 class FeeFixture:
- def __init__(self):
+ def __init__(self,binary=None):
   self.idl=json.loads((ROOT/'evidence/upstream/pump_fees.json').read_text());self.program=Pubkey.from_string(self.idl['address'])
   self.config_program=Pubkey.from_string('6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P')
   self.key,self.bump=Pubkey.find_program_address([b'fee_config',bytes(self.config_program)],self.program)
   self.discriminator=bytes(next(a for a in self.idl['accounts'] if a['name']=='FeeConfig')['discriminator'])
   self.vm=LiteSVM().with_transaction_history(0);self.payer=Keypair.from_seed(bytes(32));self.vm.airdrop(self.payer.pubkey(),10**10)
-  self.vm.add_program_from_file(self.program,ROOT/'evidence/original/pump_fees/deployed.so');self.vm.set_account(self.config_program,Account(10**9,b'',Pubkey.default()))
+  self.vm.add_program_from_file(self.program,binary or ROOT/'evidence/original/pump_fees/deployed.so');self.vm.set_account(self.config_program,Account(10**9,b'',Pubkey.default()))
  def config(self,normal,stable,flat,exotic,allocation=4097):
   def fees(f):return struct.pack('<QQQ',*f)
   def tiers(xs):return struct.pack('<I',len(xs))+b''.join(t.to_bytes(16,'little')+fees(f) for t,f in xs)

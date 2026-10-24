@@ -1,0 +1,38 @@
+{
+  "scope": "Independent clean-target build of a partial program. Unsupported handlers remain; this is not a complete reconstruction or deployable substitute.",
+  "program": "mayhem",
+  "source_sha256": {
+    "programs/mayhem/Cargo.lock": "7bcbb09e3c78a4bbcd68f6081786bde120d2ac9cf3d36b0ea375e2b63345fcab",
+    "programs/mayhem/Cargo.toml": "cf1e009f87316e79fc72d1c58abf62133068cb738c340bf648bbc80de5989c19",
+    "programs/mayhem/src/lib.rs": "22c728f65bde679c5dfdd22893bcebee44be3840459e4275ddf52ff2841dffdf"
+  },
+  "cargo_build_sbf_version": "solana-cargo-build-sbf 2.1.21\nplatform-tools v1.43\nrustc 1.79.0",
+  "selected_toolchain": "v1.52",
+  "rustc_version": "rustc 1.89.0-dev\nbinary: rustc\ncommit-hash: unknown\ncommit-date: unknown\nhost: aarch64-apple-darwin\nrelease: 1.89.0-dev\nLLVM version: 20.1.7",
+  "rustc_sha256": "c58ec8ad482a40216152a4e4a6172f485be22a7f4482623e7e3cdf6c7085beb8",
+  "command": [
+    "cargo",
+    "build-sbf",
+    "--manifest-path",
+    "<repo>/programs/mayhem/Cargo.toml",
+    "--tools-version",
+    "v1.52",
+    "--offline",
+    "--sbf-out-dir",
+    "<repo>/work/mayhem-recovery/clean-eleven/artifacts"
+  ],
+  "environment": {
+    "CARGO_TARGET_DIR": "<output>/target"
+  },
+  "build_log_sha256": "d4abb19e2e2954efe6ce0ebf522025751b7ca9da14d29b554c777a37a98355d5",
+  "comparison": {
+    "original_bytes": 777408,
+    "candidate_bytes": 229776,
+    "original_sha256": "a87fa9f866272514e6acb852b668c4a08aeb173d56c883039991d114d1199bdb",
+    "candidate_sha256": "2669decaa1ce05f2202dbddcd0ac8b1fd054856c85ca9bb9152d299841fe4dd8",
+    "full_byte_equality": false,
+    "first_difference": 24,
+    "different_positions_in_shared_length": 125457,
+    "length_difference": -547632
+  }
+}

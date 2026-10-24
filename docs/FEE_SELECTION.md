@@ -109,3 +109,21 @@ python3 scripts/build_quote_fees.py --toolchain /path/to/platform-tools-v1.43 \
 Synthetic empty/unsorted configurations are deliberate semantic probes;
 reachability through the actual administration instructions remains unproven.
 No vulnerability is established by those injected states.
+
+## Independently executing query handlers
+
+`programs/pump-fees/` now builds an experimental complete SBF executable with two
+implemented query handlers and 29 unsupported handler bodies. This advances beyond
+native math comparisons: 10,789 cases compare execution of that compiled candidate
+with the original in separate LiteSVM instances. They check returned fees, error
+codes, unchanged account data and unchanged account lamports. They cover both
+query interfaces, missing/truncated arguments, PDA/owner/discriminator/allocation
+checks, malformed vector lengths, and the earlier threshold/quote matrices.
+No mismatch was observed. Log text, compute cost, and full instruction coverage
+are not established. Original-versus-candidate byte comparison remains unequal.
+
+The first Anchor 0.30.1 build differed on all inputs shorter than eight bytes.
+Anchor 0.31.1 resolved those differences without a custom dispatcher patch.
+Further parser probes distinguished InvalidAccountData (bad discriminator or
+short allocation) from BorshIoError (malformed vectors). The selected lockfile
+is reproducible but remains a candidate, not the recovered historical graph.
