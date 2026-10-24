@@ -21,10 +21,17 @@ differential cases. See [the recovery experiment](docs/FEE_SELECTION.md).
 
 [Recovery status](docs/RECOVERY.md) separates observed evidence from unresolved work.
 [Tooling](docs/TOOLING.md) covers recapture, disassembly and strict candidate comparison.
-The [security assessment](audit/AUDIT.md) is incomplete: 393 local malformed-input
-checks passed, but no valid-state security or differential suite has been completed.
+The [security assessment](audit/AUDIT.md) remains incomplete. Local validation
+includes 393 malformed-input checks and 30 signed offline lifecycle transactions;
+these bounded checks do not establish full security or differential coverage.
 Zero confirmed findings does not establish security.
 
 Original bytes live under `evidence/`, never as rebuilt artifacts. This project
-contains no deployment or transaction-broadcast tooling. Upstream IDLs retain their
+contains no on-chain deployment or transaction-broadcast tooling; the imported
+signed test harness submits only to offline loopback simulators. Upstream IDLs retain their
 original authorship; this repository does not assert a license over Pump's materials.
+
+The [integrated research lab](research/README.md) supplies pinned Pump.fun lifecycle
+fixtures, signed offline replay harnesses, receipt verifiers and an explicitly
+incomplete 31-handler Fees scaffold. Its import provenance and validation status
+are separate from source-reconstruction claims.

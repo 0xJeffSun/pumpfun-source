@@ -53,3 +53,11 @@ cases covering privileged instructions, token extensions, fee accounting, migrat
 CPI substitution and multi-hop swaps. Re-audit the actual recovered implementation.
 None of these steps is satisfied by an IDL, equivalent high-level math, disassembly,
 a copied ELF, or a successful hash comparison without build provenance.
+
+## Integrated prior research
+
+The selected research-lab import is indexed in `research/README.md`. Its three
+original captures are identical to ours. Its lifecycle and fee-withdrawal fixtures
+provide a stronger starting point for valid-state differential recovery, but the
+imported 31-handler Fees source is an unsupported-handler scaffold. The existing
+partial fee-selector recovery and its compiler comparison remain separate.

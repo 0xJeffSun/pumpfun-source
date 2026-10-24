@@ -42,3 +42,22 @@ unsorted and duplicate thresholds but does not establish that such configuration
 are reachable through authorized update instructions. Empty tiers panic in the
 original; no vulnerability is asserted without establishing reachable state and
 impact. These checks do not complete the broader audit.
+
+## Imported lifecycle validation
+
+The integrated lab adds 30 freshly replayed, signed transactions against the
+captured original Pump, PumpSwap and Pump Fees programs in offline Surfpool 1.6.1.
+Seven saved-evidence verifiers and seven fresh-evidence verifiers passed. Covered
+paths include synthetic-authority config writes and rejected outsiders; fresh SOL
+coin creation, v3 trades and completion; migrate_v2 with the two required remaining
+accounts; v2 trading on captured and freshly migrated pools; and synthetic referral
+vault withdrawal with signature/PDA/recipient rejection controls. Source provenance,
+logs, exact receipts and limitations are under `research/`.
+
+These results expand bounded valid-state coverage to ten distinct published
+handlers (five Pump, three PumpSwap and two Fees). They do not establish real
+authority control, live fee accrual, all quote/token modes, or behavior for Mayhem.
+The tests use the captured core executables with the harness/runtime dependency
+configuration; no whole external-dependency version equivalence is claimed. No
+additional vulnerability finding or completed source audit follows from these
+successful paths.
