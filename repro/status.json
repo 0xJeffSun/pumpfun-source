@@ -20,14 +20,18 @@
     "comparison_status": "NOT_RUN_NO_REBUILT_ARTIFACT"
   },
   "pump_fees": {
-    "source_reconstruction": "not_implemented",
+    "source_reconstruction": "partial_fee_tier_selector",
     "historical_source_recovered": false,
     "compiler": "unresolved",
     "dependencies": "unresolved",
     "build_flags": "unresolved",
     "candidate_artifact": null,
     "full_byte_equality": null,
-    "comparison_status": "NOT_RUN_NO_REBUILT_ARTIFACT"
+    "comparison_status": "NOT_RUN_NO_REBUILT_ARTIFACT",
+    "compiler_candidates": [
+      "platform-tools v1.43: one 376-byte selector matches apart from unresolved relocations",
+      "platform-tools v1.52: selector differs"
+    ]
   },
   "mayhem": {
     "source_reconstruction": "not_implemented",

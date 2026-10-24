@@ -24,7 +24,7 @@ def analyze():
     for name in json.loads((ROOT/'repro/programs.json').read_text()):
         b=(ROOT/f'evidence/original/{name}/deployed.so').read_bytes(); r=elf_layout(b)
         r['source_path_evidence']=[{'offset':m.start(),'path':m.group().decode()} for m in re.finditer(rb'(?:programs|/home/runner/work/platform-tools)[a-zA-Z0-9_./-]+?\.rs',b)]
-        r['instruction_log_names']=sorted(set(m.group(1).decode() for m in re.finditer(rb'Instruction: ([A-Z][A-Za-z0-9]+)',b)))
+        r['instruction_log_names']=sorted(set(m.group(1).decode() for m in re.finditer(rb'Instruction: ([A-Z][A-Za-z0-9]*?)(?=Instruction:|[^A-Za-z0-9]|$)',b)))
         r['compiler_version']='unresolved'; r['dependency_versions']='unresolved'; out[name]=r
     (ROOT/'evidence/binary-analysis.json').write_text(json.dumps(out,indent=2)+'\n')
     inventory={}

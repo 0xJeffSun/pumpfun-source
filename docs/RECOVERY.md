@@ -2,7 +2,8 @@
 
 No program has been reconstructed. All four comparisons are **NOT RUN: no rebuilt
 artifact**, not a match and not a measured mismatch. `repro/status.json` is the
-machine-readable record. No generated executable is published under `binaries/`.
+machine-readable record. No complete generated executable is published under `binaries/`. Partial compiler
+objects are kept under `binaries/experimental/`; see `docs/FEE_SELECTION.md`.
 
 The official public documentation repository supplies three IDLs: Pump (56
 instructions), PumpSwap (38), and Pump Fees (31). The pinned tree has no deployed
@@ -29,7 +30,9 @@ path; Mayhem contains `library/alloc/src/raw_vec/mod.rs` and a path naming
 `hashbrown-0.15.4`. These clues do not uniquely identify a compiler or lockfile.
 Anchor-style logs and errors likewise do not uniquely establish an Anchor version.
 Compiler, Cargo dependency graph, optimization settings, linker order, panic source
-locations and original program implementations remain unresolved for each program.
+locations and original program implementations remain unresolved for each program. A first
+fee-selector fragment has a v1.43 instruction match excluding relocations, which
+is a compiler candidate and not yet a unique toolchain identification.
 
 Disassembly was successfully generated locally for all four with the official
 platform-tools v1.52 LLVM 20.1.7-rust-dev tool. Its identity and output hashes are

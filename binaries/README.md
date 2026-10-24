@@ -1,2 +1,3 @@
-No rebuilt binaries exist yet. Original deployed artifacts are stored exclusively
-under `evidence/`. Do not copy them here or label them as compiler output.
+No complete rebuilt programs exist yet. Original deployed artifacts are stored
+exclusively under `evidence/`. `experimental/` holds independently compiled partial
+Rust object files, not deployable programs or complete reconstruction outputs.

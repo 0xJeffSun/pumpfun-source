@@ -13,3 +13,5 @@ jobs:
       - run: pip install -r requirements.txt
       - run: python scripts/local_validation.py
       - run: git diff --exit-code -- audit/local-validation.json
+      - run: mkdir -p work && rustc --edition 2021 -O programs/pump-fees/recovered/fee_selection_host.rs -o work/fee-selector-host
+      - run: python scripts/validate_fee_selection.py --host work/fee-selector-host --output work/fee-selector-validation.json

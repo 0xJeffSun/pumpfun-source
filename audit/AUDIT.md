@@ -1,7 +1,7 @@
 # Consolidated security assessment
 
 **Status: incomplete; not a security sign-off.** Scope is the four captured original
-programs listed in `docs/SCOPE.md`. No reconstructed source exists to audit.
+programs listed in `docs/SCOPE.md`. Only one partial fee-tier selector has been recovered; no complete program exists.
 
 | Severity | Confirmed findings |
 | --- | ---: |
@@ -35,3 +35,10 @@ The evidence verifier and six comparator mutation tests validate capture integri
 and ensure code/padding changes are not hidden by the comparison utility. They are
 not evidence of on-chain program correctness. Source recovery, valid-state security
 validation and complete audit coverage remain outstanding.
+
+The recovered selector additionally matches 1,215 local original-program calls
+using synthetic fee configurations (see `docs/FEE_SELECTION.md`). This includes
+unsorted and duplicate thresholds but does not establish that such configurations
+are reachable through authorized update instructions. Empty tiers panic in the
+original; no vulnerability is asserted without establishing reachable state and
+impact. These checks do not complete the broader audit.
