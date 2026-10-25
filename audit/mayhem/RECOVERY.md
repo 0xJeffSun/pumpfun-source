@@ -232,3 +232,35 @@ neither matches the original executable. No initializer workaround or altered
 authorization was used. Four raw panic-log differences remain documented, and no
 full historical buy replay is claimed. See the
 [twenty-handler package](../../repro/mayhem/twenty/README.md).
+
+
+## Quote-aware sell
+
+The recovered `sell_v2` requires the writable configured trader signer and the
+original typed accounts, PDA/ATA relations, program IDs and account order. Its
+31-account outer parser feeds an actual 26-account Pump sell CPI, signed by
+Mayhem's own sol-vault PDA. Native quotes use GlobalParams cap/threshold/counter
+positions 16/129/113; token quotes use 182/222/206. Actual SOL lamports or quote
+vault tokens received drive checked i128 global/state updates. The state's quote
+counter remains at 56 and token counter at 72. Complete 303-byte events zero
+native-specific fields for token quotes while preserving the generic quote tail.
+
+There are 473 synthetic cases each for native SOL, legacy SPL Token quotes and
+Token-2022 quotes. Their 418 successful calls and 1,001 rejections match complete
+watched account bytes/metadata/balances, errors, return data, events and inner
+CPI. Independent checks reconstruct each successful quote and CPI payload,
+complete state/event bytes, signed transaction validity and failed rollback.
+Malformed accounts, every curve prefix through 141 bytes, guard ordering,
+tolerance/cap boundaries, signed counters, flags and actual CPI failures are
+covered. Invalid executable-account fixture mutations rejected during simulator
+setup were excluded and retained separately, not counted as program rejections.
+
+All 3,841 inherited comparisons pass on the same combined 21-handler artifact;
+the clean main build is wholly byte-identical to the tested scratch artifact.
+The three new families were rerun from their final repository paths. Four panic
+log differences per family remain explicit; compute usage and source diagnostics
+are not equivalent. Test-owned trader signatures and synthetic stored authority
+are used with real PDA CPI signing. No initializer workaround, foreign signature,
+authorization weakening, historical replay or live configuration reachability is
+claimed. No confirmed vulnerability is established by these tests. See the
+[twenty-one-handler package](../../repro/mayhem/twentyone/README.md).

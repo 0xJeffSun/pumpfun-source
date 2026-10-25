@@ -1,8 +1,8 @@
 # Partial PumpSwap source recovery
 
-Thirty-six of 38 published handlers are implemented from captured-program behavior
-and disassembly, including legacy buy, exact-quote buy, sell, direct fee/cashback payouts, and boost buy-and-burn.
-Two handlers remain absent: create_config and multi_hop_swap. This is not a replacement for the deployed program
+Thirty-seven of 38 published handlers are implemented from captured-program behavior
+and disassembly, including legacy buy, exact-quote buy, sell, direct fee/cashback payouts, boost buy-and-burn, and AMM/curve multi-hop routes.
+One handler remains absent: create_config. This is not a replacement for the deployed program
 and does not match its bytes.
 
 ```sh
@@ -43,6 +43,17 @@ harvesting, and error 6088 are covered by the bounded corpus. See
 and [`audit/pump_amm/BOOST_BUY_BURN_RECOVERY.md`](../../audit/pump_amm/BOOST_BUY_BURN_RECOVERY.md).
 The earlier AMM35 package remains immutable.
 
+The multi-hop checkpoint adds one body. All 25 suites pass 17,462 comparisons,
+including 735 new normally signed route cases. The clean main-path executable
+matches the scratch executable exactly; the maintained route harness also passes
+from `/tmp`. One, two and three AMM legs, grouped Pump curves, both kinds of
+AMM/curve transition, inline fee allocation, captured CPIs, rollback/error order,
+and endpoint/intermediate token transfer fees are covered. See
+[`repro/pump_amm/multi-hop-thirty-seven`](../../repro/pump_amm/multi-hop-thirty-seven/README.md)
+and [`audit/pump_amm/MULTI_HOP_RECOVERY.md`](../../audit/pump_amm/MULTI_HOP_RECOVERY.md).
+Earlier packages remain immutable. Fixed-admin `create_config` evidence is limited
+to legitimate historical signed replays and static analysis; no signer bypass is used.
+
 Additional SBF suites are `scripts/pump_amm_buyback_differential.py`,
 `scripts/pump_amm_fee_config_differential.py`,
 `scripts/pump_amm_resize_differential.py --creator`, and
@@ -63,7 +74,8 @@ Additional SBF suites are `scripts/pump_amm_buyback_differential.py`,
 `scripts/pump_amm_cashback_differential.py`, and
 `scripts/pump_amm_legacy_sell_differential.py`, and
 `scripts/pump_amm_legacy_buy_differential.py`, and
-`scripts/pump_amm_boost_burn_differential.py`, each taking `--candidate` and `--output`.
+`scripts/pump_amm_boost_burn_differential.py`, and
+`scripts/pump_amm_multi_hop_differential.py`, each taking `--candidate` and `--output`.
 
 For a clean build with complete source/lock/toolchain hashes and an unmodified
 whole-file comparison, use `scripts/build_partial_candidate.py`. See

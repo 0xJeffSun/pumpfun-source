@@ -1,6 +1,6 @@
 # Partial Pump reconstruction
 
-The Anchor 0.31.1 source implements thirty-three recovered handlers:
+The Anchor 0.31.1 source implements forty-one recovered handlers:
 `toggle_create_v2`, `toggle_mayhem_mode`, `toggle_cashback_enabled`, and
 `set_max_curve_depth`, `set_virtual_quote_reserves`, `update_buyback_config`,
 `update_creator_fee_config`, `update_holder_reward_config`, `add_quote_mint`, and
@@ -10,15 +10,15 @@ The Anchor 0.31.1 source implements thirty-three recovered handlers:
 `get_minimum_distributable_fee`, `collect_creator_fee_v2`, `extend_account`,
 `sync_user_volume_accumulator`, `sweep_creator_fee`, `sweep_protocol_fee`,
 `migrate_bonding_curve_creator`, `admin_cto`, `set_params`, `set_creator`,
-`set_metaplex_creator`, `admin_set_idl_authority` and legacy `create`, `sell`, `sell_v2` and `migrate`. It also implements **partial `sell_v3`, `buy_v3`, `buy_exact_quote_in_v3` and `create_v2` paths**.
+`set_metaplex_creator`, `admin_set_idl_authority` and legacy `create`, `sell`, `sell_v2`, `migrate`, `buy`, `buy_exact_sol_in`, `buy_v2`, `buy_exact_quote_in_v2`, `migrate_v2`, `claim_cashback`, `claim_cashback_v2` and `initialize`. It also implements **partial `sell_v3`, `buy_v3`, `buy_exact_quote_in_v3` and `create_v2` paths**.
 It is incomplete and is not a deployable replacement.
 
-The current frozen checkpoint is [creator-thirtythree](../../repro/pump/creator-thirtythree/README.md):
-6,338 differential cases across 28 suites and 694 Surfpool comparisons using
-1,388 signed transactions across 21 runners passed. Its candidate is 1,129,592 bytes,
-SHA-256 `85358197282b1c5579dbccc623d407bab2e04e0fae1c72e1b6066a5f8bc25292`.
-It adds legacy sell, sell_v2 and migration, expands quote-control creation and
-corrects stored creator-fee overrides and v3 exact-quote completion accounting.
+The current frozen checkpoint is [creator-fortyone](../../repro/pump/creator-fortyone/README.md):
+7,957 differential cases across 33 suites and 936 Surfpool comparisons using
+1,872 signed transactions across 26 runners passed. Its candidate is 1,361,464 bytes,
+SHA-256 `640778c9a482c5369cc38c3f27928213dbdce30f2f2be22ad78aeb0c895da18c`.
+It adds legacy and v2 buys, v2 migration, cashback claims and initialization,
+retaining the earlier stored creator-fee and exact-quote corrections.
 Full byte equality remains false. Earlier checkpoint counts below describe their
 historical source snapshots.
 

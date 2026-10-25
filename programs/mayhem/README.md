@@ -1,6 +1,6 @@
 # Partial Mayhem implementation recovery
 
-This independently compiled Anchor program implements **20 of the 25 currently
+This independently compiled Anchor program implements **21 of the 25 currently
 identified instruction paths**. It is not a full program reconstruction, a
 byte-identical ELF, or a deployable replacement. Other handlers are absent.
 No original machine code is embedded or patched into the build.
@@ -15,7 +15,7 @@ Implemented paths:
 - `update_global_params`
 - `extend_account`, `withdraw_admin`, `withdraw_quote_admin`
 - `sweep_fees`, `sweep_fees_admin`
-- `burn_tokens`, `sell`, `buy`
+- `burn_tokens`, `sell`, `buy`, `sell_v2`
 
 ## Evidence and unresolved source details
 
@@ -37,8 +37,8 @@ evidence from burn recovery supersedes the earlier 0.31.1 baseline: typed duplic
 checks, Pubkey CPI context and event-authority constants match the newer family.
 Exact historical revision and dependency identity remain unresolved. The explicit
 System wrapper preserves the original address-before-executable validation order.
-All previous 2,953 cases still pass. The current candidate has 3,841 instruction
-comparisons across nine suites; see the [twenty-handler package](../../repro/mayhem/twenty/README.md).
+All previous 2,953 cases still pass. The current candidate has 5,260 instruction
+comparisons across twelve suite runs; see the [twenty-one-handler package](../../repro/mayhem/twentyone/README.md).
 
 ## Reproduce
 
@@ -61,7 +61,7 @@ units, all transactions, and the absent instruction paths are not equivalent
 claims. States are synthetic; injected configurations are not proof of reachable
 mainnet states.
 
-`repro/mayhem/twenty/` retains the clean build's comparison/provenance and compressed
+`repro/mayhem/twentyone/` retains the clean build's comparison/provenance and compressed
 case evidence. See `audit/mayhem/RECOVERY.md` for bounded security observations.
 
 The additional `scripts/mayhem_validate_fee_recipient.py` suite compares 306
@@ -112,8 +112,8 @@ python3 scripts/verify_mayhem_sell.py \
 The sell fixtures use only test-owned signatures and synthetic configuration;
 they do not establish a full historical sell replay. Compute usage and recorded
 source locations differ. In one zero-reserve panic case, the candidate additionally
-logs an Option-unwrapping message; the error and complete rollback agree. Four
-other trade handlers and Mayhem-state initialization remain unrecovered.
+logs an Option-unwrapping message; the error and complete rollback agree. At that checkpoint, four
+other trade handlers and Mayhem-state initialization remained unrecovered.
 
 
 Legacy `buy` adds 486 ordinary-signature synthetic cases: 187 successes and 299
@@ -141,5 +141,35 @@ python3 scripts/verify_mayhem_buy.py \
 Buy fixtures use configured test-owned traders and synthetic account state, with
 real program-derived CPI signing. They do not claim historical prestate or live
 authority. Compute and source diagnostics differ; four panic cases retain explicit
-log differences while matching failures and complete rollback. Four trade paths
-and Mayhem-state initialization remain absent.
+log differences while matching failures and complete rollback. At that checkpoint, four trade paths
+and Mayhem-state initialization remained absent.
+
+
+Quote-aware `sell_v2` adds 1,419 ordinary-signature synthetic comparisons across
+native SOL, legacy SPL Token, and Token-2022 quote families (473 each). It preserves
+the 31-account parser and actual 26-account Pump CPI. The configured trader,
+PDA/ATA and typed-owner constraints remain enforced. Quote selection controls the
+budget cap, reserve threshold, actual received balance and global signed-i128
+counter; both families share the state counter. Complete 303-byte events retain
+zero native-specific fields for token quotes. All 3,841 prior comparisons pass on
+the same artifact. Its clean integrated build is byte-identical to the tested
+scratch build, with original executable identity still unresolved.
+
+```sh
+python3 scripts/mayhem_sell_v2_differential.py \
+  --candidate repro/mayhem/twentyone/mayhem_recovered.so \
+  --cases repro/mayhem/twentyone/sell-v2-cases.json --family native \
+  --output work/mayhem-sell-v2-native.json
+python3 scripts/verify_mayhem_sell_v2.py \
+  --candidate repro/mayhem/twentyone/mayhem_recovered.so \
+  --receipts work/mayhem-sell-v2-native.json --output work/mayhem-sell-v2-verification.json
+```
+
+Repeat with `--family token` and `--family token22` for the two token-quote runs.
+The 418 successes and 1,001 rejections agree on full watched account state,
+events, inner calls, return data and errors. Independent saved-receipt checks
+verify every signature, successful quote/CPI/state/event and failed rollback.
+Four panic diagnostics differ in each family, as documented in the package.
+Starting business states and configured authorities are synthetic and test-owned;
+no live authority or historical prestate is claimed. Three trade handlers
+(`buy_v2`, `buy_pump_swap`, `sell_pump_swap`) and `initialize_mayhem_state` remain absent.

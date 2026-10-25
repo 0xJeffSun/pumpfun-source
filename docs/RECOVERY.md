@@ -152,7 +152,7 @@ The [35-handler checkpoint](../repro/pump_amm/legacy-buy-thirty-five/README.md) 
 
 ## Metaplex source differences
 
-[Candidate5](../repro/pump/metaplex-candidate-build-5/README.md) is a fresh pinned Linux build with recovered edition conversion resets and master-edition metadata writability checks. All 53 signed boundary comparisons pass; full-file comparison still differs. Diagnostic function alignment finds 1,235 matching normalized instruction windows with corresponding calls and 16 structurally different windows. A [further five-file source trial](../repro/pump/metaplex-audit-source-recovery/README.md) targets captured burn-PDA checking and removal of a legacy metadata authority exception; its [candidate 6 build](../repro/pump/metaplex-candidate-build-6/README.md) compiles and passes all 53 edition regressions but still differs in 16 instruction windows. A [ten-file source trial](../repro/pump/metaplex-uses-source-recovery/README.md) adds captured Uses bounds and token-standard checks; compilation and post-patch validation are pending. These dependency observations do not change the four main-program completeness claims.
+[Candidate5](../repro/pump/metaplex-candidate-build-5/README.md) is a fresh pinned Linux build with recovered edition conversion resets and master-edition metadata writability checks. All 53 signed boundary comparisons pass; full-file comparison still differs. Diagnostic function alignment finds 1,235 matching normalized instruction windows with corresponding calls and 16 structurally different windows. A [further five-file source trial](../repro/pump/metaplex-audit-source-recovery/README.md) targets captured burn-PDA checking and removal of a legacy metadata authority exception; its [candidate 6 build](../repro/pump/metaplex-candidate-build-6/README.md) compiles and passes all 53 edition regressions but still differs in 16 instruction windows. A [ten-file source trial](../repro/pump/metaplex-uses-source-recovery/README.md) adds captured Uses bounds and token-standard checks; its [candidate 7 build](../repro/pump/metaplex-candidate-build-7/README.md) passes all 109 retained edition/Uses/burn comparisons. The next context-check/seed-ownership trial is pending. These dependency observations do not change the four main-program completeness claims.
 
 ## Fees update-admin state access
 
@@ -169,3 +169,20 @@ The [twenty-handler checkpoint](../repro/mayhem/twenty/README.md) adds legacy bu
 ## Fees serialization error conversion
 
 The [serialization checkpoint](../repro/pump_fees/fee-config-serialization-v144/README.md) restores direct Anchor I/O error propagation. The complete 992-byte exit body and all its direct calls now match after address normalization, resolving the previously unmatched update-admin exit target. All 17,441 receipts and the ten-step donation sequence pass; one repeated serialization failure adds exact error-log and signed rollback assertions, not a new unique input. The 769,000-byte clean main ELF equals tested scratch. Full original binary identity remains false.
+
+
+## Pump legacy/v2 buys, migration and cashback
+
+The [41-handler checkpoint](../repro/pump/creator-fortyone/README.md) adds eight handlers while retaining four partial paths. Its clean 1,361,464-byte candidate passes 7,957 differential comparisons across 33 suites and 936 Surfpool comparisons with 1,872 independently verified signatures. All 30 source, 80 harness and 27 fixture hashes are bound. Nested creation, v3 token extensions and full original binary identity remain unresolved in this checkpoint.
+
+## PumpSwap routed swaps
+
+The [37-handler checkpoint](../repro/pump_amm/multi-hop-thirty-seven/README.md) adds routed swaps across AMM pools and Pump curves using real program-derived CPI signing. All 735 new route comparisons and the complete 25-suite regression pass, totaling 17,462 cases. The 1,177,560-byte main build equals tested scratch; root independently checked 1,470 focused transaction signatures. Fixed-admin create_config and whole-file identity remain unresolved.
+
+## Mayhem quote-aware sell
+
+The [21-handler checkpoint](../repro/mayhem/twentyone/README.md) adds sell_v2 with native, legacy-token and Token-2022 quotes. Each family passes 473 comparisons; together with all prior cases, the candidate passes 5,260 comparisons across 12 suite runs. Independent checks cover quote calculations, CPI payloads, full watched state/events, signatures and rollback. The 502,192-byte main build equals scratch. Three trade handlers, state initialization and full original binary identity remain unresolved.
+
+## Retained Fees deserializer negatives
+
+[Four source trials](../repro/pump_fees/deserialization-source-trials/README.md) preserve the captured decoder's allocation branches and test Borsh API spelling. None reproduces the whole decoder; no runtime or source promotion claim is made. One API variant produces the exact same ELF as its predecessor. The validated serializer remains the active Fees candidate.

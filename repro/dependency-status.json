@@ -40,7 +40,8 @@
       "repro/pump/metaplex-candidate-build-3/comparison.json",
       "repro/pump/metaplex-candidate-build-4/comparison.json",
       "repro/pump/metaplex-candidate-build-5/comparison.json",
-      "repro/pump/metaplex-candidate-build-6/comparison.json"
+      "repro/pump/metaplex-candidate-build-6/comparison.json",
+      "repro/pump/metaplex-candidate-build-7/comparison.json"
     ],
     "latest_tested_candidate_full_byte_equality": false
   },

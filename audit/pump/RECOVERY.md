@@ -67,3 +67,17 @@ One additional tiny-trade probe fails with original Overflow6024 before a usable
 reserve delta and is recorded outside the arithmetic comparison. The full sell
 handler, fee accounting and event paths remain to be reconstructed. See the
 fragment README and receipts for exact scope.
+
+
+## Forty-one-handler checkpoint
+
+The clean main candidate adds legacy buy/exact SOL, both v2 buys, migrate_v2,
+cashback claims and initialize. All 7,957 differential cases across 33 suites and
+936 Surfpool comparisons pass. Root independently verified the complete package,
+30 source inputs, 80 harness inputs, 27 fixture bindings and all 1,872 ordinary
+transaction signatures. Four creation/trading paths remain partial, including
+unresolved transfer-fee extension and nested-creation scope. Source diagnostics,
+runtime-specific IDL behavior and event suffix limits remain documented. The
+1,361,464-byte candidate differs from the original whole file. These tests do not
+complete a security audit or establish production readiness. See the
+[checkpoint evidence](../../repro/pump/creator-fortyone/README.md).
