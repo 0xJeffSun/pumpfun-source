@@ -267,3 +267,10 @@ The [static set_mayhem_virtual_params package](../repro/pump/mayhem-virtual-para
 ## Six quote-control handlers
 
 The [Pump48 checkpoint](../repro/pump/quote-control-fortyeight/README.md) recovers quote-control initialization, admin and reserves-admin rotation, mint addition/removal, and reserve updates. Its clean main build is whole-file identical to the tested scratch build: 1,478,960 bytes, SHA-256 `c9c364b59fca69ecc395c1e7911d55fc7997631daa0dd0b0bcf37d7f0dfa4804`. All 9,161 comparisons across 36 suites and all 1,024 Surfpool comparisons across 28 runners pass. The quote-control cases contain 1,014 executed transactions with 2,008 verified signatures; Surfpool separately contains 2,048 transactions with 2,980 signatures. Old unbound reports remain preserved as unaccepted history. The four programs now total 140 implemented handlers plus four partial paths and 53,659 saved comparison receipts. Every original whole-file comparison still differs, and the current sell_v2 gap remains explicit.
+
+A separate [controlled Pump source-path remap](../repro/pump/path-remap-fortyeight/README.md)
+keeps the Pump48 source and v1.44 compiler hashes fixed while adding a
+Pump-crate-only Rust path remap. It reproduces the target's sampled
+`programs/pump/src/create_v2.rs` path bytes, stored length and NUL policy,
+but not its source line numbers or executable bytes. The trial is a build
+layout clue, not evidence of the historical flags or a matching Pump binary.
