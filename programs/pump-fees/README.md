@@ -38,14 +38,14 @@ Temporary serialized creator/admin state before each CPI is retained, because
 the called program reads that state. These cases use normally signed test-owned
 keys and synthetic local accounts; they do not prove every live sharing transition.
 
-The [current source checkpoint](../../repro/pump_fees/donation-borrow-v144/README.md)
+The [current source checkpoint](../../repro/pump_fees/legacy-social-admission-v144/README.md)
 binds this README and all 25 remaining source/workspace/IDL inputs. It preserves
 the recovered dependency graph, social-account layout, inline initializer Pump
 Global account, four declarations in `state.rs`, and SharingConfig in
 `instructions/fee_sharing/create_fee_sharing_config.rs`. The clean main ELF is
-770,016 bytes, SHA-256
-`5cf8d567934188d1307d2f9f3d2220ede52f6978e389064b08897441fbdd7d49`, with complete
-ELF and symbol-bearing identity to the tested donation-borrow scratch build.
+773,808 bytes, SHA-256
+`8ff12f9c580baa51631a1802d5dc0a936e837f5de4fc1b88b71fd57bd2a7450b`, with complete
+ELF and symbol-bearing identity to the tested legacy-quote/social-admission scratch build.
 Its 17,461 comparison receipts comprise the unchanged 17,441-receipt corpus
 (including 69 repeated-input checks) and the unchanged 20 focused comparisons.
 All inputs are repeats in this checkpoint; no new handler or unique case is added.
@@ -56,8 +56,9 @@ transaction fields re-verify 17,204 signatures across 8,644 encoded baseline and
 sequence fields; those are not unique transactions or extra cases. Focused20 adds
 40 signed executions and 80 test-owned signatures, counted separately. Some older
 reports preserve runtime signature assertions without complete transaction bytes.
-The focused run's complete successful report and log are retained; its numeric
-process exit code was not separately persisted and is not reconstructed.
+All eleven fresh scratch jobs have retained numeric zero exits, complete reports
+and logs. Main-source acceptance carries those receipts only by whole executable
+and symbol identity; target transactions are not repeated for the main build.
 Compilation selected platform-tools v1.44; the unchanged SDK installer selected
 v1.52 for `llvm-objcopy` stripping. The phase records distinguish those tools;
 retained file hashes do not retrospectively prove every historical invocation.
@@ -106,11 +107,36 @@ error messages. One formerly direct `AccountInfo::clone` call is absent; inlined
 reference-count operations are not counted by that observation. Passing fixtures
 do not prove complete behavior, indirect/transitive closure or source identity.
 
-The fresh inventory preserves all 585 original inferred windows and 546 candidate
-symbol windows. Original status remains 437 mapped patterns, 145 unattributed and
-three call conflicts. Inferred windows are not a historical-function denominator
+The fresh inventory preserves all 585 original inferred windows and 547 candidate
+symbol windows. Original status is 439 mapped patterns, 143 unattributed and
+three call conflicts. The candidate has 440 consistent normalized call patterns,
+105 unmatched windows and two call conflicts; 100 windows are raw-identical.
+Compared with the accepted predicate/ownership scratch, two original drop-routine
+windows gain matches. Whole-file equality remains false. Inferred windows are not a historical-function denominator
 or semantic completion percentage. Immediate matches, ambiguous alternatives,
 indirect calls and data-extent limits remain explicit in the published package.
+
+The two sharing AMM predicates now preserve the original conjunction, and the
+donation quote helper borrows its AccountInfo argument. Legacy `update_fee_shares`
+first checks the curve quote bytes at 83..115 when the allocation is at least 115
+bytes; short allocations are admitted by this helper. A nonzero quote returns
+UnsupportedQuoteMint before the already-updated version error. The fresh machine
+code confirms the borrow release and temporary drops before this error branch.
+The helper is inlined; the complete legacy handler still differs from the original.
+Remaining-account preprocessing and V2 payout reconstruction remain incomplete.
+
+Social token claims use a shared admission helper for both associated accounts.
+It checks the canonical address, System-owned creation permission, exact supplied
+token-program owner and decoded mint. Recipient creation uses the ordinary
+idempotent associated-token instruction with six AccountInfos; the source-side
+call disallows creation. Fresh bytes confirm both flags and instruction opcode 1.
+All 17 original immediate helper target windows have normalized matches called by
+the new helper, and the six-AccountInfo drop body is raw-identical. Complete
+helper/handler equality and unrestricted descendant/data closure remain unresolved.
+No new fixtures or token-extension conclusions are added by this checkpoint.
+
+The [prior donation-borrow checkpoint](../../repro/pump_fees/donation-borrow-v144/README.md)
+retains its 770,016-byte `5cf8d567…` ELF and source-specific results unchanged.
 
 `BuybackVault`, `SocialFeePda`, `DonationFeePda`, `FeeProgramGlobal` and
 `SharingConfig` preserve their complete account declarations byte-for-byte, with
@@ -334,4 +360,4 @@ differ from the capture; these checks do not establish unique historical source.
 
 `ClaimSocialFeePdaV2` boxes its quote mint and uses by-value `AccountInfo` fields for event authority and program, preserving the existing account constraints. The original parser's field stores and generated event-CPI account contract support these types. Together they reproduce the complete 560-byte normalized account-exit body, seven direct callee bodies and three bounded literal spans. Boxing alone left one context offset unmatched; that earlier attempt remains preserved.
 
-This source-layout result does not prove recursive data/call closure, original whole-file identity or a completed audit. The [historical social v2 layout checkpoint](../../repro/pump_fees/social-v2-account-layout-v144/README.md) retains the 770,624-byte `c181b0ba75aee67369385e04908d89088552c1fad756bf5a21d7fb21979e6a58` ELF and its own fresh receipts. The current donation-business checkpoint above carries freshly executed scratch receipts by whole-file identity and retains the inline initializer and social exit checks.
+This source-layout result does not prove recursive data/call closure, original whole-file identity or a completed audit. The [historical social v2 layout checkpoint](../../repro/pump_fees/social-v2-account-layout-v144/README.md) retains the 770,624-byte `c181b0ba75aee67369385e04908d89088552c1fad756bf5a21d7fb21979e6a58` ELF and its own fresh receipts. The current legacy-quote/social-admission checkpoint above carries freshly executed scratch receipts by whole-file identity and retains the inline initializer and social exit checks.

@@ -137,7 +137,7 @@ recorded independently. Whole-file equality and the audit remain incomplete.
 All earlier checkpoints and negative evidence remain immutable.
 
 
-The current [event-borrow checkpoint](../../repro/pump_amm/update-event-borrow-v144/README.md)
+The preceding [event-borrow checkpoint](../../repro/pump_amm/update-event-borrow-v144/README.md)
 removes only the redundant clone passed to `emit!` in `update_fee_config`.
 The handler now measures 2,912 bytes and its complete normalized instruction body
 matches the captured original. The 2,296-byte wrapper and 744-byte event serializer
@@ -159,3 +159,8 @@ runtime replay. The complete Pool and GlobalConfig exits, their 24 direct target
 each and discriminators still match at fresh symbols. Compilation uses v1.44 and
 the unchanged SDK separately strips with v1.52. Whole-original ELF equality is
 false, and the audit remains incomplete. Earlier packages and seals stay immutable.
+
+
+## Destination rent checkpoint
+
+Current AMM is the [destination-rent checkpoint](../../repro/pump_amm/destination-rent-v144/README.md) (`2a8a69f1…`, 1,199,064 bytes). The main executable and symbol ELF equal the reviewed scratch candidate. The one-line correction uses the destination account data length for rent. All 17,462 existing comparisons and 35,418 saved signature checks are retained; no new fixture or main replay is claimed. Pool and GlobalConfig complete normalized serializers, each of their 24 direct targets and discriminators match. The complete 2,912-byte fee-update handler, wrapper and event serializer still match under normalization; 12/16 immediate handler targets match. Scalar methods, recipient source coordinates and transitive data remain unresolved. Initializer static matches remain, but authentic successful replay is absent. The 267 transfer rows include zero-lamport destination-data cases and do not validate live nonempty accounts; the external 8/267 claim remains unverified.
