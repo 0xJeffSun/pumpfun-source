@@ -147,7 +147,7 @@
     "compiler": "unresolved",
     "dependencies": "unresolved",
     "build_flags": "unresolved",
-    "candidate_artifact": "repro/pump_fees/error-enum-v144/pump_fees_candidate.so",
+    "candidate_artifact": "repro/pump_fees/external-codecs-v144/pump_fees_candidate.so",
     "full_byte_equality": false,
     "comparison_status": "DIFFERS_PARTIAL_IMPLEMENTATION",
     "compiler_candidates": [
@@ -188,15 +188,15 @@
       "update_fee_shares_v2",
       "initialize_fee_config"
     ],
-    "comparison_report": "repro/pump_fees/error-enum-v144/build-comparison.json",
-    "build_log": "repro/pump_fees/error-enum-v144/build.log",
-    "validated_cases": 17363,
+    "comparison_report": "repro/pump_fees/external-codecs-v144/build-comparison.json",
+    "build_log": "repro/pump_fees/external-codecs-v144/build.log",
+    "validated_cases": 17372,
     "deprecated_dispatches": [
       "revoke_fee_sharing_authority",
       "transfer_fee_sharing_authority"
     ],
     "signed_sequence_reports": [
-      "repro/pump_fees/error-enum-v144/donation-sequence.json.gz"
+      "repro/pump_fees/external-codecs-v144/donation-sequence.json.gz"
     ],
     "compiler_family_candidates": [
       "v1.44",
@@ -208,14 +208,15 @@
     "preferred_compiler_candidate": "v1.44",
     "controlled_compiler_evidence": "repro/pump_fees/compiler-family/CONTROLLED-HELPER-REPORT.md",
     "validation_reports": [
-      "repro/pump_fees/error-enum-v144/differential.json.gz",
-      "repro/pump_fees/error-enum-v144/initializer-history.json.gz",
-      "repro/pump_fees/error-enum-v144/initializer-rejections.json.gz",
-      "repro/pump_fees/error-enum-v144/messages.json.gz"
+      "repro/pump_fees/external-codecs-v144/differential.json.gz",
+      "repro/pump_fees/external-codecs-v144/initializer-history.json.gz",
+      "repro/pump_fees/external-codecs-v144/initializer-rejections.json.gz",
+      "repro/pump_fees/external-codecs-v144/messages.json.gz",
+      "repro/pump_fees/external-codecs-v144/codec-rejections.json.gz"
     ],
     "authentic_historical_replays": [
       {
-        "report": "repro/pump_fees/error-enum-v144/initializer-history.json.gz",
+        "report": "repro/pump_fees/external-codecs-v144/initializer-history.json.gz",
         "transactions": "repro/pump_fees/initializer-history/transactions"
       }
     ],
@@ -229,9 +230,10 @@
       "readme": "repro/pump_fees/all-thirtyone-v144/README.md",
       "comparisons": 112,
       "signed_transactions": 224,
-      "scope": "Separate prior executable; not rerun after enum-only correction."
+      "scope": "Separate prior executable; not rerun after error-enum and external-codec corrections."
     },
-    "error_enum_evidence": "repro/pump_fees/error-enum-v144/README.md"
+    "error_enum_evidence": "repro/pump_fees/error-enum-v144/README.md",
+    "external_codec_evidence": "repro/pump_fees/external-codecs-v144/README.md"
   },
   "mayhem": {
     "source_reconstruction": "partial_handlers_compiled",

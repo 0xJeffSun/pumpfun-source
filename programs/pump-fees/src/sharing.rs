@@ -1,6 +1,5 @@
 //! Recovered sharing creation; captured Pump/AMM dependencies perform external CPI.
 use anchor_lang::prelude::*;
-use anchor_lang::Discriminator;
 use anchor_lang::solana_program::{instruction::{Instruction, AccountMeta}, program::invoke};
 use crate::{FeeError, ID, pump_global};
 use crate::types::Shareholder;
@@ -58,16 +57,5 @@ pub struct CreateFeeSharingConfig<'info>{
 #[event]
 pub struct CreateFeeSharingConfigEvent{pub timestamp:i64,pub mint:Pubkey,pub bonding_curve:Pubkey,pub pool:Option<Pubkey>,pub sharing_config:Pubkey,pub admin:Pubkey,pub initial_shareholders:Vec<Shareholder>,pub status:ConfigStatus}
 
-#[derive(AnchorSerialize,AnchorDeserialize,Clone)]
-pub struct SharingPool {pub pool_bump:u8,pub index:u16,pub creator:Pubkey,pub base_mint:Pubkey,pub quote_mint:Pubkey,pub lp_mint:Pubkey,pub pool_base_token_account:Pubkey,pub pool_quote_token_account:Pubkey,pub lp_supply:u64,pub coin_creator:Pubkey,pub is_mayhem_mode:bool,pub is_cashback_coin:bool,pub virtual_quote_reserves:i128}
-impl Owner for SharingPool {fn owner()->Pubkey {AMM}}
-impl Discriminator for SharingPool {const DISCRIMINATOR:&'static [u8]=&[241,154,109,4,17,177,109,188];}
-impl AccountSerialize for SharingPool {}
-impl AccountDeserialize for SharingPool {
- fn try_deserialize(buf:&mut &[u8])->Result<Self>{
-  if buf.len()<8{return Err(error!(anchor_lang::error::ErrorCode::AccountDiscriminatorNotFound));}
-  if &buf[..8]!=Self::DISCRIMINATOR{return Err(error!(anchor_lang::error::ErrorCode::AccountDiscriminatorMismatch));}
-  Self::try_deserialize_unchecked(buf)
- }
- fn try_deserialize_unchecked(buf:&mut &[u8])->Result<Self>{Self::deserialize(&mut &buf[8..]).map_err(|_|error!(anchor_lang::error::ErrorCode::AccountDidNotDeserialize))}
-}
+// External AMM pool codec is shared with donation parsing.
+pub use crate::donation::Pool as SharingPool;

@@ -40,8 +40,8 @@ keys and synthetic local accounts; they do not prove every live sharing transiti
 
 The [prior v1.44 checkpoint](../../repro/pump_fees/all-thirtyone-v144/README.md)
 passes 112 independent Surfpool comparisons with 224 signed local transactions.
-All Surfpool counts below refer to that retained executable. The current complete
-error-enum build passes 17,363 SBF checks and the ten-step persistent donation
+All Surfpool counts below refer to that retained executable. The current external-account
+codec build passes 17,372 SBF checks and the ten-step persistent donation
 sequence. Its source hashes and receipts are indexed by `repro/status.json`.
 The enum restores four omitted IDL variants and the original literal `format`
 messages for errors 6003 and 6011.
@@ -105,7 +105,7 @@ The global initializer reads the older 740-byte Pump Global layout, authenticate
 its authority and PDA, creates the 338-byte Fees global with canonical bump, and
 emits the exact event log and self-CPI. Its 180 comparisons include prefunding,
 malformed accounts, authorization, argument boundaries and CPI rollback. The
-31-instruction candidate passes 17,363 cases; full-file byte equality remains false.
+31-instruction candidate passes 17,372 cases; full-file byte equality remains false.
 
 FeeConfig deserialization is gated by allocation: the normal schedule is read at
 2,512 bytes, the stable schedule at 4,073, and exotic flat fees at 4,097. Earlier
@@ -167,3 +167,11 @@ with mint/authority/program checks but no ATA-address requirement. The latest
 combined executable passes all 55 donation/social/withdraw Surfpool comparisons
 (110 signed transactions), plus the separate persistent donation sequence. See
 [withdrawal recovery](../../localnet/recovery/fees-withdraw/README.md).
+
+External Pump Global/BondingCurve and AMM Pool types now use generated Anchor account
+codecs with explicit external owners. Sharing and donation parsing reuse the same
+AMM Pool type. Three complete checked decoder patterns differ from the captured
+original only in embedded source-file length and source-line constants after
+relocation/call masking. Nine ordinary-signature malformed-account checks and all
+existing regressions pass; this does not establish whole-program identity. See
+[codec evidence](../../repro/pump_fees/external-codecs-v144/README.md).
