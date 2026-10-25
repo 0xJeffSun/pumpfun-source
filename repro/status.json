@@ -406,7 +406,7 @@
     "authentic_historical_replays": [
       {
         "count": 2,
-        "report": "repro/pump_fees/sharing-fourth-cpi-main-v144/validation/initializer-history.json.gz",
+        "report": "repro/layered-passes/pass-23/fees-current-evidence/validation/initializer-history.json.gz",
         "transactions": "repro/pump_fees/v2-caller-v144/transactions"
       }
     ],
@@ -416,22 +416,22 @@
       "case_count": 3,
       "overlaps_full_suite_cases": true,
       "prior_checkpoint_report": "repro/pump_fees/solana-family-221-v144/authority-logs.json.gz",
-      "report": "repro/pump_fees/sharing-fourth-cpi-main-v144/validation/authority-logs.json.gz"
+      "report": "repro/layered-passes/pass-23/fees-current-evidence/validation/authority-logs.json.gz"
     },
     "build_flags": "unresolved",
-    "build_log": "repro/pump_fees/sharing-fourth-cpi-main-v144/main/build.log",
+    "build_log": "repro/pump_fees/sharing-authorize-main-v144/main/build.log",
     "buyback_body_evidence": "repro/pump_fees/buyback-source-v144/static/typed-macro-box-analysis.json",
     "buyback_source_evidence": "repro/pump_fees/buyback-source-v144/README.md",
-    "candidate_artifact": "repro/pump_fees/sharing-fourth-cpi-main-v144/main/candidate.so",
-    "candidate_build_identity_report": "repro/pump_fees/sharing-fourth-cpi-main-v144/main/controls/identity.json",
-    "candidate_sha256": "6a1f3fc565d08418721c3bf3543278f1261b92302ed0a0e7aa00d995c9cec896",
+    "candidate_artifact": "repro/pump_fees/sharing-authorize-main-v144/main/candidate.so",
+    "candidate_build_identity_report": "repro/pump_fees/sharing-authorize-main-v144/controls/identity.json",
+    "candidate_sha256": "2387f8139a13918a5c9c523f140ecdd72db7243c8e2ed9cd7e1ff9d42ad6c8af",
     "compared_value_assertions": {
       "case_count": 9,
       "overlaps_full_suite_indices": true,
       "prior_checkpoint_report": "repro/pump_fees/solana-family-221-v144/compared-values.json.gz",
-      "report": "repro/pump_fees/sharing-fourth-cpi-main-v144/validation/compared-values.json.gz"
+      "report": "repro/layered-passes/pass-23/fees-current-evidence/validation/compared-values.json.gz"
     },
-    "comparison_report": "repro/pump_fees/sharing-fourth-cpi-main-v144/main/build-comparison.json",
+    "comparison_report": "repro/pump_fees/sharing-authorize-main-v144/main/build-comparison.json",
     "comparison_status": "DIFFERS_PARTIAL_IMPLEMENTATION",
     "compiler": "unresolved",
     "compiler_candidates": [
@@ -478,14 +478,14 @@
       "Only the first Pump extension CPI is restored to the typed generated API; its payer writable flag is corrected in the local IDL. Three complete helpers match normalized originals, with all30 immediate targets supported. The remaining three manual CPIs, recursive semantics and whole identity remain unresolved.",
       "The second Pump CPI now uses its generated typed API with unchanged IDL flags. Its complete3712-byte helper and1072-byte metadata constructor match normalized originals with all immediate target bodies;26/116 existing sharing cases reach the migration. This second-CPI checkpoint is historical; the current fourth-CPI package closes the two typed AMM call constructions, while full recursive/whole-file identity remains unresolved.",
       "All four sharing CPIs now use generated typed APIs; the AMM extend IDL marks user writable as the original metadata proves. Eight complete helpers match with normalized relocations and immediate target bodies. Original461 mapped/122 unattributed/two conflicting windows remain; the complete sharing caller and authorization roles, data, error metadata and historical build recipe remain incomplete. All17461 existing comparisons and10 separate sequence steps pass;17204 retained baseline/sequence signatures and80 focused signatures verify. No new unique cases or all-state equivalence.",
-      "Known remaining reconstruction gap proved by full Global cursor/decoder and sharing branch closure: original new-config authorization allows payer==Global.admin_set_creator_authority OR payer==selected_creator, after required pool validation. Current candidate accepts only selected creator and attaches compared keys on6016. The source-only proof is published; correction/build/runtime acceptance belong to the next pass. This is a reconstruction difference, not an original-program vulnerability claim."
+      "Sharing creation now permits the proved admin-or-selected-creator authorization after required pool validation and returns plain source-bearing6016 without compared keys. Complete Global cursor/decoder/context and emitted branch proofs support this correction. All17461 existing comparisons and10steps pass; all116sharing inputs have zero payer/globaladmin matches, so admin-only behavior is static-only. Whole original caller/recursive identity and source-coordinate equality remain unresolved."
     ],
     "current_binding_command": "python3 -B scripts/verify_current_checkpoint.py pump_fees",
     "current_compilation_tools": "platform-tools v1.44 (Darwin)",
-    "current_function_inventory": "repro/pump_fees/sharing-fourth-cpi-v144/analysis/full-function-inventory.json",
+    "current_function_inventory": "repro/layered-passes/pass-23/fees-current-evidence/analysis/full-function-inventory.json",
     "current_runtime_receipts_inherited": true,
     "current_runtime_receipts_scope": "Fresh scratch executions of unchanged17441 baseline and unchanged20 focused inputs;10sequence steps separate. Carried to one main build by full stripped and symbol-bearing identity; no new target execution in publication. Earlier main repeats remain historical evidence.",
-    "current_saved_verification_command": "python3 -B repro/pump_fees/sharing-fourth-cpi-v144/verify.py --runtime-signatures",
+    "current_saved_verification_command": "python3 -B repro/pump_fees/sharing-authorize-v144/verify.py --runtime-signatures",
     "current_sdk_stripping_tools": "platform-tools v1.52 llvm-objcopy",
     "declared_program_evidence": "repro/pump_fees/declared-programs-v144/README.md",
     "decoder_contract_static_evidence": {
@@ -618,7 +618,7 @@
       "scope": "Separate prior executable; not rerun after error-enum and external-codec corrections.",
       "signed_transactions": 224
     },
-    "prior_checkpoint": "repro/pump_fees/sharing-second-pump-cpi-main-v144",
+    "prior_checkpoint": "repro/pump_fees/sharing-fourth-cpi-main-v144",
     "pubkey_source_coordinate_evidence": {
       "current_build_evidence": "repro/pump_fees/solana-family-221-v144/static-gate.json",
       "current_matching_coordinates": [
@@ -666,7 +666,7 @@
     "sharing_module_evidence": "repro/pump_fees/sharing-module-v144/README.md",
     "sharing_module_static_evidence": "repro/pump_fees/sharing-module-v144/sharing-closure-proof.json",
     "signed_sequence_reports": [
-      "repro/pump_fees/sharing-fourth-cpi-main-v144/validation/donation-sequence.json.gz"
+      "repro/layered-passes/pass-23/fees-current-evidence/validation/donation-sequence.json.gz"
     ],
     "social_v2_layout_evidence": "repro/pump_fees/social-v2-account-layout-v144/trials/exit-comparison-v2.json",
     "social_v2_layout_package": "repro/pump_fees/social-v2-account-layout-v144/README.md",
@@ -677,7 +677,7 @@
     "source_reconstruction": "all_instruction_bodies_compiled_bounded_validation",
     "state_module_evidence": "repro/pump_fees/state-module-v144/README.md",
     "state_module_static_evidence": "repro/pump_fees/state-module-v144/candidate-codecs.json",
-    "symbols_sha256": "e9ea8cc096befc5a9c300e0e53677f85b7de4728f56ae993a0067ec9a1d7c912",
+    "symbols_sha256": "4a8084f8a1056e3d0b2df5b0a272c1a3f0a56d3e96532e1b8a2ba7eb21d6ac4c",
     "tool_phase_provenance": "repro/pump_fees/v2-caller-v144/tool-phase-provenance.json",
     "total_comparison_receipts": 17461,
     "unchanged_dependency_selections": 245,
@@ -701,18 +701,18 @@
     },
     "validated_cases": 17461,
     "validation_reports": [
-      "repro/pump_fees/sharing-fourth-cpi-main-v144/validation/focused20.json.gz",
-      "repro/pump_fees/sharing-fourth-cpi-main-v144/validation/differential.json.gz",
-      "repro/pump_fees/sharing-fourth-cpi-main-v144/validation/initializer-history.json.gz",
-      "repro/pump_fees/sharing-fourth-cpi-main-v144/validation/initializer-rejections.json.gz",
-      "repro/pump_fees/sharing-fourth-cpi-main-v144/validation/messages.json.gz",
-      "repro/pump_fees/sharing-fourth-cpi-main-v144/validation/codec-rejections.json.gz",
-      "repro/pump_fees/sharing-fourth-cpi-main-v144/validation/compared-values.json.gz",
-      "repro/pump_fees/sharing-fourth-cpi-main-v144/validation/authority-logs.json.gz",
-      "repro/pump_fees/sharing-fourth-cpi-main-v144/validation/signed-transfers.json.gz",
-      "repro/pump_fees/sharing-fourth-cpi-main-v144/validation/serialization-error.json.gz"
+      "repro/layered-passes/pass-23/fees-current-evidence/validation/focused20.json.gz",
+      "repro/layered-passes/pass-23/fees-current-evidence/validation/differential.json.gz",
+      "repro/layered-passes/pass-23/fees-current-evidence/validation/initializer-history.json.gz",
+      "repro/layered-passes/pass-23/fees-current-evidence/validation/initializer-rejections.json.gz",
+      "repro/layered-passes/pass-23/fees-current-evidence/validation/messages.json.gz",
+      "repro/layered-passes/pass-23/fees-current-evidence/validation/codec-rejections.json.gz",
+      "repro/layered-passes/pass-23/fees-current-evidence/validation/compared-values.json.gz",
+      "repro/layered-passes/pass-23/fees-current-evidence/validation/authority-logs.json.gz",
+      "repro/layered-passes/pass-23/fees-current-evidence/validation/signed-transfers.json.gz",
+      "repro/layered-passes/pass-23/fees-current-evidence/validation/serialization-error.json.gz"
     ],
-    "workspace_source_manifest": "repro/pump_fees/sharing-fourth-cpi-main-v144/main/controls/source-proposed.json",
+    "workspace_source_manifest": "repro/layered-passes/pass-23/fees-current-evidence/main-source-sha256.json",
     "withdrawal_owned_error_evidence": "repro/pump_fees/withdraw-owned-error-v144/README.md",
     "prior_candidate_evidence": {
       "codec_static_before_withdrawal": "repro/pump_fees/v2-caller-v144/retained-static-gate.json"
@@ -729,8 +729,10 @@
       "repro/pump_fees/compiler-family/CONTROLLED-HELPER-REPORT.md"
     ],
     "controlled_v1461_evidence": "repro/identity-audit/2026-10-25/compiler-v1461/REPORT.md",
-    "candidate_bytes": 863928,
-    "sharing_fourth_cpi_evidence": "repro/pump_fees/sharing-fourth-cpi-v144/README.md"
+    "candidate_bytes": 863808,
+    "sharing_fourth_cpi_evidence": "repro/pump_fees/sharing-fourth-cpi-v144/README.md",
+    "sharing_authorization_evidence": "repro/pump_fees/sharing-authorize-v144/README.md",
+    "sharing_authorization_admin_only_runtime_cases": 0
   },
   "mayhem": {
     "source_reconstruction": "partial_handlers_compiled",

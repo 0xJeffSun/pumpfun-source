@@ -9,6 +9,7 @@ import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 CHECKPOINTS = {
+    'repro/pump_fees/sharing-authorize-main-v144': ('4049a50a07bfb8a4c51b95776607e86abc3ca1588a8d29f7dfde769a5ed51135', 'helpers', None),
     'repro/pump/admin-cto-error-batch-main-fortyeight': ('4cd1fa3085fd7602d70acbd40e130e33a2232e53771086aff14201b5e7f18890', 'main/build-helpers', 'main/README.final.md'),
     'repro/pump_fees/sharing-fourth-cpi-main-v144': ('b68d33f0d133b1f1283dfa2ce833e2f9c1f398c6c7b16fd177fa91ab74deacfd', 'helpers', None),
     'repro/pump/admin-cto-owned6083-main-fortyeight': ('a994e09c2a8f418fc11f08014542b932333167783224db1f83659fdd62e39e39', 'main/build-helpers', 'main/README.final.md'),
@@ -48,6 +49,7 @@ def verify(program, root):
     package = root / name
     verify_manifest(package, seal)
     scratch_bindings = {
+        'repro/pump_fees/sharing-authorize-main-v144': ('repro/pump_fees/sharing-authorize-v144', '52cd978029f67b8c79e738131fa2bec3251de8fdfc2a22270e1464b210125ba7'),
         'repro/pump/admin-cto-error-batch-main-fortyeight': ('repro/pump/admin-cto-error-batch-fortyeight', 'd9d6adc2f5d1533c04999626f93d1aef6a6d0acfb100a11483b4ca777ef62cd6'),
         'repro/pump_fees/sharing-fourth-cpi-main-v144': ('repro/pump_fees/sharing-fourth-cpi-v144', 'e21ebdbc98cf49cb391697ae0b50699814107d292caab68a83c22a3265641fd4'),
     }
@@ -66,7 +68,8 @@ def verify(program, root):
     if final_readme:
         crate = 'pump' if program == 'pump' else 'pump-amm'
         assert (root / 'programs' / crate / 'README.md').read_bytes() == (package / final_readme).read_bytes()
-    gate = read(package / 'main/controls/gate-before.json')
+    controls_prefix = 'controls' if name == 'repro/pump_fees/sharing-authorize-main-v144' else 'main/controls'
+    gate = read(package / controls_prefix / 'gate-before.json')
     transitions = []
     for helper, recorded in gate['helpers'].items():
         assert sha(package / helper_prefix / helper) == recorded, helper

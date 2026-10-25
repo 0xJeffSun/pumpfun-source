@@ -26,6 +26,12 @@ for name,status in json.loads((ROOT/'repro/status.json').read_text()).items():
   subprocess.run([sys.executable,'-B',str(scratch)],check=True)
   print(name,': partial build provenance consistent;9269 saved differential cases and1024 Surfpool comparisons; full byte equality',report['comparison']['full_byte_equality'])
   continue
+ if name=='pump_fees' and status['candidate_artifact']=='repro/pump_fees/sharing-authorize-main-v144/main/candidate.so':
+  assert status['validated_cases']==17461
+  subprocess.run([sys.executable,'-B',str(ROOT/'scripts/verify_current_checkpoint.py'),'pump_fees'],check=True)
+  subprocess.run([sys.executable,'-B',str(ROOT/'repro/pump_fees/sharing-authorize-v144/verify.py'),'--runtime-signatures'],check=True)
+  print(name,': bound authorization checkpoint;17461 saved comparisons and10 separate sequence steps; full byte equality',report['comparison']['full_byte_equality'])
+  continue
  total=0
  for receipt_name in status.get('validation_reports',[status.get('validation_report')]):
   receipt=ROOT/receipt_name;data=receipt.read_bytes()

@@ -1,0 +1,8 @@
+{
+  "inputs": 26,
+  "mismatches": [
+    "programs/pump-fees/README.md",
+    "programs/pump-fees/idls/pump_amm.json",
+    "programs/pump-fees/src/sharing.rs"
+  ]
+}

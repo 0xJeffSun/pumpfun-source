@@ -28,3 +28,11 @@ repro/pump_fees/sharing-fourth-cpi-v144/source/Cargo.toml -whitespace
 
 # Preserve incoming positive-guard source evidence exactly.
 repro/pump/metaplex-utilize-positive-guard-source-recovery/source.patch -whitespace
+
+# Preserve pass23 frozen source and patch receipt bytes.
+repro/layered-passes/pass-23/fees-current-evidence/analysis/method/dependency_reader.py -whitespace
+repro/layered-passes/pass-23/relay-serializer-review/source/src/dispatch.rs -whitespace
+repro/layered-passes/pass-23/relay-typed-borrow-proposal/baseline-source/src/dispatch.rs -whitespace
+repro/layered-passes/pass-23/verification/bridge-routing.patch -whitespace
+repro/pump_fees/sharing-authorize-main-v144/source/Cargo.toml -whitespace
+repro/layered-passes/pass-23/focused-preparation-review/helper.patch -whitespace

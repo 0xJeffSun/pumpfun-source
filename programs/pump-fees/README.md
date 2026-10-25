@@ -492,3 +492,10 @@ binds one clean main build to the tested scratch executable and symbols.
 The `sharing-fourth-cpi-v144` checkpoint composes the reviewed third AMM extension and final AMM creator-migration typed APIs over Fee21. The fourth-call immediate baseline is the frozen third source; only sharing.rs changes from that baseline. Relative to Fee21 root, sharing.rs and the third-call AMM IDL writable-user field change. All four calls now use typed generated CPI contexts. Eight complete helper/metadata/info windows match originals under retained normalization; immediate target-body support is not recursive target-program proof.
 
 See `repro/pump_fees/sharing-fourth-cpi-v144/` for exact layered source, full inventories, unchanged receipts, signatures, diagnostics and retained third-build helper transition history. Separate accepted main identity is in `repro/pump_fees/sharing-fourth-cpi-main-v144/`. Fourth build uses the restored accepted helper with explicit v1.44 and existing v1.52 strip; third's earlier failed global gate remains separately documented.
+
+
+### Sharing creator/admin authorization checkpoint
+
+The `sharing-authorize-v144` checkpoint restores original sharing creation authorization: the payer may equal Global.admin_set_creator_authority or the selected curve/pool creator. Required pool validation precedes authorization; existing sharing version returns early. Failure uses plain source-bearing6016 without compared-key payload. Eight typed CPI helper matches remain retained.
+
+The unchanged17461 comparisons (focused20 included) and separate10steps pass; saved signatures are verified. Existing116sharing cases have zero payer/globaladmin matches, so the newly corrected admin-only domain remains static-only. No authority probe/newfixture was added. Full evidence and limits are at `repro/pump_fees/sharing-authorize-v144/`, with independent main executable/symbol identity at `repro/pump_fees/sharing-authorize-main-v144/`. Whole original/recursive behavior identity remains unproved.

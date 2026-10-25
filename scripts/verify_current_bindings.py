@@ -116,7 +116,7 @@ def main():
     status = json.loads((ROOT / "repro/status.json").read_text())
     key = "pump" if args.program == "pump" else "pump_fees"
     artifact = status[key]["candidate_artifact"]
-    if artifact in ("repro/pump/admin-cto-error-batch-main-fortyeight/main/candidate.so", "repro/pump_fees/sharing-fourth-cpi-main-v144/main/candidate.so"):
+    if artifact in ("repro/pump_fees/sharing-authorize-main-v144/main/candidate.so", "repro/pump/admin-cto-error-batch-main-fortyeight/main/candidate.so", "repro/pump_fees/sharing-fourth-cpi-main-v144/main/candidate.so"):
         subprocess.run([sys.executable, "-B", str(ROOT / "scripts/verify_current_checkpoint.py"), key], check=True)
         return
     if args.program == "pump" and artifact == "repro/pump/buy-fee-basis-main-fortyeight/main/candidate.so":
