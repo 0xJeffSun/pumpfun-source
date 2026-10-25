@@ -1,28 +1,23 @@
-# Master gap ledger — everything not 100%, and why
+# Historical gap-ledger draft and reconciliation
 
-_Fresh 6-agent per-component audit, 2026-10-25, re-derived from the live repo. Each item: what is missing, why, and whether it is recoverable. Whole-binary byte-identicality remains **0/4** for the core programs and is fundamentally bounded by the **lost literal source** (behavioral/size equivalence does not determine bytes); the two byte-identical dependencies (SPL Token, Token-2022) have public source. See BYTE-IDENTICALITY-FUNDAMENTAL-LIMIT.md and RECIPE-REVERSE-ENGINEERING.md._
+This merged draft combines per-component reports made against different candidates and contains incompatible conclusions. Retain its104-item inventory as historical hypotheses, not as a verified current verdict. The [pass16 remaining-work report](../../../layered-passes/pass-16/REMAINING.md), [full current ledger index](../../../layered-passes/pass-16/current-analysis-index.json), and [source security reviews](../../../security-reviews/pass-16/README.md) bind current claims to exact artifacts.
+
+**Reconciliation:** the original compiler is unresolved; the accepted recipe remains pinned v1.44 with its separately recorded v1.52 strip phase. Do not adopt the v1.43 promotion recommendations below: the cross-cutting review in this same draft rejects them. ATA's307 differing positions comprise304 text and3 relocation bytes; attributing them to `custom_panic` is not accepted. Relay has a compiled source reconstruction and369 unmatched original windows at its published09 checkpoint. Finite passing cases do not establish behavior-complete SDK acceptance. No proof here establishes that exact reconstruction is impossible without the original literal source; such categorical statements below are unaccepted conjectures. Diagnostic coordinates and historical recipe remain unresolved evidence obligations.
 
 ## Rollup — what is not 100% (104 items across 6 components)
 
-**Whole-binary byte-identicality: 0/4 core programs.** Root cause is the lost literal
-source — unrecoverable from the binary. Everything below is either (a) a genuine
-missing-source gap, (b) a behavior-complete-but-not-byte-identical structural gap, or
-(c) a cross-cutting recipe/build/audit gap.
+**Whole-binary byte-identicality: 0/4 core programs.** Source, function/call/data, diagnostics and historical-build gaps remain. The item-level recoverability predictions require their own evidence; absence of original source does not prove impossibility.
 
 | Area | Bounded/done | Not 100% — headline gaps |
 | --- | --- | --- |
 | **Pump** | 48/56 handlers | 5 partial (`buy_v3`, `sell_v3`, `buy_exact_quote_in_v3`, `create_v2`, `multi_hop_curve_swap` — missing quote routes, Token-2022 extensions, exhaustive validation, deeper nesting/hops); 3 unrecovered/**stopped** (`admin_update_token_incentives`, `claim_token_incentives`, `set_mayhem_virtual_params`); confirmed `sell_v2` transfer-fee min-output/event defect; ~316 KB `.text` genuinely missing; TradeEvent trailing 8 bytes uninterpreted |
-| **PumpSwap** | 37/38 handlers | `create_config` static-only (no authentic positive initializer replay); all 37 bodies behavior-faithful but **not byte-identical** (structural: ~994 fewer calls / ~663 fewer relocations = different inlining/factoring); `transfer_creator_fees_to_pump` rent-sized-destination bug reported resolved in the current shipped candidate (re-verify) |
+| **PumpSwap** | 37/38 handlers | `create_config` static-only (no authentic positive initializer replay); 37 bodies have bounded finite runtime checks but **not byte-identical** (structural: ~994 fewer calls / ~663 fewer relocations = different inlining/factoring); `transfer_creator_fees_to_pump` rent-sized-destination bug reported resolved in the current shipped candidate (re-verify) |
 | **Pump Fees** | 31/31 handlers | ~8 KB `.text` still absent (handler-body/diagnostic/transitive closure); source-line/coordinate diffs; whole-binary non-identity |
 | **Mayhem** | 24/25 handlers | `initialize_mayhem_state` unrecovered/**stopped**; ~100 KB `.text` missing (other unreconstructed handlers); non-initializer error-return ABI/codegen diffs; 26 panic-diagnostic diffs; 5 unknown `GlobalParams` field roles |
-| **Dependencies** | SPL Token ✅, Token-2022 ✅ (byte-identical) | Metaplex `token_metadata`: **1,509 bytes** differ (`Utilize` branch + ~30 source-coordinate bytes; needs rust-1.69 verifiable build on x86 CI, ~30 bytes unrecoverable); ATA: **307 bytes** in `custom_panic` (needs Solana 1.10.33 bpf-tools on x86 CI); donation_relay: no source recovered (369/492 windows unmatched) |
-| **Recipe / build / audit** | compiler recovered (v1.43/v1.52) | committed candidates still pin **v1.44** (consistency gap — should switch to v1.43); exact build flags/lockfile not proven unique; offline build needs a warmed cargo cache; verifiable dep builds need x86 Docker; **security audit incomplete** (not every handler/CPI/arithmetic-boundary/account-relationship reviewed); surfpool harness error-map stale vs surfpool 1.6.1; exhaustive-input coverage not established |
+| **Dependencies** | SPL Token and retained Token-2022 capture comparisons exact | Metaplex:1,477 text,30 diagnostic and2 relocation positions differ. ATA:304 text and3 relocation positions differ; original recipe remains unresolved. Relay:compiled source and bounded ordinary cases,369/492 original windows unmatched at published09. Allocation-image and raw compiler comparisons remain separate. |
+| **Recipe / build / audit** | Pinned v1.44 compilation and separately observed v1.52 strip provenance | Original compiler, dependency graph, flags and source remain unresolved. Preserve accepted pins; size similarity does not establish v1.43. Fresh permitted-source security reviews now cover all four core programs with exclusions and conditional findings; exhaustive security/runtime equivalence remains incomplete. |
 
-**Biggest single lever for completeness:** recover the **lost original source** (backups /
-VCS / CI artifacts) — it is the only thing that makes the 4 core programs byte-identical
-and would also resolve the structural gaps instantly (as it does for the public-source
-deps). Absent that, the reconstruction is behavior-complete for SDK testing but not
-byte-identical, by the fundamental limit above.
+Original source/build records could close important gaps, but their absence does not justify a mathematical impossibility claim. Continue source-supported reconstruction and exact comparisons. The historical per-item text below is preserved so the conflicting hypotheses remain reviewable; current counts and acceptance decisions come from pass16.
 
 The per-item detail (all 104) follows.
 
