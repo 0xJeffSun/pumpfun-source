@@ -1,6 +1,6 @@
 # Partial Pump reconstruction
 
-The Anchor 0.31.1 source implements forty-eight recovered handlers:
+The Anchor 0.31.1 source implements forty-nine recovered handler slices:
 `toggle_create_v2`, `toggle_mayhem_mode`, `toggle_cashback_enabled`, and
 `set_max_curve_depth`, `set_virtual_quote_reserves`, `update_buyback_config`,
 `update_creator_fee_config`, `update_holder_reward_config`, `add_quote_mint`, and
@@ -13,10 +13,11 @@ The Anchor 0.31.1 source implements forty-eight recovered handlers:
 `migrate_bonding_curve_creator`, `admin_cto`, `set_params`, `set_creator`,
 `set_metaplex_creator`, `admin_set_idl_authority` and legacy `create`, `sell`, `sell_v2`, `migrate`, `buy`, `buy_exact_sol_in`, `buy_v2`, `buy_exact_quote_in_v2`, `migrate_v2`, `claim_cashback`, `claim_cashback_v2`, `initialize`, `initialize_quote_control`,
 `set_quote_control_admin`, `set_quote_control_reserves_admin`, `add_quote_control_mint`,
-`remove_quote_control_mint` and `set_quote_control_mint_reserves`. It also implements **partial `sell_v3`, `buy_v3`, `buy_exact_quote_in_v3` and `create_v2` paths**.
+`remove_quote_control_mint`, `set_quote_control_mint_reserves`, and bounded
+`claim_token_incentives`. It also implements **partial `sell_v3`, `buy_v3`, `buy_exact_quote_in_v3` and `create_v2` paths**.
 It is incomplete and is not a deployable replacement. The current sell_v2 quote-transfer-fee minimum-output check and fee-event fields have a confirmed mismatch with the captured original; the saved passing suites do not cover that boundary.
 
-The current frozen checkpoint is [quote-control-fortyeight](../../repro/pump/quote-control-fortyeight/README.md):
+The prior frozen checkpoint is [quote-control-fortyeight](../../repro/pump/quote-control-fortyeight/README.md):
 9,161 differential cases across 36 suites and 1,024 Surfpool comparisons using
 2,048 signed transactions across 28 runners passed. The Surfpool transactions
 contain 2,980 verified individual signatures. Its candidate is 1,478,960 bytes,
@@ -31,6 +32,17 @@ parents and deeper chains. See [the quote-control recovery report](../../audit/p
 and [the earlier holder/nested report](../../audit/pump/HOLDER_NESTED_RECOVERY.md).
 Full original-byte equality remains false. Earlier checkpoint counts below describe
 their historical source snapshots.
+
+The [claim-token-incentives checkpoint](../../repro/pump/claim-token-incentives/README.md)
+adds one bounded Rust handler to public source base `4ffe8bd`. Two clean v1.44
+builds produced the same candidate SHA-256
+`54f79cfdfdd027ab0d1447f4e25ed6236424ecbf778893e85887c5df493c3541`,
+which differs from deployed Pump. A signed offline target/candidate comparison
+matches all 60 claim cases, including 31 payouts/events and 12 rollbacks. The
+9,161 inherited Pump cases also pass against this exact candidate; Surfpool
+runners have not been rerun for it. The positive claim fixture's reward schedule
+and funded incentive ATA are **synthetic local state**. Their live reachability,
+full claim behavior, and any current fund risk are unproven.
 
 The partial v3 trade paths handle constant-product reserve changes, fee tier selection,
 creator/protocol/buyback accounting, Token/Token2022 `transfer_checked` CPI,

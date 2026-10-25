@@ -82,7 +82,7 @@ def main():
     build = json.loads(diff.BUILD.read_text())
     second_build = json.loads(SECOND_BUILD.read_text())
     repro = json.loads(BUILD_REPRO.read_text())
-    assert report["baseline_commit"] == "a9c06891d4b1eed53732296f4ace924b10fd0dc5"
+    assert report["baseline_commit"] == "4ffe8bd88761059693e481ae972443c10204f7af"
     assert report["target_sha256"] == diff.sha(diff.ORIGINAL.read_bytes())
     assert report["candidate_sha256"] == diff.sha(args.candidate.read_bytes())
     assert report["build_receipt_sha256"] == diff.sha(diff.BUILD.read_bytes())
@@ -104,37 +104,41 @@ def main():
     assert repro["candidate_sha256"] == [report["candidate_sha256"]] * 2
     assert repro["builds_identical"] and not repro["deployed_byte_match"]
     inherited = json.loads(INHERITED.read_text())
+    assert inherited["baseline_commit"] == report["baseline_commit"]
     assert inherited["candidate_sha256"] == report["candidate_sha256"]
     assert inherited["target_sha256"] == report["target_sha256"]
-    assert inherited["total_cases_or_steps"] == 161
+    assert inherited["total_cases"] == 9161 and inherited["suite_count"] == 36
     assert [entry["name"] for entry in inherited["receipts"]] == [
-        "admin", "mint-reserves", "reserves-admin", "composed", "initialize", "volume"]
+        "maintained", "holder_distribution", "nested_create", "quote_control"]
+    assert [entry["cases"] for entry in inherited["receipts"]] == \
+        [7957, 649, 48, 507]
     for entry in inherited["receipts"]:
         compressed = (INHERITED.parent / entry["file"]).read_bytes()
         raw = gzip.decompress(compressed)
         assert diff.sha(compressed) == entry["compressed_sha256"]
         assert diff.sha(raw) == entry["json_sha256"] and len(raw) == entry["json_bytes"]
         selected = json.loads(raw)
-        assert selected["candidate_sha256"] == report["candidate_sha256"]
-        assert selected.get("target_sha256", selected.get("original_sha256")) == \
-               report["target_sha256"]
-        if entry["name"] == "admin":
-            assert len(selected["cases"]) == 22 and not selected["mismatches"]
-        elif entry["name"] == "mint-reserves":
-            assert len(selected["cases"]) == 38 and not selected["behavior_mismatches"]
-            assert selected["normalized_log_mismatches"] == ["unknown_mint", "empty_list"]
-        elif entry["name"] == "reserves-admin":
-            assert selected["summary"]["cases"] == \
-                   selected["summary"]["matched"] == 16
-        elif entry["name"] == "composed":
-            assert len(selected["steps"]) == 3
-            assert all(not value for value in selected["mismatches"].values())
-            assert all(selected["normalized_logs_equal"].values())
-        elif entry["name"] == "initialize":
-            assert selected["summary"]["cases"] == \
-                   selected["summary"]["matched"] == 15
+        if entry["name"] == "quote_control":
+            assert selected["cases"] == entry["cases"] == len(selected["results"])
+            assert selected["mismatches"] == 0
+            for path, expected in selected["bound_inputs_sha256"].items():
+                if path == "work/claim-pr-candidate/pump_recovered.so":
+                    assert expected == report["candidate_sha256"]
+                else:
+                    assert diff.sha((diff.ROOT / path).read_bytes()) == expected
         else:
-            assert len(selected["cases"]) == 66 and not selected["mismatches"]
+            assert selected["candidate_sha256"] == report["candidate_sha256"]
+            assert selected["original_sha256"] == report["target_sha256"]
+            assert selected["case_count"] == entry["cases"] and not selected["mismatches"]
+            if entry["name"] == "maintained":
+                assert len(selected["suites"]) == 33
+                assert sum(suite["case_count"] for suite in selected["suites"].values()) == 7957
+                assert all(not suite.get("mismatches", suite.get("failures", []))
+                           for suite in selected["suites"].values())
+                assert all(diff.sha((diff.ROOT / "scripts" / name).read_bytes()) == digest
+                           for name, digest in selected["script_sha256"].items())
+            else:
+                assert len(selected["cases"]) == entry["cases"]
     assert build["selected_toolchain"] == "v1.44"
     assert build["comparison"]["candidate_sha256"] == report["candidate_sha256"]
     assert build["comparison"]["original_sha256"] == report["target_sha256"]

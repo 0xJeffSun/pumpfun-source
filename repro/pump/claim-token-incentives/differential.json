@@ -1,9 +1,9 @@
 {
   "scope": "Signed isolated current-Pump claim_token_incentives differential with captured program-created UserVolume/mint/user ATA and explicit synthetic daily schedule/incentive vault; no live transaction or funds.",
-  "baseline_commit": "a9c06891d4b1eed53732296f4ace924b10fd0dc5",
+  "baseline_commit": "4ffe8bd88761059693e481ae972443c10204f7af",
   "target_sha256": "7a19affaa2c6187e04a5fe0ea298cee81fa5eb8c24cfcc30d85f615e89f7b02d",
-  "candidate_sha256": "dd9d93a64d4f6e2fb4fcff4f50c88fb25d8fefa641424814423d5a4fae03a8d0",
-  "build_receipt_sha256": "b09ac1a252112283e4ab1d07bff0dce6c9087bf1cdd538ca5c1738ea94cf6cd6",
+  "candidate_sha256": "54f79cfdfdd027ab0d1447f4e25ed6236424ecbf778893e85887c5df493c3541",
+  "build_receipt_sha256": "8dbd046ba2908d7c1a0d88c4526d37d05da2a39dfbc1dd46d46c64881bc7bf6e",
   "idl_sha256": "7616681ea557975f9f623ac211080f22a93060781eaf4765b0a488d980997207",
   "fixture_sha256": "54d69dd4f11a61cc6cea3076e3e89fd4aa31ea6ff835f8ea316646a7b1642920",
   "dependency_sha256": {
@@ -13,13 +13,13 @@
   "source_sha256": {
     "programs/pump/Cargo.toml": "2e573ab4e47e5032b9dd3cb21391502bbd91c648ab37c63b99a63fa80afacf0e",
     "programs/pump/Cargo.lock": "486cbaa1eab7a945e849df5f72ca7c1e0b172ab8a17a1cd7a353fde123a84e95",
-    "programs/pump/src/lib.rs": "4cfbec290b987cca6231a595daf0785801e47eb1c560d7e143905034a47b022d",
+    "programs/pump/src/lib.rs": "ce42771641b7a0cfc7bd2deed90f1f1b56df1e3298db8a8baed1988e440bc823",
     "programs/pump/src/volume_sync.rs": "309ef3db60b5cdf76e08b39eb73c0e33d146a9bb85a08bd4053217901a5026ad",
     "programs/pump/src/token_incentives/mod.rs": "97cfb504e5da49a62eb51400357b74ad91f7f0e2a5c05ca6fc8874f4949f5025",
     "programs/pump/src/token_incentives/claim_token_incentives.rs": "4073a3b8b20b4d1131c47f6627388b2c9c1c27508a663d6e3c54e54a75c31e36",
-    "scripts/pump_claim_token_incentives_differential.py": "6a7a91c5e4e2d46a3e72254d11b7bf704b8481ccf1bea92b3cca3b96882971ea"
+    "scripts/pump_claim_token_incentives_differential.py": "e2a470c747ef980cfa4bc811bc6d4d0a6b578689efd5cd01fca92dab30d8335e"
   },
-  "script_sha256": "6a7a91c5e4e2d46a3e72254d11b7bf704b8481ccf1bea92b3cca3b96882971ea",
+  "script_sha256": "e2a470c747ef980cfa4bc811bc6d4d0a6b578689efd5cd01fca92dab30d8335e",
   "signed_local": true,
   "offline_only": true,
   "summary": {
@@ -462,7 +462,7 @@
             "stack_height": 2
           }
         ],
-        "compute_units": 28432,
+        "compute_units": 28441,
         "relevant_logs": [
           "Program log: Instruction: ClaimTokenIncentives",
           "Program log: Instruction: TransferChecked",
@@ -1300,7 +1300,7 @@
             "stack_height": 2
           }
         ],
-        "compute_units": 28432,
+        "compute_units": 28441,
         "relevant_logs": [
           "Program log: Instruction: ClaimTokenIncentives",
           "Program log: Instruction: TransferChecked",
@@ -1745,7 +1745,7 @@
             "stack_height": 2
           }
         ],
-        "compute_units": 28432,
+        "compute_units": 28441,
         "relevant_logs": [
           "Program log: Instruction: ClaimTokenIncentives",
           "Program log: Instruction: TransferChecked",
@@ -2190,7 +2190,7 @@
             "stack_height": 2
           }
         ],
-        "compute_units": 28432,
+        "compute_units": 28441,
         "relevant_logs": [
           "Program log: Instruction: ClaimTokenIncentives",
           "Program log: Instruction: TransferChecked",
@@ -2641,7 +2641,7 @@
             "stack_height": 2
           }
         ],
-        "compute_units": 28432,
+        "compute_units": 28441,
         "relevant_logs": [
           "Program log: Instruction: ClaimTokenIncentives",
           "Program log: Instruction: TransferChecked",
@@ -3092,7 +3092,7 @@
             "stack_height": 2
           }
         ],
-        "compute_units": 28432,
+        "compute_units": 28441,
         "relevant_logs": [
           "Program log: Instruction: ClaimTokenIncentives",
           "Program log: Instruction: TransferChecked",
@@ -3543,7 +3543,7 @@
             "stack_height": 2
           }
         ],
-        "compute_units": 28432,
+        "compute_units": 28441,
         "relevant_logs": [
           "Program log: Instruction: ClaimTokenIncentives",
           "Program log: Instruction: TransferChecked",
@@ -3997,7 +3997,7 @@
             "stack_height": 2
           }
         ],
-        "compute_units": 28683,
+        "compute_units": 28692,
         "relevant_logs": [
           "Program log: Instruction: ClaimTokenIncentives",
           "Program log: Instruction: TransferChecked",
@@ -4451,7 +4451,7 @@
             "stack_height": 2
           }
         ],
-        "compute_units": 28419,
+        "compute_units": 28428,
         "relevant_logs": [
           "Program log: Instruction: ClaimTokenIncentives",
           "Program log: Instruction: TransferChecked",
@@ -4896,7 +4896,7 @@
             "stack_height": 2
           }
         ],
-        "compute_units": 28432,
+        "compute_units": 28441,
         "relevant_logs": [
           "Program log: Instruction: ClaimTokenIncentives",
           "Program log: Instruction: TransferChecked",
@@ -6127,7 +6127,7 @@
             "stack_height": 2
           }
         ],
-        "compute_units": 28432,
+        "compute_units": 28441,
         "relevant_logs": [
           "Program log: Instruction: ClaimTokenIncentives",
           "Program log: Instruction: TransferChecked",
@@ -8144,7 +8144,7 @@
             "stack_height": 2
           }
         ],
-        "compute_units": 28432,
+        "compute_units": 28441,
         "relevant_logs": [
           "Program log: Instruction: ClaimTokenIncentives",
           "Program log: Instruction: TransferChecked",
@@ -9375,7 +9375,7 @@
             "stack_height": 2
           }
         ],
-        "compute_units": 28395,
+        "compute_units": 28404,
         "relevant_logs": [
           "Program log: Instruction: ClaimTokenIncentives",
           "Program log: Instruction: TransferChecked",
@@ -9820,7 +9820,7 @@
             "stack_height": 2
           }
         ],
-        "compute_units": 28395,
+        "compute_units": 28404,
         "relevant_logs": [
           "Program log: Instruction: ClaimTokenIncentives",
           "Program log: Instruction: TransferChecked",
@@ -10265,7 +10265,7 @@
             "stack_height": 2
           }
         ],
-        "compute_units": 28443,
+        "compute_units": 28452,
         "relevant_logs": [
           "Program log: Instruction: ClaimTokenIncentives",
           "Program log: Instruction: TransferChecked",
@@ -11499,7 +11499,7 @@
             "stack_height": 2
           }
         ],
-        "compute_units": 28409,
+        "compute_units": 28418,
         "relevant_logs": [
           "Program log: Instruction: ClaimTokenIncentives",
           "Program log: Instruction: TransferChecked",
@@ -11947,7 +11947,7 @@
             "stack_height": 2
           }
         ],
-        "compute_units": 28409,
+        "compute_units": 28418,
         "relevant_logs": [
           "Program log: Instruction: ClaimTokenIncentives",
           "Program log: Instruction: TransferChecked",
@@ -12395,7 +12395,7 @@
             "stack_height": 2
           }
         ],
-        "compute_units": 28409,
+        "compute_units": 28418,
         "relevant_logs": [
           "Program log: Instruction: ClaimTokenIncentives",
           "Program log: Instruction: TransferChecked",
@@ -13248,7 +13248,7 @@
             "stack_height": 2
           }
         ],
-        "compute_units": 28377,
+        "compute_units": 28386,
         "relevant_logs": [
           "Program log: Instruction: ClaimTokenIncentives",
           "Program log: Instruction: TransferChecked",
@@ -13693,7 +13693,7 @@
             "stack_height": 2
           }
         ],
-        "compute_units": 28527,
+        "compute_units": 28536,
         "relevant_logs": [
           "Program log: Instruction: ClaimTokenIncentives",
           "Program log: Instruction: TransferChecked",
@@ -14138,7 +14138,7 @@
             "stack_height": 2
           }
         ],
-        "compute_units": 28557,
+        "compute_units": 28566,
         "relevant_logs": [
           "Program log: Instruction: ClaimTokenIncentives",
           "Program log: Instruction: TransferChecked",
@@ -14982,7 +14982,7 @@
             "stack_height": 2
           }
         ],
-        "compute_units": 28557,
+        "compute_units": 28566,
         "relevant_logs": [
           "Program log: Instruction: ClaimTokenIncentives",
           "Program log: Instruction: TransferChecked",
@@ -15436,7 +15436,7 @@
             "stack_height": 2
           }
         ],
-        "compute_units": 28550,
+        "compute_units": 28559,
         "relevant_logs": [
           "Program log: Instruction: ClaimTokenIncentives",
           "Program log: Instruction: TransferChecked",
@@ -16280,7 +16280,7 @@
             "stack_height": 2
           }
         ],
-        "compute_units": 28557,
+        "compute_units": 28566,
         "relevant_logs": [
           "Program log: Instruction: ClaimTokenIncentives",
           "Program log: Instruction: TransferChecked",
@@ -16725,7 +16725,7 @@
             "stack_height": 2
           }
         ],
-        "compute_units": 28564,
+        "compute_units": 28573,
         "relevant_logs": [
           "Program log: Instruction: ClaimTokenIncentives",
           "Program log: Instruction: TransferChecked",
@@ -17561,7 +17561,7 @@
             "stack_height": 2
           }
         ],
-        "compute_units": 28432,
+        "compute_units": 28441,
         "relevant_logs": [
           "Program log: Instruction: ClaimTokenIncentives",
           "Program log: Instruction: TransferChecked",
@@ -18009,7 +18009,7 @@
             "stack_height": 2
           }
         ],
-        "compute_units": 28433,
+        "compute_units": 28442,
         "relevant_logs": [
           "Program log: Instruction: ClaimTokenIncentives",
           "Program log: Instruction: TransferChecked",
@@ -18454,7 +18454,7 @@
             "stack_height": 2
           }
         ],
-        "compute_units": 28432,
+        "compute_units": 28441,
         "relevant_logs": [
           "Program log: Instruction: ClaimTokenIncentives",
           "Program log: Instruction: TransferChecked",
@@ -18902,7 +18902,7 @@
             "stack_height": 2
           }
         ],
-        "compute_units": 28178,
+        "compute_units": 28187,
         "relevant_logs": [
           "Program log: Instruction: ClaimTokenIncentives",
           "Program log: Instruction: TransferChecked",
@@ -19350,7 +19350,7 @@
             "stack_height": 2
           }
         ],
-        "compute_units": 28430,
+        "compute_units": 28439,
         "relevant_logs": [
           "Program log: Instruction: ClaimTokenIncentives",
           "Program log: Instruction: TransferChecked",
@@ -19804,7 +19804,7 @@
             "stack_height": 2
           }
         ],
-        "compute_units": 28432,
+        "compute_units": 28441,
         "relevant_logs": [
           "Program log: Instruction: ClaimTokenIncentives",
           "Program log: Instruction: TransferChecked",

@@ -282,7 +282,7 @@ def main():
         report_rows.append({"case": case, "target": target, "candidate": candidate,
                             "differences": differences})
     receipt = {"scope": "Signed isolated current-Pump claim_token_incentives differential with captured program-created UserVolume/mint/user ATA and explicit synthetic daily schedule/incentive vault; no live transaction or funds.",
-               "baseline_commit": "a9c06891d4b1eed53732296f4ace924b10fd0dc5",
+               "baseline_commit": "4ffe8bd88761059693e481ae972443c10204f7af",
                "target_sha256": sha(ORIGINAL.read_bytes()),
                "candidate_sha256": sha(args.candidate.read_bytes()) if args.candidate else None,
                "build_receipt_sha256": sha(BUILD.read_bytes()) if args.candidate else None,

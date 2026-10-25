@@ -1,7 +1,7 @@
 # Pump token-incentive claim source slice
 
-This isolated branch starts from the combined Pump checkpoint
-`a9c06891d4b1eed53732296f4ace924b10fd0dc5` and adds a **bounded**
+This branch starts from public Pump source checkpoint
+`4ffe8bd88761059693e481ae972443c10204f7af` and adds a **bounded**
 `claim_token_incentives` Rust body. The pinned deployed Pump ELF is SHA-256
 `7a19affaa2c6187e04a5fe0ea298cee81fa5eb8c24cfcc30d85f615e89f7b02d`.
 The current candidate is not an original-source or deployed-byte match.
@@ -45,30 +45,33 @@ The [independent verifier](../../../scripts/pump_claim_token_incentives_verify.p
 re-executes all 60 cases, checks the valid payer signatures, full watched
 state, conservation of the two Token-2022 balances, event fields, CPI bytes
 and order, rollback, source/IDL/fixture/dependency hashes, and two clean
-build records. The [inherited regression packet](inherited-regressions.json)
-contains **161 selected cases/steps**: QuoteControl initialize 15, admin 22,
-reserves-admin 16, mint-reserves 38, a four-step composed sequence, and volume
-sync 66. Mint-reserves retains its two previously documented source-location
-log differences, with no behavior mismatch. The full prior 7,957-case
-program suite was not rerun in this sparse checkout.
+build records. The [fresh inherited regression packet](inherited-regressions.json)
+binds **9,161 passing cases** to this candidate: 7,957 maintained Pump cases
+across 33 suites, 649 holder-distribution cases, 48 nested-create cases, and
+507 QuoteControl cases. Each compressed receipt is saved beside the summary.
+These fixtures remain bounded; the known `sell_v2` quote-transfer-fee gap is
+outside their passing coverage. The maintained runner's embedded scope string
+predates this branch and still says “forty-one”; its saved candidate hash and
+33 actual suite results bind execution to the current candidate.
 
 Two isolated clean SBF builds with the saved Anchor 0.31.1 lock and explicit
 platform-tools **v1.44** produced identical candidate SHA-256
-`dd9d93a64d4f6e2fb4fcff4f50c88fb25d8fefa641424814423d5a4fae03a8d0`
+`54f79cfdfdd027ab0d1447f4e25ed6236424ecbf778893e85887c5df493c3541`
 ([build receipt](build-reproducibility.json)). Build attempts/comparisons and
-compressed logs are adjacent; no ignored `.so` or generated keypair is
-committed. The active host's `cargo-build-sbf` lacked an adjacent `sdk/sbf`,
+compressed logs are adjacent, and the exact [candidate ELF](candidate.so) is
+retained for replay. No generated keypair is committed. The active host's
+`cargo-build-sbf` lacked an adjacent `sdk/sbf`,
 so a temporary wrapper supplied a copy of the saved SDK to the standard
 isolated builder. Target executable bytes were never compiler inputs.
 
-To reproduce after a fresh v1.44 build, pass its candidate path to the
-importable differential and verifier:
+To reproduce, pass the retained candidate (or a fresh v1.44 build with the
+same SHA-256) to the importable differential and verifier:
 
 ```sh
 <venv>/bin/python scripts/pump_claim_token_incentives_differential.py \
-  --candidate <build>/artifacts/pump_recovered.so --output <new-receipt.json>
+  --candidate repro/pump/claim-token-incentives/candidate.so --output <new-receipt.json>
 <venv>/bin/python scripts/pump_claim_token_incentives_verify.py \
-  --candidate <build>/artifacts/pump_recovered.so --receipt <new-receipt.json>
+  --candidate repro/pump/claim-token-incentives/candidate.so --receipt <new-receipt.json>
 ```
 
 The fixture builder `fixture_data` and executor `run_case` are reusable for
