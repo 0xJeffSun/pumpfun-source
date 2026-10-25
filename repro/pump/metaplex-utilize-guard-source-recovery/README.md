@@ -15,3 +15,7 @@ python3 scripts/pump_build_token_dependency.py --dependency token_metadata \
 ```
 
 The build uses the same pinned Linux/amd64 image and command as candidate11. The host Rust toolchain is1.69.0; the actual SBF compiler in the retained recipe is platform-tools v1.37 / Rust1.68.0-dev. These are separate phases. No new runtime acceptance is claimed by this source package. Full original identity remains false until an actual rebuilt payload matches every byte.
+
+## Measured result: rejected
+
+The [pinned hosted build](https://github.com/lalalune/pumpfun-source/actions/runs/40188763483) compiled successfully, then failed the final full-byte comparison. Candidate12 has196,601 differing positions versus candidate11's1,509 and must not replace candidate11. The [portable independent review](../metaplex-candidate-build-12-review/REPORT.md) binds the source, toolchain, build log and complete artifact. It traces the discrepancy to a complementary branch plus one extra8-byte jump and the resulting address propagation, while the30 diagnostic-coordinate differences persist. This mapping explains the mismatch; it is not raw identity. A separately reviewed positive-guard source fragment is only a future experiment, with no build or acceptance claimed.
