@@ -439,7 +439,7 @@ which matches the original under call/address and relocation normalization.
 
 That one-line correction did not resolve the raw four-word graduation decision.
 The later graduation checkpoint below resolves its reserve predicate; repeated
-optional pool/program/event ordering remains unresolved. Whole sharing-handler,
+optional pool/program/event ordering remained unresolved at that checkpoint. Whole sharing-handler,
 parser, cleanup and recursive data equivalence remain open. The unchanged
 17,461 comparisons and separate ten-step sequence are preservation evidence;
 no case was added. Raw diagnostic differences remain in the checkpoint.
@@ -449,6 +449,13 @@ remains immutable, including its missing-token-program coverage limitation.
 
 ### Graduation predicate checkpoint
 
-The `graduation-zero-v144` checkpoint changes only sharing creation's graduation predicate to require all four decoded reserves to be zero, matching the original full parser-to-application field trace. The accepted first missing-pool enum conversion remains. The original repeated optional pool/program/event ordering remains unresolved; this checkpoint does not change it.
+The `graduation-zero-v144` checkpoint changes only sharing creation's graduation predicate to require all four decoded reserves to be zero, matching the original full parser-to-application field trace. The accepted first missing-pool enum conversion remains. The repeated optional pool/program/event ordering remained unresolved at that checkpoint; the later option-order checkpoint below addresses it.
 
 The pinned v1.44 build and v1.52 strip use the same 26 source inputs apart from this predicate. See `repro/pump_fees/graduation-zero-v144/` for complete original/current function, call and data inventory, source bindings, unchanged finite runtime receipts and retained diagnostics. Main identity, when accepted, is recorded separately in `repro/pump_fees/graduation-zero-main-v144/`. These observations do not establish full original executable or application identity.
+
+
+### Sharing option-order checkpoint
+
+The `sharing-option-order-v144` checkpoint moves the AMM program and event presence checks to the original late position. After both Pump calls, the graduated path checks pool, updates and serializes sharing state, then checks program and event using fieldless enum19 conversions before AMM calls. The nongraduated path no longer performs the unsupported second state rewrite/exit. The accepted first pool conversion and all-four-reserves-zero predicate are unchanged.
+
+See `repro/pump_fees/sharing-option-order-v144/` for exact source and original/candidate call/data evidence, unchanged finite runtime receipts and retained diagnostics. `repro/pump_fees/sharing-option-order-main-v144/` records the separately accepted main build identity. Complete original, recursive CPI, allocator and cleanup identity remain unproved.

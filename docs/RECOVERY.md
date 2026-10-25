@@ -447,3 +447,7 @@ Three Pump creator paths use the already-recovered full BondingCurve account typ
 ## Layered pass18: Sync, graduation and discriminator ownership
 
 [Pass18](../repro/layered-passes/pass-18/README.md) preserves separate AMM context and logging checkpoints, then proves their cumulative main identity. Fees follows the original four-reserve zero predicate. Relay restores owned3001 without rewriting3002. The remaining-work report and full byte/function ledgers retain all scope limits.
+
+## Layered pass19: typed CTO, initializer ownership and late checks
+
+[Pass19](../repro/layered-passes/pass-19/README.md) retains the failed first Pump compile and its reviewed borrow-only repair, full source/static/runtime evidence, and exact main/scratch identities. Separate source-only reviews preserve unresolved AMM Sync, Mayhem layout and ATA provenance findings without speculative patches.

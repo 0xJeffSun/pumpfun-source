@@ -1,0 +1,14 @@
+{
+  "gate": {
+    "returncode": 0
+  },
+  "context-static": {
+    "returncode": 0
+  },
+  "claim-static": {
+    "returncode": 0
+  },
+  "init-effects": {
+    "returncode": 0
+  }
+}

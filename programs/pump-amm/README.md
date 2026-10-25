@@ -264,3 +264,22 @@ instruction difference remains explicit. Sync parser and wrapper match normalize
 original bodies; its handler and recursive data/call closure remain unresolved.
 The full inventory has 485 normalized original matches and 300 unmatched windows;
 whole original ELF identity is not established.
+
+
+## Initializer user AccountInfo ownership checkpoint
+
+The [initializer ownership checkpoint](../../repro/pump_amm/init-user-ownership-v144/README.md)
+restores the original owned `AccountInfo` for the initializer user, including its
+reference counts and cleanup. The complete initializer parser, wrapper and handler
+now match original normalized instructions and relocation patterns. The tested
+scratch executable SHA256 is
+`3fe52eea99e26866795348aad93fb821f834bf04290b4176a67ae0b7add0fcb5`.
+
+The unchanged 25 suites passed 17,462 cases and 35,418 saved signatures; all 113
+existing Sync no-change messages still match. No new initializer-success fixture
+was added. The full inventory has 488 normalized original matches and 297
+unmatched windows. The initializer's nested helper remains mismatched; full
+callee/data and original ELF equality remain unresolved. Close, Sync and Claim
+bodies are unchanged from the preceding checkpoint, including the known Claim
+diagnostic line 147 to 149 difference. Main acceptance requires the separate
+[main identity companion](../../repro/pump_amm/init-user-ownership-main-v144/README.md).

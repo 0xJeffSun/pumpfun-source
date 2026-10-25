@@ -1,0 +1,1 @@
+PASS: full 62 retained rows; exact one-field source proposal; three complete close normalized matches; init ownership and aggregate anchors; source and executable bindings
