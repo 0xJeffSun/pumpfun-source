@@ -32,6 +32,10 @@ No transaction was broadcast and no real funds were used.
 Verify the saved source hashes, two builds, signed cases, and regression
 receipts with the project Python environment:
 
+CI's `verify_current_bindings.py pump` selects this branch candidate from
+`repro/status.json`; it retains the earlier serializer package as historical
+static evidence and executes the verifier below for the current source.
+
 ```sh
 <venv>/bin/python scripts/pump_claim_token_incentives_8099_verify.py
 ```

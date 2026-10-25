@@ -5,6 +5,7 @@ Run the immutable package verifier separately for saved receipts and signatures.
 The historical Darwin Surfpool executable is identified, not installed or executed.
 """
 import argparse
+import gzip
 import hashlib
 import importlib.util
 import json
@@ -12,6 +13,8 @@ from pathlib import Path
 import struct
 import subprocess
 import sys
+
+from build_source_manifest import source_manifest
 
 sys.dont_write_bytecode = True
 ROOT = Path(__file__).resolve().parents[1]
@@ -81,6 +84,69 @@ def verify_pump_body(root, package):
         assert elf.b[ptr:ptr+8] == bytes.fromhex("17b7f83760d8ac60")
 
 
+def verify_branch_pump(root, historical_package, tracked, status):
+    """Bind the branch executable to current source; retain old static proof."""
+    maps = json.loads((historical_package / "source-harness-sha256.json").read_text())
+    groups = {name: maps[name] for name in
+              ("harness", "runtime", "documentation", "build_helpers")}
+    # The branch README describes new evidence; the historical package keeps
+    # its original README hash in its sealed source/harness snapshot.
+    groups["documentation"] = {name: digest for name, digest in groups["documentation"].items()
+                               if name != "programs/pump/README.md"}
+    old_count, historical = verify_maps(root, groups, tracked)
+    assert len(historical) == 2
+    verify_pump_body(root, historical_package)
+
+    candidate_name = status["branch_candidate_artifact"]
+    package = (root / candidate_name).parent
+    build = json.loads((package / "build-comparison.json").read_text())
+    second = json.loads((package / "second-build-comparison.json").read_text())
+    reproducibility = json.loads((package / "build-reproducibility.json").read_text())
+    source = source_manifest(root / "programs/pump", root / "programs/pump", root, cwd=root)
+    assert source == build["source_sha256"] == second["source_sha256"] == reproducibility["source_sha256"]
+    assert status["branch_candidate_source_base_commit"] == reproducibility["source_base_commit"]
+    assert build["selected_toolchain"] == second["selected_toolchain"] == "v1.44"
+    for name, expected in source.items():
+        assert name in tracked and not (root / name).is_symlink()
+        assert sha((root / name).read_bytes()) == expected
+    candidate = root / candidate_name
+    candidate_hash = sha(candidate.read_bytes())
+    assert candidate_name in tracked and not candidate.is_symlink()
+    assert candidate_hash == build["comparison"]["candidate_sha256"]
+    assert candidate_hash == second["comparison"]["candidate_sha256"]
+    assert candidate_hash == reproducibility["candidate_sha256"]
+    assert not build["comparison"]["full_byte_equality"]
+    for report, name in ((build, "build.log.gz"), (second, "second-build.log.gz")):
+        path = package / name
+        assert str(path.relative_to(root)) in tracked and not path.is_symlink()
+        assert sha(gzip.decompress(path.read_bytes())) == report["build_log_sha256"]
+    for name in (status["branch_candidate_focused_receipt"],
+                 status["branch_candidate_regression_receipt"]):
+        assert name in tracked and not (root / name).is_symlink()
+    handler = status["rebuilt_branch_source_handler"]
+    commands = {
+        "claim_token_incentives": ["scripts/pump_claim_token_incentives_8099_verify.py"],
+        "admin_update_token_incentives": [
+            "scripts/pump_admin_token_incentives_verify.py", "--receipt",
+            status["branch_candidate_focused_receipt"], "--candidate", candidate_name,
+            "--build-comparison", str((package / "build-comparison.json").relative_to(root)),
+            "--expected-baseline", status["branch_candidate_source_base_commit"]],
+        "set_mayhem_virtual_params": ["scripts/verify_pump_set_mayhem_params_8099.py"],
+    }
+    assert handler in commands
+    assert all(name in tracked for name in (commands[handler][0],))
+    replay = subprocess.run([sys.executable, *commands[handler]], cwd=root,
+                            check=True, capture_output=True, text=True)
+    return {"verified": True, "program": "pump", "branch_handler": handler,
+            "branch_candidate_sha256": candidate_hash,
+            "current_source_inputs": len(source),
+            "historical_tracked_bindings": old_count,
+            "historical_exact_copy_bindings": historical,
+            "historical_serializer_and_25_calls_checked": True,
+            "current_branch_verifier": json.loads(replay.stdout.strip().splitlines()[-1]),
+            "full_original_byte_equality": False}
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("program", choices=PACKAGES)
@@ -88,6 +154,11 @@ def main():
     package = ROOT / PACKAGES[args.program]
     read = lambda name: json.loads((package / name).read_text())
     tracked = set(subprocess.check_output(["git", "-C", str(ROOT), "ls-files", "-z"]).decode().split("\0"))
+    if args.program == "pump":
+        status = json.loads((ROOT / "repro/status.json").read_text())["pump"]
+        if status.get("branch_candidate_artifact"):
+            print(json.dumps(verify_branch_pump(ROOT, package, tracked, status), indent=2))
+            return
     if args.program == "pump":
         maps = read("source-harness-sha256.json")
         groups = {k: maps[k] for k in ["source", "harness", "runtime", "documentation", "build_helpers"]}
