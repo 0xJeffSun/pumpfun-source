@@ -39,9 +39,15 @@ Conclusions:
   content) and diffs at byte 24 — none matches size, let alone bytes.
 - The pinned `17e99434` is an **arbitrary "immutability" merge commit, not a release** (its crate
   version is still `1.14.0`); v1.15.0 is the newest mainnet-beta proposal and it does not match.
-- The `resize` instruction present in the deployed binary is a **non-default cargo feature**, but
-  enabling it **does not change the output** on the built manifest (and older versions lack the
-  feature) — so the deployed program's extra ~1.3 KB of code is **not** reachable via that feature.
+- The `resize` instruction is a **red herring**: in v1.15.0 it is **always compiled**
+  (`processor/mod.rs` dispatches `MetadataInstruction::Resize` unconditionally; the `resize`/`padded`
+  Cargo features are empty `[]` no-ops), and `programs/token-metadata/Cargo.toml` is a `[workspace]`
+  that resolves to the same build as the `program/` crate. So `--features resize` changes nothing,
+  and the deployed program's extra ~1.3 KB is **not** a feature toggle. Given the deployed binary
+  links spl-token-2022 with its full extension set, the residual is a **dependency/inter-release
+  provenance** delta (a different pinned spl-token-2022 / mpl-utils / auth-rules in the deployed
+  `Cargo.lock`, or an inter-release commit), which `--locked` against the public lockfile cannot
+  reproduce.
 - The only build that reaches the deployed *size* (707,448 B) is `17e99434` + the team's
   behaviorally-recovered **source patch** (a hypothesis), which lands `diff@238802` (1,509 B off) —
   closer than any clean release but still not byte-equal.
