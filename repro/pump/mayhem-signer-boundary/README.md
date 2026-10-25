@@ -1,7 +1,8 @@
 # Pump `set_mayhem_virtual_params`: signer boundary
 
 This package narrows the missing handler's reachability. It adds **no Rust
-handler**, no positive CPI, no byte-equality claim, and no vulnerability claim.
+handler**, no positive CPI for this selector, no byte-equality claim, and no
+vulnerability claim.
 The Pump IDL requires account 0, `sol_vault_authority`, to be a writable signer
 at Mayhem's `[b"sol-vault"]` PDA. That address is
 `BwWK17cbHxwWBKZkUYvzxLcNQ1YVyaFezduWbtm2de6s` (bump 253, off-curve).
@@ -28,6 +29,13 @@ instruction never runs. The first trace creates the same mint used by the
 account snapshot. The archive also retains each raw signed v0 transaction;
 both transactions' Ed25519 signatures verify offline. RPC execution logs are
 public observations and are not themselves cryptographic attestations.
+
+A later [finalized trade-CPI packet](mainnet-trade-cpi/README.md) independently
+pins one genuine Mayhem → Pump `buy` and one `sell`. In both, Mayhem's
+`sol-vault` PDA is Pump's user, is not an outer signer, and moves the exact
+watched token/lamport amounts encoded in the Pump inner instruction. That
+positive **trade** route does not include `SetMayhemVirtualParams`; this
+package's negative-reachability qualification for that selector remains.
 
 The original Mayhem ELF (SHA-256
 `a87fa9f866272514e6acb852b668c4a08aeb173d56c883039991d114d1199bdb`)
