@@ -153,3 +153,15 @@ The [35-handler checkpoint](../repro/pump_amm/legacy-buy-thirty-five/README.md) 
 ## Metaplex source differences
 
 [Candidate5](../repro/pump/metaplex-candidate-build-5/README.md) is a fresh pinned Linux build with recovered edition conversion resets and master-edition metadata writability checks. All 53 signed boundary comparisons pass; full-file comparison still differs. Diagnostic function alignment finds 1,235 matching normalized instruction windows with corresponding calls and 16 structurally different windows. A [further five-file source trial](../repro/pump/metaplex-audit-source-recovery/README.md) targets captured burn-PDA checking and removal of a legacy metadata authority exception; its new build is pending. These dependency observations do not change the four main-program completeness claims.
+
+## Fees update-admin state access
+
+The [update-admin checkpoint](../repro/pump_fees/update-admin-dataflow-v144/README.md) reconstructs event values from FeeConfig state and the new-admin `AccountInfo` layout. Its 2,824-byte handler and 5,664-byte account parser match normalized instructions and all mapped direct calls. The 769,640-byte clean main output equals tested scratch. All 17,384 prior comparisons and the donation sequence pass; 56 signed repeats add signature/state evidence but no new input cases. The dispatcher serialization-exit helper still differs and remains an explicit next recovery target.
+
+## PumpSwap boost buy and burn
+
+The [36-handler checkpoint](../repro/pump_amm/boost-burn-thirty-six/README.md) adds boost buy-and-burn with real quote transfers, base-token burning, event CPIs and vault-drain cleanup. Its 506 new signed cases and all prior suites pass, totaling 16,727 comparisons across 24 suites. The 1,071,304-byte clean main ELF exactly matches tested scratch. The observed QuoteMintNotWritable error6088 is restored. `multi_hop_swap`, `create_config` and full byte identity remain unresolved.
+
+## Mayhem legacy buy
+
+The [twenty-handler checkpoint](../repro/mayhem/twenty/README.md) adds legacy buy with captured Pump CPIs and overall/per-coin risk checks. Its 486 buy cases include 187 successes and 299 rejections; all prior 3,355 comparisons pass, totaling 3,841 across nine suites. Independent verifiers check complete state, events, CPIs and rollback. The 457,600-byte clean main artifact equals tested scratch. Four trade handlers, Mayhem-state initialization and whole-program byte identity remain unresolved.

@@ -1,6 +1,6 @@
 # Mayhem: recovered administration paths
 
-The nineteen implemented paths and 3,355 differential cases are a partial security
+The twenty implemented paths and 3,841 differential cases are a partial security
 review. No complete byte-identical program or complete Mayhem audit exists yet.
 
 ## Observed controls and behavior
@@ -41,7 +41,7 @@ self-CPI; both are reproduced and compared.
 ## Dependency observations
 
 Covered paths exercise the System program, Mayhem self-event entrypoint, and
-captured token/ATA dependencies. Legacy sell now exercises the captured Pump CPI;
+captured token/ATA dependencies. Legacy buy and sell exercise the captured Pump CPI;
 the remaining trade paths' dependency behavior is still unresolved.
 The original Mayhem ELF contains full 32-byte constants for Pump at 0xae2ac,
 PumpSwap at 0xae2e2, SPL Token at 0xad168/0xae302, and Token2022 at 0xae322.
@@ -52,8 +52,8 @@ scan does not prove absence of use. No unobserved Metaplex/relay CPI is assumed.
 
 ## Remaining work
 
-Six currently identified paths remain unimplemented: Mayhem state
-initialization and five other Pump/PumpSwap buy/sell paths. Their
+Five currently identified paths remain unimplemented: Mayhem state
+initialization and four other Pump/PumpSwap buy/sell paths. Their
 account/CPI constraints, price impact, risk accounting, rate limits, arithmetic,
 rollback and dependency equivalence remain to be recovered and audited.
 Historical source/build fidelity, executable layout and all bytes remain
@@ -149,7 +149,7 @@ The initially suspected permissionless recipient-creation concern has no
 demonstrated fund-diversion path in these recovered instructions: initialization
 stores no caller beneficiary, and sweep/withdraw destinations require the stored
 trader or administrator. This is a bounded negative finding, not a declaration
-that the entire deployed program is secure. The six absent handlers, live
+that the entire deployed program is secure. The five absent handlers, live
 configuration reachability and complete dependency source fidelity remain open.
 
 ## Genuine burn sequences
@@ -197,3 +197,38 @@ All inherited cases and genuine burn sequences pass against the same combined
 zero-SOL panic also has an additional candidate Option-unwrapping message while
 the runtime error and full rollback match. No confirmed vulnerability is claimed.
 See [the nineteen-handler evidence package](../../repro/mayhem/nineteen/README.md).
+
+
+## Legacy buy
+
+The recovered `buy` preserves configured-trader authorization and typed accounts,
+with 23 outer accounts and an actual 18-account Pump buy CPI. It uses the same
+pause/rate/deadline/reserve-threshold and tolerance checks as legacy sell. Its
+budget derives from current vault tokens and curve reserves, constrained by the
+configured cap and retained real SOL. Token output is capped by real token
+reserves; Pump receives that output and the full budget as maximum SOL cost.
+
+After CPI/reloads, actual spent SOL increases the global and state signed-i128
+counters, and acquired tokens reduce the state's signed-i128 token counter.
+Checked overflow fails with 6002. Overall and per-coin limits are serialized
+GlobalParams offsets 32 and 40; positive counters must be strictly below their
+limits. Rejections are 6006 (`OverallRiskExceeded`) and 6007 (`CoinRiskExceeded`).
+The original compares each positive counter's low u64 limb; the same truncation
+is reproduced for synthetic values beyond u64::MAX. Those cases do not establish
+reachable live configuration or an exploitable accounting condition.
+
+The 486 cases include 187 successes and 299 rejections, using normally signed
+owned-trader fixtures. They cover strict risk boundaries, negative/zero/large
+counters, real-token caps, funding depletion and zero-lamport account removal,
+volume windows, malformed accounts, flags and CPI failures. All watched account
+bytes and metadata, errors, return data, events and inner calls agree. Independent
+receipt checks verify signatures, exact quote/CPI inputs, full state/event bytes
+and complete rollback after rejection. Post-CPI risk rejection rolls back Pump
+changes as well as Mayhem state.
+
+All inherited 3,355 comparisons pass on the same twenty-handler bytes. The actual
+main-source build is wholly byte-identical to the reviewed isolated artifact;
+neither matches the original executable. No initializer workaround or altered
+authorization was used. Four raw panic-log differences remain documented, and no
+full historical buy replay is claimed. See the
+[twenty-handler package](../../repro/mayhem/twenty/README.md).

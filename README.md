@@ -17,11 +17,11 @@ python3 scripts/test_tooling.py
 A partial Rust fee-tier selector now matches the original instruction sequence except
 for unresolved relocations with platform-tools v1.43, and passes 1,215 local
 differential cases. Recovered quote-mint routing additionally passes 9,428 original-program
-queries, but its compiled instructions still differ. All 31 Fees instruction bodies pass 17,384 SBF comparisons; thirty-three recovered Pump
-handlers plus four partial creation/trading paths pass 6,338. Thirty-five PumpSwap
-handlers pass 16,221 comparisons, and nineteen Mayhem handlers pass 3,355. These
-43,298 saved comparisons cover 118 implemented handlers and four partial paths, not the
-complete programs. Twelve focused Fees checks repeat prior inputs with stronger log assertions. Two Fees handlers are deprecated dispatches that always reject.
+queries, but its compiled instructions still differ. All 31 Fees instruction bodies pass 17,440 SBF comparisons; thirty-three recovered Pump
+handlers plus four partial creation/trading paths pass 6,338. Thirty-six PumpSwap
+handlers pass 16,727 comparisons, and twenty Mayhem handlers pass 3,841. These
+44,346 saved comparisons cover 120 implemented handlers and four partial paths, not the
+complete programs. The Fees total includes 68 repeated-input checks with stronger log or signature assertions. Two Fees handlers are deprecated dispatches that always reject.
 The current Pump checkpoint corrects the previously reported stored creator-fee
 override gap and passes 694 additional Surfpool comparisons with 1,388 signed transactions.
 The current PumpSwap checkpoint corrects the earlier zero-fee cashback event mismatch;

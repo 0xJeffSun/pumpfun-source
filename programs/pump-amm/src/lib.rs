@@ -15,6 +15,7 @@ use creator_reassignment::*;
 mod trade;
 mod create;
 mod boost;
+mod boost_burn;
 mod sweep;
 mod extend;
 mod collect;
@@ -24,6 +25,7 @@ use collect::*;
 use extend::*;
 use sweep::*;
 use boost::*;
+use boost_burn::*;
 use create::*;
 use trade::*;
 use anchor_spl::{token::Token, token_2022::Token2022, token_interface::{self, Mint, TokenAccount}};
@@ -55,6 +57,7 @@ pub mod pump_amm_recovered {
     pub fn sweep_protocol_fee(ctx: Context<SweepFees>) -> Result<()> { sweep::execute(ctx,false) }
     pub fn sweep_creator_fee(ctx: Context<SweepFees>) -> Result<()> { sweep::execute(ctx,true) }
 
+    pub fn boost_buy_and_burn(ctx: Context<BoostBuyAndBurn>, quote_amount_in: u64, min_base_amount_burned: u64) -> Result<()> { boost_burn::execute(ctx, quote_amount_in, min_base_amount_burned) }
     pub fn init_boost(ctx: Context<InitBoost>) -> Result<()> { boost::execute(ctx) }
 
     pub fn create_pool(ctx: Context<CreatePool>, index: u16, base_amount_in: u64, quote_amount_in: u64, coin_creator: Pubkey, is_mayhem_mode: bool, is_cashback_coin: OptionBool, creator_fee_bps: OptionU64, can_edit_creator_fee: OptionBool, is_holder_reward: OptionBool) -> Result<()> { create::execute(ctx,index,base_amount_in,quote_amount_in,coin_creator,is_mayhem_mode,is_cashback_coin.0,creator_fee_bps.0,can_edit_creator_fee.0,is_holder_reward.0) }
@@ -368,6 +371,8 @@ pub enum PumpAmmError {
     MultiHopMixedDirection = 86,
     #[msg("A transfer's source is its destination and the signer does not own it")]
     SelfTransferNotAllowed = 87,
+    #[msg("quote_mint must be writable for a quote with a Token-2022 transfer fee: its withheld fees are harvested to the mint.")]
+    QuoteMintNotWritable = 88,
 }
 
 #[event_cpi]

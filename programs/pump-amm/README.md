@@ -1,8 +1,8 @@
 # Partial PumpSwap source recovery
 
-Thirty-five of 38 published handlers are implemented from captured-program behavior
-and disassembly, including legacy buy, exact-quote buy, sell and their direct fee/cashback payouts.
-Three handlers remain absent. This is not a replacement for the deployed program
+Thirty-six of 38 published handlers are implemented from captured-program behavior
+and disassembly, including legacy buy, exact-quote buy, sell, direct fee/cashback payouts, and boost buy-and-burn.
+Two handlers remain absent: create_config and multi_hop_swap. This is not a replacement for the deployed program
 and does not match its bytes.
 
 ```sh
@@ -34,6 +34,15 @@ and [`audit/pump_amm/LEGACY_BUY_RECOVERY.md`](../../audit/pump_amm/LEGACY_BUY_RE
 The previous AMM33 package and its subsequently discovered negative event receipt
 remain preserved; the new package binds that exact signed case to a passing regression.
 
+The boost buy-and-burn checkpoint adds one body. All 24 suites pass 16,727
+comparisons, including 506 new normally signed boost cases. Its clean main build
+is identical to the scratch executable used for the complete regression run.
+Quote transfer, base burn, trade/boost events, final vault closure, Token-2022 fee
+harvesting, and error 6088 are covered by the bounded corpus. See
+[`repro/pump_amm/boost-burn-thirty-six`](../../repro/pump_amm/boost-burn-thirty-six/README.md)
+and [`audit/pump_amm/BOOST_BUY_BURN_RECOVERY.md`](../../audit/pump_amm/BOOST_BUY_BURN_RECOVERY.md).
+The earlier AMM35 package remains immutable.
+
 Additional SBF suites are `scripts/pump_amm_buyback_differential.py`,
 `scripts/pump_amm_fee_config_differential.py`,
 `scripts/pump_amm_resize_differential.py --creator`, and
@@ -53,7 +62,8 @@ Additional SBF suites are `scripts/pump_amm_buyback_differential.py`,
 `scripts/pump_amm_incentives_differential.py --family sync|admin|claim`, and
 `scripts/pump_amm_cashback_differential.py`, and
 `scripts/pump_amm_legacy_sell_differential.py`, and
-`scripts/pump_amm_legacy_buy_differential.py`, each taking `--candidate` and `--output`.
+`scripts/pump_amm_legacy_buy_differential.py`, and
+`scripts/pump_amm_boost_burn_differential.py`, each taking `--candidate` and `--output`.
 
 For a clean build with complete source/lock/toolchain hashes and an unmodified
 whole-file comparison, use `scripts/build_partial_candidate.py`. See

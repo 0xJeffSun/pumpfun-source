@@ -1,6 +1,6 @@
 # Partial Mayhem implementation recovery
 
-This independently compiled Anchor program implements **19 of the 25 currently
+This independently compiled Anchor program implements **20 of the 25 currently
 identified instruction paths**. It is not a full program reconstruction, a
 byte-identical ELF, or a deployable replacement. Other handlers are absent.
 No original machine code is embedded or patched into the build.
@@ -15,7 +15,7 @@ Implemented paths:
 - `update_global_params`
 - `extend_account`, `withdraw_admin`, `withdraw_quote_admin`
 - `sweep_fees`, `sweep_fees_admin`
-- `burn_tokens`, `sell`
+- `burn_tokens`, `sell`, `buy`
 
 ## Evidence and unresolved source details
 
@@ -37,8 +37,8 @@ evidence from burn recovery supersedes the earlier 0.31.1 baseline: typed duplic
 checks, Pubkey CPI context and event-authority constants match the newer family.
 Exact historical revision and dependency identity remain unresolved. The explicit
 System wrapper preserves the original address-before-executable validation order.
-All previous 2,953 cases still pass. The current candidate has 3,355 instruction
-comparisons across eight suites; see the [nineteen-handler package](../../repro/mayhem/nineteen/README.md).
+All previous 2,953 cases still pass. The current candidate has 3,841 instruction
+comparisons across nine suites; see the [twenty-handler package](../../repro/mayhem/twenty/README.md).
 
 ## Reproduce
 
@@ -61,7 +61,7 @@ units, all transactions, and the absent instruction paths are not equivalent
 claims. States are synthetic; injected configurations are not proof of reachable
 mainnet states.
 
-`repro/mayhem/nineteen/` retains the clean build's comparison/provenance and compressed
+`repro/mayhem/twenty/` retains the clean build's comparison/provenance and compressed
 case evidence. See `audit/mayhem/RECOVERY.md` for bounded security observations.
 
 The additional `scripts/mayhem_validate_fee_recipient.py` suite compares 306
@@ -112,5 +112,34 @@ python3 scripts/verify_mayhem_sell.py \
 The sell fixtures use only test-owned signatures and synthetic configuration;
 they do not establish a full historical sell replay. Compute usage and recorded
 source locations differ. In one zero-reserve panic case, the candidate additionally
-logs an Option-unwrapping message; the error and complete rollback agree. Five
+logs an Option-unwrapping message; the error and complete rollback agree. Four
 other trade handlers and Mayhem-state initialization remain unrecovered.
+
+
+Legacy `buy` adds 486 ordinary-signature synthetic cases: 187 successes and 299
+rejections. It preserves the 23-account parser, actual 18-account Pump CPI,
+price/tolerance guards, reserve-based budget and real-token cap. Actual spent SOL
+and gained tokens drive checked signed-128-bit accounting. Overall and per-coin
+risk checks run after the CPI, with strict upper limits; a failed check rolls back
+the complete transaction. The original tests counter positivity before comparing
+the low u64 limb, including for synthetic counters above u64::MAX. Complete events,
+inner calls, watched account state and rollback agree with the captured original.
+
+All 3,355 previous comparisons also pass on the combined twenty-handler artifact.
+Its clean integrated-source build matches the reviewed scratch artifact byte for
+byte. The portable buy harness and offline verifier can reproduce the evidence:
+
+```sh
+python3 scripts/mayhem_buy_differential.py \
+  --candidate repro/mayhem/twenty/mayhem_recovered.so \
+  --cases repro/mayhem/twenty/buy-cases.json --output work/mayhem-buy-replay.json
+python3 scripts/verify_mayhem_buy.py \
+  --candidate repro/mayhem/twenty/mayhem_recovered.so \
+  --receipts work/mayhem-buy-replay.json --output work/mayhem-buy-verification.json
+```
+
+Buy fixtures use configured test-owned traders and synthetic account state, with
+real program-derived CPI signing. They do not claim historical prestate or live
+authority. Compute and source diagnostics differ; four panic cases retain explicit
+log differences while matching failures and complete rollback. Four trade paths
+and Mayhem-state initialization remain absent.
