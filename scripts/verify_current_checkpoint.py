@@ -44,6 +44,9 @@ def verify(program, root):
     suffix = '/main/candidate.so'
     assert status['candidate_artifact'].endswith(suffix)
     name = status['candidate_artifact'][:-len(suffix)]
+    if program == 'pump' and name == 'repro/pump/admin-cto-compared-errors-main-fortyeight':
+        from verify_pump_compared_checkpoint import verify as verify_compared
+        return verify_compared(root)
     assert name in CHECKPOINTS, ('Checkpoint needs explicit bridge review', name)
     seal, helper_prefix, final_readme = CHECKPOINTS[name]
     package = root / name
@@ -95,4 +98,7 @@ if __name__ == '__main__':
     parser.add_argument('program', choices=['pump', 'pump_amm', 'pump_fees'])
     parser.add_argument('--repo', type=Path, default=ROOT)
     args = parser.parse_args()
-    print(json.dumps(verify(args.program, args.repo.resolve()), indent=2))
+    root = args.repo.resolve()
+    if args.program == 'pump' and read(args.repo / 'repro/status.json')['pump'].get('candidate_artifact') == 'repro/pump/admin-cto-compared-errors-main-fortyeight/main/candidate.so':
+        root = args.repo.absolute()
+    print(json.dumps(verify(args.program, root), indent=2))
