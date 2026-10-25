@@ -107,3 +107,10 @@ result does not establish security of the token program or its callers.
 The current PumpSwap candidate additionally implements accumulator initialization
 and closure.76 cases compare creation, prefunding, rent/System CPI, preserved
 state and close refunds; trading/liquidity coverage remains separate and incomplete.
+
+Token2022 now also has a fresh pinned Linux source build matching the full capture
+after explicit zero allocation padding. ATA and donation relay have no verified
+source attribution in the latest saved registry response. Metaplex's registry
+response points to a failed, mismatching Phoenix build; that repository is rejected
+as source attribution. The failed registry records are retained separately and
+do not establish that the correct source is unavailable.

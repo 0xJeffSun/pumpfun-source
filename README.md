@@ -32,7 +32,9 @@ Zero confirmed findings does not establish security.
 
 The SPL Token dependency now has a fresh Linux source build matching the entire
 captured 108,600-byte payload. [Build evidence](repro/pump/verified-spl-token/README.md)
-is separate from the still-unmatched four Pump.fun programs.
+is separate from the still-unmatched four Pump.fun programs. Token2022 also has a
+[verified fresh source build](repro/pump/verified-token-2022/README.md), including
+explicitly regenerated zero allocation padding.
 
 Original bytes live under `evidence/`, never as rebuilt artifacts. This project
 contains no on-chain deployment or transaction-broadcast tooling; the imported

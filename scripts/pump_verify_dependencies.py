@@ -30,3 +30,17 @@ assert proof['source_commit']==registry['results']['spl_token']['commit']
 images=json.loads((proof_dir/'image-inspect.json').read_text())
 assert proof['image'] in images[0]['RepoDigests']
 print('SPL Token fresh Linux source build: full',len(built),'byte equality confirmed; SHA-256',proof['candidate_sha256'])
+proof_dir=ROOT/'repro/pump/verified-token-2022'
+proof=json.loads((proof_dir/'comparison.json').read_text())
+raw=(proof_dir/'spl_token_2022.so').read_bytes()
+built=(proof_dir/'rebuilt.deployed.so').read_bytes()
+captured=(ROOT/'evidence/dependencies/spl_token_2022/deployed.so').read_bytes()
+assert built==raw+bytes(proof['zero_padding_bytes'])==captured
+assert hashlib.sha256(raw).hexdigest()==proof['candidate_input_sha256']
+assert hashlib.sha256(built).hexdigest()==proof['candidate_sha256']==proof['original_sha256']
+for filename,field in [('source-manifest.json','source_manifest_sha256'),('build.log','build_log_sha256')]:
+ assert hashlib.sha256((proof_dir/filename).read_bytes()).hexdigest()==proof[field]
+assert proof['full_byte_equality'] is True
+assert proof['source_commit']==registry['results']['spl_token_2022']['commit']
+assert proof['image'] in json.loads((proof_dir/'image-inspect.json').read_text())[0]['RepoDigests']
+print('Token2022 fresh Linux source build: raw ELF',len(raw),'bytes +',proof['zero_padding_bytes'],'new zero bytes equals captured allocation',len(built),'bytes; SHA-256',proof['candidate_sha256'])

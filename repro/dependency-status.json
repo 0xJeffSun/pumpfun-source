@@ -8,11 +8,13 @@
     "security_audit": "incomplete"
   },
   "spl_token_2022": {
-    "fresh_source_build": "not_yet_verified",
-    "full_byte_equality": null,
+    "fresh_source_build": "verified_full_byte_match_with_zero_allocation_padding",
+    "full_byte_equality": true,
     "source_commit": "8867f751c0f69367ba03af4f85510b5611989491",
-    "source_attribution": "registry hash matches capture; fresh build pending",
-    "security_audit": "incomplete"
+    "security_audit": "incomplete",
+    "candidate_artifact": "repro/pump/verified-token-2022/rebuilt.deployed.so",
+    "raw_candidate_artifact": "repro/pump/verified-token-2022/spl_token_2022.so",
+    "comparison_report": "repro/pump/verified-token-2022/comparison.json"
   },
   "associated_token": {
     "fresh_source_build": "unresolved",
