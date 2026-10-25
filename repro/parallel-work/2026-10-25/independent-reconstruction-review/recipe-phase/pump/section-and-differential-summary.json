@@ -1,0 +1,196 @@
+{
+  "program": "pump",
+  "manifest": "programs/pump/Cargo.toml",
+  "artifact": "pump_recovered.so",
+  "original": {
+    "elf_extent": 1934800,
+    ".text": 1792208,
+    ".rodata": 32031,
+    ".rel.dyn": 98352,
+    ".data.rel.ro": 10352
+  },
+  "builds": {
+    "v1.43": {
+      "elf_extent": 1663888,
+      "sha256": "e8c27e77b3090ef43ea09f36f7a69d5307c085cd6ee588929ebc12c54e9303e0",
+      ".text": 1546496,
+      ".rodata": 29223,
+      ".rel.dyn": 76736,
+      ".data.rel.ro": 9576
+    },
+    "v1.45": {
+      "elf_extent": 1580488,
+      "sha256": "45a3802b60b1949f54f007872c7602148fd7a7ee143fa714aeac2173e1eae478",
+      ".text": 1460664,
+      ".rodata": 29459,
+      ".rel.dyn": 78848,
+      ".data.rel.ro": 9656
+    },
+    "v1.46": {
+      "elf_extent": 1580488,
+      "sha256": "af821b447ba832a22c08f27849964562e772edc6b445d1e45813fc8fc8671cde",
+      ".text": 1460664,
+      ".rodata": 29459,
+      ".rel.dyn": 78848,
+      ".data.rel.ro": 9656
+    }
+  },
+  "text_pct_of_original": {
+    "v1.43": 86.29,
+    "v1.45": 81.5,
+    "v1.46": 81.5
+  },
+  "text_delta": {
+    "v1.43": -245712,
+    "v1.45": -331544,
+    "v1.46": -331544
+  },
+  "best_compiler": "v1.43",
+  "siblings_same_compiler_v1.43_text_pct": {
+    "pump_amm": 99.9,
+    "pump_fees": 99.0,
+    "pump": 86.29
+  },
+  "handler_dispositions": {
+    "bounded": 48,
+    "partial": [
+      "buy_exact_quote_in_v3",
+      "buy_v3",
+      "create_v2",
+      "multi_hop_curve_swap",
+      "sell_v3"
+    ],
+    "unrecovered_stopped": [
+      "admin_update_token_incentives",
+      "claim_token_incentives",
+      "set_mayhem_virtual_params"
+    ]
+  },
+  "differential": {
+    "pump_admin_cto": {
+      "cases": 363,
+      "mismatches": 0
+    },
+    "pump_buy_v2": {
+      "cases": 216,
+      "mismatches": 0
+    },
+    "pump_cashback": {
+      "cases": 252,
+      "mismatches": 0
+    },
+    "pump_create": {
+      "cases": 87,
+      "mismatches": 0
+    },
+    "pump_create_control": {
+      "cases": 85,
+      "mismatches": 0
+    },
+    "pump_create_nested": {
+      "cases": 48,
+      "mismatches": 0
+    },
+    "pump_create_quote": {
+      "cases": 297,
+      "mismatches": 0
+    },
+    "pump_create_v2": {
+      "cases": 110,
+      "mismatches": 0
+    },
+    "pump_creator_collect": {
+      "cases": 119,
+      "mismatches": 0
+    },
+    "pump_creator_collect_v2": {
+      "cases": 154,
+      "mismatches": 0
+    },
+    "pump_creator_distribution": {
+      "cases": 298,
+      "mismatches": 0
+    },
+    "pump_creator_migration": {
+      "cases": 139,
+      "mismatches": 0
+    },
+    "pump_exact_quote": {
+      "cases": 352,
+      "mismatches": 0
+    },
+    "pump_extend": {
+      "cases": 308,
+      "mismatches": 0
+    },
+    "pump_fee_sweep": {
+      "cases": 504,
+      "mismatches": 0
+    },
+    "pump_global_init": {
+      "cases": 40,
+      "mismatches": 0
+    },
+    "pump_holder_distribution": {
+      "cases": 649,
+      "mismatches": 0
+    },
+    "pump_idl_authority": {
+      "cases": 171,
+      "mismatches": 0
+    },
+    "pump_legacy_buy": {
+      "cases": 284,
+      "mismatches": 0
+    },
+    "pump_legacy_sell": {
+      "cases": 115,
+      "mismatches": 0
+    },
+    "pump_legacy_sell_configured_fee": {
+      "cases": 28,
+      "mismatches": 0
+    },
+    "pump_migrate": {
+      "cases": 228,
+      "mismatches": 0
+    },
+    "pump_migrate_v2": {
+      "cases": 827,
+      "mismatches": 0
+    },
+    "pump_minimum_fee": {
+      "cases": 181,
+      "mismatches": 0
+    },
+    "pump_quote_control": {
+      "cases": null,
+      "mismatches": 0
+    },
+    "pump_sell_v2": {
+      "cases": 184,
+      "mismatches": 0
+    },
+    "pump_set_creator": {
+      "cases": 509,
+      "mismatches": 0
+    },
+    "pump_set_params": {
+      "cases": 169,
+      "mismatches": 0
+    },
+    "pump_v3_configured_fee": {
+      "cases": 372,
+      "mismatches": 0
+    },
+    "pump_v3_token_extensions": {
+      "cases": 126,
+      "mismatches": 92
+    },
+    "pump_volume_sync": {
+      "cases": 341,
+      "mismatches": 0
+    }
+  },
+  "notes": "v1.43 best of tested; v1.45==v1.46 byte-identical layout. pump_v3_token_extensions (untracked new suite) mismatches identically under committed v1.44 => compiler-independent missing code. pump_quote_control_fresh excluded: source-hash provenance guard trips on working-tree drift of multi_hop_curve.rs, candidate-independent."
+}
