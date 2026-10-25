@@ -75,22 +75,28 @@ confirmed vulnerability without a reachable configuration path.
 
 ### Executing recovered handlers
 
-Pump Fees now has 31 independently compiled instruction bodies, with 17,363 original-
+Pump Fees now has 31 independently compiled instruction bodies, with 17,372 original-
 versus-candidate SBF cases. These cover two query handlers, four authority setters,
 global initialization against the historical 740-byte Pump Global layout, and
 three configuration setters, permissionless resize, and two deprecated rejection
 dispatches, two tier upserts and FeeConfig administrator transfer, two donation handlers and three social-fee handlers and referral withdrawal, four buyback handlers, sharing creation, administrative sharing reset, both sharing updates and FeeConfig initialization. All31 bodies have bounded implementations; full source/context equivalence remains unproven. Selected compiler and dependency versions
 remain candidates rather than an established historical graph.
 
-### Parallel reconstruction checkpoint: 95 implemented handlers and two partial paths
+### Parallel reconstruction checkpoint: 111 implemented handlers and four partial paths
 
-Saved builds cover Pump 18, PumpSwap 28, Pump Fees 31 and Mayhem 18 implemented
-handlers, plus Pump's partial SOL/USDC buy_v3/sell_v3 branches. Their 35,038 local SBF
+Saved builds cover Pump 30, PumpSwap 32, Pump Fees 31 and Mayhem 18 implemented
+handlers, plus Pump's partial buy_v3, sell_v3, buy_exact_quote_in_v3 and create_v2 paths. Their 40,105 local SBF
 comparisons are indexed by `repro/status.json`; each report preserves its own
 coverage and limitations. Pump's SOL trade paths include Mayhem buyback suppression,
 holder-reward event fields and explicit cashback rejection. USDC quote behavior adds 130 synthetic SPL/Token2022 cases; other quote routes
 and the final event suffix remain incomplete. Neither is counted
 as a fully recovered trade handler. See [partial sell review](pump/partial-sell-review.md).
+The new legacy creation handler has bounded captured-Metaplex CPI coverage.
+The partial create_v2 path covers normal SOL and holder-reward creation; Mayhem and
+alternative quote creation remain unsupported in this candidate. Exact-quote v3
+coverage uses SOL and synthetic USDC/Token2022 fixtures without extensions.
+The combined Pump candidate passed 346 offline Surfpool comparisons with 692 signed
+transactions; these receipts establish only their stated behavior and runtime scope.
 
 PumpSwap deposit/withdraw coverage includes actual captured Token/Token2022 CPIs,
 transfer-fee extension fixtures, slippage and exact inner instructions. See

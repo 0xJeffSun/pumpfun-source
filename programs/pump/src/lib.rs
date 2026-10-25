@@ -1,5 +1,11 @@
 use anchor_lang::prelude::*;
 
+pub mod create_v2;
+pub use create_v2::*;
+
+pub mod create;
+pub use create::*;
+
 pub mod collect_v2;
 pub use collect_v2::*;
 pub mod extend;
@@ -31,6 +37,9 @@ declare_id!("6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P");
 #[program]
 pub mod pump_recovered {
     use super::*;
+    pub fn create_v2(ctx:Context<CreateV2>,name:String,symbol:String,uri:String,creator:Pubkey,is_mayhem_mode:bool,is_cashback_enabled:OptionBool,creator_fee_bps:CreationOptionU64,is_holder_reward:OptionBool)->Result<()>{create_v2::execute(ctx,name,symbol,uri,creator,is_mayhem_mode,is_cashback_enabled,creator_fee_bps,is_holder_reward)}
+    pub fn buy_exact_quote_in_v3(ctx:Context<SellV3>,spendable_quote_in:u64,min_tokens_out:u64,partial_fill:OptionBool)->Result<()>{trade::buy_exact_quote(ctx,spendable_quote_in,min_tokens_out,partial_fill.0)}
+    pub fn create(ctx:Context<Create>,name:String,symbol:String,uri:String,creator:Pubkey)->Result<()>{create::execute(ctx,name,symbol,uri,creator)}
     pub fn admin_set_idl_authority(ctx:Context<AdminSetIdlAuthority>,idl_authority:Pubkey)->Result<()>{idl_authority::execute(ctx,idl_authority)}
     pub fn set_creator(ctx:Context<SetCreator>,creator:Pubkey)->Result<()>{set_creator::set(ctx,creator)}
     pub fn set_metaplex_creator(ctx:Context<SetMetaplexCreator>)->Result<()>{set_creator::sync(ctx)}

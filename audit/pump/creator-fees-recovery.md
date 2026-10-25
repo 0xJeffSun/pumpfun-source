@@ -1,14 +1,15 @@
 # Pump creator-fee recovery review
 
-The current creator-twentynine checkpoint implements 29 recovered handlers and
-two partial buy/sell v3 paths. All 4,590 differential cases across 19 suites and
-242 Surfpool comparisons (484 signed transactions across 12 runners) passed.
-Full-file byte identity remains false. The captured original is 10,485,715 bytes
-with SHA-256 `7a19affaa2c6187e04a5fe0ea298cee81fa5eb8c24cfcc30d85f615e89f7b02d`.
-The current v1.44 candidate is 767,200 bytes with SHA-256
-`f506f0643079adc5d94bfa63c14742c14be6cd1363b653de8bed2d39cd6c8b7b`.
-[The frozen package](../../repro/pump/creator-twentynine/README.md) binds the build,
-20 source inputs, 46 harness files and receipts. Earlier checkpoint counts below
+The current creator-thirty checkpoint implements 30 recovered handlers and four
+partial paths: buy_v3, sell_v3, buy_exact_quote_in_v3 and create_v2. All 5,139
+differential cases across 22 suites and 346 Surfpool comparisons (692 signed
+transactions across 15 runners) passed. Full-file byte identity remains false.
+The captured original is 10,485,715 bytes with SHA-256
+`7a19affaa2c6187e04a5fe0ea298cee81fa5eb8c24cfcc30d85f615e89f7b02d`.
+The current v1.44 candidate is 955,072 bytes with SHA-256
+`273e07ca4d27788bbf8eedd8a901b521ebce7406400610f4edce5f1198940ab2`.
+[The frozen package](../../repro/pump/creator-thirty/README.md) binds 22 source
+inputs, 52 harness files, the independent build and all receipts. Earlier counts
 remain historical evidence rather than the current candidate's totals.
 
 ## Recovered behavior
@@ -118,3 +119,33 @@ its own comparison scope. Alternative ATA bootstrap transactions remain separate
 from the 484 Surfpool transactions. These results do not establish production
 safety, exhaustive behavioral equivalence or historical compiler/dependency
 identity. No new original-program vulnerability is inferred from this checkpoint.
+
+
+## Creation and exact-quote integration
+
+The creator-thirty candidate adds one recovered handler, legacy create, and
+two partial handlers: normal SOL create_v2 and buy_exact_quote_in_v3. It therefore
+contains30 recovered handlers plus four partial paths. The clean candidate is
+955,072 bytes with SHA-256
+`273e07ca4d27788bbf8eedd8a901b521ebce7406400610f4edce5f1198940ab2`.
+All 5,139 differential cases across 22 suites and 346 Surfpool comparisons
+using 692 signed transactions pass. Source/harness hashes remain unchanged, and
+the package manifest verifies all 156 files. Full byte equality remains false.
+
+Legacy create initializes the mint, curve and ATA, invokes captured immutable
+Metaplex metadata creation, mints supply and revokes authority. Metadata string
+limits are enforced by the actual dependency. The create_v2 partial branch uses
+Token-2022 metadata initialization, holder creator substitution and byte-length
+checks; it explicitly rejects unrecovered Mayhem and quote remaining-account
+branches using a reconstruction-only error. Those rejections are not attributed
+to the original.
+
+Exact-quote recovery exposed and corrected candidate mismatches through expanding
+fixtures: tiny spend/error ordering, migration-fee underflow, funded completion,
+quote-dependent post-completion reserves, Mayhem partial-fill slippage behavior
+and one-unit fee rounding. Protocol and creator fee ceilings use the original
+unadjusted net quote, while the recorded quote may be decremented for affordability.
+Ordinary completion can continue into a post-completion pool; oversized Mayhem
+partial fills stop at completion. Full state, CPI arrays, events and return values
+are compared in deterministic fixtures. These are reconstruction corrections, not
+a new security assessment of the original protocol.

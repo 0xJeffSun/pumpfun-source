@@ -1,6 +1,6 @@
 # Partial Pump reconstruction
 
-The Anchor 0.31.1 source implements twenty-nine recovered handlers:
+The Anchor 0.31.1 source implements thirty recovered handlers:
 `toggle_create_v2`, `toggle_mayhem_mode`, `toggle_cashback_enabled`, and
 `set_max_curve_depth`, `set_virtual_quote_reserves`, `update_buyback_config`,
 `update_creator_fee_config`, `update_holder_reward_config`, `add_quote_mint`, and
@@ -10,13 +10,13 @@ The Anchor 0.31.1 source implements twenty-nine recovered handlers:
 `get_minimum_distributable_fee`, `collect_creator_fee_v2`, `extend_account`,
 `sync_user_volume_accumulator`, `sweep_creator_fee`, `sweep_protocol_fee`,
 `migrate_bonding_curve_creator`, `admin_cto`, `set_params`, `set_creator`,
-`set_metaplex_creator` and `admin_set_idl_authority`. It also implements **partial SOL and USDC-quote `sell_v3` and `buy_v3` paths**.
+`set_metaplex_creator`, `admin_set_idl_authority` and legacy `create`. It also implements **partial `sell_v3`, `buy_v3`, `buy_exact_quote_in_v3` and `create_v2` paths**.
 It is incomplete and is not a deployable replacement.
 
-The current frozen checkpoint is [creator-twentynine](../../repro/pump/creator-twentynine/README.md):
-4,590 differential cases across 19 suites and 242 Surfpool comparisons using
-484 signed transactions across 12 runners passed. Its candidate is 767,200 bytes,
-SHA-256 `f506f0643079adc5d94bfa63c14742c14be6cd1363b653de8bed2d39cd6c8b7b`.
+The current frozen checkpoint is [creator-thirty](../../repro/pump/creator-thirty/README.md):
+5,139 differential cases across 22 suites and 346 Surfpool comparisons using
+692 signed transactions across 15 runners passed. Its candidate is 955,072 bytes,
+SHA-256 `273e07ca4d27788bbf8eedd8a901b521ebce7406400610f4edce5f1198940ab2`.
 Full byte equality remains false. Earlier checkpoint counts below describe their
 historical source snapshots.
 
@@ -142,3 +142,20 @@ in Surfpool. These errors are not normalized across runtimes. The frozen package
 retains all raw fixtures and transaction receipts. Its 20 source/build inputs and
 46 harness files are hash-bound. Alternative ATA bootstrap transactions are
 retained separately and are not counted among the 484 Surfpool transactions.
+
+
+The creator-thirty source adds legacy SPL Token creation, ordinary SOL
+Token-2022 creation and exact-quote v3 buys. Legacy creation uses genuine captured
+Metaplex/Token/ATA CPIs, creates immutable metadata, mints supply and revokes mint
+authority. Partial create_v2 preserves metadata-pointer/Token-2022 initialization,
+holder-reward creation and optional argument decoding for its normal SOL branch.
+Mayhem and remaining quote-account creation branches are explicitly unrecovered.
+
+Partial exact-quote v3 covers SOL and synthetic USDC under SPL Token and Token-2022
+without token extensions. It preserves rounding before the affordability
+adjustment, completion/post-completion reserve accounting and Mayhem partial-fill
+behavior. Token completion omits the native migration-fee deduction. Broader quote
+chains, exhaustive account validation and full source identity remain unresolved.
+The combined clean candidate passes 5,139 cases across 22 differential suites;
+all 346 Surfpool comparisons using 692 signed transactions also pass. The frozen
+package preserves the exact source, candidate and validation receipts.

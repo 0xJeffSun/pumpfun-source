@@ -40,7 +40,7 @@ jobs:
               python scripts/fees_external_codec_differential.py --candidate repro/pump_fees/external-codecs-v144/pump_fees_candidate.so --output work/fees-codec-rejections.json
           - suite: pump
             commands: |
-              python scripts/pump_validate_all.py --candidate repro/pump/creator-twentynine/candidate.so --output work/pump-handlers.json.gz
+              python scripts/pump_validate_all.py --candidate repro/pump/creator-thirty/candidate.so --output work/pump-handlers.json.gz
           - suite: pump-amm
             commands: |
               python scripts/pump_amm_admin_differential.py --candidate repro/pump_amm/cashback-thirty-two/pump_amm_recovered.so --output work/pump-amm-admin.json
