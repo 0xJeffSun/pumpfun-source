@@ -1,7 +1,13 @@
 # Mayhem: recovered administration paths
 
-The twenty implemented paths and 3,841 differential cases are a partial security
-review. No complete byte-identical program or complete Mayhem audit exists yet.
+The current [Mayhem24 checkpoint](../../repro/mayhem/twentyfour/README.md) contains
+24 recovered paths and 9,595 comparison receipts. Only the identified
+`initialize_mayhem_state` handler remains absent; that initializer lane remains
+stopped. Whole-original-byte equality and the security audit remain incomplete.
+
+The opening observations below describe the earlier twenty-handler checkpoint
+with 3,841 cases. Later sections record subsequent recoveries in order; their
+counts and missing-path statements are historical, not the current inventory.
 
 ## Observed controls and behavior
 
@@ -50,9 +56,9 @@ call's constraints or dependency build identity. A full-byte constant scan did
 not find the captured Metaplex, donation relay or ATA IDs, but absence from that
 scan does not prove absence of use. No unobserved Metaplex/relay CPI is assumed.
 
-## Remaining work
+## Remaining work at the twenty-handler checkpoint
 
-Five currently identified paths remain unimplemented: Mayhem state
+Five then-identified paths remained unimplemented: Mayhem state
 initialization and four other Pump/PumpSwap buy/sell paths. Their
 account/CPI constraints, price impact, risk accounting, rate limits, arithmetic,
 rollback and dependency equivalence remain to be recovered and audited.

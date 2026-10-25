@@ -1,6 +1,6 @@
 # Partial Pump reconstruction
 
-The Anchor 0.31.1 source implements forty-two recovered handlers:
+The Anchor 0.31.1 source implements forty-eight recovered handlers:
 `toggle_create_v2`, `toggle_mayhem_mode`, `toggle_cashback_enabled`, and
 `set_max_curve_depth`, `set_virtual_quote_reserves`, `update_buyback_config`,
 `update_creator_fee_config`, `update_holder_reward_config`, `add_quote_mint`, and
@@ -11,18 +11,24 @@ The Anchor 0.31.1 source implements forty-two recovered handlers:
 `get_minimum_distributable_fee`, `collect_creator_fee_v2`, `extend_account`,
 `sync_user_volume_accumulator`, `sweep_creator_fee`, `sweep_protocol_fee`,
 `migrate_bonding_curve_creator`, `admin_cto`, `set_params`, `set_creator`,
-`set_metaplex_creator`, `admin_set_idl_authority` and legacy `create`, `sell`, `sell_v2`, `migrate`, `buy`, `buy_exact_sol_in`, `buy_v2`, `buy_exact_quote_in_v2`, `migrate_v2`, `claim_cashback`, `claim_cashback_v2` and `initialize`. It also implements **partial `sell_v3`, `buy_v3`, `buy_exact_quote_in_v3` and `create_v2` paths**.
+`set_metaplex_creator`, `admin_set_idl_authority` and legacy `create`, `sell`, `sell_v2`, `migrate`, `buy`, `buy_exact_sol_in`, `buy_v2`, `buy_exact_quote_in_v2`, `migrate_v2`, `claim_cashback`, `claim_cashback_v2`, `initialize`, `initialize_quote_control`,
+`set_quote_control_admin`, `set_quote_control_reserves_admin`, `add_quote_control_mint`,
+`remove_quote_control_mint` and `set_quote_control_mint_reserves`. It also implements **partial `sell_v3`, `buy_v3`, `buy_exact_quote_in_v3` and `create_v2` paths**.
 It is incomplete and is not a deployable replacement. The current sell_v2 quote-transfer-fee minimum-output check and fee-event fields have a confirmed mismatch with the captured original; the saved passing suites do not cover that boundary.
 
-The current frozen checkpoint is [holder-nested-fortytwo](../../repro/pump/holder-nested-fortytwo/README.md):
-8,654 differential cases across 35 suites and 1,024 Surfpool comparisons using
-2,048 signed transactions across 28 runners passed. Its candidate is 1,405,520 bytes,
-SHA-256 `c07e67b055c87da881b33c9e07bddf913d5b0beffa1cfe52169ba1bc3f6d2bbf`.
-It adds holder distributions and depth-one normal SOL-root nested creation to
-creator-fortyone. Main and scratch clean builds are whole-file identical. All 33
-prior differential suites and 26 prior Surfpool runners were rerun, alongside the
-two focused suites. Nested creation remains partial for Mayhem, migrated parents
-and deeper chains. See [the recovery report](../../audit/pump/HOLDER_NESTED_RECOVERY.md).
+The current frozen checkpoint is [quote-control-fortyeight](../../repro/pump/quote-control-fortyeight/README.md):
+9,161 differential cases across 36 suites and 1,024 Surfpool comparisons using
+2,048 signed transactions across 28 runners passed. The Surfpool transactions
+contain 2,980 verified individual signatures. Its candidate is 1,478,960 bytes,
+SHA-256 `c9c364b59fca69ecc395c1e7911d55fc7997631daa0dd0b0bcf37d7f0dfa4804`.
+It adds six independent quote-control handlers to holder-nested-fortytwo.
+Main and scratch clean builds are whole-file identical. All 35 prior differential
+suites and 28 prior Surfpool runners were rerun against this candidate. The new
+507-case quote-control suite separately records 1,014 executed transactions and
+2,008 verified signatures, with explicit signature/blockhash checks and complete
+saved transaction bytes. Nested creation remains partial for Mayhem, migrated
+parents and deeper chains. See [the quote-control recovery report](../../audit/pump/QUOTE_CONTROL_RECOVERY.md)
+and [the earlier holder/nested report](../../audit/pump/HOLDER_NESTED_RECOVERY.md).
 Full original-byte equality remains false. Earlier checkpoint counts below describe
 their historical source snapshots.
 

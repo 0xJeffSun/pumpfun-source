@@ -252,4 +252,18 @@ The [42-handler checkpoint](../repro/pump/holder-nested-fortytwo/README.md) inte
 
 ## Metaplex zero-use analysis correction
 
-A later [raw control-flow review](../repro/pump/metaplex-zero-use-source-recovery/STATIC-CORRECTION.md) corrects the earlier source hypothesis: the original ApproveUseAuthority and Utilize paths reject zero uses with error86. Candidate10 skips that rejection; its 135 inherited regressions do not cover the boundary. The new source-only trial restores both predicates and the separately observed edition-conversion data-length evaluation order. Exact branch bytes and destinations are retained, and the earlier incorrect analysis remains identifiable as historical evidence. This correction awaits its own build and comparison.
+A later [raw control-flow review](../repro/pump/metaplex-zero-use-source-recovery/STATIC-CORRECTION.md) corrects the earlier source hypothesis: the original ApproveUseAuthority and Utilize paths reject zero uses with error86. Candidate10 skips that rejection; its 135 inherited regressions do not cover the boundary. The new source-only trial restores both predicates and the separately observed edition-conversion data-length evaluation order. Exact branch bytes and destinations are retained, and the earlier incorrect analysis remains identifiable as historical evidence. Candidate11 subsequently compiled this correction and passed the inherited comparisons; its remaining differences are recorded below.
+
+
+## Metaplex final-window comparison
+
+[Candidate11](../repro/pump/metaplex-candidate-build-11/README.md) compiles the zero-use and conversion-order correction and passes all 135 inherited comparisons with 270 independently verified signed transactions. Its 707,448-byte raw ELF matches 1,250 of 1,251 inferred function windows byte-for-byte. The remaining Utilize window, two relocation bytes and 29 Rust source-coordinate records account for all 1,509 differing positions after explicit zero allocation padding. The existing cases do not cover the zero-use boundaries. Full-file equality remains false; the pinned hosted build failed that final requirement after successful compilation.
+
+## Static Mayhem virtual-reserve instruction
+
+The [static set_mayhem_virtual_params package](../repro/pump/mayhem-virtual-params-static/README.md) retains dispatch, account constraints, arithmetic and event-sequence evidence, with 22 original windows checked against raw bytes. Its Rust hypothesis is uncompiled. A genuine Mayhem invocation with its sol-vault PDA signer has not been established. This research adds zero implemented handlers and zero runtime comparisons; it does not resume the stopped initializer work.
+
+
+## Six quote-control handlers
+
+The [Pump48 checkpoint](../repro/pump/quote-control-fortyeight/README.md) recovers quote-control initialization, admin and reserves-admin rotation, mint addition/removal, and reserve updates. Its clean main build is whole-file identical to the tested scratch build: 1,478,960 bytes, SHA-256 `c9c364b59fca69ecc395c1e7911d55fc7997631daa0dd0b0bcf37d7f0dfa4804`. All 9,161 comparisons across 36 suites and all 1,024 Surfpool comparisons across 28 runners pass. The quote-control cases contain 1,014 executed transactions with 2,008 verified signatures; Surfpool separately contains 2,048 transactions with 2,980 signatures. Old unbound reports remain preserved as unaccepted history. The four programs now total 140 implemented handlers plus four partial paths and 53,659 saved comparison receipts. Every original whole-file comparison still differs, and the current sell_v2 gap remains explicit.

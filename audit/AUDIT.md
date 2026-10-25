@@ -3,10 +3,10 @@
 **Status: incomplete; not a security sign-off.** Scope is the four captured original
 programs listed in `docs/SCOPE.md`. Partial executable handlers have been recovered; no complete program exists.
 
-The current published recovery covers 134 implemented handlers plus four partial
-Pump paths and 53,152 saved comparison receipts: [Pump42](../repro/pump/holder-nested-fortytwo/README.md),
+The current published recovery covers 140 implemented handlers plus four partial
+Pump paths and 53,659 saved comparison receipts: [Pump48](../repro/pump/quote-control-fortyeight/README.md),
 [AMM37 serializer](../repro/pump_amm/serialization-thirty-seven/README.md),
-[Fees31 serializer](../repro/pump_fees/fee-config-serialization-v144/README.md),
+[Fees31 provenance checkpoint](../repro/pump_fees/readme-provenance-v144/README.md),
 and [Mayhem24](../repro/mayhem/twentyfour/README.md). These bounded recovery results
 do not extend the source review frozen at commit329fc44 into a complete audit of
 the later candidates. All four original whole-file comparisons still differ.
@@ -295,3 +295,15 @@ source-location strings differ and are retained. The candidate uses an Anchor
 order. See [the package](../repro/mayhem/eighteen/README.md) for exact inputs and
 limits. Seven identified paths remain absent; this is not historical replay or
 a completed audit. The frozen source review at 329fc44 excludes this addition.
+
+
+## Dependency and static-recovery checkpoint
+
+Metaplex [candidate11](../repro/pump/metaplex-candidate-build-11/README.md) passes 135 inherited differential comparisons and matches 1,250 of 1,251 inferred function windows byte-for-byte. The final Utilize window and source-coordinate/relocation bytes still differ; the inherited cases do not exercise the corrected zero-use guards. This is reconstruction evidence, not a completed dependency audit or a claim of full behavioral equivalence.
+
+The Pump [set_mayhem_virtual_params static package](../repro/pump/mayhem-virtual-params-static/README.md) has no compiled implementation or runtime receipts. Its required Mayhem sol-vault PDA signer lacks an established genuine invocation in this lane. Static provenance verification does not establish reachability or security, and contributes no handler or comparison count.
+
+
+## Quote-control recovery checkpoint
+
+[Pump48](../repro/pump/quote-control-fortyeight/README.md) adds the six quote-control handlers with 507 fresh signed comparisons. Its 800 failed executions preserve all nonpayer state and payer state except expected signature fees. All 8,654 earlier cases and 1,024 Surfpool comparisons were rerun against the new ELF. Root independently verified the package, current source bindings and saved signatures. These bounded results cover tested role restrictions, account growth, mint eligibility and event behavior; they do not establish a complete audit. The current sell_v2 transfer-fee gap and four partial paths remain unchanged.

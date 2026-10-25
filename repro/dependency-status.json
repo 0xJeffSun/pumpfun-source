@@ -45,9 +45,17 @@
       "repro/pump/metaplex-candidate-build-7/comparison.json",
       "repro/pump/metaplex-candidate-build-8/comparison.json",
       "repro/pump/metaplex-candidate-build-9/comparison.json",
-      "repro/pump/metaplex-candidate-build-10/comparison.json"
+      "repro/pump/metaplex-candidate-build-10/comparison.json",
+      "repro/pump/metaplex-candidate-build-11/comparison.json"
     ],
-    "latest_tested_candidate_full_byte_equality": false
+    "latest_tested_candidate_full_byte_equality": false,
+    "latest_candidate_artifact": "repro/pump/metaplex-candidate-build-11/token_metadata.so",
+    "latest_candidate_raw_equal_function_windows": 1250,
+    "latest_candidate_total_function_windows": 1251,
+    "remaining_structural_windows": [
+      346
+    ],
+    "latest_candidate_evidence": "repro/pump/metaplex-candidate-build-11/README.md"
   },
   "donation_relay": {
     "fresh_source_build": "unresolved",

@@ -19,6 +19,8 @@ jobs:
               python scripts/test_build_source_manifest.py
               python scripts/verify_recovered_builds.py
               python scripts/pump_verify_dependencies.py
+              python repro/pump/metaplex-candidate-build-11/verify.py
+              python repro/pump/mayhem-virtual-params-static/verify.py
               python scripts/local_validation.py
               git diff --exit-code -- audit/local-validation.json
           - suite: host-fragments
@@ -47,9 +49,11 @@ jobs:
               python repro/pump_fees/readme-provenance-v144/verify_publication.py --current-main
           - suite: pump
             commands: |
-              python scripts/pump_validate_all.py --candidate repro/pump/holder-nested-fortytwo/candidate.so --output work/pump-handlers.json.gz
-              python scripts/pump_holder_distribution_differential.py --candidate repro/pump/holder-nested-fortytwo/candidate.so --output work/pump-holder-distribution.json.gz
-              python scripts/pump_create_nested_differential.py --candidate repro/pump/holder-nested-fortytwo/candidate.so --output work/pump-create-nested.json.gz
+              python scripts/pump_validate_all.py --candidate repro/pump/quote-control-fortyeight/candidate.so --output work/pump-handlers.json.gz
+              python scripts/pump_holder_distribution_differential.py --candidate repro/pump/quote-control-fortyeight/candidate.so --output work/pump-holder-distribution.json.gz
+              python scripts/pump_create_nested_differential.py --candidate repro/pump/quote-control-fortyeight/candidate.so --output work/pump-create-nested.json.gz
+              python scripts/pump_quote_control_fresh_differential.py --candidate repro/pump/quote-control-fortyeight/candidate.so --output work/pump-quote-control.json.gz
+              python repro/pump/quote-control-fortyeight/verify-package.py
           - suite: pump-amm
             commands: |
               python scripts/pump_amm_admin_differential.py --candidate repro/pump_amm/serialization-thirty-seven/pump_amm_recovered.so --output work/pump-amm-admin.json
