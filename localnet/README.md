@@ -116,3 +116,7 @@ and fixture readback hashes are also retained in `evidence/`.
 ### Fee-sharing creation reconstruction checks
 
 [Sharing creation draft and receipts](recovery/fees-sharing/README.md) cover 116 signed differential cases and eight Surfpool comparisons (16 signed transactions), including genuine Pump and PumpSwap CPI migrations and account resizing. The single-handler draft remains byte-unequal to the full Fees program.
+
+### Buyback reconstruction checks
+
+[Buyback draft and receipts](recovery/fees-buyback/README.md) recover four handlers with 1,249 signed differential cases and 18 Surfpool comparisons (36 signed transactions), including initialization, authority update, signed funding and a sweep. The draft remains byte-unequal to the full Fees program.
