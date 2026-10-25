@@ -149,6 +149,41 @@ class KeypairRetentionTests(unittest.TestCase):
         self.assertEqual(reads, [])
         self.assertTrue(all(isinstance(row, str) for row in rows))
 
+    def test_unstripped_elf_is_retained_on_failure_and_hashed(self):
+        attempt = self.attempt()
+        self.write("attempt/target/sbf-solana-solana/release/pump_fees_candidate.so", b"synthetic symbol ELF")
+        self.write("attempt/target/sbf-solana-solana/release/pump_fees_candidate-keypair.json")
+        with forbid_reading(helper.generated_keypair_path):
+            helper.retain_generated_outputs(attempt)
+            helper.seal_evidence(attempt)
+        retained = attempt.evidence / "pump_fees_candidate-unstripped.so"
+        self.assertEqual(retained.read_bytes(), b"synthetic symbol ELF")
+        hashes = json.loads((attempt.evidence / "artifact-hashes.json").read_text())
+        self.assertEqual(hashes[retained.name]["sha256"], helper.digest(retained))
+        self.assertEqual(attempt.state["status"], "failed")
+
+    def test_unstripped_symlink_cannot_copy_keypair_contents(self):
+        attempt = self.attempt()
+        directory = attempt.output / "target/sbf-solana-solana/release"
+        directory.mkdir(parents=True)
+        key = self.write("attempt/target/sbf-solana-solana/release/pump_fees_candidate-keypair.json")
+        (directory / "pump_fees_candidate.so").symlink_to(key)
+        with forbid_reading(helper.generated_keypair_path):
+            with self.assertRaisesRegex(ValueError, "not a symlink"):
+                helper.retain_generated_outputs(attempt)
+        self.assertFalse((attempt.evidence / "pump_fees_candidate-unstripped.so").exists())
+
+    def test_unstripped_parent_symlink_is_rejected_before_copy(self):
+        attempt = self.attempt()
+        blocked = self.write("excluded/pump_fees_candidate.so")
+        directory = attempt.output / "target/sbf-solana-solana"
+        directory.mkdir(parents=True)
+        (directory / "release").symlink_to(blocked.parent, target_is_directory=True)
+        with forbid_reading(lambda p: p == blocked or p == directory / "release/pump_fees_candidate.so"):
+            with self.assertRaisesRegex(ValueError, "not a symlink"):
+                helper.retain_generated_outputs(attempt)
+        self.assertFalse((attempt.evidence / "pump_fees_candidate-unstripped.so").exists())
+
     def test_fetch_metadata_never_enters_compiler_target(self):
         source = self.root / "source"
         self.write("source/lib.rs", b"frozen source")

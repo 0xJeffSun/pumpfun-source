@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""PROPOSAL ONLY: fixed Fees v1.44 compile and recorded v1.52 strip pipeline.
+"""Fixed-source Fees v1.44 compile and recorded v1.52 strip pipeline.
 
 No execution is authorized by this file. The frozen recorded SDK is copied, not
 patched. Public Linux Criterion v2.3.3 follows its existing platform branch.
@@ -136,7 +136,7 @@ def prepare_compile_inputs(source, expected, fetch_target, target, evidence, env
 
 
 def retain_generated_outputs(attempt):
-    """Run on success/failure; read candidate bytes only, omit deployment keys."""
+    """Retain emitted stripped/symbol ELFs on success/failure, omitting keys."""
     if attempt.state["build_attempts"] == 0:
         return
     excluded = set(attempt.state.get("excluded_generated_keypair_paths", []))
@@ -150,11 +150,18 @@ def retain_generated_outputs(attempt):
         excluded.update(str(Path(name) / path) for path in omitted)
     attempt.state["excluded_generated_keypair_paths"] = sorted(excluded)
     attempt.save()
-    candidate = attempt.output / "artifacts/pump_fees_candidate.so"
-    if candidate.is_symlink():
-        raise ValueError("Candidate must be a regular emitted file, not a symlink")
-    if candidate.is_file():
-        shutil.copy2(candidate, attempt.evidence / "pump_fees_candidate.so")
+    emitted = {
+        "artifacts/pump_fees_candidate.so": "pump_fees_candidate.so",
+        "target/sbf-solana-solana/release/pump_fees_candidate.so": "pump_fees_candidate-unstripped.so",
+    }
+    for relative, retained in emitted.items():
+        candidate = attempt.output / relative
+        chain = [attempt.output / Path(*Path(relative).parts[:i])
+                 for i in range(1, len(Path(relative).parts) + 1)]
+        if any(path.is_symlink() for path in chain):
+            raise ValueError("Candidate must be a regular emitted file, not a symlink")
+        if candidate.is_file():
+            shutil.copy2(candidate, attempt.evidence / retained)
 
 
 def seal_evidence(attempt):

@@ -41,3 +41,10 @@ All seven follow-up CLI workers subsequently completed their assigned first-stag
 The [independent acceptance review](../repro/parallel-work/2026-10-24/accepted-source-review/REPORT.md) verifies the frozen Pump/Fees scratch handoffs, retained signatures and unchanged prior coverage. Their main publication packages separately bind the clean main builds. The [hosted verification at `278e47e`](https://github.com/lalalune/pumpfun-source/actions/runs/40165907139) passed all twelve jobs for the preceding candidates; that result does not substitute for CI on the new source changes.
 
 The [current integration review](../repro/ci/two-curve-inline-bindings/REPORT.md) found and fixed an omitted Pump harness-binding check. The restored gate verifies 168 tracked inputs; fifteen missing/tampered/untracked-input checks and seven invalid-receipt checks reject as expected. The immutable build/runtime packages are unchanged.
+
+
+## Third wave
+
+[Ten further CLI tasks](../repro/parallel-work/2026-10-25/launch.json) were launched against published source517d77d, with separate writable scopes: source review for each of the four programs, Pump partial-fill predicate/dataflow, nested creation, deeper ordinary curve routing, Mayhem error-return ABI, relay parser error ABI and relay arithmetic closure. All ten emitted `turn.started`, and their process handles were verified live at launch. This records assignments, not completed audits or accepted program changes. Previously stopped scopes and private audit inputs remain excluded.
+
+In parallel, native agents own the grounded Fees account-module source build, AMM scalar-setter source recovery and attribution of the completed fixed-source Linux build. No additional compiler variant search or initializer signer substitution is part of these tasks.
