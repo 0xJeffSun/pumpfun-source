@@ -133,3 +133,19 @@ The [33-handler checkpoint](../repro/pump_amm/legacy-sell-thirty-three/README.md
 ## Fees typed buyback guards
 
 The [buyback-source checkpoint](../repro/pump_fees/buyback-source-v144/README.md) restores three typed `require_gt!` comparisons and a boxed update account. Their bodies now match original lengths, relocation patterns and mapped calls; source-location instructions still differ. The 768,976-byte clean main ELF exactly matches the tested scratch ELF. All 17,372 retained comparisons and the ten-step donation sequence pass, plus nine focused signed comparisons that repeat index values with explicit compared-value log assertions. Those nine strengthen diagnostics coverage rather than adding nine distinct boundary values. Whole-file equality remains false.
+
+## Mayhem legacy sell
+
+The [nineteen-handler checkpoint](../repro/mayhem/nineteen/README.md) adds legacy sell with the captured Pump/Token-2022 CPIs. Its 396 new signed cases include 134 successes, every curve prefix through 141 bytes, typed-account constraints, pricing bounds, complete events and rollback. All 2,953 inherited cases and six burn comparisons pass, totaling 3,355. An independent verifier checks 792 sell signatures and full state/event/CPI observations. The 415,168-byte clean main executable exactly equals the tested scratch build; its original comparison remains different. Panic-message/source-location differences and remaining handlers are documented.
+
+## Pump sell, migration and configured fees
+
+The [33-handler checkpoint](../repro/pump/creator-thirtythree/README.md) adds legacy sell, sell_v2 and migration while expanding quote-control creation. It corrects the earlier stored creator-fee override gap and exact-quote completion accounting. The 1,129,592-byte clean candidate passes 6,338 cases across 28 suites and 694 Surfpool comparisons with 1,388 verified ordinary signatures. Four creation/trading paths remain partial; runtime-specific IDL behavior, incomplete token-extension coverage and unknown event suffixes remain explicit. All 25 build inputs, 68 harness files and 27 fixture/capture hashes are bound. Full byte identity is false.
+
+## Fees authority guard
+
+The [authority-guard checkpoint](../repro/pump_fees/authority-guard-v144/README.md) restores the original plain inequality check for `set_authority`, removing compared-key logs absent from the capture. Its 3,320-byte function matches instruction structure and mapped calls except source-location constants. The 768,824-byte clean main output equals tested scratch; 17,384 comparison receipts and the ten-step donation sequence pass. Three focused cases strengthen log assertions on prior authority inputs. Complete ELF equality remains false.
+
+## PumpSwap legacy buys and sell-event correction
+
+The [35-handler checkpoint](../repro/pump_amm/legacy-buy-thirty-five/README.md) adds legacy buy and exact-quote buy, including fee payouts and transfer-fee handling. It also fixes the prior zero-fee cashback sell event mismatch. All 23 suites pass 16,221 cases, including 1,011 buy cases and 16 new sell-event cases. The 1,034,280-byte main build equals the tested scratch executable; the portable buy/sell runners were replayed against main. Three handlers and full ELF identity remain unresolved.

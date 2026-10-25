@@ -64,7 +64,8 @@ pub fn sell(ctx:Context<SellV3>,amount:u64,min_sol_output:u64)->Result<()> {
     let config=read_config(&config_data)?;
     drop(config_data);
     require!(!(if is_sol{&config.fee_tiers}else{&config.stable_fee_tiers}).is_empty(),PumpError::FeeTiersEmpty);
-    let fees=selected(&config,cap,!is_sol);
+    let mut fees=selected(&config,cap,!is_sol);
+    if curve.creator_fee_bps>0{fees.creator_fee_bps=curve.creator_fee_bps;}
     let creator_bps=if curve.creator==Pubkey::default(){0}else{fees.creator_fee_bps};
     let protocol_fee=fee(quote,fees.protocol_fee_bps)?;
     let creator_fee=fee(quote,creator_bps)?;
@@ -127,7 +128,8 @@ pub fn buy(ctx:Context<SellV3>,amount:u64,max_sol_cost:u64)->Result<()> {
     let config=read_config(&config_data)?;
     drop(config_data);
     require!(!(if is_sol{&config.fee_tiers}else{&config.stable_fee_tiers}).is_empty(),PumpError::FeeTiersEmpty);
-    let fees=selected(&config,cap,!is_sol);
+    let mut fees=selected(&config,cap,!is_sol);
+    if curve.creator_fee_bps>0{fees.creator_fee_bps=curve.creator_fee_bps;}
     let creator_bps=if curve.creator==Pubkey::default(){0}else{fees.creator_fee_bps};
     let protocol_fee=fee(quote,fees.protocol_fee_bps)?;
     let creator_fee=fee(quote,creator_bps)?;
@@ -196,8 +198,11 @@ pub fn buy_exact_quote(ctx:Context<SellV3>,spendable_quote_in:u64,min_tokens_out
     require!(config_data.len()>=2512,PumpError::FeeConfigTooShort);
     drop(config_data);
     require!(!(if is_sol{&config.fee_tiers}else{&config.stable_fee_tiers}).is_empty(),PumpError::FeeTiersEmpty);
-    let fees=selected(&config,cap,!is_sol);
+    let mut fees=selected(&config,cap,!is_sol);
+    if curve.creator_fee_bps>0{fees.creator_fee_bps=curve.creator_fee_bps;}
     let creator_bps=if curve.creator==Pubkey::default(){0}else{fees.creator_fee_bps};
+    let _=fee(spendable_quote_in,fees.protocol_fee_bps)?;
+    let _=fee(spendable_quote_in,creator_bps)?;
     let quote_budget=net_quote(spendable_quote_in,fees.protocol_fee_bps,creator_bps)?;
     require!(spendable_quote_in as u128*10000/(10000u128+fees.protocol_fee_bps as u128+creator_bps as u128)>0,PumpError::BuyNotEnoughSolToCoverFees);
     let effective=quote_budget.saturating_sub(1);
@@ -213,7 +218,7 @@ pub fn buy_exact_quote(ctx:Context<SellV3>,spendable_quote_in:u64,min_tokens_out
     let buyback_bps=if curve.is_mayhem_mode {0}else{a.global.buyback_basis_points};
     let buyback_fee=narrow(protocol_fee as u128*buyback_bps as u128/10000)?;
     let first_cost=add(add(quote,protocol_fee)?,creator_fee)?;
-    let pool_base_before=if crossing{sub(sub(a.global.token_total_supply,a.global.initial_real_token_reserves)?,curve.post_complete_base_out)?}else{0};
+    let pool_base_before=if crossing{sub(a.associated_base_bonding_curve.amount,amount)?}else{0};
     let pool_quote_before=if crossing{add(sub(add(curve.real_quote_reserves,quote)?,if is_sol{a.global.pool_migration_fee}else{0})?,curve.post_complete_quote_in)?}else{0};
     let post_quote=if crossing{net_quote(sub(spendable_quote_in,first_cost)?,fees.protocol_fee_bps,creator_bps)?}else{0};
     let post_base=if post_quote>0{narrow(pool_base_before as u128*(post_quote-1) as u128/(pool_quote_before as u128+(post_quote-1) as u128))?}else{0};

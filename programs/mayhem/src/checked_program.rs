@@ -31,7 +31,7 @@ impl<'info> Accounts<'info, CheckedSystemProgramBumps> for CheckedSystemProgram<
         _bumps: &mut CheckedSystemProgramBumps,
         _reallocs: &mut BTreeSet<Pubkey>,
     ) -> Result<Self> {
-        let (info, rest) = accounts.split_first().ok_or(ErrorCode::AccountNotEnoughKeys)?;
+        let (info, rest) = accounts.split_first().ok_or_else(|| Error::from(ErrorCode::AccountNotEnoughKeys).with_account_name("system_program"))?;
         *accounts = rest;
         Self::try_from(info)
     }

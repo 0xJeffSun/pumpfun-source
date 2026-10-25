@@ -1,5 +1,5 @@
-//! Partial independently compiled Mayhem implementation: eighteen recovered administration, sweep,
-//! and burn handlers. Unknown fields are preserved as byte arrays, not guessed names.
+//! Partial independently compiled Mayhem implementation: nineteen recovered administration, sweep,
+//! burn and legacy sell handlers. Unknown fields are preserved as byte arrays, not guessed names.
 //! This is not a complete or byte-identical program reconstruction.
 use anchor_lang::prelude::*;
 mod checked_program;
@@ -9,12 +9,16 @@ use anchor_spl::{associated_token::AssociatedToken, token_interface::{Mint, Toke
 pub mod state;
 pub mod instructions;
 pub use instructions::burn::*;
+pub use instructions::sell::*;
 
 declare_id!("MAyhSmzXzV1pTf7LsNkrNwkWKTo4ougAJ1PPg47MD4e");
 
 #[program]
 pub mod mayhem_recovered {
     use super::*;
+    pub fn sell(ctx: Context<LegacySell>, reference: u128, tolerance_bps: u16, retained_reserve_bps: u16) -> Result<()> {
+        instructions::sell::handler(ctx, reference, tolerance_bps, retained_reserve_bps)
+    }
     pub fn burn_tokens(ctx: Context<BurnTokens>) -> Result<()> {
         instructions::burn::handler(ctx)
     }

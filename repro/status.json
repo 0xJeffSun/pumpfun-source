@@ -5,7 +5,7 @@
     "compiler": "unresolved",
     "dependencies": "unresolved",
     "build_flags": "unresolved",
-    "candidate_artifact": "repro/pump/creator-thirty/candidate.so",
+    "candidate_artifact": "repro/pump/creator-thirtythree/candidate.so",
     "full_byte_equality": false,
     "comparison_status": "DIFFERS_PARTIAL_IMPLEMENTATION",
     "implemented_handlers": [
@@ -38,19 +38,22 @@
       "set_creator",
       "set_metaplex_creator",
       "admin_set_idl_authority",
-      "create"
+      "create",
+      "sell",
+      "sell_v2",
+      "migrate"
     ],
-    "comparison_report": "repro/pump/creator-thirty/build-comparison.json",
-    "build_log": "repro/pump/creator-thirty/build.log.gz",
-    "validated_cases": 5139,
+    "comparison_report": "repro/pump/creator-thirtythree/build-comparison.json",
+    "build_log": "repro/pump/creator-thirtythree/build.log.gz",
+    "validated_cases": 6338,
     "validation_reports": [
-      "repro/pump/creator-thirty/all-differential.json.gz"
+      "repro/pump/creator-thirtythree/all-differential.json.gz"
     ],
     "partially_implemented_handlers": {
-      "sell_v3": "SOL and USDC quote branches, Mayhem/holder fields and cashback rejection. Other quote routes and exhaustive extension/account validation remain incomplete; final event suffix uninterpreted. Known gap in this published candidate: a nonzero stored creator_fee_bps override is ignored; subsequent synthetic signed probes diverge in state/events/inner instructions. Corrected source is under validation.",
-      "buy_v3": "SOL and USDC quote branches, Mayhem/holder fields and cashback rejection. Other quote routes and exhaustive extension/account validation remain incomplete; final event suffix uninterpreted. Known gap in this published candidate: a nonzero stored creator_fee_bps override is ignored; subsequent synthetic signed probes diverge in state/events/inner instructions. Corrected source is under validation.",
-      "buy_exact_quote_in_v3": "SOL and synthetic USDC Token/Token2022 quotes without extensions, fee rounding, funded completion/post-completion and Mayhem partial-fill. Other quote chains and exhaustive account validation remain unresolved. Known gap in this published candidate: a nonzero stored creator_fee_bps override is ignored; subsequent synthetic signed probes diverge in state/events/inner instructions. Corrected source is under validation.",
-      "create_v2": "Normal SOL Token-2022 creation and holder-reward creation only. Mayhem and quote remaining-account branches explicitly return ReconstructionBranchUnsupported; these are unrecovered source branches, not original behavior."
+      "sell_v3": "SOL and USDC quote branches, Mayhem/holder fields and cashback rejection. Other quote routes and exhaustive extension/account validation remain incomplete; final event suffix uninterpreted.",
+      "buy_v3": "SOL and USDC quote branches, Mayhem/holder fields and cashback rejection. Other quote routes and exhaustive extension/account validation remain incomplete; final event suffix uninterpreted.",
+      "buy_exact_quote_in_v3": "Bounded SOL and synthetic USDC Token/Token2022 quote paths, configured creator fee/gross-spend truncation, funded completion using actual base-vault balances, optional fills and Mayhem crossing. Nested routes, transfer-fee extensions and exhaustive account validation remain unresolved.",
+      "create_v2": "Normal SOL and whitelisted token quote creation, holder creation, quote-control consumer admission/reserves and configured creator fee checks. Mayhem and nested quote-chain paths remain unrecovered; fixtures do not establish those paths."
     },
     "compiler_family_candidates": [
       "v1.44",
@@ -60,24 +63,30 @@
     ],
     "compiler_family_evidence": "repro/pump_fees/compiler-family/HEADER-AND-BUILD-REPORT.md",
     "signed_sequence_reports": [
-      "repro/pump/creator-thirty/surfpool/admin_cto/pump-admin-cto-transactions.json.gz",
-      "repro/pump/creator-thirty/surfpool/collect/pump-collect-transactions.json.gz",
-      "repro/pump/creator-thirty/surfpool/collect_v2/pump-collect-v2-transactions.json.gz",
-      "repro/pump/creator-thirty/surfpool/create/pump-create-transactions.json.gz",
-      "repro/pump/creator-thirty/surfpool/create_v2/pump-create-v2-transactions.json.gz",
-      "repro/pump/creator-thirty/surfpool/creator_migration/pump-creator-migration-transactions.json.gz",
-      "repro/pump/creator-thirty/surfpool/distribution/pump-distribution-transactions.json.gz",
-      "repro/pump/creator-thirty/surfpool/exact_quote/pump-exact-quote-transactions.json.gz",
-      "repro/pump/creator-thirty/surfpool/extend/pump-extend-transactions.json.gz",
-      "repro/pump/creator-thirty/surfpool/idl_authority/pump-idl-authority-transactions.json.gz",
-      "repro/pump/creator-thirty/surfpool/minimum/pump-minimum-transactions.json.gz",
-      "repro/pump/creator-thirty/surfpool/set_creator/pump-set-creator-transactions.json.gz",
-      "repro/pump/creator-thirty/surfpool/set_params/pump-set-params-transactions.json.gz",
-      "repro/pump/creator-thirty/surfpool/sweep/pump-sweep-transactions.json.gz",
-      "repro/pump/creator-thirty/surfpool/volume_sync/pump-volume-sync-transactions.json.gz"
+      "repro/pump/creator-thirtythree/surfpool/admin_cto/pump-admin-cto-transactions.json.gz",
+      "repro/pump/creator-thirtythree/surfpool/collect/pump-collect-transactions.json.gz",
+      "repro/pump/creator-thirtythree/surfpool/collect_v2/pump-collect-v2-transactions.json.gz",
+      "repro/pump/creator-thirtythree/surfpool/create/pump-create-transactions.json.gz",
+      "repro/pump/creator-thirtythree/surfpool/create_control/pump-create-control-transactions.json.gz",
+      "repro/pump/creator-thirtythree/surfpool/create_quote/pump-create-quote-transactions.json.gz",
+      "repro/pump/creator-thirtythree/surfpool/creator_migration/pump-creator-migration-transactions.json.gz",
+      "repro/pump/creator-thirtythree/surfpool/distribution/pump-distribution-transactions.json.gz",
+      "repro/pump/creator-thirtythree/surfpool/exact_quote/pump-exact-quote-transactions.json.gz",
+      "repro/pump/creator-thirtythree/surfpool/extend/pump-extend-transactions.json.gz",
+      "repro/pump/creator-thirtythree/surfpool/idl_authority/pump-idl-authority-transactions.json.gz",
+      "repro/pump/creator-thirtythree/surfpool/legacy_sell/pump-legacy-sell-transactions.json.gz",
+      "repro/pump/creator-thirtythree/surfpool/legacy_sell_configured_fee/pump-legacy-sell-configured-fee-transactions.json.gz",
+      "repro/pump/creator-thirtythree/surfpool/migrate/pump-migrate-transactions.json.gz",
+      "repro/pump/creator-thirtythree/surfpool/minimum/pump-minimum-transactions.json.gz",
+      "repro/pump/creator-thirtythree/surfpool/sell_v2/pump-sell-v2-transactions.json.gz",
+      "repro/pump/creator-thirtythree/surfpool/set_creator/pump-set-creator-transactions.json.gz",
+      "repro/pump/creator-thirtythree/surfpool/set_params/pump-set-params-transactions.json.gz",
+      "repro/pump/creator-thirtythree/surfpool/sweep/pump-sweep-transactions.json.gz",
+      "repro/pump/creator-thirtythree/surfpool/v3_configured_fee/pump-v3-configured-fee-transactions.json.gz",
+      "repro/pump/creator-thirtythree/surfpool/volume_sync/pump-volume-sync-transactions.json.gz"
     ],
-    "surfpool_comparisons": 346,
-    "surfpool_signed_transactions": 692
+    "surfpool_comparisons": 694,
+    "surfpool_signed_transactions": 1388
   },
   "pump_amm": {
     "source_reconstruction": "partial_handlers_compiled",
@@ -85,7 +94,7 @@
     "compiler": "unresolved",
     "dependencies": "unresolved",
     "build_flags": "unresolved",
-    "candidate_artifact": "repro/pump_amm/legacy-sell-thirty-three/pump_amm_recovered.so",
+    "candidate_artifact": "repro/pump_amm/legacy-buy-thirty-five/pump_amm_recovered.so",
     "full_byte_equality": false,
     "comparison_status": "DIFFERS_PARTIAL_IMPLEMENTATION",
     "implemented_handlers": [
@@ -121,34 +130,37 @@
       "admin_update_token_incentives",
       "claim_token_incentives",
       "claim_cashback",
-      "sell"
+      "sell",
+      "buy",
+      "buy_exact_quote_in"
     ],
-    "comparison_report": "repro/pump_amm/legacy-sell-thirty-three/build-comparison.json",
-    "build_log": "repro/pump_amm/legacy-sell-thirty-three/build.log.gz",
-    "validated_cases": 15194,
+    "comparison_report": "repro/pump_amm/legacy-buy-thirty-five/build-comparison.json",
+    "build_log": "repro/pump_amm/legacy-buy-thirty-five/build.log.gz",
+    "validated_cases": 16221,
     "validation_reports": [
-      "repro/pump_amm/legacy-sell-thirty-three/accumulator-differential.json.gz",
-      "repro/pump_amm/legacy-sell-thirty-three/admin-differential.json.gz",
-      "repro/pump_amm/legacy-sell-thirty-three/boost-differential.json.gz",
-      "repro/pump_amm/legacy-sell-thirty-three/buyback-differential.json.gz",
-      "repro/pump_amm/legacy-sell-thirty-three/collect-differential.json.gz",
-      "repro/pump_amm/legacy-sell-thirty-three/create-differential.json.gz",
-      "repro/pump_amm/legacy-sell-thirty-three/creator_reassignment-differential.json.gz",
-      "repro/pump_amm/legacy-sell-thirty-three/creator_reassignment_cto-differential.json.gz",
-      "repro/pump_amm/legacy-sell-thirty-three/extend-differential.json.gz",
-      "repro/pump_amm/legacy-sell-thirty-three/fee_config-differential.json.gz",
-      "repro/pump_amm/legacy-sell-thirty-three/incentives_admin-differential.json.gz",
-      "repro/pump_amm/legacy-sell-thirty-three/incentives_claim-differential.json.gz",
-      "repro/pump_amm/legacy-sell-thirty-three/incentives_sync-differential.json.gz",
-      "repro/pump_amm/legacy-sell-thirty-three/liquidity-differential.json.gz",
-      "repro/pump_amm/legacy-sell-thirty-three/migration_create-differential.json.gz",
-      "repro/pump_amm/legacy-sell-thirty-three/reserved-differential.json.gz",
-      "repro/pump_amm/legacy-sell-thirty-three/resize-differential.json.gz",
-      "repro/pump_amm/legacy-sell-thirty-three/sweep-differential.json.gz",
-      "repro/pump_amm/legacy-sell-thirty-three/trade_v2-differential.json.gz",
-      "repro/pump_amm/legacy-sell-thirty-three/transfer_creator-differential.json.gz",
-      "repro/pump_amm/legacy-sell-thirty-three/cashback-differential.json.gz",
-      "repro/pump_amm/legacy-sell-thirty-three/legacy_sell-differential.json.gz"
+      "repro/pump_amm/legacy-buy-thirty-five/accumulator-differential.json.gz",
+      "repro/pump_amm/legacy-buy-thirty-five/admin-differential.json.gz",
+      "repro/pump_amm/legacy-buy-thirty-five/boost-differential.json.gz",
+      "repro/pump_amm/legacy-buy-thirty-five/buyback-differential.json.gz",
+      "repro/pump_amm/legacy-buy-thirty-five/collect-differential.json.gz",
+      "repro/pump_amm/legacy-buy-thirty-five/create-differential.json.gz",
+      "repro/pump_amm/legacy-buy-thirty-five/creator_reassignment-differential.json.gz",
+      "repro/pump_amm/legacy-buy-thirty-five/creator_reassignment_cto-differential.json.gz",
+      "repro/pump_amm/legacy-buy-thirty-five/extend-differential.json.gz",
+      "repro/pump_amm/legacy-buy-thirty-five/fee_config-differential.json.gz",
+      "repro/pump_amm/legacy-buy-thirty-five/incentives_admin-differential.json.gz",
+      "repro/pump_amm/legacy-buy-thirty-five/incentives_claim-differential.json.gz",
+      "repro/pump_amm/legacy-buy-thirty-five/incentives_sync-differential.json.gz",
+      "repro/pump_amm/legacy-buy-thirty-five/liquidity-differential.json.gz",
+      "repro/pump_amm/legacy-buy-thirty-five/migration_create-differential.json.gz",
+      "repro/pump_amm/legacy-buy-thirty-five/reserved-differential.json.gz",
+      "repro/pump_amm/legacy-buy-thirty-five/resize-differential.json.gz",
+      "repro/pump_amm/legacy-buy-thirty-five/sweep-differential.json.gz",
+      "repro/pump_amm/legacy-buy-thirty-five/trade_v2-differential.json.gz",
+      "repro/pump_amm/legacy-buy-thirty-five/transfer_creator-differential.json.gz",
+      "repro/pump_amm/legacy-buy-thirty-five/cashback-differential.json.gz",
+      "repro/pump_amm/legacy-buy-thirty-five/legacy_sell-differential.json.gz",
+      "repro/pump_amm/legacy-buy-thirty-five/legacy_buy-differential.json.gz"
     ],
     "compiler_family_candidates": [
       "v1.44",
@@ -159,10 +171,12 @@
     "compiler_family_evidence": "repro/pump_fees/compiler-family/HEADER-AND-BUILD-REPORT.md",
     "candidate_toolchain": "v1.44",
     "candidate_cargo_lock_sha256": "dd27205d8d47e4341c8438bb7adf812f38fae150625cec43303a963c319ddef5",
-    "candidate_build_identity_report": "repro/pump_amm/legacy-sell-thirty-three/main-scratch-identity.json",
-    "prior_checkpoint": "repro/pump_amm/compiler-v144",
+    "candidate_build_identity_report": "repro/pump_amm/legacy-buy-thirty-five/main-scratch-identity.json",
+    "prior_checkpoint": "repro/pump_amm/legacy-sell-thirty-three",
     "compiler_compatibility_report": "repro/pump_amm/compiler-v144/README.md",
-    "legacy_sell_recovery_report": "audit/pump_amm/LEGACY_SELL_RECOVERY.md"
+    "legacy_sell_recovery_report": "audit/pump_amm/LEGACY_SELL_RECOVERY.md",
+    "legacy_buy_recovery_report": "audit/pump_amm/LEGACY_BUY_RECOVERY.md",
+    "corrected_prior_gap_report": "repro/pump_amm/legacy-buy-thirty-five/sell-event-correction.json"
   },
   "pump_fees": {
     "source_reconstruction": "all_instruction_bodies_compiled_bounded_validation",
@@ -170,7 +184,7 @@
     "compiler": "unresolved",
     "dependencies": "unresolved",
     "build_flags": "unresolved",
-    "candidate_artifact": "repro/pump_fees/buyback-source-v144/pump_fees_candidate.so",
+    "candidate_artifact": "repro/pump_fees/authority-guard-v144/pump_fees_candidate.so",
     "full_byte_equality": false,
     "comparison_status": "DIFFERS_PARTIAL_IMPLEMENTATION",
     "compiler_candidates": [
@@ -211,15 +225,15 @@
       "update_fee_shares_v2",
       "initialize_fee_config"
     ],
-    "comparison_report": "repro/pump_fees/buyback-source-v144/build-comparison.json",
-    "build_log": "repro/pump_fees/buyback-source-v144/build.log.gz",
-    "validated_cases": 17381,
+    "comparison_report": "repro/pump_fees/authority-guard-v144/build-comparison.json",
+    "build_log": "repro/pump_fees/authority-guard-v144/build.log.gz",
+    "validated_cases": 17384,
     "deprecated_dispatches": [
       "revoke_fee_sharing_authority",
       "transfer_fee_sharing_authority"
     ],
     "signed_sequence_reports": [
-      "repro/pump_fees/buyback-source-v144/donation-sequence.json.gz"
+      "repro/pump_fees/authority-guard-v144/donation-sequence.json.gz"
     ],
     "compiler_family_candidates": [
       "v1.44",
@@ -231,16 +245,17 @@
     "preferred_compiler_candidate": "v1.44",
     "controlled_compiler_evidence": "repro/pump_fees/compiler-family/CONTROLLED-HELPER-REPORT.md",
     "validation_reports": [
-      "repro/pump_fees/buyback-source-v144/differential.json.gz",
-      "repro/pump_fees/buyback-source-v144/initializer-history.json.gz",
-      "repro/pump_fees/buyback-source-v144/initializer-rejections.json.gz",
-      "repro/pump_fees/buyback-source-v144/messages.json.gz",
-      "repro/pump_fees/buyback-source-v144/codec-rejections.json.gz",
-      "repro/pump_fees/buyback-source-v144/compared-values.json.gz"
+      "repro/pump_fees/authority-guard-v144/differential.json.gz",
+      "repro/pump_fees/authority-guard-v144/initializer-history.json.gz",
+      "repro/pump_fees/authority-guard-v144/initializer-rejections.json.gz",
+      "repro/pump_fees/authority-guard-v144/messages.json.gz",
+      "repro/pump_fees/authority-guard-v144/codec-rejections.json.gz",
+      "repro/pump_fees/authority-guard-v144/compared-values.json.gz",
+      "repro/pump_fees/authority-guard-v144/authority-logs.json.gz"
     ],
     "authentic_historical_replays": [
       {
-        "report": "repro/pump_fees/buyback-source-v144/initializer-history.json.gz",
+        "report": "repro/pump_fees/authority-guard-v144/initializer-history.json.gz",
         "transactions": "repro/pump_fees/initializer-history/transactions"
       }
     ],
@@ -248,7 +263,8 @@
       "All31 bodies are implemented, but bounded fixtures and partially isolated CPI-context checks do not establish complete historical source equivalence.",
       "Initializer uses two genuine signed historical messages against the later capture; signature verification is enabled and only blockhash freshness is adapted. This is not a full historical bank reproduction.",
       "All full-file byte comparisons remain different.",
-      "Three typed buyback guards and boxed update vault now reproduce compared-value logs, but source-location records and compute-unit consumption remain different. Nine focused compared-value comparisons repeat full-suite indices with stronger log assertions."
+      "Three typed buyback guards and boxed update vault now reproduce compared-value logs, but source-location records and compute-unit consumption remain different. Nine focused compared-value comparisons repeat full-suite indices with stronger log assertions.",
+      "Set-authority plain inequality guard now omits compared-public-key fields as in the original. Three focused cases repeat administrative inputs with stronger raw-key-log assertions; source locations and compute-unit consumption remain different."
     ],
     "previous_surfpool_checkpoint": {
       "artifact": "repro/pump_fees/all-thirtyone-v144/pump_fees_candidate.so",
@@ -260,16 +276,23 @@
     "error_enum_evidence": "repro/pump_fees/error-enum-v144/README.md",
     "external_codec_evidence": "repro/pump_fees/declared-programs-v144/README.md",
     "declared_program_evidence": "repro/pump_fees/declared-programs-v144/README.md",
-    "workspace_source_manifest": "repro/pump_fees/buyback-source-v144/source-sha256.json",
-    "main_scratch_identity_evidence": "repro/pump_fees/buyback-source-v144/main-scratch-identity.json",
+    "workspace_source_manifest": "repro/pump_fees/authority-guard-v144/source-sha256.json",
+    "main_scratch_identity_evidence": "repro/pump_fees/authority-guard-v144/main-scratch-identity.json",
     "buyback_source_evidence": "repro/pump_fees/buyback-source-v144/README.md",
     "buyback_body_evidence": "repro/pump_fees/buyback-source-v144/static/typed-macro-box-analysis.json",
     "compared_value_assertions": {
       "case_count": 9,
       "overlaps_full_suite_indices": true,
-      "report": "repro/pump_fees/buyback-source-v144/compared-values.json.gz"
+      "report": "repro/pump_fees/authority-guard-v144/compared-values.json.gz"
     },
-    "candidate_sha256": "f7697d83d22f2fa812bcdc5667399fb4c859d866f24d01c583f2b87c311ecbfb"
+    "candidate_sha256": "952a96cdb974517ec85ebeff3e2b5ec690029aaf3f822dfc22501e95bc3dba66",
+    "authority_guard_evidence": "repro/pump_fees/authority-guard-v144/README.md",
+    "authority_guard_body_evidence": "repro/pump_fees/authority-guard-v144/static/body-analysis.json",
+    "authority_log_assertions": {
+      "case_count": 3,
+      "overlaps_full_suite_cases": true,
+      "report": "repro/pump_fees/authority-guard-v144/authority-logs.json.gz"
+    }
   },
   "mayhem": {
     "source_reconstruction": "partial_handlers_compiled",
@@ -277,7 +300,7 @@
     "compiler": "unresolved",
     "dependencies": "unresolved",
     "build_flags": "unresolved",
-    "candidate_artifact": "repro/mayhem/eighteen/mayhem_recovered.so",
+    "candidate_artifact": "repro/mayhem/nineteen/mayhem_recovered.so",
     "full_byte_equality": false,
     "comparison_status": "DIFFERS_PARTIAL_IMPLEMENTATION",
     "implemented_handlers": [
@@ -298,19 +321,21 @@
       "withdraw_quote_admin",
       "sweep_fees",
       "sweep_fees_admin",
-      "burn_tokens"
+      "burn_tokens",
+      "sell"
     ],
-    "comparison_report": "repro/mayhem/eighteen/build-comparison.json",
-    "build_log": "repro/mayhem/eighteen/build.log",
-    "validated_cases": 2959,
+    "comparison_report": "repro/mayhem/nineteen/build-comparison.json",
+    "build_log": "repro/mayhem/nineteen/build.log",
+    "validated_cases": 3355,
     "validation_reports": [
-      "repro/mayhem/eighteen/admin-differential.json.gz",
-      "repro/mayhem/eighteen/fee_recipient-differential.json.gz",
-      "repro/mayhem/eighteen/extend-differential.json.gz",
-      "repro/mayhem/eighteen/withdraw-differential.json.gz",
-      "repro/mayhem/eighteen/quote_withdraw-differential.json.gz",
-      "repro/mayhem/eighteen/sweeps-differential.json.gz",
-      "repro/mayhem/eighteen/burn-sequences/verification.json"
+      "repro/mayhem/nineteen/admin-differential.json.gz",
+      "repro/mayhem/nineteen/fee_recipient-differential.json.gz",
+      "repro/mayhem/nineteen/extend-differential.json.gz",
+      "repro/mayhem/nineteen/withdraw-differential.json.gz",
+      "repro/mayhem/nineteen/quote_withdraw-differential.json.gz",
+      "repro/mayhem/nineteen/sweeps-differential.json.gz",
+      "repro/mayhem/nineteen/sell-differential.json.gz",
+      "repro/mayhem/nineteen/burn-sequences/verification.json"
     ],
     "compiler_family_candidates": [
       "v1.52",
@@ -321,8 +346,8 @@
     ],
     "compiler_family_evidence": "repro/compiler-fingerprints/REPORT.md",
     "genuine_snapshot_sequences": {
-      "report": "repro/mayhem/eighteen/burn-sequences/comparison.json",
-      "verification": "repro/mayhem/eighteen/burn-sequences/verification.json",
+      "report": "repro/mayhem/nineteen/burn-sequences/comparison.json",
+      "verification": "repro/mayhem/nineteen/burn-sequences/verification.json",
       "sequences": 3,
       "instruction_comparisons": 6,
       "signed_transactions": 12,
@@ -332,6 +357,14 @@
       ],
       "historical_replay": false
     },
-    "framework_candidate": "Anchor 1.0.0 with explicit System-ID checking and runtime event-PDA contexts; exact historical revision unresolved"
+    "framework_candidate": "Anchor 1.0.0 with explicit System-ID checking and runtime event-PDA contexts; exact historical revision unresolved",
+    "sell_validation": {
+      "synthetic_cases": 396,
+      "successful_cases": 134,
+      "signed_transactions": 792,
+      "report": "repro/mayhem/nineteen/sell-differential.json.gz",
+      "verification": "repro/mayhem/nineteen/sell-verification.json",
+      "historical_replay": false
+    }
   }
 }

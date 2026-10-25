@@ -33,53 +33,57 @@ jobs:
               python scripts/pump_validate_sell_accounting.py --host work/pump-sell-accounting-host --output work/pump-sell-accounting.json
           - suite: fees
             commands: |
-              python scripts/fees_validate_all.py --candidate repro/pump_fees/buyback-source-v144/pump_fees_candidate.so --output work/fee-handlers.json
-              python scripts/fees_donation_sequence.py --candidate repro/pump_fees/buyback-source-v144/pump_fees_candidate.so --output work/donation-sequence.json
-              python repro/pump_fees/initializer-history/replay_history.py --candidate repro/pump_fees/buyback-source-v144/pump_fees_candidate.so --output work/fees-init-history.json
-              python repro/pump_fees/initializer-history/negative_differential.py --candidate repro/pump_fees/buyback-source-v144/pump_fees_candidate.so --output work/fees-init-rejections.json
-              python scripts/fees_error_messages_differential.py --candidate repro/pump_fees/buyback-source-v144/pump_fees_candidate.so --output work/fees-error-messages.json
-              python scripts/fees_external_codec_differential.py --candidate repro/pump_fees/buyback-source-v144/pump_fees_candidate.so --output work/fees-codec-rejections.json
-              python repro/pump_fees/buyback-source-v144/compared_values.py --candidate repro/pump_fees/buyback-source-v144/pump_fees_candidate.so --output work/fees-compared-values.json
-              python repro/pump_fees/buyback-source-v144/verify_publication.py
+              python scripts/fees_validate_all.py --candidate repro/pump_fees/authority-guard-v144/pump_fees_candidate.so --output work/fee-handlers.json
+              python scripts/fees_donation_sequence.py --candidate repro/pump_fees/authority-guard-v144/pump_fees_candidate.so --output work/donation-sequence.json
+              python repro/pump_fees/initializer-history/replay_history.py --candidate repro/pump_fees/authority-guard-v144/pump_fees_candidate.so --output work/fees-init-history.json
+              python repro/pump_fees/initializer-history/negative_differential.py --candidate repro/pump_fees/authority-guard-v144/pump_fees_candidate.so --output work/fees-init-rejections.json
+              python scripts/fees_error_messages_differential.py --candidate repro/pump_fees/authority-guard-v144/pump_fees_candidate.so --output work/fees-error-messages.json
+              python scripts/fees_external_codec_differential.py --candidate repro/pump_fees/authority-guard-v144/pump_fees_candidate.so --output work/fees-codec-rejections.json
+              python repro/pump_fees/authority-guard-v144/compared_values.py --candidate repro/pump_fees/authority-guard-v144/pump_fees_candidate.so --output work/fees-compared-values.json
+              python repro/pump_fees/authority-guard-v144/authority_logs.py --candidate repro/pump_fees/authority-guard-v144/pump_fees_candidate.so --output work/fees-authority-logs.json
+              python repro/pump_fees/authority-guard-v144/verify_publication.py
           - suite: pump
             commands: |
-              python scripts/pump_validate_all.py --candidate repro/pump/creator-thirty/candidate.so --output work/pump-handlers.json.gz
+              python scripts/pump_validate_all.py --candidate repro/pump/creator-thirtythree/candidate.so --output work/pump-handlers.json.gz
           - suite: pump-amm
             commands: |
-              python scripts/pump_amm_admin_differential.py --candidate repro/pump_amm/legacy-sell-thirty-three/pump_amm_recovered.so --output work/pump-amm-admin.json
-              python scripts/pump_amm_buyback_differential.py --candidate repro/pump_amm/legacy-sell-thirty-three/pump_amm_recovered.so --output work/pump-amm-buyback.json
-              python scripts/pump_amm_fee_config_differential.py --candidate repro/pump_amm/legacy-sell-thirty-three/pump_amm_recovered.so --output work/pump-amm-fee_config.json
-              python scripts/pump_amm_resize_differential.py --creator --candidate repro/pump_amm/legacy-sell-thirty-three/pump_amm_recovered.so --output work/pump-amm-resize.json
-              python scripts/pump_amm_reserved_differential.py --candidate repro/pump_amm/legacy-sell-thirty-three/pump_amm_recovered.so --output work/pump-amm-reserved.json
-              python scripts/pump_amm_accumulator_differential.py --candidate repro/pump_amm/legacy-sell-thirty-three/pump_amm_recovered.so --output work/pump-amm-accumulator.json
-              python scripts/pump_amm_liquidity_differential.py --candidate repro/pump_amm/legacy-sell-thirty-three/pump_amm_recovered.so --output work/pump-amm-liquidity.json
-              python scripts/pump_amm_trade_v2_differential.py --candidate repro/pump_amm/legacy-sell-thirty-three/pump_amm_recovered.so --output work/pump-amm-trade-v2.json
-              python scripts/pump_amm_create_differential.py --candidate repro/pump_amm/legacy-sell-thirty-three/pump_amm_recovered.so --output work/pump-amm-create.json
-              python scripts/pump_amm_migration_create_differential.py --candidate repro/pump_amm/legacy-sell-thirty-three/pump_amm_recovered.so --output work/pump-amm-migration-create.json
-              python scripts/pump_amm_boost_differential.py --candidate repro/pump_amm/legacy-sell-thirty-three/pump_amm_recovered.so --output work/pump-amm-boost.json
-              python scripts/pump_amm_sweep_differential.py --candidate repro/pump_amm/legacy-sell-thirty-three/pump_amm_recovered.so --output work/pump-amm-sweep.json
-              python scripts/pump_amm_extend_differential.py --candidate repro/pump_amm/legacy-sell-thirty-three/pump_amm_recovered.so --output work/pump-amm-extend.json
-              python scripts/pump_amm_collect_differential.py --candidate repro/pump_amm/legacy-sell-thirty-three/pump_amm_recovered.so --output work/pump-amm-collect.json
-              python scripts/pump_amm_transfer_creator_differential.py --candidate repro/pump_amm/legacy-sell-thirty-three/pump_amm_recovered.so --output work/pump-amm-transfer-creator.json
-              python scripts/pump_amm_creator_reassignment_differential.py --candidate repro/pump_amm/legacy-sell-thirty-three/pump_amm_recovered.so --output work/pump-amm-creator-reassignment.json
-              python scripts/pump_amm_creator_reassignment_cto_differential.py --candidate repro/pump_amm/legacy-sell-thirty-three/pump_amm_recovered.so --output work/pump-amm-creator-reassignment-cto.json
-              python scripts/pump_amm_incentives_differential.py --family sync --candidate repro/pump_amm/legacy-sell-thirty-three/pump_amm_recovered.so --output work/pump-amm-incentives-sync.json
-              python scripts/pump_amm_incentives_differential.py --family admin --candidate repro/pump_amm/legacy-sell-thirty-three/pump_amm_recovered.so --output work/pump-amm-incentives-admin.json
-              python scripts/pump_amm_incentives_differential.py --family claim --candidate repro/pump_amm/legacy-sell-thirty-three/pump_amm_recovered.so --output work/pump-amm-incentives-claim.json
-              python scripts/pump_amm_cashback_differential.py --candidate repro/pump_amm/legacy-sell-thirty-three/pump_amm_recovered.so --output work/pump-amm-cashback.json
-              python scripts/pump_amm_legacy_sell_differential.py --candidate repro/pump_amm/legacy-sell-thirty-three/pump_amm_recovered.so --output work/pump-amm-legacy-sell.json
+              python scripts/pump_amm_admin_differential.py --candidate repro/pump_amm/legacy-buy-thirty-five/pump_amm_recovered.so --output work/pump-amm-admin.json
+              python scripts/pump_amm_buyback_differential.py --candidate repro/pump_amm/legacy-buy-thirty-five/pump_amm_recovered.so --output work/pump-amm-buyback.json
+              python scripts/pump_amm_fee_config_differential.py --candidate repro/pump_amm/legacy-buy-thirty-five/pump_amm_recovered.so --output work/pump-amm-fee_config.json
+              python scripts/pump_amm_resize_differential.py --creator --candidate repro/pump_amm/legacy-buy-thirty-five/pump_amm_recovered.so --output work/pump-amm-resize.json
+              python scripts/pump_amm_reserved_differential.py --candidate repro/pump_amm/legacy-buy-thirty-five/pump_amm_recovered.so --output work/pump-amm-reserved.json
+              python scripts/pump_amm_accumulator_differential.py --candidate repro/pump_amm/legacy-buy-thirty-five/pump_amm_recovered.so --output work/pump-amm-accumulator.json
+              python scripts/pump_amm_liquidity_differential.py --candidate repro/pump_amm/legacy-buy-thirty-five/pump_amm_recovered.so --output work/pump-amm-liquidity.json
+              python scripts/pump_amm_trade_v2_differential.py --candidate repro/pump_amm/legacy-buy-thirty-five/pump_amm_recovered.so --output work/pump-amm-trade-v2.json
+              python scripts/pump_amm_create_differential.py --candidate repro/pump_amm/legacy-buy-thirty-five/pump_amm_recovered.so --output work/pump-amm-create.json
+              python scripts/pump_amm_migration_create_differential.py --candidate repro/pump_amm/legacy-buy-thirty-five/pump_amm_recovered.so --output work/pump-amm-migration-create.json
+              python scripts/pump_amm_boost_differential.py --candidate repro/pump_amm/legacy-buy-thirty-five/pump_amm_recovered.so --output work/pump-amm-boost.json
+              python scripts/pump_amm_sweep_differential.py --candidate repro/pump_amm/legacy-buy-thirty-five/pump_amm_recovered.so --output work/pump-amm-sweep.json
+              python scripts/pump_amm_extend_differential.py --candidate repro/pump_amm/legacy-buy-thirty-five/pump_amm_recovered.so --output work/pump-amm-extend.json
+              python scripts/pump_amm_collect_differential.py --candidate repro/pump_amm/legacy-buy-thirty-five/pump_amm_recovered.so --output work/pump-amm-collect.json
+              python scripts/pump_amm_transfer_creator_differential.py --candidate repro/pump_amm/legacy-buy-thirty-five/pump_amm_recovered.so --output work/pump-amm-transfer-creator.json
+              python scripts/pump_amm_creator_reassignment_differential.py --candidate repro/pump_amm/legacy-buy-thirty-five/pump_amm_recovered.so --output work/pump-amm-creator-reassignment.json
+              python scripts/pump_amm_creator_reassignment_cto_differential.py --candidate repro/pump_amm/legacy-buy-thirty-five/pump_amm_recovered.so --output work/pump-amm-creator-reassignment-cto.json
+              python scripts/pump_amm_incentives_differential.py --family sync --candidate repro/pump_amm/legacy-buy-thirty-five/pump_amm_recovered.so --output work/pump-amm-incentives-sync.json
+              python scripts/pump_amm_incentives_differential.py --family admin --candidate repro/pump_amm/legacy-buy-thirty-five/pump_amm_recovered.so --output work/pump-amm-incentives-admin.json
+              python scripts/pump_amm_incentives_differential.py --family claim --candidate repro/pump_amm/legacy-buy-thirty-five/pump_amm_recovered.so --output work/pump-amm-incentives-claim.json
+              python scripts/pump_amm_cashback_differential.py --candidate repro/pump_amm/legacy-buy-thirty-five/pump_amm_recovered.so --output work/pump-amm-cashback.json
+              python scripts/pump_amm_legacy_sell_differential.py --candidate repro/pump_amm/legacy-buy-thirty-five/pump_amm_recovered.so --output work/pump-amm-legacy-sell.json
+              python scripts/pump_amm_legacy_buy_differential.py --candidate repro/pump_amm/legacy-buy-thirty-five/pump_amm_recovered.so --output work/pump-amm-legacy-buy.json
           - suite: mayhem
             commands: |
-              python scripts/mayhem_validate_admin.py --candidate repro/mayhem/eighteen/mayhem_recovered.so --output work/mayhem-admin.json
-              python scripts/mayhem_validate_fee_recipient.py --candidate repro/mayhem/eighteen/mayhem_recovered.so --output work/mayhem-recipient.json
-              python scripts/mayhem_validate_extend.py --candidate repro/mayhem/eighteen/mayhem_recovered.so --output work/mayhem-extend.json
-              python scripts/mayhem_validate_withdraw.py --candidate repro/mayhem/eighteen/mayhem_recovered.so --output work/mayhem-withdraw.json
-              python scripts/mayhem_validate_quote_withdraw.py --candidate repro/mayhem/eighteen/mayhem_recovered.so --output work/mayhem-quote-withdraw.json
-              python scripts/mayhem_validate_sweeps.py --candidate repro/mayhem/eighteen/mayhem_recovered.so --output work/mayhem-sweeps.json
+              python scripts/mayhem_validate_admin.py --candidate repro/mayhem/nineteen/mayhem_recovered.so --output work/mayhem-admin.json
+              python scripts/mayhem_validate_fee_recipient.py --candidate repro/mayhem/nineteen/mayhem_recovered.so --output work/mayhem-recipient.json
+              python scripts/mayhem_validate_extend.py --candidate repro/mayhem/nineteen/mayhem_recovered.so --output work/mayhem-extend.json
+              python scripts/mayhem_validate_withdraw.py --candidate repro/mayhem/nineteen/mayhem_recovered.so --output work/mayhem-withdraw.json
+              python scripts/mayhem_validate_quote_withdraw.py --candidate repro/mayhem/nineteen/mayhem_recovered.so --output work/mayhem-quote-withdraw.json
+              python scripts/mayhem_validate_sweeps.py --candidate repro/mayhem/nineteen/mayhem_recovered.so --output work/mayhem-sweeps.json
+              python scripts/mayhem_sell_differential.py --candidate repro/mayhem/nineteen/mayhem_recovered.so --output work/mayhem-sell.json
+              python scripts/verify_mayhem_sell.py --candidate repro/mayhem/nineteen/mayhem_recovered.so --receipts work/mayhem-sell.json --output work/mayhem-sell-verification.json
               mkdir -p work/mayhem-captured-fixtures
-              python -c "import tarfile; tarfile.open('repro/mayhem/eighteen/captured-fixtures.tar.gz').extractall('work/mayhem-captured-fixtures', filter='data')"
+              python -c "import tarfile; tarfile.open('repro/mayhem/nineteen/captured-fixtures.tar.gz').extractall('work/mayhem-captured-fixtures', filter='data')"
               python work/mayhem-captured-fixtures/verify_fixtures.py
-              python scripts/mayhem_burn_sequence.py --fixtures work/mayhem-captured-fixtures --candidate repro/mayhem/eighteen/mayhem_recovered.so --output work/mayhem-burn-replay
+              python scripts/mayhem_burn_sequence.py --fixtures work/mayhem-captured-fixtures --candidate repro/mayhem/nineteen/mayhem_recovered.so --output work/mayhem-burn-replay
               python scripts/verify_mayhem_burn_sequence.py --fixtures work/mayhem-captured-fixtures --receipts work/mayhem-burn-replay
           - suite: imported-lab
             commands: |

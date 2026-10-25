@@ -40,9 +40,10 @@ keys and synthetic local accounts; they do not prove every live sharing transiti
 
 The [prior v1.44 checkpoint](../../repro/pump_fees/all-thirtyone-v144/README.md)
 passes 112 independent Surfpool comparisons with 224 signed local transactions.
-All Surfpool counts below refer to that retained executable. The current declared-program
-codec build passes 17,372 SBF checks and the ten-step persistent donation
-sequence. Its source hashes and receipts are indexed by `repro/status.json`.
+All Surfpool counts below refer to that retained executable. The current authority-guard
+build passes 17,384 SBF comparisons and the ten-step persistent donation sequence.
+Twelve focused comparisons repeat existing indices/keys with stronger raw-log
+assertions. Its source hashes and receipts are indexed by `repro/status.json`.
 The enum restores four omitted IDL variants and the original literal `format`
 messages for errors 6003 and 6011.
 
@@ -105,7 +106,7 @@ The global initializer reads the older 740-byte Pump Global layout, authenticate
 its authority and PDA, creates the 338-byte Fees global with canonical bump, and
 emits the exact event log and self-CPI. Its 180 comparisons include prefunding,
 malformed accounts, authorization, argument boundaries and CPI rollback. The
-31-instruction candidate passes 17,372 cases; full-file byte equality remains false.
+31-instruction candidate passes 17,384 comparisons; full-file byte equality remains false.
 
 FeeConfig deserialization is gated by allocation: the normal schedule is read at
 2,512 bytes, the stable schedule at 4,073, and exotic flat fees at 4,097. Earlier
@@ -195,7 +196,7 @@ differ. Nine malformed-account cases also reproduce the exact Anchor error lines
 including filename and line. This does not prove a unique original macro, IDL
 revision, compiler or historical source tree.
 
-The clean candidate is 766,800 bytes with SHA-256
+The retained declared-program candidate is 766,800 bytes with SHA-256
 `cf34104a46c65538e7de734abfa9d5d74102639257969cc4e51eb36a31cbd0eb`.
 The [declared-program evidence](../../repro/pump_fees/declared-programs-v144/README.md)
 retains whole-workspace/IDL inputs, the actual build helpers, bounded decoder
@@ -203,3 +204,26 @@ comparisons, all 17,372 comparison receipts and the ten-step donation sequence.
 It preserves the earlier helper used for the isolated experiment separately from
 the corrected two-file helper used for the main build. Whole-file byte equality
 remains false, and the older Surfpool receipts are not reattributed to this ELF.
+
+## Recovered guard and account-layout details
+
+Three buyback guards use `require_gt!(8u8, index, InvalidBuybackIndex)` and the
+shared update context boxes its vault account. Their instruction bodies and
+value-formatting helper support these source choices, and nine normally signed
+index-7/8/255 comparisons assert exact compared-value logs. The separate
+[buyback checkpoint](../../repro/pump_fees/buyback-source-v144/README.md) retains
+the controlled macro, integer-type, and account-layout builds.
+
+`set_authority` uses a plain public-key inequality guard. Unlike
+`require_keys_neq!`, it does not attach compared-key fields to `InvalidAdmin`,
+matching the original error dataflow and logs. Its 3,320-byte body has the
+original relocation pattern and fourteen mapped internal calls; after address
+normalization, only source filename length and line constants differ.
+
+The [authority-guard checkpoint](../../repro/pump_fees/authority-guard-v144/README.md)
+retains the clean main build, its exact scratch identity, all 22 source/workspace/IDL
+inputs, and 17,384 comparison receipts plus the donation sequence. Its ELF is
+768,824 bytes, SHA-256
+`952a96cdb974517ec85ebeff3e2b5ec690029aaf3f822dfc22501e95bc3dba66`.
+Source locations, compute-unit consumption and the complete executable still
+differ from the capture; these checks do not establish unique historical source.

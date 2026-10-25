@@ -2,6 +2,8 @@
 //! This crate is not the historical source or a byte-identical replacement.
 use anchor_lang::prelude::*;
 mod state;
+mod legacy_buy;
+use legacy_buy::*;
 mod legacy_sell;
 use legacy_sell::*;
 mod cashback;
@@ -32,6 +34,8 @@ declare_id!("pAMMBay6oceH9fJKBRHGP5D4bD4sWpmSwMn52FMfXEA");
 #[program]
 pub mod pump_amm_recovered {
     use super::*;
+    pub fn buy<'info>(ctx:Context<'_,'_,'_,'info,LegacyBuy<'info>>,base_amount_out:u64,max_quote_amount_in:u64,track_volume:OptionBool)->Result<()>{legacy_buy::execute(ctx,base_amount_out,max_quote_amount_in,track_volume.0,false)}
+    pub fn buy_exact_quote_in<'info>(ctx:Context<'_,'_,'_,'info,LegacyBuy<'info>>,spendable_quote_in:u64,min_base_amount_out:u64,track_volume:OptionBool)->Result<()>{legacy_buy::execute(ctx,spendable_quote_in,min_base_amount_out,track_volume.0,true)}
     pub fn sell<'info>(ctx:Context<'_,'_,'_,'info,LegacySell<'info>>,base_amount_in:u64,min_quote_amount_out:u64)->Result<()>{legacy_sell::execute(ctx,base_amount_in,min_quote_amount_out)}
     pub fn claim_cashback(ctx:Context<ClaimCashback>)->Result<()>{cashback::claim(ctx)}
     pub fn sync_user_volume_accumulator(ctx:Context<SyncUserVolumeAccumulator>)->Result<()>{incentives::sync(ctx)}

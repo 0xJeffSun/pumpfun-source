@@ -1,6 +1,6 @@
 # Mayhem: recovered administration paths
 
-The eighteen implemented paths and 2,959 differential cases are a partial security
+The nineteen implemented paths and 3,355 differential cases are a partial security
 review. No complete byte-identical program or complete Mayhem audit exists yet.
 
 ## Observed controls and behavior
@@ -41,7 +41,8 @@ self-CPI; both are reproduced and compared.
 ## Dependency observations
 
 Covered paths exercise the System program, Mayhem self-event entrypoint, and
-captured token/ATA dependencies. Trading dependency behavior is still unresolved.
+captured token/ATA dependencies. Legacy sell now exercises the captured Pump CPI;
+the remaining trade paths' dependency behavior is still unresolved.
 The original Mayhem ELF contains full 32-byte constants for Pump at 0xae2ac,
 PumpSwap at 0xae2e2, SPL Token at 0xad168/0xae302, and Token2022 at 0xae322.
 This locates references for remaining CPI recovery; it is not proof of each
@@ -51,8 +52,8 @@ scan does not prove absence of use. No unobserved Metaplex/relay CPI is assumed.
 
 ## Remaining work
 
-Seven currently identified paths remain unimplemented: Mayhem state
-initialization and six Pump/PumpSwap buy/sell paths. Their
+Six currently identified paths remain unimplemented: Mayhem state
+initialization and five other Pump/PumpSwap buy/sell paths. Their
 account/CPI constraints, price impact, risk accounting, rate limits, arithmetic,
 rollback and dependency equivalence remain to be recovered and audited.
 Historical source/build fidelity, executable layout and all bytes remain
@@ -148,7 +149,7 @@ The initially suspected permissionless recipient-creation concern has no
 demonstrated fund-diversion path in these recovered instructions: initialization
 stores no caller beneficiary, and sweep/withdraw destinations require the stored
 trader or administrator. This is a bounded negative finding, not a declaration
-that the entire deployed program is secure. The eight absent handlers, live
+that the entire deployed program is secure. The six absent handlers, live
 configuration reachability and complete dependency source fidelity remain open.
 
 ## Genuine burn sequences
@@ -167,3 +168,32 @@ The framework moved to the Anchor 1.0 family following static parser/CPI evidenc
 An explicit source wrapper preserves original System-address checking, correcting
 25 errors in an earlier draft. All inherited 2,953 cases pass after this change.
 See [the complete evidence package](../../repro/mayhem/eighteen/README.md).
+
+## Legacy sell
+
+The recovered `sell` requires the writable signing trader named by GlobalParams,
+the expected GlobalParams/state/vault PDAs, typed mint/token owners and ATA
+relations, and the fixed Token-2022 and Mayhem program IDs. It retains the original
+Mayhem-derived `bonding-curve-v2` PDA. Its distinct external curve decoder pads
+short data to 141 zero-filled bytes and validates five boolean fields; burn's
+strict curve decoder remains unchanged. Truncated data is still constrained by
+subsequent arithmetic and the real Pump CPI, and is not treated as an authorization
+bypass.
+
+The 396 ordinary-signature synthetic cases compare complete watched account
+state, balance/owner/rent metadata, errors, return data, events and inner CPI.
+The original and candidate process the same signed transaction. All 134 successes
+match the quote, 16-account Pump CPI, checked signed-128-bit accounting and 303-byte
+event; all 262 rejections roll back watched business state. Rate/deadline ordering,
+inclusive tolerance boundaries, caps, malformed accounts, every curve prefix
+through 141 bytes, program substitutions, arithmetic extremes and post-CPI
+overflow are covered. The simulator's stored trader is a genuine test-owned
+keypair. No privileged initializer, foreign signature or authorization weakening
+is used. This does not establish reachability of extreme synthetic states on the
+deployed program or full historical sell replay.
+
+All inherited cases and genuine burn sequences pass against the same combined
+19-handler artifact. Compute usage and source-location diagnostics differ; the
+zero-SOL panic also has an additional candidate Option-unwrapping message while
+the runtime error and full rollback match. No confirmed vulnerability is claimed.
+See [the nineteen-handler evidence package](../../repro/mayhem/nineteen/README.md).

@@ -274,7 +274,7 @@ pub fn execute<'info>(
     // Payouts consume remaining accounts only when a creator/cashback fee is nonzero.
     let mut next = 0;
     if creator_fee > 0 {
-        if a.pool.is_cashback_coin {
+        if a.pool.is_cashback_coin && creator_fee > 0 {
             cashback(a, ctx.remaining_accounts, creator_fee, signer)?;
             next = 2;
         }
@@ -358,22 +358,22 @@ pub fn execute<'info>(
         protocol_fee_recipient: a.protocol_fee_recipient.key(),
         protocol_fee_recipient_token_account: a.protocol_fee_recipient_token_account.key(),
         coin_creator: a.pool.coin_creator,
-        coin_creator_fee_basis_points: if a.pool.is_cashback_coin {
+        coin_creator_fee_basis_points: if a.pool.is_cashback_coin && creator_fee > 0 {
             0
         } else {
             selected.creator_fee_bps
         },
-        coin_creator_fee: if a.pool.is_cashback_coin {
+        coin_creator_fee: if a.pool.is_cashback_coin && creator_fee > 0 {
             0
         } else {
             creator_fee
         },
-        cashback_fee_basis_points: if a.pool.is_cashback_coin {
+        cashback_fee_basis_points: if a.pool.is_cashback_coin && creator_fee > 0 {
             selected.creator_fee_bps
         } else {
             0
         },
-        cashback: if a.pool.is_cashback_coin {
+        cashback: if a.pool.is_cashback_coin && creator_fee > 0 {
             creator_fee
         } else {
             0

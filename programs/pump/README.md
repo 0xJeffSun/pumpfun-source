@@ -1,6 +1,6 @@
 # Partial Pump reconstruction
 
-The Anchor 0.31.1 source implements thirty recovered handlers:
+The Anchor 0.31.1 source implements thirty-three recovered handlers:
 `toggle_create_v2`, `toggle_mayhem_mode`, `toggle_cashback_enabled`, and
 `set_max_curve_depth`, `set_virtual_quote_reserves`, `update_buyback_config`,
 `update_creator_fee_config`, `update_holder_reward_config`, `add_quote_mint`, and
@@ -10,13 +10,15 @@ The Anchor 0.31.1 source implements thirty recovered handlers:
 `get_minimum_distributable_fee`, `collect_creator_fee_v2`, `extend_account`,
 `sync_user_volume_accumulator`, `sweep_creator_fee`, `sweep_protocol_fee`,
 `migrate_bonding_curve_creator`, `admin_cto`, `set_params`, `set_creator`,
-`set_metaplex_creator`, `admin_set_idl_authority` and legacy `create`. It also implements **partial `sell_v3`, `buy_v3`, `buy_exact_quote_in_v3` and `create_v2` paths**.
+`set_metaplex_creator`, `admin_set_idl_authority` and legacy `create`, `sell`, `sell_v2` and `migrate`. It also implements **partial `sell_v3`, `buy_v3`, `buy_exact_quote_in_v3` and `create_v2` paths**.
 It is incomplete and is not a deployable replacement.
 
-The current frozen checkpoint is [creator-thirty](../../repro/pump/creator-thirty/README.md):
-5,139 differential cases across 22 suites and 346 Surfpool comparisons using
-692 signed transactions across 15 runners passed. Its candidate is 955,072 bytes,
-SHA-256 `273e07ca4d27788bbf8eedd8a901b521ebce7406400610f4edce5f1198940ab2`.
+The current frozen checkpoint is [creator-thirtythree](../../repro/pump/creator-thirtythree/README.md):
+6,338 differential cases across 28 suites and 694 Surfpool comparisons using
+1,388 signed transactions across 21 runners passed. Its candidate is 1,129,592 bytes,
+SHA-256 `85358197282b1c5579dbccc623d407bab2e04e0fae1c72e1b6066a5f8bc25292`.
+It adds legacy sell, sell_v2 and migration, expands quote-control creation and
+corrects stored creator-fee overrides and v3 exact-quote completion accounting.
 Full byte equality remains false. Earlier checkpoint counts below describe their
 historical source snapshots.
 

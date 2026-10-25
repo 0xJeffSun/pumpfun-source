@@ -41,3 +41,16 @@ Whole-file and parsed ELF-extent identity remain false. The first different byte
 `create_config`, and `multi_hop_swap`. The v1.44 lock and compiler are compatibility
 controls, not proof of the original graph. The prior AMM32 checkpoints and separate
 frozen security scan remain unchanged.
+
+
+## AMM35 event correction
+
+A subsequent signed cross-case showed that AMM33's zero-fee cashback sell succeeds
+with matching account state/payouts but mislabels creator/cashback basis points in the
+event and event CPI. The immutable negative receipt is retained at
+`repro/pump_amm/legacy-sell-zero-fee-gap`; AMM33 remains a historical affected artifact.
+AMM35 changes classification only when `creator_fee > 0`. Sixteen added regressions
+pass, and `repro/pump_amm/legacy-buy-thirty-five/sell-event-correction.json` binds the
+original negative case to an exact original result and signed transaction in the new
+passing sell suite. The current sell suite has 575 cases. See `LEGACY_BUY_RECOVERY.md`
+for the AMM35 build, full 23-suite validation and executable identity.

@@ -171,5 +171,14 @@ def main():
    mutate(pool,211,bytes(value))(h,m);vault=Pubkey.find_program_address([b'creator_vault',bytes(value)],PROGRAM)[0];ata=Pubkey.find_program_address([bytes(vault),bytes(TOKEN),bytes(quote)],ATA)[0];h.vm.set_account(vault,Account(10**9,b'',Pubkey.default()));h.vm.set_account(ata,Account(2039280,token(quote,vault,0,True),TOKEN));m[17]=AccountMeta(ata,False,True);m[18]=AccountMeta(vault,False,False)
    if value==Pubkey.default():del m[21]
   test('creator='+str(value),overrides=creator_override)
+
+ for amount in [1,2,100,1000]:
+  for zero_creator in [False,True]:
+   for holder in [False,True]:
+    def zero_cashback(h,m,zero_creator=zero_creator,holder=holder):
+     mutate(pool,244,b'\1')(h,m);mutate(pool,270,bytes([holder]))(h,m);del m[21]
+     if zero_creator:
+      creator=Pubkey.default();mutate(pool,211,bytes(creator))(h,m);vault=Pubkey.find_program_address([b'creator_vault',bytes(creator)],PROGRAM)[0];ata=Pubkey.find_program_address([bytes(vault),bytes(TOKEN),bytes(quote)],ATA)[0];h.vm.set_account(vault,Account(10**9,b'',Pubkey.default()));h.vm.set_account(ata,Account(2039280,token(quote,vault,0,True),TOKEN));m[17]=AccountMeta(ata,False,True);m[18]=AccountMeta(vault,False,False)
+    test('zero-fee-cashback-event='+str((amount,zero_creator,holder)),amount=amount,overrides=zero_cashback)
  failures=[i for i,r in enumerate(rows) if r['diff']];sha=lambda p:hashlib.sha256(pathlib.Path(p).read_bytes()).hexdigest();report={'scope':'AMM legacy sell scratch differential; ordinary verified signatures, synthetic signer/state fixtures and actual captured token/ATA/Fees CPI. Not whole-program equality.','candidate_sha256':sha(a.candidate),'original_sha256':sha(ROOT/'evidence/original/pump_amm/deployed.so'),'script_sha256':sha(__file__),'case_count':len(rows),'mismatches':failures,'cases':rows};a.output.parent.mkdir(exist_ok=True,parents=True);a.output.write_text(json.dumps(report,separators=(',',':'))+'\n');print(json.dumps({'case_count':len(rows),'mismatches':failures}));raise SystemExit(bool(failures))
 if __name__=='__main__':main()

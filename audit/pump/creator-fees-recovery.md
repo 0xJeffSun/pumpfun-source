@@ -1,16 +1,23 @@
 # Pump creator-fee recovery review
 
-The current creator-thirty checkpoint implements 30 recovered handlers and four
-partial paths: buy_v3, sell_v3, buy_exact_quote_in_v3 and create_v2. All 5,139
-differential cases across 22 suites and 346 Surfpool comparisons (692 signed
-transactions across 15 runners) passed. Full-file byte identity remains false.
-The captured original is 10,485,715 bytes with SHA-256
+The current creator-thirtythree checkpoint implements 33 recovered handlers and
+four partial paths: buy_v3, sell_v3, buy_exact_quote_in_v3 and create_v2. All 6,338
+differential cases across 28 suites and 694 Surfpool comparisons (1,388 signed
+transactions across 21 runners) passed. Full-file byte identity remains false.
+The original capture is 10,485,715 bytes, SHA256
 `7a19affaa2c6187e04a5fe0ea298cee81fa5eb8c24cfcc30d85f615e89f7b02d`.
-The current v1.44 candidate is 955,072 bytes with SHA-256
-`273e07ca4d27788bbf8eedd8a901b521ebce7406400610f4edce5f1198940ab2`.
-[The frozen package](../../repro/pump/creator-thirty/README.md) binds 22 source
-inputs, 52 harness files, the independent build and all receipts. Earlier counts
-remain historical evidence rather than the current candidate's totals.
+The clean v1.44 candidate is 1,129,592 bytes, SHA256
+`85358197282b1c5579dbccc623d407bab2e04e0fae1c72e1b6066a5f8bc25292`.
+[The frozen package](../../repro/pump/creator-thirtythree/README.md) binds 25 source
+inputs, 68 harness files and 205 manifest entries. All 1,388 transaction signatures
+were independently verified. Earlier checkpoint counts remain historical evidence.
+
+This checkpoint adds legacy sell, sell_v2 and legacy migration, and extends partial
+creation to whitelisted quote/control-consumer paths. It corrects stored creator-fee
+overrides, exact-input fee overflow order and completion reserve accounting in the
+reconstruction. These are reconstruction differences, not original-program
+vulnerability findings. Mayhem/nested creation and untested v3 quote routes remain
+incomplete. Compiler and dependency identity remain unresolved.
 
 ## Recovered behavior
 

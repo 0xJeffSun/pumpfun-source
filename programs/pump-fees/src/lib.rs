@@ -155,7 +155,7 @@ pub mod pump_fees_candidate {
 
     #[allow(unused_variables)]
     pub fn set_authority(ctx: Context<SetAuthority>, new_authority: Pubkey) -> Result<()> {
-        require_keys_neq!(new_authority, Pubkey::default(), FeeError::InvalidAdmin);
+        require!(new_authority != Pubkey::default(), FeeError::InvalidAdmin);
         let old_authority = ctx.accounts.fee_program_global.authority;
         ctx.accounts.fee_program_global.authority = new_authority;
         let event = SetAuthorityEvent { timestamp: Clock::get()?.unix_timestamp, old_authority, new_authority };

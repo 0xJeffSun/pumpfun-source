@@ -17,14 +17,15 @@ python3 scripts/test_tooling.py
 A partial Rust fee-tier selector now matches the original instruction sequence except
 for unresolved relocations with platform-tools v1.43, and passes 1,215 local
 differential cases. Recovered quote-mint routing additionally passes 9,428 original-program
-queries, but its compiled instructions still differ. All 31 Fees instruction bodies pass 17,381 SBF comparisons; thirty recovered Pump
-handlers plus four partial creation/trading paths pass 5,139. Thirty-three PumpSwap
-handlers pass 15,194 comparisons, and eighteen Mayhem handlers pass 2,959. These
-40,673 saved comparisons cover 112 implemented handlers and four partial paths, not the
-complete programs. Nine focused Fees checks repeat prior index values with stronger log assertions. Two Fees handlers are deprecated dispatches that always reject.
-The published Pump partial v3 paths have a known stored creator-fee override gap;
-expanded signed probes found it after the saved checkpoint. Corrected source is
-under validation and is not included in the published candidate.
+queries, but its compiled instructions still differ. All 31 Fees instruction bodies pass 17,384 SBF comparisons; thirty-three recovered Pump
+handlers plus four partial creation/trading paths pass 6,338. Thirty-five PumpSwap
+handlers pass 16,221 comparisons, and nineteen Mayhem handlers pass 3,355. These
+43,298 saved comparisons cover 118 implemented handlers and four partial paths, not the
+complete programs. Twelve focused Fees checks repeat prior inputs with stronger log assertions. Two Fees handlers are deprecated dispatches that always reject.
+The current Pump checkpoint corrects the previously reported stored creator-fee
+override gap and passes 694 additional Surfpool comparisons with 1,388 signed transactions.
+The current PumpSwap checkpoint corrects the earlier zero-fee cashback event mismatch;
+the [signed negative probe](repro/pump_amm/legacy-sell-zero-fee-gap/README.md) preserves evidence against the prior executable.
 A separate native accounting fragment is tested against 206
 original Pump sell cases. See [the recovery experiment](docs/FEE_SELECTION.md).
 

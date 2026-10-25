@@ -1,8 +1,8 @@
 # Partial PumpSwap source recovery
 
-Thirty-three of 38 published handlers are implemented from captured-program behavior
-and disassembly, including legacy sell and its direct fee and cashback payouts.
-Five handlers remain absent. This is not a replacement for the deployed program
+Thirty-five of 38 published handlers are implemented from captured-program behavior
+and disassembly, including legacy buy, exact-quote buy, sell and their direct fee/cashback payouts.
+Three handlers remain absent. This is not a replacement for the deployed program
 and does not match its bytes.
 
 ```sh
@@ -25,12 +25,14 @@ proof of the historical compiler/dependencies. The preceding 32-handler compiler
 build provenance, artifact identity and limits. Cache preparation requires the
 pinned archives to be locally available; it does not download them.
 
-The legacy sell checkpoint adds 559 bounded comparisons to the previous 14,635,
-for 15,194 passing comparisons across 22 suites. Its clean main-path v1.44 build
-uses the same lockfile. See
-[`repro/pump_amm/legacy-sell-thirty-three`](../../repro/pump_amm/legacy-sell-thirty-three/README.md)
-and [`audit/pump_amm/LEGACY_SELL_RECOVERY.md`](../../audit/pump_amm/LEGACY_SELL_RECOVERY.md)
-for the executable identity, payout and cashback behavior, provenance, and limits.
+The legacy buy checkpoint adds two bodies and corrects zero-fee cashback sell event
+labels. All 23 suites pass 16,221 comparisons, including all previous cases, 16 sell
+regressions, and 1,011 buy/exact-quote cases. Its clean main-path build uses the same
+v1.44 lockfile. See
+[`repro/pump_amm/legacy-buy-thirty-five`](../../repro/pump_amm/legacy-buy-thirty-five/README.md)
+and [`audit/pump_amm/LEGACY_BUY_RECOVERY.md`](../../audit/pump_amm/LEGACY_BUY_RECOVERY.md).
+The previous AMM33 package and its subsequently discovered negative event receipt
+remain preserved; the new package binds that exact signed case to a passing regression.
 
 Additional SBF suites are `scripts/pump_amm_buyback_differential.py`,
 `scripts/pump_amm_fee_config_differential.py`,
@@ -50,7 +52,8 @@ Additional SBF suites are `scripts/pump_amm_buyback_differential.py`,
 `scripts/pump_amm_creator_reassignment_cto_differential.py`, and
 `scripts/pump_amm_incentives_differential.py --family sync|admin|claim`, and
 `scripts/pump_amm_cashback_differential.py`, and
-`scripts/pump_amm_legacy_sell_differential.py`, each taking `--candidate` and `--output`.
+`scripts/pump_amm_legacy_sell_differential.py`, and
+`scripts/pump_amm_legacy_buy_differential.py`, each taking `--candidate` and `--output`.
 
 For a clean build with complete source/lock/toolchain hashes and an unmodified
 whole-file comparison, use `scripts/build_partial_candidate.py`. See

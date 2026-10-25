@@ -1,6 +1,6 @@
 # Partial Mayhem implementation recovery
 
-This independently compiled Anchor program implements **18 of the 25 currently
+This independently compiled Anchor program implements **19 of the 25 currently
 identified instruction paths**. It is not a full program reconstruction, a
 byte-identical ELF, or a deployable replacement. Other handlers are absent.
 No original machine code is embedded or patched into the build.
@@ -15,7 +15,7 @@ Implemented paths:
 - `update_global_params`
 - `extend_account`, `withdraw_admin`, `withdraw_quote_admin`
 - `sweep_fees`, `sweep_fees_admin`
-- `burn_tokens`
+- `burn_tokens`, `sell`
 
 ## Evidence and unresolved source details
 
@@ -37,7 +37,8 @@ evidence from burn recovery supersedes the earlier 0.31.1 baseline: typed duplic
 checks, Pubkey CPI context and event-authority constants match the newer family.
 Exact historical revision and dependency identity remain unresolved. The explicit
 System wrapper preserves the original address-before-executable validation order.
-All previous 2,953 cases still pass. See the [eighteen-handler package](../../repro/mayhem/eighteen/README.md).
+All previous 2,953 cases still pass. The current candidate has 3,355 instruction
+comparisons across eight suites; see the [nineteen-handler package](../../repro/mayhem/nineteen/README.md).
 
 ## Reproduce
 
@@ -60,7 +61,7 @@ units, all transactions, and the absent instruction paths are not equivalent
 claims. States are synthetic; injected configurations are not proof of reachable
 mainnet states.
 
-`repro/mayhem/eighteen/` retains the clean build's comparison/provenance and compressed
+`repro/mayhem/nineteen/` retains the clean build's comparison/provenance and compressed
 case evidence. See `audit/mayhem/RECOVERY.md` for bounded security observations.
 
 The additional `scripts/mayhem_validate_fee_recipient.py` suite compares 306
@@ -89,3 +90,27 @@ The burn handler adds three genuine captured account families and three sequenti
 second-burn rejections, for 2,959 comparisons. Complete state, events, inner calls
 and errors agree for those fixtures; compute logs and source locations differ.
 The capture archive and portable runners are in the eighteen-handler package.
+
+Legacy `sell` adds 396 normally signed synthetic cases: 134 successes and 262
+rejections. The source preserves configured-trader authorization, typed ownership,
+PDA/ATA constraints, fixed Token-2022 and self-program IDs, guard ordering,
+reserve/tolerance arithmetic, the real Pump CPI, checked accounting updates,
+complete 303-byte events and transaction rollback. Sell's external curve decoder
+zero-pads to 141 bytes; burn retains its separate strict codec. All earlier cases
+pass on the combined artifact. The main build is byte identical to the fully
+tested scratch candidate, but differs from the original ELF.
+
+```sh
+python3 scripts/mayhem_sell_differential.py \
+  --candidate repro/mayhem/nineteen/mayhem_recovered.so \
+  --output work/mayhem-sell-replay.json
+python3 scripts/verify_mayhem_sell.py \
+  --candidate repro/mayhem/nineteen/mayhem_recovered.so \
+  --receipts work/mayhem-sell-replay.json --output work/mayhem-sell-verification.json
+```
+
+The sell fixtures use only test-owned signatures and synthetic configuration;
+they do not establish a full historical sell replay. Compute usage and recorded
+source locations differ. In one zero-reserve panic case, the candidate additionally
+logs an Option-unwrapping message; the error and complete rollback agree. Five
+other trade handlers and Mayhem-state initialization remain unrecovered.

@@ -1,4 +1,10 @@
 use anchor_lang::prelude::*;
+pub mod migrate;
+pub use migrate::*;
+pub mod sell_v2;
+pub use sell_v2::*;
+pub mod legacy_sell;
+pub use legacy_sell::*;
 
 pub mod create_v2;
 pub use create_v2::*;
@@ -37,7 +43,10 @@ declare_id!("6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P");
 #[program]
 pub mod pump_recovered {
     use super::*;
-    pub fn create_v2(ctx:Context<CreateV2>,name:String,symbol:String,uri:String,creator:Pubkey,is_mayhem_mode:bool,is_cashback_enabled:OptionBool,creator_fee_bps:CreationOptionU64,is_holder_reward:OptionBool)->Result<()>{create_v2::execute(ctx,name,symbol,uri,creator,is_mayhem_mode,is_cashback_enabled,creator_fee_bps,is_holder_reward)}
+    pub fn migrate<'info>(ctx:Context<'_,'_,'_,'info,Migrate<'info>>)->Result<()>{migrate::execute(ctx)}
+    pub fn sell_v2(ctx:Context<SellV2>,amount:u64,min_sol_output:u64)->Result<()>{sell_v2::execute(ctx,amount,min_sol_output)}
+    pub fn sell(ctx:Context<LegacySell>,amount:u64,min_sol_output:u64)->Result<()>{legacy_sell::execute(ctx,amount,min_sol_output)}
+    pub fn create_v2<'info>(ctx:Context<'_,'_,'_,'info,CreateV2<'info>>,name:String,symbol:String,uri:String,creator:Pubkey,is_mayhem_mode:bool,is_cashback_enabled:OptionBool,creator_fee_bps:CreationOptionU64,is_holder_reward:OptionBool)->Result<()>{create_v2::execute(ctx,name,symbol,uri,creator,is_mayhem_mode,is_cashback_enabled,creator_fee_bps,is_holder_reward)}
     pub fn buy_exact_quote_in_v3(ctx:Context<SellV3>,spendable_quote_in:u64,min_tokens_out:u64,partial_fill:OptionBool)->Result<()>{trade::buy_exact_quote(ctx,spendable_quote_in,min_tokens_out,partial_fill.0)}
     pub fn create(ctx:Context<Create>,name:String,symbol:String,uri:String,creator:Pubkey)->Result<()>{create::execute(ctx,name,symbol,uri,creator)}
     pub fn admin_set_idl_authority(ctx:Context<AdminSetIdlAuthority>,idl_authority:Pubkey)->Result<()>{idl_authority::execute(ctx,idl_authority)}

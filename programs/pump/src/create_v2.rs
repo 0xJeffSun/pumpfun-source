@@ -32,14 +32,46 @@ pub struct CreateV2<'info>{
  /// CHECK: unused for normal creation.
  #[account(mut)]pub mayhem_token_vault:UncheckedAccount<'info>,
 }
-pub fn execute(ctx:Context<CreateV2>,name:String,symbol:String,uri:String,creator:Pubkey,is_mayhem_mode:bool,is_cashback_enabled:OptionBool,_creator_fee_bps:CreationOptionU64,is_holder_reward:OptionBool)->Result<()>{
+pub fn execute<'info>(ctx:Context<'_,'_,'_,'info,CreateV2<'info>>,name:String,symbol:String,uri:String,creator:Pubkey,is_mayhem_mode:bool,is_cashback_enabled:OptionBool,creator_fee_bps:CreationOptionU64,is_holder_reward:OptionBool)->Result<()>{
  // Other quote and Mayhem branches remain explicitly outside this reconstruction checkpoint.
- require!(!is_mayhem_mode && ctx.remaining_accounts.is_empty(),PumpError::ReconstructionBranchUnsupported);
+ require!(!is_mayhem_mode,PumpError::ReconstructionBranchUnsupported);
  let a=&ctx.accounts;
  require!(a.global.create_v2_enabled,PumpError::CreateV2Disabled);
  require!(!is_cashback_enabled.0,PumpError::CashbackDeprecated);
  let creator=if is_holder_reward.0 {require!(a.global.is_holder_reward_enabled,PumpError::HolderRewardDisabled);Pubkey::find_program_address(&[b"holder-rewards",a.mint.key().as_ref()],&crate::ID).0}else{creator};
  require!(creator!=Pubkey::default(),PumpError::CreatorShouldNotBeZero);
+ let (quote_mint,virtual_quote_reserves,can_configure_fee)=if ctx.remaining_accounts.is_empty(){(Pubkey::default(),a.global.initial_virtual_sol_reserves,false)}else{
+  require!(ctx.remaining_accounts.len()>=3,PumpError::NotEnoughRemainingAccounts);
+  let mint=&ctx.remaining_accounts[0];let ata=&ctx.remaining_accounts[1];let program=&ctx.remaining_accounts[2];
+  require!(program.key()==anchor_spl::token::ID || program.key()==anchor_spl::token_2022::ID,PumpError::InvalidQuoteTokenProgram);
+  require!(mint.owner==program.key,PumpError::UnsupportedQuoteMint);
+  if program.key()==anchor_spl::token_2022::ID {require!(mint.key()!=token_interface::spl_token_2022::native_mint::id(),PumpError::UnsupportedQuoteMint);require!(quote_extensions_supported(&mint.try_borrow_data()?),PumpError::UnsupportedQuoteMint);}
+  let (reserves,can_configure)=if a.global.whitelisted_quote_mints.contains(mint.key){(a.global.initial_virtual_quote_reserves,false)}else{
+   require!(ctx.remaining_accounts.len()>=4,PumpError::UnsupportedQuoteMint);
+   let control=&ctx.remaining_accounts[3];let expected=Pubkey::find_program_address(&[b"quote-control"],&crate::ID).0;
+   require!(control.key()==expected && control.owner==&crate::ID,PumpError::InvalidQuoteControl);
+   let data=control.try_borrow_data()?;
+   require!(data.len()>=8 && data[..8]==CONTROL_DISCRIMINATOR,PumpError::InvalidQuoteControl);
+   require!(data.len()>=108,PumpError::InvalidQuoteControl);
+   let count=u32::from_le_bytes(data[104..108].try_into().unwrap()) as usize;
+   let size=count.checked_mul(40).and_then(|n|n.checked_add(108)).ok_or_else(||error!(PumpError::InvalidQuoteControl))?;
+   require!(data.len()>=size,PumpError::InvalidQuoteControl);
+   let entry=data[108..size].chunks_exact(40).find(|entry|entry[..32]==mint.key().to_bytes());
+   if let Some(entry)=entry{(u64::from_le_bytes(entry[32..40].try_into().unwrap()),true)}else{
+    require!(ctx.remaining_accounts.len()<5,PumpError::ReconstructionBranchUnsupported);
+    return err!(PumpError::UnsupportedQuoteMint);
+   }
+  };
+  let expected=anchor_spl::associated_token::get_associated_token_address_with_program_id(&a.bonding_curve.key(),mint.key,program.key);
+  require!(ata.key()==expected,PumpError::InvalidAssociatedQuoteBondingCurve);
+  anchor_spl::associated_token::create(CpiContext::new(a.associated_token_program.to_account_info(),anchor_spl::associated_token::Create{payer:a.user.to_account_info(),associated_token:ata.clone(),authority:a.bonding_curve.to_account_info(),mint:mint.clone(),system_program:a.system_program.to_account_info(),token_program:program.clone()}))?;
+  (mint.key(),reserves,can_configure)
+ };
+ let fee=if can_configure_fee && creator_fee_bps.0>0 {
+  require!(a.global.creator_fee_configurable,PumpError::CreatorFeeNotConfigurable);
+  require!(creator_fee_bps.0<=a.global.max_configurable_creator_fee_bps,PumpError::CreatorFeeBpsOutOfRange);
+  creator_fee_bps.0
+ }else{0};
  require!(name.len()<=32,PumpError::NameTooLong);require!(symbol.len()<=13,PumpError::SymbolTooLong);require!(uri.len()<=200,PumpError::UriTooLong);
  let bump=[ctx.bumps.mint_authority];let seeds:&[&[u8]]=&[b"mint-authority",&bump];
  let size=234+4+64+16+name.len()+symbol.len()+uri.len();
@@ -53,7 +85,25 @@ pub fn execute(ctx:Context<CreateV2>,name:String,symbol:String,uri:String,creato
  invoke_signed(&ix,&[a.mint.to_account_info(),a.mint_authority.to_account_info(),a.token_program.to_account_info()],&[seeds])?;
  token_interface::mint_to(CpiContext::new_with_signer(a.token_program.to_account_info(),token_interface::MintTo{mint:a.mint.to_account_info(),to:a.associated_bonding_curve.to_account_info(),authority:a.mint_authority.to_account_info()},&[seeds]),a.global.token_total_supply)?;
  token_interface::set_authority(CpiContext::new_with_signer(a.token_program.to_account_info(),token_interface::SetAuthority{current_authority:a.mint_authority.to_account_info(),account_or_mint:a.mint.to_account_info()},&[seeds]),token_interface::spl_token_2022::instruction::AuthorityType::MintTokens,None)?;
- let event=CreateEvent{name,symbol,uri,mint:a.mint.key(),bonding_curve:a.bonding_curve.key(),user:a.user.key(),creator,timestamp:Clock::get()?.unix_timestamp,virtual_token_reserves:a.global.initial_virtual_token_reserves,virtual_sol_reserves:a.global.initial_virtual_sol_reserves,real_token_reserves:a.global.initial_real_token_reserves,token_total_supply:a.global.token_total_supply,token_program:a.token_program.key(),is_mayhem_mode:false,is_cashback_enabled:false,quote_mint:Pubkey::default(),virtual_quote_reserves:a.global.initial_virtual_sol_reserves,creator_fee_bps:0,is_holder_reward:is_holder_reward.0,depth:0};
- let g=&ctx.accounts.global;let curve=&mut ctx.accounts.bonding_curve;curve.virtual_token_reserves=g.initial_virtual_token_reserves;curve.virtual_quote_reserves=g.initial_virtual_sol_reserves;curve.real_token_reserves=g.initial_real_token_reserves;curve.token_total_supply=g.token_total_supply;curve.creator=creator;curve.is_holder_reward=is_holder_reward.0;curve.initial_virtual_quote_reserves=g.initial_virtual_sol_reserves;
+ let event=CreateEvent{name,symbol,uri,mint:a.mint.key(),bonding_curve:a.bonding_curve.key(),user:a.user.key(),creator,timestamp:Clock::get()?.unix_timestamp,virtual_token_reserves:a.global.initial_virtual_token_reserves,virtual_sol_reserves:virtual_quote_reserves,real_token_reserves:a.global.initial_real_token_reserves,token_total_supply:a.global.token_total_supply,token_program:a.token_program.key(),is_mayhem_mode:false,is_cashback_enabled:false,quote_mint,virtual_quote_reserves,creator_fee_bps:fee,is_holder_reward:is_holder_reward.0,depth:0};
+ let g=&ctx.accounts.global;let curve=&mut ctx.accounts.bonding_curve;curve.virtual_token_reserves=g.initial_virtual_token_reserves;curve.virtual_quote_reserves=virtual_quote_reserves;curve.real_token_reserves=g.initial_real_token_reserves;curve.token_total_supply=g.token_total_supply;curve.creator=creator;curve.creator_fee_bps=fee;curve.is_holder_reward=is_holder_reward.0;curve.quote_mint=quote_mint;curve.initial_virtual_quote_reserves=virtual_quote_reserves;
  emit!(event.clone());emit_cpi!(event);Ok(())
 }
+
+// The captured program accepts transfer-fee config as well as the operable
+// metadata/delegate extensions; official IDL prose omits that observed case.
+fn quote_extensions_supported(data:&[u8])->bool {
+ if data.len()==82{return true;}
+ if data.len()<166 || data.len()==355 || data[165]!=1{return false;}
+ let mut at=166;
+ while at<data.len(){
+  if at+2>data.len(){return false;}let kind=u16::from_le_bytes([data[at],data[at+1]]);
+  if kind==0{return true;}if at+4>data.len(){return false;}let size=u16::from_le_bytes([data[at+2],data[at+3]]) as usize;at+=4;
+  if at+size>data.len(){return false;}let bytes=&data[at..at+size];
+  match kind{4|12|16|18|19|25|26=>{},1=>if bytes.len()<108{return false;},6=>if bytes.is_empty() || bytes[0]!=1{return false;},14=>if bytes.len()<64 || bytes[32..64]!=[0;32]{return false;},_=>return false}
+  at+=size;
+ }
+ true
+}
+
+const CONTROL_DISCRIMINATOR:[u8;8]=[56, 244, 35, 238, 193, 213, 162, 201];
