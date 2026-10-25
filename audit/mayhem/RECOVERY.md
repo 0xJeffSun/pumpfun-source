@@ -1,6 +1,6 @@
 # Mayhem: recovered administration paths
 
-The seventeen implemented paths and 2,953 differential cases are a partial security
+The eighteen implemented paths and 2,959 differential cases are a partial security
 review. No complete byte-identical program or complete Mayhem audit exists yet.
 
 ## Observed controls and behavior
@@ -51,8 +51,8 @@ scan does not prove absence of use. No unobserved Metaplex/relay CPI is assumed.
 
 ## Remaining work
 
-Eight currently identified paths remain unimplemented: Mayhem state
-initialization, token burn, and six Pump/PumpSwap buy/sell paths. Their
+Seven currently identified paths remain unimplemented: Mayhem state
+initialization and six Pump/PumpSwap buy/sell paths. Their
 account/CPI constraints, price impact, risk accounting, rate limits, arithmetic,
 rollback and dependency equivalence remain to be recovered and audited.
 Historical source/build fidelity, executable layout and all bytes remain
@@ -150,3 +150,20 @@ stores no caller beneficiary, and sweep/withdraw destinations require the stored
 trader or administrator. This is a bounded negative finding, not a declaration
 that the entire deployed program is secure. The eight absent handlers, live
 configuration reachability and complete dependency source fidelity remain open.
+
+## Genuine burn sequences
+
+The recovered burn handler was tested with three unmodified finalized account
+families, captured Clock and exact dependency executables. It burns the complete
+vault balance, reduces mint supply, stores the amount, emits log/self-CPI events
+and marks state ended. A second normally signed transaction in the same local
+bank rejects with 6004 and changes only payer fees. All business state remains
+untouched by fixture edits. The six instruction comparisons use twelve signed
+transactions. Raw compute logs and source-location strings differ; the semantic
+receipt lists precisely what was compared. These are current snapshots, not
+historical replay or proof of all context/mode combinations.
+
+The framework moved to the Anchor 1.0 family following static parser/CPI evidence.
+An explicit source wrapper preserves original System-address checking, correcting
+25 errors in an earlier draft. All inherited 2,953 cases pass after this change.
+See [the complete evidence package](../../repro/mayhem/eighteen/README.md).

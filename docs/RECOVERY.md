@@ -96,3 +96,14 @@ The [complete Fees error enum](../repro/pump_fees/error-enum-v144/README.md)
 restores four omitted IDL variants and two literal runtime messages. Its generated
 name and display functions add two complete instruction-pattern matches, while
 all prior behavioral regressions pass. Whole-program bytes still differ.
+
+## Additional dependency evidence
+
+A fifth fresh ATA build tested the source immediately preceding the public release
+asset upload. It compiled but still differs at 1,506 byte positions; the closest
+retained candidates differ at 307. The [chronology and exact build inputs](../repro/pump/dependency-exactness/ata-chronology-candidate.json)
+preserve this negative result. The remaining two `RawVec::reserve_for_push`
+specializations are associated with Token2022; their order remains unresolved.
+The donation relay embeds a [source-repository attribution](../repro/pump/dependency-exactness/relay-source-attribution.json),
+but the repository returned 404 through the current connection. No exact source
+revision or relay rebuild has been recovered.

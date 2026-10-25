@@ -1,20 +1,29 @@
-//! Partial independently compiled Mayhem implementation: seventeen recovered administration
-//! and sweep handlers. Unknown fields are preserved as byte arrays, not guessed names.
+//! Partial independently compiled Mayhem implementation: eighteen recovered administration, sweep,
+//! and burn handlers. Unknown fields are preserved as byte arrays, not guessed names.
 //! This is not a complete or byte-identical program reconstruction.
 use anchor_lang::prelude::*;
+mod checked_program;
+use checked_program::{CheckedSystemProgram, CheckedSystemProgramBumps, __client_accounts_checked_system_program, __cpi_client_accounts_checked_system_program};
 use anchor_spl::{associated_token::AssociatedToken, token_interface::{Mint, TokenAccount, TokenInterface}};
+
+pub mod state;
+pub mod instructions;
+pub use instructions::burn::*;
 
 declare_id!("MAyhSmzXzV1pTf7LsNkrNwkWKTo4ougAJ1PPg47MD4e");
 
 #[program]
 pub mod mayhem_recovered {
     use super::*;
-    pub fn sweep_fees<'info>(ctx: Context<'_, '_, 'info, 'info, SweepFees<'info>>) -> Result<()> {
+    pub fn burn_tokens(ctx: Context<BurnTokens>) -> Result<()> {
+        instructions::burn::handler(ctx)
+    }
+    pub fn sweep_fees<'info>(ctx: Context<'info, SweepFees<'info>>) -> Result<()> {
         let limit = if ctx.accounts.quote_mint.key() == anchor_spl::token::spl_token::native_mint::ID { ctx.accounts.global_params.max_sol_per_sweep } else { ctx.accounts.global_params.max_stable_per_sweep };
         let amount = sweep_remaining(ctx.remaining_accounts, &ctx.accounts.trader.to_account_info(), &ctx.accounts.trader_quote_ata.to_account_info(), &ctx.accounts.token_program.to_account_info(), ctx.accounts.quote_mint.key(), limit, false)?;
         let event = SweepEvent { amount, timestamp: Clock::get()?.unix_timestamp }; emit!(event); emit_cpi!(event); Ok(())
     }
-    pub fn sweep_fees_admin<'info>(ctx: Context<'_, '_, 'info, 'info, SweepFeesAdmin<'info>>) -> Result<()> {
+    pub fn sweep_fees_admin<'info>(ctx: Context<'info, SweepFeesAdmin<'info>>) -> Result<()> {
         let amount = sweep_remaining(ctx.remaining_accounts, &ctx.accounts.admin.to_account_info(), &ctx.accounts.admin_quote_ata.to_account_info(), &ctx.accounts.token_program.to_account_info(), ctx.accounts.quote_mint.key(), u64::MAX, true)?;
         let event = SweepEvent { amount, timestamp: Clock::get()?.unix_timestamp }; emit!(event); emit_cpi!(event); Ok(())
     }
@@ -28,7 +37,7 @@ pub mod mayhem_recovered {
         let bump = [ctx.bumps.sol_vault];
         let seeds: &[&[u8]] = &[b"sol-vault", &bump];
         anchor_spl::token::transfer(CpiContext::new_with_signer(
-            ctx.accounts.token_program.to_account_info(), anchor_spl::token::Transfer {
+            ctx.accounts.token_program.key(), anchor_spl::token::Transfer {
                 from: ctx.accounts.vault_quote_ata.to_account_info(),
                 to: ctx.accounts.admin_quote_ata.to_account_info(),
                 authority: ctx.accounts.sol_vault.to_account_info(),
@@ -47,7 +56,7 @@ pub mod mayhem_recovered {
         let bump = [ctx.bumps.sol_vault];
         let seeds: &[&[u8]] = &[b"sol-vault", &bump];
         anchor_lang::system_program::transfer(
-            CpiContext::new_with_signer(ctx.accounts.system_program.to_account_info(),
+            CpiContext::new_with_signer(ctx.accounts.system_program.key(),
                 anchor_lang::system_program::Transfer {
                     from: ctx.accounts.sol_vault.to_account_info(),
                     to: ctx.accounts.admin.to_account_info(),
@@ -76,12 +85,12 @@ pub mod mayhem_recovered {
         let required = Rent::get()?.minimum_balance(new_size).saturating_sub(account.lamports());
         if required > 0 {
             anchor_lang::system_program::transfer(
-                CpiContext::new(ctx.accounts.system_program.to_account_info(),
+                CpiContext::new(ctx.accounts.system_program.key(),
                     anchor_lang::system_program::Transfer {
                         from: ctx.accounts.user.to_account_info(), to: account.clone()
                     }), required)?;
         }
-        account.realloc(new_size, true)?;
+        account.resize(new_size)?;
         let event = ExtendAccountEvent {
             account: account.key(), user: ctx.accounts.user.key(),
             old_size: old_size as u64, new_size: new_size as u64,
@@ -191,14 +200,18 @@ pub mod mayhem_recovered {
     }
 }
 
-#[event_cpi]
 #[derive(Accounts)]
 pub struct Admin<'info> {
     #[account(mut)]
     pub admin: Signer<'info>,
     #[account(mut, seeds = [b"global-params"], bump, has_one = admin)]
     pub global_params: Account<'info, GlobalParams>,
-    pub system_program: Program<'info, System>,
+    pub system_program: CheckedSystemProgram<'info>,
+    /// CHECK: Preserve the captured runtime PDA derivation and ConstraintSeeds error.
+    #[account(seeds = [b"__event_authority"], bump)]
+    pub event_authority: UncheckedAccount<'info>,
+    /// CHECK: Captured parser consumes this account without an address constraint.
+    pub program: UncheckedAccount<'info>,
 }
 
 /// Exact observed Borsh positions; opaque bytes remain named by behavior.
@@ -288,7 +301,7 @@ pub struct InitializeGlobalParams<'info> {
     pub admin: Signer<'info>,
     #[account(init, payer = admin, space = 254, seeds = [b"global-params"], bump)]
     pub global_params: Account<'info, GlobalParams>,
-    pub system_program: Program<'info, System>,
+    pub system_program: CheckedSystemProgram<'info>,
 }
 
 #[account]
@@ -311,20 +324,24 @@ pub struct InitializeFeeRecipient<'info> {
     pub fee_recipient_ata: InterfaceAccount<'info, TokenAccount>,
     #[account(mut, seeds = [b"global-params"], bump)]
     pub global_params: Account<'info, GlobalParams>,
-    pub system_program: Program<'info, System>,
+    pub system_program: CheckedSystemProgram<'info>,
     #[account(address = anchor_spl::token::ID)]
     pub token_program: Interface<'info, TokenInterface>,
     pub associated_token_program: Program<'info, AssociatedToken>,
 }
 
-#[event_cpi]
 #[derive(Accounts)]
 pub struct ExtendAccount<'info> {
     /// CHECK: Owner/mut checked here; recognized discriminator checked in handler.
     #[account(mut, owner = ID)]
     pub account: UncheckedAccount<'info>,
     pub user: Signer<'info>,
-    pub system_program: Program<'info, System>,
+    pub system_program: CheckedSystemProgram<'info>,
+    /// CHECK: Preserve the captured runtime PDA derivation and ConstraintSeeds error.
+    #[account(seeds = [b"__event_authority"], bump)]
+    pub event_authority: UncheckedAccount<'info>,
+    /// CHECK: Captured parser consumes this account without an address constraint.
+    pub program: UncheckedAccount<'info>,
 }
 
 #[event(discriminator = [0x61,0x61,0xd7,0x90,0x5d,0x92,0x16,0x7c])]
@@ -345,7 +362,7 @@ pub struct WithdrawAdmin<'info> {
     /// CHECK: PDA/writability enforced here; System CPI enforces spending owner.
     #[account(mut, seeds = [b"sol-vault"], bump)]
     pub sol_vault: UncheckedAccount<'info>,
-    pub system_program: Program<'info, System>,
+    pub system_program: CheckedSystemProgram<'info>,
 }
 
 #[derive(Accounts)]
@@ -362,7 +379,7 @@ pub struct WithdrawQuoteAdmin<'info> {
     pub admin_quote_ata: InterfaceAccount<'info, TokenAccount>,
     pub token_program: Interface<'info, TokenInterface>,
     pub associated_token_program: Program<'info, AssociatedToken>,
-    pub system_program: Program<'info, System>,
+    pub system_program: CheckedSystemProgram<'info>,
 }
 
 #[event(discriminator = [218,130,134,253,101,109,149,152])]
@@ -379,7 +396,7 @@ fn sweep_remaining<'info>(remaining: &'info [AccountInfo<'info>], destination: &
         let token_amount = ata.amount.min(available);
         if token_amount > 0 {
             let index=[recipient.index];let bump=[recipient.bump];let seeds: &[&[u8]]=&[b"fee-recipient", &index, &bump];
-            anchor_spl::token::transfer(CpiContext::new_with_signer(token.clone(), anchor_spl::token::Transfer { from: ata.to_account_info(), to: destination_ata.clone(), authority: recipient.to_account_info() }, &[seeds]),token_amount)?;
+            anchor_spl::token::transfer(CpiContext::new_with_signer(*token.key, anchor_spl::token::Transfer { from: ata.to_account_info(), to: destination_ata.clone(), authority: recipient.to_account_info() }, &[seeds]),token_amount)?;
             total += token_amount;
         }
         if mint == anchor_spl::token::spl_token::native_mint::ID {
@@ -398,26 +415,34 @@ fn sweep_remaining<'info>(remaining: &'info [AccountInfo<'info>], destination: &
     Ok(total)
 }
 
-#[event_cpi]
 #[derive(Accounts)]
 pub struct SweepFees<'info> {
     #[account(mut)] pub trader: Signer<'info>,
     #[account(mut, seeds=[b"global-params"], bump, has_one=trader)] pub global_params: Account<'info, GlobalParams>,
     pub quote_mint: InterfaceAccount<'info, Mint>,
     #[account(mut, associated_token::mint=quote_mint, associated_token::authority=trader, associated_token::token_program=token_program)] pub trader_quote_ata: InterfaceAccount<'info, TokenAccount>,
-    pub system_program: Program<'info,System>,
+    pub system_program: CheckedSystemProgram<'info>,
     #[account(address=anchor_spl::token::ID)] pub token_program: Interface<'info,TokenInterface>,
     pub associated_token_program: Program<'info,AssociatedToken>,
+    /// CHECK: Preserve the captured runtime PDA derivation and ConstraintSeeds error.
+    #[account(seeds = [b"__event_authority"], bump)]
+    pub event_authority: UncheckedAccount<'info>,
+    /// CHECK: Captured parser consumes this account without an address constraint.
+    pub program: UncheckedAccount<'info>,
 }
 
-#[event_cpi]
 #[derive(Accounts)]
 pub struct SweepFeesAdmin<'info> {
     #[account(mut)] pub admin: Signer<'info>,
     #[account(mut, seeds=[b"global-params"], bump, has_one=admin)] pub global_params: Account<'info, GlobalParams>,
     pub quote_mint: InterfaceAccount<'info, Mint>,
     #[account(mut, associated_token::mint=quote_mint, associated_token::authority=admin, associated_token::token_program=token_program)] pub admin_quote_ata: InterfaceAccount<'info, TokenAccount>,
-    pub system_program: Program<'info,System>,
+    pub system_program: CheckedSystemProgram<'info>,
     #[account(address=anchor_spl::token::ID)] pub token_program: Interface<'info,TokenInterface>,
     pub associated_token_program: Program<'info,AssociatedToken>,
+    /// CHECK: Preserve the captured runtime PDA derivation and ConstraintSeeds error.
+    #[account(seeds = [b"__event_authority"], bump)]
+    pub event_authority: UncheckedAccount<'info>,
+    /// CHECK: Captured parser consumes this account without an address constraint.
+    pub program: UncheckedAccount<'info>,
 }

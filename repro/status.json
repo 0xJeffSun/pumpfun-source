@@ -220,7 +220,7 @@
     "compiler": "unresolved",
     "dependencies": "unresolved",
     "build_flags": "unresolved",
-    "candidate_artifact": "repro/mayhem/mayhem_recovered.so",
+    "candidate_artifact": "repro/mayhem/eighteen/mayhem_recovered.so",
     "full_byte_equality": false,
     "comparison_status": "DIFFERS_PARTIAL_IMPLEMENTATION",
     "implemented_handlers": [
@@ -240,18 +240,20 @@
       "withdraw_admin",
       "withdraw_quote_admin",
       "sweep_fees",
-      "sweep_fees_admin"
+      "sweep_fees_admin",
+      "burn_tokens"
     ],
-    "comparison_report": "repro/mayhem/build-comparison.json",
-    "build_log": "repro/mayhem/build.log.gz",
-    "validated_cases": 2953,
+    "comparison_report": "repro/mayhem/eighteen/build-comparison.json",
+    "build_log": "repro/mayhem/eighteen/build.log",
+    "validated_cases": 2959,
     "validation_reports": [
-      "repro/mayhem/differential.json.gz",
-      "repro/mayhem/fee-recipient-differential.json.gz",
-      "repro/mayhem/extend-differential.json.gz",
-      "repro/mayhem/withdraw-differential.json.gz",
-      "repro/mayhem/quote-withdraw-differential.json.gz",
-      "repro/mayhem/sweeps-differential.json.gz"
+      "repro/mayhem/eighteen/admin-differential.json.gz",
+      "repro/mayhem/eighteen/fee_recipient-differential.json.gz",
+      "repro/mayhem/eighteen/extend-differential.json.gz",
+      "repro/mayhem/eighteen/withdraw-differential.json.gz",
+      "repro/mayhem/eighteen/quote_withdraw-differential.json.gz",
+      "repro/mayhem/eighteen/sweeps-differential.json.gz",
+      "repro/mayhem/eighteen/burn-sequences/verification.json"
     ],
     "compiler_family_candidates": [
       "v1.52",
@@ -260,6 +262,19 @@
       "v1.55",
       "v1.56"
     ],
-    "compiler_family_evidence": "repro/compiler-fingerprints/REPORT.md"
+    "compiler_family_evidence": "repro/compiler-fingerprints/REPORT.md",
+    "genuine_snapshot_sequences": {
+      "report": "repro/mayhem/eighteen/burn-sequences/comparison.json",
+      "verification": "repro/mayhem/eighteen/burn-sequences/verification.json",
+      "sequences": 3,
+      "instruction_comparisons": 6,
+      "signed_transactions": 12,
+      "known_differences": [
+        "compute-unit logs",
+        "second-burn source location"
+      ],
+      "historical_replay": false
+    },
+    "framework_candidate": "Anchor 1.0.0 with explicit System-ID checking and runtime event-PDA contexts; exact historical revision unresolved"
   }
 }

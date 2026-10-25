@@ -82,10 +82,10 @@ three configuration setters, permissionless resize, and two deprecated rejection
 dispatches, two tier upserts and FeeConfig administrator transfer, two donation handlers and three social-fee handlers and referral withdrawal, four buyback handlers, sharing creation, administrative sharing reset, both sharing updates and FeeConfig initialization. All31 bodies have bounded implementations; full source/context equivalence remains unproven. Selected compiler and dependency versions
 remain candidates rather than an established historical graph.
 
-### Parallel reconstruction checkpoint: 94 implemented handlers and two partial paths
+### Parallel reconstruction checkpoint: 95 implemented handlers and two partial paths
 
-Saved builds cover Pump 18, PumpSwap 28, Pump Fees 31 and Mayhem 17 implemented
-handlers, plus Pump's partial SOL/USDC buy_v3/sell_v3 branches. Their 35,032 local SBF
+Saved builds cover Pump 18, PumpSwap 28, Pump Fees 31 and Mayhem 18 implemented
+handlers, plus Pump's partial SOL/USDC buy_v3/sell_v3 branches. Their 35,038 local SBF
 comparisons are indexed by `repro/status.json`; each report preserves its own
 coverage and limitations. Pump's SOL trade paths include Mayhem buyback suppression,
 holder-reward event fields and explicit cashback rejection. USDC quote behavior adds 130 synthetic SPL/Token2022 cases; other quote routes
@@ -263,3 +263,15 @@ checks and two added error-message comparisons pass, for 17,363. The earlier
 112 Surfpool comparisons refer to the retained pre-correction executable.
 Source locations and compute logs still differ. This repairs reconstruction
 fidelity and does not assert a vulnerability or complete source equivalence.
+
+### Mayhem burn and framework recovery
+
+The current eighteen-handler Mayhem build passes 2,953 inherited comparisons
+and six genuine-snapshot burn instruction comparisons. Each of three first burns
+succeeds; a second burn on the actual resulting local state rejects with 6004.
+Normal signatures and blockhash checks remain enabled. Raw compute logs and
+source-location strings differ and are retained. The candidate uses an Anchor
+1.0.0 baseline with explicit System-ID validation to preserve the captured check
+order. See [the package](../repro/mayhem/eighteen/README.md) for exact inputs and
+limits. Seven identified paths remain absent; this is not historical replay or
+a completed audit. The frozen source review at 329fc44 excludes this addition.

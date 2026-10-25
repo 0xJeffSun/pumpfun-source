@@ -61,12 +61,17 @@ jobs:
               python scripts/pump_amm_creator_reassignment_cto_differential.py --candidate repro/pump_amm/creator-twenty-eight/pump_amm_recovered.so --output work/pump-amm-creator-reassignment-cto.json
           - suite: mayhem
             commands: |
-              python scripts/mayhem_validate_admin.py --candidate repro/mayhem/mayhem_recovered.so --output work/mayhem-admin.json
-              python scripts/mayhem_validate_fee_recipient.py --candidate repro/mayhem/mayhem_recovered.so --output work/mayhem-recipient.json
-              python scripts/mayhem_validate_extend.py --candidate repro/mayhem/mayhem_recovered.so --output work/mayhem-extend.json
-              python scripts/mayhem_validate_withdraw.py --candidate repro/mayhem/mayhem_recovered.so --output work/mayhem-withdraw.json
-              python scripts/mayhem_validate_quote_withdraw.py --candidate repro/mayhem/mayhem_recovered.so --output work/mayhem-quote-withdraw.json
-              python scripts/mayhem_validate_sweeps.py --candidate repro/mayhem/mayhem_recovered.so --output work/mayhem-sweeps.json
+              python scripts/mayhem_validate_admin.py --candidate repro/mayhem/eighteen/mayhem_recovered.so --output work/mayhem-admin.json
+              python scripts/mayhem_validate_fee_recipient.py --candidate repro/mayhem/eighteen/mayhem_recovered.so --output work/mayhem-recipient.json
+              python scripts/mayhem_validate_extend.py --candidate repro/mayhem/eighteen/mayhem_recovered.so --output work/mayhem-extend.json
+              python scripts/mayhem_validate_withdraw.py --candidate repro/mayhem/eighteen/mayhem_recovered.so --output work/mayhem-withdraw.json
+              python scripts/mayhem_validate_quote_withdraw.py --candidate repro/mayhem/eighteen/mayhem_recovered.so --output work/mayhem-quote-withdraw.json
+              python scripts/mayhem_validate_sweeps.py --candidate repro/mayhem/eighteen/mayhem_recovered.so --output work/mayhem-sweeps.json
+              mkdir -p work/mayhem-captured-fixtures
+              python -c "import tarfile; tarfile.open('repro/mayhem/eighteen/captured-fixtures.tar.gz').extractall('work/mayhem-captured-fixtures', filter='data')"
+              python work/mayhem-captured-fixtures/verify_fixtures.py
+              python scripts/mayhem_burn_sequence.py --fixtures work/mayhem-captured-fixtures --candidate repro/mayhem/eighteen/mayhem_recovered.so --output work/mayhem-burn-replay
+              python scripts/verify_mayhem_burn_sequence.py --fixtures work/mayhem-captured-fixtures --receipts work/mayhem-burn-replay
           - suite: imported-lab
             commands: |
               git clone https://github.com/pump-fun/pump-public-docs.git work/pump-public-docs
@@ -87,4 +92,5 @@ jobs:
           path: |
             work/*.json
             work/*.json.gz
+            work/mayhem-burn-replay/**
           if-no-files-found: ignore

@@ -1,6 +1,6 @@
 # Partial Mayhem implementation recovery
 
-This independently compiled Anchor program implements **17 of the 25 currently
+This independently compiled Anchor program implements **18 of the 25 currently
 identified instruction paths**. It is not a full program reconstruction, a
 byte-identical ELF, or a deployable replacement. Other handlers are absent.
 No original machine code is embedded or patched into the build.
@@ -15,6 +15,7 @@ Implemented paths:
 - `update_global_params`
 - `extend_account`, `withdraw_admin`, `withdraw_quote_admin`
 - `sweep_fees`, `sweep_fees_admin`
+- `burn_tokens`
 
 ## Evidence and unresolved source details
 
@@ -31,10 +32,12 @@ struct memory layout, code ordering and dependency versions are not established.
 The event discriminator is observed directly from original event bytes, not
 claimed to derive from a recovered historical event type name.
 
-The dependency lockfile pins the candidate's build. Anchor 0.31.1 matches the
-original short-discriminator behavior: 0–7 bytes return error 101. An earlier
-0.30.1 candidate returned 100 and was rejected. This is version-family evidence,
-not proof that the original used exactly Anchor 0.31.1.
+The dependency lockfile pins an Anchor 1.0.0 candidate build. Stronger static
+evidence from burn recovery supersedes the earlier 0.31.1 baseline: typed duplicate
+checks, Pubkey CPI context and event-authority constants match the newer family.
+Exact historical revision and dependency identity remain unresolved. The explicit
+System wrapper preserves the original address-before-executable validation order.
+All previous 2,953 cases still pass. See the [eighteen-handler package](../../repro/mayhem/eighteen/README.md).
 
 ## Reproduce
 
@@ -57,7 +60,7 @@ units, all transactions, and the absent instruction paths are not equivalent
 claims. States are synthetic; injected configurations are not proof of reachable
 mainnet states.
 
-`repro/mayhem/` retains the clean build's comparison/provenance and compressed
+`repro/mayhem/eighteen/` retains the clean build's comparison/provenance and compressed
 case evidence. See `audit/mayhem/RECOVERY.md` for bounded security observations.
 
 The additional `scripts/mayhem_validate_fee_recipient.py` suite compares 306
@@ -81,3 +84,8 @@ rate limits and Token2022 mismatch behavior. Sweep tests cover authorization,
 recipient order/duplication, counters, caps, token mutations, malformed accounts,
 randomized state, arithmetic and rollback. They do not establish full program
 security or equivalence outside the tested instruction/state surface.
+
+The burn handler adds three genuine captured account families and three sequential
+second-burn rejections, for 2,959 comparisons. Complete state, events, inner calls
+and errors agree for those fixtures; compute logs and source locations differ.
+The capture archive and portable runners are in the eighteen-handler package.
