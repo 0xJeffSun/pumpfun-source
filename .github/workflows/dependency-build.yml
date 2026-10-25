@@ -14,6 +14,7 @@ on:
           - token_metadata
           - token_metadata_recovered
           - token_metadata_audit_recovered
+          - token_metadata_uses_recovered
           - both
 permissions:
   contents: read
@@ -85,7 +86,7 @@ jobs:
           if-no-files-found: error
           retention-days: 30
   token-metadata:
-    if: inputs.dependency == 'token_metadata' || inputs.dependency == 'token_metadata_recovered' || inputs.dependency == 'token_metadata_audit_recovered'
+    if: inputs.dependency == 'token_metadata' || inputs.dependency == 'token_metadata_recovered' || inputs.dependency == 'token_metadata_audit_recovered' || inputs.dependency == 'token_metadata_uses_recovered'
     runs-on: ubuntu-24.04
     timeout-minutes: 30
     steps:
@@ -98,7 +99,9 @@ jobs:
           persist-credentials: false
       - name: Build official-source candidate using pinned CLI1.16.25 image
         run: |
-          if [ "${{ inputs.dependency }}" = "token_metadata_audit_recovered" ]; then
+          if [ "${{ inputs.dependency }}" = "token_metadata_uses_recovered" ]; then
+            python3 scripts/pump_build_token_dependency.py --dependency token_metadata --metaplex-uses-recovery --source work/metaplex-source --output work/metaplex-rebuild
+          elif [ "${{ inputs.dependency }}" = "token_metadata_audit_recovered" ]; then
             python3 scripts/pump_build_token_dependency.py --dependency token_metadata --metaplex-audit-recovery --source work/metaplex-source --output work/metaplex-rebuild
           elif [ "${{ inputs.dependency }}" = "token_metadata_recovered" ]; then
             python3 scripts/pump_build_token_dependency.py --dependency token_metadata --metaplex-recovery --source work/metaplex-source --output work/metaplex-rebuild
