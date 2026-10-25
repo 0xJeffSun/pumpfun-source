@@ -16,39 +16,54 @@ The Anchor 0.31.1 source implements forty-eight recovered handlers:
 `remove_quote_control_mint` and `set_quote_control_mint_reserves`. It also implements **partial `sell_v3`, `buy_v3`, `buy_exact_quote_in_v3`, `create_v2` and `multi_hop_curve_swap` paths**.
 It is incomplete and is not a deployable replacement. The current sell_v2 quote-transfer-fee minimum-output check and fee-event fields have a confirmed mismatch with the captured original; the saved passing suites do not cover that boundary.
 
-The current frozen checkpoint is [bonding-curve-serializer-fortyeight](../../repro/pump/bonding-curve-serializer-fortyeight/README.md):
-9,217 differential cases across 37 suites and 1,024 Surfpool comparisons using
-2,048 signed transactions across 28 runners passed. The Surfpool transactions
-contain 2,980 verified individual signatures. The candidate is 1,534,768 bytes,
-SHA-256 `92575cd082bf76b332044a7d09371a9764db8b2cc40180bf1418f261945bbd6a`.
-It preserves all 48 recovered handlers and five partial paths. Explicit
-`BondingCurve` account traits propagate serializer I/O errors as observed in the
-captured original. The complete 1,840-byte exit body matches under strict
-relocation/internal-call normalization, including all 25 direct calls to six
-unique matched target bodies and the eight-byte discriminator. The main and
-fully regressed scratch clean builds are whole-file identical. See
-[the serializer recovery report](../../audit/pump/BONDING_CURVE_SERIALIZATION_RECOVERY.md).
+The current frozen checkpoint is [tokenkeg-two-curve-fortyeight](../../repro/pump/tokenkeg-two-curve-fortyeight/README.md):
+9,237 differential cases across 38 suites and 1,024 Surfpool comparisons across
+28 runners passed. The candidate is 1,576,744 bytes, SHA-256
+`5c1c1c2d1cd2c334b3e054b6a8fb5ac0638d80d13495c1c18d935ad20bfd62bb`.
+It preserves 48 recovered handlers and five partial paths. The selected compiler
+is v1.44; the unchanged installed CLI SDK uses v1.52 for its stripping step.
+These observed phases do not establish the historical compiler recipe.
+
+The partial `multi_hop_curve_swap` path now supports exactly SOL→A→B and
+B→A→SOL with ordinary Tokenkeg accounts, canonical pre-existing vaults, a native
+root storing quote zero, and strictly non-completing buys. The new 20-case suite
+uses the captured AMM's genuine PDA-signed Pump CPI and ordinary test-owned outer
+signatures. Sixteen comparisons succeed, two stop in AMM before Pump, and two
+reach successful Pump execution before AMM's final slippage rejection rolls back
+the transaction. Eighteen comparisons reach Pump; the suite records 40 verified
+signatures. Flat/exotic fee selection, endpoint flags and previous-curve transfer
+authority are independently traced. All curve and vault fixture state is explicitly
+synthetic and already exists before invocation.
 
 The earlier [native-curve-partial-fortyeight](../../repro/pump/native-curve-partial-fortyeight/README.md)
-checkpoint added the partial native curve-run branch. Its retained 56-case suite
-uses ordinary verified outer signatures and the captured
-AMM program's genuine PDA-signed Pump CPI. Fifty comparisons reach Pump; six are
-rejected by the captured AMM before Pump, and only 11 comparisons succeed. The
-suite records 112 verified signatures. Its accepted scope is one native curve per
-Pump CPI, fee flag 3, legacy Tokenkeg 82/165-byte mint/account layouts and an
-ordinary 166-byte curve. Multi-curve runs, mixed endpoint flags, non-native or
-nested quote paths, Token-2022, holder rewards and synthetic completion remain
-unsupported. See [the curve-run recovery report](../../audit/pump/MULTI_HOP_CURVE_RECOVERY.md).
+checkpoint added the one-native-curve path with fee flag 3, legacy Tokenkeg
+82/165-byte mint/account layouts and an ordinary 166-byte curve. Its retained
+56-case subset has 50 Pump CPI comparisons, six caller rejections, 11 successes
+and 112 verified signatures. Its one-curve restriction describes that historical
+checkpoint. Broader routing, other quote currencies, arbitrary hop counts,
+Token-2022/extensions, holder/cashback/Mayhem curves and synthetic completion
+remain unsupported by the current routing module. See the current package and
+[the earlier curve-run report](../../audit/pump/MULTI_HOP_CURVE_RECOVERY.md).
 
-All 37 existing differential suites and 28 existing Surfpool runners were freshly
-run against the serializer scratch executable. Each of the 65 saved receipt files
-is bound to the tested ELF and its 36 actual compiler inputs. Older runners'
-embedded source maps remain snapshots of the baseline Pump48/five-partial
-checkout; they are not the serializer build-input map. Quote-control receipts
-directly bind the adjacent serializer build report and all its source inputs.
-Main-path receipt reuse is justified only by complete executable identity. The
-differential receipts contain 15,830 transactions and 24,216 verified signatures;
-these counts include synthetic local fixtures, not live network transactions.
+All 37 established differential suites (9,217 cases), the new 20-case suite and
+28 established Surfpool runners were freshly executed on the same scratch ELF.
+The 66 saved runtime receipts bind that ELF and its 36 actual compiler inputs.
+Legacy embedded source maps remain incidental baseline checkout snapshots;
+quote-control directly binds the adjacent scratch build report. Reuse for the
+main-path build requires whole-file executable identity. The differential
+receipts contain 15,870 transactions and 24,256 verified signatures. Surfpool
+records 2,048 signed transactions containing 2,980 verified signatures. These are
+local synthetic fixtures, not live-network transactions.
+
+The prior [bonding-curve-serializer-fortyeight](../../repro/pump/bonding-curve-serializer-fortyeight/README.md)
+checkpoint used a 1,534,768-byte executable with SHA-256
+`92575cd082bf76b332044a7d09371a9764db8b2cc40180bf1418f261945bbd6a`.
+It added explicit `BondingCurve` account traits that propagate serializer I/O
+errors. That checkpoint's complete 1,840-byte exit matched the original under
+strict relocation/internal-call normalization, including 25 direct calls to six
+unique matched bodies and the eight-byte discriminator. The serializer source
+is unchanged in the current checkpoint. See
+[the serializer report](../../audit/pump/BONDING_CURVE_SERIALIZATION_RECOVERY.md).
 
 The earlier [quote-control-fortyeight](../../repro/pump/quote-control-fortyeight/README.md)
 checkpoint added six independent quote-control handlers and passed 9,161 cases
@@ -66,7 +81,7 @@ lamport transfers, and log/CPI TradeEvents. USDC quote paths transfer tokens thr
 use stable fee tiers, and zero legacy SOL-only event fields. A130-case suite
 checks locally synthesized quote accounts under SPL Token and Token2022, without
 claiming every token extension combination. Other v3 quote branches and curve
-routes outside the narrow native single-curve path above remain unsupported. SOL Mayhem trades suppress buyback,
+routes outside the native one-curve and ordinary Tokenkeg two-curve paths above remain unsupported. SOL Mayhem trades suppress buyback,
 holder-reward trades report the observed creator-fee-derived reward fields, and
 cashback coins are rejected with the original v3 error6094. FeeConfig parsing
 accounts for legacy allocation boundaries2512/4073/4097. The334-case expanded buy suite also compares complete recorded inner

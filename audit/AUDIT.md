@@ -4,9 +4,9 @@
 programs listed in `docs/SCOPE.md`. Partial executable handlers have been recovered; no complete program exists.
 
 The current published recovery covers 140 implemented handlers plus five partial
-Pump paths and 53,715 saved comparison receipts: [Pump48 serializer](../repro/pump/bonding-curve-serializer-fortyeight/README.md),
+Pump paths and 53,735 saved comparison receipts: [Pump48 two-curve checkpoint](../repro/pump/tokenkeg-two-curve-fortyeight/README.md),
 [AMM37 Pool serializer](../repro/pump_amm/pool-serialization-thirty-seven/README.md),
-[Fees31 dependency-family checkpoint](../repro/pump_fees/solana-family-221-v144/README.md),
+[Fees31 inline initializer checkpoint](../repro/pump_fees/initializer-inline-v144/README.md),
 and [Mayhem24](../repro/mayhem/twentyfour/README.md). These bounded recovery results
 do not extend the source review frozen at commit329fc44 into a complete audit of
 the later candidates. All four original whole-file comparisons still differ.

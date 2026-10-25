@@ -46,6 +46,34 @@ def verify_maps(root, groups, tracked):
     return checked, historical
 
 
+def current_pump_groups(package):
+    """Bind live published inputs without treating scratch origins as live files."""
+    read = lambda name: json.loads((package / name).read_text())
+    maps = read("source-harness-sha256.json")
+    scratch = read("scratch-inputs-before.json")
+    assert maps["source"] == read("source-sha256.json")
+    assert len(maps["source"]) == 36
+    assert len(scratch["harness_sha256"]) == 94
+    assert len(scratch["repository_fixture_snapshot_sha256"]) == 28
+    assert len(maps["canonical_harness"]) == 2
+    groups = {
+        "source": maps["source"],
+        "harness": scratch["harness_sha256"],
+        "runtime": scratch["repository_fixture_snapshot_sha256"],
+        "build_helpers": read("build-helper-sha256.json"),
+        "canonical_harness": maps["canonical_harness"],
+        "static_and_saved_verifiers": maps["static_and_saved_verifiers"],
+        "documentation": maps["owned_documentation"],
+        "candidate": {str((package / "candidate.so").relative_to(ROOT)):
+                      read("manifest-sha256.json")["candidate.so"]["sha256"]},
+    }
+    # The old single-curve runner and verifier have exact published aliases in
+    # HISTORICAL_COPIES. The adapted new runner has its own canonical hashes;
+    # scratch orchestration remains historical evidence inside the package.
+    assert len(groups["build_helpers"]) == 3
+    return groups
+
+
 def verify_pump_body(root, package):
     # Same complete-body/call/literal checks as immutable verify-package.py:112-125.
     spec = importlib.util.spec_from_file_location("pump_binding_elf", package / "elf_reader.py")
@@ -85,6 +113,35 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("program", choices=PACKAGES)
     args = parser.parse_args()
+    status = json.loads((ROOT / "repro/status.json").read_text())
+    key = "pump" if args.program == "pump" else "pump_fees"
+    artifact = status[key]["candidate_artifact"]
+    current = {
+        "pump": "repro/pump/tokenkeg-two-curve-fortyeight/candidate.so",
+        "fees": "repro/pump_fees/initializer-inline-v144/pump_fees_candidate.so",
+    }
+    if artifact == current[args.program]:
+        directory = (ROOT / artifact).parent
+        if args.program == "pump":
+            tracked = set(subprocess.check_output(
+                ["git", "-C", str(ROOT), "ls-files", "-z"]).decode().split("\0"))
+            groups = current_pump_groups(directory)
+            count, historical = verify_maps(ROOT, groups, tracked)
+            assert len(historical) == 2
+        command = ([sys.executable, str(directory / "verify-package.py"), "--current-main"]
+                   if args.program == "pump" else
+                   [sys.executable, str(directory / "verify_current_bindings.py"), "--repo", str(ROOT)])
+        subprocess.run(command, check=True)
+        if args.program == "pump":
+            print(json.dumps({"verified": True, "program": "pump",
+                              "current_tracked_bindings": count,
+                              "tracked_bindings_by_group": {k: len(v) for k, v in groups.items()},
+                              "historical_exact_copy_bindings": historical,
+                              "saved_package_verified": True,
+                              "runtime_replayed_by_this_script": False}, indent=2))
+        return
+    expected_old = PACKAGES[args.program] + ("/candidate.so" if args.program == "pump" else "/pump_fees_candidate.so")
+    assert artifact == expected_old, ("No reviewed binding verifier for current candidate", artifact)
     package = ROOT / PACKAGES[args.program]
     read = lambda name: json.loads((package / name).read_text())
     tracked = set(subprocess.check_output(["git", "-C", str(ROOT), "ls-files", "-z"]).decode().split("\0"))
