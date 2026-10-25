@@ -267,3 +267,13 @@ The [static set_mayhem_virtual_params package](../repro/pump/mayhem-virtual-para
 ## Six quote-control handlers
 
 The [Pump48 checkpoint](../repro/pump/quote-control-fortyeight/README.md) recovers quote-control initialization, admin and reserves-admin rotation, mint addition/removal, and reserve updates. Its clean main build is whole-file identical to the tested scratch build: 1,478,960 bytes, SHA-256 `c9c364b59fca69ecc395c1e7911d55fc7997631daa0dd0b0bcf37d7f0dfa4804`. All 9,161 comparisons across 36 suites and all 1,024 Surfpool comparisons across 28 runners pass. The quote-control cases contain 1,014 executed transactions with 2,008 verified signatures; Surfpool separately contains 2,048 transactions with 2,980 signatures. Old unbound reports remain preserved as unaccepted history. The four programs now total 140 implemented handlers plus four partial paths and 53,659 saved comparison receipts. Every original whole-file comparison still differs, and the current sell_v2 gap remains explicit.
+
+
+## AMM Pool error-conversion recovery
+
+The [Pool serializer checkpoint](../repro/pump_amm/pool-serialization-thirty-seven/README.md) independently traces all 19 original writes and their error branches, then replaces the two explicit Borsh error mappings with direct I/O-error propagation. Its 1,175,720-byte main/scratch-identical candidate has SHA-256 `5a68db39372121c6406727bced3087aa9caf63f14a999ac68206c9b5b3401216`. All 17,462 existing cases across 25 suites pass again. The 1,704-byte Pool exit and 1,648-byte GlobalConfig exit each match normalized complete bodies and their 24 direct callees; full original-byte identity remains false. Counts remain 37 implemented AMM handlers with create_config absent.
+
+
+## Partial native curve execution
+
+The [native/legacy curve checkpoint](../repro/pump/native-curve-partial-fortyeight/README.md) retains 48 implemented Pump handlers and adds a fifth partial path. The 1,534,904-byte clean main build is identical to the regressed scratch composite, SHA-256 `6271a6d5782d350f6d716a91712d283592d4589aa8e9befb9c1f1a0dd3ac7ebe`. All 9,217 comparisons across 37 suites and 1,024 Surfpool comparisons pass. The 56 new fixed-scope comparisons include six rejections before Pump and 11 successes; the actual captured AMM supplies the required PDA signature. Every receipt is bound to the tested ELF and all 36 actual compiler inputs; legacy embedded source maps remain labeled as incidental checkout snapshots. The four-program total is now 140 implemented handlers, five partial paths and 53,715 saved comparison receipts. All original whole-file comparisons still differ.

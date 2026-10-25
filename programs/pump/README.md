@@ -1,6 +1,6 @@
 # Partial Pump reconstruction
 
-The Anchor 0.31.1 source implements forty-nine recovered handlers:
+The Anchor 0.31.1 source implements forty-eight recovered handlers:
 `toggle_create_v2`, `toggle_mayhem_mode`, `toggle_cashback_enabled`, and
 `set_max_curve_depth`, `set_virtual_quote_reserves`, `update_buyback_config`,
 `update_creator_fee_config`, `update_holder_reward_config`, `add_quote_mint`, and
@@ -13,35 +13,62 @@ The Anchor 0.31.1 source implements forty-nine recovered handlers:
 `migrate_bonding_curve_creator`, `admin_cto`, `set_params`, `set_creator`,
 `set_metaplex_creator`, `admin_set_idl_authority` and legacy `create`, `sell`, `sell_v2`, `migrate`, `buy`, `buy_exact_sol_in`, `buy_v2`, `buy_exact_quote_in_v2`, `migrate_v2`, `claim_cashback`, `claim_cashback_v2`, `initialize`, `initialize_quote_control`,
 `set_quote_control_admin`, `set_quote_control_reserves_admin`, `add_quote_control_mint`,
-`remove_quote_control_mint`, `set_quote_control_mint_reserves`, and
-`admin_update_token_incentives`. It also implements **partial `sell_v3`, `buy_v3`, `buy_exact_quote_in_v3` and `create_v2` paths**.
+`remove_quote_control_mint`, `set_quote_control_mint_reserves`, and bounded
+`admin_update_token_incentives`. It also implements **partial `sell_v3`, `buy_v3`, `buy_exact_quote_in_v3`, `create_v2` and `multi_hop_curve_swap` paths**.
 It is incomplete and is not a deployable replacement. The current sell_v2 quote-transfer-fee minimum-output check and fee-event fields have a confirmed mismatch with the captured original; the saved passing suites do not cover that boundary.
 
-The current [admin-incentives-fortynine checkpoint](../../repro/pump/admin-incentives-fortynine/README.md)
-records 9,259 matching offline target/candidate cases across 37 suites:
-the inherited 9,161 cases rerun against this candidate, plus 98 focused
-`admin_update_token_incentives` cases (43 successes and 55 rollbacks). The
-focused receipt compares complete watched account states, events, return data,
-inner CPIs, and a debug log. Two clean v1.44 builds produce the same unmodified
-1,518,544-byte candidate, SHA-256
-`c1558a656f889b2f4348161473b595d95060caf2951c3569d6f6962024ba75c4`.
-The original is 10,485,715 bytes and differs in full. The 1,024 Surfpool
-comparisons belong to the preceding [quote-control-fortyeight checkpoint](../../repro/pump/quote-control-fortyeight/README.md);
-the new handler has no Surfpool run. Its offline fixtures use a copied Global
-snapshot with test-owned authority and synthetic incentive state, so these
-passes do not establish every reachable mainnet transition. The prior
-quote-control and holder/nested limits remain documented in
-[the quote-control recovery report](../../audit/pump/QUOTE_CONTROL_RECOVERY.md)
+The current frozen checkpoint is [native-curve-partial-fortyeight](../../repro/pump/native-curve-partial-fortyeight/README.md):
+9,217 differential cases across 37 suites and 1,024 Surfpool comparisons using
+2,048 signed transactions across 28 runners passed. The Surfpool transactions
+contain 2,980 verified individual signatures. The candidate is 1,534,904 bytes,
+SHA-256 `6271a6d5782d350f6d716a91712d283592d4589aa8e9befb9c1f1a0dd3ac7ebe`.
+It preserves all 48 recovered handlers and adds only a partial native curve-run
+branch. The main and fully regressed scratch clean builds are whole-file identical.
+
+The new 56-case suite uses ordinary verified outer signatures and the captured
+AMM program's genuine PDA-signed Pump CPI. Fifty comparisons reach Pump; six are
+rejected by the captured AMM before Pump, and only 11 comparisons succeed. The
+suite records 112 verified signatures. Its accepted scope is one native curve per
+Pump CPI, fee flag 3, legacy Tokenkeg 82/165-byte mint/account layouts and an
+ordinary 166-byte curve. Multi-curve runs, mixed endpoint flags, non-native or
+nested quote paths, Token-2022, holder rewards and synthetic completion remain
+unsupported. See [the curve-run recovery report](../../audit/pump/MULTI_HOP_CURVE_RECOVERY.md).
+
+All 36 prior differential suites and 28 prior Surfpool runners were freshly run
+against the composite executable. Each of the 65 saved receipt files is bound to
+the tested ELF and its 36 actual compiler inputs. Older runners' embedded source
+maps are preserved as snapshots of the then-current Pump48 checkout; they are
+not the composite build-input map. Quote-control receipts directly bind the
+adjacent composite build report and all its source inputs. Main-path receipt
+reuse is justified only by complete executable identity.
+
+The earlier [quote-control-fortyeight](../../repro/pump/quote-control-fortyeight/README.md)
+checkpoint added six independent quote-control handlers and passed 9,161 cases
+across 36 suites. Its 507 focused cases recorded 1,014 transactions and 2,008
+verified signatures. See [the quote-control report](../../audit/pump/QUOTE_CONTROL_RECOVERY.md)
 and [the earlier holder/nested report](../../audit/pump/HOLDER_NESTED_RECOVERY.md).
-Earlier checkpoint counts below describe their historical source snapshots.
+Nested creation remains partial for Mayhem, migrated parents and deeper chains.
+Full original-byte equality remains false; historical compiler/dependency identity
+and the security audit remain incomplete. Earlier checkpoint counts below describe
+their historical source snapshots.
+
+The retained [admin-incentives checkpoint](../../repro/pump/admin-incentives-fortynine/README.md)
+was built from public source `4ffe8bd`, before the native-curve merge. Its two
+clean v1.44 builds produced the same 1,518,544-byte candidate, SHA-256
+`c1558a656f889b2f4348161473b595d95060caf2951c3569d6f6962024ba75c4`.
+All 98 focused offline cases matched the captured target (43 successes and 55
+rollbacks), as did 9,161 inherited cases. The 1,024 Surfpool comparisons
+belong to the prior quote-control candidate; this handler has no Surfpool run.
+The local fixtures use test-owned authority and synthetic incentive state.
+The merged source has not been rebuilt or regressed with the native curve path.
 
 The partial v3 trade paths handle constant-product reserve changes, fee tier selection,
 creator/protocol/buyback accounting, Token/Token2022 `transfer_checked` CPI,
 lamport transfers, and log/CPI TradeEvents. USDC quote paths transfer tokens through the supplied quote token program,
 use stable fee tiers, and zero legacy SOL-only event fields. A130-case suite
 checks locally synthesized quote accounts under SPL Token and Token2022, without
-claiming every token extension combination. Other quote and multi-hop routes remain
-unsupported. SOL Mayhem trades suppress buyback,
+claiming every token extension combination. Other v3 quote branches and curve
+routes outside the narrow native single-curve path above remain unsupported. SOL Mayhem trades suppress buyback,
 holder-reward trades report the observed creator-fee-derived reward fields, and
 cashback coins are rejected with the original v3 error6094. FeeConfig parsing
 accounts for legacy allocation boundaries2512/4073/4097. The334-case expanded buy suite also compares complete recorded inner
@@ -137,8 +164,8 @@ Mayhem recipient selection. Creator migration preserves legacy curve boundaries,
 holder immutability and the outstanding-creator-fee guard. Administrative creator
 changes execute the captured Fees and AMM CPIs, including outgoing wallet payouts
 and holder conversion. Volume synchronization clears claimed incentive fields only
-in the observed pre-campaign branch. At that checkpoint, incentive administration
-and claim handlers were unrecovered. The combined v1.44 candidate passes 3,741 differential cases and 176 Surfpool
+in the observed pre-campaign branch. This does not recover incentive administration
+or claim handlers. The combined v1.44 candidate passes 3,741 differential cases and 176 Surfpool
 comparisons using 352 signed transactions. Build and validation evidence is under
 `repro/pump/creator-twentyfive/`; the indexed status identifies the published build.
 Full byte equality remains false.
