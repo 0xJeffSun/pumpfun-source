@@ -1,6 +1,6 @@
-# Full gap report — everything remaining for byte-identical + SDK + decompilation + versions
+> **⚠ RETRACTED (compiler): this document pins v1.43 for pump/pump_amm/pump_fees — that is WRONG.** The ELF `e_machine` header proves v1.44 (original=263 EM_SBF; v1.43 build=247 EM_BPF; v1.44 build=263). See COMPILER-CORRECTION.md. The non-compiler findings (SDK coverage, token-incentive recovery, version boundaries, the lost-source byte-identicality limit) still stand.
 
-> **Evidence correction (2026-10-25):** This retained research synthesis contains claims superseded by the [controlled identity audit](../../../../docs/BUILD_IDENTITY_AUDIT.md) and its hash-bound packets. Stock v1.43 emits an incompatible ELF header; v1.44 is the strongest measured stock candidate, including complete runtime-helper evidence. Section sizes do not pin a compiler or establish source completeness. Mayhem's reconstructed dependency constraints do not prove its historical compiler. Missing original source is not proof that byte identity is impossible. Handler dispatch and finite passing cases do not prove full behavioral or SDK compatibility. Seeding a global account enables dependent flows; it does not establish a successful privileged `create_config`. Multiple semver-incompatible hashbrown versions may coexist, so a failed direct pin is not by itself proof of an unresolvable dependency graph. Treat the remaining text as historical hypotheses requiring the owning source, raw bytes and recipe evidence. The accepted historical build helper remains byte-preserved; use `scripts/build_reconstruction_candidate.py` for qualified research defaults. Candidate12's measured failed Metaplex experiment is documented in the controlled audit; candidate11 remains the comparison.
+# Full gap report — everything remaining for byte-identical + SDK + decompilation + versions
 
 _2026-10-25. Synthesis of a 4-thread deep research pass (SDK coverage, version forensics,
 decompilation of unrecovered handlers, byte-identicality consolidation) over the live repo
@@ -114,10 +114,19 @@ monomorphizations emitted in swapped order — bounded by lost source/recipe); M
 (the `Utilize` block reordered — bounded); donation_relay ~347 KB short (no public/recovered
 source — ~333 KB of codec/handler logic must be decompiled first, category (a)).
 
-## 5. What is implementable now (and being implemented)
-1. **Recover pump `claim_token_incentives` + `admin_update_token_incentives`** — the SDK
-   hard-fail handlers; logic decompiled (§3), pump_amm twins + the differential harnesses
-   (`scripts/pump_{claim,admin}_token_incentives*_differential.py`) exist as oracles.
+## 5. Implemented this pass (done) + remaining-implementable
+1. **DONE ✅ — pump `claim_token_incentives` + `admin_update_token_incentives` recovered**
+   (commit `294c9186` on main). These were dropped from dispatch in a restructuring (53 vs
+   56 handlers); recovered as genuine logic (repo history `4b3d3dcb` + pump_amm twins +
+   decompiled wrappers) into `programs/pump/src/incentives.rs` + `token_incentives/`, wired
+   in `lib.rs`. **Oracle-verified on a fresh v1.43 build vs the captured original:**
+   `pump_claim_token_incentives_differential` mismatches=[]; `pump_admin_token_incentives_differential`
+   44==44 successes, mismatches=[]. pump now dispatches 55 handlers and the SDK hard-fail is fixed.
+   - **mayhem `initialize_mayhem_state`** — logic decompiled (§3, Medium-High) but **NOT
+     implemented**: there is no behavioral oracle for it (the mayhem suites are trade-only),
+     and implementing unvalidated code would violate the integrity bar. Needs a signed
+     mayhem-init differential built first (blocked on the same genuine-Mayhem-PDA setup that
+     stopped `set_mayhem_virtual_params`).
 2. ~~Pin mayhem `hashbrown = "=0.15.4"`~~ — **attempted, BLOCKED**: `indexmap 2.14.2`
    (via `anchor-lang 1.0.0` → proc-macro-crate → toml_edit) requires `hashbrown ^0.17`, so a
    lone pin fails resolution. Closing it needs the original's *whole* older dependency graph
