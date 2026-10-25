@@ -1,6 +1,6 @@
 {
   "before_sha256": "c11f3a670c698ab842d5179d44e5954936f476aae9416f29b0bd119e50394d2c",
-  "after_sha256": "eb5c478df1e57fd7e2be02fbac3afa69c11b3f97194c134e8a41abd264a5221d",
+  "after_sha256": "01297aaba7d3beef867458dbf1e64f9ee86bc5b4e3dd67463fed3f4e56210f77",
   "exact_frozen_payloads": {
     "repro/donation-relay/source-build-13-typed-borrow-owned/evidence/repository/repro/donation-relay/local-validation-proposal/build04-source/src/dispatch.rs": "e8f649f4468ea1f178af86739333bd28076fb42b756270c2e1f99f13826f42e7",
     "repro/donation-relay/source-build-13-typed-borrow-owned/evidence/repository/repro/donation-relay/local-validation-proposal/inputs/dispatch-source.rs": "e8f649f4468ea1f178af86739333bd28076fb42b756270c2e1f99f13826f42e7",
@@ -20,5 +20,10 @@
     "repro/pump/admin-cto-compared-errors-main-fortyeight/promotion-control/proposed-source/programs/pump/src/cashback.rs": "647c24a4c6ad68a2b8e43ae60da9cbf9fa805e2c9a3227ace595033c56232410",
     "repro/pump/admin-cto-compared-errors-main-fortyeight/promotion-control/proposed-source/programs/pump/src/create_v2.rs": "603e907d858ff3aa00e5e4f52805f22ec036255783e468454b04bceefa5609b3"
   },
-  "scope": "Only these known-sealed raw source/tool output bytes retain their original whitespace; no glob or executable modification."
+  "scope": "Exact incoming attributes retained, then17known-sealed pass24 files and one exact incoming raw hosted log. No glob or payload byte change.",
+  "incoming_base_sha256": "d013b9a92fe086edd3e5d11838317bb60a230140e404c56f863ca51b0e8665cc",
+  "incoming_ref": "a73a4f2e542135b7eb2071f2d520ca722a228e18",
+  "exact_incoming_payloads": {
+    "repro/pump/metaplex-candidate-build-13-review/hosted-job.log": "d57511ad1d2857f41c2c09d80f6ab68c956334c0e4256e5f3408ab80c48f7a89"
+  }
 }

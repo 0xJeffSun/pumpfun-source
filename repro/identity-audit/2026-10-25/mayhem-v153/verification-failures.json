@@ -1,0 +1,8 @@
+[
+  {
+    "stage": "firstportableverification",
+    "failure": "KeyError cpu",
+    "cause": "RustctargetspecJSONomitsthegenericdefaultCPUkey",
+    "resolution": "Checkprimaryimmutabletargetsourceexplicitgenericv0CPUandacceptomittedJSONdefault; no programbuild rerun"
+  }
+]

@@ -28,6 +28,19 @@ repro/pump_fees/sharing-fourth-cpi-v144/source/Cargo.toml -whitespace
 
 # Preserve incoming positive-guard source evidence exactly.
 repro/pump/metaplex-utilize-positive-guard-source-recovery/source.patch -whitespace
+repro/pump/metaplex-candidate-build-13-review/expected-source.patch -whitespace
+repro/pump/metaplex-candidate-build-13-review/build13/source.patch -whitespace
+repro/pump/metaplex-utilize-unified-guard-source-recovery/source.patch -whitespace
+repro/pump/metaplex-utilize-unified-guard-source-recovery/proof/single-change.patch -whitespace
+repro/pump/metaplex-candidate-build-14-review/expected-source.patch -whitespace
+repro/pump/metaplex-candidate-build-14-review/build14/source.patch -whitespace
+repro/pump/metaplex-candidate-build-14-review/source-proof/single-change.patch -whitespace
+repro/pump/metaplex-authentic-source-history/utilize-authentic-history.diff -whitespace
+repro/pump/metaplex-authentic-source-history/public-source/** -whitespace
+repro/identity-audit/2026-10-25/mayhem-v153/v1.53-build.sh -whitespace
+repro/identity-audit/2026-10-25/mayhem-v154/v1.54-build.sh -whitespace
+repro/identity-audit/2026-10-25/relay-v147/primary-source/platform-build.sh -whitespace
+repro/pump/metaplex-candidate-build-14-review/hosted-job.log -whitespace
 
 # Preserve pass23 frozen source and patch receipt bytes.
 repro/layered-passes/pass-23/fees-current-evidence/analysis/method/dependency_reader.py -whitespace
@@ -36,6 +49,10 @@ repro/layered-passes/pass-23/relay-typed-borrow-proposal/baseline-source/src/dis
 repro/layered-passes/pass-23/verification/bridge-routing.patch -whitespace
 repro/pump_fees/sharing-authorize-main-v144/source/Cargo.toml -whitespace
 repro/layered-passes/pass-23/focused-preparation-review/helper.patch -whitespace
+
+# Preserve reviewed tooling and pass23 patch receipts exactly.
+repro/build-tooling/supported-sbpf-proposal/wrapper-routing.patch -whitespace
+repro/layered-passes/pass-23/reconciliation-transition/reviewed-plan/focused-preparation-review/helper.patch -whitespace
 
 # Exact pass24 immutable source and raw tool-output preservation
 repro/donation-relay/source-build-13-typed-borrow-owned/evidence/repository/repro/donation-relay/local-validation-proposal/build04-source/src/dispatch.rs -whitespace
@@ -55,3 +72,4 @@ repro/pump/admin-cto-compared-errors-main-fortyeight/promotion-control/baseline/
 repro/pump/admin-cto-compared-errors-main-fortyeight/promotion-control/baseline/programs/pump/src/create_v2.rs -whitespace
 repro/pump/admin-cto-compared-errors-main-fortyeight/promotion-control/proposed-source/programs/pump/src/cashback.rs -whitespace
 repro/pump/admin-cto-compared-errors-main-fortyeight/promotion-control/proposed-source/programs/pump/src/create_v2.rs -whitespace
+repro/pump/metaplex-candidate-build-13-review/hosted-job.log -whitespace

@@ -29,8 +29,16 @@ jobs:
               python -B repro/identity-audit/2026-10-25/verify.py
               python -B repro/pump/metaplex-utilize-guard-source-recovery/verify.py
               python -B repro/pump/metaplex-candidate-build-12-review/verify.py
+              python -B repro/pump/metaplex-candidate-build-13-review/verify.py
+              python -B repro/pump/metaplex-candidate-build-14-review/verify.py
+              python -B repro/pump/metaplex-authentic-source-history/verify.py
               # Stopped BuyV3 research packets remain passive evidence in this reconciliation.
               python -B repro/pump/metaplex-utilize-positive-guard-source-recovery/verify.py
+              python -B repro/pump/metaplex-utilize-unified-guard-source-recovery/verify.py
+              python -B repro/sdk/interface-audit-20261025/verify.py
+              python -B repro/build-tooling/supported-sbpf-proposal/verify.py
+              python -B repro/build-tooling/supported-sbpf-integration/verify.py
+              python -B scripts/test_supported_sbpf_policy.py
               python scripts/test_reconstruction_build_selection.py
               python scripts/test_reconstruction_identity_audit.py
               python scripts/test_localnet_sdk_plan.py
