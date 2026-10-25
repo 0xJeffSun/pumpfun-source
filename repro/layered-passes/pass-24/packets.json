@@ -133,5 +133,25 @@
     "sha256": "836533e8760602d5b912b93c0c4aebb27abc86a7c2768da7432e692432560ae6",
     "command": null,
     "runtime_args": []
+  },
+  {
+    "path": "repro/layered-passes/pass-24/latest-main-retention",
+    "manifest": "manifest.json",
+    "sha256": "28e7cdb6e65c095c9b6d5dda774ad0937f0809ba2c61f6d206a2f7e19f3f69df",
+    "command": [
+      "verify.py",
+      "--current-root",
+      ".",
+      "--expected-seal",
+      "28e7cdb6e65c095c9b6d5dda774ad0937f0809ba2c61f6d206a2f7e19f3f69df"
+    ],
+    "runtime_args": []
+  },
+  {
+    "path": "repro/layered-passes/pass-24/latest-main-wrapper-review",
+    "manifest": "manifest.json",
+    "sha256": "682d3b21c81f0f4f20bd8cdcf86fe187c75430e71d5b6bd2c875fb8eff85bf38",
+    "command": null,
+    "runtime_args": []
   }
 ]
