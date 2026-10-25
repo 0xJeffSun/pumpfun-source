@@ -91,7 +91,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           repository: metaplex-foundation/mpl-token-metadata
-          ref: 7c1c905f324462af7bb3850c75aa6724f8689a74
+          ref: 17e99434af5ead3e989c08f32af33609821d0bc0
           path: work/metaplex-source
           persist-credentials: false
       - name: Build official-source candidate using pinned CLI1.16.25 image
