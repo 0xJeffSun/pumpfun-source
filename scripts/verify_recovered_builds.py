@@ -29,7 +29,7 @@ for name,status in json.loads((ROOT/'repro/status.json').read_text()).items():
   r=json.loads(gzip.decompress(data) if receipt.suffix=='.gz' else data)
   assert r['candidate_sha256']==sha(candidate),name
   assert r['original_sha256']==sha(original),name
-  assert not r['mismatches'] and not r.get('unexpected_errors',[]),name
+  assert not r['mismatches'] and not r.get('unexpected_errors',[]) and not r.get('unexpected_original_errors',[]),name
   if 'steps' in r:
    assert all(step['match'] and step['original']['signature_verification'] and step['candidate']['signature_verification'] for step in r['steps']),name
   if 'signed_transactions' in r:

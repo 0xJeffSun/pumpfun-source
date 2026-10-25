@@ -1,12 +1,13 @@
 # Partial Pump Fees reconstruction
 
-Eighteen handlers execute recovered behavior: `get_fees`, `get_fees_with_quote_mint`,
+Twenty-one handlers execute recovered behavior: `get_fees`, `get_fees_with_quote_mint`,
 `set_authority`, `set_social_claim_authority`, `set_disable_flags` and
 `set_claim_rate_limit`, `initialize_fee_program_global`, `update_fee_config`,
 `update_stable_fee_config`, `set_exotic_flat_fees`, `extend_fee_config`,
 `revoke_fee_sharing_authority`, `transfer_fee_sharing_authority`, `upsert_fee_tiers`,
 `upsert_stable_fee_tiers`, `update_admin`, `create_donation_fee_pda` and
-`crank_donation_fee_pda`. The other 13 instruction bodies remain unsupported;
+`crank_donation_fee_pda`, `create_social_fee_pda`, `claim_social_fee_pda` and
+`claim_social_fee_pda_v2`. The other 10 instruction bodies remain unsupported;
 their generated account declarations are not recovered constraints. This crate
 is an experimental reconstruction target, not a deployable substitute.
 
@@ -57,7 +58,7 @@ The global initializer reads the older 740-byte Pump Global layout, authenticate
 its authority and PDA, creates the 338-byte Fees global with canonical bump, and
 emits the exact event log and self-CPI. Its 180 comparisons include prefunding,
 malformed accounts, authorization, argument boundaries and CPI rollback. The
-eighteen-handler candidate passes 13,811 cases; full-file byte equality remains false.
+twenty-one-handler candidate passes 15,373 cases; full-file byte equality remains false.
 
 FeeConfig deserialization is gated by allocation: the normal schedule is read at
 2,512 bytes, the stable schedule at 4,073, and exotic flat fees at 4,097. Earlier
@@ -102,3 +103,12 @@ verified test-owned signatures. The sequence compares exact timestamped events;
 independent Surfpool processes exclude only `last_crank_ts` wall-clock differences
 from state equality and retain the raw values. Captured external dependency
 binaries execute locally; the donation relay source remains unrecovered.
+
+The three social-fee handlers add 1,562 signed differential cases, comparing
+state, errors, events, CPI instructions and optional claim return values. The
+same combined executable also passes 29 Surfpool comparisons (58 signed
+transactions) for social creation, SOL claims and token claims. See the
+[social recovery notes](../../localnet/recovery/fees-social/README.md) for the
+179-byte rent reserve, cooldown, versioned initialization, saturating counters,
+token ATA creation and precise timestamp exclusions. These observations do not
+establish that every authorization or token-extension combination is safe.

@@ -2,7 +2,17 @@
 
 Captured-program bytes were only read. This investigation does not rebuild source, establish whole-program equality, or identify a unique compiler release. The saved evidence is under `repro/compiler-fingerprints/`; the investigation ran in scratch before publication.
 
-## Result
+## Later header evidence
+
+The [controlled build/header report](../pump_fees/compiler-family/HEADER-AND-BUILD-REPORT.md)
+supersedes the v1.43-first recommendation below. Stock v1.43 emits either machine
+247 with flags 0 or machine 263 with flags 32; the captures have machine 263 and
+flags 0. The updated stock Pump/PumpSwap/Fees shortlist is v1.44, v1.45, v1.46,
+and v1.46.1. The earlier source-family comparisons remain preserved below; they
+alone did not distinguish v1.43. Mayhem's family is unchanged. No exact compiler
+or whole-program match has been established.
+
+## Original source-family result
 
 | Program | Unique stdlib path/line/column fingerprints | Releases matching the assumed reference source family | Recommended first candidate |
 |---|---:|---|---|

@@ -68,7 +68,8 @@ partial fee-selector recovery and its compiler comparison remain separate.
 
 The [static fingerprint report](../repro/compiler-fingerprints/REPORT.md) compares
 captured Rust panic-location records with 22 official platform-tools releases.
-It prioritizes v1.43–v1.46.1 for Pump/PumpSwap/Fees and v1.52–v1.56 for Mayhem,
+With the subsequent [header evidence](../repro/pump_fees/compiler-family/HEADER-AND-BUILD-REPORT.md),
+it prioritizes v1.44–v1.46.1 for Pump/PumpSwap/Fees and v1.52–v1.56 for Mayhem,
 conditional on ordinary official sysroots. Its baseline source-line comparisons
 are distinguished from independent filename-layout and impossible-coordinate
 checks. It does not uniquely identify a compiler, linker, target or dependency

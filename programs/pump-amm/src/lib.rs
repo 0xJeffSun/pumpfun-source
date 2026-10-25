@@ -4,6 +4,8 @@ use anchor_lang::prelude::*;
 mod state;
 mod trade;
 mod create;
+mod boost;
+use boost::*;
 use create::*;
 use trade::*;
 use anchor_spl::{token::Token, token_2022::Token2022, token_interface::{self, Mint, TokenAccount}};
@@ -14,6 +16,8 @@ declare_id!("pAMMBay6oceH9fJKBRHGP5D4bD4sWpmSwMn52FMfXEA");
 #[program]
 pub mod pump_amm_recovered {
     use super::*;
+
+    pub fn init_boost(ctx: Context<InitBoost>) -> Result<()> { boost::execute(ctx) }
 
     pub fn create_pool(ctx: Context<CreatePool>, index: u16, base_amount_in: u64, quote_amount_in: u64, coin_creator: Pubkey, is_mayhem_mode: bool, is_cashback_coin: OptionBool, creator_fee_bps: OptionU64, can_edit_creator_fee: OptionBool, is_holder_reward: OptionBool) -> Result<()> { create::execute(ctx,index,base_amount_in,quote_amount_in,coin_creator,is_mayhem_mode,is_cashback_coin.0,creator_fee_bps.0,can_edit_creator_fee.0,is_holder_reward.0) }
 

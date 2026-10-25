@@ -33,7 +33,14 @@
     "partially_implemented_handlers": {
       "sell_v3": "SOL and USDC quote branches, Mayhem/holder fields and cashback rejection. Other quote routes and exhaustive extension/account validation remain incomplete; final event suffix uninterpreted.",
       "buy_v3": "SOL and USDC quote branches, Mayhem/holder fields and cashback rejection. Other quote routes and exhaustive extension/account validation remain incomplete; final event suffix uninterpreted."
-    }
+    },
+    "compiler_family_candidates": [
+      "v1.44",
+      "v1.45",
+      "v1.46",
+      "v1.46.1"
+    ],
+    "compiler_family_evidence": "repro/pump_fees/compiler-family/HEADER-AND-BUILD-REPORT.md"
   },
   "pump_amm": {
     "source_reconstruction": "partial_handlers_compiled",
@@ -41,7 +48,7 @@
     "compiler": "unresolved",
     "dependencies": "unresolved",
     "build_flags": "unresolved",
-    "candidate_artifact": "repro/pump_amm/create-eighteen/pump_amm_recovered.so",
+    "candidate_artifact": "repro/pump_amm/boost-nineteen/pump_amm_recovered.so",
     "full_byte_equality": false,
     "comparison_status": "DIFFERS_PARTIAL_IMPLEMENTATION",
     "implemented_handlers": [
@@ -62,23 +69,32 @@
       "buy_v2",
       "sell_v2",
       "buy_exact_quote_in_v2",
-      "create_pool"
+      "create_pool",
+      "init_boost"
     ],
-    "comparison_report": "repro/pump_amm/create-eighteen/build-comparison.json",
-    "build_log": "repro/pump_amm/create-eighteen/build.log",
-    "validated_cases": 11220,
+    "comparison_report": "repro/pump_amm/boost-nineteen/build-comparison.json",
+    "build_log": "repro/pump_amm/boost-nineteen/build.log",
+    "validated_cases": 11320,
     "validation_reports": [
-      "repro/pump_amm/create-eighteen/admin-differential.json.gz",
-      "repro/pump_amm/create-eighteen/buyback-differential.json.gz",
-      "repro/pump_amm/create-eighteen/fee_config-differential.json.gz",
-      "repro/pump_amm/create-eighteen/resize-differential.json.gz",
-      "repro/pump_amm/create-eighteen/reserved-differential.json.gz",
-      "repro/pump_amm/create-eighteen/accumulator-differential.json.gz",
-      "repro/pump_amm/create-eighteen/liquidity-differential.json.gz",
-      "repro/pump_amm/create-eighteen/trade_v2-differential.json.gz",
-      "repro/pump_amm/create-eighteen/create-differential.json.gz",
-      "repro/pump_amm/create-eighteen/migration_create-differential.json.gz"
-    ]
+      "repro/pump_amm/boost-nineteen/admin-differential.json.gz",
+      "repro/pump_amm/boost-nineteen/buyback-differential.json.gz",
+      "repro/pump_amm/boost-nineteen/fee_config-differential.json.gz",
+      "repro/pump_amm/boost-nineteen/resize-differential.json.gz",
+      "repro/pump_amm/boost-nineteen/reserved-differential.json.gz",
+      "repro/pump_amm/boost-nineteen/accumulator-differential.json.gz",
+      "repro/pump_amm/boost-nineteen/liquidity-differential.json.gz",
+      "repro/pump_amm/boost-nineteen/trade_v2-differential.json.gz",
+      "repro/pump_amm/boost-nineteen/create-differential.json.gz",
+      "repro/pump_amm/boost-nineteen/migration_create-differential.json.gz",
+      "repro/pump_amm/boost-nineteen/boost-differential.json.gz"
+    ],
+    "compiler_family_candidates": [
+      "v1.44",
+      "v1.45",
+      "v1.46",
+      "v1.46.1"
+    ],
+    "compiler_family_evidence": "repro/pump_fees/compiler-family/HEADER-AND-BUILD-REPORT.md"
   },
   "pump_fees": {
     "source_reconstruction": "partial_handlers_compiled",
@@ -86,12 +102,13 @@
     "compiler": "unresolved",
     "dependencies": "unresolved",
     "build_flags": "unresolved",
-    "candidate_artifact": "repro/pump_fees/donation-eighteen/pump_fees_candidate.so",
+    "candidate_artifact": "repro/pump_fees/social-twentyone/pump_fees_candidate.so",
     "full_byte_equality": false,
     "comparison_status": "DIFFERS_PARTIAL_IMPLEMENTATION",
     "compiler_candidates": [
-      "platform-tools v1.43: one 376-byte selector matches apart from unresolved relocations",
-      "platform-tools v1.52: selector differs"
+      "v1.43: selector body matches except relocations, but stock ELF machine/flags contradict capture",
+      "v1.44: frozen16-handler source builds, matching ELF header pair; full binary still differs",
+      "v1.45/v1.46/v1.46.1: qualified family candidates; exact compiler unresolved"
     ],
     "implemented_handlers": [
       "get_fees",
@@ -111,20 +128,32 @@
       "upsert_stable_fee_tiers",
       "update_admin",
       "create_donation_fee_pda",
-      "crank_donation_fee_pda"
+      "crank_donation_fee_pda",
+      "create_social_fee_pda",
+      "claim_social_fee_pda",
+      "claim_social_fee_pda_v2"
     ],
-    "comparison_report": "repro/pump_fees/donation-eighteen/build-comparison.json",
-    "build_log": "repro/pump_fees/donation-eighteen/build.log",
-    "validation_report": "repro/pump_fees/donation-eighteen/differential.json.gz",
-    "validated_cases": 13811,
+    "comparison_report": "repro/pump_fees/social-twentyone/build-comparison.json",
+    "build_log": "repro/pump_fees/social-twentyone/build.log",
+    "validation_report": "repro/pump_fees/social-twentyone/differential.json.gz",
+    "validated_cases": 15373,
     "deprecated_dispatches": [
       "revoke_fee_sharing_authority",
       "transfer_fee_sharing_authority"
     ],
     "signed_sequence_reports": [
-      "repro/pump_fees/donation-eighteen/donation-sequence.json.gz",
-      "repro/pump_fees/donation-eighteen/surfpool-donation.json.gz"
-    ]
+      "repro/pump_fees/social-twentyone/donation-sequence.json.gz",
+      "repro/pump_fees/social-twentyone/surfpool-donation.json.gz",
+      "repro/pump_fees/social-twentyone/surfpool-social.json.gz",
+      "repro/pump_fees/social-twentyone/surfpool-social-v2.json.gz"
+    ],
+    "compiler_family_candidates": [
+      "v1.44",
+      "v1.45",
+      "v1.46",
+      "v1.46.1"
+    ],
+    "compiler_family_evidence": "repro/pump_fees/compiler-family/HEADER-AND-BUILD-REPORT.md"
   },
   "mayhem": {
     "source_reconstruction": "partial_handlers_compiled",
@@ -164,6 +193,14 @@
       "repro/mayhem/withdraw-differential.json.gz",
       "repro/mayhem/quote-withdraw-differential.json.gz",
       "repro/mayhem/sweeps-differential.json.gz"
-    ]
+    ],
+    "compiler_family_candidates": [
+      "v1.52",
+      "v1.53",
+      "v1.54",
+      "v1.55",
+      "v1.56"
+    ],
+    "compiler_family_evidence": "repro/compiler-fingerprints/REPORT.md"
   }
 }

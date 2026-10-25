@@ -49,9 +49,10 @@ historical blockhash freshness in LiteSVM. The original Pump ELF supplies the
 actual PDA signature. Modified before-account data is synthetic and identified
 per case. Missing-boost transactions compare the successful `create_pool` call
 and later rollback. Mayhem cases bypass boost and compare complete committed
-migration account states. The non-Mayhem `init_boost` path remains absent from
-the candidate, as do the other unimplemented handlers. This suite does not claim
-full migration support or whole-program equivalence.
+migration account states. The eighteenth checkpoint omits the non-Mayhem `init_boost` path. The nineteenth
+checkpoint adds it with separate fully committed migration tests documented in
+`BOOST_RECOVERY.md`. This creation suite alone does not claim full migration
+support or whole-program equivalence.
 
 Original deployment bytes are never linked into the candidate. All original
 program use is confined to the independent execution side and dependency caller.

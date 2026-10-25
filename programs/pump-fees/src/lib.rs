@@ -1,9 +1,11 @@
-//! Partial reconstruction: eighteen handlers implemented; remaining handlers unsupported.
+//! Partial reconstruction: twenty-one handlers implemented; remaining handlers unsupported.
 //! It is not the deployed program source.
 use anchor_lang::prelude::*;
 
 mod contexts;
 mod donation;
+mod social;
+use social::*;
 use donation::*;
 mod pump_global;
 mod types;
@@ -22,13 +24,13 @@ pub mod pump_fees_candidate {
     }
 
     #[allow(unused_variables)]
-    pub fn claim_social_fee_pda(_ctx: Context<ClaimSocialFeePda>, user_id: String, platform: u8) -> Result<()> {
-        Err(error!(CandidateError::Unsupported))
+    pub fn claim_social_fee_pda(ctx: Context<ClaimSocialFeePda>, user_id: String, platform: u8) -> Result<Option<SocialFeePdaClaimed>> {
+        social::claim(ctx, user_id, platform)
     }
 
     #[allow(unused_variables)]
-    pub fn claim_social_fee_pda_v2(_ctx: Context<ClaimSocialFeePdaV2>, user_id: String, platform: u8) -> Result<()> {
-        Err(error!(CandidateError::Unsupported))
+    pub fn claim_social_fee_pda_v2(ctx: Context<ClaimSocialFeePdaV2>, user_id: String, platform: u8) -> Result<Option<SocialFeePdaClaimed>> {
+        social::claim_v2(ctx, user_id, platform)
     }
 
     #[allow(unused_variables)]
@@ -47,8 +49,8 @@ pub mod pump_fees_candidate {
     }
 
     #[allow(unused_variables)]
-    pub fn create_social_fee_pda(_ctx: Context<CreateSocialFeePda>, user_id: String, platform: u8) -> Result<()> {
-        Err(error!(CandidateError::Unsupported))
+    pub fn create_social_fee_pda(ctx: Context<CreateSocialFeePda>, user_id: String, platform: u8) -> Result<()> {
+        social::create_social(ctx, user_id, platform)
     }
 
     #[allow(unused_variables)]
@@ -316,10 +318,16 @@ pub enum FeeError {
     SharingConfigNotActive = 18,
     #[msg("Feature is currently deactivated")]
     FeatureDeactivated = 21,
+    #[msg("User ID exceeds maximum length")]
+    UserIdTooLong = 22,
     #[msg("Instruction is deprecated")]
     DeprecatedInstruction = 23,
     #[msg("Account is not a valid FeeConfig for this instruction")]
     InvalidFeeConfigAccount = 28,
+    #[msg("Account type not supported")]
+    AccountTypeNotSupported = 29,
+    #[msg("Mint does not match quote mint")]
+    InvalidMint = 30,
 }
 
 fn validate_fees(fees: &Fees) -> Result<()> {
