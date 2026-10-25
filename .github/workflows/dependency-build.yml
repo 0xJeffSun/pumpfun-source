@@ -94,7 +94,7 @@ jobs:
           ref: 667d7c95dbe4d547fb5312b3fc99104a08204f99
           path: work/metaplex-source
           persist-credentials: false
-      - name: Build official-source candidate using pinned CLI2.0.9 image
+      - name: Build official-source candidate using pinned CLI1.16.25 image
         run: python3 scripts/pump_build_token_dependency.py --dependency token_metadata --source work/metaplex-source --output work/metaplex-rebuild
       - name: Preserve candidate source, logs, generated ELF and honest comparison
         if: always()
