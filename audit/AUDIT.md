@@ -84,10 +84,10 @@ and dependency versions are candidates, not the recovered historical graph.
 This does not extend a security conclusion to the other handlers or deployments.
 
 
-### Parallel reconstruction checkpoint:32 implemented handlers
+### Parallel reconstruction checkpoint:34 implemented handlers
 
-Current saved candidate builds cover Pump4, PumpSwap10, Pump Fees6 and Mayhem12
-handlers. Their21,994 local original-versus-candidate SBF cases are indexed by
+Current saved candidate builds cover Pump4, PumpSwap12, Pump Fees6 and Mayhem12
+handlers. Their22,070 local original-versus-candidate SBF cases are indexed by
 `repro/status.json`; validation suites preserve separate scopes. New coverage
 includes stored-bump/authority checks and event CPI for Fees administration,
 legacy-layout resizing with System rent transfers in PumpSwap, and permissionless
@@ -103,3 +103,7 @@ handler. A Linux dependency build using the on-chain registered SPL Token recipe
 now matches all 108,600 captured bytes. The generated ELF and build provenance
 are preserved under `repro/pump/verified-spl-token/`. This dependency identity
 result does not establish security of the token program or its callers.
+
+The current PumpSwap candidate additionally implements accumulator initialization
+and closure.76 cases compare creation, prefunding, rent/System CPI, preserved
+state and close refunds; trading/liquidity coverage remains separate and incomplete.

@@ -10,6 +10,25 @@ declare_id!("pAMMBay6oceH9fJKBRHGP5D4bD4sWpmSwMn52FMfXEA");
 pub mod pump_amm_recovered {
     use super::*;
 
+    pub fn init_user_volume_accumulator(ctx: Context<InitUserVolumeAccumulator>) -> Result<()> {
+        ctx.accounts.user_volume_accumulator.user = ctx.accounts.user.key();
+        let event = InitUserVolumeAccumulatorEvent { payer: ctx.accounts.payer.key(),
+            user: ctx.accounts.user.key(), timestamp: Clock::get()?.unix_timestamp };
+        emit!(event.clone());
+        emit_cpi!(event);
+        Ok(())
+    }
+    pub fn close_user_volume_accumulator(ctx: Context<CloseUserVolumeAccumulator>) -> Result<()> {
+        let account = &ctx.accounts.user_volume_accumulator;
+        let event = CloseUserVolumeAccumulatorEvent { user: ctx.accounts.user.key(),
+            timestamp: Clock::get()?.unix_timestamp, total_unclaimed_tokens: account.total_unclaimed_tokens,
+            total_claimed_tokens: account.total_claimed_tokens, current_sol_volume: account.current_sol_volume,
+            last_update_timestamp: account.last_update_timestamp };
+        emit!(event.clone());
+        emit_cpi!(event);
+        Ok(())
+    }
+
     pub fn set_reserved_fee_recipients(ctx: Context<SetReservedFeeRecipients>, whitelist_pda: Pubkey) -> Result<()> {
         require!(ctx.remaining_accounts.len() >= 8, PumpAmmError::NotEnoughRemainingAccounts);
         let mut recipients = [Pubkey::default(); 8];
@@ -336,4 +355,24 @@ pub struct SetReservedFeeRecipients<'info> {
     #[account(mut, seeds = [b"global_config"], bump, has_one = admin @ PumpAmmError::InvalidAdmin)]
     pub global_config: Box<Account<'info, GlobalConfig>>,
     pub admin: Signer<'info>,
+}
+
+#[event_cpi]
+#[derive(Accounts)]
+pub struct InitUserVolumeAccumulator<'info> {
+    #[account(mut)]
+    pub payer: Signer<'info>,
+    /// CHECK: A user key is sufficient; the user need not sign initialization.
+    pub user: UncheckedAccount<'info>,
+    #[account(init_if_needed, payer = payer, space = 137, seeds = [b"user_volume_accumulator", user.key().as_ref()], bump)]
+    pub user_volume_accumulator: Account<'info, UserVolumeAccumulator>,
+    pub system_program: Program<'info, System>,
+}
+#[event_cpi]
+#[derive(Accounts)]
+pub struct CloseUserVolumeAccumulator<'info> {
+    #[account(mut)]
+    pub user: Signer<'info>,
+    #[account(mut, close = user, seeds = [b"user_volume_accumulator", user.key().as_ref()], bump)]
+    pub user_volume_accumulator: Account<'info, UserVolumeAccumulator>,
 }

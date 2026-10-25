@@ -1,6 +1,6 @@
 # PumpSwap administrative recovery checkpoint
 
-This is a partial, independently compiled implementation of ten of the 38
+This is a partial, independently compiled implementation of twelve of the 38
 published instructions. It is not the historical source, a complete security
 audit, or a byte-identical program. Unknown instructions use Anchor's fallback;
 they are not silently accepted or represented by successful empty handlers.
@@ -32,7 +32,7 @@ Implemented instructions:
   least eight remaining accounts. Use the first eight, reject zero keys, preserve
   order and accept duplicates. Set the supplied whitelist key and emit recipients.
 
-Every handler requires a signing admin related to the writable GlobalConfig.
+The ten configuration handlers require a signing admin related to the writable GlobalConfig.
 A wrong admin returns custom error 6005, not Anchor's generic HasOne error.
 The event-bearing account contexts also check the event PDA even for the two
 simple toggles that emit no event. `toggle_boost` takes just two fixed accounts.
@@ -75,7 +75,7 @@ The implemented paths use Clock, signed self-CPI for events, and System Program
 transfer CPI for rent top-ups during legacy account resizing. They do not
 exercise token/Token-2022/ATA transfers, Pump/Fees pricing CPI, transfer-fee or
 transfer-hook extensions, token authority checks, donations, migrations or
-multi-hop trading. Those dependencies remain required for the other 28 handlers.
+multi-hop trading. Those dependencies remain required for the other 26 handlers.
 Original dependency captures and the imported signed trading fixtures are available
 for subsequent original-versus-rebuilt tests; their presence is not candidate
 acceptance evidence.
@@ -95,3 +95,24 @@ passing bounded suite changes that whole-program mismatch.
 
 The current ten-handler checkpoint has **9,311** total SBF differential cases
 and zero observed mismatches across all five suites on the same candidate ELF.
+
+
+## Accumulator initialization and closure
+
+The twelve-handler checkpoint adds `init_user_volume_accumulator` and
+`close_user_volume_accumulator`. Initialization is idempotent (`init_if_needed`),
+allocates 137 bytes, stores the requested user and preserves existing volume/claim
+fields. A payer may initialize for another user without that user's signature.
+The initializer validates the PDA and existing allocation size. Closure requires
+the user's signature and derived accumulator PDA, emits stored totals, refunds
+all account lamports to the user and closes the account. It does not require the
+stored user field to match, nor require unclaimed/token/cashback counters to be
+zero; those are explicitly probed synthetic states, not a vulnerability claim.
+Both instructions emit log and self-CPI events. Additional tests cover prefunded
+System-owned account allocation/assignment, existing accounts, malformed bools,
+wrong owner/PDA, unsigned close and allocation boundaries. The test uses a fixed
+nonzero Clock timestamp to distinguish initialization events from preserved state.
+
+`repro/pump_amm/admin-twelve/` pins this clean build and all six suites on the
+same candidate ELF: **9,387** cases with zero observed mismatches. The ten-handler
+checkpoint remains a separate earlier artifact. Full byte identity remains false.

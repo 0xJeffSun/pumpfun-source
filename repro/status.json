@@ -25,7 +25,7 @@
     "compiler": "unresolved",
     "dependencies": "unresolved",
     "build_flags": "unresolved",
-    "candidate_artifact": "repro/pump_amm/admin-ten/pump_amm_recovered.so",
+    "candidate_artifact": "repro/pump_amm/admin-twelve/pump_amm_recovered.so",
     "full_byte_equality": false,
     "comparison_status": "DIFFERS_PARTIAL_IMPLEMENTATION",
     "implemented_handlers": [
@@ -38,17 +38,20 @@
       "update_fee_config",
       "set_boost_authority",
       "update_creator_fee_config",
-      "set_reserved_fee_recipients"
+      "set_reserved_fee_recipients",
+      "init_user_volume_accumulator",
+      "close_user_volume_accumulator"
     ],
-    "comparison_report": "repro/pump_amm/admin-ten/build-comparison.json",
-    "build_log": "repro/pump_amm/admin-ten/build.log",
-    "validated_cases": 9311,
+    "comparison_report": "repro/pump_amm/admin-twelve/build-comparison.json",
+    "build_log": "repro/pump_amm/admin-twelve/build.log",
+    "validated_cases": 9387,
     "validation_reports": [
-      "repro/pump_amm/admin-ten/admin-differential.json.gz",
-      "repro/pump_amm/admin-ten/buyback-differential.json.gz",
-      "repro/pump_amm/admin-ten/fee-config-differential.json.gz",
-      "repro/pump_amm/admin-ten/resize-differential.json.gz",
-      "repro/pump_amm/admin-ten/reserved-differential.json.gz"
+      "repro/pump_amm/admin-twelve/admin-differential.json.gz",
+      "repro/pump_amm/admin-twelve/buyback-differential.json.gz",
+      "repro/pump_amm/admin-twelve/fee_config-differential.json.gz",
+      "repro/pump_amm/admin-twelve/resize-differential.json.gz",
+      "repro/pump_amm/admin-twelve/reserved-differential.json.gz",
+      "repro/pump_amm/admin-twelve/accumulator-differential.json.gz"
     ]
   },
   "pump_fees": {

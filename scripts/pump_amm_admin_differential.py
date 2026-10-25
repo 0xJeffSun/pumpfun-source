@@ -97,7 +97,7 @@ def main():
         for payload in [b'',b'\2',b'\0extra']:test(f'{instruction}-payload-{payload.hex()}',payload,instruction=instruction)
     for length in range(8):test(f'short-dispatch-{length}',bytes(length),instruction=None)
     sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
-    report={'scope':'Partial independently built disable/update_admin/toggle handlers vs captured original. Full state and log events compared; other instructions unimplemented; no byte identity claimed.','original_sha256':sha(original),'candidate_sha256':sha(a.candidate),'source_sha256':{str(p.relative_to(ROOT)):sha(p) for p in (ROOT/'programs/pump-amm').rglob('*.rs') if 'target' not in p.parts},'cases':cases,'case_count':len(cases),'mismatches':mismatches}
+    report={'scope':'Partial independently built disable/update_admin/toggle handlers vs captured original. Full state and log events compared; other instruction paths are not covered by this suite; no byte identity claimed.','original_sha256':sha(original),'candidate_sha256':sha(a.candidate),'source_sha256':{str(p.relative_to(ROOT)):sha(p) for p in (ROOT/'programs/pump-amm').rglob('*.rs') if 'target' not in p.parts},'cases':cases,'case_count':len(cases),'mismatches':mismatches}
     a.output.parent.mkdir(parents=True,exist_ok=True);a.output.write_text(json.dumps(report,separators=(',',':'))+'\n')
     print(json.dumps({'cases':len(cases),'mismatches':mismatches[:30],'mismatch_count':len(mismatches)}))
     if mismatches:raise SystemExit(1)
