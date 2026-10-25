@@ -22,7 +22,7 @@ def main():
  assert known['returncode']==0 and known['all_812_source_hashes_unchanged'] and known['equals_linux_candidate11']
  assert H((P/'baseline/resumed-build.log').read_bytes())==known['build_log_sha256']
  assert H((P/'baseline/source-manifest.json').read_bytes())==known['source_manifest_sha256']
- rows=json.loads((P/'results.json').read_text());assert len(rows)==15
+ rows=json.loads((P/'results.json').read_text());assert len(rows)==16
  for row in rows:
   d=P/'cases'/row['name'];r=json.loads((d/'result.json').read_text())
   assert r['returncode']==0 and r['all_planned_source_hashes_unchanged'] and not r['accepted']

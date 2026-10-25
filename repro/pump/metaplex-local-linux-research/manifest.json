@@ -1,5 +1,5 @@
 {
-  "README.md": "a40136941294b5bef91924354f5e965845eca3869ce376374a1e4a8f8daf7520",
+  "README.md": "c80f77f5a48a89e48402fd1efec5532cbf1f00e2d19d47a4a0f342a6e0f302d0",
   "baseline/build.log": "57a756507ffa687c22ad17170d99236be332a71467190516261dfef8d3626a08",
   "baseline/candidate.so": "3bbaf27ff0c10ff68d8a195a82f39eadee266f324067bd0a66081710be30b4ec",
   "baseline/container.json": "95f8896aaaebe9f935914a2f36f6ddf1219f2ab0be3124938c15cfff00237838",
@@ -24,6 +24,18 @@
   "cases/bool-match/prior-candidate-sha256.txt": "9e71c5c12defacc2472ff5754b12ad7a0bfcdca7ec13ee8b7649738c4554cd1e",
   "cases/bool-match/result.json": "4c966a2654174001c0b71a311a47246056cb362293fa47ccc6a2b82578f105e8",
   "cases/bool-match/source-manifest.json": "b64478cbca263c3488eb2eaae37b62999dfe886bfba8dd0b97745bf93fd869c3",
+  "cases/direct-sub/allocation-image.so": "2c26e081f3faabf00592a9615fdb19d0115ff1c0ded5acf29548e214704d5283",
+  "cases/direct-sub/applied-lib.rs": "7e88537eaf3030d3ef32baec95c96dc6bd7b8d7a749a91af5bfba3dc4df6a169",
+  "cases/direct-sub/applied-source.rs": "2f403b698750ab295ffd88d71eb75cb594dd27eff67edcc7a260688e33f67ca3",
+  "cases/direct-sub/build-driver.py": "f6e5b83d4400467bfa9febfde70e8de73cb7dfa6e9d95d3b9c0ee4ad7a556e75",
+  "cases/direct-sub/build.log": "3b9062bb175a02cbd9b8ab86cb72c1ce55185f37cc669bae322ce5bd82be0609",
+  "cases/direct-sub/candidate.so": "3bbaf27ff0c10ff68d8a195a82f39eadee266f324067bd0a66081710be30b4ec",
+  "cases/direct-sub/command.json": "41e84818ec911e372151c4456f49b93b0b2cd0f0ea02b2128e08260cd7369b15",
+  "cases/direct-sub/previous-lib.rs": "54eb9885e37b35cf30cabb3696225762b7169d96169346756446fb80520520e1",
+  "cases/direct-sub/previous-source.rs": "94ddfd74382106798c62e47075c9f55a615e4d9dc48ee7e7107dc6b4a76485ec",
+  "cases/direct-sub/prior-candidate-sha256.txt": "677d3f2a08610f2c80c2707ba43932e013ba9e6aba1b06049ba01073203eb00d",
+  "cases/direct-sub/result.json": "deaa767b92a120e0cd798af127b52e4a99d7d3f6e006b0cd5e40e5d2ca518764",
+  "cases/direct-sub/source-manifest.json": "318c68fd98bf8414852c0460cb2bcf9e130d8746d83a72e59ee35b1bc3f04735",
   "cases/feature-control/allocation-image.so": "de3ebb1dd993e3aa80ec143e37bb7fa3ac0a197976ac26b555c322c0d0d5670f",
   "cases/feature-control/applied-lib.rs": "54eb9885e37b35cf30cabb3696225762b7169d96169346756446fb80520520e1",
   "cases/feature-control/applied-source.rs": "dfcfdabd16a2aba63ea76c9b25b096067c433454ec6908a299f56b1a6657aad5",
@@ -190,6 +202,6 @@
   "cases/unlikely-valid/source-manifest.json": "c97836c13f39a8f3fbd6e08bdae08a11a998fb6063f4fd398364e2e06e38bfc5",
   "iterate.py": "f6e5b83d4400467bfa9febfde70e8de73cb7dfa6e9d95d3b9c0ee4ad7a556e75",
   "original-build-helper.py": "8aa57f1f3259ea5d4cc98d93fed9d2d008da6417b9e3ab0dd02844cdf772aeff",
-  "results.json": "5de061a0c9f0b095f9fde9384c9e11b74563d8903c5345a8aa107afb3593ad95",
-  "verify.py": "7b488799d7b2ddd6bfb49ed5d34cffbea796e69c8db3a0016cae92351d9b9d7e"
+  "results.json": "d1cd7fc2bf1a93db46213dd067abac58b8341beea96d0bbb03df58a4f17b9f36",
+  "verify.py": "528c5ddd9cb799876cb91c98b01647d6a7982f7786315f21dbaa3e2c40e5cf90"
 }
