@@ -25,3 +25,6 @@ repro/pump/admin-cto-error-batch-main-fortyeight/main/source/programs/pump/src/c
 repro/pump_fees/sharing-fourth-cpi-main-v144/source/Cargo.toml -whitespace
 repro/pump_fees/sharing-fourth-cpi-v144/analysis/method/dependency_reader.py -whitespace
 repro/pump_fees/sharing-fourth-cpi-v144/source/Cargo.toml -whitespace
+
+# Preserve incoming positive-guard source evidence exactly.
+repro/pump/metaplex-utilize-positive-guard-source-recovery/source.patch -whitespace
