@@ -17,16 +17,17 @@ LOADER = 'BPFLoader2111111111111111111111111111111111'
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--surfpool', type=Path, default=ROOT/'work/localnet/surfpool')
     parser.add_argument('--check', action='store_true', help='verify startup and loaded bytes, then stop')
     parser.add_argument('--port', type=int, default=18999)
     parser.add_argument('--studio-port', type=int, default=18488)
     args = parser.parse_args()
-    binary = shutil.which('surfpool')
+    binary = str(args.surfpool.resolve()) if args.surfpool.exists() else shutil.which('surfpool')
     if not binary:
         raise SystemExit('Install Surfpool from https://www.surfpool.run/ first.')
     version = subprocess.check_output([binary, '--version'], text=True).strip()
-    if version != 'surfpool 1.0.0':
-        raise SystemExit(f'Expected surfpool 1.0.0; found {version}. Review CLI compatibility before changing the pin.')
+    if version != 'surfpool 1.6.1':
+        raise SystemExit(f'Expected surfpool 1.6.1; found {version}. Review CLI compatibility before changing the pin.')
     for port in (args.port, args.port + 1, args.studio_port):
         with socket.socket() as sock:
             sock.bind(('127.0.0.1', port))
@@ -52,7 +53,8 @@ def main():
                 time.sleep(.2)
             else: raise TimeoutError('Surfpool did not become healthy')
             rows = []
-            for capture in sorted((ROOT/'evidence/original').glob('*/capture.json')):
+            captures = sorted((ROOT/'evidence/original').glob('*/capture.json')) + sorted((ROOT/'evidence/dependencies').glob('*/capture.json'))
+            for capture in captures:
                 metadata = json.loads(capture.read_text())
                 payload = (capture.parent/'deployed.so').read_bytes()
                 assert hashlib.sha256(payload).hexdigest() == metadata['payload_sha256'], capture
@@ -66,7 +68,19 @@ def main():
                 assert account['executable'] and account['owner'] == LOADER
                 assert base64.b64decode(account['data'][0]) == elf
                 rows.append({'name':capture.parent.name,'program':address,'elf_bytes':len(elf),'elf_sha256':hashlib.sha256(elf).hexdigest(),'capture_sha256':metadata['payload_sha256']})
-            report = {'surfpool_version':version, 'rpc':rpc_url, 'offline':True, 'programs':rows, 'scope':'Captured original ELFs under legacy loader; startup and byte readback only. No transactions, reconstruction identity, or complete chain snapshot established.'}
+            fixture_rows = []
+            lane = ROOT/'research/imported-lab/analysis/pump_fun'
+            configs = json.loads((lane/'config-snapshot.json').read_text())['accounts']
+            pool = json.loads((lane/'amm-v2-trade-fixture.json').read_text())['accounts']
+            for entry in configs + list(pool.values()):
+                data = base64.b64decode(entry['data_base64'])
+                assert hashlib.sha256(data).hexdigest() == entry['data_sha256']
+                rpc('surfnet_setAccount', [entry['address'], {'lamports':entry['lamports'], 'owner':entry['owner'], 'executable':entry.get('executable',False), 'data':data.hex()}])
+                actual = rpc('getAccountInfo', [entry['address'], {'encoding':'base64'}])['value']
+                assert base64.b64decode(actual['data'][0]) == data
+                assert actual['lamports'] == entry['lamports'] and actual['owner'] == entry['owner']
+                fixture_rows.append({'address':entry['address'],'sha256':entry['data_sha256']})
+            report = {'surfpool_version':version, 'rpc':rpc_url, 'offline':True, 'programs':rows, 'account_fixtures':fixture_rows, 'scope':'Captured original ELFs and dependency ELFs under legacy loader, captured configuration and one AMM pool; startup and byte readback only. No transactions, reconstruction identity, or complete chain snapshot established.'}
             (work/'verification.json').write_text(json.dumps(report,indent=2)+'\n')
             print(json.dumps(report, indent=2), flush=True)
             if not args.check:

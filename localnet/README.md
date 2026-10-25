@@ -1,55 +1,102 @@
-# Surfpool local network
+# Surfpool fixtures and transaction tests
 
-The project launcher uses **Surfpool 1.0.0** and Python 3's standard library.
-Surfpool is already installed on the development machine at
-`~/.local/bin/surfpool`. On another machine, follow the
-[official installation instructions](https://www.surfpool.run/) and install the
-same version. The launcher rejects other versions until compatibility is reviewed.
+Use **Surfpool 1.6.1** for this project's fixture suite. The earlier 1.0.0 launcher
+was tested only for basic program loading; it is superseded by this pinned setup.
 
-From the repository root:
+## Install once
+
+On macOS ARM64, from the repository root:
+
+```sh
+python3.12 localnet/setup.py
+```
+
+This installs the SHA-256-verified upstream Surfpool archive into `work/localnet/`,
+creates an isolated Python environment with the repository's pinned dependencies,
+and checks out the exact official-docs commit used by the fixtures. It does not
+change global wallets, CLI settings or installed tools. Python 3.12 is recommended:
+the host's Homebrew 3.14 has a broken libexpat linkage affecting pip/ensurepip.
+`--python /path/to/python` selects another interpreter for the test environment.
+
+The pinned archive provenance is in
+[`tool-downloads.json`](../research/imported-lab/evidence/tool-downloads.json).
+Other platforms can supply their installed Surfpool 1.6.1 and docs checkout using
+the test runner's `--surfpool` and `--docs-checkout` options.
+
+## Start an interactive fixture network
 
 ```sh
 python3 localnet/surfpool.py
 ```
 
-- Local RPC: `http://127.0.0.1:18999`
-- Local WebSocket: `ws://127.0.0.1:19000`
+- RPC: `http://127.0.0.1:18999`
+- WebSocket: `ws://127.0.0.1:19000`
 - Studio: `http://127.0.0.1:18488`
 - Stop: Ctrl-C in the launch terminal.
 
-Use `--port` and `--studio-port` to select alternate ports. The WebSocket port is
-the RPC port plus one. Occupied ports fail before starting another server.
-For clients, pass the local RPC explicitly; no global Solana configuration or
-wallet settings are changed. The process runs with `--offline`, `--no-deploy` and
-an in-memory database, so a new invocation starts a fresh local network.
+The launcher loads the four captured original programs, five captured dependencies,
+and ten captured configuration/pool accounts. Every payload hash is checked before
+loading, and every loaded ELF and account is read back and compared. Captured pool
+fixtures include mint accounts, vaults, fee configuration and the fee recipient.
+They retain captured authorities; the launcher does not possess those keys.
 
-## Loaded programs and validation
+Use `--port` and `--studio-port` to select alternate ports, or `--surfpool` for an
+explicit binary. Occupied ports fail before another server starts. Run
+`python3 localnet/surfpool.py --check` to verify initialization and then stop.
+Logs and readback reports are stored under ignored `work/surfpool/`.
 
-The launcher verifies the saved capture hashes, then loads the original Pump,
-Pump AMM, Pump Fees and Mayhem ELFs at their captured program addresses. It removes
-only verified zero allocation padding after each ELF's section table. It reads
-back every program and checks exact ELF bytes, owner and executable status.
+## Execute signed transaction tests
 
 ```sh
-python3 localnet/surfpool.py --check
+work/localnet/venv/bin/python localnet/test_transactions.py
 ```
 
-This smoke check starts Surfpool, loads and verifies the four programs, and stops
-its own process. It passed locally on Surfpool 1.0.0. Runtime logs and a fresh
-verification report are written under ignored `work/surfpool/`.
+This validates the frozen fixture hashes, creates a disposable copy, and runs four
+transaction sequences in fresh offline in-memory Surfpool instances. It then runs
+all seven independent receipt-verification scripts on the new results:
 
-These are **original captured programs**, not rebuilt candidates. This mode uses
-the legacy BPF loader for local execution; it does not reproduce upgradeable-loader
-ProgramData metadata or upgrade-authority behavior. It does not hydrate all user,
-pool, token or dependency accounts and is not a complete historical chain snapshot.
-Tests must install their own account fixtures and dependencies before exercising
-instructions. Startup/readback success alone does not prove transaction behavior,
-security or byte-identical source reconstruction.
+- Authorized configuration updates and wrong-authority rollback.
+- PumpSwap buy/sell, missing signer and slippage rejection.
+- Fresh token/curve creation, curve trades, completion, migration and post-migration trades.
+- Fees withdrawal, missing signer, wrong claimant and redirected recipient rejection.
 
-The existing signed execution harnesses under
-[`research/imported-lab/scripts/`](../research/imported-lab/scripts/) remain the
-reference for isolated fixture-based transaction checks; their saved evidence and
-scope are under [`research/validation/`](../research/validation/).
+Test signers, user balances and certain authority fields are synthetic. Each
+receipt records signed payloads, errors, before/after state, balances and log output.
+The resulting `transaction-summary.json` counts unique signed payloads across the
+receipts. Output directories are new for each invocation; `--output` can specify a
+new path. Imported evidence is never overwritten. Tests use ports 19831/19832,
+19851/19852, 19871/19872 and 19891/19892 and reject port collisions.
 
-[Surfpool documentation](https://www.surfpool.run/llms.txt) describes the local
-network model; `surfpool start --help` lists the flags supported by the pinned CLI.
+## Scope
+
+The network is offline, with auto-deployment disabled and no mainnet broadcasts.
+Programs are the **original captures**, not rebuilt candidates. Local execution uses
+the legacy BPF loader and strips only verified zero allocation padding after the
+ELF section table. Upgradeable-loader metadata/authority behavior is not reproduced.
+The accounts are selected captures from different slots, not a complete historical
+chain snapshot. The imported transaction suite does not exercise Mayhem trades.
+Passing transactions or readback checks do not establish source reconstruction or
+complete byte identity. See the [reconstruction status](../repro/status.json).
+
+[Surfpool documentation](https://www.surfpool.run/llms.txt) describes the local network
+model; `surfpool start --help` lists the installed CLI's supported flags.
+
+## Mayhem admin candidate parity
+
+```sh
+work/localnet/venv/bin/python localnet/mayhem_transactions.py \
+  --candidate repro/mayhem/mayhem_recovered.so \
+  --output work/localnet/mayhem-new-run
+```
+
+This freezes the candidate, runs 60 synthetic cases against both original and
+candidate with valid transaction signatures, and compares committed errors, account
+bytes/owners/lamports and payer/admin balance deltas. The recorded run passed all
+60 comparisons (120 transactions). It covers ten admin handlers, including signer,
+owner, writability and PDA checks. Timestamp-sensitive event logs are retained but
+not compared. It does not exercise Mayhem trading or privileged PDA signing.
+See [summary](evidence/mayhem-summary.json) and [full receipts](evidence/mayhem-transactions.json.gz).
+
+The [lifecycle summary](evidence/transaction-summary.json) records 30 unique signed
+transactions, 15 successful and 15 expected rejections. Compressed fresh receipts
+and fixture readback hashes are also retained in `evidence/`.
