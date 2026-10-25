@@ -10,6 +10,7 @@ on:
         options:
           - spl_token
           - spl_token_2022
+          - associated_token
           - both
 permissions:
   contents: read
@@ -56,5 +57,27 @@ jobs:
         with:
           name: token-2022-rebuild-${{ github.run_id }}
           path: work/token-2022-rebuild
+          if-no-files-found: error
+          retention-days: 30
+  associated-token:
+    if: inputs.dependency == 'associated_token'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          repository: solana-labs/solana-program-library
+          ref: c00194d2257302f028f44a403c6dee95c0f9c3bc
+          path: work/ata-source
+          persist-credentials: false
+      - name: Rebuild release-attributed ATA source using pinned CLI1.10.33 image
+        run: python3 scripts/pump_build_token_dependency.py --dependency associated_token --source work/ata-source --output work/ata-rebuild
+      - name: Preserve source manifest, build logs, generated ELF and comparison
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ata-rebuild-${{ github.run_id }}
+          path: work/ata-rebuild
           if-no-files-found: error
           retention-days: 30
