@@ -126,6 +126,9 @@ def main():
     if args.program == "pump" and artifact == "repro/pump/buy-mode-order-main-fortyeight/main/candidate.so":
         subprocess.run([sys.executable, "-B", str(ROOT / "repro/pump/buy-mode-order-main-fortyeight/verify.py"), "--current-main", str(ROOT)], check=True)
         return
+    if args.program == "fees" and artifact == "repro/pump_fees/withdraw-owned-error-main-v144/main/candidate.so":
+        subprocess.run([sys.executable, "-B", str(ROOT / "repro/pump_fees/withdraw-owned-error-main-v144/verify.py"), "--current-main", str(ROOT)], check=True)
+        return
     if args.program == "fees" and artifact in ("repro/pump_fees/donation-business-v144/pump_fees_candidate.so", "repro/pump_fees/donation-borrow-v144/pump_fees_candidate.so", "repro/pump_fees/legacy-social-admission-v144/pump_fees_candidate.so", "repro/pump_fees/legacy-caller-v144/pump_fees_candidate.so", "repro/pump_fees/legacy-value-v144/pump_fees_candidate.so", "repro/pump_fees/v2-caller-v144/pump_fees_candidate.so"):
         subprocess.run([sys.executable, "-B", str((ROOT / artifact).parent / "verify.py"),
                         "--current-main", "--repo", str(ROOT)], check=True)

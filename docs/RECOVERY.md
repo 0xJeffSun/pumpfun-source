@@ -435,3 +435,7 @@ The [controlled Pump48 path-remap experiment](../repro/pump/path-remap-fortyeigh
 ## Layered pass14: Relay IDL owned errors
 
 The [current Relay source checkpoint](../repro/donation-relay/source-build-09-idl-owned/README.md) restores the complete admitted header-failure ownership path using the existing writer and error implementation. The source, single build, full ledgers and ordinary12 saved evidence are preserved; all earlier checkpoints remain immutable.
+
+## Layered pass15: Fees withdrawal and AMM claim ownership
+
+Both source corrections have single pinned builds, unchanged corpus checks, portable saved-evidence verification and exact main/scratch executable+symbol identity. [Pass15](../repro/layered-passes/pass-15/README.md) retains every byte mismatch and full source limitations, including the AMM handler and recursive parser graph gaps.

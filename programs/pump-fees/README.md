@@ -38,14 +38,14 @@ Temporary serialized creator/admin state before each CPI is retained, because
 the called program reads that state. These cases use normally signed test-owned
 keys and synthetic local accounts; they do not prove every live sharing transition.
 
-The [current source checkpoint](../../repro/pump_fees/v2-caller-v144/README.md)
+The [current source checkpoint](../../repro/pump_fees/withdraw-owned-error-v144/README.md)
 binds this README and all 25 remaining source/workspace/IDL inputs. It preserves
 the recovered dependency graph, social-account layout, inline initializer Pump
 Global account, four declarations in `state.rs`, and SharingConfig in
-`instructions/fee_sharing/create_fee_sharing_config.rs`. The clean main ELF is
-852,248 bytes, SHA-256
-`b2d02994dbc29680273f0a3589d8d9fd2763445505483c1acbd4c9f09e1502fb`, with complete
-ELF and symbol-bearing identity to the tested V2 caller scratch build.
+`instructions/fee_sharing/create_fee_sharing_config.rs`. The tested scratch ELF is
+850,600 bytes, SHA-256
+`76b027c2f4393912e274c1f05b21de77743e18116969a3546ccf8718c2cfa7f7`. Main-build identity must be recorded separately before these
+receipts are attributed to a main build.
 Its 17,461 comparison receipts comprise the unchanged 17,441-receipt corpus
 (including 69 repeated-input checks) and the unchanged 20 focused comparisons.
 All inputs are repeats in this checkpoint; no new handler or unique case is added.
@@ -309,6 +309,16 @@ transactions) for social creation, SOL claims and token claims. See the
 179-byte rent reserve, cooldown, versioned initialization, saturating counters,
 token ATA creation and precise timestamp exclusions. These observations do not
 establish that every authorization or token-extension combination is safe.
+
+The withdrawal token-option checks now convert `FeeError::IncompleteTokenAccounts`
+only on the missing-option branch, with no source-origin attachment. Complete
+original and candidate application bodies support the three ordered checks and
+the owned enum-conversion role; the complete converter matches after call/address
+normalization. The existing cases directly cover missing vault and user application errors;
+the final missing-token-program application error is supported statically but is
+not reached by these fixtures. Earlier option checks or account constraints win.
+These cases do not measure allocations or prove whole-handler cleanup equivalence. The previous
+[V2 caller checkpoint](../../repro/pump_fees/v2-caller-v144/README.md) is retained.
 
 Referral `withdraw` adds 113 signed differential cases and 16 independent Surfpool
 comparisons. It authenticates the user signer and the System-owned referral PDA,
