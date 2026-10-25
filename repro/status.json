@@ -5,7 +5,7 @@
     "compiler": "unresolved",
     "dependencies": "unresolved",
     "build_flags": "unresolved",
-    "candidate_artifact": "repro/pump/admin-cto-compared-errors-main-fortyeight/main/candidate.so",
+    "candidate_artifact": "repro/pump/recovered-dispatch-56-from-main-v144/main/candidate.so",
     "full_byte_equality": false,
     "comparison_status": "DIFFERS_PARTIAL_IMPLEMENTATION",
     "implemented_handlers": [
@@ -56,7 +56,10 @@
       "set_quote_control_reserves_admin",
       "add_quote_control_mint",
       "remove_quote_control_mint",
-      "set_quote_control_mint_reserves"
+      "set_quote_control_mint_reserves",
+      "claim_token_incentives",
+      "admin_update_token_incentives",
+      "set_mayhem_virtual_params"
     ],
     "comparison_report": "repro/pump/admin-cto-compared-errors-main-fortyeight/main/build-comparison.json",
     "build_log": "repro/pump/admin-cto-compared-errors-main-fortyeight/main/build.log",
@@ -159,7 +162,7 @@
       "The five remaining proven CTO owned-error constructors6084/6090/6089/6077/6078 are corrected, with unchanged9269 differential and1024 signed-comparison inputs. Changed-guard coverage is22 differential and4 signed cases;6077 has no signed coverage. The later compared-key pass corrects6030 and application2006; four numeric return sites, compared-value/framework roles, diagnostics and full body identity remain unresolved. Scratch and one main build exited0; full candidate and symbol identity carry scratch receipts to main.",
       "Compared-key6030 uses(target,default); application ConstraintSeeds2006 uses(actual holder_creator_vault,derived PDA). Unchanged9269 differential/1024 signed comparisons pass; changed6030 has1 differential/0 signed application cases and changed2006 has0 in both. Other parser2006 cases are separate. Four numeric source return sites remain:6019once,6091once,6092twice. Full CTO app27816B differs original27400B; source107/118 differs original307/648; raw diagnostic logs still differ. No exhaustive security/body identity."
     ],
-    "candidate_build_identity_report": "repro/pump/admin-cto-compared-errors-main-fortyeight/main/controls/identity.json",
+    "candidate_build_identity_report": "repro/pump/recovered-dispatch-56-from-main-v144/main/controls/identity.json",
     "prior_checkpoint": "repro/pump/admin-cto-error-batch-main-fortyeight",
     "holder_nested_recovery_report": "audit/pump/HOLDER_NESTED_RECOVERY.md",
     "surfpool_verified_signatures": 2980,
@@ -226,7 +229,12 @@
     "admin_cto_error_batch_report": "repro/pump/admin-cto-error-batch-fortyeight/README.md",
     "admin_cto_error_batch_coverage": "repro/pump/admin-cto-error-batch-fortyeight/batch-coverage-review.json",
     "admin_cto_compared_errors_report": "repro/pump/admin-cto-compared-errors-fortyeight/README.md",
-    "admin_cto_compared_errors_coverage": "repro/pump/admin-cto-compared-errors-fortyeight/runtime-controls/changed-domain-coverage.json"
+    "admin_cto_compared_errors_coverage": "repro/pump/admin-cto-compared-errors-fortyeight/runtime-controls/changed-domain-coverage.json",
+    "prior_candidate_artifact": "repro/pump/admin-cto-compared-errors-main-fortyeight/main/candidate.so",
+    "dispatch_coverage": "56/56",
+    "dispatch_coverage_report": "repro/pump/recovered-dispatch-56-from-main-v144/main/dispatch-coverage.json",
+    "reproduced_from_committed_source": true,
+    "candidate_reproduction_note": "Candidate deterministically rebuilds BYTE-IDENTICALLY from origin/main programs/pump (cargo build-sbf v1.44 --offline --locked, isolated target); sha256 5392c9a953db572bf5b1096aa6e3888b4bfaf318a6621fabb525c7dd9174d366. Dispatches all 56 IDL discriminators incl. the three recovered handlers (claim_token_incentives, admin_update_token_incentives, set_mayhem_virtual_params); behaviorally validated by the @pump-fun SDK localnet flows. NOT byte-identical to the deployed original (full_byte_equality stays false)."
   },
   "pump_amm": {
     "source_reconstruction": "partial_handlers_compiled",
@@ -743,7 +751,7 @@
     "compiler": "unresolved",
     "dependencies": "unresolved",
     "build_flags": "unresolved",
-    "candidate_artifact": "repro/mayhem/sell-result-error-main-twentyfour/main/candidate.so",
+    "candidate_artifact": "repro/mayhem/recovered-dispatch-25-from-main-v152/main/candidate.so",
     "full_byte_equality": false,
     "comparison_status": "DIFFERS_PARTIAL_IMPLEMENTATION",
     "implemented_handlers": [
@@ -770,7 +778,8 @@
       "sell_v2",
       "buy_v2",
       "buy_pump_swap",
-      "sell_pump_swap"
+      "sell_pump_swap",
+      "initialize_mayhem_state"
     ],
     "comparison_report": "repro/mayhem/sell-result-error-main-twentyfour/main/build-comparison.json",
     "build_log": "repro/mayhem/sell-result-error-main-twentyfour/main/build.log",
@@ -1063,8 +1072,8 @@
       },
       "historical_replay": false
     },
-    "candidate_sha256": "7d416f848f03e46d9a514f4c505a8e903cdb908f52280bb961254eed90aebe1f",
-    "candidate_bytes": 668640,
+    "candidate_sha256": "cbe8c8e71f0c256326cf639f303b3d939244320637531d79041585c9358020e2",
+    "candidate_bytes": 691128,
     "source_refinement": "BuyPumpSwap and SellPumpSwap zero-divisor sizing failures preserve original typed PumpSwapCpiMathOverflow Result unwrap; no new handlers/cases.",
     "known_diagnostic_differences": "repro/mayhem/sell-result-error-twentyfour/diagnostic-differences.json",
     "full_inventory": "repro/mayhem/sell-result-error-twentyfour/static/complete-inventory.json.gz",
@@ -1073,7 +1082,11 @@
     "main_build_identity_report": "repro/mayhem/sell-result-error-main-twentyfour/main/controls/identity.json",
     "current_full_function_inventory": "repro/mayhem/sell-result-error-twentyfour/static/complete-inventory.json.gz",
     "prior_checkpoint": "repro/mayhem/twentyfour",
-    "candidate_build_identity_report": "repro/mayhem/sell-result-error-main-twentyfour/main/controls/identity.json",
-    "compiler_recipe_note": "Research default v1.52 within the retained newer compiler-family shortlist. RawVec module layout and hashbrown path evidence do not uniquely identify an SDK release, flags, lockfile or compiler. Historical recipe remains unresolved."
+    "candidate_build_identity_report": "repro/mayhem/recovered-dispatch-25-from-main-v152/main/controls/identity.json",
+    "compiler_recipe_note": "Research default v1.52 within the retained newer compiler-family shortlist. RawVec module layout and hashbrown path evidence do not uniquely identify an SDK release, flags, lockfile or compiler. Historical recipe remains unresolved.",
+    "prior_candidate_artifact": "repro/mayhem/sell-result-error-main-twentyfour/main/candidate.so",
+    "dispatch_coverage": "25/25",
+    "reproduced_from_committed_source": true,
+    "candidate_reproduction_note": "Candidate deterministically rebuilds BYTE-IDENTICALLY from origin/main programs/mayhem (cargo build-sbf v1.52 --offline --locked, isolated target); sha256 cbe8c8e71f0c256326cf639f303b3d939244320637531d79041585c9358020e2. Dispatches all 25 handlers incl. the recovered initialize_mayhem_state (the create_v2 Mayhem-mode CPI target, absent from the prior candidate); behaviorally validated by the SDK Mayhem-create flow. NOT byte-identical to the deployed original (full_byte_equality stays false)."
   }
 }
