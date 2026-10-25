@@ -99,7 +99,10 @@
       "repro/pump/creator-fortyone/surfpool/volume_sync/pump-volume-sync-transactions.json.gz"
     ],
     "surfpool_comparisons": 936,
-    "surfpool_signed_transactions": 1872
+    "surfpool_signed_transactions": 1872,
+    "coverage_limitations": [
+      "Known current reconstruction gap: sell_v2 quote transfer-fee minimum-output checking and fee-event fields differ from the captured original. Saved passing suites do not cover this boundary; candidate is not a deployable replacement."
+    ]
   },
   "pump_amm": {
     "source_reconstruction": "partial_handlers_compiled",
@@ -341,7 +344,7 @@
     "compiler": "unresolved",
     "dependencies": "unresolved",
     "build_flags": "unresolved",
-    "candidate_artifact": "repro/mayhem/twentyone/mayhem_recovered.so",
+    "candidate_artifact": "repro/mayhem/twentytwo/mayhem_recovered.so",
     "full_byte_equality": false,
     "comparison_status": "DIFFERS_PARTIAL_IMPLEMENTATION",
     "implemented_handlers": [
@@ -365,24 +368,28 @@
       "burn_tokens",
       "sell",
       "buy",
-      "sell_v2"
+      "sell_v2",
+      "buy_v2"
     ],
-    "comparison_report": "repro/mayhem/twentyone/build-comparison.json",
-    "build_log": "repro/mayhem/twentyone/build.log",
-    "validated_cases": 5260,
+    "comparison_report": "repro/mayhem/twentytwo/build-comparison.json",
+    "build_log": "repro/mayhem/twentytwo/build.log",
+    "validated_cases": 7099,
     "validation_reports": [
-      "repro/mayhem/twentyone/admin-differential.json.gz",
-      "repro/mayhem/twentyone/fee_recipient-differential.json.gz",
-      "repro/mayhem/twentyone/extend-differential.json.gz",
-      "repro/mayhem/twentyone/withdraw-differential.json.gz",
-      "repro/mayhem/twentyone/quote_withdraw-differential.json.gz",
-      "repro/mayhem/twentyone/sweeps-differential.json.gz",
-      "repro/mayhem/twentyone/sell-differential.json.gz",
-      "repro/mayhem/twentyone/buy-differential.json.gz",
-      "repro/mayhem/twentyone/sell-v2-native-differential.json.gz",
-      "repro/mayhem/twentyone/sell-v2-token-differential.json.gz",
-      "repro/mayhem/twentyone/sell-v2-token22-differential.json.gz",
-      "repro/mayhem/twentyone/burn-sequences/verification.json"
+      "repro/mayhem/twentytwo/admin-differential.json.gz",
+      "repro/mayhem/twentytwo/fee_recipient-differential.json.gz",
+      "repro/mayhem/twentytwo/extend-differential.json.gz",
+      "repro/mayhem/twentytwo/withdraw-differential.json.gz",
+      "repro/mayhem/twentytwo/quote_withdraw-differential.json.gz",
+      "repro/mayhem/twentytwo/sweeps-differential.json.gz",
+      "repro/mayhem/twentytwo/sell-differential.json.gz",
+      "repro/mayhem/twentytwo/buy-differential.json.gz",
+      "repro/mayhem/twentytwo/sell-v2-native-differential.json.gz",
+      "repro/mayhem/twentytwo/sell-v2-token-differential.json.gz",
+      "repro/mayhem/twentytwo/sell-v2-token22-differential.json.gz",
+      "repro/mayhem/twentytwo/buy-v2-native-differential.json.gz",
+      "repro/mayhem/twentytwo/buy-v2-token-differential.json.gz",
+      "repro/mayhem/twentytwo/buy-v2-token22-differential.json.gz",
+      "repro/mayhem/twentytwo/burn-sequences/verification.json"
     ],
     "compiler_family_candidates": [
       "v1.52",
@@ -393,8 +400,8 @@
     ],
     "compiler_family_evidence": "repro/compiler-fingerprints/REPORT.md",
     "genuine_snapshot_sequences": {
-      "report": "repro/mayhem/twentyone/burn-sequences/comparison.json",
-      "verification": "repro/mayhem/twentyone/burn-sequences/verification.json",
+      "report": "repro/mayhem/twentytwo/burn-sequences/comparison.json",
+      "verification": "repro/mayhem/twentytwo/burn-sequences/verification.json",
       "sequences": 3,
       "instruction_comparisons": 6,
       "signed_transactions": 12,
@@ -409,16 +416,16 @@
       "synthetic_cases": 396,
       "successful_cases": 134,
       "signed_transactions": 792,
-      "report": "repro/mayhem/twentyone/sell-differential.json.gz",
-      "verification": "repro/mayhem/twentyone/sell-verification.json",
+      "report": "repro/mayhem/twentytwo/sell-differential.json.gz",
+      "verification": "repro/mayhem/twentytwo/sell-verification.json",
       "historical_replay": false
     },
     "buy_validation": {
       "synthetic_cases": 486,
       "successful_cases": 187,
       "signed_transactions": 972,
-      "report": "repro/mayhem/twentyone/buy-differential.json.gz",
-      "verification": "repro/mayhem/twentyone/buy-verification.json",
+      "report": "repro/mayhem/twentytwo/buy-differential.json.gz",
+      "verification": "repro/mayhem/twentytwo/buy-verification.json",
       "historical_replay": false
     },
     "sell_v2_validation": {
@@ -430,8 +437,8 @@
         "native": {
           "cases": 473,
           "mismatches": 0,
-          "receipt": "repro/mayhem/twentyone/sell-v2-native-differential.json.gz",
-          "compressed_sha256": "d0ace1d58a002e26954de31a6b5a94889bab82c78af53f54bce357fa52b7a1f8",
+          "receipt": "repro/mayhem/twentytwo/sell-v2-native-differential.json.gz",
+          "compressed_sha256": "a5cfad249fc1e33f4c7f1edbb0d06dfa98025ba28a4d42a6bfd996778c877276",
           "successes": 176,
           "rejections": 297,
           "signed_transactions": 946,
@@ -441,13 +448,13 @@
             "retained65535",
             "quote_extreme_1_0_1"
           ],
-          "verification": "repro/mayhem/twentyone/sell-v2-native-verification.json"
+          "verification": "repro/mayhem/twentytwo/sell-v2-native-verification.json"
         },
         "token": {
           "cases": 473,
           "mismatches": 0,
-          "receipt": "repro/mayhem/twentyone/sell-v2-token-differential.json.gz",
-          "compressed_sha256": "b8d0589508815da656098a835cd22a20fce17f1050eeba9afe26ecc3c8e9384e",
+          "receipt": "repro/mayhem/twentytwo/sell-v2-token-differential.json.gz",
+          "compressed_sha256": "70abd9aaa28dbf9bd14064b87870dc4bec4ebfefa7a99b6632aba4f2c56665c1",
           "successes": 121,
           "rejections": 352,
           "signed_transactions": 946,
@@ -457,13 +464,13 @@
             "retained65535",
             "quote_extreme_1_0_1"
           ],
-          "verification": "repro/mayhem/twentyone/sell-v2-token-verification.json"
+          "verification": "repro/mayhem/twentytwo/sell-v2-token-verification.json"
         },
         "token22": {
           "cases": 473,
           "mismatches": 0,
-          "receipt": "repro/mayhem/twentyone/sell-v2-token22-differential.json.gz",
-          "compressed_sha256": "94ccd14fbe4228d36496df9aa73236ce5a3c1ae664d5f56ef5f2a3f07cd95d1e",
+          "receipt": "repro/mayhem/twentytwo/sell-v2-token22-differential.json.gz",
+          "compressed_sha256": "a37f31469ad8e84c3d5e2c59894584104fc4624263907fe21d19ef54b07acd2f",
           "successes": 121,
           "rejections": 352,
           "signed_transactions": 946,
@@ -473,7 +480,64 @@
             "retained65535",
             "quote_extreme_1_0_1"
           ],
-          "verification": "repro/mayhem/twentyone/sell-v2-token22-verification.json"
+          "verification": "repro/mayhem/twentytwo/sell-v2-token22-verification.json"
+        }
+      },
+      "historical_replay": false
+    },
+    "buy_v2_validation": {
+      "synthetic_cases": 1839,
+      "successful_cases": 704,
+      "rejection_cases": 1135,
+      "signed_transactions": 3678,
+      "families": {
+        "native": {
+          "cases": 613,
+          "mismatches": 0,
+          "receipt": "repro/mayhem/twentytwo/buy-v2-native-differential.json.gz",
+          "compressed_sha256": "2e7139a02365286891ab6b9b9e4edef974c61a1d04bef5734e65e458ea07f38e",
+          "successes": 284,
+          "rejections": 329,
+          "signed_transactions": 1226,
+          "normalized_log_differences": [
+            "interval_overflow",
+            "retained10001",
+            "retained65535",
+            "quote_extreme_1_0_1"
+          ],
+          "verification": "repro/mayhem/twentytwo/buy-v2-native-verification.json"
+        },
+        "token": {
+          "cases": 613,
+          "mismatches": 0,
+          "receipt": "repro/mayhem/twentytwo/buy-v2-token-differential.json.gz",
+          "compressed_sha256": "c1a8d91d14902e8b3040505c501ee7388418b6e066e377ebcb31540d1caa13fe",
+          "successes": 210,
+          "rejections": 403,
+          "signed_transactions": 1226,
+          "normalized_log_differences": [
+            "interval_overflow",
+            "retained10001",
+            "retained65535",
+            "quote_extreme_1_0_1"
+          ],
+          "verification": "repro/mayhem/twentytwo/buy-v2-token-verification.json"
+        },
+        "token22": {
+          "cases": 613,
+          "mismatches": 0,
+          "receipt": "repro/mayhem/twentytwo/buy-v2-token22-differential.json.gz",
+          "compressed_sha256": "a6c47e17c8220b7bcb832d2b949cec806ef11c3116171d31b67378733c59dff3",
+          "successes": 210,
+          "rejections": 403,
+          "signed_transactions": 1226,
+          "normalized_log_differences": [
+            "interval_overflow",
+            "retained10001",
+            "retained65535",
+            "quote_extreme_1_0_1"
+          ],
+          "verification": "repro/mayhem/twentytwo/buy-v2-token22-verification.json"
         }
       },
       "historical_replay": false

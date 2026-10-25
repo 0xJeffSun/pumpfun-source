@@ -76,26 +76,32 @@ jobs:
               python scripts/pump_amm_multi_hop_differential.py --candidate repro/pump_amm/multi-hop-thirty-seven/pump_amm_recovered.so --output work/pump-amm-multi-hop.json
           - suite: mayhem
             commands: |
-              python scripts/mayhem_validate_admin.py --candidate repro/mayhem/twentyone/mayhem_recovered.so --output work/mayhem-admin.json
-              python scripts/mayhem_validate_fee_recipient.py --candidate repro/mayhem/twentyone/mayhem_recovered.so --output work/mayhem-recipient.json
-              python scripts/mayhem_validate_extend.py --candidate repro/mayhem/twentyone/mayhem_recovered.so --output work/mayhem-extend.json
-              python scripts/mayhem_validate_withdraw.py --candidate repro/mayhem/twentyone/mayhem_recovered.so --output work/mayhem-withdraw.json
-              python scripts/mayhem_validate_quote_withdraw.py --candidate repro/mayhem/twentyone/mayhem_recovered.so --output work/mayhem-quote-withdraw.json
-              python scripts/mayhem_validate_sweeps.py --candidate repro/mayhem/twentyone/mayhem_recovered.so --output work/mayhem-sweeps.json
-              python scripts/mayhem_sell_differential.py --candidate repro/mayhem/twentyone/mayhem_recovered.so --output work/mayhem-sell.json
-              python scripts/verify_mayhem_sell.py --candidate repro/mayhem/twentyone/mayhem_recovered.so --receipts work/mayhem-sell.json --output work/mayhem-sell-verification.json
-              python scripts/mayhem_buy_differential.py --candidate repro/mayhem/twentyone/mayhem_recovered.so --cases repro/mayhem/twentyone/buy-cases.json --output work/mayhem-buy.json
-              python scripts/verify_mayhem_buy.py --candidate repro/mayhem/twentyone/mayhem_recovered.so --receipts work/mayhem-buy.json --output work/mayhem-buy-verification.json
-              python scripts/mayhem_sell_v2_differential.py --candidate repro/mayhem/twentyone/mayhem_recovered.so --cases repro/mayhem/twentyone/sell-v2-cases.json --family native --output work/mayhem-sell-v2-native.json
-              python scripts/verify_mayhem_sell_v2.py --candidate repro/mayhem/twentyone/mayhem_recovered.so --receipts work/mayhem-sell-v2-native.json --output work/mayhem-sell-v2-native-verification.json
-              python scripts/mayhem_sell_v2_differential.py --candidate repro/mayhem/twentyone/mayhem_recovered.so --cases repro/mayhem/twentyone/sell-v2-cases.json --family token --output work/mayhem-sell-v2-token.json
-              python scripts/verify_mayhem_sell_v2.py --candidate repro/mayhem/twentyone/mayhem_recovered.so --receipts work/mayhem-sell-v2-token.json --output work/mayhem-sell-v2-token-verification.json
-              python scripts/mayhem_sell_v2_differential.py --candidate repro/mayhem/twentyone/mayhem_recovered.so --cases repro/mayhem/twentyone/sell-v2-cases.json --family token22 --output work/mayhem-sell-v2-token22.json
-              python scripts/verify_mayhem_sell_v2.py --candidate repro/mayhem/twentyone/mayhem_recovered.so --receipts work/mayhem-sell-v2-token22.json --output work/mayhem-sell-v2-token22-verification.json
+              python scripts/mayhem_validate_admin.py --candidate repro/mayhem/twentytwo/mayhem_recovered.so --output work/mayhem-admin.json
+              python scripts/mayhem_validate_fee_recipient.py --candidate repro/mayhem/twentytwo/mayhem_recovered.so --output work/mayhem-recipient.json
+              python scripts/mayhem_validate_extend.py --candidate repro/mayhem/twentytwo/mayhem_recovered.so --output work/mayhem-extend.json
+              python scripts/mayhem_validate_withdraw.py --candidate repro/mayhem/twentytwo/mayhem_recovered.so --output work/mayhem-withdraw.json
+              python scripts/mayhem_validate_quote_withdraw.py --candidate repro/mayhem/twentytwo/mayhem_recovered.so --output work/mayhem-quote-withdraw.json
+              python scripts/mayhem_validate_sweeps.py --candidate repro/mayhem/twentytwo/mayhem_recovered.so --output work/mayhem-sweeps.json
+              python scripts/mayhem_sell_differential.py --candidate repro/mayhem/twentytwo/mayhem_recovered.so --output work/mayhem-sell.json
+              python scripts/verify_mayhem_sell.py --candidate repro/mayhem/twentytwo/mayhem_recovered.so --receipts work/mayhem-sell.json --output work/mayhem-sell-verification.json
+              python scripts/mayhem_buy_differential.py --candidate repro/mayhem/twentytwo/mayhem_recovered.so --cases repro/mayhem/twentytwo/buy-cases.json --output work/mayhem-buy.json
+              python scripts/verify_mayhem_buy.py --candidate repro/mayhem/twentytwo/mayhem_recovered.so --receipts work/mayhem-buy.json --output work/mayhem-buy-verification.json
+              python scripts/mayhem_sell_v2_differential.py --candidate repro/mayhem/twentytwo/mayhem_recovered.so --cases repro/mayhem/twentytwo/sell-v2-cases.json --family native --output work/mayhem-sell-v2-native.json
+              python scripts/verify_mayhem_sell_v2.py --candidate repro/mayhem/twentytwo/mayhem_recovered.so --receipts work/mayhem-sell-v2-native.json --output work/mayhem-sell-v2-native-verification.json
+              python scripts/mayhem_sell_v2_differential.py --candidate repro/mayhem/twentytwo/mayhem_recovered.so --cases repro/mayhem/twentytwo/sell-v2-cases.json --family token --output work/mayhem-sell-v2-token.json
+              python scripts/verify_mayhem_sell_v2.py --candidate repro/mayhem/twentytwo/mayhem_recovered.so --receipts work/mayhem-sell-v2-token.json --output work/mayhem-sell-v2-token-verification.json
+              python scripts/mayhem_sell_v2_differential.py --candidate repro/mayhem/twentytwo/mayhem_recovered.so --cases repro/mayhem/twentytwo/sell-v2-cases.json --family token22 --output work/mayhem-sell-v2-token22.json
+              python scripts/verify_mayhem_sell_v2.py --candidate repro/mayhem/twentytwo/mayhem_recovered.so --receipts work/mayhem-sell-v2-token22.json --output work/mayhem-sell-v2-token22-verification.json
+              python scripts/mayhem_buy_v2_differential.py --candidate repro/mayhem/twentytwo/mayhem_recovered.so --cases repro/mayhem/twentytwo/buy-v2-cases.json --family native --output work/mayhem-buy-v2-native.json
+              python scripts/verify_mayhem_buy_v2.py --candidate repro/mayhem/twentytwo/mayhem_recovered.so --receipts work/mayhem-buy-v2-native.json --output work/mayhem-buy-v2-native-verification.json
+              python scripts/mayhem_buy_v2_differential.py --candidate repro/mayhem/twentytwo/mayhem_recovered.so --cases repro/mayhem/twentytwo/buy-v2-cases.json --family token --output work/mayhem-buy-v2-token.json
+              python scripts/verify_mayhem_buy_v2.py --candidate repro/mayhem/twentytwo/mayhem_recovered.so --receipts work/mayhem-buy-v2-token.json --output work/mayhem-buy-v2-token-verification.json
+              python scripts/mayhem_buy_v2_differential.py --candidate repro/mayhem/twentytwo/mayhem_recovered.so --cases repro/mayhem/twentytwo/buy-v2-cases.json --family token22 --output work/mayhem-buy-v2-token22.json
+              python scripts/verify_mayhem_buy_v2.py --candidate repro/mayhem/twentytwo/mayhem_recovered.so --receipts work/mayhem-buy-v2-token22.json --output work/mayhem-buy-v2-token22-verification.json
               mkdir -p work/mayhem-captured-fixtures
-              python -c "import tarfile; tarfile.open('repro/mayhem/twentyone/captured-fixtures.tar.gz').extractall('work/mayhem-captured-fixtures', filter='data')"
+              python -c "import tarfile; tarfile.open('repro/mayhem/twentytwo/captured-fixtures.tar.gz').extractall('work/mayhem-captured-fixtures', filter='data')"
               python work/mayhem-captured-fixtures/verify_fixtures.py
-              python scripts/mayhem_burn_sequence.py --fixtures work/mayhem-captured-fixtures --candidate repro/mayhem/twentyone/mayhem_recovered.so --output work/mayhem-burn-replay
+              python scripts/mayhem_burn_sequence.py --fixtures work/mayhem-captured-fixtures --candidate repro/mayhem/twentytwo/mayhem_recovered.so --output work/mayhem-burn-replay
               python scripts/verify_mayhem_burn_sequence.py --fixtures work/mayhem-captured-fixtures --receipts work/mayhem-burn-replay
           - suite: imported-lab
             commands: |

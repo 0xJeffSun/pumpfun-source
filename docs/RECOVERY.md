@@ -186,3 +186,14 @@ The [21-handler checkpoint](../repro/mayhem/twentyone/README.md) adds sell_v2 wi
 ## Retained Fees deserializer negatives
 
 [Four source trials](../repro/pump_fees/deserialization-source-trials/README.md) preserve the captured decoder's allocation branches and test Borsh API spelling. None reproduces the whole decoder; no runtime or source promotion claim is made. One API variant produces the exact same ELF as its predecessor. The validated serializer remains the active Fees candidate.
+
+
+## Mayhem quote-aware buy
+
+The [22-handler checkpoint](../repro/mayhem/twentytwo/README.md) adds buy_v2 with 1,839 new native/legacy-token/Token-2022 quote comparisons, including 704 successes and 1,135 rejections. All 5,260 inherited cases pass on the same bytes, totaling 7,099 comparisons across 15 suite runs. The 547,048-byte clean main executable equals tested scratch. The initial extra writable constraint on the global-volume account was removed after original-program comparison, and every focused case was rerun. Two PumpSwap trade handlers, state initialization and full original binary identity remain unresolved.
+
+## Known current Pump transfer-fee gap
+
+A later review confirmed that the published 41-handler candidate's sell_v2 minimum-output check and fee-event fields differ from the captured original for a quote token with a transfer fee. The 7,957 saved differential passes and 936 Surfpool passes do not cover this boundary. This is a reconstruction limitation; the captured original rejected the observed requested minimum. No corrected executable is published, and the candidate remains unsuitable for deployment.
+
+The next [twelve-file Metaplex trial](../repro/pump/metaplex-validation-source-recovery/README.md) adds observed collection system-program and mint-owner checks to the preceding context trial. Eighteen ordinary-signed baseline comparisons retain twelve differences and six controls. It is a source input awaiting compilation and combined regression, not a new accepted candidate.

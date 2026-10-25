@@ -1,6 +1,6 @@
 # Partial Mayhem implementation recovery
 
-This independently compiled Anchor program implements **21 of the 25 currently
+This independently compiled Anchor program implements **22 of the 25 currently
 identified instruction paths**. It is not a full program reconstruction, a
 byte-identical ELF, or a deployable replacement. Other handlers are absent.
 No original machine code is embedded or patched into the build.
@@ -15,7 +15,7 @@ Implemented paths:
 - `update_global_params`
 - `extend_account`, `withdraw_admin`, `withdraw_quote_admin`
 - `sweep_fees`, `sweep_fees_admin`
-- `burn_tokens`, `sell`, `buy`, `sell_v2`
+- `burn_tokens`, `sell`, `buy`, `sell_v2`, `buy_v2`
 
 ## Evidence and unresolved source details
 
@@ -37,8 +37,8 @@ evidence from burn recovery supersedes the earlier 0.31.1 baseline: typed duplic
 checks, Pubkey CPI context and event-authority constants match the newer family.
 Exact historical revision and dependency identity remain unresolved. The explicit
 System wrapper preserves the original address-before-executable validation order.
-All previous 2,953 cases still pass. The current candidate has 5,260 instruction
-comparisons across twelve suite runs; see the [twenty-one-handler package](../../repro/mayhem/twentyone/README.md).
+All previous 2,953 cases still pass. The current candidate has 7,099 instruction
+comparisons across fifteen suite runs; see the [twenty-two-handler package](../../repro/mayhem/twentytwo/README.md).
 
 ## Reproduce
 
@@ -61,7 +61,7 @@ units, all transactions, and the absent instruction paths are not equivalent
 claims. States are synthetic; injected configurations are not proof of reachable
 mainnet states.
 
-`repro/mayhem/twentyone/` retains the clean build's comparison/provenance and compressed
+`repro/mayhem/twentytwo/` retains the clean build's comparison/provenance and compressed
 case evidence. See `audit/mayhem/RECOVERY.md` for bounded security observations.
 
 The additional `scripts/mayhem_validate_fee_recipient.py` suite compares 306
@@ -171,5 +171,31 @@ events, inner calls, return data and errors. Independent saved-receipt checks
 verify every signature, successful quote/CPI/state/event and failed rollback.
 Four panic diagnostics differ in each family, as documented in the package.
 Starting business states and configured authorities are synthetic and test-owned;
-no live authority or historical prestate is claimed. Three trade handlers
-(`buy_v2`, `buy_pump_swap`, `sell_pump_swap`) and `initialize_mayhem_state` remain absent.
+no live authority or historical prestate is claimed. At that checkpoint, three trade handlers
+(`buy_v2`, `buy_pump_swap`, `sell_pump_swap`) and `initialize_mayhem_state` remained absent.
+
+
+Quote-aware `buy_v2` adds 1,839 ordinary-signature comparisons (613 each for native
+SOL, legacy SPL Token and Token-2022 quotes), with 704 successes and 1,135
+rejections. It preserves the 32-account parser, read-only global-volume acceptance,
+actual 27-account Pump CPI, quote selection, reserve-based budget and real-token
+cap. Checked actual-spend accounting precedes strict overall/per-coin risk limits;
+rejection rolls back both Pump and Mayhem changes. All 5,260 earlier comparisons
+pass on the same bytes. A clean main-source build matches the tested scratch
+artifact; complete historical source or executable equality is not established.
+
+```sh
+python3 scripts/mayhem_buy_v2_differential.py \
+  --candidate repro/mayhem/twentytwo/mayhem_recovered.so \
+  --cases repro/mayhem/twentytwo/buy-v2-cases.json --family native \
+  --output work/mayhem-buy-v2-native.json
+python3 scripts/verify_mayhem_buy_v2.py \
+  --candidate repro/mayhem/twentytwo/mayhem_recovered.so \
+  --receipts work/mayhem-buy-v2-native.json --output work/mayhem-buy-v2-verification.json
+```
+
+Repeat with `--family token` and `--family token22`. Independent receipt checks
+validate signatures, quote/CPI inputs, complete state/events, risk limits and
+failed rollback. Four panic diagnostics per family remain explicitly different.
+Fixtures are synthetic with configured test-owned authorities and real PDA CPI
+signing. `buy_pump_swap`, `sell_pump_swap` and `initialize_mayhem_state` remain absent.

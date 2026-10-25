@@ -264,3 +264,32 @@ are used with real PDA CPI signing. No initializer workaround, foreign signature
 authorization weakening, historical replay or live configuration reachability is
 claimed. No confirmed vulnerability is established by these tests. See the
 [twenty-one-handler package](../../repro/mayhem/twentyone/README.md).
+
+
+## Quote-aware buy
+
+The recovered `buy_v2` preserves the 32-account parser and actual 27-account Pump
+CPI, using the configured ordinary trader signer and Mayhem's own sol-vault PDA.
+Original-only and differential evidence establish read-only global-volume account
+acceptance. The first draft's unnecessary mut constraint was removed after all
+three matrices isolated it; the failed draft and receipts remain archived. No
+trader authorization, typed ownership, PDA or ATA constraint was removed.
+
+Quote arithmetic derives a capped budget and caps desired tokens by real token
+reserves. Actual quote spent increases global/state signed-i128 counters and
+acquired tokens decrease the state's token counter. Native overall/per-coin risk
+limits are at GlobalParams offsets 32/40; token-quote limits are 190/198. Signed
+positivity precedes the strict comparison of the counter's low u64 limb. Large
+synthetic-counter cases reproduce this original behavior without establishing
+live reachability or exploitation. Failed post-CPI checks roll back all watched
+Pump and Mayhem accounts. Complete 303-byte log/self-CPI events agree.
+
+There are 613 normally signed synthetic cases per native/legacy-token/Token-2022
+quote family, totaling 704 successes and 1,135 rejections. All 5,260 earlier
+comparisons pass on the combined 22-handler artifact. Independent checks verify
+signatures, exact quote/CPI expectations, complete state/events, strict successful
+risk limits and failed rollback. The clean integrated build is wholly identical
+to the tested scratch artifact, with full original executable equality unresolved.
+Four panic diagnostic differences per family remain. No historical prestate,
+foreign signature, initializer workaround or confirmed vulnerability is claimed.
+See the [twenty-two-handler package](../../repro/mayhem/twentytwo/README.md).
