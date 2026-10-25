@@ -4,7 +4,7 @@ use anchor_lang::prelude::*;
 use anchor_lang::solana_program::instruction::AccountMeta;
 use anchor_spl::token_interface::Mint;
 use crate::{FeeError, ID};
-use crate::types::{FeeProgramGlobal, Shareholder};
+use crate::types::FeeProgramGlobal;
 pub const RELAY: Pubkey = anchor_lang::solana_program::pubkey!("RLAYHr9TRFcKB2ubYQhspcnXiaGpaVzNQvHytt47RZu");
 pub const PUMP: Pubkey = crate::pump_global::PUMP_ID;
 pub const AMM: Pubkey = anchor_lang::solana_program::pubkey!("pAMMBay6oceH9fJKBRHGP5D4bD4sWpmSwMn52FMfXEA");
@@ -104,8 +104,7 @@ pub struct DonationFeePdaCreated {pub timestamp:i64,pub created_by:Pubkey,pub do
 
 #[derive(AnchorSerialize,AnchorDeserialize,Clone,PartialEq)]
 pub enum ConfigStatus {Paused,Active}
-#[account]
-pub struct SharingConfig {pub bump:u8,pub version:u8,pub status:ConfigStatus,pub mint:Pubkey,pub admin:Pubkey,pub admin_revoked:bool,pub shareholders:Vec<Shareholder>}
+pub use crate::instructions::fee_sharing::create_fee_sharing_config::SharingConfig;
 
 #[derive(Accounts)]
 pub struct CrankDonationFeePda<'info> {

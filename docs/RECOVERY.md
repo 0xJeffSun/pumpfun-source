@@ -304,7 +304,7 @@ The [inline receipt reference correction](../repro/ci/inline-runtime-receipt-ref
 The successful fixed-source Linux build retained a hash and section comparison for its unstripped ELF but omitted the symbol-bearing file from the downloadable artifact. No unstripped symbols can be inferred from that hash. The build helper now retains both exact emitted ELFs, rejects direct and parent symlinks before copying, and continues to omit generated keypairs. All 33 preparation/retention tests pass locally. This is a future retention correction; the earlier build has not been repeated and its missing symbol bytes remain missing.
 
 
-## Current Fees account-module reconstruction
+## Fees account-module reconstruction
 
 The [state-module checkpoint](../repro/pump_fees/state-module-v144/README.md) moves four unchanged account declarations to the original recorded filename, retaining public reexports. The clean main and tested scratch ELFs are identical: 768,024 bytes, SHA-256 `d5b8f885942ee0d54519e4330941b5e034cfcdcf271eb286d0b4cc81165bee13`. All 23 actual source inputs and fixed v1.44 compiler/v1.52 strip phases are recorded. All 17,441 inherited comparisons and ten donation steps pass, with unchanged historical signed messages; no cases or handlers are added.
 
@@ -314,3 +314,17 @@ The [independent review of symbol retention](../repro/ci/receipt-retention-revie
 
 
 The [independent Fees integration review](../repro/ci/state-module-integration-review/README.md) verifies the preserved declarations, 23 actual inputs, identical main/scratch ELF, direct receipts, signed histories and complete 150-row ledger against its frozen integration snapshot. All 91 current-binding map entries passed; overlapping groups are not counted as unique files. This is bounded evidence acceptance, with whole-original equality and security sign-off still unresolved.
+
+
+## Current AMM scalar guard-order reconstruction
+
+The [AMM scalar-guard checkpoint](../repro/pump_amm/scalar-guard-order-v144/README.md) changes only the fee setter's explicit unsigned guards and immediate stores, following original LP → protocol → recipients → creator order. Its clean main and scratch binaries are identical: 1,177,512 bytes, SHA-256 `a6dbd0dc24e28a9459e50858136a2cfabb59fb8aa8399d58499d047a76ec291f`. The full unchanged 25-suite corpus passes 17,462 comparisons; 191 existing scalar rejection cases additionally match Left/Right diagnostics. Signed evidence records 35,418 verified signatures over 35,074 transactions, including 150 separately classified original-program setup calls that add no comparison or handler coverage.
+
+Fresh symbols preserve complete Pool and GlobalConfig exit comparisons, each with 24 immediate target checks and an eight-byte discriminator. The corrected handler itself remains unmatched at 6,096 candidate bytes versus 2,912 original bytes, and the actual specialized error helper retains four instruction differences. This closes a demonstrated source-behavior gap without claiming exact compiler reconstruction. All 18 compiler inputs and separate v1.44 compile/v1.52 strip phases are retained; no suite rerun was needed for the byte-identical main executable.
+
+
+## Current Fees SharingConfig-module reconstruction
+
+The [SharingConfig-module checkpoint](../repro/pump_fees/sharing-module-v144/README.md) preserves the fifth account declaration in its recorded instructions/fee_sharing/create_fee_sharing_config.rs module, with existing imports retained through a public reexport. Main and tested scratch binaries are identical: 768,104 bytes, SHA-256 `8cce74a5191b286eaa10af59c02c9ee16d3853be214c5e9b1132e50bba15ef87`. All 26 inputs, fixed compilation/strip phases, direct receipts and current bindings are recorded. All 17,441 existing comparisons, ten donation steps and retained signature checks pass; no cases or handlers are added.
+
+All five complete checked codecs now reference the original filenames and account-name literals. Natural source-line values remain different. The complete SharingConfig unchecked decoder and Account::try_from wrapper retain their comparisons; their 23 immediate call checks overlap the wider 35 codec calls. The earlier ten complete initializer/social/Pubkey bodies remain supported. Larger caller, transitive data, historical source and whole-ELF equality gaps remain explicit. A second runtime run was unnecessary because the clean main ELF equals the tested scratch bytes.

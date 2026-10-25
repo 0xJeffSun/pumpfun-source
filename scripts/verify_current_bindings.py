@@ -118,7 +118,7 @@ def main():
     artifact = status[key]["candidate_artifact"]
     current = {
         "pump": "repro/pump/tokenkeg-two-curve-fortyeight/candidate.so",
-        "fees": "repro/pump_fees/state-module-v144/pump_fees_candidate.so",
+        "fees": "repro/pump_fees/sharing-module-v144/pump_fees_candidate.so",
     }
     if artifact == current[args.program]:
         directory = (ROOT / artifact).parent

@@ -26,6 +26,7 @@ The current [Pump48 two-curve checkpoint](repro/pump/tokenkeg-two-curve-fortyeig
 The current Pump `sell_v2` has a confirmed quote transfer-fee minimum-output and event mismatch; its saved passes do not cover that boundary.
 The current PumpSwap checkpoint corrects the earlier zero-fee cashback event mismatch;
 the [signed negative probe](repro/pump_amm/legacy-sell-zero-fee-gap/README.md) preserves evidence against the prior executable.
+The [AMM scalar-guard checkpoint](repro/pump_amm/scalar-guard-order-v144/README.md) restores the original fee guard/store ordering and compared-value errors. All 17,462 existing comparisons and 191 stricter rejection-log checks pass; the handler machine code remains unmatched.
 A separate native accounting fragment is tested against 206
 original Pump sell cases. See [the recovery experiment](docs/FEE_SELECTION.md).
 
@@ -34,11 +35,11 @@ favors platform-tools v1.44 among the tested Fees builds: two complete runtime
 helper bodies match the capture exactly. The current Fees candidate uses that
 compiler. The [previous retained Fees build](repro/pump_fees/all-thirtyone-v144/README.md)
 also passed 112 independent Surfpool comparisons with 224 signed local transactions.
-The current [Fees state-module checkpoint](repro/pump_fees/state-module-v144/README.md) places four unchanged account declarations in the original recorded `state.rs` file. It retains the inline initializer, social-v2 and Pubkey helper comparisons and passes all 17,441 existing comparisons and ten donation sequence steps. Historical source-line values and whole-ELF identity remain unresolved. Current Fees compilation uses v1.44; the retained SDK strips with v1.52. These results do not prove the complete historical build configuration.
+The current [Fees SharingConfig-module checkpoint](repro/pump_fees/sharing-module-v144/README.md) places the fifth account declaration in its original recorded file, retaining the four earlier `state.rs` accounts. All five codec filenames and account-name literals now match; historical source-line values and whole-ELF identity remain unresolved. The inline initializer, social-v2 and Pubkey checks remain supported, with all 17,441 existing comparisons and ten donation steps passing. Compilation uses v1.44 and the retained SDK strips with v1.52; this does not prove the historical recipe.
 
 [Recovery status](docs/RECOVERY.md) separates observed evidence from unresolved work.
 The [completion and remaining-work ledger](docs/COMPLETION.md) enumerates all 150 instruction dispositions: 140 bounded implementations (93.3%), five partial and five unrecovered. Whole-binary completion remains 0/4; this is not a 93.3% overall completion estimate.
-[Parallel worker results and concurrency configuration](docs/PARALLEL_WORK.md) document the 16 completed CLI tasks and their remaining follow-ups.
+[Parallel worker results and concurrency configuration](docs/PARALLEL_WORK.md) document the completed CLI research waves, focused follow-ups and configured concurrency.
 [Tooling](docs/TOOLING.md) covers recapture, disassembly and strict candidate comparison.
 The [security assessment](audit/AUDIT.md) remains incomplete. Local validation
 includes 393 malformed-input checks and 30 signed offline lifecycle transactions;

@@ -83,4 +83,22 @@ whole-file comparison, use `scripts/build_partial_candidate.py`. See
 `audit/pump_amm/ADMIN_RECOVERY.md` and `audit/pump_amm/LIQUIDITY_RECOVERY.md` and
 `audit/pump_amm/TRADE_V2_RECOVERY.md` and `audit/pump_amm/CREATE_POOL_RECOVERY.md` and `audit/pump_amm/BOOST_RECOVERY.md` and `audit/pump_amm/SWEEP_RECOVERY.md` and `audit/pump_amm/EXTEND_RECOVERY.md` and `audit/pump_amm/CREATOR_FEES_RECOVERY.md` and `audit/pump_amm/CREATOR_REASSIGNMENT_RECOVERY.md` and `audit/pump_amm/INCENTIVES_RECOVERY.md` and `audit/pump_amm/CASHBACK_RECOVERY.md` for recovered constraints and limitations.
 
-The current [Pool serializer checkpoint](../../repro/pump_amm/pool-serialization-thirty-seven/README.md) preserves those 37 bodies and reruns all 25 suites / 17,462 comparisons. Both Pool and GlobalConfig complete normalized account-exit bodies match the captured original, including each exit's 24 direct call targets. Its clean main and scratch executables are byte-identical; equality to the original whole binary remains false. The prior [GlobalConfig checkpoint](../../repro/pump_amm/serialization-thirty-seven/README.md) remains preserved. See [the Pool serialization audit](../../audit/pump_amm/POOL_SERIALIZATION_RECOVERY.md) for the source correction and verification limits. Static-only `create_config` source is retained separately and is not promoted.
+The preceding [Pool serializer checkpoint](../../repro/pump_amm/pool-serialization-thirty-seven/README.md) preserves those 37 bodies and reruns all 25 suites / 17,462 comparisons. Both Pool and GlobalConfig complete normalized account-exit bodies match the captured original, including each exit's 24 direct call targets. Its clean main and scratch executables are byte-identical; equality to the original whole binary remains false. The prior [GlobalConfig checkpoint](../../repro/pump_amm/serialization-thirty-seven/README.md) remains preserved. See [the Pool serialization audit](../../audit/pump_amm/POOL_SERIALIZATION_RECOVERY.md) for the source correction and verification limits. Static-only `create_config` source is retained separately and is not promoted.
+
+
+The current [scalar guard-order checkpoint](../../repro/pump_amm/scalar-guard-order-v144/README.md)
+restores `update_fee_config` scalar compared-value diagnostics and the original
+LP → protocol → recipients → creator guard/store order. The unchanged 25-suite
+corpus passes all 17,462 comparisons; stricter Left/Right assertions pass on 191
+existing scalar-fee rejection cases. There are no added handlers or test cases.
+The clean main executable is byte-identical to the tested scratch executable;
+35,418 signatures are verified, with 150 existing setup transactions accounted
+for separately from comparison cases. The complete Pool and GlobalConfig exit
+matches and their 24 direct targets each are rechecked at the new candidate locations.
+
+The fee-config handler remains structurally unmatched: 6,096 candidate bytes versus
+2,912 original bytes, with no standalone 616-byte scalar-setter match. Its actual
+error helper retains constant-specialization differences. Compilation uses pinned
+v1.44 and the unchanged installed SDK performs its separate v1.52 strip phase;
+these are recorded as separate tool identities. Whole-file equality and the audit
+remain incomplete. Earlier checkpoints and failed evidence checks remain preserved.
