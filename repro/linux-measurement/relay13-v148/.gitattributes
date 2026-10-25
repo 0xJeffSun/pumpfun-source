@@ -1,0 +1,2 @@
+# Preserve reviewed patch context exactly.
+record/source-hardening.patch -whitespace
