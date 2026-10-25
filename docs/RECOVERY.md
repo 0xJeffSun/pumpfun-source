@@ -197,3 +197,8 @@ The [22-handler checkpoint](../repro/mayhem/twentytwo/README.md) adds buy_v2 wit
 A later review confirmed that the published 41-handler candidate's sell_v2 minimum-output check and fee-event fields differ from the captured original for a quote token with a transfer fee. The 7,957 saved differential passes and 936 Surfpool passes do not cover this boundary. This is a reconstruction limitation; the captured original rejected the observed requested minimum. No corrected executable is published, and the candidate remains unsuitable for deployment.
 
 The next [twelve-file Metaplex trial](../repro/pump/metaplex-validation-source-recovery/README.md) adds observed collection system-program and mint-owner checks to the preceding context trial. Eighteen ordinary-signed baseline comparisons retain twelve differences and six controls. It is a source input awaiting compilation and combined regression, not a new accepted candidate.
+
+
+## Metaplex metadata-context recovery
+
+[Candidate 8](../repro/pump/metaplex-candidate-build-8/README.md) passes all 117 edition/Uses/burn/system-program comparisons with 234 ordinary signed transactions. Its ten-file source patch compiles successfully and fixes the observed metadata context mismatch; full original binary identity remains false. Detailed instruction-window counts and limitations are retained with the candidate.
