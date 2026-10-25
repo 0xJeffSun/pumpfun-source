@@ -100,3 +100,7 @@ See [summary](evidence/mayhem-summary.json) and [full receipts](evidence/mayhem-
 The [lifecycle summary](evidence/transaction-summary.json) records 30 unique signed
 transactions, 15 successful and 15 expected rejections. Compressed fresh receipts
 and fixture readback hashes are also retained in `evidence/`.
+
+### Donation forwarding reconstruction checks
+
+[Donation draft and receipts](recovery/fees-donation/README.md) contain a partial two-handler Fees reconstruction, 713 signed LiteSVM differential cases and 10 original/candidate Surfpool comparisons (20 signed transactions). The draft remains byte-unequal to the captured full Fees program.
