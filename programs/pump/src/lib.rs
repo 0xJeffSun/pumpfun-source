@@ -10,6 +10,22 @@ declare_id!("6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P");
 pub mod pump_recovered {
     use super::*;
     pub fn buy_v3(ctx: Context<SellV3>, amount:u64,max_sol_cost:u64,partial_fill:OptionBool)->Result<()>{let _ = partial_fill;trade::buy(ctx,amount,max_sol_cost)}
+    pub fn add_quote_mint(ctx:Context<AdminGlobal>,quote_mint:Pubkey)->Result<()>{
+     require!(quote_mint!=Pubkey::default() && quote_mint!=anchor_lang::solana_program::pubkey!("So11111111111111111111111111111111111111112"),PumpError::QuoteMintNotEligibleForWhitelist);
+     require!(!ctx.accounts.global.whitelisted_quote_mints.contains(&quote_mint),PumpError::QuoteMintAlreadyWhitelisted);
+     let slot=ctx.accounts.global.whitelisted_quote_mints.iter_mut().find(|key|**key==Pubkey::default()).ok_or_else(||error!(PumpError::QuoteMintWhitelistFull))?;*slot=quote_mint;Ok(())
+    }
+    pub fn remove_quote_mint(ctx:Context<AdminGlobal>,quote_mint:Pubkey)->Result<()>{
+     require!(quote_mint!=Pubkey::default(),PumpError::QuoteMintNotEligibleForWhitelist);
+     let slot=ctx.accounts.global.whitelisted_quote_mints.iter_mut().find(|key|**key==quote_mint).ok_or_else(||error!(PumpError::QuoteMintNotWhitelisted))?;*slot=Pubkey::default();Ok(())
+    }
+    pub fn set_virtual_quote_reserves(ctx:Context<AdminGlobal>,initial_virtual_quote_reserves:u64)->Result<()>{ctx.accounts.global.initial_virtual_quote_reserves=initial_virtual_quote_reserves;Ok(())}
+    pub fn update_buyback_config(ctx:Context<AdminGlobal>,buyback_basis_points:Option<u64>)->Result<()>{if let Some(value)=buyback_basis_points{require!(value<=10000,PumpError::BuybackBasisPointsOutOfRange);ctx.accounts.global.buyback_basis_points=value;}Ok(())}
+    pub fn update_creator_fee_config(ctx:Context<AdminGlobal>,creator_fee_configurable:bool,max_configurable_creator_fee_bps:u64)->Result<()>{
+      ctx.accounts.global.creator_fee_configurable=creator_fee_configurable;ctx.accounts.global.max_configurable_creator_fee_bps=max_configurable_creator_fee_bps;
+      let event=UpdateCreatorFeeConfigEvent{timestamp:Clock::get()?.unix_timestamp,authority:ctx.accounts.authority.key(),creator_fee_configurable,max_configurable_creator_fee_bps};emit!(event.clone());emit_cpi!(event);Ok(())
+    }
+    pub fn update_holder_reward_config(ctx:Context<AdminGlobal>,is_holder_reward_enabled:bool,holder_reward_claim_authority:Pubkey)->Result<()>{ctx.accounts.global.is_holder_reward_enabled=is_holder_reward_enabled;ctx.accounts.global.holder_reward_claim_authority=holder_reward_claim_authority;Ok(())}
     pub fn sell_v3(ctx: Context<SellV3>, amount: u64, min_sol_output: u64) -> Result<()> { trade::sell(ctx, amount, min_sol_output) }
     pub fn toggle_create_v2(ctx: Context<AdminGlobal>, enabled: bool) -> Result<()> {
         require_neq!(ctx.accounts.global.create_v2_enabled, enabled, PumpError::NotAuthorized);
@@ -290,3 +306,7 @@ impl AnchorDeserialize for OptionBool {
   let mut b=[0u8];match reader.read(&mut b)?{0=>Ok(Self(false)),_=>match b[0]{0=>Ok(Self(false)),1=>Ok(Self(true)),_=>Err(std::io::Error::new(std::io::ErrorKind::InvalidData,"Invalid bool representation"))}}
  }
 }
+
+#[event]
+#[derive(Clone)]
+pub struct UpdateCreatorFeeConfigEvent {pub timestamp:i64,pub authority:Pubkey,pub creator_fee_configurable:bool,pub max_configurable_creator_fee_bps:u64}

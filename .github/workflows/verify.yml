@@ -22,8 +22,10 @@ jobs:
       - run: python scripts/validate_fee_selection.py --host work/fee-selector-host --output work/fee-selector-validation.json
       - run: python scripts/build_quote_host.py --output work/quote-host
       - run: python scripts/validate_quote_fees.py --host work/quote-host/quote-fees-host --output work/quote-validation.json
-      - run: python scripts/fees_validate_all.py --candidate repro/pump_fees/config-sixteen/pump_fees_candidate.so --output work/fee-handlers.json
-      - run: python scripts/pump_validate_admin.py --candidate repro/pump/quote-candidate.so --output work/pump-admin.json
+      - run: python scripts/fees_validate_all.py --candidate repro/pump_fees/donation-eighteen/pump_fees_candidate.so --output work/fee-handlers.json
+      - run: python scripts/fees_donation_sequence.py --candidate repro/pump_fees/donation-eighteen/pump_fees_candidate.so --output work/donation-sequence.json
+      - run: python scripts/pump_validate_config_admin.py --candidate repro/pump/config-admin-candidate.so --output work/pump-config-admin.json.gz
+      - run: python scripts/pump_validate_admin.py --candidate repro/pump/config-admin-candidate.so --output work/pump-admin.json
       - run: python scripts/pump_amm_admin_differential.py --candidate repro/pump_amm/create-eighteen/pump_amm_recovered.so --output work/pump-amm-admin.json
       - run: python scripts/pump_amm_buyback_differential.py --candidate repro/pump_amm/create-eighteen/pump_amm_recovered.so --output work/pump-amm-buyback.json
       - run: python scripts/pump_amm_fee_config_differential.py --candidate repro/pump_amm/create-eighteen/pump_amm_recovered.so --output work/pump-amm-fee_config.json
@@ -34,17 +36,17 @@ jobs:
       - run: python scripts/mayhem_validate_fee_recipient.py --candidate repro/mayhem/mayhem_recovered.so --output work/mayhem-recipient.json
       - run: rustc --edition=2021 -O programs/pump/recovered/constant_product_host.rs -o work/pump-math-host
       - run: python scripts/pump_validate_constant_product.py --host work/pump-math-host --output work/pump-math.json
-      - run: python scripts/pump_validate_sell.py --candidate repro/pump/quote-candidate.so --output work/pump-sell.json
+      - run: python scripts/pump_validate_sell.py --candidate repro/pump/config-admin-candidate.so --output work/pump-sell.json
       - run: rustc --edition=2021 -O programs/pump/recovered/sell_accounting_host.rs -o work/pump-sell-accounting-host
       - run: python scripts/pump_validate_sell_accounting.py --host work/pump-sell-accounting-host --output work/pump-sell-accounting.json
       - run: python scripts/pump_amm_liquidity_differential.py --candidate repro/pump_amm/create-eighteen/pump_amm_recovered.so --output work/pump-amm-liquidity.json
       - run: python scripts/mayhem_validate_extend.py --candidate repro/mayhem/mayhem_recovered.so --output work/mayhem-extend.json
       - run: python scripts/mayhem_validate_withdraw.py --candidate repro/mayhem/mayhem_recovered.so --output work/mayhem-withdraw.json
-      - run: python scripts/pump_validate_buy.py --candidate repro/pump/quote-candidate.so --output work/pump-buy.json
+      - run: python scripts/pump_validate_buy.py --candidate repro/pump/config-admin-candidate.so --output work/pump-buy.json
       - run: python scripts/mayhem_validate_quote_withdraw.py --candidate repro/mayhem/mayhem_recovered.so --output work/mayhem-quote-withdraw.json
       - run: python scripts/mayhem_validate_sweeps.py --candidate repro/mayhem/mayhem_recovered.so --output work/mayhem-sweeps.json
       - run: python scripts/pump_amm_trade_v2_differential.py --candidate repro/pump_amm/create-eighteen/pump_amm_recovered.so --output work/pump-amm-trade-v2.json
-      - run: python scripts/pump_validate_quote.py --candidate repro/pump/quote-candidate.so --output work/pump-quote.json.gz
+      - run: python scripts/pump_validate_quote.py --candidate repro/pump/config-admin-candidate.so --output work/pump-quote.json.gz
       - run: python scripts/pump_amm_create_differential.py --candidate repro/pump_amm/create-eighteen/pump_amm_recovered.so --output work/pump-amm-create.json
       - run: python scripts/pump_amm_migration_create_differential.py --candidate repro/pump_amm/create-eighteen/pump_amm_recovered.so --output work/pump-amm-migration-create.json
       - run: git clone https://github.com/pump-fun/pump-public-docs.git work/pump-public-docs

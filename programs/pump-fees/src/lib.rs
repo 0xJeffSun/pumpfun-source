@@ -1,8 +1,10 @@
-//! Partial reconstruction: sixteen handlers implemented; remaining handlers unsupported.
+//! Partial reconstruction: eighteen handlers implemented; remaining handlers unsupported.
 //! It is not the deployed program source.
 use anchor_lang::prelude::*;
 
 mod contexts;
+mod donation;
+use donation::*;
 mod pump_global;
 mod types;
 use contexts::*;
@@ -30,13 +32,13 @@ pub mod pump_fees_candidate {
     }
 
     #[allow(unused_variables)]
-    pub fn crank_donation_fee_pda(_ctx: Context<CrankDonationFeePda>) -> Result<()> {
-        Err(error!(CandidateError::Unsupported))
+    pub fn crank_donation_fee_pda(ctx: Context<CrankDonationFeePda>) -> Result<()> {
+        donation::crank(ctx)
     }
 
     #[allow(unused_variables)]
-    pub fn create_donation_fee_pda(_ctx: Context<CreateDonationFeePda>) -> Result<()> {
-        Err(error!(CandidateError::Unsupported))
+    pub fn create_donation_fee_pda(ctx: Context<CreateDonationFeePda>) -> Result<()> {
+        donation::create(ctx)
     }
 
     #[allow(unused_variables)]
@@ -300,8 +302,20 @@ pub enum FeeError {
     FeeTiersNotSorted = 5,
     #[msg("Fee total must not exceed 10_000bps")]
     InvalidFeeTotal = 6,
+    #[msg("Invalid Sharing Config")]
+    InvalidSharingConfig = 7,
+    #[msg("Invalid Pool")]
+    InvalidPool = 8,
+    #[msg("Sharing config authority has been revoked - sharing config can only be updated once")]
+    SharingConfigAdminRevoked = 9,
+    #[msg("Share calculation overflow")]
+    ShareCalculationOverflow = 15,
     #[msg("The given account is not authorized to execute this instruction.")]
     NotAuthorized = 16,
+    #[msg("Fee sharing config is not active")]
+    SharingConfigNotActive = 18,
+    #[msg("Feature is currently deactivated")]
+    FeatureDeactivated = 21,
     #[msg("Instruction is deprecated")]
     DeprecatedInstruction = 23,
     #[msg("Account is not a valid FeeConfig for this instruction")]

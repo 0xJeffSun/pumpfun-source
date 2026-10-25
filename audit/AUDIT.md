@@ -75,17 +75,17 @@ confirmed vulnerability without a reachable configuration path.
 
 ### Executing recovered handlers
 
-Pump Fees now has sixteen independently compiled handlers, with 13,098 original-
+Pump Fees now has eighteen independently compiled handlers, with 13,811 original-
 versus-candidate SBF cases. These cover two query handlers, four authority setters,
 global initialization against the historical 740-byte Pump Global layout, and
 three configuration setters, permissionless resize, and two deprecated rejection
-dispatches, two tier upserts and FeeConfig administrator transfer. The other 15 handlers remain unsupported. Selected compiler and dependency versions
+dispatches, two tier upserts and FeeConfig administrator transfer, and two donation handlers. The other 13 handlers remain unsupported. Selected compiler and dependency versions
 remain candidates rather than an established historical graph.
 
-### Parallel reconstruction checkpoint: 55 implemented handlers and two partial paths
+### Parallel reconstruction checkpoint: 63 implemented handlers and two partial paths
 
-Saved builds cover Pump 4, PumpSwap 18, Pump Fees 16 and Mayhem 17 implemented
-handlers, plus Pump's partial SOL/USDC buy_v3/sell_v3 branches. Their 28,129 local SBF
+Saved builds cover Pump 10, PumpSwap 18, Pump Fees 18 and Mayhem 17 implemented
+handlers, plus Pump's partial SOL/USDC buy_v3/sell_v3 branches. Their 29,193 local SBF
 comparisons are indexed by `repro/status.json`; each report preserves its own
 coverage and limitations. Pump's SOL trade paths include Mayhem buyback suppression,
 holder-reward event fields and explicit cashback rejection. USDC quote behavior adds 130 synthetic SPL/Token2022 cases; other quote routes
@@ -151,3 +151,22 @@ supply, existing vault balances, optional argument parsing and tested mint exten
 checks agree. Non-Mayhem migration still requires the absent `init_boost` handler;
 rollback observations do not establish complete migration support. See
 [pool creation recovery](pump_amm/CREATE_POOL_RECOVERY.md).
+
+The combined Fees executable now also passes the 713 donation creation/forwarding
+fixtures. Creation validates canonical pool and creator/sharing authorization;
+forwarding validates its stored-bump donation PDA, retains rent for 218 bytes,
+wraps excess native SOL and calls the captured relay. Zero token balance returns
+after ATA initialization. The relay amount, config, message, credited program,
+account flags and signer seeds are compared. A persistent 10-step signed sequence
+and 10 independent Surfpool comparisons also pass against the combined build.
+No cooldown was observed at the tested same-time, one-second and one-day intervals;
+this is an observed rule, not a vulnerability claim or complete timing audit.
+
+Six additional Pump administrative handlers add 351 original/candidate cases:
+quote whitelist add/remove, initial virtual quote reserves, buyback configuration,
+creator-fee configuration and holder-reward configuration. The existing four
+administration and partial-trade suites also pass against the same new executable.
+Buyback basis points reject values above 10,000, whereas tested configurable
+creator-fee maxima retain full u64 inputs. Only the creator-fee configuration
+setter emits an event in these six recovered paths. These recovered permissions
+and boundaries do not establish that every downstream use is safe.

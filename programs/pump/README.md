@@ -1,8 +1,10 @@
 # Partial Pump reconstruction
 
-The Anchor 0.31.1 source implements four recovered administration handlers:
+The Anchor 0.31.1 source implements ten recovered administration handlers:
 `toggle_create_v2`, `toggle_mayhem_mode`, `toggle_cashback_enabled`, and
-`set_max_curve_depth`. It also implements **partial SOL and USDC-quote `sell_v3` and `buy_v3` paths**.
+`set_max_curve_depth`, `set_virtual_quote_reserves`, `update_buyback_config`,
+`update_creator_fee_config`, `update_holder_reward_config`, `add_quote_mint`, and
+`remove_quote_mint`. It also implements **partial SOL and USDC-quote `sell_v3` and `buy_v3` paths**.
 It is incomplete and is not a deployable replacement.
 
 The trade paths handle constant-product reserve changes, fee tier selection,
@@ -21,6 +23,13 @@ of that argument outside tested branches remains unresolved. The final eight Tra
 bytes are zero in this fixture; their meaning is unresolved and the source names
 them `unparsed_trailing_field`. Zero in bounded fixtures is not proof of a general
 invariant. All remaining instructions are unimplemented.
+
+The six newer configuration handlers add351 differential cases, including exact
+events and inner CPIs. Buyback configuration accepts None and values through10000,
+rejecting larger values with6060. Creator-fee limits and virtual quote reserves
+accept the observed fullu64 range; only creator-fee configuration emits its event.
+Quote whitelist mutation preserves the observed eligibility, duplicate, full, and
+not-listed checks.
 
 The account layouts derive from the captured official IDL. Four administration
 handlers retain the earlier 93-case regression suite. Toggles reject unchanged
@@ -50,5 +59,7 @@ python scripts/pump_validate_buy.py \
   --candidate work/pump-clean/artifacts/pump_recovered.so --output work/pump-buy.json
 python scripts/pump_validate_quote.py \
   --candidate work/pump-clean/artifacts/pump_recovered.so --output work/pump-quote.json.gz
+python scripts/pump_validate_config_admin.py \
+  --candidate work/pump-clean/artifacts/pump_recovered.so --output work/pump-config.json.gz
 python scripts/pump_verify_dependencies.py
 ```

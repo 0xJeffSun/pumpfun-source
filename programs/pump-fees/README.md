@@ -1,11 +1,12 @@
 # Partial Pump Fees reconstruction
 
-Sixteen handlers execute recovered behavior: `get_fees`, `get_fees_with_quote_mint`,
+Eighteen handlers execute recovered behavior: `get_fees`, `get_fees_with_quote_mint`,
 `set_authority`, `set_social_claim_authority`, `set_disable_flags` and
 `set_claim_rate_limit`, `initialize_fee_program_global`, `update_fee_config`,
 `update_stable_fee_config`, `set_exotic_flat_fees`, `extend_fee_config`,
 `revoke_fee_sharing_authority`, `transfer_fee_sharing_authority`, `upsert_fee_tiers`,
-`upsert_stable_fee_tiers` and `update_admin`. The other 15 instruction bodies remain unsupported;
+`upsert_stable_fee_tiers`, `update_admin`, `create_donation_fee_pda` and
+`crank_donation_fee_pda`. The other 13 instruction bodies remain unsupported;
 their generated account declarations are not recovered constraints. This crate
 is an experimental reconstruction target, not a deployable substitute.
 
@@ -56,7 +57,7 @@ The global initializer reads the older 740-byte Pump Global layout, authenticate
 its authority and PDA, creates the 338-byte Fees global with canonical bump, and
 emits the exact event log and self-CPI. Its 180 comparisons include prefunding,
 malformed accounts, authorization, argument boundaries and CPI rollback. The
-sixteen-handler candidate passes 13,098 cases; full-file byte equality remains false.
+eighteen-handler candidate passes 13,811 cases; full-file byte equality remains false.
 
 FeeConfig deserialization is gated by allocation: the normal schedule is read at
 2,512 bytes, the stable schedule at 4,073, and exotic flat fees at 4,097. Earlier
@@ -92,3 +93,12 @@ incoming tiers and offset. `update_admin` has 56 cases, accepts any new key,
 including zero and nonsigners, and emits the previous and new keys. Its acceptance
 of zero differs from the FeeProgramGlobal authority setter; these are separate
 configuration types and recovered behaviors.
+
+Donation creation and forwarding are integrated from the independently validated
+[draft](../../localnet/recovery/fees-donation/README.md). Their 713 signed synthetic
+cases pass against this combined executable. A further 10-step persistent
+creation/deposit/crank sequence and 10 Surfpool comparisons pass with normally
+verified test-owned signatures. The sequence compares exact timestamped events;
+independent Surfpool processes exclude only `last_crank_ts` wall-clock differences
+from state equality and retain the raw values. Captured external dependency
+binaries execute locally; the donation relay source remains unrecovered.

@@ -24,4 +24,14 @@ for name,status in json.loads((ROOT/'repro/status.json').read_text()).items():
   assert not r.get('mismatches',r.get('failures',[])),name
   total+=r['case_count']
  assert total==status['validated_cases'],name
+ for receipt_name in status.get('signed_sequence_reports',[]):
+  receipt=ROOT/receipt_name;data=receipt.read_bytes()
+  r=json.loads(gzip.decompress(data) if receipt.suffix=='.gz' else data)
+  assert r['candidate_sha256']==sha(candidate),name
+  assert r['original_sha256']==sha(original),name
+  assert not r['mismatches'] and not r.get('unexpected_errors',[]),name
+  if 'steps' in r:
+   assert all(step['match'] and step['original']['signature_verification'] and step['candidate']['signature_verification'] for step in r['steps']),name
+  if 'signed_transactions' in r:
+   assert r['signed_transactions']==len(r['original'])+len(r['candidate'])==2*r['cases'],name
  print(name,': partial build provenance consistent;',total,'saved differential cases; full byte equality',report['comparison']['full_byte_equality'])
