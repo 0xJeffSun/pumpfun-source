@@ -332,3 +332,8 @@ retain source-diagnostic differences; eight also differ in unwrap-message detail
 No original executable, authorization check or signature was patched. No blocked
 initializer experiment, historical replay or live chain mutation was performed.
 See the [twenty-four-handler package](../../repro/mayhem/twentyfour/README.md).
+
+
+## Field roles in the accepted Mayhem24 source
+
+The [field-role crosswalk](../../repro/mayhem/field-role-crosswalk/README.md) binds the fourteen accepted compiler inputs and maps nine of sixteen neutral GlobalParams arguments to reads in the six recovered trade bodies. It separately records the nine MayhemState fields. Account byte offsets, candidate operations and unresolved historical names/types are kept distinct. Seven argument roles remain unresolved by this bounded review. The crosswalk adds no implementation, runtime receipts or security finding and does not inspect the stopped initializer.
