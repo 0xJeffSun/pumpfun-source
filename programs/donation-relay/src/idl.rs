@@ -30,6 +30,14 @@ fn code(n: u32) -> IdlError {
 pub fn program_error(error: ProgramFailure) -> IdlError {
     IdlError { cause: Cause::Program(error), account: None, keys: None, values: None, origin: None }
 }
+// Typed Account::try_from boxes a borrow failure before outer account naming.
+fn own_typed_borrow_failure(mut error: IdlError) -> IdlError {
+    error.cause = match error.cause {
+        Cause::Program(program) => Cause::Owned(program.into()),
+        cause => cause,
+    };
+    error
+}
 fn named<T>(r: I<T>, name: &'static str) -> I<T> {
     r.map_err(|mut e| {
         match e.cause {
@@ -111,8 +119,12 @@ fn checked_header(data: &[u8]) -> I<Header> {
         });
     }
     if data[..8] != DISC {
-        let mut e = code(3002); e.account = Some("IdlAccount");
-        return Err(e); // enclosing generated parser replaces account name.
+        let owned = crate::generated_exit::exit_error::account_discriminator_mismatch(
+            crate::generated_exit::exit_error::Source { filename: file!(), line: line!() },
+        ).with_account_name("IdlAccount");
+        return Err(IdlError {
+            cause: Cause::Owned(owned), account: None, keys: None, values: None, origin: None,
+        }); // enclosing generated parser replaces the owned account name.
     }
     unchecked_header(data)
 }
@@ -142,7 +154,11 @@ fn typed<R: IdlRuntime>(rt: &R, info: Account, checked: bool) -> I<Typed> {
     let owner = rt.idl_owner(info);
     if owner == SYSTEM && rt.idl_lamports_panicking(info) == 0 { return Err(code(3012)); }
     if owner != RELAY { let mut e = code(3007); e.keys = Some((owner, RELAY)); return Err(e); }
-    let bytes = rt.idl_data(info)?;
+    let bytes = if checked {
+        rt.idl_data(info).map_err(own_typed_borrow_failure)?
+    } else {
+        rt.idl_data(info)?
+    };
     let value = if checked { checked_header(&bytes)? } else { unchecked_header(&bytes)? };
     drop(bytes); Ok(Typed { info, value })
 }

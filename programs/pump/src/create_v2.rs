@@ -35,14 +35,11 @@ pub struct CreateV2<'info>{
  #[account(mut)]pub mayhem_token_vault:UncheckedAccount<'info>,
 }
 pub fn execute<'info>(ctx:Context<'_,'_,'_,'info,CreateV2<'info>>,name:String,symbol:String,uri:String,creator:Pubkey,is_mayhem_mode:bool,is_cashback_enabled:OptionBool,creator_fee_bps:CreationOptionU64,is_holder_reward:OptionBool)->Result<()>{
+ // Other quote and Mayhem branches remain explicitly outside this reconstruction checkpoint.
+ require!(!is_mayhem_mode,crate::ReconstructionError::ReconstructionBranchUnsupported);
  let a=&ctx.accounts;
  require!(a.global.create_v2_enabled,PumpError::CreateV2Disabled);
  require!(!is_cashback_enabled.0,PumpError::CashbackDeprecated);
- // Mayhem-mode gate: requires the admin flag and rejects any quote-mint remaining accounts.
- if is_mayhem_mode {
-  require!(a.global.mayhem_mode_enabled,PumpError::MayhemModeDisabled);
-  require!(ctx.remaining_accounts.is_empty(),PumpError::MayhemModeQuoteMintNotAllowed);
- }
  let creator=if is_holder_reward.0 {require!(a.global.is_holder_reward_enabled,PumpError::HolderRewardDisabled);Pubkey::find_program_address(&[b"holder-rewards",a.mint.key().as_ref()],&crate::ID).0}else{creator};
  require!(creator!=Pubkey::default(),PumpError::CreatorShouldNotBeZero);
  let mut depth=0u8;
@@ -92,23 +89,10 @@ pub fn execute<'info>(ctx:Context<'_,'_,'_,'info,CreateV2<'info>>,name:String,sy
  let mut data=vec![215,228,166,228,84,100,86,123];data.extend_from_slice(&[0;32]);
  let ix=Instruction{program_id:a.token_program.key(),accounts:vec![AccountMeta::new(a.mint.key(),false),AccountMeta::new_readonly(a.mint_authority.key(),true)],data};
  invoke_signed(&ix,&[a.mint.to_account_info(),a.mint_authority.to_account_info(),a.token_program.to_account_info()],&[seeds])?;
- // Mayhem-creation CPI: pump signs the ["mint-authority"] PDA into mayhem's
- // initialize_mayhem_state (disc 0x2dcc4555485ebd9d, no args). Mayhem derives the
- // mint from account #4, derives/inits mayhem_state["mayhem-state",mint] and the
- // sol-vault token vault, and sets end_timestamp=now+reset_middle[0]*3600.
- if is_mayhem_mode {
-  let mdata=vec![157u8,189,94,72,85,69,204,45];
-  let mix=Instruction{program_id:MAYHEM_ID,accounts:vec![AccountMeta::new(a.user.key(),true),AccountMeta::new_readonly(a.global_params.key(),false),AccountMeta::new_readonly(a.mint_authority.key(),true),AccountMeta::new(a.sol_vault.key(),false),AccountMeta::new_readonly(a.mint.key(),false),AccountMeta::new(a.mayhem_token_vault.key(),false),AccountMeta::new(a.mayhem_state.key(),false),AccountMeta::new_readonly(a.system_program.key(),false),AccountMeta::new_readonly(a.token_program.key(),false),AccountMeta::new_readonly(a.associated_token_program.key(),false)],data:mdata};
-  invoke_signed(&mix,&[a.user.to_account_info(),a.global_params.to_account_info(),a.mint_authority.to_account_info(),a.sol_vault.to_account_info(),a.mint.to_account_info(),a.mayhem_token_vault.to_account_info(),a.mayhem_state.to_account_info(),a.system_program.to_account_info(),a.token_program.to_account_info(),a.associated_token_program.to_account_info()],&[seeds])?;
- }
  token_interface::mint_to(CpiContext::new_with_signer(a.token_program.to_account_info(),token_interface::MintTo{mint:a.mint.to_account_info(),to:a.associated_bonding_curve.to_account_info(),authority:a.mint_authority.to_account_info()},&[seeds]),a.global.token_total_supply)?;
- if is_mayhem_mode {
-  // Mayhem mints the full supply to the sol-vault token vault as well.
-  token_interface::mint_to(CpiContext::new_with_signer(a.token_program.to_account_info(),token_interface::MintTo{mint:a.mint.to_account_info(),to:a.mayhem_token_vault.to_account_info(),authority:a.mint_authority.to_account_info()},&[seeds]),a.global.token_total_supply)?;
- }
  token_interface::set_authority(CpiContext::new_with_signer(a.token_program.to_account_info(),token_interface::SetAuthority{current_authority:a.mint_authority.to_account_info(),account_or_mint:a.mint.to_account_info()},&[seeds]),token_interface::spl_token_2022::instruction::AuthorityType::MintTokens,None)?;
- let event=CreateEvent{name,symbol,uri,mint:a.mint.key(),bonding_curve:a.bonding_curve.key(),user:a.user.key(),creator,timestamp:Clock::get()?.unix_timestamp,virtual_token_reserves:a.global.initial_virtual_token_reserves,virtual_sol_reserves:virtual_quote_reserves,real_token_reserves:a.global.initial_real_token_reserves,token_total_supply:a.global.token_total_supply,token_program:a.token_program.key(),is_mayhem_mode,is_cashback_enabled:false,quote_mint,virtual_quote_reserves,creator_fee_bps:fee,is_holder_reward:is_holder_reward.0,depth};
- let g=&ctx.accounts.global;let curve=&mut ctx.accounts.bonding_curve;curve.virtual_token_reserves=g.initial_virtual_token_reserves;curve.virtual_quote_reserves=virtual_quote_reserves;curve.real_token_reserves=g.initial_real_token_reserves;curve.token_total_supply=g.token_total_supply;curve.creator=creator;curve.creator_fee_bps=fee;curve.is_holder_reward=is_holder_reward.0;curve.quote_mint=quote_mint;curve.initial_virtual_quote_reserves=virtual_quote_reserves;curve.depth=depth;curve.is_mayhem_mode=is_mayhem_mode;
+ let event=CreateEvent{name,symbol,uri,mint:a.mint.key(),bonding_curve:a.bonding_curve.key(),user:a.user.key(),creator,timestamp:Clock::get()?.unix_timestamp,virtual_token_reserves:a.global.initial_virtual_token_reserves,virtual_sol_reserves:virtual_quote_reserves,real_token_reserves:a.global.initial_real_token_reserves,token_total_supply:a.global.token_total_supply,token_program:a.token_program.key(),is_mayhem_mode:false,is_cashback_enabled:false,quote_mint,virtual_quote_reserves,creator_fee_bps:fee,is_holder_reward:is_holder_reward.0,depth};
+ let g=&ctx.accounts.global;let curve=&mut ctx.accounts.bonding_curve;curve.virtual_token_reserves=g.initial_virtual_token_reserves;curve.virtual_quote_reserves=virtual_quote_reserves;curve.real_token_reserves=g.initial_real_token_reserves;curve.token_total_supply=g.token_total_supply;curve.creator=creator;curve.creator_fee_bps=fee;curve.is_holder_reward=is_holder_reward.0;curve.quote_mint=quote_mint;curve.initial_virtual_quote_reserves=virtual_quote_reserves;curve.depth=depth;
  emit!(event.clone());emit_cpi!(event);Ok(())
 }
 

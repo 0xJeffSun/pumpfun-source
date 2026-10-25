@@ -304,10 +304,11 @@ pub struct Source {
 // The admitted account conversion roles share the owned framework model.
 // Keep the owned name and Display-to-String construction of the framework
 // conversion; do not replace the message with a borrowed catalog reference.
-enum AccountErrorCode { AccountDiscriminatorNotFound, AccountDidNotDeserialize, AccountDidNotSerialize }
+enum AccountErrorCode { AccountDiscriminatorMismatch, AccountDiscriminatorNotFound, AccountDidNotDeserialize, AccountDidNotSerialize }
 impl AccountErrorCode {
     fn name(&self) -> String {
         match self {
+            Self::AccountDiscriminatorMismatch => "AccountDiscriminatorMismatch".to_owned(),
             Self::AccountDiscriminatorNotFound => "AccountDiscriminatorNotFound".to_owned(),
             Self::AccountDidNotDeserialize => "AccountDidNotDeserialize".to_owned(),
             Self::AccountDidNotSerialize => "AccountDidNotSerialize".to_owned(),
@@ -317,6 +318,7 @@ impl AccountErrorCode {
 impl Display for AccountErrorCode {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         match self {
+            Self::AccountDiscriminatorMismatch => f.write_str("Account discriminator did not match what was expected"),
             Self::AccountDiscriminatorNotFound => f.write_str("No discriminator was found on the account"),
             Self::AccountDidNotDeserialize => f.write_str("Failed to deserialize the account"),
             Self::AccountDidNotSerialize => f.write_str("Failed to serialize the account"),
@@ -336,12 +338,24 @@ fn account_io_error(code: AccountErrorCode) -> Error {
     AnchorError {
         error_name: code.name(),
         error_code_number: match &code {
+            AccountErrorCode::AccountDiscriminatorMismatch => 3002,
             AccountErrorCode::AccountDiscriminatorNotFound => 3001,
             AccountErrorCode::AccountDidNotDeserialize => 3003,
             AccountErrorCode::AccountDidNotSerialize => 3004,
         },
         error_msg: code.to_string(),
         error_origin: None,
+        compared_values: None,
+    }.into()
+}
+
+pub fn account_discriminator_mismatch(source: Source) -> Error {
+    let code = AccountErrorCode::AccountDiscriminatorMismatch;
+    AnchorError {
+        error_name: code.name(),
+        error_code_number: 3002,
+        error_msg: code.to_string(),
+        error_origin: Some(ErrorOrigin::Source(source)),
         compared_values: None,
     }.into()
 }
