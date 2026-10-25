@@ -1,5 +1,7 @@
 # Why core byte-identicality is bounded by the lost literal source
 
+> Historical research report; its compiler, completeness, exhaustive-equivalence and impossibility claims are not accepted. See the [current evidence review](../../../layered-passes/pass-10/CONCURRENT-CLAIMS-REVIEW.md) and [complete remaining-work report](../../../layered-passes/pass-10/REMAINING.md). The original text below is retained for traceability.
+
 Final technical determination after reverse-engineering the recipe and attempting
 function-level source-structure matching (2026-10-25).
 
