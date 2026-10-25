@@ -14,4 +14,4 @@ Source SHA-256:
 - `programs/pump/src/trade_types.rs`: `49ab3f4dd75c2703157caaed925d7410c90dfeeecb4b55b5b24ae0335cbb44b5`
 - `programs/pump/Cargo.lock`: `486cbaa1eab7a945e849df5f72ca7c1e0b172ab8a17a1cd7a353fde123a84e95`
 
-Local build attempts, complete source manifests, logs, ELF comparisons, and focused replay files are under `work/pr5-integration-*`, `work/pr5-upstream-56.json`, `work/pr5-core-34.json`, `work/pr5-routes-72.json`, `work/pr5-quote-control-507.json`, and `work/pr5-volume-341.json`.
+The tested ELF, both clean build attempts/comparisons/logs, and all five compressed signed replay receipts are packaged in [`repro/pump/pr5-current-upstream-integration/`](../../repro/pump/pr5-current-upstream-integration/README.md). Its receipt index hashes every raw artifact and its read-only verifier checks 2,020 outer transaction signatures. Upstream `ebaa333` changed docs and repro inventory only; this checkout has the exact 37 source-input hashes of both builds.
