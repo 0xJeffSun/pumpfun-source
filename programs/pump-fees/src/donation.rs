@@ -98,12 +98,8 @@ pub struct CreateDonationFeePda<'info> {
 }
 #[account]
 pub struct DonationFeePda {pub bump:u8,pub version:u8,pub config_id:Pubkey,pub base_mint:Pubkey,pub quote_mint:Pubkey,pub creator:Pubkey,pub total_donated:u64,pub last_crank_ts:i64,pub reserved:[u8;64]}
-#[account("account")]
-pub struct BondingCurve {pub virtual_token_reserves:u64,pub virtual_quote_reserves:u64,pub real_token_reserves:u64,pub real_quote_reserves:u64,pub token_total_supply:u64,pub complete:bool,pub creator:Pubkey,pub is_mayhem_mode:bool}
-impl Owner for BondingCurve {fn owner()->Pubkey {PUMP}}
-#[account("account")]
-pub struct Pool {pub pool_bump:u8,pub index:u16,pub creator:Pubkey,pub base_mint:Pubkey,pub quote_mint:Pubkey,pub lp_mint:Pubkey,pub pool_base_token_account:Pubkey,pub pool_quote_token_account:Pubkey,pub lp_supply:u64,pub coin_creator:Pubkey,pub is_mayhem_mode:bool,pub is_cashback_coin:bool,pub virtual_quote_reserves:i128}
-impl Owner for Pool {fn owner()->Pubkey {AMM}}
+pub use crate::pump::accounts::BondingCurve;
+pub use crate::pump_amm::accounts::Pool;
 #[event]
 pub struct DonationFeePdaCreated {pub timestamp:i64,pub created_by:Pubkey,pub donation_fee_pda:Pubkey,pub config_id:Pubkey,pub base_mint:Pubkey,pub quote_mint:Pubkey,pub creator:Pubkey}
 

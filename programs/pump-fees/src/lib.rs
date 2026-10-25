@@ -24,6 +24,9 @@ use types::*;
 
 declare_id!("pfeeUxB6jkeY1Hxd7CsFCAjcbHA9rWtchMGdZ6VojVZ");
 
+declare_program!(pump);
+declare_program!(pump_amm);
+
 #[program]
 pub mod pump_fees_candidate {
     use super::*;

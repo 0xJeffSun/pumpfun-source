@@ -47,9 +47,9 @@
       "repro/pump/creator-thirty/all-differential.json.gz"
     ],
     "partially_implemented_handlers": {
-      "sell_v3": "SOL and USDC quote branches, Mayhem/holder fields and cashback rejection. Other quote routes and exhaustive extension/account validation remain incomplete; final event suffix uninterpreted.",
-      "buy_v3": "SOL and USDC quote branches, Mayhem/holder fields and cashback rejection. Other quote routes and exhaustive extension/account validation remain incomplete; final event suffix uninterpreted.",
-      "buy_exact_quote_in_v3": "SOL and synthetic USDC Token/Token2022 quotes without extensions, fee rounding, funded completion/post-completion and Mayhem partial-fill. Other quote chains and exhaustive account validation remain unresolved.",
+      "sell_v3": "SOL and USDC quote branches, Mayhem/holder fields and cashback rejection. Other quote routes and exhaustive extension/account validation remain incomplete; final event suffix uninterpreted. Known gap in this published candidate: a nonzero stored creator_fee_bps override is ignored; subsequent synthetic signed probes diverge in state/events/inner instructions. Corrected source is under validation.",
+      "buy_v3": "SOL and USDC quote branches, Mayhem/holder fields and cashback rejection. Other quote routes and exhaustive extension/account validation remain incomplete; final event suffix uninterpreted. Known gap in this published candidate: a nonzero stored creator_fee_bps override is ignored; subsequent synthetic signed probes diverge in state/events/inner instructions. Corrected source is under validation.",
+      "buy_exact_quote_in_v3": "SOL and synthetic USDC Token/Token2022 quotes without extensions, fee rounding, funded completion/post-completion and Mayhem partial-fill. Other quote chains and exhaustive account validation remain unresolved. Known gap in this published candidate: a nonzero stored creator_fee_bps override is ignored; subsequent synthetic signed probes diverge in state/events/inner instructions. Corrected source is under validation.",
       "create_v2": "Normal SOL Token-2022 creation and holder-reward creation only. Mayhem and quote remaining-account branches explicitly return ReconstructionBranchUnsupported; these are unrecovered source branches, not original behavior."
     },
     "compiler_family_candidates": [
@@ -167,7 +167,7 @@
     "compiler": "unresolved",
     "dependencies": "unresolved",
     "build_flags": "unresolved",
-    "candidate_artifact": "repro/pump_fees/external-codecs-v144/pump_fees_candidate.so",
+    "candidate_artifact": "repro/pump_fees/declared-programs-v144/pump_fees_candidate.so",
     "full_byte_equality": false,
     "comparison_status": "DIFFERS_PARTIAL_IMPLEMENTATION",
     "compiler_candidates": [
@@ -208,15 +208,15 @@
       "update_fee_shares_v2",
       "initialize_fee_config"
     ],
-    "comparison_report": "repro/pump_fees/external-codecs-v144/build-comparison.json",
-    "build_log": "repro/pump_fees/external-codecs-v144/build.log",
+    "comparison_report": "repro/pump_fees/declared-programs-v144/build-comparison.json",
+    "build_log": "repro/pump_fees/declared-programs-v144/build.log.gz",
     "validated_cases": 17372,
     "deprecated_dispatches": [
       "revoke_fee_sharing_authority",
       "transfer_fee_sharing_authority"
     ],
     "signed_sequence_reports": [
-      "repro/pump_fees/external-codecs-v144/donation-sequence.json.gz"
+      "repro/pump_fees/declared-programs-v144/donation-sequence.json.gz"
     ],
     "compiler_family_candidates": [
       "v1.44",
@@ -228,15 +228,15 @@
     "preferred_compiler_candidate": "v1.44",
     "controlled_compiler_evidence": "repro/pump_fees/compiler-family/CONTROLLED-HELPER-REPORT.md",
     "validation_reports": [
-      "repro/pump_fees/external-codecs-v144/differential.json.gz",
-      "repro/pump_fees/external-codecs-v144/initializer-history.json.gz",
-      "repro/pump_fees/external-codecs-v144/initializer-rejections.json.gz",
-      "repro/pump_fees/external-codecs-v144/messages.json.gz",
-      "repro/pump_fees/external-codecs-v144/codec-rejections.json.gz"
+      "repro/pump_fees/declared-programs-v144/differential.json.gz",
+      "repro/pump_fees/declared-programs-v144/initializer-history.json.gz",
+      "repro/pump_fees/declared-programs-v144/initializer-rejections.json.gz",
+      "repro/pump_fees/declared-programs-v144/messages.json.gz",
+      "repro/pump_fees/declared-programs-v144/codec-rejections.json.gz"
     ],
     "authentic_historical_replays": [
       {
-        "report": "repro/pump_fees/external-codecs-v144/initializer-history.json.gz",
+        "report": "repro/pump_fees/declared-programs-v144/initializer-history.json.gz",
         "transactions": "repro/pump_fees/initializer-history/transactions"
       }
     ],
@@ -253,7 +253,10 @@
       "scope": "Separate prior executable; not rerun after error-enum and external-codec corrections."
     },
     "error_enum_evidence": "repro/pump_fees/error-enum-v144/README.md",
-    "external_codec_evidence": "repro/pump_fees/external-codecs-v144/README.md"
+    "external_codec_evidence": "repro/pump_fees/declared-programs-v144/README.md",
+    "declared_program_evidence": "repro/pump_fees/declared-programs-v144/README.md",
+    "workspace_source_manifest": "repro/pump_fees/declared-programs-v144/source-sha256.json",
+    "main_scratch_identity_evidence": "repro/pump_fees/declared-programs-v144/main-scratch-identity.json"
   },
   "mayhem": {
     "source_reconstruction": "partial_handlers_compiled",

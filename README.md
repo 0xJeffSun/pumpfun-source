@@ -22,6 +22,9 @@ handlers plus four partial creation/trading paths pass 5,139. Thirty-two PumpSwa
 handlers pass 14,635 comparisons, and eighteen Mayhem handlers pass 2,959. These
 40,105 SBF cases cover 111 implemented handlers and four partial paths, not the
 complete programs. Two Fees handlers are deprecated dispatches that always reject.
+The published Pump partial v3 paths have a known stored creator-fee override gap;
+expanded signed probes found it after the saved checkpoint. Corrected source is
+under validation and is not included in the published candidate.
 A separate native accounting fragment is tested against 206
 original Pump sell cases. See [the recovery experiment](docs/FEE_SELECTION.md).
 
@@ -30,8 +33,8 @@ favors platform-tools v1.44 among the tested Fees builds: two complete runtime
 helper bodies match the capture exactly. The current Fees candidate uses that
 compiler. The [previous retained Fees build](repro/pump_fees/all-thirtyone-v144/README.md)
 also passed 112 independent Surfpool comparisons with 224 signed local transactions.
-The current external-account codec build passes its full SBF regression and targeted
-message/decoder checks. These results do not prove the complete historical build configuration.
+The current declared-program codec build passes its full SBF regression and targeted
+message/decoder checks, including the captured decoder source locations. These results do not prove the complete historical build configuration.
 
 [Recovery status](docs/RECOVERY.md) separates observed evidence from unresolved work.
 [Tooling](docs/TOOLING.md) covers recapture, disassembly and strict candidate comparison.

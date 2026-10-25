@@ -33,12 +33,13 @@ jobs:
               python scripts/pump_validate_sell_accounting.py --host work/pump-sell-accounting-host --output work/pump-sell-accounting.json
           - suite: fees
             commands: |
-              python scripts/fees_validate_all.py --candidate repro/pump_fees/external-codecs-v144/pump_fees_candidate.so --output work/fee-handlers.json
-              python scripts/fees_donation_sequence.py --candidate repro/pump_fees/external-codecs-v144/pump_fees_candidate.so --output work/donation-sequence.json
-              python repro/pump_fees/initializer-history/replay_history.py --candidate repro/pump_fees/external-codecs-v144/pump_fees_candidate.so --output work/fees-init-history.json
-              python repro/pump_fees/initializer-history/negative_differential.py --candidate repro/pump_fees/external-codecs-v144/pump_fees_candidate.so --output work/fees-init-rejections.json
-              python scripts/fees_error_messages_differential.py --candidate repro/pump_fees/external-codecs-v144/pump_fees_candidate.so --output work/fees-error-messages.json
-              python scripts/fees_external_codec_differential.py --candidate repro/pump_fees/external-codecs-v144/pump_fees_candidate.so --output work/fees-codec-rejections.json
+              python scripts/fees_validate_all.py --candidate repro/pump_fees/declared-programs-v144/pump_fees_candidate.so --output work/fee-handlers.json
+              python scripts/fees_donation_sequence.py --candidate repro/pump_fees/declared-programs-v144/pump_fees_candidate.so --output work/donation-sequence.json
+              python repro/pump_fees/initializer-history/replay_history.py --candidate repro/pump_fees/declared-programs-v144/pump_fees_candidate.so --output work/fees-init-history.json
+              python repro/pump_fees/initializer-history/negative_differential.py --candidate repro/pump_fees/declared-programs-v144/pump_fees_candidate.so --output work/fees-init-rejections.json
+              python scripts/fees_error_messages_differential.py --candidate repro/pump_fees/declared-programs-v144/pump_fees_candidate.so --output work/fees-error-messages.json
+              python scripts/fees_external_codec_differential.py --candidate repro/pump_fees/declared-programs-v144/pump_fees_candidate.so --output work/fees-codec-rejections.json
+              python repro/pump_fees/declared-programs-v144/verify_publication.py
           - suite: pump
             commands: |
               python scripts/pump_validate_all.py --candidate repro/pump/creator-thirty/candidate.so --output work/pump-handlers.json.gz
