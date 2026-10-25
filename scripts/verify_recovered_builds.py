@@ -15,7 +15,7 @@ for name,status in json.loads((ROOT/'repro/status.json').read_text()).items():
  log_path=ROOT/status['build_log'];log=log_path.read_bytes()
  if log_path.suffix=='.gz':log=gzip.decompress(log)
  assert hashlib.sha256(log).hexdigest()==report['build_log_sha256'],name
- if name=='pump' and status['candidate_artifact']in['repro/pump/admin-cto-owned-main-fortyeight/main/candidate.so','repro/pump/admin-cto-owned6083-main-fortyeight/main/candidate.so']:
+ if name=='pump' and status['candidate_artifact']in['repro/pump/admin-cto-error-batch-main-fortyeight/main/candidate.so','repro/pump/admin-cto-owned-main-fortyeight/main/candidate.so','repro/pump/admin-cto-owned6083-main-fortyeight/main/candidate.so']:
   assert status['validated_cases']==9269
   current=status['candidate_artifact'].removesuffix('/main/candidate.so')
   scratch=ROOT/current.replace('-main-fortyeight','-fortyeight')/'verify.py'

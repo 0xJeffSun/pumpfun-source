@@ -1,3 +1,14 @@
+# Pump: five CTO owned-error restorations
+
+Tested scratch candidate `3ae5bb44a614ae083900ca6825fa91946f475457524c1d321e06cf3724555191` (1,582,896 bytes) restores named owned AnchorError construction for existing CTO guards6084,6090,6089,6077,6078. Predicates/order, typed BondingCurve and accepted mutation/borrow/CPI/Clock behavior remain unchanged. Six unresolved numeric-return occurrences remain unchanged;6030/2006 require compared-pubkey ownership, and6019/6091/6092 need further attribution.
+
+Existing changed-guard differential/signed coverage:6084 2/1;6090 4/1;6089 6/1;6077 1/0;6078 9/1. Exact original names/messages are observed on22differential and4signed cases. Current source origins remain truthful and differ from historical coordinates. These finite checks do not prove allocation-failure behavior, every error/cleanup path or whole original byte identity.
+
+Evidence: [`repro/pump/admin-cto-error-batch-fortyeight`](../../repro/pump/admin-cto-error-batch-fortyeight/README.md). The packet preserves exactsource37, full original/current function/call/data/raw residual ledgers, explicitv1.44 compile/v1.52 strip, actual current orchestration hashes, dependency/tool/SDK gates and unchanged9269+1024 receipts/signatures. Initial preparation failed before VM on a pass21 CI-only provenancehash; root approved the exact hash after retaining old/current bytes/maps/diff. No replaygenerator/assertion/fixture changed, no runtime retries or new probes.
+
+<details>
+<summary>Historical ffa checkpoint and inherited recovery history</summary>
+
 # Pump: owned holder-downgrade error checkpoint
 
 The tested scratch executable is `ffa0f3bab34b8cfca6d6aeef5e6b8dcabad0a16eccfeb3d22d5781e22ae3b193` (1,581,624 bytes). One existing admin-CTO holder-downgrade guard now returns the named `HolderRewardCreatorImmutable` Anchor error instead of `ProgramError::Custom(6083)`. Its predicate/order, the accepted owned6088/6080 guards, typed full BondingCurve and scoped borrow/mutation/CPI/Clock ordering remain unchanged.
@@ -62,3 +73,5 @@ The unchanged CTO corpus does not exercise holder mode with an already-cashback 
 </details>
 
 Recorded integrity limit: both differential and Surfpool orchestrators exited1 at their final global check because the build helper changed concurrently. All target child suites exited0 and saved signatures/effects passed. The frozen build passed old-helper before/after gates. Root-reviewed explicit-version AST equivalence proof seal `eb9173e77c85d1b5e55c8556b52e002ad655e5abe3b8a430a13e5a7fe7cb3223` admits only exact old→current helper transition with explicit nonempty v1.44/v1.52; all other inputs were rechecked. This is not a blanket whole-integrity PASS; no runtime rerun occurred.
+
+</details>
