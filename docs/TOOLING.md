@@ -20,7 +20,7 @@ The validation script regenerates `audit/local-validation.json`. Evidence verifi
 is distinct from reconstruction verification. Evidence CI checks captures, source manifests,
 saved candidate executables and bounded regressions, and builds native fragments. The
 separate dependency workflow builds selected pinned dependency candidates. Routine
-evidence CI does not clean-build all four recovered SBF programs.
+evidence CI does not clean-build all four recovered SBF programs. The verification matrix allows up to twelve concurrent jobs: four disjoint Pump groups, three Mayhem groups, and the five other checks. Every previous differential command remains represented; Pump groups retain receipt hash, runner-script and candidate immutability, and mismatch checks. The partial curve runner has an explicit 56-case failure gate. Available hosted concurrency and fixture cost determine wall time.
 
 ## Capture a new deployment snapshot
 
@@ -78,3 +78,7 @@ would prove nothing about source reconstruction.
 `build_partial_candidate.py` records crate Rust sources/manifests, the owning workspace manifest and lockfile, ancestor `idls/` JSON files used by Anchor `declare_program!`, and repository-local Cargo/toolchain configuration before and after compilation. `--extra-input <path>` adds a repository-local path dependency or other build-script/include asset; repeat it for additional inputs. The before/after maps must be identical. This is an inventory of known local inputs, not a hermetic toolchain/dependency closure. Registry archives, environment and toolchain identity require their separate build records.
 
 Older saved builds keep their original manifests; their scope is not retroactively expanded. Fees workspace experiments explicitly bind their root manifest/lock and IDLs in separate provenance records. Run `python3 scripts/test_build_source_manifest.py` to verify that workspace-lock, IDL and explicit-asset changes are detected.
+
+The manual [controlled Linux Fees workflow](../repro/pump_fees/linux-v144-build-plan/README.md) performs one fixed-source build using the official Linux v1.44 distribution. Its comparison is separate from runtime acceptance; changed bytes do not inherit the current candidate’s saved receipts.
+
+The first Linux attempt stopped before compilation because a locally modified SDK installer had supplied the original expected hash. The [official SDK correction](../repro/pump_fees/linux-v144-sdk-correction/README.md) preserves that failed attempt and pins the unmodified official archive; the explicit v1.44 compiler selection and all source/dependency inputs stay fixed.

@@ -1,0 +1,44 @@
+name: Controlled Fees Linux v1.44 build
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: controlled-fees-linux-v144
+  cancel-in-progress: false
+jobs:
+  fees-linux-v144:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - name: Checkout reviewed build tooling
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+          path: tooling
+      - name: Checkout the frozen Fees source checkpoint
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: 4ffe8bd88761059693e481ae972443c10204f7af
+          path: frozen-repository
+          persist-credentials: false
+      - name: One isolated source build and post-build whole-file comparison
+        run: >-
+          python3 tooling/scripts/core_linux_v144_build.py
+          --repository "$GITHUB_WORKSPACE/frozen-repository"
+          --inputs "$GITHUB_WORKSPACE/tooling/scripts/core_linux_v144_inputs.json"
+          --output "$RUNNER_TEMP/fees-linux-v144"
+      - name: Retain success or failure, source, public archives and compiler provenance
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: fees-linux-v144-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            ${{ runner.temp }}/fees-linux-v144/evidence
+            !${{ runner.temp }}/fees-linux-v144/evidence/*-keypair.json
+            !${{ runner.temp }}/fees-linux-v144/evidence/**/*-keypair.json
+            !${{ runner.temp }}/fees-linux-v144/evidence/**/*-keypair.json/**
+          if-no-files-found: error
+          include-hidden-files: true
+          compression-level: 0
+          retention-days: 30

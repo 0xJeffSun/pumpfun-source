@@ -218,7 +218,8 @@ impl AccountDeserialize for Pool {
 }
 impl AccountSerialize for Pool {
     fn try_serialize<W: std::io::Write>(&self, writer: &mut W) -> Result<()> {
-        writer.write_all(Self::DISCRIMINATOR).map_err(|e| anchor_lang::solana_program::program_error::ProgramError::BorshIoError(e.to_string()))?;
-        self.serialize(writer).map_err(|e| anchor_lang::solana_program::program_error::ProgramError::BorshIoError(e.to_string()).into())
+        writer.write_all(Self::DISCRIMINATOR)?;
+        self.serialize(writer)?;
+        Ok(())
     }
 }

@@ -7,6 +7,11 @@ off-curve Mayhem `sol-vault` PDA and invokes the captured Pump program. **The
 caller is synthetic; no invocation path through deployed Mayhem is proven.**
 Nothing here was sent to mainnet or moved real funds.
 
+The saved candidate and receipts were produced from the earlier public Pump48
+source. Main now contains a partial native curve path; the merged source has
+not been rebuilt or replayed with that addition. The hashes and case counts
+below refer to the retained pre-merge candidate.
+
 The [captured IDL excerpt](idl-excerpt.json) specifies selector
 `3da9bcbf99952a61`, no arguments, and eight accounts. Account 0 is Mayhem's
 writable `sol-vault` PDA signer; account 1 is its token vault; accounts 2–7 are
