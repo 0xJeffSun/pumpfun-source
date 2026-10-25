@@ -1,6 +1,7 @@
 //! IDL-derived account order/flags only; business constraints are open.
 use anchor_lang::prelude::*;
-use crate::types::FeeConfig;
+use crate::types::{FeeConfig, FeeProgramGlobal};
+use crate::FeeError;
 
 #[derive(Accounts)]
 pub struct AdminCtoSharingConfig<'info> {
@@ -273,43 +274,34 @@ pub struct InitializeFeeProgramGlobal<'info> {
 #[derive(Accounts)]
 pub struct RevokeFeeSharingAuthority {}
 
+#[event_cpi]
 #[derive(Accounts)]
 pub struct SetAuthority<'info> {
     #[account(mut)]
     pub authority: Signer<'info>,
-    #[account(mut)]
-    /// CHECK: Exact deployed constraint not recovered.
-    pub fee_program_global: UncheckedAccount<'info>,
-    /// CHECK: Exact deployed constraint not recovered.
-    pub event_authority: UncheckedAccount<'info>,
-    /// CHECK: Exact deployed constraint not recovered.
-    pub program: UncheckedAccount<'info>,
+    #[account(mut, seeds = [b"fee-program-global"], bump = fee_program_global.bump,
+              has_one = authority @ FeeError::NotAuthorized)]
+    pub fee_program_global: Account<'info, FeeProgramGlobal>,
 }
 
+#[event_cpi]
 #[derive(Accounts)]
 pub struct SetClaimRateLimit<'info> {
     #[account(mut)]
     pub authority: Signer<'info>,
-    #[account(mut)]
-    /// CHECK: Exact deployed constraint not recovered.
-    pub fee_program_global: UncheckedAccount<'info>,
-    /// CHECK: Exact deployed constraint not recovered.
-    pub event_authority: UncheckedAccount<'info>,
-    /// CHECK: Exact deployed constraint not recovered.
-    pub program: UncheckedAccount<'info>,
+    #[account(mut, seeds = [b"fee-program-global"], bump = fee_program_global.bump,
+              has_one = authority @ FeeError::NotAuthorized)]
+    pub fee_program_global: Account<'info, FeeProgramGlobal>,
 }
 
+#[event_cpi]
 #[derive(Accounts)]
 pub struct SetDisableFlags<'info> {
     #[account(mut)]
     pub authority: Signer<'info>,
-    #[account(mut)]
-    /// CHECK: Exact deployed constraint not recovered.
-    pub fee_program_global: UncheckedAccount<'info>,
-    /// CHECK: Exact deployed constraint not recovered.
-    pub event_authority: UncheckedAccount<'info>,
-    /// CHECK: Exact deployed constraint not recovered.
-    pub program: UncheckedAccount<'info>,
+    #[account(mut, seeds = [b"fee-program-global"], bump = fee_program_global.bump,
+              has_one = authority @ FeeError::NotAuthorized)]
+    pub fee_program_global: Account<'info, FeeProgramGlobal>,
 }
 
 #[derive(Accounts)]
@@ -328,17 +320,14 @@ pub struct SetExoticFlatFees<'info> {
     pub program: UncheckedAccount<'info>,
 }
 
+#[event_cpi]
 #[derive(Accounts)]
 pub struct SetSocialClaimAuthority<'info> {
     #[account(mut)]
     pub authority: Signer<'info>,
-    #[account(mut)]
-    /// CHECK: Exact deployed constraint not recovered.
-    pub fee_program_global: UncheckedAccount<'info>,
-    /// CHECK: Exact deployed constraint not recovered.
-    pub event_authority: UncheckedAccount<'info>,
-    /// CHECK: Exact deployed constraint not recovered.
-    pub program: UncheckedAccount<'info>,
+    #[account(mut, seeds = [b"fee-program-global"], bump = fee_program_global.bump,
+              has_one = authority @ FeeError::NotAuthorized)]
+    pub fee_program_global: Account<'info, FeeProgramGlobal>,
 }
 
 #[derive(Accounts)]

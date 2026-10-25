@@ -64,3 +64,41 @@ impl AccountSerialize for GlobalConfig {
         self.serialize(writer).map_err(|err| anchor_lang::solana_program::program_error::ProgramError::BorshIoError(err.to_string()).into())
     }
 }
+
+#[event]
+#[derive(Clone)]
+pub struct UpdateFeeConfigEvent {
+    pub timestamp: i64,
+    pub admin: Pubkey,
+    pub lp_fee_basis_points: u64,
+    pub protocol_fee_basis_points: u64,
+    pub protocol_fee_recipients: [Pubkey; 8],
+    pub coin_creator_fee_basis_points: u64,
+    pub admin_set_coin_creator_authority: Pubkey,
+}
+
+#[event]
+#[derive(Clone)]
+pub struct SetBoostAuthorityEvent {
+    pub timestamp: i64,
+    pub admin: Pubkey,
+    pub old_boost_authority: Pubkey,
+    pub new_boost_authority: Pubkey,
+}
+
+#[event]
+#[derive(Clone)]
+pub struct UpdateCreatorFeeConfigEvent {
+    pub timestamp: i64,
+    pub admin: Pubkey,
+    pub creator_fee_configurable: bool,
+    pub max_configurable_creator_fee_bps: u64,
+}
+
+#[event]
+#[derive(Clone)]
+pub struct ReservedFeeRecipientsEvent {
+    pub timestamp: i64,
+    pub reserved_fee_recipient: Pubkey,
+    pub reserved_fee_recipients: [Pubkey; 7],
+}

@@ -1,6 +1,6 @@
 # Mayhem: recovered administration paths
 
-The eleven implemented paths and 1,051 differential cases are a partial security
+The twelve implemented paths and 1,357 differential cases are a partial security
 review. No complete byte-identical program or complete Mayhem audit exists yet.
 
 ## Observed controls and behavior
@@ -51,11 +51,33 @@ scan does not prove absence of use. No unobserved Metaplex/relay CPI is assumed.
 
 ## Remaining work
 
-Fourteen currently identified paths remain unimplemented: fee-recipient
-initialization; two sweep handlers; two withdrawals; account extension; Mayhem
+Thirteen currently identified paths remain unimplemented: two sweep handlers; two withdrawals; account extension; Mayhem
 state initialization; token burn; and six Pump/PumpSwap buy/sell paths. Their
 account/CPI constraints, price impact, risk accounting, rate limits, arithmetic,
 rollback and dependency equivalence remain to be recovered and audited.
 Historical source/build fidelity, executable layout and all bytes remain
 unresolved. Current tests do not establish safety of those paths or the program
 as a whole. No confirmed vulnerability is claimed by this partial work.
+
+## Fee-recipient initialization and captured dependencies
+
+The twelfth recovered path, `initialize_fee_recipient`, is covered by 306 further
+strict differential cases, loading the exact captured Token, Token2022 and ATA
+ELFs rather than relying on LiteSVM's builtin token programs. Valid indices 0–7
+create a 42-byte program-owned FeeRecipient PDA and its native-WSOL ATA. Indices
+8–255 return 6017 after the initialization CPIs and roll everything back. The
+PDA seeds are `fee-recipient` plus the one-byte index. Its first two serialized
+fields are bump and index; the remaining 32 bytes initialize to zero.
+
+This initialization path requires a signing writable payer, but does not require
+the payer to match GlobalParams.admin. GlobalParams must still be the correct
+writable program-owned PDA. The native WSOL mint and legacy SPL Token addresses
+are constrained; a valid Token2022 mint/program pair can reach initialization
+CPIs but subsequently fails the token-program address constraint and rolls back.
+These controls and ordering are reproduced. Permissionless creation of a fixed
+program-owned fee-recipient PDA is not by itself a confirmed vulnerability.
+
+The successful original calls establish actual ATA and token dependency use.
+The earlier full-byte constant scan's missing ATA key was only a scan limitation.
+Dependency source/build identity remains unproven even though captured binaries
+are used for these local calls. Metaplex and donation-relay use remains unproven.

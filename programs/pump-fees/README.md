@@ -1,7 +1,8 @@
 # Partial Pump Fees reconstruction
 
-Two handlers execute recovered behavior: `get_fees` and
-`get_fees_with_quote_mint`. The other 29 instruction bodies remain unsupported;
+Six handlers execute recovered behavior: `get_fees`, `get_fees_with_quote_mint`,
+`set_authority`, `set_social_claim_authority`, `set_disable_flags` and
+`set_claim_rate_limit`. The other 25 instruction bodies remain unsupported;
 their generated account declarations are not recovered constraints. This crate
 is an experimental reconstruction target, not a deployable substitute.
 
@@ -27,7 +28,7 @@ substantially from the original binary. The experimental standalone fragments in
 python scripts/build_partial_candidate.py --manifest programs/pump-fees/Cargo.toml \
   --program pump_fees --artifact-name pump_fees_candidate.so \
   --output work/fees-clean-build
-python scripts/validate_fee_handlers.py \
+python scripts/fees_validate_all.py \
   --candidate work/fees-clean-build/artifacts/pump_fees_candidate.so \
   --output work/fees-handler-validation.json
 ```
@@ -39,3 +40,11 @@ The runtime comparison checks return bytes, error codes, and unchanged account
 state/lamports for queries. It does not assert log strings, compute usage, or byte
 identity. Synthetic invalid account states are included and do not establish
 reachability or a vulnerability.
+
+The four administration handlers use a 338-byte FeeProgramGlobal with stored-bump
+PDA verification, signing/writable authority, and custom authorization error6016.
+Changing the main authority to zero fails6001; the social-claim authority accepts
+zero. All u8 flag values and the tested u64 rate-limit boundaries are accepted.
+Every successful setter emits the typed log event and signed self-CPI event.
+444 original/candidate cases compare errors, complete state, lamports, event bytes
+and inner instructions. The two query suites contribute10,789 additional cases.

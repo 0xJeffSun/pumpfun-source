@@ -19,7 +19,7 @@ custom-heap = []
 custom-panic = []
 
 [dependencies]
-anchor-lang = "=0.31.1"
+anchor-lang = { version = "=0.31.1", features = ["event-cpi"] }
 
 [profile.release]
 panic = "abort"

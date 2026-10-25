@@ -13,10 +13,13 @@ for name,status in json.loads((ROOT/'repro/status.json').read_text()).items():
  log_path=ROOT/status['build_log'];log=log_path.read_bytes()
  if log_path.suffix=='.gz':log=gzip.decompress(log)
  assert hashlib.sha256(log).hexdigest()==report['build_log_sha256'],name
- receipt=ROOT/status['validation_report'];data=receipt.read_bytes()
- r=json.loads(gzip.decompress(data) if receipt.suffix=='.gz' else data)
- assert r['candidate_sha256']==sha(candidate),name
- assert r['original_sha256']==sha(original),name
- assert not r.get('mismatches',r.get('failures',[])),name
- assert r['case_count']==status['validated_cases'],name
- print(name,': partial build provenance consistent;',r['case_count'],'saved differential cases; full byte equality',report['comparison']['full_byte_equality'])
+ total=0
+ for receipt_name in status.get('validation_reports',[status.get('validation_report')]):
+  receipt=ROOT/receipt_name;data=receipt.read_bytes()
+  r=json.loads(gzip.decompress(data) if receipt.suffix=='.gz' else data)
+  assert r['candidate_sha256']==sha(candidate),name
+  assert r['original_sha256']==sha(original),name
+  assert not r.get('mismatches',r.get('failures',[])),name
+  total+=r['case_count']
+ assert total==status['validated_cases'],name
+ print(name,': partial build provenance consistent;',total,'saved differential cases; full byte equality',report['comparison']['full_byte_equality'])

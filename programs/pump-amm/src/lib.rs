@@ -10,6 +10,107 @@ declare_id!("pAMMBay6oceH9fJKBRHGP5D4bD4sWpmSwMn52FMfXEA");
 pub mod pump_amm_recovered {
     use super::*;
 
+    pub fn set_reserved_fee_recipients(ctx: Context<SetReservedFeeRecipients>, whitelist_pda: Pubkey) -> Result<()> {
+        require!(ctx.remaining_accounts.len() >= 8, PumpAmmError::NotEnoughRemainingAccounts);
+        let mut recipients = [Pubkey::default(); 8];
+        for i in 0..8 {
+            recipients[i] = ctx.remaining_accounts[i].key();
+            require_keys_neq!(recipients[i], Pubkey::default(), PumpAmmError::AllProtocolFeeRecipientsShouldBeNonZero);
+        }
+        ctx.accounts.global_config.whitelist_pda = whitelist_pda;
+        ctx.accounts.global_config.reserved_fee_recipient = recipients[0];
+        ctx.accounts.global_config.reserved_fee_recipients.copy_from_slice(&recipients[1..]);
+        let event = ReservedFeeRecipientsEvent { timestamp: Clock::get()?.unix_timestamp,
+            reserved_fee_recipient: recipients[0], reserved_fee_recipients: recipients[1..].try_into().unwrap() };
+        emit!(event.clone());
+        emit_cpi!(event);
+        Ok(())
+    }
+
+    pub fn update_creator_fee_config(ctx: Context<UpdateCreatorFeeConfig>, creator_fee_configurable: bool,
+        max_configurable_creator_fee_bps: u64) -> Result<()> {
+        let account = ctx.accounts.global_config.to_account_info();
+        if account.data_len() < 949 {
+            let required = Rent::get()?.minimum_balance(949);
+            let top_up = required.saturating_sub(account.lamports());
+            if top_up > 0 {
+                anchor_lang::system_program::transfer(CpiContext::new(
+                    ctx.accounts.system_program.to_account_info(),
+                    anchor_lang::system_program::Transfer {
+                        from: ctx.accounts.admin.to_account_info(), to: account.clone(),
+                    }), top_up)?;
+            }
+            account.realloc(949, false)?;
+        }
+        ctx.accounts.global_config.creator_fee_configurable = creator_fee_configurable;
+        ctx.accounts.global_config.max_configurable_creator_fee_bps = max_configurable_creator_fee_bps;
+        let event = UpdateCreatorFeeConfigEvent { timestamp: Clock::get()?.unix_timestamp,
+            admin: ctx.accounts.admin.key(), creator_fee_configurable, max_configurable_creator_fee_bps };
+        emit!(event.clone());
+        emit_cpi!(event);
+        Ok(())
+    }
+
+    pub fn set_boost_authority(ctx: Context<SetBoostAuthority>) -> Result<()> {
+        let account = ctx.accounts.global_config.to_account_info();
+        if account.data_len() < 949 {
+            let required = Rent::get()?.minimum_balance(949);
+            let top_up = required.saturating_sub(account.lamports());
+            if top_up > 0 {
+                anchor_lang::system_program::transfer(CpiContext::new(
+                    ctx.accounts.system_program.to_account_info(),
+                    anchor_lang::system_program::Transfer {
+                        from: ctx.accounts.admin.to_account_info(), to: account.clone(),
+                    }), top_up)?;
+            }
+            account.realloc(949, false)?;
+        }
+        let old_boost_authority = ctx.accounts.global_config.boost_authority;
+        let new_boost_authority = ctx.accounts.boost_authority.key();
+        ctx.accounts.global_config.boost_authority = new_boost_authority;
+        let event = SetBoostAuthorityEvent { timestamp: Clock::get()?.unix_timestamp,
+            admin: ctx.accounts.admin.key(), old_boost_authority, new_boost_authority };
+        emit!(event.clone());
+        emit_cpi!(event);
+        Ok(())
+    }
+
+    pub fn update_fee_config(ctx: Context<AdminGlobal>, lp_fee_basis_points: u64,
+        protocol_fee_basis_points: u64, protocol_fee_recipients: [Pubkey; 8],
+        coin_creator_fee_basis_points: u64, admin_set_coin_creator_authority: Pubkey) -> Result<()> {
+        require!(lp_fee_basis_points <= 1000 && protocol_fee_basis_points <= 1000 && coin_creator_fee_basis_points <= 1000, PumpAmmError::FeeBasisPointsExceedsMaximum);
+        for recipient in protocol_fee_recipients.iter() { require_keys_neq!(*recipient, Pubkey::default(), PumpAmmError::AllProtocolFeeRecipientsShouldBeNonZero); }
+        for i in 1..8 { require!(protocol_fee_recipients[i-1] < protocol_fee_recipients[i], PumpAmmError::UnsortedNotUniqueProtocolFeeRecipients); }
+        let config = &mut ctx.accounts.global_config;
+        config.lp_fee_basis_points = lp_fee_basis_points;
+        config.protocol_fee_basis_points = protocol_fee_basis_points;
+        config.protocol_fee_recipients = protocol_fee_recipients;
+        config.coin_creator_fee_basis_points = coin_creator_fee_basis_points;
+        config.admin_set_coin_creator_authority = admin_set_coin_creator_authority;
+        let event = UpdateFeeConfigEvent { timestamp: Clock::get()?.unix_timestamp,
+            admin: ctx.accounts.admin.key(), lp_fee_basis_points, protocol_fee_basis_points,
+            protocol_fee_recipients, coin_creator_fee_basis_points, admin_set_coin_creator_authority };
+        emit!(event.clone());
+        emit_cpi!(event);
+        Ok(())
+    }
+
+    pub fn update_buyback_config(ctx: Context<AdminGlobal>, buyback_basis_points: Option<u64>) -> Result<()> {
+        if let Some(bps) = buyback_basis_points {
+            require!(bps <= 10_000, PumpAmmError::BuybackBasisPointsOutOfRange);
+            ctx.accounts.global_config.buyback_basis_points = bps;
+        }
+        if !ctx.remaining_accounts.is_empty() {
+            require_eq!(ctx.remaining_accounts.len(), 8, PumpAmmError::WrongBuybackFeeRecipientsCount);
+            let mut recipients = [Pubkey::default(); 8];
+            for (i, account) in ctx.remaining_accounts.iter().enumerate() { recipients[i] = account.key(); }
+            for recipient in recipients.iter() { require_keys_neq!(*recipient, Pubkey::default(), PumpAmmError::AllBuybackFeeRecipientsShouldBeNonZero); }
+            for i in 0..8 { for j in 0..i { require_keys_neq!(recipients[i], recipients[j], PumpAmmError::NotUniqueBuybackFeeRecipients); } }
+            ctx.accounts.global_config.buyback_fee_recipients = recipients;
+        }
+        Ok(())
+    }
+
     pub fn toggle_mayhem_mode(ctx: Context<AdminGlobal>, enabled: bool) -> Result<()> {
         require_neq!(ctx.accounts.global_config.mayhem_mode_enabled, enabled, PumpAmmError::MayhemModeInDesiredState);
         ctx.accounts.global_config.mayhem_mode_enabled = enabled;
@@ -206,4 +307,33 @@ pub struct AdminGlobalNoEvent<'info> {
     pub admin: Signer<'info>,
     #[account(mut, has_one = admin @ PumpAmmError::InvalidAdmin)]
     pub global_config: Box<Account<'info, GlobalConfig>>,
+}
+
+#[event_cpi]
+#[derive(Accounts)]
+pub struct SetBoostAuthority<'info> {
+    pub admin: Signer<'info>,
+    #[account(mut, has_one = admin @ PumpAmmError::InvalidAdmin)]
+    pub global_config: Box<Account<'info, GlobalConfig>>,
+    /// CHECK: Only its public key is stored as authority.
+    pub boost_authority: UncheckedAccount<'info>,
+    pub system_program: Program<'info, System>,
+}
+
+#[event_cpi]
+#[derive(Accounts)]
+pub struct UpdateCreatorFeeConfig<'info> {
+    #[account(mut)]
+    pub admin: Signer<'info>,
+    #[account(mut, has_one = admin @ PumpAmmError::InvalidAdmin)]
+    pub global_config: Box<Account<'info, GlobalConfig>>,
+    pub system_program: Program<'info, System>,
+}
+
+#[event_cpi]
+#[derive(Accounts)]
+pub struct SetReservedFeeRecipients<'info> {
+    #[account(mut, seeds = [b"global_config"], bump, has_one = admin @ PumpAmmError::InvalidAdmin)]
+    pub global_config: Box<Account<'info, GlobalConfig>>,
+    pub admin: Signer<'info>,
 }

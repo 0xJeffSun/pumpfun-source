@@ -1,13 +1,20 @@
-//! Partial independently compiled Mayhem implementation: eleven recovered admin
+//! Partial independently compiled Mayhem implementation: twelve recovered admin
 //! handlers. Unknown fields are preserved as byte arrays, not guessed names.
 //! This is not a complete or byte-identical program reconstruction.
 use anchor_lang::prelude::*;
+use anchor_spl::{associated_token::AssociatedToken, token_interface::{Mint, TokenAccount, TokenInterface}};
 
 declare_id!("MAyhSmzXzV1pTf7LsNkrNwkWKTo4ougAJ1PPg47MD4e");
 
 #[program]
 pub mod mayhem_recovered {
     use super::*;
+    pub fn initialize_fee_recipient(ctx: Context<InitializeFeeRecipient>, index: u8) -> Result<()> {
+        require!(index < 8, MayhemError::MaxFeeRecipientsExceeded);
+        ctx.accounts.fee_recipient.bump = ctx.bumps.fee_recipient;
+        ctx.accounts.fee_recipient.index = index;
+        Ok(())
+    }
     pub fn initialize_global_params(ctx: Context<InitializeGlobalParams>) -> Result<()> {
         ctx.accounts.global_params.admin = ctx.accounts.admin.key();
         Ok(())
@@ -140,6 +147,8 @@ pub enum MayhemError {
     TradingActive,
     #[msg("Math overflow")]
     MathOverflow,
+    #[msg("Only 8 fee recipients supported")]
+    MaxFeeRecipientsExceeded = 17,
 }
 
 /// Recovered serialized widths/order. Semantic names remain unresolved.
@@ -194,4 +203,30 @@ pub struct InitializeGlobalParams<'info> {
     #[account(init, payer = admin, space = 254, seeds = [b"global-params"], bump)]
     pub global_params: Account<'info, GlobalParams>,
     pub system_program: Program<'info, System>,
+}
+
+#[account]
+pub struct FeeRecipient {
+    pub bump: u8,
+    pub index: u8,
+    pub opaque: [u8; 32],
+}
+
+#[derive(Accounts)]
+#[instruction(index: u8)]
+pub struct InitializeFeeRecipient<'info> {
+    #[account(mut)]
+    pub admin: Signer<'info>,
+    #[account(address = anchor_spl::token::spl_token::native_mint::ID)]
+    pub wsol_mint: InterfaceAccount<'info, Mint>,
+    #[account(init, payer = admin, space = 42, seeds = [b"fee-recipient".as_ref(), &[index]], bump)]
+    pub fee_recipient: Account<'info, FeeRecipient>,
+    #[account(init, payer = admin, associated_token::mint = wsol_mint, associated_token::authority = fee_recipient, associated_token::token_program = token_program)]
+    pub fee_recipient_ata: InterfaceAccount<'info, TokenAccount>,
+    #[account(mut, seeds = [b"global-params"], bump)]
+    pub global_params: Account<'info, GlobalParams>,
+    pub system_program: Program<'info, System>,
+    #[account(address = anchor_spl::token::ID)]
+    pub token_program: Interface<'info, TokenInterface>,
+    pub associated_token_program: Program<'info, AssociatedToken>,
 }

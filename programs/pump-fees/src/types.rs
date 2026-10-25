@@ -65,3 +65,21 @@ impl AccountDeserialize for FeeConfig {
         Self::deserialize(&mut &buf[8..]).map_err(|e| ProgramError::BorshIoError(e.to_string()).into())
     }
 }
+
+#[account]
+pub struct FeeProgramGlobal {
+    pub bump: u8,
+    pub authority: Pubkey,
+    pub disable_flags: u8,
+    pub social_claim_authority: Pubkey,
+    pub claim_rate_limit: u64,
+    pub _reserved: [u8; 256],
+}
+#[event]
+pub struct SetAuthorityEvent { pub timestamp: i64, pub old_authority: Pubkey, pub new_authority: Pubkey }
+#[event]
+pub struct SetSocialClaimAuthorityEvent { pub timestamp: i64, pub social_claim_authority: Pubkey }
+#[event]
+pub struct SetDisableFlagsEvent { pub timestamp: i64, pub disable_flags: u8 }
+#[event]
+pub struct SetClaimRateLimitEvent { pub timestamp: i64, pub claim_rate_limit: u64 }

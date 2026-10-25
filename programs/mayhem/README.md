@@ -1,13 +1,13 @@
 # Partial Mayhem implementation recovery
 
-This independently compiled Anchor program implements **11 of the 25 currently
+This independently compiled Anchor program implements **12 of the 25 currently
 identified instruction paths**. It is not a full program reconstruction, a
 byte-identical ELF, or a deployable replacement. Other handlers are absent.
 No original machine code is embedded or patched into the build.
 
 Implemented paths:
 
-- `initialize_global_params`
+- `initialize_global_params`, `initialize_fee_recipient`
 - `reset_sol_deployed`, `reset_stable_deployed`, `reset_state`
 - `stop_trading`, `resume_trading`
 - `update_admin`, `update_trader`
@@ -44,7 +44,7 @@ python3 scripts/mayhem_validate_admin.py \
   --output work/mayhem-admin-validation.json
 ```
 
-The 1,051 deterministic cases compare complete original and candidate SBF calls
+The 1,051 deterministic admin cases compare complete original and candidate SBF calls
 inside separate LiteSVM instances. They compare instruction error, GlobalParams
 bytes/owner/balance, admin and payer balance changes, logged event data, and inner
 instructions. They include random valid serialized states, malformed state,
@@ -57,3 +57,10 @@ mainnet states.
 
 `repro/mayhem/` retains the clean build's comparison/provenance and compressed
 case evidence. See `audit/mayhem/RECOVERY.md` for bounded security observations.
+
+The additional `scripts/mayhem_validate_fee_recipient.py` suite compares 306
+fee-recipient initialization cases using the exact captured SPL Token, Token2022
+and ATA dependency ELFs in both VMs. It covers every u8 recipient index, native
+mint/token address constraints, authorization behavior, account flags, missing
+accounts and rollback after CPI. Its receipt is
+`repro/mayhem/fee-recipient-differential.json.gz`.

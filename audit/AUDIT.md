@@ -82,3 +82,23 @@ those return/error/state assertions. The remaining 29 handlers are unsupported,
 and the complete executable differs from the captured original. Selected Anchor
 and dependency versions are candidates, not the recovered historical graph.
 This does not extend a security conclusion to the other handlers or deployments.
+
+
+### Parallel reconstruction checkpoint:32 implemented handlers
+
+Current saved candidate builds cover Pump4, PumpSwap10, Pump Fees6 and Mayhem12
+handlers. Their21,994 local original-versus-candidate SBF cases are indexed by
+`repro/status.json`; validation suites preserve separate scopes. New coverage
+includes stored-bump/authority checks and event CPI for Fees administration,
+legacy-layout resizing with System rent transfers in PumpSwap, and permissionless
+Mayhem fee-recipient/ATA creation using the exact captured token dependencies.
+Permissionless operations observed with synthetic state are not vulnerabilities
+without an unauthorized-impact demonstration. No such finding is asserted here.
+
+The four full-file comparisons still differ. Trading, liquidity, fee sharing,
+claims, migrations, dependencies and hostile CPI/token-extension paths remain
+incompletely reconstructed or audited. Pump's160 successful trade arithmetic
+comparisons isolate reserve math and do not implement or certify its whole trade
+handler. A Linux dependency build using the on-chain registered SPL Token recipe
+is running separately; third-party verified-source attribution alone is not a
+fresh independently reproduced build.

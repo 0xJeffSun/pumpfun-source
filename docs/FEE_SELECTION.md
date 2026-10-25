@@ -113,7 +113,7 @@ No vulnerability is established by those injected states.
 ## Independently executing query handlers
 
 `programs/pump-fees/` now builds an experimental complete SBF executable with two
-implemented query handlers and 29 unsupported handler bodies. This advances beyond
+implemented query handlers, four implemented admin handlers, and 25 unsupported handler bodies. This advances beyond
 native math comparisons: 10,789 cases compare execution of that compiled candidate
 with the original in separate LiteSVM instances. They check returned fees, error
 codes, unchanged account data and unchanged account lamports. They cover both
@@ -127,3 +127,18 @@ Anchor 0.31.1 resolved those differences without a custom dispatcher patch.
 Further parser probes distinguished InvalidAccountData (bad discriminator or
 short allocation) from BorshIoError (malformed vectors). The selected lockfile
 is reproducible but remains a candidate, not the recovered historical graph.
+
+
+## FeeProgramGlobal administration
+
+The same independently built executable now also implements `set_authority`,
+`set_social_claim_authority`, `set_disable_flags`, and `set_claim_rate_limit`.
+444 additional differential cases compare errors, account bytes/owner/lamports,
+payer balance changes, event payloads and signed self-CPI instructions. These
+include every u8 flag value, u64 boundaries, malformed arguments, and account
+validation failures. Together the six handlers have11,233 passing SBF cases.
+The captured original rejects a zero main authority with6001, permits a zero
+social-claim authority, and rejects unauthorized signers with6016. No security
+conclusion is extended to the25 unimplemented handlers. The current source,
+compiled ELF, build log and complete receipts are pinned under
+`repro/pump_fees/admin-six/`. All whole-program comparisons remain unequal.

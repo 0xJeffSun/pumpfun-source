@@ -20,6 +20,7 @@ custom-panic = []
 
 [dependencies]
 anchor-lang = { version = "=0.31.1", features = ["event-cpi"] }
+anchor-spl = { version = "=0.31.1", default-features = false, features = ["associated_token", "token", "token_2022"] }
 
 [profile.release]
 panic = "abort"

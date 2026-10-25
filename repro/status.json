@@ -25,7 +25,7 @@
     "compiler": "unresolved",
     "dependencies": "unresolved",
     "build_flags": "unresolved",
-    "candidate_artifact": "repro/pump_amm/admin-five/pump_amm_recovered.so",
+    "candidate_artifact": "repro/pump_amm/admin-ten/pump_amm_recovered.so",
     "full_byte_equality": false,
     "comparison_status": "DIFFERS_PARTIAL_IMPLEMENTATION",
     "implemented_handlers": [
@@ -33,12 +33,23 @@
       "update_admin",
       "toggle_mayhem_mode",
       "toggle_cashback_enabled",
-      "toggle_boost"
+      "toggle_boost",
+      "update_buyback_config",
+      "update_fee_config",
+      "set_boost_authority",
+      "update_creator_fee_config",
+      "set_reserved_fee_recipients"
     ],
-    "comparison_report": "repro/pump_amm/admin-five/build-comparison.json",
-    "build_log": "repro/pump_amm/admin-five/build.log",
-    "validation_report": "repro/pump_amm/admin-five/differential.json.gz",
-    "validated_cases": 8331
+    "comparison_report": "repro/pump_amm/admin-ten/build-comparison.json",
+    "build_log": "repro/pump_amm/admin-ten/build.log",
+    "validated_cases": 9311,
+    "validation_reports": [
+      "repro/pump_amm/admin-ten/admin-differential.json.gz",
+      "repro/pump_amm/admin-ten/buyback-differential.json.gz",
+      "repro/pump_amm/admin-ten/fee-config-differential.json.gz",
+      "repro/pump_amm/admin-ten/resize-differential.json.gz",
+      "repro/pump_amm/admin-ten/reserved-differential.json.gz"
+    ]
   },
   "pump_fees": {
     "source_reconstruction": "partial_handlers_compiled",
@@ -46,7 +57,7 @@
     "compiler": "unresolved",
     "dependencies": "unresolved",
     "build_flags": "unresolved",
-    "candidate_artifact": "repro/pump_fees/query-candidate.so",
+    "candidate_artifact": "repro/pump_fees/admin-six/pump_fees_candidate.so",
     "full_byte_equality": false,
     "comparison_status": "DIFFERS_PARTIAL_IMPLEMENTATION",
     "compiler_candidates": [
@@ -55,12 +66,16 @@
     ],
     "implemented_handlers": [
       "get_fees",
-      "get_fees_with_quote_mint"
+      "get_fees_with_quote_mint",
+      "set_authority",
+      "set_social_claim_authority",
+      "set_disable_flags",
+      "set_claim_rate_limit"
     ],
-    "comparison_report": "repro/pump_fees/query-build-comparison.json",
-    "build_log": "repro/pump_fees/query-build.log",
-    "validation_report": "repro/pump_fees/query-differential.json.gz",
-    "validated_cases": 10789
+    "comparison_report": "repro/pump_fees/admin-six/build-comparison.json",
+    "build_log": "repro/pump_fees/admin-six/build.log",
+    "validation_report": "repro/pump_fees/admin-six/differential.json.gz",
+    "validated_cases": 11233
   },
   "mayhem": {
     "source_reconstruction": "partial_handlers_compiled",
@@ -82,11 +97,15 @@
       "reset_stable_deployed",
       "reset_state",
       "stop_trading",
-      "resume_trading"
+      "resume_trading",
+      "initialize_fee_recipient"
     ],
     "comparison_report": "repro/mayhem/build-comparison.json",
     "build_log": "repro/mayhem/build.log.gz",
-    "validation_report": "repro/mayhem/differential.json.gz",
-    "validated_cases": 1051
+    "validated_cases": 1357,
+    "validation_reports": [
+      "repro/mayhem/differential.json.gz",
+      "repro/mayhem/fee-recipient-differential.json.gz"
+    ]
   }
 }

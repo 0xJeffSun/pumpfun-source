@@ -19,9 +19,16 @@ jobs:
       - run: python scripts/validate_fee_selection.py --host work/fee-selector-host --output work/fee-selector-validation.json
       - run: python scripts/build_quote_host.py --output work/quote-host
       - run: python scripts/validate_quote_fees.py --host work/quote-host/quote-fees-host --output work/quote-validation.json
-      - run: python scripts/validate_fee_handlers.py --candidate repro/pump_fees/query-candidate.so --output work/fee-handlers.json
+      - run: python scripts/fees_validate_all.py --candidate repro/pump_fees/admin-six/pump_fees_candidate.so --output work/fee-handlers.json
       - run: python scripts/pump_validate_admin.py --candidate repro/pump/admin-candidate.so --output work/pump-admin.json
-      - run: python scripts/pump_amm_admin_differential.py --candidate repro/pump_amm/admin-five/pump_amm_recovered.so --output work/pump-amm-admin.json
+      - run: python scripts/pump_amm_admin_differential.py --candidate repro/pump_amm/admin-ten/pump_amm_recovered.so --output work/pump-amm-admin.json
+      - run: python scripts/pump_amm_buyback_differential.py --candidate repro/pump_amm/admin-ten/pump_amm_recovered.so --output work/pump-amm-buyback.json
+      - run: python scripts/pump_amm_fee_config_differential.py --candidate repro/pump_amm/admin-ten/pump_amm_recovered.so --output work/pump-amm-fee_config.json
+      - run: python scripts/pump_amm_resize_differential.py --creator --candidate repro/pump_amm/admin-ten/pump_amm_recovered.so --output work/pump-amm-resize.json
+      - run: python scripts/pump_amm_reserved_differential.py --candidate repro/pump_amm/admin-ten/pump_amm_recovered.so --output work/pump-amm-reserved.json
       - run: python scripts/mayhem_validate_admin.py --candidate repro/mayhem/mayhem_recovered.so --output work/mayhem-admin.json
+      - run: python scripts/mayhem_validate_fee_recipient.py --candidate repro/mayhem/mayhem_recovered.so --output work/mayhem-recipient.json
+      - run: rustc --edition=2021 -O programs/pump/recovered/constant_product_host.rs -o work/pump-math-host
+      - run: python scripts/pump_validate_constant_product.py --host work/pump-math-host --output work/pump-math.json
       - run: git clone https://github.com/pump-fun/pump-public-docs.git work/pump-public-docs
       - run: python scripts/verify_imported_lab.py --docs-checkout work/pump-public-docs --output work/lab-saved-verification

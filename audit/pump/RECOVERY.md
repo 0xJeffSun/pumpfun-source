@@ -45,3 +45,25 @@ flows require implementation and independent tests. Local VM builtin token
 programs must not be treated as equivalent to the captured Pinocchio Token and
 Token2022 dependencies. Valid trade tests should load the pinned captured programs
 and state all remaining runtime differences.
+
+## Follow-up build recipe and trade evidence
+
+Finalized on-chain Otter verification PDAs provide the saved build recipes in
+`repro/pump/*-onchain-build-params.json`. SPL Token names the official
+`solanafoundation/solana-verifiable-build:3.1.9` image and platform-tools v1.54.
+The image tag resolved to digest
+`sha256:d7079331a2696eca570fbeeb5caa556cb09084f89ca96f0a0edb86e1cf83e165`.
+A native macOS v1.54 build still differs (108,344 versus108,600 bytes), so the
+Linux image build remains necessary. Starting the installed Docker engine failed
+with a disk `resize2fs` error; no reset or disk repair was performed. A dedicated
+manual GitHub Actions workflow now supplies an isolated Linux reproduction path.
+Token2022's on-chain build-record deployment slot is older than the captured
+program deployment; the matching registry normalized hash remains distinct
+from fresh local source-build proof.
+
+The recovered constant-product arithmetic fragment now matches160 successful
+original sell_v3 reserve-delta cases using the captured external token programs.
+One additional tiny-trade probe fails with original Overflow6024 before a usable
+reserve delta and is recorded outside the arithmetic comparison. The full sell
+handler, fee accounting and event paths remain to be reconstructed. See the
+fragment README and receipts for exact scope.

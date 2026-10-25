@@ -1,4 +1,4 @@
-//! Partial reconstruction: two fee queries implemented; remaining handlers unsupported.
+//! Partial reconstruction: six handlers implemented; remaining handlers unsupported.
 //! It is not the deployed program source.
 use anchor_lang::prelude::*;
 
@@ -95,18 +95,32 @@ pub mod pump_fees_candidate {
     }
 
     #[allow(unused_variables)]
-    pub fn set_authority(_ctx: Context<SetAuthority>, new_authority: Pubkey) -> Result<()> {
-        Err(error!(CandidateError::Unsupported))
+    pub fn set_authority(ctx: Context<SetAuthority>, new_authority: Pubkey) -> Result<()> {
+        require_keys_neq!(new_authority, Pubkey::default(), FeeError::InvalidAdmin);
+        let old_authority = ctx.accounts.fee_program_global.authority;
+        ctx.accounts.fee_program_global.authority = new_authority;
+        let event = SetAuthorityEvent { timestamp: Clock::get()?.unix_timestamp, old_authority, new_authority };
+        emit!(event);
+        emit_cpi!(event);
+        Ok(())
     }
 
     #[allow(unused_variables)]
-    pub fn set_claim_rate_limit(_ctx: Context<SetClaimRateLimit>, claim_rate_limit: u64) -> Result<()> {
-        Err(error!(CandidateError::Unsupported))
+    pub fn set_claim_rate_limit(ctx: Context<SetClaimRateLimit>, claim_rate_limit: u64) -> Result<()> {
+        ctx.accounts.fee_program_global.claim_rate_limit = claim_rate_limit;
+        let event = SetClaimRateLimitEvent { timestamp: Clock::get()?.unix_timestamp, claim_rate_limit };
+        emit!(event);
+        emit_cpi!(event);
+        Ok(())
     }
 
     #[allow(unused_variables)]
-    pub fn set_disable_flags(_ctx: Context<SetDisableFlags>, disable_flags: u8) -> Result<()> {
-        Err(error!(CandidateError::Unsupported))
+    pub fn set_disable_flags(ctx: Context<SetDisableFlags>, disable_flags: u8) -> Result<()> {
+        ctx.accounts.fee_program_global.disable_flags = disable_flags;
+        let event = SetDisableFlagsEvent { timestamp: Clock::get()?.unix_timestamp, disable_flags };
+        emit!(event);
+        emit_cpi!(event);
+        Ok(())
     }
 
     #[allow(unused_variables)]
@@ -115,8 +129,12 @@ pub mod pump_fees_candidate {
     }
 
     #[allow(unused_variables)]
-    pub fn set_social_claim_authority(_ctx: Context<SetSocialClaimAuthority>, social_claim_authority: Pubkey) -> Result<()> {
-        Err(error!(CandidateError::Unsupported))
+    pub fn set_social_claim_authority(ctx: Context<SetSocialClaimAuthority>, social_claim_authority: Pubkey) -> Result<()> {
+        ctx.accounts.fee_program_global.social_claim_authority = social_claim_authority;
+        let event = SetSocialClaimAuthorityEvent { timestamp: Clock::get()?.unix_timestamp, social_claim_authority };
+        emit!(event);
+        emit_cpi!(event);
+        Ok(())
     }
 
     #[allow(unused_variables)]
@@ -197,3 +215,11 @@ fn select_fee_tier(tiers: &[FeeTier], cap: u128) -> Fees {
 pub const WRAPPED_SOL: [u8; 32] = [6,155,136,87,254,171,129,132,251,104,127,99,70,24,192,53,218,196,57,220,26,235,59,85,152,160,240,0,0,0,0,1];
 pub const OTHER_NORMAL_QUOTE: [u8; 32] = [131,13,252,159,222,95,230,184,170,124,4,164,118,233,30,138,198,187,38,74,173,144,250,25,201,223,73,216,92,62,91,94];
 pub const USDC: [u8; 32] = [198,250,122,243,190,219,173,58,61,101,243,106,171,201,116,49,177,187,228,194,210,246,224,228,124,166,2,3,69,47,93,97];
+
+#[error_code]
+pub enum FeeError {
+    #[msg("Invalid admin")]
+    InvalidAdmin = 1,
+    #[msg("The given account is not authorized to execute this instruction.")]
+    NotAuthorized = 16,
+}
