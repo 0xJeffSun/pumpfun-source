@@ -81,7 +81,7 @@ pub fn create(ctx: Context<CreateDonationFeePda>) -> Result<()> {
 #[derive(Accounts)]
 pub struct CreateDonationFeePda<'info> {
     /// CHECK: event PDA validated.
-    #[account(seeds=[b"__event_authority"],bump)] pub event_authority: UncheckedAccount<'info>,
+    #[account(seeds=[b"__event_authority"],bump)] pub event_authority: AccountInfo<'info>,
     pub program: Program<'info, crate::program::PumpFeesCandidate>,
     #[account(mut)] pub payer: Signer<'info>,
     pub system_program: Program<'info,System>,

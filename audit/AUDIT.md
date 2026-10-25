@@ -5,8 +5,8 @@ programs listed in `docs/SCOPE.md`. Partial executable handlers have been recove
 
 The current published recovery covers 140 implemented handlers plus five partial
 Pump paths and 53,735 saved comparison receipts: [Pump48 two-curve checkpoint](../repro/pump/tokenkeg-two-curve-fortyeight/README.md),
-[AMM37 scalar-guard checkpoint](../repro/pump_amm/scalar-guard-order-v144/README.md),
-[Fees31 SharingConfig-module checkpoint](../repro/pump_fees/sharing-module-v144/README.md),
+[AMM37 shared-method/static-initializer checkpoint](../repro/pump_amm/create-config-shared-methods-v144/README.md),
+[Fees31 donation-context checkpoint](../repro/pump_fees/donation-event-account-v144/README.md),
 and [Mayhem24](../repro/mayhem/twentyfour/README.md). These bounded recovery results
 do not extend the source review frozen at commit329fc44 into a complete audit of
 the later candidates. All four original whole-file comparisons still differ.

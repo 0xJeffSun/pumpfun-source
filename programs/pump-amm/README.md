@@ -1,9 +1,12 @@
 # Partial PumpSwap source recovery
 
-Thirty-seven of 38 published handlers are implemented from captured-program behavior
-and disassembly, including legacy buy, exact-quote buy, sell, direct fee/cashback payouts, boost buy-and-burn, and AMM/curve multi-hop routes.
-One handler remains absent: create_config. This is not a replacement for the deployed program
-and does not match its bytes.
+Thirty-seven of 38 published handlers have bounded runtime validation from
+captured-program behavior and disassembly, including legacy buy, exact-quote buy,
+sell, direct fee/cashback payouts, boost buy-and-burn, and AMM/curve multi-hop routes.
+The remaining `create_config` source is reconstructed and compiled with static-only
+evidence; no authentic successful fixed-administrator initialization replay exists.
+It is excluded from the 37-handler runtime count. This is not a replacement for
+the deployed program and does not match its bytes.
 
 ```sh
 work/test-env/bin/python scripts/prepare_locked_cargo_home.py \
@@ -83,10 +86,10 @@ whole-file comparison, use `scripts/build_partial_candidate.py`. See
 `audit/pump_amm/ADMIN_RECOVERY.md` and `audit/pump_amm/LIQUIDITY_RECOVERY.md` and
 `audit/pump_amm/TRADE_V2_RECOVERY.md` and `audit/pump_amm/CREATE_POOL_RECOVERY.md` and `audit/pump_amm/BOOST_RECOVERY.md` and `audit/pump_amm/SWEEP_RECOVERY.md` and `audit/pump_amm/EXTEND_RECOVERY.md` and `audit/pump_amm/CREATOR_FEES_RECOVERY.md` and `audit/pump_amm/CREATOR_REASSIGNMENT_RECOVERY.md` and `audit/pump_amm/INCENTIVES_RECOVERY.md` and `audit/pump_amm/CASHBACK_RECOVERY.md` for recovered constraints and limitations.
 
-The preceding [Pool serializer checkpoint](../../repro/pump_amm/pool-serialization-thirty-seven/README.md) preserves those 37 bodies and reruns all 25 suites / 17,462 comparisons. Both Pool and GlobalConfig complete normalized account-exit bodies match the captured original, including each exit's 24 direct call targets. Its clean main and scratch executables are byte-identical; equality to the original whole binary remains false. The prior [GlobalConfig checkpoint](../../repro/pump_amm/serialization-thirty-seven/README.md) remains preserved. See [the Pool serialization audit](../../audit/pump_amm/POOL_SERIALIZATION_RECOVERY.md) for the source correction and verification limits. Static-only `create_config` source is retained separately and is not promoted.
+The preceding [Pool serializer checkpoint](../../repro/pump_amm/pool-serialization-thirty-seven/README.md) preserves those 37 bodies and reruns all 25 suites / 17,462 comparisons. Both Pool and GlobalConfig complete normalized account-exit bodies match the captured original, including each exit's 24 direct call targets. Its clean main and scratch executables are byte-identical; equality to the original whole binary remains false. The prior [GlobalConfig checkpoint](../../repro/pump_amm/serialization-thirty-seven/README.md) remains preserved. See [the Pool serialization audit](../../audit/pump_amm/POOL_SERIALIZATION_RECOVERY.md) for the source correction and verification limits. At that checkpoint, static-only `create_config` source was retained separately and was not promoted.
 
 
-The current [scalar guard-order checkpoint](../../repro/pump_amm/scalar-guard-order-v144/README.md)
+The preceding [scalar guard-order checkpoint](../../repro/pump_amm/scalar-guard-order-v144/README.md)
 restores `update_fee_config` scalar compared-value diagnostics and the original
 LP → protocol → recipients → creator guard/store order. The unchanged 25-suite
 corpus passes all 17,462 comparisons; stricter Left/Right assertions pass on 191
@@ -96,9 +99,39 @@ The clean main executable is byte-identical to the tested scratch executable;
 for separately from comparison cases. The complete Pool and GlobalConfig exit
 matches and their 24 direct targets each are rechecked at the new candidate locations.
 
-The fee-config handler remains structurally unmatched: 6,096 candidate bytes versus
+At that checkpoint, the fee-config handler remained structurally unmatched: 6,096 candidate bytes versus
 2,912 original bytes, with no standalone 616-byte scalar-setter match. Its actual
 error helper retains constant-specialization differences. Compilation uses pinned
 v1.44 and the unchanged installed SDK performs its separate v1.52 strip phase;
 these are recorded as separate tool identities. Whole-file equality and the audit
 remain incomplete. Earlier checkpoints and failed evidence checks remain preserved.
+
+
+The current [create-config/shared-method checkpoint](../../repro/pump_amm/create-config-shared-methods-v144/README.md)
+adds the reconstructed initializer/context/event source and shares the four original
+GlobalConfig methods between creation and fee updates. The fixed administrator,
+Signer requirement, canonical config/event PDA constraints, System CPI ordering
+and event/exit ordering are preserved. Creation remains static-only: this checkpoint
+adds no positive initializer execution, bounded handler count or test case.
+
+All 25 unchanged suites pass 17,462 comparisons on its executable. Saved-evidence
+checks verify 35,418 signatures, including 150 existing setup transactions counted
+separately, and stricter diagnostics on 191 scalar and 78 recipient rejection cases.
+The recipient method restores the original plain error output without spurious
+Left/Right public-key diagnostics. Its clean main build is bound to the tested
+scratch corpus through complete ELF identity, with all 22 actual inputs recorded.
+
+The complete create wrapper, handler, account parser and event serializer match
+original normalized instruction bodies. The init helper and recipient setter retain
+truthful source-coordinate differences; their immediate callees match completely.
+Three scalar methods remain 608 bytes versus 616 original bytes. The fee-update
+handler is 3,160 bytes versus 2,912 original bytes, and its actual scalar error helper
+retains four specialization differences. The genuine two-caller graph alone does
+not reproduce the original code generation. Eleven compiler panic/format/I/O data
+references remain outside complete recursive data verification.
+
+The complete Pool and GlobalConfig exits, all 24 direct targets each and their
+discriminators still match at this candidate's fresh symbol locations. Compilation
+uses pinned v1.44; the unchanged installed SDK's separate v1.52 strip phase is
+recorded independently. Whole-file equality and the audit remain incomplete.
+All earlier checkpoints and negative evidence remain immutable.

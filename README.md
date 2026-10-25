@@ -26,7 +26,7 @@ The current [Pump48 two-curve checkpoint](repro/pump/tokenkeg-two-curve-fortyeig
 The current Pump `sell_v2` has a confirmed quote transfer-fee minimum-output and event mismatch; its saved passes do not cover that boundary.
 The current PumpSwap checkpoint corrects the earlier zero-fee cashback event mismatch;
 the [signed negative probe](repro/pump_amm/legacy-sell-zero-fee-gap/README.md) preserves evidence against the prior executable.
-The [AMM scalar-guard checkpoint](repro/pump_amm/scalar-guard-order-v144/README.md) restores the original fee guard/store ordering and compared-value errors. All 17,462 existing comparisons and 191 stricter rejection-log checks pass; the handler machine code remains unmatched.
+The current [AMM shared-method checkpoint](repro/pump_amm/create-config-shared-methods-v144/README.md) adds the fixed-admin create_config source and genuine shared setters. Its creation wrapper, handler, context and event serializer match complete normalized original bodies, but initializer success remains unvalidated. All 17,462 existing comparisons, 191 scalar and 78 recipient diagnostic checks pass. The update handler and whole ELF remain unmatched; the bounded count stays 37.
 A separate native accounting fragment is tested against 206
 original Pump sell cases. See [the recovery experiment](docs/FEE_SELECTION.md).
 
@@ -35,7 +35,7 @@ favors platform-tools v1.44 among the tested Fees builds: two complete runtime
 helper bodies match the capture exactly. The current Fees candidate uses that
 compiler. The [previous retained Fees build](repro/pump_fees/all-thirtyone-v144/README.md)
 also passed 112 independent Surfpool comparisons with 224 signed local transactions.
-The current [Fees SharingConfig-module checkpoint](repro/pump_fees/sharing-module-v144/README.md) places the fifth account declaration in its original recorded file, retaining the four earlier `state.rs` accounts. All five codec filenames and account-name literals now match; historical source-line values and whole-ELF identity remain unresolved. The inline initializer, social-v2 and Pubkey checks remain supported, with all 17,441 existing comparisons and ten donation steps passing. Compilation uses v1.44 and the retained SDK strips with v1.52; this does not prove the historical recipe.
+The current [Fees donation-context checkpoint](repro/pump_fees/donation-event-account-v144/README.md) corrects event-authority ownership to AccountInfo. Its complete 8,984-byte parser and 928-byte wrapper now match normalized original bodies; the handler still lacks original log/reserve branches. Existing codec, initializer, social and formatter checks remain supported, with all 17,441 comparisons and ten donation steps passing. Compilation uses v1.44 and the retained SDK strips with v1.52; historical source-line values, recipe and whole-ELF identity remain unresolved.
 
 [Recovery status](docs/RECOVERY.md) separates observed evidence from unresolved work.
 The [completion and remaining-work ledger](docs/COMPLETION.md) enumerates all 150 instruction dispositions: 140 bounded implementations (93.3%), five partial and five unrecovered. Whole-binary completion remains 0/4; this is not a 93.3% overall completion estimate.

@@ -1,3 +1,4 @@
+mod global_config;
 use anchor_lang::Discriminator;
 use anchor_lang::prelude::*;
 #[event]

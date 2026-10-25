@@ -463,7 +463,7 @@
       "instruction": "admin_cto_pool",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_amm/scalar-guard-order-v144/candidate.so",
+      "candidate_artifact": "repro/pump_amm/create-config-shared-methods-v144/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -471,7 +471,7 @@
       "instruction": "admin_update_token_incentives",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_amm/scalar-guard-order-v144/candidate.so",
+      "candidate_artifact": "repro/pump_amm/create-config-shared-methods-v144/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -479,7 +479,7 @@
       "instruction": "boost_buy_and_burn",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_amm/scalar-guard-order-v144/candidate.so",
+      "candidate_artifact": "repro/pump_amm/create-config-shared-methods-v144/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -487,7 +487,7 @@
       "instruction": "buy",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_amm/scalar-guard-order-v144/candidate.so",
+      "candidate_artifact": "repro/pump_amm/create-config-shared-methods-v144/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -495,7 +495,7 @@
       "instruction": "buy_exact_quote_in",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_amm/scalar-guard-order-v144/candidate.so",
+      "candidate_artifact": "repro/pump_amm/create-config-shared-methods-v144/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -503,7 +503,7 @@
       "instruction": "buy_exact_quote_in_v2",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_amm/scalar-guard-order-v144/candidate.so",
+      "candidate_artifact": "repro/pump_amm/create-config-shared-methods-v144/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -511,7 +511,7 @@
       "instruction": "buy_v2",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_amm/scalar-guard-order-v144/candidate.so",
+      "candidate_artifact": "repro/pump_amm/create-config-shared-methods-v144/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -519,7 +519,7 @@
       "instruction": "claim_cashback",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_amm/scalar-guard-order-v144/candidate.so",
+      "candidate_artifact": "repro/pump_amm/create-config-shared-methods-v144/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -527,7 +527,7 @@
       "instruction": "claim_token_incentives",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_amm/scalar-guard-order-v144/candidate.so",
+      "candidate_artifact": "repro/pump_amm/create-config-shared-methods-v144/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -535,7 +535,7 @@
       "instruction": "close_user_volume_accumulator",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_amm/scalar-guard-order-v144/candidate.so",
+      "candidate_artifact": "repro/pump_amm/create-config-shared-methods-v144/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -543,15 +543,15 @@
       "instruction": "collect_coin_creator_fee",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_amm/scalar-guard-order-v144/candidate.so",
+      "candidate_artifact": "repro/pump_amm/create-config-shared-methods-v144/candidate.so",
       "full_byte_equality": false
     },
     {
       "program": "pump_amm",
       "instruction": "create_config",
       "status": "unrecovered",
-      "limitation": null,
-      "candidate_artifact": "repro/pump_amm/scalar-guard-order-v144/candidate.so",
+      "limitation": "Static-only source implementation and compiled body/context/event comparisons are present; no authentic successful initializer replay. Not counted among bounded runtime implementations; transitive targets/data and full ELF remain unmatched.",
+      "candidate_artifact": "repro/pump_amm/create-config-shared-methods-v144/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -559,7 +559,7 @@
       "instruction": "create_pool",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_amm/scalar-guard-order-v144/candidate.so",
+      "candidate_artifact": "repro/pump_amm/create-config-shared-methods-v144/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -567,7 +567,7 @@
       "instruction": "deposit",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_amm/scalar-guard-order-v144/candidate.so",
+      "candidate_artifact": "repro/pump_amm/create-config-shared-methods-v144/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -575,7 +575,7 @@
       "instruction": "disable",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_amm/scalar-guard-order-v144/candidate.so",
+      "candidate_artifact": "repro/pump_amm/create-config-shared-methods-v144/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -583,7 +583,7 @@
       "instruction": "extend_account",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_amm/scalar-guard-order-v144/candidate.so",
+      "candidate_artifact": "repro/pump_amm/create-config-shared-methods-v144/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -591,7 +591,7 @@
       "instruction": "init_boost",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_amm/scalar-guard-order-v144/candidate.so",
+      "candidate_artifact": "repro/pump_amm/create-config-shared-methods-v144/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -599,7 +599,7 @@
       "instruction": "init_user_volume_accumulator",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_amm/scalar-guard-order-v144/candidate.so",
+      "candidate_artifact": "repro/pump_amm/create-config-shared-methods-v144/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -607,7 +607,7 @@
       "instruction": "migrate_pool_coin_creator",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_amm/scalar-guard-order-v144/candidate.so",
+      "candidate_artifact": "repro/pump_amm/create-config-shared-methods-v144/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -615,7 +615,7 @@
       "instruction": "multi_hop_swap",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_amm/scalar-guard-order-v144/candidate.so",
+      "candidate_artifact": "repro/pump_amm/create-config-shared-methods-v144/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -623,7 +623,7 @@
       "instruction": "sell",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_amm/scalar-guard-order-v144/candidate.so",
+      "candidate_artifact": "repro/pump_amm/create-config-shared-methods-v144/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -631,7 +631,7 @@
       "instruction": "sell_v2",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_amm/scalar-guard-order-v144/candidate.so",
+      "candidate_artifact": "repro/pump_amm/create-config-shared-methods-v144/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -639,7 +639,7 @@
       "instruction": "set_boost_authority",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_amm/scalar-guard-order-v144/candidate.so",
+      "candidate_artifact": "repro/pump_amm/create-config-shared-methods-v144/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -647,7 +647,7 @@
       "instruction": "set_coin_creator",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_amm/scalar-guard-order-v144/candidate.so",
+      "candidate_artifact": "repro/pump_amm/create-config-shared-methods-v144/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -655,7 +655,7 @@
       "instruction": "set_reserved_fee_recipients",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_amm/scalar-guard-order-v144/candidate.so",
+      "candidate_artifact": "repro/pump_amm/create-config-shared-methods-v144/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -663,7 +663,7 @@
       "instruction": "sweep_creator_fee",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_amm/scalar-guard-order-v144/candidate.so",
+      "candidate_artifact": "repro/pump_amm/create-config-shared-methods-v144/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -671,7 +671,7 @@
       "instruction": "sweep_protocol_fee",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_amm/scalar-guard-order-v144/candidate.so",
+      "candidate_artifact": "repro/pump_amm/create-config-shared-methods-v144/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -679,7 +679,7 @@
       "instruction": "sync_user_volume_accumulator",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_amm/scalar-guard-order-v144/candidate.so",
+      "candidate_artifact": "repro/pump_amm/create-config-shared-methods-v144/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -687,7 +687,7 @@
       "instruction": "toggle_boost",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_amm/scalar-guard-order-v144/candidate.so",
+      "candidate_artifact": "repro/pump_amm/create-config-shared-methods-v144/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -695,7 +695,7 @@
       "instruction": "toggle_cashback_enabled",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_amm/scalar-guard-order-v144/candidate.so",
+      "candidate_artifact": "repro/pump_amm/create-config-shared-methods-v144/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -703,7 +703,7 @@
       "instruction": "toggle_mayhem_mode",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_amm/scalar-guard-order-v144/candidate.so",
+      "candidate_artifact": "repro/pump_amm/create-config-shared-methods-v144/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -711,7 +711,7 @@
       "instruction": "transfer_creator_fees_to_pump",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_amm/scalar-guard-order-v144/candidate.so",
+      "candidate_artifact": "repro/pump_amm/create-config-shared-methods-v144/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -719,7 +719,7 @@
       "instruction": "transfer_creator_fees_to_pump_v2",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_amm/scalar-guard-order-v144/candidate.so",
+      "candidate_artifact": "repro/pump_amm/create-config-shared-methods-v144/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -727,7 +727,7 @@
       "instruction": "update_admin",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_amm/scalar-guard-order-v144/candidate.so",
+      "candidate_artifact": "repro/pump_amm/create-config-shared-methods-v144/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -735,7 +735,7 @@
       "instruction": "update_buyback_config",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_amm/scalar-guard-order-v144/candidate.so",
+      "candidate_artifact": "repro/pump_amm/create-config-shared-methods-v144/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -743,7 +743,7 @@
       "instruction": "update_creator_fee_config",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_amm/scalar-guard-order-v144/candidate.so",
+      "candidate_artifact": "repro/pump_amm/create-config-shared-methods-v144/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -751,7 +751,7 @@
       "instruction": "update_fee_config",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_amm/scalar-guard-order-v144/candidate.so",
+      "candidate_artifact": "repro/pump_amm/create-config-shared-methods-v144/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -759,7 +759,7 @@
       "instruction": "withdraw",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_amm/scalar-guard-order-v144/candidate.so",
+      "candidate_artifact": "repro/pump_amm/create-config-shared-methods-v144/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -767,7 +767,7 @@
       "instruction": "admin_cto_sharing_config",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_fees/sharing-module-v144/pump_fees_candidate.so",
+      "candidate_artifact": "repro/pump_fees/donation-event-account-v144/pump_fees_candidate.so",
       "full_byte_equality": false
     },
     {
@@ -775,7 +775,7 @@
       "instruction": "claim_social_fee_pda",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_fees/sharing-module-v144/pump_fees_candidate.so",
+      "candidate_artifact": "repro/pump_fees/donation-event-account-v144/pump_fees_candidate.so",
       "full_byte_equality": false
     },
     {
@@ -783,7 +783,7 @@
       "instruction": "claim_social_fee_pda_v2",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_fees/sharing-module-v144/pump_fees_candidate.so",
+      "candidate_artifact": "repro/pump_fees/donation-event-account-v144/pump_fees_candidate.so",
       "full_byte_equality": false
     },
     {
@@ -791,7 +791,7 @@
       "instruction": "crank_donation_fee_pda",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_fees/sharing-module-v144/pump_fees_candidate.so",
+      "candidate_artifact": "repro/pump_fees/donation-event-account-v144/pump_fees_candidate.so",
       "full_byte_equality": false
     },
     {
@@ -799,7 +799,7 @@
       "instruction": "create_donation_fee_pda",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_fees/sharing-module-v144/pump_fees_candidate.so",
+      "candidate_artifact": "repro/pump_fees/donation-event-account-v144/pump_fees_candidate.so",
       "full_byte_equality": false
     },
     {
@@ -807,7 +807,7 @@
       "instruction": "create_fee_sharing_config",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_fees/sharing-module-v144/pump_fees_candidate.so",
+      "candidate_artifact": "repro/pump_fees/donation-event-account-v144/pump_fees_candidate.so",
       "full_byte_equality": false
     },
     {
@@ -815,7 +815,7 @@
       "instruction": "create_social_fee_pda",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_fees/sharing-module-v144/pump_fees_candidate.so",
+      "candidate_artifact": "repro/pump_fees/donation-event-account-v144/pump_fees_candidate.so",
       "full_byte_equality": false
     },
     {
@@ -823,7 +823,7 @@
       "instruction": "extend_fee_config",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_fees/sharing-module-v144/pump_fees_candidate.so",
+      "candidate_artifact": "repro/pump_fees/donation-event-account-v144/pump_fees_candidate.so",
       "full_byte_equality": false
     },
     {
@@ -831,7 +831,7 @@
       "instruction": "get_fees",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_fees/sharing-module-v144/pump_fees_candidate.so",
+      "candidate_artifact": "repro/pump_fees/donation-event-account-v144/pump_fees_candidate.so",
       "full_byte_equality": false
     },
     {
@@ -839,7 +839,7 @@
       "instruction": "get_fees_with_quote_mint",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_fees/sharing-module-v144/pump_fees_candidate.so",
+      "candidate_artifact": "repro/pump_fees/donation-event-account-v144/pump_fees_candidate.so",
       "full_byte_equality": false
     },
     {
@@ -847,7 +847,7 @@
       "instruction": "initialize_buyback",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_fees/sharing-module-v144/pump_fees_candidate.so",
+      "candidate_artifact": "repro/pump_fees/donation-event-account-v144/pump_fees_candidate.so",
       "full_byte_equality": false
     },
     {
@@ -855,7 +855,7 @@
       "instruction": "initialize_fee_config",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_fees/sharing-module-v144/pump_fees_candidate.so",
+      "candidate_artifact": "repro/pump_fees/donation-event-account-v144/pump_fees_candidate.so",
       "full_byte_equality": false
     },
     {
@@ -863,7 +863,7 @@
       "instruction": "initialize_fee_program_global",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_fees/sharing-module-v144/pump_fees_candidate.so",
+      "candidate_artifact": "repro/pump_fees/donation-event-account-v144/pump_fees_candidate.so",
       "full_byte_equality": false
     },
     {
@@ -871,7 +871,7 @@
       "instruction": "revoke_fee_sharing_authority",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_fees/sharing-module-v144/pump_fees_candidate.so",
+      "candidate_artifact": "repro/pump_fees/donation-event-account-v144/pump_fees_candidate.so",
       "full_byte_equality": false
     },
     {
@@ -879,7 +879,7 @@
       "instruction": "set_authority",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_fees/sharing-module-v144/pump_fees_candidate.so",
+      "candidate_artifact": "repro/pump_fees/donation-event-account-v144/pump_fees_candidate.so",
       "full_byte_equality": false
     },
     {
@@ -887,7 +887,7 @@
       "instruction": "set_claim_rate_limit",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_fees/sharing-module-v144/pump_fees_candidate.so",
+      "candidate_artifact": "repro/pump_fees/donation-event-account-v144/pump_fees_candidate.so",
       "full_byte_equality": false
     },
     {
@@ -895,7 +895,7 @@
       "instruction": "set_disable_flags",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_fees/sharing-module-v144/pump_fees_candidate.so",
+      "candidate_artifact": "repro/pump_fees/donation-event-account-v144/pump_fees_candidate.so",
       "full_byte_equality": false
     },
     {
@@ -903,7 +903,7 @@
       "instruction": "set_exotic_flat_fees",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_fees/sharing-module-v144/pump_fees_candidate.so",
+      "candidate_artifact": "repro/pump_fees/donation-event-account-v144/pump_fees_candidate.so",
       "full_byte_equality": false
     },
     {
@@ -911,7 +911,7 @@
       "instruction": "set_social_claim_authority",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_fees/sharing-module-v144/pump_fees_candidate.so",
+      "candidate_artifact": "repro/pump_fees/donation-event-account-v144/pump_fees_candidate.so",
       "full_byte_equality": false
     },
     {
@@ -919,7 +919,7 @@
       "instruction": "sweep_buyback",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_fees/sharing-module-v144/pump_fees_candidate.so",
+      "candidate_artifact": "repro/pump_fees/donation-event-account-v144/pump_fees_candidate.so",
       "full_byte_equality": false
     },
     {
@@ -927,7 +927,7 @@
       "instruction": "transfer_fee_sharing_authority",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_fees/sharing-module-v144/pump_fees_candidate.so",
+      "candidate_artifact": "repro/pump_fees/donation-event-account-v144/pump_fees_candidate.so",
       "full_byte_equality": false
     },
     {
@@ -935,7 +935,7 @@
       "instruction": "update_admin",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_fees/sharing-module-v144/pump_fees_candidate.so",
+      "candidate_artifact": "repro/pump_fees/donation-event-account-v144/pump_fees_candidate.so",
       "full_byte_equality": false
     },
     {
@@ -943,7 +943,7 @@
       "instruction": "update_buyback_authority",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_fees/sharing-module-v144/pump_fees_candidate.so",
+      "candidate_artifact": "repro/pump_fees/donation-event-account-v144/pump_fees_candidate.so",
       "full_byte_equality": false
     },
     {
@@ -951,7 +951,7 @@
       "instruction": "update_buyback_claim_rate_limit",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_fees/sharing-module-v144/pump_fees_candidate.so",
+      "candidate_artifact": "repro/pump_fees/donation-event-account-v144/pump_fees_candidate.so",
       "full_byte_equality": false
     },
     {
@@ -959,7 +959,7 @@
       "instruction": "update_fee_config",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_fees/sharing-module-v144/pump_fees_candidate.so",
+      "candidate_artifact": "repro/pump_fees/donation-event-account-v144/pump_fees_candidate.so",
       "full_byte_equality": false
     },
     {
@@ -967,7 +967,7 @@
       "instruction": "update_fee_shares",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_fees/sharing-module-v144/pump_fees_candidate.so",
+      "candidate_artifact": "repro/pump_fees/donation-event-account-v144/pump_fees_candidate.so",
       "full_byte_equality": false
     },
     {
@@ -975,7 +975,7 @@
       "instruction": "update_fee_shares_v2",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_fees/sharing-module-v144/pump_fees_candidate.so",
+      "candidate_artifact": "repro/pump_fees/donation-event-account-v144/pump_fees_candidate.so",
       "full_byte_equality": false
     },
     {
@@ -983,7 +983,7 @@
       "instruction": "update_stable_fee_config",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_fees/sharing-module-v144/pump_fees_candidate.so",
+      "candidate_artifact": "repro/pump_fees/donation-event-account-v144/pump_fees_candidate.so",
       "full_byte_equality": false
     },
     {
@@ -991,7 +991,7 @@
       "instruction": "upsert_fee_tiers",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_fees/sharing-module-v144/pump_fees_candidate.so",
+      "candidate_artifact": "repro/pump_fees/donation-event-account-v144/pump_fees_candidate.so",
       "full_byte_equality": false
     },
     {
@@ -999,7 +999,7 @@
       "instruction": "upsert_stable_fee_tiers",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_fees/sharing-module-v144/pump_fees_candidate.so",
+      "candidate_artifact": "repro/pump_fees/donation-event-account-v144/pump_fees_candidate.so",
       "full_byte_equality": false
     },
     {
@@ -1007,7 +1007,7 @@
       "instruction": "withdraw",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_fees/sharing-module-v144/pump_fees_candidate.so",
+      "candidate_artifact": "repro/pump_fees/donation-event-account-v144/pump_fees_candidate.so",
       "full_byte_equality": false
     },
     {
@@ -1223,16 +1223,16 @@
         "comparison_report": "repro/pump/tokenkeg-two-curve-fortyeight/build-comparison.json"
       },
       "pump_amm": {
-        "candidate_artifact": "repro/pump_amm/scalar-guard-order-v144/candidate.so",
-        "candidate_sha256": "a6dbd0dc24e28a9459e50858136a2cfabb59fb8aa8399d58499d047a76ec291f",
+        "candidate_artifact": "repro/pump_amm/create-config-shared-methods-v144/candidate.so",
+        "candidate_sha256": "807010828fe3b4124b5e20c34ca627582e1718e9c5849bf0c15309983d4088b2",
         "differential_comparisons": 17462,
-        "comparison_report": "repro/pump_amm/scalar-guard-order-v144/build-comparison.json"
+        "comparison_report": "repro/pump_amm/create-config-shared-methods-v144/build-comparison.json"
       },
       "pump_fees": {
-        "candidate_artifact": "repro/pump_fees/sharing-module-v144/pump_fees_candidate.so",
-        "candidate_sha256": "8cce74a5191b286eaa10af59c02c9ee16d3853be214c5e9b1132e50bba15ef87",
+        "candidate_artifact": "repro/pump_fees/donation-event-account-v144/pump_fees_candidate.so",
+        "candidate_sha256": "8f89dbeb0eaef9490a518a97adb50dd8cbf0a21984a2bfca343d6ff5c2fe6c8e",
         "differential_comparisons": 17441,
-        "comparison_report": "repro/pump_fees/sharing-module-v144/build-comparison.json"
+        "comparison_report": "repro/pump_fees/donation-event-account-v144/build-comparison.json"
       },
       "mayhem": {
         "candidate_artifact": "repro/mayhem/twentyfour/mayhem_recovered.so",

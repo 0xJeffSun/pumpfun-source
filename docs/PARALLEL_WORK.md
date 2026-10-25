@@ -73,3 +73,26 @@ All four composition/route assignments subsequently completed, raising the total
 
 
 The SharingConfig review needs its [portable verification wrapper](../repro/ci/SHARING_REVIEW_VERIFICATION.md) across Python environments: the initial exact traceback comparison embedded interpreter paths. The correction retains every negative and source/signature check while separately preserving raw diagnostics. Root independently passed it with the repository virtual environment; no program source, executable or regression receipt changed.
+
+
+## Ordinary route and nested-creation closure
+
+[Five further CLI workers](../repro/parallel-work/2026-10-25/route-closure-followups/README.md) started from published checkpoint `4d3c19e`: fee-table decoding, Tokenkeg vault admission, Tokenkeg transfers, event wire/CPI dependencies and nested creation admission. All five processes and turn starts were observed. Together with 41 completed CLI tasks, this is 46 launched assignments; launch is not completion or accepted reconstruction. Native workers separately own the AMM initializer source hypothesis, Fees account-context source hypothesis and current public-source audit applicability. No global/native concurrency setting changed.
+
+The [five-helper Pump runtime ledger](../repro/pump/wide-runtime-attribution/README.md) independently matches 5,960 complete bytes under exact internal-call mapping: three bodies are raw-equal, the other two differ only at six call-displacement bytes, and all twelve calls close inside the matched set. This complements the [manual arithmetic contracts](../repro/parallel-work/2026-10-25/composition-results/pump_route_wide/REPORT.md); neither package supplies authenticated historical compiler-builtins source/build linkage or complete surrounding route behavior. Whole-program equality and handler counts remain unchanged.
+
+
+The reviewed [AMM create-config proposal](../repro/pump_amm/create-config-source-proposal/REPORT.md) adds the genuine fixed-admin context and shared configuration methods; the [Fees donation account proposal](../repro/pump_fees/donation-event-account-proposal/REPORT.md) changes only its event-authority field ownership. These immutable prebuild packages contain source proposals and static evidence. Separate workers are testing one pinned scratch build each; neither proposal is promoted to the current main program by this publication. The AMM initializer still lacks an authentic successful replay. Fees still has unimplemented original log/reserve branches beyond the one-field proposal.
+
+
+All five route-closure assignments subsequently completed: **46 CLI tasks are complete**, with [five reviewed packages](../repro/parallel-work/2026-10-25/route-closure-results/README.md). Their new contracts cover FeeConfig decoding, ordinary vault checks/transfer interfaces, event wire/clone effects and walk-local nested-creation rules. The trailing TradeEvent u64 now has a bounded route interpretation: quote amount removed by the adapter, zero on ordinary Tokenkeg; historical naming and other modes remain open.
+
+[Five next CLI assignments](../repro/parallel-work/2026-10-25/context-closure-followups/README.md) started on complete route context, nested create context, native settlement, donation business branches and the AMM/Fees return-data contract. All five starts and live processes were observed. This brings launched CLI assignments to **51**, with 46 completed at this checkpoint.
+
+The [public-review applicability ledger](../repro/ci/public-audit-applicability-4d3c19e/README.md) reconciles 422 function dispositions, 112 contexts, 25 observations and 1,185 supporting references from517d77d to frozen4d3c19e. It directly rereviews the changed AMM setter and five Fees declaration moves; nine split citations remain explicit. No observations are resolved. Its live-source check detects the later authorized AMM promotion, so this historical review is not presented as clearance of newer source.
+
+
+The AMM and Fees source proposals subsequently passed one isolated scratch build and one clean main build each. Current [AMM80701082](../repro/pump_amm/create-config-shared-methods-v144/README.md) and [Fees8f89dbeb](../repro/pump_fees/donation-event-account-v144/README.md) match their own tested scratch binaries exactly, with unchanged regression totals and explicit original-binary differences. Their prebuild proposals above remain immutable historical records. The AMM initializer remains static-only, and the Fees donation business gaps remain open.
+
+
+[Hosted run40169544656](https://github.com/lalalune/pumpfun-source/actions/runs/40169544656) passed all twelve jobs at4d3c19e. The newer [independent AMM/Fees acceptance review](../repro/ci/create-donation-acceptance-review/README.md) pins both final publication packages, recomputes raw bodies/signed targets/literals and checks their source changes, receipts and signature guards. Root independently passed both package/current-source gates and the all-four recovered-build verifier. Hosted validation of a subsequent publication remains separate from4d3c19e's completed run.
