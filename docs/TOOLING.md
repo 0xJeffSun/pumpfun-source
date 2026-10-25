@@ -20,7 +20,7 @@ The validation script regenerates `audit/local-validation.json`. Evidence verifi
 is distinct from reconstruction verification. Evidence CI checks captures, source manifests,
 saved candidate executables and bounded regressions, and builds native fragments. The
 separate dependency workflow builds selected pinned dependency candidates. Routine
-evidence CI does not clean-build all four recovered SBF programs.
+evidence CI does not clean-build all four recovered SBF programs. The verification matrix allows up to twelve concurrent jobs: four disjoint Pump groups, three Mayhem groups, and the five other checks. Every previous differential command remains represented; Pump groups retain receipt hash, runner-script and candidate immutability, and mismatch checks. The partial curve runner has an explicit 56-case failure gate. Available hosted concurrency and fixture cost determine wall time.
 
 ## Capture a new deployment snapshot
 

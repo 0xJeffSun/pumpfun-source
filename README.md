@@ -18,11 +18,11 @@ A partial Rust fee-tier selector now matches the original instruction sequence e
 for unresolved relocations with platform-tools v1.43, and passes 1,215 local
 differential cases. Recovered quote-mint routing additionally passes 9,428 original-program
 queries, but its compiled instructions still differ. All 31 Fees instruction bodies pass 17,441 SBF comparison receipts; forty-eight recovered Pump
-handlers plus four partial creation/trading paths pass 9,161. Thirty-seven PumpSwap
+handlers plus five partial creation/trading paths pass 9,217. Thirty-seven PumpSwap
 handlers pass 17,462 comparisons, and twenty-four Mayhem handlers pass 9,595. These
-53,659 saved comparisons cover 140 implemented handlers and four partial paths, not the
+53,715 saved comparisons cover 140 implemented handlers and five partial paths, not the
 complete programs. The Fees total includes 69 repeated-input checks with stronger log or signature assertions. Two Fees handlers are deprecated dispatches that always reject.
-The current [Pump48 checkpoint](repro/pump/quote-control-fortyeight/README.md) adds six quote-control handlers and retains the stored creator-fee correction. It passes 1,024 additional Surfpool comparisons with 2,048 signed transactions; its focused quote-control suite contributes 507 comparisons to the total above.
+The current [Pump48 checkpoint](repro/pump/native-curve-partial-fortyeight/README.md) retains the six quote-control handlers and adds a bounded native/legacy multi-hop branch. It passes 1,024 additional Surfpool comparisons with 2,048 signed transactions. The new 56-case suite includes 50 comparisons reaching Pump through captured AMM calls, six caller rejections and 11 successes.
 The current Pump `sell_v2` has a confirmed quote transfer-fee minimum-output and event mismatch; its saved passes do not cover that boundary.
 The current PumpSwap checkpoint corrects the earlier zero-fee cashback event mismatch;
 the [signed negative probe](repro/pump_amm/legacy-sell-zero-fee-gap/README.md) preserves evidence against the prior executable.
