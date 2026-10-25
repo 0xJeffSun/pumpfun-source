@@ -13,7 +13,8 @@ work/test-env/bin/python scripts/prepare_locked_cargo_home.py \
   --lockfile programs/pump-amm/Cargo.lock --output work/amm-replay-cargo-home
 CARGO_HOME="$PWD/work/amm-replay-cargo-home" work/test-env/bin/python scripts/build_partial_candidate.py \
   --manifest programs/pump-amm/Cargo.toml --program pump_amm \
-  --artifact-name pump_amm_recovered.so --tools-version v1.44 --output work/amm-replay-build
+  --artifact-name pump_amm_recovered.so --tools-version v1.44 \
+  --extra-input programs/pump-amm/vendor/solana-pubkey --output work/amm-replay-build
 work/test-env/bin/python scripts/pump_amm_admin_differential.py \
   --candidate work/amm-replay-build/artifacts/pump_amm_recovered.so \
   --output work/amm-replay-admin.json
@@ -169,3 +170,23 @@ The preceding AMM is the [destination-rent checkpoint](../../repro/pump_amm/dest
 ## Accumulator mutation ordering checkpoint
 
 The [accumulator-order checkpoint](../../repro/pump_amm/accumulator-order-v144/README.md) moves only the user-field assignment in `init_user_volume_accumulator` after successful `Clock::get()`, matching the original instruction order. The isolated executable is `8ce5f958…` (1,199,072 bytes). The 25 unchanged suites passed 17,462 comparisons; saved evidence verifies 35,418 signatures, including the 150 existing setup transactions. No case or initializer-success fixture was added. The complete before/after inventory remains at 785 original and 653 candidate windows, with 310 original windows unmatched. The source-order improvement does not establish a committed-state difference on a reverted transaction, historical source spelling, transitive closure, or whole ELF identity.
+
+
+## Restored base58 formatter
+
+The [formatter-restoration checkpoint](../../repro/pump_amm/formatter-restoration-v144/README.md)
+restores the stack-buffer base58 algorithm and checked UTF-8 conversion supported by
+the original renderer. The complete solana-pubkey 2.4.0 archive is vendored with
+only the reviewed formatter/import and bs58 dependency changes. Package versions
+and all other lockfile records remain unchanged; the original dependency revision
+is still unresolved. Third-party attribution is in THIRD_PARTY_NOTICES.md.
+
+The clean main executable and symbol ELF exactly equal the tested scratch build.
+The executable is 1,196,544 bytes, SHA256
+`d3dacf1bd54e0b7b825557d01adfe158bc229753fb4b945618c5eabf2bdb1bab`.
+All 25 unchanged suites passed 17,462 comparisons; saved checks verify 35,418
+signatures. Four additional original function windows match under the existing
+normalization, including the entire 1,520-byte renderer and its ten immediate
+target bodies. There remain 306 unmatched original windows. Raw binary equality,
+recursive data and indirect-call closure, authentic initializer success and the
+security audit remain incomplete. Diagnostic source locations remain truthful.

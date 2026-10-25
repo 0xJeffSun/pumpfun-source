@@ -428,3 +428,6 @@ Relay build07 implements the recovered owned error model and passes all twelve u
 ## Historical source-path experiment
 
 The [controlled Pump48 path-remap experiment](../repro/pump/path-remap-fortyeight/README.md) preserves its original source snapshot and compiler inputs. It matches sampled path encoding, not executable bytes or the historical build recipe. Its candidate is historical and is not the merged-source candidate.
+## Layered pass 12: AMM formatter dependency source
+
+[Pass 12](../repro/layered-passes/pass-12/README.md) integrates the evidenced stack-buffer base58/checked-UTF8 formatter through a complete vendored crate and narrowly reviewed source patch. Original package identity remains unresolved. All other versions and lock records remain unchanged. The single main build equals the separately tested executable and symbols; all prior corpus counts and remaining diagnostic limits persist.

@@ -37,7 +37,7 @@ The current [Fees V2 caller checkpoint](repro/pump_fees/v2-caller-v144/README.md
 
 The current [Mayhem swap-sell typed-error checkpoint](repro/mayhem/sell-result-error-twentyfour/README.md) restores the typed zero-divisor error in SellPumpSwap, following the prior buy correction. All 9,595 functional comparisons pass; 61 diagnostic rows remain explicit. Saved verification checks 13,284 retained transaction strings and 26,500 signatures; 19,190 remains the recorded/derived signed-execution count. Both clean main builds equal their tested scratch executables and symbols.
 
-[Recovery status](docs/RECOVERY.md) separates observed evidence from unresolved work. The [eleventh layered pass](repro/layered-passes/pass-11/README.md) records the latest fixes, complete byte differences, function/call/data inventories and the next source obligations.
+[Recovery status](docs/RECOVERY.md) separates observed evidence from unresolved work. The [twelfth layered pass](repro/layered-passes/pass-12/README.md) records the latest fixes, complete byte differences, function/call/data inventories and the next source obligations.
 The [completion and remaining-work ledger](docs/COMPLETION.md) enumerates all 150 instruction dispositions: 140 bounded implementations (93.3%), five partial and five unrecovered. Whole-binary completion remains 0/4; this is not a 93.3% overall completion estimate.
 [Parallel worker results and concurrency configuration](docs/PARALLEL_WORK.md) document the completed CLI research waves, focused follow-ups and configured concurrency.
 [Tooling](docs/TOOLING.md) covers recapture, disassembly and strict candidate comparison.
@@ -61,3 +61,5 @@ The [integrated research lab](research/README.md) supplies pinned Pump.fun lifec
 fixtures, signed offline replay harnesses, receipt verifiers and an explicitly
 incomplete 31-handler Fees scaffold. Its import provenance and validation status
 are separate from source-reconstruction claims.
+
+The current [AMM formatter checkpoint](repro/pump_amm/formatter-restoration-v144/README.md) restores the evidenced stack-buffer base58 and checked UTF-8 algorithm in a narrowly patched dependency. All 17,462 unchanged comparisons and 35,418 saved signatures pass; the clean main build equals scratch. Four more original function windows match under the existing normalization, leaving 306 unmatched. Full original byte identity and historical dependency identity remain unresolved.

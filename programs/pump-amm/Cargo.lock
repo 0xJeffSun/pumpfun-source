@@ -1888,11 +1888,10 @@ dependencies = [
 [[package]]
 name = "solana-pubkey"
 version = "2.4.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9b62adb9c3261a052ca1f999398c388f1daf558a1b492f60a6d9e64857db4ff1"
 dependencies = [
  "borsh 0.10.4",
  "borsh 1.8.1",
+ "bs58",
  "bytemuck",
  "bytemuck_derive",
  "curve25519-dalek",
