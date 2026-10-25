@@ -16,3 +16,12 @@ repro/pump/metaplex-candidate-build-13-review/expected-source.patch -whitespace
 repro/pump/metaplex-candidate-build-13-review/build13/source.patch -whitespace
 repro/pump/metaplex-utilize-unified-guard-source-recovery/source.patch -whitespace
 repro/pump/metaplex-utilize-unified-guard-source-recovery/proof/single-change.patch -whitespace
+repro/pump/metaplex-candidate-build-14-review/expected-source.patch -whitespace
+repro/pump/metaplex-candidate-build-14-review/build14/source.patch -whitespace
+repro/pump/metaplex-candidate-build-14-review/source-proof/single-change.patch -whitespace
+repro/pump/metaplex-authentic-source-history/utilize-authentic-history.diff -whitespace
+repro/pump/metaplex-authentic-source-history/public-source/** -whitespace
+repro/identity-audit/2026-10-25/mayhem-v153/v1.53-build.sh -whitespace
+repro/identity-audit/2026-10-25/mayhem-v154/v1.54-build.sh -whitespace
+repro/identity-audit/2026-10-25/relay-v147/primary-source/platform-build.sh -whitespace
+repro/pump/metaplex-candidate-build-14-review/hosted-job.log -whitespace
