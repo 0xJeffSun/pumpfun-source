@@ -1,5 +1,6 @@
 pub mod multi_hop_curve;
-pub use multi_hop_curve::*;
+pub mod multi_hop_curve_swap;
+pub use multi_hop_curve_swap::*;
 pub mod global_init;
 pub use global_init::*;
 pub mod buy_v2;
@@ -60,7 +61,16 @@ declare_id!("6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P");
 #[program]
 pub mod pump_recovered {
     use super::*;
-    pub fn multi_hop_curve_swap<'info>(ctx:Context<'_,'_,'info,'info,MultiHopCurve<'info>>,amount_in:u64,hop_fees:Vec<u8>)->Result<CurveRunResult>{multi_hop_curve::execute(ctx,amount_in,hop_fees)}
+    pub fn multi_hop_curve_swap<'info>(ctx: Context<'_, '_, 'info, 'info, MultiHopCurveSwap<'info>>, amount_in: u64, hop_fees: Vec<u8>) -> Result<CurveRunResult> {
+        if ctx.remaining_accounts.len() == 5 && ctx.remaining_accounts[0].owner == &anchor_spl::token::ID {
+            let fee_data = ctx.accounts.fee_config.try_borrow_data()?;
+            LegacyFeeConfig::try_deserialize(&mut &fee_data[..])?;
+            drop(fee_data);
+            multi_hop_curve::execute(ctx, amount_in, hop_fees)
+        } else {
+            multi_hop_curve_swap::execute(ctx, amount_in, hop_fees)
+        }
+    }
     pub fn initialize_quote_control(ctx: Context<InitializeQuoteControl>) -> Result<()> { quote_control::initialize_quote_control(ctx) }
     pub fn set_quote_control_admin(ctx: Context<SetQuoteControlAdmin>, new_admin: Pubkey) -> Result<()> { quote_control::set_quote_control_admin(ctx, new_admin) }
     pub fn set_quote_control_reserves_admin(ctx: Context<SetQuoteControlReservesAdmin>, new_reserves_admin: Pubkey) -> Result<()> { quote_control::set_quote_control_reserves_admin(ctx, new_reserves_admin) }

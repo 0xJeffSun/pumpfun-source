@@ -4,27 +4,12 @@
 use anchor_lang::prelude::*;
 use anchor_lang::solana_program::{instruction::{Instruction,AccountMeta},program::invoke_signed};
 use anchor_spl::{token::{Token,SyncNative},token_2022::Token2022,token_interface::{self,Mint,TokenAccount,TransferChecked}};
-use crate::{Global,PumpError,LegacyFeeConfig};
+use crate::PumpError;
+use crate::multi_hop_curve_swap::{MultiHopCurveSwap, CurveRunResult};
 use crate::trade_types::{BondingCurve,FeeConfig,Fees,TradeEvent};
 const FEES:Pubkey=anchor_lang::solana_program::pubkey!("pfeeUxB6jkeY1Hxd7CsFCAjcbHA9rWtchMGdZ6VojVZ");
 const AMM:Pubkey=anchor_lang::solana_program::pubkey!("pAMMBay6oceH9fJKBRHGP5D4bD4sWpmSwMn52FMfXEA");
 const WSOL:Pubkey=anchor_spl::token::spl_token::native_mint::ID;
-#[event_cpi]
-#[derive(Accounts)]
-pub struct MultiHopCurve<'info>{
- #[account(seeds=[b"global"],bump)]pub global:Box<Account<'info,Global>>,
- #[account(seeds=[b"fee_config",crate::ID.as_ref()],bump=fee_config.to_account_info().try_borrow_data()?[8],seeds::program=FEES)]pub fee_config:Box<Account<'info,LegacyFeeConfig>>,
- #[account(seeds=[b"global_config"],bump,seeds::program=AMM)]pub pump_amm_global_config:Signer<'info>,
- #[account(mut)]pub user:Signer<'info>,
- pub source_authority:Signer<'info>,
- #[account(mut)]pub source:Box<InterfaceAccount<'info,TokenAccount>>,
- #[account(mut)]pub destination:Box<InterfaceAccount<'info,TokenAccount>>,
- /// CHECK: Native recipient membership and its canonical WSOL ATA are checked.
- #[account(mut)]pub buyback_fee_recipient:UncheckedAccount<'info>,
- pub token_program:Program<'info,Token>,
- pub token_2022_program:Program<'info,Token2022>,
- pub system_program:Program<'info,System>,
-}
 #[derive(Accounts)]
 pub struct CurveHop<'info>{
  pub base_mint:Box<InterfaceAccount<'info,Mint>>,
@@ -36,13 +21,12 @@ pub struct CurveHop<'info>{
  /// CHECK: Address and native quote branch checked before transfer.
  #[account(mut)]pub quote_vault:UncheckedAccount<'info>,
 }
-#[derive(AnchorSerialize,AnchorDeserialize,Clone)]
-pub struct CurveRunResult{pub amount_out:u64,pub buyback_fee:u64}
+fn token_mint(info:&AccountInfo)->Result<Pubkey>{let data=info.try_borrow_data()?;require!(data.len()>=32,PumpError::AccountTypeNotSupported);Ok(Pubkey::new_from_array(data[..32].try_into().unwrap()))}
 fn add(a:u64,b:u64)->Result<u64>{a.checked_add(b).ok_or(error!(PumpError::Overflow))}
 fn sub(a:u64,b:u64)->Result<u64>{a.checked_sub(b).ok_or(error!(PumpError::Overflow))}
 fn n(a:u128)->Result<u64>{u64::try_from(a).map_err(|_|error!(PumpError::Truncation))}
 fn fee(a:u64,b:u64)->Result<u64>{n((a as u128*b as u128+9999)/10000)}
-fn fees(a:&MultiHopCurve,c:&BondingCurve)->Result<Fees>{
+fn fees(a:&MultiHopCurveSwap,c:&BondingCurve)->Result<Fees>{
  let info=a.fee_config.to_account_info();let data=info.try_borrow_data()?;
  require!(data.len()>=2512,PumpError::FeeConfigTooShort);
  let config=FeeConfig::deserialize(&mut &data[8..]).map_err(|_|error!(anchor_lang::error::ErrorCode::AccountDidNotDeserialize))?;
@@ -58,7 +42,7 @@ fn move_lamports(from:&AccountInfo,to:&AccountInfo,amount:u64)->Result<()>{
  let a=sub(from.lamports(),amount)?;let b=add(to.lamports(),amount)?;
  **from.try_borrow_mut_lamports()?=a;**to.try_borrow_mut_lamports()?=b;Ok(())
 }
-fn native_buyback<'info>(a:&MultiHopCurve<'info>,curve:AccountInfo<'info>,amount:u64)->Result<()>{
+fn native_buyback<'info>(a:&MultiHopCurveSwap<'info>,curve:AccountInfo<'info>,amount:u64)->Result<()>{
  if amount==0{return Ok(())}
  let to=a.buyback_fee_recipient.to_account_info();move_lamports(&curve,&to,amount)?;
  // The original flushes the writable native balances through a genuine self CPI
@@ -67,7 +51,7 @@ fn native_buyback<'info>(a:&MultiHopCurve<'info>,curve:AccountInfo<'info>,amount
  invoke_signed(&Instruction{program_id:crate::ID,accounts:vec![AccountMeta::new_readonly(a.event_authority.key(),true),AccountMeta::new(curve.key(),false),AccountMeta::new(to.key(),false)],data:vec![228,69,165,46,81,203,154,29]},&[a.event_authority.to_account_info(),curve,to.clone(),a.program.to_account_info()],&[&[b"__event_authority",&[bump]]])?;
  anchor_spl::token::sync_native(CpiContext::new(a.token_program.to_account_info(),SyncNative{account:to}))
 }
-pub fn execute<'info>(ctx:Context<'_,'_,'info,'info,MultiHopCurve<'info>>,amount_in:u64,hop_fees:Vec<u8>)->Result<CurveRunResult>{
+pub fn execute<'info>(ctx:Context<'_,'_,'info,'info,MultiHopCurveSwap<'info>>,amount_in:u64,hop_fees:Vec<u8>)->Result<CurveRunResult>{
  require!(amount_in>0,PumpError::BuyZeroAmount);
  require!(ctx.remaining_accounts.len()>=5 && ctx.remaining_accounts.len()%5==0,PumpError::NotEnoughRemainingAccounts);
  require!(hop_fees.len()==ctx.remaining_accounts.len()/5 && hop_fees.iter().all(|f|*f<4),PumpError::MultiHopHopFeesMismatch);
@@ -84,9 +68,10 @@ pub fn execute<'info>(ctx:Context<'_,'_,'info,'info,MultiHopCurve<'info>>,amount
  require!(!c.is_holder_reward && h.bonding_curve.to_account_info().data_len()==166,PumpError::ReconstructionBranchUnsupported);
  require!(h.quote_mint.to_account_info().owner==&anchor_spl::token::ID && h.quote_mint.to_account_info().data_len()==82,PumpError::ReconstructionBranchUnsupported);
  require!(a.source.to_account_info().owner==&anchor_spl::token::ID && a.source.to_account_info().data_len()==165 && a.destination.to_account_info().owner==&anchor_spl::token::ID && a.destination.to_account_info().data_len()==165,PumpError::ReconstructionBranchUnsupported);
- let sell=a.source.mint==h.base_mint.key();
- require!(sell || a.source.mint==WSOL,PumpError::MultiHopDiscontinuousPath);
- require_keys_eq!(a.destination.mint,if sell{WSOL}else{h.base_mint.key()},PumpError::MultiHopDiscontinuousPath);
+ let source_mint=token_mint(&a.source.to_account_info())?;
+ let sell=source_mint==h.base_mint.key();
+ require!(sell || source_mint==WSOL,PumpError::MultiHopDiscontinuousPath);
+ require_keys_eq!(token_mint(&a.destination.to_account_info())?,if sell{WSOL}else{h.base_mint.key()},PumpError::MultiHopDiscontinuousPath);
  let base_vault=anchor_spl::associated_token::get_associated_token_address_with_program_id(&h.bonding_curve.key(),&h.base_mint.key(),&anchor_spl::token::ID);
  let quote_vault=anchor_spl::associated_token::get_associated_token_address_with_program_id(&h.bonding_curve.key(),&WSOL,&anchor_spl::token::ID);
  require_keys_eq!(h.base_vault.key(),base_vault,anchor_lang::error::ErrorCode::ConstraintSeeds);
