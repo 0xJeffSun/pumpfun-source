@@ -63,3 +63,13 @@ original captures are identical to ours. Its lifecycle and fee-withdrawal fixtur
 provide a stronger starting point for valid-state differential recovery, but the
 imported 31-handler Fees source is an unsupported-handler scaffold. The existing
 partial fee-selector recovery and its compiler comparison remain separate.
+
+## Compiler-family evidence
+
+The [static fingerprint report](../repro/compiler-fingerprints/REPORT.md) compares
+captured Rust panic-location records with 22 official platform-tools releases.
+It prioritizes v1.43–v1.46.1 for Pump/PumpSwap/Fees and v1.52–v1.56 for Mayhem,
+conditional on ordinary official sysroots. Its baseline source-line comparisons
+are distinguished from independent filename-layout and impossible-coordinate
+checks. It does not uniquely identify a compiler, linker, target or dependency
+lock. Complete source builds and byte comparisons remain required.

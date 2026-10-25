@@ -69,7 +69,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           repository: solana-labs/solana-program-library
-          ref: f5ce86d43dd31ddefb96d4e8cdd67dd073dc5dca
+          ref: e10776ee2910eef96d7b5fd2716b2805a2fd42e6
           path: work/ata-source
           persist-credentials: false
       - name: Rebuild release-attributed ATA source using pinned CLI1.10.33 image
