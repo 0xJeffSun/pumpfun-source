@@ -104,3 +104,7 @@ and fixture readback hashes are also retained in `evidence/`.
 ### Donation forwarding reconstruction checks
 
 [Donation draft and receipts](recovery/fees-donation/README.md) contain a partial two-handler Fees reconstruction, 713 signed LiteSVM differential cases and 10 original/candidate Surfpool comparisons (20 signed transactions). The draft remains byte-unequal to the captured full Fees program.
+
+### Social fee reconstruction checks
+
+[Social draft and receipts](recovery/fees-social/README.md) contain three recovered Fees handlers, 1,562 deterministic signed differential cases and 29 Surfpool comparisons (58 signed transactions). The draft remains byte-unequal to the complete captured Fees program.
