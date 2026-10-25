@@ -14,11 +14,11 @@ The [build record](build-comparison.json), [second build](second-build-compariso
 [source and toolchain pins](build-reproducibility.json), attempts, and compressed
 logs are adjacent. The deployed ELF differs from the candidate.
 
-The [fresh differential](differential.json) re-executes 60 validly signed
+The [fresh differential](differential.json.gz) re-executes 60 validly signed
 target/candidate transactions: 60 matches, 48 successes, 31 payout events,
 and 12 rollbacks. It compares complete watched accounts, errors, events, and
 inner instructions. The [quote-control replay](quote-control-regression.json.gz)
-adds 507/507 matches, and the [native-curve replay](multi-hop-regression.json)
+adds 507/507 matches, and the [native-curve replay](multi-hop-regression.json.gz)
 adds 56/56 matches on this exact candidate. The
 [regression summary](regression-summary.json) binds both receipts to its hash.
 The remaining inherited Pump suites and Surfpool runners were not rerun on

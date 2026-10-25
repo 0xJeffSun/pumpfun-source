@@ -137,7 +137,7 @@
     "rebuilt_branch_source_handler": "claim_token_incentives",
     "branch_candidate_artifact": "repro/pump/claim-token-incentives-8099/candidate.so",
     "branch_candidate_source_base_commit": "80990317bd9c0363e071646b892490886d7bf946",
-    "branch_candidate_focused_receipt": "repro/pump/claim-token-incentives-8099/differential.json",
+    "branch_candidate_focused_receipt": "repro/pump/claim-token-incentives-8099/differential.json.gz",
     "branch_candidate_regression_receipt": "repro/pump/claim-token-incentives-8099/regression-summary.json",
     "branch_candidate_qualification_limit": "60 focused claim cases, 507 quote-control cases, and 56 native-curve cases passed; other inherited suites and Surfpool runners were not rerun on this branch candidate.",
     "historical_claim_candidate_report": "repro/pump/claim-token-incentives/README.md",

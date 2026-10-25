@@ -19,7 +19,7 @@ def sha(path):
 
 
 def main():
-    receipt = json.loads((PACKAGE / "differential.json").read_text())
+    receipt = json.loads(gzip.decompress((PACKAGE / "differential.json.gz").read_bytes()))
     first = json.loads((PACKAGE / "build-comparison.json").read_text())
     second = json.loads((PACKAGE / "second-build-comparison.json").read_text())
     reproducibility = json.loads((PACKAGE / "build-reproducibility.json").read_text())
@@ -56,9 +56,9 @@ def main():
     regressions = json.loads((PACKAGE / "regression-summary.json").read_text())
     assert regressions["candidate_sha256"] == sha(candidate)
     quote = json.loads(gzip.decompress((PACKAGE / "quote-control-regression.json.gz").read_bytes()))
-    curve = json.loads((PACKAGE / "multi-hop-regression.json").read_text())
+    curve = json.loads(gzip.decompress((PACKAGE / "multi-hop-regression.json.gz").read_bytes()))
     assert regressions["quote_control"]["receipt_sha256"] == sha(PACKAGE / "quote-control-regression.json.gz")
-    assert regressions["multi_hop_curve"]["receipt_sha256"] == sha(PACKAGE / "multi-hop-regression.json")
+    assert regressions["multi_hop_curve"]["receipt_sha256"] == sha(PACKAGE / "multi-hop-regression.json.gz")
     assert quote["cases"] == 507 and quote["mismatches"] == 0
     assert all(sha(ROOT / path) == digest for path, digest in quote["bound_inputs_sha256"].items())
     assert curve["case_count"] == curve["passed"] == 56

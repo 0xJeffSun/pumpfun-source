@@ -9,8 +9,8 @@
   "multi_hop_curve": {
     "cases": 56,
     "matches": 56,
-    "receipt": "multi-hop-regression.json",
-    "receipt_sha256": "c19b7e9c8f242d94e2fb6d14da10bd2141bbb1d95a86cf504fc9808536921952"
+    "receipt": "multi-hop-regression.json.gz",
+    "receipt_sha256": "9b95e532a211e47489c99ca72d6ba00f19f060970670472c1b20d52a7958da61"
   },
   "scope": "Fresh signed offline replays on this merged candidate. Other inherited suites and Surfpool runners were not rerun."
 }
