@@ -38,15 +38,18 @@ Temporary serialized creator/admin state before each CPI is retained, because
 the called program reads that state. These cases use normally signed test-owned
 keys and synthetic local accounts; they do not prove every live sharing transition.
 
-The [current source checkpoint](../../repro/pump_fees/readme-provenance-v144/README.md)
-binds this corrected README and the same 21 remaining source/workspace/IDL inputs.
-Its clean v1.44 build is byte-identical to the
-[FeeConfig serialization checkpoint](../../repro/pump_fees/fee-config-serialization-v144/README.md):
-769,000 bytes, SHA-256 `a9c4ea9e47356a91bf9bd97318746a7c207b873e32485d7786853f048d7d4afa`.
-Exact whole-ELF identity carries forward the 17,441 comparison receipts, including
+The [current source checkpoint](../../repro/pump_fees/solana-family-221-v144/README.md)
+binds this README and all 21 remaining source/workspace/IDL inputs. It combines the
+recovered social-account layout with eight dependency selections witnessed in one
+official SPL release lock. The clean main ELF is 768,072 bytes, SHA-256
+`e501ca2c744373e5653a5ac7e25a3fd20f6058765808b888c3605fd03adba60f`, exactly matching
+the combined scratch ELF that freshly passed 17,441 comparison receipts, including
 69 repeat-input checks, and the separate ten-step persistent donation sequence.
-This documentation checkpoint adds no runtime comparisons or unique input cases.
-Full-file equality with the captured original remains false.
+No new unique input cases are claimed. Compilation selected platform-tools v1.44;
+the unchanged SDK installer selected v1.52 for `llvm-objcopy` stripping. The phase
+records distinguish those tools; retained file hashes do not retrospectively prove
+every historical invocation. Full-file equality with the captured original remains
+false, and the unique historical dependency/compiler recipe remains unresolved.
 
 The [prior v1.44 checkpoint](../../repro/pump_fees/all-thirtyone-v144/README.md)
 passes 112 independent Surfpool comparisons with 224 signed local transactions.
@@ -96,7 +99,8 @@ python scripts/fees_validate_all.py \
 ```
 
 Use a Python environment with root requirements installed and cargo-build-sbf
-2.1.21 with platform-tools v1.44 available. The cache helper requires previously
+2.1.21 with platform-tools v1.44 for compilation and the retained SDK's v1.52
+stripping tools available. The cache helper requires previously
 downloaded crates and verifies archives against Cargo.lock. Build offline from the pinned lockfile;
 source/toolchain/build-log hashes and the raw full-file comparison are retained.
 The runtime comparison checks return bytes, error codes, and unchanged account
@@ -239,3 +243,10 @@ inputs, and 17,384 comparison receipts plus the donation sequence. Its ELF is
 `952a96cdb974517ec85ebeff3e2b5ec690029aaf3f822dfc22501e95bc3dba66`.
 Source locations, compute-unit consumption and the complete executable still
 differ from the capture; these checks do not establish unique historical source.
+
+
+## Social claim v2 account layout
+
+`ClaimSocialFeePdaV2` boxes its quote mint and uses by-value `AccountInfo` fields for event authority and program, preserving the existing account constraints. The original parser's field stores and generated event-CPI account contract support these types. Together they reproduce the complete 560-byte normalized account-exit body, seven direct callee bodies and three bounded literal spans. Boxing alone left one context offset unmatched; that earlier attempt remains preserved.
+
+This source-layout result does not prove recursive data/call closure, original whole-file identity or a completed audit. The [historical social v2 layout checkpoint](../../repro/pump_fees/social-v2-account-layout-v144/README.md) retains the 770,624-byte `c181b0ba75aee67369385e04908d89088552c1fad756bf5a21d7fb21979e6a58` ELF and its own fresh receipts. The current combined dependency checkpoint above has separately executed receipts for its exact bytes.
