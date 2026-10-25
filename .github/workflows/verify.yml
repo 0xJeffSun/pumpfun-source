@@ -38,13 +38,7 @@ jobs:
               python repro/pump_fees/initializer-history/negative_differential.py --candidate repro/pump_fees/all-thirtyone-v144/pump_fees_candidate.so --output work/fees-init-rejections.json
           - suite: pump
             commands: |
-              python scripts/pump_validate_config_admin.py --candidate repro/pump/volume-lifecycle-candidate.so --output work/pump-config-admin.json.gz
-              python scripts/pump_validate_admin.py --candidate repro/pump/volume-lifecycle-candidate.so --output work/pump-admin.json
-              python scripts/pump_validate_sell.py --candidate repro/pump/volume-lifecycle-candidate.so --output work/pump-sell.json
-              python scripts/pump_validate_buy.py --candidate repro/pump/volume-lifecycle-candidate.so --output work/pump-buy.json
-              python scripts/pump_validate_quote.py --candidate repro/pump/volume-lifecycle-candidate.so --output work/pump-quote.json.gz
-              python scripts/pump_validate_authority.py --candidate repro/pump/volume-lifecycle-candidate.so --output work/pump-authority.json.gz
-              python scripts/pump_validate_volume.py --candidate repro/pump/volume-lifecycle-candidate.so --output work/pump-volume.json.gz
+              python scripts/pump_validate_all.py --candidate repro/pump/creator-eighteen/candidate.so --output work/pump-handlers.json.gz
           - suite: pump-amm
             commands: |
               python scripts/pump_amm_admin_differential.py --candidate repro/pump_amm/creator-twenty-five/pump_amm_recovered.so --output work/pump-amm-admin.json

@@ -81,5 +81,5 @@ and v1.46. The complete captured `core::fmt::write` and `__multi3` bodies match
 v1.44 exactly; those representative bodies differ in the other tested releases.
 This makes v1.44 the preferred tested stock candidate for Fees, without excluding
 untested v1.46.1, custom sysroots or different build settings. The current
-twenty-seven-handler Fees checkpoint compiles with v1.44 and passes all 16,851
+thirty-one-body Fees checkpoint compiles with v1.44 and passes all 17,361
 saved behavioral cases. Its full binary still differs from the capture.

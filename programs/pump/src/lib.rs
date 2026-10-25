@@ -1,5 +1,9 @@
 use anchor_lang::prelude::*;
 
+pub mod distribution;
+pub use distribution::*;
+pub mod minimum;
+pub use minimum::*;
 pub mod trade_types;
 pub mod trade;
 pub use trade::*;
@@ -9,6 +13,10 @@ declare_id!("6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P");
 #[program]
 pub mod pump_recovered {
     use super::*;
+    pub fn distribute_creator_fees<'info>(ctx:Context<'_,'_,'_,'info,DistributeCreatorFees<'info>>)->Result<DistributeCreatorFeesEvent>{distribution::execute(ctx)}
+    pub fn distribute_creator_fees_v2<'info>(ctx:Context<'_,'_,'_,'info,DistributeCreatorFeesV2<'info>>,initialize_ata:bool)->Result<DistributeCreatorFeesEvent>{distribution::execute_v2(ctx,initialize_ata)}
+    pub fn get_minimum_distributable_fee<'info>(ctx:Context<'_,'_,'_,'info,GetMinimumDistributableFee<'info>>)->Result<MinimumDistributableFeeEvent>{minimum::execute(ctx)}
+
     pub fn buy_v3(ctx: Context<SellV3>, amount:u64,max_sol_cost:u64,partial_fill:OptionBool)->Result<()>{let _ = partial_fill;trade::buy(ctx,amount,max_sol_cost)}
     pub fn add_quote_mint(ctx:Context<AdminGlobal>,quote_mint:Pubkey)->Result<()>{
      require!(quote_mint!=Pubkey::default() && quote_mint!=anchor_lang::solana_program::pubkey!("So11111111111111111111111111111111111111112"),PumpError::QuoteMintNotEligibleForWhitelist);
@@ -18,6 +26,14 @@ pub mod pump_recovered {
     pub fn remove_quote_mint(ctx:Context<AdminGlobal>,quote_mint:Pubkey)->Result<()>{
      require!(quote_mint!=Pubkey::default(),PumpError::QuoteMintNotEligibleForWhitelist);
      let slot=ctx.accounts.global.whitelisted_quote_mints.iter_mut().find(|key|**key==quote_mint).ok_or_else(||error!(PumpError::QuoteMintNotWhitelisted))?;*slot=Pubkey::default();Ok(())
+    }
+    pub fn collect_creator_fee(ctx:Context<CollectCreatorFee>)->Result<()>{
+      if ctx.accounts.creator.executable{msg!("Creator account is executable, so it cannot receive lamports");return Ok(());}
+      let amount=ctx.accounts.creator_vault.lamports().saturating_sub(Rent::get()?.minimum_balance(0));
+      if amount==0{msg!("No creator fee to collect");return Ok(());}
+      let creator=ctx.accounts.creator.key();let bump=[ctx.bumps.creator_vault];let seeds:&[&[u8]]=&[b"creator-vault",creator.as_ref(),&bump];
+      anchor_lang::system_program::transfer(CpiContext::new_with_signer(ctx.accounts.system_program.to_account_info(),anchor_lang::system_program::Transfer{from:ctx.accounts.creator_vault.to_account_info(),to:ctx.accounts.creator.to_account_info()},&[seeds]),amount)?;
+      let event=CollectCreatorFeeEvent{timestamp:Clock::get()?.unix_timestamp,creator,creator_fee:amount,quote_mint:Pubkey::default()};emit!(event.clone());emit_cpi!(event);Ok(())
     }
     pub fn init_user_volume_accumulator(ctx:Context<InitUserVolume>)->Result<()>{
       ctx.accounts.user_volume_accumulator.user=ctx.accounts.user.key();let event=InitUserVolumeAccumulatorEvent{payer:ctx.accounts.payer.key(),user:ctx.accounts.user.key(),timestamp:Clock::get()?.unix_timestamp};emit!(event.clone());emit_cpi!(event);Ok(())
@@ -377,3 +393,16 @@ pub struct InitUserVolumeAccumulatorEvent{pub payer:Pubkey,pub user:Pubkey,pub t
 #[event]
 #[derive(Clone)]
 pub struct CloseUserVolumeAccumulatorEvent{pub user:Pubkey,pub timestamp:i64,pub total_unclaimed_tokens:u64,pub total_claimed_tokens:u64,pub current_sol_volume:u64,pub last_update_timestamp:i64}
+
+#[event_cpi]
+#[derive(Accounts)]
+pub struct CollectCreatorFee<'info>{
+ /// CHECK: payout destination is bound to the vault PDA.
+ #[account(mut)]pub creator:UncheckedAccount<'info>,
+ /// CHECK: original defers owner/data restrictions to System transfer.
+ #[account(mut,seeds=[b"creator-vault",creator.key().as_ref()],bump)]pub creator_vault:UncheckedAccount<'info>,
+ pub system_program:Program<'info,System>,
+}
+#[event]
+#[derive(Clone)]
+pub struct CollectCreatorFeeEvent{pub timestamp:i64,pub creator:Pubkey,pub creator_fee:u64,pub quote_mint:Pubkey}

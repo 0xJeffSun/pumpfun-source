@@ -1,11 +1,13 @@
 # Partial Pump reconstruction
 
-The Anchor 0.31.1 source implements fourteen recovered handlers:
+The Anchor 0.31.1 source implements eighteen recovered handlers:
 `toggle_create_v2`, `toggle_mayhem_mode`, `toggle_cashback_enabled`, and
 `set_max_curve_depth`, `set_virtual_quote_reserves`, `update_buyback_config`,
 `update_creator_fee_config`, `update_holder_reward_config`, `add_quote_mint`, and
 `remove_quote_mint`, `update_global_authority`, `set_reserved_fee_recipients`,
-`init_user_volume_accumulator` and `close_user_volume_accumulator`. It also implements **partial SOL and USDC-quote `sell_v3` and `buy_v3` paths**.
+`init_user_volume_accumulator`, `close_user_volume_accumulator`,
+`collect_creator_fee`, `distribute_creator_fees`, `distribute_creator_fees_v2`, and
+`get_minimum_distributable_fee`. It also implements **partial SOL and USDC-quote `sell_v3` and `buy_v3` paths**.
 It is incomplete and is not a deployable replacement.
 
 The trade paths handle constant-product reserve changes, fee tier selection,
@@ -51,7 +53,7 @@ observed error101 for short dispatch data but does not uniquely identify a versi
 
 ```sh
 python scripts/build_partial_candidate.py --manifest programs/pump/Cargo.toml \
-  --program pump --artifact-name pump_recovered.so --output work/pump-clean
+  --program pump --artifact-name pump_recovered.so --tools-version v1.44 --output work/pump-clean
 python scripts/pump_validate_admin.py \
   --candidate work/pump-clean/artifacts/pump_recovered.so --output work/pump-admin.json
 python scripts/pump_validate_sell.py \
@@ -73,6 +75,25 @@ signs without needing to be writable. The volume lifecycle handlers add 66 cases
 initialization creates a 137-byte account or preserves an existing account;
 close refunds its lamports even when observed reward/cashback fields are nonzero.
 Closure requires the user signature, with the PDA tying that signer to the account. These synthetic
-state tests do not establish every reachable lifecycle transition. All 1,334
-administration, lifecycle and partial-trade cases pass on the same clean candidate,
+state tests do not establish every reachable lifecycle transition. The previous
+volume checkpoint passed all 1,334 administration, lifecycle and partial-trade cases,
 with whole-file equality still false. See [the review](../../audit/pump/volume-lifecycle-review.md).
+
+
+The creator-fee checkpoint adds collection, native/token distribution and the
+minimum-distributable query. It preserves native rent thresholds, floor rounding,
+legacy curve decoding, the sharing-program owner/discriminator, token program
+errors and the observed event/return behavior. The query emits its event as well
+as returning it. V2 distribution optionally creates missing recipient ATAs through
+the captured associated-token program. All fixture signatures are verified.
+
+The current integrated build uses platform-tools v1.44 (Rust 1.79 family), Anchor
+0.31.1 and the committed lockfile. Compatibility pins permit that compiler to
+build current recovered source; they are not asserted historical dependency
+versions. Offline reproduction requires the corresponding populated Cargo cache.
+The integrated candidate passes all 1,924 maintained differential cases and
+50 Surfpool comparisons using 100 signed transactions. Run all maintained suites
+with `scripts/pump_validate_all.py`. The frozen build,
+whole-file mismatch and signed local transaction receipts are indexed in
+`repro/pump/creator-eighteen/`. See
+[the recovery review](../../audit/pump/creator-fees-recovery.md) for limits.

@@ -82,10 +82,10 @@ three configuration setters, permissionless resize, and two deprecated rejection
 dispatches, two tier upserts and FeeConfig administrator transfer, two donation handlers and three social-fee handlers and referral withdrawal, four buyback handlers, sharing creation, administrative sharing reset, both sharing updates and FeeConfig initialization. All31 bodies have bounded implementations; full source/context equivalence remains unproven. Selected compiler and dependency versions
 remain candidates rather than an established historical graph.
 
-### Parallel reconstruction checkpoint: 87 implemented handlers and two partial paths
+### Parallel reconstruction checkpoint: 91 implemented handlers and two partial paths
 
-Saved builds cover Pump 14, PumpSwap 25, Pump Fees 31 and Mayhem 17 implemented
-handlers, plus Pump's partial SOL/USDC buy_v3/sell_v3 branches. Their 33,954 local SBF
+Saved builds cover Pump 18, PumpSwap 25, Pump Fees 31 and Mayhem 17 implemented
+handlers, plus Pump's partial SOL/USDC buy_v3/sell_v3 branches. Their 34,544 local SBF
 comparisons are indexed by `repro/status.json`; each report preserves its own
 coverage and limitations. Pump's SOL trade paths include Mayhem buyback suppression,
 holder-reward event fields and explicit cashback rejection. USDC quote behavior adds 130 synthetic SPL/Token2022 cases; other quote routes
@@ -230,3 +230,15 @@ AMM creator-fee collection and both transfer-to-Pump variants add415 cases. The
 The source preserves tested native-rent thresholds, quote-token transfers, exact
 CPI/event bytes and permission constraints. Dependency and lifecycle reachability
 questions remain; full ELF equality is false for all four programs.
+
+### Pump creator-fee integration
+
+Four additional Pump handlers cover native creator-fee collection, distribution
+v1/v2 and the minimum-distributable query. The combined candidate passes 1,924
+SBF comparisons and 50 Surfpool comparisons with 100 normally signed offline
+transactions. The package preserves frozen source, harnesses, fixtures and raw
+receipts under `repro/pump/creator-eighteen/`. See
+[creator-fee recovery](pump/creator-fees-recovery.md) for rent thresholds,
+rounding, token paths and bounded coverage. This new source is outside the
+independent static review frozen at commit `329fc44`; no security sign-off
+is implied by its behavioral comparisons.
