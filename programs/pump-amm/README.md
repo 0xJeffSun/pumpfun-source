@@ -190,3 +190,21 @@ normalization, including the entire 1,520-byte renderer and its ten immediate
 target bodies. There remain 306 unmatched original windows. Raw binary equality,
 recursive data and indirect-call closure, authentic initializer success and the
 security audit remain incomplete. Diagnostic source locations remain truthful.
+
+
+## Claim account ownership checkpoint
+
+The [claim-context checkpoint](../../repro/pump_amm/claim-context-v144/README.md)
+restores owned `AccountInfo` values for the claim user and event authority, and
+stores the global accumulator `Account` inline. Complete constructor, member and
+drop evidence supports these three declaration changes. The clean main executable
+and symbol ELF equal the tested scratch build; the executable SHA256 is
+`6f2589487eac44be02788312a55bcba09cebea635d9bdf0880d65b9999381815`.
+
+The 25 unchanged suites passed 17,462 comparisons and saved verification checked
+35,418 signatures. Four more original windows now match normalized bodies: the
+claim parser, initializer closure, exit and wrapper. There remain 302 unmatched
+original windows. Parser recursive graph correspondence and the wrapper's handler
+target remain unresolved; normalized wrapper instructions do not prove transitive
+equivalence. No new runtime case or initializer-success fixture was added. Full
+original ELF identity and broader reconstruction obligations remain open.

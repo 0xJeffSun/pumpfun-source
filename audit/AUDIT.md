@@ -383,3 +383,5 @@ Pass 11's two narrow source corrections passed unchanged corpora and independent
 Pass 12 restores a supported dependency algorithm and its typed failure paths, with whole-window static checks and the unchanged AMM corpus. Normalized function matches do not prove full recursive data identity, exhaustive behavior or security acceptance. The full security audit remains incomplete.
 
 Pass14 reviews the Relay IDL header error lifetime from I/O destruction through owned reporting/lowering. The unchanged ordinary corpus passes but does not validate every changed failure arm. No full original, historical-build or security-audit acceptance follows.
+
+Pass15 restores observed optional-error conversion and account ownership/lifetimes. Finite corpus and full selected function matches do not establish full recursive data identity, untested error arms, or complete security acceptance. Known diagnostic gaps remain visible.

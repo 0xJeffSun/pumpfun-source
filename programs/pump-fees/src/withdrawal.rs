@@ -7,9 +7,9 @@ use crate::FeeError;
   let seeds:&[&[u8]]=&[b"referral-vault",user.as_ref(),&bump];
   let amount;let mint;
   if let Some(quote)=ctx.accounts.quote_mint.as_ref() {
-   let vault=ctx.accounts.vault_ata.as_ref().ok_or(error!(FeeError::IncompleteTokenAccounts))?;
-   let destination=ctx.accounts.user_ata.as_ref().ok_or(error!(FeeError::IncompleteTokenAccounts))?;
-   let token=ctx.accounts.token_program.as_ref().ok_or(error!(FeeError::IncompleteTokenAccounts))?;
+   let vault=ctx.accounts.vault_ata.as_ref().ok_or(FeeError::IncompleteTokenAccounts)?;
+   let destination=ctx.accounts.user_ata.as_ref().ok_or(FeeError::IncompleteTokenAccounts)?;
+   let token=ctx.accounts.token_program.as_ref().ok_or(FeeError::IncompleteTokenAccounts)?;
    amount=vault.amount;require!(amount>0,FeeError::NothingToWithdraw);mint=quote.key();
    anchor_spl::token_interface::transfer_checked(CpiContext::new_with_signer(token.to_account_info(),anchor_spl::token_interface::TransferChecked{from:vault.to_account_info(),mint:quote.to_account_info(),to:destination.to_account_info(),authority:ctx.accounts.referral_vault.to_account_info()},&[seeds]),amount,quote.decimals)?;
   }else{
