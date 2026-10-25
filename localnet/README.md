@@ -120,3 +120,7 @@ and fixture readback hashes are also retained in `evidence/`.
 ### Buyback reconstruction checks
 
 [Buyback draft and receipts](recovery/fees-buyback/README.md) recover four handlers with 1,249 signed differential cases and 18 Surfpool comparisons (36 signed transactions), including initialization, authority update, signed funding and a sweep. The draft remains byte-unequal to the full Fees program.
+
+### Administrative sharing reset reconstruction checks
+
+[Administrative CTO draft and receipts](recovery/fees-admin-cto/README.md) cover 63 differential cases and 12 Surfpool comparisons (24 signed transactions) through the captured Pump caller. Pump performs its genuine PDA-signed CPI; transaction signers are test-owned keys. The Fees draft remains byte-unequal to the complete program.
