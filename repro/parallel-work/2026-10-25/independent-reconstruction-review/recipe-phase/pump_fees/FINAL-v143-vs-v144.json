@@ -1,0 +1,115 @@
+{
+  "program": "pump_fees",
+  "committed_head": "4938820",
+  "conclusion": "v1.43 is the real compiler: .text 99.0% vs original (7968 bytes short) vs v1.44 94.1% (47184 short), identical source. Behavior unchanged: both builds pass all 18 fees differential suites, 6147 cases, 0 mismatches.",
+  "best_compiler": "v1.43",
+  "rustc": "1.79.0-dev",
+  "builds": {
+    "v143": "c678b29580750359290d2026891b55a72ba9ff5a732318b41c8775d0cfc45dfa",
+    "v144_committed": "e5c811e2a66b540f25b44d9a55dd7b890e7ff01a0074dfc0d0dfc25237c391fe",
+    "original": "4f2955d0f6b40cc9ff7daa18ccad7d19119ba1249759f4e7e3bb691beee6b35e"
+  },
+  "text_pct": {
+    "v143": 99.004,
+    "v144": 94.099
+  },
+  "text_missing_bytes": {
+    "v143": 7968,
+    "v144": 47184
+  },
+  "differential_total_cases": 6147,
+  "v143_total_mismatches": 0,
+  "v144_total_mismatches": 0,
+  "per_suite": {
+    "fees_admin_cto_differential": {
+      "cases": 63,
+      "v143_mm": 0,
+      "v144_mm": 0
+    },
+    "fees_admin_differential": {
+      "cases": 444,
+      "v143_mm": 0,
+      "v144_mm": 0
+    },
+    "fees_admin_transfer_differential": {
+      "cases": 56,
+      "v143_mm": 0,
+      "v144_mm": 0
+    },
+    "fees_buyback_differential": {
+      "cases": 1249,
+      "v143_mm": 0,
+      "v144_mm": 0
+    },
+    "fees_config_differential": {
+      "cases": 625,
+      "v143_mm": 0,
+      "v144_mm": 0
+    },
+    "fees_deprecated_differential": {
+      "cases": 80,
+      "v143_mm": 0,
+      "v144_mm": 0
+    },
+    "fees_donation_create_differential": {
+      "cases": 356,
+      "v143_mm": 0,
+      "v144_mm": 0
+    },
+    "fees_error_messages_differential": {
+      "cases": 2,
+      "v143_mm": 0,
+      "v144_mm": 0
+    },
+    "fees_extend_differential": {
+      "cases": 297,
+      "v143_mm": 0,
+      "v144_mm": 0
+    },
+    "fees_external_codec_differential": {
+      "cases": 9,
+      "v143_mm": 0,
+      "v144_mm": 0
+    },
+    "fees_initialize_differential": {
+      "cases": 180,
+      "v143_mm": 0,
+      "v144_mm": 0
+    },
+    "fees_sharing_create_differential": {
+      "cases": 116,
+      "v143_mm": 0,
+      "v144_mm": 0
+    },
+    "fees_sharing_update_differential": {
+      "cases": 417,
+      "v143_mm": 0,
+      "v144_mm": 0
+    },
+    "fees_social_claim_differential": {
+      "cases": 347,
+      "v143_mm": 0,
+      "v144_mm": 0
+    },
+    "fees_social_claim_v2_differential": {
+      "cases": 627,
+      "v143_mm": 0,
+      "v144_mm": 0
+    },
+    "fees_social_create_differential": {
+      "cases": 588,
+      "v143_mm": 0,
+      "v144_mm": 0
+    },
+    "fees_upsert_differential": {
+      "cases": 578,
+      "v143_mm": 0,
+      "v144_mm": 0
+    },
+    "fees_withdraw_differential": {
+      "cases": 113,
+      "v143_mm": 0,
+      "v144_mm": 0
+    }
+  }
+}

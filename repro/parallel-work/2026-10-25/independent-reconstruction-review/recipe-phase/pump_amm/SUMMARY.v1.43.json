@@ -1,0 +1,72 @@
+{
+  "program": "pump_amm",
+  "manifest": "programs/pump-amm/Cargo.toml",
+  "artifact": "pump_amm_recovered.so",
+  "best_compiler": "v1.43",
+  "toolchain_cross_check": {
+    "v1.43": {
+      "text": 1160920,
+      "text_pct_of_orig": 99.904,
+      "rodata": 23975,
+      "rel_dyn": 59536,
+      "elf_extent": 1254832,
+      "text_delta": -1120
+    },
+    "v1.44": {
+      "text": 1103896,
+      "text_pct_of_orig": 95.0,
+      "rodata": 24155,
+      "rel_dyn": 60608,
+      "elf_extent": 1199064,
+      "text_delta": -58144
+    },
+    "note": "v1.45/v1.46 worse per established size sweep (750,536 .text). v1.43 reproduces the sweep's 1,160,920 exactly."
+  },
+  "original": {
+    "text": 1162040,
+    "rodata": 25715,
+    "data_rel_ro": 8584,
+    "rel_dyn": 70384,
+    "elf_extent": 1268504
+  },
+  "section_deltas_v143": {
+    ".text": "1162040->1160920 (-1120, 99.90%)",
+    ".rodata": "25715->23975 (-1740, 93.23%)",
+    ".data.rel.ro": "8584->8672 (+88, 101.03%)",
+    ".rel.dyn": "70384->59536 (-10848, 84.59%)"
+  },
+  "raw_diff": {
+    "elf_overlap_len": 1254832,
+    "diff_positions": 679201,
+    "raw_diff_pct_overlap": 54.13
+  },
+  "behavior": {
+    "suites": 23,
+    "total_cases": 17410,
+    "mismatches": 0,
+    "incentives_families": {
+      "sync": 222,
+      "claim": 807,
+      "admin": 668
+    },
+    "v144_cross_check": {
+      "total_cases": 17410,
+      "mismatches": 0
+    },
+    "conclusion": "behaviorally identical to original and to committed v1.44 build"
+  },
+  "text_decomposition": {
+    "position_match_in_place_pct": 45.85,
+    "normalized_instruction_multiset_match_pct": 74.46,
+    "same_source_cross_compiler_calibration_pct": 80.28,
+    "orig_calls": 7223,
+    "v143_calls": 6229,
+    "v144_calls": 6699,
+    "orig_insns": 143254,
+    "v143_insns": 142840,
+    "genuine_net_missing_text_bytes": 1120,
+    "genuine_net_missing_pct": 0.096,
+    "ordering_attributable_points": "~28.6 (74.46 - 45.85)",
+    "interpretation": "net missing ~0.1%; raw 54% diff is ordering/relink (dominant) plus codegen/source-structure divergence (fewer calls/relocs). Not literal original source; byte-identicality needs matching exact source structure, not reorder alone."
+  }
+}
