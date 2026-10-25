@@ -31,7 +31,9 @@ invocation are explicit research inputs.
 
 Run `python3 scripts/verify_pump_source_path_remap.py` with the repository's
 pinned Python dependencies to recheck ELF sections, source hashes, the
-wrapper and location records without rebuilding. To repeat the source build,
+wrapper and location records without rebuilding. The verifier reads the 35
+historical source files from immutable Git commit `4ffe8bd`; later source
+changes in the checkout are outside this experiment. To repeat the source build,
 use a clean `4ffe8bd` checkout with platform-tools v1.44 and its locked Cargo
 dependencies cached, set `RUSTC_WRAPPER` to the absolute path of the saved
 wrapper and `CARGO_HOME` to an isolated cache, prepend an Agave 2.1.21 CLI to

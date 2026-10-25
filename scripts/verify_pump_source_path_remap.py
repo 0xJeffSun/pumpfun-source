@@ -4,6 +4,7 @@ import gzip
 import hashlib
 import json
 import struct
+import subprocess
 from pathlib import Path
 
 from elftools.elf.elffile import ELFFile
@@ -17,6 +18,7 @@ BASE_BUILD = ROOT / "repro/pump/quote-control-fortyeight/build-comparison.json"
 TRIAL = FOLDER / "candidate.so"
 WRAPPER = ROOT / "scripts/pump_rustc_source_path_wrapper.sh"
 OUT = FOLDER / "verification.json"
+SOURCE_BASE = "4ffe8bd88761059693e481ae972443c10204f7af"
 
 
 def sha(raw):
@@ -82,8 +84,13 @@ def main():
     assert attempt["returncode"] == 0 and attempt["source_unchanged"]
     assert saved["source_sha256"] == built["source_sha256"]
     assert len(saved["source_sha256"]) == 35
-    assert all(sha((ROOT / path).read_bytes()) == digest
-               for path, digest in saved["source_sha256"].items())
+    # This trial predates later Pump handlers. Verify its compiler inputs from
+    # the immutable ancestor commit instead of the evolving checkout source.
+    subprocess.run(["git", "merge-base", "--is-ancestor", SOURCE_BASE, "HEAD"],
+                   cwd=ROOT, check=True)
+    assert all(sha(subprocess.check_output(
+        ["git", "show", f"{SOURCE_BASE}:{path}"], cwd=ROOT)) == digest
+        for path, digest in saved["source_sha256"].items())
     assert saved["rustc_sha256"] == built["rustc_sha256"]
     assert saved["selected_toolchain"] == built["selected_toolchain"] == "v1.44"
     assert sha(base) == saved["comparison"]["candidate_sha256"]
@@ -112,6 +119,7 @@ def main():
         "remapped_candidate_sha256": sha(trial),
         "target_sha256": sha(target),
         "source_files_checked": len(saved["source_sha256"]),
+        "source_verification_commit": SOURCE_BASE,
         "rustc_sha256": built["rustc_sha256"],
         "wrapper_sha256": sha(WRAPPER.read_bytes()),
         "base_elf_bytes": len(base), "remapped_elf_bytes": len(trial),
