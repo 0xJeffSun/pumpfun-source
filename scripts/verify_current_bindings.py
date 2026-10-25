@@ -19,6 +19,7 @@ PACKAGES = {
     "pump": "repro/pump/bonding-curve-serializer-fortyeight",
     "fees": "repro/pump_fees/solana-family-221-v144",
 }
+CURRENT_PUMP_CURVE = "repro/pump/pr5-current-upstream-integration"
 HISTORICAL_COPIES = {
     "work/pump-multi-hop-curve-recovery/differential.py": "repro/pump/native-curve-partial-fortyeight/harness/pump_multi_hop_curve_differential.py",
     "work/pump-multi-hop-curve-recovery/verify_saved.py": "repro/pump/native-curve-partial-fortyeight/isolated-partial-checkpoint/verify_saved.py",
@@ -90,8 +91,23 @@ def main():
     tracked = set(subprocess.check_output(["git", "-C", str(ROOT), "ls-files", "-z"]).decode().split("\0"))
     if args.program == "pump":
         maps = read("source-harness-sha256.json")
-        groups = {k: maps[k] for k in ["source", "harness", "runtime", "documentation", "build_helpers"]}
-        assert len(groups["source"]) == 36
+        # The immutable serializer package verifies its own 36-file source
+        # snapshot. Bind the live Pump checkout to the newer curve build while
+        # retaining the inherited harness, runtime, documentation and static
+        # checks below.
+        curve = ROOT / CURRENT_PUMP_CURVE
+        curve_build = json.loads((curve / "build-a-build-comparison.json").read_text())
+        current_source = curve_build["source_sha256"]
+        assert len(maps["source"]) == 36 and len(current_source) == 37
+        assert set(current_source) - set(maps["source"]) == {
+            "programs/pump/src/multi_hop_curve_swap.rs"}
+        assert set(maps["source"]) - set(current_source) == set()
+        assert {name for name in maps["source"]
+                if maps["source"][name] != current_source[name]} == {
+            "programs/pump/src/lib.rs", "programs/pump/src/multi_hop_curve.rs"}
+        assert sha((curve / "candidate.so").read_bytes()) == curve_build["comparison"]["candidate_sha256"]
+        groups = {"source": current_source, **{k: maps[k] for k in
+                    ["harness", "runtime", "documentation", "build_helpers"]}}
     else:
         groups = {n: read(n) for n in ["source-sha256.json", "build-helper-sha256.json", "documentation-sha256.json", "harness-source-sha256.json", "runtime-inputs.json"]}
         assert len(groups["source-sha256.json"]) == 22
@@ -104,7 +120,10 @@ def main():
               "saved_package_verifier_required_separately": True, "runtime_replayed_by_this_script": False}
     if args.program == "pump":
         result.update(historical_surfpool_identity=maps["surfpool"], local_surfpool_binary_checked=False,
-                      complete_serializer_and_25_calls_checked=True)
+                      complete_serializer_and_25_calls_checked=True,
+                      historical_serializer_source_inputs=len(maps["source"]),
+                      current_curve_source_inputs=len(current_source),
+                      current_curve_candidate_sha256=curve_build["comparison"]["candidate_sha256"])
     print(json.dumps(result, indent=2))
 
 
