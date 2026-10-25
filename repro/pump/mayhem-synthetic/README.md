@@ -8,8 +8,8 @@ caller is synthetic; no invocation path through deployed Mayhem is proven.**
 Nothing here was sent to mainnet or moved real funds.
 
 The saved candidate and receipts were produced from the earlier public Pump48
-source. Main now contains a partial native curve path; the merged source has
-not been rebuilt or replayed with that addition. The hashes and case counts
+source. Main now contains a partial native curve path and a serializer change;
+the merged source has not been rebuilt or replayed with those additions. The hashes and case counts
 below refer to the retained pre-merge candidate.
 
 The [captured IDL excerpt](idl-excerpt.json) specifies selector
