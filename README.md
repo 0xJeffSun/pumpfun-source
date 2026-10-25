@@ -20,9 +20,9 @@ differential cases. Recovered quote-mint routing additionally passes 9,428 origi
 queries, but its compiled instructions still differ. All 31 Fees instruction bodies pass 17,461 SBF comparison receipts; forty-eight recovered Pump
 handlers plus five partial creation/trading paths pass 9,237. Thirty-seven PumpSwap
 handlers pass 17,462 comparisons, and twenty-four Mayhem handlers pass 9,595. These
-53,755 saved comparisons cover 140 implemented handlers and five partial paths, not the
+53,771 saved comparisons cover 140 implemented handlers and five partial paths, not the
 complete programs. The Fees total includes 69 repeated-input checks with stronger log or signature assertions. Two Fees handlers are deprecated dispatches that always reject.
-The current [Pump48 two-curve checkpoint](repro/pump/tokenkeg-two-curve-fortyeight/README.md) adds the bounded ordinary-token routes SOL→A→B and B→A→SOL while retaining the prior single-curve branch. Its 20 new comparisons include 18 calls reaching Pump and 16 successes; broader routing remains partial. The complete 1,840-byte BondingCurve serializer and all 25 direct calls still match under the documented normalization. The same executable passes 1,024 additional Surfpool comparisons with 2,048 signed transactions.
+The current [Pump48 nested-ancestry checkpoint](repro/pump/nested-ancestry-fortyeight/README.md) extends ordinary creation through depth five and pre-existing canonical Curve/Pool ancestry. Its 16 new cases include 15 successes and one expected depth rejection; ancestry is synthetic and exhaustive creation behavior remains partial. All 9,253 differential comparisons and 1,024 Surfpool comparisons pass. Clean main and tested scratch ELF/symbol files are identical. The complete 1,840-byte BondingCurve serializer and all 25 direct calls still match under the documented normalization. Existing one/two-curve trading coverage remains; broader route work is separate.
 The current Pump `sell_v2` has a confirmed quote transfer-fee minimum-output and event mismatch; its saved passes do not cover that boundary.
 The current PumpSwap checkpoint corrects the earlier zero-fee cashback event mismatch;
 the [signed negative probe](repro/pump_amm/legacy-sell-zero-fee-gap/README.md) preserves evidence against the prior executable.

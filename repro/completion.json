@@ -15,7 +15,7 @@
       "instruction": "add_quote_control_mint",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump/tokenkeg-two-curve-fortyeight/candidate.so",
+      "candidate_artifact": "repro/pump/nested-ancestry-fortyeight/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -23,7 +23,7 @@
       "instruction": "add_quote_mint",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump/tokenkeg-two-curve-fortyeight/candidate.so",
+      "candidate_artifact": "repro/pump/nested-ancestry-fortyeight/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -31,7 +31,7 @@
       "instruction": "admin_cto",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump/tokenkeg-two-curve-fortyeight/candidate.so",
+      "candidate_artifact": "repro/pump/nested-ancestry-fortyeight/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -39,7 +39,7 @@
       "instruction": "admin_set_idl_authority",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump/tokenkeg-two-curve-fortyeight/candidate.so",
+      "candidate_artifact": "repro/pump/nested-ancestry-fortyeight/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -47,7 +47,7 @@
       "instruction": "admin_update_token_incentives",
       "status": "unrecovered",
       "limitation": null,
-      "candidate_artifact": "repro/pump/tokenkeg-two-curve-fortyeight/candidate.so",
+      "candidate_artifact": "repro/pump/nested-ancestry-fortyeight/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -55,7 +55,7 @@
       "instruction": "buy",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump/tokenkeg-two-curve-fortyeight/candidate.so",
+      "candidate_artifact": "repro/pump/nested-ancestry-fortyeight/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -63,7 +63,7 @@
       "instruction": "buy_exact_quote_in_v2",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump/tokenkeg-two-curve-fortyeight/candidate.so",
+      "candidate_artifact": "repro/pump/nested-ancestry-fortyeight/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -71,7 +71,7 @@
       "instruction": "buy_exact_quote_in_v3",
       "status": "partial",
       "limitation": "Bounded SOL and synthetic USDC Token/Token2022 quote paths, configured creator fee/gross-spend truncation, funded completion using actual base-vault balances, optional fills and Mayhem crossing. Nested routes, transfer-fee extensions and exhaustive account validation remain unresolved.",
-      "candidate_artifact": "repro/pump/tokenkeg-two-curve-fortyeight/candidate.so",
+      "candidate_artifact": "repro/pump/nested-ancestry-fortyeight/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -79,7 +79,7 @@
       "instruction": "buy_exact_sol_in",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump/tokenkeg-two-curve-fortyeight/candidate.so",
+      "candidate_artifact": "repro/pump/nested-ancestry-fortyeight/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -87,7 +87,7 @@
       "instruction": "buy_v2",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump/tokenkeg-two-curve-fortyeight/candidate.so",
+      "candidate_artifact": "repro/pump/nested-ancestry-fortyeight/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -95,7 +95,7 @@
       "instruction": "buy_v3",
       "status": "partial",
       "limitation": "SOL and USDC quote branches, Mayhem/holder fields and cashback rejection. Other quote routes and exhaustive extension/account validation remain incomplete; final event suffix uninterpreted.",
-      "candidate_artifact": "repro/pump/tokenkeg-two-curve-fortyeight/candidate.so",
+      "candidate_artifact": "repro/pump/nested-ancestry-fortyeight/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -103,7 +103,7 @@
       "instruction": "claim_cashback",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump/tokenkeg-two-curve-fortyeight/candidate.so",
+      "candidate_artifact": "repro/pump/nested-ancestry-fortyeight/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -111,7 +111,7 @@
       "instruction": "claim_cashback_v2",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump/tokenkeg-two-curve-fortyeight/candidate.so",
+      "candidate_artifact": "repro/pump/nested-ancestry-fortyeight/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -119,7 +119,7 @@
       "instruction": "claim_token_incentives",
       "status": "unrecovered",
       "limitation": null,
-      "candidate_artifact": "repro/pump/tokenkeg-two-curve-fortyeight/candidate.so",
+      "candidate_artifact": "repro/pump/nested-ancestry-fortyeight/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -127,7 +127,7 @@
       "instruction": "close_user_volume_accumulator",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump/tokenkeg-two-curve-fortyeight/candidate.so",
+      "candidate_artifact": "repro/pump/nested-ancestry-fortyeight/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -135,7 +135,7 @@
       "instruction": "collect_creator_fee",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump/tokenkeg-two-curve-fortyeight/candidate.so",
+      "candidate_artifact": "repro/pump/nested-ancestry-fortyeight/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -143,7 +143,7 @@
       "instruction": "collect_creator_fee_v2",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump/tokenkeg-two-curve-fortyeight/candidate.so",
+      "candidate_artifact": "repro/pump/nested-ancestry-fortyeight/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -151,15 +151,15 @@
       "instruction": "create",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump/tokenkeg-two-curve-fortyeight/candidate.so",
+      "candidate_artifact": "repro/pump/nested-ancestry-fortyeight/candidate.so",
       "full_byte_equality": false
     },
     {
       "program": "pump",
       "instruction": "create_v2",
       "status": "partial",
-      "limitation": "Normal SOL and whitelisted token quote creation, holder creation, quote-control consumer admission/reserves, configured creator fee checks, and depth-one nested creation from a normal SOL-root quote coin. Mayhem, migrated-parent and deeper nested paths remain partial or unrecovered.",
-      "candidate_artifact": "repro/pump/tokenkeg-two-curve-fortyeight/candidate.so",
+      "limitation": "Normal SOL and admitted quote creation, holder/quote-control/configured-fee paths, plus ordinary Tokenkeg curve/Pool ancestry source with finite depth1\u20135 validation. New16cases include15successes/one6105rollback and exact cap/depth diagnostics; pre-existing canonical ancestry is synthetic. Mayhem, exhaustive ancestry/error/input coverage, and new Token-2022 ancestry/extension modes remain unresolved.",
+      "candidate_artifact": "repro/pump/nested-ancestry-fortyeight/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -167,7 +167,7 @@
       "instruction": "distribute_creator_fees",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump/tokenkeg-two-curve-fortyeight/candidate.so",
+      "candidate_artifact": "repro/pump/nested-ancestry-fortyeight/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -175,7 +175,7 @@
       "instruction": "distribute_creator_fees_v2",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump/tokenkeg-two-curve-fortyeight/candidate.so",
+      "candidate_artifact": "repro/pump/nested-ancestry-fortyeight/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -183,7 +183,7 @@
       "instruction": "distribute_fee_to_holders",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump/tokenkeg-two-curve-fortyeight/candidate.so",
+      "candidate_artifact": "repro/pump/nested-ancestry-fortyeight/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -191,7 +191,7 @@
       "instruction": "extend_account",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump/tokenkeg-two-curve-fortyeight/candidate.so",
+      "candidate_artifact": "repro/pump/nested-ancestry-fortyeight/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -199,7 +199,7 @@
       "instruction": "get_minimum_distributable_fee",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump/tokenkeg-two-curve-fortyeight/candidate.so",
+      "candidate_artifact": "repro/pump/nested-ancestry-fortyeight/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -207,7 +207,7 @@
       "instruction": "init_user_volume_accumulator",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump/tokenkeg-two-curve-fortyeight/candidate.so",
+      "candidate_artifact": "repro/pump/nested-ancestry-fortyeight/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -215,7 +215,7 @@
       "instruction": "initialize",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump/tokenkeg-two-curve-fortyeight/candidate.so",
+      "candidate_artifact": "repro/pump/nested-ancestry-fortyeight/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -223,7 +223,7 @@
       "instruction": "initialize_quote_control",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump/tokenkeg-two-curve-fortyeight/candidate.so",
+      "candidate_artifact": "repro/pump/nested-ancestry-fortyeight/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -231,7 +231,7 @@
       "instruction": "migrate",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump/tokenkeg-two-curve-fortyeight/candidate.so",
+      "candidate_artifact": "repro/pump/nested-ancestry-fortyeight/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -239,7 +239,7 @@
       "instruction": "migrate_bonding_curve_creator",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump/tokenkeg-two-curve-fortyeight/candidate.so",
+      "candidate_artifact": "repro/pump/nested-ancestry-fortyeight/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -247,7 +247,7 @@
       "instruction": "migrate_v2",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump/tokenkeg-two-curve-fortyeight/candidate.so",
+      "candidate_artifact": "repro/pump/nested-ancestry-fortyeight/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -255,7 +255,7 @@
       "instruction": "multi_hop_curve_swap",
       "status": "partial",
       "limitation": "One native curve per genuine AMM-signed Pump CPI with flag 3, plus exactly SOL\u2192A\u2192B and B\u2192A\u2192SOL using ordinary Tokenkeg accounts and flags [1,2]/[2,1]. The two-curve paths require canonical pre-existing vaults, a native root storing quote zero, ordinary 166-byte curves and strictly non-completing buys. Broader routes, other quote currencies, arbitrary hop counts, Token-2022/extensions, holder/cashback/Mayhem modes and completion remain unsupported. The retained 56-case one-curve subset has 50 Pump CPI comparisons and 11 successes; the new 20-case subset has 18 Pump CPI comparisons and 16 successes.",
-      "candidate_artifact": "repro/pump/tokenkeg-two-curve-fortyeight/candidate.so",
+      "candidate_artifact": "repro/pump/nested-ancestry-fortyeight/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -263,7 +263,7 @@
       "instruction": "remove_quote_control_mint",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump/tokenkeg-two-curve-fortyeight/candidate.so",
+      "candidate_artifact": "repro/pump/nested-ancestry-fortyeight/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -271,7 +271,7 @@
       "instruction": "remove_quote_mint",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump/tokenkeg-two-curve-fortyeight/candidate.so",
+      "candidate_artifact": "repro/pump/nested-ancestry-fortyeight/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -279,7 +279,7 @@
       "instruction": "sell",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump/tokenkeg-two-curve-fortyeight/candidate.so",
+      "candidate_artifact": "repro/pump/nested-ancestry-fortyeight/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -287,7 +287,7 @@
       "instruction": "sell_v2",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump/tokenkeg-two-curve-fortyeight/candidate.so",
+      "candidate_artifact": "repro/pump/nested-ancestry-fortyeight/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -295,7 +295,7 @@
       "instruction": "sell_v3",
       "status": "partial",
       "limitation": "SOL and USDC quote branches, Mayhem/holder fields and cashback rejection. Other quote routes and exhaustive extension/account validation remain incomplete; final event suffix uninterpreted.",
-      "candidate_artifact": "repro/pump/tokenkeg-two-curve-fortyeight/candidate.so",
+      "candidate_artifact": "repro/pump/nested-ancestry-fortyeight/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -303,7 +303,7 @@
       "instruction": "set_creator",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump/tokenkeg-two-curve-fortyeight/candidate.so",
+      "candidate_artifact": "repro/pump/nested-ancestry-fortyeight/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -311,7 +311,7 @@
       "instruction": "set_max_curve_depth",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump/tokenkeg-two-curve-fortyeight/candidate.so",
+      "candidate_artifact": "repro/pump/nested-ancestry-fortyeight/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -319,7 +319,7 @@
       "instruction": "set_mayhem_virtual_params",
       "status": "unrecovered",
       "limitation": null,
-      "candidate_artifact": "repro/pump/tokenkeg-two-curve-fortyeight/candidate.so",
+      "candidate_artifact": "repro/pump/nested-ancestry-fortyeight/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -327,7 +327,7 @@
       "instruction": "set_metaplex_creator",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump/tokenkeg-two-curve-fortyeight/candidate.so",
+      "candidate_artifact": "repro/pump/nested-ancestry-fortyeight/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -335,7 +335,7 @@
       "instruction": "set_params",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump/tokenkeg-two-curve-fortyeight/candidate.so",
+      "candidate_artifact": "repro/pump/nested-ancestry-fortyeight/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -343,7 +343,7 @@
       "instruction": "set_quote_control_admin",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump/tokenkeg-two-curve-fortyeight/candidate.so",
+      "candidate_artifact": "repro/pump/nested-ancestry-fortyeight/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -351,7 +351,7 @@
       "instruction": "set_quote_control_mint_reserves",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump/tokenkeg-two-curve-fortyeight/candidate.so",
+      "candidate_artifact": "repro/pump/nested-ancestry-fortyeight/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -359,7 +359,7 @@
       "instruction": "set_quote_control_reserves_admin",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump/tokenkeg-two-curve-fortyeight/candidate.so",
+      "candidate_artifact": "repro/pump/nested-ancestry-fortyeight/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -367,7 +367,7 @@
       "instruction": "set_reserved_fee_recipients",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump/tokenkeg-two-curve-fortyeight/candidate.so",
+      "candidate_artifact": "repro/pump/nested-ancestry-fortyeight/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -375,7 +375,7 @@
       "instruction": "set_virtual_quote_reserves",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump/tokenkeg-two-curve-fortyeight/candidate.so",
+      "candidate_artifact": "repro/pump/nested-ancestry-fortyeight/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -383,7 +383,7 @@
       "instruction": "sweep_creator_fee",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump/tokenkeg-two-curve-fortyeight/candidate.so",
+      "candidate_artifact": "repro/pump/nested-ancestry-fortyeight/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -391,7 +391,7 @@
       "instruction": "sweep_protocol_fee",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump/tokenkeg-two-curve-fortyeight/candidate.so",
+      "candidate_artifact": "repro/pump/nested-ancestry-fortyeight/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -399,7 +399,7 @@
       "instruction": "sync_user_volume_accumulator",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump/tokenkeg-two-curve-fortyeight/candidate.so",
+      "candidate_artifact": "repro/pump/nested-ancestry-fortyeight/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -407,7 +407,7 @@
       "instruction": "toggle_cashback_enabled",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump/tokenkeg-two-curve-fortyeight/candidate.so",
+      "candidate_artifact": "repro/pump/nested-ancestry-fortyeight/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -415,7 +415,7 @@
       "instruction": "toggle_create_v2",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump/tokenkeg-two-curve-fortyeight/candidate.so",
+      "candidate_artifact": "repro/pump/nested-ancestry-fortyeight/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -423,7 +423,7 @@
       "instruction": "toggle_mayhem_mode",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump/tokenkeg-two-curve-fortyeight/candidate.so",
+      "candidate_artifact": "repro/pump/nested-ancestry-fortyeight/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -431,7 +431,7 @@
       "instruction": "update_buyback_config",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump/tokenkeg-two-curve-fortyeight/candidate.so",
+      "candidate_artifact": "repro/pump/nested-ancestry-fortyeight/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -439,7 +439,7 @@
       "instruction": "update_creator_fee_config",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump/tokenkeg-two-curve-fortyeight/candidate.so",
+      "candidate_artifact": "repro/pump/nested-ancestry-fortyeight/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -447,7 +447,7 @@
       "instruction": "update_global_authority",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump/tokenkeg-two-curve-fortyeight/candidate.so",
+      "candidate_artifact": "repro/pump/nested-ancestry-fortyeight/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -455,7 +455,7 @@
       "instruction": "update_holder_reward_config",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump/tokenkeg-two-curve-fortyeight/candidate.so",
+      "candidate_artifact": "repro/pump/nested-ancestry-fortyeight/candidate.so",
       "full_byte_equality": false
     },
     {
@@ -1213,14 +1213,14 @@
   ],
   "current_validation": {
     "scope": "Saved bounded comparison receipts, including repeated inputs; not exhaustive input coverage or whole-program equality. Pump Surfpool comparisons are counted separately. Canonical harness replays add no new unique coverage cases.",
-    "core_differential_comparisons": 53755,
+    "core_differential_comparisons": 53771,
     "pump_surfpool_comparisons": 1024,
     "programs": {
       "pump": {
-        "candidate_artifact": "repro/pump/tokenkeg-two-curve-fortyeight/candidate.so",
-        "candidate_sha256": "5c1c1c2d1cd2c334b3e054b6a8fb5ac0638d80d13495c1c18d935ad20bfd62bb",
-        "differential_comparisons": 9237,
-        "comparison_report": "repro/pump/tokenkeg-two-curve-fortyeight/build-comparison.json"
+        "candidate_artifact": "repro/pump/nested-ancestry-fortyeight/candidate.so",
+        "candidate_sha256": "568546bcf038740d995325c1e742528f218f630840ac152f96dcf5c2147eabc2",
+        "differential_comparisons": 9253,
+        "comparison_report": "repro/pump/nested-ancestry-fortyeight/build-comparison.json"
       },
       "pump_amm": {
         "candidate_artifact": "repro/pump_amm/update-event-borrow-v144/candidate.so",

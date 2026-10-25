@@ -120,6 +120,10 @@ def main():
         subprocess.run([sys.executable, "-B", str((ROOT / artifact).parent / "verify.py"),
                         "--current-main", "--repo", str(ROOT)], check=True)
         return
+    if args.program == "pump" and artifact == "repro/pump/nested-ancestry-fortyeight/candidate.so":
+        subprocess.run([sys.executable, "-B", str((ROOT / artifact).parent / "verify-package.py"),
+                        "--current-main"], check=True)
+        return
     current = {
         "pump": "repro/pump/tokenkeg-two-curve-fortyeight/candidate.so",
         "fees": "repro/pump_fees/donation-event-account-v144/pump_fees_candidate.so",
