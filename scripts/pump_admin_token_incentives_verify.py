@@ -17,32 +17,66 @@ FINANCIAL_ACCOUNTS = (
 
 
 def main(receipt_path=diff.OUTPUT, candidate_path=diff.CANDIDATE,
-         build_path=diff.BUILD):
+         build_path=diff.BUILD, expected_baseline="4ffe8bd88761059693e481ae972443c10204f7af"):
     receipt_path, candidate_path, build_path = map(Path,
                                                    (receipt_path, candidate_path, build_path))
     encoded = receipt_path.read_bytes()
     receipt = json.loads(gzip.decompress(encoded) if receipt_path.suffix == ".gz"
                          else encoded)
-    assert receipt["baseline_commit"] == "4ffe8bd88761059693e481ae972443c10204f7af"
+    assert receipt["baseline_commit"] == expected_baseline
     assert receipt["target_sha256"] == diff.sha(diff.TARGET)
     assert receipt["candidate_sha256"] == diff.sha(candidate_path)
     assert receipt["build_comparison_sha256"] == diff.sha(build_path)
+    build = json.loads(build_path.read_text())
+    assert build["selected_toolchain"] == "v1.44"
+    assert build["comparison"]["candidate_sha256"] == receipt["candidate_sha256"]
+    assert all(checksum == diff.sha(diff.ROOT / path)
+               for path, checksum in build["source_sha256"].items())
+    assert build["build_log_sha256"] == diff.sha(gzip.decompress(
+        (build_path.parent / "build.log.gz").read_bytes()))
     if receipt.get("second_clean_build") is not None:
         second = receipt["second_clean_build"]
         second_path = Path(second["comparison_path"])
         if not second_path.is_absolute():
             second_path = diff.ROOT / second_path
         assert diff.sha(second_path) == second["comparison_sha256"]
-        first_build = json.loads(build_path.read_text())
+        first_build = build
         second_build = json.loads(second_path.read_text())
         assert first_build["source_sha256"] == second_build["source_sha256"]
         assert first_build["selected_toolchain"] == second_build["selected_toolchain"]
+        assert first_build["comparison"]["candidate_sha256"] == second_build["comparison"]["candidate_sha256"]
+        assert second_build["build_log_sha256"] == diff.sha(gzip.decompress(
+            (second_path.parent / "second-build.log.gz").read_bytes()))
     assert receipt["idl_sha256"] == diff.sha(diff.IDL)
     assert receipt["global_snapshot_sha256"] == diff.sha(diff.SNAPSHOT)
     for path, checksum in receipt["source_sha256"].items():
         assert checksum == diff.sha(diff.ROOT / path), path
     for name, checksum in receipt["dependency_sha256"].items():
         assert checksum == diff.sha(diff.ROOT / "evidence/dependencies" / name / "deployed.so")
+    if expected_baseline == "80990317bd9c0363e071646b892490886d7bf946":
+        package = build_path.parent
+        reproducibility = json.loads((package / "build-reproducibility.json").read_text())
+        assert reproducibility["source_base_commit"] == expected_baseline
+        assert reproducibility["candidate_sha256"] == receipt["candidate_sha256"]
+        assert reproducibility["builds_identical"] and not reproducibility["deployed_byte_match"]
+        assert reproducibility["source_sha256"] == build["source_sha256"]
+        for filename in ("build-attempt.json", "second-build-attempt.json"):
+            attempt = json.loads((package / filename).read_text())
+            assert attempt["returncode"] == 0 and attempt["source_unchanged"]
+            assert attempt["source_sha256"] == build["source_sha256"]
+        regression = json.loads((package / "regression-summary.json").read_text())
+        quote_file = package / "quote-control-regression.json.gz"
+        curve_file = package / "multi-hop-regression.json"
+        quote = json.loads(gzip.decompress(quote_file.read_bytes()))
+        curve = json.loads(curve_file.read_text())
+        assert regression["candidate_sha256"] == receipt["candidate_sha256"]
+        assert regression["quote_control"]["receipt_sha256"] == diff.sha(quote_file)
+        assert regression["multi_hop_curve"]["receipt_sha256"] == diff.sha(curve_file)
+        assert quote["cases"] == 507 and quote["mismatches"] == 0
+        assert all(checksum == diff.sha(diff.ROOT / path)
+                   for path, checksum in quote["bound_inputs_sha256"].items())
+        assert curve["case_count"] == curve["passed"] == 56
+        assert curve["candidate_sha256"] == receipt["candidate_sha256"]
     idl = json.loads(diff.IDL.read_text())
     item = next(item for item in idl["instructions"]
                 if item["name"] == "admin_update_token_incentives")
@@ -97,5 +131,6 @@ if __name__ == "__main__":
     parser.add_argument("--receipt", type=Path, default=diff.OUTPUT)
     parser.add_argument("--candidate", type=Path, default=diff.CANDIDATE)
     parser.add_argument("--build-comparison", type=Path, default=diff.BUILD)
+    parser.add_argument("--expected-baseline", default="4ffe8bd88761059693e481ae972443c10204f7af")
     args = parser.parse_args()
-    main(args.receipt, args.candidate, args.build_comparison)
+    main(args.receipt, args.candidate, args.build_comparison, args.expected_baseline)

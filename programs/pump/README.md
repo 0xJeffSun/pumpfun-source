@@ -61,6 +61,13 @@ Full original-byte equality remains false; historical compiler/dependency identi
 and the security audit remain incomplete. Earlier checkpoint counts below describe
 their historical source snapshots.
 
+The [merged-source admin checkpoint](../../repro/pump/admin-incentives-8099/README.md)
+rebuilds this branch's bounded handler on upstream `8099031`. Two clean v1.44
+builds agree on SHA-256 `afad2a757245bfca045c8eca0f25ddb2ff53ac6ffb678c84ed7b560a96aec8e7`.
+Its fresh signed replay matches 98/98 focused admin updates, 507/507
+quote-control cases, and 56/56 native-curve cases. Other inherited suites
+and Surfpool runners have not been rerun on this candidate.
+
 The retained [admin-incentives checkpoint](../../repro/pump/admin-incentives-fortynine/README.md)
 was built from public source `4ffe8bd`, before the native-curve and serializer
 merges. Its two

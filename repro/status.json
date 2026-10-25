@@ -134,7 +134,12 @@
     "bonding_curve_serialization_body_evidence": "repro/pump/bonding-curve-serializer-fortyeight/function-match.json",
     "differential_signed_transactions": 15830,
     "differential_verified_signatures": 24216,
-    "unrebuilt_branch_source_handler": "admin_update_token_incentives",
+    "rebuilt_branch_source_handler": "admin_update_token_incentives",
+    "branch_candidate_artifact": "repro/pump/admin-incentives-8099/candidate.so",
+    "branch_candidate_source_base_commit": "80990317bd9c0363e071646b892490886d7bf946",
+    "branch_candidate_focused_receipt": "repro/pump/admin-incentives-8099/differential.json.gz",
+    "branch_candidate_regression_receipt": "repro/pump/admin-incentives-8099/regression-summary.json",
+    "branch_candidate_qualification_limit": "98 focused admin cases, 507 quote-control cases, and 56 native-curve cases passed; other inherited suites and Surfpool runners were not rerun on this branch candidate.",
     "historical_admin_incentives_report": "repro/pump/admin-incentives-fortynine/README.md",
     "historical_admin_incentives_baseline_commit": "4ffe8bd88761059693e481ae972443c10204f7af"
   },
