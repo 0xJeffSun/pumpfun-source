@@ -29,3 +29,7 @@ programs and 2/5 dependency captures**. The bounded instruction measure remains
 140/150 and is not overall completion. Pump fee-basis and Mayhem typed-error
 builds are separate pending work. Full semantic closure and the security audit
 remain incomplete.
+
+The [concurrent recipe review](CONCURRENT-RECIPE-REVIEW.md) records a remote
+research merge encountered during publication. Its size-based compiler and
+source-completeness claims do not change this pass's acceptance records.
