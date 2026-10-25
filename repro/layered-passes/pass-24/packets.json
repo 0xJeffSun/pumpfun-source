@@ -1,0 +1,72 @@
+[
+  {
+    "path": "repro/pump/admin-cto-compared-errors-fortyeight",
+    "manifest": "manifest.json",
+    "sha256": "6dd9e2ea3de977a47867bbb11f249b3cba5f4683b16b3a568d949df30b8609d5",
+    "command": [
+      "verify.py",
+      "--runtime-signatures"
+    ],
+    "runtime_args": []
+  },
+  {
+    "path": "repro/pump/admin-cto-compared-errors-main-fortyeight",
+    "manifest": "manifest.json",
+    "sha256": "c4ee0834d4e59f66fb8a805f20bc39d4556c48332fe955479f9d1793f7ced86a",
+    "command": [
+      "verify.py",
+      "--current-root",
+      ".",
+      "--scratch",
+      "repro/pump/admin-cto-compared-errors-fortyeight"
+    ],
+    "runtime_args": []
+  },
+  {
+    "path": "repro/layered-passes/pass-24/pump-compared-errors-source-proof",
+    "manifest": "manifest.json",
+    "sha256": "bcb32d74c6d9fc5c438809c72665545238bab7cb1933ecd7cd2bee818080a25e",
+    "command": [
+      "verify.py"
+    ],
+    "runtime_args": []
+  },
+  {
+    "path": "repro/layered-passes/pass-24/pump-current-evidence",
+    "manifest": "manifest.json",
+    "sha256": "d55b3c2260564ee612467190db7f5853039bc6eaae0f7b611e99135e115deead",
+    "command": null,
+    "runtime_args": []
+  },
+  {
+    "path": "repro/donation-relay/source-build-13-typed-borrow-owned",
+    "manifest": "manifest.json",
+    "sha256": "1d323ea804581e676204a93cfa6277737243d831a91d9b6dacd4a2448067e4d5",
+    "command": [
+      "verify.py"
+    ],
+    "runtime_args": []
+  },
+  {
+    "path": "repro/donation-relay/source-build-13-selection",
+    "manifest": "manifest.json",
+    "sha256": "7d1ec01d3baf45d755400640f5e9e158946e90c5899028847cbb2c50faeb705e",
+    "command": [
+      "verify.py",
+      "--checkpoint",
+      "repro/donation-relay/source-build-13-typed-borrow-owned",
+      "--current-root",
+      "."
+    ],
+    "runtime_args": []
+  },
+  {
+    "path": "repro/mayhem/compiler-v154-source-retarget",
+    "manifest": "manifest.json",
+    "sha256": "54352a1adb76eb9192b26443c441b4bfa57dffe7918cd3679bd8cb85e29fc3c6",
+    "command": [
+      "verify.py"
+    ],
+    "runtime_args": []
+  }
+]

@@ -37,7 +37,7 @@ The current [Fees V2 caller checkpoint](repro/pump_fees/v2-caller-v144/README.md
 
 The current [Mayhem swap-sell typed-error checkpoint](repro/mayhem/sell-result-error-twentyfour/README.md) restores the typed zero-divisor error in SellPumpSwap, following the prior buy correction. All 9,595 functional comparisons pass; 61 diagnostic rows remain explicit. Saved verification checks 13,284 retained transaction strings and 26,500 signatures; 19,190 remains the recorded/derived signed-execution count. Both clean main builds equal their tested scratch executables and symbols.
 
-[Recovery status](docs/RECOVERY.md) separates observed evidence from unresolved work. The [twenty-third layered pass](repro/layered-passes/pass-23/README.md) records the latest fixes, complete byte differences, function/call/data inventories and the next source obligations.
+[Recovery status](docs/RECOVERY.md) separates observed evidence from unresolved work. The [twenty-fourth layered pass](repro/layered-passes/pass-24/README.md) records the latest fixes, complete byte differences, function/call/data inventories and the next source obligations.
 The [completion and remaining-work ledger](docs/COMPLETION.md) enumerates all 150 instruction dispositions: 140 bounded implementations (93.3%), five partial and five unrecovered. Whole-binary completion remains 0/4; this is not a 93.3% overall completion estimate.
 [Parallel worker results and concurrency configuration](docs/PARALLEL_WORK.md) document the completed CLI research waves, focused follow-ups and configured concurrency.
 [Tooling](docs/TOOLING.md) covers recapture, disassembly and strict candidate comparison.
@@ -83,3 +83,5 @@ The [twentieth layered pass](repro/layered-passes/pass-20/README.md) restores Pu
 [Pass22](repro/layered-passes/pass-22/README.md) integrates five CTO owned errors, the final two typed sharing CPIs and Relay owned3002, with full artifact/input proofs. Complete original identity remains0/4; the next proven Fees admin-or-creator authorization gap is explicitly retained.
 
 [Pass23](repro/layered-passes/pass-23/README.md) restores the proved sharing admin-or-creator guard and plain rejection ownership. All existing cases and exact main/scratch identity pass; admin-only runtime coverage is zero, and core original identity remains0/4.
+
+[Pass24](repro/layered-passes/pass-24/README.md) integrates two proved Pump compared-key error constructors and Relay checked-borrow error ownership. Entire main and tested Pump binaries agree; existing corpora pass, with explicit zero coverage for the changed PDA/borrow failures. A stronger Mayhem compiler candidate is retained separately. Whole-original identity remains 0/4 core programs.

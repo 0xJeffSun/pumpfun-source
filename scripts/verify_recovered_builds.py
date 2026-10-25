@@ -15,6 +15,10 @@ for name,status in json.loads((ROOT/'repro/status.json').read_text()).items():
  log_path=ROOT/status['build_log'];log=log_path.read_bytes()
  if log_path.suffix=='.gz':log=gzip.decompress(log)
  assert hashlib.sha256(log).hexdigest()==report['build_log_sha256'],name
+ if name=='pump' and status['candidate_artifact']=='repro/pump/admin-cto-compared-errors-main-fortyeight/main/candidate.so':
+  subprocess.run([sys.executable,'-B',str(ROOT/'scripts/verify_pump_compared_checkpoint.py')],check=True)
+  print(name,': exact compared-error checkpoint;9269 saved differential cases and1024 Surfpool comparisons; full original byte equality',report['comparison']['full_byte_equality'])
+  continue
  if name=='pump' and status['candidate_artifact']in['repro/pump/admin-cto-error-batch-main-fortyeight/main/candidate.so','repro/pump/admin-cto-owned-main-fortyeight/main/candidate.so','repro/pump/admin-cto-owned6083-main-fortyeight/main/candidate.so']:
   assert status['validated_cases']==9269
   current=status['candidate_artifact'].removesuffix('/main/candidate.so')
