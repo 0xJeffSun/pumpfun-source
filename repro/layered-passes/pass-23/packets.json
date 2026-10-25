@@ -111,5 +111,16 @@
       "verify.py"
     ],
     "runtime_args": []
+  },
+  {
+    "path": "repro/layered-passes/pass-23/reconciliation-transition",
+    "manifest": "manifest.json",
+    "sha256": "c89a3f212625d7a79989c5f1142aaa51e99d211480fa108b55e1c55a7fe773d6",
+    "command": [
+      "verify.py",
+      "--current-root",
+      "."
+    ],
+    "runtime_args": []
   }
 ]
