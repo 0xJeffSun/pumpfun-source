@@ -466,3 +466,22 @@ See `repro/pump_fees/sharing-option-order-v144/` for exact source and original/c
 The `sharing-pump-extend-v144` checkpoint restores only sharing creation's first Pump extension to the generated Anchor CPI helper. The local Pump IDL marks this extension's user writable, preserving the original and preceding manual-call metadata. The full emitted helper, AccountMeta constructor and AccountInfo constructor match their original instruction windows under call/relocation normalization, with all immediate target bodies supported. Remaining three manual calls are unchanged.
 
 See `repro/pump_fees/sharing-pump-extend-v144/` for source/IDL bindings, complete before/after inventories, unchanged finite runtime receipts, signatures and raw diagnostics; the separate main identity is in `repro/pump_fees/sharing-pump-extend-main-v144/`. This does not claim whole original ELF equality or recursive target-program semantics.
+
+
+## Second Pump CPI ownership checkpoint
+
+The [second Pump CPI checkpoint](../../repro/pump_fees/sharing-second-pump-cpi-v144/README.md)
+restores the generated `migrate_bonding_curve_creator` CPI with its natural
+CpiContext ownership, account-info append and data allocation. The local IDL
+already has the original metadata; only one source call changes. Both existing
+Pump calls keep their order and success barriers. The two remaining AMM manual
+calls are unchanged.
+
+The scratch candidate is `466725afe7406860177df56696a60897874ffa6dab7429e5cc62da087dbf48b5`.
+The new complete CPI helper and AccountMeta constructor match normalized original
+windows with their immediate call targets; the prior three helper matches remain.
+The full inventory leaves 125 unattributed and two conflicting original windows.
+All 17,461 unchanged comparisons and the separate ten-step sequence pass; no
+new fixture or unique case is claimed. Raw diagnostics and full recursive/whole
+original equality remain unresolved. The [main companion](../../repro/pump_fees/sharing-second-pump-cpi-main-v144/README.md)
+binds one clean main build to the tested scratch executable and symbols.

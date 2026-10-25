@@ -455,3 +455,7 @@ Three Pump creator paths use the already-recovered full BondingCurve account typ
 ## Pass20 and upstream reconciliation
 
 [Pass20](../repro/layered-passes/pass-20/README.md) binds three clean main/scratch identities and complete before/after ledgers. [Upstream reconciliation](../repro/upstream-reconciliation/main-bde19c4e/README.md) accounts for266 incoming paths and retains15 conflicting active variants outside the compiler tree;251 research/evidence additions remain inactive. The excluded execution scopes and verified compiler recipes are unchanged.
+
+## Pass21: second typed CPI, owned6083 and helper provenance
+
+[Pass21](../repro/layered-passes/pass-21/README.md) binds the exact tested/main artifacts and preserves the concurrent helper-default failures. Current-checkpoint verification independently checks actual sources, README and helpers against frozen evidence, allowing only the sealed explicit-version-equivalent transition. No original compiler or whole-program identity is claimed.

@@ -37,7 +37,7 @@ The current [Fees V2 caller checkpoint](repro/pump_fees/v2-caller-v144/README.md
 
 The current [Mayhem swap-sell typed-error checkpoint](repro/mayhem/sell-result-error-twentyfour/README.md) restores the typed zero-divisor error in SellPumpSwap, following the prior buy correction. All 9,595 functional comparisons pass; 61 diagnostic rows remain explicit. Saved verification checks 13,284 retained transaction strings and 26,500 signatures; 19,190 remains the recorded/derived signed-execution count. Both clean main builds equal their tested scratch executables and symbols.
 
-[Recovery status](docs/RECOVERY.md) separates observed evidence from unresolved work. The [twentieth layered pass](repro/layered-passes/pass-20/README.md) records the latest fixes, complete byte differences, function/call/data inventories and the next source obligations.
+[Recovery status](docs/RECOVERY.md) separates observed evidence from unresolved work. The [twenty-first layered pass](repro/layered-passes/pass-21/README.md) records the latest fixes, complete byte differences, function/call/data inventories and the next source obligations.
 The [completion and remaining-work ledger](docs/COMPLETION.md) enumerates all 150 instruction dispositions: 140 bounded implementations (93.3%), five partial and five unrecovered. Whole-binary completion remains 0/4; this is not a 93.3% overall completion estimate.
 [Parallel worker results and concurrency configuration](docs/PARALLEL_WORK.md) document the completed CLI research waves, focused follow-ups and configured concurrency.
 [Tooling](docs/TOOLING.md) covers recapture, disassembly and strict candidate comparison.
@@ -77,3 +77,5 @@ The [eighteenth layered pass](repro/layered-passes/pass-18/README.md) restores A
 The [nineteenth layered pass](repro/layered-passes/pass-19/README.md) restores Pump admin-CTO typed curve state, AMM initializer user ownership, and Fees late account-check/state-exit order. All existing corpora pass; AMM retains297 unmatched original windows. Whole original byte identity remains0/4.
 
 The [twentieth layered pass](repro/layered-passes/pass-20/README.md) restores Pump owned CTO error metadata, Fees first typed CPI ownership, and AMM logical module provenance. All three main builds equal tested scratch artifacts;0/4 core originals match. Upstream history is reconciled with excluded executions retained.
+
+[Pass21](repro/layered-passes/pass-21/README.md) restores Pump owned6083 and the second typed Fees Pump CPI, with exact main/scratch identity. Concurrent helper-default integrity failures are preserved and narrowly reconciled through explicit-version AST proof; byte identity remains0/4.
