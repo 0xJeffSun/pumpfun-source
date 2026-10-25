@@ -1,7 +1,7 @@
 # Partial PumpSwap source recovery
 
-Thirty-one administrative, accumulator, liquidity, v2 trading, pool creation, boost initialization, fee sweep, account extension, creator-fee collection/transfer and creator-reassignment, incentive scheduling/claim and volume synchronization handlers are implemented from captured-program behavior and
-disassembly. The remaining seven published handlers are absent. This is not a
+Thirty-two administrative, accumulator, liquidity, v2 trading, pool creation, boost initialization, fee sweep, account extension, creator-fee collection/transfer and creator-reassignment, incentive scheduling/claim volume synchronization and cashback-claim handlers are implemented from captured-program behavior and
+disassembly. The remaining six published handlers are absent. This is not a
 replacement for the deployed program and does not match its bytes.
 
 ```sh
@@ -28,9 +28,10 @@ Additional SBF suites are `scripts/pump_amm_buyback_differential.py`,
 `scripts/pump_amm_transfer_creator_differential.py`,
 `scripts/pump_amm_creator_reassignment_differential.py`, and
 `scripts/pump_amm_creator_reassignment_cto_differential.py`, and
-`scripts/pump_amm_incentives_differential.py --family sync|admin|claim`, each taking `--candidate` and `--output`.
+`scripts/pump_amm_incentives_differential.py --family sync|admin|claim`, and
+`scripts/pump_amm_cashback_differential.py`, each taking `--candidate` and `--output`.
 
 For a clean build with complete source/lock/toolchain hashes and an unmodified
 whole-file comparison, use `scripts/build_partial_candidate.py`. See
 `audit/pump_amm/ADMIN_RECOVERY.md` and `audit/pump_amm/LIQUIDITY_RECOVERY.md` and
-`audit/pump_amm/TRADE_V2_RECOVERY.md` and `audit/pump_amm/CREATE_POOL_RECOVERY.md` and `audit/pump_amm/BOOST_RECOVERY.md` and `audit/pump_amm/SWEEP_RECOVERY.md` and `audit/pump_amm/EXTEND_RECOVERY.md` and `audit/pump_amm/CREATOR_FEES_RECOVERY.md` and `audit/pump_amm/CREATOR_REASSIGNMENT_RECOVERY.md` and `audit/pump_amm/INCENTIVES_RECOVERY.md` for recovered constraints and limitations.
+`audit/pump_amm/TRADE_V2_RECOVERY.md` and `audit/pump_amm/CREATE_POOL_RECOVERY.md` and `audit/pump_amm/BOOST_RECOVERY.md` and `audit/pump_amm/SWEEP_RECOVERY.md` and `audit/pump_amm/EXTEND_RECOVERY.md` and `audit/pump_amm/CREATOR_FEES_RECOVERY.md` and `audit/pump_amm/CREATOR_REASSIGNMENT_RECOVERY.md` and `audit/pump_amm/INCENTIVES_RECOVERY.md` and `audit/pump_amm/CASHBACK_RECOVERY.md` for recovered constraints and limitations.
