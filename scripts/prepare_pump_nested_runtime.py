@@ -4,11 +4,11 @@ import argparse
 import hashlib
 import json
 from pathlib import Path, PurePosixPath
+from verify_current_checkpoint import verify as verify_checkpoint
 
 ROOT = Path(__file__).resolve().parents[1]
 HARNESS_PACKAGE = ROOT / 'repro/pump/buy-mode-order-fortyeight'
 HARNESS_SEAL = '84849c316aa1e9c0bb8ae05050480cd641fdd9546e69cf875085f29645bbd3a0'
-MAIN_PACKAGE = ROOT / 'repro/pump/admin-cto-owned6083-main-fortyeight'
 PREFIX = 'runtime-layer/nested-harness/'
 
 
@@ -17,13 +17,19 @@ def sha(path):
 
 
 def prepare(output):
+    checkpoint = verify_checkpoint('pump', ROOT)
+    status = json.loads((ROOT / 'repro/status.json').read_text())['pump']
+    candidate = ROOT / status['candidate_artifact']
+    main_package = candidate.parent.parent
+    assert candidate.name == 'candidate.so' and candidate.parent.name == 'main'
     manifest_path = HARNESS_PACKAGE / 'manifest.json'
     assert sha(manifest_path) == HARNESS_SEAL
     manifest = json.loads(manifest_path.read_text())
     selected = {name: value for name, value in manifest.items() if name.startswith(PREFIX)}
     assert len(selected) == 6
-    report_path = MAIN_PACKAGE / 'main/build-comparison.json'
-    attempt_path = MAIN_PACKAGE / 'main/build-attempt.json'
+    report_path = ROOT / status['comparison_report']
+    assert report_path == main_package / 'main/build-comparison.json'
+    attempt_path = main_package / 'main/build-attempt.json'
     report = json.loads(report_path.read_text())
     attempt = json.loads(attempt_path.read_text())
     assert attempt['returncode'] == 0 and attempt['source_unchanged']
@@ -34,8 +40,7 @@ def prepare(output):
         path = PurePosixPath(name)
         assert not path.is_absolute() and '..' not in path.parts
         assert name.startswith('programs/pump/') and sha(ROOT / name) == digest, name
-    candidate = MAIN_PACKAGE / 'main/candidate.so'
-    assert report['comparison']['candidate_sha256'] == sha(candidate)
+    assert report['comparison']['candidate_sha256'] == sha(candidate) == checkpoint['candidate_sha256']
     output.mkdir(parents=True, exist_ok=False)
     copied = {}
     for name, value in selected.items():
@@ -57,6 +62,7 @@ def prepare(output):
         'current_source_map_sha256': sha(source_map),
         'build_report_sha256': sha(report_path), 'build_attempt_sha256': sha(attempt_path),
         'candidate_sha256': sha(candidate),
+        'current_checkpoint': str(main_package.relative_to(ROOT)),
         'scope': 'Only the copied expected source map changes; cases, runtime code and assertions retain their sealed bytes.'
     }
     (output / 'binding-update.json').write_text(json.dumps(record, indent=2, sort_keys=True) + '\n')
