@@ -73,3 +73,11 @@ repro/pump/admin-cto-compared-errors-main-fortyeight/promotion-control/baseline/
 repro/pump/admin-cto-compared-errors-main-fortyeight/promotion-control/proposed-source/programs/pump/src/cashback.rs -whitespace
 repro/pump/admin-cto-compared-errors-main-fortyeight/promotion-control/proposed-source/programs/pump/src/create_v2.rs -whitespace
 repro/pump/metaplex-candidate-build-13-review/hosted-job.log -whitespace
+repro/donation-relay/compiler-v147-backend-rejection/attempt/source/src/dispatch.rs -whitespace
+repro/donation-relay/compiler-v147-backend-rejection/reviewed-plan/accepted-launcher/crate/src/dispatch.rs -whitespace
+repro/donation-relay/compiler-v147-backend-rejection/reviewed-plan/primary-source/platform-build.sh -whitespace
+repro/donation-relay/compiler-v147-backend-rejection/reviewed-plan/source/src/dispatch.rs -whitespace
+repro/mayhem/compiler-v154-runtime/control/seed/scripts/mayhem_validate_sweeps.py -whitespace
+repro/mayhem/compiler-v154-runtime/control/static5435/build/readelf-dyn-symbols.stdout -whitespace
+repro/mayhem/compiler-v154-runtime/control/static5435/build/readelf-structure.stdout -whitespace
+repro/mayhem/compiler-v154-runtime/control/static5435/reviewed-plan/audit/v1.54-build.sh -whitespace
