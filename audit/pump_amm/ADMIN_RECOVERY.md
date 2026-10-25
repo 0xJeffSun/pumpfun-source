@@ -128,3 +128,12 @@ state and exact inner CPI instructions against the captured original, running th
 captured SPL Token and Token2022 binaries. Details and remaining dependency limits
 are in `LIQUIDITY_RECOVERY.md`. The remaining 24 handlers are absent; whole-program
 byte identity remains false.
+
+## V2 trading checkpoint
+
+`repro/pump_amm/trade-seventeen/` adds `buy_v2`, `sell_v2`, and
+`buy_exact_quote_in_v2`, with **10,937** aggregate cases and zero observed
+mismatches across eight suites on one clean candidate ELF. The v2 suite includes
+870 cases with exact inner CPI payload and involved account-state comparisons.
+See `TRADE_V2_RECOVERY.md` for recovered behavior, dependencies and limits.
+Twenty-one handlers remain absent and complete byte identity remains false.
