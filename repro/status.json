@@ -5,7 +5,7 @@
     "compiler": "unresolved",
     "dependencies": "unresolved",
     "build_flags": "unresolved",
-    "candidate_artifact": "repro/pump/quote-control-fortyeight/candidate.so",
+    "candidate_artifact": "repro/pump/admin-incentives-fortynine/candidate.so",
     "full_byte_equality": false,
     "comparison_status": "DIFFERS_PARTIAL_IMPLEMENTATION",
     "implemented_handlers": [
@@ -56,13 +56,18 @@
       "set_quote_control_reserves_admin",
       "add_quote_control_mint",
       "remove_quote_control_mint",
-      "set_quote_control_mint_reserves"
+      "set_quote_control_mint_reserves",
+      "admin_update_token_incentives"
     ],
-    "comparison_report": "repro/pump/quote-control-fortyeight/build-comparison.json",
-    "build_log": "repro/pump/quote-control-fortyeight/build.log.gz",
-    "validated_cases": 9161,
+    "comparison_report": "repro/pump/admin-incentives-fortynine/build-comparison.json",
+    "build_log": "repro/pump/admin-incentives-fortynine/build.log.gz",
+    "validated_cases": 9259,
     "validation_reports": [
-      "repro/pump/quote-control-fortyeight/all-differential.json.gz"
+      "repro/pump/admin-incentives-fortynine/differential/prior-thirtythree.json.gz",
+      "repro/pump/admin-incentives-fortynine/differential/holder-distribution.json.gz",
+      "repro/pump/admin-incentives-fortynine/differential/nested-create.json.gz",
+      "repro/pump/admin-incentives-fortynine/differential/quote-control.json.gz",
+      "repro/pump/admin-token-incentives-candidate-differential.json.gz"
     ],
     "partially_implemented_handlers": {
       "sell_v3": "SOL and USDC quote branches, Mayhem/holder fields and cashback rejection. Other quote routes and exhaustive extension/account validation remain incomplete; final event suffix uninterpreted.",
@@ -110,17 +115,26 @@
     "surfpool_comparisons": 1024,
     "surfpool_signed_transactions": 2048,
     "coverage_limitations": [
-      "Known current reconstruction gap: sell_v2 quote transfer-fee minimum-output checking and fee-event fields differ from the captured original. Saved passing suites do not cover this boundary; candidate is not a deployable replacement."
+      "Known current reconstruction gap: sell_v2 quote transfer-fee minimum-output checking and fee-event fields differ from the captured original. Saved passing suites do not cover this boundary; candidate is not a deployable replacement.",
+      "Admin incentive acceptance uses a locally re-authorized captured Global account and synthetic accumulator/mint/ATA; it does not prove possession of the live admin key, downstream claim behavior, or all reachable incentive schedules."
     ],
-    "candidate_build_identity_report": "repro/pump/quote-control-fortyeight/main-scratch-identity.json",
-    "prior_checkpoint": "repro/pump/holder-nested-fortytwo",
+    "candidate_build_identity_report": "repro/pump/admin-incentives-fortynine/two-build-identity.json",
+    "prior_checkpoint": "repro/pump/quote-control-fortyeight",
     "holder_nested_recovery_report": "audit/pump/HOLDER_NESTED_RECOVERY.md",
     "surfpool_verified_signatures": 2980,
     "quote_control_recovery_report": "audit/pump/QUOTE_CONTROL_RECOVERY.md",
     "quote_control_focused_cases": 507,
     "quote_control_executed_transactions": 1014,
     "quote_control_verified_signatures": 2008,
-    "mayhem_virtual_params_static_evidence": "repro/pump/mayhem-virtual-params-static/README.md"
+    "mayhem_virtual_params_static_evidence": "repro/pump/mayhem-virtual-params-static/README.md",
+    "admin_token_incentives_cases": 98,
+    "admin_token_incentives_successes": 43,
+    "admin_token_incentives_rollbacks": 55,
+    "admin_token_incentives_receipt": "repro/pump/admin-token-incentives-candidate-differential.json.gz",
+    "admin_token_incentives_verifier": "scripts/pump_admin_token_incentives_verify.py",
+    "regression_summary": "repro/pump/admin-incentives-fortynine/regression-summary.json",
+    "surfpool_validation_candidate_artifact": "repro/pump/quote-control-fortyeight/candidate.so",
+    "surfpool_validation_scope": "The 1,024 Surfpool comparisons and 2,048 signed transactions were retained from the prior 48-handler candidate; no Surfpool runner was executed against admin-incentives-fortynine."
   },
   "pump_amm": {
     "source_reconstruction": "partial_handlers_compiled",
