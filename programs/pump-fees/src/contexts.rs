@@ -353,20 +353,17 @@ pub struct SweepBuyback<'info> {
 #[derive(Accounts)]
 pub struct TransferFeeSharingAuthority {}
 
+#[event_cpi]
 #[derive(Accounts)]
 pub struct UpdateAdmin<'info> {
     pub admin: Signer<'info>,
-    #[account(mut)]
-    /// CHECK: Exact deployed constraint not recovered.
-    pub fee_config: UncheckedAccount<'info>,
-    /// CHECK: Exact deployed constraint not recovered.
+    #[account(mut, seeds = [b"fee_config", config_program_id.key().as_ref()], bump = fee_config.bump,
+              has_one = admin @ FeeError::InvalidAdmin)]
+    pub fee_config: Account<'info, FeeConfig>,
+    /// CHECK: accepted as the next authority key; zero and nonsigner keys are allowed.
     pub new_admin: UncheckedAccount<'info>,
-    /// CHECK: Exact deployed constraint not recovered.
+    /// CHECK: configuration PDA namespace.
     pub config_program_id: UncheckedAccount<'info>,
-    /// CHECK: Exact deployed constraint not recovered.
-    pub event_authority: UncheckedAccount<'info>,
-    /// CHECK: Exact deployed constraint not recovered.
-    pub program: UncheckedAccount<'info>,
 }
 
 #[derive(Accounts)]
@@ -511,32 +508,26 @@ pub struct UpdateStableFeeConfig<'info> {
     pub config_program_id: UncheckedAccount<'info>,
 }
 
+#[event_cpi]
 #[derive(Accounts)]
 pub struct UpsertFeeTiers<'info> {
-    #[account(mut)]
-    /// CHECK: Exact deployed constraint not recovered.
-    pub fee_config: UncheckedAccount<'info>,
+    #[account(mut, seeds = [b"fee_config", config_program_id.key().as_ref()], bump = fee_config.bump,
+              has_one = admin @ FeeError::InvalidAdmin)]
+    pub fee_config: Account<'info, FeeConfig>,
     pub admin: Signer<'info>,
-    /// CHECK: Exact deployed constraint not recovered.
+    /// CHECK: configuration PDA namespace.
     pub config_program_id: UncheckedAccount<'info>,
-    /// CHECK: Exact deployed constraint not recovered.
-    pub event_authority: UncheckedAccount<'info>,
-    /// CHECK: Exact deployed constraint not recovered.
-    pub program: UncheckedAccount<'info>,
 }
 
+#[event_cpi]
 #[derive(Accounts)]
 pub struct UpsertStableFeeTiers<'info> {
-    #[account(mut)]
-    /// CHECK: Exact deployed constraint not recovered.
-    pub fee_config: UncheckedAccount<'info>,
+    #[account(mut, seeds = [b"fee_config", config_program_id.key().as_ref()], bump = fee_config.bump,
+              has_one = admin @ FeeError::InvalidAdmin)]
+    pub fee_config: Account<'info, FeeConfig>,
     pub admin: Signer<'info>,
-    /// CHECK: Exact deployed constraint not recovered.
+    /// CHECK: configuration PDA namespace.
     pub config_program_id: UncheckedAccount<'info>,
-    /// CHECK: Exact deployed constraint not recovered.
-    pub event_authority: UncheckedAccount<'info>,
-    /// CHECK: Exact deployed constraint not recovered.
-    pub program: UncheckedAccount<'info>,
 }
 
 #[derive(Accounts)]

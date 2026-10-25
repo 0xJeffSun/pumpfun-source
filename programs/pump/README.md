@@ -2,12 +2,16 @@
 
 The Anchor 0.31.1 source implements four recovered administration handlers:
 `toggle_create_v2`, `toggle_mayhem_mode`, `toggle_cashback_enabled`, and
-`set_max_curve_depth`. It also implements **partial SOL `sell_v3` and `buy_v3` paths**.
+`set_max_curve_depth`. It also implements **partial SOL and USDC-quote `sell_v3` and `buy_v3` paths**.
 It is incomplete and is not a deployable replacement.
 
 The trade paths handle constant-product reserve changes, fee tier selection,
 creator/protocol/buyback accounting, Token/Token2022 `transfer_checked` CPI,
-lamport transfers, and log/CPI TradeEvents. Quote-token paths remain unsupported. SOL Mayhem trades suppress buyback,
+lamport transfers, and log/CPI TradeEvents. USDC quote paths transfer tokens through the supplied quote token program,
+use stable fee tiers, and zero legacy SOL-only event fields. A130-case suite
+checks locally synthesized quote accounts under SPL Token and Token2022, without
+claiming every token extension combination. Other quote and multi-hop routes remain
+unsupported. SOL Mayhem trades suppress buyback,
 holder-reward trades report the observed creator-fee-derived reward fields, and
 cashback coins are rejected with the original v3 error6094. FeeConfig parsing
 accounts for legacy allocation boundaries2512/4073/4097. The334-case expanded buy suite also compares complete recorded inner
@@ -44,5 +48,7 @@ python scripts/pump_validate_sell.py \
   --candidate work/pump-clean/artifacts/pump_recovered.so --output work/pump-sell.json
 python scripts/pump_validate_buy.py \
   --candidate work/pump-clean/artifacts/pump_recovered.so --output work/pump-buy.json
+python scripts/pump_validate_quote.py \
+  --candidate work/pump-clean/artifacts/pump_recovered.so --output work/pump-quote.json.gz
 python scripts/pump_verify_dependencies.py
 ```

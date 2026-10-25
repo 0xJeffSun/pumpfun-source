@@ -1,4 +1,4 @@
-//! Partial reconstruction: thirteen handlers implemented; remaining handlers unsupported.
+//! Partial reconstruction: sixteen handlers implemented; remaining handlers unsupported.
 //! It is not the deployed program source.
 use anchor_lang::prelude::*;
 
@@ -197,8 +197,12 @@ pub mod pump_fees_candidate {
     }
 
     #[allow(unused_variables)]
-    pub fn update_admin(_ctx: Context<UpdateAdmin>) -> Result<()> {
-        Err(error!(CandidateError::Unsupported))
+    pub fn update_admin(ctx: Context<UpdateAdmin>) -> Result<()> {
+        let old_admin = ctx.accounts.admin.key();
+        let new_admin = ctx.accounts.new_admin.key();
+        ctx.accounts.fee_config.admin = new_admin;
+        let event = UpdateAdminEvent { timestamp: Clock::get()?.unix_timestamp, old_admin, new_admin };
+        emit!(event); emit_cpi!(event); Ok(())
     }
 
     #[allow(unused_variables)]
@@ -243,13 +247,19 @@ pub mod pump_fees_candidate {
     }
 
     #[allow(unused_variables)]
-    pub fn upsert_fee_tiers(_ctx: Context<UpsertFeeTiers>, fee_tiers: Vec<FeeTier>, offset: u8) -> Result<()> {
-        Err(error!(CandidateError::Unsupported))
+    pub fn upsert_fee_tiers(ctx: Context<UpsertFeeTiers>, fee_tiers: Vec<FeeTier>, offset: u8) -> Result<()> {
+        upsert_tiers(&mut ctx.accounts.fee_config.fee_tiers, &fee_tiers, offset)?;
+        let event = UpsertFeeTiersEvent { timestamp: Clock::get()?.unix_timestamp,
+            admin: ctx.accounts.admin.key(), fee_config: ctx.accounts.fee_config.key(), fee_tiers, offset };
+        emit!(event.clone()); emit_cpi!(event); Ok(())
     }
 
     #[allow(unused_variables)]
-    pub fn upsert_stable_fee_tiers(_ctx: Context<UpsertStableFeeTiers>, fee_tiers: Vec<FeeTier>, offset: u8) -> Result<()> {
-        Err(error!(CandidateError::Unsupported))
+    pub fn upsert_stable_fee_tiers(ctx: Context<UpsertStableFeeTiers>, fee_tiers: Vec<FeeTier>, offset: u8) -> Result<()> {
+        upsert_tiers(&mut ctx.accounts.fee_config.stable_fee_tiers, &fee_tiers, offset)?;
+        let event = UpsertStableFeeTiersEvent { timestamp: Clock::get()?.unix_timestamp,
+            admin: ctx.accounts.admin.key(), fee_config: ctx.accounts.fee_config.key(), stable_fee_tiers: fee_tiers, offset };
+        emit!(event.clone()); emit_cpi!(event); Ok(())
     }
 
     #[allow(unused_variables)]
@@ -284,6 +294,8 @@ pub enum FeeError {
     NoFeeTiers = 2,
     #[msg("Too many fee tiers")]
     TooManyFeeTiers = 3,
+    #[msg("The offset should be <= fee_config.fee_tiers.len()")]
+    OffsetNotContinuous = 4,
     #[msg("Fee tiers must be sorted by market cap threshold (ascending)")]
     FeeTiersNotSorted = 5,
     #[msg("Fee total must not exceed 10_000bps")]
@@ -309,4 +321,16 @@ fn validate_tiers(tiers: &[FeeTier]) -> Result<()> {
     for tier in tiers { validate_fees(&tier.fees)?; }
     require!(tiers.windows(2).all(|pair| pair[0].market_cap_lamports_threshold < pair[1].market_cap_lamports_threshold), FeeError::FeeTiersNotSorted);
     Ok(())
+}
+
+fn upsert_tiers(current: &mut Vec<FeeTier>, incoming: &[FeeTier], offset: u8) -> Result<()> {
+    require!(!incoming.is_empty(), FeeError::NoFeeTiers);
+    let offset = offset as usize;
+    require!(offset <= current.len(), FeeError::OffsetNotContinuous);
+    require!(current.len().max(offset + incoming.len()) <= 50, FeeError::TooManyFeeTiers);
+    for (index, tier) in incoming.iter().enumerate() {
+        if offset + index < current.len() { current[offset + index] = tier.clone(); }
+        else { current.push(tier.clone()); }
+    }
+    validate_tiers(current)
 }

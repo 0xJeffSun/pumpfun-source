@@ -123,3 +123,19 @@ pub struct ExtendFeeConfigEvent {
     pub fee_config: Pubkey, pub user: Pubkey, pub current_size: u64,
     pub new_size: u64, pub timestamp: i64,
 }
+
+#[event]
+#[derive(Clone)]
+pub struct UpsertFeeTiersEvent {
+    pub timestamp: i64, pub admin: Pubkey, pub fee_config: Pubkey,
+    pub fee_tiers: Vec<FeeTier>, pub offset: u8,
+}
+#[event]
+#[derive(Clone)]
+pub struct UpsertStableFeeTiersEvent {
+    pub timestamp: i64, pub admin: Pubkey, pub fee_config: Pubkey,
+    pub stable_fee_tiers: Vec<FeeTier>, pub offset: u8,
+}
+
+#[event]
+pub struct UpdateAdminEvent { pub timestamp: i64, pub old_admin: Pubkey, pub new_admin: Pubkey }

@@ -1,10 +1,11 @@
 # Partial Pump Fees reconstruction
 
-Thirteen handlers execute recovered behavior: `get_fees`, `get_fees_with_quote_mint`,
+Sixteen handlers execute recovered behavior: `get_fees`, `get_fees_with_quote_mint`,
 `set_authority`, `set_social_claim_authority`, `set_disable_flags` and
 `set_claim_rate_limit`, `initialize_fee_program_global`, `update_fee_config`,
 `update_stable_fee_config`, `set_exotic_flat_fees`, `extend_fee_config`,
-`revoke_fee_sharing_authority` and `transfer_fee_sharing_authority`. The other 18 instruction bodies remain unsupported;
+`revoke_fee_sharing_authority`, `transfer_fee_sharing_authority`, `upsert_fee_tiers`,
+`upsert_stable_fee_tiers` and `update_admin`. The other 15 instruction bodies remain unsupported;
 their generated account declarations are not recovered constraints. This crate
 is an experimental reconstruction target, not a deployable substitute.
 
@@ -55,7 +56,7 @@ The global initializer reads the older 740-byte Pump Global layout, authenticate
 its authority and PDA, creates the 338-byte Fees global with canonical bump, and
 emits the exact event log and self-CPI. Its 180 comparisons include prefunding,
 malformed accounts, authorization, argument boundaries and CPI rollback. The
-thirteen-handler candidate passes 12,464 cases; full-file byte equality remains false.
+sixteen-handler candidate passes 13,098 cases; full-file byte equality remains false.
 
 FeeConfig deserialization is gated by allocation: the normal schedule is read at
 2,512 bytes, the stable schedule at 4,073, and exotic flat fees at 4,097. Earlier
@@ -81,3 +82,13 @@ even when already overfunded; 297 cases compare this behavior and event CPI.
 in the captured deployment. Their recovered dispatches always return 6023;
 80 payload/account-shape cases pass. They count as implemented rejection paths,
 not recovered historical successful authority-transfer functionality.
+
+The two tier upserts overwrite from the supplied offset, append beyond the old
+end and retain unaffected trailing tiers. Offset cannot exceed the old length;
+combined size cannot exceed 50. Validation covers the entire resulting schedule,
+including retained entries. Their 578 cases cover insertion, overwrite, gaps,
+length/order/fee boundaries and legacy allocation behavior. Events carry the
+incoming tiers and offset. `update_admin` has 56 cases, accepts any new key,
+including zero and nonsigners, and emits the previous and new keys. Its acceptance
+of zero differs from the FeeProgramGlobal authority setter; these are separate
+configuration types and recovered behaviors.

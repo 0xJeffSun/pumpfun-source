@@ -75,20 +75,20 @@ confirmed vulnerability without a reachable configuration path.
 
 ### Executing recovered handlers
 
-Pump Fees now has thirteen independently compiled handlers, with 12,464 original-
+Pump Fees now has sixteen independently compiled handlers, with 13,098 original-
 versus-candidate SBF cases. These cover two query handlers, four authority setters,
 global initialization against the historical 740-byte Pump Global layout, and
 three configuration setters, permissionless resize, and two deprecated rejection
-dispatches. The other 18 handlers remain unsupported. Selected compiler and dependency versions
+dispatches, two tier upserts and FeeConfig administrator transfer. The other 15 handlers remain unsupported. Selected compiler and dependency versions
 remain candidates rather than an established historical graph.
 
-### Parallel reconstruction checkpoint: 51 implemented handlers and two partial paths
+### Parallel reconstruction checkpoint: 55 implemented handlers and two partial paths
 
-Saved builds cover Pump 4, PumpSwap 17, Pump Fees 13 and Mayhem 17 implemented
-handlers, plus Pump's partial regular-SOL buy_v3/sell_v3 branches. Their 27,082 local SBF
+Saved builds cover Pump 4, PumpSwap 18, Pump Fees 16 and Mayhem 17 implemented
+handlers, plus Pump's partial SOL/USDC buy_v3/sell_v3 branches. Their 28,129 local SBF
 comparisons are indexed by `repro/status.json`; each report preserves its own
 coverage and limitations. Pump's SOL trade paths include Mayhem buyback suppression,
-holder-reward event fields and explicit cashback rejection. Quote-token behavior
+holder-reward event fields and explicit cashback rejection. USDC quote behavior adds 130 synthetic SPL/Token2022 cases; other quote routes
 and the final event suffix remain incomplete. Neither is counted
 as a fully recovered trade handler. See [partial sell review](pump/partial-sell-review.md).
 
@@ -144,3 +144,10 @@ legacy account resizing, Token2022 transfer fees, exact token/System/event CPI
 payloads and failure rollback. See [v2 trade recovery](pump_amm/TRADE_V2_RECOVERY.md)
 for semantic details and untested extension combinations. The first-generation
 trade handlers and multi-hop routes remain outside this recovered checkpoint.
+
+AMM pool creation adds 283 signed comparisons, including calls through the original
+Pump migration path with its actual PDA signer. Pool/LP/vault creation, locked LP
+supply, existing vault balances, optional argument parsing and tested mint extension
+checks agree. Non-Mayhem migration still requires the absent `init_boost` handler;
+rollback observations do not establish complete migration support. See
+[pool creation recovery](pump_amm/CREATE_POOL_RECOVERY.md).

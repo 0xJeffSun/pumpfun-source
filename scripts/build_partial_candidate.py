@@ -17,9 +17,14 @@ active=subprocess.check_output(['rustup','show','active-toolchain'],text=True).s
 for entry in (rustup_source/'toolchains').iterdir():
  if entry.name!='solana':(rustup/'toolchains'/entry.name).symlink_to(entry.resolve(),target_is_directory=True)
 (rustup/'settings.toml').write_text('version = "12"\ndefault_toolchain = '+json.dumps(active)+'\nprofile = "minimal"\n')
-before=sources();cmd=['cargo','build-sbf','--manifest-path',str(manifest),'--tools-version',a.tools_version,'--offline','--sbf-sdk',str(sdk),'--sbf-out-dir',str(a.output/'artifacts')]
+before=sources();cmd=['cargo','build-sbf','--manifest-path',str(manifest),'--tools-version',a.tools_version,'--offline','--sbf-sdk',str(sdk),'--sbf-out-dir',str(a.output/'artifacts'),'--','--locked','--offline']
 env=os.environ.copy();env['CARGO_TARGET_DIR']=str(a.output/'target');env['RUSTUP_HOME']=str(rustup)
-r=subprocess.run(cmd,env=env,text=True,capture_output=True,cwd=ROOT);(a.output/'build.log').write_text(r.stdout+r.stderr);r.check_returncode();assert before==sources(),'source or lockfile changed during build'
+attempt={'scope':'Independent source build attempt; captured binaries are not compiler inputs. Failed attempts establish no binary identity.','program':a.program,'source_sha256':before,'selected_toolchain':a.tools_version,'command':[s.replace(str(a.output),'<output>').replace(str(ROOT),'<repo>') for s in cmd],'environment':{'CARGO_TARGET_DIR':'<output>/target','RUSTUP_HOME':'<output>/rustup'}}
+(a.output/'build-attempt.json').write_text(json.dumps(attempt,indent=2)+'\n')
+r=subprocess.run(cmd,env=env,text=True,capture_output=True,cwd=ROOT);(a.output/'build.log').write_text(r.stdout+r.stderr)
+after=sources();attempt.update(returncode=r.returncode,source_after_sha256=after,source_unchanged=before==after,build_log_sha256=sha((a.output/'build.log').read_bytes()))
+(a.output/'build-attempt.json').write_text(json.dumps(attempt,indent=2)+'\n')
+r.check_returncode();assert before==after,'source or lockfile changed during build'
 binary=a.output/'artifacts'/a.artifact_name
 original=ROOT/'evidence/original'/a.program/'deployed.so'
 # The reference is read only after compilation has finished.
