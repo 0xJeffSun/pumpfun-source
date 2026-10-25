@@ -1,10 +1,10 @@
 # Partial Pump reconstruction
 
-The Anchor 0.31.1 source implements ten recovered administration handlers:
+The Anchor 0.31.1 source implements twelve recovered administration handlers:
 `toggle_create_v2`, `toggle_mayhem_mode`, `toggle_cashback_enabled`, and
 `set_max_curve_depth`, `set_virtual_quote_reserves`, `update_buyback_config`,
 `update_creator_fee_config`, `update_holder_reward_config`, `add_quote_mint`, and
-`remove_quote_mint`. It also implements **partial SOL and USDC-quote `sell_v3` and `buy_v3` paths**.
+`remove_quote_mint`, `update_global_authority` and `set_reserved_fee_recipients`. It also implements **partial SOL and USDC-quote `sell_v3` and `buy_v3` paths**.
 It is incomplete and is not a deployable replacement.
 
 The trade paths handle constant-product reserve changes, fee tier selection,
@@ -63,3 +63,10 @@ python scripts/pump_validate_config_admin.py \
   --candidate work/pump-clean/artifacts/pump_recovered.so --output work/pump-config.json.gz
 python scripts/pump_verify_dependencies.py
 ```
+
+The authority/recipient checkpoint adds 59 cases. Global authority changes accept
+zero and self keys and emit the previous/new authority. Reserved recipients use
+the first eight remaining accounts, each nonzero, non-executable and rent exempt;
+extra remaining accounts are ignored in tested fixtures. The caller authority
+signs without needing to be writable. All 1,268 administration and partial-trade
+cases pass on the same clean candidate, with whole-file equality still false.

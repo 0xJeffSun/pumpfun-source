@@ -5,6 +5,8 @@ mod state;
 mod trade;
 mod create;
 mod boost;
+mod sweep;
+use sweep::*;
 use boost::*;
 use create::*;
 use trade::*;
@@ -16,6 +18,9 @@ declare_id!("pAMMBay6oceH9fJKBRHGP5D4bD4sWpmSwMn52FMfXEA");
 #[program]
 pub mod pump_amm_recovered {
     use super::*;
+
+    pub fn sweep_protocol_fee(ctx: Context<SweepFees>) -> Result<()> { sweep::execute(ctx,false) }
+    pub fn sweep_creator_fee(ctx: Context<SweepFees>) -> Result<()> { sweep::execute(ctx,true) }
 
     pub fn init_boost(ctx: Context<InitBoost>) -> Result<()> { boost::execute(ctx) }
 

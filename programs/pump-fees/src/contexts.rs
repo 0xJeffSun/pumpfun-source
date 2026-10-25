@@ -397,26 +397,3 @@ pub struct UpsertStableFeeTiers<'info> {
     pub config_program_id: UncheckedAccount<'info>,
 }
 
-#[derive(Accounts)]
-pub struct Withdraw<'info> {
-    #[account(mut)]
-    pub user: Signer<'info>,
-    #[account(mut)]
-    /// CHECK: Exact deployed constraint not recovered.
-    pub referral_vault: UncheckedAccount<'info>,
-    /// CHECK: Exact deployed constraint not recovered.
-    pub quote_mint: UncheckedAccount<'info>,
-    #[account(mut)]
-    /// CHECK: Exact deployed constraint not recovered.
-    pub vault_ata: UncheckedAccount<'info>,
-    #[account(mut)]
-    /// CHECK: Exact deployed constraint not recovered.
-    pub user_ata: UncheckedAccount<'info>,
-    /// CHECK: Exact deployed constraint not recovered.
-    pub token_program: UncheckedAccount<'info>,
-    pub system_program: Program<'info, System>,
-    /// CHECK: Exact deployed constraint not recovered.
-    pub event_authority: UncheckedAccount<'info>,
-    /// CHECK: Exact deployed constraint not recovered.
-    pub program: UncheckedAccount<'info>,
-}

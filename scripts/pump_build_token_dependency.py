@@ -11,7 +11,7 @@ if a.dependency=='spl_token':
 elif a.dependency=='spl_token_2022':
     COMMIT='8867f751c0f69367ba03af4f85510b5611989491';IMAGE='solanafoundation/solana-verifiable-build@sha256:6c73adc767ee7ff212f2532d4695472b12f3d4ac20aea3db22b89d8c614dac50';REPOSITORY='https://github.com/solana-program/token-2022';MANIFEST='program/Cargo.toml';LIBRARY='spl_token_2022';TOOLS=[]
 elif a.dependency=='associated_token':
-    COMMIT='e10776ee2910eef96d7b5fd2716b2805a2fd42e6';IMAGE='solanafoundation/solana-verifiable-build@sha256:ee9ad7809009a99a70f659f7cba959e0c3c124e10f771b524914fd42f2b605a8';REPOSITORY='https://github.com/solana-labs/solana-program-library';MANIFEST='associated-token-account/program/Cargo.toml';LIBRARY='spl_associated_token_account';TOOLS=[]
+    COMMIT='f5ce86d43dd31ddefb96d4e8cdd67dd073dc5dca';IMAGE='solanafoundation/solana-verifiable-build@sha256:ee9ad7809009a99a70f659f7cba959e0c3c124e10f771b524914fd42f2b605a8';REPOSITORY='https://github.com/solana-labs/solana-program-library';MANIFEST='associated-token-account/program/Cargo.toml';LIBRARY='spl_associated_token_account';TOOLS=[]
 else:
     COMMIT='17e99434af5ead3e989c08f32af33609821d0bc0';IMAGE='solanafoundation/solana-verifiable-build@sha256:43206149a565ec35da95b1a909f4714f5d5f0d8241c31df24189e517acd18467';REPOSITORY='https://github.com/metaplex-foundation/mpl-token-metadata';MANIFEST='programs/token-metadata/Cargo.toml';LIBRARY='token_metadata';TOOLS=[]
 source=a.source.resolve();out=a.output.resolve();out.mkdir(parents=True,exist_ok=False)
@@ -35,7 +35,7 @@ try:
     active=read(['docker','exec','-w','/',container,'rustup','show','active-toolchain']).split()[0]
     cmd=['docker','exec','-e','RUSTUP_TOOLCHAIN='+active,'-w',workdir.rstrip('/')+'/'+str(pathlib.PurePosixPath(MANIFEST).parent),container,'cargo','build-sbf',*TOOLS,'--','--config','registries.crates-io.protocol="sparse"','--locked','--manifest-path',workdir.rstrip('/')+'/'+MANIFEST]
     if a.dependency=='associated_token':
-        cmd=['docker','exec','-e','RUSTUP_TOOLCHAIN='+active,'-w',workdir,container,'cargo','build-bpf','--manifest-path',workdir.rstrip('/')+'/'+MANIFEST,'--','--locked']
+        cmd=['docker','exec','-e','RUSTUP_TOOLCHAIN='+active,'-e','RUSTFLAGS=-D warnings','-w',workdir,container,'cargo','build-bpf','--manifest-path',workdir.rstrip('/')+'/'+MANIFEST,'--','--locked']
     commands.append(cmd)
     print('Building pinned '+a.dependency+' source with its official image recipe',flush=True)
     with (out/'build.log').open('w') as log:

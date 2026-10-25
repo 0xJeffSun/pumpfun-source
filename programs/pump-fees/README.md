@@ -1,13 +1,13 @@
 # Partial Pump Fees reconstruction
 
-Twenty-one handlers execute recovered behavior: `get_fees`, `get_fees_with_quote_mint`,
+Twenty-two handlers execute recovered behavior: `get_fees`, `get_fees_with_quote_mint`,
 `set_authority`, `set_social_claim_authority`, `set_disable_flags` and
 `set_claim_rate_limit`, `initialize_fee_program_global`, `update_fee_config`,
 `update_stable_fee_config`, `set_exotic_flat_fees`, `extend_fee_config`,
 `revoke_fee_sharing_authority`, `transfer_fee_sharing_authority`, `upsert_fee_tiers`,
 `upsert_stable_fee_tiers`, `update_admin`, `create_donation_fee_pda` and
 `crank_donation_fee_pda`, `create_social_fee_pda`, `claim_social_fee_pda` and
-`claim_social_fee_pda_v2`. The other 10 instruction bodies remain unsupported;
+`claim_social_fee_pda_v2` and `withdraw`. The other 9 instruction bodies remain unsupported;
 their generated account declarations are not recovered constraints. This crate
 is an experimental reconstruction target, not a deployable substitute.
 
@@ -58,7 +58,7 @@ The global initializer reads the older 740-byte Pump Global layout, authenticate
 its authority and PDA, creates the 338-byte Fees global with canonical bump, and
 emits the exact event log and self-CPI. Its 180 comparisons include prefunding,
 malformed accounts, authorization, argument boundaries and CPI rollback. The
-twenty-one-handler candidate passes 15,373 cases; full-file byte equality remains false.
+twenty-two-handler candidate passes 15,486 cases; full-file byte equality remains false.
 
 FeeConfig deserialization is gated by allocation: the normal schedule is read at
 2,512 bytes, the stable schedule at 4,073, and exotic flat fees at 4,097. Earlier
@@ -112,3 +112,11 @@ transactions) for social creation, SOL claims and token claims. See the
 179-byte rent reserve, cooldown, versioned initialization, saturating counters,
 token ATA creation and precise timestamp exclusions. These observations do not
 establish that every authorization or token-extension combination is safe.
+
+Referral `withdraw` adds 113 signed differential cases and 16 independent Surfpool
+comparisons. It authenticates the user signer and the System-owned referral PDA,
+retains the zero-data rent minimum for SOL, and supports optional token withdrawals
+with mint/authority/program checks but no ATA-address requirement. The latest
+combined executable passes all 55 donation/social/withdraw Surfpool comparisons
+(110 signed transactions), plus the separate persistent donation sequence. See
+[withdrawal recovery](../../localnet/recovery/fees-withdraw/README.md).

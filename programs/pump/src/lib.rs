@@ -19,6 +19,17 @@ pub mod pump_recovered {
      require!(quote_mint!=Pubkey::default(),PumpError::QuoteMintNotEligibleForWhitelist);
      let slot=ctx.accounts.global.whitelisted_quote_mints.iter_mut().find(|key|**key==quote_mint).ok_or_else(||error!(PumpError::QuoteMintNotWhitelisted))?;*slot=Pubkey::default();Ok(())
     }
+    pub fn update_global_authority(ctx:Context<UpdateGlobalAuthority>)->Result<()>{
+     let event=UpdateGlobalAuthorityEvent{global:ctx.accounts.global.key(),authority:ctx.accounts.authority.key(),new_authority:ctx.accounts.new_authority.key(),timestamp:Clock::get()?.unix_timestamp};
+     ctx.accounts.global.authority=ctx.accounts.new_authority.key();emit!(event.clone());emit_cpi!(event);Ok(())
+    }
+    pub fn set_reserved_fee_recipients(ctx:Context<AdminReadonly>,whitelist_pda:Pubkey)->Result<()>{
+     require!(ctx.remaining_accounts.len()>=8,PumpError::NotEnoughRemainingAccounts);
+     for account in ctx.remaining_accounts.iter().take(8){require!(account.key()!=Pubkey::default(),PumpError::AllFeeRecipientsShouldBeNonZero);require!(!account.executable,anchor_lang::error::ErrorCode::ConstraintExecutable);require!(Rent::get()?.is_exempt(account.lamports(),account.data_len()),anchor_lang::error::ErrorCode::ConstraintRentExempt);}
+     let first=ctx.remaining_accounts[0].key();let rest=core::array::from_fn(|i|ctx.remaining_accounts[i+1].key());
+     ctx.accounts.global.whitelist_pda=whitelist_pda;ctx.accounts.global.reserved_fee_recipient=first;ctx.accounts.global.reserved_fee_recipients=rest;
+     let event=ReservedFeeRecipientsEvent{timestamp:Clock::get()?.unix_timestamp,reserved_fee_recipient:first,reserved_fee_recipients:rest};emit!(event.clone());emit_cpi!(event);Ok(())
+    }
     pub fn set_virtual_quote_reserves(ctx:Context<AdminGlobal>,initial_virtual_quote_reserves:u64)->Result<()>{ctx.accounts.global.initial_virtual_quote_reserves=initial_virtual_quote_reserves;Ok(())}
     pub fn update_buyback_config(ctx:Context<AdminGlobal>,buyback_basis_points:Option<u64>)->Result<()>{if let Some(value)=buyback_basis_points{require!(value<=10000,PumpError::BuybackBasisPointsOutOfRange);ctx.accounts.global.buyback_basis_points=value;}Ok(())}
     pub fn update_creator_fee_config(ctx:Context<AdminGlobal>,creator_fee_configurable:bool,max_configurable_creator_fee_bps:u64)->Result<()>{
@@ -310,3 +321,26 @@ impl AnchorDeserialize for OptionBool {
 #[event]
 #[derive(Clone)]
 pub struct UpdateCreatorFeeConfigEvent {pub timestamp:i64,pub authority:Pubkey,pub creator_fee_configurable:bool,pub max_configurable_creator_fee_bps:u64}
+
+#[event_cpi]
+#[derive(Accounts)]
+pub struct AdminReadonly<'info>{
+ #[account(mut,seeds=[b"global"],bump,has_one=authority @ PumpError::NotAuthorized)]
+ pub global:Account<'info,Global>,
+ pub authority:Signer<'info>,
+}
+#[event_cpi]
+#[derive(Accounts)]
+pub struct UpdateGlobalAuthority<'info>{
+ #[account(mut,seeds=[b"global"],bump,has_one=authority @ PumpError::NotAuthorized)]
+ pub global:Account<'info,Global>,
+ pub authority:Signer<'info>,
+ /// CHECK: new authority is assigned by the current signer; zero/self are accepted by the original.
+ pub new_authority:UncheckedAccount<'info>,
+}
+#[event]
+#[derive(Clone)]
+pub struct UpdateGlobalAuthorityEvent{pub global:Pubkey,pub authority:Pubkey,pub new_authority:Pubkey,pub timestamp:i64}
+#[event]
+#[derive(Clone)]
+pub struct ReservedFeeRecipientsEvent{pub timestamp:i64,pub reserved_fee_recipient:Pubkey,pub reserved_fee_recipients:[Pubkey;7]}

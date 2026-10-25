@@ -1,10 +1,12 @@
-//! Partial reconstruction: twenty-one handlers implemented; remaining handlers unsupported.
+//! Partial reconstruction: twenty-two handlers implemented; remaining handlers unsupported.
 //! It is not the deployed program source.
 use anchor_lang::prelude::*;
 
 mod contexts;
 mod donation;
 mod social;
+mod withdrawal;
+use withdrawal::*;
 use social::*;
 use donation::*;
 mod pump_global;
@@ -267,8 +269,8 @@ pub mod pump_fees_candidate {
     }
 
     #[allow(unused_variables)]
-    pub fn withdraw(_ctx: Context<Withdraw>) -> Result<()> {
-        Err(error!(CandidateError::Unsupported))
+    pub fn withdraw(ctx: Context<Withdraw>) -> Result<()> {
+        withdrawal::execute(ctx)
     }
 
 }
@@ -328,6 +330,10 @@ pub enum FeeError {
     AccountTypeNotSupported = 29,
     #[msg("Mint does not match quote mint")]
     InvalidMint = 30,
+    #[msg("Token withdrawals need quote_mint, vault_ata, user_ata and token_program")]
+    IncompleteTokenAccounts = 35,
+    #[msg("Nothing to withdraw")]
+    NothingToWithdraw = 36,
 }
 
 fn validate_fees(fees: &Fees) -> Result<()> {

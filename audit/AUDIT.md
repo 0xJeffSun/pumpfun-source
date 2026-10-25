@@ -75,17 +75,17 @@ confirmed vulnerability without a reachable configuration path.
 
 ### Executing recovered handlers
 
-Pump Fees now has twenty-one independently compiled handlers, with 15,373 original-
+Pump Fees now has twenty-two independently compiled handlers, with 15,486 original-
 versus-candidate SBF cases. These cover two query handlers, four authority setters,
 global initialization against the historical 740-byte Pump Global layout, and
 three configuration setters, permissionless resize, and two deprecated rejection
-dispatches, two tier upserts and FeeConfig administrator transfer, two donation handlers and three social-fee handlers. The other 10 handlers remain unsupported. Selected compiler and dependency versions
+dispatches, two tier upserts and FeeConfig administrator transfer, two donation handlers and three social-fee handlers and referral withdrawal. The other 9 handlers remain unsupported. Selected compiler and dependency versions
 remain candidates rather than an established historical graph.
 
-### Parallel reconstruction checkpoint: 67 implemented handlers and two partial paths
+### Parallel reconstruction checkpoint: 72 implemented handlers and two partial paths
 
-Saved builds cover Pump 10, PumpSwap 19, Pump Fees 21 and Mayhem 17 implemented
-handlers, plus Pump's partial SOL/USDC buy_v3/sell_v3 branches. Their 30,855 local SBF
+Saved builds cover Pump 12, PumpSwap 21, Pump Fees 22 and Mayhem 17 implemented
+handlers, plus Pump's partial SOL/USDC buy_v3/sell_v3 branches. Their 31,281 local SBF
 comparisons are indexed by `repro/status.json`; each report preserves its own
 coverage and limitations. Pump's SOL trade paths include Mayhem buyback suppression,
 holder-reward event fields and explicit cashback rejection. USDC quote behavior adds 130 synthetic SPL/Token2022 cases; other quote routes
@@ -181,3 +181,13 @@ than a reloaded token balance (including a synthetic self-transfer). That observ
 event behavior alone does not establish a reachable financial loss. Separate
 Surfpool processes normalize only decoded wall-clock timestamps and retain raw
 values. Every new handler remains subject to the larger incomplete audit scope.
+
+The next checkpoint adds signed referral withdrawal, two Pump authority/recipient
+setters, and both AMM fee sweeps. Referral withdrawals retain native rent and check
+optional token authority/mint/program constraints. AMM sweeps authenticate the
+configured recipient or creator vault, validate fee balances and virtual-reserve
+arithmetic, transfer the selected bucket and preserve the other bucket. The 254
+sweep cases include captured Token2022 transfer-fee execution, but are not an
+exhaustive extension or aliasing audit. Normal recipient lookup uses binary search;
+injected unsorted arrays rejecting a present key are an observation, not a confirmed
+reachable vulnerability. All original/candidate bytes remain independently compared.

@@ -5,7 +5,7 @@
     "compiler": "unresolved",
     "dependencies": "unresolved",
     "build_flags": "unresolved",
-    "candidate_artifact": "repro/pump/config-admin-candidate.so",
+    "candidate_artifact": "repro/pump/authority-admin-candidate.so",
     "full_byte_equality": false,
     "comparison_status": "DIFFERS_PARTIAL_IMPLEMENTATION",
     "implemented_handlers": [
@@ -18,17 +18,20 @@
       "set_virtual_quote_reserves",
       "update_buyback_config",
       "update_creator_fee_config",
-      "update_holder_reward_config"
+      "update_holder_reward_config",
+      "update_global_authority",
+      "set_reserved_fee_recipients"
     ],
-    "comparison_report": "repro/pump/config-admin-build-comparison.json",
-    "build_log": "repro/pump/config-admin-build.log.gz",
-    "validated_cases": 1209,
+    "comparison_report": "repro/pump/authority-admin-build-comparison.json",
+    "build_log": "repro/pump/authority-admin-build.log.gz",
+    "validated_cases": 1268,
     "validation_reports": [
-      "repro/pump/config-admin-original-regression.json.gz",
-      "repro/pump/config-admin-differential.json.gz",
-      "repro/pump/config-admin-buy-regression.json.gz",
-      "repro/pump/config-admin-sell-regression.json.gz",
-      "repro/pump/config-admin-quote-regression.json.gz"
+      "repro/pump/authority-admin-admin-regression.json.gz",
+      "repro/pump/authority-admin-config-admin-regression.json.gz",
+      "repro/pump/authority-admin-differential.json.gz",
+      "repro/pump/authority-admin-buy-regression.json.gz",
+      "repro/pump/authority-admin-sell-regression.json.gz",
+      "repro/pump/authority-admin-quote-regression.json.gz"
     ],
     "partially_implemented_handlers": {
       "sell_v3": "SOL and USDC quote branches, Mayhem/holder fields and cashback rejection. Other quote routes and exhaustive extension/account validation remain incomplete; final event suffix uninterpreted.",
@@ -48,7 +51,7 @@
     "compiler": "unresolved",
     "dependencies": "unresolved",
     "build_flags": "unresolved",
-    "candidate_artifact": "repro/pump_amm/boost-nineteen/pump_amm_recovered.so",
+    "candidate_artifact": "repro/pump_amm/sweep-twenty-one/pump_amm_recovered.so",
     "full_byte_equality": false,
     "comparison_status": "DIFFERS_PARTIAL_IMPLEMENTATION",
     "implemented_handlers": [
@@ -70,23 +73,26 @@
       "sell_v2",
       "buy_exact_quote_in_v2",
       "create_pool",
-      "init_boost"
+      "init_boost",
+      "sweep_protocol_fee",
+      "sweep_creator_fee"
     ],
-    "comparison_report": "repro/pump_amm/boost-nineteen/build-comparison.json",
-    "build_log": "repro/pump_amm/boost-nineteen/build.log",
-    "validated_cases": 11320,
+    "comparison_report": "repro/pump_amm/sweep-twenty-one/build-comparison.json",
+    "build_log": "repro/pump_amm/sweep-twenty-one/build.log",
+    "validated_cases": 11574,
     "validation_reports": [
-      "repro/pump_amm/boost-nineteen/admin-differential.json.gz",
-      "repro/pump_amm/boost-nineteen/buyback-differential.json.gz",
-      "repro/pump_amm/boost-nineteen/fee_config-differential.json.gz",
-      "repro/pump_amm/boost-nineteen/resize-differential.json.gz",
-      "repro/pump_amm/boost-nineteen/reserved-differential.json.gz",
-      "repro/pump_amm/boost-nineteen/accumulator-differential.json.gz",
-      "repro/pump_amm/boost-nineteen/liquidity-differential.json.gz",
-      "repro/pump_amm/boost-nineteen/trade_v2-differential.json.gz",
-      "repro/pump_amm/boost-nineteen/create-differential.json.gz",
-      "repro/pump_amm/boost-nineteen/migration_create-differential.json.gz",
-      "repro/pump_amm/boost-nineteen/boost-differential.json.gz"
+      "repro/pump_amm/sweep-twenty-one/admin-differential.json.gz",
+      "repro/pump_amm/sweep-twenty-one/buyback-differential.json.gz",
+      "repro/pump_amm/sweep-twenty-one/fee_config-differential.json.gz",
+      "repro/pump_amm/sweep-twenty-one/resize-differential.json.gz",
+      "repro/pump_amm/sweep-twenty-one/reserved-differential.json.gz",
+      "repro/pump_amm/sweep-twenty-one/accumulator-differential.json.gz",
+      "repro/pump_amm/sweep-twenty-one/liquidity-differential.json.gz",
+      "repro/pump_amm/sweep-twenty-one/trade_v2-differential.json.gz",
+      "repro/pump_amm/sweep-twenty-one/create-differential.json.gz",
+      "repro/pump_amm/sweep-twenty-one/migration_create-differential.json.gz",
+      "repro/pump_amm/sweep-twenty-one/boost-differential.json.gz",
+      "repro/pump_amm/sweep-twenty-one/sweep-differential.json.gz"
     ],
     "compiler_family_candidates": [
       "v1.44",
@@ -102,7 +108,7 @@
     "compiler": "unresolved",
     "dependencies": "unresolved",
     "build_flags": "unresolved",
-    "candidate_artifact": "repro/pump_fees/social-twentyone/pump_fees_candidate.so",
+    "candidate_artifact": "repro/pump_fees/withdraw-twentytwo/pump_fees_candidate.so",
     "full_byte_equality": false,
     "comparison_status": "DIFFERS_PARTIAL_IMPLEMENTATION",
     "compiler_candidates": [
@@ -131,21 +137,23 @@
       "crank_donation_fee_pda",
       "create_social_fee_pda",
       "claim_social_fee_pda",
-      "claim_social_fee_pda_v2"
+      "claim_social_fee_pda_v2",
+      "withdraw"
     ],
-    "comparison_report": "repro/pump_fees/social-twentyone/build-comparison.json",
-    "build_log": "repro/pump_fees/social-twentyone/build.log",
-    "validation_report": "repro/pump_fees/social-twentyone/differential.json.gz",
-    "validated_cases": 15373,
+    "comparison_report": "repro/pump_fees/withdraw-twentytwo/build-comparison.json",
+    "build_log": "repro/pump_fees/withdraw-twentytwo/build.log",
+    "validation_report": "repro/pump_fees/withdraw-twentytwo/differential.json.gz",
+    "validated_cases": 15486,
     "deprecated_dispatches": [
       "revoke_fee_sharing_authority",
       "transfer_fee_sharing_authority"
     ],
     "signed_sequence_reports": [
-      "repro/pump_fees/social-twentyone/donation-sequence.json.gz",
-      "repro/pump_fees/social-twentyone/surfpool-donation.json.gz",
-      "repro/pump_fees/social-twentyone/surfpool-social.json.gz",
-      "repro/pump_fees/social-twentyone/surfpool-social-v2.json.gz"
+      "repro/pump_fees/withdraw-twentytwo/donation-sequence.json.gz",
+      "repro/pump_fees/withdraw-twentytwo/surfpool-withdraw.json.gz",
+      "repro/pump_fees/withdraw-twentytwo/surfpool-donation.json.gz",
+      "repro/pump_fees/withdraw-twentytwo/surfpool-social.json.gz",
+      "repro/pump_fees/withdraw-twentytwo/surfpool-social-v2.json.gz"
     ],
     "compiler_family_candidates": [
       "v1.44",
