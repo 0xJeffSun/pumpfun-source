@@ -80,10 +80,17 @@
     "c/sbf.mk": "a35cb234fd2aa6598adbcc7998ef284ed853a3050643c7f17eb1de1ac44c2298",
     "env.sh": "ff2f69a21002d52c154c839057c52252b0bf784bbba4d7a3e26e660233e552f2",
     "scripts/dump.sh": "18e01419dd684b5ad8c0945ecfb5a9e62481392ae71ff9ca10956e66309561d0",
-    "scripts/install.sh": "a2ce4b4cd8266a5625ace5fda51a79de66e730134f4b89bfe1655f9a8698e9b2",
+    "scripts/install.sh": "72115529656e060c68b1a5498db99a8132fdd629036e37394f813d6d31b3b4aa",
     "scripts/objcopy.sh": "4d24c6440314cd9a0708458d38657858f58999e59a68231abf4524d64c29e7a3",
     "scripts/package.sh": "682cdb1d8fba9c28a26800784586b6f6e53c5c3f05387d0022867e606ff7637c",
     "scripts/strip.sh": "70d730afc852d4ba71f6583c9a6e0592f3e36840ab53000c1c225f2c3a491978",
     "syscalls.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "sdk_source_provenance": {
+    "official_cli_archive_sha256": "5da3359e296f1e6c13522b874317cb4cfe33e73301a9dc60b1e1435cc133b397",
+    "verified_failed_run": 40162878365,
+    "prior_local_installer_sha256": "a2ce4b4cd8266a5625ace5fda51a79de66e730134f4b89bfe1655f9a8698e9b2",
+    "difference": "The local SDK installer used version=v1.52; the official2.1.21 archive uses version=v1.43. No SDK file is edited; explicit build --tools-version v1.44 remains unchanged.",
+    "zero_compiler_attempts_in_failed_run": true
   }
 }

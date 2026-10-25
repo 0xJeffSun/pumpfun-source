@@ -17,6 +17,7 @@ jobs:
               python scripts/verify_evidence.py
               python scripts/test_tooling.py
               python scripts/test_build_source_manifest.py
+              python scripts/test_core_linux_v144_retention.py
               python scripts/verify_recovered_builds.py
               python scripts/pump_verify_dependencies.py
               python repro/pump/metaplex-candidate-build-11/verify.py

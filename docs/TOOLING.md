@@ -80,3 +80,5 @@ would prove nothing about source reconstruction.
 Older saved builds keep their original manifests; their scope is not retroactively expanded. Fees workspace experiments explicitly bind their root manifest/lock and IDLs in separate provenance records. Run `python3 scripts/test_build_source_manifest.py` to verify that workspace-lock, IDL and explicit-asset changes are detected.
 
 The manual [controlled Linux Fees workflow](../repro/pump_fees/linux-v144-build-plan/README.md) performs one fixed-source build using the official Linux v1.44 distribution. Its comparison is separate from runtime acceptance; changed bytes do not inherit the current candidate’s saved receipts.
+
+The first Linux attempt stopped before compilation because a locally modified SDK installer had supplied the original expected hash. The [official SDK correction](../repro/pump_fees/linux-v144-sdk-correction/README.md) preserves that failed attempt and pins the unmodified official archive; the explicit v1.44 compiler selection and all source/dependency inputs stay fixed.

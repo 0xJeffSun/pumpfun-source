@@ -28,6 +28,7 @@ PLATFORM_SHA = "6719b889d60677a8a2fcf4c82f68441a1afe0ab093edd2efe9f84a67a808b3e9
 PLATFORM_SIZE = 490710349
 CLI_URL = "https://github.com/anza-xyz/agave/releases/download/v2.1.21/solana-release-x86_64-unknown-linux-gnu.tar.bz2"
 CLI_SIZE = 298782636
+CLI_SHA = "5da3359e296f1e6c13522b874317cb4cfe33e73301a9dc60b1e1435cc133b397"
 CLI_ASSET_ID = 247593735
 CLI_COMMIT = "8a085eebcb901b6846d1f82f4636667742146545"
 RUSTUP_URL = "https://static.rust-lang.org/rustup/archive/1.29.0/x86_64-unknown-linux-gnu/rustup-init"
@@ -365,7 +366,7 @@ def build(args, attempt):
     cli_version = attempt.download("agave-release.yml", "https://github.com/anza-xyz/agave/releases/download/v2.1.21/solana-release-x86_64-unknown-linux-gnu.yml", "aa8f5e66f5c9e79d671b6b3e15c11cec5204ae0055408dd9ed26dba71734580f")
     if CLI_COMMIT not in cli_version.read_text():
         raise ValueError("CLI release revision mismatch")
-    cli_archive = attempt.download("solana-release-x86_64-unknown-linux-gnu.tar.bz2", CLI_URL, expected_size=CLI_SIZE)
+    cli_archive = attempt.download("solana-release-x86_64-unknown-linux-gnu.tar.bz2", CLI_URL, expected_sha=CLI_SHA, expected_size=CLI_SIZE)
     cli_root = output / "cli"
     unpack(cli_archive, cli_root)
     cli_bin = cli_root / "solana-release/bin"
@@ -379,7 +380,7 @@ def build(args, attempt):
     sdk_before = tree_hashes(sdk)
     write_json(evidence / "sdk-source-before.json", sdk_before)
     if {k: v.get("sha256") for k, v in sdk_before.items()} != pins["sdk_source_sha256"]:
-        raise ValueError("Official Linux CLI SDK source differs from the recorded 2.1.21 recipe")
+        raise ValueError("Official Linux CLI SDK source differs from the pinned official archive")
     rustup_init = attempt.download("rustup-init", RUSTUP_URL, RUSTUP_SHA)
     rustup_init.chmod(0o755)
     attempt.download("channel-rust-1.94.0.toml", HOST_CHANNEL_URL, HOST_CHANNEL_SHA)
