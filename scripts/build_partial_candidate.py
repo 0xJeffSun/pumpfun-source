@@ -4,7 +4,9 @@ import argparse,hashlib,json,os,pathlib,subprocess,shutil
 from compare import compare
 from build_source_manifest import source_manifest
 ROOT=pathlib.Path(__file__).resolve().parents[1]
-p=argparse.ArgumentParser();p.add_argument('--manifest',type=pathlib.Path,required=True);p.add_argument('--program',required=True,choices=['pump','pump_amm','pump_fees','mayhem']);p.add_argument('--artifact-name',required=True);p.add_argument('--tools-version',default='v1.52');p.add_argument('--output',type=pathlib.Path,required=True);p.add_argument('--extra-input',type=pathlib.Path,action='append',default=[],help='Additional repository-local path dependency or build asset to hash (repeatable)');a=p.parse_args()
+p=argparse.ArgumentParser();p.add_argument('--manifest',type=pathlib.Path,required=True);p.add_argument('--program',required=True,choices=['pump','pump_amm','pump_fees','mayhem']);p.add_argument('--artifact-name',required=True);p.add_argument('--tools-version',default=None,help='platform-tools version; default is the reverse-engineered per-program recipe (pump/pump_amm/pump_fees=v1.43, mayhem=v1.52)');p.add_argument('--output',type=pathlib.Path,required=True);p.add_argument('--extra-input',type=pathlib.Path,action='append',default=[],help='Additional repository-local path dependency or build asset to hash (repeatable)');a=p.parse_args()
+# Reverse-engineered per-program compiler recipe (RECIPE-REVERSE-ENGINEERING.md): std RawVec/slice-sort layout + section-size sweep pin v1.43 for the three older programs, v1.52 for mayhem.
+a.tools_version=a.tools_version or {'pump':'v1.43','pump_amm':'v1.43','pump_fees':'v1.43','mayhem':'v1.52'}[a.program]
 a.output=a.output.resolve();a.output.mkdir(parents=True,exist_ok=False);manifest=a.manifest.resolve();crate=manifest.parent
 workspace=pathlib.Path(subprocess.check_output(['cargo','locate-project','--workspace','--manifest-path',str(manifest),'--message-format','plain'],text=True,cwd=ROOT).strip()).parent
 sha=lambda b:hashlib.sha256(b).hexdigest()
