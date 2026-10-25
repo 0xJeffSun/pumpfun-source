@@ -16,6 +16,14 @@ The Anchor 0.31.1 source implements forty-eight recovered handlers:
 `remove_quote_control_mint` and `set_quote_control_mint_reserves`. It also implements **partial `sell_v3`, `buy_v3`, `buy_exact_quote_in_v3`, `create_v2` and `multi_hop_curve_swap` paths**.
 It is incomplete and is not a deployable replacement. The current sell_v2 quote-transfer-fee minimum-output check and fee-event fields have a confirmed mismatch with the captured original; the saved passing suites do not cover that boundary.
 
+This branch additionally implements bounded `set_mayhem_virtual_params`.
+The [merged-source synthetic checkpoint](../../repro/pump/mayhem-synthetic-8099/README.md)
+has two identical v1.44 builds and 25/25 signed target/candidate matches
+through a local synthetic Mayhem-ID caller. It also passes 507 quote-control
+and 56 native-curve comparisons. A deployed Mayhem caller route remains
+unproven; other inherited suites and Surfpool runners were not rerun on this
+branch candidate.
+
 The current frozen checkpoint is [bonding-curve-serializer-fortyeight](../../repro/pump/bonding-curve-serializer-fortyeight/README.md):
 9,217 differential cases across 37 suites and 1,024 Surfpool comparisons using
 2,048 signed transactions across 28 runners passed. The Surfpool transactions

@@ -133,7 +133,13 @@
     "bonding_curve_serialization_recovery_report": "audit/pump/BONDING_CURVE_SERIALIZATION_RECOVERY.md",
     "bonding_curve_serialization_body_evidence": "repro/pump/bonding-curve-serializer-fortyeight/function-match.json",
     "differential_signed_transactions": 15830,
-    "differential_verified_signatures": 24216
+    "differential_verified_signatures": 24216,
+    "rebuilt_branch_source_handler": "set_mayhem_virtual_params",
+    "branch_candidate_artifact": "repro/pump/mayhem-synthetic-8099/candidate.so",
+    "branch_candidate_source_base_commit": "80990317bd9c0363e071646b892490886d7bf946",
+    "branch_candidate_focused_receipt": "repro/pump/mayhem-synthetic-8099/differential.json.gz",
+    "branch_candidate_regression_receipt": "repro/pump/mayhem-synthetic-8099/regression-summary.json",
+    "branch_candidate_qualification_limit": "25 synthetic-caller cases, 507 quote-control cases, and 56 native-curve cases passed; deployed Mayhem caller route, other inherited suites, and Surfpool runners remain unverified."
   },
   "pump_amm": {
     "source_reconstruction": "partial_handlers_compiled",
