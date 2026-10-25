@@ -5,7 +5,7 @@
     "compiler": "unresolved",
     "dependencies": "unresolved",
     "build_flags": "unresolved",
-    "candidate_artifact": "repro/pump/curve-preparation-fortyeight/candidate.so",
+    "candidate_artifact": "repro/pump/buy-fee-basis-main-fortyeight/main/candidate.so",
     "full_byte_equality": false,
     "comparison_status": "DIFFERS_PARTIAL_IMPLEMENTATION",
     "implemented_handlers": [
@@ -58,11 +58,11 @@
       "remove_quote_control_mint",
       "set_quote_control_mint_reserves"
     ],
-    "comparison_report": "repro/pump/curve-preparation-fortyeight/build-comparison.json",
-    "build_log": "repro/pump/curve-preparation-fortyeight/build.log.gz",
+    "comparison_report": "repro/pump/buy-fee-basis-main-fortyeight/main/build-comparison.json",
+    "build_log": "repro/pump/buy-fee-basis-main-fortyeight/main/build.log",
     "validated_cases": 9269,
     "validation_reports": [
-      "repro/pump/curve-preparation-fortyeight/all-differential.json.gz"
+      "repro/pump/buy-fee-basis-fortyeight/all-differential.json.gz"
     ],
     "partially_implemented_handlers": {
       "sell_v3": "SOL and USDC quote branches, Mayhem/holder fields and cashback rejection. Other quote routes and exhaustive extension/account validation remain incomplete; final event suffix uninterpreted.",
@@ -79,34 +79,34 @@
     ],
     "compiler_family_evidence": "repro/pump_fees/compiler-family/HEADER-AND-BUILD-REPORT.md",
     "signed_sequence_reports": [
-      "repro/pump/curve-preparation-fortyeight/surfpool/holder_distribution.json.gz",
-      "repro/pump/curve-preparation-fortyeight/surfpool/nested_create.json.gz",
-      "repro/pump/curve-preparation-fortyeight/surfpool/collect.json.gz",
-      "repro/pump/curve-preparation-fortyeight/surfpool/minimum.json.gz",
-      "repro/pump/curve-preparation-fortyeight/surfpool/collect_v2.json.gz",
-      "repro/pump/curve-preparation-fortyeight/surfpool/extend.json.gz",
-      "repro/pump/curve-preparation-fortyeight/surfpool/volume_sync.json.gz",
-      "repro/pump/curve-preparation-fortyeight/surfpool/distribution.json.gz",
-      "repro/pump/curve-preparation-fortyeight/surfpool/creator_migration.json.gz",
-      "repro/pump/curve-preparation-fortyeight/surfpool/sweep.json.gz",
-      "repro/pump/curve-preparation-fortyeight/surfpool/set_params.json.gz",
-      "repro/pump/curve-preparation-fortyeight/surfpool/admin_cto.json.gz",
-      "repro/pump/curve-preparation-fortyeight/surfpool/create.json.gz",
-      "repro/pump/curve-preparation-fortyeight/surfpool/set_creator.json.gz",
-      "repro/pump/curve-preparation-fortyeight/surfpool/legacy_sell.json.gz",
-      "repro/pump/curve-preparation-fortyeight/surfpool/legacy_sell_configured_fee.json.gz",
-      "repro/pump/curve-preparation-fortyeight/surfpool/idl_authority.json.gz",
-      "repro/pump/curve-preparation-fortyeight/surfpool/sell_v2.json.gz",
-      "repro/pump/curve-preparation-fortyeight/surfpool/migrate.json.gz",
-      "repro/pump/curve-preparation-fortyeight/surfpool/create_quote.json.gz",
-      "repro/pump/curve-preparation-fortyeight/surfpool/exact_quote.json.gz",
-      "repro/pump/curve-preparation-fortyeight/surfpool/legacy_buy.json.gz",
-      "repro/pump/curve-preparation-fortyeight/surfpool/buy_v2.json.gz",
-      "repro/pump/curve-preparation-fortyeight/surfpool/create_control.json.gz",
-      "repro/pump/curve-preparation-fortyeight/surfpool/migrate_v2.json.gz",
-      "repro/pump/curve-preparation-fortyeight/surfpool/global_init.json.gz",
-      "repro/pump/curve-preparation-fortyeight/surfpool/cashback.json.gz",
-      "repro/pump/curve-preparation-fortyeight/surfpool/v3_configured_fee.json.gz"
+      "repro/pump/buy-fee-basis-fortyeight/surfpool/holder_distribution.json.gz",
+      "repro/pump/buy-fee-basis-fortyeight/surfpool/nested_create.json.gz",
+      "repro/pump/buy-fee-basis-fortyeight/surfpool/collect.json.gz",
+      "repro/pump/buy-fee-basis-fortyeight/surfpool/minimum.json.gz",
+      "repro/pump/buy-fee-basis-fortyeight/surfpool/collect_v2.json.gz",
+      "repro/pump/buy-fee-basis-fortyeight/surfpool/extend.json.gz",
+      "repro/pump/buy-fee-basis-fortyeight/surfpool/volume_sync.json.gz",
+      "repro/pump/buy-fee-basis-fortyeight/surfpool/distribution.json.gz",
+      "repro/pump/buy-fee-basis-fortyeight/surfpool/creator_migration.json.gz",
+      "repro/pump/buy-fee-basis-fortyeight/surfpool/set_params.json.gz",
+      "repro/pump/buy-fee-basis-fortyeight/surfpool/sweep.json.gz",
+      "repro/pump/buy-fee-basis-fortyeight/surfpool/admin_cto.json.gz",
+      "repro/pump/buy-fee-basis-fortyeight/surfpool/create.json.gz",
+      "repro/pump/buy-fee-basis-fortyeight/surfpool/set_creator.json.gz",
+      "repro/pump/buy-fee-basis-fortyeight/surfpool/legacy_sell.json.gz",
+      "repro/pump/buy-fee-basis-fortyeight/surfpool/legacy_sell_configured_fee.json.gz",
+      "repro/pump/buy-fee-basis-fortyeight/surfpool/idl_authority.json.gz",
+      "repro/pump/buy-fee-basis-fortyeight/surfpool/sell_v2.json.gz",
+      "repro/pump/buy-fee-basis-fortyeight/surfpool/migrate.json.gz",
+      "repro/pump/buy-fee-basis-fortyeight/surfpool/create_quote.json.gz",
+      "repro/pump/buy-fee-basis-fortyeight/surfpool/exact_quote.json.gz",
+      "repro/pump/buy-fee-basis-fortyeight/surfpool/legacy_buy.json.gz",
+      "repro/pump/buy-fee-basis-fortyeight/surfpool/buy_v2.json.gz",
+      "repro/pump/buy-fee-basis-fortyeight/surfpool/create_control.json.gz",
+      "repro/pump/buy-fee-basis-fortyeight/surfpool/migrate_v2.json.gz",
+      "repro/pump/buy-fee-basis-fortyeight/surfpool/global_init.json.gz",
+      "repro/pump/buy-fee-basis-fortyeight/surfpool/cashback.json.gz",
+      "repro/pump/buy-fee-basis-fortyeight/surfpool/v3_configured_fee.json.gz"
     ],
     "surfpool_comparisons": 1024,
     "surfpool_signed_transactions": 2048,
@@ -114,8 +114,8 @@
       "Known current reconstruction gap: sell_v2 quote transfer-fee minimum-output checking and fee-event fields differ from the captured original. Saved passing suites do not cover this boundary; candidate is not a deployable replacement.",
       "Retains existing one/two-curve coverage and adds16 successful genuine AMM-signed three-hop ordinary Tokenkeg cases with flags [1,0,2]/[2,0,1], four fixed fee modes and two amounts. Source handles ordinary noncompleting routes beyond two hops; arbitrary lengths and capacity are unvalidated. Existing native/quote/extension/Mayhem/completion gaps and explicit reconstruction fences remain; no all-input equivalence."
     ],
-    "candidate_build_identity_report": "repro/pump/curve-preparation-fortyeight/main-scratch-identity.json",
-    "prior_checkpoint": "repro/pump/final-error-metadata-fortyeight",
+    "candidate_build_identity_report": "repro/pump/buy-fee-basis-main-fortyeight/main/controls/identity.json",
+    "prior_checkpoint": "repro/pump/curve-preparation-fortyeight",
     "holder_nested_recovery_report": "audit/pump/HOLDER_NESTED_RECOVERY.md",
     "surfpool_verified_signatures": 2980,
     "quote_control_recovery_report": "audit/pump/QUOTE_CONTROL_RECOVERY.md",
@@ -129,7 +129,7 @@
     "multi_hop_curve_pump_cpi_cases": 84,
     "multi_hop_curve_successful_cases": 43,
     "multi_hop_curve_caller_rejections": 8,
-    "receipt_build_bindings_report": "repro/pump/curve-preparation-fortyeight/receipt-build-bindings.json",
+    "receipt_build_bindings_report": "repro/pump/buy-fee-basis-fortyeight/receipt-bindings.json",
     "bonding_curve_serialization_recovery_report": "audit/pump/BONDING_CURVE_SERIALIZATION_RECOVERY.md",
     "bonding_curve_serialization_body_evidence": "repro/pump/curve-preparation-fortyeight/function-match.json",
     "differential_signed_transactions": 15934,
@@ -139,7 +139,7 @@
     "multi_hop_curve_two_curve_pump_cpi_cases": 18,
     "multi_hop_curve_two_curve_successes": 16,
     "multi_hop_curve_two_curve_post_pump_slippage_rollbacks": 2,
-    "compiler_phase_provenance": "repro/pump/curve-preparation-fortyeight/toolchain-phases.json",
+    "compiler_phase_provenance": "repro/pump/buy-fee-basis-fortyeight/toolchain-phases.json",
     "nested_ancestry_report": "repro/pump/nested-general-route-fortyeight/README.md",
     "nested_ancestry_new_unique_cases": 16,
     "nested_ancestry_successes": 15,
@@ -151,7 +151,9 @@
     "multi_hop_curve_general_route_verified_signatures": 32,
     "final_error_metadata_report": "repro/pump/curve-preparation-fortyeight/README.md",
     "final_error_metadata_body_evidence": "repro/pump/curve-preparation-fortyeight/metadata-closure.json",
-    "curve_decoder_preparation_report": "repro/pump/curve-preparation-fortyeight/README.md"
+    "curve_decoder_preparation_report": "repro/pump/curve-preparation-fortyeight/README.md",
+    "buy_fee_basis_report": "repro/pump/buy-fee-basis-fortyeight/README.md",
+    "buy_fee_basis_body_evidence": "repro/pump/buy-fee-basis-fortyeight/fee-basis-static-review.json"
   },
   "pump_amm": {
     "source_reconstruction": "partial_handlers_compiled",
@@ -615,7 +617,7 @@
     "compiler": "unresolved",
     "dependencies": "unresolved",
     "build_flags": "unresolved",
-    "candidate_artifact": "repro/mayhem/twentyfour/mayhem_recovered.so",
+    "candidate_artifact": "repro/mayhem/buy-result-error-main-twentyfour/main/candidate.so",
     "full_byte_equality": false,
     "comparison_status": "DIFFERS_PARTIAL_IMPLEMENTATION",
     "implemented_handlers": [
@@ -644,31 +646,31 @@
       "buy_pump_swap",
       "sell_pump_swap"
     ],
-    "comparison_report": "repro/mayhem/twentyfour/build-comparison.json",
-    "build_log": "repro/mayhem/twentyfour/build.log",
+    "comparison_report": "repro/mayhem/buy-result-error-main-twentyfour/main/build-comparison.json",
+    "build_log": "repro/mayhem/buy-result-error-main-twentyfour/main/build.log",
     "validated_cases": 9595,
     "validation_reports": [
-      "repro/mayhem/twentyfour/admin-differential.json.gz",
-      "repro/mayhem/twentyfour/fee_recipient-differential.json.gz",
-      "repro/mayhem/twentyfour/extend-differential.json.gz",
-      "repro/mayhem/twentyfour/withdraw-differential.json.gz",
-      "repro/mayhem/twentyfour/quote_withdraw-differential.json.gz",
-      "repro/mayhem/twentyfour/sweeps-differential.json.gz",
-      "repro/mayhem/twentyfour/sell-differential.json.gz",
-      "repro/mayhem/twentyfour/buy-differential.json.gz",
-      "repro/mayhem/twentyfour/sell-v2-native-differential.json.gz",
-      "repro/mayhem/twentyfour/sell-v2-token-differential.json.gz",
-      "repro/mayhem/twentyfour/sell-v2-token22-differential.json.gz",
-      "repro/mayhem/twentyfour/buy-v2-native-differential.json.gz",
-      "repro/mayhem/twentyfour/buy-v2-token-differential.json.gz",
-      "repro/mayhem/twentyfour/buy-v2-token22-differential.json.gz",
-      "repro/mayhem/twentyfour/buy-pump-swap-native-differential.json.gz",
-      "repro/mayhem/twentyfour/buy-pump-swap-token-differential.json.gz",
-      "repro/mayhem/twentyfour/buy-pump-swap-token22-differential.json.gz",
-      "repro/mayhem/twentyfour/sell-pump-swap-native-differential.json.gz",
-      "repro/mayhem/twentyfour/sell-pump-swap-token-differential.json.gz",
-      "repro/mayhem/twentyfour/sell-pump-swap-token22-differential.json.gz",
-      "repro/mayhem/twentyfour/burn-sequences/verification.json"
+      "repro/mayhem/buy-result-error-twentyfour/replay/admin.json.gz",
+      "repro/mayhem/buy-result-error-twentyfour/replay/fee_recipient.json.gz",
+      "repro/mayhem/buy-result-error-twentyfour/replay/extend.json.gz",
+      "repro/mayhem/buy-result-error-twentyfour/replay/withdraw.json.gz",
+      "repro/mayhem/buy-result-error-twentyfour/replay/quote_withdraw.json.gz",
+      "repro/mayhem/buy-result-error-twentyfour/replay/sweeps.json.gz",
+      "repro/mayhem/buy-result-error-twentyfour/replay/sell.json.gz",
+      "repro/mayhem/buy-result-error-twentyfour/replay/buy.json.gz",
+      "repro/mayhem/buy-result-error-twentyfour/replay/sell-v2-native.json.gz",
+      "repro/mayhem/buy-result-error-twentyfour/replay/sell-v2-token.json.gz",
+      "repro/mayhem/buy-result-error-twentyfour/replay/sell-v2-token22.json.gz",
+      "repro/mayhem/buy-result-error-twentyfour/replay/buy-v2-native.json.gz",
+      "repro/mayhem/buy-result-error-twentyfour/replay/buy-v2-token.json.gz",
+      "repro/mayhem/buy-result-error-twentyfour/replay/buy-v2-token22.json.gz",
+      "repro/mayhem/buy-result-error-twentyfour/replay/buy-pump-swap-native.json.gz",
+      "repro/mayhem/buy-result-error-twentyfour/replay/buy-pump-swap-token.json.gz",
+      "repro/mayhem/buy-result-error-twentyfour/replay/buy-pump-swap-token22.json.gz",
+      "repro/mayhem/buy-result-error-twentyfour/replay/sell-pump-swap-native.json.gz",
+      "repro/mayhem/buy-result-error-twentyfour/replay/sell-pump-swap-token.json.gz",
+      "repro/mayhem/buy-result-error-twentyfour/replay/sell-pump-swap-token22.json.gz",
+      "repro/mayhem/buy-result-error-twentyfour/verification/burn.json"
     ],
     "compiler_family_candidates": [
       "v1.52",
@@ -679,8 +681,8 @@
     ],
     "compiler_family_evidence": "repro/compiler-fingerprints/REPORT.md",
     "genuine_snapshot_sequences": {
-      "report": "repro/mayhem/twentyfour/burn-sequences/comparison.json",
-      "verification": "repro/mayhem/twentyfour/burn-sequences/verification.json",
+      "report": "repro/mayhem/buy-result-error-twentyfour/replay/burn/comparison.json",
+      "verification": "repro/mayhem/buy-result-error-twentyfour/verification/burn.json",
       "sequences": 3,
       "instruction_comparisons": 6,
       "signed_transactions": 12,
@@ -695,16 +697,16 @@
       "synthetic_cases": 396,
       "successful_cases": 134,
       "signed_transactions": 792,
-      "report": "repro/mayhem/twentyfour/sell-differential.json.gz",
-      "verification": "repro/mayhem/twentyfour/sell-verification.json",
+      "report": "repro/mayhem/buy-result-error-twentyfour/replay/sell.json.gz",
+      "verification": "repro/mayhem/buy-result-error-twentyfour/verification/sell.json",
       "historical_replay": false
     },
     "buy_validation": {
       "synthetic_cases": 486,
       "successful_cases": 187,
       "signed_transactions": 972,
-      "report": "repro/mayhem/twentyfour/buy-differential.json.gz",
-      "verification": "repro/mayhem/twentyfour/buy-verification.json",
+      "report": "repro/mayhem/buy-result-error-twentyfour/replay/buy.json.gz",
+      "verification": "repro/mayhem/buy-result-error-twentyfour/verification/buy.json",
       "historical_replay": false
     },
     "sell_v2_validation": {
@@ -716,8 +718,8 @@
         "native": {
           "cases": 473,
           "mismatches": 0,
-          "receipt": "repro/mayhem/twentyfour/sell-v2-native-differential.json.gz",
-          "compressed_sha256": "95cb35730f0a14f6829d984c49effc39acd40af75f39d7cdeee394c99f9aafb0",
+          "receipt": "repro/mayhem/buy-result-error-twentyfour/replay/sell-v2-native.json.gz",
+          "compressed_sha256": "7e9f532e179d1426202f11f44bcb166554b7fa13bff733f1942c4daacba97446",
           "successes": 176,
           "rejections": 297,
           "signed_transactions": 946,
@@ -727,13 +729,13 @@
             "retained65535",
             "quote_extreme_1_0_1"
           ],
-          "verification": "repro/mayhem/twentyfour/sell-v2-native-verification.json"
+          "verification": "repro/mayhem/buy-result-error-twentyfour/verification/sell-v2-native.json"
         },
         "token": {
           "cases": 473,
           "mismatches": 0,
-          "receipt": "repro/mayhem/twentyfour/sell-v2-token-differential.json.gz",
-          "compressed_sha256": "0c6442c054ff7164c713eeb25f3c220635b8dcd6a8add6b48e5e988b3ba102bf",
+          "receipt": "repro/mayhem/buy-result-error-twentyfour/replay/sell-v2-token.json.gz",
+          "compressed_sha256": "7a330b6a91dc8f24d74203e4e85c5454342c56233e6e85f1f8a6a425f2c6e298",
           "successes": 121,
           "rejections": 352,
           "signed_transactions": 946,
@@ -743,13 +745,13 @@
             "retained65535",
             "quote_extreme_1_0_1"
           ],
-          "verification": "repro/mayhem/twentyfour/sell-v2-token-verification.json"
+          "verification": "repro/mayhem/buy-result-error-twentyfour/verification/sell-v2-token.json"
         },
         "token22": {
           "cases": 473,
           "mismatches": 0,
-          "receipt": "repro/mayhem/twentyfour/sell-v2-token22-differential.json.gz",
-          "compressed_sha256": "24b76b6e395d9ac4e5d549c6dd03e4f6e3de9adf93be2af36723f5b16964bc5b",
+          "receipt": "repro/mayhem/buy-result-error-twentyfour/replay/sell-v2-token22.json.gz",
+          "compressed_sha256": "65d8a1ba3da0fd9ad84ad2f0f611df274535f0752d50de9251f64cb50ddeab40",
           "successes": 121,
           "rejections": 352,
           "signed_transactions": 946,
@@ -759,7 +761,7 @@
             "retained65535",
             "quote_extreme_1_0_1"
           ],
-          "verification": "repro/mayhem/twentyfour/sell-v2-token22-verification.json"
+          "verification": "repro/mayhem/buy-result-error-twentyfour/verification/sell-v2-token22.json"
         }
       },
       "historical_replay": false
@@ -773,8 +775,8 @@
         "native": {
           "cases": 613,
           "mismatches": 0,
-          "receipt": "repro/mayhem/twentyfour/buy-v2-native-differential.json.gz",
-          "compressed_sha256": "21df333a916c8824ba290f7fdfb1711bc2297965f2fd5ea3d0774566812fe389",
+          "receipt": "repro/mayhem/buy-result-error-twentyfour/replay/buy-v2-native.json.gz",
+          "compressed_sha256": "15222dacd9831393fc940a4de5b87c3a1f4e9bf58fbfc5e9f54e0f634a3e3f4d",
           "successes": 284,
           "rejections": 329,
           "signed_transactions": 1226,
@@ -784,13 +786,13 @@
             "retained65535",
             "quote_extreme_1_0_1"
           ],
-          "verification": "repro/mayhem/twentyfour/buy-v2-native-verification.json"
+          "verification": "repro/mayhem/buy-result-error-twentyfour/verification/buy-v2-native.json"
         },
         "token": {
           "cases": 613,
           "mismatches": 0,
-          "receipt": "repro/mayhem/twentyfour/buy-v2-token-differential.json.gz",
-          "compressed_sha256": "e8bf45df03b4e1f195e4046c7dd0789ac90e5b28faa6a2dc8a9ee2aeb2eb46a8",
+          "receipt": "repro/mayhem/buy-result-error-twentyfour/replay/buy-v2-token.json.gz",
+          "compressed_sha256": "52710bfbb9cc235efaf886ea39075bd4cd4b40e0ede21ed03fc672460a54643b",
           "successes": 210,
           "rejections": 403,
           "signed_transactions": 1226,
@@ -800,13 +802,13 @@
             "retained65535",
             "quote_extreme_1_0_1"
           ],
-          "verification": "repro/mayhem/twentyfour/buy-v2-token-verification.json"
+          "verification": "repro/mayhem/buy-result-error-twentyfour/verification/buy-v2-token.json"
         },
         "token22": {
           "cases": 613,
           "mismatches": 0,
-          "receipt": "repro/mayhem/twentyfour/buy-v2-token22-differential.json.gz",
-          "compressed_sha256": "0bed8a183241ae67d41bbf6e1f4b53006c54662157da4d19d799e473dc81a763",
+          "receipt": "repro/mayhem/buy-result-error-twentyfour/replay/buy-v2-token22.json.gz",
+          "compressed_sha256": "b765f7effa3000aa5d09b49ac2fca346375a84126ed3040d86dab41346391954",
           "successes": 210,
           "rejections": 403,
           "signed_transactions": 1226,
@@ -816,7 +818,7 @@
             "retained65535",
             "quote_extreme_1_0_1"
           ],
-          "verification": "repro/mayhem/twentyfour/buy-v2-token22-verification.json"
+          "verification": "repro/mayhem/buy-result-error-twentyfour/verification/buy-v2-token22.json"
         }
       },
       "historical_replay": false
@@ -830,8 +832,8 @@
         "native": {
           "cases": 419,
           "mismatches": 0,
-          "receipt": "repro/mayhem/twentyfour/buy-pump-swap-native-differential.json.gz",
-          "compressed_sha256": "3f634e2c3f09e47b31f4f832e3960bf89d353590bd21703cb9a31db702717d10",
+          "receipt": "repro/mayhem/buy-result-error-twentyfour/replay/buy-pump-swap-native.json.gz",
+          "compressed_sha256": "b39557bc0e3d7a290d9a04ee148c535bba5c8e6a124c65cfb57126544bf4d32b",
           "successes": 163,
           "rejections": 256,
           "signed_transactions": 838,
@@ -848,13 +850,13 @@
             "pool_tokens_15_0",
             "pool_tokens_15_1000000000"
           ],
-          "verification": "repro/mayhem/twentyfour/buy-pump-swap-native-verification.json"
+          "verification": "repro/mayhem/buy-result-error-twentyfour/verification/buy-pump-swap-native.json"
         },
         "token": {
           "cases": 419,
           "mismatches": 0,
-          "receipt": "repro/mayhem/twentyfour/buy-pump-swap-token-differential.json.gz",
-          "compressed_sha256": "da59a3866115fff965c9e78d2665a2d06157cfae2952138e289308e422325d84",
+          "receipt": "repro/mayhem/buy-result-error-twentyfour/replay/buy-pump-swap-token.json.gz",
+          "compressed_sha256": "a6d0e6dd693c69d9da1d04d717f8ef35e813afc59b3fd3ce1cf40a1129f9d6b8",
           "successes": 164,
           "rejections": 255,
           "signed_transactions": 838,
@@ -865,18 +867,18 @@
             "virtual_-122946690720",
             "pool_tokens_15_0"
           ],
-          "verification": "repro/mayhem/twentyfour/buy-pump-swap-token-verification.json"
+          "verification": "repro/mayhem/buy-result-error-twentyfour/verification/buy-pump-swap-token.json"
         },
         "token22": {
           "cases": 419,
           "mismatches": 0,
-          "receipt": "repro/mayhem/twentyfour/buy-pump-swap-token22-differential.json.gz",
-          "compressed_sha256": "056a5f8e9b6c7461e8159d6b6123e94e208d49f59c94cd7c1355f7c1ec430c6e",
+          "receipt": "repro/mayhem/buy-result-error-twentyfour/replay/buy-pump-swap-token22.json.gz",
+          "compressed_sha256": "b6184ba327b396b481d53f0e3e4356df5456ce2521f2a24bf51084f96b318c2d",
           "successes": 0,
           "rejections": 419,
           "signed_transactions": 838,
           "normalized_log_differences": [],
-          "verification": "repro/mayhem/twentyfour/buy-pump-swap-token22-verification.json"
+          "verification": "repro/mayhem/buy-result-error-twentyfour/verification/buy-pump-swap-token22.json"
         }
       },
       "historical_replay": false
@@ -890,8 +892,8 @@
         "native": {
           "cases": 413,
           "mismatches": 0,
-          "receipt": "repro/mayhem/twentyfour/sell-pump-swap-native-differential.json.gz",
-          "compressed_sha256": "c0bce4cbe142a98001ae835cf13a3da9b446ae75548f73351038b906a91ebc3a",
+          "receipt": "repro/mayhem/buy-result-error-twentyfour/replay/sell-pump-swap-native.json.gz",
+          "compressed_sha256": "12421e01bb1eedd6b5f36c5250e75127792b18cde824d23a89ac0596c89dbc23",
           "successes": 176,
           "rejections": 237,
           "signed_transactions": 826,
@@ -902,13 +904,13 @@
             "virtual_-122946690720",
             "pool_tokens_15_0"
           ],
-          "verification": "repro/mayhem/twentyfour/sell-pump-swap-native-verification.json"
+          "verification": "repro/mayhem/buy-result-error-twentyfour/verification/sell-pump-swap-native.json"
         },
         "token": {
           "cases": 413,
           "mismatches": 0,
-          "receipt": "repro/mayhem/twentyfour/sell-pump-swap-token-differential.json.gz",
-          "compressed_sha256": "4c5b06f583eb80ddd822a657970ecc03a294bb14c4956493713aa0096287d472",
+          "receipt": "repro/mayhem/buy-result-error-twentyfour/replay/sell-pump-swap-token.json.gz",
+          "compressed_sha256": "c38715bdac9e89180872d57b022e397c5aeae8aca440cac6c13c3a54eea7901a",
           "successes": 177,
           "rejections": 236,
           "signed_transactions": 826,
@@ -919,21 +921,31 @@
             "virtual_-122946690720",
             "pool_tokens_15_0"
           ],
-          "verification": "repro/mayhem/twentyfour/sell-pump-swap-token-verification.json"
+          "verification": "repro/mayhem/buy-result-error-twentyfour/verification/sell-pump-swap-token.json"
         },
         "token22": {
           "cases": 413,
           "mismatches": 0,
-          "receipt": "repro/mayhem/twentyfour/sell-pump-swap-token22-differential.json.gz",
-          "compressed_sha256": "e020e1c30e23bae09e45fe5d77b4a78f20c240db397f4e80931e997c76ba1228",
+          "receipt": "repro/mayhem/buy-result-error-twentyfour/replay/sell-pump-swap-token22.json.gz",
+          "compressed_sha256": "6968a96cda84a9ae47f68e48815d368610abc3bbc6b07b162866da7343e3736b",
           "successes": 0,
           "rejections": 413,
           "signed_transactions": 826,
           "normalized_log_differences": [],
-          "verification": "repro/mayhem/twentyfour/sell-pump-swap-token22-verification.json"
+          "verification": "repro/mayhem/buy-result-error-twentyfour/verification/sell-pump-swap-token22.json"
         }
       },
       "historical_replay": false
-    }
+    },
+    "candidate_sha256": "dda5554a2faf8aa40fc86547e91c4b32c6ac44b878073dcb8bd9f7ac60b47cd4",
+    "candidate_bytes": 668544,
+    "source_refinement": "BuyPumpSwap checked_div None preserves original typed PumpSwapCpiMathOverflow Result unwrap; no new handlers/cases.",
+    "known_diagnostic_differences": "repro/mayhem/buy-result-error-twentyfour/diagnostic-differences.json",
+    "full_inventory": "repro/mayhem/buy-result-error-twentyfour/static/complete-inventory.json.gz",
+    "main_promotion_evidence": "repro/mayhem/buy-result-error-main-twentyfour",
+    "signature_count_scope": "signed_transactions fields are recorded/derived execution counts; not every administrative receipt retains independently re-verifiable transaction bytes",
+    "main_build_identity_report": "repro/mayhem/buy-result-error-main-twentyfour/main/controls/identity.json",
+    "current_full_function_inventory": "repro/mayhem/buy-result-error-twentyfour/static/complete-inventory.json.gz",
+    "prior_checkpoint": "repro/mayhem/twentyfour"
   }
 }

@@ -79,4 +79,5 @@ impl AccountSerialize for SwapGlobalConfig {
 #[error_code]
 pub enum PumpSwapError {
  #[msg("Pump Swap CPI call failed")]PumpSwapCpiFailed=10,
+ #[msg("Math Overflow in Pump Swap CPI call")]PumpSwapCpiMathOverflow=11,
 }

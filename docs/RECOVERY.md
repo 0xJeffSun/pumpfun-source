@@ -415,3 +415,7 @@ Relay build07 implements the recovered owned error model and passes all twelve u
 ## Layered pass 09: accumulator ordering and dependency review
 
 [Pass09](../repro/layered-passes/pass-09/README.md) moves AMM's accumulator user-field assignment after successful Clock retrieval. The clean main build equals the separately tested executable and symbol ELF; the unchanged 25-suite corpus passes 17,462 comparisons. Fresh complete inventories preserve all unmatched windows. The dependency review reproduces every ATA and Metaplex differing byte and explains the missing artifact-linked source/build evidence. No new source hypothesis is promoted merely to influence code placement.
+
+## Layered pass 10: buy fee input and typed math error
+
+[Pass10](../repro/layered-passes/pass-10/README.md) integrates the Pump buy-side supply selector and Mayhem BuyPumpSwap typed zero-divisor error. Both clean main builds equal their independently tested scratch executables and symbols. The unchanged corpora preserve their explicit diagnostic and coverage limits. Portable independent review checks original/candidate instructions, current source deltas and retained evidence. The complete before/after comparison remains 0/4 core and 2/5 dependency captures exact.

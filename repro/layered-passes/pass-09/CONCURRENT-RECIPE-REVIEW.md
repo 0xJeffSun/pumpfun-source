@@ -2,7 +2,7 @@
 
 After pass09 was committed as `e70db8da740e06edef8773ff4ba684063b73ee03`, the first push encountered a concurrent remote commit, `31aa51d`. The remote research was merged without changing the pass09 source, build artifacts, status or acceptance evidence. All 612 reviewed pass09 files retained their exact hashes after the merge.
 
-The concurrent [recipe report](../../parallel-work/2026-10-25/independent-reconstruction-review/RECIPE-REVERSE-ENGINEERING.md) proposes v1.43 for Pump, AMM and Fees. Its section-size measurements and finite regression summaries are candidate observations. They do not establish the historical compiler or source completeness:
+The concurrent [recipe report](https://github.com/lalalune/pumpfun-source/blob/31aa51d/repro/parallel-work/2026-10-25/independent-reconstruction-review/RECIPE-REVERSE-ENGINEERING.md) proposes v1.43 for Pump, AMM and Fees. Its section-size measurements and finite regression summaries are candidate observations. They do not establish the historical compiler or source completeness:
 
 - Similar `.text` size does not imply that the same functions, conditions, ownership operations or data are present. Extra and absent code can offset each other. A size ratio is not a source-recovery percentage.
 - Matching selected runtime helpers does not uniquely identify a compiler when those helpers may be shared across releases. Conversely, a closer total size does not disprove the other compiler's provenance.

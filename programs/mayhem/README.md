@@ -18,6 +18,24 @@ Implemented paths:
 - `burn_tokens`, `sell`, `buy`, `sell_v2`, `buy_v2`
 - `buy_pump_swap`, `sell_pump_swap`
 
+
+## BuyPumpSwap typed sizing-error refinement
+
+The reviewed [isolated refinement](../../repro/mayhem/buy-result-error-twentyfour/README.md)
+restores the original typed `Result::unwrap` failure for a zero sizing divisor,
+using `PumpSwapError::PumpSwapCpiMathOverflow` (original value11 and message).
+All21 unchanged suites were replayed:9595 functional comparisons passed, with19190 recorded/derived signed
+executions (not independent signature proof for every administrative receipt), with no new unique cases. The three second-burn source-location
+differences remain explicit in the receipts and unchanged verifier result.
+The previous extra Option-unwrap message is absent in the exercised BuyPumpSwap
+zero-effective-reserve cases; source path/line and other diagnostic differences remain.
+The scratch candidate is668544 bytes, SHA256
+`dda5554a2faf8aa40fc86547e91c4b32c6ac44b878073dcb8bd9f7ac60b47cd4`.
+Main-build acceptance, if completed, belongs to the separate
+[main-promotion evidence](../../repro/mayhem/buy-result-error-main-twentyfour/README.md).
+This source refinement does not recover the excluded initializer or establish
+full original ELF, compiler, formatting-engine or all-input equivalence.
+
 ## Evidence and unresolved source details
 
 The original captured binary is `evidence/original/mayhem/deployed.so`. Its

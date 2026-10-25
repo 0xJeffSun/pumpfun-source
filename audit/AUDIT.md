@@ -375,3 +375,5 @@ The seventh-pass Fees change affects one legacy error's compared-value payload. 
 Pass08's independent review checks bounded original named-key provenance and documents unevaluated branch and padding assumptions. The unchanged Fees corpus and Relay ordinary12 comparisons are regression evidence, not a complete security audit or proof of all historical behavior. No new vulnerability finding is asserted.
 
 Pass09 changes the AMM accumulator assignment order using original instruction evidence and retains unchanged runtime comparisons. It adds no new security finding or complete audit sign-off. Its dependency review distinguishes unresolved code/data and provenance differences from demonstrated behavioral faults.
+
+Pass10's Pump fee-input and Mayhem typed-error changes have bounded independent source/static review and unchanged regression evidence. Pump divergent-supply runtime coverage is still absent; Mayhem diagnostic differences and missing raw administrative transaction bytes remain explicit. These reviews do not establish exhaustive behavior or complete the security audit.
