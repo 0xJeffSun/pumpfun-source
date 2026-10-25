@@ -407,3 +407,7 @@ Relay build07 implements the recovered owned error model and passes all twelve u
 ## Layered pass 07: legacy compared-value ownership
 
 [Pass07](../repro/layered-passes/pass-07/README.md) follows the sixth-pass review with its concrete one-check Fees correction. The original payout error owns formatted comparison values; the candidate now uses the corresponding framework API. The generated formatting code inlines into the legacy handler and reaches the raw-identical 40-byte Pubkey formatter at four call sites. All 17,461 existing comparisons and ten separate sequence steps pass, and clean main executable/symbol files equal the tested scratch build. Complete inventories retain 448 mapped, 135 unattributed and two conflicting original windows. Full original identity, V2 source acceptance, transitive data/calls and the security assessment remain incomplete.
+
+## Layered pass 08: V2 composition and whitelist serialization
+
+[Pass08](../repro/layered-passes/pass-08/README.md) integrates Fees V2 caller composition after independent named-key review, all unchanged regressions, saved-signature verification and a matching clean main rebuild. It also uses the Relay whitelist writer so I/O errors are dropped before construction of the owned framework error. The full before/after byte reports and function ledgers retain all unmatched and ambiguous ranges. No new whole-original byte identity or security completion is claimed.

@@ -116,7 +116,7 @@ def main():
     status = json.loads((ROOT / "repro/status.json").read_text())
     key = "pump" if args.program == "pump" else "pump_fees"
     artifact = status[key]["candidate_artifact"]
-    if args.program == "fees" and artifact in ("repro/pump_fees/donation-business-v144/pump_fees_candidate.so", "repro/pump_fees/donation-borrow-v144/pump_fees_candidate.so", "repro/pump_fees/legacy-social-admission-v144/pump_fees_candidate.so", "repro/pump_fees/legacy-caller-v144/pump_fees_candidate.so", "repro/pump_fees/legacy-value-v144/pump_fees_candidate.so"):
+    if args.program == "fees" and artifact in ("repro/pump_fees/donation-business-v144/pump_fees_candidate.so", "repro/pump_fees/donation-borrow-v144/pump_fees_candidate.so", "repro/pump_fees/legacy-social-admission-v144/pump_fees_candidate.so", "repro/pump_fees/legacy-caller-v144/pump_fees_candidate.so", "repro/pump_fees/legacy-value-v144/pump_fees_candidate.so", "repro/pump_fees/v2-caller-v144/pump_fees_candidate.so"):
         subprocess.run([sys.executable, "-B", str((ROOT / artifact).parent / "verify.py"),
                         "--current-main", "--repo", str(ROOT)], check=True)
         return
