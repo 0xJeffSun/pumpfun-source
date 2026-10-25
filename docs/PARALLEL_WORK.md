@@ -28,3 +28,9 @@ max_concurrent_threads_per_session = 12
 This caps spawned threads excluding the primary; `max_threads` remains a legacy alias. A host can impose a lower session limit, and changing a configuration file does not itself prove an existing chat's capacity changed. See [global subagent settings](https://learn.chatgpt.com/docs/agent-configuration/subagents#global-settings).
 
 Independent workers can also be launched with `codex exec --sandbox workspace-write -C <assigned-directory> --json -o <result-file> -`, supplying the task on stdin. That creates separate CLI runs rather than increasing this chat's native agent allowance. See [non-interactive mode](https://developers.openai.com/codex/noninteractive). More workers consume the same account's available usage and should retain disjoint writable scopes.
+
+## Follow-up wave
+
+All nine initial CLI tasks exited successfully. Eight public research handoffs are [published with portable verifiers](../repro/parallel-work/2026-10-24/results/README.md). The initial audit package was withheld because it copied previously private review inputs; it does not establish audit completion. A separate public-source-only audit worker recomputes the public coverage evidence. No private audit records are included in the published worker packages.
+
+[Seven follow-up workers](../repro/parallel-work/2026-10-24/wave2/launch.json) started on Fees initializer context layout, Fees account module reconstruction, relay fixed codecs, relay shared arithmetic, Pump ordinary partial-fill behavior, Mayhem field roles and public-source audit applicability. They preserve prior results and write separate reviewable packages. The native routing worker has positive original-only ordinary Tokenkeg two-curve fixtures and is separately authorized for one fixed-recipe candidate build and bounded regression. These are work assignments, not accepted source changes or increased completion counts.
