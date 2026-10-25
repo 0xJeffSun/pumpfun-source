@@ -8,3 +8,6 @@ repro/identity-audit/2026-10-25/compiler-sdk/v1.54-build.sh -whitespace
 
 # Unified patch context spaces are part of the exact source trial.
 repro/pump/metaplex-utilize-guard-source-recovery/source.patch -whitespace
+repro/pump/metaplex-candidate-build-12-review/build12-source.patch -whitespace
+repro/identity-audit/2026-10-25/compiler-v1461/v1.46-build.sh -whitespace
+repro/identity-audit/2026-10-25/compiler-v1461/v1.46.1-build.sh -whitespace

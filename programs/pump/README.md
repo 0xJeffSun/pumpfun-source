@@ -1,3 +1,14 @@
+# Pump: owned holder-downgrade error checkpoint
+
+The tested scratch executable is `ffa0f3bab34b8cfca6d6aeef5e6b8dcabad0a16eccfeb3d22d5781e22ae3b193` (1,581,624 bytes). One existing admin-CTO holder-downgrade guard now returns the named `HolderRewardCreatorImmutable` Anchor error instead of `ProgramError::Custom(6083)`. Its predicate/order, the accepted owned6088/6080 guards, typed full BondingCurve and scoped borrow/mutation/CPI/Clock ordering remain unchanged.
+
+The error number, name and message match original on six existing differential cases. No existing signed Surfpool case reaches6083; signed changed-guard coverage remains zero. Source origins remain truthful and differ: original `programs/pump/src/creator/admin_cto.rs:289`, recovered `src/admin_cto.rs:103`. No padding, remapping or historical-coordinate constants are used. Whole original application/executable bytes remain unmatched; other numeric guards and allocation-failure behavior remain unresolved.
+
+The evidence package is [`repro/pump/admin-cto-owned6083-fortyeight`](../../repro/pump/admin-cto-owned6083-fortyeight/README.md). It binds the exact one-file patch, all 37 source inputs, pinned v1.44 compile/v1.52 strip tools, SDK/helpers and 252 package/14,281 file dependency gates; full original/current functions/calls/data and byte residuals; and unchanged finite comparison/signature receipts. No new fixture/probe was added. The previous recovery history and prior coverage limitations remain below.
+
+<details>
+<summary>Historical accepted c261 checkpoint and inherited recovery history</summary>
+
 # Pump: owned admin-CTO error checkpoint
 
 The tested scratch executable is `c261d215495a35aa59970546b87bd5fb74407d2bbd5d885d41a0d1a2677cc2f2` (1,581,232 bytes). It changes one admin-CTO guard from a generic `ProgramError::Custom(6088)` to the existing named `CtoNotAllowedForMayhemCoin` Anchor error. The typed BondingCurve parser, accepted mutation/Clock/CPI ordering and scoped borrow repair are retained.
@@ -47,3 +58,7 @@ The unchanged CTO corpus does not exercise holder mode with an already-cashback 
 </details>
 
 </details>
+
+</details>
+
+Recorded integrity limit: both differential and Surfpool orchestrators exited1 at their final global check because the build helper changed concurrently. All target child suites exited0 and saved signatures/effects passed. The frozen build passed old-helper before/after gates. Root-reviewed explicit-version AST equivalence proof seal `eb9173e77c85d1b5e55c8556b52e002ad655e5abe3b8a430a13e5a7fe7cb3223` admits only exact old→current helper transition with explicit nonempty v1.44/v1.52; all other inputs were rechecked. This is not a blanket whole-integrity PASS; no runtime rerun occurred.
