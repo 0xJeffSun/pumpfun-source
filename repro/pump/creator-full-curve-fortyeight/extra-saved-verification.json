@@ -1,0 +1,14 @@
+{
+  "nested-original": {
+    "cases": 16,
+    "signatures": 32
+  },
+  "nested-differential": {
+    "cases": 16,
+    "signatures": 64
+  },
+  "route": {
+    "cases": 16,
+    "signatures": 32
+  }
+}
