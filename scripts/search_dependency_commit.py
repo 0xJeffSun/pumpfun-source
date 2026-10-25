@@ -31,6 +31,7 @@ def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('--dependency', choices=list(CFG), required=True)
     p.add_argument('--commits', nargs='+', required=True)
+    p.add_argument('--features', default='', help='comma-separated cargo features to enable')
     p.add_argument('--output', type=pathlib.Path, required=True)
     a = p.parse_args()
     cfg = CFG[a.dependency]
@@ -61,12 +62,13 @@ def main():
             if co.returncode:
                 results.append(dict(commit=commit, checked_out=False, error=co.stderr[-500:])); continue
             head = read(['git', '-C', str(src), 'rev-parse', 'HEAD'])
+            feat = ['--features', a.features] if a.features else []
             if cfg['build'] == 'build-sbf':
                 cmd = ['docker', 'exec', '-e', 'RUSTUP_TOOLCHAIN=' + active, '-w', mdir, container,
-                       'cargo', 'build-sbf', '--', '--config', 'registries.crates-io.protocol="sparse"', '--locked', '--manifest-path', mpath]
+                       'cargo', 'build-sbf', '--', '--config', 'registries.crates-io.protocol="sparse"', *feat, '--locked', '--manifest-path', mpath]
             else:
                 cmd = ['docker', 'exec', '-e', 'RUSTUP_TOOLCHAIN=' + active, '-e', 'RUSTFLAGS=-D warnings', '-w', workdir, container,
-                       'cargo', 'build-bpf', '--manifest-path', mpath, '--', '--locked']
+                       'cargo', 'build-bpf', '--manifest-path', mpath, '--', *feat, '--locked']
             b = subprocess.run(cmd, capture_output=True, text=True)
             so = src / cfg['deploy'] / (cfg['library'] + '.so')
             row = dict(commit=commit, head=head, built=b.returncode == 0)
@@ -87,7 +89,7 @@ def main():
             print(json.dumps({k: row[k] for k in row if k != 'error_tail'}), flush=True)
     finally:
         subprocess.run(['docker', 'stop', container], check=False, stdout=subprocess.DEVNULL)
-    report = dict(dependency=a.dependency, image=cfg['image'], repo=cfg['repo'],
+    report = dict(dependency=a.dependency, features=a.features, image=cfg['image'], repo=cfg['repo'],
                   original_sha256=sha(original), original_bytes=len(original),
                   matches=[r['head'] for r in results if r.get('full_byte_equality')], results=results)
     (out / 'search-report.json').write_text(json.dumps(report, indent=2) + '\n')
