@@ -82,13 +82,14 @@ three configuration setters, permissionless resize, and two deprecated rejection
 dispatches. The other 18 handlers remain unsupported. Selected compiler and dependency versions
 remain candidates rather than an established historical graph.
 
-### Parallel reconstruction checkpoint: 48 implemented handlers and two partial paths
+### Parallel reconstruction checkpoint: 51 implemented handlers and two partial paths
 
-Saved builds cover Pump 4, PumpSwap 14, Pump Fees 13 and Mayhem 17 implemented
-handlers, plus Pump's partial regular-SOL buy_v3/sell_v3 branches. Their 26,044 local SBF
+Saved builds cover Pump 4, PumpSwap 17, Pump Fees 13 and Mayhem 17 implemented
+handlers, plus Pump's partial regular-SOL buy_v3/sell_v3 branches. Their 27,082 local SBF
 comparisons are indexed by `repro/status.json`; each report preserves its own
-coverage and limitations. Pump's trade paths exclude quote-token, Mayhem, cashback
-and holder-reward branches and has an uninterpreted event suffix. Neither is counted
+coverage and limitations. Pump's SOL trade paths include Mayhem buyback suppression,
+holder-reward event fields and explicit cashback rejection. Quote-token behavior
+and the final event suffix remain incomplete. Neither is counted
 as a fully recovered trade handler. See [partial sell review](pump/partial-sell-review.md).
 
 PumpSwap deposit/withdraw coverage includes actual captured Token/Token2022 CPIs,
@@ -136,3 +137,10 @@ unconditional rejection behavior (6023), not successful authority changes. The
 checks, exact rent-delta transfers, no-op behavior, new zero-filled bytes and
 rollback. Injecting an underfunded synthetic account can fail rent checks after
 execution; that observation alone is not a vulnerability finding.
+
+PumpSwap's three v2 trade handlers add 870 original/candidate cases covering
+canonical and noncanonical pool fee selection, SOL/USDC/exotic quote schedules,
+legacy account resizing, Token2022 transfer fees, exact token/System/event CPI
+payloads and failure rollback. See [v2 trade recovery](pump_amm/TRADE_V2_RECOVERY.md)
+for semantic details and untested extension combinations. The first-generation
+trade handlers and multi-hop routes remain outside this recovered checkpoint.

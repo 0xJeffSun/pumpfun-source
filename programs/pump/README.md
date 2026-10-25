@@ -2,13 +2,16 @@
 
 The Anchor 0.31.1 source implements four recovered administration handlers:
 `toggle_create_v2`, `toggle_mayhem_mode`, `toggle_cashback_enabled`, and
-`set_max_curve_depth`. It also implements **partial regular-SOL `sell_v3` and `buy_v3` paths**.
+`set_max_curve_depth`. It also implements **partial SOL `sell_v3` and `buy_v3` paths**.
 It is incomplete and is not a deployable replacement.
 
 The trade paths handle constant-product reserve changes, fee tier selection,
 creator/protocol/buyback accounting, Token/Token2022 `transfer_checked` CPI,
-lamport transfers, and log/CPI TradeEvents. Quote-token, Mayhem, cashback, and
-holder-reward branches are explicitly unsupported. The buy path supports the observed curve-completion state and CompleteEvent,
+lamport transfers, and log/CPI TradeEvents. Quote-token paths remain unsupported. SOL Mayhem trades suppress buyback,
+holder-reward trades report the observed creator-fee-derived reward fields, and
+cashback coins are rejected with the original v3 error6094. FeeConfig parsing
+accounts for legacy allocation boundaries2512/4073/4097. The334-case expanded buy suite also compares complete recorded inner
+instructions. The buy path supports the observed curve-completion state and CompleteEvent,
 including an omitted or explicit optional boolean argument. The original meaning
 of that argument outside tested branches remains unresolved. The final eight TradeEvent
 bytes are zero in this fixture; their meaning is unresolved and the source names
@@ -19,7 +22,7 @@ The account layouts derive from the captured official IDL. Four administration
 handlers retain the earlier 93-case regression suite. Toggles reject unchanged
 values with NotAuthorized (6000), update their boolean, and emit no event. Wrong
 authority also uses6000. `set_max_curve_depth` accepts the tested u8 boundaries.
-The partial sell suite covers217 cases, comparing errors, account bytes/owners/
+The expanded partial sell suite covers301 cases, comparing errors, account bytes/owners/
 lamports, and raw events with the captured original. The replaced executable Pump
 account is excluded from semantic state comparison; its independent binary
 comparison remains a mismatch. Tests load captured external dependency binaries

@@ -5,7 +5,7 @@
     "compiler": "unresolved",
     "dependencies": "unresolved",
     "build_flags": "unresolved",
-    "candidate_artifact": "repro/pump/buy-candidate.so",
+    "candidate_artifact": "repro/pump/expanded-candidate.so",
     "full_byte_equality": false,
     "comparison_status": "DIFFERS_PARTIAL_IMPLEMENTATION",
     "implemented_handlers": [
@@ -14,17 +14,17 @@
       "toggle_cashback_enabled",
       "set_max_curve_depth"
     ],
-    "comparison_report": "repro/pump/buy-build-comparison.json",
-    "build_log": "repro/pump/buy-build.log",
-    "validated_cases": 560,
+    "comparison_report": "repro/pump/expanded-build-comparison.json",
+    "build_log": "repro/pump/expanded-build.log.gz",
+    "validated_cases": 728,
     "validation_reports": [
-      "repro/pump/buy-admin-regression.json",
-      "repro/pump/buy-sell-regression.json",
-      "repro/pump/buy-sbf-differential.json"
+      "repro/pump/expanded-admin-regression.json.gz",
+      "repro/pump/expanded-sell-differential.json.gz",
+      "repro/pump/expanded-buy-differential.json.gz"
     ],
     "partially_implemented_handlers": {
-      "sell_v3": "Regular SOL quote, no Mayhem/cashback/holder-reward branches. Final event suffix remains uninterpreted. See audit/pump/partial-sell-review.md.",
-      "buy_v3": "Regular SOL quote with existing user ATA and completion event. Excludes Mayhem/cashback/holder-reward/quote-token branches. See audit/pump/partial-sell-review.md."
+      "sell_v3": "SOL quote including Mayhem buyback suppression, holder-reward fields and cashback rejection. Quote-token path incomplete; final event suffix uninterpreted.",
+      "buy_v3": "SOL quote with existing user ATA, completion event, Mayhem/holder flags and cashback rejection. Quote-token path incomplete; final event suffix uninterpreted."
     }
   },
   "pump_amm": {
@@ -33,7 +33,7 @@
     "compiler": "unresolved",
     "dependencies": "unresolved",
     "build_flags": "unresolved",
-    "candidate_artifact": "repro/pump_amm/liquidity-fourteen/pump_amm_recovered.so",
+    "candidate_artifact": "repro/pump_amm/trade-seventeen/pump_amm_recovered.so",
     "full_byte_equality": false,
     "comparison_status": "DIFFERS_PARTIAL_IMPLEMENTATION",
     "implemented_handlers": [
@@ -50,19 +50,23 @@
       "init_user_volume_accumulator",
       "close_user_volume_accumulator",
       "deposit",
-      "withdraw"
+      "withdraw",
+      "buy_v2",
+      "sell_v2",
+      "buy_exact_quote_in_v2"
     ],
-    "comparison_report": "repro/pump_amm/liquidity-fourteen/build-comparison.json",
-    "build_log": "repro/pump_amm/liquidity-fourteen/build.log",
-    "validated_cases": 10067,
+    "comparison_report": "repro/pump_amm/trade-seventeen/build-comparison.json",
+    "build_log": "repro/pump_amm/trade-seventeen/build.log",
+    "validated_cases": 10937,
     "validation_reports": [
-      "repro/pump_amm/liquidity-fourteen/admin-differential.json.gz",
-      "repro/pump_amm/liquidity-fourteen/buyback-differential.json.gz",
-      "repro/pump_amm/liquidity-fourteen/fee_config-differential.json.gz",
-      "repro/pump_amm/liquidity-fourteen/resize-differential.json.gz",
-      "repro/pump_amm/liquidity-fourteen/reserved-differential.json.gz",
-      "repro/pump_amm/liquidity-fourteen/accumulator-differential.json.gz",
-      "repro/pump_amm/liquidity-fourteen/liquidity-differential.json.gz"
+      "repro/pump_amm/trade-seventeen/admin-differential.json.gz",
+      "repro/pump_amm/trade-seventeen/buyback-differential.json.gz",
+      "repro/pump_amm/trade-seventeen/fee_config-differential.json.gz",
+      "repro/pump_amm/trade-seventeen/resize-differential.json.gz",
+      "repro/pump_amm/trade-seventeen/reserved-differential.json.gz",
+      "repro/pump_amm/trade-seventeen/accumulator-differential.json.gz",
+      "repro/pump_amm/trade-seventeen/liquidity-differential.json.gz",
+      "repro/pump_amm/trade-seventeen/trade_v2-differential.json.gz"
     ]
   },
   "pump_fees": {

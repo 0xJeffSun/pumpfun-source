@@ -2,6 +2,8 @@
 //! This crate is not the historical source or a byte-identical replacement.
 use anchor_lang::prelude::*;
 mod state;
+mod trade;
+use trade::*;
 use anchor_spl::{token::Token, token_2022::Token2022, token_interface::{self, Mint, TokenAccount}};
 use state::*;
 
@@ -11,6 +13,9 @@ declare_id!("pAMMBay6oceH9fJKBRHGP5D4bD4sWpmSwMn52FMfXEA");
 pub mod pump_amm_recovered {
     use super::*;
 
+    pub fn buy_v2(ctx: Context<TradeV2>, base_amount_out: u64, max_quote_amount_in: u64) -> Result<()> { trade::execute(ctx, base_amount_out, max_quote_amount_in, 0) }
+    pub fn sell_v2(ctx: Context<TradeV2>, base_amount_in: u64, min_quote_amount_out: u64) -> Result<()> { trade::execute(ctx, base_amount_in, min_quote_amount_out, 1) }
+    pub fn buy_exact_quote_in_v2(ctx: Context<TradeV2>, spendable_quote_in: u64, min_base_amount_out: u64) -> Result<()> { trade::execute(ctx, spendable_quote_in, min_base_amount_out, 2) }
     pub fn deposit(ctx: Context<Liquidity>, lp_token_amount_out: u64, max_base_amount_in: u64, max_quote_amount_in: u64) -> Result<()> {
         liquidity(ctx, lp_token_amount_out, max_base_amount_in, max_quote_amount_in, true)
     }
