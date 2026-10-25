@@ -267,3 +267,31 @@ The [static set_mayhem_virtual_params package](../repro/pump/mayhem-virtual-para
 ## Six quote-control handlers
 
 The [Pump48 checkpoint](../repro/pump/quote-control-fortyeight/README.md) recovers quote-control initialization, admin and reserves-admin rotation, mint addition/removal, and reserve updates. Its clean main build is whole-file identical to the tested scratch build: 1,478,960 bytes, SHA-256 `c9c364b59fca69ecc395c1e7911d55fc7997631daa0dd0b0bcf37d7f0dfa4804`. All 9,161 comparisons across 36 suites and all 1,024 Surfpool comparisons across 28 runners pass. The quote-control cases contain 1,014 executed transactions with 2,008 verified signatures; Surfpool separately contains 2,048 transactions with 2,980 signatures. Old unbound reports remain preserved as unaccepted history. The four programs now total 140 implemented handlers plus four partial paths and 53,659 saved comparison receipts. Every original whole-file comparison still differs, and the current sell_v2 gap remains explicit.
+
+
+## AMM Pool error-conversion recovery
+
+The [Pool serializer checkpoint](../repro/pump_amm/pool-serialization-thirty-seven/README.md) independently traces all 19 original writes and their error branches, then replaces the two explicit Borsh error mappings with direct I/O-error propagation. Its 1,175,720-byte main/scratch-identical candidate has SHA-256 `5a68db39372121c6406727bced3087aa9caf63f14a999ac68206c9b5b3401216`. All 17,462 existing cases across 25 suites pass again. The 1,704-byte Pool exit and 1,648-byte GlobalConfig exit each match normalized complete bodies and their 24 direct callees; full original-byte identity remains false. Counts remain 37 implemented AMM handlers with create_config absent.
+
+
+## Partial native curve execution
+
+The [native/legacy curve checkpoint](../repro/pump/native-curve-partial-fortyeight/README.md) retains 48 implemented Pump handlers and adds a fifth partial path. The 1,534,904-byte clean main build is identical to the regressed scratch composite, SHA-256 `6271a6d5782d350f6d716a91712d283592d4589aa8e9befb9c1f1a0dd3ac7ebe`. All 9,217 comparisons across 37 suites and 1,024 Surfpool comparisons pass. The 56 new fixed-scope comparisons include six rejections before Pump and 11 successes; the actual captured AMM supplies the required PDA signature. Every receipt is bound to the tested ELF and all 36 actual compiler inputs; legacy embedded source maps remain labeled as incidental checkout snapshots. The four-program total is now 140 implemented handlers, five partial paths and 53,715 saved comparison receipts. All original whole-file comparisons still differ.
+
+
+## Historical serializer and dependency-family checkpoint
+
+Pump's [BondingCurve serialization checkpoint](../repro/pump/bonding-curve-serializer-fortyeight/README.md) produces 1,534,768 bytes, SHA-256 `92575cd082bf76b332044a7d09371a9764db8b2cc40180bf1418f261945bbd6a`. The complete 1,840-byte serializer, all 25 direct calls and discriminator bytes match under the documented normalization. All 9,217 differential and 1,024 Surfpool comparisons pass on this executable.
+
+Fees' [combined social-layout and dependency-family checkpoint](../repro/pump_fees/solana-family-221-v144/README.md) produces 768,072 bytes, SHA-256 `e501ca2c744373e5653a5ac7e25a3fd20f6058765808b888c3605fd03adba60f`. Exactly eight of 253 dependency selections change, all witnessed together in an official SPL release lock. The complete social-v2 exit, six Pubkey helpers, base58 formatter and nine source records match their captured counterparts under the documented static comparison. Fresh scratch execution passes 17,441 receipts and ten sequence steps; a clean main build produces the identical whole ELF. The intermediate social-only `c181b0ba` checkpoint remains immutable history.
+
+Counts remain 140 bounded implementations, five partial handlers and 53,715 comparison receipts. No new unique runtime cases or completed core binaries are claimed. The [completion ledger](COMPLETION.md) records the remaining scope.
+
+
+## Current two-curve and inline initializer checkpoint
+
+Pump's [two-curve checkpoint](../repro/pump/tokenkeg-two-curve-fortyeight/README.md) produces 1,576,744 bytes, SHA-256 `5c1c1c2d1cd2c334b3e054b6a8fb5ac0638d80d13495c1c18d935ad20bfd62bb`. Its only Rust change extends the existing routing module to ordinary Tokenkeg SOL→A→B and B→A→SOL with canonical pre-existing vaults, 166-byte curves, native root quote and non-completing buys. All 9,217 inherited differential comparisons, 20 new comparisons and 1,024 Surfpool comparisons pass. Eighteen new cases reach Pump through genuine captured AMM PDA signing; sixteen succeed and two roll back on the caller's minimum-output check. Two zero-input cases reject before Pump. Arbitrary routes, other quote currencies, Token-2022/extensions, holder rewards, cashback, Mayhem and completion remain outside this bounded extension. The prior full serializer comparison passes again on the new candidate.
+
+Fees' [inline initializer checkpoint](../repro/pump_fees/initializer-inline-v144/README.md) produces 767,992 bytes, SHA-256 `01fedce5878ec14618233c4683bcb4149e471775acb48ffb69614d9df570bb95`. One field type changes from boxed to inline `Account<Global>`, recovering the original 1,200-byte account context. The complete 2,992-byte handler, 6,824-byte parser and 1,608-byte wrapper match under the documented normalization; all nine immediate handler target bodies and two literal spans match as well. All 17,441 existing comparisons and ten donation sequence steps pass, including unchanged authentic historical transactions. The separate state-module proposal remains uncompiled and unintegrated.
+
+Each candidate has one tested scratch build and one clean main build with identical whole ELF bytes, actual compiler inputs, tool phase records and receipt bindings. Portable and current-source verifiers pass. The four-program total is 53,735 comparison receipts, 140 bounded implementations and five partial paths. Five handlers remain unrecovered. Whole-original-file equality remains false for all four programs, and the security audit remains incomplete.

@@ -18,11 +18,11 @@ A partial Rust fee-tier selector now matches the original instruction sequence e
 for unresolved relocations with platform-tools v1.43, and passes 1,215 local
 differential cases. Recovered quote-mint routing additionally passes 9,428 original-program
 queries, but its compiled instructions still differ. All 31 Fees instruction bodies pass 17,441 SBF comparison receipts; forty-eight recovered Pump
-handlers plus four partial creation/trading paths pass 9,161. Thirty-seven PumpSwap
+handlers plus five partial creation/trading paths pass 9,237. Thirty-seven PumpSwap
 handlers pass 17,462 comparisons, and twenty-four Mayhem handlers pass 9,595. These
-53,659 saved comparisons cover 140 implemented handlers and four partial paths, not the
+53,735 saved comparisons cover 140 implemented handlers and five partial paths, not the
 complete programs. The Fees total includes 69 repeated-input checks with stronger log or signature assertions. Two Fees handlers are deprecated dispatches that always reject.
-The current [Pump48 checkpoint](repro/pump/quote-control-fortyeight/README.md) adds six quote-control handlers and retains the stored creator-fee correction. It passes 1,024 additional Surfpool comparisons with 2,048 signed transactions; its focused quote-control suite contributes 507 comparisons to the total above.
+The current [Pump48 two-curve checkpoint](repro/pump/tokenkeg-two-curve-fortyeight/README.md) adds the bounded ordinary-token routes SOL→A→B and B→A→SOL while retaining the prior single-curve branch. Its 20 new comparisons include 18 calls reaching Pump and 16 successes; broader routing remains partial. The complete 1,840-byte BondingCurve serializer and all 25 direct calls still match under the documented normalization. The same executable passes 1,024 additional Surfpool comparisons with 2,048 signed transactions.
 The current Pump `sell_v2` has a confirmed quote transfer-fee minimum-output and event mismatch; its saved passes do not cover that boundary.
 The current PumpSwap checkpoint corrects the earlier zero-fee cashback event mismatch;
 the [signed negative probe](repro/pump_amm/legacy-sell-zero-fee-gap/README.md) preserves evidence against the prior executable.
@@ -34,11 +34,11 @@ favors platform-tools v1.44 among the tested Fees builds: two complete runtime
 helper bodies match the capture exactly. The current Fees candidate uses that
 compiler. The [previous retained Fees build](repro/pump_fees/all-thirtyone-v144/README.md)
 also passed 112 independent Surfpool comparisons with 224 signed local transactions.
-The current Fees build adds typed buyback guards and a boxed account context, reproducing
-compared-value error logs and three more original function shapes. It retains the
-full SBF regression and targeted message/decoder checks. These results do not prove the complete historical build configuration.
+The current [Fees inline initializer checkpoint](repro/pump_fees/initializer-inline-v144/README.md) restores the original inline Pump Global account layout. Its complete handler, account parser and wrapper match under the documented normalization, while the prior social-v2 and Pubkey helper matches remain satisfied. All 17,441 comparison receipts and ten donation sequence steps pass again. Current Fees compilation uses v1.44; the retained SDK strips with v1.52. These results do not prove the complete historical build configuration.
 
 [Recovery status](docs/RECOVERY.md) separates observed evidence from unresolved work.
+The [completion and remaining-work ledger](docs/COMPLETION.md) enumerates all 150 instruction dispositions: 140 bounded implementations (93.3%), five partial and five unrecovered. Whole-binary completion remains 0/4; this is not a 93.3% overall completion estimate.
+[Parallel worker results and concurrency configuration](docs/PARALLEL_WORK.md) document the 16 completed CLI tasks and their remaining follow-ups.
 [Tooling](docs/TOOLING.md) covers recapture, disassembly and strict candidate comparison.
 The [security assessment](audit/AUDIT.md) remains incomplete. Local validation
 includes 393 malformed-input checks and 30 signed offline lifecycle transactions;

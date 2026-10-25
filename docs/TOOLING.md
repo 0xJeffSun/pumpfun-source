@@ -20,7 +20,7 @@ The validation script regenerates `audit/local-validation.json`. Evidence verifi
 is distinct from reconstruction verification. Evidence CI checks captures, source manifests,
 saved candidate executables and bounded regressions, and builds native fragments. The
 separate dependency workflow builds selected pinned dependency candidates. Routine
-evidence CI does not clean-build all four recovered SBF programs.
+evidence CI does not clean-build all four recovered SBF programs. The verification matrix allows up to twelve concurrent jobs: four disjoint Pump groups, three Mayhem groups, and the five other checks. Every previous differential command remains represented; Pump groups retain receipt hash, runner-script and candidate immutability, and mismatch checks. The partial curve runner has an explicit 56-case failure gate. Available hosted concurrency and fixture cost determine wall time.
 
 ## Capture a new deployment snapshot
 
@@ -78,3 +78,16 @@ would prove nothing about source reconstruction.
 `build_partial_candidate.py` records crate Rust sources/manifests, the owning workspace manifest and lockfile, ancestor `idls/` JSON files used by Anchor `declare_program!`, and repository-local Cargo/toolchain configuration before and after compilation. `--extra-input <path>` adds a repository-local path dependency or other build-script/include asset; repeat it for additional inputs. The before/after maps must be identical. This is an inventory of known local inputs, not a hermetic toolchain/dependency closure. Registry archives, environment and toolchain identity require their separate build records.
 
 Older saved builds keep their original manifests; their scope is not retroactively expanded. Fees workspace experiments explicitly bind their root manifest/lock and IDLs in separate provenance records. Run `python3 scripts/test_build_source_manifest.py` to verify that workspace-lock, IDL and explicit-asset changes are detected.
+
+The manual [controlled Linux Fees workflow](../repro/pump_fees/linux-v144-build-plan/README.md) performs one fixed-source build using the official Linux v1.44 distribution. Its comparison is separate from runtime acceptance; changed bytes do not inherit the current candidate’s saved receipts.
+
+The first Linux attempt stopped before compilation because a locally modified SDK installer had supplied the original expected hash. The [official SDK correction](../repro/pump_fees/linux-v144-sdk-correction/README.md) preserves that failed attempt and pins the unmodified official archive; the explicit v1.44 compiler selection and all source/dependency inputs stay fixed.
+
+
+Later retained SDK analysis distinguishes compiler selection from stripping. The current Darwin Pump and Fees recipes compile with v1.44 but their retained SDK installer selects v1.52 `llvm-objcopy` for post-compilation stripping. Before/after files and SDK selection are recorded; a complete historical process invocation trace is not available. The official unmodified Linux SDK instead defaults to v1.43 for that phase. Consequently the earlier Linux workflow is not yet a validated reproduction of the recorded Darwin pipeline. Two hosted attempts stopped before compilation; no successful Linux candidate or comparison exists. A corrected, fixed-source proposal is retained separately and has not been executed.
+
+
+The current Pump/Fees immutable package verifiers have an optional `--current-main` mode designed for the original research checkout. It includes historical scratch harness paths and, for Pump, the recorded Darwin Surfpool executable. A clean clone does not contain those local paths. CI runs each immutable verifier in portable mode, then `scripts/verify_current_bindings.py pump` or `fees`: this checks every current source/helper/documentation/runtime binding, maps exactly four historical harness names to their byte-identical published copies, and rechecks the complete Pump serializer/calls/literals. The historical Surfpool executable remains identified by its saved hash; the Linux check does not claim that executable is installed or that Surfpool was replayed. New runtime CI suites still execute against the current candidates.
+
+
+The [reviewed Linux pipeline correction](../repro/pump_fees/linux-recorded-pipeline-correction/README.md) is now integrated into the manual workflow. It preserves the baseline of 22 frozen source inputs, exact 53-file recorded SDK and unchanged build command, verifies both Cargo cache namespaces against all 252 locked crate archives, checks executable modes, and traces process lifecycle plus actual compiler/stripper execution. Thirty focused preparation/retention tests pass locally; the manual job reruns them on its host. The first action requiring native tooling is a tiny strace readiness probe before downloads or compiler-attempt counting. Hosted readiness and binary results remain unverified until a successful run. No untraced or installation fallback is automatic.
