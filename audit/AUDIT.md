@@ -75,16 +75,17 @@ confirmed vulnerability without a reachable configuration path.
 
 ### Executing recovered handlers
 
-Pump Fees now has ten independently compiled handlers, with 12,087 original-
+Pump Fees now has thirteen independently compiled handlers, with 12,464 original-
 versus-candidate SBF cases. These cover two query handlers, four authority setters,
 global initialization against the historical 740-byte Pump Global layout, and
-three configuration setters. The other 21 handlers remain unsupported. Selected compiler and dependency versions
+three configuration setters, permissionless resize, and two deprecated rejection
+dispatches. The other 18 handlers remain unsupported. Selected compiler and dependency versions
 remain candidates rather than an established historical graph.
 
-### Parallel reconstruction checkpoint: 45 implemented handlers and two partial paths
+### Parallel reconstruction checkpoint: 48 implemented handlers and two partial paths
 
-Saved builds cover Pump 4, PumpSwap 14, Pump Fees 10 and Mayhem 17 implemented
-handlers, plus Pump's partial regular-SOL buy_v3/sell_v3 branches. Their 25,667 local SBF
+Saved builds cover Pump 4, PumpSwap 14, Pump Fees 13 and Mayhem 17 implemented
+handlers, plus Pump's partial regular-SOL buy_v3/sell_v3 branches. Their 26,044 local SBF
 comparisons are indexed by `repro/status.json`; each report preserves its own
 coverage and limitations. Pump's trade paths exclude quote-token, Mayhem, cashback
 and holder-reward branches and has an uninterpreted event suffix. Neither is counted
@@ -128,3 +129,10 @@ token program substitutions, token ownership/mint errors and counter arithmetic.
 They establish bounded agreement only. A separate privileged-PDA initialization
 experiment was stopped by automated safety review and is not included in the
 implemented-handler count, saved accepted coverage or any security conclusion.
+
+The two deprecated Fees authority-sharing dispatches are counted only as observed
+unconditional rejection behavior (6023), not successful authority changes. The
+297-case permissionless resize suite compares owner/discriminator/stored-bump
+checks, exact rent-delta transfers, no-op behavior, new zero-filled bytes and
+rollback. Injecting an underfunded synthetic account can fail rent checks after
+execution; that observation alone is not a vulnerability finding.

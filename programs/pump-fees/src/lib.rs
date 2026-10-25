@@ -1,4 +1,4 @@
-//! Partial reconstruction: ten handlers implemented; remaining handlers unsupported.
+//! Partial reconstruction: thirteen handlers implemented; remaining handlers unsupported.
 //! It is not the deployed program source.
 use anchor_lang::prelude::*;
 
@@ -50,8 +50,28 @@ pub mod pump_fees_candidate {
     }
 
     #[allow(unused_variables)]
-    pub fn extend_fee_config(_ctx: Context<ExtendFeeConfig>) -> Result<()> {
-        Err(error!(CandidateError::Unsupported))
+    pub fn extend_fee_config(ctx: Context<ExtendFeeConfig>) -> Result<()> {
+        let info = ctx.accounts.fee_config.to_account_info();
+        let data = info.try_borrow_data()?;
+        require!(info.owner == &ID && data.len() >= 9 && data[..8] == [143,52,146,187,219,123,76,155], FeeError::InvalidFeeConfigAccount);
+        let bump = [data[8]];
+        let config_program = ctx.accounts.config_program_id.key();
+        let expected = Pubkey::create_program_address(&[b"fee_config", config_program.as_ref(), &bump], &ID)
+            .map_err(|_| error!(FeeError::InvalidFeeConfigAccount))?;
+        require_keys_eq!(expected, info.key(), FeeError::InvalidFeeConfigAccount);
+        let current_size = data.len();
+        drop(data);
+        if current_size >= 4097 { return Ok(()); }
+        let rent = Rent::get()?;
+        let amount = rent.minimum_balance(4097) - rent.minimum_balance(current_size);
+        anchor_lang::system_program::transfer(CpiContext::new(
+            ctx.accounts.system_program.to_account_info(), anchor_lang::system_program::Transfer {
+                from: ctx.accounts.user.to_account_info(), to: info.clone(),
+            }), amount)?;
+        info.realloc(4097, true)?;
+        let event = ExtendFeeConfigEvent { fee_config: info.key(), user: ctx.accounts.user.key(),
+            current_size: current_size as u64, new_size: 4097, timestamp: Clock::get()?.unix_timestamp };
+        emit!(event); emit_cpi!(event); Ok(())
     }
 
     #[allow(unused_variables)]
@@ -104,7 +124,7 @@ pub mod pump_fees_candidate {
 
     #[allow(unused_variables)]
     pub fn revoke_fee_sharing_authority(_ctx: Context<RevokeFeeSharingAuthority>) -> Result<()> {
-        Err(error!(CandidateError::Unsupported))
+        Err(error!(FeeError::DeprecatedInstruction))
     }
 
     #[allow(unused_variables)]
@@ -173,7 +193,7 @@ pub mod pump_fees_candidate {
 
     #[allow(unused_variables)]
     pub fn transfer_fee_sharing_authority(_ctx: Context<TransferFeeSharingAuthority>) -> Result<()> {
-        Err(error!(CandidateError::Unsupported))
+        Err(error!(FeeError::DeprecatedInstruction))
     }
 
     #[allow(unused_variables)]
@@ -270,6 +290,10 @@ pub enum FeeError {
     InvalidFeeTotal = 6,
     #[msg("The given account is not authorized to execute this instruction.")]
     NotAuthorized = 16,
+    #[msg("Instruction is deprecated")]
+    DeprecatedInstruction = 23,
+    #[msg("Account is not a valid FeeConfig for this instruction")]
+    InvalidFeeConfigAccount = 28,
 }
 
 fn validate_fees(fees: &Fees) -> Result<()> {

@@ -1,5 +1,8 @@
 name: Verify captured evidence
 on: [push, pull_request, workflow_dispatch]
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
   evidence:
     runs-on: ubuntu-24.04
@@ -19,7 +22,7 @@ jobs:
       - run: python scripts/validate_fee_selection.py --host work/fee-selector-host --output work/fee-selector-validation.json
       - run: python scripts/build_quote_host.py --output work/quote-host
       - run: python scripts/validate_quote_fees.py --host work/quote-host/quote-fees-host --output work/quote-validation.json
-      - run: python scripts/fees_validate_all.py --candidate repro/pump_fees/config-ten/pump_fees_candidate.so --output work/fee-handlers.json
+      - run: python scripts/fees_validate_all.py --candidate repro/pump_fees/config-thirteen/pump_fees_candidate.so --output work/fee-handlers.json
       - run: python scripts/pump_validate_admin.py --candidate repro/pump/buy-candidate.so --output work/pump-admin.json
       - run: python scripts/pump_amm_admin_differential.py --candidate repro/pump_amm/liquidity-fourteen/pump_amm_recovered.so --output work/pump-amm-admin.json
       - run: python scripts/pump_amm_buyback_differential.py --candidate repro/pump_amm/liquidity-fourteen/pump_amm_recovered.so --output work/pump-amm-buyback.json

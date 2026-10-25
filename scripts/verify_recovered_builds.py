@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 """Check saved partial-build provenance against current sources, artifacts and captures."""
-import gzip,hashlib,json,pathlib
+import argparse,gzip,hashlib,json,pathlib
 from compare import compare
 ROOT=pathlib.Path(__file__).resolve().parents[1]
 sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
+parser=argparse.ArgumentParser();parser.add_argument('--program',choices=['pump','pump_amm','pump_fees','mayhem']);args=parser.parse_args()
 for name,status in json.loads((ROOT/'repro/status.json').read_text()).items():
+ if args.program and name!=args.program:continue
  if not status.get('candidate_artifact'):continue
  manifest=ROOT/status['comparison_report'];report=json.loads(manifest.read_text())
  for source,digest in report['source_sha256'].items():assert sha(ROOT/source)==digest,source

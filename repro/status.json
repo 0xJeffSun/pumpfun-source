@@ -71,7 +71,7 @@
     "compiler": "unresolved",
     "dependencies": "unresolved",
     "build_flags": "unresolved",
-    "candidate_artifact": "repro/pump_fees/config-ten/pump_fees_candidate.so",
+    "candidate_artifact": "repro/pump_fees/config-thirteen/pump_fees_candidate.so",
     "full_byte_equality": false,
     "comparison_status": "DIFFERS_PARTIAL_IMPLEMENTATION",
     "compiler_candidates": [
@@ -88,12 +88,19 @@
       "initialize_fee_program_global",
       "update_fee_config",
       "update_stable_fee_config",
-      "set_exotic_flat_fees"
+      "set_exotic_flat_fees",
+      "extend_fee_config",
+      "revoke_fee_sharing_authority",
+      "transfer_fee_sharing_authority"
     ],
-    "comparison_report": "repro/pump_fees/config-ten/build-comparison.json",
-    "build_log": "repro/pump_fees/config-ten/build.log",
-    "validation_report": "repro/pump_fees/config-ten/differential.json.gz",
-    "validated_cases": 12087
+    "comparison_report": "repro/pump_fees/config-thirteen/build-comparison.json",
+    "build_log": "repro/pump_fees/config-thirteen/build.log",
+    "validation_report": "repro/pump_fees/config-thirteen/differential.json.gz",
+    "validated_cases": 12464,
+    "deprecated_dispatches": [
+      "revoke_fee_sharing_authority",
+      "transfer_fee_sharing_authority"
+    ]
   },
   "mayhem": {
     "source_reconstruction": "partial_handlers_compiled",

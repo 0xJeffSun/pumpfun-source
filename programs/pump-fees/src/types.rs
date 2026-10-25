@@ -117,3 +117,9 @@ pub struct UpdateStableFeeConfigEvent {
     pub timestamp: i64, pub admin: Pubkey, pub fee_config: Pubkey,
     pub stable_fee_tiers: Vec<FeeTier>, pub flat_fees: Fees,
 }
+
+#[event]
+pub struct ExtendFeeConfigEvent {
+    pub fee_config: Pubkey, pub user: Pubkey, pub current_size: u64,
+    pub new_size: u64, pub timestamp: i64,
+}

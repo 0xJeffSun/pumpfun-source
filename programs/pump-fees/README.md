@@ -1,9 +1,10 @@
 # Partial Pump Fees reconstruction
 
-Ten handlers execute recovered behavior: `get_fees`, `get_fees_with_quote_mint`,
+Thirteen handlers execute recovered behavior: `get_fees`, `get_fees_with_quote_mint`,
 `set_authority`, `set_social_claim_authority`, `set_disable_flags` and
 `set_claim_rate_limit`, `initialize_fee_program_global`, `update_fee_config`,
-`update_stable_fee_config` and `set_exotic_flat_fees`. The other 21 instruction bodies remain unsupported;
+`update_stable_fee_config`, `set_exotic_flat_fees`, `extend_fee_config`,
+`revoke_fee_sharing_authority` and `transfer_fee_sharing_authority`. The other 18 instruction bodies remain unsupported;
 their generated account declarations are not recovered constraints. This crate
 is an experimental reconstruction target, not a deployable substitute.
 
@@ -54,7 +55,7 @@ The global initializer reads the older 740-byte Pump Global layout, authenticate
 its authority and PDA, creates the 338-byte Fees global with canonical bump, and
 emits the exact event log and self-CPI. Its 180 comparisons include prefunding,
 malformed accounts, authorization, argument boundaries and CPI rollback. The
-ten-handler candidate passes 12,087 cases; full-file byte equality remains false.
+thirteen-handler candidate passes 12,464 cases; full-file byte equality remains false.
 
 FeeConfig deserialization is gated by allocation: the normal schedule is read at
 2,512 bytes, the stable schedule at 4,073, and exotic flat fees at 4,097. Earlier
@@ -70,3 +71,13 @@ grow older accounts to 4,097 bytes and top up rent only when growing. State,
 events, CPI payloads and rollback are compared, including preservation of the
 existing schedule in current layouts. These are bounded reconstruction checks,
 not proof that every configuration transition is safe.
+
+Permissionless `extend_fee_config` validates the discriminator, owning program and
+stored-bump PDA with custom error 6028, without decoding fee vectors. Accounts of
+at least 4,097 bytes are left unchanged. Smaller accounts grow with zero-filled
+bytes and a System transfer equal to the difference between old/new rent minima,
+even when already overfunded; 297 cases compare this behavior and event CPI.
+`revoke_fee_sharing_authority` and `transfer_fee_sharing_authority` are deprecated
+in the captured deployment. Their recovered dispatches always return 6023;
+80 payload/account-shape cases pass. They count as implemented rejection paths,
+not recovered historical successful authority-transfer functionality.

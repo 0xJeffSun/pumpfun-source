@@ -185,19 +185,16 @@ pub struct CreateSocialFeePda<'info> {
     pub program: UncheckedAccount<'info>,
 }
 
+#[event_cpi]
 #[derive(Accounts)]
 pub struct ExtendFeeConfig<'info> {
+    /// CHECK: owner, discriminator, stored bump and PDA are validated by handler.
     #[account(mut)]
-    /// CHECK: Exact deployed constraint not recovered.
     pub fee_config: UncheckedAccount<'info>,
     pub user: Signer<'info>,
-    /// CHECK: Exact deployed constraint not recovered.
+    /// CHECK: used only as the configuration PDA namespace.
     pub config_program_id: UncheckedAccount<'info>,
     pub system_program: Program<'info, System>,
-    /// CHECK: Exact deployed constraint not recovered.
-    pub event_authority: UncheckedAccount<'info>,
-    /// CHECK: Exact deployed constraint not recovered.
-    pub program: UncheckedAccount<'info>,
 }
 
 #[derive(Accounts)]
