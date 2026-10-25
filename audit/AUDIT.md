@@ -381,3 +381,5 @@ Pass10's Pump fee-input and Mayhem typed-error changes have bounded independent 
 Pass 11's two narrow source corrections passed unchanged corpora and independent source/operand review. These finite checks do not cover Pump's simultaneous complete/cashback flags or establish full Mayhem helper equivalence. The AMM formatting-source proposal is not security acceptance. The broader security assessment remains incomplete.
 
 Pass 12 restores a supported dependency algorithm and its typed failure paths, with whole-window static checks and the unchanged AMM corpus. Normalized function matches do not prove full recursive data identity, exhaustive behavior or security acceptance. The full security audit remains incomplete.
+
+Pass14 reviews the Relay IDL header error lifetime from I/O destruction through owned reporting/lowering. The unchanged ordinary corpus passes but does not validate every changed failure arm. No full original, historical-build or security-audit acceptance follows.

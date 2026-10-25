@@ -427,3 +427,7 @@ Relay build07 implements the recovered owned error model and passes all twelve u
 ## Layered pass 12: AMM formatter dependency source
 
 [Pass 12](../repro/layered-passes/pass-12/README.md) integrates the evidenced stack-buffer base58/checked-UTF8 formatter through a complete vendored crate and narrowly reviewed source patch. Original package identity remains unresolved. All other versions and lock records remain unchanged. The single main build equals the separately tested executable and symbols; all prior corpus counts and remaining diagnostic limits persist.
+
+## Layered pass14: Relay IDL owned errors
+
+The [current Relay source checkpoint](../repro/donation-relay/source-build-09-idl-owned/README.md) restores the complete admitted header-failure ownership path using the existing writer and error implementation. The source, single build, full ledgers and ordinary12 saved evidence are preserved; all earlier checkpoints remain immutable.
