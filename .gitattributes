@@ -135,3 +135,4 @@ repro/pump/remaining-guards-main-fortyeight/promotion-control/proposed-source/pr
 programs/donation-relay/src/dispatch.rs -whitespace
 repro/upstream-reconciliation/main-2f14c36c/incoming/programs/pump/src/create_v2.rs -whitespace
 repro/upstream-reconciliation/main-2f14c36c/selected-restore/programs/pump/src/create_v2.rs -whitespace
+repro/layered-passes/pass-25/current-proposal-v7/delta-v6-v7.patch -whitespace
