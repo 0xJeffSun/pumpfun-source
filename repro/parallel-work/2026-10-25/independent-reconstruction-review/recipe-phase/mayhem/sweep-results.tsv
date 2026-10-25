@@ -1,7 +1,0 @@
-version	rustc	text	text_delta	pct	extent	extent_delta	status
-v1.52	rustc 1.89.0-dev	605928	-100816	85.74%	667552	-107864	OK
-v1.51	rustc 1.84.1-dev						BUILD_FAILED
-v1.50	rustc 1.84.1-dev						BUILD_FAILED
-v1.48	rustc 1.84.1-dev						BUILD_FAILED
-v1.53	rustc 1.89.0-dev						BUILD_FAILED
-v1.54	rustc 1.89.0-dev						BUILD_FAILED
