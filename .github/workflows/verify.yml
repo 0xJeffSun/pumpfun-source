@@ -29,6 +29,8 @@ jobs:
               python -B repro/pump/metaplex-utilize-guard-source-recovery/verify.py
               python -B repro/pump/metaplex-candidate-build-12-review/verify.py
               python -B repro/pump/buy-v3-static-gap-review/verify.py --repo .
+              python -B repro/pump/buy-v3-funded-gap-audit/verify_package.py --repo-root .
+              python -B repro/pump/metaplex-utilize-positive-guard-source-recovery/verify.py
               python scripts/test_reconstruction_build_selection.py
               python scripts/test_reconstruction_identity_audit.py
               python scripts/test_localnet_sdk_plan.py
