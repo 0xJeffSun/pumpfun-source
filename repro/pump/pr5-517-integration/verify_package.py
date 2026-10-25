@@ -43,6 +43,8 @@ def verify():
     assert sha((ROOT / "evidence/original/pump_amm/deployed.so").read_bytes()) == index["original_amm_sha256"]
     for name, expected in index["artifacts_sha256"].items():
         assert sha((HERE / name).read_bytes()) == expected, name
+    for relative, expected in index["branch_binding_overrides"].items():
+        assert sha((ROOT / relative).read_bytes()) == expected, relative
     builds = [read_json(f"build-{letter}-build-comparison.json") for letter in "ab"]
     assert builds[0]["source_sha256"] == builds[1]["source_sha256"]
     assert len(builds[0]["source_sha256"]) == index["source_input_count"]

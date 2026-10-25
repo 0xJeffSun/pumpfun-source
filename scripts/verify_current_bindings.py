@@ -130,6 +130,11 @@ def main():
         new_source = build["source_sha256"]
         groups = current_pump_groups(ROOT / current["pump"].rsplit("/", 1)[0])
         old_source = groups["source"]
+        index = json.loads((curve / "receipt-index.json").read_text())
+        branch_overrides = index["branch_binding_overrides"]
+        assert set(branch_overrides) == {"scripts/verify_recovered_builds.py"}
+        assert {name: groups["harness"][name] for name in branch_overrides} == index["upstream_binding_sha256"]
+        groups["harness"].update(branch_overrides)
         assert len(old_source) == 36 and len(new_source) == 37
         assert set(new_source) - set(old_source) == {"programs/pump/src/multi_hop_curve_swap.rs"}
         assert set(old_source) - set(new_source) == set()

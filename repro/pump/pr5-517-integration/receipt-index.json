@@ -51,5 +51,11 @@
       "cases": 341,
       "verified_transactions": 682
     }
+  },
+  "upstream_binding_sha256": {
+    "scripts/verify_recovered_builds.py": "81a448499c2c479389a6d59e9e43a29fe58859c995b80b4ef0b796d3d18f3387"
+  },
+  "branch_binding_overrides": {
+    "scripts/verify_recovered_builds.py": "6b23d233f244ad64d469829a048bef0d362ddb559306fd6a33f57b6adfa13cb2"
   }
 }
