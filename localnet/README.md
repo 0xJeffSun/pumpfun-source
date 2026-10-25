@@ -112,3 +112,7 @@ and fixture readback hashes are also retained in `evidence/`.
 ### Referral withdrawal reconstruction checks
 
 [Withdrawal draft and receipts](recovery/fees-withdraw/README.md) cover 113 signed differential cases and 16 Surfpool comparisons (32 signed transactions), including native SOL and SPL Token/Token2022 withdrawals. This single-handler draft remains byte-unequal to the complete Fees program.
+
+### Fee-sharing creation reconstruction checks
+
+[Sharing creation draft and receipts](recovery/fees-sharing/README.md) cover 116 signed differential cases and eight Surfpool comparisons (16 signed transactions), including genuine Pump and PumpSwap CPI migrations and account resizing. The single-handler draft remains byte-unequal to the full Fees program.
