@@ -422,7 +422,7 @@
     "compiler_candidates": [
       "v1.43: selector fragment matches except relocations, but stock ELF machine/flags contradict capture",
       "v1.44: preferred tested stock candidate; two complete runtime helper bodies match capture, but current31 and frozen16 full binaries differ",
-      "v1.45/v1.46: tested on the frozen16 graph with weaker selected-helper matches; v1.46.1 remains unbuilt; exact historical compiler is unresolved"
+      "v1.45/v1.46: tested on the frozen16 graph with weaker selected-helper matches; v1.46.1 now has one adapted-target frozen16 build with the same weaker full-helper results as v1.46; exact historical compiler is unresolved"
     ],
     "compiler_family_candidates": [
       "v1.44",
@@ -704,7 +704,8 @@
     "graduation_zero_evidence": "repro/pump_fees/graduation-zero-v144/README.md",
     "sharing_option_order_evidence": "repro/pump_fees/sharing-pump-extend-v144/README.md",
     "sharing_pump_extend_evidence": "repro/pump_fees/sharing-pump-extend-v144/README.md",
-    "compiler_recipe_note": "Research default v1.44: strongest measured Fees runtime-helper match and capture-compatible ELF header. Stock v1.43 emits incompatible headers in controlled backend probes. This is not unique historical compiler identification; see docs/BUILD_IDENTITY_AUDIT.md. Existing checkpoint artifacts and source proofs are unchanged. Use scripts/build_reconstruction_candidate.py or an explicit --tools-version; the historical helper is byte-preserved for accepted package proofs."
+    "compiler_recipe_note": "Research default v1.44: strongest measured Fees runtime-helper match and capture-compatible ELF header. Stock v1.43 emits incompatible headers in controlled backend probes. This is not unique historical compiler identification; see docs/BUILD_IDENTITY_AUDIT.md. Existing checkpoint artifacts and source proofs are unchanged. Use scripts/build_reconstruction_candidate.py or an explicit --tools-version; the historical helper is byte-preserved for accepted package proofs.",
+    "controlled_v1461_evidence": "repro/identity-audit/2026-10-25/compiler-v1461/REPORT.md"
   },
   "mayhem": {
     "source_reconstruction": "partial_handlers_compiled",

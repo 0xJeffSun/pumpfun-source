@@ -19,7 +19,7 @@ actual|={str(p.relative_to(HERE)) for p in HERE.rglob('manifest.json') if p!=HER
 assert actual==set(manifest),(actual-set(manifest),set(manifest)-actual)
 for name,expected in manifest.items():
     path=HERE/name;assert not path.is_symlink() and H(path.read_bytes())==expected,name
-for package in ['compiler-sdk','ata']:
+for package in ['compiler-sdk','ata','compiler-v1461']:
     subprocess.run([sys.executable,'-B',str(HERE/package/'verify.py')],check=True)
 source=J(HERE/'source/audit.json')
 assert source['ref']=='3c5b492be7ed793e062bc14f57c7abf3b3823c61'
