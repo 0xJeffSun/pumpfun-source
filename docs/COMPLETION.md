@@ -60,3 +60,5 @@ A worker covers related functions as a dependency-aware group. Launching one pro
 See [parallel ownership and configuration](PARALLEL_WORK.md) for the launched assignments and documented concurrency setting.
 
 The [portable function inventories and follow-up studies](../repro/function-inventory/2026-10-24-374fcf0/README.md) preserve every row from the historical baseline, plus seven static studies/build proposals. Those baseline Pump/Fees tables are labeled separately from the current serializer and dependency-family candidates.
+
+The [first parallel research pass](../repro/parallel-work/2026-10-24/results/README.md) now supplies refreshed Fees residuals, every AMM residual row, 74 Pump partial-path gap rows, all 492 relay window dispositions/codecs and detailed ATA/Metaplex provenance. Eight public packages pass portable verifiers. These new analyses add no accepted handlers or whole-byte matches; subsequent scratch proposals are tracked separately.
