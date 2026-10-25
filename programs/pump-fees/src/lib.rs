@@ -1,8 +1,9 @@
-//! Partial reconstruction: six handlers implemented; remaining handlers unsupported.
+//! Partial reconstruction: seven handlers implemented; remaining handlers unsupported.
 //! It is not the deployed program source.
 use anchor_lang::prelude::*;
 
 mod contexts;
+mod pump_global;
 mod types;
 use contexts::*;
 use types::*;
@@ -85,8 +86,20 @@ pub mod pump_fees_candidate {
     }
 
     #[allow(unused_variables)]
-    pub fn initialize_fee_program_global(_ctx: Context<InitializeFeeProgramGlobal>, social_claim_authority: Pubkey, disable_flags: u8, claim_rate_limit: u64) -> Result<()> {
-        Err(error!(CandidateError::Unsupported))
+    pub fn initialize_fee_program_global(ctx: Context<InitializeFeeProgramGlobal>, social_claim_authority: Pubkey, disable_flags: u8, claim_rate_limit: u64) -> Result<()> {
+        let state = &mut ctx.accounts.fee_program_global;
+        state.bump = ctx.bumps.fee_program_global;
+        state.authority = ctx.accounts.authority.key();
+        state.social_claim_authority = social_claim_authority;
+        state.disable_flags = disable_flags;
+        state.claim_rate_limit = claim_rate_limit;
+        let event = InitializeFeeProgramGlobalEvent {
+            timestamp: Clock::get()?.unix_timestamp, authority: ctx.accounts.authority.key(),
+            social_claim_authority, disable_flags, claim_rate_limit,
+        };
+        emit!(event);
+        emit_cpi!(event);
+        Ok(())
     }
 
     #[allow(unused_variables)]

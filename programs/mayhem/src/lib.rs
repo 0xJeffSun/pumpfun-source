@@ -1,4 +1,4 @@
-//! Partial independently compiled Mayhem implementation: twelve recovered admin
+//! Partial independently compiled Mayhem implementation: fourteen recovered admin
 //! handlers. Unknown fields are preserved as byte arrays, not guessed names.
 //! This is not a complete or byte-identical program reconstruction.
 use anchor_lang::prelude::*;
@@ -9,6 +9,63 @@ declare_id!("MAyhSmzXzV1pTf7LsNkrNwkWKTo4ougAJ1PPg47MD4e");
 #[program]
 pub mod mayhem_recovered {
     use super::*;
+    pub fn withdraw_admin(ctx: Context<WithdrawAdmin>, amount: u64) -> Result<()> {
+        let now = Clock::get()?.unix_timestamp;
+        let state = &mut ctx.accounts.global_params;
+        let last = i64::from_le_bytes(state.reset_middle[1..9].try_into().unwrap());
+        let interval = i64::from_le_bytes(state.reset_middle[17..25].try_into().unwrap());
+        if last != 0 && interval != 0 {
+            // The captured original panics on signed-add overflow here.
+            require_gte!(now, last + interval, MayhemError::WithdrawRateLimit);
+        }
+        state.reset_middle[1..9].copy_from_slice(&now.to_le_bytes());
+        let bump = [ctx.bumps.sol_vault];
+        let seeds: &[&[u8]] = &[b"sol-vault", &bump];
+        anchor_lang::system_program::transfer(
+            CpiContext::new_with_signer(ctx.accounts.system_program.to_account_info(),
+                anchor_lang::system_program::Transfer {
+                    from: ctx.accounts.sol_vault.to_account_info(),
+                    to: ctx.accounts.admin.to_account_info(),
+                }, &[seeds]), amount)
+    }
+    pub fn extend_account(ctx: Context<ExtendAccount>) -> Result<()> {
+        let account = ctx.accounts.account.to_account_info();
+        let old_size = account.data_len();
+        let new_size = {
+            let data = account.try_borrow_data()?;
+            match data.get(..8) {
+                Some(d) if d == GlobalParams::DISCRIMINATOR => 318,
+                Some(d) if d == FeeRecipient::DISCRIMINATOR => 74,
+                Some(d) if d == [0xb1,0xfd,0xbf,0x7d,0xcb,0x16,0x86,0x6b] => 170,
+                _ => return err!(MayhemError::AccountTypeNotSupported),
+            }
+        };
+        if old_size == new_size {
+            msg!("Account already has the correct size");
+            return Ok(());
+        }
+        if old_size > new_size {
+            msg!("Account already has more than {} bytes: {}", new_size, old_size);
+            return Ok(());
+        }
+        let required = Rent::get()?.minimum_balance(new_size).saturating_sub(account.lamports());
+        if required > 0 {
+            anchor_lang::system_program::transfer(
+                CpiContext::new(ctx.accounts.system_program.to_account_info(),
+                    anchor_lang::system_program::Transfer {
+                        from: ctx.accounts.user.to_account_info(), to: account.clone()
+                    }), required)?;
+        }
+        account.realloc(new_size, true)?;
+        let event = ExtendAccountEvent {
+            account: account.key(), user: ctx.accounts.user.key(),
+            old_size: old_size as u64, new_size: new_size as u64,
+            timestamp: Clock::get()?.unix_timestamp,
+        };
+        emit!(event);
+        emit_cpi!(event);
+        Ok(())
+    }
     pub fn initialize_fee_recipient(ctx: Context<InitializeFeeRecipient>, index: u8) -> Result<()> {
         require!(index < 8, MayhemError::MaxFeeRecipientsExceeded);
         ctx.accounts.fee_recipient.bump = ctx.bumps.fee_recipient;
@@ -147,6 +204,10 @@ pub enum MayhemError {
     TradingActive,
     #[msg("Math overflow")]
     MathOverflow,
+    #[msg("Withdraw Rate limit")]
+    WithdrawRateLimit = 14,
+    #[msg("Account type not supported")]
+    AccountTypeNotSupported = 16,
     #[msg("Only 8 fee recipients supported")]
     MaxFeeRecipientsExceeded = 17,
 }
@@ -229,4 +290,35 @@ pub struct InitializeFeeRecipient<'info> {
     #[account(address = anchor_spl::token::ID)]
     pub token_program: Interface<'info, TokenInterface>,
     pub associated_token_program: Program<'info, AssociatedToken>,
+}
+
+#[event_cpi]
+#[derive(Accounts)]
+pub struct ExtendAccount<'info> {
+    /// CHECK: Owner/mut checked here; recognized discriminator checked in handler.
+    #[account(mut, owner = ID)]
+    pub account: UncheckedAccount<'info>,
+    pub user: Signer<'info>,
+    pub system_program: Program<'info, System>,
+}
+
+#[event(discriminator = [0x61,0x61,0xd7,0x90,0x5d,0x92,0x16,0x7c])]
+pub struct ExtendAccountEvent {
+    pub account: Pubkey,
+    pub user: Pubkey,
+    pub old_size: u64,
+    pub new_size: u64,
+    pub timestamp: i64,
+}
+
+#[derive(Accounts)]
+pub struct WithdrawAdmin<'info> {
+    #[account(mut)]
+    pub admin: Signer<'info>,
+    #[account(mut, seeds = [b"global-params"], bump, has_one = admin)]
+    pub global_params: Account<'info, GlobalParams>,
+    /// CHECK: PDA/writability enforced here; System CPI enforces spending owner.
+    #[account(mut, seeds = [b"sol-vault"], bump)]
+    pub sol_vault: UncheckedAccount<'info>,
+    pub system_program: Program<'info, System>,
 }

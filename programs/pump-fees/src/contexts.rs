@@ -255,20 +255,17 @@ pub struct InitializeFeeConfig<'info> {
     pub program: UncheckedAccount<'info>,
 }
 
+#[event_cpi]
 #[derive(Accounts)]
 pub struct InitializeFeeProgramGlobal<'info> {
     #[account(mut)]
     pub authority: Signer<'info>,
-    /// CHECK: Exact deployed constraint not recovered.
-    pub pump_global: UncheckedAccount<'info>,
-    #[account(mut)]
-    /// CHECK: Exact deployed constraint not recovered.
-    pub fee_program_global: UncheckedAccount<'info>,
+    #[account(seeds = [b"global"], bump, seeds::program = crate::pump_global::PUMP_ID,
+              has_one = authority @ FeeError::NotAuthorized)]
+    pub pump_global: Box<Account<'info, crate::pump_global::Global>>,
+    #[account(init, payer = authority, space = 338, seeds = [b"fee-program-global"], bump)]
+    pub fee_program_global: Account<'info, FeeProgramGlobal>,
     pub system_program: Program<'info, System>,
-    /// CHECK: Exact deployed constraint not recovered.
-    pub event_authority: UncheckedAccount<'info>,
-    /// CHECK: Exact deployed constraint not recovered.
-    pub program: UncheckedAccount<'info>,
 }
 
 #[derive(Accounts)]

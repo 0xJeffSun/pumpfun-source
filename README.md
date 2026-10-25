@@ -17,11 +17,12 @@ python3 scripts/test_tooling.py
 A partial Rust fee-tier selector now matches the original instruction sequence except
 for unresolved relocations with platform-tools v1.43, and passes 1,215 local
 differential cases. Recovered quote-mint routing additionally passes 9,428 original-program
-queries, but its compiled instructions still differ. Six Fees handlers pass 11,233 independent SBF comparisons; four recovered Pump
-admin handlers pass 93 comparisons. Twelve PumpSwap handlers pass 9,387 comparisons,
-and twelve Mayhem handlers pass 1,357. These 22,070 SBF cases cover only the listed
-34 handlers, not the complete programs. A separate native arithmetic fragment
-matches reserve deltas from 160 successful original Pump sell transactions. See [the recovery experiment](docs/FEE_SELECTION.md).
+queries, but its compiled instructions still differ. Seven Fees handlers pass 11,413 independent SBF comparisons; four recovered Pump
+admin handlers plus a partial regular-SOL sell branch pass 310. Fourteen PumpSwap
+handlers pass 10,067 comparisons, and fourteen Mayhem handlers pass 1,932. These
+23,722 SBF cases cover 39 implemented handlers and one partial trade path, not the
+complete programs. A separate native accounting fragment is tested against 206
+original Pump sell cases. See [the recovery experiment](docs/FEE_SELECTION.md).
 
 [Recovery status](docs/RECOVERY.md) separates observed evidence from unresolved work.
 [Tooling](docs/TOOLING.md) covers recapture, disassembly and strict candidate comparison.

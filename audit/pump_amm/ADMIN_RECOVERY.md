@@ -71,11 +71,12 @@ including solana-program 2.3.0, solana-cpi 2.2.1, solana-pubkey 2.4.0 and Borsh
 0.10.4/1.8.1. Platform-tools v1.52 is selected for this partial full-program build.
 The recovered function and ELF comparisons still differ from the original.
 
-The implemented paths use Clock, signed self-CPI for events, and System Program
-transfer CPI for rent top-ups during legacy account resizing. They do not
+The twelve-handler checkpoint paths use Clock, signed self-CPI for events, and System Program
+transfer CPI for rent top-ups during legacy account resizing. Those twelve handlers do not
 exercise token/Token-2022/ATA transfers, Pump/Fees pricing CPI, transfer-fee or
 transfer-hook extensions, token authority checks, donations, migrations or
-multi-hop trading. Those dependencies remain required for the other 26 handlers.
+multi-hop trading. At that checkpoint those dependencies remained required for 26 other handlers.
+The subsequent liquidity checkpoint below adds token transfer coverage.
 Original dependency captures and the imported signed trading fixtures are available
 for subsequent original-versus-rebuilt tests; their presence is not candidate
 acceptance evidence.
@@ -87,13 +88,13 @@ are test fixtures; they do not establish control of production state or keys.
 ## Versioned checkpoints
 
 `repro/pump_amm/admin-five/` preserves the earlier five-handler checkpoint.
-`repro/pump_amm/admin-ten/` preserves the current ten-handler clean build,
+`repro/pump_amm/admin-ten/` preserves the earlier ten-handler clean build,
 source/test snapshot, separate complete case reports and their hashes. The
 candidate binary is compared unmodified with the complete original payload;
 length mismatch and differing instruction bytes remain explicit. Nothing in a
 passing bounded suite changes that whole-program mismatch.
 
-The current ten-handler checkpoint has **9,311** total SBF differential cases
+The ten-handler checkpoint has **9,311** total SBF differential cases
 and zero observed mismatches across all five suites on the same candidate ELF.
 
 
@@ -116,3 +117,14 @@ nonzero Clock timestamp to distinguish initialization events from preserved stat
 `repro/pump_amm/admin-twelve/` pins this clean build and all six suites on the
 same candidate ELF: **9,387** cases with zero observed mismatches. The ten-handler
 checkpoint remains a separate earlier artifact. Full byte identity remains false.
+
+
+## Liquidity checkpoint
+
+`repro/pump_amm/liquidity-fourteen/` adds deposit and withdraw to the same clean
+full candidate and pins all seven suite receipts: **10,067** cases, zero observed
+mismatches. Its 680 liquidity cases additionally compare complete involved account
+state and exact inner CPI instructions against the captured original, running the
+captured SPL Token and Token2022 binaries. Details and remaining dependency limits
+are in `LIQUIDITY_RECOVERY.md`. The remaining 24 handlers are absent; whole-program
+byte identity remains false.

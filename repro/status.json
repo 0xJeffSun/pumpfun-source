@@ -5,7 +5,7 @@
     "compiler": "unresolved",
     "dependencies": "unresolved",
     "build_flags": "unresolved",
-    "candidate_artifact": "repro/pump/admin-candidate.so",
+    "candidate_artifact": "repro/pump/sell-candidate.so",
     "full_byte_equality": false,
     "comparison_status": "DIFFERS_PARTIAL_IMPLEMENTATION",
     "implemented_handlers": [
@@ -14,10 +14,16 @@
       "toggle_cashback_enabled",
       "set_max_curve_depth"
     ],
-    "comparison_report": "repro/pump/admin-build-comparison.json",
-    "build_log": "repro/pump/admin-build.log",
-    "validation_report": "repro/pump/admin-differential.json",
-    "validated_cases": 93
+    "comparison_report": "repro/pump/sell-build-comparison.json",
+    "build_log": "repro/pump/sell-build.log",
+    "validated_cases": 310,
+    "validation_reports": [
+      "repro/pump/sell-admin-regression.json",
+      "repro/pump/sell-sbf-differential.json"
+    ],
+    "partially_implemented_handlers": {
+      "sell_v3": "Regular SOL quote, no Mayhem/cashback/holder-reward branches. Final event suffix remains uninterpreted. See audit/pump/partial-sell-review.md."
+    }
   },
   "pump_amm": {
     "source_reconstruction": "partial_handlers_compiled",
@@ -25,7 +31,7 @@
     "compiler": "unresolved",
     "dependencies": "unresolved",
     "build_flags": "unresolved",
-    "candidate_artifact": "repro/pump_amm/admin-twelve/pump_amm_recovered.so",
+    "candidate_artifact": "repro/pump_amm/liquidity-fourteen/pump_amm_recovered.so",
     "full_byte_equality": false,
     "comparison_status": "DIFFERS_PARTIAL_IMPLEMENTATION",
     "implemented_handlers": [
@@ -40,18 +46,21 @@
       "update_creator_fee_config",
       "set_reserved_fee_recipients",
       "init_user_volume_accumulator",
-      "close_user_volume_accumulator"
+      "close_user_volume_accumulator",
+      "deposit",
+      "withdraw"
     ],
-    "comparison_report": "repro/pump_amm/admin-twelve/build-comparison.json",
-    "build_log": "repro/pump_amm/admin-twelve/build.log",
-    "validated_cases": 9387,
+    "comparison_report": "repro/pump_amm/liquidity-fourteen/build-comparison.json",
+    "build_log": "repro/pump_amm/liquidity-fourteen/build.log",
+    "validated_cases": 10067,
     "validation_reports": [
-      "repro/pump_amm/admin-twelve/admin-differential.json.gz",
-      "repro/pump_amm/admin-twelve/buyback-differential.json.gz",
-      "repro/pump_amm/admin-twelve/fee_config-differential.json.gz",
-      "repro/pump_amm/admin-twelve/resize-differential.json.gz",
-      "repro/pump_amm/admin-twelve/reserved-differential.json.gz",
-      "repro/pump_amm/admin-twelve/accumulator-differential.json.gz"
+      "repro/pump_amm/liquidity-fourteen/admin-differential.json.gz",
+      "repro/pump_amm/liquidity-fourteen/buyback-differential.json.gz",
+      "repro/pump_amm/liquidity-fourteen/fee_config-differential.json.gz",
+      "repro/pump_amm/liquidity-fourteen/resize-differential.json.gz",
+      "repro/pump_amm/liquidity-fourteen/reserved-differential.json.gz",
+      "repro/pump_amm/liquidity-fourteen/accumulator-differential.json.gz",
+      "repro/pump_amm/liquidity-fourteen/liquidity-differential.json.gz"
     ]
   },
   "pump_fees": {
@@ -60,7 +69,7 @@
     "compiler": "unresolved",
     "dependencies": "unresolved",
     "build_flags": "unresolved",
-    "candidate_artifact": "repro/pump_fees/admin-six/pump_fees_candidate.so",
+    "candidate_artifact": "repro/pump_fees/admin-seven/pump_fees_candidate.so",
     "full_byte_equality": false,
     "comparison_status": "DIFFERS_PARTIAL_IMPLEMENTATION",
     "compiler_candidates": [
@@ -73,12 +82,13 @@
       "set_authority",
       "set_social_claim_authority",
       "set_disable_flags",
-      "set_claim_rate_limit"
+      "set_claim_rate_limit",
+      "initialize_fee_program_global"
     ],
-    "comparison_report": "repro/pump_fees/admin-six/build-comparison.json",
-    "build_log": "repro/pump_fees/admin-six/build.log",
-    "validation_report": "repro/pump_fees/admin-six/differential.json.gz",
-    "validated_cases": 11233
+    "comparison_report": "repro/pump_fees/admin-seven/build-comparison.json",
+    "build_log": "repro/pump_fees/admin-seven/build.log",
+    "validation_report": "repro/pump_fees/admin-seven/differential.json.gz",
+    "validated_cases": 11413
   },
   "mayhem": {
     "source_reconstruction": "partial_handlers_compiled",
@@ -101,14 +111,18 @@
       "reset_state",
       "stop_trading",
       "resume_trading",
-      "initialize_fee_recipient"
+      "initialize_fee_recipient",
+      "extend_account",
+      "withdraw_admin"
     ],
     "comparison_report": "repro/mayhem/build-comparison.json",
     "build_log": "repro/mayhem/build.log.gz",
-    "validated_cases": 1357,
+    "validated_cases": 1932,
     "validation_reports": [
       "repro/mayhem/differential.json.gz",
-      "repro/mayhem/fee-recipient-differential.json.gz"
+      "repro/mayhem/fee-recipient-differential.json.gz",
+      "repro/mayhem/extend-differential.json.gz",
+      "repro/mayhem/withdraw-differential.json.gz"
     ]
   }
 }

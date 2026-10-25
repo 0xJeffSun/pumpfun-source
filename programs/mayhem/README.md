@@ -1,6 +1,6 @@
 # Partial Mayhem implementation recovery
 
-This independently compiled Anchor program implements **12 of the 25 currently
+This independently compiled Anchor program implements **14 of the 25 currently
 identified instruction paths**. It is not a full program reconstruction, a
 byte-identical ELF, or a deployable replacement. Other handlers are absent.
 No original machine code is embedded or patched into the build.
@@ -13,6 +13,7 @@ Implemented paths:
 - `update_admin`, `update_trader`
 - `update_max_sol_per_sweep`, `update_max_stable_per_sweep`
 - `update_global_params`
+- `extend_account`, `withdraw_admin`
 
 ## Evidence and unresolved source details
 
@@ -64,3 +65,10 @@ and ATA dependency ELFs in both VMs. It covers every u8 recipient index, native
 mint/token address constraints, authorization behavior, account flags, missing
 accounts and rollback after CPI. Its receipt is
 `repro/mayhem/fee-recipient-differential.json.gz`.
+
+The account-extension suite adds 301 cases and the SOL-withdrawal suite adds 274,
+for 1,932 differential cases across fourteen paths. Extension cases cover account
+types, size boundaries, rent funding, zero initialization, events and rollback.
+Withdrawal cases cover administrator/PDA constraints, transfer errors, timestamp
+updates, rate boundaries and signed-add overflow. Receipts are retained as
+`extend-differential.json.gz` and `withdraw-differential.json.gz`.

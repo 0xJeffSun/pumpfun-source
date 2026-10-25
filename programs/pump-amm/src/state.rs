@@ -132,3 +132,92 @@ pub struct UserVolumeAccumulator {
     pub cashback_earned: u64,
     pub total_cashback_claimed: u64,
 }
+
+#[derive(AnchorSerialize, AnchorDeserialize, Clone)]
+pub struct Pool {
+    pub pool_bump: u8,
+    pub index: u16,
+    pub creator: Pubkey,
+    pub base_mint: Pubkey,
+    pub quote_mint: Pubkey,
+    pub lp_mint: Pubkey,
+    pub pool_base_token_account: Pubkey,
+    pub pool_quote_token_account: Pubkey,
+    pub lp_supply: u64,
+    pub coin_creator: Pubkey,
+    pub is_mayhem_mode: bool,
+    pub is_cashback_coin: bool,
+    pub virtual_quote_reserves: i128,
+    pub creator_fee_bps: u64,
+    pub can_edit_creator_fee: bool,
+    pub is_holder_reward: bool,
+    pub protocol_fees: u64,
+    pub creator_fees: u64,
+}
+
+#[event]
+#[derive(Clone)]
+pub struct DepositEvent {
+    pub timestamp: i64,
+    pub lp_token_amount_out: u64,
+    pub max_base_amount_in: u64,
+    pub max_quote_amount_in: u64,
+    pub user_base_token_reserves: u64,
+    pub user_quote_token_reserves: u64,
+    pub pool_base_token_reserves: u64,
+    pub pool_quote_token_reserves: u64,
+    pub base_amount_in: u64,
+    pub quote_amount_in: u64,
+    pub lp_mint_supply: u64,
+    pub pool: Pubkey,
+    pub user: Pubkey,
+    pub user_base_token_account: Pubkey,
+    pub user_quote_token_account: Pubkey,
+    pub user_pool_token_account: Pubkey,
+    pub quote_transfer_fee: u64,
+}
+
+#[event]
+#[derive(Clone)]
+pub struct WithdrawEvent {
+    pub timestamp: i64,
+    pub lp_token_amount_in: u64,
+    pub min_base_amount_out: u64,
+    pub min_quote_amount_out: u64,
+    pub user_base_token_reserves: u64,
+    pub user_quote_token_reserves: u64,
+    pub pool_base_token_reserves: u64,
+    pub pool_quote_token_reserves: u64,
+    pub base_amount_out: u64,
+    pub quote_amount_out: u64,
+    pub lp_mint_supply: u64,
+    pub pool: Pubkey,
+    pub user: Pubkey,
+    pub user_base_token_account: Pubkey,
+    pub user_quote_token_account: Pubkey,
+    pub user_pool_token_account: Pubkey,
+    pub quote_transfer_fee: u64,
+}
+
+impl Owner for Pool { fn owner() -> Pubkey { crate::ID } }
+impl Discriminator for Pool { const DISCRIMINATOR: &'static [u8] = &[241,154,109,4,17,177,109,188]; }
+impl AccountDeserialize for Pool {
+    fn try_deserialize(buf: &mut &[u8]) -> Result<Self> {
+        if buf.len() < 8 || &buf[..8] != Self::DISCRIMINATOR {
+            return Err(anchor_lang::solana_program::program_error::ProgramError::InvalidAccountData.into());
+        }
+        Self::try_deserialize_unchecked(buf)
+    }
+    fn try_deserialize_unchecked(buf: &mut &[u8]) -> Result<Self> {
+        if buf.len() < 211 { return Err(anchor_lang::solana_program::program_error::ProgramError::InvalidAccountData.into()); }
+        let n = [211,243,244,245,261,270,271,287].into_iter().filter(|n| *n <= buf.len()).last().unwrap();
+        let mut padded = [0u8;287]; padded[..n].copy_from_slice(&buf[..n]);
+        Self::deserialize(&mut &padded[8..]).map_err(|e| anchor_lang::solana_program::program_error::ProgramError::BorshIoError(e.to_string()).into())
+    }
+}
+impl AccountSerialize for Pool {
+    fn try_serialize<W: std::io::Write>(&self, writer: &mut W) -> Result<()> {
+        writer.write_all(Self::DISCRIMINATOR).map_err(|e| anchor_lang::solana_program::program_error::ProgramError::BorshIoError(e.to_string()))?;
+        self.serialize(writer).map_err(|e| anchor_lang::solana_program::program_error::ProgramError::BorshIoError(e.to_string()).into())
+    }
+}

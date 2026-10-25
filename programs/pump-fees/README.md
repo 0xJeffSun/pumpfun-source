@@ -1,8 +1,8 @@
 # Partial Pump Fees reconstruction
 
-Six handlers execute recovered behavior: `get_fees`, `get_fees_with_quote_mint`,
+Seven handlers execute recovered behavior: `get_fees`, `get_fees_with_quote_mint`,
 `set_authority`, `set_social_claim_authority`, `set_disable_flags` and
-`set_claim_rate_limit`. The other 25 instruction bodies remain unsupported;
+`set_claim_rate_limit` and `initialize_fee_program_global`. The other 24 instruction bodies remain unsupported;
 their generated account declarations are not recovered constraints. This crate
 is an experimental reconstruction target, not a deployable substitute.
 
@@ -48,3 +48,9 @@ zero. All u8 flag values and the tested u64 rate-limit boundaries are accepted.
 Every successful setter emits the typed log event and signed self-CPI event.
 444 original/candidate cases compare errors, complete state, lamports, event bytes
 and inner instructions. The two query suites contribute10,789 additional cases.
+
+The global initializer reads the older 740-byte Pump Global layout, authenticates
+its authority and PDA, creates the 338-byte Fees global with canonical bump, and
+emits the exact event log and self-CPI. Its 180 comparisons include prefunding,
+malformed accounts, authorization, argument boundaries and CPI rollback. The
+seven-handler candidate passes 11,413 cases; full-file byte equality remains false.

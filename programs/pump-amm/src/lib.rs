@@ -2,6 +2,7 @@
 //! This crate is not the historical source or a byte-identical replacement.
 use anchor_lang::prelude::*;
 mod state;
+use anchor_spl::{token::Token, token_2022::Token2022, token_interface::{self, Mint, TokenAccount}};
 use state::*;
 
 declare_id!("pAMMBay6oceH9fJKBRHGP5D4bD4sWpmSwMn52FMfXEA");
@@ -9,6 +10,13 @@ declare_id!("pAMMBay6oceH9fJKBRHGP5D4bD4sWpmSwMn52FMfXEA");
 #[program]
 pub mod pump_amm_recovered {
     use super::*;
+
+    pub fn deposit(ctx: Context<Liquidity>, lp_token_amount_out: u64, max_base_amount_in: u64, max_quote_amount_in: u64) -> Result<()> {
+        liquidity(ctx, lp_token_amount_out, max_base_amount_in, max_quote_amount_in, true)
+    }
+    pub fn withdraw(ctx: Context<Liquidity>, lp_token_amount_in: u64, min_base_amount_out: u64, min_quote_amount_out: u64) -> Result<()> {
+        liquidity(ctx, lp_token_amount_in, min_base_amount_out, min_quote_amount_out, false)
+    }
 
     pub fn init_user_volume_accumulator(ctx: Context<InitUserVolumeAccumulator>) -> Result<()> {
         ctx.accounts.user_volume_accumulator.user = ctx.accounts.user.key();
@@ -375,4 +383,146 @@ pub struct CloseUserVolumeAccumulator<'info> {
     pub user: Signer<'info>,
     #[account(mut, close = user, seeds = [b"user_volume_accumulator", user.key().as_ref()], bump)]
     pub user_volume_accumulator: Account<'info, UserVolumeAccumulator>,
+}
+
+#[event_cpi]
+#[derive(Accounts)]
+pub struct Liquidity<'info> {
+    #[account(mut, has_one = base_mint @ PumpAmmError::InvalidBaseMint, has_one = quote_mint @ PumpAmmError::InvalidQuoteMint, has_one = lp_mint @ PumpAmmError::InvalidLpMint, has_one = pool_base_token_account @ PumpAmmError::InvalidPoolBaseTokenAccount, has_one = pool_quote_token_account @ PumpAmmError::InvalidPoolQuoteTokenAccount)]
+    pub pool: Box<Account<'info, Pool>>,
+    pub global_config: Box<Account<'info, GlobalConfig>>,
+    pub user: Signer<'info>,
+    pub base_mint: Box<InterfaceAccount<'info, Mint>>,
+    pub quote_mint: Box<InterfaceAccount<'info, Mint>>,
+    #[account(mut)]
+    pub lp_mint: Box<InterfaceAccount<'info, Mint>>,
+    #[account(mut)]
+    pub user_base_token_account: Box<InterfaceAccount<'info, TokenAccount>>,
+    #[account(mut)]
+    pub user_quote_token_account: Box<InterfaceAccount<'info, TokenAccount>>,
+    #[account(mut, token::authority = user)]
+    pub user_pool_token_account: Box<InterfaceAccount<'info, TokenAccount>>,
+    #[account(mut)]
+    pub pool_base_token_account: Box<InterfaceAccount<'info, TokenAccount>>,
+    #[account(mut)]
+    pub pool_quote_token_account: Box<InterfaceAccount<'info, TokenAccount>>,
+    pub token_program: Program<'info, Token>,
+    pub token_2022_program: Program<'info, Token2022>,
+}
+fn liquidity(ctx: Context<Liquidity>, amount: u64, base_limit: u64, quote_limit: u64, deposit: bool) -> Result<()> {
+    let a = &mut *ctx.accounts;
+    if deposit { require!(a.global_config.disable_flags & 2 == 0, PumpAmmError::DisabledDeposit); }
+    else {
+        require!(a.global_config.disable_flags & 4 == 0, PumpAmmError::DisabledWithdraw);
+        require!(a.lp_mint.supply <= a.pool.lp_supply, PumpAmmError::SeedLockViolation);
+    }
+    let old_supply = a.pool.lp_supply;
+    let base_reserve = a.pool_base_token_account.amount;
+    let fees = a.pool.protocol_fees.checked_add(a.pool.creator_fees).ok_or(PumpAmmError::Overflow)?;
+    let quote_reserve = a.pool_quote_token_account.amount.checked_sub(fees).ok_or(PumpAmmError::Overflow)?;
+    let ratio = |reserve: u64| -> Result<u64> {
+        let mut n = (reserve as u128).checked_mul(amount as u128).ok_or(PumpAmmError::Overflow)?;
+        if deposit { n = n.checked_add(old_supply as u128).ok_or(PumpAmmError::Overflow)?.checked_sub(1).ok_or(PumpAmmError::Overflow)?; }
+        let n = n.checked_div(old_supply as u128).ok_or(PumpAmmError::DivisionByZero)?;
+        u64::try_from(n).map_err(|_| error!(PumpAmmError::Truncation))
+    };
+    let base_amount = ratio(base_reserve)?;
+    let quote_amount = ratio(quote_reserve)?;
+    let quote_transfer_fee = quote_transfer_fee(&a.quote_mint.to_account_info(), quote_amount, deposit)?;
+    let quote_transfer_amount = if deposit { quote_amount.checked_add(quote_transfer_fee) } else { Some(quote_amount) }.ok_or(PumpAmmError::Overflow)?;
+    let quote_received = quote_amount.checked_sub(if deposit { 0 } else { quote_transfer_fee }).ok_or(PumpAmmError::Overflow)?;
+    if deposit { require!(base_amount <= base_limit && quote_transfer_amount <= quote_limit, PumpAmmError::ExceededSlippage); }
+    else { require!(base_amount >= base_limit && quote_received >= quote_limit, PumpAmmError::ExceededSlippage); }
+    let index = a.pool.index.to_le_bytes(); let bump = [a.pool.pool_bump];
+    let creator = a.pool.creator; let base = a.pool.base_mint; let quote = a.pool.quote_mint;
+    let seeds: &[&[u8]] = &[b"pool", &index, creator.as_ref(), base.as_ref(), quote.as_ref(), &bump];
+    let signer_seeds = [seeds];
+    for (mint, user, vault, quantity) in [(&a.base_mint, &a.user_base_token_account, &a.pool_base_token_account, base_amount), (&a.quote_mint, &a.user_quote_token_account, &a.pool_quote_token_account, quote_transfer_amount)] {
+        if quantity == 0 { continue; }
+        if user.key() == vault.key() {
+            require_keys_eq!(user.owner, if deposit { a.user.key() } else { a.pool.key() }, PumpAmmError::SelfTransferNotAllowed);
+        }
+        let program = if *mint.to_account_info().owner == anchor_spl::token::ID { a.token_program.to_account_info() } else { a.token_2022_program.to_account_info() };
+        let transfer = token_interface::TransferChecked { from: if deposit { user.to_account_info() } else { vault.to_account_info() },
+            mint: mint.to_account_info(), to: if deposit { vault.to_account_info() } else { user.to_account_info() },
+            authority: if deposit { a.user.to_account_info() } else { a.pool.to_account_info() } };
+        token_interface::transfer_checked(CpiContext::new_with_signer(program, transfer, if deposit { &[] } else { &signer_seeds }), quantity, mint.decimals)?;
+    }
+    if deposit {
+        token_interface::mint_to(CpiContext::new_with_signer(a.token_2022_program.to_account_info(), token_interface::MintTo {
+            mint: a.lp_mint.to_account_info(), to: a.user_pool_token_account.to_account_info(), authority: a.pool.to_account_info() }, &[seeds]), amount)?;
+    } else {
+        token_interface::burn(CpiContext::new(a.token_2022_program.to_account_info(), token_interface::Burn {
+            mint: a.lp_mint.to_account_info(), from: a.user_pool_token_account.to_account_info(), authority: a.user.to_account_info() }), amount)?;
+    }
+    let new_supply = if deposit { old_supply.checked_add(amount) } else { old_supply.checked_sub(amount) }.ok_or(PumpAmmError::Overflow)?;
+    let effective_virtual = a.pool.virtual_quote_reserves.checked_add(fees as i128).ok_or(PumpAmmError::Overflow)?;
+    if effective_virtual != 0 {
+        let virtual_reserve = u128::try_from(effective_virtual).map_err(|_| error!(PumpAmmError::Overflow))?;
+        let mut change = virtual_reserve.checked_mul(amount as u128).ok_or(PumpAmmError::Overflow)?;
+        if !deposit { change = change.checked_add(old_supply as u128).ok_or(PumpAmmError::Overflow)?.checked_sub(1).ok_or(PumpAmmError::Overflow)?; }
+        change = change.checked_div(old_supply as u128).ok_or(PumpAmmError::DivisionByZero)?;
+        if !deposit { u64::try_from(change).map_err(|_| error!(PumpAmmError::Truncation))?; }
+        let change = i128::try_from(change).map_err(|_| error!(PumpAmmError::Overflow))?;
+        a.pool.virtual_quote_reserves = if deposit { a.pool.virtual_quote_reserves.checked_add(change) } else { a.pool.virtual_quote_reserves.checked_sub(change) }.ok_or(PumpAmmError::Overflow)?;
+    }
+    a.pool.lp_supply = new_supply;
+    if deposit {
+        let event = DepositEvent {
+            timestamp: Clock::get()?.unix_timestamp,
+            lp_token_amount_out: amount,
+            max_base_amount_in: base_limit,
+            max_quote_amount_in: quote_limit,
+            user_base_token_reserves: a.user_base_token_account.amount,
+            user_quote_token_reserves: a.user_quote_token_account.amount,
+            pool_base_token_reserves: base_reserve,
+            pool_quote_token_reserves: a.pool_quote_token_account.amount,
+            base_amount_in: base_amount,
+            quote_amount_in: quote_amount,
+            lp_mint_supply: old_supply,
+            pool: a.pool.key(),
+            user: a.user.key(),
+            user_base_token_account: a.user_base_token_account.key(),
+            user_quote_token_account: a.user_quote_token_account.key(),
+            user_pool_token_account: a.user_pool_token_account.key(),
+            quote_transfer_fee,
+        };
+        emit!(event.clone());
+        emit_cpi!(event);
+    } else {
+        let event = WithdrawEvent {
+            timestamp: Clock::get()?.unix_timestamp,
+            lp_token_amount_in: amount,
+            min_base_amount_out: base_limit,
+            min_quote_amount_out: quote_limit,
+            user_base_token_reserves: a.user_base_token_account.amount,
+            user_quote_token_reserves: a.user_quote_token_account.amount,
+            pool_base_token_reserves: base_reserve,
+            pool_quote_token_reserves: a.pool_quote_token_account.amount,
+            base_amount_out: base_amount,
+            quote_amount_out: quote_amount,
+            lp_mint_supply: old_supply,
+            pool: a.pool.key(),
+            user: a.user.key(),
+            user_base_token_account: a.user_base_token_account.key(),
+            user_quote_token_account: a.user_quote_token_account.key(),
+            user_pool_token_account: a.user_pool_token_account.key(),
+            quote_transfer_fee,
+        };
+        emit!(event.clone());
+        emit_cpi!(event);
+    }
+    Ok(())
+}
+
+fn quote_transfer_fee(mint: &AccountInfo, amount: u64, inverse: bool) -> Result<u64> {
+    use anchor_spl::token_2022::spl_token_2022::{extension::{BaseStateWithExtensions, StateWithExtensions, transfer_fee::TransferFeeConfig}, state::Mint as SplMint};
+    if mint.owner == &anchor_spl::token::ID { return Ok(0); }
+    let data = mint.try_borrow_data()?;
+    let mint = StateWithExtensions::<SplMint>::unpack(&data)?;
+    if let Ok(fees) = mint.get_extension::<TransferFeeConfig>() {
+        let epoch = Clock::get()?.epoch;
+        let fee = if inverse { fees.calculate_inverse_epoch_fee(epoch, amount) } else { fees.calculate_epoch_fee(epoch, amount) };
+        fee.ok_or_else(|| error!(PumpAmmError::Overflow))
+    } else { Ok(0) }
 }

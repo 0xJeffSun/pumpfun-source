@@ -1,11 +1,11 @@
 # Mayhem: recovered administration paths
 
-The twelve implemented paths and 1,357 differential cases are a partial security
+The fourteen implemented paths and 1,932 differential cases are a partial security
 review. No complete byte-identical program or complete Mayhem audit exists yet.
 
 ## Observed controls and behavior
 
-Existing-state admin instructions require a signing, writable administrator;
+The ten shared-context existing-state admin instructions require a signing, writable administrator;
 GlobalParams must have the correct program owner, discriminator, valid Borsh
 layout, writable flag, `global-params` PDA and matching stored admin. The System
 program ID is validated. These paths also require the event-authority PDA and a
@@ -51,7 +51,7 @@ scan does not prove absence of use. No unobserved Metaplex/relay CPI is assumed.
 
 ## Remaining work
 
-Thirteen currently identified paths remain unimplemented: two sweep handlers; two withdrawals; account extension; Mayhem
+Eleven currently identified paths remain unimplemented: two sweep handlers; quote withdrawal; Mayhem
 state initialization; token burn; and six Pump/PumpSwap buy/sell paths. Their
 account/CPI constraints, price impact, risk accounting, rate limits, arithmetic,
 rollback and dependency equivalence remain to be recovered and audited.
@@ -81,3 +81,32 @@ The successful original calls establish actual ATA and token dependency use.
 The earlier full-byte constant scan's missing ATA key was only a scan limitation.
 Dependency source/build identity remains unproven even though captured binaries
 are used for these local calls. Metaplex and donation-relay use remains unproven.
+
+## Account extension and SOL withdrawal
+
+`extend_account` accepts program-owned accounts with the recovered GlobalParams,
+FeeRecipient or MayhemState discriminators, extending them to 318, 74 or 170
+bytes respectively. It does not require a PDA or stored administrator. The signer
+pays any rent shortfall, appended bytes are zeroed, and a log plus self-CPI event
+records account, payer, old/new lengths and timestamp. Already large accounts
+return without funding or events. Unknown types fail with 6016. The 301 cases
+cover these boundaries and failed CPI rollback; permissionless rent-funded
+extension alone does not demonstrate unauthorized fund extraction.
+
+`withdraw_admin` requires the signing writable stored administrator, correct
+GlobalParams PDA and `sol-vault` PDA, and transfers from the vault to that
+administrator through the System program. The recovered rate check reads signed
+i64 timestamp and interval at serialized offsets 138 and 154. When both are
+nonzero, current time must be at least their sum; signed overflow panics as in
+the original. A successful call writes current time even for zero amount. Failed
+transfer and rate-limit calls roll back. Its 274 cases include extreme synthetic
+configuration values; these do not prove an unprivileged party can create such
+states or deny service on the deployed program.
+
+The initialized FeeRecipient's trailing 32 bytes are zero, not the initializer's
+public key. Preliminary original-only sweep probes further show stored trader
+authorization for `sweep_fees` and stored administrator authorization for
+`sweep_fees_admin`, with the authorized signer's wallet/ATA as destination.
+Unauthorized signer fixtures fail the has-one constraint. These observations
+reduce the initial creation-race concern but are not a complete sweep audit;
+recipient-pair validation and token transfer paths remain under investigation.

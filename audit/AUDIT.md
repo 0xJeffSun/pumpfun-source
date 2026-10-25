@@ -1,7 +1,7 @@
 # Consolidated security assessment
 
 **Status: incomplete; not a security sign-off.** Scope is the four captured original
-programs listed in `docs/SCOPE.md`. Only one partial fee-tier selector has been recovered; no complete program exists.
+programs listed in `docs/SCOPE.md`. Partial executable handlers have been recovered; no complete program exists.
 
 | Severity | Confirmed findings |
 | --- | ---: |
@@ -75,38 +75,35 @@ confirmed vulnerability without a reachable configuration path.
 
 ### Executing recovered handlers
 
-Pump Fees now has two independently compiled query handlers tested in 10,789
-original-versus-candidate SBF cases. Account error precedence and malformed-vector
-errors were refined from observed mismatches; the final tested binary matches
-those return/error/state assertions. The remaining 29 handlers are unsupported,
-and the complete executable differs from the captured original. Selected Anchor
-and dependency versions are candidates, not the recovered historical graph.
-This does not extend a security conclusion to the other handlers or deployments.
+Pump Fees now has seven independently compiled handlers, with 11,413 original-
+versus-candidate SBF cases. These cover two query handlers, four authority setters,
+and global initialization against the historical 740-byte Pump Global layout. The
+other 24 handlers remain unsupported. Selected compiler and dependency versions
+remain candidates rather than an established historical graph.
 
+### Parallel reconstruction checkpoint: 39 implemented handlers and one partial path
 
-### Parallel reconstruction checkpoint:34 implemented handlers
+Saved builds cover Pump 4, PumpSwap 14, Pump Fees 7 and Mayhem 14 implemented
+handlers, plus Pump's partial regular-SOL sell_v3 branch. Their 23,722 local SBF
+comparisons are indexed by `repro/status.json`; each report preserves its own
+coverage and limitations. Pump's sell path excludes quote-token, Mayhem, cashback
+and holder-reward branches and has an uninterpreted event suffix. It is not counted
+as a fully recovered trade handler. See [partial sell review](pump/partial-sell-review.md).
 
-Current saved candidate builds cover Pump4, PumpSwap12, Pump Fees6 and Mayhem12
-handlers. Their22,070 local original-versus-candidate SBF cases are indexed by
-`repro/status.json`; validation suites preserve separate scopes. New coverage
-includes stored-bump/authority checks and event CPI for Fees administration,
-legacy-layout resizing with System rent transfers in PumpSwap, and permissionless
-Mayhem fee-recipient/ATA creation using the exact captured token dependencies.
-Permissionless operations observed with synthetic state are not vulnerabilities
-without an unauthorized-impact demonstration. No such finding is asserted here.
+PumpSwap deposit/withdraw coverage includes actual captured Token/Token2022 CPIs,
+transfer-fee extension fixtures, slippage and exact inner instructions. See
+[liquidity recovery](pump_amm/LIQUIDITY_RECOVERY.md). Mayhem coverage adds rent-funded
+account extension and privileged SOL withdrawal with signed timestamp/rate-limit
+arithmetic. Its permissionless recipient creation does not store a caller-chosen
+beneficiary; downstream sweeps and other authorization paths remain under study.
+Synthetic invalid states or permissionless instructions alone are not findings.
 
-The four full-file comparisons still differ. Trading, liquidity, fee sharing,
+All four full-file comparisons still differ. Trading, liquidity, fee sharing,
 claims, migrations, dependencies and hostile CPI/token-extension paths remain
-incompletely reconstructed or audited. Pump's160 successful trade arithmetic
-comparisons isolate reserve math and do not implement or certify its whole trade
-handler. A Linux dependency build using the on-chain registered SPL Token recipe
-now matches all 108,600 captured bytes. The generated ELF and build provenance
-are preserved under `repro/pump/verified-spl-token/`. This dependency identity
-result does not establish security of the token program or its callers.
-
-The current PumpSwap candidate additionally implements accumulator initialization
-and closure.76 cases compare creation, prefunding, rent/System CPI, preserved
-state and close refunds; trading/liquidity coverage remains separate and incomplete.
+incompletely reconstructed or audited. No complete audit conclusion follows from
+these bounded tests. SPL Token has a fresh Linux source build matching all 108,600
+captured bytes, preserved under `repro/pump/verified-spl-token/`; byte identity does
+not establish security of that dependency or its callers.
 
 Token2022 now also has a fresh pinned Linux source build matching the full capture
 after explicit zero allocation padding. ATA and donation relay have no verified

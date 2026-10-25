@@ -83,3 +83,9 @@ pub struct SetSocialClaimAuthorityEvent { pub timestamp: i64, pub social_claim_a
 pub struct SetDisableFlagsEvent { pub timestamp: i64, pub disable_flags: u8 }
 #[event]
 pub struct SetClaimRateLimitEvent { pub timestamp: i64, pub claim_rate_limit: u64 }
+
+#[event]
+pub struct InitializeFeeProgramGlobalEvent {
+    pub timestamp: i64, pub authority: Pubkey, pub social_claim_authority: Pubkey,
+    pub disable_flags: u8, pub claim_rate_limit: u64,
+}
