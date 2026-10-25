@@ -1,30 +1,25 @@
-# Local pump.fun validator for SDK integration testing
+# Local validator for bounded SDK checks
 
-Turnkey offline localnet for exercising an SDK against the reconstructed programs.
-All inputs are tracked in this repo; a clean clone can run it.
+This optional harness loads the four current candidate artifacts from `repro/status.json`
+and four captured dependencies. It seeds the three retained global-account snapshots.
+A clean clone still requires `solana-test-validator`, Python3, Git and the referenced
+tracked files. The snapshots are test inputs, not proof of current chain state.
 
 ```sh
+bash repro/parallel-work/2026-10-25/independent-reconstruction-review/localnet-sdk-testing/start-localnet.sh --check
+# After inspecting the preflight, start with a new empty ledger path:
 bash repro/parallel-work/2026-10-25/independent-reconstruction-review/localnet-sdk-testing/start-localnet.sh
-# then point your SDK at http://127.0.0.1:8899  (RPC_PORT=NNNN to change)
 ```
 
-Loads at canonical mainnet IDs: pump, pump_amm (PumpSwap), pump_fees, mayhem (reconstructed
-candidates) + spl_token, spl_token_2022, associated_token, token_metadata (captured
-originals). Seeds the captured pump/pump_amm/pump_fees global configs.
+The default ledger is `work/localnet-sdk-testing`; an existing path is refused.
+`RPC_PORT=NNNN` changes the local port. Point an SDK at `http://127.0.0.1:8899`
+(or the selected port). The script does not broadcast to another cluster.
 
-**These candidates are behaviorally/ABI identical to mainnet (differential-verified across
-tens of thousands of cases) but NOT byte-identical** — see ../BYTE-IDENTICALITY-FUNDAMENTAL-LIMIT.md.
-Behavior is what an SDK exercises, so this is valid for integration testing.
-
-## Safe-flow matrix (which flows are drop-in)
-- **Fully covered** (bounded differential-verified): create, buy/buy_v2, sell/sell_v2,
-  migrate/migrate_v2, all PumpSwap trading + pool-create + liquidity + AMM multi-hop,
-  all 31 Fees handlers (collection/sharing/social/buyback/withdraw), quote-control,
-  cashback claims, holder-reward distribution.
-- **Partial — exercise with care** (specific edge paths diverge): buy_v3/sell_v3 (SOL+USDC
-  branch only), create_v2 (Mayhem mode / migrated-parent / deep-nested diverge),
-  native multi_hop_curve_swap (two Tokenkeg routes only), sell_v2 with a Token-2022
-  transfer-fee quote mint, and pump_amm transfer_creator_fees_to_pump on rent-sized
-  destinations (a known candidate bug).
-- **Unavailable** (unrecovered/stopped handlers): pump admin_update_token_incentives,
-  claim_token_incentives, set_mayhem_virtual_params; mayhem initialize_mayhem_state.
+The reconstructed programs pass their documented finite comparison corpora.
+They are not proven exhaustively behaviorally/ABI equivalent, byte-identical,
+or complete replacements for deployment. Seeded globals do not establish that
+all dependent accounts or fixed-authority routes can be initialized successfully.
+Use the current [remaining-work report](../../../../layered-passes/pass-15/REMAINING.md)
+and each package's explicit coverage limits when interpreting local results.
+Starting this validator is separate from the recorded regression acceptance.
+No validator execution is claimed by this harness's preflight check.

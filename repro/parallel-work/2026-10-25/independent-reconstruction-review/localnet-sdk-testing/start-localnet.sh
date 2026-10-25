@@ -1,25 +1,51 @@
 #!/usr/bin/env bash
-# Turnkey local pump.fun validator for SDK integration testing.
-# Loads the 4 reconstructed candidate programs + 4 captured dependencies at their
-# canonical mainnet program IDs and seeds the 3 captured global-config accounts, all
-# from files already tracked in this repo. OFFLINE ONLY: point your SDK at
-# http://127.0.0.1:${RPC_PORT:-8899}. It never broadcasts to a real cluster.
-#
-# The candidates are BEHAVIORALLY identical to mainnet (differential-verified) but NOT
-# byte-identical (see BYTE-IDENTICALITY-FUNDAMENTAL-LIMIT.md); behavior is what the SDK
-# exercises. See the safe-flow matrix in this folder's README.md for which flows are
-# fully covered vs partial vs unavailable.
+# Optional local validator with current, hash-checked candidate artifacts.
+# Finite regression evidence does not establish full behavioral equivalence.
 set -euo pipefail
-ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../../.." && pwd)"   # repo root
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-LEDGER="${1:-$HERE/ledger}"; RPC_PORT="${RPC_PORT:-8899}"
-rm -rf "$LEDGER"
+ROOT="$(git -C "$HERE" rev-parse --show-toplevel)"
+PROGRAM_FILES="$(python3 - "$ROOT" <<'PYCODE'
+from pathlib import Path
+import hashlib, json, sys
+root=Path(sys.argv[1]).resolve()
+status=json.loads((root/'repro/status.json').read_text())
+for name in ['pump','pump_amm','pump_fees','mayhem']:
+    row=status[name];relative=Path(row['candidate_artifact'])
+    assert not relative.is_absolute() and '..' not in relative.parts
+    path=root/relative;report=json.loads((root/row['comparison_report']).read_text())
+    assert hashlib.sha256(path.read_bytes()).hexdigest()==report['comparison']['candidate_sha256'],name
+    for file,digest in report['source_sha256'].items():
+        assert hashlib.sha256((root/file).read_bytes()).hexdigest()==digest,file
+    assert '\n' not in str(path)
+    print(path)
+PYCODE
+)"
+PROGRAMS=()
+while IFS= read -r line; do PROGRAMS+=("$line"); done <<<"$PROGRAM_FILES"
+[[ ${#PROGRAMS[@]} -eq 4 ]]
+for dependency in spl_token spl_token_2022 associated_token token_metadata; do
+  [[ -f "$ROOT/evidence/dependencies/$dependency/deployed.so" ]]
+done
+for account in pump_global pump_amm_global pump_fees_global; do
+  [[ -f "$HERE/seed-accounts/$account.json" ]]
+done
+if [[ ${1:-} == --check ]]; then
+  printf '%s\n' 'Current artifacts, source hashes and retained input files passed preflight; no validator started.'
+  exit 0
+fi
+LEDGER="${1:-$ROOT/work/localnet-sdk-testing}"
+RPC_PORT="${RPC_PORT:-8899}"
+if [[ -e "$LEDGER" ]]; then
+  printf 'Refusing existing ledger path: %s\nChoose a new path.\n' "$LEDGER" >&2
+  exit 1
+fi
+mkdir -p "$(dirname "$LEDGER")"
 exec solana-test-validator \
-  --ledger "$LEDGER" --reset --quiet --rpc-port "$RPC_PORT" \
-  --bpf-program 6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P "$ROOT/repro/pump/tokenkeg-two-curve-fortyeight/candidate.so" \
-  --bpf-program pAMMBay6oceH9fJKBRHGP5D4bD4sWpmSwMn52FMfXEA "$ROOT/repro/pump_amm/update-event-borrow-v144/candidate.so" \
-  --bpf-program pfeeUxB6jkeY1Hxd7CsFCAjcbHA9rWtchMGdZ6VojVZ "$ROOT/repro/pump_fees/donation-event-account-v144/pump_fees_candidate.so" \
-  --bpf-program MAyhSmzXzV1pTf7LsNkrNwkWKTo4ougAJ1PPg47MD4e "$ROOT/repro/mayhem/twentyfour/mayhem_recovered.so" \
+  --ledger "$LEDGER" --quiet --rpc-port "$RPC_PORT" \
+  --bpf-program 6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P "${PROGRAMS[0]}" \
+  --bpf-program pAMMBay6oceH9fJKBRHGP5D4bD4sWpmSwMn52FMfXEA "${PROGRAMS[1]}" \
+  --bpf-program pfeeUxB6jkeY1Hxd7CsFCAjcbHA9rWtchMGdZ6VojVZ "${PROGRAMS[2]}" \
+  --bpf-program MAyhSmzXzV1pTf7LsNkrNwkWKTo4ougAJ1PPg47MD4e "${PROGRAMS[3]}" \
   --bpf-program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA "$ROOT/evidence/dependencies/spl_token/deployed.so" \
   --bpf-program TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb "$ROOT/evidence/dependencies/spl_token_2022/deployed.so" \
   --bpf-program ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL "$ROOT/evidence/dependencies/associated_token/deployed.so" \
