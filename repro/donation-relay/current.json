@@ -1,0 +1,16 @@
+{
+  "candidate_artifact": "repro/donation-relay/source-build-09-idl-owned/candidate.so",
+  "candidate_sha256": "977fa996ec68d82a5b03d718cb2893bfeb51e239dc8d07572969044722b28cbb",
+  "source_snapshot": "repro/donation-relay/source-build-09-idl-owned/source",
+  "source_manifest": "repro/donation-relay/source-build-09-idl-owned/launcher/resolved-source-sha256.json",
+  "evidence_manifest": "repro/donation-relay/source-build-09-idl-owned/manifest.json",
+  "evidence_manifest_sha256": "d7c9b52fae03e0f63d51a453a674acf7420dc36e668f285ff1e8a38165688bec",
+  "full_original_byte_equality": false,
+  "validated_ordinary_cases": 12,
+  "verified_transaction_submissions": 24,
+  "verified_unique_transactions": 12,
+  "verified_signature_fields": 50,
+  "verified_unique_signatures": 25,
+  "unmatched_original_windows": 369,
+  "limits": "Finite ordinary corpus; header-failure, privileged routes, diagnostics, full indirect/data closure and historical build identity remain incomplete."
+}
