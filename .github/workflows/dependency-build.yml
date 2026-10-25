@@ -69,10 +69,10 @@ jobs:
       - uses: actions/checkout@v4
         with:
           repository: solana-labs/solana-program-library
-          ref: f5ce86d43dd31ddefb96d4e8cdd67dd073dc5dca
+          ref: abc63ad9467907a0c443606e0d449094988848b0
           path: work/ata-source
           persist-credentials: false
-      - name: Rebuild release-attributed ATA source using pinned CLI1.10.33 image
+      - name: Rebuild ATA source immediately before release upload with pinned CLI1.10.33 image
         run: python3 scripts/pump_build_token_dependency.py --dependency associated_token --source work/ata-source --output work/ata-rebuild
       - name: Preserve source manifest, build logs, generated ELF and comparison
         if: always()
