@@ -108,3 +108,7 @@ and fixture readback hashes are also retained in `evidence/`.
 ### Social fee reconstruction checks
 
 [Social draft and receipts](recovery/fees-social/README.md) contain three recovered Fees handlers, 1,562 deterministic signed differential cases and 29 Surfpool comparisons (58 signed transactions). The draft remains byte-unequal to the complete captured Fees program.
+
+### Referral withdrawal reconstruction checks
+
+[Withdrawal draft and receipts](recovery/fees-withdraw/README.md) cover 113 signed differential cases and 16 Surfpool comparisons (32 signed transactions), including native SOL and SPL Token/Token2022 withdrawals. This single-handler draft remains byte-unequal to the complete Fees program.
