@@ -1,30 +1,16 @@
-# Local pump.fun validator for SDK integration testing
+# Local SDK fixtures for reconstructed Pump programs
 
-Turnkey offline localnet for exercising an SDK against the reconstructed programs.
-All inputs are tracked in this repo; a clean clone can run it.
+This starts a local validator using the four candidate paths in `repro/status.json`, five captured dependency programs (including donation relay), and three captured global configurations. It checks each candidate against its owning build-comparison hash and each dependency against its capture hash. Missing or inconsistent artifacts stop startup; an older binary is never selected as a fallback.
 
 ```sh
-bash repro/parallel-work/2026-10-25/independent-reconstruction-review/localnet-sdk-testing/start-localnet.sh
-# then point your SDK at http://127.0.0.1:8899  (RPC_PORT=NNNN to change)
+bash repro/parallel-work/2026-10-25/independent-reconstruction-review/localnet-sdk-testing/start-localnet.sh --dry-run
+bash repro/parallel-work/2026-10-25/independent-reconstruction-review/localnet-sdk-testing/start-localnet.sh work/my-fresh-sdk-ledger
 ```
 
-Loads at canonical mainnet IDs: pump, pump_amm (PumpSwap), pump_fees, mayhem (reconstructed
-candidates) + spl_token, spl_token_2022, associated_token, token_metadata (captured
-originals). Seeds the captured pump/pump_amm/pump_fees global configs.
+The ledger path must not exist, and its parent directory must exist. Existing ledgers and symlinks are preserved. The default is `work/sdk-localnet-ledger`. Use another fresh path for another run. `RPC_PORT` defaults to8899; validator ports bind to127.0.0.1. The dry run verifies and prints the exact program IDs, binary hashes, seed hashes and command without launching a validator or creating a ledger. Runtime requires an installed compatible `solana-test-validator`.
 
-**These candidates are behaviorally/ABI identical to mainnet (differential-verified across
-tens of thousands of cases) but NOT byte-identical** — see ../BYTE-IDENTICALITY-FUNDAMENTAL-LIMIT.md.
-Behavior is what an SDK exercises, so this is valid for integration testing.
+These are bounded reconstruction fixtures. Passing saved comparisons does not establish behavioral or ABI identity across every SDK action, historical byte identity, live deployment acceptance, or security completeness. The official IDLs and captured programs are revision-pinned evidence, not a guarantee of current network compatibility.
 
-## Safe-flow matrix (which flows are drop-in)
-- **Fully covered** (bounded differential-verified): create, buy/buy_v2, sell/sell_v2,
-  migrate/migrate_v2, all PumpSwap trading + pool-create + liquidity + AMM multi-hop,
-  all 31 Fees handlers (collection/sharing/social/buyback/withdraw), quote-control,
-  cashback claims, holder-reward distribution.
-- **Partial — exercise with care** (specific edge paths diverge): buy_v3/sell_v3 (SOL+USDC
-  branch only), create_v2 (Mayhem mode / migrated-parent / deep-nested diverge),
-  native multi_hop_curve_swap (two Tokenkeg routes only), sell_v2 with a Token-2022
-  transfer-fee quote mint, and pump_amm transfer_creator_fees_to_pump on rent-sized
-  destinations (a known candidate bug).
-- **Unavailable** (unrecovered/stopped handlers): pump admin_update_token_incentives,
-  claim_token_incentives, set_mayhem_virtual_params; mayhem initialize_mayhem_state.
+The three global configurations alone do not prepare user balances, mints, pools, ancestry, Mayhem state or donation relay epoch/debouncer/whitelist accounts. Each tested SDK flow needs its own valid lifecycle setup and target/candidate comparison. Loading the relay closes a missing executable dependency; it does not prove all donation flows work.
+
+Current dispositions and known gaps belong to `repro/status.json` and `repro/completion.json`, reconciled with their owning build/receipt packages. Partial V3 routes, Mayhem creation/initialization, missing Pump incentive/Mayhem dispatches, the confirmed Pump sell_v2 quote-transfer-fee discrepancy and unobserved extension combinations remain outside broad acceptance. PumpSwap create_config has static source but lacks an authentic successful initializer replay. Existing tests for other instructions remain finite; consult their actual cases before treating a new SDK path as supported.
