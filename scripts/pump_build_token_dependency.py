@@ -1,0 +1,50 @@
+#!/usr/bin/env python3
+"""Reproduce the pinned SPL Token verified-build recipe in its official Linux image."""
+import argparse, hashlib, json, pathlib, shutil, subprocess, uuid
+
+ROOT=pathlib.Path(__file__).resolve().parents[1]
+COMMIT='a94dd19750dc3b2409f73e15bb74754935b2a489'
+IMAGE='solanafoundation/solana-verifiable-build@sha256:d7079331a2696eca570fbeeb5caa556cb09084f89ca96f0a0edb86e1cf83e165'
+p=argparse.ArgumentParser();p.add_argument('--source',type=pathlib.Path,required=True);p.add_argument('--output',type=pathlib.Path,required=True);a=p.parse_args()
+source=a.source.resolve();out=a.output.resolve();out.mkdir(parents=True,exist_ok=False)
+sha=lambda b:hashlib.sha256(b).hexdigest()
+def read(cmd):return subprocess.check_output(cmd,text=True).strip()
+assert read(['git','-C',str(source),'rev-parse','HEAD'])==COMMIT
+assert not read(['git','-C',str(source),'status','--porcelain']), 'source checkout must be fresh and clean'
+assert not (source/'target').exists(), 'require a clean build target'
+tracked=read(['git','-C',str(source),'ls-files']).splitlines()
+source_hashes={name:sha((source/name).read_bytes()) for name in tracked if (source/name).is_file()}
+(out/'source-manifest.json').write_text(json.dumps(source_hashes,indent=2)+'\n')
+subprocess.run(['docker','pull','--platform','linux/amd64',IMAGE],check=True)
+image_info=json.loads(read(['docker','image','inspect',IMAGE]))
+(out/'image-inspect.json').write_text(json.dumps(image_info,indent=2)+'\n')
+workdir=read(['docker','run','--rm','--platform','linux/amd64',IMAGE,'pwd'])
+assert workdir.startswith('/') and workdir != '/' and '\n' not in workdir
+name='pump-token-rebuild-'+uuid.uuid4().hex[:12]
+container=read(['docker','run','--rm','--platform','linux/amd64','--name',name,'--mount',f'type=bind,source={source},target={workdir}','-d',IMAGE,'sleep','infinity'])
+commands=[]
+try:
+    active=read(['docker','exec','-w','/',container,'rustup','show','active-toolchain']).split()[0]
+    cmd=['docker','exec','-e','RUSTUP_TOOLCHAIN='+active,'-w',workdir.rstrip('/')+'/pinocchio/program',container,'cargo','build-sbf','--tools-version','v1.54','--','--config','registries.crates-io.protocol="sparse"','--locked','--manifest-path',workdir.rstrip('/')+'/pinocchio/program/Cargo.toml']
+    commands.append(cmd)
+    print('Building pinned SPL Token source with official image and platform-tools v1.54',flush=True)
+    with (out/'build.log').open('w') as log:
+        result=subprocess.run(cmd,stdout=log,stderr=subprocess.STDOUT)
+    if result.returncode:
+        print((out/'build.log').read_text()[-12000:]);result.check_returncode()
+    tool_info=read(['docker','exec',container,'cargo','build-sbf','--version'])
+    (out/'tool-versions.txt').write_text(tool_info+'\n')
+finally:
+    subprocess.run(['docker','stop',container],check=False,stdout=subprocess.DEVNULL)
+assert all(sha((source/name).read_bytes())==digest for name,digest in source_hashes.items()), 'build modified source or lockfile'
+candidate=source/'target/deploy/pinocchio_token_program.so'
+assert candidate.is_file()
+shutil.copyfile(candidate,out/'pinocchio_token_program.so')
+# Reference bytes are read only after the source-only build has finished.
+b=candidate.read_bytes();original=(ROOT/'evidence/dependencies/spl_token/deployed.so').read_bytes()
+normalized=b.rstrip(b'\0');original_normalized=original.rstrip(b'\0')
+first=next((i for i,(x,y) in enumerate(zip(b,original)) if x!=y),None)
+if first is None and len(b)!=len(original):first=min(len(b),len(original))
+report={'scope':'Fresh Linux container source build; no captured binary mounted into build container. Original padding is compared explicitly.','source_repository':'https://github.com/solana-program/token','source_commit':COMMIT,'image':IMAGE,'platform':'linux/amd64','onchain_recipe':'repro/pump/spl_token-onchain-build-params.json','active_host_toolchain':active,'commands':[[x.replace(container,'<container>').replace(str(source),'<source>') for x in cmd] for cmd in commands],'source_manifest_sha256':sha((out/'source-manifest.json').read_bytes()),'build_log_sha256':sha((out/'build.log').read_bytes()),'original_bytes':len(original),'candidate_bytes':len(b),'original_sha256':sha(original),'candidate_sha256':sha(b),'original_normalized_sha256':sha(original_normalized),'candidate_normalized_sha256':sha(normalized),'normalized_byte_equality':normalized==original_normalized,'full_byte_equality':b==original,'first_difference':first}
+(out/'comparison.json').write_text(json.dumps(report,indent=2)+'\n');print(json.dumps(report,indent=2))
+if b!=original:raise SystemExit(1)

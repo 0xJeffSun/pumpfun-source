@@ -1,0 +1,27 @@
+name: Rebuild pinned SPL Token dependency
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  spl-token:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          repository: solana-program/token
+          ref: a94dd19750dc3b2409f73e15bb74754935b2a489
+          path: work/token-source
+          persist-credentials: false
+      - name: Rebuild using pinned verified image and compare complete capture
+        run: python3 scripts/pump_build_token_dependency.py --source work/token-source --output work/token-rebuild
+      - name: Preserve source manifest, build logs, generated ELF and comparison
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: spl-token-rebuild-${{ github.run_id }}
+          path: work/token-rebuild
+          if-no-files-found: error
+          retention-days: 30
