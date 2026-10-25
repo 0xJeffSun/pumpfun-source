@@ -59,7 +59,6 @@ pub struct SweepBuyback<'info>{
  /// CHECK: event target.
  pub program:UncheckedAccount<'info>,
 }
-#[account]
-pub struct BuybackVault{pub authority:Pubkey,pub total_claimed:u64,pub total_claimed_token1:u64,pub total_claimed_token2:u64,pub last_claimed:i64,pub claim_rate_limit:i64,pub _reserved:[u8;128]}
+pub use crate::state::BuybackVault;
 #[event]
 pub struct SweepBuybackEvent{pub index:u8,pub sol_amount:u64,pub token_amount:u64,pub destination:Pubkey,pub buyback_vault:Pubkey,pub mint:Pubkey}

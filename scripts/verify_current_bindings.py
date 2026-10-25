@@ -119,7 +119,7 @@ def main():
     artifact = status[key]["candidate_artifact"]
     current = {
         "pump": "repro/pump/tokenkeg-two-curve-fortyeight/candidate.so",
-        "fees": "repro/pump_fees/initializer-inline-v144/pump_fees_candidate.so",
+        "fees": "repro/pump_fees/sharing-module-v144/pump_fees_candidate.so",
     }
     if args.program == "pump" and (ROOT / CURRENT_PUMP_CURVE).is_dir():
         # This PR is a branch-specific source composition. Keep the accepted

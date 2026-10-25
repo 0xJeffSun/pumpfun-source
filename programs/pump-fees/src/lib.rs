@@ -19,6 +19,8 @@ use social::*;
 use donation::*;
 mod pump_global;
 mod types;
+mod state;
+mod instructions;
 use contexts::*;
 use types::*;
 

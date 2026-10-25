@@ -67,8 +67,7 @@ pub struct CreateSocialFeePda<'info>{
  /// CHECK: event-CPI program account; original imposes no typed-program constraint.
  pub program:UncheckedAccount<'info>,
 }
-#[account]
-pub struct SocialFeePda{pub bump:u8,pub version:u8,pub user_id:String,pub platform:u8,pub total_claimed:u64,pub last_claimed:u64,pub total_stable_claimed:u64,pub _reserved:[u8;120]}
+pub use crate::state::SocialFeePda;
 #[event]
 pub struct SocialFeePdaCreated{pub timestamp:i64,pub user_id:String,pub platform:u8,pub social_fee_pda:Pubkey,pub created_by:Pubkey}
 
