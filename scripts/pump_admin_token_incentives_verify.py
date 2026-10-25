@@ -66,9 +66,9 @@ def main(receipt_path=diff.OUTPUT, candidate_path=diff.CANDIDATE,
             assert attempt["source_sha256"] == build["source_sha256"]
         regression = json.loads((package / "regression-summary.json").read_text())
         quote_file = package / "quote-control-regression.json.gz"
-        curve_file = package / "multi-hop-regression.json"
+        curve_file = package / "multi-hop-regression.json.gz"
         quote = json.loads(gzip.decompress(quote_file.read_bytes()))
-        curve = json.loads(curve_file.read_text())
+        curve = json.loads(gzip.decompress(curve_file.read_bytes()))
         assert regression["candidate_sha256"] == receipt["candidate_sha256"]
         assert regression["quote_control"]["receipt_sha256"] == diff.sha(quote_file)
         assert regression["multi_hop_curve"]["receipt_sha256"] == diff.sha(curve_file)

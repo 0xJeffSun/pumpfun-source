@@ -19,7 +19,7 @@ target/candidate transactions: 98 matches, 43 successes, and 55 rollbacks.
 It compares complete watched accounts, errors, events, logs, inner
 instructions, and return data. The
 [quote-control replay](quote-control-regression.json.gz) adds 507/507 matches,
-and the [native-curve replay](multi-hop-regression.json) adds 56/56 matches on
+and the [native-curve replay](multi-hop-regression.json.gz) adds 56/56 matches on
 this exact candidate. The [regression summary](regression-summary.json) binds
 both receipts to its hash. The remaining inherited Pump suites and Surfpool
 runners were not rerun on this composite executable.
