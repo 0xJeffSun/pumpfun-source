@@ -439,3 +439,7 @@ Both source corrections have single pinned builds, unchanged corpus checks, port
 ## Layered pass16: Pump creator codec and AMM claim ordering
 
 Three Pump creator paths use the already-recovered full BondingCurve account type with source-supported log and mutation order. AMM claim computes its fallible total before mutating accumulator fields. [Pass16](../repro/layered-passes/pass-16/README.md) binds the one-build source corrections to all unchanged receipts, complete before/after ledgers and exact main/scratch executable and symbol equality. Whole-original equality remains unresolved.
+
+## Layered pass17: caller admission and owned errors
+
+[Pass17](../repro/layered-passes/pass-17/README.md) restores the source-supported AMM Claim predicate, Fees first missing-pool conversion and Relay3003 construction/drop order. Original/current full ledgers, unchanged receipts, main identities and all stated limits are retained.

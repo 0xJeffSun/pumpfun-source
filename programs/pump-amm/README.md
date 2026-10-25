@@ -224,3 +224,22 @@ signatures. No new case, probe or compiler variant was added. The full inventory
 remains at 483 normalized original matches and 302 unmatched original windows.
 The claim handler remains a mismatch, and no persisted-state difference is claimed
 for transaction rollback. Whole original ELF equality remains unresolved.
+
+
+## Claim self-transfer admission checkpoint
+
+The [self-transfer checkpoint](../../repro/pump_amm/claim-self-transfer-v144/README.md)
+restores the original application predicate before Claim's token CPI: different
+source/destination addresses pass; equal addresses require the source token owner
+to equal the global accumulator authority. The compiled candidate includes the
+plain SelfTransferNotAllowed error and retains the same downstream SPL helper.
+The clean main executable and symbol ELF equal the tested scratch build;
+executable SHA256 is
+`ad74b08447914cb219624f9e9cc81d4cfe751b332d67534c45aec63ef70aa166`.
+
+All 25 unchanged suites passed 17,462 comparisons, with 35,418 saved signatures
+verified. No new fixture or probe establishes failure reachability: the existing
+ATA parser constraints may already exclude this error for admitted Claim inputs.
+The complete inventory remains at 483 normalized original matches and 302
+unmatched windows. The whole handler, recursive call/data closure and original
+ELF identity remain unresolved.

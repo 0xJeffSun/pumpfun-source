@@ -38,13 +38,13 @@ Temporary serialized creator/admin state before each CPI is retained, because
 the called program reads that state. These cases use normally signed test-owned
 keys and synthetic local accounts; they do not prove every live sharing transition.
 
-The [current source checkpoint](../../repro/pump_fees/withdraw-owned-error-v144/README.md)
+The [current source checkpoint](../../repro/pump_fees/sharing-owned-error-v144/README.md)
 binds this README and all 25 remaining source/workspace/IDL inputs. It preserves
 the recovered dependency graph, social-account layout, inline initializer Pump
 Global account, four declarations in `state.rs`, and SharingConfig in
 `instructions/fee_sharing/create_fee_sharing_config.rs`. The tested scratch ELF is
-850,600 bytes, SHA-256
-`76b027c2f4393912e274c1f05b21de77743e18116969a3546ccf8718c2cfa7f7`. Main-build identity must be recorded separately before these
+849,984 bytes, SHA-256
+`70ddf61ad431b950aefd736ac50da156c9079257ea95f32cfcd9635266e40429`. Main-build identity must be recorded separately before these
 receipts are attributed to a main build.
 Its 17,461 comparison receipts comprise the unchanged 17,441-receipt corpus
 (including 69 repeated-input checks) and the unchanged 20 focused comparisons.
@@ -426,3 +426,21 @@ function. Matching CPI/meta/info roots also retain matching immediate targets.
 These results do not establish full caller/parser/cleanup/data equivalence or
 historical source identity. All 17,461 existing comparisons, including the
 417 sharing rows, and the ten-step sequence pass for the new executable.
+
+
+## Sharing creation optional-pool error
+
+The first graduated-path pool check now passes the fieldless
+`FeeError::AmmAccountsRequiredForGraduatedCoin` to `ok_or`, converting it to an
+owned Anchor error only on the missing path. This removes the unsupported source
+origin and successful-path owned-error allocation at that one site. The fresh
+candidate branches on the pool marker before calling the complete converter,
+which matches the original under call/address and relocation normalization.
+
+This one-line correction does not resolve the original raw four-word graduation
+decision or later optional pool/program/event ordering. Whole sharing-handler,
+parser, cleanup and recursive data equivalence remain open. The unchanged
+17,461 comparisons and separate ten-step sequence are preservation evidence;
+no case was added. Raw diagnostic differences remain in the checkpoint.
+The [prior withdrawal checkpoint](../../repro/pump_fees/withdraw-owned-error-v144/README.md)
+remains immutable, including its missing-token-program coverage limitation.

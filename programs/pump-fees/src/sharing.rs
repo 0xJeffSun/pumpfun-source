@@ -12,7 +12,7 @@ const AMM: Pubkey = crate::donation::AMM;
   if ctx.accounts.sharing_config.version!=0{return Ok(());}
   let graduated=ctx.accounts.bonding_curve.real_token_reserves==0;
   let creator=if graduated {
-   let pool=ctx.accounts.pool.as_ref().ok_or(error!(FeeError::AmmAccountsRequiredForGraduatedCoin))?;
+   let pool=ctx.accounts.pool.as_ref().ok_or(FeeError::AmmAccountsRequiredForGraduatedCoin)?;
    require!(ctx.accounts.pump_amm_program.is_some() && ctx.accounts.pump_amm_event_authority.is_some(),FeeError::AmmAccountsRequiredForGraduatedCoin);
    let state=pool;
    require_keys_eq!(state.base_mint,ctx.accounts.mint.key(),FeeError::InvalidPool);

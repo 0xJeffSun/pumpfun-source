@@ -1,0 +1,10 @@
+{
+  "passed": true,
+  "proposal_sites": 1,
+  "original_error": 6019,
+  "original_origin": "None",
+  "current_eager_origin_line": 15,
+  "whole_application_equality": false,
+  "builds": 0,
+  "runtime_executions": 0
+}
