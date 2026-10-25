@@ -58,7 +58,7 @@ pub fn claim(ctx: Context<ClaimTokenIncentives>) -> Result<()> {
     let global = &ctx.accounts.global_volume_accumulator;
     let start = global.start_time;
     let seconds = global.seconds_in_a_day;
-    require!(seconds > 0, PumpError::ReconstructionBranchUnsupported);
+    require!(seconds > 0, crate::ReconstructionError::ReconstructionBranchUnsupported);
     if now < start {
         return Ok(());
     }
@@ -71,7 +71,7 @@ pub fn claim(ctx: Context<ClaimTokenIncentives>) -> Result<()> {
         return Ok(());
     }
     let current_day = usize::try_from(current_day_number)
-        .map_err(|_| PumpError::ReconstructionBranchUnsupported)?;
+        .map_err(|_| crate::ReconstructionError::ReconstructionBranchUnsupported)?;
     let _ = global.total_token_supply[current_day];
     let user = &mut ctx.accounts.user_volume_accumulator;
     let previous = user.last_update_timestamp;
@@ -80,7 +80,7 @@ pub fn claim(ctx: Context<ClaimTokenIncentives>) -> Result<()> {
         return Ok(());
     }
     let day = usize::try_from((previous - start) / seconds)
-        .map_err(|_| PumpError::ReconstructionBranchUnsupported)?;
+        .map_err(|_| crate::ReconstructionError::ReconstructionBranchUnsupported)?;
     if day >= 30 {
         return Ok(());
     }
@@ -90,14 +90,14 @@ pub fn claim(ctx: Context<ClaimTokenIncentives>) -> Result<()> {
         accrued = u64::try_from(
             u128::from(user.current_sol_volume)
                 .checked_mul(u128::from(global.total_token_supply[day]))
-                .ok_or(PumpError::ReconstructionBranchUnsupported)?
+                .ok_or(crate::ReconstructionError::ReconstructionBranchUnsupported)?
                 / u128::from(daily_sol_volume))
-            .map_err(|_| PumpError::ReconstructionBranchUnsupported)?;
+            .map_err(|_| crate::ReconstructionError::ReconstructionBranchUnsupported)?;
         user.current_sol_volume = 0;
         user.needs_claim = false;
     }
     let amount = user.total_unclaimed_tokens.checked_add(accrued)
-        .ok_or(PumpError::ReconstructionBranchUnsupported)?;
+        .ok_or(crate::ReconstructionError::ReconstructionBranchUnsupported)?;
     if amount == 0 {
         return Ok(());
     }
@@ -115,7 +115,7 @@ pub fn claim(ctx: Context<ClaimTokenIncentives>) -> Result<()> {
         amount, ctx.accounts.mint.decimals)?;
     user.total_unclaimed_tokens = 0;
     user.total_claimed_tokens = user.total_claimed_tokens.checked_add(amount)
-        .ok_or(PumpError::ReconstructionBranchUnsupported)?;
+        .ok_or(crate::ReconstructionError::ReconstructionBranchUnsupported)?;
     user.has_total_claimed_tokens = true;
     let event = ClaimTokenIncentivesEvent {
         user: ctx.accounts.user.key(), mint: ctx.accounts.mint.key(),
