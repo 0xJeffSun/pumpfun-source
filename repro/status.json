@@ -211,7 +211,9 @@
     "admin_cto_typed_body_evidence": "repro/pump/admin-cto-typed-fortyeight/admin-static/acceptance.json",
     "admin_cto_coverage_report": "repro/pump/admin-cto-typed-fortyeight/coverage-review.json",
     "admin_cto_owned_error_report": "repro/pump/admin-cto-owned-fortyeight/README.md",
-    "admin_cto_owned_error_coverage": "repro/pump/admin-cto-owned-fortyeight/owned-coverage-review.json"
+    "admin_cto_owned_error_coverage": "repro/pump/admin-cto-owned-fortyeight/owned-coverage-review.json",
+    "preferred_compiler_candidate": "v1.43",
+    "compiler_recipe_note": "v1.43 (reverse-engineered from binary std-layout + section-size sweep, 2026-10-25; build_partial_candidate.py now defaults to v1.43 for this program). Committed checkpoint artifacts remain v1.44-built until a pass regenerates them with v1.43."
   },
   "pump_amm": {
     "source_reconstruction": "partial_handlers_compiled",
@@ -381,13 +383,15 @@
     "sync_nochange_log_report": "repro/pump_amm/sync-nochange-log-v144/README.md",
     "claim_diagnostic_scope": "Claim source remains unchanged; added Sync lines move one SelfTransferNotAllowed source-line immediate147 to149. Full normalized handler equality is false for this exact recorded instruction difference.",
     "init_user_ownership_report": "repro/pump_amm/init-logical-module-v144/README.md",
-    "init_logical_module_report": "repro/pump_amm/init-logical-module-v144/README.md"
+    "init_logical_module_report": "repro/pump_amm/init-logical-module-v144/README.md",
+    "preferred_compiler_candidate": "v1.43",
+    "compiler_recipe_note": "v1.43 (reverse-engineered from binary std-layout + section-size sweep, 2026-10-25; build_partial_candidate.py now defaults to v1.43 for this program). Committed checkpoint artifacts remain v1.44-built until a pass regenerates them with v1.43."
   },
   "pump_fees": {
     "authentic_historical_replays": [
       {
         "count": 2,
-        "report": "repro/pump_fees/sharing-pump-extend-main-v144/validation/initializer-history.json.gz",
+        "report": "repro/pump_fees/sharing-second-pump-cpi-main-v144/validation/initializer-history.json.gz",
         "transactions": "repro/pump_fees/v2-caller-v144/transactions"
       }
     ],
@@ -397,22 +401,22 @@
       "case_count": 3,
       "overlaps_full_suite_cases": true,
       "prior_checkpoint_report": "repro/pump_fees/solana-family-221-v144/authority-logs.json.gz",
-      "report": "repro/pump_fees/sharing-pump-extend-main-v144/validation/authority-logs.json.gz"
+      "report": "repro/pump_fees/sharing-second-pump-cpi-main-v144/validation/authority-logs.json.gz"
     },
     "build_flags": "unresolved",
-    "build_log": "repro/pump_fees/sharing-pump-extend-main-v144/main/build.log",
+    "build_log": "repro/pump_fees/sharing-second-pump-cpi-main-v144/main/build.log",
     "buyback_body_evidence": "repro/pump_fees/buyback-source-v144/static/typed-macro-box-analysis.json",
     "buyback_source_evidence": "repro/pump_fees/buyback-source-v144/README.md",
-    "candidate_artifact": "repro/pump_fees/sharing-pump-extend-main-v144/main/candidate.so",
-    "candidate_build_identity_report": "repro/pump_fees/sharing-pump-extend-main-v144/main/controls/identity.json",
-    "candidate_sha256": "6c87132fd95d0e2d4f1ba416667f1084e6a60937280639c473caeae8483e1887",
+    "candidate_artifact": "repro/pump_fees/sharing-second-pump-cpi-main-v144/main/candidate.so",
+    "candidate_build_identity_report": "repro/pump_fees/sharing-second-pump-cpi-main-v144/main/controls/identity.json",
+    "candidate_sha256": "466725afe7406860177df56696a60897874ffa6dab7429e5cc62da087dbf48b5",
     "compared_value_assertions": {
       "case_count": 9,
       "overlaps_full_suite_indices": true,
       "prior_checkpoint_report": "repro/pump_fees/solana-family-221-v144/compared-values.json.gz",
-      "report": "repro/pump_fees/sharing-pump-extend-main-v144/validation/compared-values.json.gz"
+      "report": "repro/pump_fees/sharing-second-pump-cpi-main-v144/validation/compared-values.json.gz"
     },
-    "comparison_report": "repro/pump_fees/sharing-pump-extend-main-v144/main/build-comparison.json",
+    "comparison_report": "repro/pump_fees/sharing-second-pump-cpi-main-v144/main/build-comparison.json",
     "comparison_status": "DIFFERS_PARTIAL_IMPLEMENTATION",
     "compiler": "unresolved",
     "compiler_candidates": [
@@ -456,14 +460,15 @@
       "Sharing creation first missing-pool error converts enum19 only on absence with no source origin. Neighboring four-word graduation and repeated option-check order remain unresolved; no complete sharing-body equivalence is claimed.",
       "Sharing graduation now requires all four reserves zero, supported by full typed-member mapping and all16 static branch assignments. None of the116 existing sharing cases has real_token_reserves==0 with another reserve nonzero, so changed-domain runtime coverage is absent. Later option ordering remains unresolved.",
       "Sharing creation now repeats the pool check after both Pump CPIs, serializes the second state update only when graduated, then checks AMM program and event in original order. Existing corpus contains no late missing-program/event6019 case; those branches retain static evidence only. Full recursive CPI/cleanup equivalence remains unresolved.",
-      "Only the first Pump extension CPI is restored to the typed generated API; its payer writable flag is corrected in the local IDL. Three complete helpers match normalized originals, with all30 immediate targets supported. The remaining three manual CPIs, recursive semantics and whole identity remain unresolved."
+      "Only the first Pump extension CPI is restored to the typed generated API; its payer writable flag is corrected in the local IDL. Three complete helpers match normalized originals, with all30 immediate targets supported. The remaining three manual CPIs, recursive semantics and whole identity remain unresolved.",
+      "The second Pump CPI now uses its generated typed API with unchanged IDL flags. Its complete3712-byte helper and1072-byte metadata constructor match normalized originals with all immediate target bodies;26/116 existing sharing cases reach the migration. Two remaining AMM manual calls and full recursive/whole-file identity remain unresolved."
     ],
-    "current_binding_command": "python3 -B repro/pump_fees/sharing-pump-extend-main-v144/verify.py --current-main .",
+    "current_binding_command": "python3 -B repro/pump_fees/sharing-second-pump-cpi-main-v144/verify.py --current-main .",
     "current_compilation_tools": "platform-tools v1.44 (Darwin)",
-    "current_function_inventory": "repro/pump_fees/sharing-pump-extend-v144/analysis/full-function-inventory.json",
+    "current_function_inventory": "repro/pump_fees/sharing-second-pump-cpi-v144/analysis/full-function-inventory.json",
     "current_runtime_receipts_inherited": true,
     "current_runtime_receipts_scope": "Fresh scratch executions of unchanged17441 baseline and unchanged20 focused inputs;10sequence steps separate. Carried to main by full stripped and symbol-bearing identity. An additional20 focused comparisons repeat against main to verify CI wiring, without new unique cases.",
-    "current_saved_verification_command": "python3 -B repro/pump_fees/sharing-pump-extend-v144/verify.py --runtime-signatures",
+    "current_saved_verification_command": "python3 -B repro/pump_fees/sharing-second-pump-cpi-v144/verify.py --runtime-signatures",
     "current_sdk_stripping_tools": "platform-tools v1.52 llvm-objcopy",
     "declared_program_evidence": "repro/pump_fees/declared-programs-v144/README.md",
     "decoder_contract_static_evidence": {
@@ -588,7 +593,7 @@
     },
     "linux_sysroot_evidence": "repro/pump_fees/linux-v144-sysroot-provenance/PUBLICATION.md",
     "main_scratch_identity_evidence": "repro/pump_fees/v2-caller-v144/main-scratch-identity.json",
-    "preferred_compiler_candidate": "v1.44",
+    "preferred_compiler_candidate": "v1.43",
     "previous_surfpool_checkpoint": {
       "artifact": "repro/pump_fees/all-thirtyone-v144/pump_fees_candidate.so",
       "comparisons": 112,
@@ -596,7 +601,7 @@
       "scope": "Separate prior executable; not rerun after error-enum and external-codec corrections.",
       "signed_transactions": 224
     },
-    "prior_checkpoint": "repro/pump_fees/sharing-option-order-main-v144",
+    "prior_checkpoint": "repro/pump_fees/sharing-pump-extend-main-v144",
     "pubkey_source_coordinate_evidence": {
       "current_build_evidence": "repro/pump_fees/solana-family-221-v144/static-gate.json",
       "current_matching_coordinates": [
@@ -644,7 +649,7 @@
     "sharing_module_evidence": "repro/pump_fees/sharing-module-v144/README.md",
     "sharing_module_static_evidence": "repro/pump_fees/sharing-module-v144/sharing-closure-proof.json",
     "signed_sequence_reports": [
-      "repro/pump_fees/sharing-pump-extend-main-v144/validation/donation-sequence.json.gz"
+      "repro/pump_fees/sharing-second-pump-cpi-main-v144/validation/donation-sequence.json.gz"
     ],
     "social_v2_layout_evidence": "repro/pump_fees/social-v2-account-layout-v144/trials/exit-comparison-v2.json",
     "social_v2_layout_package": "repro/pump_fees/social-v2-account-layout-v144/README.md",
@@ -679,16 +684,16 @@
     },
     "validated_cases": 17461,
     "validation_reports": [
-      "repro/pump_fees/sharing-pump-extend-main-v144/validation/focused20.json.gz",
-      "repro/pump_fees/sharing-pump-extend-main-v144/validation/differential.json.gz",
-      "repro/pump_fees/sharing-pump-extend-main-v144/validation/initializer-history.json.gz",
-      "repro/pump_fees/sharing-pump-extend-main-v144/validation/initializer-rejections.json.gz",
-      "repro/pump_fees/sharing-pump-extend-main-v144/validation/messages.json.gz",
-      "repro/pump_fees/sharing-pump-extend-main-v144/validation/codec-rejections.json.gz",
-      "repro/pump_fees/sharing-pump-extend-main-v144/validation/compared-values.json.gz",
-      "repro/pump_fees/sharing-pump-extend-main-v144/validation/authority-logs.json.gz",
-      "repro/pump_fees/sharing-pump-extend-main-v144/validation/signed-transfers.json.gz",
-      "repro/pump_fees/sharing-pump-extend-main-v144/validation/serialization-error.json.gz"
+      "repro/pump_fees/sharing-second-pump-cpi-main-v144/validation/focused20.json.gz",
+      "repro/pump_fees/sharing-second-pump-cpi-main-v144/validation/differential.json.gz",
+      "repro/pump_fees/sharing-second-pump-cpi-main-v144/validation/initializer-history.json.gz",
+      "repro/pump_fees/sharing-second-pump-cpi-main-v144/validation/initializer-rejections.json.gz",
+      "repro/pump_fees/sharing-second-pump-cpi-main-v144/validation/messages.json.gz",
+      "repro/pump_fees/sharing-second-pump-cpi-main-v144/validation/codec-rejections.json.gz",
+      "repro/pump_fees/sharing-second-pump-cpi-main-v144/validation/compared-values.json.gz",
+      "repro/pump_fees/sharing-second-pump-cpi-main-v144/validation/authority-logs.json.gz",
+      "repro/pump_fees/sharing-second-pump-cpi-main-v144/validation/signed-transfers.json.gz",
+      "repro/pump_fees/sharing-second-pump-cpi-main-v144/validation/serialization-error.json.gz"
     ],
     "workspace_source_manifest": "repro/pump_fees/v2-caller-v144/source-sha256.json",
     "withdrawal_owned_error_evidence": "repro/pump_fees/withdraw-owned-error-v144/README.md",
@@ -698,8 +703,10 @@
     "additional_main_repeat_report": "repro/layered-passes/pass-15/verification/fees-focused-main-repeat.json.gz",
     "sharing_owned_error_evidence": "repro/pump_fees/sharing-owned-error-v144/README.md",
     "graduation_zero_evidence": "repro/pump_fees/graduation-zero-v144/README.md",
-    "sharing_option_order_evidence": "repro/pump_fees/sharing-pump-extend-v144/README.md",
-    "sharing_pump_extend_evidence": "repro/pump_fees/sharing-pump-extend-v144/README.md"
+    "sharing_option_order_evidence": "repro/pump_fees/sharing-second-pump-cpi-v144/README.md",
+    "sharing_pump_extend_evidence": "repro/pump_fees/sharing-second-pump-cpi-v144/README.md",
+    "compiler_recipe_note": "v1.43 (reverse-engineered from binary std-layout + section-size sweep, 2026-10-25; build_partial_candidate.py now defaults to v1.43 for this program). Committed checkpoint artifacts remain v1.44-built until a pass regenerates them with v1.43.",
+    "sharing_second_pump_cpi_evidence": "repro/pump_fees/sharing-second-pump-cpi-v144/README.md"
   },
   "mayhem": {
     "source_reconstruction": "partial_handlers_compiled",
@@ -1037,6 +1044,7 @@
     "main_build_identity_report": "repro/mayhem/sell-result-error-main-twentyfour/main/controls/identity.json",
     "current_full_function_inventory": "repro/mayhem/sell-result-error-twentyfour/static/complete-inventory.json.gz",
     "prior_checkpoint": "repro/mayhem/twentyfour",
-    "candidate_build_identity_report": "repro/mayhem/sell-result-error-main-twentyfour/main/controls/identity.json"
+    "candidate_build_identity_report": "repro/mayhem/sell-result-error-main-twentyfour/main/controls/identity.json",
+    "compiler_recipe_note": "v1.52 (confirmed: edition2024/indexmap + hashbrown-0.15.4 + target evidence)."
   }
 }
