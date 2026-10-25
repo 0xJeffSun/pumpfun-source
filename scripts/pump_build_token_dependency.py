@@ -5,7 +5,8 @@ import argparse, hashlib, json, pathlib, shutil, subprocess, uuid
 ROOT=pathlib.Path(__file__).resolve().parents[1]
 TOKEN_COMMIT='a94dd19750dc3b2409f73e15bb74754935b2a489'
 TOKEN_IMAGE='solanafoundation/solana-verifiable-build@sha256:d7079331a2696eca570fbeeb5caa556cb09084f89ca96f0a0edb86e1cf83e165'
-p=argparse.ArgumentParser();p.add_argument('--source',type=pathlib.Path,required=True);p.add_argument('--output',type=pathlib.Path,required=True);p.add_argument('--dependency',choices=['spl_token','spl_token_2022','associated_token','token_metadata'],default='spl_token');a=p.parse_args()
+p=argparse.ArgumentParser();p.add_argument('--source',type=pathlib.Path,required=True);p.add_argument('--output',type=pathlib.Path,required=True);p.add_argument('--dependency',choices=['spl_token','spl_token_2022','associated_token','token_metadata'],default='spl_token');p.add_argument('--metaplex-recovery',action='store_true',help='Apply the recorded, behaviorally recovered Metaplex Rust patch before compilation');a=p.parse_args()
+if a.metaplex_recovery and a.dependency!='token_metadata':p.error('--metaplex-recovery requires --dependency token_metadata')
 if a.dependency=='spl_token':
     COMMIT=TOKEN_COMMIT;IMAGE=TOKEN_IMAGE;REPOSITORY='https://github.com/solana-program/token';MANIFEST='pinocchio/program/Cargo.toml';LIBRARY='pinocchio_token_program';TOOLS=['--tools-version','v1.54']
 elif a.dependency=='spl_token_2022':
@@ -22,6 +23,20 @@ assert not read(['git','-C',str(source),'status','--porcelain']), 'source checko
 assert not (source/'target').exists(), 'require a clean build target'
 tracked=read(['git','-C',str(source),'ls-files']).splitlines()
 source_hashes={name:sha((source/name).read_bytes()) for name in tracked if (source/name).is_file()}
+source_patch=None
+if a.metaplex_recovery:
+    recovery=ROOT/'repro/pump/metaplex-source-recovery'
+    patch=recovery/'source.patch';inputs=json.loads((recovery/'source-inputs.json').read_text())
+    assert inputs['upstream_commit']==COMMIT
+    assert all(source_hashes[name]==digest for name,digest in inputs['baseline'].items())
+    (out/'upstream-source-manifest.json').write_text(json.dumps(source_hashes,indent=2)+'\n')
+    subprocess.run(['git','-C',str(source),'apply','--check',str(patch)],check=True)
+    subprocess.run(['git','-C',str(source),'apply',str(patch)],check=True)
+    assert set(read(['git','-C',str(source),'diff','--name-only']).splitlines())==set(inputs['patched'])
+    source_hashes={name:sha((source/name).read_bytes()) for name in tracked if (source/name).is_file()}
+    assert all(source_hashes[name]==digest for name,digest in inputs['patched'].items())
+    shutil.copyfile(patch,out/'source.patch');shutil.copyfile(recovery/'source-inputs.json',out/'patch-source-inputs.json')
+    source_patch={'path':'source.patch','sha256':sha(patch.read_bytes()),'scope':'Behaviorally recovered Rust changes applied to public baseline; not attributed historical source.'}
 (out/'source-manifest.json').write_text(json.dumps(source_hashes,indent=2)+'\n')
 subprocess.run(['docker','pull','--platform','linux/amd64',IMAGE],check=True)
 image_info=json.loads(read(['docker','image','inspect',IMAGE]))
@@ -70,5 +85,6 @@ normalized=b.rstrip(b'\0');original_normalized=original.rstrip(b'\0')
 first=next((i for i,(x,y) in enumerate(zip(b,original)) if x!=y),None)
 if first is None and len(b)!=len(original):first=min(len(b),len(original))
 report={'scope':'Fresh Linux container source build; no captured binary mounted into build container. Original padding is compared explicitly.','source_repository':REPOSITORY,'dependency':a.dependency,'source_commit':COMMIT,'image':IMAGE,'platform':'linux/amd64','onchain_recipe':None if a.dependency in ('associated_token','token_metadata') else 'repro/pump/'+a.dependency+'-onchain-build-params.json','active_host_toolchain':active,'commands':[[x.replace(container,'<container>').replace(str(source),'<source>') for x in cmd] for cmd in commands],'source_manifest_sha256':sha((out/'source-manifest.json').read_bytes()),'build_log_sha256':sha((out/'build.log').read_bytes()),'original_bytes':len(original),'candidate_input_bytes':len(raw),'candidate_input_sha256':sha(raw),'zero_padding_bytes':len(b)-len(raw),'candidate_bytes':len(b),'original_sha256':sha(original),'candidate_sha256':sha(b),'original_normalized_sha256':sha(original_normalized),'candidate_normalized_sha256':sha(normalized),'normalized_byte_equality':normalized==original_normalized,'full_byte_equality':b==original,'first_difference':first}
+if source_patch is not None:report['source_patch']=source_patch
 (out/'comparison.json').write_text(json.dumps(report,indent=2)+'\n');print(json.dumps(report,indent=2))
 if b!=original:raise SystemExit(1)

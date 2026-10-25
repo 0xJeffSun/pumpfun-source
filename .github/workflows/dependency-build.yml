@@ -12,6 +12,7 @@ on:
           - spl_token_2022
           - associated_token
           - token_metadata
+          - token_metadata_recovered
           - both
 permissions:
   contents: read
@@ -83,7 +84,7 @@ jobs:
           if-no-files-found: error
           retention-days: 30
   token-metadata:
-    if: inputs.dependency == 'token_metadata'
+    if: inputs.dependency == 'token_metadata' || inputs.dependency == 'token_metadata_recovered'
     runs-on: ubuntu-24.04
     timeout-minutes: 30
     steps:
@@ -95,7 +96,12 @@ jobs:
           path: work/metaplex-source
           persist-credentials: false
       - name: Build official-source candidate using pinned CLI1.16.25 image
-        run: python3 scripts/pump_build_token_dependency.py --dependency token_metadata --source work/metaplex-source --output work/metaplex-rebuild
+        run: |
+          if [ "${{ inputs.dependency }}" = "token_metadata_recovered" ]; then
+            python3 scripts/pump_build_token_dependency.py --dependency token_metadata --metaplex-recovery --source work/metaplex-source --output work/metaplex-rebuild
+          else
+            python3 scripts/pump_build_token_dependency.py --dependency token_metadata --source work/metaplex-source --output work/metaplex-rebuild
+          fi
       - name: Preserve candidate source, logs, generated ELF and honest comparison
         if: always()
         uses: actions/upload-artifact@v4

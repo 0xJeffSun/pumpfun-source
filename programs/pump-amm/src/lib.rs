@@ -2,6 +2,8 @@
 //! This crate is not the historical source or a byte-identical replacement.
 use anchor_lang::prelude::*;
 mod state;
+mod legacy_sell;
+use legacy_sell::*;
 mod cashback;
 use cashback::*;
 mod incentives;
@@ -30,6 +32,7 @@ declare_id!("pAMMBay6oceH9fJKBRHGP5D4bD4sWpmSwMn52FMfXEA");
 #[program]
 pub mod pump_amm_recovered {
     use super::*;
+    pub fn sell<'info>(ctx:Context<'_,'_,'_,'info,LegacySell<'info>>,base_amount_in:u64,min_quote_amount_out:u64)->Result<()>{legacy_sell::execute(ctx,base_amount_in,min_quote_amount_out)}
     pub fn claim_cashback(ctx:Context<ClaimCashback>)->Result<()>{cashback::claim(ctx)}
     pub fn sync_user_volume_accumulator(ctx:Context<SyncUserVolumeAccumulator>)->Result<()>{incentives::sync(ctx)}
     pub fn admin_update_token_incentives(ctx:Context<AdminUpdateTokenIncentives>,start_time:i64,end_time:i64,seconds_in_a_day:i64,day_number:u64,token_supply_per_day:u64)->Result<()>{incentives::admin(ctx,start_time,end_time,seconds_in_a_day,day_number,token_supply_per_day)}

@@ -125,3 +125,11 @@ The [dependency provenance follow-up](../repro/pump/dependency-provenance-202610
 ## Declared Fees dependencies and workspace layout
 
 The [declared-program checkpoint](../repro/pump_fees/declared-programs-v144/README.md) generates external account types from genuine historical Pump/PumpSwap IDLs. A root workspace reproduces the captured source path, and consecutive macro placement at lines 27 and 28 closes the three checked decoders' remaining source-location instruction differences. The 766,800-byte main output exactly equals the scratch output that passed 17,372 comparisons and the ten-step donation sequence. All 22 local inputs, including the root manifest/lockfile and both IDLs, are bound. Three complete decoder patterns match after relocation/call masking, with matching source literals and mapped calls; raw-function and whole-ELF equality remain unproved. These constraints do not uniquely establish the historical IDLs or full source.
+
+## PumpSwap legacy sell
+
+The [33-handler checkpoint](../repro/pump_amm/legacy-sell-thirty-three/README.md) adds legacy sell with real Fees and token-program CPIs. Its 559 new cases cover direct fee payouts, gross-input pricing, cashback, buyback, reserve boundaries and account validation. All 21 prior suites also pass, for 15,194 total comparisons. The independently clean main build exactly matches the tested scratch executable (963,600 bytes); the package records that identity and preserves unsuccessful drafts. Five handlers and whole-program byte identity remain unresolved.
+
+## Fees typed buyback guards
+
+The [buyback-source checkpoint](../repro/pump_fees/buyback-source-v144/README.md) restores three typed `require_gt!` comparisons and a boxed update account. Their bodies now match original lengths, relocation patterns and mapped calls; source-location instructions still differ. The 768,976-byte clean main ELF exactly matches the tested scratch ELF. All 17,372 retained comparisons and the ten-step donation sequence pass, plus nine focused signed comparisons that repeat index values with explicit compared-value log assertions. Those nine strengthen diagnostics coverage rather than adding nine distinct boundary values. Whole-file equality remains false.

@@ -17,11 +17,11 @@ python3 scripts/test_tooling.py
 A partial Rust fee-tier selector now matches the original instruction sequence except
 for unresolved relocations with platform-tools v1.43, and passes 1,215 local
 differential cases. Recovered quote-mint routing additionally passes 9,428 original-program
-queries, but its compiled instructions still differ. All 31 Fees instruction bodies pass 17,372 independent SBF comparisons; thirty recovered Pump
-handlers plus four partial creation/trading paths pass 5,139. Thirty-two PumpSwap
-handlers pass 14,635 comparisons, and eighteen Mayhem handlers pass 2,959. These
-40,105 SBF cases cover 111 implemented handlers and four partial paths, not the
-complete programs. Two Fees handlers are deprecated dispatches that always reject.
+queries, but its compiled instructions still differ. All 31 Fees instruction bodies pass 17,381 SBF comparisons; thirty recovered Pump
+handlers plus four partial creation/trading paths pass 5,139. Thirty-three PumpSwap
+handlers pass 15,194 comparisons, and eighteen Mayhem handlers pass 2,959. These
+40,673 saved comparisons cover 112 implemented handlers and four partial paths, not the
+complete programs. Nine focused Fees checks repeat prior index values with stronger log assertions. Two Fees handlers are deprecated dispatches that always reject.
 The published Pump partial v3 paths have a known stored creator-fee override gap;
 expanded signed probes found it after the saved checkpoint. Corrected source is
 under validation and is not included in the published candidate.
@@ -33,8 +33,9 @@ favors platform-tools v1.44 among the tested Fees builds: two complete runtime
 helper bodies match the capture exactly. The current Fees candidate uses that
 compiler. The [previous retained Fees build](repro/pump_fees/all-thirtyone-v144/README.md)
 also passed 112 independent Surfpool comparisons with 224 signed local transactions.
-The current declared-program codec build passes its full SBF regression and targeted
-message/decoder checks, including the captured decoder source locations. These results do not prove the complete historical build configuration.
+The current Fees build adds typed buyback guards and a boxed account context, reproducing
+compared-value error logs and three more original function shapes. It retains the
+full SBF regression and targeted message/decoder checks. These results do not prove the complete historical build configuration.
 
 [Recovery status](docs/RECOVERY.md) separates observed evidence from unresolved work.
 [Tooling](docs/TOOLING.md) covers recapture, disassembly and strict candidate comparison.
