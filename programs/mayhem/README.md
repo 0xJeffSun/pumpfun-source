@@ -36,6 +36,23 @@ Main-build acceptance, if completed, belongs to the separate
 This source refinement does not recover the excluded initializer or establish
 full original ELF, compiler, formatting-engine or all-input equivalence.
 
+
+## SellPumpSwap typed sizing-error refinement
+
+The reviewed [SellPumpSwap refinement](../../repro/mayhem/sell-result-error-twentyfour/README.md)
+reuses the original `PumpSwapCpiMathOverflow` typed Result failure on a zero sizing
+divisor. One pinned build passed the same21 suites/9595 functional comparisons,
+with no new unique cases. The recorded/derived signed-execution count remains19190;
+not every administrative receipt contains independently verifiable transaction bytes.
+The previous extra Option-unwrapping log is absent in the exercised SellPumpSwap
+zero-effective-quote cases. Source-location, compute and the three known second-burn
+diagnostic differences remain explicit. The scratch candidate is668640 bytes,
+SHA256 `7d416f848f03e46d9a514f4c505a8e903cdb908f52280bb961254eed90aebe1f`.
+The separate [main identity package](../../repro/mayhem/sell-result-error-main-twentyfour/README.md)
+records any accepted clean main build. The raw strict-guard distinction remains;
+the included input-domain proof is not whole helper/ELF equivalence. The excluded
+initializer and historical source/compiler recovery remain unresolved.
+
 ## Evidence and unresolved source details
 
 The original captured binary is `evidence/original/mayhem/deployed.so`. Its

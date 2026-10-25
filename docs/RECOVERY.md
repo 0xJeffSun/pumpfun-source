@@ -419,3 +419,7 @@ Relay build07 implements the recovered owned error model and passes all twelve u
 ## Layered pass 10: buy fee input and typed math error
 
 [Pass10](../repro/layered-passes/pass-10/README.md) integrates the Pump buy-side supply selector and Mayhem BuyPumpSwap typed zero-divisor error. Both clean main builds equal their independently tested scratch executables and symbols. The unchanged corpora preserve their explicit diagnostic and coverage limits. Portable independent review checks original/candidate instructions, current source deltas and retained evidence. The complete before/after comparison remains 0/4 core and 2/5 dependency captures exact.
+
+## Layered pass 11: buy rejection order and swap-sell error
+
+[Pass 11](../repro/layered-passes/pass-11/README.md) integrates the reviewed Pump complete-before-cashback order and Mayhem SellPumpSwap typed zero-divisor error. Both main builds equal their tested scratch files, including symbols. All prior corpus and diagnostic limits remain explicit. The AMM formatter review identifies a supported dependency-source proposal; its separate build remains outside this pass's accepted artifacts.

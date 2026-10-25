@@ -117,8 +117,8 @@ pub fn buy(ctx:Context<SellV3>,amount:u64,max_sol_cost:u64)->Result<()> {
     crate::trade_types::prepare_bonding_curve(&a.bonding_curve, &a.system_program, &a.user)?;
     let quote_decimals=check_quote(a)?;
     let is_sol=quote_decimals.is_none();
-    require!(!a.bonding_curve.is_cashback_coin,PumpError::CashbackCoinNotSupported);
     require!(!a.bonding_curve.complete,PumpError::BondingCurveComplete);
+    require!(!a.bonding_curve.is_cashback_coin,PumpError::CashbackCoinNotSupported);
     require!(amount>0,PumpError::BuyZeroAmount);
     if is_sol{require!(a.global.buyback_fee_recipients.contains(&a.buyback_fee_recipient.key()),PumpError::BuybackFeeRecipientNotAuthorized);}
     let curve=&a.bonding_curve;
