@@ -387,6 +387,16 @@
       "unique_historical_version_proven": false,
       "dependency_changes": 0,
       "new_runtime_cases": 0
+    },
+    "decoder_contract_static_evidence": {
+      "package": "repro/pump_fees/decoder-contract-static",
+      "manifest_sha256": "aef7eac1a73f2a678fc07ab567c01c80bd7c0f135cff33998693f5ea68810cf7",
+      "sealed_review_files": 28,
+      "threshold_pairs": 3,
+      "direct_decoder_callers_per_elf": 2,
+      "behavioral_correction_proven": false,
+      "source_changes": 0,
+      "new_runtime_cases": 0
     }
   },
   "mayhem": {
