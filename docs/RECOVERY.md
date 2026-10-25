@@ -451,3 +451,7 @@ Three Pump creator paths use the already-recovered full BondingCurve account typ
 ## Layered pass19: typed CTO, initializer ownership and late checks
 
 [Pass19](../repro/layered-passes/pass-19/README.md) retains the failed first Pump compile and its reviewed borrow-only repair, full source/static/runtime evidence, and exact main/scratch identities. Separate source-only reviews preserve unresolved AMM Sync, Mayhem layout and ATA provenance findings without speculative patches.
+
+## Pass20 and upstream reconciliation
+
+[Pass20](../repro/layered-passes/pass-20/README.md) binds three clean main/scratch identities and complete before/after ledgers. [Upstream reconciliation](../repro/upstream-reconciliation/main-bde19c4e/README.md) accounts for266 incoming paths and retains15 conflicting active variants outside the compiler tree;251 research/evidence additions remain inactive. The excluded execution scopes and verified compiler recipes are unchanged.

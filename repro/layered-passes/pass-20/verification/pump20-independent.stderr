@@ -1,0 +1,2 @@
+usage: verify.py [-h] [--current-main CURRENT_MAIN]
+verify.py: error: unrecognized arguments: --repo .

@@ -119,6 +119,9 @@ def main():
     if args.program == "pump" and artifact == "repro/pump/buy-fee-basis-main-fortyeight/main/candidate.so":
         subprocess.run([sys.executable, "-B", str(ROOT / "repro/pump/buy-fee-basis-main-fortyeight/verify.py"), "--current-main", str(ROOT)], check=True)
         return
+    if args.program == "pump" and artifact == "repro/pump/admin-cto-owned-main-fortyeight/main/candidate.so":
+        subprocess.run([sys.executable, "-B", str(ROOT / "repro/pump/admin-cto-owned-main-fortyeight/verify.py"), "--current-main", str(ROOT)], check=True)
+        return
     if args.program == "pump" and artifact == "repro/pump/admin-cto-typed-main-fortyeight/main/candidate.so":
         subprocess.run([sys.executable, "-B", str(ROOT / "repro/pump/admin-cto-typed-main-fortyeight/verify.py"), "--current-main", str(ROOT)], check=True)
         return
@@ -127,6 +130,9 @@ def main():
         return
     if args.program == "pump" and artifact == "repro/pump/buy-mode-order-main-fortyeight/main/candidate.so":
         subprocess.run([sys.executable, "-B", str(ROOT / "repro/pump/buy-mode-order-main-fortyeight/verify.py"), "--current-main", str(ROOT)], check=True)
+        return
+    if args.program == "fees" and artifact == "repro/pump_fees/sharing-pump-extend-main-v144/main/candidate.so":
+        subprocess.run([sys.executable, "-B", str(ROOT / "repro/pump_fees/sharing-pump-extend-main-v144/verify.py"), "--current-main", str(ROOT)], check=True)
         return
     if args.program == "fees" and artifact == "repro/pump_fees/sharing-option-order-main-v144/main/candidate.so":
         subprocess.run([sys.executable, "-B", str(ROOT / "repro/pump_fees/sharing-option-order-main-v144/verify.py"), "--current-main", str(ROOT)], check=True)

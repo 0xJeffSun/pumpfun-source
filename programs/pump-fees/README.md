@@ -459,3 +459,10 @@ The pinned v1.44 build and v1.52 strip use the same 26 source inputs apart from 
 The `sharing-option-order-v144` checkpoint moves the AMM program and event presence checks to the original late position. After both Pump calls, the graduated path checks pool, updates and serializes sharing state, then checks program and event using fieldless enum19 conversions before AMM calls. The nongraduated path no longer performs the unsupported second state rewrite/exit. The accepted first pool conversion and all-four-reserves-zero predicate are unchanged.
 
 See `repro/pump_fees/sharing-option-order-v144/` for exact source and original/candidate call/data evidence, unchanged finite runtime receipts and retained diagnostics. `repro/pump_fees/sharing-option-order-main-v144/` records the separately accepted main build identity. Complete original, recursive CPI, allocator and cleanup identity remain unproved.
+
+
+### First Pump extension typed CPI checkpoint
+
+The `sharing-pump-extend-v144` checkpoint restores only sharing creation's first Pump extension to the generated Anchor CPI helper. The local Pump IDL marks this extension's user writable, preserving the original and preceding manual-call metadata. The full emitted helper, AccountMeta constructor and AccountInfo constructor match their original instruction windows under call/relocation normalization, with all immediate target bodies supported. Remaining three manual calls are unchanged.
+
+See `repro/pump_fees/sharing-pump-extend-v144/` for source/IDL bindings, complete before/after inventories, unchanged finite runtime receipts, signatures and raw diagnostics; the separate main identity is in `repro/pump_fees/sharing-pump-extend-main-v144/`. This does not claim whole original ELF equality or recursive target-program semantics.

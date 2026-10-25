@@ -25,7 +25,16 @@ const AMM: Pubkey = crate::donation::AMM;
   }else{ctx.accounts.bonding_curve.creator};
   require_keys_eq!(creator,ctx.accounts.payer.key(),FeeError::NotAuthorized);
   let state=&mut ctx.accounts.sharing_config;state.bump=ctx.bumps.sharing_config;state.version=2;state.status=ConfigStatus::Active;state.mint=ctx.accounts.mint.key();state.admin=ctx.accounts.bonding_curve.creator;state.admin_revoked=false;state.shareholders=vec![Shareholder{address:ctx.accounts.bonding_curve.creator,share_bps:10000}];state.exit(&ID)?;
-  call(PUMP,vec![ctx.accounts.bonding_curve.to_account_info(),ctx.accounts.payer.to_account_info(),ctx.accounts.system_program.to_account_info(),ctx.accounts.pump_event_authority.to_account_info(),ctx.accounts.pump_program.to_account_info()],&[(true,false),(true,true),(false,false),(false,false),(false,false)],vec![234,102,194,203,150,72,62,229])?;
+  crate::pump::cpi::extend_account(CpiContext::new(
+      ctx.accounts.pump_program.to_account_info(),
+      crate::pump::cpi::accounts::ExtendAccount {
+          account: ctx.accounts.bonding_curve.to_account_info(),
+          user: ctx.accounts.payer.to_account_info(),
+          system_program: ctx.accounts.system_program.to_account_info(),
+          event_authority: ctx.accounts.pump_event_authority.to_account_info(),
+          program: ctx.accounts.pump_program.to_account_info(),
+      },
+  ))?;
   call(PUMP,vec![ctx.accounts.mint.to_account_info(),ctx.accounts.bonding_curve.to_account_info(),state.to_account_info(),ctx.accounts.pump_event_authority.to_account_info(),ctx.accounts.pump_program.to_account_info()],&[(false,false),(true,false),(false,false),(false,false),(false,false)],vec![87,124,52,191,52,38,214,232])?;
   if graduated {
    let pool=ctx.accounts.pool.as_ref().ok_or(FeeError::AmmAccountsRequiredForGraduatedCoin)?;

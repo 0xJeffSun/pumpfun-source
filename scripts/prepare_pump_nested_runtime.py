@@ -8,7 +8,7 @@ from pathlib import Path, PurePosixPath
 ROOT = Path(__file__).resolve().parents[1]
 HARNESS_PACKAGE = ROOT / 'repro/pump/buy-mode-order-fortyeight'
 HARNESS_SEAL = '84849c316aa1e9c0bb8ae05050480cd641fdd9546e69cf875085f29645bbd3a0'
-MAIN_PACKAGE = ROOT / 'repro/pump/admin-cto-typed-main-fortyeight'
+MAIN_PACKAGE = ROOT / 'repro/pump/admin-cto-owned-main-fortyeight'
 PREFIX = 'runtime-layer/nested-harness/'
 
 

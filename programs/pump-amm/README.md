@@ -283,3 +283,22 @@ callee/data and original ELF equality remain unresolved. Close, Sync and Claim
 bodies are unchanged from the preceding checkpoint, including the known Claim
 diagnostic line 147 to 149 difference. Main acceptance requires the separate
 [main identity companion](../../repro/pump_amm/init-user-ownership-main-v144/README.md).
+
+
+## Initializer logical-module checkpoint
+
+The [logical-module checkpoint](../../repro/pump_amm/init-logical-module-v144/README.md)
+places only the initializer Accounts context into its evidenced instruction-file
+hierarchy and re-exports it. Fields, constraints and the handler remain unchanged.
+The tested scratch executable SHA256 is
+`6dc621c8c6a165650a159b67f9f2d042c3ffc71481236208d2565485c3e169b2`.
+
+The natural emitted filename has length65 and line4; the original has length83
+and line8. No workspace, remap, padding or flag change was used. The full inventory
+retains488 normalized original matches and297 unmatched windows, with zero gains
+or losses. All25 unchanged suites pass17462 cases and35418 saved signatures;
+all113 existing Sync messages remain exact. No new initializer-success fixture
+or whole-byte-match improvement is claimed. The separate
+[main companion](../../repro/pump_amm/init-logical-module-main-v144/README.md)
+binds a clean main build to the tested scratch. Original root/workspace provenance,
+remaining helper metadata and recursive call/data identity remain unresolved.

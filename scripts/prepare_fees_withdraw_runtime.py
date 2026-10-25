@@ -7,7 +7,7 @@ from pathlib import Path, PurePosixPath
 import tarfile
 
 ROOT = Path(__file__).resolve().parents[1]
-PACKAGE = ROOT / 'repro/pump_fees/sharing-option-order-v144'
+PACKAGE = ROOT / 'repro/pump_fees/sharing-pump-extend-v144'
 
 
 def prepare(output):

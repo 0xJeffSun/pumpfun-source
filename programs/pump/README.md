@@ -1,3 +1,16 @@
+# Pump: owned admin-CTO error checkpoint
+
+The tested scratch executable is `c261d215495a35aa59970546b87bd5fb74407d2bbd5d885d41a0d1a2677cc2f2` (1,581,232 bytes). It changes one admin-CTO guard from a generic `ProgramError::Custom(6088)` to the existing named `CtoNotAllowedForMayhemCoin` Anchor error. The typed BondingCurve parser, accepted mutation/Clock/CPI ordering and scoped borrow repair are retained.
+
+The original and candidate now produce the same error number, name and message on the existing covered 6088 cases. Their source origins intentionally differ: original `programs/pump/src/creator/admin_cto.rs:284`; recovered source `src/admin_cto.rs:103`. No historical source coordinates, compiler layouts or byte identity are fabricated.
+
+The immutable scratch evidence is [`repro/pump/admin-cto-owned-fortyeight`](../../repro/pump/admin-cto-owned-fortyeight/README.md). It retains the one-file source patch, pinned v1.44 compile/v1.52 strip controls, all 37 input hashes and 252 package/14,281 file dependency gates, complete original/current function and call/data ledgers, and unchanged regression/signature receipts. Whole original executable and application byte identity remain false.
+
+Finite validation: 9,269 unchanged differential comparisons and 1,024 unchanged signed Surfpool comparisons. The changed guard is covered by two existing differential cases and one existing signed case; this does not establish all error/cleanup/allocation-failure behavior. Other numeric guards remain unresolved. Prior cashback/6080 and exact 123-byte nonzero-fee coverage limitations remain as documented below. No new fixture or probe was added.
+
+<details>
+<summary>Historical accepted 5d checkpoint and inherited recovery history</summary>
+
 # Pump admin-CTO typed-curve checkpoint
 
 The current tested executable is **1,580,712 bytes**, SHA256 `5d35884bf79de90850e23ac5e6781b328430b8748f62e4c1381cb77b9f2e0a6c`. Root's clean main build matches the complete tested scratch executable and unstripped symbol file (`9f74f5cf77c959999064695c046a41b70c497db02d98e80742eb11edc2c34305`). See the [main identity record](../../repro/pump/admin-cto-typed-main-fortyeight/main/controls/identity.json) and [scratch evidence](../../repro/pump/admin-cto-typed-fortyeight/README.md).
@@ -30,5 +43,7 @@ Creator contexts now use the recovered full BondingCurve decoder/serializer inst
 AdminCto now uses the recovered full BondingCurve account model, updates decoded fields before the pool-update CPI and restores the original holder/cashback and creator-fee guard behavior. The [admin-CTO typed checkpoint](../../repro/pump/admin-cto-typed-fortyeight/README.md) retains the source proof, initial borrow-check failure, reviewed scope repair and final finite validation. Earlier creator, fee/admission and settlement limitations remain in the linked checkpoint history.
 
 The unchanged CTO corpus does not exercise holder mode with an already-cashback curve, the restored6080 error, or an exact123-byte curve containing a nonzero partial fee field. Those refinements are supported by the retained static source/CFG proof, not direct runtime coverage.
+
+</details>
 
 </details>
