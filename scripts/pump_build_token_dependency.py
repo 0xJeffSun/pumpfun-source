@@ -11,7 +11,7 @@ if a.dependency=='spl_token':
 elif a.dependency=='spl_token_2022':
     COMMIT='8867f751c0f69367ba03af4f85510b5611989491';IMAGE='solanafoundation/solana-verifiable-build@sha256:6c73adc767ee7ff212f2532d4695472b12f3d4ac20aea3db22b89d8c614dac50';REPOSITORY='https://github.com/solana-program/token-2022';MANIFEST='program/Cargo.toml';LIBRARY='spl_token_2022';TOOLS=[]
 elif a.dependency=='associated_token':
-    COMMIT='c00194d2257302f028f44a403c6dee95c0f9c3bc';IMAGE='solanafoundation/solana-verifiable-build@sha256:ee9ad7809009a99a70f659f7cba959e0c3c124e10f771b524914fd42f2b605a8';REPOSITORY='https://github.com/solana-labs/solana-program-library';MANIFEST='associated-token-account/program/Cargo.toml';LIBRARY='spl_associated_token_account';TOOLS=[]
+    COMMIT='f5ce86d43dd31ddefb96d4e8cdd67dd073dc5dca';IMAGE='solanafoundation/solana-verifiable-build@sha256:ee9ad7809009a99a70f659f7cba959e0c3c124e10f771b524914fd42f2b605a8';REPOSITORY='https://github.com/solana-labs/solana-program-library';MANIFEST='associated-token-account/program/Cargo.toml';LIBRARY='spl_associated_token_account';TOOLS=[]
 else:
     COMMIT='667d7c95dbe4d547fb5312b3fc99104a08204f99';IMAGE='solanafoundation/solana-verifiable-build@sha256:a684474d1b8dc399814d0812f04266cbed44001b32873cdb7940a93d656165fa';REPOSITORY='https://github.com/metaplex-foundation/mpl-token-metadata';MANIFEST='programs/token-metadata/Cargo.toml';LIBRARY='token_metadata';TOOLS=[]
 source=a.source.resolve();out=a.output.resolve();out.mkdir(parents=True,exist_ok=False)
