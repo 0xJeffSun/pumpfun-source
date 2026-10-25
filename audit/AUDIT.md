@@ -4,9 +4,9 @@
 programs listed in `docs/SCOPE.md`. Partial executable handlers have been recovered; no complete program exists.
 
 The current published recovery covers 140 implemented handlers plus five partial
-Pump paths and 53,755 saved comparison receipts: [Pump48 two-curve checkpoint](../repro/pump/tokenkeg-two-curve-fortyeight/README.md),
-[AMM37 event-borrow/static-initializer checkpoint](../repro/pump_amm/update-event-borrow-v144/README.md),
-[Fees31 donation-business checkpoint](../repro/pump_fees/donation-business-v144/README.md),
+Pump paths and 53,787 saved comparison receipts: [Pump48 error-metadata checkpoint](../repro/pump/final-error-metadata-fortyeight/README.md),
+[AMM37 destination-rent checkpoint](../repro/pump_amm/destination-rent-v144/README.md),
+[Fees31 legacy/social-admission checkpoint](../repro/pump_fees/legacy-social-admission-v144/README.md),
 and [Mayhem24](../repro/mayhem/twentyfour/README.md). These bounded recovery results
 do not extend the source review frozen at commit329fc44 into a complete audit of
 the later candidates. All four original whole-file comparisons still differ.
@@ -27,6 +27,27 @@ There are no substantiated vulnerability findings in this checkpoint. No hypothe
 issue is presented as a finding, and no informational findings are included.
 
 ## Public candidate-source review progress
+
+The [fourth layered pass](../repro/layered-passes/pass-04/README.md) reviews the
+accepted source frozen at `aa98fb45f3f756d008ccb9940bcfd9a6e986ef77`. Each package
+records exact per-file, per-function and account-context coverage:
+
+| Candidate | Inspected explicit functions | Inspected account contexts | Review |
+| --- | ---: | ---: | --- |
+| Pump | 209 | 38 | [Report](../repro/layered-passes/pass-04/audit-pump/REPORT.md) |
+| AMM | 117 | 30 | [Report](../repro/layered-passes/pass-04/audit-amm/REPORT.md) |
+| Fees | 64 in-program definitions | 30 | [Report](../repro/layered-passes/pass-04/audit-fees/REPORT.md) |
+| Mayhem | 61 | 15 | [Report](../repro/layered-passes/pass-04/audit-mayhem/REPORT.md) |
+
+Fees separately inventories eight standalone definitions and two external
+declarations. Pump retains six excluded declarations as opaque metadata. These
+lexical inventories have explicit scope rules and are not percentages of audited
+machine code. The reviews retain their qualified observations and establish no
+new confirmed vulnerability or independently justified source patch. Their
+verifiers check source provenance and coverage integrity, not all-state safety.
+Generated code, transitive dependencies, lifecycle and alias premises, incomplete
+reconstructions and excluded work still prevent security sign-off. This source
+applicability does not transfer to subsequent unaccepted reconstruction proposals.
 
 The [third parallel pass](../repro/parallel-work/2026-10-25/results/README.md) contains new manual source reviews for the four candidates frozen at 517d77d. They enumerate 112 included Accounts contexts and 422 function declarations/dispositions, with explicit excluded boundary rows. Twenty-five candidate observations retain authorization, policy, reachability and dependency prerequisites; they are not confirmed vulnerabilities in the captured originals. The verifiers check provenance, spans and bounded calculations rather than certifying every review conclusion.
 
