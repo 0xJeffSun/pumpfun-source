@@ -53,6 +53,10 @@ The security audit remains incomplete. Existing malformed-input/lifecycle checks
 
 ## Parallel ownership
 
-Native workers own ordinary Tokenkeg multi-curve static reconstruction, portable function-inventory publication, and completed Fees dependency-family promotion. Additional CLI workers will use separate scratch directories for Pump event attribution, Pump partial-path gap mapping, AMM residual functions, Fees residual functions, Mayhem non-initializer ABI, ATA recipe evidence, Metaplex Utilize attribution, donation-relay reconstruction and audit evidence coverage. They must preserve all stopped lanes, avoid duplicate compilation and return reviewable evidence before root integration.
+Native workers own ordinary Tokenkeg multi-curve static reconstruction, portable function-inventory publication, and completed Fees dependency-family promotion. Nine additional CLI workers have started in separate scratch directories for Pump event attribution, Pump partial-path gap mapping, AMM residual functions, Fees residual functions, Mayhem non-initializer ABI, ATA recipe evidence, Metaplex Utilize attribution, donation-relay reconstruction and audit evidence coverage. They must preserve all stopped lanes, avoid duplicate compilation and return reviewable evidence before root integration.
 
 A worker covers related functions as a dependency-aware group. Launching one process for every inferred disassembly window would duplicate helper analysis and would not establish completion. Each machine inventory retains every row, including unmatched and unresolved rows.
+
+See [parallel ownership and configuration](PARALLEL_WORK.md) for the launched assignments and documented concurrency setting.
+
+The [portable function inventories and follow-up studies](../repro/function-inventory/2026-10-24-374fcf0/README.md) preserve every row from the historical baseline, plus seven static studies/build proposals. Those baseline Pump/Fees tables are labeled separately from the current serializer and dependency-family candidates.
