@@ -119,3 +119,5 @@ revision or relay rebuild has been recovered.
 ## PumpSwap compiler compatibility
 
 The [v1.44 main-path build](../repro/pump_amm/compiler-v144/README.md) reproduces the same candidate as the validated scratch build and retains all 14,635 passing comparisons. The Rust implementation is unchanged; compatible lockfile pins and the selected compiler changed together. The 889,472-byte output has the captured machine/flags family, but both complete-file and parsed-ELF comparisons differ. This is a reproducible candidate configuration, not attribution of the historical compiler or dependency graph.
+
+The [dependency provenance follow-up](../repro/pump/dependency-provenance-20261025/README.md) records the actual Anchor/Cargo release-recipe constraints for ATA and a newer, currently inaccessible audit-source revision for Metaplex. These primary-source observations select no new verified build and do not alter dependency byte-identity claims.
