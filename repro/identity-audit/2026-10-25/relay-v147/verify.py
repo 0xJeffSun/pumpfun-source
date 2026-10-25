@@ -12,8 +12,12 @@ lock=tomllib.loads((P/'crate/Cargo.lock').read_text());packages={p['name']+'-'+p
 failed=J(P/'build-01/build-attempt.json');flog=gzip.decompress((P/'build-01/build.log.gz').read_bytes());assert failed['returncode']==101 and failed['source_sha256']==failed['source_after_sha256']==frozen and H(flog)==failed['build_log_sha256']and b'--offline was specified'in flog and b'Running `'not in flog and b'Compiling 'not in flog
 attempt=J(P/'build-02/build-attempt.json');log=gzip.decompress((P/'build-02/build.log.gz').read_bytes());assert attempt['returncode']==0 and attempt['source_unchanged']and attempt['source_sha256']==attempt['source_after_sha256']==frozen and H(log)==attempt['build_log_sha256']and not attempt['global_alias_mutated']
 cmd=attempt['command'];assert cmd.count('build')==1 and cmd[cmd.index('--target')+1]=='sbf-solana-solana'and all(x in cmd for x in['--release','--locked','--offline','--verbose'])
-for flag in['-C opt-level=3','-C panic=abort','-C codegen-units=1','-C overflow-checks=on']:assert flag.encode()in log
-assert b'-C target-feature='not in log and b'-C target-cpu='not in log
+rustc_lines=[line for line in log.decode().splitlines() if line.lstrip().startswith('Running `'+attempt['command'][0].removesuffix('/cargo')+'/rustc ')]
+assert rustc_lines
+root_lines=[line for line in rustc_lines if '--crate-name pump_fees_candidate ' in line]
+assert len(root_lines)==1 and '--target sbf-solana-solana' in root_lines[0] and '--crate-type cdylib' in root_lines[0]
+for flag in['-C opt-level=3','-C panic=abort','-C codegen-units=1','-C overflow-checks=on']:assert flag in root_lines[0]
+assert all('-C target-feature=' not in line and '-C target-cpu=' not in line for line in rustc_lines)
 baseline=J(REPO/'repro/pump_fees/compiler-family/v146-build-01/build-comparison.json');assert attempt['sdk_reference_sha256']==baseline['sdk_source_sha256']and len(attempt['sdk_reference_sha256'])==53
 comparison=J(P/'build-02/build-comparison.json');b=(P/'build-02/pump_fees_candidate.so').read_bytes();o=(REPO/'evidence/dependencies/donation_relay/deployed.so').read_bytes();c=comparison['comparison'];assert H(b)==c['candidate_sha256']and H(o)==c['original_sha256']and len(b)==c['candidate_bytes']and len(o)==c['original_bytes']and b!=o and not c['full_byte_equality']
 assert comparison['strip_tool_sha256']==J(REPO/'repro/identity-audit/2026-10-25/compiler-v1461/v1461-build-01/build-comparison.json')['strip_tool_sha256']
@@ -34,7 +38,7 @@ alias=J(P/'alias-sysroot-comparison.json');assert not alias['raw_maps_equal'] an
 selected_legacy={n.removeprefix('rust/lib/rustlib/sbf-solana-solana/lib/'):r['sha256']for n,r in d['selected_files'].items()if n.startswith('rust/lib/rustlib/sbf-solana-solana/lib/')};assert selected_legacy==pre['alias_sysroot_files'] and len(selected_legacy)==25
 assert all(r['returncode']==0 for r in pre['commands'])
 probe=(P/'v147-generic.o').read_bytes();assert(struct.unpack_from('<H',probe,18)[0],struct.unpack_from('<I',probe,48)[0])==(263,0)
-root=str(Path(attempt['environment_overrides']['CARGO_HOME'])/'registry/src/index.crates.io-6f17d22bba15001f');used=set(re.findall(re.escape(root)+r'/([^/\s]+)/',log.decode()));deps=J(P/'compiled-dependency-checks.json');assert used=={p['package']for p in deps['packages']}and len(used)==deps['compiled_registry_roots']==144 and sum(p['verified_source_files']for p in deps['packages'])==deps['source_files']==3778
+root=str(Path(attempt['environment_overrides']['CARGO_HOME'])/'registry/src/index.crates.io-6f17d22bba15001f');used=set(re.findall(re.escape(root)+r'/([^/\s]+)/','\n'.join(rustc_lines)));deps=J(P/'compiled-dependency-checks.json');assert used=={p['package']for p in deps['packages']}and len(used)==deps['compiled_registry_roots']==144 and sum(p['verified_source_files']for p in deps['packages'])==deps['source_files']==3778
 all_cache=J(P/'isolated-cache-source-verification.json');cachemap={p['package']:p for p in all_cache['packages']};assert set(cachemap)==set(packages) and all_cache['source_files']==7075
 for p in deps['packages']:
  assert p['archive_sha256']==p['lock_checksum']==packages[p['package']]['checksum']

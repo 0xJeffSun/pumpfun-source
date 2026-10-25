@@ -49,3 +49,7 @@ repro/layered-passes/pass-23/relay-typed-borrow-proposal/baseline-source/src/dis
 repro/layered-passes/pass-23/verification/bridge-routing.patch -whitespace
 repro/pump_fees/sharing-authorize-main-v144/source/Cargo.toml -whitespace
 repro/layered-passes/pass-23/focused-preparation-review/helper.patch -whitespace
+
+# Preserve reviewed tooling and pass23 patch receipts exactly.
+repro/build-tooling/supported-sbpf-proposal/wrapper-routing.patch -whitespace
+repro/layered-passes/pass-23/reconciliation-transition/reviewed-plan/focused-preparation-review/helper.patch -whitespace

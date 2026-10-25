@@ -1,4 +1,5 @@
 {
+  "HARDENING.md": "750c7e385bf210554a521dcbbbfd5009e978fc4507970fe4d189075a3a796a3a",
   "REPORT.md": "07d91f49a0fe25ce58c34852b5f60fc11d2162a3dd1293c2be90cc35bc28db85",
   "alias-sysroot-comparison.json": "8e67a302e8590a8d59c8dce494e67e6ccd0ecc6df185c20e5c1e1b938924c88a",
   "build-01/build-attempt.json": "71845a0ef7f4fb4c41d8a8cf3b26b11c7d376253fa85ad14a9406e0b51f5f62e",
@@ -66,5 +67,5 @@
   "v147-llvm-gitlink.json": "9cb35c2a9ba7c67837c1627cc84df2ec13a0b4d3320c15a7cd1577c8f707f107",
   "v147-rust-ref.json": "e2e3c64edab172132f77ce89a0e8c190db1cd30936a096344f45893bd5b75f8a",
   "v147-rust-tag.json": "fb12fe88c74085a96ce51beeb4f42f42b773e1340289c2c8b1d89da9542dccdf",
-  "verify.py": "f2001c567f571d1f8272c5a4029e0d68f98dcd4ec6d5277f9aaf0c2d9fd97df1"
+  "verify.py": "ff2b9fb614d85710da47d019ff33b03fe0c21b22b9fbb08f3fbb91a007c07b15"
 }
