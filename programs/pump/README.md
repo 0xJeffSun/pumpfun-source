@@ -61,6 +61,13 @@ Full original-byte equality remains false; historical compiler/dependency identi
 and the security audit remain incomplete. Earlier checkpoint counts below describe
 their historical source snapshots.
 
+The [merged-source claim checkpoint](../../repro/pump/claim-token-incentives-8099/README.md)
+rebuilds this branch's bounded handler on upstream `8099031`. Two clean v1.44
+builds agree on SHA-256 `3e1bc69113cef484818a47cffc7d9f911fc4b4e1a99268338296a239d7691d64`.
+Its fresh signed replay matches 60/60 focused claims, 507/507 quote-control
+cases, and 56/56 native-curve cases. Other inherited suites and Surfpool
+runners have not been rerun on this candidate.
+
 The [claim-token-incentives checkpoint](../../repro/pump/claim-token-incentives/README.md)
 adds one bounded Rust handler to public source base `4ffe8bd`. This retained
 candidate predates the native-curve and serializer source merges and has not

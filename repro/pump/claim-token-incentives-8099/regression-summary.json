@@ -1,0 +1,16 @@
+{
+  "candidate_sha256": "3e1bc69113cef484818a47cffc7d9f911fc4b4e1a99268338296a239d7691d64",
+  "quote_control": {
+    "cases": 507,
+    "mismatches": 0,
+    "receipt": "quote-control-regression.json.gz",
+    "receipt_sha256": "e96c3a22efd9288ad96cc534b8cc3b1c08cd8180da2767d5e56635ffac3af5da"
+  },
+  "multi_hop_curve": {
+    "cases": 56,
+    "matches": 56,
+    "receipt": "multi-hop-regression.json",
+    "receipt_sha256": "c19b7e9c8f242d94e2fb6d14da10bd2141bbb1d95a86cf504fc9808536921952"
+  },
+  "scope": "Fresh signed offline replays on this merged candidate. Other inherited suites and Surfpool runners were not rerun."
+}
