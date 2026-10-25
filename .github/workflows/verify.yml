@@ -76,6 +76,7 @@ jobs:
               python repro/pump_fees/fresh-init-liveness/verify.py
               python repro/pump/mayhem-signer-boundary/mainnet-trade-cpi/verify.py
               python repro/pump/merged-prs-20261025/run_suite.py scripts/pump_set_mayhem_params_signer_boundary.py --output work/mayhem-direct-boundary.json
+              git fetch --no-tags --unshallow --filter=blob:none origin
               python scripts/verify_pump_source_path_remap.py
           - suite: pump-amm
             commands: |
