@@ -32,6 +32,10 @@ was broadcast and no real funds were used.
 Verify the saved source hashes, builds, signed replay and regressions with
 the project Python environment:
 
+CI's `verify_current_bindings.py pump` selects this branch candidate from
+`repro/status.json`; it retains the earlier serializer package as historical
+static evidence and executes the verifier below for the current source.
+
 ```sh
 <venv>/bin/python scripts/verify_pump_set_mayhem_params_8099.py
 ```
