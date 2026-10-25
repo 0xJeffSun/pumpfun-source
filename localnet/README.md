@@ -124,3 +124,7 @@ and fixture readback hashes are also retained in `evidence/`.
 ### Administrative sharing reset reconstruction checks
 
 [Administrative CTO draft and receipts](recovery/fees-admin-cto/README.md) cover 63 differential cases and 12 Surfpool comparisons (24 signed transactions) through the captured Pump caller. Pump performs its genuine PDA-signed CPI; transaction signers are test-owned keys. The Fees draft remains byte-unequal to the complete program.
+
+### Fee-share update reconstruction checks
+
+[Sharing-update draft and receipts](recovery/fees-sharing-update/README.md) recover both update handlers with 417 differential cases and 19 Surfpool comparisons (38 signed transactions), including old-shareholder payouts, Token2022 ATA creation and atomic rollback on invalid updates. The draft remains byte-unequal to the complete Fees program.
