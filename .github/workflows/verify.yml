@@ -266,7 +266,7 @@ jobs:
               print(json.dumps({'group':'pump-4','cases':report['case_count'],'suites':list(suites),'mismatches':[]}))
               PY
               python scripts/verify_current_bindings.py pump
-              python repro/pump/pr5-current-upstream-integration/verify_package.py
+              python repro/pump/pr5-517-integration/verify_package.py
           - suite: pump-amm
             commands: |
               python scripts/pump_amm_admin_differential.py --candidate repro/pump_amm/pool-serialization-thirty-seven/pump_amm_recovered.so --output work/pump-amm-admin.json

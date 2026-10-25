@@ -132,7 +132,7 @@ struct PreviousHop<'info> {
  bump: u8,
 }
 
-fn two_curve_fees(a:&MultiHopCurve,c:&BondingCurve,supply:u64)->Result<Fees>{
+fn two_curve_fees(a:&MultiHopCurveSwap,c:&BondingCurve,supply:u64)->Result<Fees>{
  use crate::trade_types::FeeTier;
  let info=a.fee_config.to_account_info();let data=info.try_borrow_data()?;
  require!(data.len()>=2512,PumpError::FeeConfigTooShort);
@@ -157,7 +157,7 @@ fn two_curve_fees(a:&MultiHopCurve,c:&BondingCurve,supply:u64)->Result<Fees>{
  Ok(selected)
 }
 
-fn two_curve_input<'info>(a:&MultiHopCurve<'info>,previous:Option<&PreviousHop<'info>>,mint:AccountInfo<'info>,to:AccountInfo<'info>,amount:u64,decimals:u8)->Result<()>{
+fn two_curve_input<'info>(a:&MultiHopCurveSwap<'info>,previous:Option<&PreviousHop<'info>>,mint:AccountInfo<'info>,to:AccountInfo<'info>,amount:u64,decimals:u8)->Result<()>{
  if amount==0{return Ok(())}
  if let Some(p)=previous{
   if p.output_vault.key()==to.key(){return Ok(())}
@@ -168,17 +168,19 @@ fn two_curve_input<'info>(a:&MultiHopCurve<'info>,previous:Option<&PreviousHop<'
  }
 }
 
-fn execute_two<'info>(ctx:Context<'_,'_,'info,'info,MultiHopCurve<'info>>,amount_in:u64,hop_fees:&[u8])->Result<CurveRunResult>{
+fn execute_two<'info>(ctx:Context<'_,'_,'info,'info,MultiHopCurveSwap<'info>>,amount_in:u64,hop_fees:&[u8])->Result<CurveRunResult>{
  let a=&ctx.accounts;let groups=ctx.remaining_accounts;
  require!(groups.len()==10,PumpError::ReconstructionBranchUnsupported);
- let sell=a.source.mint==groups[0].key();
+ let source_mint=token_mint(&a.source.to_account_info())?;
+ let destination_mint=token_mint(&a.destination.to_account_info())?;
+ let sell=source_mint==groups[0].key();
  let (root_mint,nested_mint)=if sell{(groups[5].key(),groups[0].key())}else{(groups[0].key(),groups[5].key())};
  const USDC:Pubkey=anchor_lang::solana_program::pubkey!("EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v");
  require!(root_mint!=nested_mint && root_mint!=Pubkey::default() && root_mint!=WSOL && root_mint!=USDC && root_mint!=token_interface::spl_token_2022::native_mint::ID && nested_mint!=WSOL,PumpError::ReconstructionBranchUnsupported);
  if sell{
-  require!(groups[1].key()==root_mint && groups[6].key()==WSOL && a.destination.mint==WSOL && hop_fees==[2,1],PumpError::ReconstructionBranchUnsupported);
+  require!(groups[1].key()==root_mint && groups[6].key()==WSOL && destination_mint==WSOL && hop_fees==[2,1],PumpError::ReconstructionBranchUnsupported);
  }else{
-  require!(a.source.mint==WSOL && groups[1].key()==WSOL && groups[6].key()==root_mint && a.destination.mint==nested_mint && hop_fees==[1,2],PumpError::ReconstructionBranchUnsupported);
+  require!(source_mint==WSOL && groups[1].key()==WSOL && groups[6].key()==root_mint && destination_mint==nested_mint && hop_fees==[1,2],PumpError::ReconstructionBranchUnsupported);
  }
  for info in [a.source.to_account_info(),a.destination.to_account_info()]{
   require!(info.owner==&anchor_spl::token::ID && info.data_len()==165,PumpError::ReconstructionBranchUnsupported);

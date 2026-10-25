@@ -19,7 +19,7 @@ PACKAGES = {
     "pump": "repro/pump/bonding-curve-serializer-fortyeight",
     "fees": "repro/pump_fees/solana-family-221-v144",
 }
-CURRENT_PUMP_CURVE = "repro/pump/pr5-current-upstream-integration"
+CURRENT_PUMP_CURVE = "repro/pump/pr5-517-integration"
 HISTORICAL_COPIES = {
     "work/pump-multi-hop-curve-recovery/differential.py": "repro/pump/native-curve-partial-fortyeight/harness/pump_multi_hop_curve_differential.py",
     "work/pump-multi-hop-curve-recovery/verify_saved.py": "repro/pump/native-curve-partial-fortyeight/isolated-partial-checkpoint/verify_saved.py",
@@ -121,6 +121,35 @@ def main():
         "pump": "repro/pump/tokenkeg-two-curve-fortyeight/candidate.so",
         "fees": "repro/pump_fees/initializer-inline-v144/pump_fees_candidate.so",
     }
+    if args.program == "pump" and (ROOT / CURRENT_PUMP_CURVE).is_dir():
+        # This PR is a branch-specific source composition. Keep the accepted
+        # upstream candidate and its source snapshot historical; bind the
+        # current checkout and the new ELF to this branch's clean builds.
+        curve = ROOT / CURRENT_PUMP_CURVE
+        build = json.loads((curve / "build-a-build-comparison.json").read_text())
+        new_source = build["source_sha256"]
+        groups = current_pump_groups(ROOT / current["pump"].rsplit("/", 1)[0])
+        old_source = groups["source"]
+        assert len(old_source) == 36 and len(new_source) == 37
+        assert set(new_source) - set(old_source) == {"programs/pump/src/multi_hop_curve_swap.rs"}
+        assert set(old_source) - set(new_source) == set()
+        assert {name for name in old_source if old_source[name] != new_source[name]} == {
+            "programs/pump/src/lib.rs", "programs/pump/src/multi_hop_curve.rs"}
+        groups["source"] = new_source
+        tracked = set(subprocess.check_output(
+            ["git", "-C", str(ROOT), "ls-files", "-z"]).decode().split("\0"))
+        count, historical = verify_maps(ROOT, groups, tracked)
+        assert len(historical) == 2
+        assert sha((curve / "candidate.so").read_bytes()) == build["comparison"]["candidate_sha256"]
+        verify_pump_body(ROOT, ROOT / PACKAGES["pump"])
+        subprocess.run([sys.executable, str(curve / "verify_package.py")], check=True)
+        print(json.dumps({"verified": True, "program": "pump",
+                          "branch_candidate_artifact": CURRENT_PUMP_CURVE + "/candidate.so",
+                          "upstream_status_artifact": artifact,
+                          "current_tracked_bindings": count,
+                          "historical_exact_copy_bindings": historical,
+                          "runtime_replayed_by_this_script": False}, indent=2))
+        return
     if artifact == current[args.program]:
         directory = (ROOT / artifact).parent
         if args.program == "pump":

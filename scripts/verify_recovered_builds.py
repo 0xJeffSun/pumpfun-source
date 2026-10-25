@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Check saved partial-build provenance against current sources, artifacts and captures."""
-import argparse,base64,gzip,hashlib,json,pathlib
+import argparse,base64,gzip,hashlib,json,pathlib,subprocess,sys
 from compare import compare
 ROOT=pathlib.Path(__file__).resolve().parents[1]
 sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
@@ -8,6 +8,13 @@ parser=argparse.ArgumentParser();parser.add_argument('--program',choices=['pump'
 for name,status in json.loads((ROOT/'repro/status.json').read_text()).items():
  if args.program and name!=args.program:continue
  if not status.get('candidate_artifact'):continue
+ if name=='pump' and (ROOT/'repro/pump/pr5-517-integration').is_dir():
+  # This PR retains upstream's accepted status artifact as historical input.
+  # Its changed current source and separately built candidate are bound by
+  # the branch package; do not attribute upstream's 9,237 cases to that ELF.
+  subprocess.run([sys.executable,str(ROOT/'repro/pump/pr5-517-integration/verify_package.py')],check=True)
+  print('pump: PR5 branch source/build/replay package verified separately from upstream status')
+  continue
  manifest=ROOT/status['comparison_report'];report=json.loads(manifest.read_text())
  for source,digest in report['source_sha256'].items():assert sha(ROOT/source)==digest,source
  candidate=ROOT/status['candidate_artifact'];original=ROOT/'evidence/original'/name/'deployed.so'

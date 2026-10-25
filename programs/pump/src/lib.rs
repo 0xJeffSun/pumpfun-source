@@ -62,10 +62,21 @@ declare_id!("6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P");
 pub mod pump_recovered {
     use super::*;
     pub fn multi_hop_curve_swap<'info>(ctx: Context<'_, '_, 'info, 'info, MultiHopCurveSwap<'info>>, amount_in: u64, hop_fees: Vec<u8>) -> Result<CurveRunResult> {
-        if ctx.remaining_accounts.len() == 5 && ctx.remaining_accounts[0].owner == &anchor_spl::token::ID {
+        let remaining = ctx.remaining_accounts;
+        let ordinary_single = remaining.len() == 5 &&
+            remaining[0].owner == &anchor_spl::token::ID;
+        let ordinary_two = remaining.len() == 10 &&
+            matches!(hop_fees.as_slice(), [1, 2] | [2, 1]) &&
+            ctx.accounts.source.owner == &anchor_spl::token::ID &&
+            ctx.accounts.destination.owner == &anchor_spl::token::ID &&
+            [0, 1, 5, 6].iter().all(|index|
+                remaining[*index].owner == &anchor_spl::token::ID);
+        if ordinary_single {
             let fee_data = ctx.accounts.fee_config.try_borrow_data()?;
             LegacyFeeConfig::try_deserialize(&mut &fee_data[..])?;
             drop(fee_data);
+            multi_hop_curve::execute(ctx, amount_in, hop_fees)
+        } else if ordinary_two {
             multi_hop_curve::execute(ctx, amount_in, hop_fees)
         } else {
             multi_hop_curve_swap::execute(ctx, amount_in, hop_fees)
