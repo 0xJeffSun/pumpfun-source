@@ -198,20 +198,12 @@ fn system_transfer<'info>(from: AccountInfo<'info>, to: AccountInfo<'info>, amou
     Ok(())
 }
 fn prepare_curve<'info>(a: &MultiHopCurve<'info>, h: &CurveHop<'info>) -> Result<()> {
-    let info = h.bonding_curve.to_account_info();
-    let c = &h.bonding_curve;
-    // Short-account decode/resize is an explicit remaining recovery boundary.
-    require!(info.data_len() >= 166,crate::ReconstructionError::ReconstructionBranchUnsupported);
-    let protected = if c.quote_mint == Pubkey::default() {
-        add(c.real_quote_reserves, add(c.creator_fee,c.protocol_fees)?)?
-    } else { 0 };
-    // Conditional substitution for original returned rent word M. Float equivalence OPEN.
-    let minimum = Rent::get()?.minimum_balance(info.data_len().max(166));
-    let available = info.lamports().saturating_sub(protected);
-    if minimum > available {
-        system_transfer(a.user.to_account_info(),info,minimum - available)?;
+    {
+        let info = h.bonding_curve.to_account_info();
+        // Existing reconstruction boundary: keep it before any growth.
+        require!(info.data_len() >= 166,crate::ReconstructionError::ReconstructionBranchUnsupported);
     }
-    Ok(())
+    crate::trade_types::prepare_bonding_curve(&h.bonding_curve, &a.system_program, &a.user)
 }
 fn move_lamports(from: &AccountInfo, to: &AccountInfo, amount: u64) -> Result<()> {
     if amount == 0 { return Ok(()); }

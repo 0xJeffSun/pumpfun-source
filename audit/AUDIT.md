@@ -4,7 +4,7 @@
 programs listed in `docs/SCOPE.md`. Partial executable handlers have been recovered; no complete program exists.
 
 The current published recovery covers 140 implemented handlers plus five partial
-Pump paths and 53,787 saved comparison receipts: [Pump48 error-metadata checkpoint](../repro/pump/final-error-metadata-fortyeight/README.md),
+Pump paths and 53,787 saved comparison receipts: [Pump48 decoder/preparation checkpoint](../repro/pump/curve-preparation-fortyeight/README.md),
 [AMM37 destination-rent checkpoint](../repro/pump_amm/destination-rent-v144/README.md),
 [Fees31 legacy-caller checkpoint](../repro/pump_fees/legacy-caller-v144/README.md),
 and [Mayhem24](../repro/mayhem/twentyfour/README.md). These bounded recovery results
@@ -367,3 +367,5 @@ The [current Fees and AMM applicability reviews](../repro/parallel-work/2026-10-
 
 
 The [nested-ancestry checkpoint](../repro/pump/nested-ancestry-fortyeight/README.md) adds sixteen bounded original/candidate comparisons while preserving the complete prior Pump and Surfpool corpus. Synthetic pre-existing ancestry and finite depth/Pool cases do not establish exhaustive account admission, lifecycle reachability or complete source security. The newly integrated Pump source requires its own current-source applicability review; the Fees/AMM review above does not cover it.
+
+The Pump decoder/preparation correction in [pass06](../repro/layered-passes/pass-06/README.md) postdates the frozen candidate-source reviews. Its exact source review, clean-build identity and unchanged regression evidence do not extend those audits into full security acceptance. The Relay owned-error build and uncompiled Fees proposals likewise retain separate source/build/runtime applicability. No new confirmed vulnerability finding or complete security assessment is asserted.

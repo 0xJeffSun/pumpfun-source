@@ -34,23 +34,133 @@ impl anchor_lang::AccountSerialize for BondingCurve {
         Ok(())
     }
 }
+// Source proposal only: original checked 0x9b148 and unchecked 0x9b430.
+// Account owner/lamports/borrow checks and field-name errors belong to Anchor.
 impl anchor_lang::AccountDeserialize for BondingCurve {
     fn try_deserialize(buf: &mut &[u8]) -> Result<Self> {
-        if buf.len() < Self::DISCRIMINATOR.len() {
-            return Err(anchor_lang::error::ErrorCode::AccountDiscriminatorNotFound.into());
-        }
-        let given_disc = &buf[..Self::DISCRIMINATOR.len()];
-        if Self::DISCRIMINATOR != given_disc {
-            return Err(anchor_lang::error!(anchor_lang::error::ErrorCode::AccountDiscriminatorMismatch).with_account_name("BondingCurve"));
+        if buf.len() < Self::DISCRIMINATOR.len()
+            || &buf[..Self::DISCRIMINATOR.len()] != Self::DISCRIMINATOR
+        {
+            return Err(anchor_lang::solana_program::program_error::ProgramError::InvalidAccountData.into());
         }
         Self::try_deserialize_unchecked(buf)
     }
+
     fn try_deserialize_unchecked(buf: &mut &[u8]) -> Result<Self> {
-        let mut data: &[u8] = &buf[Self::DISCRIMINATOR.len()..];
-        AnchorDeserialize::deserialize(&mut data)
-            .map_err(|_| anchor_lang::error::ErrorCode::AccountDidNotDeserialize.into())
+        if buf.len() < Self::DISCRIMINATOR.len() {
+            return Err(anchor_lang::solana_program::program_error::ProgramError::InvalidAccountData.into());
+        }
+        *buf = &buf[Self::DISCRIMINATOR.len()..];
+        decode_original_curve_payload(buf)
     }
 }
+
+fn historical_field<T: AnchorDeserialize>(buf: &mut &[u8]) -> Result<T> {
+    // Original maps Borsh I/O errors through Anchor's From<io::Error> path,
+    // not AccountDidNotDeserialize / a custom numeric error.
+    T::deserialize(buf).map_err(anchor_lang::error::Error::from)
+}
+
+fn decode_original_curve_payload(buf: &mut &[u8]) -> Result<BondingCurve> {
+    let historical_len = buf.len();
+    if historical_len < 41 {
+        return Err(anchor_lang::solana_program::program_error::ProgramError::InvalidAccountData.into());
+    }
+    let mut curve = BondingCurve {
+        virtual_token_reserves: historical_field(buf)?,
+        virtual_quote_reserves: historical_field(buf)?,
+        real_token_reserves: historical_field(buf)?,
+        real_quote_reserves: historical_field(buf)?,
+        token_total_supply: historical_field(buf)?,
+        complete: historical_field(buf)?,
+        creator: Pubkey::default(),
+        is_mayhem_mode: false,
+        is_cashback_coin: false,
+        quote_mint: Pubkey::default(),
+        creator_fee_bps: 0,
+        can_edit_creator_fee: false,
+        is_holder_reward: false,
+        creator_fee: 0,
+        protocol_fees: 0,
+        depth: 0,
+        initial_virtual_quote_reserves: 0,
+        post_complete_base_out: 0,
+        post_complete_quote_in: 0,
+    };
+    // These gates are layout-version boundaries, not per-field best efforts.
+    // Bytes short of the next complete version remain unconsumed.
+    if historical_len >= 73 { curve.creator = historical_field(buf)?; }
+    if historical_len >= 74 { curve.is_mayhem_mode = historical_field(buf)?; }
+    if historical_len >= 75 { curve.is_cashback_coin = historical_field(buf)?; }
+    if historical_len >= 107 { curve.quote_mint = historical_field(buf)?; }
+    if historical_len >= 116 {
+        curve.creator_fee_bps = historical_field(buf)?;
+        curve.can_edit_creator_fee = historical_field(buf)?;
+    }
+    if historical_len >= 117 { curve.is_holder_reward = historical_field(buf)?; }
+    if historical_len >= 133 {
+        curve.creator_fee = historical_field(buf)?;
+        curve.protocol_fees = historical_field(buf)?;
+    }
+    if historical_len >= 158 {
+        curve.depth = historical_field(buf)?;
+        curve.initial_virtual_quote_reserves = historical_field(buf)?;
+        curve.post_complete_base_out = historical_field(buf)?;
+        curve.post_complete_quote_in = historical_field(buf)?;
+    }
+    Ok(curve)
+}
+// Original shared preparation 0x3cd50 and rent funding 0x3d250.
+// The Account is already decoded; temporary AccountInfo clones do not keep a
+// data borrow alive across the System CPI or realloc. No state reload follows.
+pub fn prepare_bonding_curve<'info>(
+    curve: &Account<'info, BondingCurve>,
+    system_program: &Program<'info, System>,
+    payer: &Signer<'info>,
+) -> Result<()> {
+    let current_size = curve.to_account_info().data_len();
+    fund_bonding_curve_rent(curve, system_program, payer, current_size.max(166))?;
+    if current_size < 166 {
+        curve.to_account_info().realloc(166, false)?;
+    }
+    Ok(())
+}
+
+fn reserved_bonding_curve_fees(curve: &BondingCurve) -> Result<u64> {
+    curve.creator_fee.checked_add(curve.protocol_fees)
+        .ok_or_else(|| error!(crate::PumpError::Overflow))
+}
+
+fn fund_bonding_curve_rent<'info>(
+    curve: &Account<'info, BondingCurve>,
+    system_program: &Program<'info, System>,
+    payer: &Signer<'info>,
+    size: usize,
+) -> Result<()> {
+    let reserved = if curve.quote_mint == Pubkey::default() {
+        let fees = reserved_bonding_curve_fees(curve)?;
+        curve.real_quote_reserves.checked_add(fees)
+            .ok_or_else(|| error!(crate::PumpError::Overflow))?
+    } else {
+        0
+    };
+    let minimum = Rent::get()?.minimum_balance(size);
+    let available = curve.to_account_info().lamports().saturating_sub(reserved);
+    if minimum > available {
+        anchor_lang::system_program::transfer(
+            CpiContext::new(
+                system_program.to_account_info(),
+                anchor_lang::system_program::Transfer {
+                    from: payer.to_account_info(),
+                    to: curve.to_account_info(),
+                },
+            ),
+            minimum.saturating_sub(available),
+        )?;
+    }
+    Ok(())
+}
+
 #[event]
 #[derive(Clone)]
 pub struct TradeEvent {

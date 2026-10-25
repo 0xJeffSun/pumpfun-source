@@ -50,6 +50,7 @@ fn selected(config:&FeeConfig,cap:u128,stable:bool)->Fees{
 }
 pub fn sell(ctx:Context<SellV3>,amount:u64,min_sol_output:u64)->Result<()> {
     let a=&mut *ctx.accounts;
+    crate::trade_types::prepare_bonding_curve(&a.bonding_curve, &a.system_program, &a.user)?;
     let quote_decimals=check_quote(a)?;
     let is_sol=quote_decimals.is_none();
     require!(!a.bonding_curve.is_cashback_coin,PumpError::CashbackCoinNotSupported);
@@ -113,6 +114,7 @@ pub fn sell(ctx:Context<SellV3>,amount:u64,min_sol_output:u64)->Result<()> {
 
 pub fn buy(ctx:Context<SellV3>,amount:u64,max_sol_cost:u64)->Result<()> {
     let a=&mut *ctx.accounts;
+    crate::trade_types::prepare_bonding_curve(&a.bonding_curve, &a.system_program, &a.user)?;
     let quote_decimals=check_quote(a)?;
     let is_sol=quote_decimals.is_none();
     require!(!a.bonding_curve.is_cashback_coin,PumpError::CashbackCoinNotSupported);
@@ -182,6 +184,7 @@ pub fn buy(ctx:Context<SellV3>,amount:u64,max_sol_cost:u64)->Result<()> {
 
 pub fn buy_exact_quote(ctx:Context<SellV3>,spendable_quote_in:u64,min_tokens_out:u64,partial_fill:bool)->Result<()> {
     let a=&mut *ctx.accounts;
+    crate::trade_types::prepare_bonding_curve(&a.bonding_curve, &a.system_program, &a.user)?;
     let quote_decimals=check_quote(a)?;
     let is_sol=quote_decimals.is_none();
     require!(!a.bonding_curve.is_cashback_coin,PumpError::CashbackCoinNotSupported);

@@ -120,7 +120,7 @@ def main():
         subprocess.run([sys.executable, "-B", str((ROOT / artifact).parent / "verify.py"),
                         "--current-main", "--repo", str(ROOT)], check=True)
         return
-    if args.program == "pump" and artifact in ("repro/pump/nested-general-route-fortyeight/candidate.so", "repro/pump/final-error-metadata-fortyeight/candidate.so"):
+    if args.program == "pump" and artifact in ("repro/pump/nested-general-route-fortyeight/candidate.so", "repro/pump/final-error-metadata-fortyeight/candidate.so", "repro/pump/curve-preparation-fortyeight/candidate.so"):
         subprocess.run([sys.executable, "-B", str((ROOT / artifact).parent / "verify.py"),
                         "--current-main", "--repo", str(ROOT)], check=True)
         return
