@@ -12,3 +12,5 @@ repro/pump/metaplex-candidate-build-12-review/build12-source.patch -whitespace
 repro/identity-audit/2026-10-25/compiler-v1461/v1.46-build.sh -whitespace
 repro/identity-audit/2026-10-25/compiler-v1461/v1.46.1-build.sh -whitespace
 repro/pump/metaplex-utilize-positive-guard-source-recovery/source.patch -whitespace
+repro/pump/metaplex-candidate-build-13-review/expected-source.patch -whitespace
+repro/pump/metaplex-candidate-build-13-review/build13/source.patch -whitespace

@@ -63,9 +63,7 @@ platform-tools/...`) — none is a stock-rustup build; ELF machine 263, SBPFv1 (
 No in-binary rustc/LLVM producer string (stripped, no `.comment`).
 
 **Actionable version discrepancies:**
-- **mayhem: original links `hashbrown 0.15.4`, reconstruction resolves `0.17.1`.** 0.15 vs
-  0.16/0.17 differ in monomorphized codegen; pinning `hashbrown = "=0.15.4"` in mayhem is a
-  concrete fix that closes codegen drift. (pump/amm/fees embed no hashbrown path.)
+- **Mayhem hashbrown drift claim withdrawn.** The [host/target graph audit](../../../identity-audit/2026-10-25/mayhem-hashbrown/REPORT.md) finds positive hashbrown0.15.4 path witnesses in both original and accepted target binaries. Project0.17.1 belongs to the host proc-macro chain; the v1.52 target sysroot separately locks0.15.4. A direct project pin is not an established target-codegen repair, and multiple versions can coexist. Historical compiler/sysroot identity remains unresolved.
 - **v1.43 vs v1.44 is NOT resolvable by version forensics** (identical Rust 1.79/LLVM 18) —
   the v1.43 pin rests on the section-size sweep (v1.43 matched `.text` to ~99–100% for
   pump_amm/pump_fees), a codegen conclusion, not a version string. The repo is internally
@@ -118,14 +116,9 @@ source — ~333 KB of codec/handler logic must be decompiled first, category (a)
 1. **Recover pump `claim_token_incentives` + `admin_update_token_incentives`** — the SDK
    hard-fail handlers; logic decompiled (§3), pump_amm twins + the differential harnesses
    (`scripts/pump_{claim,admin}_token_incentives*_differential.py`) exist as oracles.
-2. ~~Pin mayhem `hashbrown = "=0.15.4"`~~ — **attempted, BLOCKED**: `indexmap 2.14.2`
-   (via `anchor-lang 1.0.0` → proc-macro-crate → toml_edit) requires `hashbrown ^0.17`, so a
-   lone pin fails resolution. Closing it needs the original's *whole* older dependency graph
-   (the lost `Cargo.lock`) — this is category-(c) provenance, not a one-line fix. The real
-   signal stands: the original's lockfile differs from the reconstruction's, and the mayhem
-   `.text` gap is partly this codegen drift.
-3. **Re-apply the v1.43 per-program build-recipe default** (reverted by a concurrent edit) — done.
-4. **Localnet `create_config`**: seed/clone the live `GlobalConfig` so SDK `createConfig` tests pass the admin gate.
+2. **Separate host and target dependency evidence.** The previously asserted hashbrown pin failure has no retained command/error/exit receipt in the bounded review-packet search. Adding an independent0.15 dependency would not automatically replace indexmap's0.17 requirement or the target sysroot dependency. Do not attribute the target size gap to this unproved drift.
+3. **Use measured research compiler selection.** Stock v1.43's header contradicts capture; the research wrapper chooses the strongest measured stock candidatev1.44 for the three older programs. Historical helper bytes remain preserved for owning package proofs. No unique historical recipe is established.
+4. **Localnet `create_config`**: seeding `GlobalConfig` prepares dependent flows; it does not establish a successful privileged initializer or satisfy its admin signature.
 
 ## 6. What remains fundamentally bounded (honest)
 - Whole-binary byte-identicality of pump_fees / pump_amm: **not reachable** without the lost

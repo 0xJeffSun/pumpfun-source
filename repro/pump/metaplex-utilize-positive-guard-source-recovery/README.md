@@ -17,3 +17,7 @@ python3 scripts/pump_build_token_dependency.py --dependency token_metadata \
 ```
 
 The flag is mutually exclusive with earlier recovery flags and valid only for Metaplex. This uses the same pinned Linux/amd64 image, public upstream commit, source-only build command and lock as candidate11/12. Host Rust1.69.0 and selected SBF platform-tools v1.37 / Rust1.68.0-dev remain separate phases. No compiler/profile/dependency/metadata/whitespace-padding/path flags are added. The captured ELF is read only after source compilation finishes for honest comparison; it is never mounted into the source build. No build, VM transaction, deployment or acceptance claim is made by this package. Only the measured full-payload comparison of the pinned experiment can decide whether to continue this hypothesis.
+
+## Measured result: rejected, no improvement
+
+The [single pinned build40190519595](https://github.com/lalalune/pumpfun-source/actions/runs/40190519595) compiled this source successfully. Its complete raw output is byte-for-byte identical to rejected candidate12, still differing from target at196,601 padded payload positions. The [portable result review](../metaplex-candidate-build-13-review/REPORT.md) binds the exact dispatched source, compiler, image and output and recomputes the full body/call/relocation/data analysis. The explicit positive `if` canonicalized to the same extra-jump layout. Candidate11 remains the accepted earlier comparison. The proposal text above records the pre-build hypothesis; this measured result supersedes its unbuilt status.
