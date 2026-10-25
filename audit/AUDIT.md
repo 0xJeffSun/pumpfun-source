@@ -3,9 +3,9 @@
 **Status: incomplete; not a security sign-off.** Scope is the four captured original
 programs listed in `docs/SCOPE.md`. Partial executable handlers have been recovered; no complete program exists.
 
-The current published recovery covers 140 implemented handlers plus four partial
-Pump paths and 53,659 saved comparison receipts: [Pump48](../repro/pump/quote-control-fortyeight/README.md),
-[AMM37 serializer](../repro/pump_amm/serialization-thirty-seven/README.md),
+The current published recovery covers 140 implemented handlers plus five partial
+Pump paths and 53,715 saved comparison receipts: [Pump48 partial curve](../repro/pump/native-curve-partial-fortyeight/README.md),
+[AMM37 Pool serializer](../repro/pump_amm/pool-serialization-thirty-seven/README.md),
 [Fees31 provenance checkpoint](../repro/pump_fees/readme-provenance-v144/README.md),
 and [Mayhem24](../repro/mayhem/twentyfour/README.md). These bounded recovery results
 do not extend the source review frozen at commit329fc44 into a complete audit of
@@ -307,3 +307,22 @@ The Pump [set_mayhem_virtual_params static package](../repro/pump/mayhem-virtual
 ## Quote-control recovery checkpoint
 
 [Pump48](../repro/pump/quote-control-fortyeight/README.md) adds the six quote-control handlers with 507 fresh signed comparisons. Its 800 failed executions preserve all nonpayer state and payer state except expected signature fees. All 8,654 earlier cases and 1,024 Surfpool comparisons were rerun against the new ELF. Root independently verified the package, current source bindings and saved signatures. These bounded results cover tested role restrictions, account growth, mint eligibility and event behavior; they do not establish a complete audit. The current sell_v2 transfer-fee gap and four partial paths remain unchanged.
+
+
+## AMM Pool serialization fidelity
+
+The [Pool serializer checkpoint](../repro/pump_amm/pool-serialization-thirty-seven/README.md) replaces two explicit error-string conversions with the original's observed direct I/O-error conversion. The complete 1,704-byte normalized Pool exit and all 24 direct callees now match; the earlier GlobalConfig match remains. All 25 existing suites / 17,462 comparisons pass freshly on the new ELF, and clean main and scratch builds are whole-file identical. This adds no handlers or unique test inputs and does not establish transitive data or original whole-file identity.
+
+
+## Partial native curve execution through AMM
+
+The [partial curve checkpoint](../repro/pump/native-curve-partial-fortyeight/README.md) adds one native/legacy curve per Pump CPI, using the captured AMM's genuine PDA signing. Its 56 comparisons include 50 that reach Pump, six AMM caller rejections and 11 successes; all 112 ordinary outer signatures were verified. All 9,161 previous Pump cases and 1,024 Surfpool comparisons pass on the new executable. Multiple curves, other endpoint flags, nested/non-native quotes, Token-2022, holder rewards and completion crossing remain unsupported. This is a fifth partial path, not an additional fully recovered handler. No complete security audit follows from these bounded results.
+
+
+## Fees call/data closure limits
+
+The [bounded update-admin closure](../repro/pump_fees/update-admin-call-closure-static/README.md) visits 59 body pairs: 58 normalized matches and 16 raw matches, with one unmatched FeeConfig account decoder wrapper. Sixteen bounded pointer/length spans match; indirect calls, depth limits and 133 data extents remain unresolved. Matching instruction bodies also reference different compiler/source-location records. [Official Linux/Darwin sysroot evidence](../repro/pump_fees/linux-v144-sysroot-provenance/PUBLICATION.md) explains one allocator-filename difference without rewriting it. These are source-fidelity observations, not new runtime coverage, a proved vulnerability or a completed transitive audit.
+
+The [cached public Pubkey source attribution](../repro/pump_fees/pubkey-source-coordinate-attribution/README.md) identifies `solana-pubkey` 2.2.1 as a concrete candidate: both observed original source coordinates match, and four relevant source blocks equal the current 2.4.0 blocks. The surrounding source changes explain the shifted coordinates. This does not uniquely identify the historical version, dependency graph or build recipe, and no dependency change or new runtime claim is made.
+
+The [decoder-contract review](../repro/pump_fees/decoder-contract-static/README.md) resolves the apparent discriminator-slice discrepancy: the three original body thresholds equal the candidate account thresholds after adding eight bytes, and both observed original callers discard their local cursors after decoding. Internal helper layout, allocation branches and error formatting still differ. This evidence does not justify a behavioral correction or prove full equivalence.
