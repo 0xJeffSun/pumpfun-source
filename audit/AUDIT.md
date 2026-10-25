@@ -4,9 +4,9 @@
 programs listed in `docs/SCOPE.md`. Partial executable handlers have been recovered; no complete program exists.
 
 The current published recovery covers 140 implemented handlers plus five partial
-Pump paths and 53,735 saved comparison receipts: [Pump48 two-curve checkpoint](../repro/pump/tokenkeg-two-curve-fortyeight/README.md),
+Pump paths and 53,755 saved comparison receipts: [Pump48 two-curve checkpoint](../repro/pump/tokenkeg-two-curve-fortyeight/README.md),
 [AMM37 event-borrow/static-initializer checkpoint](../repro/pump_amm/update-event-borrow-v144/README.md),
-[Fees31 donation-context checkpoint](../repro/pump_fees/donation-event-account-v144/README.md),
+[Fees31 donation-business checkpoint](../repro/pump_fees/donation-business-v144/README.md),
 and [Mayhem24](../repro/mayhem/twentyfour/README.md). These bounded recovery results
 do not extend the source review frozen at commit329fc44 into a complete audit of
 the later candidates. All four original whole-file comparisons still differ.
@@ -95,8 +95,8 @@ confirmed vulnerability without a reachable configuration path.
 
 ### Executing recovered handlers
 
-Pump Fees now has 31 independently compiled instruction bodies, with 17,441
-original-versus-candidate SBF comparison receipts, including 69 repeated-input checks. These cover two query handlers, four authority setters,
+Pump Fees now has 31 independently compiled instruction bodies, with 17,461
+original-versus-candidate SBF comparison receipts, including 69 baseline repeated-input checks and eight focused repeats. These cover two query handlers, four authority setters,
 global initialization against the historical 740-byte Pump Global layout, and
 three configuration setters, permissionless resize, and two deprecated rejection
 dispatches, two tier upserts and FeeConfig administrator transfer, two donation handlers and three social-fee handlers and referral withdrawal, four buyback handlers, sharing creation, administrative sharing reset, both sharing updates and FeeConfig initialization. All31 bodies have bounded implementations; full source/context equivalence remains unproven. Selected compiler and dependency versions
@@ -332,3 +332,5 @@ The [bounded update-admin closure](../repro/pump_fees/update-admin-call-closure-
 The [cached public Pubkey source attribution](../repro/pump_fees/pubkey-source-coordinate-attribution/README.md) identifies `solana-pubkey` 2.2.1 as a concrete candidate: both observed original source coordinates match, and four relevant source blocks equal the current 2.4.0 blocks. The surrounding source changes explain the shifted coordinates. This does not uniquely identify the historical version, dependency graph or build recipe, and no dependency change or new runtime claim is made.
 
 The [decoder-contract review](../repro/pump_fees/decoder-contract-static/README.md) resolves the apparent discriminator-slice discrepancy: the three original body thresholds equal the candidate account thresholds after adding eight bytes, and both observed original callers discard their local cursors after decoding. Internal helper layout, allocation branches and error formatting still differ. This evidence does not justify a behavioral correction or prove full equivalence.
+
+The donation-business checkpoint adds a grounded curve branch and diagnostic corrections, with20 focused comparisons (eight repeated inputs,twelve new typed combinations) and the unchanged17,441-case baseline. These are reconstruction checks, not a completed security review. The new executable requires current-source audit applicability review; historical audit packages retain their original scope.

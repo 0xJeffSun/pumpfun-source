@@ -17,10 +17,10 @@ python3 scripts/test_tooling.py
 A partial Rust fee-tier selector now matches the original instruction sequence except
 for unresolved relocations with platform-tools v1.43, and passes 1,215 local
 differential cases. Recovered quote-mint routing additionally passes 9,428 original-program
-queries, but its compiled instructions still differ. All 31 Fees instruction bodies pass 17,441 SBF comparison receipts; forty-eight recovered Pump
+queries, but its compiled instructions still differ. All 31 Fees instruction bodies pass 17,461 SBF comparison receipts; forty-eight recovered Pump
 handlers plus five partial creation/trading paths pass 9,237. Thirty-seven PumpSwap
 handlers pass 17,462 comparisons, and twenty-four Mayhem handlers pass 9,595. These
-53,735 saved comparisons cover 140 implemented handlers and five partial paths, not the
+53,755 saved comparisons cover 140 implemented handlers and five partial paths, not the
 complete programs. The Fees total includes 69 repeated-input checks with stronger log or signature assertions. Two Fees handlers are deprecated dispatches that always reject.
 The current [Pump48 two-curve checkpoint](repro/pump/tokenkeg-two-curve-fortyeight/README.md) adds the bounded ordinary-token routes SOL→A→B and B→A→SOL while retaining the prior single-curve branch. Its 20 new comparisons include 18 calls reaching Pump and 16 successes; broader routing remains partial. The complete 1,840-byte BondingCurve serializer and all 25 direct calls still match under the documented normalization. The same executable passes 1,024 additional Surfpool comparisons with 2,048 signed transactions.
 The current Pump `sell_v2` has a confirmed quote transfer-fee minimum-output and event mismatch; its saved passes do not cover that boundary.
@@ -35,7 +35,7 @@ favors platform-tools v1.44 among the tested Fees builds: two complete runtime
 helper bodies match the capture exactly. The current Fees candidate uses that
 compiler. The [previous retained Fees build](repro/pump_fees/all-thirtyone-v144/README.md)
 also passed 112 independent Surfpool comparisons with 224 signed local transactions.
-The current [Fees donation-context checkpoint](repro/pump_fees/donation-event-account-v144/README.md) corrects event-authority ownership to AccountInfo. Its complete 8,984-byte parser and 928-byte wrapper now match normalized original bodies; the handler still lacks original log/reserve branches. Existing codec, initializer, social and formatter checks remain supported, with all 17,441 comparisons and ten donation steps passing. Compilation uses v1.44 and the retained SDK strips with v1.52; historical source-line values, recipe and whole-ELF identity remain unresolved.
+The current [Fees donation-business checkpoint](repro/pump_fees/donation-business-v144/README.md) restores the reserve-dependent curve branch, early logs and evidenced diagnostic ordering. Its clean main ELF and symbols match the tested scratch build. All 17,441 existing comparisons plus 20 focused comparisons pass; the focused set contains eight repeated inputs and twelve new typed combinations. Ten donation sequence steps remain separate. The complete parser and wrapper retain normalized matches, while the full handler and whole original ELF still differ. Compilation uses v1.44 and the retained SDK strips with v1.52; historical source coordinates and the original recipe remain unresolved.
 
 [Recovery status](docs/RECOVERY.md) separates observed evidence from unresolved work.
 The [completion and remaining-work ledger](docs/COMPLETION.md) enumerates all 150 instruction dispositions: 140 bounded implementations (93.3%), five partial and five unrecovered. Whole-binary completion remains 0/4; this is not a 93.3% overall completion estimate.

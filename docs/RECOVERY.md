@@ -80,7 +80,7 @@ builds the same sixteen-handler Fees source and lockfile with v1.43, v1.44, v1.4
 and v1.46. The complete captured `core::fmt::write` and `__multi3` bodies match
 v1.44 exactly; those representative bodies differ in the other tested releases.
 This makes v1.44 the preferred tested stock candidate for Fees, without excluding
-untested v1.46.1, custom sysroots or different build settings. The current
+untested v1.46.1, custom sysroots or different build settings. The historical
 [thirty-one-body Fees serializer checkpoint](../repro/pump_fees/fee-config-serialization-v144/README.md)
 compiles with v1.44 and passes 17,441 saved comparison receipts, including 69
 repeated-input checks. Its full binary still differs from the capture.
@@ -349,4 +349,13 @@ The [d27be7e9 checkpoint](../repro/pump_amm/update-event-borrow-v144/README.md) 
 
 All 17,462 unchanged comparisons and 35,418 signature checks pass, with 191 existing scalar and 78 recipient diagnostics. No new cases, handlers or initializer-success evidence are added. Creation matches and both account serializers remain intact; whole-original equality is false. The [prebuild residual study](../repro/pump_amm/shared-method-residuals/REPORT.md) preserves the source basis and independent event-copy review.
 
-The [context studies](../repro/parallel-work/2026-10-25/context-closure-results/README.md), [independent review](../repro/ci/context-closure-review/README.md) and [Pump source hypotheses](../repro/parallel-work/2026-10-25/source-hypothesis-results/README.md) now make deeper creation and general ordinary routing concrete for subsequent compilation and testing. Their integrity checks do not establish runtime or security acceptance. The [Fees donation business proposal](../repro/pump_fees/donation-business-source-proposal/README.md) similarly remains separate from accepted Fees8f89, whose [exhaustive function inventory](../repro/pump_fees/function-inventory-8f89/REPORT.md) preserves all original/candidate windows and residuals.
+The [context studies](../repro/parallel-work/2026-10-25/context-closure-results/README.md), [independent review](../repro/ci/context-closure-review/README.md) and [Pump source hypotheses](../repro/parallel-work/2026-10-25/source-hypothesis-results/README.md) now make deeper creation and general ordinary routing concrete for subsequent compilation and testing. Their integrity checks do not establish runtime or security acceptance. The [Fees donation business proposal](../repro/pump_fees/donation-business-source-proposal/README.md) was separate from the then-accepted Fees8f89, whose [exhaustive function inventory](../repro/pump_fees/function-inventory-8f89/REPORT.md) preserves all original/candidate windows and residuals.
+
+
+## Donation business reconstruction and current parallel work
+
+The [Fees donation-business checkpoint](../repro/pump_fees/donation-business-v144/README.md) restores both early logs, reserve-dependent Curve/Pool selection, raw quote extraction, sharing authorization and original error metadata/compared-key order. One corrected scratch build and one clean main build produce identical complete ELF and symbols: `fc1088f3e25738267a49aaa2b5189f1ab77c487f1023d45fede11e14e5a086b2`, 770,744 bytes. The first scratch build was superseded before runtime; its provenance remains preserved.
+
+All17,441 existing comparisons,20 focused comparisons and ten separate donation sequence steps pass. The focused20 has eight repeated inputs and twelve new typed combinations,40 transactions and80 ordinary signatures; eleven saved diagnostic rows also pass. Main inherits those receipts through complete binary identity, with all26 main source inputs bound. The four-core total is53,755 comparison receipts,140/150 bounded handlers and0/4 original byte-identical binaries. The complete donation handler remains unequal, and its exhaustive function inventory preserves every residual row.
+
+The [integrated relay/Pump proposals](../repro/parallel-work/2026-10-25/integration-hypothesis-results/README.md) remain separate static source hypotheses. Eight additional CLI assignments address their concrete application gaps; they do not establish accepted implementations. [Hosted run40171437120](https://github.com/lalalune/pumpfun-source/actions/runs/40171437120) passed all twelve jobs atf0c80ca before this Fees promotion.

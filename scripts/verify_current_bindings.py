@@ -116,6 +116,10 @@ def main():
     status = json.loads((ROOT / "repro/status.json").read_text())
     key = "pump" if args.program == "pump" else "pump_fees"
     artifact = status[key]["candidate_artifact"]
+    if args.program == "fees" and artifact == "repro/pump_fees/donation-business-v144/pump_fees_candidate.so":
+        subprocess.run([sys.executable, "-B", str((ROOT / artifact).parent / "verify.py"),
+                        "--current-main", "--repo", str(ROOT)], check=True)
+        return
     current = {
         "pump": "repro/pump/tokenkeg-two-curve-fortyeight/candidate.so",
         "fees": "repro/pump_fees/donation-event-account-v144/pump_fees_candidate.so",
