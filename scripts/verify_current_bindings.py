@@ -125,6 +125,9 @@ def main():
     if args.program == "pump" and artifact == "repro/pump/buy-mode-order-main-fortyeight/main/candidate.so":
         subprocess.run([sys.executable, "-B", str(ROOT / "repro/pump/buy-mode-order-main-fortyeight/verify.py"), "--current-main", str(ROOT)], check=True)
         return
+    if args.program == "fees" and artifact == "repro/pump_fees/graduation-zero-main-v144/main/candidate.so":
+        subprocess.run([sys.executable, "-B", str(ROOT / "repro/pump_fees/graduation-zero-main-v144/verify.py"), "--current-main", str(ROOT)], check=True)
+        return
     if args.program == "fees" and artifact == "repro/pump_fees/sharing-owned-error-main-v144/main/candidate.so":
         subprocess.run([sys.executable, "-B", str(ROOT / "repro/pump_fees/sharing-owned-error-main-v144/verify.py"), "--current-main", str(ROOT)], check=True)
         return

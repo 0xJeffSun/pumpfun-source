@@ -437,10 +437,18 @@ origin and successful-path owned-error allocation at that one site. The fresh
 candidate branches on the pool marker before calling the complete converter,
 which matches the original under call/address and relocation normalization.
 
-This one-line correction does not resolve the original raw four-word graduation
-decision or later optional pool/program/event ordering. Whole sharing-handler,
+That one-line correction did not resolve the raw four-word graduation decision.
+The later graduation checkpoint below resolves its reserve predicate; repeated
+optional pool/program/event ordering remains unresolved. Whole sharing-handler,
 parser, cleanup and recursive data equivalence remain open. The unchanged
 17,461 comparisons and separate ten-step sequence are preservation evidence;
 no case was added. Raw diagnostic differences remain in the checkpoint.
 The [prior withdrawal checkpoint](../../repro/pump_fees/withdraw-owned-error-v144/README.md)
 remains immutable, including its missing-token-program coverage limitation.
+
+
+### Graduation predicate checkpoint
+
+The `graduation-zero-v144` checkpoint changes only sharing creation's graduation predicate to require all four decoded reserves to be zero, matching the original full parser-to-application field trace. The accepted first missing-pool enum conversion remains. The original repeated optional pool/program/event ordering remains unresolved; this checkpoint does not change it.
+
+The pinned v1.44 build and v1.52 strip use the same 26 source inputs apart from this predicate. See `repro/pump_fees/graduation-zero-v144/` for complete original/current function, call and data inventory, source bindings, unchanged finite runtime receipts and retained diagnostics. Main identity, when accepted, is recorded separately in `repro/pump_fees/graduation-zero-main-v144/`. These observations do not establish full original executable or application identity.

@@ -15,9 +15,9 @@ pub struct GlobalVolumeAccumulator {
 #[derive(Accounts)]
 pub struct SyncUserVolumeAccumulator<'info>{
     /// CHECK: PDA seed only, no signature required.
-    pub user:UncheckedAccount<'info>,
+    pub user:AccountInfo<'info>,
     #[account(seeds=[b"global_volume_accumulator"],bump)]
-    pub global_volume_accumulator:Box<Account<'info,GlobalVolumeAccumulator>>,
+    pub global_volume_accumulator:Account<'info,GlobalVolumeAccumulator>,
     #[account(mut,seeds=[b"user_volume_accumulator",user.key().as_ref()],bump)]
     pub user_volume_accumulator:Account<'info,UserVolumeAccumulator>,
 }
@@ -35,6 +35,8 @@ pub fn sync(ctx:Context<SyncUserVolumeAccumulator>)->Result<()> {
     if before!=after {
         let event=SyncUserVolumeAccumulatorEvent{user:ctx.accounts.user.key(),total_claimed_tokens_before:before,total_claimed_tokens_after:after,timestamp};
         emit!(event.clone());emit_cpi!(event);
+    }else{
+        msg!("No changes in accumulator for user={}",ctx.accounts.user.key());
     }
     Ok(())
 }

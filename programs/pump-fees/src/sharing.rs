@@ -10,7 +10,10 @@ const AMM: Pubkey = crate::donation::AMM;
 #[derive(Clone)]pub struct Amm;impl Id for Amm{fn id()->Pubkey{AMM}}
  pub fn create_sharing(ctx:Context<CreateFeeSharingConfig>)->Result<()> {
   if ctx.accounts.sharing_config.version!=0{return Ok(());}
-  let graduated=ctx.accounts.bonding_curve.real_token_reserves==0;
+  let graduated=ctx.accounts.bonding_curve.virtual_token_reserves==0
+   && ctx.accounts.bonding_curve.virtual_sol_reserves==0
+   && ctx.accounts.bonding_curve.real_token_reserves==0
+   && ctx.accounts.bonding_curve.real_sol_reserves==0;
   let creator=if graduated {
    let pool=ctx.accounts.pool.as_ref().ok_or(FeeError::AmmAccountsRequiredForGraduatedCoin)?;
    require!(ctx.accounts.pump_amm_program.is_some() && ctx.accounts.pump_amm_event_authority.is_some(),FeeError::AmmAccountsRequiredForGraduatedCoin);

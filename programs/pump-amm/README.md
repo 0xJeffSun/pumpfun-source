@@ -243,3 +243,24 @@ ATA parser constraints may already exclude this error for admitted Claim inputs.
 The complete inventory remains at 483 normalized original matches and 302
 unmatched windows. The whole handler, recursive call/data closure and original
 ELF identity remain unresolved.
+
+
+## Sync account ownership and no-change log checkpoint
+
+The [Sync context checkpoint](../../repro/pump_amm/sync-context-v144/README.md)
+restores the owned user AccountInfo and inline global accumulator Account. The
+[no-change log checkpoint](../../repro/pump_amm/sync-nochange-log-v144/README.md)
+then restores the original formatted user message when Sync makes no change.
+Both independent scratch proofs and the cumulative main build are retained.
+The main executable and symbol ELF exactly equal the final tested scratch;
+executable SHA256 is
+`c96ed810bccdcc741ab811c846a2ad76bd50163c4f635ef3a61db6562114d69c`.
+
+All 25 unchanged suites passed 17,462 comparisons and 35,418 saved signatures.
+All 113 existing no-change message cases now match exactly; no new fixture or
+probe was added. Claim source is unchanged, but the two added lines move its
+SelfTransferNotAllowed diagnostic line from 147 to 149. That exact emitted
+instruction difference remains explicit. Sync parser and wrapper match normalized
+original bodies; its handler and recursive data/call closure remain unresolved.
+The full inventory has 485 normalized original matches and 300 unmatched windows;
+whole original ELF identity is not established.

@@ -443,3 +443,7 @@ Three Pump creator paths use the already-recovered full BondingCurve account typ
 ## Layered pass17: caller admission and owned errors
 
 [Pass17](../repro/layered-passes/pass-17/README.md) restores the source-supported AMM Claim predicate, Fees first missing-pool conversion and Relay3003 construction/drop order. Original/current full ledgers, unchanged receipts, main identities and all stated limits are retained.
+
+## Layered pass18: Sync, graduation and discriminator ownership
+
+[Pass18](../repro/layered-passes/pass-18/README.md) preserves separate AMM context and logging checkpoints, then proves their cumulative main identity. Fees follows the original four-reserve zero predicate. Relay restores owned3001 without rewriting3002. The remaining-work report and full byte/function ledgers retain all scope limits.
