@@ -53,5 +53,5 @@ for p in tracked:
 result={'ref':REF,'scope':'Read-only audit of current tracked source/IDL/status/completion and ELF bytes; no VM execution.','handler_rows':rows,'candidate_drift':drift,'binary_measurements':measurements,'explicit_source_boundaries':fences}
 (OUT/'audit.json').write_text(json.dumps(result,indent=2)+'\n')
 with (OUT/'handlers.csv').open('w')as f:
- w=csv.DictWriter(f,fieldnames=list(rows[0]));w.writeheader();w.writerows(rows)
+ w=csv.DictWriter(f,fieldnames=list(rows[0]),lineterminator='\n');w.writeheader();w.writerows(rows)
 print(json.dumps({'ref':REF,'handlers':len(rows),'drift':drift,'measurements':{k:{n:v.get(n) for n in ['candidate_path','candidate_sha256','build_selected_toolchain','text_byte_delta','text_sha_equal','candidate_missing_from_git_tree']}for k,v in measurements.items()},'boundary_rows':len(fences)},indent=2))
