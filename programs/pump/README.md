@@ -1,13 +1,15 @@
 # Partial Pump reconstruction
 
-The Anchor 0.31.1 source implements eighteen recovered handlers:
+The Anchor 0.31.1 source implements twenty-five recovered handlers:
 `toggle_create_v2`, `toggle_mayhem_mode`, `toggle_cashback_enabled`, and
 `set_max_curve_depth`, `set_virtual_quote_reserves`, `update_buyback_config`,
 `update_creator_fee_config`, `update_holder_reward_config`, `add_quote_mint`, and
 `remove_quote_mint`, `update_global_authority`, `set_reserved_fee_recipients`,
 `init_user_volume_accumulator`, `close_user_volume_accumulator`,
 `collect_creator_fee`, `distribute_creator_fees`, `distribute_creator_fees_v2`, and
-`get_minimum_distributable_fee`. It also implements **partial SOL and USDC-quote `sell_v3` and `buy_v3` paths**.
+`get_minimum_distributable_fee`, `collect_creator_fee_v2`, `extend_account`,
+`sync_user_volume_accumulator`, `sweep_creator_fee`, `sweep_protocol_fee`,
+`migrate_bonding_curve_creator` and `admin_cto`. It also implements **partial SOL and USDC-quote `sell_v3` and `buy_v3` paths**.
 It is incomplete and is not a deployable replacement.
 
 The trade paths handle constant-product reserve changes, fee tier selection,
@@ -87,13 +89,33 @@ errors and the observed event/return behavior. The query emits its event as well
 as returning it. V2 distribution optionally creates missing recipient ATAs through
 the captured associated-token program. All fixture signatures are verified.
 
-The current integrated build uses platform-tools v1.44 (Rust 1.79 family), Anchor
+The creator-eighteen integrated build uses platform-tools v1.44 (Rust 1.79 family), Anchor
 0.31.1 and the committed lockfile. Compatibility pins permit that compiler to
 build current recovered source; they are not asserted historical dependency
 versions. Offline reproduction requires the corresponding populated Cargo cache.
-The integrated candidate passes all 1,924 maintained differential cases and
+The creator-eighteen candidate passes all 1,924 maintained differential cases and
 50 Surfpool comparisons using 100 signed transactions. Run all maintained suites
 with `scripts/pump_validate_all.py`. The frozen build,
 whole-file mismatch and signed local transaction receipts are indexed in
 `repro/pump/creator-eighteen/`. See
 [the recovery review](../../audit/pump/creator-fees-recovery.md) for limits.
+
+
+The next creator-twentyfive checkpoint adds token collection, account extension,
+volume synchronization, fee sweeps, creator migration and administrative creator
+changes. Its distribution V2 now explicitly checks recipient ATA addresses,
+matching the original rejection of an existing same-mint ATA belonging to another
+wallet. The regression creates that alternate ATA through the real captured ATA
+program using a normal signature. It exposed a reconstruction defect; it did not
+establish a defect in the original program.
+
+Fee sweeps preserve native/token quote distinctions, rent top-ups and normal versus
+Mayhem recipient selection. Creator migration preserves legacy curve boundaries,
+holder immutability and the outstanding-creator-fee guard. Administrative creator
+changes execute the captured Fees and AMM CPIs, including outgoing wallet payouts
+and holder conversion. Volume synchronization clears claimed incentive fields only
+in the observed pre-campaign branch. This does not recover incentive administration
+or claim handlers. The combined v1.44 candidate passes 3,741 differential cases and 176 Surfpool
+comparisons using 352 signed transactions. Build and validation evidence is under
+`repro/pump/creator-twentyfive/`; the indexed status identifies the published build.
+Full byte equality remains false.

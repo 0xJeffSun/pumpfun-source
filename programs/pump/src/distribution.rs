@@ -97,6 +97,8 @@ pub fn execute_v2<'info>(ctx:Context<'_, '_, '_, 'info,DistributeCreatorFeesV2<'
    if eligible && amount>0{anchor_lang::system_program::transfer(CpiContext::new_with_signer(a.system_program.to_account_info(),anchor_lang::system_program::Transfer{from:a.creator_vault.to_account_info(),to:recipient.clone()},&[seeds]),amount)?;}
   }else{
    let ata=&ctx.remaining_accounts[count+i];
+   let expected=anchor_spl::associated_token::get_associated_token_address_with_program_id(&recipient.key(),&a.quote_mint.key(),&a.quote_token_program.key());
+   require_keys_eq!(ata.key(),expected,PumpError::ShareholdersAndRemainingAccountsMismatch);
    if ata.data_is_empty(){
     require!(initialize_ata,PumpError::UnableToDistributeCreatorFeesToUninitializedAccount);
     anchor_spl::associated_token::create(CpiContext::new(a.associated_token_program.to_account_info(),anchor_spl::associated_token::Create{payer:a.payer.to_account_info(),associated_token:ata.clone(),authority:recipient.clone(),mint:a.quote_mint.to_account_info(),system_program:a.system_program.to_account_info(),token_program:a.quote_token_program.to_account_info()}))?;

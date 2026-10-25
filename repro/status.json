@@ -5,7 +5,7 @@
     "compiler": "unresolved",
     "dependencies": "unresolved",
     "build_flags": "unresolved",
-    "candidate_artifact": "repro/pump/creator-eighteen/candidate.so",
+    "candidate_artifact": "repro/pump/creator-twentyfive/candidate.so",
     "full_byte_equality": false,
     "comparison_status": "DIFFERS_PARTIAL_IMPLEMENTATION",
     "implemented_handlers": [
@@ -26,13 +26,20 @@
       "collect_creator_fee",
       "distribute_creator_fees",
       "distribute_creator_fees_v2",
-      "get_minimum_distributable_fee"
+      "get_minimum_distributable_fee",
+      "collect_creator_fee_v2",
+      "extend_account",
+      "sync_user_volume_accumulator",
+      "sweep_creator_fee",
+      "sweep_protocol_fee",
+      "migrate_bonding_curve_creator",
+      "admin_cto"
     ],
-    "comparison_report": "repro/pump/creator-eighteen/build-comparison.json",
-    "build_log": "repro/pump/creator-eighteen/build.log.gz",
-    "validated_cases": 1924,
+    "comparison_report": "repro/pump/creator-twentyfive/build-comparison.json",
+    "build_log": "repro/pump/creator-twentyfive/build.log.gz",
+    "validated_cases": 3741,
     "validation_reports": [
-      "repro/pump/creator-eighteen/all-differential.json.gz"
+      "repro/pump/creator-twentyfive/all-differential.json.gz"
     ],
     "partially_implemented_handlers": {
       "sell_v3": "SOL and USDC quote branches, Mayhem/holder fields and cashback rejection. Other quote routes and exhaustive extension/account validation remain incomplete; final event suffix uninterpreted.",
@@ -46,12 +53,18 @@
     ],
     "compiler_family_evidence": "repro/pump_fees/compiler-family/HEADER-AND-BUILD-REPORT.md",
     "signed_sequence_reports": [
-      "repro/pump/creator-eighteen/surfpool/collect/pump-collect-transactions.json.gz",
-      "repro/pump/creator-eighteen/surfpool/distribution/pump-distribution-transactions.json.gz",
-      "repro/pump/creator-eighteen/surfpool/minimum/pump-minimum-transactions.json.gz"
+      "repro/pump/creator-twentyfive/surfpool/admin_cto/pump-admin-cto-transactions.json.gz",
+      "repro/pump/creator-twentyfive/surfpool/collect/pump-collect-transactions.json.gz",
+      "repro/pump/creator-twentyfive/surfpool/collect_v2/pump-collect-v2-transactions.json.gz",
+      "repro/pump/creator-twentyfive/surfpool/creator_migration/pump-creator-migration-transactions.json.gz",
+      "repro/pump/creator-twentyfive/surfpool/distribution/pump-distribution-transactions.json.gz",
+      "repro/pump/creator-twentyfive/surfpool/extend/pump-extend-transactions.json.gz",
+      "repro/pump/creator-twentyfive/surfpool/minimum/pump-minimum-transactions.json.gz",
+      "repro/pump/creator-twentyfive/surfpool/sweep/pump-sweep-transactions.json.gz",
+      "repro/pump/creator-twentyfive/surfpool/volume_sync/pump-volume-sync-transactions.json.gz"
     ],
-    "surfpool_comparisons": 50,
-    "surfpool_signed_transactions": 100
+    "surfpool_comparisons": 176,
+    "surfpool_signed_transactions": 352
   },
   "pump_amm": {
     "source_reconstruction": "partial_handlers_compiled",

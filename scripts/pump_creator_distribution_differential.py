@@ -34,6 +34,16 @@ def run(c,binary=None):
   vm.set_account(key,Account(mutation.get('lamports',a.lamports if a else 0),bytes(data),Pubkey.from_string(mutation.get('owner',str(a.owner if a else Pubkey.default()))),mutation.get('executable',False)))
  if binary:vm.add_program_from_file(PUMP,binary)
  token=TOKEN22 if c.get('token22') else TOKEN;quote=Pubkey.from_string(c.get('quote',str(QUOTE)));pa=Pubkey.find_program_address([bytes(PV),bytes(token),bytes(quote)],ATA)[0]
+ bootstrap_transactions=[];alternative_ata=None
+ if c.get('alternative_ata_wallet'):
+  wallet=Pubkey.from_string(c['alternative_ata_wallet']);alternative_ata=Pubkey.find_program_address([bytes(wallet),bytes(token),bytes(quote)],ATA)[0]
+  create=Instruction(ATA,bytes([0]),[AccountMeta(PAYER.pubkey(),True,True),AccountMeta(alternative_ata,False,True),AccountMeta(wallet,False,False),AccountMeta(quote,False,False),AccountMeta(Pubkey.default(),False,False),AccountMeta(token,False,False)])
+  bootstrap_tx=Transaction.new_signed_with_payer([create],PAYER.pubkey(),[PAYER],vm.latest_blockhash());assert all(bootstrap_tx.verify_with_results())
+  created=vm.vm.send_transaction(bootstrap_tx);assert not isinstance(created,FailedTransactionMetadata),str(created)
+  vm.keys.add(alternative_ata);account=vm.get_account(alternative_ata)
+  assert account.owner==token and account.data[:32]==bytes(quote) and account.data[32:64]==bytes(wallet)
+  assert int.from_bytes(account.data[64:72],'little')==0
+  bootstrap_transactions.append({'transaction_base64':base64.b64encode(bytes(bootstrap_tx)).decode(),'signature_verified':True,'logs':created.logs(),'created_ata':str(alternative_ata),'wallet':str(wallet)})
  ix=next(x for x in PIDL['instructions'] if x['name']==c.get('op','distribute_creator_fees'))
  names={'payer':AUTH.pubkey(),'mint':MINT,'bonding_curve':CURVE,'sharing_config':SHARING,'creator_vault':PV,'system_program':Pubkey.default(),'event_authority':pump.EVENT,'program':PUMP,'creator_vault_quote_token_account':pa,'quote_mint':quote,'quote_token_program':token,'associated_token_program':ATA}
  if c.get('wrong'):names[c['wrong']]=Pubkey.from_bytes(bytes([77])*32)
@@ -45,7 +55,9 @@ def run(c,binary=None):
    ata=Pubkey.find_program_address([bytes(key),bytes(token),bytes(quote)],ATA)[0];m=AccountMeta(ata,False,c.get('ata_writable',True))
    if c.get('grouped_remaining'):ata_metas.append(m)
    else:metas.append(m)
- metas+=ata_metas;metas=metas[:c.get('account_count',len(metas))]
+ metas+=ata_metas
+ if alternative_ata is not None:metas[-1]=AccountMeta(alternative_ata,False,True)
+ metas=metas[:c.get('account_count',len(metas))]
  payload=bytes(ix['discriminator'])+(bytes([c.get('initialize_ata',1)]) if ix['name'].endswith('_v2') else b'')
  signers=[PAYER]+([AUTH] if any(m.pubkey==AUTH.pubkey() and m.is_signer for m in metas) else [])
  tx=Transaction.new_signed_with_payer([set_compute_unit_limit(1400000),Instruction(PUMP,payload,metas)],PAYER.pubkey(),signers,vm.latest_blockhash());assert all(tx.verify_with_results())
@@ -57,7 +69,7 @@ def run(c,binary=None):
    out[str(key)]=None if a is None else {'lamports':a.lamports,'data':a.data.hex(),'owner':str(a.owner)}
   return out
  before=snap();r=vm.vm.send_transaction(tx);failed=isinstance(r,FailedTransactionMetadata);m=r.meta() if failed else r;raw=json.loads(m.to_json())
- return {'error':str(r.err()) if failed else None,'before':before,'after':snap(),'events':[l for l in m.logs() if l.startswith('Program data:')],'logs':m.logs(),'inner':raw['inner_instructions'],'return':raw.get('return_data'),'transaction_base64':base64.b64encode(bytes(tx)).decode()}
+ return {'error':str(r.err()) if failed else None,'before':before,'after':snap(),'events':[l for l in m.logs() if l.startswith('Program data:')],'logs':m.logs(),'inner':raw['inner_instructions'],'return':raw.get('return_data'),'transaction_base64':base64.b64encode(bytes(tx)).decode(),'bootstrap_transactions':bootstrap_transactions}
 def cases():
  out=[];auth=str(AUTH.pubkey());other=str(OTHER.pubkey());third=str(Pubkey.from_bytes(bytes([91])*32))
  for op in ['distribute_creator_fees','distribute_creator_fees_v2']:
@@ -82,6 +94,7 @@ def cases():
    stable={'quote':str(Pubkey.from_bytes(bytes([88])*32)),'curve_patches':[(83,(bytes([88])*32).hex())],'remaining_atas':True,'grouped_remaining':True}
    rows += [{'name':'stable-'+str(i),**stable,**c} for i,c in enumerate([{}, {'pump_tokens':1000000},{'pump_tokens':1000000,'token22':True},{'pump_tokens':1000001,'old_shareholders':[(auth,3333),(other,6667)]},{'pump_tokens':1000000,'initialize_ata':False},{'pump_tokens':1000000,'account_mutations':{'remaining_ata_0':{'missing':True}}},{'pump_tokens':1000000,'account_mutations':{'remaining_ata_0':{'missing':True}},'initialize_ata':False},{'pump_tokens':0,'account_mutations':{'remaining_ata_0':{'missing':True}}},{'remaining_atas':False},{'pump_tokens':1000000,'ata_writable':False},{'pump_tokens':1000000,'old_shareholders':[(other,10000)],'readonly':'payer','account_mutations':{'remaining_ata_0':{'missing':True}}}])]
    rows += [{'name':'stable-quote-mismatch','quote':str(Pubkey.from_bytes(bytes([88])*32)),'remaining_atas':True,'pump_tokens':1000000},{'name':'stable-zero-frozen',**stable,'account_mutations':{'pump_creator_vault_ata':{'patches':[(108,'02')]}}},{'name':'stable-zero-uninitialized',**stable,'account_mutations':{'pump_creator_vault_ata':{'patches':[(108,'00')]}}},{'name':'stable-missing-source-and-remaining',**stable,'remaining':[],'account_mutations':{'pump_creator_vault_ata':{'missing':True}}},{'name':'stable-missing-source-paused',**stable,'status':0,'account_mutations':{'pump_creator_vault_ata':{'missing':True}}},{'name':'stable-zero-recipient-uninitialized-no-init',**stable,'initialize_ata':False,'account_mutations':{'remaining_ata_0':{'missing':True}}}]
+   rows += [{'name':f'valid-other-wallet-ata-token22-{token22}-balance-{amount}-initialize-{initialize}',**stable,'pump_tokens':amount,'token22':token22,'initialize_ata':initialize,'alternative_ata_wallet':other} for token22 in [False,True] for amount in [0,1000000] for initialize in [False,True]]
    for target in ['pump_creator_vault_ata','remaining_ata_0']:
     rows += [{'name':target+'-'+label,**stable,'pump_tokens':1000000,'account_mutations':{target:mutation}} for label,mutation in [('missing',{'missing':True}),('empty',{'length':0}),('owner',{'owner':str(PROGRAM)}),('mint',{'patches':[(0,bytes(32).hex())]}),('authority',{'patches':[(32,bytes(32).hex())]}),('frozen',{'patches':[(108,'02')]})]]
   out += [{**c,'op':op,'name':op+'-'+c['name']} for c in rows]

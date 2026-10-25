@@ -51,3 +51,39 @@ All 1,924 differential cases and 50 Surfpool comparisons (100 signed transaction
 passed on the integrated candidate. Frozen artifacts and exact counts are recorded under `repro/pump/creator-eighteen/`.
 The build records compiler identity, source hashes, lockfile and command. Original
 ELF bytes are read only after compilation for comparison and are not compiler inputs.
+
+
+## Expanded creator and lifecycle checkpoint
+
+The creator-twentyfive source adds token collection, extension, volume sync,
+creator/protocol sweeps, creator migration and administrative creator changes.
+Each focused implementation was independently compiled and compared before
+combined regression. The integration candidate remains byte-different.
+
+Additional destination-substitution coverage found that the original rejects an
+existing same-mint ATA belonging to a different wallet with6054; the earlier
+reconstruction omitted that address check. The new implementation preserves the
+original rejection. The test creates the alternative ATA through the captured
+ATA program with an ordinary signature, without editing its token authority.
+Earlier bounded passing fixtures did not cover this substitution. Treat this as
+a corrected reconstruction gap, not a vulnerability in the captured original.
+
+The migration path requires matching sharing administration, rejects holder
+creator changes, and requires accrued creator fees to be swept. It allows protocol
+fees to remain. Short legacy curve layouts preserve original post-event write
+failures and transaction rollback. Administrative CTO includes actual captured
+Fees/AMM CPIs, token/native payouts, frozen-wallet behavior, holder conversion,
+fee configuration constraints and curve rent/size handling. These observations
+remain bounded by saved synthetic fixtures and normal signature verification.
+
+
+The combined creator-twentyfive candidate is 690,480 bytes with SHA-256
+`a1edac573ea08b5456116ca8bea53ed570d4e5dcae21c72cc438103d75774213`.
+All 3,741 differential cases across 16 suites and 176 Surfpool comparisons
+(352 signed transactions) passed. The eight destination-substitution cases now
+reject consistently in the original and candidate. Surfpool replays initialized
+poststates; the genuine signed ATA-creation bootstrap transactions and initialized
+account snapshots are retained separately, rather than claiming the bootstrap was
+rerun by Surfpool. Exact source/build/receipt manifests are in
+`repro/pump/creator-twentyfive/`. These results supersede the earlier candidate for
+this expanded scope, without establishing full binary equality.

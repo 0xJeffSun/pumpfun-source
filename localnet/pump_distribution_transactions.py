@@ -15,6 +15,7 @@ class RecordingVM:
  def set_account(self,key,account):self.keys.add(key);return self.vm.set_account(key,account)
  def send_transaction(self,tx):
   self.transaction=tx;self.accounts={}
+  self.keys.update(tx.message.account_keys)
   for key in self.keys:
    a=self.vm.get_account(key)
    if a is None:self.accounts[str(key)]={'lamports':0,'data':'','owner':str(f.Pubkey.default()),'executable':False}
@@ -28,7 +29,7 @@ def prepare(c):
  try:receipt=f.run(c)
  finally:f.fixtures.f.LiteSVM=original
  vm=recorded[0]
- return {'case':c,'accounts':vm.accounts,'transaction_base64':base64.b64encode(bytes(vm.transaction)).decode(),'litesvm_error':receipt['error']}
+ return {'case':c,'accounts':vm.accounts,'transaction_base64':base64.b64encode(bytes(vm.transaction)).decode(),'litesvm_error':receipt['error'],'bootstrap_transactions':receipt.get('bootstrap_transactions',[]),'fixture_origin':'Post-bootstrap LiteSVM account snapshots, including genuine ATA-program-created alternative addresses. Bootstrap receipts retained; Surfpool replays distribution only.'}
 def run(binary,cases,surfpool,output):
  def rpc(method,params=None):
   req=urllib.request.Request(f'http://127.0.0.1:{PORT}',data=json.dumps({'jsonrpc':'2.0','id':1,'method':method,'params':params or []}).encode(),headers={'Content-Type':'application/json'})
@@ -91,11 +92,11 @@ def main():
   with socket.socket() as s:s.setsockopt(socket.SOL_SOCKET,socket.SO_REUSEADDR,1);s.bind(('127.0.0.1',port))
  a.output.mkdir(parents=True,exist_ok=False);original=a.output/'original.so';candidate=a.output/'candidate.so';original.write_bytes(f.ORIGINAL.read_bytes());candidate.write_bytes(a.candidate.read_bytes())
  wanted=['base','two-rounding','balance-1000000','wrong-remaining','status-0','zero-share','stable-1','stable-2','stable-5','stable-6','stable-9','pump_creator_vault_ata-frozen','curve-bool-48','recipient-floor-0-1781759','recipient-floor-0-1781760']
- cases=[c for c in f.cases() if c['name'].removeprefix(c['op']+'-') in wanted];script_hash=sha(Path(f.__file__).read_bytes());runner_hash=sha(Path(__file__).read_bytes());fixtures=[prepare(c) for c in cases];(a.output/'fixtures.json').write_text(json.dumps(fixtures,indent=2)+'\n')
+ cases=[c for c in f.cases() if c['name'].removeprefix(c['op']+'-') in wanted or c.get('alternative_ata_wallet')];script_hash=sha(Path(f.__file__).read_bytes());runner_hash=sha(Path(__file__).read_bytes());fixtures=[prepare(c) for c in cases];(a.output/'fixtures.json').write_text(json.dumps(fixtures,indent=2)+'\n')
  x=run(original,fixtures,a.surfpool,a.output);y=run(candidate,fixtures,a.surfpool,a.output)
  for rows in [x,y]:
   for row in rows:
-   label=row['case']['name'].removeprefix(row['case']['op']+'-');code={'wrong-remaining':6054,'status-0':6051,'zero-share':6055,'stable-6':6070,'pump_creator_vault_ata-frozen':17}.get(label)
+   label=row['case']['name'].removeprefix(row['case']['op']+'-');code=6054 if row['case'].get('alternative_ata_wallet') else {'wrong-remaining':6054,'status-0':6051,'zero-share':6055,'stable-6':6070,'pump_creator_vault_ata-frozen':17}.get(label)
    expected={'InstructionError':[1,'BorshIoError']} if label=='curve-bool-48' else {'InstructionError':[1,{'Custom':code}]} if code else {'InstructionError':[1,'PrivilegeEscalation']} if label=='stable-9' else None
    assert row['error']==expected,(label,row['error'])
    if label=='balance-1000000':
