@@ -1,8 +1,9 @@
 # Partial Pump Fees reconstruction
 
-Seven handlers execute recovered behavior: `get_fees`, `get_fees_with_quote_mint`,
+Ten handlers execute recovered behavior: `get_fees`, `get_fees_with_quote_mint`,
 `set_authority`, `set_social_claim_authority`, `set_disable_flags` and
-`set_claim_rate_limit` and `initialize_fee_program_global`. The other 24 instruction bodies remain unsupported;
+`set_claim_rate_limit`, `initialize_fee_program_global`, `update_fee_config`,
+`update_stable_fee_config` and `set_exotic_flat_fees`. The other 21 instruction bodies remain unsupported;
 their generated account declarations are not recovered constraints. This crate
 is an experimental reconstruction target, not a deployable substitute.
 
@@ -47,10 +48,25 @@ Changing the main authority to zero fails6001; the social-claim authority accept
 zero. All u8 flag values and the tested u64 rate-limit boundaries are accepted.
 Every successful setter emits the typed log event and signed self-CPI event.
 444 original/candidate cases compare errors, complete state, lamports, event bytes
-and inner instructions. The two query suites contribute10,789 additional cases.
+and inner instructions. The two query suites contribute10,838 additional cases.
 
 The global initializer reads the older 740-byte Pump Global layout, authenticates
 its authority and PDA, creates the 338-byte Fees global with canonical bump, and
 emits the exact event log and self-CPI. Its 180 comparisons include prefunding,
 malformed accounts, authorization, argument boundaries and CPI rollback. The
-seven-handler candidate passes 11,413 cases; full-file byte equality remains false.
+ten-handler candidate passes 12,087 cases; full-file byte equality remains false.
+
+FeeConfig deserialization is gated by allocation: the normal schedule is read at
+2,512 bytes, the stable schedule at 4,073, and exotic flat fees at 4,097. Earlier
+layouts default the absent fields to empty/zero. Tests compare these boundaries
+for both queries and writes; adding stable/exotic field bytes to a legacy
+allocation does not make the original decoder consume them.
+
+The three configuration setters have 625 independent SBF cases. Schedules must
+contain 1–50 strictly increasing thresholds and each fee sum must be at most
+10,000 basis points. Addition overflow aborts in the original and candidate.
+The normal updater validates flat fees before schedule checks. Exotic fee updates
+grow older accounts to 4,097 bytes and top up rent only when growing. State,
+events, CPI payloads and rollback are compared, including preservation of the
+existing schedule in current layouts. These are bounded reconstruction checks,
+not proof that every configuration transition is safe.

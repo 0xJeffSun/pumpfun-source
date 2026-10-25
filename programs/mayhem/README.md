@@ -1,6 +1,6 @@
 # Partial Mayhem implementation recovery
 
-This independently compiled Anchor program implements **14 of the 25 currently
+This independently compiled Anchor program implements **17 of the 25 currently
 identified instruction paths**. It is not a full program reconstruction, a
 byte-identical ELF, or a deployable replacement. Other handlers are absent.
 No original machine code is embedded or patched into the build.
@@ -13,7 +13,8 @@ Implemented paths:
 - `update_admin`, `update_trader`
 - `update_max_sol_per_sweep`, `update_max_stable_per_sweep`
 - `update_global_params`
-- `extend_account`, `withdraw_admin`
+- `extend_account`, `withdraw_admin`, `withdraw_quote_admin`
+- `sweep_fees`, `sweep_fees_admin`
 
 ## Evidence and unresolved source details
 
@@ -72,3 +73,11 @@ types, size boundaries, rent funding, zero initialization, events and rollback.
 Withdrawal cases cover administrator/PDA constraints, transfer errors, timestamp
 updates, rate boundaries and signed-add overflow. Receipts are retained as
 `extend-differential.json.gz` and `withdraw-differential.json.gz`.
+
+Quote withdrawal adds 329 cases and the two sweep paths add 692 cases, producing
+2,953 total cases across seventeen implemented paths. Both suites load the exact
+captured dependency ELFs. Quote tests cover ATA creation, signed vault transfers,
+rate limits and Token2022 mismatch behavior. Sweep tests cover authorization,
+recipient order/duplication, counters, caps, token mutations, malformed accounts,
+randomized state, arithmetic and rollback. They do not establish full program
+security or equivalence outside the tested instruction/state surface.

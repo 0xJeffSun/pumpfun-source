@@ -3,8 +3,8 @@
   "program": "mayhem",
   "source_sha256": {
     "programs/mayhem/Cargo.lock": "c33f79f273efb240f1cb88bd002b0bcc3558fe18512e2a1056272b69013abe15",
-    "programs/mayhem/Cargo.toml": "52a5e69e9278fb73828ce95d94f6cf1b141b6b023509b9c41fc5c9a3a1df2fde",
-    "programs/mayhem/src/lib.rs": "ee985172d53e746ba31e47e9b10b4a0c3cea5be9af2ccc995058ae927a5dbf0f"
+    "programs/mayhem/Cargo.toml": "c43f223d6184216d4c2c73d08cc39c43bffedab4d6864de307b764d090278bda",
+    "programs/mayhem/src/lib.rs": "728469bf4ccdb3c1292313954229427f0fe0de85ad28c378585dee977284f5e7"
   },
   "cargo_build_sbf_version": "solana-cargo-build-sbf 2.1.21\nplatform-tools v1.43\nrustc 1.79.0",
   "selected_toolchain": "v1.52",
@@ -82,15 +82,15 @@
     "scripts/strip.sh": "70d730afc852d4ba71f6583c9a6e0592f3e36840ab53000c1c225f2c3a491978",
     "syscalls.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
   },
-  "build_log_sha256": "415f4ac5ac7c807c1778a97ae9b0033100c6fdf9f63ee7eb04e67480a49c0e54",
+  "build_log_sha256": "83058dfe7a3332e1538110b1e9f9387757d79935c29debd5847bba33e6358983",
   "comparison": {
     "original_bytes": 777408,
-    "candidate_bytes": 298776,
+    "candidate_bytes": 373672,
     "original_sha256": "a87fa9f866272514e6acb852b668c4a08aeb173d56c883039991d114d1199bdb",
-    "candidate_sha256": "d2f2fd8e7414e19381a84e9db913a23b14811c92ac56e638425ff12008309a1b",
+    "candidate_sha256": "126babacd3d9caa67dfc476cab690cc377aa21401c412d04f52286eab475391b",
     "full_byte_equality": false,
     "first_difference": 24,
-    "different_positions_in_shared_length": 162588,
-    "length_difference": -478632
+    "different_positions_in_shared_length": 202274,
+    "length_difference": -403736
   }
 }

@@ -75,19 +75,19 @@ confirmed vulnerability without a reachable configuration path.
 
 ### Executing recovered handlers
 
-Pump Fees now has seven independently compiled handlers, with 11,413 original-
+Pump Fees now has ten independently compiled handlers, with 12,087 original-
 versus-candidate SBF cases. These cover two query handlers, four authority setters,
-and global initialization against the historical 740-byte Pump Global layout. The
-other 24 handlers remain unsupported. Selected compiler and dependency versions
+global initialization against the historical 740-byte Pump Global layout, and
+three configuration setters. The other 21 handlers remain unsupported. Selected compiler and dependency versions
 remain candidates rather than an established historical graph.
 
-### Parallel reconstruction checkpoint: 39 implemented handlers and one partial path
+### Parallel reconstruction checkpoint: 45 implemented handlers and two partial paths
 
-Saved builds cover Pump 4, PumpSwap 14, Pump Fees 7 and Mayhem 14 implemented
-handlers, plus Pump's partial regular-SOL sell_v3 branch. Their 23,722 local SBF
+Saved builds cover Pump 4, PumpSwap 14, Pump Fees 10 and Mayhem 17 implemented
+handlers, plus Pump's partial regular-SOL buy_v3/sell_v3 branches. Their 25,667 local SBF
 comparisons are indexed by `repro/status.json`; each report preserves its own
-coverage and limitations. Pump's sell path excludes quote-token, Mayhem, cashback
-and holder-reward branches and has an uninterpreted event suffix. It is not counted
+coverage and limitations. Pump's trade paths exclude quote-token, Mayhem, cashback
+and holder-reward branches and has an uninterpreted event suffix. Neither is counted
 as a fully recovered trade handler. See [partial sell review](pump/partial-sell-review.md).
 
 PumpSwap deposit/withdraw coverage includes actual captured Token/Token2022 CPIs,
@@ -111,3 +111,20 @@ source attribution in the latest saved registry response. Metaplex's registry
 response points to a failed, mismatching Phoenix build; that repository is rejected
 as source attribution. The failed registry records are retained separately and
 do not establish that the correct source is unavailable.
+
+### Versioned configuration and sweep coverage
+
+Fee schedule updates reject empty schedules, more than 50 tiers, duplicate or
+unsorted thresholds and fee totals above 10,000 basis points. Checked-add overflow
+aborts and rolls state back. These authorized-update constraints narrow earlier
+query observations involving injected empty/unsorted schedules; such injected
+states alone do not establish an exploitable path. The decoder intentionally
+ignores newer fields in legacy allocations. The configuration setter suite tests
+migration boundaries and the exotic setter's resize/rent transfer behavior.
+
+Mayhem's current compiled candidate covers quote withdrawal and both fee sweeps.
+The added 1,021 cases include signer/role checks, rate limits, recipient duplicates,
+token program substitutions, token ownership/mint errors and counter arithmetic.
+They establish bounded agreement only. A separate privileged-PDA initialization
+experiment was stopped by automated safety review and is not included in the
+implemented-handler count, saved accepted coverage or any security conclusion.

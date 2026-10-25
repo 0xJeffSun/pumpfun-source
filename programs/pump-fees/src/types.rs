@@ -62,7 +62,17 @@ impl AccountDeserialize for FeeConfig {
     }
     fn try_deserialize_unchecked(buf: &mut &[u8]) -> Result<Self> {
         if buf.len() < 2512 { return Err(ProgramError::InvalidAccountData.into()); }
-        Self::deserialize(&mut &buf[8..]).map_err(|e| ProgramError::BorshIoError(e.to_string()).into())
+        let mut data = &buf[8..];
+        let decode = (|| -> std::io::Result<Self> {
+            let bump = u8::deserialize(&mut data)?;
+            let admin = Pubkey::deserialize(&mut data)?;
+            let flat_fees = Fees::deserialize(&mut data)?;
+            let fee_tiers = Vec::<FeeTier>::deserialize(&mut data)?;
+            let stable_fee_tiers = if buf.len() >= 4073 { Vec::<FeeTier>::deserialize(&mut data)? } else { vec![] };
+            let exotic_flat_fees = if buf.len() >= 4097 { Fees::deserialize(&mut data)? } else { Fees { lp_fee_bps: 0, protocol_fee_bps: 0, creator_fee_bps: 0 } };
+            Ok(Self { bump, admin, flat_fees, fee_tiers, stable_fee_tiers, exotic_flat_fees })
+        })();
+        decode.map_err(|e| ProgramError::BorshIoError(e.to_string()).into())
     }
 }
 
@@ -88,4 +98,22 @@ pub struct SetClaimRateLimitEvent { pub timestamp: i64, pub claim_rate_limit: u6
 pub struct InitializeFeeProgramGlobalEvent {
     pub timestamp: i64, pub authority: Pubkey, pub social_claim_authority: Pubkey,
     pub disable_flags: u8, pub claim_rate_limit: u64,
+}
+
+#[event]
+#[derive(Clone)]
+pub struct SetExoticFlatFeesEvent {
+    pub timestamp: i64, pub admin: Pubkey, pub fee_config: Pubkey, pub exotic_flat_fees: Fees,
+}
+#[event]
+#[derive(Clone)]
+pub struct UpdateFeeConfigEvent {
+    pub timestamp: i64, pub admin: Pubkey, pub fee_config: Pubkey,
+    pub fee_tiers: Vec<FeeTier>, pub flat_fees: Fees,
+}
+#[event]
+#[derive(Clone)]
+pub struct UpdateStableFeeConfigEvent {
+    pub timestamp: i64, pub admin: Pubkey, pub fee_config: Pubkey,
+    pub stable_fee_tiers: Vec<FeeTier>, pub flat_fees: Fees,
 }

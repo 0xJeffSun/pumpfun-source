@@ -1,4 +1,4 @@
-//! Partial reconstruction: seven handlers implemented; remaining handlers unsupported.
+//! Partial reconstruction: ten handlers implemented; remaining handlers unsupported.
 //! It is not the deployed program source.
 use anchor_lang::prelude::*;
 
@@ -137,8 +137,24 @@ pub mod pump_fees_candidate {
     }
 
     #[allow(unused_variables)]
-    pub fn set_exotic_flat_fees(_ctx: Context<SetExoticFlatFees>, exotic_flat_fees: Fees) -> Result<()> {
-        Err(error!(CandidateError::Unsupported))
+    pub fn set_exotic_flat_fees(ctx: Context<SetExoticFlatFees>, exotic_flat_fees: Fees) -> Result<()> {
+        validate_fees(&exotic_flat_fees)?;
+        let info = ctx.accounts.fee_config.to_account_info();
+        if info.data_len() < 4097 {
+            let rent = Rent::get()?.minimum_balance(4097);
+            let extra = rent.saturating_sub(info.lamports());
+            if extra > 0 {
+                anchor_lang::system_program::transfer(CpiContext::new(
+                    ctx.accounts.system_program.to_account_info(), anchor_lang::system_program::Transfer {
+                        from: ctx.accounts.admin.to_account_info(), to: info.clone(),
+                    }), extra)?;
+            }
+            info.realloc(4097, true)?;
+        }
+        ctx.accounts.fee_config.exotic_flat_fees = exotic_flat_fees.clone();
+        let event = SetExoticFlatFeesEvent { timestamp: Clock::get()?.unix_timestamp,
+            admin: ctx.accounts.admin.key(), fee_config: ctx.accounts.fee_config.key(), exotic_flat_fees };
+        emit!(event.clone()); emit_cpi!(event); Ok(())
     }
 
     #[allow(unused_variables)]
@@ -176,8 +192,14 @@ pub mod pump_fees_candidate {
     }
 
     #[allow(unused_variables)]
-    pub fn update_fee_config(_ctx: Context<UpdateFeeConfig>, fee_tiers: Vec<FeeTier>, flat_fees: Fees) -> Result<()> {
-        Err(error!(CandidateError::Unsupported))
+    pub fn update_fee_config(ctx: Context<UpdateFeeConfig>, fee_tiers: Vec<FeeTier>, flat_fees: Fees) -> Result<()> {
+        validate_fees(&flat_fees)?;
+        validate_tiers(&fee_tiers)?;
+        ctx.accounts.fee_config.fee_tiers = fee_tiers.clone();
+        ctx.accounts.fee_config.flat_fees = flat_fees.clone();
+        let event = UpdateFeeConfigEvent { timestamp: Clock::get()?.unix_timestamp,
+            admin: ctx.accounts.admin.key(), fee_config: ctx.accounts.fee_config.key(), fee_tiers, flat_fees };
+        emit!(event.clone()); emit_cpi!(event); Ok(())
     }
 
     #[allow(unused_variables)]
@@ -191,8 +213,13 @@ pub mod pump_fees_candidate {
     }
 
     #[allow(unused_variables)]
-    pub fn update_stable_fee_config(_ctx: Context<UpdateStableFeeConfig>, fee_tiers: Vec<FeeTier>) -> Result<()> {
-        Err(error!(CandidateError::Unsupported))
+    pub fn update_stable_fee_config(ctx: Context<UpdateStableFeeConfig>, fee_tiers: Vec<FeeTier>) -> Result<()> {
+        validate_tiers(&fee_tiers)?;
+        ctx.accounts.fee_config.stable_fee_tiers = fee_tiers.clone();
+        let event = UpdateStableFeeConfigEvent { timestamp: Clock::get()?.unix_timestamp,
+            admin: ctx.accounts.admin.key(), fee_config: ctx.accounts.fee_config.key(),
+            stable_fee_tiers: fee_tiers, flat_fees: ctx.accounts.fee_config.flat_fees.clone() };
+        emit!(event.clone()); emit_cpi!(event); Ok(())
     }
 
     #[allow(unused_variables)]
@@ -233,6 +260,29 @@ pub const USDC: [u8; 32] = [198,250,122,243,190,219,173,58,61,101,243,106,171,20
 pub enum FeeError {
     #[msg("Invalid admin")]
     InvalidAdmin = 1,
+    #[msg("No fee tiers provided")]
+    NoFeeTiers = 2,
+    #[msg("Too many fee tiers")]
+    TooManyFeeTiers = 3,
+    #[msg("Fee tiers must be sorted by market cap threshold (ascending)")]
+    FeeTiersNotSorted = 5,
+    #[msg("Fee total must not exceed 10_000bps")]
+    InvalidFeeTotal = 6,
     #[msg("The given account is not authorized to execute this instruction.")]
     NotAuthorized = 16,
+}
+
+fn validate_fees(fees: &Fees) -> Result<()> {
+    // The original aborts on addition overflow before comparing the total.
+    let total = fees.lp_fee_bps.checked_add(fees.protocol_fee_bps).unwrap()
+        .checked_add(fees.creator_fee_bps).unwrap();
+    require!(total <= 10_000, FeeError::InvalidFeeTotal);
+    Ok(())
+}
+fn validate_tiers(tiers: &[FeeTier]) -> Result<()> {
+    require!(!tiers.is_empty(), FeeError::NoFeeTiers);
+    require!(tiers.len() <= 50, FeeError::TooManyFeeTiers);
+    for tier in tiers { validate_fees(&tier.fees)?; }
+    require!(tiers.windows(2).all(|pair| pair[0].market_cap_lamports_threshold < pair[1].market_cap_lamports_threshold), FeeError::FeeTiersNotSorted);
+    Ok(())
 }

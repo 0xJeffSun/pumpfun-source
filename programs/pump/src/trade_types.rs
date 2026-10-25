@@ -86,3 +86,7 @@ pub struct Fees {
     pub protocol_fee_bps: u64,
     pub creator_fee_bps: u64,
 }
+
+#[event]
+#[derive(Clone)]
+pub struct CompleteEvent {pub user:Pubkey,pub mint:Pubkey,pub bonding_curve:Pubkey,pub timestamp:i64,pub quote_mint:Pubkey}

@@ -1,6 +1,6 @@
 # Mayhem: recovered administration paths
 
-The fourteen implemented paths and 1,932 differential cases are a partial security
+The seventeen implemented paths and 2,953 differential cases are a partial security
 review. No complete byte-identical program or complete Mayhem audit exists yet.
 
 ## Observed controls and behavior
@@ -40,8 +40,8 @@ self-CPI; both are reproduced and compared.
 
 ## Dependency observations
 
-Covered paths exercise the System program and the Mayhem self-event entrypoint.
-They do not establish the behavior of external token/trading dependencies.
+Covered paths exercise the System program, Mayhem self-event entrypoint, and
+captured token/ATA dependencies. Trading dependency behavior is still unresolved.
 The original Mayhem ELF contains full 32-byte constants for Pump at 0xae2ac,
 PumpSwap at 0xae2e2, SPL Token at 0xad168/0xae302, and Token2022 at 0xae322.
 This locates references for remaining CPI recovery; it is not proof of each
@@ -51,8 +51,8 @@ scan does not prove absence of use. No unobserved Metaplex/relay CPI is assumed.
 
 ## Remaining work
 
-Eleven currently identified paths remain unimplemented: two sweep handlers; quote withdrawal; Mayhem
-state initialization; token burn; and six Pump/PumpSwap buy/sell paths. Their
+Eight currently identified paths remain unimplemented: Mayhem state
+initialization, token burn, and six Pump/PumpSwap buy/sell paths. Their
 account/CPI constraints, price impact, risk accounting, rate limits, arithmetic,
 rollback and dependency equivalence remain to be recovered and audited.
 Historical source/build fidelity, executable layout and all bytes remain
@@ -109,4 +109,44 @@ authorization for `sweep_fees` and stored administrator authorization for
 `sweep_fees_admin`, with the authorized signer's wallet/ATA as destination.
 Unauthorized signer fixtures fail the has-one constraint. These observations
 reduce the initial creation-race concern but are not a complete sweep audit;
-recipient-pair validation and token transfer paths remain under investigation.
+the additional recovered sweep checks and tests are described below.
+
+## Quote withdrawal and sweeps
+
+`withdraw_quote_admin` validates the stored administrator and vault PDA, creates
+the administrator's quote ATA if needed, and transfers from the vault quote ATA
+with the vault PDA as authority. It has a separate signed-i64 rate clock at
+offset 238 and interval at 230, with the same zero-value bypass, checked-add
+overflow and rollback behavior as SOL withdrawal. The context accepts token
+interfaces, but its transfer instruction targets legacy SPL Token. A fixture
+providing only Token2022 therefore fails with MissingAccount and rolls back,
+rather than successfully moving Token2022 assets. The 329 cases reproduce this
+original behavior with captured dependencies.
+
+Both sweep paths require exactly sixteen remaining accounts, interpreted as
+eight FeeRecipient/token-account pairs. The signer must match GlobalParams.trader
+for `sweep_fees`, or GlobalParams.admin for `sweep_fees_admin`. Destination is the
+signer and its already initialized quote ATA. The token-program address is
+constrained to legacy SPL Token. A trader sweep applies the respective native or
+stable aggregate limit; the administrator sweep is uncapped. Native sweeps move
+wrapped tokens and excess recipient lamports, retaining rent for the actual
+recipient account size. Non-native sweeps transfer tokens. Rent subtraction and
+accounting overflow reproduce original panics on extreme synthetic state.
+
+The FeeRecipient's trailing 32 bytes hold accounting fields: native timestamp
+at 10, native cumulative amount at 18, stable cumulative amount at 26, stable
+timestamp at 34. Trader sweeps update the appropriate timestamp even when moving
+zero; admin sweeps preserve timestamps. Recipients are decoded and serialized
+sequentially, so duplicate pairs observe earlier changes within the call.
+Program ownership and account discriminators are checked. The recipient bump
+and index authorize token CPI; native-only lamport movement does not require
+those bytes to derive the provided account address. Token execution constrains
+token authority and mint. These details match 692 differential cases, including
+300 randomized fixtures and hostile token/recipient mutations.
+
+The initially suspected permissionless recipient-creation concern has no
+demonstrated fund-diversion path in these recovered instructions: initialization
+stores no caller beneficiary, and sweep/withdraw destinations require the stored
+trader or administrator. This is a bounded negative finding, not a declaration
+that the entire deployed program is secure. The eight absent handlers, live
+configuration reachability and complete dependency source fidelity remain open.

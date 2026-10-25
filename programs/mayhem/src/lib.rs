@@ -1,5 +1,5 @@
-//! Partial independently compiled Mayhem implementation: fourteen recovered admin
-//! handlers. Unknown fields are preserved as byte arrays, not guessed names.
+//! Partial independently compiled Mayhem implementation: seventeen recovered administration
+//! and sweep handlers. Unknown fields are preserved as byte arrays, not guessed names.
 //! This is not a complete or byte-identical program reconstruction.
 use anchor_lang::prelude::*;
 use anchor_spl::{associated_token::AssociatedToken, token_interface::{Mint, TokenAccount, TokenInterface}};
@@ -9,6 +9,31 @@ declare_id!("MAyhSmzXzV1pTf7LsNkrNwkWKTo4ougAJ1PPg47MD4e");
 #[program]
 pub mod mayhem_recovered {
     use super::*;
+    pub fn sweep_fees<'info>(ctx: Context<'_, '_, 'info, 'info, SweepFees<'info>>) -> Result<()> {
+        let limit = if ctx.accounts.quote_mint.key() == anchor_spl::token::spl_token::native_mint::ID { ctx.accounts.global_params.max_sol_per_sweep } else { ctx.accounts.global_params.max_stable_per_sweep };
+        let amount = sweep_remaining(ctx.remaining_accounts, &ctx.accounts.trader.to_account_info(), &ctx.accounts.trader_quote_ata.to_account_info(), &ctx.accounts.token_program.to_account_info(), ctx.accounts.quote_mint.key(), limit, false)?;
+        let event = SweepEvent { amount, timestamp: Clock::get()?.unix_timestamp }; emit!(event); emit_cpi!(event); Ok(())
+    }
+    pub fn sweep_fees_admin<'info>(ctx: Context<'_, '_, 'info, 'info, SweepFeesAdmin<'info>>) -> Result<()> {
+        let amount = sweep_remaining(ctx.remaining_accounts, &ctx.accounts.admin.to_account_info(), &ctx.accounts.admin_quote_ata.to_account_info(), &ctx.accounts.token_program.to_account_info(), ctx.accounts.quote_mint.key(), u64::MAX, true)?;
+        let event = SweepEvent { amount, timestamp: Clock::get()?.unix_timestamp }; emit!(event); emit_cpi!(event); Ok(())
+    }
+    pub fn withdraw_quote_admin(ctx: Context<WithdrawQuoteAdmin>, amount: u64) -> Result<()> {
+        let now = Clock::get()?.unix_timestamp;
+        let state = &mut ctx.accounts.global_params;
+        let last = i64::from_le_bytes(state.reset_stable_suffix[16..24].try_into().unwrap());
+        let interval = i64::from_le_bytes(state.reset_stable_suffix[8..16].try_into().unwrap());
+        if last != 0 && interval != 0 { require_gte!(now, last + interval, MayhemError::WithdrawRateLimit); }
+        state.reset_stable_suffix[16..24].copy_from_slice(&now.to_le_bytes());
+        let bump = [ctx.bumps.sol_vault];
+        let seeds: &[&[u8]] = &[b"sol-vault", &bump];
+        anchor_spl::token::transfer(CpiContext::new_with_signer(
+            ctx.accounts.token_program.to_account_info(), anchor_spl::token::Transfer {
+                from: ctx.accounts.vault_quote_ata.to_account_info(),
+                to: ctx.accounts.admin_quote_ata.to_account_info(),
+                authority: ctx.accounts.sol_vault.to_account_info(),
+            }, &[seeds]), amount)
+    }
     pub fn withdraw_admin(ctx: Context<WithdrawAdmin>, amount: u64) -> Result<()> {
         let now = Clock::get()?.unix_timestamp;
         let state = &mut ctx.accounts.global_params;
@@ -321,4 +346,78 @@ pub struct WithdrawAdmin<'info> {
     #[account(mut, seeds = [b"sol-vault"], bump)]
     pub sol_vault: UncheckedAccount<'info>,
     pub system_program: Program<'info, System>,
+}
+
+#[derive(Accounts)]
+pub struct WithdrawQuoteAdmin<'info> {
+    #[account(mut)] pub admin: Signer<'info>,
+    #[account(mut, seeds = [b"global-params"], bump, has_one = admin)]
+    pub global_params: Account<'info, GlobalParams>,
+    /// CHECK: PDA authorizes its token accounts.
+    #[account(mut, seeds = [b"sol-vault"], bump)] pub sol_vault: UncheckedAccount<'info>,
+    pub quote_mint: InterfaceAccount<'info, Mint>,
+    #[account(mut, associated_token::mint = quote_mint, associated_token::authority = sol_vault, associated_token::token_program = token_program)]
+    pub vault_quote_ata: InterfaceAccount<'info, TokenAccount>,
+    #[account(init_if_needed, payer = admin, associated_token::mint = quote_mint, associated_token::authority = admin, associated_token::token_program = token_program)]
+    pub admin_quote_ata: InterfaceAccount<'info, TokenAccount>,
+    pub token_program: Interface<'info, TokenInterface>,
+    pub associated_token_program: Program<'info, AssociatedToken>,
+    pub system_program: Program<'info, System>,
+}
+
+#[event(discriminator = [218,130,134,253,101,109,149,152])]
+pub struct SweepEvent { pub amount: u64, pub timestamp: i64 }
+fn sweep_remaining<'info>(remaining: &'info [AccountInfo<'info>], destination: &AccountInfo<'info>, destination_ata: &AccountInfo<'info>, token: &AccountInfo<'info>, mint: Pubkey, limit: u64, admin: bool) -> Result<u64> {
+    require_eq!(remaining.len(),16,MayhemError::AccountTypeNotSupported);
+    let rent = Rent::get()?;
+    let mut total = 0u64;
+    for pair in remaining.chunks_exact(2) {
+        let mut recipient=Account::<FeeRecipient>::try_from(&pair[0])?;
+        let ata=InterfaceAccount::<TokenAccount>::try_from(&pair[1])?;
+        let before_total=total;
+        let available = limit - total;
+        let token_amount = ata.amount.min(available);
+        if token_amount > 0 {
+            let index=[recipient.index];let bump=[recipient.bump];let seeds: &[&[u8]]=&[b"fee-recipient", &index, &bump];
+            anchor_spl::token::transfer(CpiContext::new_with_signer(token.clone(), anchor_spl::token::Transfer { from: ata.to_account_info(), to: destination_ata.clone(), authority: recipient.to_account_info() }, &[seeds]),token_amount)?;
+            total += token_amount;
+        }
+        if mint == anchor_spl::token::spl_token::native_mint::ID {
+            let account = recipient.to_account_info();
+            let amount = (account.lamports() - rent.minimum_balance(account.data_len())).min(limit-total);
+            **account.try_borrow_mut_lamports()? -= amount;
+            **destination.try_borrow_mut_lamports()? += amount;
+            total += amount;
+        }
+        let (counter, timestamp) = if mint == anchor_spl::token::spl_token::native_mint::ID { (8, 0) } else { (16, 24) };
+        let previous=u64::from_le_bytes(recipient.opaque[counter..counter+8].try_into().unwrap());
+        recipient.opaque[counter..counter+8].copy_from_slice(&(previous + total-before_total).to_le_bytes());
+        if !admin { recipient.opaque[timestamp..timestamp+8].copy_from_slice(&Clock::get()?.unix_timestamp.to_le_bytes()); }
+        recipient.exit(&ID)?;
+    }
+    Ok(total)
+}
+
+#[event_cpi]
+#[derive(Accounts)]
+pub struct SweepFees<'info> {
+    #[account(mut)] pub trader: Signer<'info>,
+    #[account(mut, seeds=[b"global-params"], bump, has_one=trader)] pub global_params: Account<'info, GlobalParams>,
+    pub quote_mint: InterfaceAccount<'info, Mint>,
+    #[account(mut, associated_token::mint=quote_mint, associated_token::authority=trader, associated_token::token_program=token_program)] pub trader_quote_ata: InterfaceAccount<'info, TokenAccount>,
+    pub system_program: Program<'info,System>,
+    #[account(address=anchor_spl::token::ID)] pub token_program: Interface<'info,TokenInterface>,
+    pub associated_token_program: Program<'info,AssociatedToken>,
+}
+
+#[event_cpi]
+#[derive(Accounts)]
+pub struct SweepFeesAdmin<'info> {
+    #[account(mut)] pub admin: Signer<'info>,
+    #[account(mut, seeds=[b"global-params"], bump, has_one=admin)] pub global_params: Account<'info, GlobalParams>,
+    pub quote_mint: InterfaceAccount<'info, Mint>,
+    #[account(mut, associated_token::mint=quote_mint, associated_token::authority=admin, associated_token::token_program=token_program)] pub admin_quote_ata: InterfaceAccount<'info, TokenAccount>,
+    pub system_program: Program<'info,System>,
+    #[account(address=anchor_spl::token::ID)] pub token_program: Interface<'info,TokenInterface>,
+    pub associated_token_program: Program<'info,AssociatedToken>,
 }

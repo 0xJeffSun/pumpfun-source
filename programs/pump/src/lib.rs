@@ -9,6 +9,7 @@ declare_id!("6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P");
 #[program]
 pub mod pump_recovered {
     use super::*;
+    pub fn buy_v3(ctx: Context<SellV3>, amount:u64,max_sol_cost:u64,partial_fill:OptionBool)->Result<()>{let _ = partial_fill;trade::buy(ctx,amount,max_sol_cost)}
     pub fn sell_v3(ctx: Context<SellV3>, amount: u64, min_sol_output: u64) -> Result<()> { trade::sell(ctx, amount, min_sol_output) }
     pub fn toggle_create_v2(ctx: Context<AdminGlobal>, enabled: bool) -> Result<()> {
         require_neq!(ctx.accounts.global.create_v2_enabled, enabled, PumpError::NotAuthorized);
@@ -280,4 +281,12 @@ pub enum PumpError {
     QuoteChainAccountsRequired,
     #[msg("Reconstruction branch is not implemented") ]
     ReconstructionBranchUnsupported,
+}
+
+#[derive(AnchorSerialize,Clone)]
+pub struct OptionBool(pub bool);
+impl AnchorDeserialize for OptionBool {
+ fn deserialize_reader<R:std::io::Read>(reader:&mut R)->std::io::Result<Self>{
+  let mut b=[0u8];match reader.read(&mut b)?{0=>Ok(Self(false)),_=>match b[0]{0=>Ok(Self(false)),1=>Ok(Self(true)),_=>Err(std::io::Error::new(std::io::ErrorKind::InvalidData,"Invalid bool representation"))}}
+ }
 }

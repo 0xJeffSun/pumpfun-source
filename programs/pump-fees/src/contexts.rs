@@ -301,20 +301,17 @@ pub struct SetDisableFlags<'info> {
     pub fee_program_global: Account<'info, FeeProgramGlobal>,
 }
 
+#[event_cpi]
 #[derive(Accounts)]
 pub struct SetExoticFlatFees<'info> {
-    #[account(mut)]
-    /// CHECK: Exact deployed constraint not recovered.
-    pub fee_config: UncheckedAccount<'info>,
+    #[account(mut, seeds = [b"fee_config", config_program_id.key().as_ref()], bump = fee_config.bump,
+              has_one = admin @ FeeError::InvalidAdmin)]
+    pub fee_config: Account<'info, FeeConfig>,
     #[account(mut)]
     pub admin: Signer<'info>,
-    /// CHECK: Exact deployed constraint not recovered.
+    /// CHECK: only used as the configuration PDA namespace.
     pub config_program_id: UncheckedAccount<'info>,
     pub system_program: Program<'info, System>,
-    /// CHECK: Exact deployed constraint not recovered.
-    pub event_authority: UncheckedAccount<'info>,
-    /// CHECK: Exact deployed constraint not recovered.
-    pub program: UncheckedAccount<'info>,
 }
 
 #[event_cpi]
@@ -407,18 +404,15 @@ pub struct UpdateBuybackClaimRateLimit<'info> {
     pub program: UncheckedAccount<'info>,
 }
 
+#[event_cpi]
 #[derive(Accounts)]
 pub struct UpdateFeeConfig<'info> {
-    #[account(mut)]
-    /// CHECK: Exact deployed constraint not recovered.
-    pub fee_config: UncheckedAccount<'info>,
+    #[account(mut, seeds = [b"fee_config", config_program_id.key().as_ref()], bump = fee_config.bump,
+              has_one = admin @ FeeError::InvalidAdmin)]
+    pub fee_config: Account<'info, FeeConfig>,
     pub admin: Signer<'info>,
-    /// CHECK: Exact deployed constraint not recovered.
+    /// CHECK: only used as the configuration PDA namespace.
     pub config_program_id: UncheckedAccount<'info>,
-    /// CHECK: Exact deployed constraint not recovered.
-    pub event_authority: UncheckedAccount<'info>,
-    /// CHECK: Exact deployed constraint not recovered.
-    pub program: UncheckedAccount<'info>,
 }
 
 #[derive(Accounts)]
@@ -509,18 +503,15 @@ pub struct UpdateFeeSharesV2<'info> {
     pub coin_creator_vault_ata: UncheckedAccount<'info>,
 }
 
+#[event_cpi]
 #[derive(Accounts)]
 pub struct UpdateStableFeeConfig<'info> {
-    #[account(mut)]
-    /// CHECK: Exact deployed constraint not recovered.
-    pub fee_config: UncheckedAccount<'info>,
+    #[account(mut, seeds = [b"fee_config", config_program_id.key().as_ref()], bump = fee_config.bump,
+              has_one = admin @ FeeError::InvalidAdmin)]
+    pub fee_config: Account<'info, FeeConfig>,
     pub admin: Signer<'info>,
-    /// CHECK: Exact deployed constraint not recovered.
+    /// CHECK: only used as the configuration PDA namespace.
     pub config_program_id: UncheckedAccount<'info>,
-    /// CHECK: Exact deployed constraint not recovered.
-    pub event_authority: UncheckedAccount<'info>,
-    /// CHECK: Exact deployed constraint not recovered.
-    pub program: UncheckedAccount<'info>,
 }
 
 #[derive(Accounts)]

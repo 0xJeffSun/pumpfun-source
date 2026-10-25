@@ -65,5 +65,16 @@ for name in ['get_fees','get_fees_with_quote_mint']:
   for pool in [0,1]:
    for flag in [b'',b'\0',b'\1',b'\2']:
     run('get_fees-pool-'+str(pool)+'-flag-'+flag.hex(),base,raw=disc+bytes([pool])+(100).to_bytes(16,'little')+bytes(8)+flag)
+# Allocation-gated legacy layouts: stable schedule begins at4073, exotic at4097.
+original.config([(0,(1,2,3))],[(0,(4,5,6))],(7,8,9),(10,11,12),allocation=5000)
+legacy_base=original.vm.get_account(original.key).data
+quote_disc=bytes(next(i['discriminator'] for i in original.idl['instructions'] if i['name']=='get_fees_with_quote_mint'))
+for size in [2511,2512,4072,4073,4096,4097,5000]:
+ for quote in [bytes(32),bytes(Pubkey.from_string('So11111111111111111111111111111111111111112')),bytes(Pubkey.from_string('EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v')),bytes([45])*32]:
+  payload=quote_disc+b'\1'+(100).to_bytes(16,'little')+quote
+  run('legacy-allocation-'+str(size)+'-'+quote.hex(),legacy_base[:size],raw=payload)
+ for count in [0,61,2**32-1]:
+  data=legacy_base[:109]+count.to_bytes(4,'little')+legacy_base[113:]
+  run('legacy-stable-count-'+str(size)+'-'+str(count),data[:size])
 report={'scope':'Two independently executing full query handlers only; other handlers unsupported. Error numbers/return bytes and read-only state tested; logs, compute, full byte identity not asserted.','original_sha256':hashlib.sha256((ROOT/'evidence/original/pump_fees/deployed.so').read_bytes()).hexdigest(),'candidate_sha256':hashlib.sha256(args.candidate.read_bytes()).hexdigest(),'input_receipt_sha256':hashlib.sha256(receipt.read_bytes()).hexdigest(),'tier_input_receipt_sha256':hashlib.sha256(tier_receipt.read_bytes()).hexdigest(),'case_count':len(rows),'mismatch_count':len(failures),'failures':failures,'cases':rows}
 args.output.parent.mkdir(parents=True,exist_ok=True);args.output.write_text(json.dumps(report,indent=2)+'\n');print('Cases',len(rows),'mismatches',len(failures));print(json.dumps(failures[:10],indent=2));assert not failures

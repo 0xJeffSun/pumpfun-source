@@ -5,7 +5,7 @@
     "compiler": "unresolved",
     "dependencies": "unresolved",
     "build_flags": "unresolved",
-    "candidate_artifact": "repro/pump/sell-candidate.so",
+    "candidate_artifact": "repro/pump/buy-candidate.so",
     "full_byte_equality": false,
     "comparison_status": "DIFFERS_PARTIAL_IMPLEMENTATION",
     "implemented_handlers": [
@@ -14,15 +14,17 @@
       "toggle_cashback_enabled",
       "set_max_curve_depth"
     ],
-    "comparison_report": "repro/pump/sell-build-comparison.json",
-    "build_log": "repro/pump/sell-build.log",
-    "validated_cases": 310,
+    "comparison_report": "repro/pump/buy-build-comparison.json",
+    "build_log": "repro/pump/buy-build.log",
+    "validated_cases": 560,
     "validation_reports": [
-      "repro/pump/sell-admin-regression.json",
-      "repro/pump/sell-sbf-differential.json"
+      "repro/pump/buy-admin-regression.json",
+      "repro/pump/buy-sell-regression.json",
+      "repro/pump/buy-sbf-differential.json"
     ],
     "partially_implemented_handlers": {
-      "sell_v3": "Regular SOL quote, no Mayhem/cashback/holder-reward branches. Final event suffix remains uninterpreted. See audit/pump/partial-sell-review.md."
+      "sell_v3": "Regular SOL quote, no Mayhem/cashback/holder-reward branches. Final event suffix remains uninterpreted. See audit/pump/partial-sell-review.md.",
+      "buy_v3": "Regular SOL quote with existing user ATA and completion event. Excludes Mayhem/cashback/holder-reward/quote-token branches. See audit/pump/partial-sell-review.md."
     }
   },
   "pump_amm": {
@@ -69,7 +71,7 @@
     "compiler": "unresolved",
     "dependencies": "unresolved",
     "build_flags": "unresolved",
-    "candidate_artifact": "repro/pump_fees/admin-seven/pump_fees_candidate.so",
+    "candidate_artifact": "repro/pump_fees/config-ten/pump_fees_candidate.so",
     "full_byte_equality": false,
     "comparison_status": "DIFFERS_PARTIAL_IMPLEMENTATION",
     "compiler_candidates": [
@@ -83,12 +85,15 @@
       "set_social_claim_authority",
       "set_disable_flags",
       "set_claim_rate_limit",
-      "initialize_fee_program_global"
+      "initialize_fee_program_global",
+      "update_fee_config",
+      "update_stable_fee_config",
+      "set_exotic_flat_fees"
     ],
-    "comparison_report": "repro/pump_fees/admin-seven/build-comparison.json",
-    "build_log": "repro/pump_fees/admin-seven/build.log",
-    "validation_report": "repro/pump_fees/admin-seven/differential.json.gz",
-    "validated_cases": 11413
+    "comparison_report": "repro/pump_fees/config-ten/build-comparison.json",
+    "build_log": "repro/pump_fees/config-ten/build.log",
+    "validation_report": "repro/pump_fees/config-ten/differential.json.gz",
+    "validated_cases": 12087
   },
   "mayhem": {
     "source_reconstruction": "partial_handlers_compiled",
@@ -113,16 +118,21 @@
       "resume_trading",
       "initialize_fee_recipient",
       "extend_account",
-      "withdraw_admin"
+      "withdraw_admin",
+      "withdraw_quote_admin",
+      "sweep_fees",
+      "sweep_fees_admin"
     ],
     "comparison_report": "repro/mayhem/build-comparison.json",
     "build_log": "repro/mayhem/build.log.gz",
-    "validated_cases": 1932,
+    "validated_cases": 2953,
     "validation_reports": [
       "repro/mayhem/differential.json.gz",
       "repro/mayhem/fee-recipient-differential.json.gz",
       "repro/mayhem/extend-differential.json.gz",
-      "repro/mayhem/withdraw-differential.json.gz"
+      "repro/mayhem/withdraw-differential.json.gz",
+      "repro/mayhem/quote-withdraw-differential.json.gz",
+      "repro/mayhem/sweeps-differential.json.gz"
     ]
   }
 }

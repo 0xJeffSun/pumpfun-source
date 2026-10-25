@@ -34,3 +34,16 @@ historical dependency versions and instruction bytes remain unresolved.
 
 The source must not be deployed as a replacement. These are reconstruction
 limitations, not assertions that the original program contains those flaws.
+
+## Subsequent normal-SOL buy path
+
+The expanded candidate also implements an existing-ATA regular-SOL `buy_v3`
+path, including checked inverse-curve pricing, signed curve-to-user token CPI,
+one System transfer of the full purchase cost to the curve, direct buyback
+lamport accounting, and curve completion plus CompleteEvent. The250-case suite
+includes low virtual reserve arithmetic, maximum-cost boundaries, explicit fee
+rates, completion at the real token reserve boundary, and omitted/false/true/
+malformed trailing optional boolean data. It additionally compares complete
+recorded inner-instruction data and account indices. This does not cover missing
+ATA creation, other quote mints, rewards, Mayhem, cashback, or every possible
+semantic use of the optional boolean. Both trade instructions remain partial.
