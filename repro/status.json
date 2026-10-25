@@ -128,12 +128,12 @@
     "compiler": "unresolved",
     "dependencies": "unresolved",
     "build_flags": "unresolved",
-    "candidate_artifact": "repro/pump_fees/all-thirtyone-v144/pump_fees_candidate.so",
+    "candidate_artifact": "repro/pump_fees/error-enum-v144/pump_fees_candidate.so",
     "full_byte_equality": false,
     "comparison_status": "DIFFERS_PARTIAL_IMPLEMENTATION",
     "compiler_candidates": [
       "v1.43: selector fragment matches except relocations, but stock ELF machine/flags contradict capture",
-      "v1.44: preferred tested stock candidate; two complete runtime helper bodies match capture, but current27 and frozen16 full binaries differ",
+      "v1.44: preferred tested stock candidate; two complete runtime helper bodies match capture, but current31 and frozen16 full binaries differ",
       "v1.45/v1.46: tested on the frozen16 graph with weaker selected-helper matches; v1.46.1 remains unbuilt; exact historical compiler is unresolved"
     ],
     "implemented_handlers": [
@@ -169,23 +169,15 @@
       "update_fee_shares_v2",
       "initialize_fee_config"
     ],
-    "comparison_report": "repro/pump_fees/all-thirtyone-v144/build-comparison.json",
-    "build_log": "repro/pump_fees/all-thirtyone-v144/build.log",
-    "validated_cases": 17361,
+    "comparison_report": "repro/pump_fees/error-enum-v144/build-comparison.json",
+    "build_log": "repro/pump_fees/error-enum-v144/build.log",
+    "validated_cases": 17363,
     "deprecated_dispatches": [
       "revoke_fee_sharing_authority",
       "transfer_fee_sharing_authority"
     ],
     "signed_sequence_reports": [
-      "repro/pump_fees/all-thirtyone-v144/donation-sequence.json.gz",
-      "repro/pump_fees/all-thirtyone-v144/surfpool-buyback.json.gz",
-      "repro/pump_fees/all-thirtyone-v144/surfpool-sharing.json.gz",
-      "repro/pump_fees/all-thirtyone-v144/surfpool-withdraw.json.gz",
-      "repro/pump_fees/all-thirtyone-v144/surfpool-donation.json.gz",
-      "repro/pump_fees/all-thirtyone-v144/surfpool-social.json.gz",
-      "repro/pump_fees/all-thirtyone-v144/surfpool-social-v2.json.gz",
-      "repro/pump_fees/all-thirtyone-v144/surfpool-admin-cto.json.gz",
-      "repro/pump_fees/all-thirtyone-v144/surfpool-sharing-update.json.gz"
+      "repro/pump_fees/error-enum-v144/donation-sequence.json.gz"
     ],
     "compiler_family_candidates": [
       "v1.44",
@@ -197,13 +189,14 @@
     "preferred_compiler_candidate": "v1.44",
     "controlled_compiler_evidence": "repro/pump_fees/compiler-family/CONTROLLED-HELPER-REPORT.md",
     "validation_reports": [
-      "repro/pump_fees/all-thirtyone-v144/differential.json.gz",
-      "repro/pump_fees/all-thirtyone-v144/initializer-history.json.gz",
-      "repro/pump_fees/all-thirtyone-v144/initializer-rejections.json.gz"
+      "repro/pump_fees/error-enum-v144/differential.json.gz",
+      "repro/pump_fees/error-enum-v144/initializer-history.json.gz",
+      "repro/pump_fees/error-enum-v144/initializer-rejections.json.gz",
+      "repro/pump_fees/error-enum-v144/messages.json.gz"
     ],
     "authentic_historical_replays": [
       {
-        "report": "repro/pump_fees/all-thirtyone-v144/initializer-history.json.gz",
+        "report": "repro/pump_fees/error-enum-v144/initializer-history.json.gz",
         "transactions": "repro/pump_fees/initializer-history/transactions"
       }
     ],
@@ -211,7 +204,15 @@
       "All31 bodies are implemented, but bounded fixtures and partially isolated CPI-context checks do not establish complete historical source equivalence.",
       "Initializer uses two genuine signed historical messages against the later capture; signature verification is enabled and only blockhash freshness is adapted. This is not a full historical bank reproduction.",
       "All full-file byte comparisons remain different."
-    ]
+    ],
+    "previous_surfpool_checkpoint": {
+      "artifact": "repro/pump_fees/all-thirtyone-v144/pump_fees_candidate.so",
+      "readme": "repro/pump_fees/all-thirtyone-v144/README.md",
+      "comparisons": 112,
+      "signed_transactions": 224,
+      "scope": "Separate prior executable; not rerun after enum-only correction."
+    },
+    "error_enum_evidence": "repro/pump_fees/error-enum-v144/README.md"
   },
   "mayhem": {
     "source_reconstruction": "partial_handlers_compiled",

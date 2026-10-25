@@ -38,9 +38,13 @@ Temporary serialized creator/admin state before each CPI is retained, because
 the called program reads that state. These cases use normally signed test-owned
 keys and synthetic local accounts; they do not prove every live sharing transition.
 
-The combined v1.44 checkpoint passes 112 independent Surfpool comparisons with
-224 signed local transactions plus the ten-step persistent donation sequence.
-Its artifact, source hashes and receipts are indexed by `repro/status.json`.
+The [prior v1.44 checkpoint](../../repro/pump_fees/all-thirtyone-v144/README.md)
+passes 112 independent Surfpool comparisons with 224 signed local transactions.
+All Surfpool counts below refer to that retained executable. The current complete
+error-enum build passes 17,363 SBF checks and the ten-step persistent donation
+sequence. Its source hashes and receipts are indexed by `repro/status.json`.
+The enum restores four omitted IDL variants and the original literal `format`
+messages for errors 6003 and 6011.
 
 The sharing reset and two update handlers add 480 comparisons. Reset runs through
 the captured Pump administrative caller and its own PDA-signed CPI. Sharing
@@ -101,7 +105,7 @@ The global initializer reads the older 740-byte Pump Global layout, authenticate
 its authority and PDA, creates the 338-byte Fees global with canonical bump, and
 emits the exact event log and self-CPI. Its 180 comparisons include prefunding,
 malformed accounts, authorization, argument boundaries and CPI rollback. The
-31-instruction candidate passes 17,361 cases; full-file byte equality remains false.
+31-instruction candidate passes 17,363 cases; full-file byte equality remains false.
 
 FeeConfig deserialization is gated by allocation: the normal schedule is read at
 2,512 bytes, the stable schedule at 4,073, and exotic flat fees at 4,097. Earlier
@@ -149,7 +153,7 @@ binaries execute locally; the donation relay source remains unrecovered.
 
 The three social-fee handlers add 1,562 signed differential cases, comparing
 state, errors, events, CPI instructions and optional claim return values. The
-same combined executable also passes 29 Surfpool comparisons (58 signed
+prior retained executable also passes 29 Surfpool comparisons (58 signed
 transactions) for social creation, SOL claims and token claims. See the
 [social recovery notes](../../localnet/recovery/fees-social/README.md) for the
 179-byte rent reserve, cooldown, versioned initialization, saturating counters,

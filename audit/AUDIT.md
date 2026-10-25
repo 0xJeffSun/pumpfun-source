@@ -75,7 +75,7 @@ confirmed vulnerability without a reachable configuration path.
 
 ### Executing recovered handlers
 
-Pump Fees now has 31 independently compiled instruction bodies, with 17,361 original-
+Pump Fees now has 31 independently compiled instruction bodies, with 17,363 original-
 versus-candidate SBF cases. These cover two query handlers, four authority setters,
 global initialization against the historical 740-byte Pump Global layout, and
 three configuration setters, permissionless resize, and two deprecated rejection
@@ -85,7 +85,7 @@ remain candidates rather than an established historical graph.
 ### Parallel reconstruction checkpoint: 94 implemented handlers and two partial paths
 
 Saved builds cover Pump 18, PumpSwap 28, Pump Fees 31 and Mayhem 17 implemented
-handlers, plus Pump's partial SOL/USDC buy_v3/sell_v3 branches. Their 35,030 local SBF
+handlers, plus Pump's partial SOL/USDC buy_v3/sell_v3 branches. Their 35,032 local SBF
 comparisons are indexed by `repro/status.json`; each report preserves its own
 coverage and limitations. Pump's SOL trade paths include Mayhem buyback suppression,
 holder-reward event fields and explicit cashback rejection. USDC quote behavior adds 130 synthetic SPL/Token2022 cases; other quote routes
@@ -254,3 +254,12 @@ PDA signature for CPI. See [recovery details](pump_amm/CREATOR_REASSIGNMENT_RECO
 for ordering corrections, synthetic-state limits and exact build provenance. Ten
 AMM IDL handlers remain absent. This addition is outside the source review frozen
 at commit 329fc44 and does not complete the original-program security assessment.
+
+### Fees error-message fidelity
+
+The current Fees build restores the complete 37-variant IDL error enum and the
+literal `format` messages observed for errors 6003 and 6011. All prior 17,361 SBF
+checks and two added error-message comparisons pass, for 17,363. The earlier
+112 Surfpool comparisons refer to the retained pre-correction executable.
+Source locations and compute logs still differ. This repairs reconstruction
+fidelity and does not assert a vulnerability or complete source equivalence.

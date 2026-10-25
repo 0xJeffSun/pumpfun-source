@@ -81,7 +81,7 @@ and v1.46. The complete captured `core::fmt::write` and `__multi3` bodies match
 v1.44 exactly; those representative bodies differ in the other tested releases.
 This makes v1.44 the preferred tested stock candidate for Fees, without excluding
 untested v1.46.1, custom sysroots or different build settings. The current
-thirty-one-body Fees checkpoint compiles with v1.44 and passes all 17,361
+thirty-one-body Fees checkpoint compiles with v1.44 and passes all 17,363
 saved behavioral cases. Its full binary still differs from the capture.
 
 The [linked function comparison](../repro/pump_fees/framework-matching/README.md)
@@ -91,3 +91,8 @@ handler bodies, twelve generated instruction wrappers, and Anchor error/IDL
 helpers. Relocation and internal-call immediates are masked only in memory;
 relocated data and unmapped callees remain unresolved. This guides further
 source recovery without changing any executable or establishing byte identity.
+
+The [complete Fees error enum](../repro/pump_fees/error-enum-v144/README.md)
+restores four omitted IDL variants and two literal runtime messages. Its generated
+name and display functions add two complete instruction-pattern matches, while
+all prior behavioral regressions pass. Whole-program bytes still differ.

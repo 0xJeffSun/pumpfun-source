@@ -17,10 +17,10 @@ python3 scripts/test_tooling.py
 A partial Rust fee-tier selector now matches the original instruction sequence except
 for unresolved relocations with platform-tools v1.43, and passes 1,215 local
 differential cases. Recovered quote-mint routing additionally passes 9,428 original-program
-queries, but its compiled instructions still differ. All 31 Fees instruction bodies pass 17,361 independent SBF comparisons; eighteen recovered Pump
+queries, but its compiled instructions still differ. All 31 Fees instruction bodies pass 17,363 independent SBF comparisons; eighteen recovered Pump
 handlers plus partial SOL/USDC buy/sell branches pass 1,924. Twenty-eight PumpSwap
 handlers pass 12,792 comparisons, and seventeen Mayhem handlers pass 2,953. These
-35,030 SBF cases cover 94 implemented handlers and two partial trade paths, not the
+35,032 SBF cases cover 94 implemented handlers and two partial trade paths, not the
 complete programs. Two Fees handlers are deprecated dispatches that always reject.
 A separate native accounting fragment is tested against 206
 original Pump sell cases. See [the recovery experiment](docs/FEE_SELECTION.md).
@@ -28,8 +28,10 @@ original Pump sell cases. See [the recovery experiment](docs/FEE_SELECTION.md).
 The [controlled compiler comparison](repro/pump_fees/compiler-family/CONTROLLED-HELPER-REPORT.md)
 favors platform-tools v1.44 among the tested Fees builds: two complete runtime
 helper bodies match the capture exactly. The current Fees candidate uses that
-compiler and also passes 112 independent Surfpool comparisons with 224 signed local
-transactions. Neither result proves the complete historical build configuration.
+compiler. The [previous retained Fees build](repro/pump_fees/all-thirtyone-v144/README.md)
+also passed 112 independent Surfpool comparisons with 224 signed local transactions.
+The current error-enum correction passes its full SBF regression and targeted message
+checks. These results do not prove the complete historical build configuration.
 
 [Recovery status](docs/RECOVERY.md) separates observed evidence from unresolved work.
 [Tooling](docs/TOOLING.md) covers recapture, disassembly and strict candidate comparison.

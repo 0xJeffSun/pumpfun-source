@@ -311,11 +311,13 @@ pub const USDC: [u8; 32] = [198,250,122,243,190,219,173,58,61,101,243,106,171,20
 
 #[error_code]
 pub enum FeeError {
+    #[msg("Only Pump and PumpSwap programs can call this instruction")]
+    UnauthorizedProgram = 0,
     #[msg("Invalid admin")]
     InvalidAdmin = 1,
     #[msg("No fee tiers provided")]
     NoFeeTiers = 2,
-    #[msg("Too many fee tiers")]
+    #[msg("format")]
     TooManyFeeTiers = 3,
     #[msg("The offset should be <= fee_config.fee_tiers.len()")]
     OffsetNotContinuous = 4,
@@ -329,11 +331,9 @@ pub enum FeeError {
     InvalidPool = 8,
     #[msg("Sharing config authority has been revoked - sharing config can only be updated once")]
     SharingConfigAdminRevoked = 9,
-    #[msg("Share calculation overflow")]
-    ShareCalculationOverflow = 15,
     #[msg("No shareholders provided")]
     NoShareholders = 10,
-    #[msg("Too many shareholders")]
+    #[msg("format")]
     TooManyShareholders = 11,
     #[msg("Duplicate shareholder address")]
     DuplicateShareholder = 12,
@@ -341,26 +341,26 @@ pub enum FeeError {
     NotEnoughRemainingAccounts = 13,
     #[msg("Invalid share total - must equal 10_000 basis points")]
     InvalidShareTotal = 14,
-    #[msg("Shareholder cannot have zero share")]
-    ZeroShareNotAllowed = 17,
-    #[msg("Remaining account key doesn't match shareholder address")]
-    ShareholderAccountMismatch = 20,
-    #[msg("Reward split can only be updated once")]
-    FeeSharesAlreadyUpdated = 24,
-    #[msg("quote_mint is not the bonding curve's quote mint")]
-    InvalidQuoteMint = 34,
+    #[msg("Share calculation overflow")]
+    ShareCalculationOverflow = 15,
     #[msg("The given account is not authorized to execute this instruction.")]
     NotAuthorized = 16,
+    #[msg("Shareholder cannot have zero share")]
+    ZeroShareNotAllowed = 17,
     #[msg("Fee sharing config is not active")]
     SharingConfigNotActive = 18,
     #[msg("AMM accounts are required for graduated coins")]
     AmmAccountsRequiredForGraduatedCoin = 19,
+    #[msg("Remaining account key doesn't match shareholder address")]
+    ShareholderAccountMismatch = 20,
     #[msg("Feature is currently deactivated")]
     FeatureDeactivated = 21,
     #[msg("User ID exceeds maximum length")]
     UserIdTooLong = 22,
     #[msg("Instruction is deprecated")]
     DeprecatedInstruction = 23,
+    #[msg("Reward split can only be updated once")]
+    FeeSharesAlreadyUpdated = 24,
     #[msg("Math overflow")]
     MathOverflow = 25,
     #[msg("Invalid buybackindex")]
@@ -373,6 +373,14 @@ pub enum FeeError {
     AccountTypeNotSupported = 29,
     #[msg("Mint does not match quote mint")]
     InvalidMint = 30,
+    #[msg("Unsupported quote mint")]
+    UnsupportedQuoteMint = 31,
+    #[msg("Invalid remaining accounts")]
+    InvalidRemainingAccounts = 32,
+    #[msg("Pool creator_fees must be swept before the shares change")]
+    PoolCreatorFeesNotSwept = 33,
+    #[msg("quote_mint is not the bonding curve's quote mint")]
+    InvalidQuoteMint = 34,
     #[msg("Token withdrawals need quote_mint, vault_ata, user_ata and token_program")]
     IncompleteTokenAccounts = 35,
     #[msg("Nothing to withdraw")]
