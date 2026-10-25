@@ -75,17 +75,17 @@ confirmed vulnerability without a reachable configuration path.
 
 ### Executing recovered handlers
 
-Pump Fees now has twenty-seven independently compiled handlers, with 16,851 original-
+Pump Fees now has 31 independently compiled instruction bodies, with 17,361 original-
 versus-candidate SBF cases. These cover two query handlers, four authority setters,
 global initialization against the historical 740-byte Pump Global layout, and
 three configuration setters, permissionless resize, and two deprecated rejection
-dispatches, two tier upserts and FeeConfig administrator transfer, two donation handlers and three social-fee handlers and referral withdrawal, four buyback handlers and sharing creation. The other 4 handlers remain unsupported. Selected compiler and dependency versions
+dispatches, two tier upserts and FeeConfig administrator transfer, two donation handlers and three social-fee handlers and referral withdrawal, four buyback handlers, sharing creation, administrative sharing reset, both sharing updates and FeeConfig initialization. All31 bodies have bounded implementations; full source/context equivalence remains unproven. Selected compiler and dependency versions
 remain candidates rather than an established historical graph.
 
-### Parallel reconstruction checkpoint: 80 implemented handlers and two partial paths
+### Parallel reconstruction checkpoint: 87 implemented handlers and two partial paths
 
-Saved builds cover Pump 14, PumpSwap 22, Pump Fees 27 and Mayhem 17 implemented
-handlers, plus Pump's partial SOL/USDC buy_v3/sell_v3 branches. Their 33,029 local SBF
+Saved builds cover Pump 14, PumpSwap 25, Pump Fees 31 and Mayhem 17 implemented
+handlers, plus Pump's partial SOL/USDC buy_v3/sell_v3 branches. Their 33,954 local SBF
 comparisons are indexed by `repro/status.json`; each report preserves its own
 coverage and limitations. Pump's SOL trade paths include Mayhem buyback suppression,
 holder-reward event fields and explicit cashback rejection. USDC quote behavior adds 130 synthetic SPL/Token2022 cases; other quote routes
@@ -207,3 +207,26 @@ sequence passed again on that executable. The compiler selection follows exact
 runtime helper-body comparisons, not complete binary equality. Full reconstruction,
 state reachability analysis, exhaustive dependency/CPI coverage and security
 assessment of all unrecovered handlers remain outstanding.
+
+### All Fees instruction bodies and AMM creator-fee paths
+
+Fees now has bounded implementations for all31 IDL instruction bodies, including
+two deprecated rejecting dispatches. The combined executable passes17,361 SBF
+comparisons and112 Surfpool comparisons. The final initializer uses two authentic,
+unchanged historical signed messages, with signature verification enabled and only
+blockhash freshness adapted for local replay. It creates the observed2,512-byte
+FeeConfig; rent, zero defaults and events match the captured program and saved
+historical metadata. This does not reproduce the entire historical bank or prove
+equivalence of all initializer account combinations.
+
+Sharing updates execute genuine Pump/AMM fee distribution before validating the
+new shares, with rollback on failure. Administrative reset is reached through the
+captured Pump caller signing its own PDA; some direct Fees context constraints
+remain only indirectly tested. All31 bodies being present is therefore a recovery
+milestone, not completed source reconstruction or a security sign-off.
+
+AMM creator-fee collection and both transfer-to-Pump variants add415 cases. The
+25-handler combined AMM candidate passes12,306 cases including prior regressions.
+The source preserves tested native-rent thresholds, quote-token transfers, exact
+CPI/event bytes and permission constraints. Dependency and lifecycle reachability
+questions remain; full ELF equality is false for all four programs.

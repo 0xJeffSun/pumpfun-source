@@ -139,3 +139,10 @@ pub struct UpsertStableFeeTiersEvent {
 
 #[event]
 pub struct UpdateAdminEvent { pub timestamp: i64, pub old_admin: Pubkey, pub new_admin: Pubkey }
+
+#[event]
+pub struct InitializeFeeConfigEvent {
+    pub timestamp: i64,
+    pub admin: Pubkey,
+    pub fee_config: Pubkey,
+}

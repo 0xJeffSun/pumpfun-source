@@ -54,7 +54,7 @@
     "compiler": "unresolved",
     "dependencies": "unresolved",
     "build_flags": "unresolved",
-    "candidate_artifact": "repro/pump_amm/extend-twenty-two/pump_amm_recovered.so",
+    "candidate_artifact": "repro/pump_amm/creator-twenty-five/pump_amm_recovered.so",
     "full_byte_equality": false,
     "comparison_status": "DIFFERS_PARTIAL_IMPLEMENTATION",
     "implemented_handlers": [
@@ -79,25 +79,30 @@
       "init_boost",
       "sweep_protocol_fee",
       "sweep_creator_fee",
-      "extend_account"
+      "extend_account",
+      "collect_coin_creator_fee",
+      "transfer_creator_fees_to_pump",
+      "transfer_creator_fees_to_pump_v2"
     ],
-    "comparison_report": "repro/pump_amm/extend-twenty-two/build-comparison.json",
-    "build_log": "repro/pump_amm/extend-twenty-two/build.log",
-    "validated_cases": 11891,
+    "comparison_report": "repro/pump_amm/creator-twenty-five/build-comparison.json",
+    "build_log": "repro/pump_amm/creator-twenty-five/build.log",
+    "validated_cases": 12306,
     "validation_reports": [
-      "repro/pump_amm/extend-twenty-two/admin-differential.json.gz",
-      "repro/pump_amm/extend-twenty-two/buyback-differential.json.gz",
-      "repro/pump_amm/extend-twenty-two/fee_config-differential.json.gz",
-      "repro/pump_amm/extend-twenty-two/resize-differential.json.gz",
-      "repro/pump_amm/extend-twenty-two/reserved-differential.json.gz",
-      "repro/pump_amm/extend-twenty-two/accumulator-differential.json.gz",
-      "repro/pump_amm/extend-twenty-two/liquidity-differential.json.gz",
-      "repro/pump_amm/extend-twenty-two/trade_v2-differential.json.gz",
-      "repro/pump_amm/extend-twenty-two/create-differential.json.gz",
-      "repro/pump_amm/extend-twenty-two/migration_create-differential.json.gz",
-      "repro/pump_amm/extend-twenty-two/boost-differential.json.gz",
-      "repro/pump_amm/extend-twenty-two/sweep-differential.json.gz",
-      "repro/pump_amm/extend-twenty-two/extend-differential.json.gz"
+      "repro/pump_amm/creator-twenty-five/admin-differential.json.gz",
+      "repro/pump_amm/creator-twenty-five/buyback-differential.json.gz",
+      "repro/pump_amm/creator-twenty-five/fee_config-differential.json.gz",
+      "repro/pump_amm/creator-twenty-five/resize-differential.json.gz",
+      "repro/pump_amm/creator-twenty-five/reserved-differential.json.gz",
+      "repro/pump_amm/creator-twenty-five/accumulator-differential.json.gz",
+      "repro/pump_amm/creator-twenty-five/liquidity-differential.json.gz",
+      "repro/pump_amm/creator-twenty-five/trade_v2-differential.json.gz",
+      "repro/pump_amm/creator-twenty-five/create-differential.json.gz",
+      "repro/pump_amm/creator-twenty-five/migration_create-differential.json.gz",
+      "repro/pump_amm/creator-twenty-five/boost-differential.json.gz",
+      "repro/pump_amm/creator-twenty-five/sweep-differential.json.gz",
+      "repro/pump_amm/creator-twenty-five/extend-differential.json.gz",
+      "repro/pump_amm/creator-twenty-five/collect-differential.json.gz",
+      "repro/pump_amm/creator-twenty-five/transfer_creator-differential.json.gz"
     ],
     "compiler_family_candidates": [
       "v1.44",
@@ -108,12 +113,12 @@
     "compiler_family_evidence": "repro/pump_fees/compiler-family/HEADER-AND-BUILD-REPORT.md"
   },
   "pump_fees": {
-    "source_reconstruction": "partial_handlers_compiled",
+    "source_reconstruction": "all_instruction_bodies_compiled_bounded_validation",
     "historical_source_recovered": false,
     "compiler": "unresolved",
     "dependencies": "unresolved",
     "build_flags": "unresolved",
-    "candidate_artifact": "repro/pump_fees/config-twentyseven-v144/pump_fees_candidate.so",
+    "candidate_artifact": "repro/pump_fees/all-thirtyone-v144/pump_fees_candidate.so",
     "full_byte_equality": false,
     "comparison_status": "DIFFERS_PARTIAL_IMPLEMENTATION",
     "compiler_candidates": [
@@ -148,24 +153,29 @@
       "update_buyback_authority",
       "update_buyback_claim_rate_limit",
       "sweep_buyback",
-      "create_fee_sharing_config"
+      "create_fee_sharing_config",
+      "admin_cto_sharing_config",
+      "update_fee_shares",
+      "update_fee_shares_v2",
+      "initialize_fee_config"
     ],
-    "comparison_report": "repro/pump_fees/config-twentyseven-v144/build-comparison.json",
-    "build_log": "repro/pump_fees/config-twentyseven-v144/build.log",
-    "validation_report": "repro/pump_fees/config-twentyseven-v144/differential.json.gz",
-    "validated_cases": 16851,
+    "comparison_report": "repro/pump_fees/all-thirtyone-v144/build-comparison.json",
+    "build_log": "repro/pump_fees/all-thirtyone-v144/build.log",
+    "validated_cases": 17361,
     "deprecated_dispatches": [
       "revoke_fee_sharing_authority",
       "transfer_fee_sharing_authority"
     ],
     "signed_sequence_reports": [
-      "repro/pump_fees/config-twentyseven-v144/donation-sequence.json.gz",
-      "repro/pump_fees/config-twentyseven-v144/surfpool-buyback.json.gz",
-      "repro/pump_fees/config-twentyseven-v144/surfpool-sharing.json.gz",
-      "repro/pump_fees/config-twentyseven-v144/surfpool-withdraw.json.gz",
-      "repro/pump_fees/config-twentyseven-v144/surfpool-donation.json.gz",
-      "repro/pump_fees/config-twentyseven-v144/surfpool-social.json.gz",
-      "repro/pump_fees/config-twentyseven-v144/surfpool-social-v2.json.gz"
+      "repro/pump_fees/all-thirtyone-v144/donation-sequence.json.gz",
+      "repro/pump_fees/all-thirtyone-v144/surfpool-buyback.json.gz",
+      "repro/pump_fees/all-thirtyone-v144/surfpool-sharing.json.gz",
+      "repro/pump_fees/all-thirtyone-v144/surfpool-withdraw.json.gz",
+      "repro/pump_fees/all-thirtyone-v144/surfpool-donation.json.gz",
+      "repro/pump_fees/all-thirtyone-v144/surfpool-social.json.gz",
+      "repro/pump_fees/all-thirtyone-v144/surfpool-social-v2.json.gz",
+      "repro/pump_fees/all-thirtyone-v144/surfpool-admin-cto.json.gz",
+      "repro/pump_fees/all-thirtyone-v144/surfpool-sharing-update.json.gz"
     ],
     "compiler_family_candidates": [
       "v1.44",
@@ -175,7 +185,23 @@
     ],
     "compiler_family_evidence": "repro/pump_fees/compiler-family/HEADER-AND-BUILD-REPORT.md",
     "preferred_compiler_candidate": "v1.44",
-    "controlled_compiler_evidence": "repro/pump_fees/compiler-family/CONTROLLED-HELPER-REPORT.md"
+    "controlled_compiler_evidence": "repro/pump_fees/compiler-family/CONTROLLED-HELPER-REPORT.md",
+    "validation_reports": [
+      "repro/pump_fees/all-thirtyone-v144/differential.json.gz",
+      "repro/pump_fees/all-thirtyone-v144/initializer-history.json.gz",
+      "repro/pump_fees/all-thirtyone-v144/initializer-rejections.json.gz"
+    ],
+    "authentic_historical_replays": [
+      {
+        "report": "repro/pump_fees/all-thirtyone-v144/initializer-history.json.gz",
+        "transactions": "repro/pump_fees/initializer-history/transactions"
+      }
+    ],
+    "coverage_limitations": [
+      "All31 bodies are implemented, but bounded fixtures and partially isolated CPI-context checks do not establish complete historical source equivalence.",
+      "Initializer uses two genuine signed historical messages against the later capture; signature verification is enabled and only blockhash freshness is adapted. This is not a full historical bank reproduction.",
+      "All full-file byte comparisons remain different."
+    ]
   },
   "mayhem": {
     "source_reconstruction": "partial_handlers_compiled",

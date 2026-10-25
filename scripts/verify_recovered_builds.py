@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Check saved partial-build provenance against current sources, artifacts and captures."""
-import argparse,gzip,hashlib,json,pathlib
+import argparse,base64,gzip,hashlib,json,pathlib
 from compare import compare
 ROOT=pathlib.Path(__file__).resolve().parents[1]
 sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
@@ -34,4 +34,24 @@ for name,status in json.loads((ROOT/'repro/status.json').read_text()).items():
    assert all(step['match'] and step['original']['signature_verification'] and step['candidate']['signature_verification'] for step in r['steps']),name
   if 'signed_transactions' in r:
    assert r['signed_transactions']==len(r['original'])+len(r['candidate'])==2*r['cases'],name
+ for evidence in status.get('authentic_historical_replays',[]):
+  from solders.transaction import VersionedTransaction
+  receipt=ROOT/evidence['report'];data=receipt.read_bytes()
+  r=json.loads(gzip.decompress(data) if receipt.suffix=='.gz' else data)
+  assert r['candidate_sha256']==sha(candidate) and r['original_sha256']==sha(original),name
+  assert not r['mismatches'] and r['signed_transactions']==2*r['case_count']==2*len(r['cases']),name
+  assert 'BlockhashNotFound' in r['freshness_control']['error'],name
+  for row in r['cases']:
+   capture=json.loads((ROOT/evidence['transactions']/f"admin-success-{row['index']}.json").read_text())['response']['result']
+   raw=base64.b64decode(capture['transaction'][0]);tx=VersionedTransaction.from_bytes(raw)
+   assert all(tx.verify_with_results()) and bytes(tx)==raw,name
+   assert row['match'],name
+   for side in ['original','candidate']:
+    case=row[side]
+    assert case['error'] is None and case['signature_verification'] and case['sigverify_runtime_enabled'],name
+    assert case['signed_message_and_signature_unchanged'] and not case['blockhash_freshness_check'],name
+    assert case['raw_transaction_sha256']==hashlib.sha256(raw).hexdigest(),name
+    assert case['signature']==str(tx.signatures[0]) and case['raw_transaction_bytes']==len(raw),name
+    assert case['state_matches_static_prediction'] and case['events_match_recorded_history'],name
+    assert case['postbalances']==capture['meta']['postBalances'],name
  print(name,': partial build provenance consistent;',total,'saved differential cases; full byte equality',report['comparison']['full_byte_equality'])

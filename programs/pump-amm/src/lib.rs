@@ -7,6 +7,10 @@ mod create;
 mod boost;
 mod sweep;
 mod extend;
+mod collect;
+mod transfer_creator;
+use transfer_creator::*;
+use collect::*;
 use extend::*;
 use sweep::*;
 use boost::*;
@@ -20,6 +24,11 @@ declare_id!("pAMMBay6oceH9fJKBRHGP5D4bD4sWpmSwMn52FMfXEA");
 #[program]
 pub mod pump_amm_recovered {
     use super::*;
+
+    pub fn transfer_creator_fees_to_pump(ctx: Context<TransferCreatorFeesToPump>) -> Result<()> { transfer_creator::legacy(ctx) }
+    pub fn transfer_creator_fees_to_pump_v2(ctx: Context<TransferCreatorFeesToPumpV2>) -> Result<()> { transfer_creator::v2(ctx) }
+
+    pub fn collect_coin_creator_fee(ctx: Context<CollectCoinCreatorFee>) -> Result<()> { collect::execute(ctx) }
 
     pub fn extend_account(ctx: Context<ExtendAccount>) -> Result<()> { extend::execute(ctx) }
 

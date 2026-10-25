@@ -1,4 +1,4 @@
-//! Partial reconstruction: twenty-seven handlers implemented; remaining handlers unsupported.
+//! Partial reconstruction: all thirty-one instruction bodies implemented with bounded validation.
 //! It is not the deployed program source.
 use anchor_lang::prelude::*;
 
@@ -8,6 +8,10 @@ mod social;
 mod withdrawal;
 mod buyback;
 mod sharing;
+mod sharing_update;
+mod sharing_admin;
+use sharing_update::*;
+use sharing_admin::*;
 use buyback::*;
 use sharing::*;
 use withdrawal::*;
@@ -25,8 +29,8 @@ pub mod pump_fees_candidate {
     use super::*;
 
     #[allow(unused_variables)]
-    pub fn admin_cto_sharing_config(_ctx: Context<AdminCtoSharingConfig>, new_admin: Option<Pubkey>) -> Result<()> {
-        Err(error!(CandidateError::Unsupported))
+    pub fn admin_cto_sharing_config(ctx: Context<AdminCtoSharingConfig>, new_admin: Option<Pubkey>) -> Result<()> {
+        sharing_admin::admin_cto_sharing_config(ctx, new_admin)
     }
 
     #[allow(unused_variables)]
@@ -111,8 +115,17 @@ pub mod pump_fees_candidate {
     }
 
     #[allow(unused_variables)]
-    pub fn initialize_fee_config(_ctx: Context<InitializeFeeConfig>) -> Result<()> {
-        Err(error!(CandidateError::Unsupported))
+    pub fn initialize_fee_config(ctx: Context<InitializeFeeConfig>) -> Result<()> {
+        ctx.accounts.fee_config.bump = ctx.bumps.fee_config;
+        ctx.accounts.fee_config.admin = ctx.accounts.admin.key();
+        let event = InitializeFeeConfigEvent {
+            timestamp: Clock::get()?.unix_timestamp,
+            admin: ctx.accounts.admin.key(),
+            fee_config: ctx.accounts.fee_config.key(),
+        };
+        emit!(event);
+        emit_cpi!(event);
+        Ok(())
     }
 
     #[allow(unused_variables)]
@@ -237,13 +250,13 @@ pub mod pump_fees_candidate {
     }
 
     #[allow(unused_variables)]
-    pub fn update_fee_shares(_ctx: Context<UpdateFeeShares>, shareholders: Vec<Shareholder>) -> Result<()> {
-        Err(error!(CandidateError::Unsupported))
+    pub fn update_fee_shares<'info>(ctx: Context<'_, '_, '_, 'info, UpdateFeeShares<'info>>, shareholders: Vec<Shareholder>) -> Result<()> {
+        sharing_update::update_fee_shares(ctx, shareholders)
     }
 
     #[allow(unused_variables)]
-    pub fn update_fee_shares_v2(_ctx: Context<UpdateFeeSharesV2>, shareholders: Vec<Shareholder>) -> Result<()> {
-        Err(error!(CandidateError::Unsupported))
+    pub fn update_fee_shares_v2<'info>(ctx: Context<'_, '_, '_, 'info, UpdateFeeSharesV2<'info>>, shareholders: Vec<Shareholder>) -> Result<()> {
+        sharing_update::update_fee_shares_v2(ctx, shareholders)
     }
 
     #[allow(unused_variables)]
@@ -318,6 +331,24 @@ pub enum FeeError {
     SharingConfigAdminRevoked = 9,
     #[msg("Share calculation overflow")]
     ShareCalculationOverflow = 15,
+    #[msg("No shareholders provided")]
+    NoShareholders = 10,
+    #[msg("Too many shareholders")]
+    TooManyShareholders = 11,
+    #[msg("Duplicate shareholder address")]
+    DuplicateShareholder = 12,
+    #[msg("Not enough remaining accounts")]
+    NotEnoughRemainingAccounts = 13,
+    #[msg("Invalid share total - must equal 10_000 basis points")]
+    InvalidShareTotal = 14,
+    #[msg("Shareholder cannot have zero share")]
+    ZeroShareNotAllowed = 17,
+    #[msg("Remaining account key doesn't match shareholder address")]
+    ShareholderAccountMismatch = 20,
+    #[msg("Reward split can only be updated once")]
+    FeeSharesAlreadyUpdated = 24,
+    #[msg("quote_mint is not the bonding curve's quote mint")]
+    InvalidQuoteMint = 34,
     #[msg("The given account is not authorized to execute this instruction.")]
     NotAuthorized = 16,
     #[msg("Fee sharing config is not active")]

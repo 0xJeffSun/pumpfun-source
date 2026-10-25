@@ -1,6 +1,6 @@
 # Partial Pump Fees reconstruction
 
-Twenty-seven handlers execute recovered behavior: `get_fees`, `get_fees_with_quote_mint`,
+All 31 IDL instruction bodies now execute bounded recovered behavior: `get_fees`, `get_fees_with_quote_mint`,
 `set_authority`, `set_social_claim_authority`, `set_disable_flags` and
 `set_claim_rate_limit`, `initialize_fee_program_global`, `update_fee_config`,
 `update_stable_fee_config`, `set_exotic_flat_fees`, `extend_fee_config`,
@@ -8,10 +8,13 @@ Twenty-seven handlers execute recovered behavior: `get_fees`, `get_fees_with_quo
 `upsert_stable_fee_tiers`, `update_admin`, `create_donation_fee_pda` and
 `crank_donation_fee_pda`, `create_social_fee_pda`, `claim_social_fee_pda` and
 `claim_social_fee_pda_v2`, `withdraw`, `initialize_buyback`, `update_buyback_authority`,
-`update_buyback_claim_rate_limit`, `sweep_buyback` and `create_fee_sharing_config`.
-The other 4 instruction bodies remain unsupported;
-their generated account declarations are not recovered constraints. This crate
-is an experimental reconstruction target, not a deployable substitute.
+`update_buyback_claim_rate_limit`, `sweep_buyback`, `create_fee_sharing_config`,
+`admin_cto_sharing_config`, `update_fee_shares`, `update_fee_shares_v2` and
+`initialize_fee_config`. Two of these are deprecated rejecting dispatches.
+All instruction bodies being present does not establish every account constraint,
+historical source identity, complete security coverage or byte equality. Some
+sharing-reset constraints are tested only through the genuine Pump caller. This
+crate remains an experimental reconstruction target, not a deployable substitute.
 
 The interface scaffold originated in `research/imported-lab/reconstruction/pump-fun-fees-candidate`
 (source commit and unchanged upstream hashes in `research/import-manifest.json`).
@@ -35,9 +38,24 @@ Temporary serialized creator/admin state before each CPI is retained, because
 the called program reads that state. These cases use normally signed test-owned
 keys and synthetic local accounts; they do not prove every live sharing transition.
 
-The combined v1.44 checkpoint passes 81 independent Surfpool comparisons with
-162 signed local transactions plus the ten-step persistent donation sequence.
+The combined v1.44 checkpoint passes 112 independent Surfpool comparisons with
+224 signed local transactions plus the ten-step persistent donation sequence.
 Its artifact, source hashes and receipts are indexed by `repro/status.json`.
+
+The sharing reset and two update handlers add 480 comparisons. Reset runs through
+the captured Pump administrative caller and its own PDA-signed CPI. Sharing
+updates distribute old fees through the captured Pump/AMM programs, then validate
+the new list and revoke further administrator updates. Failure rolls back the
+earlier transfers. The source preserves the observed one-to-ten, nonzero,
+unique-shareholder and checked-u16 total constraints and error ordering.
+
+The final initializer adds two exact historical signed-message replays and 28
+ordinary-signer rejection cases. The original administrator's public signature
+is verified; the signed message is unchanged. Only stale-blockhash freshness is
+adapted for local replay. The 2,512-byte account, zero defaults, rent/balances and
+events match both the captured executable and saved historical transaction
+metadata. These are two initialization paths against a later executable, not a
+complete historical bank reconstruction. See [the evidence](../../repro/pump_fees/initializer-history/REPORT.md).
 
 Observed parser rules: wrong discriminator or allocation below 2,512 bytes returns
 InvalidAccountData; malformed vector serialization returns BorshIoError. Standard
@@ -83,7 +101,7 @@ The global initializer reads the older 740-byte Pump Global layout, authenticate
 its authority and PDA, creates the 338-byte Fees global with canonical bump, and
 emits the exact event log and self-CPI. Its 180 comparisons include prefunding,
 malformed accounts, authorization, argument boundaries and CPI rollback. The
-twenty-seven-handler candidate passes 16,851 cases; full-file byte equality remains false.
+31-instruction candidate passes 17,361 cases; full-file byte equality remains false.
 
 FeeConfig deserialization is gated by allocation: the normal schedule is read at
 2,512 bytes, the stable schedule at 4,073, and exotic flat fees at 4,097. Earlier
