@@ -11,6 +11,7 @@ on:
           - spl_token
           - spl_token_2022
           - associated_token
+          - token_metadata
           - both
 permissions:
   contents: read
@@ -79,5 +80,27 @@ jobs:
         with:
           name: ata-rebuild-${{ github.run_id }}
           path: work/ata-rebuild
+          if-no-files-found: error
+          retention-days: 30
+  token-metadata:
+    if: inputs.dependency == 'token_metadata'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          repository: metaplex-foundation/mpl-token-metadata
+          ref: 667d7c95dbe4d547fb5312b3fc99104a08204f99
+          path: work/metaplex-source
+          persist-credentials: false
+      - name: Build official-source candidate using pinned CLI2.0.9 image
+        run: python3 scripts/pump_build_token_dependency.py --dependency token_metadata --source work/metaplex-source --output work/metaplex-rebuild
+      - name: Preserve candidate source, logs, generated ELF and honest comparison
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: metaplex-rebuild-${{ github.run_id }}
+          path: work/metaplex-rebuild
           if-no-files-found: error
           retention-days: 30
