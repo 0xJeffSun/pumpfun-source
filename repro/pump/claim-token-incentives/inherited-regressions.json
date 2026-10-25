@@ -1,0 +1,62 @@
+{
+  "scope": "Six inherited signed offline Pump/QuoteControl regressions rerun against the bounded claim-token candidate. Mint-reserves retains two previously known source-location log differences; no behavior mismatch.",
+  "baseline_commit": "a9c06891d4b1eed53732296f4ace924b10fd0dc5",
+  "candidate_sha256": "dd9d93a64d4f6e2fb4fcff4f50c88fb25d8fefa641424814423d5a4fae03a8d0",
+  "target_sha256": "7a19affaa2c6187e04a5fe0ea298cee81fa5eb8c24cfcc30d85f615e89f7b02d",
+  "total_cases_or_steps": 161,
+  "mint_reserves_normalized_log_differences": [
+    "unknown_mint",
+    "empty_list"
+  ],
+  "qualification": "The inherited reserves-admin driver retains its older hard-coded baseline_commit metadata even though its output pins the new candidate SHA. Full 7,957-suite regression was not rerun in this sparse checkout. These six selected suites compare bounded paths only.",
+  "receipts": [
+    {
+      "name": "admin",
+      "cases_or_steps": 22,
+      "file": "inherited-admin.json.gz",
+      "compressed_sha256": "8d6f020b14a79ff0475453d87e35be41dce327035d89a7f1c1a2cfa2b1ab1f6d",
+      "json_sha256": "111f1a733bfa1646c387c6223b01f0294c6bb857cbb0b2215ec34ca01159f04a",
+      "json_bytes": 557393
+    },
+    {
+      "name": "mint-reserves",
+      "cases_or_steps": 38,
+      "file": "inherited-mint-reserves.json.gz",
+      "compressed_sha256": "3f9074ba11c6833f677ac5dbe2757374e26f9ef8e5df9923bc8aaca69ef3e64a",
+      "json_sha256": "922528ae76c96592b63a9ece01ad7609751963c4e078a4f6235a35ac87040285",
+      "json_bytes": 1031220
+    },
+    {
+      "name": "reserves-admin",
+      "cases_or_steps": 16,
+      "file": "inherited-reserves-admin.json.gz",
+      "compressed_sha256": "0b6b5d0847ced4d47a85c6dc6b8143b78056a5cc86d5da5beb8b90ffdc344231",
+      "json_sha256": "400871a9d02f816588f36d7d70fc590ceabbff6678ed9a71a67b550fb325ab6e",
+      "json_bytes": 607945
+    },
+    {
+      "name": "composed",
+      "cases_or_steps": 4,
+      "file": "inherited-composed.json.gz",
+      "compressed_sha256": "d9c3ff965e1ac571c218ad251959576b5888cdb27ae6293e2aa1d53abd6f5e53",
+      "json_sha256": "e6d9c7d14fb3f4add4d480c25adf324625de1fa2e83e88bb642c737d2231d92d",
+      "json_bytes": 88947
+    },
+    {
+      "name": "initialize",
+      "cases_or_steps": 15,
+      "file": "inherited-initialize.json.gz",
+      "compressed_sha256": "d676db0ffbb7aec7c48a3a09d8890f6a46b2a3b2b04f5b27f8a954322a241d1d",
+      "json_sha256": "d972028dcaefa9658c01d8db4a36dc7bf9bc7f49b1db370f07432b963b6f2685",
+      "json_bytes": 241425
+    },
+    {
+      "name": "volume",
+      "cases_or_steps": 66,
+      "file": "inherited-volume.json.gz",
+      "compressed_sha256": "4b6d188d2241c45b887bbf2fffd472286d704f0d5acaf9a03b3b21f85bf0bcde",
+      "json_sha256": "4bf5689d18e07d7fe7db726c63e76b333a383ab5e8217eea779b172e59e32927",
+      "json_bytes": 388243
+    }
+  ]
+}
