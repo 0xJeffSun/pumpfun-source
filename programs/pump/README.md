@@ -17,15 +17,22 @@ The Anchor 0.31.1 source implements forty-nine recovered handler slices:
 `claim_token_incentives`. It also implements **partial `sell_v3`, `buy_v3`, `buy_exact_quote_in_v3`, `create_v2` and `multi_hop_curve_swap` paths**.
 It is incomplete and is not a deployable replacement. The current sell_v2 quote-transfer-fee minimum-output check and fee-event fields have a confirmed mismatch with the captured original; the saved passing suites do not cover that boundary.
 
-The current frozen checkpoint is [native-curve-partial-fortyeight](../../repro/pump/native-curve-partial-fortyeight/README.md):
+The current frozen checkpoint is [bonding-curve-serializer-fortyeight](../../repro/pump/bonding-curve-serializer-fortyeight/README.md):
 9,217 differential cases across 37 suites and 1,024 Surfpool comparisons using
 2,048 signed transactions across 28 runners passed. The Surfpool transactions
-contain 2,980 verified individual signatures. The candidate is 1,534,904 bytes,
-SHA-256 `6271a6d5782d350f6d716a91712d283592d4589aa8e9befb9c1f1a0dd3ac7ebe`.
-It preserves all 48 recovered handlers and adds only a partial native curve-run
-branch. The main and fully regressed scratch clean builds are whole-file identical.
+contain 2,980 verified individual signatures. The candidate is 1,534,768 bytes,
+SHA-256 `92575cd082bf76b332044a7d09371a9764db8b2cc40180bf1418f261945bbd6a`.
+It preserves all 48 recovered handlers and five partial paths. Explicit
+`BondingCurve` account traits propagate serializer I/O errors as observed in the
+captured original. The complete 1,840-byte exit body matches under strict
+relocation/internal-call normalization, including all 25 direct calls to six
+unique matched target bodies and the eight-byte discriminator. The main and
+fully regressed scratch clean builds are whole-file identical. See
+[the serializer recovery report](../../audit/pump/BONDING_CURVE_SERIALIZATION_RECOVERY.md).
 
-The new 56-case suite uses ordinary verified outer signatures and the captured
+The earlier [native-curve-partial-fortyeight](../../repro/pump/native-curve-partial-fortyeight/README.md)
+checkpoint added the partial native curve-run branch. Its retained 56-case suite
+uses ordinary verified outer signatures and the captured
 AMM program's genuine PDA-signed Pump CPI. Fifty comparisons reach Pump; six are
 rejected by the captured AMM before Pump, and only 11 comparisons succeed. The
 suite records 112 verified signatures. Its accepted scope is one native curve per
@@ -34,13 +41,15 @@ ordinary 166-byte curve. Multi-curve runs, mixed endpoint flags, non-native or
 nested quote paths, Token-2022, holder rewards and synthetic completion remain
 unsupported. See [the curve-run recovery report](../../audit/pump/MULTI_HOP_CURVE_RECOVERY.md).
 
-All 36 prior differential suites and 28 prior Surfpool runners were freshly run
-against the composite executable. Each of the 65 saved receipt files is bound to
-the tested ELF and its 36 actual compiler inputs. Older runners' embedded source
-maps are preserved as snapshots of the then-current Pump48 checkout; they are
-not the composite build-input map. Quote-control receipts directly bind the
-adjacent composite build report and all its source inputs. Main-path receipt
-reuse is justified only by complete executable identity.
+All 37 existing differential suites and 28 existing Surfpool runners were freshly
+run against the serializer scratch executable. Each of the 65 saved receipt files
+is bound to the tested ELF and its 36 actual compiler inputs. Older runners'
+embedded source maps remain snapshots of the baseline Pump48/five-partial
+checkout; they are not the serializer build-input map. Quote-control receipts
+directly bind the adjacent serializer build report and all its source inputs.
+Main-path receipt reuse is justified only by complete executable identity. The
+differential receipts contain 15,830 transactions and 24,216 verified signatures;
+these counts include synthetic local fixtures, not live network transactions.
 
 The earlier [quote-control-fortyeight](../../repro/pump/quote-control-fortyeight/README.md)
 checkpoint added six independent quote-control handlers and passed 9,161 cases
@@ -54,7 +63,8 @@ their historical source snapshots.
 
 The [claim-token-incentives checkpoint](../../repro/pump/claim-token-incentives/README.md)
 adds one bounded Rust handler to public source base `4ffe8bd`. This retained
-candidate predates the native-curve source merge and has not been rebuilt with it. Two clean v1.44
+candidate predates the native-curve and serializer source merges and has not
+been rebuilt with them. Two clean v1.44
 builds produced the same candidate SHA-256
 `54f79cfdfdd027ab0d1447f4e25ed6236424ecbf778893e85887c5df493c3541`,
 which differs from deployed Pump. A signed offline target/candidate comparison

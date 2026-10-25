@@ -277,3 +277,12 @@ The [Pool serializer checkpoint](../repro/pump_amm/pool-serialization-thirty-sev
 ## Partial native curve execution
 
 The [native/legacy curve checkpoint](../repro/pump/native-curve-partial-fortyeight/README.md) retains 48 implemented Pump handlers and adds a fifth partial path. The 1,534,904-byte clean main build is identical to the regressed scratch composite, SHA-256 `6271a6d5782d350f6d716a91712d283592d4589aa8e9befb9c1f1a0dd3ac7ebe`. All 9,217 comparisons across 37 suites and 1,024 Surfpool comparisons pass. The 56 new fixed-scope comparisons include six rejections before Pump and 11 successes; the actual captured AMM supplies the required PDA signature. Every receipt is bound to the tested ELF and all 36 actual compiler inputs; legacy embedded source maps remain labeled as incidental checkout snapshots. The four-program total is now 140 implemented handlers, five partial paths and 53,715 saved comparison receipts. All original whole-file comparisons still differ.
+
+
+## Current serializer and dependency-family checkpoint
+
+Pump's [BondingCurve serialization checkpoint](../repro/pump/bonding-curve-serializer-fortyeight/README.md) produces 1,534,768 bytes, SHA-256 `92575cd082bf76b332044a7d09371a9764db8b2cc40180bf1418f261945bbd6a`. The complete 1,840-byte serializer, all 25 direct calls and discriminator bytes match under the documented normalization. All 9,217 differential and 1,024 Surfpool comparisons pass on this executable.
+
+Fees' [combined social-layout and dependency-family checkpoint](../repro/pump_fees/solana-family-221-v144/README.md) produces 768,072 bytes, SHA-256 `e501ca2c744373e5653a5ac7e25a3fd20f6058765808b888c3605fd03adba60f`. Exactly eight of 253 dependency selections change, all witnessed together in an official SPL release lock. The complete social-v2 exit, six Pubkey helpers, base58 formatter and nine source records match their captured counterparts under the documented static comparison. Fresh scratch execution passes 17,441 receipts and ten sequence steps; a clean main build produces the identical whole ELF. The intermediate social-only `c181b0ba` checkpoint remains immutable history.
+
+Counts remain 140 bounded implementations, five partial handlers and 53,715 comparison receipts. No new unique runtime cases or completed core binaries are claimed. The [completion ledger](COMPLETION.md) records the remaining scope.

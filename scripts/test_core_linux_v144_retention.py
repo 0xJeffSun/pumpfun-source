@@ -149,6 +149,46 @@ class KeypairRetentionTests(unittest.TestCase):
         self.assertEqual(reads, [])
         self.assertTrue(all(isinstance(row, str) for row in rows))
 
+    def test_fetch_metadata_never_enters_compiler_target(self):
+        source = self.root / "source"
+        self.write("source/lib.rs", b"frozen source")
+        self.write("fetch-target/.rustc_info.json", b"synthetic Cargo metadata")
+        self.write("fetch-target/unused-keypair.json")
+        target = self.root / "target"
+        target.mkdir()
+        evidence = self.root / "evidence"
+        env = {"CARGO_TARGET_DIR": str(self.root / "fetch-target")}
+        expected = {"lib.rs": hashlib.sha256(b"frozen source").hexdigest()}
+        with forbid_reading(helper.generated_keypair_path):
+            observed = helper.prepare_compile_inputs(source, expected, self.root / "fetch-target", target, evidence, env)
+        self.assertEqual(observed, expected)
+        self.assertEqual(env["CARGO_TARGET_DIR"], str(target))
+        self.assertEqual(list(target.iterdir()), [])
+        self.assertEqual(set(json.loads((evidence / "fetch-target-files.json").read_text())), {".rustc_info.json"})
+        self.assertEqual(json.loads((evidence / "fetch-target-excluded-paths.json").read_text()), ["unused-keypair.json"])
+
+    def test_fetch_source_drift_stops_before_compiler_environment(self):
+        self.write("source/lib.rs", b"changed source")
+        (self.root / "fetch-target").mkdir()
+        (self.root / "target").mkdir()
+        env = {"CARGO_TARGET_DIR": str(self.root / "fetch-target")}
+        expected = {"lib.rs": hashlib.sha256(b"frozen source").hexdigest()}
+        with self.assertRaisesRegex(ValueError, "Frozen source changed"):
+            helper.prepare_compile_inputs(self.root / "source", expected, self.root / "fetch-target", self.root / "target", self.root / "evidence", env)
+        self.assertEqual(env["CARGO_TARGET_DIR"], str(self.root / "fetch-target"))
+        self.assertFalse((self.root / "evidence/compiler-environment.json").exists())
+
+    def test_nonempty_compile_target_is_preserved_and_rejected(self):
+        self.write("source/lib.rs", b"frozen source")
+        self.write("target/unexpected.o", b"existing object")
+        (self.root / "fetch-target").mkdir()
+        env = {"CARGO_TARGET_DIR": str(self.root / "fetch-target")}
+        expected = {"lib.rs": hashlib.sha256(b"frozen source").hexdigest()}
+        with self.assertRaisesRegex(ValueError, "separate compiler target is not empty"):
+            helper.prepare_compile_inputs(self.root / "source", expected, self.root / "fetch-target", self.root / "target", self.root / "evidence", env)
+        self.assertEqual((self.root / "target/unexpected.o").read_bytes(), b"existing object")
+        self.assertFalse((self.root / "evidence/compiler-environment.json").exists())
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
