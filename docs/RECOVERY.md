@@ -149,3 +149,7 @@ The [authority-guard checkpoint](../repro/pump_fees/authority-guard-v144/README.
 ## PumpSwap legacy buys and sell-event correction
 
 The [35-handler checkpoint](../repro/pump_amm/legacy-buy-thirty-five/README.md) adds legacy buy and exact-quote buy, including fee payouts and transfer-fee handling. It also fixes the prior zero-fee cashback sell event mismatch. All 23 suites pass 16,221 cases, including 1,011 buy cases and 16 new sell-event cases. The 1,034,280-byte main build equals the tested scratch executable; the portable buy/sell runners were replayed against main. Three handlers and full ELF identity remain unresolved.
+
+## Metaplex source differences
+
+[Candidate5](../repro/pump/metaplex-candidate-build-5/README.md) is a fresh pinned Linux build with recovered edition conversion resets and master-edition metadata writability checks. All 53 signed boundary comparisons pass; full-file comparison still differs. Diagnostic function alignment finds 1,235 matching normalized instruction windows with corresponding calls and 16 structurally different windows. A [further five-file source trial](../repro/pump/metaplex-audit-source-recovery/README.md) targets captured burn-PDA checking and removal of a legacy metadata authority exception; its new build is pending. These dependency observations do not change the four main-program completeness claims.
