@@ -12,6 +12,12 @@ pub mod admin_cto;
 pub use admin_cto::*;
 pub mod creator_migration;
 pub use creator_migration::*;
+pub mod set_params;
+pub use set_params::*;
+pub mod set_creator;
+pub use set_creator::*;
+pub mod idl_authority;
+pub use idl_authority::*;
 pub mod distribution;
 pub use distribution::*;
 pub mod minimum;
@@ -25,6 +31,10 @@ declare_id!("6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P");
 #[program]
 pub mod pump_recovered {
     use super::*;
+    pub fn admin_set_idl_authority(ctx:Context<AdminSetIdlAuthority>,idl_authority:Pubkey)->Result<()>{idl_authority::execute(ctx,idl_authority)}
+    pub fn set_creator(ctx:Context<SetCreator>,creator:Pubkey)->Result<()>{set_creator::set(ctx,creator)}
+    pub fn set_metaplex_creator(ctx:Context<SetMetaplexCreator>)->Result<()>{set_creator::sync(ctx)}
+    pub fn set_params(ctx:Context<SetParams>,initial_virtual_token_reserves:u64,initial_virtual_sol_reserves:u64,initial_real_token_reserves:u64,token_total_supply:u64,fee_basis_points:u64,withdraw_authority:Pubkey,enable_migrate:bool,pool_migration_fee:u64,creator_fee_basis_points:u64,set_creator_authority:Pubkey,admin_set_creator_authority:Pubkey)->Result<()>{set_params::execute(ctx,initial_virtual_token_reserves,initial_virtual_sol_reserves,initial_real_token_reserves,token_total_supply,fee_basis_points,withdraw_authority,enable_migrate,pool_migration_fee,creator_fee_basis_points,set_creator_authority,admin_set_creator_authority)}
     pub fn migrate_bonding_curve_creator(ctx:Context<MigrateBondingCurveCreator>)->Result<()>{creator_migration::execute(ctx)}
     pub fn admin_cto(ctx:Context<AdminCto>,is_holder_reward:Option<bool>,creator_fee_bps:Option<u64>,new_creator:Option<Pubkey>)->Result<()>{admin_cto::execute(ctx,is_holder_reward,creator_fee_bps,new_creator)}
     pub fn sweep_creator_fee(ctx:Context<SweepFees>)->Result<()>{sweep::execute(ctx,true)}

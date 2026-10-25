@@ -1,12 +1,15 @@
 # Pump creator-fee recovery review
 
-The independently compiled checkpoint implements creator-fee collection,
-distribution v1/v2 and the minimum-distributable query alongside the existing
-fourteen recovered handlers and partial buy/sell v3 paths. Full-file byte identity
-remains false. The captured original is 10,485,715 bytes with SHA-256
-`7a19affaa2c6187e04a5fe0ea298cee81fa5eb8c24cfcc30d85f615e89f7b02d`.
-The main-path v1.44 build is 536,168 bytes with SHA-256
-`ebc76c833fa4edb373ec90b4285d05b6865d889922164f9a2933385aebc54108`.
+The current creator-twentynine checkpoint implements 29 recovered handlers and
+two partial buy/sell v3 paths. All 4,590 differential cases across 19 suites and
+242 Surfpool comparisons (484 signed transactions across 12 runners) passed.
+Full-file byte identity remains false. The captured original is 10,485,715 bytes
+with SHA-256 `7a19affaa2c6187e04a5fe0ea298cee81fa5eb8c24cfcc30d85f615e89f7b02d`.
+The current v1.44 candidate is 767,200 bytes with SHA-256
+`f506f0643079adc5d94bfa63c14742c14be6cd1363b653de8bed2d39cd6c8b7b`.
+[The frozen package](../../repro/pump/creator-twentynine/README.md) binds the build,
+20 source inputs, 46 harness files and receipts. Earlier checkpoint counts below
+remain historical evidence rather than the current candidate's totals.
 
 ## Recovered behavior
 
@@ -87,3 +90,31 @@ account snapshots are retained separately, rather than claiming the bootstrap wa
 rerun by Surfpool. Exact source/build/receipt manifests are in
 `repro/pump/creator-twentyfive/`. These results supersede the earlier candidate for
 this expanded scope, without establishing full binary equality.
+
+
+## Parameter, creator-setter and IDL authority checkpoint
+
+Creator-twentynine adds `set_params`, `set_creator`, `set_metaplex_creator` and
+`admin_set_idl_authority`. The new suites add 169, 509 and 171 cases respectively,
+with the two creator setters sharing one suite. Parameter updates preserve reserve
+arithmetic, validation precedence, sorted recipient checks and unrelated Global
+fields. Creator setters retain observed metadata decoding, creator restrictions
+and legacy curve serialization. These bounded fixtures do not establish every
+possible metadata or account-state combination.
+
+IDL authority uses actual Anchor account deserialization and serialization after
+its observed resize/discriminator checks. The original differs between runtimes
+on six short-header fixtures: lengths 0/7 return InvalidRealloc in LiteSVM and
+6010 in Surfpool; lengths 8/31/40/43 return InvalidRealloc in LiteSVM and succeed
+in Surfpool. The final candidate matches the original within each runtime. The
+receipts retain these cross-runtime differences explicitly; they are not hidden
+by normalizing errors or skipping comparisons.
+
+The current package supersedes creator-twentyfive for this expanded scope. It
+preserves raw signed transactions, logs and fixtures. Recognized event timestamps
+are normalized for comparison while raw values remain available. Some Surfpool
+return values are retained without comparison; each deterministic suite records
+its own comparison scope. Alternative ATA bootstrap transactions remain separate
+from the 484 Surfpool transactions. These results do not establish production
+safety, exhaustive behavioral equivalence or historical compiler/dependency
+identity. No new original-program vulnerability is inferred from this checkpoint.

@@ -1,6 +1,6 @@
 # Partial Pump reconstruction
 
-The Anchor 0.31.1 source implements twenty-five recovered handlers:
+The Anchor 0.31.1 source implements twenty-nine recovered handlers:
 `toggle_create_v2`, `toggle_mayhem_mode`, `toggle_cashback_enabled`, and
 `set_max_curve_depth`, `set_virtual_quote_reserves`, `update_buyback_config`,
 `update_creator_fee_config`, `update_holder_reward_config`, `add_quote_mint`, and
@@ -9,8 +9,16 @@ The Anchor 0.31.1 source implements twenty-five recovered handlers:
 `collect_creator_fee`, `distribute_creator_fees`, `distribute_creator_fees_v2`, and
 `get_minimum_distributable_fee`, `collect_creator_fee_v2`, `extend_account`,
 `sync_user_volume_accumulator`, `sweep_creator_fee`, `sweep_protocol_fee`,
-`migrate_bonding_curve_creator` and `admin_cto`. It also implements **partial SOL and USDC-quote `sell_v3` and `buy_v3` paths**.
+`migrate_bonding_curve_creator`, `admin_cto`, `set_params`, `set_creator`,
+`set_metaplex_creator` and `admin_set_idl_authority`. It also implements **partial SOL and USDC-quote `sell_v3` and `buy_v3` paths**.
 It is incomplete and is not a deployable replacement.
+
+The current frozen checkpoint is [creator-twentynine](../../repro/pump/creator-twentynine/README.md):
+4,590 differential cases across 19 suites and 242 Surfpool comparisons using
+484 signed transactions across 12 runners passed. Its candidate is 767,200 bytes,
+SHA-256 `f506f0643079adc5d94bfa63c14742c14be6cd1363b653de8bed2d39cd6c8b7b`.
+Full byte equality remains false. Earlier checkpoint counts below describe their
+historical source snapshots.
 
 The trade paths handle constant-product reserve changes, fee tier selection,
 creator/protocol/buyback accounting, Token/Token2022 `transfer_checked` CPI,
@@ -119,3 +127,18 @@ or claim handlers. The combined v1.44 candidate passes 3,741 differential cases 
 comparisons using 352 signed transactions. Build and validation evidence is under
 `repro/pump/creator-twentyfive/`; the indexed status identifies the published build.
 Full byte equality remains false.
+
+
+The creator-twentynine checkpoint adds parameter updates, both creator setters and
+IDL-authority administration. Parameter updates preserve validation ordering,
+sorted recipient requirements, reserve arithmetic and unaffected Global fields.
+Creator setters preserve metadata parsing and legacy curve serialization behavior.
+IDL-authority handling uses the actual Anchor account deserialization/serialization
+flow. Some malformed short IDL accounts behave differently in LiteSVM and Surfpool;
+the original and candidate match within each runtime. The six cross-runtime
+differences remain explicit: IDL lengths 0/7 yield InvalidRealloc in LiteSVM and
+6010 in Surfpool; lengths 8/31/40/43 yield InvalidRealloc in LiteSVM and succeed
+in Surfpool. These errors are not normalized across runtimes. The frozen package
+retains all raw fixtures and transaction receipts. Its 20 source/build inputs and
+46 harness files are hash-bound. Alternative ATA bootstrap transactions are
+retained separately and are not counted among the 484 Surfpool transactions.
