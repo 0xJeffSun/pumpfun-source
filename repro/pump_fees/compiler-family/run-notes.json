@@ -29,6 +29,20 @@
         "CARGO_HOME": "/Users/shawwalters/Documents/Codex/2026-10-24/pumpfun-source/work/fees-compat/cargo-home"
       },
       "outcome": "success: exit0, source_unchanged=true, ELF not equal to capture"
+    },
+    {
+      "directory": "v145-build-01",
+      "additional_env": {
+        "CARGO_HOME": "/Users/shawwalters/Documents/Codex/2026-10-24/pumpfun-source/work/fees-compat/cargo-home"
+      },
+      "outcome": "success: exit0, source_unchanged=true, ELF not equal to capture"
+    },
+    {
+      "directory": "v146-build-01",
+      "additional_env": {
+        "CARGO_HOME": "/Users/shawwalters/Documents/Codex/2026-10-24/pumpfun-source/work/fees-compat/cargo-home"
+      },
+      "outcome": "success: exit0, source_unchanged=true, ELF not equal to capture"
     }
   ]
 }

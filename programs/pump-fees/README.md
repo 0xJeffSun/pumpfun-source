@@ -1,13 +1,15 @@
 # Partial Pump Fees reconstruction
 
-Twenty-two handlers execute recovered behavior: `get_fees`, `get_fees_with_quote_mint`,
+Twenty-seven handlers execute recovered behavior: `get_fees`, `get_fees_with_quote_mint`,
 `set_authority`, `set_social_claim_authority`, `set_disable_flags` and
 `set_claim_rate_limit`, `initialize_fee_program_global`, `update_fee_config`,
 `update_stable_fee_config`, `set_exotic_flat_fees`, `extend_fee_config`,
 `revoke_fee_sharing_authority`, `transfer_fee_sharing_authority`, `upsert_fee_tiers`,
 `upsert_stable_fee_tiers`, `update_admin`, `create_donation_fee_pda` and
 `crank_donation_fee_pda`, `create_social_fee_pda`, `claim_social_fee_pda` and
-`claim_social_fee_pda_v2` and `withdraw`. The other 9 instruction bodies remain unsupported;
+`claim_social_fee_pda_v2`, `withdraw`, `initialize_buyback`, `update_buyback_authority`,
+`update_buyback_claim_rate_limit`, `sweep_buyback` and `create_fee_sharing_config`.
+The other 4 instruction bodies remain unsupported;
 their generated account declarations are not recovered constraints. This crate
 is an experimental reconstruction target, not a deployable substitute.
 
@@ -16,6 +18,26 @@ The interface scaffold originated in `research/imported-lab/reconstruction/pump-
 This working copy adds actual query implementations, PDA constraints using the
 stored bump, optional trailing bool parsing, and the custom FeeConfig parser.
 Original program bytes are comparison inputs only and never compiler inputs.
+
+Four buyback handlers add 1,249 cases, including all u8 indexes, ordinary authority
+signatures, initialization, native/token sweeps, rate limits and checked counters.
+Vault initialization accepts indexes 0–7 and leaves the authority zero until a
+global-authority update. Sweeps transfer tokens before native SOL and retain rent
+for the actual allocation. A zero rate bypasses cooldown; other rates use a strict
+signed elapsed-time comparison. The observations and limits are detailed in the
+[buyback draft](../../localnet/recovery/fees-buyback/README.md).
+
+Sharing creation adds 116 cases with genuine captured Pump and PumpSwap CPIs.
+The handler creates a version-two sharing account, validates creator authority,
+and transfers the curve/pool creator role through the captured programs. Graduated
+coins require AMM accounts. Existing nonzero sharing versions return early.
+Temporary serialized creator/admin state before each CPI is retained, because
+the called program reads that state. These cases use normally signed test-owned
+keys and synthetic local accounts; they do not prove every live sharing transition.
+
+The combined v1.44 checkpoint passes 81 independent Surfpool comparisons with
+162 signed local transactions plus the ten-step persistent donation sequence.
+Its artifact, source hashes and receipts are indexed by `repro/status.json`.
 
 Observed parser rules: wrong discriminator or allocation below 2,512 bytes returns
 InvalidAccountData; malformed vector serialization returns BorshIoError. Standard
@@ -30,16 +52,19 @@ substantially from the original binary. The experimental standalone fragments in
 `recovered/` are separate compiler experiments; the crate builds `src/`.
 
 ```sh
-python scripts/build_partial_candidate.py --manifest programs/pump-fees/Cargo.toml \
+python scripts/prepare_locked_cargo_home.py --lockfile programs/pump-fees/Cargo.lock \
+  --output work/fees-cargo-home
+CARGO_HOME="$PWD/work/fees-cargo-home" python scripts/build_partial_candidate.py --manifest programs/pump-fees/Cargo.toml \
   --program pump_fees --artifact-name pump_fees_candidate.so \
-  --output work/fees-clean-build
+  --tools-version v1.44 --output work/fees-clean-build
 python scripts/fees_validate_all.py \
   --candidate work/fees-clean-build/artifacts/pump_fees_candidate.so \
   --output work/fees-handler-validation.json
 ```
 
 Use a Python environment with root requirements installed and cargo-build-sbf
-2.1.21 with platform-tools v1.52 available. Build offline from the pinned lockfile;
+2.1.21 with platform-tools v1.44 available. The cache helper requires previously
+downloaded crates and verifies archives against Cargo.lock. Build offline from the pinned lockfile;
 source/toolchain/build-log hashes and the raw full-file comparison are retained.
 The runtime comparison checks return bytes, error codes, and unchanged account
 state/lamports for queries. It does not assert log strings, compute usage, or byte
@@ -58,7 +83,7 @@ The global initializer reads the older 740-byte Pump Global layout, authenticate
 its authority and PDA, creates the 338-byte Fees global with canonical bump, and
 emits the exact event log and self-CPI. Its 180 comparisons include prefunding,
 malformed accounts, authorization, argument boundaries and CPI rollback. The
-twenty-two-handler candidate passes 15,486 cases; full-file byte equality remains false.
+twenty-seven-handler candidate passes 16,851 cases; full-file byte equality remains false.
 
 FeeConfig deserialization is gated by allocation: the normal schedule is read at
 2,512 bytes, the stable schedule at 4,073, and exotic flat fees at 4,097. Earlier

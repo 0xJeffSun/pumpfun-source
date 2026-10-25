@@ -32,30 +32,32 @@ jobs:
               python scripts/pump_validate_sell_accounting.py --host work/pump-sell-accounting-host --output work/pump-sell-accounting.json
           - suite: fees
             commands: |
-              python scripts/fees_validate_all.py --candidate repro/pump_fees/withdraw-twentytwo/pump_fees_candidate.so --output work/fee-handlers.json
-              python scripts/fees_donation_sequence.py --candidate repro/pump_fees/withdraw-twentytwo/pump_fees_candidate.so --output work/donation-sequence.json
+              python scripts/fees_validate_all.py --candidate repro/pump_fees/config-twentyseven-v144/pump_fees_candidate.so --output work/fee-handlers.json
+              python scripts/fees_donation_sequence.py --candidate repro/pump_fees/config-twentyseven-v144/pump_fees_candidate.so --output work/donation-sequence.json
           - suite: pump
             commands: |
-              python scripts/pump_validate_config_admin.py --candidate repro/pump/authority-admin-candidate.so --output work/pump-config-admin.json.gz
-              python scripts/pump_validate_admin.py --candidate repro/pump/authority-admin-candidate.so --output work/pump-admin.json
-              python scripts/pump_validate_sell.py --candidate repro/pump/authority-admin-candidate.so --output work/pump-sell.json
-              python scripts/pump_validate_buy.py --candidate repro/pump/authority-admin-candidate.so --output work/pump-buy.json
-              python scripts/pump_validate_quote.py --candidate repro/pump/authority-admin-candidate.so --output work/pump-quote.json.gz
-              python scripts/pump_validate_authority.py --candidate repro/pump/authority-admin-candidate.so --output work/pump-authority.json.gz
+              python scripts/pump_validate_config_admin.py --candidate repro/pump/volume-lifecycle-candidate.so --output work/pump-config-admin.json.gz
+              python scripts/pump_validate_admin.py --candidate repro/pump/volume-lifecycle-candidate.so --output work/pump-admin.json
+              python scripts/pump_validate_sell.py --candidate repro/pump/volume-lifecycle-candidate.so --output work/pump-sell.json
+              python scripts/pump_validate_buy.py --candidate repro/pump/volume-lifecycle-candidate.so --output work/pump-buy.json
+              python scripts/pump_validate_quote.py --candidate repro/pump/volume-lifecycle-candidate.so --output work/pump-quote.json.gz
+              python scripts/pump_validate_authority.py --candidate repro/pump/volume-lifecycle-candidate.so --output work/pump-authority.json.gz
+              python scripts/pump_validate_volume.py --candidate repro/pump/volume-lifecycle-candidate.so --output work/pump-volume.json.gz
           - suite: pump-amm
             commands: |
-              python scripts/pump_amm_admin_differential.py --candidate repro/pump_amm/sweep-twenty-one/pump_amm_recovered.so --output work/pump-amm-admin.json
-              python scripts/pump_amm_buyback_differential.py --candidate repro/pump_amm/sweep-twenty-one/pump_amm_recovered.so --output work/pump-amm-buyback.json
-              python scripts/pump_amm_fee_config_differential.py --candidate repro/pump_amm/sweep-twenty-one/pump_amm_recovered.so --output work/pump-amm-fee_config.json
-              python scripts/pump_amm_resize_differential.py --creator --candidate repro/pump_amm/sweep-twenty-one/pump_amm_recovered.so --output work/pump-amm-resize.json
-              python scripts/pump_amm_reserved_differential.py --candidate repro/pump_amm/sweep-twenty-one/pump_amm_recovered.so --output work/pump-amm-reserved.json
-              python scripts/pump_amm_accumulator_differential.py --candidate repro/pump_amm/sweep-twenty-one/pump_amm_recovered.so --output work/pump-amm-accumulator.json
-              python scripts/pump_amm_liquidity_differential.py --candidate repro/pump_amm/sweep-twenty-one/pump_amm_recovered.so --output work/pump-amm-liquidity.json
-              python scripts/pump_amm_trade_v2_differential.py --candidate repro/pump_amm/sweep-twenty-one/pump_amm_recovered.so --output work/pump-amm-trade-v2.json
-              python scripts/pump_amm_create_differential.py --candidate repro/pump_amm/sweep-twenty-one/pump_amm_recovered.so --output work/pump-amm-create.json
-              python scripts/pump_amm_migration_create_differential.py --candidate repro/pump_amm/sweep-twenty-one/pump_amm_recovered.so --output work/pump-amm-migration-create.json
-              python scripts/pump_amm_boost_differential.py --candidate repro/pump_amm/sweep-twenty-one/pump_amm_recovered.so --output work/pump-amm-boost.json
-              python scripts/pump_amm_sweep_differential.py --candidate repro/pump_amm/sweep-twenty-one/pump_amm_recovered.so --output work/pump-amm-sweep.json
+              python scripts/pump_amm_admin_differential.py --candidate repro/pump_amm/extend-twenty-two/pump_amm_recovered.so --output work/pump-amm-admin.json
+              python scripts/pump_amm_buyback_differential.py --candidate repro/pump_amm/extend-twenty-two/pump_amm_recovered.so --output work/pump-amm-buyback.json
+              python scripts/pump_amm_fee_config_differential.py --candidate repro/pump_amm/extend-twenty-two/pump_amm_recovered.so --output work/pump-amm-fee_config.json
+              python scripts/pump_amm_resize_differential.py --creator --candidate repro/pump_amm/extend-twenty-two/pump_amm_recovered.so --output work/pump-amm-resize.json
+              python scripts/pump_amm_reserved_differential.py --candidate repro/pump_amm/extend-twenty-two/pump_amm_recovered.so --output work/pump-amm-reserved.json
+              python scripts/pump_amm_accumulator_differential.py --candidate repro/pump_amm/extend-twenty-two/pump_amm_recovered.so --output work/pump-amm-accumulator.json
+              python scripts/pump_amm_liquidity_differential.py --candidate repro/pump_amm/extend-twenty-two/pump_amm_recovered.so --output work/pump-amm-liquidity.json
+              python scripts/pump_amm_trade_v2_differential.py --candidate repro/pump_amm/extend-twenty-two/pump_amm_recovered.so --output work/pump-amm-trade-v2.json
+              python scripts/pump_amm_create_differential.py --candidate repro/pump_amm/extend-twenty-two/pump_amm_recovered.so --output work/pump-amm-create.json
+              python scripts/pump_amm_migration_create_differential.py --candidate repro/pump_amm/extend-twenty-two/pump_amm_recovered.so --output work/pump-amm-migration-create.json
+              python scripts/pump_amm_boost_differential.py --candidate repro/pump_amm/extend-twenty-two/pump_amm_recovered.so --output work/pump-amm-boost.json
+              python scripts/pump_amm_sweep_differential.py --candidate repro/pump_amm/extend-twenty-two/pump_amm_recovered.so --output work/pump-amm-sweep.json
+              python scripts/pump_amm_extend_differential.py --candidate repro/pump_amm/extend-twenty-two/pump_amm_recovered.so --output work/pump-amm-extend.json
           - suite: mayhem
             commands: |
               python scripts/mayhem_validate_admin.py --candidate repro/mayhem/mayhem_recovered.so --output work/mayhem-admin.json

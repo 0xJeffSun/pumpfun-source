@@ -1,10 +1,11 @@
 # Partial Pump reconstruction
 
-The Anchor 0.31.1 source implements twelve recovered administration handlers:
+The Anchor 0.31.1 source implements fourteen recovered handlers:
 `toggle_create_v2`, `toggle_mayhem_mode`, `toggle_cashback_enabled`, and
 `set_max_curve_depth`, `set_virtual_quote_reserves`, `update_buyback_config`,
 `update_creator_fee_config`, `update_holder_reward_config`, `add_quote_mint`, and
-`remove_quote_mint`, `update_global_authority` and `set_reserved_fee_recipients`. It also implements **partial SOL and USDC-quote `sell_v3` and `buy_v3` paths**.
+`remove_quote_mint`, `update_global_authority`, `set_reserved_fee_recipients`,
+`init_user_volume_accumulator` and `close_user_volume_accumulator`. It also implements **partial SOL and USDC-quote `sell_v3` and `buy_v3` paths**.
 It is incomplete and is not a deployable replacement.
 
 The trade paths handle constant-product reserve changes, fee tier selection,
@@ -68,5 +69,10 @@ The authority/recipient checkpoint adds 59 cases. Global authority changes accep
 zero and self keys and emit the previous/new authority. Reserved recipients use
 the first eight remaining accounts, each nonzero, non-executable and rent exempt;
 extra remaining accounts are ignored in tested fixtures. The caller authority
-signs without needing to be writable. All 1,268 administration and partial-trade
-cases pass on the same clean candidate, with whole-file equality still false.
+signs without needing to be writable. The volume lifecycle handlers add 66 cases:
+initialization creates a 137-byte account or preserves an existing account;
+close refunds its lamports even when observed reward/cashback fields are nonzero.
+Closure requires the user signature, with the PDA tying that signer to the account. These synthetic
+state tests do not establish every reachable lifecycle transition. All 1,334
+administration, lifecycle and partial-trade cases pass on the same clean candidate,
+with whole-file equality still false. See [the review](../../audit/pump/volume-lifecycle-review.md).

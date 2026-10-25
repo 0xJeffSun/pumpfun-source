@@ -20,37 +20,6 @@ pub struct AdminCtoSharingConfig<'info> {
     pub program: UncheckedAccount<'info>,
 }
 
-#[derive(Accounts)]
-pub struct CreateFeeSharingConfig<'info> {
-    /// CHECK: Exact deployed constraint not recovered.
-    pub event_authority: UncheckedAccount<'info>,
-    /// CHECK: Exact deployed constraint not recovered.
-    pub program: UncheckedAccount<'info>,
-    #[account(mut)]
-    pub payer: Signer<'info>,
-    /// CHECK: Exact deployed constraint not recovered.
-    pub global: UncheckedAccount<'info>,
-    /// CHECK: Exact deployed constraint not recovered.
-    pub mint: UncheckedAccount<'info>,
-    #[account(mut)]
-    /// CHECK: Exact deployed constraint not recovered.
-    pub sharing_config: UncheckedAccount<'info>,
-    pub system_program: Program<'info, System>,
-    #[account(mut)]
-    /// CHECK: Exact deployed constraint not recovered.
-    pub bonding_curve: UncheckedAccount<'info>,
-    /// CHECK: Exact deployed constraint not recovered.
-    pub pump_program: UncheckedAccount<'info>,
-    /// CHECK: Exact deployed constraint not recovered.
-    pub pump_event_authority: UncheckedAccount<'info>,
-    #[account(mut)]
-    /// CHECK: Exact deployed constraint not recovered.
-    pub pool: UncheckedAccount<'info>,
-    /// CHECK: Exact deployed constraint not recovered.
-    pub pump_amm_program: UncheckedAccount<'info>,
-    /// CHECK: Exact deployed constraint not recovered.
-    pub pump_amm_event_authority: UncheckedAccount<'info>,
-}
 
 #[event_cpi]
 #[derive(Accounts)]
@@ -80,28 +49,6 @@ pub struct GetFeesWithQuoteMint<'info> {
     pub config_program_id: UncheckedAccount<'info>,
 }
 
-#[derive(Accounts)]
-pub struct InitializeBuyback<'info> {
-    #[account(mut)]
-    pub payer: Signer<'info>,
-    #[account(mut)]
-    /// CHECK: Exact deployed constraint not recovered.
-    pub buyback_vault: UncheckedAccount<'info>,
-    #[account(mut)]
-    /// CHECK: Exact deployed constraint not recovered.
-    pub buyback_vault_ata: UncheckedAccount<'info>,
-    pub system_program: Program<'info, System>,
-    /// CHECK: Exact deployed constraint not recovered.
-    pub associated_token_program: UncheckedAccount<'info>,
-    /// CHECK: Exact deployed constraint not recovered.
-    pub mint: UncheckedAccount<'info>,
-    /// CHECK: Exact deployed constraint not recovered.
-    pub token_program: UncheckedAccount<'info>,
-    /// CHECK: Exact deployed constraint not recovered.
-    pub event_authority: UncheckedAccount<'info>,
-    /// CHECK: Exact deployed constraint not recovered.
-    pub program: UncheckedAccount<'info>,
-}
 
 #[derive(Accounts)]
 pub struct InitializeFeeConfig<'info> {
@@ -188,34 +135,6 @@ pub struct SetSocialClaimAuthority<'info> {
     pub fee_program_global: Account<'info, FeeProgramGlobal>,
 }
 
-#[derive(Accounts)]
-pub struct SweepBuyback<'info> {
-    #[account(mut)]
-    /// CHECK: Exact deployed constraint not recovered.
-    pub destination: UncheckedAccount<'info>,
-    #[account(mut)]
-    pub authority: Signer<'info>,
-    #[account(mut)]
-    /// CHECK: Exact deployed constraint not recovered.
-    pub buyback_vault: UncheckedAccount<'info>,
-    #[account(mut)]
-    /// CHECK: Exact deployed constraint not recovered.
-    pub buyback_vault_ata: UncheckedAccount<'info>,
-    #[account(mut)]
-    /// CHECK: Exact deployed constraint not recovered.
-    pub destination_ata: UncheckedAccount<'info>,
-    pub system_program: Program<'info, System>,
-    /// CHECK: Exact deployed constraint not recovered.
-    pub associated_token_program: UncheckedAccount<'info>,
-    /// CHECK: Exact deployed constraint not recovered.
-    pub mint: UncheckedAccount<'info>,
-    /// CHECK: Exact deployed constraint not recovered.
-    pub token_program: UncheckedAccount<'info>,
-    /// CHECK: Exact deployed constraint not recovered.
-    pub event_authority: UncheckedAccount<'info>,
-    /// CHECK: Exact deployed constraint not recovered.
-    pub program: UncheckedAccount<'info>,
-}
 
 #[derive(Accounts)]
 pub struct TransferFeeSharingAuthority {}
@@ -233,37 +152,7 @@ pub struct UpdateAdmin<'info> {
     pub config_program_id: UncheckedAccount<'info>,
 }
 
-#[derive(Accounts)]
-pub struct UpdateBuybackAuthority<'info> {
-    #[account(mut)]
-    pub authority: Signer<'info>,
-    #[account(mut)]
-    /// CHECK: Exact deployed constraint not recovered.
-    pub fee_program_global: UncheckedAccount<'info>,
-    #[account(mut)]
-    /// CHECK: Exact deployed constraint not recovered.
-    pub buyback_vault: UncheckedAccount<'info>,
-    /// CHECK: Exact deployed constraint not recovered.
-    pub event_authority: UncheckedAccount<'info>,
-    /// CHECK: Exact deployed constraint not recovered.
-    pub program: UncheckedAccount<'info>,
-}
 
-#[derive(Accounts)]
-pub struct UpdateBuybackClaimRateLimit<'info> {
-    #[account(mut)]
-    pub authority: Signer<'info>,
-    #[account(mut)]
-    /// CHECK: Exact deployed constraint not recovered.
-    pub fee_program_global: UncheckedAccount<'info>,
-    #[account(mut)]
-    /// CHECK: Exact deployed constraint not recovered.
-    pub buyback_vault: UncheckedAccount<'info>,
-    /// CHECK: Exact deployed constraint not recovered.
-    pub event_authority: UncheckedAccount<'info>,
-    /// CHECK: Exact deployed constraint not recovered.
-    pub program: UncheckedAccount<'info>,
-}
 
 #[event_cpi]
 #[derive(Accounts)]
@@ -396,4 +285,3 @@ pub struct UpsertStableFeeTiers<'info> {
     /// CHECK: configuration PDA namespace.
     pub config_program_id: UncheckedAccount<'info>,
 }
-

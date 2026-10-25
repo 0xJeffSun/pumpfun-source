@@ -19,6 +19,12 @@ pub mod pump_recovered {
      require!(quote_mint!=Pubkey::default(),PumpError::QuoteMintNotEligibleForWhitelist);
      let slot=ctx.accounts.global.whitelisted_quote_mints.iter_mut().find(|key|**key==quote_mint).ok_or_else(||error!(PumpError::QuoteMintNotWhitelisted))?;*slot=Pubkey::default();Ok(())
     }
+    pub fn init_user_volume_accumulator(ctx:Context<InitUserVolume>)->Result<()>{
+      ctx.accounts.user_volume_accumulator.user=ctx.accounts.user.key();let event=InitUserVolumeAccumulatorEvent{payer:ctx.accounts.payer.key(),user:ctx.accounts.user.key(),timestamp:Clock::get()?.unix_timestamp};emit!(event.clone());emit_cpi!(event);Ok(())
+    }
+    pub fn close_user_volume_accumulator(ctx:Context<CloseUserVolume>)->Result<()>{
+      let a=&ctx.accounts.user_volume_accumulator;let event=CloseUserVolumeAccumulatorEvent{user:ctx.accounts.user.key(),timestamp:Clock::get()?.unix_timestamp,total_unclaimed_tokens:a.total_unclaimed_tokens,total_claimed_tokens:a.total_claimed_tokens,current_sol_volume:a.current_sol_volume,last_update_timestamp:a.last_update_timestamp};emit!(event.clone());emit_cpi!(event);Ok(())
+    }
     pub fn update_global_authority(ctx:Context<UpdateGlobalAuthority>)->Result<()>{
      let event=UpdateGlobalAuthorityEvent{global:ctx.accounts.global.key(),authority:ctx.accounts.authority.key(),new_authority:ctx.accounts.new_authority.key(),timestamp:Clock::get()?.unix_timestamp};
      ctx.accounts.global.authority=ctx.accounts.new_authority.key();emit!(event.clone());emit_cpi!(event);Ok(())
@@ -344,3 +350,30 @@ pub struct UpdateGlobalAuthorityEvent{pub global:Pubkey,pub authority:Pubkey,pub
 #[event]
 #[derive(Clone)]
 pub struct ReservedFeeRecipientsEvent{pub timestamp:i64,pub reserved_fee_recipient:Pubkey,pub reserved_fee_recipients:[Pubkey;7]}
+
+#[account]
+#[derive(Default)]
+pub struct UserVolumeAccumulator{pub user:Pubkey,pub needs_claim:bool,pub total_unclaimed_tokens:u64,pub total_claimed_tokens:u64,pub current_sol_volume:u64,pub last_update_timestamp:i64,pub has_total_claimed_tokens:bool,pub cashback_earned:u64,pub total_cashback_claimed:u64,pub stable_cashback_earned:u64,pub total_stable_cashback_claimed:u64}
+#[event_cpi]
+#[derive(Accounts)]
+pub struct InitUserVolume<'info>{
+ #[account(mut)] pub payer:Signer<'info>,
+ /// CHECK: any user may be funded by the payer.
+ pub user:UncheckedAccount<'info>,
+ #[account(init_if_needed,payer=payer,space=137,seeds=[b"user_volume_accumulator",user.key().as_ref()],bump)]
+ pub user_volume_accumulator:Account<'info,UserVolumeAccumulator>,
+ pub system_program:Program<'info,System>,
+}
+#[event_cpi]
+#[derive(Accounts)]
+pub struct CloseUserVolume<'info>{
+ #[account(mut)] pub user:Signer<'info>,
+ #[account(mut,close=user,seeds=[b"user_volume_accumulator",user.key().as_ref()],bump)]
+ pub user_volume_accumulator:Account<'info,UserVolumeAccumulator>,
+}
+#[event]
+#[derive(Clone)]
+pub struct InitUserVolumeAccumulatorEvent{pub payer:Pubkey,pub user:Pubkey,pub timestamp:i64}
+#[event]
+#[derive(Clone)]
+pub struct CloseUserVolumeAccumulatorEvent{pub user:Pubkey,pub timestamp:i64,pub total_unclaimed_tokens:u64,pub total_claimed_tokens:u64,pub current_sol_volume:u64,pub last_update_timestamp:i64}

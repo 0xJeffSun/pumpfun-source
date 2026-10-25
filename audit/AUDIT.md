@@ -75,17 +75,17 @@ confirmed vulnerability without a reachable configuration path.
 
 ### Executing recovered handlers
 
-Pump Fees now has twenty-two independently compiled handlers, with 15,486 original-
+Pump Fees now has twenty-seven independently compiled handlers, with 16,851 original-
 versus-candidate SBF cases. These cover two query handlers, four authority setters,
 global initialization against the historical 740-byte Pump Global layout, and
 three configuration setters, permissionless resize, and two deprecated rejection
-dispatches, two tier upserts and FeeConfig administrator transfer, two donation handlers and three social-fee handlers and referral withdrawal. The other 9 handlers remain unsupported. Selected compiler and dependency versions
+dispatches, two tier upserts and FeeConfig administrator transfer, two donation handlers and three social-fee handlers and referral withdrawal, four buyback handlers and sharing creation. The other 4 handlers remain unsupported. Selected compiler and dependency versions
 remain candidates rather than an established historical graph.
 
-### Parallel reconstruction checkpoint: 72 implemented handlers and two partial paths
+### Parallel reconstruction checkpoint: 80 implemented handlers and two partial paths
 
-Saved builds cover Pump 12, PumpSwap 21, Pump Fees 22 and Mayhem 17 implemented
-handlers, plus Pump's partial SOL/USDC buy_v3/sell_v3 branches. Their 31,281 local SBF
+Saved builds cover Pump 14, PumpSwap 22, Pump Fees 27 and Mayhem 17 implemented
+handlers, plus Pump's partial SOL/USDC buy_v3/sell_v3 branches. Their 33,029 local SBF
 comparisons are indexed by `repro/status.json`; each report preserves its own
 coverage and limitations. Pump's SOL trade paths include Mayhem buyback suppression,
 holder-reward event fields and explicit cashback rejection. USDC quote behavior adds 130 synthetic SPL/Token2022 cases; other quote routes
@@ -191,3 +191,19 @@ sweep cases include captured Token2022 transfer-fee execution, but are not an
 exhaustive extension or aliasing audit. Normal recipient lookup uses binary search;
 injected unsorted arrays rejecting a present key are an observation, not a confirmed
 reachable vulnerability. All original/candidate bytes remain independently compared.
+
+The eighty-handler checkpoint adds Pump volume-account initialization/closure,
+AMM raw account extension, four Fees buyback handlers and sharing creation.
+Volume close accepts tested nonzero reward fields; raw AMM extension charges the
+difference between old/new rent minima even for already overfunded accounts.
+These are observed rules from synthetic states, not demonstrated vulnerabilities.
+Buyback coverage includes signed rate-limit arithmetic, initialized zero authority,
+rent retention, transfer order and counter overflow. Sharing creation uses genuine
+captured Pump/AMM CPIs with their normal authority checks and PDA signing.
+
+After moving the combined Fees candidate to platform-tools v1.44, all 16,851 SBF
+cases, 81 Surfpool comparisons (162 signed transactions), and the ten-step donation
+sequence passed again on that executable. The compiler selection follows exact
+runtime helper-body comparisons, not complete binary equality. Full reconstruction,
+state reachability analysis, exhaustive dependency/CPI coverage and security
+assessment of all unrecovered handlers remain outstanding.

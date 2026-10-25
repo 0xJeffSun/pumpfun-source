@@ -34,7 +34,7 @@ Anchor-style logs and errors likewise do not uniquely establish an Anchor versio
 Compiler, Cargo dependency graph, optimization settings, linker order, panic source
 locations and original program implementations remain unresolved for each program. A first
 fee-selector fragment has a v1.43 instruction match excluding relocations, which
-is a compiler candidate and not yet a unique toolchain identification.
+is fragment evidence only: the stock v1.43 ELF header contradicts the full capture.
 
 Disassembly was successfully generated locally for all four with the official
 platform-tools v1.52 LLVM 20.1.7-rust-dev tool. Its identity and output hashes are
@@ -74,3 +74,12 @@ conditional on ordinary official sysroots. Its baseline source-line comparisons
 are distinguished from independent filename-layout and impossible-coordinate
 checks. It does not uniquely identify a compiler, linker, target or dependency
 lock. Complete source builds and byte comparisons remain required.
+
+The later [controlled helper comparison](../repro/pump_fees/compiler-family/CONTROLLED-HELPER-REPORT.md)
+builds the same sixteen-handler Fees source and lockfile with v1.43, v1.44, v1.45
+and v1.46. The complete captured `core::fmt::write` and `__multi3` bodies match
+v1.44 exactly; those representative bodies differ in the other tested releases.
+This makes v1.44 the preferred tested stock candidate for Fees, without excluding
+untested v1.46.1, custom sysroots or different build settings. The current
+twenty-seven-handler Fees checkpoint compiles with v1.44 and passes all 16,851
+saved behavioral cases. Its full binary still differs from the capture.

@@ -15,7 +15,7 @@ anchor-debug = []
 custom-heap = []
 custom-panic = []
 [dependencies]
-anchor-lang = {version = "=0.31.1", features = ["event-cpi"]}
+anchor-lang = {version = "=0.31.1", features = ["event-cpi", "init-if-needed"]}
 anchor-spl = { version = "=0.31.1", features = ["token_2022", "associated_token"] }
 [profile.release]
 panic = "abort"

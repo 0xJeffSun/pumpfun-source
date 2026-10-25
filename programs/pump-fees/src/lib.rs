@@ -1,4 +1,4 @@
-//! Partial reconstruction: twenty-two handlers implemented; remaining handlers unsupported.
+//! Partial reconstruction: twenty-seven handlers implemented; remaining handlers unsupported.
 //! It is not the deployed program source.
 use anchor_lang::prelude::*;
 
@@ -6,6 +6,10 @@ mod contexts;
 mod donation;
 mod social;
 mod withdrawal;
+mod buyback;
+mod sharing;
+use buyback::*;
+use sharing::*;
 use withdrawal::*;
 use social::*;
 use donation::*;
@@ -46,8 +50,8 @@ pub mod pump_fees_candidate {
     }
 
     #[allow(unused_variables)]
-    pub fn create_fee_sharing_config(_ctx: Context<CreateFeeSharingConfig>) -> Result<()> {
-        Err(error!(CandidateError::Unsupported))
+    pub fn create_fee_sharing_config(ctx: Context<CreateFeeSharingConfig>) -> Result<()> {
+        sharing::create_sharing(ctx)
     }
 
     #[allow(unused_variables)]
@@ -102,8 +106,8 @@ pub mod pump_fees_candidate {
     }
 
     #[allow(unused_variables)]
-    pub fn initialize_buyback(_ctx: Context<InitializeBuyback>, index: u8) -> Result<()> {
-        Err(error!(CandidateError::Unsupported))
+    pub fn initialize_buyback(ctx: Context<InitializeBuyback>, index: u8) -> Result<()> {
+        buyback::initialize_buyback(ctx,index)
     }
 
     #[allow(unused_variables)]
@@ -193,8 +197,8 @@ pub mod pump_fees_candidate {
     }
 
     #[allow(unused_variables)]
-    pub fn sweep_buyback(_ctx: Context<SweepBuyback>, index: u8) -> Result<()> {
-        Err(error!(CandidateError::Unsupported))
+    pub fn sweep_buyback(ctx: Context<SweepBuyback>, index: u8) -> Result<()> {
+        buyback::sweep_buyback(ctx,index)
     }
 
     #[allow(unused_variables)]
@@ -212,13 +216,13 @@ pub mod pump_fees_candidate {
     }
 
     #[allow(unused_variables)]
-    pub fn update_buyback_authority(_ctx: Context<UpdateBuybackAuthority>, index: u8, new_authority: Pubkey) -> Result<()> {
-        Err(error!(CandidateError::Unsupported))
+    pub fn update_buyback_authority(ctx: Context<UpdateBuyback>, index: u8, new_authority: Pubkey) -> Result<()> {
+        buyback::update_buyback_authority(ctx,index,new_authority)
     }
 
     #[allow(unused_variables)]
-    pub fn update_buyback_claim_rate_limit(_ctx: Context<UpdateBuybackClaimRateLimit>, index: u8, claim_rate_limit: i64) -> Result<()> {
-        Err(error!(CandidateError::Unsupported))
+    pub fn update_buyback_claim_rate_limit(ctx: Context<UpdateBuyback>, index: u8, claim_rate_limit: i64) -> Result<()> {
+        buyback::update_buyback_claim_rate_limit(ctx,index,claim_rate_limit)
     }
 
     #[allow(unused_variables)]
@@ -318,12 +322,20 @@ pub enum FeeError {
     NotAuthorized = 16,
     #[msg("Fee sharing config is not active")]
     SharingConfigNotActive = 18,
+    #[msg("AMM accounts are required for graduated coins")]
+    AmmAccountsRequiredForGraduatedCoin = 19,
     #[msg("Feature is currently deactivated")]
     FeatureDeactivated = 21,
     #[msg("User ID exceeds maximum length")]
     UserIdTooLong = 22,
     #[msg("Instruction is deprecated")]
     DeprecatedInstruction = 23,
+    #[msg("Math overflow")]
+    MathOverflow = 25,
+    #[msg("Invalid buybackindex")]
+    InvalidBuybackIndex = 26,
+    #[msg("Claim rate limit exceeded")]
+    ClaimRateLimitExceeded = 27,
     #[msg("Account is not a valid FeeConfig for this instruction")]
     InvalidFeeConfigAccount = 28,
     #[msg("Account type not supported")]

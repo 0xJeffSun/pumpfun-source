@@ -17,13 +17,19 @@ python3 scripts/test_tooling.py
 A partial Rust fee-tier selector now matches the original instruction sequence except
 for unresolved relocations with platform-tools v1.43, and passes 1,215 local
 differential cases. Recovered quote-mint routing additionally passes 9,428 original-program
-queries, but its compiled instructions still differ. Twenty-two Fees handlers pass 15,486 independent SBF comparisons; twelve recovered Pump
-admin handlers plus partial SOL/USDC buy/sell branches pass 1,268. Twenty-one PumpSwap
-handlers pass 11,574 comparisons, and seventeen Mayhem handlers pass 2,953. These
-31,281 SBF cases cover 72 implemented handlers and two partial trade paths, not the
+queries, but its compiled instructions still differ. Twenty-seven Fees handlers pass 16,851 independent SBF comparisons; fourteen recovered Pump
+handlers plus partial SOL/USDC buy/sell branches pass 1,334. Twenty-two PumpSwap
+handlers pass 11,891 comparisons, and seventeen Mayhem handlers pass 2,953. These
+33,029 SBF cases cover 80 implemented handlers and two partial trade paths, not the
 complete programs. Two Fees handlers are deprecated dispatches that always reject.
 A separate native accounting fragment is tested against 206
 original Pump sell cases. See [the recovery experiment](docs/FEE_SELECTION.md).
+
+The [controlled compiler comparison](repro/pump_fees/compiler-family/CONTROLLED-HELPER-REPORT.md)
+favors platform-tools v1.44 among the tested Fees builds: two complete runtime
+helper bodies match the capture exactly. The current Fees candidate uses that
+compiler and also passes 81 independent Surfpool comparisons with 162 signed local
+transactions. Neither result proves the complete historical build configuration.
 
 [Recovery status](docs/RECOVERY.md) separates observed evidence from unresolved work.
 [Tooling](docs/TOOLING.md) covers recapture, disassembly and strict candidate comparison.

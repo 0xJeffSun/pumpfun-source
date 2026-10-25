@@ -23,7 +23,8 @@
     "tested_candidate_reports": [
       "repro/pump/ata-candidate-build-1/comparison.json",
       "repro/pump/ata-candidate-build-2/comparison.json",
-      "repro/pump/ata-candidate-build-3/comparison.json"
+      "repro/pump/ata-candidate-build-3/comparison.json",
+      "repro/pump/ata-candidate-build-4/comparison.json"
     ],
     "latest_tested_candidate_full_byte_equality": false
   },
@@ -34,7 +35,8 @@
     "tested_candidate_reports": [
       "repro/pump/metaplex-candidate-build-1/comparison.json",
       "repro/pump/metaplex-candidate-build-2/comparison.json",
-      "repro/pump/metaplex-candidate-build-3/comparison.json"
+      "repro/pump/metaplex-candidate-build-3/comparison.json",
+      "repro/pump/metaplex-candidate-build-4/comparison.json"
     ],
     "latest_tested_candidate_full_byte_equality": false
   },
