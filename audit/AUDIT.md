@@ -5,7 +5,7 @@ programs listed in `docs/SCOPE.md`. Partial executable handlers have been recove
 
 The current published recovery covers 140 implemented handlers plus five partial
 Pump paths and 53,787 saved comparison receipts: [Pump48 decoder/preparation checkpoint](../repro/pump/curve-preparation-fortyeight/README.md),
-[AMM37 destination-rent checkpoint](../repro/pump_amm/destination-rent-v144/README.md),
+[AMM37 accumulator-order checkpoint](../repro/pump_amm/accumulator-order-v144/README.md),
 [Fees31 V2 caller checkpoint](../repro/pump_fees/v2-caller-v144/README.md),
 and [Mayhem24](../repro/mayhem/twentyfour/README.md). These bounded recovery results
 do not extend the source review frozen at commit329fc44 into a complete audit of
@@ -373,3 +373,5 @@ The Pump decoder/preparation correction in [pass06](../repro/layered-passes/pass
 The seventh-pass Fees change affects one legacy error's compared-value payload. Its source review, retained-body checks and unchanged runtime corpus do not constitute an independent complete security audit. No new confirmed vulnerability finding is asserted, and the earlier frozen audit's applicability limits remain.
 
 Pass08's independent review checks bounded original named-key provenance and documents unevaluated branch and padding assumptions. The unchanged Fees corpus and Relay ordinary12 comparisons are regression evidence, not a complete security audit or proof of all historical behavior. No new vulnerability finding is asserted.
+
+Pass09 changes the AMM accumulator assignment order using original instruction evidence and retains unchanged runtime comparisons. It adds no new security finding or complete audit sign-off. Its dependency review distinguishes unresolved code/data and provenance differences from demonstrated behavioral faults.

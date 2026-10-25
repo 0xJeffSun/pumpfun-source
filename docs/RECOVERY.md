@@ -411,3 +411,7 @@ Relay build07 implements the recovered owned error model and passes all twelve u
 ## Layered pass 08: V2 composition and whitelist serialization
 
 [Pass08](../repro/layered-passes/pass-08/README.md) integrates Fees V2 caller composition after independent named-key review, all unchanged regressions, saved-signature verification and a matching clean main rebuild. It also uses the Relay whitelist writer so I/O errors are dropped before construction of the owned framework error. The full before/after byte reports and function ledgers retain all unmatched and ambiguous ranges. No new whole-original byte identity or security completion is claimed.
+
+## Layered pass 09: accumulator ordering and dependency review
+
+[Pass09](../repro/layered-passes/pass-09/README.md) moves AMM's accumulator user-field assignment after successful Clock retrieval. The clean main build equals the separately tested executable and symbol ELF; the unchanged 25-suite corpus passes 17,462 comparisons. Fresh complete inventories preserve all unmatched windows. The dependency review reproduces every ATA and Metaplex differing byte and explains the missing artifact-linked source/build evidence. No new source hypothesis is promoted merely to influence code placement.

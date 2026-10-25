@@ -26,9 +26,7 @@ The current [Pump decoder/preparation checkpoint](repro/pump/curve-preparation-f
 The current Pump `sell_v2` has a confirmed quote transfer-fee minimum-output and event mismatch; its saved passes do not cover that boundary.
 The current PumpSwap checkpoint corrects the earlier zero-fee cashback event mismatch;
 the [signed negative probe](repro/pump_amm/legacy-sell-zero-fee-gap/README.md) preserves evidence against the prior executable.
-The current [AMM destination-rent checkpoint](repro/pump_amm/destination-rent-v144/README.md) uses the destination account data length in its rent calculation. Its clean main executable and symbols equal the tested scratch build; all 17,462 existing comparisons pass. The complete fee-update handler, wrapper, event serializer, Pool and GlobalConfig serializers retain their normalized matches. Scalar helper specialization, recipient diagnostics, transitive data and authentic initializer success remain unresolved. Whole ELF equality is false; the bounded count stays 37.
-A separate native accounting fragment is tested against 206
-original Pump sell cases. See [the recovery experiment](docs/FEE_SELECTION.md).
+The current [AMM accumulator-order checkpoint](repro/pump_amm/accumulator-order-v144/README.md) puts the accumulator user-field assignment after successful Clock retrieval, as in the captured original. Its clean main executable and symbols equal the tested scratch build; all 17,462 existing comparisons and 35,418 saved signature checks pass. The full inventory still has 310 unmatched original windows. Scalar specialization, recipient diagnostics, transitive data, authentic initializer success and whole ELF identity remain unresolved.
 
 The [controlled compiler comparison](repro/pump_fees/compiler-family/CONTROLLED-HELPER-REPORT.md)
 favors platform-tools v1.44 among the tested Fees builds: two complete runtime
@@ -37,7 +35,7 @@ compiler. The [previous retained Fees build](repro/pump_fees/all-thirtyone-v144/
 also passed 112 independent Surfpool comparisons with 224 signed local transactions.
 The current [Fees V2 caller checkpoint](repro/pump_fees/v2-caller-v144/README.md) composes quote admission, remaining-account preprocessing, generated AMM/Pump V2 CPIs, payout filtering/rescaling and early serialization. All 17,461 existing comparisons and the separate ten-step sequence pass; a clean main build matches the tested executable and symbols. Five original windows gain normalized matches, leaving 130 unattributed and two conflicting windows. Whole-file identity, complete caller/parser/error/cleanup equivalence and the security audit remain incomplete.
 
-[Recovery status](docs/RECOVERY.md) separates observed evidence from unresolved work. The [eighth layered pass](repro/layered-passes/pass-08/README.md) records the latest fixes, complete byte differences, function/call/data inventories and the next source obligations.
+[Recovery status](docs/RECOVERY.md) separates observed evidence from unresolved work. The [ninth layered pass](repro/layered-passes/pass-09/README.md) records the latest fixes, complete byte differences, function/call/data inventories and the next source obligations.
 The [completion and remaining-work ledger](docs/COMPLETION.md) enumerates all 150 instruction dispositions: 140 bounded implementations (93.3%), five partial and five unrecovered. Whole-binary completion remains 0/4; this is not a 93.3% overall completion estimate.
 [Parallel worker results and concurrency configuration](docs/PARALLEL_WORK.md) document the completed CLI research waves, focused follow-ups and configured concurrency.
 [Tooling](docs/TOOLING.md) covers recapture, disassembly and strict candidate comparison.
