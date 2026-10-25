@@ -107,7 +107,7 @@ these are recorded as separate tool identities. Whole-file equality and the audi
 remain incomplete. Earlier checkpoints and failed evidence checks remain preserved.
 
 
-The current [create-config/shared-method checkpoint](../../repro/pump_amm/create-config-shared-methods-v144/README.md)
+The preceding [create-config/shared-method checkpoint](../../repro/pump_amm/create-config-shared-methods-v144/README.md)
 adds the reconstructed initializer/context/event source and shares the four original
 GlobalConfig methods between creation and fee updates. The fixed administrator,
 Signer requirement, canonical config/event PDA constraints, System CPI ordering
@@ -135,3 +135,27 @@ discriminators still match at this candidate's fresh symbol locations. Compilati
 uses pinned v1.44; the unchanged installed SDK's separate v1.52 strip phase is
 recorded independently. Whole-file equality and the audit remain incomplete.
 All earlier checkpoints and negative evidence remain immutable.
+
+
+The current [event-borrow checkpoint](../../repro/pump_amm/update-event-borrow-v144/README.md)
+removes only the redundant clone passed to `emit!` in `update_fee_config`.
+The handler now measures 2,912 bytes and its complete normalized instruction body
+matches the captured original. The 2,296-byte wrapper and 744-byte event serializer
+also match. This is source-derived output from the unchanged pinned build recipe.
+
+All 25 unchanged suites passed 17,462 comparisons on the exact scratch executable.
+The clean 22-input main build has complete ELF identity with that executable,
+justifying receipt reuse without another replay. Saved checks verify 35,418
+signatures, 191 scalar and 78 recipient diagnostics; the 150 existing setup
+transactions remain separate from comparison cases. No handler or case is added.
+
+The handler's immediate target closure remains 12 of 16: three scalar methods
+remain 608 bytes versus 616 original bytes, and the recipient setter retains
+truthful source-coordinate differences. The actual scalar error helper still has
+four specialization differences. Five bounded update data references and both
+inline event constants match; four compiler metadata references remain unclosed.
+The initializer retains all previous static limits and has no authentic successful
+runtime replay. The complete Pool and GlobalConfig exits, their 24 direct targets
+each and discriminators still match at fresh symbols. Compilation uses v1.44 and
+the unchanged SDK separately strips with v1.52. Whole-original ELF equality is
+false, and the audit remains incomplete. Earlier packages and seals stay immutable.

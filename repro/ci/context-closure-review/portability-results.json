@@ -1,0 +1,14 @@
+[
+  {
+    "interpreter": "base",
+    "returncode": 0,
+    "passed": true,
+    "copied_outside_repository": true
+  },
+  {
+    "interpreter": "venv",
+    "returncode": 0,
+    "passed": true,
+    "copied_outside_repository": true
+  }
+]

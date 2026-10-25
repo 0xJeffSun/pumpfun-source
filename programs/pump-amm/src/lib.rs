@@ -195,7 +195,7 @@ pub mod pump_amm_recovered {
         let event = UpdateFeeConfigEvent { timestamp: Clock::get()?.unix_timestamp,
             admin: ctx.accounts.admin.key(), lp_fee_basis_points, protocol_fee_basis_points,
             protocol_fee_recipients, coin_creator_fee_basis_points, admin_set_coin_creator_authority };
-        emit!(event.clone());
+        emit!(event);
         emit_cpi!(event);
         Ok(())
     }

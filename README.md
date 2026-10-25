@@ -26,7 +26,7 @@ The current [Pump48 two-curve checkpoint](repro/pump/tokenkeg-two-curve-fortyeig
 The current Pump `sell_v2` has a confirmed quote transfer-fee minimum-output and event mismatch; its saved passes do not cover that boundary.
 The current PumpSwap checkpoint corrects the earlier zero-fee cashback event mismatch;
 the [signed negative probe](repro/pump_amm/legacy-sell-zero-fee-gap/README.md) preserves evidence against the prior executable.
-The current [AMM shared-method checkpoint](repro/pump_amm/create-config-shared-methods-v144/README.md) adds the fixed-admin create_config source and genuine shared setters. Its creation wrapper, handler, context and event serializer match complete normalized original bodies, but initializer success remains unvalidated. All 17,462 existing comparisons, 191 scalar and 78 recipient diagnostic checks pass. The update handler and whole ELF remain unmatched; the bounded count stays 37.
+The current [AMM event-borrow checkpoint](repro/pump_amm/update-event-borrow-v144/README.md) removes a redundant event clone. Its complete 2,912-byte fee-update handler, wrapper and event serializer now match normalized original bodies; four handler call targets and compiler metadata remain unresolved. The fixed-admin creation bodies retain their static matches, but initializer success remains unvalidated. All 17,462 existing comparisons, 191 scalar and 78 recipient diagnostic checks pass. Whole ELF equality is false; the bounded count stays 37.
 A separate native accounting fragment is tested against 206
 original Pump sell cases. See [the recovery experiment](docs/FEE_SELECTION.md).
 
