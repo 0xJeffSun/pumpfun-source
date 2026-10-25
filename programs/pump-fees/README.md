@@ -38,18 +38,23 @@ Temporary serialized creator/admin state before each CPI is retained, because
 the called program reads that state. These cases use normally signed test-owned
 keys and synthetic local accounts; they do not prove every live sharing transition.
 
-The [current source checkpoint](../../repro/pump_fees/solana-family-221-v144/README.md)
-binds this README and all 21 remaining source/workspace/IDL inputs. It combines the
-recovered social-account layout with eight dependency selections witnessed in one
-official SPL release lock. The clean main ELF is 768,072 bytes, SHA-256
-`e501ca2c744373e5653a5ac7e25a3fd20f6058765808b888c3605fd03adba60f`, exactly matching
-the combined scratch ELF that freshly passed 17,441 comparison receipts, including
-69 repeat-input checks, and the separate ten-step persistent donation sequence.
-No new unique input cases are claimed. Compilation selected platform-tools v1.44;
-the unchanged SDK installer selected v1.52 for `llvm-objcopy` stripping. The phase
-records distinguish those tools; retained file hashes do not retrospectively prove
-every historical invocation. Full-file equality with the captured original remains
-false, and the unique historical dependency/compiler recipe remains unresolved.
+The [current source checkpoint](../../repro/pump_fees/initializer-inline-v144/README.md)
+binds this README and all 21 remaining source/workspace/IDL inputs. It retains the
+recovered social-account layout and eight dependency selections witnessed in one
+official SPL release lock, and restores the original initializer's inline Pump
+Global account representation. The clean main ELF is 767,992 bytes, SHA-256
+`01fedce5878ec14618233c4683bcb4149e471775acb48ffb69614d9df570bb95`, exactly matching
+the single-change scratch ELF that freshly passed 17,441 comparison receipts,
+including 69 repeat-input checks, and the separate ten-step persistent donation
+sequence. No new unique input cases are claimed. The two authentic historical
+initializer messages retain their signed bytes and signature verification.
+Compilation selected platform-tools v1.44; the unchanged SDK installer selected
+v1.52 for `llvm-objcopy` stripping. The phase records distinguish those tools;
+retained file hashes do not retrospectively prove every historical invocation.
+Full-file equality with the captured original remains false, and the unique
+historical dependency/compiler recipe remains unresolved. The
+[prior dependency checkpoint](../../repro/pump_fees/solana-family-221-v144/README.md)
+retains its own 768,072-byte `e501ca2c…` executable and evidence.
 
 The [prior v1.44 checkpoint](../../repro/pump_fees/all-thirtyone-v144/README.md)
 passes 112 independent Surfpool comparisons with 224 signed local transactions.
@@ -121,7 +126,16 @@ its authority and PDA, creates the 338-byte Fees global with canonical bump, and
 emits the exact event log and self-CPI. Its 180 comparisons include prefunding,
 malformed accounts, authorization, argument boundaries and CPI rollback. The
 historical authority-guard checkpoint passes 17,384 comparisons; the current
-31-instruction candidate retains the 17,441 receipts described above.
+31-instruction candidate freshly passes the 17,441 receipts described above.
+
+`InitializeFeeProgramGlobal` holds its Pump Global account inline. The original
+parser's return stores establish a 1,200-byte accounts aggregate, including the
+744-byte account wrapper at offsets 456–1199. Removing only this field's `Box`
+reproduces the complete normalized 2,992-byte handler, 6,824-byte parser and
+1,608-byte wrapper, with matching relocation patterns, nine handler call-target
+bodies and two bounded literal spans. The selected Anchor language crate is
+0.31.1 and the relevant locked macro crates are 0.31.2. These matches do not prove
+unlimited transitive call/data equivalence or unique historical source spelling.
 
 FeeConfig deserialization is gated by allocation: the normal schedule is read at
 2,512 bytes, the stable schedule at 4,073, and exotic flat fees at 4,097. Earlier
@@ -249,4 +263,4 @@ differ from the capture; these checks do not establish unique historical source.
 
 `ClaimSocialFeePdaV2` boxes its quote mint and uses by-value `AccountInfo` fields for event authority and program, preserving the existing account constraints. The original parser's field stores and generated event-CPI account contract support these types. Together they reproduce the complete 560-byte normalized account-exit body, seven direct callee bodies and three bounded literal spans. Boxing alone left one context offset unmatched; that earlier attempt remains preserved.
 
-This source-layout result does not prove recursive data/call closure, original whole-file identity or a completed audit. The [historical social v2 layout checkpoint](../../repro/pump_fees/social-v2-account-layout-v144/README.md) retains the 770,624-byte `c181b0ba75aee67369385e04908d89088552c1fad756bf5a21d7fb21979e6a58` ELF and its own fresh receipts. The current combined dependency checkpoint above has separately executed receipts for its exact bytes.
+This source-layout result does not prove recursive data/call closure, original whole-file identity or a completed audit. The [historical social v2 layout checkpoint](../../repro/pump_fees/social-v2-account-layout-v144/README.md) retains the 770,624-byte `c181b0ba75aee67369385e04908d89088552c1fad756bf5a21d7fb21979e6a58` ELF and its own fresh receipts. The current inline-initializer checkpoint above has separately executed receipts for its exact bytes and retains the social exit checks.
