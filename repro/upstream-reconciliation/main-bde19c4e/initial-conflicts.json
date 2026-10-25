@@ -1,0 +1,5 @@
+[
+  ".github/workflows/verify.yml",
+  "programs/pump/README.md",
+  "repro/status.json"
+]
