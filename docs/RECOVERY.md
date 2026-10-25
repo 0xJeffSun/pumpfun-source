@@ -83,3 +83,11 @@ This makes v1.44 the preferred tested stock candidate for Fees, without excludin
 untested v1.46.1, custom sysroots or different build settings. The current
 thirty-one-body Fees checkpoint compiles with v1.44 and passes all 17,361
 saved behavioral cases. Its full binary still differs from the capture.
+
+The [linked function comparison](../repro/pump_fees/framework-matching/README.md)
+uses the thirty-one-body Fees build's own unstripped symbols to locate complete
+instruction patterns in the capture. It identifies matching patterns for three
+handler bodies, twelve generated instruction wrappers, and Anchor error/IDL
+helpers. Relocation and internal-call immediates are masked only in memory;
+relocated data and unmapped callees remain unresolved. This guides further
+source recovery without changing any executable or establishing byte identity.

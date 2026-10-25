@@ -82,10 +82,10 @@ three configuration setters, permissionless resize, and two deprecated rejection
 dispatches, two tier upserts and FeeConfig administrator transfer, two donation handlers and three social-fee handlers and referral withdrawal, four buyback handlers, sharing creation, administrative sharing reset, both sharing updates and FeeConfig initialization. All31 bodies have bounded implementations; full source/context equivalence remains unproven. Selected compiler and dependency versions
 remain candidates rather than an established historical graph.
 
-### Parallel reconstruction checkpoint: 91 implemented handlers and two partial paths
+### Parallel reconstruction checkpoint: 94 implemented handlers and two partial paths
 
-Saved builds cover Pump 18, PumpSwap 25, Pump Fees 31 and Mayhem 17 implemented
-handlers, plus Pump's partial SOL/USDC buy_v3/sell_v3 branches. Their 34,544 local SBF
+Saved builds cover Pump 18, PumpSwap 28, Pump Fees 31 and Mayhem 17 implemented
+handlers, plus Pump's partial SOL/USDC buy_v3/sell_v3 branches. Their 35,030 local SBF
 comparisons are indexed by `repro/status.json`; each report preserves its own
 coverage and limitations. Pump's SOL trade paths include Mayhem buyback suppression,
 holder-reward event fields and explicit cashback rejection. USDC quote behavior adds 130 synthetic SPL/Token2022 cases; other quote routes
@@ -242,3 +242,15 @@ receipts under `repro/pump/creator-eighteen/`. See
 rounding, token paths and bounded coverage. This new source is outside the
 independent static review frozen at commit `329fc44`; no security sign-off
 is implied by its behavioral comparisons.
+
+### PumpSwap creator reassignment
+
+The combined 28-handler candidate adds creator migration, metadata/bonding-curve
+creator selection and administrative CTO. All 12,792 saved cases across 17 suites
+pass, including 327 direct reassignment cases and 159 CTO cases. Of the CTO cases,
+140 reach AMM through genuine captured Pump CPI; 19 reject upstream. Normal
+test-owned signatures remain verified. The captured Pump program supplies its own
+PDA signature for CPI. See [recovery details](pump_amm/CREATOR_REASSIGNMENT_RECOVERY.md)
+for ordering corrections, synthetic-state limits and exact build provenance. Ten
+AMM IDL handlers remain absent. This addition is outside the source review frozen
+at commit 329fc44 and does not complete the original-program security assessment.

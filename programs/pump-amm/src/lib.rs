@@ -2,6 +2,8 @@
 //! This crate is not the historical source or a byte-identical replacement.
 use anchor_lang::prelude::*;
 mod state;
+mod creator_reassignment;
+use creator_reassignment::*;
 mod trade;
 mod create;
 mod boost;
@@ -24,6 +26,9 @@ declare_id!("pAMMBay6oceH9fJKBRHGP5D4bD4sWpmSwMn52FMfXEA");
 #[program]
 pub mod pump_amm_recovered {
     use super::*;
+    pub fn admin_cto_pool(ctx:Context<AdminCtoPool>,coin_creator:Pubkey,is_holder_reward:bool,creator_fee_bps:Option<u64>)->Result<()>{creator_reassignment::admin_cto(ctx,coin_creator,is_holder_reward,creator_fee_bps)}
+    pub fn migrate_pool_coin_creator(ctx:Context<MigratePoolCoinCreator>)->Result<()>{creator_reassignment::migrate(ctx)}
+    pub fn set_coin_creator(ctx:Context<SetCoinCreator>)->Result<()>{creator_reassignment::set(ctx)}
 
     pub fn transfer_creator_fees_to_pump(ctx: Context<TransferCreatorFeesToPump>) -> Result<()> { transfer_creator::legacy(ctx) }
     pub fn transfer_creator_fees_to_pump_v2(ctx: Context<TransferCreatorFeesToPumpV2>) -> Result<()> { transfer_creator::v2(ctx) }
