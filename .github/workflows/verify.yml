@@ -25,6 +25,12 @@ jobs:
               python -B repro/pump/wide-runtime-attribution/verify.py --repo .
               python scripts/pump_verify_dependencies.py
               python repro/pump/metaplex-candidate-build-11/verify.py
+              python -B repro/identity-audit/2026-10-25/verify.py
+              python -B repro/pump/metaplex-utilize-guard-source-recovery/verify.py
+              python -B repro/pump/metaplex-candidate-build-12-review/verify.py
+              python scripts/test_reconstruction_build_selection.py
+              python scripts/test_reconstruction_identity_audit.py
+              python scripts/test_localnet_sdk_plan.py
               python repro/pump/mayhem-virtual-params-static/verify.py
               python scripts/local_validation.py
               git diff --exit-code -- audit/local-validation.json
