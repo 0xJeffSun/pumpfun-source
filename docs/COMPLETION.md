@@ -1,5 +1,33 @@
 # Completion and remaining work
 
+Current selected artifacts must agree with [status.json](../repro/status.json) and the complete pass-26 byte/function index. Whole-file identity remains **0/4 core programs**. Dependency capture images remain **2/5**; only SPL Token is a whole-file exact raw compiler output (**1/5**). Token-2022 and Metaplex allocation images are recorded separately from shorter raw compiler output. No overall reconstruction percentage follows from finite tests or normalized function matches.
+
+| Program | Selected executable SHA256 prefix | Differing or missing captured positions |
+| --- | --- | ---: |
+| Pump | `71ec4d8a646eefc8` | 9,784,703 |
+| PumpSwap | `09bee0dfd751dc6a` | 9,958,512 |
+| Fees | `2387f8139a13918a` | 554,122 |
+| Mayhem | `ca5d4f54b14e2f67` | 501,010 |
+| Donation Relay | `5f6d29410047551f` | 614,726 |
+| ATA | `ba8dd8a42ca7bff4` | 307 |
+| Metaplex retained image | `2c26e081f3faabf0` | 1,509 |
+
+Positional counts include common-extent differences and missing allocation bytes; they are not semantic distance or a completion score. The 3,338 original windows remain fully represented: Pump 1,035, AMM 785, Fees 585, Mayhem 441 and Relay 492. Opaque, unmatched, ambiguous, call-conflicting and stopped rows remain explicit.
+
+The bounded handler accounting remains 140/150, with five partial and five unrecovered dispositions. Pump virtual-params is still unaccepted, AMM create_config has no authentic positive runtime replay, and the incentive/initializer exclusions remain active. Existing finite comparisons do not certify every original branch or a complete security review.
+
+The selected AMM one-line correction removes unsupported compared Pubkeys from collect-owner error 6048. Its unchanged 17,462-case corpus passes, and the genuine managed build equals the tested image. Original source diagnostics and all 297 unmatched original AMM windows remain unresolved. Mayhem v1.54 is selected with 14 unchanged compile inputs; 177 of 441 original windows have bounded normalized matches, seven admitted handler windows remain unmatched, and 257 remain opaque, including the excluded initializer wrapper. These pattern counts do not establish semantics or historical recipe identity.
+
+Pump's unaccepted setter proposal and Relay's proposed fixed-source Linux measurement remain work in progress and add no accepted handler or byte-identity count. Source-origin and authority restrictions remain enforced. Exact ATA and Metaplex residuals, unclosed call/data/ownership contracts and missing authentic historical build records remain open.
+
+Stopped executions remain excluded: the new Pump sell_v2 corrective/transfer-fee probe; Pump admin-update/claim token incentives; Mayhem initializer; old V3 token-extension leaf; additional Metaplex runtime; and filtered BuyV3 partial-fill. No new signer, PDA, owner, source-origin or history bypass, fabricated source coordinate, binary patch/padding, or flag/layout sweep is part of the current checkpoint.
+
+## Historical checkpoint notes
+
+Everything below is retained verbatim from the prior document for provenance. References to “current,” “latest,” candidate hashes, compiler selection, or counts in this historical text describe its earlier checkpoint. The current selection and remaining work are stated above and in the latest machine-readable status/index. Historical implementation and test claims must not be transferred to later artifacts without explicit source/build/receipt bindings.
+
+# Completion and remaining work
+
 The instruction-implementation measure is **140 / 150 = 93.3%**, with five partial and five unrecovered handlers. The denominator uses 56 Pump, 38 PumpSwap and 31 Fees instructions from retained official IDLs, plus 25 currently identified Mayhem handlers. Implemented means bounded reconstruction with saved comparisons; it does not establish all input behavior. Two Fees dispatches are deprecated rejection paths.
 
 The actual byte-for-byte acceptance measure is **0 / 4 core binaries (0%)**. No defensible single overall percentage combines that with handler coverage, unknown historical source, compiler/dependency attribution and the unfinished security audit. Saved cases include repeat inputs and do not measure exhaustive coverage.

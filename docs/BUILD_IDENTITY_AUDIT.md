@@ -1,5 +1,33 @@
 # Remaining work for full deployed-byte identity
 
+Current selected artifacts must agree with [status.json](../repro/status.json) and the complete pass-26 byte/function index. Whole-file identity remains **0/4 core programs**. Dependency capture images remain **2/5**; only SPL Token is a whole-file exact raw compiler output (**1/5**). Token-2022 and Metaplex allocation images are recorded separately from shorter raw compiler output. No overall reconstruction percentage follows from finite tests or normalized function matches.
+
+| Program | Selected executable SHA256 prefix | Differing or missing captured positions |
+| --- | --- | ---: |
+| Pump | `71ec4d8a646eefc8` | 9,784,703 |
+| PumpSwap | `09bee0dfd751dc6a` | 9,958,512 |
+| Fees | `2387f8139a13918a` | 554,122 |
+| Mayhem | `ca5d4f54b14e2f67` | 501,010 |
+| Donation Relay | `5f6d29410047551f` | 614,726 |
+| ATA | `ba8dd8a42ca7bff4` | 307 |
+| Metaplex retained image | `2c26e081f3faabf0` | 1,509 |
+
+Positional counts include common-extent differences and missing allocation bytes; they are not semantic distance or a completion score. The 3,338 original windows remain fully represented: Pump 1,035, AMM 785, Fees 585, Mayhem 441 and Relay 492. Opaque, unmatched, ambiguous, call-conflicting and stopped rows remain explicit.
+
+The bounded handler accounting remains 140/150, with five partial and five unrecovered dispositions. Pump virtual-params is still unaccepted, AMM create_config has no authentic positive runtime replay, and the incentive/initializer exclusions remain active. Existing finite comparisons do not certify every original branch or a complete security review.
+
+The selected AMM one-line correction removes unsupported compared Pubkeys from collect-owner error 6048. Its unchanged 17,462-case corpus passes, and the genuine managed build equals the tested image. Original source diagnostics and all 297 unmatched original AMM windows remain unresolved. Mayhem v1.54 is selected with 14 unchanged compile inputs; 177 of 441 original windows have bounded normalized matches, seven admitted handler windows remain unmatched, and 257 remain opaque, including the excluded initializer wrapper. These pattern counts do not establish semantics or historical recipe identity.
+
+Pump's unaccepted setter proposal and Relay's proposed fixed-source Linux measurement remain work in progress and add no accepted handler or byte-identity count. Source-origin and authority restrictions remain enforced. Exact ATA and Metaplex residuals, unclosed call/data/ownership contracts and missing authentic historical build records remain open.
+
+Stopped executions remain excluded: the new Pump sell_v2 corrective/transfer-fee probe; Pump admin-update/claim token incentives; Mayhem initializer; old V3 token-extension leaf; additional Metaplex runtime; and filtered BuyV3 partial-fill. No new signer, PDA, owner, source-origin or history bypass, fabricated source coordinate, binary patch/padding, or flag/layout sweep is part of the current checkpoint.
+
+## Historical checkpoint notes
+
+Everything below is retained verbatim from the prior document for provenance. References to “current,” “latest,” candidate hashes, compiler selection, or counts in this historical text describe its earlier checkpoint. The current selection and remaining work are stated above and in the latest machine-readable status/index. Historical implementation and test claims must not be transferred to later artifacts without explicit source/build/receipt bindings.
+
+# Remaining work for full deployed-byte identity
+
 Audit date: 2026-10-25. Baseline: `3c5b492be7ed793e062bc14f57c7abf3b3823c61`. The executable comparison snapshot is [pass 20's exact artifact index](../repro/layered-passes/pass-20/current-analysis-index.json); current-status health is measured separately. A later commit, green test, or compiler-default change does not retroactively change these results.
 
 Later checkpoint reconciliation: [pass21](../repro/layered-passes/pass-21/README.md) integrated the owned CTO6083 error and typed second Pump CPI. [Pass23](../repro/layered-passes/pass-23/README.md), reviewed in [PR8](https://github.com/lalalune/pumpfun-source/pull/8), additionally binds five CTO constructors, four typed sharing CPIs, original admin-or-creator authorization and Relay discriminator-error ownership. PR8 merged as `bed4fe18` after both full hosted workflows passed all12 jobs on reviewed head `4918ee17`; the merged tree is identical to that head. Saved signatures, strict source applicability and actual-current checkpoint checks pass. Concurrent incentive and trade research is preserved outside active compiler discovery. These checks execute no new contract transactions and establish no original-byte identity. The pass20 measurements below remain explicitly historical.

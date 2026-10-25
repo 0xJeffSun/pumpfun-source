@@ -20,9 +20,9 @@ jobs:
               python scripts/test_core_linux_v144_retention.py
               python repro/pump_fees/initializer-inline-runtime/verify.py
               python scripts/verify_recovered_builds.py
-              python -B repro/layered-passes/pass-25/current-applicability/verify.py --repo .
-              python -B repro/layered-passes/pass-25/current-reconciliation/verify.py --repo .
-              python -B repro/layered-passes/pass-25/verify_pass.py --repo . --relay-python python --runtime-signatures
+              python -B repro/layered-passes/pass-26/current-guards/verify_current.py --repo . --metadata repro/layered-passes/pass-26/current-metadata
+              python -B repro/layered-passes/pass-26/current-guards/verify_metadata.py --repo . --metadata repro/layered-passes/pass-26/current-metadata
+              python -B repro/layered-passes/pass-26/current-guards/verify_portable_crypto.py --repo . --metadata repro/layered-passes/pass-26/current-metadata --python312 python
               python -B repro/layered-passes/pass-19/ci-followup/verify.py --repo .
               python -B repro/pump/wide-runtime-attribution/verify.py --repo .
               python scripts/pump_verify_dependencies.py
@@ -299,32 +299,32 @@ jobs:
               python scripts/verify_current_bindings.py pump
           - suite: pump-amm
             commands: |
-              python scripts/pump_amm_admin_differential.py --candidate repro/pump_amm/init-logical-module-main-v144/main/candidate.so --output work/pump-amm-admin.json
-              python scripts/pump_amm_buyback_differential.py --candidate repro/pump_amm/init-logical-module-main-v144/main/candidate.so --output work/pump-amm-buyback.json
-              python scripts/pump_amm_fee_config_differential.py --candidate repro/pump_amm/init-logical-module-main-v144/main/candidate.so --output work/pump-amm-fee_config.json
-              python scripts/pump_amm_resize_differential.py --creator --candidate repro/pump_amm/init-logical-module-main-v144/main/candidate.so --output work/pump-amm-resize.json
-              python scripts/pump_amm_reserved_differential.py --candidate repro/pump_amm/init-logical-module-main-v144/main/candidate.so --output work/pump-amm-reserved.json
-              python scripts/pump_amm_accumulator_differential.py --candidate repro/pump_amm/init-logical-module-main-v144/main/candidate.so --output work/pump-amm-accumulator.json
-              python scripts/pump_amm_liquidity_differential.py --candidate repro/pump_amm/init-logical-module-main-v144/main/candidate.so --output work/pump-amm-liquidity.json
-              python scripts/pump_amm_trade_v2_differential.py --candidate repro/pump_amm/init-logical-module-main-v144/main/candidate.so --output work/pump-amm-trade-v2.json
-              python scripts/pump_amm_create_differential.py --candidate repro/pump_amm/init-logical-module-main-v144/main/candidate.so --output work/pump-amm-create.json
-              python scripts/pump_amm_migration_create_differential.py --candidate repro/pump_amm/init-logical-module-main-v144/main/candidate.so --output work/pump-amm-migration-create.json
-              python scripts/pump_amm_boost_differential.py --candidate repro/pump_amm/init-logical-module-main-v144/main/candidate.so --output work/pump-amm-boost.json
-              python scripts/pump_amm_sweep_differential.py --candidate repro/pump_amm/init-logical-module-main-v144/main/candidate.so --output work/pump-amm-sweep.json
-              python scripts/pump_amm_extend_differential.py --candidate repro/pump_amm/init-logical-module-main-v144/main/candidate.so --output work/pump-amm-extend.json
-              python scripts/pump_amm_collect_differential.py --candidate repro/pump_amm/init-logical-module-main-v144/main/candidate.so --output work/pump-amm-collect.json
-              python scripts/pump_amm_transfer_creator_differential.py --candidate repro/pump_amm/init-logical-module-main-v144/main/candidate.so --output work/pump-amm-transfer-creator.json
-              python scripts/pump_amm_creator_reassignment_differential.py --candidate repro/pump_amm/init-logical-module-main-v144/main/candidate.so --output work/pump-amm-creator-reassignment.json
-              python scripts/pump_amm_creator_reassignment_cto_differential.py --candidate repro/pump_amm/init-logical-module-main-v144/main/candidate.so --output work/pump-amm-creator-reassignment-cto.json
-              python scripts/pump_amm_incentives_differential.py --family sync --candidate repro/pump_amm/init-logical-module-main-v144/main/candidate.so --output work/pump-amm-incentives-sync.json
-              python scripts/pump_amm_incentives_differential.py --family admin --candidate repro/pump_amm/init-logical-module-main-v144/main/candidate.so --output work/pump-amm-incentives-admin.json
-              python scripts/pump_amm_incentives_differential.py --family claim --candidate repro/pump_amm/init-logical-module-main-v144/main/candidate.so --output work/pump-amm-incentives-claim.json
-              python scripts/pump_amm_cashback_differential.py --candidate repro/pump_amm/init-logical-module-main-v144/main/candidate.so --output work/pump-amm-cashback.json
-              python scripts/pump_amm_legacy_sell_differential.py --candidate repro/pump_amm/init-logical-module-main-v144/main/candidate.so --output work/pump-amm-legacy-sell.json
-              python scripts/pump_amm_legacy_buy_differential.py --candidate repro/pump_amm/init-logical-module-main-v144/main/candidate.so --output work/pump-amm-legacy-buy.json
-              python scripts/pump_amm_boost_burn_differential.py --candidate repro/pump_amm/init-logical-module-main-v144/main/candidate.so --output work/pump-amm-boost-burn.json
-              python scripts/pump_amm_multi_hop_differential.py --candidate repro/pump_amm/init-logical-module-main-v144/main/candidate.so --output work/pump-amm-multi-hop.json
-              python repro/pump_amm/init-logical-module-main-v144/verify.py --current-main .
+              python scripts/pump_amm_admin_differential.py --candidate repro/pump_amm/owner6048-v144/main/candidate.so --output work/pump-amm-admin.json
+              python scripts/pump_amm_buyback_differential.py --candidate repro/pump_amm/owner6048-v144/main/candidate.so --output work/pump-amm-buyback.json
+              python scripts/pump_amm_fee_config_differential.py --candidate repro/pump_amm/owner6048-v144/main/candidate.so --output work/pump-amm-fee_config.json
+              python scripts/pump_amm_resize_differential.py --creator --candidate repro/pump_amm/owner6048-v144/main/candidate.so --output work/pump-amm-resize.json
+              python scripts/pump_amm_reserved_differential.py --candidate repro/pump_amm/owner6048-v144/main/candidate.so --output work/pump-amm-reserved.json
+              python scripts/pump_amm_accumulator_differential.py --candidate repro/pump_amm/owner6048-v144/main/candidate.so --output work/pump-amm-accumulator.json
+              python scripts/pump_amm_liquidity_differential.py --candidate repro/pump_amm/owner6048-v144/main/candidate.so --output work/pump-amm-liquidity.json
+              python scripts/pump_amm_trade_v2_differential.py --candidate repro/pump_amm/owner6048-v144/main/candidate.so --output work/pump-amm-trade-v2.json
+              python scripts/pump_amm_create_differential.py --candidate repro/pump_amm/owner6048-v144/main/candidate.so --output work/pump-amm-create.json
+              python scripts/pump_amm_migration_create_differential.py --candidate repro/pump_amm/owner6048-v144/main/candidate.so --output work/pump-amm-migration-create.json
+              python scripts/pump_amm_boost_differential.py --candidate repro/pump_amm/owner6048-v144/main/candidate.so --output work/pump-amm-boost.json
+              python scripts/pump_amm_sweep_differential.py --candidate repro/pump_amm/owner6048-v144/main/candidate.so --output work/pump-amm-sweep.json
+              python scripts/pump_amm_extend_differential.py --candidate repro/pump_amm/owner6048-v144/main/candidate.so --output work/pump-amm-extend.json
+              python scripts/pump_amm_collect_differential.py --candidate repro/pump_amm/owner6048-v144/main/candidate.so --output work/pump-amm-collect.json
+              python scripts/pump_amm_transfer_creator_differential.py --candidate repro/pump_amm/owner6048-v144/main/candidate.so --output work/pump-amm-transfer-creator.json
+              python scripts/pump_amm_creator_reassignment_differential.py --candidate repro/pump_amm/owner6048-v144/main/candidate.so --output work/pump-amm-creator-reassignment.json
+              python scripts/pump_amm_creator_reassignment_cto_differential.py --candidate repro/pump_amm/owner6048-v144/main/candidate.so --output work/pump-amm-creator-reassignment-cto.json
+              python scripts/pump_amm_incentives_differential.py --family sync --candidate repro/pump_amm/owner6048-v144/main/candidate.so --output work/pump-amm-incentives-sync.json
+              python scripts/pump_amm_incentives_differential.py --family admin --candidate repro/pump_amm/owner6048-v144/main/candidate.so --output work/pump-amm-incentives-admin.json
+              python scripts/pump_amm_incentives_differential.py --family claim --candidate repro/pump_amm/owner6048-v144/main/candidate.so --output work/pump-amm-incentives-claim.json
+              python scripts/pump_amm_cashback_differential.py --candidate repro/pump_amm/owner6048-v144/main/candidate.so --output work/pump-amm-cashback.json
+              python scripts/pump_amm_legacy_sell_differential.py --candidate repro/pump_amm/owner6048-v144/main/candidate.so --output work/pump-amm-legacy-sell.json
+              python scripts/pump_amm_legacy_buy_differential.py --candidate repro/pump_amm/owner6048-v144/main/candidate.so --output work/pump-amm-legacy-buy.json
+              python scripts/pump_amm_boost_burn_differential.py --candidate repro/pump_amm/owner6048-v144/main/candidate.so --output work/pump-amm-boost-burn.json
+              python scripts/pump_amm_multi_hop_differential.py --candidate repro/pump_amm/owner6048-v144/main/candidate.so --output work/pump-amm-multi-hop.json
+              python repro/pump_amm/owner6048-v144/verify_public.py --current-main .
           - suite: mayhem-1
             commands: |
               python -B repro/mayhem/compiler-v154-main/current_bridge.py --current-root . --expected-seal f5d514664d47a04cc22282fdd19ca9e01d835c8a335aa9acc3f637fc61650acc
