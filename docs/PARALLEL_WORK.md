@@ -45,6 +45,16 @@ The [current integration review](../repro/ci/two-curve-inline-bindings/REPORT.md
 
 ## Third wave
 
-[Ten further CLI tasks](../repro/parallel-work/2026-10-25/launch.json) were launched against published source517d77d, with separate writable scopes: source review for each of the four programs, Pump partial-fill predicate/dataflow, nested creation, deeper ordinary curve routing, Mayhem error-return ABI, relay parser error ABI and relay arithmetic closure. All ten emitted `turn.started`, and their process handles were verified live at launch. This records assignments, not completed audits or accepted program changes. Previously stopped scopes and private audit inputs remain excluded.
+[Ten further CLI tasks](../repro/parallel-work/2026-10-25/launch.json) were launched against published source 517d77d, with separate writable scopes: source review for each of the four programs, Pump partial-fill predicate/dataflow, nested creation, deeper ordinary curve routing, Mayhem error-return ABI, relay parser error ABI and relay arithmetic closure. All ten emitted `turn.started`, and their process handles were verified live at launch. This records assignments, not completed audits or accepted program changes. Previously stopped scopes and private audit inputs remain excluded.
 
 In parallel, native agents own the grounded Fees account-module source build, AMM scalar-setter source recovery and attribution of the completed fixed-source Linux build. No additional compiler variant search or initializer signer substitution is part of these tasks.
+
+
+All ten third-wave CLI tasks have now completed, bringing the three waves to 26 completed independent CLI tasks. Their [verified packages](../repro/parallel-work/2026-10-25/results/README.md) are published with original seals. Native work separately produced the validated [Fees state-module checkpoint](../repro/pump_fees/state-module-v144/README.md); static CLI proposals and review observations are not counted as accepted handlers or exact binaries.
+
+
+## Focused follow-ups and hosted acceptance
+
+All twelve jobs in [run 40167951169 at 641b042](https://github.com/lalalune/pumpfun-source/actions/runs/40167951169) passed. This validates the published Pump two-curve and Fees inline-initializer checkpoint, including the corrected actual-receipt references; later source changes require their own CI.
+
+[Seven focused CLI follow-ups](../repro/parallel-work/2026-10-25/followups/README.md) were launched on the concrete prerequisites identified by the third wave. Every task emitted `turn.started` and was observed live after launch. They cover Mayhem macro bindings, AMM legacy tracking, Pump route arithmetic/nested types/partial-fill identities, and relay sort/callback closure. No global agent limit changed. Their dispatch records are distinct from completion evidence.

@@ -34,7 +34,7 @@ favors platform-tools v1.44 among the tested Fees builds: two complete runtime
 helper bodies match the capture exactly. The current Fees candidate uses that
 compiler. The [previous retained Fees build](repro/pump_fees/all-thirtyone-v144/README.md)
 also passed 112 independent Surfpool comparisons with 224 signed local transactions.
-The current [Fees inline initializer checkpoint](repro/pump_fees/initializer-inline-v144/README.md) restores the original inline Pump Global account layout. Its complete handler, account parser and wrapper match under the documented normalization, while the prior social-v2 and Pubkey helper matches remain satisfied. All 17,441 comparison receipts and ten donation sequence steps pass again. Current Fees compilation uses v1.44; the retained SDK strips with v1.52. These results do not prove the complete historical build configuration.
+The current [Fees state-module checkpoint](repro/pump_fees/state-module-v144/README.md) places four unchanged account declarations in the original recorded `state.rs` file. It retains the inline initializer, social-v2 and Pubkey helper comparisons and passes all 17,441 existing comparisons and ten donation sequence steps. Historical source-line values and whole-ELF identity remain unresolved. Current Fees compilation uses v1.44; the retained SDK strips with v1.52. These results do not prove the complete historical build configuration.
 
 [Recovery status](docs/RECOVERY.md) separates observed evidence from unresolved work.
 The [completion and remaining-work ledger](docs/COMPLETION.md) enumerates all 150 instruction dispositions: 140 bounded implementations (93.3%), five partial and five unrecovered. Whole-binary completion remains 0/4; this is not a 93.3% overall completion estimate.

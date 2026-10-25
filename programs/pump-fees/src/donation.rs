@@ -96,8 +96,7 @@ pub struct CreateDonationFeePda<'info> {
     /// CHECK: derived identifier; state rules under recovery.
     #[account(seeds=[b"sharing-config",base_mint.key().as_ref()],bump)] pub sharing_config: UncheckedAccount<'info>,
 }
-#[account]
-pub struct DonationFeePda {pub bump:u8,pub version:u8,pub config_id:Pubkey,pub base_mint:Pubkey,pub quote_mint:Pubkey,pub creator:Pubkey,pub total_donated:u64,pub last_crank_ts:i64,pub reserved:[u8;64]}
+pub use crate::state::DonationFeePda;
 pub use crate::pump::accounts::BondingCurve;
 pub use crate::pump_amm::accounts::Pool;
 #[event]

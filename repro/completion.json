@@ -254,7 +254,7 @@
       "program": "pump",
       "instruction": "multi_hop_curve_swap",
       "status": "partial",
-      "limitation": "One native curve per genuine AMM-signed Pump CPI with flag 3, plus exactly SOL→A→B and B→A→SOL using ordinary Tokenkeg accounts and flags [1,2]/[2,1]. The two-curve paths require canonical pre-existing vaults, a native root storing quote zero, ordinary 166-byte curves and strictly non-completing buys. Broader routes, other quote currencies, arbitrary hop counts, Token-2022/extensions, holder/cashback/Mayhem modes and completion remain unsupported. The retained 56-case one-curve subset has 50 Pump CPI comparisons and 11 successes; the new 20-case subset has 18 Pump CPI comparisons and 16 successes.",
+      "limitation": "One native curve per genuine AMM-signed Pump CPI with flag 3, plus exactly SOL\u2192A\u2192B and B\u2192A\u2192SOL using ordinary Tokenkeg accounts and flags [1,2]/[2,1]. The two-curve paths require canonical pre-existing vaults, a native root storing quote zero, ordinary 166-byte curves and strictly non-completing buys. Broader routes, other quote currencies, arbitrary hop counts, Token-2022/extensions, holder/cashback/Mayhem modes and completion remain unsupported. The retained 56-case one-curve subset has 50 Pump CPI comparisons and 11 successes; the new 20-case subset has 18 Pump CPI comparisons and 16 successes.",
       "candidate_artifact": "repro/pump/tokenkeg-two-curve-fortyeight/candidate.so",
       "full_byte_equality": false
     },
@@ -767,7 +767,7 @@
       "instruction": "admin_cto_sharing_config",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_fees/initializer-inline-v144/pump_fees_candidate.so",
+      "candidate_artifact": "repro/pump_fees/state-module-v144/pump_fees_candidate.so",
       "full_byte_equality": false
     },
     {
@@ -775,7 +775,7 @@
       "instruction": "claim_social_fee_pda",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_fees/initializer-inline-v144/pump_fees_candidate.so",
+      "candidate_artifact": "repro/pump_fees/state-module-v144/pump_fees_candidate.so",
       "full_byte_equality": false
     },
     {
@@ -783,7 +783,7 @@
       "instruction": "claim_social_fee_pda_v2",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_fees/initializer-inline-v144/pump_fees_candidate.so",
+      "candidate_artifact": "repro/pump_fees/state-module-v144/pump_fees_candidate.so",
       "full_byte_equality": false
     },
     {
@@ -791,7 +791,7 @@
       "instruction": "crank_donation_fee_pda",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_fees/initializer-inline-v144/pump_fees_candidate.so",
+      "candidate_artifact": "repro/pump_fees/state-module-v144/pump_fees_candidate.so",
       "full_byte_equality": false
     },
     {
@@ -799,7 +799,7 @@
       "instruction": "create_donation_fee_pda",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_fees/initializer-inline-v144/pump_fees_candidate.so",
+      "candidate_artifact": "repro/pump_fees/state-module-v144/pump_fees_candidate.so",
       "full_byte_equality": false
     },
     {
@@ -807,7 +807,7 @@
       "instruction": "create_fee_sharing_config",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_fees/initializer-inline-v144/pump_fees_candidate.so",
+      "candidate_artifact": "repro/pump_fees/state-module-v144/pump_fees_candidate.so",
       "full_byte_equality": false
     },
     {
@@ -815,7 +815,7 @@
       "instruction": "create_social_fee_pda",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_fees/initializer-inline-v144/pump_fees_candidate.so",
+      "candidate_artifact": "repro/pump_fees/state-module-v144/pump_fees_candidate.so",
       "full_byte_equality": false
     },
     {
@@ -823,7 +823,7 @@
       "instruction": "extend_fee_config",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_fees/initializer-inline-v144/pump_fees_candidate.so",
+      "candidate_artifact": "repro/pump_fees/state-module-v144/pump_fees_candidate.so",
       "full_byte_equality": false
     },
     {
@@ -831,7 +831,7 @@
       "instruction": "get_fees",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_fees/initializer-inline-v144/pump_fees_candidate.so",
+      "candidate_artifact": "repro/pump_fees/state-module-v144/pump_fees_candidate.so",
       "full_byte_equality": false
     },
     {
@@ -839,7 +839,7 @@
       "instruction": "get_fees_with_quote_mint",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_fees/initializer-inline-v144/pump_fees_candidate.so",
+      "candidate_artifact": "repro/pump_fees/state-module-v144/pump_fees_candidate.so",
       "full_byte_equality": false
     },
     {
@@ -847,7 +847,7 @@
       "instruction": "initialize_buyback",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_fees/initializer-inline-v144/pump_fees_candidate.so",
+      "candidate_artifact": "repro/pump_fees/state-module-v144/pump_fees_candidate.so",
       "full_byte_equality": false
     },
     {
@@ -855,7 +855,7 @@
       "instruction": "initialize_fee_config",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_fees/initializer-inline-v144/pump_fees_candidate.so",
+      "candidate_artifact": "repro/pump_fees/state-module-v144/pump_fees_candidate.so",
       "full_byte_equality": false
     },
     {
@@ -863,7 +863,7 @@
       "instruction": "initialize_fee_program_global",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_fees/initializer-inline-v144/pump_fees_candidate.so",
+      "candidate_artifact": "repro/pump_fees/state-module-v144/pump_fees_candidate.so",
       "full_byte_equality": false
     },
     {
@@ -871,7 +871,7 @@
       "instruction": "revoke_fee_sharing_authority",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_fees/initializer-inline-v144/pump_fees_candidate.so",
+      "candidate_artifact": "repro/pump_fees/state-module-v144/pump_fees_candidate.so",
       "full_byte_equality": false
     },
     {
@@ -879,7 +879,7 @@
       "instruction": "set_authority",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_fees/initializer-inline-v144/pump_fees_candidate.so",
+      "candidate_artifact": "repro/pump_fees/state-module-v144/pump_fees_candidate.so",
       "full_byte_equality": false
     },
     {
@@ -887,7 +887,7 @@
       "instruction": "set_claim_rate_limit",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_fees/initializer-inline-v144/pump_fees_candidate.so",
+      "candidate_artifact": "repro/pump_fees/state-module-v144/pump_fees_candidate.so",
       "full_byte_equality": false
     },
     {
@@ -895,7 +895,7 @@
       "instruction": "set_disable_flags",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_fees/initializer-inline-v144/pump_fees_candidate.so",
+      "candidate_artifact": "repro/pump_fees/state-module-v144/pump_fees_candidate.so",
       "full_byte_equality": false
     },
     {
@@ -903,7 +903,7 @@
       "instruction": "set_exotic_flat_fees",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_fees/initializer-inline-v144/pump_fees_candidate.so",
+      "candidate_artifact": "repro/pump_fees/state-module-v144/pump_fees_candidate.so",
       "full_byte_equality": false
     },
     {
@@ -911,7 +911,7 @@
       "instruction": "set_social_claim_authority",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_fees/initializer-inline-v144/pump_fees_candidate.so",
+      "candidate_artifact": "repro/pump_fees/state-module-v144/pump_fees_candidate.so",
       "full_byte_equality": false
     },
     {
@@ -919,7 +919,7 @@
       "instruction": "sweep_buyback",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_fees/initializer-inline-v144/pump_fees_candidate.so",
+      "candidate_artifact": "repro/pump_fees/state-module-v144/pump_fees_candidate.so",
       "full_byte_equality": false
     },
     {
@@ -927,7 +927,7 @@
       "instruction": "transfer_fee_sharing_authority",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_fees/initializer-inline-v144/pump_fees_candidate.so",
+      "candidate_artifact": "repro/pump_fees/state-module-v144/pump_fees_candidate.so",
       "full_byte_equality": false
     },
     {
@@ -935,7 +935,7 @@
       "instruction": "update_admin",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_fees/initializer-inline-v144/pump_fees_candidate.so",
+      "candidate_artifact": "repro/pump_fees/state-module-v144/pump_fees_candidate.so",
       "full_byte_equality": false
     },
     {
@@ -943,7 +943,7 @@
       "instruction": "update_buyback_authority",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_fees/initializer-inline-v144/pump_fees_candidate.so",
+      "candidate_artifact": "repro/pump_fees/state-module-v144/pump_fees_candidate.so",
       "full_byte_equality": false
     },
     {
@@ -951,7 +951,7 @@
       "instruction": "update_buyback_claim_rate_limit",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_fees/initializer-inline-v144/pump_fees_candidate.so",
+      "candidate_artifact": "repro/pump_fees/state-module-v144/pump_fees_candidate.so",
       "full_byte_equality": false
     },
     {
@@ -959,7 +959,7 @@
       "instruction": "update_fee_config",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_fees/initializer-inline-v144/pump_fees_candidate.so",
+      "candidate_artifact": "repro/pump_fees/state-module-v144/pump_fees_candidate.so",
       "full_byte_equality": false
     },
     {
@@ -967,7 +967,7 @@
       "instruction": "update_fee_shares",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_fees/initializer-inline-v144/pump_fees_candidate.so",
+      "candidate_artifact": "repro/pump_fees/state-module-v144/pump_fees_candidate.so",
       "full_byte_equality": false
     },
     {
@@ -975,7 +975,7 @@
       "instruction": "update_fee_shares_v2",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_fees/initializer-inline-v144/pump_fees_candidate.so",
+      "candidate_artifact": "repro/pump_fees/state-module-v144/pump_fees_candidate.so",
       "full_byte_equality": false
     },
     {
@@ -983,7 +983,7 @@
       "instruction": "update_stable_fee_config",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_fees/initializer-inline-v144/pump_fees_candidate.so",
+      "candidate_artifact": "repro/pump_fees/state-module-v144/pump_fees_candidate.so",
       "full_byte_equality": false
     },
     {
@@ -991,7 +991,7 @@
       "instruction": "upsert_fee_tiers",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_fees/initializer-inline-v144/pump_fees_candidate.so",
+      "candidate_artifact": "repro/pump_fees/state-module-v144/pump_fees_candidate.so",
       "full_byte_equality": false
     },
     {
@@ -999,7 +999,7 @@
       "instruction": "upsert_stable_fee_tiers",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_fees/initializer-inline-v144/pump_fees_candidate.so",
+      "candidate_artifact": "repro/pump_fees/state-module-v144/pump_fees_candidate.so",
       "full_byte_equality": false
     },
     {
@@ -1007,7 +1007,7 @@
       "instruction": "withdraw",
       "status": "bounded_implementation",
       "limitation": null,
-      "candidate_artifact": "repro/pump_fees/initializer-inline-v144/pump_fees_candidate.so",
+      "candidate_artifact": "repro/pump_fees/state-module-v144/pump_fees_candidate.so",
       "full_byte_equality": false
     },
     {
@@ -1229,10 +1229,10 @@
         "comparison_report": "repro/pump_amm/pool-serialization-thirty-seven/build-comparison.json"
       },
       "pump_fees": {
-        "candidate_artifact": "repro/pump_fees/initializer-inline-v144/pump_fees_candidate.so",
-        "candidate_sha256": "01fedce5878ec14618233c4683bcb4149e471775acb48ffb69614d9df570bb95",
+        "candidate_artifact": "repro/pump_fees/state-module-v144/pump_fees_candidate.so",
+        "candidate_sha256": "d5b8f885942ee0d54519e4330941b5e034cfcdcf271eb286d0b4cc81165bee13",
         "differential_comparisons": 17441,
-        "comparison_report": "repro/pump_fees/initializer-inline-v144/build-comparison.json"
+        "comparison_report": "repro/pump_fees/state-module-v144/build-comparison.json"
       },
       "mayhem": {
         "candidate_artifact": "repro/mayhem/twentyfour/mayhem_recovered.so",

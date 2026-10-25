@@ -6,7 +6,7 @@ programs listed in `docs/SCOPE.md`. Partial executable handlers have been recove
 The current published recovery covers 140 implemented handlers plus five partial
 Pump paths and 53,735 saved comparison receipts: [Pump48 two-curve checkpoint](../repro/pump/tokenkeg-two-curve-fortyeight/README.md),
 [AMM37 Pool serializer](../repro/pump_amm/pool-serialization-thirty-seven/README.md),
-[Fees31 inline initializer checkpoint](../repro/pump_fees/initializer-inline-v144/README.md),
+[Fees31 state-module checkpoint](../repro/pump_fees/state-module-v144/README.md),
 and [Mayhem24](../repro/mayhem/twentyfour/README.md). These bounded recovery results
 do not extend the source review frozen at commit329fc44 into a complete audit of
 the later candidates. All four original whole-file comparisons still differ.
@@ -25,6 +25,12 @@ original counts and scope.
 
 There are no substantiated vulnerability findings in this checkpoint. No hypothetical
 issue is presented as a finding, and no informational findings are included.
+
+## Public candidate-source review progress
+
+The [third parallel pass](../repro/parallel-work/2026-10-25/results/README.md) contains new manual source reviews for the four candidates frozen at 517d77d. They enumerate 112 included Accounts contexts and 422 function declarations/dispositions, with explicit excluded boundary rows. Twenty-five candidate observations retain authorization, policy, reachability and dependency prerequisites; they are not confirmed vulnerabilities in the captured originals. The verifiers check provenance, spans and bounded calculations rather than certifying every review conclusion.
+
+The later Fees state-module change preserves four complete account declarations and adds reexports/module wiring. Its code-generation and regression evidence does not automatically extend the frozen review to every macro-generated behavior. Missing implementations, partial paths, excluded scopes, deployment evidence and transitive dependencies still prevent whole-program security sign-off. Private audit inputs remain unpublished.
 
 ## Local evidence and applicability
 

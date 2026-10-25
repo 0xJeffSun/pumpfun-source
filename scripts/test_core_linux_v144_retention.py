@@ -184,6 +184,16 @@ class KeypairRetentionTests(unittest.TestCase):
                 helper.retain_generated_outputs(attempt)
         self.assertFalse((attempt.evidence / "pump_fees_candidate-unstripped.so").exists())
 
+    def test_output_root_symlink_is_rejected_before_inventory(self):
+        attempt = self.attempt()
+        excluded = self.write("external/ordinary.bin", b"must never be read")
+        (attempt.output / "target").symlink_to(excluded.parent, target_is_directory=True)
+        with forbid_reading(lambda p: True) as reads:
+            with self.assertRaisesRegex(ValueError, "not a symlink"):
+                helper.retain_generated_outputs(attempt)
+        self.assertEqual(reads, [])
+        self.assertFalse((attempt.evidence / "target-files.json").exists())
+
     def test_fetch_metadata_never_enters_compiler_target(self):
         source = self.root / "source"
         self.write("source/lib.rs", b"frozen source")

@@ -139,6 +139,17 @@ def retain_generated_outputs(attempt):
     """Retain emitted stripped/symbol ELFs on success/failure, omitting keys."""
     if attempt.state["build_attempts"] == 0:
         return
+    emitted = {
+        "artifacts/pump_fees_candidate.so": "pump_fees_candidate.so",
+        "target/sbf-solana-solana/release/pump_fees_candidate.so": "pump_fees_candidate-unstripped.so",
+    }
+    # os.walk follows a symlink supplied as its root even with followlinks=False.
+    # Reject the complete emitted path chains before any inventory hashes files.
+    for relative in emitted:
+        chain = [attempt.output / Path(*Path(relative).parts[:i])
+                 for i in range(1, len(Path(relative).parts) + 1)]
+        if any(path.is_symlink() for path in chain):
+            raise ValueError("Candidate must be a regular emitted file, not a symlink")
     excluded = set(attempt.state.get("excluded_generated_keypair_paths", []))
     for name, report in [("target", "target-files.json"), ("artifacts", "artifact-files.json")]:
         root = attempt.output / name
@@ -150,16 +161,8 @@ def retain_generated_outputs(attempt):
         excluded.update(str(Path(name) / path) for path in omitted)
     attempt.state["excluded_generated_keypair_paths"] = sorted(excluded)
     attempt.save()
-    emitted = {
-        "artifacts/pump_fees_candidate.so": "pump_fees_candidate.so",
-        "target/sbf-solana-solana/release/pump_fees_candidate.so": "pump_fees_candidate-unstripped.so",
-    }
     for relative, retained in emitted.items():
         candidate = attempt.output / relative
-        chain = [attempt.output / Path(*Path(relative).parts[:i])
-                 for i in range(1, len(Path(relative).parts) + 1)]
-        if any(path.is_symlink() for path in chain):
-            raise ValueError("Candidate must be a regular emitted file, not a symlink")
         if candidate.is_file():
             shutil.copy2(candidate, attempt.evidence / retained)
 

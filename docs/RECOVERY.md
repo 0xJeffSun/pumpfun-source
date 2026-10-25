@@ -288,7 +288,7 @@ Fees' [combined social-layout and dependency-family checkpoint](../repro/pump_fe
 Counts remain 140 bounded implementations, five partial handlers and 53,715 comparison receipts. No new unique runtime cases or completed core binaries are claimed. The [completion ledger](COMPLETION.md) records the remaining scope.
 
 
-## Current two-curve and inline initializer checkpoint
+## Two-curve and inline initializer checkpoint
 
 Pump's [two-curve checkpoint](../repro/pump/tokenkeg-two-curve-fortyeight/README.md) produces 1,576,744 bytes, SHA-256 `5c1c1c2d1cd2c334b3e054b6a8fb5ac0638d80d13495c1c18d935ad20bfd62bb`. Its only Rust change extends the existing routing module to ordinary Tokenkeg SOL→A→B and B→A→SOL with canonical pre-existing vaults, 166-byte curves, native root quote and non-completing buys. All 9,217 inherited differential comparisons, 20 new comparisons and 1,024 Surfpool comparisons pass. Eighteen new cases reach Pump through genuine captured AMM PDA signing; sixteen succeed and two roll back on the caller's minimum-output check. Two zero-input cases reject before Pump. Arbitrary routes, other quote currencies, Token-2022/extensions, holder rewards, cashback, Mayhem and completion remain outside this bounded extension. The prior full serializer comparison passes again on the new candidate.
 
@@ -299,6 +299,18 @@ Each candidate has one tested scratch build and one clean main build with identi
 
 ## Receipt references and future Linux symbol retention
 
-The [inline receipt reference correction](../repro/ci/inline-runtime-receipt-references/README.md) exposes ten already-sealed Fees receipts as byte-identical compressed files so the unchanged repository-wide verifier can check the current status. Its local check passes all four candidates and53,735 comparisons. This fixes a hosted evidence-job schema failure without changing program source, binaries or runtime coverage.
+The [inline receipt reference correction](../repro/ci/inline-runtime-receipt-references/README.md) exposes ten already-sealed Fees receipts as byte-identical compressed files so the unchanged repository-wide verifier can check the current status. Its local check passes all four candidates and 53,735 comparisons. This fixes a hosted evidence-job schema failure without changing program source, binaries or runtime coverage.
 
-The successful fixed-source Linux build retained a hash and section comparison for its unstripped ELF but omitted the symbol-bearing file from the downloadable artifact. No unstripped symbols can be inferred from that hash. The build helper now retains both exact emitted ELFs, rejects direct and parent symlinks before copying, and continues to omit generated keypairs. All33 preparation/retention tests pass locally. This is a future retention correction; the earlier build has not been repeated and its missing symbol bytes remain missing.
+The successful fixed-source Linux build retained a hash and section comparison for its unstripped ELF but omitted the symbol-bearing file from the downloadable artifact. No unstripped symbols can be inferred from that hash. The build helper now retains both exact emitted ELFs, rejects direct and parent symlinks before copying, and continues to omit generated keypairs. All 33 preparation/retention tests pass locally. This is a future retention correction; the earlier build has not been repeated and its missing symbol bytes remain missing.
+
+
+## Current Fees account-module reconstruction
+
+The [state-module checkpoint](../repro/pump_fees/state-module-v144/README.md) moves four unchanged account declarations to the original recorded filename, retaining public reexports. The clean main and tested scratch ELFs are identical: 768,024 bytes, SHA-256 `d5b8f885942ee0d54519e4330941b5e034cfcdcf271eb286d0b4cc81165bee13`. All 23 actual source inputs and fixed v1.44 compiler/v1.52 strip phases are recorded. All 17,441 inherited comparisons and ten donation steps pass, with unchanged historical signed messages; no cases or handlers are added.
+
+The four complete checked codecs now have matching filename and account-name literals. Their normalized bodies still differ in natural source-line values; the SharingConfig filename remains unresolved. All 35 immediate codec call sites and the retained initializer/social/Pubkey checks remain supported. This is a source-placement improvement, with full original binary equality still false.
+
+The [independent review of symbol retention](../repro/ci/receipt-retention-review/README.md) identified a pre-existing top-level symlink issue: inventory traversal could read a symlinked target root before the later candidate-chain guard. The guard now runs before inventory; the original observer sees zero file reads and all 34 preparation/retention tests pass. No additional Linux build was triggered.
+
+
+The [independent Fees integration review](../repro/ci/state-module-integration-review/README.md) verifies the preserved declarations, 23 actual inputs, identical main/scratch ELF, direct receipts, signed histories and complete 150-row ledger against its frozen integration snapshot. All 91 current-binding map entries passed; overlapping groups are not counted as unique files. This is bounded evidence acceptance, with whole-original equality and security sign-off still unresolved.

@@ -77,15 +77,7 @@ impl AccountDeserialize for FeeConfig {
     }
 }
 
-#[account]
-pub struct FeeProgramGlobal {
-    pub bump: u8,
-    pub authority: Pubkey,
-    pub disable_flags: u8,
-    pub social_claim_authority: Pubkey,
-    pub claim_rate_limit: u64,
-    pub _reserved: [u8; 256],
-}
+pub use crate::state::FeeProgramGlobal;
 #[event]
 pub struct SetAuthorityEvent { pub timestamp: i64, pub old_authority: Pubkey, pub new_authority: Pubkey }
 #[event]
