@@ -1,6 +1,6 @@
 {
   "scope": "PR5-only integration source from ebaa333. Offline signed target/candidate replays; no live transaction or deployed byte identity.",
-  "source_base": "ebaa333411ae2fdb4f8d1e8d3d484bed81fe753e",
+  "source_base": "278e47e8bd13fc047280bb10faae17ac4e03a12b",
   "source_input_count": 37,
   "candidate_sha256": "4c80e0c72e872f3cee06b35350f02010b6c62516bae96ed799482ecac1f6a438",
   "candidate_bytes": 1635144,
