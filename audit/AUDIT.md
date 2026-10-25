@@ -6,7 +6,7 @@ programs listed in `docs/SCOPE.md`. Partial executable handlers have been recove
 The current published recovery covers 140 implemented handlers plus five partial
 Pump paths and 53,787 saved comparison receipts: [Pump48 decoder/preparation checkpoint](../repro/pump/curve-preparation-fortyeight/README.md),
 [AMM37 destination-rent checkpoint](../repro/pump_amm/destination-rent-v144/README.md),
-[Fees31 legacy-caller checkpoint](../repro/pump_fees/legacy-caller-v144/README.md),
+[Fees31 legacy-value checkpoint](../repro/pump_fees/legacy-value-v144/README.md),
 and [Mayhem24](../repro/mayhem/twentyfour/README.md). These bounded recovery results
 do not extend the source review frozen at commit329fc44 into a complete audit of
 the later candidates. All four original whole-file comparisons still differ.
@@ -369,3 +369,5 @@ The [current Fees and AMM applicability reviews](../repro/parallel-work/2026-10-
 The [nested-ancestry checkpoint](../repro/pump/nested-ancestry-fortyeight/README.md) adds sixteen bounded original/candidate comparisons while preserving the complete prior Pump and Surfpool corpus. Synthetic pre-existing ancestry and finite depth/Pool cases do not establish exhaustive account admission, lifecycle reachability or complete source security. The newly integrated Pump source requires its own current-source applicability review; the Fees/AMM review above does not cover it.
 
 The Pump decoder/preparation correction in [pass06](../repro/layered-passes/pass-06/README.md) postdates the frozen candidate-source reviews. Its exact source review, clean-build identity and unchanged regression evidence do not extend those audits into full security acceptance. The Relay owned-error build and uncompiled Fees proposals likewise retain separate source/build/runtime applicability. No new confirmed vulnerability finding or complete security assessment is asserted.
+
+The seventh-pass Fees change affects one legacy error's compared-value payload. Its source review, retained-body checks and unchanged runtime corpus do not constitute an independent complete security audit. No new confirmed vulnerability finding is asserted, and the earlier frozen audit's applicability limits remain.

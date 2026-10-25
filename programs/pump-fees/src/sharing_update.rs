@@ -186,7 +186,10 @@ fn prepare_legacy_payout<'info>(
     for (i, share) in shareholders.iter().enumerate() {
         require!(i < remaining.len(), FeeError::NotEnoughRemainingAccounts);
         let account = &remaining[i];
-        require_keys_eq!(account.key(), share.address, FeeError::ShareholderAccountMismatch);
+        if account.key() != share.address {
+            return Err(error!(FeeError::ShareholderAccountMismatch)
+                .with_values((account.key(), share.address)));
+        }
         if account.executable { continue; }
         retained.push(share.clone());
         accounts.push(account.clone());
