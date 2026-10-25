@@ -17,27 +17,29 @@ python3 scripts/test_tooling.py
 A partial Rust fee-tier selector now matches the original instruction sequence except
 for unresolved relocations with platform-tools v1.43, and passes 1,215 local
 differential cases. Recovered quote-mint routing additionally passes 9,428 original-program
-queries, but its compiled instructions still differ. All 31 Fees instruction bodies pass 17,441 SBF comparison receipts; forty-eight recovered Pump
-handlers plus five partial creation/trading paths pass 9,217. Thirty-seven PumpSwap
+queries, but its compiled instructions still differ. All 31 Fees instruction bodies pass 17,461 SBF comparison receipts; forty-eight recovered Pump
+handlers plus five partial creation/trading paths pass 9,269. Thirty-seven PumpSwap
 handlers pass 17,462 comparisons, and twenty-four Mayhem handlers pass 9,595. These
-53,715 saved comparisons cover 140 implemented handlers and five partial paths, not the
+53,787 saved comparisons cover 140 implemented handlers and five partial paths, not the
 complete programs. The Fees total includes 69 repeated-input checks with stronger log or signature assertions. Two Fees handlers are deprecated dispatches that always reject.
-The current [Pump48 serializer checkpoint](repro/pump/bonding-curve-serializer-fortyeight/README.md) retains the bounded native/legacy multi-hop branch and recovers the complete 1,840-byte BondingCurve serialization body with all 25 direct calls. It passes 1,024 additional Surfpool comparisons with 2,048 signed transactions. The new 56-case suite includes 50 comparisons reaching Pump through captured AMM calls, six caller rejections and 11 successes.
+The current [Pump buy-order checkpoint](repro/pump/buy-mode-order-fortyeight/README.md) restores complete-before-cashback rejection order in the admitted buy path. Its entire executable differs from the preceding fee-basis build at nine bytes, all within buy; exact-quote is raw-unchanged. All 9,269 differential and 1,024 Surfpool comparisons pass, with no new cases. The inspected existing fixtures do not cover simultaneous complete/cashback flags or divergent mint/curve supplies. Whitelist admission, broader settlement and whole-original identity remain incomplete.
 The current Pump `sell_v2` has a confirmed quote transfer-fee minimum-output and event mismatch; its saved passes do not cover that boundary.
 The current PumpSwap checkpoint corrects the earlier zero-fee cashback event mismatch;
 the [signed negative probe](repro/pump_amm/legacy-sell-zero-fee-gap/README.md) preserves evidence against the prior executable.
-A separate native accounting fragment is tested against 206
-original Pump sell cases. See [the recovery experiment](docs/FEE_SELECTION.md).
+The current [AMM accumulator-order checkpoint](repro/pump_amm/accumulator-order-v144/README.md) puts the accumulator user-field assignment after successful Clock retrieval, as in the captured original. Its clean main executable and symbols equal the tested scratch build; all 17,462 existing comparisons and 35,418 saved signature checks pass. The full inventory still has 310 unmatched original windows. Scalar specialization, recipient diagnostics, transitive data, authentic initializer success and whole ELF identity remain unresolved.
 
 The [controlled compiler comparison](repro/pump_fees/compiler-family/CONTROLLED-HELPER-REPORT.md)
 favors platform-tools v1.44 among the tested Fees builds: two complete runtime
 helper bodies match the capture exactly. The current Fees candidate uses that
 compiler. The [previous retained Fees build](repro/pump_fees/all-thirtyone-v144/README.md)
 also passed 112 independent Surfpool comparisons with 224 signed local transactions.
-The current [Fees dependency-family checkpoint](repro/pump_fees/solana-family-221-v144/README.md) recovers the social-v2 account layout and eight dependency selections from one official release lock. It reproduces six Pubkey helpers, the complete base58 formatter and all nine checked source records, with 17,441 fresh comparison receipts and ten donation sequence steps. Current Fees compilation uses v1.44; the retained SDK strips with v1.52. These results do not prove the complete historical build configuration.
+The current [Fees V2 caller checkpoint](repro/pump_fees/v2-caller-v144/README.md) composes quote admission, remaining-account preprocessing, generated AMM/Pump V2 CPIs, payout filtering/rescaling and early serialization. All 17,461 existing comparisons and the separate ten-step sequence pass; a clean main build matches the tested executable and symbols. Five original windows gain normalized matches, leaving 130 unattributed and two conflicting windows. Whole-file identity, complete caller/parser/error/cleanup equivalence and the security audit remain incomplete.
 
-[Recovery status](docs/RECOVERY.md) separates observed evidence from unresolved work.
+The current [Mayhem swap-sell typed-error checkpoint](repro/mayhem/sell-result-error-twentyfour/README.md) restores the typed zero-divisor error in SellPumpSwap, following the prior buy correction. All 9,595 functional comparisons pass; 61 diagnostic rows remain explicit. Saved verification checks 13,284 retained transaction strings and 26,500 signatures; 19,190 remains the recorded/derived signed-execution count. Both clean main builds equal their tested scratch executables and symbols.
+
+[Recovery status](docs/RECOVERY.md) separates observed evidence from unresolved work. The [eleventh layered pass](repro/layered-passes/pass-11/README.md) records the latest fixes, complete byte differences, function/call/data inventories and the next source obligations.
 The [completion and remaining-work ledger](docs/COMPLETION.md) enumerates all 150 instruction dispositions: 140 bounded implementations (93.3%), five partial and five unrecovered. Whole-binary completion remains 0/4; this is not a 93.3% overall completion estimate.
+[Parallel worker results and concurrency configuration](docs/PARALLEL_WORK.md) document the completed CLI research waves, focused follow-ups and configured concurrency.
 [Tooling](docs/TOOLING.md) covers recapture, disassembly and strict candidate comparison.
 The [security assessment](audit/AUDIT.md) remains incomplete. Local validation
 includes 393 malformed-input checks and 30 signed offline lifecycle transactions;

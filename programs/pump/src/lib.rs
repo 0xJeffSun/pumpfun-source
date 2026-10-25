@@ -411,8 +411,17 @@ pub enum PumpError {
     MultiHopMayhemCurveNotSupported,
     #[msg("The quote coin is nested: a bonding curve remaining account is required for every coin on its quote chain down to the depth-0 root")]
     QuoteChainAccountsRequired,
-    #[msg("Reconstruction branch is not implemented") ]
-    ReconstructionBranchUnsupported,
+    // Binary evidence extends the captured official IDL, which stops at 6109.
+    #[msg("quote_mint must be writable for a quote with a Token-2022 transfer fee: its withheld fees are harvested to the mint")]
+    QuoteMintNotWritable = 110,
+}
+
+// Local reconstruction limits keep their existing code/name/message separate
+// from the captured program's error metadata. This is not an original enum.
+#[error_code]
+pub enum ReconstructionError {
+    #[msg("Reconstruction branch is not implemented")]
+    ReconstructionBranchUnsupported = 110,
 }
 
 #[derive(AnchorSerialize,Clone)]

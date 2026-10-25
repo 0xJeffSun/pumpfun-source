@@ -1,0 +1,10 @@
+[
+  {
+    "script": "analyze_fresh.py",
+    "returncode": 0
+  },
+  {
+    "script": "match-serializer.py",
+    "returncode": 0
+  }
+]

@@ -1,0 +1,13 @@
+{
+      "name": "CompleteEvent",
+      "discriminator": [
+        95,
+        114,
+        97,
+        156,
+        212,
+        46,
+        152,
+        8
+      ]
+    }

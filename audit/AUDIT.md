@@ -4,9 +4,9 @@
 programs listed in `docs/SCOPE.md`. Partial executable handlers have been recovered; no complete program exists.
 
 The current published recovery covers 140 implemented handlers plus five partial
-Pump paths and 53,715 saved comparison receipts: [Pump48 serializer](../repro/pump/bonding-curve-serializer-fortyeight/README.md),
-[AMM37 Pool serializer](../repro/pump_amm/pool-serialization-thirty-seven/README.md),
-[Fees31 dependency-family checkpoint](../repro/pump_fees/solana-family-221-v144/README.md),
+Pump paths and 53,787 saved comparison receipts: [Pump48 decoder/preparation checkpoint](../repro/pump/curve-preparation-fortyeight/README.md),
+[AMM37 accumulator-order checkpoint](../repro/pump_amm/accumulator-order-v144/README.md),
+[Fees31 V2 caller checkpoint](../repro/pump_fees/v2-caller-v144/README.md),
 and [Mayhem24](../repro/mayhem/twentyfour/README.md). These bounded recovery results
 do not extend the source review frozen at commit329fc44 into a complete audit of
 the later candidates. All four original whole-file comparisons still differ.
@@ -25,6 +25,40 @@ original counts and scope.
 
 There are no substantiated vulnerability findings in this checkpoint. No hypothetical
 issue is presented as a finding, and no informational findings are included.
+
+## Public candidate-source review progress
+
+The [fourth layered pass](../repro/layered-passes/pass-04/README.md) reviews the
+accepted source frozen at `aa98fb45f3f756d008ccb9940bcfd9a6e986ef77`. Each package
+records exact per-file, per-function and account-context coverage:
+
+| Candidate | Inspected explicit functions | Inspected account contexts | Review |
+| --- | ---: | ---: | --- |
+| Pump | 209 | 38 | [Report](../repro/layered-passes/pass-04/audit-pump/REPORT.md) |
+| AMM | 117 | 30 | [Report](../repro/layered-passes/pass-04/audit-amm/REPORT.md) |
+| Fees | 64 in-program definitions | 30 | [Report](../repro/layered-passes/pass-04/audit-fees/REPORT.md) |
+| Mayhem | 61 | 15 | [Report](../repro/layered-passes/pass-04/audit-mayhem/REPORT.md) |
+
+Fees separately inventories eight standalone definitions and two external
+declarations. Pump retains six excluded declarations as opaque metadata. These
+lexical inventories have explicit scope rules and are not percentages of audited
+machine code. The reviews retain their qualified observations and establish no
+new confirmed vulnerability or independently justified source patch. Their
+verifiers check source provenance and coverage integrity, not all-state safety.
+Generated code, transitive dependencies, lifecycle and alias premises, incomplete
+reconstructions and excluded work still prevent security sign-off. This source
+applicability does not transfer to subsequent reconstruction changes. The current
+Fees legacy-caller change postdates this frozen review. The subsequent
+[delta review](../repro/layered-passes/pass-05/audit-fees-delta/REPORT.md) checks
+all 26 frozen inputs and 14 explicit functions in its changed module, finding
+no concrete new regression. It retains F1–F5 and updates F5 for conditional
+prepared payout; it does not close lifecycle, V2, generated-code or transitive
+equivalence gaps. Source/build/regression evidence alone does not establish
+complete security coverage.
+
+The [third parallel pass](../repro/parallel-work/2026-10-25/results/README.md) contains new manual source reviews for the four candidates frozen at 517d77d. They enumerate 112 included Accounts contexts and 422 function declarations/dispositions, with explicit excluded boundary rows. Twenty-five candidate observations retain authorization, policy, reachability and dependency prerequisites; they are not confirmed vulnerabilities in the captured originals. The verifiers check provenance, spans and bounded calculations rather than certifying every review conclusion.
+
+The later Fees state-module and SharingConfig-module changes preserve five complete account declarations and add reexports/module wiring. Its code-generation and regression evidence does not automatically extend the frozen review to every macro-generated behavior. Missing implementations, partial paths, excluded scopes, deployment evidence and transitive dependencies still prevent whole-program security sign-off. Private audit inputs remain unpublished.
 
 ## Local evidence and applicability
 
@@ -89,8 +123,8 @@ confirmed vulnerability without a reachable configuration path.
 
 ### Executing recovered handlers
 
-Pump Fees now has 31 independently compiled instruction bodies, with 17,441
-original-versus-candidate SBF comparison receipts, including 69 repeated-input checks. These cover two query handlers, four authority setters,
+Pump Fees now has 31 independently compiled instruction bodies, with 17,461
+original-versus-candidate SBF comparison receipts, including 69 baseline repeated-input checks and eight focused repeats. These cover two query handlers, four authority setters,
 global initialization against the historical 740-byte Pump Global layout, and
 three configuration setters, permissionless resize, and two deprecated rejection
 dispatches, two tier upserts and FeeConfig administrator transfer, two donation handlers and three social-fee handlers and referral withdrawal, four buyback handlers, sharing creation, administrative sharing reset, both sharing updates and FeeConfig initialization. All31 bodies have bounded implementations; full source/context equivalence remains unproven. Selected compiler and dependency versions
@@ -326,3 +360,22 @@ The [bounded update-admin closure](../repro/pump_fees/update-admin-call-closure-
 The [cached public Pubkey source attribution](../repro/pump_fees/pubkey-source-coordinate-attribution/README.md) identifies `solana-pubkey` 2.2.1 as a concrete candidate: both observed original source coordinates match, and four relevant source blocks equal the current 2.4.0 blocks. The surrounding source changes explain the shifted coordinates. This does not uniquely identify the historical version, dependency graph or build recipe, and no dependency change or new runtime claim is made.
 
 The [decoder-contract review](../repro/pump_fees/decoder-contract-static/README.md) resolves the apparent discriminator-slice discrepancy: the three original body thresholds equal the candidate account thresholds after adding eight bytes, and both observed original callers discard their local cursors after decoding. Internal helper layout, allocation branches and error formatting still differ. This evidence does not justify a behavioral correction or prove full equivalence.
+
+The donation-business checkpoint adds a grounded curve branch and diagnostic corrections, with20 focused comparisons (eight repeated inputs,twelve new typed combinations) and the unchanged17,441-case baseline. These are reconstruction checks, not a completed security review. Historical audit packages retain their original scope.
+
+The [current Fees and AMM applicability reviews](../repro/parallel-work/2026-10-25/current-audit-results/README.md) pin published source `7a9cf01`. Fees retains all five observations and directly reviews the changed donation branch and context. AMM retains all nine observations, reviews the new initializer and shared setters, and distinguishes conditional current-source arguments from unresolved historical deployment and runtime premises. No new target execution, confirmed original vulnerability, or security sign-off follows. Root read both reports and independently passed their portable integrity and source-binding checks.
+
+
+The [nested-ancestry checkpoint](../repro/pump/nested-ancestry-fortyeight/README.md) adds sixteen bounded original/candidate comparisons while preserving the complete prior Pump and Surfpool corpus. Synthetic pre-existing ancestry and finite depth/Pool cases do not establish exhaustive account admission, lifecycle reachability or complete source security. The newly integrated Pump source requires its own current-source applicability review; the Fees/AMM review above does not cover it.
+
+The Pump decoder/preparation correction in [pass06](../repro/layered-passes/pass-06/README.md) postdates the frozen candidate-source reviews. Its exact source review, clean-build identity and unchanged regression evidence do not extend those audits into full security acceptance. The Relay owned-error build and uncompiled Fees proposals likewise retain separate source/build/runtime applicability. No new confirmed vulnerability finding or complete security assessment is asserted.
+
+The seventh-pass Fees change affects one legacy error's compared-value payload. Its source review, retained-body checks and unchanged runtime corpus do not constitute an independent complete security audit. No new confirmed vulnerability finding is asserted, and the earlier frozen audit's applicability limits remain.
+
+Pass08's independent review checks bounded original named-key provenance and documents unevaluated branch and padding assumptions. The unchanged Fees corpus and Relay ordinary12 comparisons are regression evidence, not a complete security audit or proof of all historical behavior. No new vulnerability finding is asserted.
+
+Pass09 changes the AMM accumulator assignment order using original instruction evidence and retains unchanged runtime comparisons. It adds no new security finding or complete audit sign-off. Its dependency review distinguishes unresolved code/data and provenance differences from demonstrated behavioral faults.
+
+Pass10's Pump fee-input and Mayhem typed-error changes have bounded independent source/static review and unchanged regression evidence. Pump divergent-supply runtime coverage is still absent; Mayhem diagnostic differences and missing raw administrative transaction bytes remain explicit. These reviews do not establish exhaustive behavior or complete the security audit.
+
+Pass 11's two narrow source corrections passed unchanged corpora and independent source/operand review. These finite checks do not cover Pump's simultaneous complete/cashback flags or establish full Mayhem helper equivalence. The AMM formatting-source proposal is not security acceptance. The broader security assessment remains incomplete.

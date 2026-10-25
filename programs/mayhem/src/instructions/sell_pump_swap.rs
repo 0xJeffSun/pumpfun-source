@@ -94,7 +94,7 @@ pub fn handler(ctx:Context<SellPumpSwap>,reference:u128,tolerance_bps:u16,retain
  let cap=if native_accounting{u64::from_le_bytes(a.global_params.reset_prefix[8..16].try_into().unwrap())}else{u64::from_le_bytes(a.global_params.reset_stable_prefix[0..8].try_into().unwrap())};
  if cap!=0 {output=output.min(cap);}
  output=output.min((effective_quote as u128*retained as u128/10_000) as u64);
- let input=u64::try_from((output as u128*vt).checked_div(vs-output as u128).unwrap()).unwrap();
+ let input=u64::try_from((output as u128*vt).checked_div(vs-output as u128).ok_or(PumpSwapError::PumpSwapCpiMathOverflow).unwrap()).unwrap();
  let minimum=output.saturating_sub(1);
  let before_sol=if native{a.sol_vault.lamports()}else{a.mayhem_quote_vault.amount};let before_tokens=a.mayhem_token_vault.amount;
  let bump=[ctx.bumps.sol_vault];let seeds:&[&[u8]]=&[b"sol-vault",&bump];

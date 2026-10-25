@@ -2,6 +2,8 @@
 //! This crate is not the historical source or a byte-identical replacement.
 use anchor_lang::prelude::*;
 mod state;
+mod instructions;
+use instructions::admin::create_config::*;
 mod legacy_buy;
 use legacy_buy::*;
 mod legacy_sell;
@@ -38,6 +40,28 @@ declare_id!("pAMMBay6oceH9fJKBRHGP5D4bD4sWpmSwMn52FMfXEA");
 #[program]
 pub mod pump_amm_recovered {
     use super::*;
+    // Static-only reconstruction: no authentic successful initializer replay exists.
+    pub fn create_config(ctx: Context<CreateConfig>, lp_fee_basis_points: u64,
+        protocol_fee_basis_points: u64, protocol_fee_recipients: [Pubkey; 8],
+        coin_creator_fee_basis_points: u64, admin_set_coin_creator_authority: Pubkey) -> Result<()> {
+        let admin = ctx.accounts.admin.key();
+        let global_config = &mut ctx.accounts.global_config;
+        global_config.admin = admin;
+        global_config.set_lp_fee_basis_points(lp_fee_basis_points)?;
+        global_config.set_protocol_fee_basis_points(protocol_fee_basis_points)?;
+        global_config.set_protocol_fee_recipients(protocol_fee_recipients)?;
+        global_config.set_coin_creator_fee_basis_points(coin_creator_fee_basis_points)?;
+        global_config.disable_flags = 0;
+        global_config.admin_set_coin_creator_authority = admin_set_coin_creator_authority;
+        let event = CreateConfigEvent { timestamp: Clock::get()?.unix_timestamp,
+            admin, lp_fee_basis_points, protocol_fee_basis_points,
+            protocol_fee_recipients, coin_creator_fee_basis_points,
+            admin_set_coin_creator_authority };
+        emit!(event);
+        emit_cpi!(event);
+        Ok(())
+    }
+
     pub fn multi_hop_swap<'info>(ctx:Context<'_, '_, 'info, 'info, MultiHop<'info>>,amount_in:u64,min_amount_out:u64)->Result<()>{multi_hop::execute(ctx,amount_in,min_amount_out)}
     pub fn buy<'info>(ctx:Context<'_,'_,'_,'info,LegacyBuy<'info>>,base_amount_out:u64,max_quote_amount_in:u64,track_volume:OptionBool)->Result<()>{legacy_buy::execute(ctx,base_amount_out,max_quote_amount_in,track_volume.0,false)}
     pub fn buy_exact_quote_in<'info>(ctx:Context<'_,'_,'_,'info,LegacyBuy<'info>>,spendable_quote_in:u64,min_base_amount_out:u64,track_volume:OptionBool)->Result<()>{legacy_buy::execute(ctx,spendable_quote_in,min_base_amount_out,track_volume.0,true)}
@@ -76,9 +100,9 @@ pub mod pump_amm_recovered {
     }
 
     pub fn init_user_volume_accumulator(ctx: Context<InitUserVolumeAccumulator>) -> Result<()> {
-        ctx.accounts.user_volume_accumulator.user = ctx.accounts.user.key();
         let event = InitUserVolumeAccumulatorEvent { payer: ctx.accounts.payer.key(),
             user: ctx.accounts.user.key(), timestamp: Clock::get()?.unix_timestamp };
+        ctx.accounts.user_volume_accumulator.user = ctx.accounts.user.key();
         emit!(event.clone());
         emit_cpi!(event);
         Ok(())
@@ -162,19 +186,16 @@ pub mod pump_amm_recovered {
     pub fn update_fee_config(ctx: Context<AdminGlobal>, lp_fee_basis_points: u64,
         protocol_fee_basis_points: u64, protocol_fee_recipients: [Pubkey; 8],
         coin_creator_fee_basis_points: u64, admin_set_coin_creator_authority: Pubkey) -> Result<()> {
-        require!(lp_fee_basis_points <= 1000 && protocol_fee_basis_points <= 1000 && coin_creator_fee_basis_points <= 1000, PumpAmmError::FeeBasisPointsExceedsMaximum);
-        for recipient in protocol_fee_recipients.iter() { require_keys_neq!(*recipient, Pubkey::default(), PumpAmmError::AllProtocolFeeRecipientsShouldBeNonZero); }
-        for i in 1..8 { require!(protocol_fee_recipients[i-1] < protocol_fee_recipients[i], PumpAmmError::UnsortedNotUniqueProtocolFeeRecipients); }
         let config = &mut ctx.accounts.global_config;
-        config.lp_fee_basis_points = lp_fee_basis_points;
-        config.protocol_fee_basis_points = protocol_fee_basis_points;
-        config.protocol_fee_recipients = protocol_fee_recipients;
-        config.coin_creator_fee_basis_points = coin_creator_fee_basis_points;
+        config.set_lp_fee_basis_points(lp_fee_basis_points)?;
+        config.set_protocol_fee_basis_points(protocol_fee_basis_points)?;
+        config.set_protocol_fee_recipients(protocol_fee_recipients)?;
+        config.set_coin_creator_fee_basis_points(coin_creator_fee_basis_points)?;
         config.admin_set_coin_creator_authority = admin_set_coin_creator_authority;
         let event = UpdateFeeConfigEvent { timestamp: Clock::get()?.unix_timestamp,
             admin: ctx.accounts.admin.key(), lp_fee_basis_points, protocol_fee_basis_points,
             protocol_fee_recipients, coin_creator_fee_basis_points, admin_set_coin_creator_authority };
-        emit!(event.clone());
+        emit!(event);
         emit_cpi!(event);
         Ok(())
     }

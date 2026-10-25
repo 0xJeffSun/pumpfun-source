@@ -1,4 +1,6 @@
 use crate::*;
+#[path = "nested_create.rs"]
+mod nested_create;
 use anchor_spl::{token_interface::{self,Mint,TokenAccount},token_2022::Token2022,associated_token::AssociatedToken};
 use anchor_lang::solana_program::{instruction::{Instruction,AccountMeta},program::invoke_signed};
 pub const MAYHEM_ID:Pubkey=anchor_lang::solana_program::pubkey!("MAyhSmzXzV1pTf7LsNkrNwkWKTo4ougAJ1PPg47MD4e");
@@ -34,7 +36,7 @@ pub struct CreateV2<'info>{
 }
 pub fn execute<'info>(ctx:Context<'_,'_,'_,'info,CreateV2<'info>>,name:String,symbol:String,uri:String,creator:Pubkey,is_mayhem_mode:bool,is_cashback_enabled:OptionBool,creator_fee_bps:CreationOptionU64,is_holder_reward:OptionBool)->Result<()>{
  // Other quote and Mayhem branches remain explicitly outside this reconstruction checkpoint.
- require!(!is_mayhem_mode,PumpError::ReconstructionBranchUnsupported);
+ require!(!is_mayhem_mode,crate::ReconstructionError::ReconstructionBranchUnsupported);
  let a=&ctx.accounts;
  require!(a.global.create_v2_enabled,PumpError::CreateV2Disabled);
  require!(!is_cashback_enabled.0,PumpError::CashbackDeprecated);
@@ -45,37 +47,31 @@ pub fn execute<'info>(ctx:Context<'_,'_,'_,'info,CreateV2<'info>>,name:String,sy
   require!(ctx.remaining_accounts.len()>=3,PumpError::NotEnoughRemainingAccounts);
   let mint=&ctx.remaining_accounts[0];let ata=&ctx.remaining_accounts[1];let program=&ctx.remaining_accounts[2];
   require!(program.key()==anchor_spl::token::ID || program.key()==anchor_spl::token_2022::ID,PumpError::InvalidQuoteTokenProgram);
-  require!(mint.owner==program.key,PumpError::UnsupportedQuoteMint);
-  if program.key()==anchor_spl::token_2022::ID {require!(mint.key()!=token_interface::spl_token_2022::native_mint::id(),PumpError::UnsupportedQuoteMint);require!(quote_extensions_supported(&mint.try_borrow_data()?),PumpError::UnsupportedQuoteMint);}
+  require!(program.executable,PumpError::InvalidQuoteTokenProgram);
+  if mint.key()==Pubkey::default() || mint.key()==anchor_spl::token::spl_token::native_mint::id() {
+   (Pubkey::default(),a.global.initial_virtual_sol_reserves,false)
+  } else {
+  // Literal key rejection at 0x1f6a8, before whitelist/control selection.
+  require!(mint.key()!=anchor_lang::solana_program::pubkey!("9pan9bMn5HatX4EJdBwg9VgCa7Uz5HL8N1m5D3NdXejP"),PumpError::UnsupportedQuoteMint);
   let (reserves,can_configure)=if a.global.whitelisted_quote_mints.contains(mint.key){(a.global.initial_virtual_quote_reserves,false)}else{
    require!(ctx.remaining_accounts.len()>=4,PumpError::UnsupportedQuoteMint);
    let control=&ctx.remaining_accounts[3];let expected=Pubkey::find_program_address(&[b"quote-control"],&crate::ID).0;
    require!(control.key()==expected && control.owner==&crate::ID,PumpError::InvalidQuoteControl);
-   let data=control.try_borrow_data()?;
-   require!(data.len()>=8 && data[..8]==CONTROL_DISCRIMINATOR,PumpError::InvalidQuoteControl);
-   require!(data.len()>=108,PumpError::InvalidQuoteControl);
-   let count=u32::from_le_bytes(data[104..108].try_into().unwrap()) as usize;
-   let size=count.checked_mul(40).and_then(|n|n.checked_add(108)).ok_or_else(||error!(PumpError::InvalidQuoteControl))?;
-   require!(data.len()>=size,PumpError::InvalidQuoteControl);
-   let entry=data[108..size].chunks_exact(40).find(|entry|entry[..32]==mint.key().to_bytes());
-   if let Some(entry)=entry{(u64::from_le_bytes(entry[32..40].try_into().unwrap()),true)}else{
-    require!(ctx.remaining_accounts.len()>=5,PumpError::UnsupportedQuoteMint);
-    let parent=&ctx.remaining_accounts[4];let expected=Pubkey::find_program_address(&[b"bonding-curve",mint.key.as_ref()],&crate::ID).0;
-    require!(parent.key()==expected && parent.owner==&crate::ID,PumpError::InvalidQuoteBondingCurve);
-    let bytes=parent.try_borrow_data()?;let root=crate::trade_types::BondingCurve::try_deserialize(&mut &bytes[..]).map_err(|_|error!(PumpError::InvalidQuoteBondingCurve))?;
-    depth=root.depth.checked_add(1).ok_or_else(||error!(PumpError::CurveDepthExceeded))?;
-    require!(depth<=a.global.max_curve_depth && depth<=5,PumpError::CurveDepthExceeded);
-    require!(!root.is_mayhem_mode,PumpError::QuoteBondingCurveNotEligible);
-    require!(root.depth==0,PumpError::QuoteChainAccountsRequired);
-    require!(root.quote_mint==Pubkey::default(),PumpError::ReconstructionBranchUnsupported);
-    require!(!root.complete,PumpError::QuoteCurveAwaitingMigration);
-    (nested_sol_reserves(&a.global,&root)?,true)
+   let entry={let data=control.try_borrow_data()?;nested_create::control_entry(&data,mint.key)?};
+   if let Some(reserves)=entry {(reserves,true)} else {
+    let (reserves,nested_depth)=nested_create::walk(&a.global,ctx.remaining_accounts)?;
+    depth=nested_depth;
+    (reserves,true)
    }
   };
+  require!(mint.owner==program.key,PumpError::UnsupportedQuoteMint);
+  if program.key()==anchor_spl::token_2022::ID {require!(quote_extensions_supported(&mint.try_borrow_data()?),PumpError::UnsupportedQuoteMint);}
+
   let expected=anchor_spl::associated_token::get_associated_token_address_with_program_id(&a.bonding_curve.key(),mint.key,program.key);
   require!(ata.key()==expected,PumpError::InvalidAssociatedQuoteBondingCurve);
   anchor_spl::associated_token::create(CpiContext::new(a.associated_token_program.to_account_info(),anchor_spl::associated_token::Create{payer:a.user.to_account_info(),associated_token:ata.clone(),authority:a.bonding_curve.to_account_info(),mint:mint.clone(),system_program:a.system_program.to_account_info(),token_program:program.clone()}))?;
   (mint.key(),reserves,can_configure)
+  }
  };
  let fee=if can_configure_fee && creator_fee_bps.0>0 {
   require!(a.global.creator_fee_configurable,PumpError::CreatorFeeNotConfigurable);
@@ -116,27 +112,3 @@ fn quote_extensions_supported(data:&[u8])->bool {
  true
 }
 
-const CONTROL_DISCRIMINATOR:[u8;8]=[56, 244, 35, 238, 193, 213, 162, 201];
-
-fn nested_sol_reserves(g:&Global,r:&crate::trade_types::BondingCurve)->Result<u64>{
- let sub=|a:u64,b:u64|a.checked_sub(b).ok_or_else(||error!(PumpError::Overflow));
- let add=|a:u64,b:u64|a.checked_add(b).ok_or_else(||error!(PumpError::Overflow));
- let narrow=|v:u128|u64::try_from(v).map_err(|_|error!(PumpError::Truncation));
- let remainder=sub(g.initial_virtual_token_reserves,g.initial_real_token_reserves)?;
- require!(remainder>0,PumpError::Overflow);
- let target=narrow(g.initial_virtual_sol_reserves as u128*g.initial_real_token_reserves as u128/remainder as u128)?;
- let denominator=r.virtual_quote_reserves as u128+target as u128;
- require!(denominator>0,PumpError::Overflow);
- let out=narrow(r.virtual_token_reserves as u128*target as u128/denominator)?;
- let base=if out>r.real_token_reserves{
-  let rem=sub(r.virtual_token_reserves,r.real_token_reserves)?;require!(rem>0,PumpError::Overflow);
-  let quote=add(narrow(r.virtual_quote_reserves as u128*r.real_token_reserves as u128/rem as u128)?,1)?;
-  let poolq=sub(add(r.real_quote_reserves,quote)?,g.pool_migration_fee)?;
-  let poolb=sub(r.token_total_supply,g.initial_real_token_reserves)?;
-  let remaining=sub(sub(target,quote)?,1)?;
-  add(r.real_token_reserves,narrow(poolb as u128*remaining as u128/(poolq as u128+remaining as u128))?)?
- }else{out};
- require!(g.initial_real_token_reserves>0,PumpError::Overflow);
- let reserves=narrow(base as u128*remainder as u128/g.initial_real_token_reserves as u128)?;
- require!(reserves>0,PumpError::QuoteReservesOutOfRange);Ok(reserves)
-}

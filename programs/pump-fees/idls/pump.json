@@ -1,34 +1,649 @@
 {
+  "accounts": [
+    {
+      "discriminator": [
+        23,
+        183,
+        248,
+        55,
+        96,
+        216,
+        172,
+        96
+      ],
+      "name": "BondingCurve"
+    },
+    {
+      "discriminator": [
+        143,
+        52,
+        146,
+        187,
+        219,
+        123,
+        76,
+        155
+      ],
+      "name": "FeeConfig"
+    },
+    {
+      "discriminator": [
+        167,
+        232,
+        232,
+        177,
+        200,
+        108,
+        114,
+        127
+      ],
+      "name": "Global"
+    },
+    {
+      "discriminator": [
+        202,
+        42,
+        246,
+        43,
+        142,
+        190,
+        30,
+        255
+      ],
+      "name": "GlobalVolumeAccumulator"
+    },
+    {
+      "discriminator": [
+        216,
+        74,
+        9,
+        0,
+        56,
+        140,
+        93,
+        75
+      ],
+      "name": "SharingConfig"
+    },
+    {
+      "discriminator": [
+        86,
+        255,
+        112,
+        14,
+        102,
+        53,
+        154,
+        250
+      ],
+      "name": "UserVolumeAccumulator"
+    }
+  ],
   "address": "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P",
-  "metadata": {
-    "name": "pump",
-    "version": "0.1.0",
-    "spec": "0.1.0",
-    "description": "Created with Anchor"
-  },
+  "errors": [
+    {
+      "code": 6000,
+      "msg": "The given account is not authorized to execute this instruction.",
+      "name": "NotAuthorized"
+    },
+    {
+      "code": 6001,
+      "msg": "The program is already initialized.",
+      "name": "AlreadyInitialized"
+    },
+    {
+      "code": 6002,
+      "msg": "slippage: Too much SOL required to buy the given amount of tokens.",
+      "name": "TooMuchSolRequired"
+    },
+    {
+      "code": 6003,
+      "msg": "slippage: Too little SOL received to sell the given amount of tokens.",
+      "name": "TooLittleSolReceived"
+    },
+    {
+      "code": 6004,
+      "msg": "The mint does not match the bonding curve.",
+      "name": "MintDoesNotMatchBondingCurve"
+    },
+    {
+      "code": 6005,
+      "msg": "The bonding curve has completed and liquidity migrated to raydium.",
+      "name": "BondingCurveComplete"
+    },
+    {
+      "code": 6006,
+      "msg": "The bonding curve has not completed.",
+      "name": "BondingCurveNotComplete"
+    },
+    {
+      "code": 6007,
+      "msg": "The program is not initialized.",
+      "name": "NotInitialized"
+    },
+    {
+      "code": 6008,
+      "msg": "Withdraw too frequent",
+      "name": "WithdrawTooFrequent"
+    },
+    {
+      "code": 6009,
+      "msg": "new_size should be > current_size",
+      "name": "NewSizeShouldBeGreaterThanCurrentSize"
+    },
+    {
+      "code": 6010,
+      "msg": "Account type not supported",
+      "name": "AccountTypeNotSupported"
+    },
+    {
+      "code": 6011,
+      "msg": "initial_real_token_reserves should be less than token_total_supply",
+      "name": "InitialRealTokenReservesShouldBeLessThanTokenTotalSupply"
+    },
+    {
+      "code": 6012,
+      "msg": "initial_virtual_token_reserves should be greater than initial_real_token_reserves",
+      "name": "InitialVirtualTokenReservesShouldBeGreaterThanInitialRealTokenReserves"
+    },
+    {
+      "code": 6013,
+      "msg": "fee_basis_points greater than maximum",
+      "name": "FeeBasisPointsGreaterThanMaximum"
+    },
+    {
+      "code": 6014,
+      "msg": "Withdraw authority cannot be set to System Program ID",
+      "name": "AllZerosWithdrawAuthority"
+    },
+    {
+      "code": 6015,
+      "msg": "pool_migration_fee should be less than final_real_sol_reserves",
+      "name": "PoolMigrationFeeShouldBeLessThanFinalRealSolReserves"
+    },
+    {
+      "code": 6016,
+      "msg": "pool_migration_fee should be greater than creator_fee + MAX_MIGRATE_FEES",
+      "name": "PoolMigrationFeeShouldBeGreaterThanCreatorFeePlusMaxMigrateFees"
+    },
+    {
+      "code": 6017,
+      "msg": "Migrate instruction is disabled",
+      "name": "DisabledWithdraw"
+    },
+    {
+      "code": 6018,
+      "msg": "Migrate instruction is disabled",
+      "name": "DisabledMigrate"
+    },
+    {
+      "code": 6019,
+      "msg": "Invalid creator pubkey",
+      "name": "InvalidCreator"
+    },
+    {
+      "code": 6020,
+      "msg": "Buy zero amount",
+      "name": "BuyZeroAmount"
+    },
+    {
+      "code": 6021,
+      "msg": "Not enough tokens to buy",
+      "name": "NotEnoughTokensToBuy"
+    },
+    {
+      "code": 6022,
+      "msg": "Sell zero amount",
+      "name": "SellZeroAmount"
+    },
+    {
+      "code": 6023,
+      "msg": "Not enough tokens to sell",
+      "name": "NotEnoughTokensToSell"
+    },
+    {
+      "code": 6024,
+      "msg": "Overflow",
+      "name": "Overflow"
+    },
+    {
+      "code": 6025,
+      "msg": "Truncation",
+      "name": "Truncation"
+    },
+    {
+      "code": 6026,
+      "msg": "Division by zero",
+      "name": "DivisionByZero"
+    },
+    {
+      "code": 6027,
+      "msg": "Not enough remaining accounts",
+      "name": "NotEnoughRemainingAccounts"
+    },
+    {
+      "code": 6028,
+      "msg": "All fee recipients should be non-zero",
+      "name": "AllFeeRecipientsShouldBeNonZero"
+    },
+    {
+      "code": 6029,
+      "msg": "Unsorted or not unique fee recipients",
+      "name": "UnsortedNotUniqueFeeRecipients"
+    },
+    {
+      "code": 6030,
+      "msg": "Creator should not be zero",
+      "name": "CreatorShouldNotBeZero"
+    },
+    {
+      "code": 6031,
+      "name": "StartTimeInThePast"
+    },
+    {
+      "code": 6032,
+      "name": "EndTimeInThePast"
+    },
+    {
+      "code": 6033,
+      "name": "EndTimeBeforeStartTime"
+    },
+    {
+      "code": 6034,
+      "name": "TimeRangeTooLarge"
+    },
+    {
+      "code": 6035,
+      "name": "EndTimeBeforeCurrentDay"
+    },
+    {
+      "code": 6036,
+      "name": "SupplyUpdateForFinishedRange"
+    },
+    {
+      "code": 6037,
+      "name": "DayIndexAfterEndIndex"
+    },
+    {
+      "code": 6038,
+      "name": "DayInActiveRange"
+    },
+    {
+      "code": 6039,
+      "name": "InvalidIncentiveMint"
+    },
+    {
+      "code": 6040,
+      "msg": "Buy: Not enough SOL to cover for rent exemption.",
+      "name": "BuyNotEnoughSolToCoverRent"
+    },
+    {
+      "code": 6041,
+      "msg": "Buy: Not enough SOL to cover for fees.",
+      "name": "BuyNotEnoughSolToCoverFees"
+    },
+    {
+      "code": 6042,
+      "msg": "Slippage: Would buy less tokens than expected min_tokens_out",
+      "name": "BuySlippageBelowMinTokensOut"
+    },
+    {
+      "code": 6043,
+      "name": "NameTooLong"
+    },
+    {
+      "code": 6044,
+      "name": "SymbolTooLong"
+    },
+    {
+      "code": 6045,
+      "name": "UriTooLong"
+    },
+    {
+      "code": 6046,
+      "name": "CreateV2Disabled"
+    },
+    {
+      "code": 6047,
+      "name": "CpitializeMayhemFailed"
+    },
+    {
+      "code": 6048,
+      "name": "MayhemModeDisabled"
+    },
+    {
+      "code": 6049,
+      "msg": "creator has been migrated to sharing config, use pump_fees::reset_fee_sharing_config instead",
+      "name": "CreatorMigratedToSharingConfig"
+    },
+    {
+      "code": 6050,
+      "msg": "creator_vault has been migrated to sharing config, use pump:distribute_creator_fees instead",
+      "name": "UnableToDistributeCreatorVaultMigratedToSharingConfig"
+    },
+    {
+      "code": 6051,
+      "msg": "Sharing config is not active",
+      "name": "SharingConfigNotActive"
+    },
+    {
+      "code": 6052,
+      "msg": "The recipient account is executable, so it cannot receive lamports, remove it from the team first",
+      "name": "UnableToDistributeCreatorFeesToExecutableRecipient"
+    },
+    {
+      "code": 6053,
+      "msg": "Bonding curve creator does not match sharing config",
+      "name": "BondingCurveAndSharingConfigCreatorMismatch"
+    },
+    {
+      "code": 6054,
+      "msg": "Remaining accounts do not match shareholders, make sure to pass exactly the same pubkeys in the same order",
+      "name": "ShareholdersAndRemainingAccountsMismatch"
+    },
+    {
+      "code": 6055,
+      "msg": "Share bps must be greater than 0",
+      "name": "InvalidShareBps"
+    }
+  ],
+  "events": [
+    {
+      "discriminator": [
+        64,
+        69,
+        192,
+        104,
+        29,
+        30,
+        25,
+        107
+      ],
+      "name": "AdminSetCreatorEvent"
+    },
+    {
+      "discriminator": [
+        245,
+        59,
+        70,
+        34,
+        75,
+        185,
+        109,
+        92
+      ],
+      "name": "AdminSetIdlAuthorityEvent"
+    },
+    {
+      "discriminator": [
+        147,
+        250,
+        108,
+        120,
+        247,
+        29,
+        67,
+        222
+      ],
+      "name": "AdminUpdateTokenIncentivesEvent"
+    },
+    {
+      "discriminator": [
+        79,
+        172,
+        246,
+        49,
+        205,
+        91,
+        206,
+        232
+      ],
+      "name": "ClaimTokenIncentivesEvent"
+    },
+    {
+      "discriminator": [
+        146,
+        159,
+        189,
+        172,
+        146,
+        88,
+        56,
+        244
+      ],
+      "name": "CloseUserVolumeAccumulatorEvent"
+    },
+    {
+      "discriminator": [
+        122,
+        2,
+        127,
+        1,
+        14,
+        191,
+        12,
+        175
+      ],
+      "name": "CollectCreatorFeeEvent"
+    },
+    {
+      "discriminator": [
+        95,
+        114,
+        97,
+        156,
+        212,
+        46,
+        152,
+        8
+      ],
+      "name": "CompleteEvent"
+    },
+    {
+      "discriminator": [
+        189,
+        233,
+        93,
+        185,
+        92,
+        148,
+        234,
+        148
+      ],
+      "name": "CompletePumpAmmMigrationEvent"
+    },
+    {
+      "discriminator": [
+        27,
+        114,
+        169,
+        77,
+        222,
+        235,
+        99,
+        118
+      ],
+      "name": "CreateEvent"
+    },
+    {
+      "discriminator": [
+        165,
+        55,
+        129,
+        112,
+        4,
+        179,
+        202,
+        40
+      ],
+      "name": "DistributeCreatorFeesEvent"
+    },
+    {
+      "discriminator": [
+        97,
+        97,
+        215,
+        144,
+        93,
+        146,
+        22,
+        124
+      ],
+      "name": "ExtendAccountEvent"
+    },
+    {
+      "discriminator": [
+        134,
+        36,
+        13,
+        72,
+        232,
+        101,
+        130,
+        216
+      ],
+      "name": "InitUserVolumeAccumulatorEvent"
+    },
+    {
+      "discriminator": [
+        155,
+        167,
+        104,
+        220,
+        213,
+        108,
+        243,
+        3
+      ],
+      "name": "MigrateBondingCurveCreatorEvent"
+    },
+    {
+      "discriminator": [
+        168,
+        216,
+        132,
+        239,
+        235,
+        182,
+        49,
+        52
+      ],
+      "name": "MinimumDistributableFeeEvent"
+    },
+    {
+      "discriminator": [
+        43,
+        188,
+        250,
+        18,
+        221,
+        75,
+        187,
+        95
+      ],
+      "name": "ReservedFeeRecipientsEvent"
+    },
+    {
+      "discriminator": [
+        237,
+        52,
+        123,
+        37,
+        245,
+        251,
+        72,
+        210
+      ],
+      "name": "SetCreatorEvent"
+    },
+    {
+      "discriminator": [
+        142,
+        203,
+        6,
+        32,
+        127,
+        105,
+        191,
+        162
+      ],
+      "name": "SetMetaplexCreatorEvent"
+    },
+    {
+      "discriminator": [
+        223,
+        195,
+        159,
+        246,
+        62,
+        48,
+        143,
+        131
+      ],
+      "name": "SetParamsEvent"
+    },
+    {
+      "discriminator": [
+        197,
+        122,
+        167,
+        124,
+        116,
+        81,
+        91,
+        255
+      ],
+      "name": "SyncUserVolumeAccumulatorEvent"
+    },
+    {
+      "discriminator": [
+        189,
+        219,
+        127,
+        211,
+        78,
+        230,
+        97,
+        238
+      ],
+      "name": "TradeEvent"
+    },
+    {
+      "discriminator": [
+        182,
+        195,
+        137,
+        42,
+        35,
+        206,
+        207,
+        247
+      ],
+      "name": "UpdateGlobalAuthorityEvent"
+    },
+    {
+      "discriminator": [
+        117,
+        123,
+        228,
+        182,
+        161,
+        168,
+        220,
+        214
+      ],
+      "name": "UpdateMayhemVirtualParamsEvent"
+    }
+  ],
   "instructions": [
     {
-      "name": "admin_set_creator",
-      "docs": [
-        "Allows Global::admin_set_creator_authority to override the bonding curve creator"
-      ],
-      "discriminator": [
-        69,
-        25,
-        171,
-        142,
-        57,
-        239,
-        13,
-        4
-      ],
       "accounts": [
         {
           "name": "admin_set_creator_authority",
-          "signer": true,
           "relations": [
             "global"
-          ]
+          ],
+          "signer": true
         },
         {
           "name": "global",
@@ -53,7 +668,6 @@
         },
         {
           "name": "bonding_curve",
-          "writable": true,
           "pda": {
             "seeds": [
               {
@@ -79,7 +693,8 @@
                 "path": "mint"
               }
             ]
-          }
+          },
+          "writable": true
         },
         {
           "name": "event_authority",
@@ -119,27 +734,30 @@
           "name": "creator",
           "type": "pubkey"
         }
-      ]
+      ],
+      "discriminator": [
+        69,
+        25,
+        171,
+        142,
+        57,
+        239,
+        13,
+        4
+      ],
+      "docs": [
+        "Allows Global::admin_set_creator_authority to override the bonding curve creator"
+      ],
+      "name": "admin_set_creator"
     },
     {
-      "name": "admin_set_idl_authority",
-      "discriminator": [
-        8,
-        217,
-        96,
-        231,
-        144,
-        104,
-        192,
-        5
-      ],
       "accounts": [
         {
           "name": "authority",
-          "signer": true,
           "relations": [
             "global"
-          ]
+          ],
+          "signer": true
         },
         {
           "name": "global",
@@ -164,8 +782,8 @@
           "writable": true
         },
         {
-          "name": "system_program",
-          "address": "11111111111111111111111111111111"
+          "address": "11111111111111111111111111111111",
+          "name": "system_program"
         },
         {
           "name": "program_signer",
@@ -211,28 +829,28 @@
           "name": "idl_authority",
           "type": "pubkey"
         }
-      ]
+      ],
+      "discriminator": [
+        8,
+        217,
+        96,
+        231,
+        144,
+        104,
+        192,
+        5
+      ],
+      "name": "admin_set_idl_authority"
     },
     {
-      "name": "admin_update_token_incentives",
-      "discriminator": [
-        209,
-        11,
-        115,
-        87,
-        213,
-        23,
-        124,
-        204
-      ],
       "accounts": [
         {
           "name": "authority",
-          "writable": true,
-          "signer": true,
           "relations": [
             "global"
-          ]
+          ],
+          "signer": true,
+          "writable": true
         },
         {
           "name": "global",
@@ -254,7 +872,6 @@
         },
         {
           "name": "global_volume_accumulator",
-          "writable": true,
           "pda": {
             "seeds": [
               {
@@ -288,29 +905,15 @@
                 ]
               }
             ]
-          }
+          },
+          "writable": true
         },
         {
           "name": "mint"
         },
         {
           "name": "global_incentive_token_account",
-          "writable": true,
           "pda": {
-            "seeds": [
-              {
-                "kind": "account",
-                "path": "global_volume_accumulator"
-              },
-              {
-                "kind": "account",
-                "path": "token_program"
-              },
-              {
-                "kind": "account",
-                "path": "mint"
-              }
-            ],
             "program": {
               "kind": "const",
               "value": [
@@ -347,16 +950,31 @@
                 248,
                 89
               ]
-            }
-          }
+            },
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "global_volume_accumulator"
+              },
+              {
+                "kind": "account",
+                "path": "token_program"
+              },
+              {
+                "kind": "account",
+                "path": "mint"
+              }
+            ]
+          },
+          "writable": true
         },
         {
-          "name": "associated_token_program",
-          "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+          "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+          "name": "associated_token_program"
         },
         {
-          "name": "system_program",
-          "address": "11111111111111111111111111111111"
+          "address": "11111111111111111111111111111111",
+          "name": "system_program"
         },
         {
           "name": "token_program"
@@ -415,23 +1033,20 @@
           "name": "pump_token_supply_per_day",
           "type": "u64"
         }
-      ]
-    },
-    {
-      "name": "buy",
-      "docs": [
-        "Buys tokens from a bonding curve."
       ],
       "discriminator": [
-        102,
-        6,
-        61,
-        18,
-        1,
-        218,
-        235,
-        234
+        209,
+        11,
+        115,
+        87,
+        213,
+        23,
+        124,
+        204
       ],
+      "name": "admin_update_token_incentives"
+    },
+    {
       "accounts": [
         {
           "name": "global",
@@ -460,7 +1075,6 @@
         },
         {
           "name": "bonding_curve",
-          "writable": true,
           "pda": {
             "seeds": [
               {
@@ -486,26 +1100,12 @@
                 "path": "mint"
               }
             ]
-          }
+          },
+          "writable": true
         },
         {
           "name": "associated_bonding_curve",
-          "writable": true,
           "pda": {
-            "seeds": [
-              {
-                "kind": "account",
-                "path": "bonding_curve"
-              },
-              {
-                "kind": "account",
-                "path": "token_program"
-              },
-              {
-                "kind": "account",
-                "path": "mint"
-              }
-            ],
             "program": {
               "kind": "const",
               "value": [
@@ -542,8 +1142,23 @@
                 248,
                 89
               ]
-            }
-          }
+            },
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "bonding_curve"
+              },
+              {
+                "kind": "account",
+                "path": "token_program"
+              },
+              {
+                "kind": "account",
+                "path": "mint"
+              }
+            ]
+          },
+          "writable": true
         },
         {
           "name": "associated_user",
@@ -551,19 +1166,18 @@
         },
         {
           "name": "user",
-          "writable": true,
-          "signer": true
+          "signer": true,
+          "writable": true
         },
         {
-          "name": "system_program",
-          "address": "11111111111111111111111111111111"
+          "address": "11111111111111111111111111111111",
+          "name": "system_program"
         },
         {
           "name": "token_program"
         },
         {
           "name": "creator_vault",
-          "writable": true,
           "pda": {
             "seeds": [
               {
@@ -585,12 +1199,13 @@
                 ]
               },
               {
+                "account": "BondingCurve",
                 "kind": "account",
-                "path": "bonding_curve.creator",
-                "account": "BondingCurve"
+                "path": "bonding_curve.creator"
               }
             ]
-          }
+          },
+          "writable": true
         },
         {
           "name": "event_authority",
@@ -622,8 +1237,8 @@
           }
         },
         {
-          "name": "program",
-          "address": "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P"
+          "address": "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P",
+          "name": "program"
         },
         {
           "name": "global_volume_accumulator",
@@ -664,7 +1279,6 @@
         },
         {
           "name": "user_volume_accumulator",
-          "writable": true,
           "pda": {
             "seeds": [
               {
@@ -700,11 +1314,16 @@
                 "path": "user"
               }
             ]
-          }
+          },
+          "writable": true
         },
         {
           "name": "fee_config",
           "pda": {
+            "program": {
+              "kind": "account",
+              "path": "fee_program"
+            },
             "seeds": [
               {
                 "kind": "const",
@@ -758,16 +1377,12 @@
                   176
                 ]
               }
-            ],
-            "program": {
-              "kind": "account",
-              "path": "fee_program"
-            }
+            ]
           }
         },
         {
-          "name": "fee_program",
-          "address": "pfeeUxB6jkeY1Hxd7CsFCAjcbHA9rWtchMGdZ6VojVZ"
+          "address": "pfeeUxB6jkeY1Hxd7CsFCAjcbHA9rWtchMGdZ6VojVZ",
+          "name": "fee_program"
         }
       ],
       "args": [
@@ -787,47 +1402,23 @@
             }
           }
         }
-      ]
-    },
-    {
-      "name": "buy_exact_sol_in",
-      "docs": [
-        "Given a budget of spendable SOL, buy at least min_tokens_out tokens.",
-        "Fees are deducted from spendable_sol_in.",
-        "",
-        "# Quote formulas",
-        "Where:",
-        "- total_fee_bps = protocol_fee_bps + creator_fee_bps (creator_fee_bps is 0 if no creator)",
-        "- floor(a/b) = a / b (integer division)",
-        "- ceil(a/b) = (a + b - 1) / b",
-        "",
-        "SOL → tokens quote",
-        "To calculate tokens_out for a given spendable_sol_in:",
-        "1. net_sol = floor(spendable_sol_in * 10_000 / (10_000 + total_fee_bps))",
-        "2. fees = ceil(net_sol * protocol_fee_bps / 10_000) + ceil(net_sol * creator_fee_bps / 10_000) (creator_fee_bps is 0 if no creator)",
-        "3. if net_sol + fees > spendable_sol_in: net_sol = net_sol - (net_sol + fees - spendable_sol_in)",
-        "4. tokens_out = floor((net_sol - 1) * virtual_token_reserves / (virtual_sol_reserves + net_sol - 1))",
-        "",
-        "Reverse quote (tokens → SOL)",
-        "To calculate spendable_sol_in for a desired number of tokens:",
-        "1. net_sol = ceil(tokens * virtual_sol_reserves / (virtual_token_reserves - tokens)) + 1",
-        "2. spendable_sol_in = ceil(net_sol * (10_000 + total_fee_bps) / 10_000)",
-        "",
-        "Rent",
-        "Separately make sure the instruction's payer has enough SOL to cover rent for:",
-        "- creator_vault: rent.minimum_balance(0)",
-        "- user_volume_accumulator: rent.minimum_balance(UserVolumeAccumulator::LEN)"
       ],
       "discriminator": [
-        56,
-        252,
-        116,
-        8,
-        158,
-        223,
-        205,
-        95
+        102,
+        6,
+        61,
+        18,
+        1,
+        218,
+        235,
+        234
       ],
+      "docs": [
+        "Buys tokens from a bonding curve."
+      ],
+      "name": "buy"
+    },
+    {
       "accounts": [
         {
           "name": "global",
@@ -856,7 +1447,6 @@
         },
         {
           "name": "bonding_curve",
-          "writable": true,
           "pda": {
             "seeds": [
               {
@@ -882,26 +1472,12 @@
                 "path": "mint"
               }
             ]
-          }
+          },
+          "writable": true
         },
         {
           "name": "associated_bonding_curve",
-          "writable": true,
           "pda": {
-            "seeds": [
-              {
-                "kind": "account",
-                "path": "bonding_curve"
-              },
-              {
-                "kind": "account",
-                "path": "token_program"
-              },
-              {
-                "kind": "account",
-                "path": "mint"
-              }
-            ],
             "program": {
               "kind": "const",
               "value": [
@@ -938,8 +1514,23 @@
                 248,
                 89
               ]
-            }
-          }
+            },
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "bonding_curve"
+              },
+              {
+                "kind": "account",
+                "path": "token_program"
+              },
+              {
+                "kind": "account",
+                "path": "mint"
+              }
+            ]
+          },
+          "writable": true
         },
         {
           "name": "associated_user",
@@ -947,19 +1538,18 @@
         },
         {
           "name": "user",
-          "writable": true,
-          "signer": true
+          "signer": true,
+          "writable": true
         },
         {
-          "name": "system_program",
-          "address": "11111111111111111111111111111111"
+          "address": "11111111111111111111111111111111",
+          "name": "system_program"
         },
         {
           "name": "token_program"
         },
         {
           "name": "creator_vault",
-          "writable": true,
           "pda": {
             "seeds": [
               {
@@ -981,12 +1571,13 @@
                 ]
               },
               {
+                "account": "BondingCurve",
                 "kind": "account",
-                "path": "bonding_curve.creator",
-                "account": "BondingCurve"
+                "path": "bonding_curve.creator"
               }
             ]
-          }
+          },
+          "writable": true
         },
         {
           "name": "event_authority",
@@ -1018,8 +1609,8 @@
           }
         },
         {
-          "name": "program",
-          "address": "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P"
+          "address": "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P",
+          "name": "program"
         },
         {
           "name": "global_volume_accumulator",
@@ -1060,7 +1651,6 @@
         },
         {
           "name": "user_volume_accumulator",
-          "writable": true,
           "pda": {
             "seeds": [
               {
@@ -1096,11 +1686,16 @@
                 "path": "user"
               }
             ]
-          }
+          },
+          "writable": true
         },
         {
           "name": "fee_config",
           "pda": {
+            "program": {
+              "kind": "account",
+              "path": "fee_program"
+            },
             "seeds": [
               {
                 "kind": "const",
@@ -1154,16 +1749,12 @@
                   176
                 ]
               }
-            ],
-            "program": {
-              "kind": "account",
-              "path": "fee_program"
-            }
+            ]
           }
         },
         {
-          "name": "fee_program",
-          "address": "pfeeUxB6jkeY1Hxd7CsFCAjcbHA9rWtchMGdZ6VojVZ"
+          "address": "pfeeUxB6jkeY1Hxd7CsFCAjcbHA9rWtchMGdZ6VojVZ",
+          "name": "fee_program"
         }
       ],
       "args": [
@@ -1183,42 +1774,54 @@
             }
           }
         }
-      ]
+      ],
+      "discriminator": [
+        56,
+        252,
+        116,
+        8,
+        158,
+        223,
+        205,
+        95
+      ],
+      "docs": [
+        "Given a budget of spendable SOL, buy at least min_tokens_out tokens.",
+        "Fees are deducted from spendable_sol_in.",
+        "",
+        "# Quote formulas",
+        "Where:",
+        "- total_fee_bps = protocol_fee_bps + creator_fee_bps (creator_fee_bps is 0 if no creator)",
+        "- floor(a/b) = a / b (integer division)",
+        "- ceil(a/b) = (a + b - 1) / b",
+        "",
+        "SOL \u2192 tokens quote",
+        "To calculate tokens_out for a given spendable_sol_in:",
+        "1. net_sol = floor(spendable_sol_in * 10_000 / (10_000 + total_fee_bps))",
+        "2. fees = ceil(net_sol * protocol_fee_bps / 10_000) + ceil(net_sol * creator_fee_bps / 10_000) (creator_fee_bps is 0 if no creator)",
+        "3. if net_sol + fees > spendable_sol_in: net_sol = net_sol - (net_sol + fees - spendable_sol_in)",
+        "4. tokens_out = floor((net_sol - 1) * virtual_token_reserves / (virtual_sol_reserves + net_sol - 1))",
+        "",
+        "Reverse quote (tokens \u2192 SOL)",
+        "To calculate spendable_sol_in for a desired number of tokens:",
+        "1. net_sol = ceil(tokens * virtual_sol_reserves / (virtual_token_reserves - tokens)) + 1",
+        "2. spendable_sol_in = ceil(net_sol * (10_000 + total_fee_bps) / 10_000)",
+        "",
+        "Rent",
+        "Separately make sure the instruction's payer has enough SOL to cover rent for:",
+        "- creator_vault: rent.minimum_balance(0)",
+        "- user_volume_accumulator: rent.minimum_balance(UserVolumeAccumulator::LEN)"
+      ],
+      "name": "buy_exact_sol_in"
     },
     {
-      "name": "claim_token_incentives",
-      "discriminator": [
-        16,
-        4,
-        71,
-        28,
-        204,
-        1,
-        40,
-        27
-      ],
       "accounts": [
         {
           "name": "user"
         },
         {
           "name": "user_ata",
-          "writable": true,
           "pda": {
-            "seeds": [
-              {
-                "kind": "account",
-                "path": "user"
-              },
-              {
-                "kind": "account",
-                "path": "token_program"
-              },
-              {
-                "kind": "account",
-                "path": "mint"
-              }
-            ],
             "program": {
               "kind": "const",
               "value": [
@@ -1255,8 +1858,23 @@
                 248,
                 89
               ]
-            }
-          }
+            },
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "user"
+              },
+              {
+                "kind": "account",
+                "path": "token_program"
+              },
+              {
+                "kind": "account",
+                "path": "mint"
+              }
+            ]
+          },
+          "writable": true
         },
         {
           "name": "global_volume_accumulator",
@@ -1297,22 +1915,7 @@
         },
         {
           "name": "global_incentive_token_account",
-          "writable": true,
           "pda": {
-            "seeds": [
-              {
-                "kind": "account",
-                "path": "global_volume_accumulator"
-              },
-              {
-                "kind": "account",
-                "path": "token_program"
-              },
-              {
-                "kind": "account",
-                "path": "mint"
-              }
-            ],
             "program": {
               "kind": "const",
               "value": [
@@ -1349,12 +1952,26 @@
                 248,
                 89
               ]
-            }
-          }
+            },
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "global_volume_accumulator"
+              },
+              {
+                "kind": "account",
+                "path": "token_program"
+              },
+              {
+                "kind": "account",
+                "path": "mint"
+              }
+            ]
+          },
+          "writable": true
         },
         {
           "name": "user_volume_accumulator",
-          "writable": true,
           "pda": {
             "seeds": [
               {
@@ -1390,7 +2007,8 @@
                 "path": "user"
               }
             ]
-          }
+          },
+          "writable": true
         },
         {
           "name": "mint",
@@ -1402,12 +2020,12 @@
           "name": "token_program"
         },
         {
-          "name": "system_program",
-          "address": "11111111111111111111111111111111"
+          "address": "11111111111111111111111111111111",
+          "name": "system_program"
         },
         {
-          "name": "associated_token_program",
-          "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+          "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+          "name": "associated_token_program"
         },
         {
           "name": "event_authority",
@@ -1439,38 +2057,37 @@
           }
         },
         {
-          "name": "program",
-          "address": "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P"
+          "address": "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P",
+          "name": "program"
         },
         {
           "name": "payer",
-          "writable": true,
-          "signer": true
+          "signer": true,
+          "writable": true
         }
       ],
-      "args": []
+      "args": [],
+      "discriminator": [
+        16,
+        4,
+        71,
+        28,
+        204,
+        1,
+        40,
+        27
+      ],
+      "name": "claim_token_incentives"
     },
     {
-      "name": "close_user_volume_accumulator",
-      "discriminator": [
-        249,
-        69,
-        164,
-        218,
-        150,
-        103,
-        84,
-        138
-      ],
       "accounts": [
         {
           "name": "user",
-          "writable": true,
-          "signer": true
+          "signer": true,
+          "writable": true
         },
         {
           "name": "user_volume_accumulator",
-          "writable": true,
           "pda": {
             "seeds": [
               {
@@ -1506,7 +2123,8 @@
                 "path": "user"
               }
             ]
-          }
+          },
+          "writable": true
         },
         {
           "name": "event_authority",
@@ -1541,23 +2159,20 @@
           "name": "program"
         }
       ],
-      "args": []
+      "args": [],
+      "discriminator": [
+        249,
+        69,
+        164,
+        218,
+        150,
+        103,
+        84,
+        138
+      ],
+      "name": "close_user_volume_accumulator"
     },
     {
-      "name": "collect_creator_fee",
-      "docs": [
-        "Collects creator_fee from creator_vault to the coin creator account"
-      ],
-      "discriminator": [
-        20,
-        22,
-        86,
-        123,
-        198,
-        28,
-        219,
-        132
-      ],
       "accounts": [
         {
           "name": "creator",
@@ -1565,7 +2180,6 @@
         },
         {
           "name": "creator_vault",
-          "writable": true,
           "pda": {
             "seeds": [
               {
@@ -1591,11 +2205,12 @@
                 "path": "creator"
               }
             ]
-          }
+          },
+          "writable": true
         },
         {
-          "name": "system_program",
-          "address": "11111111111111111111111111111111"
+          "address": "11111111111111111111111111111111",
+          "name": "system_program"
         },
         {
           "name": "event_authority",
@@ -1630,28 +2245,28 @@
           "name": "program"
         }
       ],
-      "args": []
+      "args": [],
+      "discriminator": [
+        20,
+        22,
+        86,
+        123,
+        198,
+        28,
+        219,
+        132
+      ],
+      "docs": [
+        "Collects creator_fee from creator_vault to the coin creator account"
+      ],
+      "name": "collect_creator_fee"
     },
     {
-      "name": "create",
-      "docs": [
-        "Creates a new coin and bonding curve."
-      ],
-      "discriminator": [
-        24,
-        30,
-        200,
-        40,
-        5,
-        28,
-        7,
-        119
-      ],
       "accounts": [
         {
           "name": "mint",
-          "writable": true,
-          "signer": true
+          "signer": true,
+          "writable": true
         },
         {
           "name": "mint_authority",
@@ -1681,7 +2296,6 @@
         },
         {
           "name": "bonding_curve",
-          "writable": true,
           "pda": {
             "seeds": [
               {
@@ -1707,12 +2321,49 @@
                 "path": "mint"
               }
             ]
-          }
+          },
+          "writable": true
         },
         {
           "name": "associated_bonding_curve",
-          "writable": true,
           "pda": {
+            "program": {
+              "kind": "const",
+              "value": [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89
+              ]
+            },
             "seeds": [
               {
                 "kind": "account",
@@ -1759,45 +2410,9 @@
                 "kind": "account",
                 "path": "mint"
               }
-            ],
-            "program": {
-              "kind": "const",
-              "value": [
-                140,
-                151,
-                37,
-                143,
-                78,
-                36,
-                137,
-                241,
-                187,
-                61,
-                16,
-                41,
-                20,
-                142,
-                13,
-                131,
-                11,
-                90,
-                19,
-                153,
-                218,
-                255,
-                16,
-                132,
-                4,
-                142,
-                123,
-                216,
-                219,
-                233,
-                248,
-                89
-              ]
-            }
-          }
+            ]
+          },
+          "writable": true
         },
         {
           "name": "global",
@@ -1818,13 +2433,16 @@
           }
         },
         {
-          "name": "mpl_token_metadata",
-          "address": "metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s"
+          "address": "metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s",
+          "name": "mpl_token_metadata"
         },
         {
           "name": "metadata",
-          "writable": true,
           "pda": {
+            "program": {
+              "kind": "account",
+              "path": "mpl_token_metadata"
+            },
             "seeds": [
               {
                 "kind": "const",
@@ -1880,33 +2498,30 @@
                 "kind": "account",
                 "path": "mint"
               }
-            ],
-            "program": {
-              "kind": "account",
-              "path": "mpl_token_metadata"
-            }
-          }
+            ]
+          },
+          "writable": true
         },
         {
           "name": "user",
-          "writable": true,
-          "signer": true
+          "signer": true,
+          "writable": true
         },
         {
-          "name": "system_program",
-          "address": "11111111111111111111111111111111"
+          "address": "11111111111111111111111111111111",
+          "name": "system_program"
         },
         {
-          "name": "token_program",
-          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+          "name": "token_program"
         },
         {
-          "name": "associated_token_program",
-          "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+          "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+          "name": "associated_token_program"
         },
         {
-          "name": "rent",
-          "address": "SysvarRent111111111111111111111111111111111"
+          "address": "SysvarRent111111111111111111111111111111111",
+          "name": "rent"
         },
         {
           "name": "event_authority",
@@ -1958,28 +2573,28 @@
           "name": "creator",
           "type": "pubkey"
         }
-      ]
-    },
-    {
-      "name": "create_v2",
-      "docs": [
-        "Creates a new spl-22 coin and bonding curve."
       ],
       "discriminator": [
-        214,
-        144,
-        76,
-        236,
-        95,
-        139,
-        49,
-        180
+        24,
+        30,
+        200,
+        40,
+        5,
+        28,
+        7,
+        119
       ],
+      "docs": [
+        "Creates a new coin and bonding curve."
+      ],
+      "name": "create"
+    },
+    {
       "accounts": [
         {
           "name": "mint",
-          "writable": true,
-          "signer": true
+          "signer": true,
+          "writable": true
         },
         {
           "name": "mint_authority",
@@ -2009,7 +2624,6 @@
         },
         {
           "name": "bonding_curve",
-          "writable": true,
           "pda": {
             "seeds": [
               {
@@ -2035,26 +2649,12 @@
                 "path": "mint"
               }
             ]
-          }
+          },
+          "writable": true
         },
         {
           "name": "associated_bonding_curve",
-          "writable": true,
           "pda": {
-            "seeds": [
-              {
-                "kind": "account",
-                "path": "bonding_curve"
-              },
-              {
-                "kind": "account",
-                "path": "token_program"
-              },
-              {
-                "kind": "account",
-                "path": "mint"
-              }
-            ],
             "program": {
               "kind": "const",
               "value": [
@@ -2091,8 +2691,23 @@
                 248,
                 89
               ]
-            }
-          }
+            },
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "bonding_curve"
+              },
+              {
+                "kind": "account",
+                "path": "token_program"
+              },
+              {
+                "kind": "account",
+                "path": "mint"
+              }
+            ]
+          },
+          "writable": true
         },
         {
           "name": "global",
@@ -2114,29 +2729,66 @@
         },
         {
           "name": "user",
-          "writable": true,
-          "signer": true
+          "signer": true,
+          "writable": true
         },
         {
-          "name": "system_program",
-          "address": "11111111111111111111111111111111"
+          "address": "11111111111111111111111111111111",
+          "name": "system_program"
         },
         {
-          "name": "token_program",
-          "address": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb"
+          "address": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+          "name": "token_program"
         },
         {
-          "name": "associated_token_program",
-          "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+          "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+          "name": "associated_token_program"
         },
         {
+          "address": "MAyhSmzXzV1pTf7LsNkrNwkWKTo4ougAJ1PPg47MD4e",
           "name": "mayhem_program_id",
-          "writable": true,
-          "address": "MAyhSmzXzV1pTf7LsNkrNwkWKTo4ougAJ1PPg47MD4e"
+          "writable": true
         },
         {
           "name": "global_params",
           "pda": {
+            "program": {
+              "kind": "const",
+              "value": [
+                5,
+                42,
+                229,
+                215,
+                167,
+                218,
+                167,
+                36,
+                166,
+                234,
+                176,
+                167,
+                41,
+                84,
+                145,
+                133,
+                90,
+                212,
+                160,
+                103,
+                22,
+                96,
+                103,
+                76,
+                78,
+                3,
+                69,
+                89,
+                128,
+                61,
+                101,
+                163
+              ]
+            },
             "seeds": [
               {
                 "kind": "const",
@@ -2156,7 +2808,12 @@
                   115
                 ]
               }
-            ],
+            ]
+          }
+        },
+        {
+          "name": "sol_vault",
+          "pda": {
             "program": {
               "kind": "const",
               "value": [
@@ -2193,13 +2850,7 @@
                 101,
                 163
               ]
-            }
-          }
-        },
-        {
-          "name": "sol_vault",
-          "writable": true,
-          "pda": {
+            },
             "seeds": [
               {
                 "kind": "const",
@@ -2215,7 +2866,13 @@
                   116
                 ]
               }
-            ],
+            ]
+          },
+          "writable": true
+        },
+        {
+          "name": "mayhem_state",
+          "pda": {
             "program": {
               "kind": "const",
               "value": [
@@ -2252,13 +2909,7 @@
                 101,
                 163
               ]
-            }
-          }
-        },
-        {
-          "name": "mayhem_state",
-          "writable": true,
-          "pda": {
+            },
             "seeds": [
               {
                 "kind": "const",
@@ -2281,45 +2932,9 @@
                 "kind": "account",
                 "path": "mint"
               }
-            ],
-            "program": {
-              "kind": "const",
-              "value": [
-                5,
-                42,
-                229,
-                215,
-                167,
-                218,
-                167,
-                36,
-                166,
-                234,
-                176,
-                167,
-                41,
-                84,
-                145,
-                133,
-                90,
-                212,
-                160,
-                103,
-                22,
-                96,
-                103,
-                76,
-                78,
-                3,
-                69,
-                89,
-                128,
-                61,
-                101,
-                163
-              ]
-            }
-          }
+            ]
+          },
+          "writable": true
         },
         {
           "name": "mayhem_token_vault",
@@ -2379,25 +2994,23 @@
           "name": "is_mayhem_mode",
           "type": "bool"
         }
-      ]
-    },
-    {
-      "name": "distribute_creator_fees",
-      "docs": [
-        "Distributes creator fees to shareholders based on their share percentages",
-        "The creator vault needs to have at least the minimum distributable amount to distribute fees",
-        "This can be checked with the get_minimum_distributable_fee instruction"
       ],
       "discriminator": [
-        165,
-        114,
-        103,
-        0,
-        121,
-        206,
-        247,
-        81
+        214,
+        144,
+        76,
+        236,
+        95,
+        139,
+        49,
+        180
       ],
+      "docs": [
+        "Creates a new spl-22 coin and bonding curve."
+      ],
+      "name": "create_v2"
+    },
+    {
       "accounts": [
         {
           "name": "mint",
@@ -2437,31 +3050,6 @@
         {
           "name": "sharing_config",
           "pda": {
-            "seeds": [
-              {
-                "kind": "const",
-                "value": [
-                  115,
-                  104,
-                  97,
-                  114,
-                  105,
-                  110,
-                  103,
-                  45,
-                  99,
-                  111,
-                  110,
-                  102,
-                  105,
-                  103
-                ]
-              },
-              {
-                "kind": "account",
-                "path": "mint"
-              }
-            ],
             "program": {
               "kind": "const",
               "value": [
@@ -2498,12 +3086,36 @@
                 124,
                 112
               ]
-            }
+            },
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115,
+                  104,
+                  97,
+                  114,
+                  105,
+                  110,
+                  103,
+                  45,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "mint"
+              }
+            ]
           }
         },
         {
           "name": "creator_vault",
-          "writable": true,
           "pda": {
             "seeds": [
               {
@@ -2525,16 +3137,17 @@
                 ]
               },
               {
+                "account": "BondingCurve",
                 "kind": "account",
-                "path": "bonding_curve.creator",
-                "account": "BondingCurve"
+                "path": "bonding_curve.creator"
               }
             ]
-          }
+          },
+          "writable": true
         },
         {
-          "name": "system_program",
-          "address": "11111111111111111111111111111111"
+          "address": "11111111111111111111111111111111",
+          "name": "system_program"
         },
         {
           "name": "event_authority",
@@ -2566,11 +3179,27 @@
           }
         },
         {
-          "name": "program",
-          "address": "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P"
+          "address": "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P",
+          "name": "program"
         }
       ],
       "args": [],
+      "discriminator": [
+        165,
+        114,
+        103,
+        0,
+        121,
+        206,
+        247,
+        81
+      ],
+      "docs": [
+        "Distributes creator fees to shareholders based on their share percentages",
+        "The creator vault needs to have at least the minimum distributable amount to distribute fees",
+        "This can be checked with the get_minimum_distributable_fee instruction"
+      ],
+      "name": "distribute_creator_fees",
       "returns": {
         "defined": {
           "name": "DistributeCreatorFeesEvent"
@@ -2578,20 +3207,6 @@
       }
     },
     {
-      "name": "extend_account",
-      "docs": [
-        "Extends the size of program-owned accounts"
-      ],
-      "discriminator": [
-        234,
-        102,
-        194,
-        203,
-        150,
-        72,
-        62,
-        229
-      ],
       "accounts": [
         {
           "name": "account",
@@ -2602,8 +3217,8 @@
           "signer": true
         },
         {
-          "name": "system_program",
-          "address": "11111111111111111111111111111111"
+          "address": "11111111111111111111111111111111",
+          "name": "system_program"
         },
         {
           "name": "event_authority",
@@ -2638,24 +3253,23 @@
           "name": "program"
         }
       ],
-      "args": []
+      "args": [],
+      "discriminator": [
+        234,
+        102,
+        194,
+        203,
+        150,
+        72,
+        62,
+        229
+      ],
+      "docs": [
+        "Extends the size of program-owned accounts"
+      ],
+      "name": "extend_account"
     },
     {
-      "name": "get_minimum_distributable_fee",
-      "docs": [
-        "Permissionless instruction to check the minimum required fees for distribution",
-        "Returns the minimum required balance from the creator_vault and whether distribution can proceed"
-      ],
-      "discriminator": [
-        117,
-        225,
-        127,
-        202,
-        134,
-        95,
-        68,
-        35
-      ],
       "accounts": [
         {
           "name": "mint",
@@ -2695,31 +3309,6 @@
         {
           "name": "sharing_config",
           "pda": {
-            "seeds": [
-              {
-                "kind": "const",
-                "value": [
-                  115,
-                  104,
-                  97,
-                  114,
-                  105,
-                  110,
-                  103,
-                  45,
-                  99,
-                  111,
-                  110,
-                  102,
-                  105,
-                  103
-                ]
-              },
-              {
-                "kind": "account",
-                "path": "mint"
-              }
-            ],
             "program": {
               "kind": "const",
               "value": [
@@ -2756,7 +3345,32 @@
                 124,
                 112
               ]
-            }
+            },
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115,
+                  104,
+                  97,
+                  114,
+                  105,
+                  110,
+                  103,
+                  45,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "mint"
+              }
+            ]
           }
         },
         {
@@ -2782,15 +3396,30 @@
                 ]
               },
               {
+                "account": "BondingCurve",
                 "kind": "account",
-                "path": "bonding_curve.creator",
-                "account": "BondingCurve"
+                "path": "bonding_curve.creator"
               }
             ]
           }
         }
       ],
       "args": [],
+      "discriminator": [
+        117,
+        225,
+        127,
+        202,
+        134,
+        95,
+        68,
+        35
+      ],
+      "docs": [
+        "Permissionless instruction to check the minimum required fees for distribution",
+        "Returns the minimum required balance from the creator_vault and whether distribution can proceed"
+      ],
+      "name": "get_minimum_distributable_fee",
       "returns": {
         "defined": {
           "name": "MinimumDistributableFeeEvent"
@@ -2798,29 +3427,17 @@
       }
     },
     {
-      "name": "init_user_volume_accumulator",
-      "discriminator": [
-        94,
-        6,
-        202,
-        115,
-        255,
-        96,
-        232,
-        183
-      ],
       "accounts": [
         {
           "name": "payer",
-          "writable": true,
-          "signer": true
+          "signer": true,
+          "writable": true
         },
         {
           "name": "user"
         },
         {
           "name": "user_volume_accumulator",
-          "writable": true,
           "pda": {
             "seeds": [
               {
@@ -2856,11 +3473,12 @@
                 "path": "user"
               }
             ]
-          }
+          },
+          "writable": true
         },
         {
-          "name": "system_program",
-          "address": "11111111111111111111111111111111"
+          "address": "11111111111111111111111111111111",
+          "name": "system_program"
         },
         {
           "name": "event_authority",
@@ -2895,27 +3513,23 @@
           "name": "program"
         }
       ],
-      "args": []
+      "args": [],
+      "discriminator": [
+        94,
+        6,
+        202,
+        115,
+        255,
+        96,
+        232,
+        183
+      ],
+      "name": "init_user_volume_accumulator"
     },
     {
-      "name": "initialize",
-      "docs": [
-        "Creates the global state."
-      ],
-      "discriminator": [
-        175,
-        175,
-        109,
-        31,
-        13,
-        152,
-        155,
-        237
-      ],
       "accounts": [
         {
           "name": "global",
-          "writable": true,
           "pda": {
             "seeds": [
               {
@@ -2930,35 +3544,36 @@
                 ]
               }
             ]
-          }
+          },
+          "writable": true
         },
         {
           "name": "user",
-          "writable": true,
-          "signer": true
+          "signer": true,
+          "writable": true
         },
         {
-          "name": "system_program",
-          "address": "11111111111111111111111111111111"
+          "address": "11111111111111111111111111111111",
+          "name": "system_program"
         }
       ],
-      "args": []
+      "args": [],
+      "discriminator": [
+        175,
+        175,
+        109,
+        31,
+        13,
+        152,
+        155,
+        237
+      ],
+      "docs": [
+        "Creates the global state."
+      ],
+      "name": "initialize"
     },
     {
-      "name": "migrate",
-      "docs": [
-        "Migrates liquidity to pump_amm if the bonding curve is complete"
-      ],
-      "discriminator": [
-        155,
-        234,
-        231,
-        146,
-        236,
-        158,
-        162,
-        30
-      ],
       "accounts": [
         {
           "name": "global",
@@ -2980,17 +3595,16 @@
         },
         {
           "name": "withdraw_authority",
-          "writable": true,
           "relations": [
             "global"
-          ]
+          ],
+          "writable": true
         },
         {
           "name": "mint"
         },
         {
           "name": "bonding_curve",
-          "writable": true,
           "pda": {
             "seeds": [
               {
@@ -3016,26 +3630,12 @@
                 "path": "mint"
               }
             ]
-          }
+          },
+          "writable": true
         },
         {
           "name": "associated_bonding_curve",
-          "writable": true,
           "pda": {
-            "seeds": [
-              {
-                "kind": "account",
-                "path": "bonding_curve"
-              },
-              {
-                "kind": "account",
-                "path": "mint"
-              },
-              {
-                "kind": "account",
-                "path": "mint"
-              }
-            ],
             "program": {
               "kind": "const",
               "value": [
@@ -3072,29 +3672,47 @@
                 248,
                 89
               ]
-            }
-          }
+            },
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "bonding_curve"
+              },
+              {
+                "kind": "account",
+                "path": "mint"
+              },
+              {
+                "kind": "account",
+                "path": "mint"
+              }
+            ]
+          },
+          "writable": true
         },
         {
           "name": "user",
           "signer": true
         },
         {
-          "name": "system_program",
-          "address": "11111111111111111111111111111111"
+          "address": "11111111111111111111111111111111",
+          "name": "system_program"
         },
         {
-          "name": "token_program",
-          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+          "name": "token_program"
         },
         {
-          "name": "pump_amm",
-          "address": "pAMMBay6oceH9fJKBRHGP5D4bD4sWpmSwMn52FMfXEA"
+          "address": "pAMMBay6oceH9fJKBRHGP5D4bD4sWpmSwMn52FMfXEA",
+          "name": "pump_amm"
         },
         {
           "name": "pool",
-          "writable": true,
           "pda": {
+            "program": {
+              "kind": "account",
+              "path": "pump_amm"
+            },
             "seeds": [
               {
                 "kind": "const",
@@ -3124,16 +3742,12 @@
                 "kind": "account",
                 "path": "wsol_mint"
               }
-            ],
-            "program": {
-              "kind": "account",
-              "path": "pump_amm"
-            }
-          }
+            ]
+          },
+          "writable": true
         },
         {
           "name": "pool_authority",
-          "writable": true,
           "pda": {
             "seeds": [
               {
@@ -3160,12 +3774,16 @@
                 "path": "mint"
               }
             ]
-          }
+          },
+          "writable": true
         },
         {
           "name": "pool_authority_mint_account",
-          "writable": true,
           "pda": {
+            "program": {
+              "kind": "account",
+              "path": "associated_token_program"
+            },
             "seeds": [
               {
                 "kind": "account",
@@ -3179,17 +3797,17 @@
                 "kind": "account",
                 "path": "mint"
               }
-            ],
-            "program": {
-              "kind": "account",
-              "path": "associated_token_program"
-            }
-          }
+            ]
+          },
+          "writable": true
         },
         {
           "name": "pool_authority_wsol_account",
-          "writable": true,
           "pda": {
+            "program": {
+              "kind": "account",
+              "path": "associated_token_program"
+            },
             "seeds": [
               {
                 "kind": "account",
@@ -3203,16 +3821,17 @@
                 "kind": "account",
                 "path": "wsol_mint"
               }
-            ],
-            "program": {
-              "kind": "account",
-              "path": "associated_token_program"
-            }
-          }
+            ]
+          },
+          "writable": true
         },
         {
           "name": "amm_global_config",
           "pda": {
+            "program": {
+              "kind": "account",
+              "path": "pump_amm"
+            },
             "seeds": [
               {
                 "kind": "const",
@@ -3232,21 +3851,20 @@
                   103
                 ]
               }
-            ],
-            "program": {
-              "kind": "account",
-              "path": "pump_amm"
-            }
+            ]
           }
         },
         {
-          "name": "wsol_mint",
-          "address": "So11111111111111111111111111111111111111112"
+          "address": "So11111111111111111111111111111111111111112",
+          "name": "wsol_mint"
         },
         {
           "name": "lp_mint",
-          "writable": true,
           "pda": {
+            "program": {
+              "kind": "account",
+              "path": "pump_amm"
+            },
             "seeds": [
               {
                 "kind": "const",
@@ -3269,17 +3887,17 @@
                 "kind": "account",
                 "path": "pool"
               }
-            ],
-            "program": {
-              "kind": "account",
-              "path": "pump_amm"
-            }
-          }
+            ]
+          },
+          "writable": true
         },
         {
           "name": "user_pool_token_account",
-          "writable": true,
           "pda": {
+            "program": {
+              "kind": "account",
+              "path": "associated_token_program"
+            },
             "seeds": [
               {
                 "kind": "account",
@@ -3293,17 +3911,17 @@
                 "kind": "account",
                 "path": "lp_mint"
               }
-            ],
-            "program": {
-              "kind": "account",
-              "path": "associated_token_program"
-            }
-          }
+            ]
+          },
+          "writable": true
         },
         {
           "name": "pool_base_token_account",
-          "writable": true,
           "pda": {
+            "program": {
+              "kind": "account",
+              "path": "associated_token_program"
+            },
             "seeds": [
               {
                 "kind": "account",
@@ -3317,17 +3935,17 @@
                 "kind": "account",
                 "path": "mint"
               }
-            ],
-            "program": {
-              "kind": "account",
-              "path": "associated_token_program"
-            }
-          }
+            ]
+          },
+          "writable": true
         },
         {
           "name": "pool_quote_token_account",
-          "writable": true,
           "pda": {
+            "program": {
+              "kind": "account",
+              "path": "associated_token_program"
+            },
             "seeds": [
               {
                 "kind": "account",
@@ -3341,24 +3959,25 @@
                 "kind": "account",
                 "path": "wsol_mint"
               }
-            ],
-            "program": {
-              "kind": "account",
-              "path": "associated_token_program"
-            }
-          }
+            ]
+          },
+          "writable": true
         },
         {
-          "name": "token_2022_program",
-          "address": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb"
+          "address": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+          "name": "token_2022_program"
         },
         {
-          "name": "associated_token_program",
-          "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+          "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+          "name": "associated_token_program"
         },
         {
           "name": "pump_amm_event_authority",
           "pda": {
+            "program": {
+              "kind": "account",
+              "path": "pump_amm"
+            },
             "seeds": [
               {
                 "kind": "const",
@@ -3382,11 +4001,7 @@
                   121
                 ]
               }
-            ],
-            "program": {
-              "kind": "account",
-              "path": "pump_amm"
-            }
+            ]
           }
         },
         {
@@ -3422,20 +4037,23 @@
           "name": "program"
         }
       ],
-      "args": []
+      "args": [],
+      "discriminator": [
+        155,
+        234,
+        231,
+        146,
+        236,
+        158,
+        162,
+        30
+      ],
+      "docs": [
+        "Migrates liquidity to pump_amm if the bonding curve is complete"
+      ],
+      "name": "migrate"
     },
     {
-      "name": "migrate_bonding_curve_creator",
-      "discriminator": [
-        87,
-        124,
-        52,
-        191,
-        52,
-        38,
-        214,
-        232
-      ],
       "accounts": [
         {
           "name": "mint",
@@ -3445,7 +4063,6 @@
         },
         {
           "name": "bonding_curve",
-          "writable": true,
           "pda": {
             "seeds": [
               {
@@ -3471,36 +4088,12 @@
                 "path": "mint"
               }
             ]
-          }
+          },
+          "writable": true
         },
         {
           "name": "sharing_config",
           "pda": {
-            "seeds": [
-              {
-                "kind": "const",
-                "value": [
-                  115,
-                  104,
-                  97,
-                  114,
-                  105,
-                  110,
-                  103,
-                  45,
-                  99,
-                  111,
-                  110,
-                  102,
-                  105,
-                  103
-                ]
-              },
-              {
-                "kind": "account",
-                "path": "mint"
-              }
-            ],
             "program": {
               "kind": "const",
               "value": [
@@ -3537,7 +4130,32 @@
                 124,
                 112
               ]
-            }
+            },
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115,
+                  104,
+                  97,
+                  114,
+                  105,
+                  110,
+                  103,
+                  45,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "mint"
+              }
+            ]
           }
         },
         {
@@ -3573,23 +4191,20 @@
           "name": "program"
         }
       ],
-      "args": []
+      "args": [],
+      "discriminator": [
+        87,
+        124,
+        52,
+        191,
+        52,
+        38,
+        214,
+        232
+      ],
+      "name": "migrate_bonding_curve_creator"
     },
     {
-      "name": "sell",
-      "docs": [
-        "Sells tokens into a bonding curve."
-      ],
-      "discriminator": [
-        51,
-        230,
-        133,
-        164,
-        1,
-        127,
-        131,
-        173
-      ],
       "accounts": [
         {
           "name": "global",
@@ -3618,7 +4233,6 @@
         },
         {
           "name": "bonding_curve",
-          "writable": true,
           "pda": {
             "seeds": [
               {
@@ -3644,26 +4258,12 @@
                 "path": "mint"
               }
             ]
-          }
+          },
+          "writable": true
         },
         {
           "name": "associated_bonding_curve",
-          "writable": true,
           "pda": {
-            "seeds": [
-              {
-                "kind": "account",
-                "path": "bonding_curve"
-              },
-              {
-                "kind": "account",
-                "path": "token_program"
-              },
-              {
-                "kind": "account",
-                "path": "mint"
-              }
-            ],
             "program": {
               "kind": "const",
               "value": [
@@ -3700,8 +4300,23 @@
                 248,
                 89
               ]
-            }
-          }
+            },
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "bonding_curve"
+              },
+              {
+                "kind": "account",
+                "path": "token_program"
+              },
+              {
+                "kind": "account",
+                "path": "mint"
+              }
+            ]
+          },
+          "writable": true
         },
         {
           "name": "associated_user",
@@ -3709,16 +4324,15 @@
         },
         {
           "name": "user",
-          "writable": true,
-          "signer": true
+          "signer": true,
+          "writable": true
         },
         {
-          "name": "system_program",
-          "address": "11111111111111111111111111111111"
+          "address": "11111111111111111111111111111111",
+          "name": "system_program"
         },
         {
           "name": "creator_vault",
-          "writable": true,
           "pda": {
             "seeds": [
               {
@@ -3740,12 +4354,13 @@
                 ]
               },
               {
+                "account": "BondingCurve",
                 "kind": "account",
-                "path": "bonding_curve.creator",
-                "account": "BondingCurve"
+                "path": "bonding_curve.creator"
               }
             ]
-          }
+          },
+          "writable": true
         },
         {
           "name": "token_program"
@@ -3780,12 +4395,16 @@
           }
         },
         {
-          "name": "program",
-          "address": "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P"
+          "address": "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P",
+          "name": "program"
         },
         {
           "name": "fee_config",
           "pda": {
+            "program": {
+              "kind": "account",
+              "path": "fee_program"
+            },
             "seeds": [
               {
                 "kind": "const",
@@ -3839,16 +4458,12 @@
                   176
                 ]
               }
-            ],
-            "program": {
-              "kind": "account",
-              "path": "fee_program"
-            }
+            ]
           }
         },
         {
-          "name": "fee_program",
-          "address": "pfeeUxB6jkeY1Hxd7CsFCAjcbHA9rWtchMGdZ6VojVZ"
+          "address": "pfeeUxB6jkeY1Hxd7CsFCAjcbHA9rWtchMGdZ6VojVZ",
+          "name": "fee_program"
         }
       ],
       "args": [
@@ -3860,30 +4475,30 @@
           "name": "min_sol_output",
           "type": "u64"
         }
-      ]
-    },
-    {
-      "name": "set_creator",
-      "docs": [
-        "Allows Global::set_creator_authority to set the bonding curve creator from Metaplex metadata or input argument"
       ],
       "discriminator": [
-        254,
-        148,
-        255,
-        112,
-        207,
-        142,
-        170,
-        165
+        51,
+        230,
+        133,
+        164,
+        1,
+        127,
+        131,
+        173
       ],
+      "docs": [
+        "Sells tokens into a bonding curve."
+      ],
+      "name": "sell"
+    },
+    {
       "accounts": [
         {
           "name": "set_creator_authority",
-          "signer": true,
           "relations": [
             "global"
-          ]
+          ],
+          "signer": true
         },
         {
           "name": "global",
@@ -3909,6 +4524,43 @@
         {
           "name": "metadata",
           "pda": {
+            "program": {
+              "kind": "const",
+              "value": [
+                11,
+                112,
+                101,
+                177,
+                227,
+                209,
+                124,
+                69,
+                56,
+                157,
+                82,
+                127,
+                107,
+                4,
+                195,
+                205,
+                88,
+                184,
+                108,
+                115,
+                26,
+                160,
+                253,
+                181,
+                73,
+                182,
+                209,
+                188,
+                3,
+                248,
+                41,
+                70
+              ]
+            },
             "seeds": [
               {
                 "kind": "const",
@@ -3964,49 +4616,11 @@
                 "kind": "account",
                 "path": "mint"
               }
-            ],
-            "program": {
-              "kind": "const",
-              "value": [
-                11,
-                112,
-                101,
-                177,
-                227,
-                209,
-                124,
-                69,
-                56,
-                157,
-                82,
-                127,
-                107,
-                4,
-                195,
-                205,
-                88,
-                184,
-                108,
-                115,
-                26,
-                160,
-                253,
-                181,
-                73,
-                182,
-                209,
-                188,
-                3,
-                248,
-                41,
-                70
-              ]
-            }
+            ]
           }
         },
         {
           "name": "bonding_curve",
-          "writable": true,
           "pda": {
             "seeds": [
               {
@@ -4032,7 +4646,8 @@
                 "path": "mint"
               }
             ]
-          }
+          },
+          "writable": true
         },
         {
           "name": "event_authority",
@@ -4072,42 +4687,27 @@
           "name": "creator",
           "type": "pubkey"
         }
-      ]
+      ],
+      "discriminator": [
+        254,
+        148,
+        255,
+        112,
+        207,
+        142,
+        170,
+        165
+      ],
+      "docs": [
+        "Allows Global::set_creator_authority to set the bonding curve creator from Metaplex metadata or input argument"
+      ],
+      "name": "set_creator"
     },
     {
-      "name": "set_mayhem_virtual_params",
-      "discriminator": [
-        61,
-        169,
-        188,
-        191,
-        153,
-        149,
-        42,
-        97
-      ],
       "accounts": [
         {
           "name": "sol_vault_authority",
-          "writable": true,
-          "signer": true,
           "pda": {
-            "seeds": [
-              {
-                "kind": "const",
-                "value": [
-                  115,
-                  111,
-                  108,
-                  45,
-                  118,
-                  97,
-                  117,
-                  108,
-                  116
-                ]
-              }
-            ],
             "program": {
               "kind": "const",
               "value": [
@@ -4144,27 +4744,30 @@
                 101,
                 163
               ]
-            }
-          }
+            },
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115,
+                  111,
+                  108,
+                  45,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              }
+            ]
+          },
+          "signer": true,
+          "writable": true
         },
         {
           "name": "mayhem_token_vault",
-          "writable": true,
           "pda": {
-            "seeds": [
-              {
-                "kind": "account",
-                "path": "sol_vault_authority"
-              },
-              {
-                "kind": "account",
-                "path": "token_program"
-              },
-              {
-                "kind": "account",
-                "path": "mint"
-              }
-            ],
             "program": {
               "kind": "const",
               "value": [
@@ -4201,8 +4804,23 @@
                 248,
                 89
               ]
-            }
-          }
+            },
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "sol_vault_authority"
+              },
+              {
+                "kind": "account",
+                "path": "token_program"
+              },
+              {
+                "kind": "account",
+                "path": "mint"
+              }
+            ]
+          },
+          "writable": true
         },
         {
           "name": "mint"
@@ -4227,7 +4845,6 @@
         },
         {
           "name": "bonding_curve",
-          "writable": true,
           "pda": {
             "seeds": [
               {
@@ -4253,11 +4870,12 @@
                 "path": "mint"
               }
             ]
-          }
+          },
+          "writable": true
         },
         {
-          "name": "token_program",
-          "address": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb"
+          "address": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+          "name": "token_program"
         },
         {
           "name": "event_authority",
@@ -4292,23 +4910,20 @@
           "name": "program"
         }
       ],
-      "args": []
+      "args": [],
+      "discriminator": [
+        61,
+        169,
+        188,
+        191,
+        153,
+        149,
+        42,
+        97
+      ],
+      "name": "set_mayhem_virtual_params"
     },
     {
-      "name": "set_metaplex_creator",
-      "docs": [
-        "Syncs the bonding curve creator with the Metaplex metadata creator if it exists"
-      ],
-      "discriminator": [
-        138,
-        96,
-        174,
-        217,
-        48,
-        85,
-        197,
-        246
-      ],
       "accounts": [
         {
           "name": "mint"
@@ -4316,6 +4931,43 @@
         {
           "name": "metadata",
           "pda": {
+            "program": {
+              "kind": "const",
+              "value": [
+                11,
+                112,
+                101,
+                177,
+                227,
+                209,
+                124,
+                69,
+                56,
+                157,
+                82,
+                127,
+                107,
+                4,
+                195,
+                205,
+                88,
+                184,
+                108,
+                115,
+                26,
+                160,
+                253,
+                181,
+                73,
+                182,
+                209,
+                188,
+                3,
+                248,
+                41,
+                70
+              ]
+            },
             "seeds": [
               {
                 "kind": "const",
@@ -4371,49 +5023,11 @@
                 "kind": "account",
                 "path": "mint"
               }
-            ],
-            "program": {
-              "kind": "const",
-              "value": [
-                11,
-                112,
-                101,
-                177,
-                227,
-                209,
-                124,
-                69,
-                56,
-                157,
-                82,
-                127,
-                107,
-                4,
-                195,
-                205,
-                88,
-                184,
-                108,
-                115,
-                26,
-                160,
-                253,
-                181,
-                73,
-                182,
-                209,
-                188,
-                3,
-                248,
-                41,
-                70
-              ]
-            }
+            ]
           }
         },
         {
           "name": "bonding_curve",
-          "writable": true,
           "pda": {
             "seeds": [
               {
@@ -4439,7 +5053,8 @@
                 "path": "mint"
               }
             ]
-          }
+          },
+          "writable": true
         },
         {
           "name": "event_authority",
@@ -4474,27 +5089,26 @@
           "name": "program"
         }
       ],
-      "args": []
+      "args": [],
+      "discriminator": [
+        138,
+        96,
+        174,
+        217,
+        48,
+        85,
+        197,
+        246
+      ],
+      "docs": [
+        "Syncs the bonding curve creator with the Metaplex metadata creator if it exists"
+      ],
+      "name": "set_metaplex_creator"
     },
     {
-      "name": "set_params",
-      "docs": [
-        "Sets the global state parameters."
-      ],
-      "discriminator": [
-        27,
-        234,
-        178,
-        52,
-        147,
-        2,
-        187,
-        141
-      ],
       "accounts": [
         {
           "name": "global",
-          "writable": true,
           "pda": {
             "seeds": [
               {
@@ -4509,15 +5123,16 @@
                 ]
               }
             ]
-          }
+          },
+          "writable": true
         },
         {
           "name": "authority",
-          "writable": true,
-          "signer": true,
           "relations": [
             "global"
-          ]
+          ],
+          "signer": true,
+          "writable": true
         },
         {
           "name": "event_authority",
@@ -4597,24 +5212,26 @@
           "name": "admin_set_creator_authority",
           "type": "pubkey"
         }
-      ]
+      ],
+      "discriminator": [
+        27,
+        234,
+        178,
+        52,
+        147,
+        2,
+        187,
+        141
+      ],
+      "docs": [
+        "Sets the global state parameters."
+      ],
+      "name": "set_params"
     },
     {
-      "name": "set_reserved_fee_recipients",
-      "discriminator": [
-        111,
-        172,
-        162,
-        232,
-        114,
-        89,
-        213,
-        142
-      ],
       "accounts": [
         {
           "name": "global",
-          "writable": true,
           "pda": {
             "seeds": [
               {
@@ -4629,14 +5246,15 @@
                 ]
               }
             ]
-          }
+          },
+          "writable": true
         },
         {
           "name": "authority",
-          "signer": true,
           "relations": [
             "global"
-          ]
+          ],
+          "signer": true
         },
         {
           "name": "event_authority",
@@ -4676,20 +5294,20 @@
           "name": "whitelist_pda",
           "type": "pubkey"
         }
-      ]
+      ],
+      "discriminator": [
+        111,
+        172,
+        162,
+        232,
+        114,
+        89,
+        213,
+        142
+      ],
+      "name": "set_reserved_fee_recipients"
     },
     {
-      "name": "sync_user_volume_accumulator",
-      "discriminator": [
-        86,
-        31,
-        192,
-        87,
-        163,
-        87,
-        79,
-        238
-      ],
       "accounts": [
         {
           "name": "user"
@@ -4733,7 +5351,6 @@
         },
         {
           "name": "user_volume_accumulator",
-          "writable": true,
           "pda": {
             "seeds": [
               {
@@ -4769,7 +5386,8 @@
                 "path": "user"
               }
             ]
-          }
+          },
+          "writable": true
         },
         {
           "name": "event_authority",
@@ -4804,10 +5422,87 @@
           "name": "program"
         }
       ],
-      "args": []
+      "args": [],
+      "discriminator": [
+        86,
+        31,
+        192,
+        87,
+        163,
+        87,
+        79,
+        238
+      ],
+      "name": "sync_user_volume_accumulator"
     },
     {
-      "name": "toggle_create_v2",
+      "accounts": [
+        {
+          "name": "global",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108
+                ]
+              }
+            ]
+          },
+          "writable": true
+        },
+        {
+          "name": "authority",
+          "relations": [
+            "global"
+          ],
+          "signer": true,
+          "writable": true
+        },
+        {
+          "name": "event_authority",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  95,
+                  95,
+                  101,
+                  118,
+                  101,
+                  110,
+                  116,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "program"
+        }
+      ],
+      "args": [
+        {
+          "name": "enabled",
+          "type": "bool"
+        }
+      ],
       "discriminator": [
         28,
         255,
@@ -4818,10 +5513,12 @@
         203,
         171
       ],
+      "name": "toggle_create_v2"
+    },
+    {
       "accounts": [
         {
           "name": "global",
-          "writable": true,
           "pda": {
             "seeds": [
               {
@@ -4836,15 +5533,16 @@
                 ]
               }
             ]
-          }
+          },
+          "writable": true
         },
         {
           "name": "authority",
-          "writable": true,
-          "signer": true,
           "relations": [
             "global"
-          ]
+          ],
+          "signer": true,
+          "writable": true
         },
         {
           "name": "event_authority",
@@ -4884,10 +5582,7 @@
           "name": "enabled",
           "type": "bool"
         }
-      ]
-    },
-    {
-      "name": "toggle_mayhem_mode",
+      ],
       "discriminator": [
         1,
         9,
@@ -4898,90 +5593,12 @@
         255,
         163
       ],
-      "accounts": [
-        {
-          "name": "global",
-          "writable": true,
-          "pda": {
-            "seeds": [
-              {
-                "kind": "const",
-                "value": [
-                  103,
-                  108,
-                  111,
-                  98,
-                  97,
-                  108
-                ]
-              }
-            ]
-          }
-        },
-        {
-          "name": "authority",
-          "writable": true,
-          "signer": true,
-          "relations": [
-            "global"
-          ]
-        },
-        {
-          "name": "event_authority",
-          "pda": {
-            "seeds": [
-              {
-                "kind": "const",
-                "value": [
-                  95,
-                  95,
-                  101,
-                  118,
-                  101,
-                  110,
-                  116,
-                  95,
-                  97,
-                  117,
-                  116,
-                  104,
-                  111,
-                  114,
-                  105,
-                  116,
-                  121
-                ]
-              }
-            ]
-          }
-        },
-        {
-          "name": "program"
-        }
-      ],
-      "args": [
-        {
-          "name": "enabled",
-          "type": "bool"
-        }
-      ]
+      "name": "toggle_mayhem_mode"
     },
     {
-      "name": "update_global_authority",
-      "discriminator": [
-        227,
-        181,
-        74,
-        196,
-        208,
-        21,
-        97,
-        213
-      ],
       "accounts": [
         {
           "name": "global",
-          "writable": true,
           "pda": {
             "seeds": [
               {
@@ -4996,14 +5613,15 @@
                 ]
               }
             ]
-          }
+          },
+          "writable": true
         },
         {
           "name": "authority",
-          "signer": true,
           "relations": [
             "global"
-          ]
+          ],
+          "signer": true
         },
         {
           "name": "new_authority"
@@ -5041,649 +5659,268 @@
           "name": "program"
         }
       ],
-      "args": []
-    }
-  ],
-  "accounts": [
-    {
-      "name": "BondingCurve",
+      "args": [],
       "discriminator": [
-        23,
-        183,
-        248,
-        55,
-        96,
-        216,
-        172,
-        96
-      ]
-    },
-    {
-      "name": "FeeConfig",
-      "discriminator": [
-        143,
-        52,
-        146,
-        187,
-        219,
-        123,
-        76,
-        155
-      ]
-    },
-    {
-      "name": "Global",
-      "discriminator": [
-        167,
-        232,
-        232,
-        177,
-        200,
-        108,
-        114,
-        127
-      ]
-    },
-    {
-      "name": "GlobalVolumeAccumulator",
-      "discriminator": [
-        202,
-        42,
-        246,
-        43,
-        142,
-        190,
-        30,
-        255
-      ]
-    },
-    {
-      "name": "SharingConfig",
-      "discriminator": [
-        216,
+        227,
+        181,
         74,
-        9,
-        0,
-        56,
-        140,
-        93,
-        75
-      ]
+        196,
+        208,
+        21,
+        97,
+        213
+      ],
+      "name": "update_global_authority"
     },
     {
-      "name": "UserVolumeAccumulator",
+      "accounts": [
+        {
+          "name": "payer",
+          "signer": true,
+          "writable": true
+        },
+        {
+          "name": "mint",
+          "relations": [
+            "sharing_config"
+          ]
+        },
+        {
+          "name": "bonding_curve",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  98,
+                  111,
+                  110,
+                  100,
+                  105,
+                  110,
+                  103,
+                  45,
+                  99,
+                  117,
+                  114,
+                  118,
+                  101
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "sharing_config",
+          "pda": {
+            "program": {
+              "kind": "const",
+              "value": [
+                12,
+                53,
+                255,
+                169,
+                5,
+                90,
+                142,
+                86,
+                141,
+                168,
+                247,
+                188,
+                7,
+                86,
+                21,
+                39,
+                76,
+                241,
+                201,
+                44,
+                164,
+                31,
+                64,
+                0,
+                156,
+                81,
+                106,
+                164,
+                20,
+                194,
+                124,
+                112
+              ]
+            },
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115,
+                  104,
+                  97,
+                  114,
+                  105,
+                  110,
+                  103,
+                  45,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "creator_vault",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  114,
+                  101,
+                  97,
+                  116,
+                  111,
+                  114,
+                  45,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "account": "BondingCurve",
+                "kind": "account",
+                "path": "bonding_curve.creator"
+              }
+            ]
+          },
+          "writable": true
+        },
+        {
+          "address": "11111111111111111111111111111111",
+          "name": "system_program"
+        },
+        {
+          "name": "event_authority",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  95,
+                  95,
+                  101,
+                  118,
+                  101,
+                  110,
+                  116,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "address": "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P",
+          "name": "program"
+        },
+        {
+          "docs": [
+            "Deserialized manually in the handler for non-legacy quote mints."
+          ],
+          "name": "creator_vault_quote_token_account",
+          "pda": {
+            "program": {
+              "kind": "account",
+              "path": "associated_token_program"
+            },
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "creator_vault"
+              },
+              {
+                "kind": "account",
+                "path": "quote_token_program"
+              },
+              {
+                "kind": "account",
+                "path": "quote_mint"
+              }
+            ]
+          },
+          "writable": true
+        },
+        {
+          "name": "quote_mint"
+        },
+        {
+          "name": "quote_token_program"
+        },
+        {
+          "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+          "name": "associated_token_program"
+        }
+      ],
+      "args": [
+        {
+          "name": "initialize_ata",
+          "type": "bool"
+        }
+      ],
       "discriminator": [
-        86,
         255,
-        112,
-        14,
-        102,
-        53,
-        154,
-        250
-      ]
-    }
-  ],
-  "events": [
-    {
-      "name": "AdminSetCreatorEvent",
-      "discriminator": [
-        64,
-        69,
-        192,
-        104,
-        29,
-        30,
-        25,
-        107
-      ]
-    },
-    {
-      "name": "AdminSetIdlAuthorityEvent",
-      "discriminator": [
-        245,
-        59,
-        70,
-        34,
-        75,
-        185,
-        109,
-        92
-      ]
-    },
-    {
-      "name": "AdminUpdateTokenIncentivesEvent",
-      "discriminator": [
-        147,
-        250,
-        108,
-        120,
-        247,
-        29,
-        67,
-        222
-      ]
-    },
-    {
-      "name": "ClaimTokenIncentivesEvent",
-      "discriminator": [
-        79,
-        172,
-        246,
-        49,
-        205,
-        91,
-        206,
-        232
-      ]
-    },
-    {
-      "name": "CloseUserVolumeAccumulatorEvent",
-      "discriminator": [
-        146,
-        159,
-        189,
-        172,
-        146,
-        88,
-        56,
-        244
-      ]
-    },
-    {
-      "name": "CollectCreatorFeeEvent",
-      "discriminator": [
-        122,
-        2,
-        127,
-        1,
-        14,
-        191,
-        12,
-        175
-      ]
-    },
-    {
-      "name": "CompleteEvent",
-      "discriminator": [
-        95,
-        114,
-        97,
-        156,
-        212,
-        46,
-        152,
-        8
-      ]
-    },
-    {
-      "name": "CompletePumpAmmMigrationEvent",
-      "discriminator": [
-        189,
-        233,
-        93,
-        185,
-        92,
-        148,
-        234,
-        148
-      ]
-    },
-    {
-      "name": "CreateEvent",
-      "discriminator": [
-        27,
-        114,
-        169,
-        77,
-        222,
-        235,
-        99,
-        118
-      ]
-    },
-    {
-      "name": "DistributeCreatorFeesEvent",
-      "discriminator": [
-        165,
-        55,
-        129,
-        112,
-        4,
-        179,
-        202,
-        40
-      ]
-    },
-    {
-      "name": "ExtendAccountEvent",
-      "discriminator": [
-        97,
-        97,
-        215,
-        144,
-        93,
-        146,
-        22,
-        124
-      ]
-    },
-    {
-      "name": "InitUserVolumeAccumulatorEvent",
-      "discriminator": [
-        134,
-        36,
-        13,
-        72,
-        232,
-        101,
-        130,
-        216
-      ]
-    },
-    {
-      "name": "MigrateBondingCurveCreatorEvent",
-      "discriminator": [
-        155,
-        167,
-        104,
-        220,
-        213,
-        108,
-        243,
-        3
-      ]
-    },
-    {
-      "name": "MinimumDistributableFeeEvent",
-      "discriminator": [
-        168,
-        216,
-        132,
-        239,
-        235,
-        182,
-        49,
-        52
-      ]
-    },
-    {
-      "name": "ReservedFeeRecipientsEvent",
-      "discriminator": [
-        43,
-        188,
-        250,
-        18,
-        221,
-        75,
-        187,
-        95
-      ]
-    },
-    {
-      "name": "SetCreatorEvent",
-      "discriminator": [
-        237,
-        52,
-        123,
-        37,
-        245,
-        251,
-        72,
-        210
-      ]
-    },
-    {
-      "name": "SetMetaplexCreatorEvent",
-      "discriminator": [
-        142,
         203,
-        6,
-        32,
-        127,
-        105,
-        191,
-        162
-      ]
-    },
-    {
-      "name": "SetParamsEvent",
-      "discriminator": [
-        223,
-        195,
-        159,
-        246,
-        62,
-        48,
-        143,
-        131
-      ]
-    },
-    {
-      "name": "SyncUserVolumeAccumulatorEvent",
-      "discriminator": [
-        197,
-        122,
-        167,
-        124,
-        116,
-        81,
-        91,
-        255
-      ]
-    },
-    {
-      "name": "TradeEvent",
-      "discriminator": [
-        189,
-        219,
-        127,
-        211,
-        78,
-        230,
-        97,
-        238
-      ]
-    },
-    {
-      "name": "UpdateGlobalAuthorityEvent",
-      "discriminator": [
-        182,
-        195,
-        137,
-        42,
-        35,
-        206,
-        207,
-        247
-      ]
-    },
-    {
-      "name": "UpdateMayhemVirtualParamsEvent",
-      "discriminator": [
-        117,
-        123,
-        228,
-        182,
-        161,
-        168,
-        220,
-        214
-      ]
+        19,
+        79,
+        244,
+        68,
+        8,
+        159
+      ],
+      "name": "distribute_creator_fees_v2",
+      "returns": {
+        "defined": {
+          "name": "DistributeCreatorFeesEvent"
+        }
+      }
     }
   ],
-  "errors": [
-    {
-      "code": 6000,
-      "name": "NotAuthorized",
-      "msg": "The given account is not authorized to execute this instruction."
-    },
-    {
-      "code": 6001,
-      "name": "AlreadyInitialized",
-      "msg": "The program is already initialized."
-    },
-    {
-      "code": 6002,
-      "name": "TooMuchSolRequired",
-      "msg": "slippage: Too much SOL required to buy the given amount of tokens."
-    },
-    {
-      "code": 6003,
-      "name": "TooLittleSolReceived",
-      "msg": "slippage: Too little SOL received to sell the given amount of tokens."
-    },
-    {
-      "code": 6004,
-      "name": "MintDoesNotMatchBondingCurve",
-      "msg": "The mint does not match the bonding curve."
-    },
-    {
-      "code": 6005,
-      "name": "BondingCurveComplete",
-      "msg": "The bonding curve has completed and liquidity migrated to raydium."
-    },
-    {
-      "code": 6006,
-      "name": "BondingCurveNotComplete",
-      "msg": "The bonding curve has not completed."
-    },
-    {
-      "code": 6007,
-      "name": "NotInitialized",
-      "msg": "The program is not initialized."
-    },
-    {
-      "code": 6008,
-      "name": "WithdrawTooFrequent",
-      "msg": "Withdraw too frequent"
-    },
-    {
-      "code": 6009,
-      "name": "NewSizeShouldBeGreaterThanCurrentSize",
-      "msg": "new_size should be > current_size"
-    },
-    {
-      "code": 6010,
-      "name": "AccountTypeNotSupported",
-      "msg": "Account type not supported"
-    },
-    {
-      "code": 6011,
-      "name": "InitialRealTokenReservesShouldBeLessThanTokenTotalSupply",
-      "msg": "initial_real_token_reserves should be less than token_total_supply"
-    },
-    {
-      "code": 6012,
-      "name": "InitialVirtualTokenReservesShouldBeGreaterThanInitialRealTokenReserves",
-      "msg": "initial_virtual_token_reserves should be greater than initial_real_token_reserves"
-    },
-    {
-      "code": 6013,
-      "name": "FeeBasisPointsGreaterThanMaximum",
-      "msg": "fee_basis_points greater than maximum"
-    },
-    {
-      "code": 6014,
-      "name": "AllZerosWithdrawAuthority",
-      "msg": "Withdraw authority cannot be set to System Program ID"
-    },
-    {
-      "code": 6015,
-      "name": "PoolMigrationFeeShouldBeLessThanFinalRealSolReserves",
-      "msg": "pool_migration_fee should be less than final_real_sol_reserves"
-    },
-    {
-      "code": 6016,
-      "name": "PoolMigrationFeeShouldBeGreaterThanCreatorFeePlusMaxMigrateFees",
-      "msg": "pool_migration_fee should be greater than creator_fee + MAX_MIGRATE_FEES"
-    },
-    {
-      "code": 6017,
-      "name": "DisabledWithdraw",
-      "msg": "Migrate instruction is disabled"
-    },
-    {
-      "code": 6018,
-      "name": "DisabledMigrate",
-      "msg": "Migrate instruction is disabled"
-    },
-    {
-      "code": 6019,
-      "name": "InvalidCreator",
-      "msg": "Invalid creator pubkey"
-    },
-    {
-      "code": 6020,
-      "name": "BuyZeroAmount",
-      "msg": "Buy zero amount"
-    },
-    {
-      "code": 6021,
-      "name": "NotEnoughTokensToBuy",
-      "msg": "Not enough tokens to buy"
-    },
-    {
-      "code": 6022,
-      "name": "SellZeroAmount",
-      "msg": "Sell zero amount"
-    },
-    {
-      "code": 6023,
-      "name": "NotEnoughTokensToSell",
-      "msg": "Not enough tokens to sell"
-    },
-    {
-      "code": 6024,
-      "name": "Overflow",
-      "msg": "Overflow"
-    },
-    {
-      "code": 6025,
-      "name": "Truncation",
-      "msg": "Truncation"
-    },
-    {
-      "code": 6026,
-      "name": "DivisionByZero",
-      "msg": "Division by zero"
-    },
-    {
-      "code": 6027,
-      "name": "NotEnoughRemainingAccounts",
-      "msg": "Not enough remaining accounts"
-    },
-    {
-      "code": 6028,
-      "name": "AllFeeRecipientsShouldBeNonZero",
-      "msg": "All fee recipients should be non-zero"
-    },
-    {
-      "code": 6029,
-      "name": "UnsortedNotUniqueFeeRecipients",
-      "msg": "Unsorted or not unique fee recipients"
-    },
-    {
-      "code": 6030,
-      "name": "CreatorShouldNotBeZero",
-      "msg": "Creator should not be zero"
-    },
-    {
-      "code": 6031,
-      "name": "StartTimeInThePast"
-    },
-    {
-      "code": 6032,
-      "name": "EndTimeInThePast"
-    },
-    {
-      "code": 6033,
-      "name": "EndTimeBeforeStartTime"
-    },
-    {
-      "code": 6034,
-      "name": "TimeRangeTooLarge"
-    },
-    {
-      "code": 6035,
-      "name": "EndTimeBeforeCurrentDay"
-    },
-    {
-      "code": 6036,
-      "name": "SupplyUpdateForFinishedRange"
-    },
-    {
-      "code": 6037,
-      "name": "DayIndexAfterEndIndex"
-    },
-    {
-      "code": 6038,
-      "name": "DayInActiveRange"
-    },
-    {
-      "code": 6039,
-      "name": "InvalidIncentiveMint"
-    },
-    {
-      "code": 6040,
-      "name": "BuyNotEnoughSolToCoverRent",
-      "msg": "Buy: Not enough SOL to cover for rent exemption."
-    },
-    {
-      "code": 6041,
-      "name": "BuyNotEnoughSolToCoverFees",
-      "msg": "Buy: Not enough SOL to cover for fees."
-    },
-    {
-      "code": 6042,
-      "name": "BuySlippageBelowMinTokensOut",
-      "msg": "Slippage: Would buy less tokens than expected min_tokens_out"
-    },
-    {
-      "code": 6043,
-      "name": "NameTooLong"
-    },
-    {
-      "code": 6044,
-      "name": "SymbolTooLong"
-    },
-    {
-      "code": 6045,
-      "name": "UriTooLong"
-    },
-    {
-      "code": 6046,
-      "name": "CreateV2Disabled"
-    },
-    {
-      "code": 6047,
-      "name": "CpitializeMayhemFailed"
-    },
-    {
-      "code": 6048,
-      "name": "MayhemModeDisabled"
-    },
-    {
-      "code": 6049,
-      "name": "CreatorMigratedToSharingConfig",
-      "msg": "creator has been migrated to sharing config, use pump_fees::reset_fee_sharing_config instead"
-    },
-    {
-      "code": 6050,
-      "name": "UnableToDistributeCreatorVaultMigratedToSharingConfig",
-      "msg": "creator_vault has been migrated to sharing config, use pump:distribute_creator_fees instead"
-    },
-    {
-      "code": 6051,
-      "name": "SharingConfigNotActive",
-      "msg": "Sharing config is not active"
-    },
-    {
-      "code": 6052,
-      "name": "UnableToDistributeCreatorFeesToExecutableRecipient",
-      "msg": "The recipient account is executable, so it cannot receive lamports, remove it from the team first"
-    },
-    {
-      "code": 6053,
-      "name": "BondingCurveAndSharingConfigCreatorMismatch",
-      "msg": "Bonding curve creator does not match sharing config"
-    },
-    {
-      "code": 6054,
-      "name": "ShareholdersAndRemainingAccountsMismatch",
-      "msg": "Remaining accounts do not match shareholders, make sure to pass exactly the same pubkeys in the same order"
-    },
-    {
-      "code": 6055,
-      "name": "InvalidShareBps",
-      "msg": "Share bps must be greater than 0"
-    }
-  ],
+  "metadata": {
+    "description": "Created with Anchor",
+    "name": "pump",
+    "spec": "0.1.0",
+    "version": "0.1.0"
+  },
   "types": [
     {
       "name": "AdminSetCreatorEvent",
       "type": {
-        "kind": "struct",
         "fields": [
           {
             "name": "timestamp",
@@ -5709,25 +5946,25 @@
             "name": "new_creator",
             "type": "pubkey"
           }
-        ]
+        ],
+        "kind": "struct"
       }
     },
     {
       "name": "AdminSetIdlAuthorityEvent",
       "type": {
-        "kind": "struct",
         "fields": [
           {
             "name": "idl_authority",
             "type": "pubkey"
           }
-        ]
+        ],
+        "kind": "struct"
       }
     },
     {
       "name": "AdminUpdateTokenIncentivesEvent",
       "type": {
-        "kind": "struct",
         "fields": [
           {
             "name": "start_time",
@@ -5757,13 +5994,13 @@
             "name": "timestamp",
             "type": "i64"
           }
-        ]
+        ],
+        "kind": "struct"
       }
     },
     {
       "name": "BondingCurve",
       "type": {
-        "kind": "struct",
         "fields": [
           {
             "name": "virtual_token_reserves",
@@ -5797,13 +6034,13 @@
             "name": "is_mayhem_mode",
             "type": "bool"
           }
-        ]
+        ],
+        "kind": "struct"
       }
     },
     {
       "name": "ClaimTokenIncentivesEvent",
       "type": {
-        "kind": "struct",
         "fields": [
           {
             "name": "user",
@@ -5829,13 +6066,13 @@
             "name": "current_sol_volume",
             "type": "u64"
           }
-        ]
+        ],
+        "kind": "struct"
       }
     },
     {
       "name": "CloseUserVolumeAccumulatorEvent",
       "type": {
-        "kind": "struct",
         "fields": [
           {
             "name": "user",
@@ -5861,13 +6098,13 @@
             "name": "last_update_timestamp",
             "type": "i64"
           }
-        ]
+        ],
+        "kind": "struct"
       }
     },
     {
       "name": "CollectCreatorFeeEvent",
       "type": {
-        "kind": "struct",
         "fields": [
           {
             "name": "timestamp",
@@ -5881,13 +6118,13 @@
             "name": "creator_fee",
             "type": "u64"
           }
-        ]
+        ],
+        "kind": "struct"
       }
     },
     {
       "name": "CompleteEvent",
       "type": {
-        "kind": "struct",
         "fields": [
           {
             "name": "user",
@@ -5905,13 +6142,13 @@
             "name": "timestamp",
             "type": "i64"
           }
-        ]
+        ],
+        "kind": "struct"
       }
     },
     {
       "name": "CompletePumpAmmMigrationEvent",
       "type": {
-        "kind": "struct",
         "fields": [
           {
             "name": "user",
@@ -5945,7 +6182,8 @@
             "name": "pool",
             "type": "pubkey"
           }
-        ]
+        ],
+        "kind": "struct"
       }
     },
     {
@@ -5965,7 +6203,6 @@
     {
       "name": "CreateEvent",
       "type": {
-        "kind": "struct",
         "fields": [
           {
             "name": "name",
@@ -6023,13 +6260,13 @@
             "name": "is_mayhem_mode",
             "type": "bool"
           }
-        ]
+        ],
+        "kind": "struct"
       }
     },
     {
       "name": "DistributeCreatorFeesEvent",
       "type": {
-        "kind": "struct",
         "fields": [
           {
             "name": "timestamp",
@@ -6065,13 +6302,13 @@
             "name": "distributed",
             "type": "u64"
           }
-        ]
+        ],
+        "kind": "struct"
       }
     },
     {
       "name": "ExtendAccountEvent",
       "type": {
-        "kind": "struct",
         "fields": [
           {
             "name": "account",
@@ -6093,13 +6330,13 @@
             "name": "timestamp",
             "type": "i64"
           }
-        ]
+        ],
+        "kind": "struct"
       }
     },
     {
       "name": "FeeConfig",
       "type": {
-        "kind": "struct",
         "fields": [
           {
             "name": "bump",
@@ -6127,13 +6364,13 @@
               }
             }
           }
-        ]
+        ],
+        "kind": "struct"
       }
     },
     {
       "name": "FeeTier",
       "type": {
-        "kind": "struct",
         "fields": [
           {
             "name": "market_cap_lamports_threshold",
@@ -6147,13 +6384,13 @@
               }
             }
           }
-        ]
+        ],
+        "kind": "struct"
       }
     },
     {
       "name": "Fees",
       "type": {
-        "kind": "struct",
         "fields": [
           {
             "name": "lp_fee_bps",
@@ -6167,19 +6404,19 @@
             "name": "creator_fee_bps",
             "type": "u64"
           }
-        ]
+        ],
+        "kind": "struct"
       }
     },
     {
       "name": "Global",
       "type": {
-        "kind": "struct",
         "fields": [
           {
-            "name": "initialized",
             "docs": [
               "Unused"
             ],
+            "name": "initialized",
             "type": "bool"
           },
           {
@@ -6215,10 +6452,10 @@
             "type": "pubkey"
           },
           {
-            "name": "enable_migrate",
             "docs": [
               "Unused"
             ],
+            "name": "enable_migrate",
             "type": "bool"
           },
           {
@@ -6271,13 +6508,13 @@
               ]
             }
           }
-        ]
+        ],
+        "kind": "struct"
       }
     },
     {
       "name": "GlobalVolumeAccumulator",
       "type": {
-        "kind": "struct",
         "fields": [
           {
             "name": "start_time",
@@ -6313,13 +6550,13 @@
               ]
             }
           }
-        ]
+        ],
+        "kind": "struct"
       }
     },
     {
       "name": "InitUserVolumeAccumulatorEvent",
       "type": {
-        "kind": "struct",
         "fields": [
           {
             "name": "payer",
@@ -6333,13 +6570,13 @@
             "name": "timestamp",
             "type": "i64"
           }
-        ]
+        ],
+        "kind": "struct"
       }
     },
     {
       "name": "MigrateBondingCurveCreatorEvent",
       "type": {
-        "kind": "struct",
         "fields": [
           {
             "name": "timestamp",
@@ -6365,13 +6602,13 @@
             "name": "new_creator",
             "type": "pubkey"
           }
-        ]
+        ],
+        "kind": "struct"
       }
     },
     {
       "name": "MinimumDistributableFeeEvent",
       "type": {
-        "kind": "struct",
         "fields": [
           {
             "name": "minimum_required",
@@ -6385,22 +6622,22 @@
             "name": "can_distribute",
             "type": "bool"
           }
-        ]
+        ],
+        "kind": "struct"
       }
     },
     {
       "name": "OptionBool",
       "type": {
-        "kind": "struct",
         "fields": [
           "bool"
-        ]
+        ],
+        "kind": "struct"
       }
     },
     {
       "name": "ReservedFeeRecipientsEvent",
       "type": {
-        "kind": "struct",
         "fields": [
           {
             "name": "timestamp",
@@ -6419,13 +6656,13 @@
               ]
             }
           }
-        ]
+        ],
+        "kind": "struct"
       }
     },
     {
       "name": "SetCreatorEvent",
       "type": {
-        "kind": "struct",
         "fields": [
           {
             "name": "timestamp",
@@ -6443,13 +6680,13 @@
             "name": "creator",
             "type": "pubkey"
           }
-        ]
+        ],
+        "kind": "struct"
       }
     },
     {
       "name": "SetMetaplexCreatorEvent",
       "type": {
-        "kind": "struct",
         "fields": [
           {
             "name": "timestamp",
@@ -6471,13 +6708,13 @@
             "name": "creator",
             "type": "pubkey"
           }
-        ]
+        ],
+        "kind": "struct"
       }
     },
     {
       "name": "SetParamsEvent",
       "type": {
-        "kind": "struct",
         "fields": [
           {
             "name": "initial_virtual_token_reserves",
@@ -6540,13 +6777,13 @@
             "name": "admin_set_creator_authority",
             "type": "pubkey"
           }
-        ]
+        ],
+        "kind": "struct"
       }
     },
     {
       "name": "Shareholder",
       "type": {
-        "kind": "struct",
         "fields": [
           {
             "name": "address",
@@ -6556,13 +6793,13 @@
             "name": "share_bps",
             "type": "u16"
           }
-        ]
+        ],
+        "kind": "struct"
       }
     },
     {
       "name": "SharingConfig",
       "type": {
-        "kind": "struct",
         "fields": [
           {
             "name": "bump",
@@ -6602,13 +6839,13 @@
               }
             }
           }
-        ]
+        ],
+        "kind": "struct"
       }
     },
     {
       "name": "SyncUserVolumeAccumulatorEvent",
       "type": {
-        "kind": "struct",
         "fields": [
           {
             "name": "user",
@@ -6626,16 +6863,16 @@
             "name": "timestamp",
             "type": "i64"
           }
-        ]
+        ],
+        "kind": "struct"
       }
     },
     {
-      "name": "TradeEvent",
       "docs": [
         "ix_name: \"buy\" | \"sell\" | \"buy_exact_sol_in\""
       ],
+      "name": "TradeEvent",
       "type": {
-        "kind": "struct",
         "fields": [
           {
             "name": "mint",
@@ -6729,13 +6966,13 @@
             "name": "mayhem_mode",
             "type": "bool"
           }
-        ]
+        ],
+        "kind": "struct"
       }
     },
     {
       "name": "UpdateGlobalAuthorityEvent",
       "type": {
-        "kind": "struct",
         "fields": [
           {
             "name": "global",
@@ -6753,13 +6990,13 @@
             "name": "timestamp",
             "type": "i64"
           }
-        ]
+        ],
+        "kind": "struct"
       }
     },
     {
       "name": "UpdateMayhemVirtualParamsEvent",
       "type": {
-        "kind": "struct",
         "fields": [
           {
             "name": "timestamp",
@@ -6793,13 +7030,13 @@
             "name": "real_sol_reserves",
             "type": "u64"
           }
-        ]
+        ],
+        "kind": "struct"
       }
     },
     {
       "name": "UserVolumeAccumulator",
       "type": {
-        "kind": "struct",
         "fields": [
           {
             "name": "user",
@@ -6829,7 +7066,8 @@
             "name": "has_total_claimed_tokens",
             "type": "bool"
           }
-        ]
+        ],
+        "kind": "struct"
       }
     }
   ]

@@ -1,0 +1,1 @@
+{"stage":"source evidence copying","exit_code":1,"error":"FileNotFoundError: guessed symbols.so basename; actual captured file is unstripped.so","target_executed":false}

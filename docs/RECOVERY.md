@@ -80,7 +80,7 @@ builds the same sixteen-handler Fees source and lockfile with v1.43, v1.44, v1.4
 and v1.46. The complete captured `core::fmt::write` and `__multi3` bodies match
 v1.44 exactly; those representative bodies differ in the other tested releases.
 This makes v1.44 the preferred tested stock candidate for Fees, without excluding
-untested v1.46.1, custom sysroots or different build settings. The current
+untested v1.46.1, custom sysroots or different build settings. The historical
 [thirty-one-body Fees serializer checkpoint](../repro/pump_fees/fee-config-serialization-v144/README.md)
 compiles with v1.44 and passes 17,441 saved comparison receipts, including 69
 repeated-input checks. Its full binary still differs from the capture.
@@ -279,10 +279,147 @@ The [Pool serializer checkpoint](../repro/pump_amm/pool-serialization-thirty-sev
 The [native/legacy curve checkpoint](../repro/pump/native-curve-partial-fortyeight/README.md) retains 48 implemented Pump handlers and adds a fifth partial path. The 1,534,904-byte clean main build is identical to the regressed scratch composite, SHA-256 `6271a6d5782d350f6d716a91712d283592d4589aa8e9befb9c1f1a0dd3ac7ebe`. All 9,217 comparisons across 37 suites and 1,024 Surfpool comparisons pass. The 56 new fixed-scope comparisons include six rejections before Pump and 11 successes; the actual captured AMM supplies the required PDA signature. Every receipt is bound to the tested ELF and all 36 actual compiler inputs; legacy embedded source maps remain labeled as incidental checkout snapshots. The four-program total is now 140 implemented handlers, five partial paths and 53,715 saved comparison receipts. All original whole-file comparisons still differ.
 
 
-## Current serializer and dependency-family checkpoint
+## Historical serializer and dependency-family checkpoint
 
 Pump's [BondingCurve serialization checkpoint](../repro/pump/bonding-curve-serializer-fortyeight/README.md) produces 1,534,768 bytes, SHA-256 `92575cd082bf76b332044a7d09371a9764db8b2cc40180bf1418f261945bbd6a`. The complete 1,840-byte serializer, all 25 direct calls and discriminator bytes match under the documented normalization. All 9,217 differential and 1,024 Surfpool comparisons pass on this executable.
 
 Fees' [combined social-layout and dependency-family checkpoint](../repro/pump_fees/solana-family-221-v144/README.md) produces 768,072 bytes, SHA-256 `e501ca2c744373e5653a5ac7e25a3fd20f6058765808b888c3605fd03adba60f`. Exactly eight of 253 dependency selections change, all witnessed together in an official SPL release lock. The complete social-v2 exit, six Pubkey helpers, base58 formatter and nine source records match their captured counterparts under the documented static comparison. Fresh scratch execution passes 17,441 receipts and ten sequence steps; a clean main build produces the identical whole ELF. The intermediate social-only `c181b0ba` checkpoint remains immutable history.
 
 Counts remain 140 bounded implementations, five partial handlers and 53,715 comparison receipts. No new unique runtime cases or completed core binaries are claimed. The [completion ledger](COMPLETION.md) records the remaining scope.
+
+
+## Two-curve and inline initializer checkpoint
+
+Pump's [two-curve checkpoint](../repro/pump/tokenkeg-two-curve-fortyeight/README.md) produces 1,576,744 bytes, SHA-256 `5c1c1c2d1cd2c334b3e054b6a8fb5ac0638d80d13495c1c18d935ad20bfd62bb`. Its only Rust change extends the existing routing module to ordinary Tokenkeg SOL→A→B and B→A→SOL with canonical pre-existing vaults, 166-byte curves, native root quote and non-completing buys. All 9,217 inherited differential comparisons, 20 new comparisons and 1,024 Surfpool comparisons pass. Eighteen new cases reach Pump through genuine captured AMM PDA signing; sixteen succeed and two roll back on the caller's minimum-output check. Two zero-input cases reject before Pump. Arbitrary routes, other quote currencies, Token-2022/extensions, holder rewards, cashback, Mayhem and completion remain outside this bounded extension. The prior full serializer comparison passes again on the new candidate.
+
+Fees' [inline initializer checkpoint](../repro/pump_fees/initializer-inline-v144/README.md) produces 767,992 bytes, SHA-256 `01fedce5878ec14618233c4683bcb4149e471775acb48ffb69614d9df570bb95`. One field type changes from boxed to inline `Account<Global>`, recovering the original 1,200-byte account context. The complete 2,992-byte handler, 6,824-byte parser and 1,608-byte wrapper match under the documented normalization; all nine immediate handler target bodies and two literal spans match as well. All 17,441 existing comparisons and ten donation sequence steps pass, including unchanged authentic historical transactions. The separate state-module proposal remains uncompiled and unintegrated.
+
+Each candidate has one tested scratch build and one clean main build with identical whole ELF bytes, actual compiler inputs, tool phase records and receipt bindings. Portable and current-source verifiers pass. The four-program total is 53,735 comparison receipts, 140 bounded implementations and five partial paths. Five handlers remain unrecovered. Whole-original-file equality remains false for all four programs, and the security audit remains incomplete.
+
+
+## Receipt references and future Linux symbol retention
+
+The [inline receipt reference correction](../repro/ci/inline-runtime-receipt-references/README.md) exposes ten already-sealed Fees receipts as byte-identical compressed files so the unchanged repository-wide verifier can check the current status. Its local check passes all four candidates and 53,735 comparisons. This fixes a hosted evidence-job schema failure without changing program source, binaries or runtime coverage.
+
+The successful fixed-source Linux build retained a hash and section comparison for its unstripped ELF but omitted the symbol-bearing file from the downloadable artifact. No unstripped symbols can be inferred from that hash. The build helper now retains both exact emitted ELFs, rejects direct and parent symlinks before copying, and continues to omit generated keypairs. All 33 preparation/retention tests pass locally. This is a future retention correction; the earlier build has not been repeated and its missing symbol bytes remain missing.
+
+
+## Fees account-module reconstruction
+
+The [state-module checkpoint](../repro/pump_fees/state-module-v144/README.md) moves four unchanged account declarations to the original recorded filename, retaining public reexports. The clean main and tested scratch ELFs are identical: 768,024 bytes, SHA-256 `d5b8f885942ee0d54519e4330941b5e034cfcdcf271eb286d0b4cc81165bee13`. All 23 actual source inputs and fixed v1.44 compiler/v1.52 strip phases are recorded. All 17,441 inherited comparisons and ten donation steps pass, with unchanged historical signed messages; no cases or handlers are added.
+
+The four complete checked codecs now have matching filename and account-name literals. Their normalized bodies still differ in natural source-line values; the SharingConfig filename remains unresolved. All 35 immediate codec call sites and the retained initializer/social/Pubkey checks remain supported. This is a source-placement improvement, with full original binary equality still false.
+
+The [independent review of symbol retention](../repro/ci/receipt-retention-review/README.md) identified a pre-existing top-level symlink issue: inventory traversal could read a symlinked target root before the later candidate-chain guard. The guard now runs before inventory; the original observer sees zero file reads and all 34 preparation/retention tests pass. No additional Linux build was triggered.
+
+
+The [independent Fees integration review](../repro/ci/state-module-integration-review/README.md) verifies the preserved declarations, 23 actual inputs, identical main/scratch ELF, direct receipts, signed histories and complete 150-row ledger against its frozen integration snapshot. All 91 current-binding map entries passed; overlapping groups are not counted as unique files. This is bounded evidence acceptance, with whole-original equality and security sign-off still unresolved.
+
+
+## Current AMM scalar guard-order reconstruction
+
+The [AMM scalar-guard checkpoint](../repro/pump_amm/scalar-guard-order-v144/README.md) changes only the fee setter's explicit unsigned guards and immediate stores, following original LP → protocol → recipients → creator order. Its clean main and scratch binaries are identical: 1,177,512 bytes, SHA-256 `a6dbd0dc24e28a9459e50858136a2cfabb59fb8aa8399d58499d047a76ec291f`. The full unchanged 25-suite corpus passes 17,462 comparisons; 191 existing scalar rejection cases additionally match Left/Right diagnostics. Signed evidence records 35,418 verified signatures over 35,074 transactions, including 150 separately classified original-program setup calls that add no comparison or handler coverage.
+
+Fresh symbols preserve complete Pool and GlobalConfig exit comparisons, each with 24 immediate target checks and an eight-byte discriminator. The corrected handler itself remains unmatched at 6,096 candidate bytes versus 2,912 original bytes, and the actual specialized error helper retains four instruction differences. This closes a demonstrated source-behavior gap without claiming exact compiler reconstruction. All 18 compiler inputs and separate v1.44 compile/v1.52 strip phases are retained; no suite rerun was needed for the byte-identical main executable.
+
+
+## Current Fees SharingConfig-module reconstruction
+
+The [SharingConfig-module checkpoint](../repro/pump_fees/sharing-module-v144/README.md) preserves the fifth account declaration in its recorded instructions/fee_sharing/create_fee_sharing_config.rs module, with existing imports retained through a public reexport. Main and tested scratch binaries are identical: 768,104 bytes, SHA-256 `8cce74a5191b286eaa10af59c02c9ee16d3853be214c5e9b1132e50bba15ef87`. All 26 inputs, fixed compilation/strip phases, direct receipts and current bindings are recorded. All 17,441 existing comparisons, ten donation steps and retained signature checks pass; no cases or handlers are added.
+
+All five complete checked codecs now reference the original filenames and account-name literals. Natural source-line values remain different. The complete SharingConfig unchecked decoder and Account::try_from wrapper retain their comparisons; their 23 immediate call checks overlap the wider 35 codec calls. The earlier ten complete initializer/social/Pubkey bodies remain supported. Larger caller, transitive data, historical source and whole-ELF equality gaps remain explicit. A second runtime run was unnecessary because the clean main ELF equals the tested scratch bytes.
+
+
+## AMM shared configuration methods and static initializer
+
+The [80701082 checkpoint](../repro/pump_amm/create-config-shared-methods-v144/README.md) adds the fixed-admin create_config source and four shared GlobalConfig setters. Its 1,199,296-byte clean main build equals tested scratch exactly; all 22 actual inputs and separate v1.44 compile/v1.52 strip phases are bound. Creation wrapper, handler, context and event serializer match complete normalized original bodies; 107/112 immediate initializer call targets match. Init/recipient source locations and three scalar methods remain unmatched, and eleven metadata references remain unclosed. The update handler is now 3,160 versus original 2,912 bytes; smaller size is not equality.
+
+The unchanged 25 suites pass 17,462 comparisons and verify 35,418 signatures, with 150 existing boost setup transactions separated from comparison counts. Existing cases additionally verify 191 scalar and 78 recipient diagnostic sequences. Pool and GlobalConfig serializer bodies, all 24 direct targets each and discriminators still match at freshly computed locations. No initializer success case is added; bounded handlers remain 37.
+
+## Fees donation event-authority account
+
+The [8f89dbeb checkpoint](../repro/pump_fees/donation-event-account-v144/README.md) changes only CreateDonationFeePda.event_authority ownership from UncheckedAccount to AccountInfo. Its 768,848-byte main and scratch builds are whole-file identical with 26 actual inputs. The complete parser (8,984 bytes) and wrapper (928 bytes) match normalized original bodies and relocation patterns. Of 76 direct targets, 74 match; the larger incomplete handler and init closure source-coordinate differences remain. The original handler's two early logs and reserve-dependent BondingCurve branch are not recovered by this change.
+
+All 17,441 existing comparisons and ten donation steps pass. Saved evidence verifies 8,644 transaction fields / 17,204 signatures, plus the two unchanged genuine historical captures separately. Existing five-codec, SharingConfig caller and initializer/social/formatter gates remain intact. These are bounded observations; all four original full ELFs still differ and the security audit remains incomplete.
+
+
+## AMM event borrowing and broader source hypotheses
+
+The [d27be7e9 checkpoint](../repro/pump_amm/update-event-borrow-v144/README.md) removes only the redundant clone passed to the fee-update event macro. Its 1,199,048-byte clean main executable equals its separately tested scratch build exactly. The complete 2,912-byte update handler, 2,296-byte wrapper and 744-byte event serializer match normalized original bodies. Four of sixteen handler targets remain unmatched; the shared scalar specialization and truthful source-coordinate differences are retained. Five bounded data spans match while four error/format metadata extents remain unclosed. No binary bytes or diagnostic coordinates were patched.
+
+All 17,462 unchanged comparisons and 35,418 signature checks pass, with 191 existing scalar and 78 recipient diagnostics. No new cases, handlers or initializer-success evidence are added. Creation matches and both account serializers remain intact; whole-original equality is false. The [prebuild residual study](../repro/pump_amm/shared-method-residuals/REPORT.md) preserves the source basis and independent event-copy review.
+
+The [context studies](../repro/parallel-work/2026-10-25/context-closure-results/README.md), [independent review](../repro/ci/context-closure-review/README.md) and [Pump source hypotheses](../repro/parallel-work/2026-10-25/source-hypothesis-results/README.md) now make deeper creation and general ordinary routing concrete for subsequent compilation and testing. Their integrity checks do not establish runtime or security acceptance. The [Fees donation business proposal](../repro/pump_fees/donation-business-source-proposal/README.md) was separate from the then-accepted Fees8f89, whose [exhaustive function inventory](../repro/pump_fees/function-inventory-8f89/REPORT.md) preserves all original/candidate windows and residuals.
+
+
+## Donation business reconstruction and current parallel work
+
+The [Fees donation-business checkpoint](../repro/pump_fees/donation-business-v144/README.md) restores both early logs, reserve-dependent Curve/Pool selection, raw quote extraction, sharing authorization and original error metadata/compared-key order. One corrected scratch build and one clean main build produce identical complete ELF and symbols: `fc1088f3e25738267a49aaa2b5189f1ab77c487f1023d45fede11e14e5a086b2`, 770,744 bytes. The first scratch build was superseded before runtime; its provenance remains preserved.
+
+All17,441 existing comparisons,20 focused comparisons and ten separate donation sequence steps pass. The focused20 has eight repeated inputs and twelve new typed combinations,40 transactions and80 ordinary signatures; eleven saved diagnostic rows also pass. Main inherits those receipts through complete binary identity, with all26 main source inputs bound. The four-core total is53,755 comparison receipts,140/150 bounded handlers and0/4 original byte-identical binaries. The complete donation handler remains unequal, and its exhaustive function inventory preserves every residual row.
+
+The [integrated relay/Pump proposals](../repro/parallel-work/2026-10-25/integration-hypothesis-results/README.md) remain separate static source hypotheses. Eight additional CLI assignments address their concrete application gaps; they do not establish accepted implementations. [Hosted run40171437120](https://github.com/lalalune/pumpfun-source/actions/runs/40171437120) passed all twelve jobs atf0c80ca before this Fees promotion.
+
+
+## Ordinary nested ancestry checkpoint
+
+The [nested-ancestry checkpoint](../repro/pump/nested-ancestry-fortyeight/README.md) integrates the ancestor walk and wide pricing through depth five, including canonical pre-existing Pool ancestry and signed quote adjustments. Sixteen focused comparisons add15 successes and one expected depth rejection with ordered compared-value diagnostics. An earlier real diagnostic failure remains sealed as history. Ancestry is synthetic; initializer/migration reachability, exhaustive inputs and excluded modes are not established.
+
+All9,237 previous Pump comparisons and1,024 Surfpool comparisons pass freshly. The accepted differential total is9,253 across39 suites, with27,300 comparison signatures including Surfpool. One clean main build is identical to the tested scratch executable (`568546bcf038740d995325c1e742528f218f630840ac152f96dcf5c2147eabc2`,1,598,992 bytes) and symbol ELF. The37 actual compiler inputs and separate final README binding are retained. The four-program total is53,771 differential receipts;140/150 bounded handlers and0/4 whole-original equal binaries remain unchanged.
+
+
+## Layered pass 01: ordinary routes and borrowed donation accounts
+
+The [combined Pump checkpoint](../repro/pump/nested-general-route-fortyeight/README.md) integrates the ordinary general-route module with accepted nested ancestry. One clean main compilation produces `731003570927c206353555d9743d70229234e7e3fa167a5915fa146f3007fc93` (1,579,424 bytes); its entire symbol ELF also equals the tested scratch output. All 9,269 differential comparisons and 1,024 Surfpool comparisons pass. Sixteen new cases cover ordinary three-hop Tokenkeg paths through genuine AMM signing; broader modes and arbitrary inputs remain partial. Four actual route-context field labels now match original consumed strings. The three remaining parser instruction differences and full handler/transitive closure remain open.
+
+The [Fees borrowed-account checkpoint](../repro/pump_fees/donation-borrow-v144/README.md) makes only two AccountInfo clone-to-borrow substitutions. One clean main compilation reproduces the tested `5cf8d567934188d1307d2f9f3d2220ede52f6978e389064b08897441fbdd7d49` executable (770,016 bytes) and complete symbols. Its unchanged 17,461 comparisons and separate ten-step sequence pass. The full handler remains unmatched. The focused run's numeric exit code was not separately retained; its complete report, final log, strict outcomes and signatures are verified without inventing that code.
+
+Both builds use recorded v1.44 compilation and v1.52 stripping. Pump's compiler succeeded before its outer launcher failed a mutable-log bookkeeping assertion; the failure and original prebuild seal are preserved, with a separate successful completion check and no rebuild. Actual compiler inputs, tools, SDK, caches and full main/scratch identity pass. The current four-program total is53,787 saved comparisons;140/150 bounded handlers and0/4 whole-original matches are unchanged.
+
+The [layered inventories](../repro/layered-passes/pass-01/README.md) freeze the preceding c1ffdd0 snapshot and retain every byte/window disposition. Subsequent analyses must use new symbols and input bindings. The BuyV3 replacement remains unaccepted after review found105 previously successful cases excluded by its narrower context/domain. No rejected patch or pending source proposal is counted as recovered behavior.
+
+## Layered pass 02: source corrections and complete residual review
+
+The [second layered report](../repro/layered-passes/pass-02/README.md) preserves full byte ranges and every function/call/data disposition before and after the new corrections. AMM destination rent and Fees quote/predicate/social changes have clean main builds identical to the reviewed scratch executables and symbols. Existing regression counts remain unchanged. Static BuyV3 optional-fill/parser and Fees preprocessing/payout contracts identify the next source corrections without representing uncompiled proposals as accepted behavior.
+
+The relay now has a stack-clean source build and twelve passing ordinary local comparisons. Its first business-rejection comparison fails only on source-origin logging; that failure remains saved, and two later planned cases were not executed. ATA and Metaplex provenance review found no evidenced recipe change to justify another build. Exact acceptance remains0/4 core binaries and2/5 dependency captured payloads; the security audit remains incomplete.
+
+## Layered pass 03: Relay fixed-state streaming
+
+[Pass03](../repro/layered-passes/pass-03/README.md) follows the published second pass with one source-supported Relay change. Four fixed serializers now stream fields into the borrowed buffer. The unchanged pinned recipe compiles cleanly, and all twelve unchanged ordinary local comparisons pass on the new bytes. Corrected full inventories retain492 original and279 candidate windows;29 raw original matches and110 normalized original shapes remain unchanged. Full-byte equality, source-origin rejection behavior, privileged routes and transitive source/build reconstruction remain unresolved.
+
+## Layered pass 04: fixed writer, complete source reviews and contract recovery
+
+[Pass04](../repro/layered-passes/pass-04/README.md) builds the source-supported Relay BpfWriter correction once and passes all twelve unchanged ordinary comparisons. Original raw/normalized body matches improve from29/110 to33/120, with372 original windows still unmatched. Four frozen-source audits enumerate every admitted explicit function and account context while retaining unresolved observations and excluding stopped work. New BuyV3 preparation, fee/mode, quote/vault, settlement and event/exit packets retain all117 historical rows as requirements; none is a complete replacement. The Fees legacy caller proposal is independently reviewed, with build/regression acceptance separate. Full before/after byte ranges and a corrected independent-review/dependency reconciliation remain public; acceptance is still0/4 core and2/5 dependency captured payloads.
+
+## Layered pass 05: Fees legacy caller and remaining BuyV3 contracts
+
+[Pass05](../repro/layered-passes/pass-05/README.md) integrates the reviewed Fees legacy caller: remaining-account preprocessing, executable-recipient filtering, weight rescaling, early state serialization and generated typed CPI clients. The clean main executable and symbols equal the tested scratch outputs. All17,461 existing comparisons and ten separate sequence steps pass; independent saved-signature and current-source binding checks also pass. The complete inventory retains585 original and562 candidate windows, with448 mapped,135 unattributed and two conflicting original windows. Whole-file equality remains false.
+
+The independent source delta review establishes no concrete new regression and retains F1–F5 with corrected applicability. New BuyV3 buyback, historical curve decoder and residual pricing contracts remain unintegrated; all117 retained cases remain requirements, not passes attributed to those proposals. Decoder promotion requires checking every shared caller's preparation/growth behavior. Full before/after byte ranges and current function-ledger bindings are published. The accepted total remains53,787 comparison receipts,140/150 bounded handlers,0/4 byte-identical core programs and2/5 matching dependency captures; security sign-off remains incomplete.
+
+## Layered pass 06: connected Pump preparation and Relay owned errors
+
+[Pass06](../repro/layered-passes/pass-06/README.md) integrates the reviewed three-file Pump decoder/preparation correction. All 9,269 unchanged differential comparisons and 1,024 Surfpool comparisons pass; a clean main build equals the tested scratch executable and symbols. Complete serializer and metadata matches remain. The full same-method inventory loses one call-consistent original match, which is reported without claiming byte-completion improvement.
+
+Relay build07 implements the recovered owned error model and passes all twelve unchanged ordinary replays. Its normalized original matches increase from 120 to 121, with 371 original windows unmatched. The full writer remains matched; complete serializers, conversion, name decoration and logging do not. BuyV3 whitelist/mode and Fees V2 composition proposals remain separate from build acceptance. A newly identified legacy payout comparison-payload gap has an uncompiled one-check source proposal. All before/after bytes and current complete function ledgers are bound to their actual candidate hashes. No new handler or case count, complete original identity or security sign-off is claimed.
+
+## Layered pass 07: legacy compared-value ownership
+
+[Pass07](../repro/layered-passes/pass-07/README.md) follows the sixth-pass review with its concrete one-check Fees correction. The original payout error owns formatted comparison values; the candidate now uses the corresponding framework API. The generated formatting code inlines into the legacy handler and reaches the raw-identical 40-byte Pubkey formatter at four call sites. All 17,461 existing comparisons and ten separate sequence steps pass, and clean main executable/symbol files equal the tested scratch build. Complete inventories retain 448 mapped, 135 unattributed and two conflicting original windows. Full original identity, V2 source acceptance, transitive data/calls and the security assessment remain incomplete.
+
+## Layered pass 08: V2 composition and whitelist serialization
+
+[Pass08](../repro/layered-passes/pass-08/README.md) integrates Fees V2 caller composition after independent named-key review, all unchanged regressions, saved-signature verification and a matching clean main rebuild. It also uses the Relay whitelist writer so I/O errors are dropped before construction of the owned framework error. The full before/after byte reports and function ledgers retain all unmatched and ambiguous ranges. No new whole-original byte identity or security completion is claimed.
+
+## Layered pass 09: accumulator ordering and dependency review
+
+[Pass09](../repro/layered-passes/pass-09/README.md) moves AMM's accumulator user-field assignment after successful Clock retrieval. The clean main build equals the separately tested executable and symbol ELF; the unchanged 25-suite corpus passes 17,462 comparisons. Fresh complete inventories preserve all unmatched windows. The dependency review reproduces every ATA and Metaplex differing byte and explains the missing artifact-linked source/build evidence. No new source hypothesis is promoted merely to influence code placement.
+
+## Layered pass 10: buy fee input and typed math error
+
+[Pass10](../repro/layered-passes/pass-10/README.md) integrates the Pump buy-side supply selector and Mayhem BuyPumpSwap typed zero-divisor error. Both clean main builds equal their independently tested scratch executables and symbols. The unchanged corpora preserve their explicit diagnostic and coverage limits. Portable independent review checks original/candidate instructions, current source deltas and retained evidence. The complete before/after comparison remains 0/4 core and 2/5 dependency captures exact.
+
+## Layered pass 11: buy rejection order and swap-sell error
+
+[Pass 11](../repro/layered-passes/pass-11/README.md) integrates the reviewed Pump complete-before-cashback order and Mayhem SellPumpSwap typed zero-divisor error. Both main builds equal their tested scratch files, including symbols. All prior corpus and diagnostic limits remain explicit. The AMM formatter review identifies a supported dependency-source proposal; its separate build remains outside this pass's accepted artifacts.

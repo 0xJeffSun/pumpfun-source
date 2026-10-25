@@ -4,7 +4,7 @@ use anchor_lang::prelude::*;
 use anchor_lang::solana_program::instruction::AccountMeta;
 use anchor_spl::token_interface::Mint;
 use crate::{FeeError, ID};
-use crate::types::{FeeProgramGlobal, Shareholder};
+use crate::types::FeeProgramGlobal;
 pub const RELAY: Pubkey = anchor_lang::solana_program::pubkey!("RLAYHr9TRFcKB2ubYQhspcnXiaGpaVzNQvHytt47RZu");
 pub const PUMP: Pubkey = crate::pump_global::PUMP_ID;
 pub const AMM: Pubkey = anchor_lang::solana_program::pubkey!("pAMMBay6oceH9fJKBRHGP5D4bD4sWpmSwMn52FMfXEA");
@@ -42,46 +42,80 @@ pub fn crank(ctx: Context<CrankDonationFeePda>) -> Result<()> {
         emit!(event);emit_cpi!(event);Ok(())
     }
 pub fn create(ctx: Context<CreateDonationFeePda>) -> Result<()> {
-        require!(ctx.accounts.fee_program_global.disable_flags & 4 == 0, FeeError::FeatureDeactivated);
-        if ctx.accounts.donation_fee_pda.version != 0 { return Ok(()); }
-        let info=ctx.accounts.pool.to_account_info();
-        require_keys_eq!(*info.owner, AMM, FeeError::InvalidPool);
-        let data=info.try_borrow_data()?;
-        let pool=Pool::try_deserialize(&mut &data[..])?;
-        require_keys_eq!(pool.base_mint, ctx.accounts.base_mint.key(), FeeError::InvalidPool);
-        let authority=Pubkey::find_program_address(&[b"pool-authority",ctx.accounts.base_mint.key().as_ref()],&PUMP).0;
-        require_keys_eq!(pool.creator,authority,FeeError::InvalidPool);
-        let expected=Pubkey::create_program_address(&[b"pool",&pool.index.to_le_bytes(),pool.creator.as_ref(),pool.base_mint.as_ref(),pool.quote_mint.as_ref(),&[pool.pool_bump]],&AMM).map_err(|_| error!(FeeError::InvalidPool))?;
-        require_keys_eq!(expected,info.key(),FeeError::InvalidPool);
-        let creator = if pool.coin_creator == ctx.accounts.sharing_config.key() {
-            let sharing=ctx.accounts.sharing_config.to_account_info();
+        if ctx.accounts.fee_program_global.disable_flags & 4 != 0 {
+            msg!("CreateDonationFeePda is currently disabled");
+            return Err(FeeError::FeatureDeactivated.into());
+        }
+        if ctx.accounts.donation_fee_pda.version != 0 {
+            msg!("donation_fee_pda already exists");
+            return Ok(());
+        }
+        let curve = &ctx.accounts.bonding_curve;
+        let (creator, quote_mint) = if curve.real_sol_reserves != 0
+            || curve.virtual_sol_reserves != 0
+            || curve.real_token_reserves != 0
+            || curve.virtual_token_reserves != 0
+        {
+            let quote = donation_raw_curve_quote(curve.to_account_info());
+            let quote = if quote == Pubkey::default() {
+                anchor_spl::token::spl_token::native_mint::ID
+            } else {
+                quote
+            };
+            (curve.creator, quote)
+        } else {
+            let info = &ctx.accounts.pool;
+            require_keys_eq!(*info.owner, AMM, FeeError::InvalidPool);
+            let data=info.try_borrow_data()?;
+            let pool=Pool::try_deserialize(&mut &data[..])?;
+            require_keys_eq!(pool.base_mint, ctx.accounts.base_mint.key(), FeeError::InvalidPool);
+            let authority=Pubkey::find_program_address(&[b"pool-authority",ctx.accounts.base_mint.key().as_ref()],&PUMP).0;
+            require_keys_eq!(pool.creator,authority,FeeError::InvalidPool);
+            let expected=Pubkey::create_program_address(&[b"pool",&pool.index.to_le_bytes(),pool.creator.as_ref(),pool.base_mint.as_ref(),pool.quote_mint.as_ref(),&[pool.pool_bump]],&AMM).map_err(|_| FeeError::InvalidPool)?;
+            require_keys_eq!(info.key(),expected,FeeError::InvalidPool);
+            (pool.coin_creator, pool.quote_mint)
+        };
+        let creator = if creator == ctx.accounts.sharing_config.key() {
+            let sharing = &ctx.accounts.sharing_config;
             require_keys_eq!(*sharing.owner,ID,FeeError::InvalidSharingConfig);
+            require!(!sharing.data_is_empty(),FeeError::InvalidSharingConfig);
             let bytes=sharing.try_borrow_data()?;
             let config=SharingConfig::try_deserialize(&mut &bytes[..])?;
             require_keys_eq!(config.mint,ctx.accounts.base_mint.key(),FeeError::InvalidSharingConfig);
-            require!(!config.admin_revoked,FeeError::SharingConfigAdminRevoked);
-            require_keys_eq!(config.admin,ctx.accounts.payer.key(),FeeError::NotAuthorized);
+            require!(config.admin == ctx.accounts.payer.key(), FeeError::NotAuthorized);
+            if config.admin_revoked {
+                return Err(FeeError::SharingConfigAdminRevoked.into());
+            }
             require!(config.status==ConfigStatus::Active,FeeError::SharingConfigNotActive);
             config.admin
         } else {
-            require_keys_eq!(pool.coin_creator,ctx.accounts.payer.key(),FeeError::NotAuthorized);
-            pool.coin_creator
+            require_keys_eq!(ctx.accounts.payer.key(),creator,FeeError::NotAuthorized);
+            creator
         };
         let pda=&mut ctx.accounts.donation_fee_pda;
         pda.bump=ctx.bumps.donation_fee_pda;
         pda.version=1;
         pda.config_id=ctx.accounts.config_id.key();
         pda.base_mint=ctx.accounts.base_mint.key();
-        pda.quote_mint=pool.quote_mint;
+        pda.quote_mint=quote_mint;
         pda.creator=creator;
         pda.total_donated=0;pda.last_crank_ts=0;pda.reserved=[0;64];
         let event=DonationFeePdaCreated { timestamp:Clock::get()?.unix_timestamp, created_by:ctx.accounts.payer.key(),donation_fee_pda:pda.key(),config_id:pda.config_id,base_mint:pda.base_mint,quote_mint:pda.quote_mint,creator:pda.creator };
         emit!(event);emit_cpi!(event);Ok(())
     }
+fn donation_raw_curve_quote(info: AccountInfo<'_>) -> Pubkey {
+    let mut quote_bytes = [0u8; 32];
+    if info.data_len() >= 115 {
+        let data = info.data.borrow();
+        quote_bytes.copy_from_slice(&data[83..115]);
+    }
+    Pubkey::new_from_array(quote_bytes)
+}
+
 #[derive(Accounts)]
 pub struct CreateDonationFeePda<'info> {
     /// CHECK: event PDA validated.
-    #[account(seeds=[b"__event_authority"],bump)] pub event_authority: UncheckedAccount<'info>,
+    #[account(seeds=[b"__event_authority"],bump)] pub event_authority: AccountInfo<'info>,
     pub program: Program<'info, crate::program::PumpFeesCandidate>,
     #[account(mut)] pub payer: Signer<'info>,
     pub system_program: Program<'info,System>,
@@ -96,8 +130,7 @@ pub struct CreateDonationFeePda<'info> {
     /// CHECK: derived identifier; state rules under recovery.
     #[account(seeds=[b"sharing-config",base_mint.key().as_ref()],bump)] pub sharing_config: UncheckedAccount<'info>,
 }
-#[account]
-pub struct DonationFeePda {pub bump:u8,pub version:u8,pub config_id:Pubkey,pub base_mint:Pubkey,pub quote_mint:Pubkey,pub creator:Pubkey,pub total_donated:u64,pub last_crank_ts:i64,pub reserved:[u8;64]}
+pub use crate::state::DonationFeePda;
 pub use crate::pump::accounts::BondingCurve;
 pub use crate::pump_amm::accounts::Pool;
 #[event]
@@ -105,8 +138,7 @@ pub struct DonationFeePdaCreated {pub timestamp:i64,pub created_by:Pubkey,pub do
 
 #[derive(AnchorSerialize,AnchorDeserialize,Clone,PartialEq)]
 pub enum ConfigStatus {Paused,Active}
-#[account]
-pub struct SharingConfig {pub bump:u8,pub version:u8,pub status:ConfigStatus,pub mint:Pubkey,pub admin:Pubkey,pub admin_revoked:bool,pub shareholders:Vec<Shareholder>}
+pub use crate::instructions::fee_sharing::create_fee_sharing_config::SharingConfig;
 
 #[derive(Accounts)]
 pub struct CrankDonationFeePda<'info> {

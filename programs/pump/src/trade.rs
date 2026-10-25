@@ -50,6 +50,7 @@ fn selected(config:&FeeConfig,cap:u128,stable:bool)->Fees{
 }
 pub fn sell(ctx:Context<SellV3>,amount:u64,min_sol_output:u64)->Result<()> {
     let a=&mut *ctx.accounts;
+    crate::trade_types::prepare_bonding_curve(&a.bonding_curve, &a.system_program, &a.user)?;
     let quote_decimals=check_quote(a)?;
     let is_sol=quote_decimals.is_none();
     require!(!a.bonding_curve.is_cashback_coin,PumpError::CashbackCoinNotSupported);
@@ -113,17 +114,18 @@ pub fn sell(ctx:Context<SellV3>,amount:u64,min_sol_output:u64)->Result<()> {
 
 pub fn buy(ctx:Context<SellV3>,amount:u64,max_sol_cost:u64)->Result<()> {
     let a=&mut *ctx.accounts;
+    crate::trade_types::prepare_bonding_curve(&a.bonding_curve, &a.system_program, &a.user)?;
     let quote_decimals=check_quote(a)?;
     let is_sol=quote_decimals.is_none();
-    require!(!a.bonding_curve.is_cashback_coin,PumpError::CashbackCoinNotSupported);
     require!(!a.bonding_curve.complete,PumpError::BondingCurveComplete);
+    require!(!a.bonding_curve.is_cashback_coin,PumpError::CashbackCoinNotSupported);
     require!(amount>0,PumpError::BuyZeroAmount);
     if is_sol{require!(a.global.buyback_fee_recipients.contains(&a.buyback_fee_recipient.key()),PumpError::BuybackFeeRecipientNotAuthorized);}
     let curve=&a.bonding_curve;
     let denominator=(curve.virtual_token_reserves as u128).checked_sub(amount as u128).ok_or_else(||error!(PumpError::Overflow))?;
     let quotient=(amount as u128*curve.virtual_quote_reserves as u128).checked_div(denominator).ok_or_else(||error!(PumpError::DivisionByZero))?;
     let quote=narrow(quotient.checked_add(1).ok_or_else(||error!(PumpError::Overflow))?)?;
-    let cap=curve.token_total_supply as u128*curve.virtual_quote_reserves as u128/curve.virtual_token_reserves as u128;
+    let cap=buy_fee_market_cap(curve, &a.base_mint)?;
     let config_data=a.fee_config.try_borrow_data()?;
     let config=read_config(&config_data)?;
     drop(config_data);
@@ -182,6 +184,7 @@ pub fn buy(ctx:Context<SellV3>,amount:u64,max_sol_cost:u64)->Result<()> {
 
 pub fn buy_exact_quote(ctx:Context<SellV3>,spendable_quote_in:u64,min_tokens_out:u64,partial_fill:bool)->Result<()> {
     let a=&mut *ctx.accounts;
+    crate::trade_types::prepare_bonding_curve(&a.bonding_curve, &a.system_program, &a.user)?;
     let quote_decimals=check_quote(a)?;
     let is_sol=quote_decimals.is_none();
     require!(!a.bonding_curve.is_cashback_coin,PumpError::CashbackCoinNotSupported);
@@ -190,7 +193,7 @@ pub fn buy_exact_quote(ctx:Context<SellV3>,spendable_quote_in:u64,min_tokens_out
     require!(spendable_quote_in>0,PumpError::BuyNotEnoughSolToCoverFees);
     if is_sol{require!(a.global.buyback_fee_recipients.contains(&a.buyback_fee_recipient.key()),PumpError::BuybackFeeRecipientNotAuthorized);}
     let curve=&a.bonding_curve;
-    let cap=(curve.token_total_supply as u128*curve.virtual_quote_reserves as u128).checked_div(curve.virtual_token_reserves as u128).ok_or(error!(PumpError::DivisionByZero))?;
+    let cap=buy_fee_market_cap(curve, &a.base_mint)?;
     let config_data=a.fee_config.try_borrow_data()?;
     if config_data.len()<8{return Err(error!(anchor_lang::error::ErrorCode::AccountDiscriminatorNotFound));}
     require!(config_data[..8]==[143,52,146,187,219,123,76,155],anchor_lang::error::ErrorCode::AccountDiscriminatorMismatch);
@@ -293,9 +296,9 @@ fn read_config(data:&[u8])->Result<FeeConfig>{
 const USDC:Pubkey=anchor_lang::solana_program::pubkey!("EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v");
 fn check_quote(a:&SellV3)->Result<Option<u8>>{
  if a.quote_mint.key()==WSOL||a.quote_mint.key()==Pubkey::default(){
-  require!(a.bonding_curve.quote_mint==WSOL||a.bonding_curve.quote_mint==Pubkey::default(),PumpError::ReconstructionBranchUnsupported);return Ok(None)
+  require!(a.bonding_curve.quote_mint==WSOL||a.bonding_curve.quote_mint==Pubkey::default(),crate::ReconstructionError::ReconstructionBranchUnsupported);return Ok(None)
  }
- require!(a.quote_mint.key()==USDC && a.bonding_curve.quote_mint==USDC,PumpError::ReconstructionBranchUnsupported);
+ require!(a.quote_mint.key()==USDC && a.bonding_curve.quote_mint==USDC,crate::ReconstructionError::ReconstructionBranchUnsupported);
  require!(a.quote_mint.owner==&a.quote_token_program.key(),anchor_lang::error::ErrorCode::AccountOwnedByWrongProgram);
  let mint=Mint::try_deserialize(&mut &a.quote_mint.try_borrow_data()?[..])?;
  for (role,info) in [(0,a.associated_quote_bonding_curve.to_account_info()),(1,a.associated_quote_user.to_account_info()),(2,a.buyback_fee_recipient.to_account_info())]{
@@ -316,3 +319,15 @@ fn check_quote(a:&SellV3)->Result<Option<u8>>{
 fn net_quote(spend:u64,pb:u64,cb:u64)->Result<u64>{let total=add(pb,cb)?;let mut quote=narrow(spend as u128*10000/(10000u128+total as u128))?;if quote>0 && add(add(quote,fee(quote,pb)?)?,fee(quote,cb)?)?>spend{quote-=1;}Ok(quote)}
 #[event]
 #[derive(Clone)]pub struct PostCompleteBuyEvent{pub user:Pubkey,pub mint:Pubkey,pub bonding_curve:Pubkey,pub quote_mint:Pubkey,pub timestamp:i64,pub base_out:u64,pub quote_in:u64,pub fee_basis_points:u64,pub fee:u64,pub creator_fee_basis_points:u64,pub creator_fee:u64,pub buyback_fee:u64,pub pool_base_reserves_before:u64,pub pool_quote_reserves_before:u64,pub pool_base_reserves_after:u64,pub pool_quote_reserves_after:u64}
+
+// Buy-side pretrade fee basis recovered from the original mode selector.
+fn buy_fee_market_cap(curve: &BondingCurve, mint: &Mint) -> Result<u128> {
+    require!(curve.virtual_token_reserves != 0, PumpError::DivisionByZero);
+    let selected_supply = if curve.is_mayhem_mode {
+        curve.token_total_supply
+    } else {
+        mint.supply
+    };
+    Ok(u128::from(selected_supply) * u128::from(curve.virtual_quote_reserves)
+        / u128::from(curve.virtual_token_reserves))
+}

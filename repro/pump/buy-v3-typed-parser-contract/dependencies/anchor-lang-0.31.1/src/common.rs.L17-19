@@ -1,0 +1,3 @@
+pub fn is_closed(info: &AccountInfo) -> bool {
+    info.owner == &System::id() && info.data_is_empty()
+}
