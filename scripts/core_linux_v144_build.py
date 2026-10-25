@@ -113,6 +113,23 @@ def source_hashes(source, expected):
     return {name: digest(path) for name, path in paths.items()}
 
 
+def prepare_compile_inputs(source, expected, fetch_target, target, evidence, env):
+    """Keep Cargo's fetch metadata separate from the fresh compiler target."""
+    before = source_hashes(source, expected)
+    write_json(evidence / "source-after-fetch.json", before)
+    excluded = []
+    write_json(evidence / "fetch-target-files.json", tree_hashes(
+        fetch_target, exclude=generated_keypair_path, excluded_paths=excluded))
+    write_json(evidence / "fetch-target-excluded-paths.json", excluded)
+    if before != expected:
+        raise ValueError("Frozen source changed during locked fetch")
+    if any(target.iterdir()):
+        raise ValueError("The separate compiler target is not empty before build")
+    env["CARGO_TARGET_DIR"] = str(target)
+    write_json(evidence / "compiler-environment.json", env)
+    return before
+
+
 def retain_generated_outputs(attempt):
     """Run on success/failure; read candidate bytes only, omit deployment keys."""
     if attempt.state["build_attempts"] == 0:
@@ -384,16 +401,16 @@ def build(args, attempt):
     rustup_init = attempt.download("rustup-init", RUSTUP_URL, RUSTUP_SHA)
     rustup_init.chmod(0o755)
     attempt.download("channel-rust-1.94.0.toml", HOST_CHANNEL_URL, HOST_CHANNEL_SHA)
-    cargo_home, rustup_home, target = (output / n for n in ["cargo-home", "rustup-home", "target"])
-    for path in [cargo_home, rustup_home, target, output / "tmp", output / "artifacts"]:
+    cargo_home, rustup_home, target, fetch_target = (output / n for n in ["cargo-home", "rustup-home", "target", "fetch-target"])
+    for path in [cargo_home, rustup_home, target, fetch_target, output / "tmp", output / "artifacts"]:
         path.mkdir()
     env = {"HOME": os.environ["HOME"], "PATH": SYSTEM_PATH,
            "LANG": "C.UTF-8", "LC_ALL": "C.UTF-8", "TMPDIR": str(output / "tmp"),
            "CARGO_HOME": str(cargo_home), "RUSTUP_HOME": str(rustup_home),
-           "CARGO_TARGET_DIR": str(target)}
+           "CARGO_TARGET_DIR": str(fetch_target)}
     attempt.run("rustup-host-install", [str(rustup_init), "-y", "--no-modify-path", "--profile", "minimal", "--default-toolchain", "1.94.0"], source, env)
     env["PATH"] = str(cargo_home / "bin") + ":" + str(cli_bin) + ":" + SYSTEM_PATH
-    write_json(evidence / "compiler-environment.json", env)
+    write_json(evidence / "preparation-environment.json", env)
     for name, command in [("rustup-version", ["rustup", "--version"]),
                           ("host-cargo-version", ["cargo", "--version"]),
                           ("host-rustc-version", ["rustc", "--version", "--verbose"]),
@@ -418,9 +435,7 @@ def build(args, attempt):
     # by cargo-build-sbf's metadata stage; the target build later selects +solana.
     attempt.run("public-locked-fetch", ["cargo", "fetch", "--manifest-path", str(manifest), "--locked"], source, env)
     before_deps = dependency_inventory(cargo_home, source, evidence, "before")
-    before_source = {name: digest(source / name) for name in expected}
-    if before_source != expected or any(target.iterdir()):
-        raise ValueError("Source changed during fetch or the compiler target is not empty")
+    before_source = prepare_compile_inputs(source, expected, fetch_target, target, evidence, env)
     attempt.state.update(status="building", build_attempts=1,
                          source_before_sha256=before_source,
                          target_empty_before_build=True,
