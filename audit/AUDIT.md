@@ -379,3 +379,5 @@ Pass09 changes the AMM accumulator assignment order using original instruction e
 Pass10's Pump fee-input and Mayhem typed-error changes have bounded independent source/static review and unchanged regression evidence. Pump divergent-supply runtime coverage is still absent; Mayhem diagnostic differences and missing raw administrative transaction bytes remain explicit. These reviews do not establish exhaustive behavior or complete the security audit.
 
 Pass 11's two narrow source corrections passed unchanged corpora and independent source/operand review. These finite checks do not cover Pump's simultaneous complete/cashback flags or establish full Mayhem helper equivalence. The AMM formatting-source proposal is not security acceptance. The broader security assessment remains incomplete.
+
+Pass 12 restores a supported dependency algorithm and its typed failure paths, with whole-window static checks and the unchanged AMM corpus. Normalized function matches do not prove full recursive data identity, exhaustive behavior or security acceptance. The full security audit remains incomplete.
