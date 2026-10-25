@@ -1,7 +1,12 @@
 pub mod multi_hop_curve;
+pub mod multi_hop_curve_swap;
 pub use multi_hop_curve::*;
 pub mod global_init;
 pub use global_init::*;
+pub mod token_incentives;
+pub use token_incentives::*;
+pub mod incentives;
+pub use incentives::*;
 pub mod buy_v2;
 pub use buy_v2::*;
 pub mod cashback;
@@ -54,13 +59,25 @@ pub use trade::*;
 
 pub mod quote_control;
 pub use quote_control::*;
+pub mod mayhem_virtual_params;
+pub use mayhem_virtual_params::*;
 
 declare_id!("6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P");
 
 #[program]
 pub mod pump_recovered {
     use super::*;
-    pub fn multi_hop_curve_swap<'info>(ctx:Context<'_,'_,'info,'info,MultiHopCurve<'info>>,amount_in:u64,hop_fees:Vec<u8>)->Result<CurveRunResult>{multi_hop_curve::execute(ctx,amount_in,hop_fees)}
+    pub fn claim_token_incentives(ctx: Context<ClaimTokenIncentives>) -> Result<()> { token_incentives::claim(ctx) }
+    pub fn admin_update_token_incentives(ctx: Context<AdminUpdateTokenIncentives>, start_time: i64, end_time: i64, seconds_in_a_day: i64, day_number: u64, pump_token_supply_per_day: u64) -> Result<()> { incentives::execute(ctx, start_time, end_time, seconds_in_a_day, day_number, pump_token_supply_per_day) }
+    pub fn set_mayhem_virtual_params(ctx: Context<SetMayhemVirtualParams>) -> Result<()> { mayhem_virtual_params::execute(ctx) }
+    pub fn multi_hop_curve_swap<'info>(ctx: Context<'_, '_, 'info, 'info, MultiHopCurve<'info>>, amount_in: u64, hop_fees: Vec<u8>) -> Result<CurveRunResult> {
+        let ordinary = ctx.accounts.source.to_account_info().owner == &anchor_spl::token::ID
+            && ctx.accounts.destination.to_account_info().owner == &anchor_spl::token::ID
+            && ctx.remaining_accounts.chunks(5).all(|hop| hop.len() == 5
+                && hop[0].owner == &anchor_spl::token::ID && hop[1].owner == &anchor_spl::token::ID);
+        if ordinary { multi_hop_curve::execute(ctx, amount_in, hop_fees) }
+        else { multi_hop_curve_swap::execute(ctx, amount_in, hop_fees) }
+    }
     pub fn initialize_quote_control(ctx: Context<InitializeQuoteControl>) -> Result<()> { quote_control::initialize_quote_control(ctx) }
     pub fn set_quote_control_admin(ctx: Context<SetQuoteControlAdmin>, new_admin: Pubkey) -> Result<()> { quote_control::set_quote_control_admin(ctx, new_admin) }
     pub fn set_quote_control_reserves_admin(ctx: Context<SetQuoteControlReservesAdmin>, new_reserves_admin: Pubkey) -> Result<()> { quote_control::set_quote_control_reserves_admin(ctx, new_reserves_admin) }

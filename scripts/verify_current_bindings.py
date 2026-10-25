@@ -113,6 +113,10 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("program", choices=PACKAGES)
     args = parser.parse_args()
+    if args.program == "pump":
+        assert json.loads((ROOT / "repro/status.json").read_text())["pump"]["candidate_artifact"] == "repro/pump/merged-prs-20261025/candidate.so"
+        subprocess.run([sys.executable, str(ROOT / "repro/pump/merged-prs-20261025/verify.py")], check=True)
+        return
     status = json.loads((ROOT / "repro/status.json").read_text())
     key = "pump" if args.program == "pump" else "pump_fees"
     artifact = status[key]["candidate_artifact"]

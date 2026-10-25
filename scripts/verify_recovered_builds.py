@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Check saved partial-build provenance against current sources, artifacts and captures."""
-import argparse,base64,gzip,hashlib,json,pathlib
+import argparse,base64,gzip,hashlib,json,pathlib,subprocess,sys
 from compare import compare
 ROOT=pathlib.Path(__file__).resolve().parents[1]
 sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
@@ -8,6 +8,11 @@ parser=argparse.ArgumentParser();parser.add_argument('--program',choices=['pump'
 for name,status in json.loads((ROOT/'repro/status.json').read_text()).items():
  if args.program and name!=args.program:continue
  if not status.get('candidate_artifact'):continue
+ if name=='pump':
+  assert status['candidate_artifact']=='repro/pump/merged-prs-20261025/candidate.so'
+  subprocess.run([sys.executable,str(ROOT/'repro/pump/merged-prs-20261025/verify.py')],check=True)
+  print('pump: combined current source, builds and bounded receipts verified')
+  continue
  manifest=ROOT/status['comparison_report'];report=json.loads(manifest.read_text())
  for source,digest in report['source_sha256'].items():assert sha(ROOT/source)==digest,source
  candidate=ROOT/status['candidate_artifact'];original=ROOT/'evidence/original'/name/'deployed.so'

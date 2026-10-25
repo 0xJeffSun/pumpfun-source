@@ -13,3 +13,8 @@ Original typed FeeConfig admission and whitelist's four-zero bypass remain unint
 Earlier full recovery history remains in the [connected decoder/preparation README](../../repro/pump/curve-preparation-fortyeight/README.md) and the [active fee-basis checkpoint README](../../repro/pump/buy-fee-basis-fortyeight/README.md). Those immutable reports retain their original source, runtime and provenance limitations.
 
 Creator contexts now use the recovered full BondingCurve decoder/serializer instead of partial166-byte buffers. Migration captures its old/new creator keys and mutates creator before Clock/event construction; setter/sync preserve the original early-return logs. The isolated creator-full-curve checkpoint remains a bounded reconstruction and preserves prior fee/admission/settlement limitations. See the [creator source/build report](../../repro/pump/creator-full-curve-fortyeight/README.md) for exact tested artifact and coverage.
+
+
+## Combined PR integration
+
+The [combined evidence package](../../repro/pump/merged-prs-20261025/README.md) supersedes the executable named above for current source. It adds bounded incentive claims, admin incentive scheduling, synthetic-caller Mayhem virtual parameters and richer curve routes while preserving later upstream native-route validation. Two clean v1.44 builds and fresh bounded replays are bound there. Earlier checkpoint counts and Surfpool results remain historical; full source identity, deployed Mayhem reachability and complete behavior remain unproved.

@@ -178,6 +178,18 @@ states alone do not establish an exploitable path. The decoder intentionally
 ignores newer fields in legacy allocations. The configuration setter suite tests
 migration boundaries and the exotic setter's resize/rent transfer behavior.
 
+A separate [fresh FeeConfig setup probe](../repro/pump_fees/fresh-init-liveness/README.md)
+reaches the empty-tier state on the captured original ELF only after an
+explicitly unsigned fixed-admin initializer simulation. Signed pool fee
+queries then panic; the non-pool control succeeds. A stable-tier update on the
+2,512-byte legacy allocation still leaves the stable query unusable until
+extension to 4,097 bytes. The official IDL marks the extension funding user
+read-only, and a signed local call with a separate fee payer fails writable
+privilege escalation; a writable-user override succeeds. Finalized Pump and
+PumpSwap FeeConfigs at slot 461143975 were already extended and nonempty.
+This is a conditional setup/client-integration finding, not evidence of a
+current live empty config, permissionless exploit or user-fund loss.
+
 Mayhem's current compiled candidate covers quote withdrawal and both fee sweeps.
 The added 1,021 cases include signer/role checks, rate limits, recipient duplicates,
 token program substitutions, token ownership/mint errors and counter arithmetic.
