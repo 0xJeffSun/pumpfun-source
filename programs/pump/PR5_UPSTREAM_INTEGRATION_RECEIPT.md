@@ -1,3 +1,5 @@
+> Historical PR #5 record. The source, builds and counts below describe that branch before the combined merge. Current source and its separate proof are in [the combined package](../../repro/pump/merged-prs-20261025/README.md).
+
 # PR #5 on current upstream two-curve Pump source
 
 This draft starts at upstream `517d77db988d8c63b6cf476f0be138c5a4f3128a`. One Anchor `multi_hop_curve_swap` entrypoint dispatches observed ordinary Tokenkeg native single-curve and two-curve routes to upstream `multi_hop_curve.rs`; the recovered token-quoted, Token-2022 and richer routes use `multi_hop_curve_swap.rs`. Claim, admin incentives and Mayhem virtual-params source remain outside this branch. Dispatch and handler behavior are bounded by the retained fixtures, not proven for arbitrary malformed or mixed routes.
