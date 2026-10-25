@@ -13,7 +13,7 @@ elif a.dependency=='spl_token_2022':
 elif a.dependency=='associated_token':
     COMMIT='f5ce86d43dd31ddefb96d4e8cdd67dd073dc5dca';IMAGE='solanafoundation/solana-verifiable-build@sha256:ee9ad7809009a99a70f659f7cba959e0c3c124e10f771b524914fd42f2b605a8';REPOSITORY='https://github.com/solana-labs/solana-program-library';MANIFEST='associated-token-account/program/Cargo.toml';LIBRARY='spl_associated_token_account';TOOLS=[]
 else:
-    COMMIT='667d7c95dbe4d547fb5312b3fc99104a08204f99';IMAGE='solanafoundation/solana-verifiable-build@sha256:43206149a565ec35da95b1a909f4714f5d5f0d8241c31df24189e517acd18467';REPOSITORY='https://github.com/metaplex-foundation/mpl-token-metadata';MANIFEST='programs/token-metadata/Cargo.toml';LIBRARY='token_metadata';TOOLS=[]
+    COMMIT='7c1c905f324462af7bb3850c75aa6724f8689a74';IMAGE='solanafoundation/solana-verifiable-build@sha256:43206149a565ec35da95b1a909f4714f5d5f0d8241c31df24189e517acd18467';REPOSITORY='https://github.com/metaplex-foundation/mpl-token-metadata';MANIFEST='programs/token-metadata/Cargo.toml';LIBRARY='token_metadata';TOOLS=[]
 source=a.source.resolve();out=a.output.resolve();out.mkdir(parents=True,exist_ok=False)
 sha=lambda b:hashlib.sha256(b).hexdigest()
 def read(cmd):return subprocess.check_output(cmd,text=True).strip()
