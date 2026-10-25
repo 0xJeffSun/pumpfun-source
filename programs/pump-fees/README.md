@@ -38,14 +38,14 @@ Temporary serialized creator/admin state before each CPI is retained, because
 the called program reads that state. These cases use normally signed test-owned
 keys and synthetic local accounts; they do not prove every live sharing transition.
 
-The [current source checkpoint](../../repro/pump_fees/legacy-social-admission-v144/README.md)
+The [current source checkpoint](../../repro/pump_fees/legacy-caller-v144/README.md)
 binds this README and all 25 remaining source/workspace/IDL inputs. It preserves
 the recovered dependency graph, social-account layout, inline initializer Pump
 Global account, four declarations in `state.rs`, and SharingConfig in
 `instructions/fee_sharing/create_fee_sharing_config.rs`. The clean main ELF is
-773,808 bytes, SHA-256
-`8ff12f9c580baa51631a1802d5dc0a936e837f5de4fc1b88b71fd57bd2a7450b`, with complete
-ELF and symbol-bearing identity to the tested legacy-quote/social-admission scratch build.
+826,904 bytes, SHA-256
+`e5c811e2a66b540f25b44d9a55dd7b890e7ff01a0074dfc0d0dfc25237c391fe`, with complete
+ELF and symbol-bearing identity to the tested legacy-caller scratch build.
 Its 17,461 comparison receipts comprise the unchanged 17,441-receipt corpus
 (including 69 repeated-input checks) and the unchanged 20 focused comparisons.
 All inputs are repeats in this checkpoint; no new handler or unique case is added.
@@ -107,14 +107,15 @@ error messages. One formerly direct `AccountInfo::clone` call is absent; inlined
 reference-count operations are not counted by that observation. Passing fixtures
 do not prove complete behavior, indirect/transitive closure or source identity.
 
-The fresh inventory preserves all 585 original inferred windows and 547 candidate
-symbol windows. Original status is 439 mapped patterns, 143 unattributed and
-three call conflicts. The candidate has 440 consistent normalized call patterns,
-105 unmatched windows and two call conflicts; 100 windows are raw-identical.
-Compared with the accepted predicate/ownership scratch, two original drop-routine
-windows gain matches. Whole-file equality remains false. Inferred windows are not a historical-function denominator
-or semantic completion percentage. Immediate matches, ambiguous alternatives,
-indirect calls and data-extent limits remain explicit in the published package.
+The fresh inventory preserves all 585 original inferred windows and 562 candidate
+symbol windows. Original status is 448 mapped patterns, 135 unattributed and
+two call conflicts. The candidate has 450 consistent normalized call patterns,
+110 unmatched windows and two call conflicts; 101 windows are raw-identical.
+Against the prior 8ff12 legacy-quote/social-admission checkpoint, eight previously
+unattributed original windows and one conflicting window gain mappings. All
+original rows, ambiguities and immediate-call residuals remain recorded; these
+mechanical window categories are not a historical-function denominator or
+semantic completion percentage. Whole-file equality remains false.
 
 The two sharing AMM predicates now preserve the original conjunction, and the
 donation quote helper borrows its AccountInfo argument. Legacy `update_fee_shares`
@@ -123,7 +124,29 @@ bytes; short allocations are admitted by this helper. A nonzero quote returns
 UnsupportedQuoteMint before the already-updated version error. The fresh machine
 code confirms the borrow release and temporary drops before this error branch.
 The helper is inlined; the complete legacy handler still differs from the original.
-Remaining-account preprocessing and V2 payout reconstruction remain incomplete.
+The legacy caller now applies the recovered remaining-account preprocessing,
+including its conditional final-account admission and slice shortening, before
+the AMM adapter. It owns the fixed AMM accounts before reserve/owner checks and
+uses the generated CPI clients. Legacy authorization preserves its compared-data
+and direct revoked-admin conversion. Payout preparation validates each available
+account before executable-account filtering, retains the original rescaling and
+first-maximum remainder behavior, and serializes a changed sharing list before
+calling Pump. Empty payout accounts skip that CPI. Final list validation retains
+checked totals, sorted duplicate detection, and the observed error ordering.
+The existing 417 sharing-update rows pass again; no new cases were added and V2
+source or account contexts were not changed by this recovery.
+
+The generated Pump distribution CPI, both programs' four meta/info helpers,
+SharingConfig exit and event match their complete original normalized windows
+and 96 immediate target bodies. The AMM generated CPI remains nonidentical and
+has an actual outlined owned-account cleanup call. The original helper partition
+is not reproduced: the new legacy handler is 24,880 bytes and its source helpers
+inline. Full legacy CFG/data closure, diagnostic coordinates and V2 payout
+reconstruction remain unresolved. Five accepted social roots and their 176
+immediate targets remain normalized-equal to 8ff12; V2 Rust is byte-preserved but
+its compiled handler layout changes. No original whole-program equivalence is
+claimed. The [prior legacy-quote/social-admission package](../../repro/pump_fees/legacy-social-admission-v144/README.md)
+retains the 773,808-byte 8ff12 ELF, source and tested receipts unchanged.
 
 Social token claims use a shared admission helper for both associated accounts.
 It checks the canonical address, System-owned creation permission, exact supplied
@@ -360,4 +383,4 @@ differ from the capture; these checks do not establish unique historical source.
 
 `ClaimSocialFeePdaV2` boxes its quote mint and uses by-value `AccountInfo` fields for event authority and program, preserving the existing account constraints. The original parser's field stores and generated event-CPI account contract support these types. Together they reproduce the complete 560-byte normalized account-exit body, seven direct callee bodies and three bounded literal spans. Boxing alone left one context offset unmatched; that earlier attempt remains preserved.
 
-This source-layout result does not prove recursive data/call closure, original whole-file identity or a completed audit. The [historical social v2 layout checkpoint](../../repro/pump_fees/social-v2-account-layout-v144/README.md) retains the 770,624-byte `c181b0ba75aee67369385e04908d89088552c1fad756bf5a21d7fb21979e6a58` ELF and its own fresh receipts. The current legacy-quote/social-admission checkpoint above carries freshly executed scratch receipts by whole-file identity and retains the inline initializer and social exit checks.
+This source-layout result does not prove recursive data/call closure, original whole-file identity or a completed audit. The [historical social v2 layout checkpoint](../../repro/pump_fees/social-v2-account-layout-v144/README.md) retains the 770,624-byte `c181b0ba75aee67369385e04908d89088552c1fad756bf5a21d7fb21979e6a58` ELF and its own fresh receipts. The current legacy-caller checkpoint above carries freshly executed scratch receipts by whole-file identity and retains the inline initializer and social exit checks.

@@ -6,7 +6,7 @@ programs listed in `docs/SCOPE.md`. Partial executable handlers have been recove
 The current published recovery covers 140 implemented handlers plus five partial
 Pump paths and 53,787 saved comparison receipts: [Pump48 error-metadata checkpoint](../repro/pump/final-error-metadata-fortyeight/README.md),
 [AMM37 destination-rent checkpoint](../repro/pump_amm/destination-rent-v144/README.md),
-[Fees31 legacy/social-admission checkpoint](../repro/pump_fees/legacy-social-admission-v144/README.md),
+[Fees31 legacy-caller checkpoint](../repro/pump_fees/legacy-caller-v144/README.md),
 and [Mayhem24](../repro/mayhem/twentyfour/README.md). These bounded recovery results
 do not extend the source review frozen at commit329fc44 into a complete audit of
 the later candidates. All four original whole-file comparisons still differ.
@@ -47,7 +47,14 @@ new confirmed vulnerability or independently justified source patch. Their
 verifiers check source provenance and coverage integrity, not all-state safety.
 Generated code, transitive dependencies, lifecycle and alias premises, incomplete
 reconstructions and excluded work still prevent security sign-off. This source
-applicability does not transfer to subsequent unaccepted reconstruction proposals.
+applicability does not transfer to subsequent reconstruction changes. The current
+Fees legacy-caller change postdates this frozen review. The subsequent
+[delta review](../repro/layered-passes/pass-05/audit-fees-delta/REPORT.md) checks
+all 26 frozen inputs and 14 explicit functions in its changed module, finding
+no concrete new regression. It retains F1–F5 and updates F5 for conditional
+prepared payout; it does not close lifecycle, V2, generated-code or transitive
+equivalence gaps. Source/build/regression evidence alone does not establish
+complete security coverage.
 
 The [third parallel pass](../repro/parallel-work/2026-10-25/results/README.md) contains new manual source reviews for the four candidates frozen at 517d77d. They enumerate 112 included Accounts contexts and 422 function declarations/dispositions, with explicit excluded boundary rows. Twenty-five candidate observations retain authorization, policy, reachability and dependency prerequisites; they are not confirmed vulnerabilities in the captured originals. The verifiers check provenance, spans and bounded calculations rather than certifying every review conclusion.
 
