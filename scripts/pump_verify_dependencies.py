@@ -16,3 +16,17 @@ for name in ['spl_token', 'spl_token_2022']:
                      'normalized_sha256':h, 'source_commit':row['commit'],
                      'scope':'Saved third-party verified-build attribution matches capture; not a fresh local source rebuild.'}
 print(json.dumps(results, indent=2))
+# This is a separate fresh source-build proof, rather than registry attribution.
+proof_dir=ROOT/'repro/pump/verified-spl-token'
+proof=json.loads((proof_dir/'comparison.json').read_text())
+built=(proof_dir/'pinocchio_token_program.so').read_bytes()
+captured=(ROOT/'evidence/dependencies/spl_token/deployed.so').read_bytes()
+assert built==captured
+assert hashlib.sha256(built).hexdigest()==proof['candidate_sha256']==proof['original_sha256']
+for filename,field in [('source-manifest.json','source_manifest_sha256'),('build.log','build_log_sha256')]:
+ assert hashlib.sha256((proof_dir/filename).read_bytes()).hexdigest()==proof[field]
+assert proof['full_byte_equality'] is True
+assert proof['source_commit']==registry['results']['spl_token']['commit']
+images=json.loads((proof_dir/'image-inspect.json').read_text())
+assert proof['image'] in images[0]['RepoDigests']
+print('SPL Token fresh Linux source build: full',len(built),'byte equality confirmed; SHA-256',proof['candidate_sha256'])

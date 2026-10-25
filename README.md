@@ -30,6 +30,10 @@ includes 393 malformed-input checks and 30 signed offline lifecycle transactions
 these bounded checks do not establish full security or differential coverage.
 Zero confirmed findings does not establish security.
 
+The SPL Token dependency now has a fresh Linux source build matching the entire
+captured 108,600-byte payload. [Build evidence](repro/pump/verified-spl-token/README.md)
+is separate from the still-unmatched four Pump.fun programs.
+
 Original bytes live under `evidence/`, never as rebuilt artifacts. This project
 contains no on-chain deployment or transaction-broadcast tooling; the imported
 signed test harness submits only to offline loopback simulators. Upstream IDLs retain their

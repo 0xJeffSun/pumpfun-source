@@ -100,5 +100,6 @@ claims, migrations, dependencies and hostile CPI/token-extension paths remain
 incompletely reconstructed or audited. Pump's160 successful trade arithmetic
 comparisons isolate reserve math and do not implement or certify its whole trade
 handler. A Linux dependency build using the on-chain registered SPL Token recipe
-is running separately; third-party verified-source attribution alone is not a
-fresh independently reproduced build.
+now matches all 108,600 captured bytes. The generated ELF and build provenance
+are preserved under `repro/pump/verified-spl-token/`. This dependency identity
+result does not establish security of the token program or its callers.

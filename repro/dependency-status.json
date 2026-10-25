@@ -1,0 +1,32 @@
+{
+  "spl_token": {
+    "fresh_source_build": "verified_full_byte_match",
+    "full_byte_equality": true,
+    "source_commit": "a94dd19750dc3b2409f73e15bb74754935b2a489",
+    "candidate_artifact": "repro/pump/verified-spl-token/pinocchio_token_program.so",
+    "comparison_report": "repro/pump/verified-spl-token/comparison.json",
+    "security_audit": "incomplete"
+  },
+  "spl_token_2022": {
+    "fresh_source_build": "not_yet_verified",
+    "full_byte_equality": null,
+    "source_commit": "8867f751c0f69367ba03af4f85510b5611989491",
+    "source_attribution": "registry hash matches capture; fresh build pending",
+    "security_audit": "incomplete"
+  },
+  "associated_token": {
+    "fresh_source_build": "unresolved",
+    "full_byte_equality": null,
+    "security_audit": "incomplete"
+  },
+  "token_metadata": {
+    "fresh_source_build": "unresolved",
+    "full_byte_equality": null,
+    "security_audit": "incomplete"
+  },
+  "donation_relay": {
+    "fresh_source_build": "unresolved",
+    "full_byte_equality": null,
+    "security_audit": "incomplete"
+  }
+}
