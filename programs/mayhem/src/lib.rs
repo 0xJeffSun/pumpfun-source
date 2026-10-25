@@ -1,4 +1,4 @@
-//! Partial independently compiled Mayhem implementation: 22 recovered administration, sweep,
+//! Partial independently compiled Mayhem implementation: 24 recovered administration, sweep,
 //! burn and recovered trade handlers. Unknown fields are preserved as byte arrays, not guessed names.
 //! This is not a complete or byte-identical program reconstruction.
 use anchor_lang::prelude::*;
@@ -13,12 +13,16 @@ pub use instructions::sell::*;
 pub use instructions::buy::*;
 pub use instructions::sell_v2::*;
 pub use instructions::buy_v2::*;
+pub use instructions::buy_pump_swap::*;
+pub use instructions::sell_pump_swap::*;
 
 declare_id!("MAyhSmzXzV1pTf7LsNkrNwkWKTo4ougAJ1PPg47MD4e");
 
 #[program]
 pub mod mayhem_recovered {
     use super::*;
+    pub fn buy_pump_swap(ctx: Context<BuyPumpSwap>, reference: u128, tolerance_bps: u16, retained_reserve_bps: u16) -> Result<()> { instructions::buy_pump_swap::handler(ctx, reference, tolerance_bps, retained_reserve_bps) }
+    pub fn sell_pump_swap(ctx: Context<SellPumpSwap>, reference: u128, tolerance_bps: u16, retained_reserve_bps: u16) -> Result<()> { instructions::sell_pump_swap::handler(ctx, reference, tolerance_bps, retained_reserve_bps) }
     pub fn buy_v2(ctx: Context<BuyV2>, reference: u128, tolerance_bps: u16, retained_reserve_bps: u16) -> Result<()> { instructions::buy_v2::handler(ctx, reference, tolerance_bps, retained_reserve_bps) }
     pub fn sell_v2(ctx: Context<SellV2>, reference: u128, tolerance_bps: u16, retained_reserve_bps: u16) -> Result<()> { instructions::sell_v2::handler(ctx, reference, tolerance_bps, retained_reserve_bps) }
     pub fn buy(ctx: Context<LegacyBuy>, reference: u128, tolerance_bps: u16, retained_reserve_bps: u16) -> Result<()> { instructions::buy::handler(ctx, reference, tolerance_bps, retained_reserve_bps) }

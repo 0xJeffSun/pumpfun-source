@@ -202,3 +202,28 @@ The next [twelve-file Metaplex trial](../repro/pump/metaplex-validation-source-r
 ## Metaplex metadata-context recovery
 
 [Candidate 8](../repro/pump/metaplex-candidate-build-8/README.md) passes all 117 edition/Uses/burn/system-program comparisons with 234 ordinary signed transactions. Its ten-file source patch compiles successfully and fixes the observed metadata context mismatch; full original binary identity remains false. Detailed instruction-window counts and limitations are retained with the candidate.
+
+
+## AMM initializer static recovery
+
+The remaining AMM `create_config` source hypothesis and its [static evidence](../repro/pump_amm/create-config-static/STATIC_FINDINGS.md) are preserved with compiler inputs, earlier attempts and 372 ordinary signed rejection cases. A separate [serialization follow-up](../repro/pump_amm/create-config-serialization-static/README.md) reproduces the complete normalized account-exit body and passes 8,687 administration/fee-configuration regressions plus the same 372 rejection cases. There are no successful fixed-administrator initializer transactions; these packages do not promote the instruction or increase the active handler count. Main AMM validation remains a separate source-bound package.
+
+
+## Metaplex collection and mint-owner recovery
+
+[Candidate 9](../repro/pump/metaplex-candidate-build-9/README.md) compiles the twelve-file validation trial and passes all 135 saved comparisons, with 270 independently verified transaction signatures. Normalized instruction/relocation/direct-call matching improves to 1,240 of 1,251 inferred windows; eleven remain different. Full-file equality remains false, including a documented unresolved check-order difference.
+
+
+## AMM GlobalConfig serialization
+
+The active [37-handler candidate](../repro/pump_amm/serialization-thirty-seven/README.md) now uses ordinary Anchor IO-error conversion in GlobalConfig serialization. Its complete 1,648-byte normalized account-exit body and all 24 direct target bodies match the original. The clean main executable equals the separately tested scratch executable (1,176,640 bytes); all 25 suites and 17,462 existing comparisons pass. This changes no handler count or unique-case count, and full original binary equality remains false.
+
+
+## ATA provenance follow-up
+
+An [independent read-only review](../repro/pump/dependency-exactness/ata-provenance-followup/PUBLICATION.md) rechecked all five retained ATA candidates and 51 source/provenance inputs. The best candidate still differs in 307 byte positions. Present-day release/check-run queries did not recover the exact historical build recipe; empty responses are preserved without inferring that historical CI never ran. No further build variant was selected from that incomplete evidence.
+
+
+## Mayhem PumpSwap trade recovery
+
+The [24-handler checkpoint](../repro/mayhem/twentyfour/README.md) adds `buy_pump_swap` and `sell_pump_swap` with actual Mayhem PDA-signed CPIs and ordinary test-owned outer signers. The six new matrices pass 2,496 comparisons, including 680 successes and 1,816 rejections; all 7,099 inherited cases also pass. Root independently verified all 4,992 new transaction signatures and full saved-state/event/CPI/rollback checks. Main and scratch builds are byte-identical (667,552 bytes). The full 21-suite total is 9,595 comparisons. Twenty-six panic diagnostic cases retain source-location differences, including eight unwrap-message-detail differences; original whole-file identity remains false, and the stopped initializer lane remains absent.

@@ -1,6 +1,6 @@
 # Partial Mayhem implementation recovery
 
-This independently compiled Anchor program implements **22 of the 25 currently
+This independently compiled Anchor program implements **24 of the 25 currently
 identified instruction paths**. It is not a full program reconstruction, a
 byte-identical ELF, or a deployable replacement. Other handlers are absent.
 No original machine code is embedded or patched into the build.
@@ -16,6 +16,7 @@ Implemented paths:
 - `extend_account`, `withdraw_admin`, `withdraw_quote_admin`
 - `sweep_fees`, `sweep_fees_admin`
 - `burn_tokens`, `sell`, `buy`, `sell_v2`, `buy_v2`
+- `buy_pump_swap`, `sell_pump_swap`
 
 ## Evidence and unresolved source details
 
@@ -37,8 +38,8 @@ evidence from burn recovery supersedes the earlier 0.31.1 baseline: typed duplic
 checks, Pubkey CPI context and event-authority constants match the newer family.
 Exact historical revision and dependency identity remain unresolved. The explicit
 System wrapper preserves the original address-before-executable validation order.
-All previous 2,953 cases still pass. The current candidate has 7,099 instruction
-comparisons across fifteen suite runs; see the [twenty-two-handler package](../../repro/mayhem/twentytwo/README.md).
+All previous 2,953 cases still pass. The current candidate has 9,595 instruction
+comparisons across twenty-one suite runs; see the [twenty-four-handler package](../../repro/mayhem/twentyfour/README.md).
 
 ## Reproduce
 
@@ -61,7 +62,7 @@ units, all transactions, and the absent instruction paths are not equivalent
 claims. States are synthetic; injected configurations are not proof of reachable
 mainnet states.
 
-`repro/mayhem/twentytwo/` retains the clean build's comparison/provenance and compressed
+`repro/mayhem/twentyfour/` retains the clean build's comparison/provenance and compressed
 case evidence. See `audit/mayhem/RECOVERY.md` for bounded security observations.
 
 The additional `scripts/mayhem_validate_fee_recipient.py` suite compares 306
@@ -198,4 +199,43 @@ Repeat with `--family token` and `--family token22`. Independent receipt checks
 validate signatures, quote/CPI inputs, complete state/events, risk limits and
 failed rollback. Four panic diagnostics per family remain explicitly different.
 Fixtures are synthetic with configured test-owned authorities and real PDA CPI
-signing. `buy_pump_swap`, `sell_pump_swap` and `initialize_mayhem_state` remain absent.
+signing. At that checkpoint, `buy_pump_swap`, `sell_pump_swap` and
+`initialize_mayhem_state` remained absent.
+
+
+The PumpSwap handlers add 2,496 ordinary-signature comparisons: 419 buy and 413
+sell cases in each of the native, legacy-token and Token-2022 quote configurations.
+Native and legacy-token quotes yield 680 successes in total; all Token-2022 quote
+cases reject, matching the original fixed Tokenkeg address constraint. Buy uses
+31 outer accounts and a 25-account AMM CPI; sell uses 29 and 23. Only the actual
+Mayhem sol-vault PDA signs the CPI, with the configured test-owned trader signing
+the outer transaction. The external Pool codec pads short data to 287 bytes;
+the external GlobalConfig decoder requires its historical 418-byte prefix.
+
+Trade sizing includes the pool's signed virtual quote reserve. Native buys fund
+and synchronize WSOL, and both native trades close the quote vault afterward.
+Returned rent is included in actual quote accounting, reproducing the original
+small-buy arithmetic failures with complete rollback. Events report actual pool
+balances. Buy's checked state updates and strict post-CPI risk limits are retained.
+All 7,099 earlier comparisons pass on the same artifact. Twenty-six panic cases
+retain diagnostic differences, including eight zero-effective-reserve unwrap
+messages; errors, complete watched state, events and CPIs agree. Only
+`initialize_mayhem_state` remains absent. Historical source and executable identity
+remain unresolved.
+
+```sh
+python3 scripts/mayhem_pump_swap_differential.py \
+  --candidate repro/mayhem/twentyfour/mayhem_recovered.so \
+  --cases repro/mayhem/twentyfour/buy-pump-swap-cases.json \
+  --instruction buy_pump_swap --family native --output work/mayhem-swap-buy.json
+python3 scripts/verify_mayhem_pump_swap.py \
+  --candidate repro/mayhem/twentyfour/mayhem_recovered.so \
+  --receipts work/mayhem-swap-buy.json --output work/mayhem-swap-buy-verification.json
+```
+
+Use `sell_pump_swap` with `sell-pump-swap-cases.json` for sell, and `--family token`
+or `--family token22` for the other configurations. All stored business states are
+explicit simulator fixtures; no historical prestate or live authority is claimed.
+Inherited legacy buy cases remain at `repro/mayhem/twenty/buy-cases.json`;
+sell-v2 cases at `repro/mayhem/twentyone/sell-v2-cases.json`; and buy-v2 cases at
+`repro/mayhem/twentytwo/buy-v2-cases.json`.

@@ -28,7 +28,8 @@
       "repro/pump/dependency-exactness/ata-candidate-build-5/comparison.json"
     ],
     "latest_tested_candidate_full_byte_equality": false,
-    "chronology_evidence": "repro/pump/dependency-exactness/ata-chronology-candidate.json"
+    "chronology_evidence": "repro/pump/dependency-exactness/ata-chronology-candidate.json",
+    "provenance_followup": "repro/pump/dependency-exactness/ata-provenance-followup/REPORT.md"
   },
   "token_metadata": {
     "fresh_source_build": "unresolved",
@@ -42,7 +43,8 @@
       "repro/pump/metaplex-candidate-build-5/comparison.json",
       "repro/pump/metaplex-candidate-build-6/comparison.json",
       "repro/pump/metaplex-candidate-build-7/comparison.json",
-      "repro/pump/metaplex-candidate-build-8/comparison.json"
+      "repro/pump/metaplex-candidate-build-8/comparison.json",
+      "repro/pump/metaplex-candidate-build-9/comparison.json"
     ],
     "latest_tested_candidate_full_byte_equality": false
   },

@@ -81,3 +81,5 @@ For a clean build with complete source/lock/toolchain hashes and an unmodified
 whole-file comparison, use `scripts/build_partial_candidate.py`. See
 `audit/pump_amm/ADMIN_RECOVERY.md` and `audit/pump_amm/LIQUIDITY_RECOVERY.md` and
 `audit/pump_amm/TRADE_V2_RECOVERY.md` and `audit/pump_amm/CREATE_POOL_RECOVERY.md` and `audit/pump_amm/BOOST_RECOVERY.md` and `audit/pump_amm/SWEEP_RECOVERY.md` and `audit/pump_amm/EXTEND_RECOVERY.md` and `audit/pump_amm/CREATOR_FEES_RECOVERY.md` and `audit/pump_amm/CREATOR_REASSIGNMENT_RECOVERY.md` and `audit/pump_amm/INCENTIVES_RECOVERY.md` and `audit/pump_amm/CASHBACK_RECOVERY.md` for recovered constraints and limitations.
+
+The current [serializer checkpoint](../../repro/pump_amm/serialization-thirty-seven/README.md) preserves those 37 bodies and 17,462 comparisons while matching the original complete normalized GlobalConfig account-exit body. Its clean main and scratch executables are byte-identical; equality to the original whole binary remains false. Static-only `create_config` source is retained separately and is not promoted.

@@ -293,3 +293,36 @@ to the tested scratch artifact, with full original executable equality unresolve
 Four panic diagnostic differences per family remain. No historical prestate,
 foreign signature, initializer workaround or confirmed vulnerability is claimed.
 See the [twenty-two-handler package](../../repro/mayhem/twentytwo/README.md).
+
+
+## PumpSwap buy and sell
+
+The 31-account buy and 29-account sell parsers preserve the configured trader,
+Mayhem PDAs, ATA relations, typed external AMM/token accounts and program IDs.
+The quote-program interface is additionally constrained to Tokenkeg, while the
+base program is Token-2022. Mayhem's Pool decoder zero-pads every short prefix to
+287 bytes; its strict GlobalConfig decoder reads the older 418-byte prefix.
+The Mayhem-derived pool-v2 account is validated but omitted from the actual CPI.
+The CPI uses 25 buy or 23 sell accounts, and the only fixed signer is the actual
+sol-vault PDA. Both buy volume accounts are writable, while the protocol recipient
+is read-only inside the CPI. Remaining buyback flags are forwarded from AccountInfo.
+
+The budget uses actual pool quote tokens plus signed virtual reserves, native or
+stable caps, retained-reserve bounds and the recovered price band. Native buy
+funds WSOL and synchronizes it; both native paths close WSOL back to the sol vault.
+Actual accounting includes returned rent. Small native buys can therefore reach
+the original checked-subtraction failure in these synthetic starting states;
+complete watched state rolls back. This is behavioral evidence, not a claim of
+live reachability or a confirmed vulnerability. Stable trades retain token
+balance accounting and zero native-only event fields. Post-CPI risk checks on buy
+retain the original strict low-u64 comparison after signed positivity checks.
+
+The new matrix has 2,496 comparisons, including 680 successes and 1,816 rejections.
+Six independent verifiers check all 4,992 signatures, successful quote sizing,
+exact CPI payload/account order, full state and 303-byte events, and failed rollback.
+All 7,099 inherited comparisons pass on the combined 24-handler candidate. The
+clean main build matches the tested scratch executable. Twenty-six panic cases
+retain source-diagnostic differences; eight also differ in unwrap-message detail.
+No original executable, authorization check or signature was patched. No blocked
+initializer experiment, historical replay or live chain mutation was performed.
+See the [twenty-four-handler package](../../repro/mayhem/twentyfour/README.md).

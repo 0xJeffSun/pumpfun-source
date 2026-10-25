@@ -19,8 +19,8 @@ for unresolved relocations with platform-tools v1.43, and passes 1,215 local
 differential cases. Recovered quote-mint routing additionally passes 9,428 original-program
 queries, but its compiled instructions still differ. All 31 Fees instruction bodies pass 17,441 SBF comparison receipts; forty-one recovered Pump
 handlers plus four partial creation/trading paths pass 7,957. Thirty-seven PumpSwap
-handlers pass 17,462 comparisons, and twenty-two Mayhem handlers pass 7,099. These
-49,959 saved comparisons cover 131 implemented handlers and four partial paths, not the
+handlers pass 17,462 comparisons, and twenty-four Mayhem handlers pass 9,595. These
+52,455 saved comparisons cover 133 implemented handlers and four partial paths, not the
 complete programs. The Fees total includes 69 repeated-input checks with stronger log or signature assertions. Two Fees handlers are deprecated dispatches that always reject.
 The current Pump checkpoint corrects the previously reported stored creator-fee
 override gap and passes 936 additional Surfpool comparisons with 1,872 signed transactions.
