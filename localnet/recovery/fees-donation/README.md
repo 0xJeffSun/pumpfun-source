@@ -42,3 +42,10 @@ work/localnet/venv/bin/python localnet/donation_transactions.py \
   --candidate localnet/recovery/fees-donation/pump_fees_candidate.so \
   --output work/donation-surfpool
 ```
+
+A persistent creation/deposit/crank sequence also matches across 10 steps (20 signed transactions). It preserves donation and relay state through repeated normal System transfers and same-time, one-second-later and one-day-later cranks, then an empty crank. Account changes, errors, events, return data and inner instructions are compared; the Fees executable bytes and their size-dependent initial rent are excluded while program lamport deltas are compared. Receipt: `sequence.json.gz`.
+
+```sh
+work/localnet/venv/bin/python scripts/fees_donation_sequence.py \
+  --output work/donation-sequence.json
+```
