@@ -54,3 +54,5 @@ The [prior dependency review](https://github.com/lalalune/pumpfun-source/blob/co
 | All | Unknown transitive data extents, indirect calls, precise historical source/compiler/dependencies and incomplete security assessment. Normalized matching alone closes none of these globally. |
 
 The exact incomplete instruction names and stopped-scope dispositions remain in [COMPLETION.md](https://github.com/lalalune/pumpfun-source/blob/codex/layered-reconstruction/docs/COMPLETION.md). Published source contracts and finite regressions do not establish exhaustive semantics. The before/after snapshot, current index, package seals, build identities and saved receipt verification make this pass reviewable without claiming completion.
+
+The published branch also reconciles audit main81c47dde, retains the new pass21 registry, restores the recorded helper, and preserves all101 incoming audit/tooling paths. Current-source/helper bridges and the11 focused tooling tests pass in the merged checkout. Historical audit snapshots retain their original hashes.

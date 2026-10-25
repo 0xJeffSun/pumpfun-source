@@ -91,3 +91,10 @@ The current Pump/Fees immutable package verifiers have an optional `--current-ma
 
 
 The [reviewed Linux pipeline correction](../repro/pump_fees/linux-recorded-pipeline-correction/README.md) is now integrated into the manual workflow. It preserves the baseline of 22 frozen source inputs, exact 53-file recorded SDK and unchanged build command, verifies both Cargo cache namespaces against all 252 locked crate archives, checks executable modes, and traces process lifecycle plus actual compiler/stripper execution. Thirty focused preparation/retention tests pass locally; the manual job reruns them on its host. The first action requiring native tooling is a tiny strace readiness probe before downloads or compiler-attempt counting. That hosted run subsequently passed readiness and produced the bounded comparison linked above. Current source revisions have not inherited its binary identity or runtime evidence. No untraced or installation fallback is automatic.
+
+
+## Compiler identity audit and research builds
+
+[The build identity audit](BUILD_IDENTITY_AUDIT.md) supersedes section-size-based claims that v1.43 is proved or that a binary-size ratio is source completeness. Fresh backend and exact helper comparisons favor v1.44 as the measured older-family research candidate; historical compiler identity remains unresolved.
+
+Use `python3 scripts/build_reconstruction_candidate.py` with the same manifest/program/output arguments as the historical helper. It supplies explicit v1.44 for Pump/AMM/Fees or v1.52 for Mayhem unless `--tools-version` is provided. The byte-preserved historical helper retains its original v1.52 fallback to keep accepted source-build package hashes valid; existing published commands already specify their version. An explicit alternate experiment remains separate evidence and does not promote an artifact automatically.
