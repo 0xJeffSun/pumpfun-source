@@ -5,7 +5,7 @@
     "compiler": "unresolved",
     "dependencies": "unresolved",
     "build_flags": "unresolved",
-    "candidate_artifact": "repro/pump/creator-fortyone/candidate.so",
+    "candidate_artifact": "repro/pump/holder-nested-fortytwo/candidate.so",
     "full_byte_equality": false,
     "comparison_status": "DIFFERS_PARTIAL_IMPLEMENTATION",
     "implemented_handlers": [
@@ -49,19 +49,20 @@
       "migrate_v2",
       "claim_cashback",
       "claim_cashback_v2",
-      "initialize"
+      "initialize",
+      "distribute_fee_to_holders"
     ],
-    "comparison_report": "repro/pump/creator-fortyone/build-comparison.json",
-    "build_log": "repro/pump/creator-fortyone/build.log.gz",
-    "validated_cases": 7957,
+    "comparison_report": "repro/pump/holder-nested-fortytwo/build-comparison.json",
+    "build_log": "repro/pump/holder-nested-fortytwo/build.log.gz",
+    "validated_cases": 8654,
     "validation_reports": [
-      "repro/pump/creator-fortyone/all-differential.json.gz"
+      "repro/pump/holder-nested-fortytwo/all-differential.json.gz"
     ],
     "partially_implemented_handlers": {
       "sell_v3": "SOL and USDC quote branches, Mayhem/holder fields and cashback rejection. Other quote routes and exhaustive extension/account validation remain incomplete; final event suffix uninterpreted.",
       "buy_v3": "SOL and USDC quote branches, Mayhem/holder fields and cashback rejection. Other quote routes and exhaustive extension/account validation remain incomplete; final event suffix uninterpreted.",
       "buy_exact_quote_in_v3": "Bounded SOL and synthetic USDC Token/Token2022 quote paths, configured creator fee/gross-spend truncation, funded completion using actual base-vault balances, optional fills and Mayhem crossing. Nested routes, transfer-fee extensions and exhaustive account validation remain unresolved.",
-      "create_v2": "Normal SOL and whitelisted token quote creation, holder creation, quote-control consumer admission/reserves and configured creator fee checks. Mayhem and nested quote-chain paths remain unrecovered; fixtures do not establish those paths."
+      "create_v2": "Normal SOL and whitelisted token quote creation, holder creation, quote-control consumer admission/reserves, configured creator fee checks, and depth-one nested creation from a normal SOL-root quote coin. Mayhem, migrated-parent and deeper nested paths remain partial or unrecovered."
     },
     "compiler_family_candidates": [
       "v1.44",
@@ -71,38 +72,43 @@
     ],
     "compiler_family_evidence": "repro/pump_fees/compiler-family/HEADER-AND-BUILD-REPORT.md",
     "signed_sequence_reports": [
-      "repro/pump/creator-fortyone/surfpool/admin_cto/pump-admin-cto-transactions.json.gz",
-      "repro/pump/creator-fortyone/surfpool/buy_v2/pump-buy-v2-transactions.json.gz",
-      "repro/pump/creator-fortyone/surfpool/cashback/pump-cashback-transactions.json.gz",
-      "repro/pump/creator-fortyone/surfpool/collect/pump-collect-transactions.json.gz",
-      "repro/pump/creator-fortyone/surfpool/collect_v2/pump-collect-v2-transactions.json.gz",
-      "repro/pump/creator-fortyone/surfpool/create/pump-create-transactions.json.gz",
-      "repro/pump/creator-fortyone/surfpool/create_control/pump-create-control-transactions.json.gz",
-      "repro/pump/creator-fortyone/surfpool/create_quote/pump-create-quote-transactions.json.gz",
-      "repro/pump/creator-fortyone/surfpool/creator_migration/pump-creator-migration-transactions.json.gz",
-      "repro/pump/creator-fortyone/surfpool/distribution/pump-distribution-transactions.json.gz",
-      "repro/pump/creator-fortyone/surfpool/exact_quote/pump-exact-quote-transactions.json.gz",
-      "repro/pump/creator-fortyone/surfpool/extend/pump-extend-transactions.json.gz",
-      "repro/pump/creator-fortyone/surfpool/global_init/pump-global-init-transactions.json.gz",
-      "repro/pump/creator-fortyone/surfpool/idl_authority/pump-idl-authority-transactions.json.gz",
-      "repro/pump/creator-fortyone/surfpool/legacy_buy/pump-legacy-buy-transactions.json.gz",
-      "repro/pump/creator-fortyone/surfpool/legacy_sell/pump-legacy-sell-transactions.json.gz",
-      "repro/pump/creator-fortyone/surfpool/legacy_sell_configured_fee/pump-legacy-sell-configured-fee-transactions.json.gz",
-      "repro/pump/creator-fortyone/surfpool/migrate/pump-migrate-transactions.json.gz",
-      "repro/pump/creator-fortyone/surfpool/migrate_v2/pump-migrate-v2-transactions.json.gz",
-      "repro/pump/creator-fortyone/surfpool/minimum/pump-minimum-transactions.json.gz",
-      "repro/pump/creator-fortyone/surfpool/sell_v2/pump-sell-v2-transactions.json.gz",
-      "repro/pump/creator-fortyone/surfpool/set_creator/pump-set-creator-transactions.json.gz",
-      "repro/pump/creator-fortyone/surfpool/set_params/pump-set-params-transactions.json.gz",
-      "repro/pump/creator-fortyone/surfpool/sweep/pump-sweep-transactions.json.gz",
-      "repro/pump/creator-fortyone/surfpool/v3_configured_fee/pump-v3-configured-fee-transactions.json.gz",
-      "repro/pump/creator-fortyone/surfpool/volume_sync/pump-volume-sync-transactions.json.gz"
+      "repro/pump/holder-nested-fortytwo/surfpool/admin_cto/pump-admin-cto-transactions.json.gz",
+      "repro/pump/holder-nested-fortytwo/surfpool/buy_v2/pump-buy-v2-transactions.json.gz",
+      "repro/pump/holder-nested-fortytwo/surfpool/cashback/pump-cashback-transactions.json.gz",
+      "repro/pump/holder-nested-fortytwo/surfpool/collect/pump-collect-transactions.json.gz",
+      "repro/pump/holder-nested-fortytwo/surfpool/collect_v2/pump-collect-v2-transactions.json.gz",
+      "repro/pump/holder-nested-fortytwo/surfpool/create/pump-create-transactions.json.gz",
+      "repro/pump/holder-nested-fortytwo/surfpool/create_control/pump-create-control-transactions.json.gz",
+      "repro/pump/holder-nested-fortytwo/surfpool/create_quote/pump-create-quote-transactions.json.gz",
+      "repro/pump/holder-nested-fortytwo/surfpool/creator_migration/pump-creator-migration-transactions.json.gz",
+      "repro/pump/holder-nested-fortytwo/surfpool/distribution/pump-distribution-transactions.json.gz",
+      "repro/pump/holder-nested-fortytwo/surfpool/exact_quote/pump-exact-quote-transactions.json.gz",
+      "repro/pump/holder-nested-fortytwo/surfpool/extend/pump-extend-transactions.json.gz",
+      "repro/pump/holder-nested-fortytwo/surfpool/global_init/pump-global-init-transactions.json.gz",
+      "repro/pump/holder-nested-fortytwo/surfpool/holder_distribution/pump-holder-distribution-transactions.json.gz",
+      "repro/pump/holder-nested-fortytwo/surfpool/idl_authority/pump-idl-authority-transactions.json.gz",
+      "repro/pump/holder-nested-fortytwo/surfpool/legacy_buy/pump-legacy-buy-transactions.json.gz",
+      "repro/pump/holder-nested-fortytwo/surfpool/legacy_sell/pump-legacy-sell-transactions.json.gz",
+      "repro/pump/holder-nested-fortytwo/surfpool/legacy_sell_configured_fee/pump-legacy-sell-configured-fee-transactions.json.gz",
+      "repro/pump/holder-nested-fortytwo/surfpool/migrate/pump-migrate-transactions.json.gz",
+      "repro/pump/holder-nested-fortytwo/surfpool/migrate_v2/pump-migrate-v2-transactions.json.gz",
+      "repro/pump/holder-nested-fortytwo/surfpool/minimum/pump-minimum-transactions.json.gz",
+      "repro/pump/holder-nested-fortytwo/surfpool/nested_create/pump-create-nested-transactions.json.gz",
+      "repro/pump/holder-nested-fortytwo/surfpool/sell_v2/pump-sell-v2-transactions.json.gz",
+      "repro/pump/holder-nested-fortytwo/surfpool/set_creator/pump-set-creator-transactions.json.gz",
+      "repro/pump/holder-nested-fortytwo/surfpool/set_params/pump-set-params-transactions.json.gz",
+      "repro/pump/holder-nested-fortytwo/surfpool/sweep/pump-sweep-transactions.json.gz",
+      "repro/pump/holder-nested-fortytwo/surfpool/v3_configured_fee/pump-v3-configured-fee-transactions.json.gz",
+      "repro/pump/holder-nested-fortytwo/surfpool/volume_sync/pump-volume-sync-transactions.json.gz"
     ],
-    "surfpool_comparisons": 936,
-    "surfpool_signed_transactions": 1872,
+    "surfpool_comparisons": 1024,
+    "surfpool_signed_transactions": 2048,
     "coverage_limitations": [
       "Known current reconstruction gap: sell_v2 quote transfer-fee minimum-output checking and fee-event fields differ from the captured original. Saved passing suites do not cover this boundary; candidate is not a deployable replacement."
-    ]
+    ],
+    "candidate_build_identity_report": "repro/pump/holder-nested-fortytwo/main-scratch-identity.json",
+    "prior_checkpoint": "repro/pump/creator-fortyone",
+    "holder_nested_recovery_report": "audit/pump/HOLDER_NESTED_RECOVERY.md"
   },
   "pump_amm": {
     "source_reconstruction": "partial_handlers_compiled",
@@ -207,7 +213,7 @@
     "compiler": "unresolved",
     "dependencies": "unresolved",
     "build_flags": "unresolved",
-    "candidate_artifact": "repro/pump_fees/fee-config-serialization-v144/pump_fees_candidate.so",
+    "candidate_artifact": "repro/pump_fees/readme-provenance-v144/pump_fees_candidate.so",
     "full_byte_equality": false,
     "comparison_status": "DIFFERS_PARTIAL_IMPLEMENTATION",
     "compiler_candidates": [
@@ -248,8 +254,8 @@
       "update_fee_shares_v2",
       "initialize_fee_config"
     ],
-    "comparison_report": "repro/pump_fees/fee-config-serialization-v144/build-comparison.json",
-    "build_log": "repro/pump_fees/fee-config-serialization-v144/build.log.gz",
+    "comparison_report": "repro/pump_fees/readme-provenance-v144/build-comparison.json",
+    "build_log": "repro/pump_fees/readme-provenance-v144/build.log.gz",
     "validated_cases": 17441,
     "deprecated_dispatches": [
       "revoke_fee_sharing_authority",
@@ -303,7 +309,7 @@
     "error_enum_evidence": "repro/pump_fees/error-enum-v144/README.md",
     "external_codec_evidence": "repro/pump_fees/declared-programs-v144/README.md",
     "declared_program_evidence": "repro/pump_fees/declared-programs-v144/README.md",
-    "workspace_source_manifest": "repro/pump_fees/fee-config-serialization-v144/source-sha256.json",
+    "workspace_source_manifest": "repro/pump_fees/readme-provenance-v144/source-sha256.json",
     "main_scratch_identity_evidence": "repro/pump_fees/fee-config-serialization-v144/main-scratch-identity.json",
     "buyback_source_evidence": "repro/pump_fees/buyback-source-v144/README.md",
     "buyback_body_evidence": "repro/pump_fees/buyback-source-v144/static/typed-macro-box-analysis.json",
@@ -337,7 +343,10 @@
       "overlaps_full_suite_cases": true,
       "new_unique_cases": 0,
       "report": "repro/pump_fees/fee-config-serialization-v144/serialization-error.json.gz"
-    }
+    },
+    "readme_provenance_evidence": "repro/pump_fees/readme-provenance-v144/README.md",
+    "retained_candidate_identity_evidence": "repro/pump_fees/readme-provenance-v144/whole-file-identity.json",
+    "retained_runtime_evidence_references": "repro/pump_fees/readme-provenance-v144/retained-evidence-references.json"
   },
   "mayhem": {
     "source_reconstruction": "partial_handlers_compiled",

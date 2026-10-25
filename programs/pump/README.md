@@ -1,28 +1,32 @@
 # Partial Pump reconstruction
 
-The Anchor 0.31.1 source implements forty-one recovered handlers:
+The Anchor 0.31.1 source implements forty-two recovered handlers:
 `toggle_create_v2`, `toggle_mayhem_mode`, `toggle_cashback_enabled`, and
 `set_max_curve_depth`, `set_virtual_quote_reserves`, `update_buyback_config`,
 `update_creator_fee_config`, `update_holder_reward_config`, `add_quote_mint`, and
 `remove_quote_mint`, `update_global_authority`, `set_reserved_fee_recipients`,
 `init_user_volume_accumulator`, `close_user_volume_accumulator`,
-`collect_creator_fee`, `distribute_creator_fees`, `distribute_creator_fees_v2`, and
+`collect_creator_fee`, `distribute_creator_fees`, `distribute_creator_fees_v2`,
+`distribute_fee_to_holders`, and
 `get_minimum_distributable_fee`, `collect_creator_fee_v2`, `extend_account`,
 `sync_user_volume_accumulator`, `sweep_creator_fee`, `sweep_protocol_fee`,
 `migrate_bonding_curve_creator`, `admin_cto`, `set_params`, `set_creator`,
 `set_metaplex_creator`, `admin_set_idl_authority` and legacy `create`, `sell`, `sell_v2`, `migrate`, `buy`, `buy_exact_sol_in`, `buy_v2`, `buy_exact_quote_in_v2`, `migrate_v2`, `claim_cashback`, `claim_cashback_v2` and `initialize`. It also implements **partial `sell_v3`, `buy_v3`, `buy_exact_quote_in_v3` and `create_v2` paths**.
 It is incomplete and is not a deployable replacement. The current sell_v2 quote-transfer-fee minimum-output check and fee-event fields have a confirmed mismatch with the captured original; the saved passing suites do not cover that boundary.
 
-The current frozen checkpoint is [creator-fortyone](../../repro/pump/creator-fortyone/README.md):
-7,957 differential cases across 33 suites and 936 Surfpool comparisons using
-1,872 signed transactions across 26 runners passed. Its candidate is 1,361,464 bytes,
-SHA-256 `640778c9a482c5369cc38c3f27928213dbdce30f2f2be22ad78aeb0c895da18c`.
-It adds legacy and v2 buys, v2 migration, cashback claims and initialization,
-retaining the earlier stored creator-fee and exact-quote corrections.
-Full byte equality remains false. Earlier checkpoint counts below describe their
-historical source snapshots.
+The current frozen checkpoint is [holder-nested-fortytwo](../../repro/pump/holder-nested-fortytwo/README.md):
+8,654 differential cases across 35 suites and 1,024 Surfpool comparisons using
+2,048 signed transactions across 28 runners passed. Its candidate is 1,405,520 bytes,
+SHA-256 `c07e67b055c87da881b33c9e07bddf913d5b0beffa1cfe52169ba1bc3f6d2bbf`.
+It adds holder distributions and depth-one normal SOL-root nested creation to
+creator-fortyone. Main and scratch clean builds are whole-file identical. All 33
+prior differential suites and 26 prior Surfpool runners were rerun, alongside the
+two focused suites. Nested creation remains partial for Mayhem, migrated parents
+and deeper chains. See [the recovery report](../../audit/pump/HOLDER_NESTED_RECOVERY.md).
+Full original-byte equality remains false. Earlier checkpoint counts below describe
+their historical source snapshots.
 
-The trade paths handle constant-product reserve changes, fee tier selection,
+The partial v3 trade paths handle constant-product reserve changes, fee tier selection,
 creator/protocol/buyback accounting, Token/Token2022 `transfer_checked` CPI,
 lamport transfers, and log/CPI TradeEvents. USDC quote paths transfer tokens through the supplied quote token program,
 use stable fee tiers, and zero legacy SOL-only event fields. A130-case suite
@@ -37,7 +41,7 @@ including an omitted or explicit optional boolean argument. The original meaning
 of that argument outside tested branches remains unresolved. The final eight TradeEvent
 bytes are zero in this fixture; their meaning is unresolved and the source names
 them `unparsed_trailing_field`. Zero in bounded fixtures is not proof of a general
-invariant. All remaining instructions are unimplemented.
+invariant. Instructions not listed as implemented or partial above remain unimplemented.
 
 The six newer configuration handlers add351 differential cases, including exact
 events and inner CPIs. Buyback configuration accepts None and values through10000,

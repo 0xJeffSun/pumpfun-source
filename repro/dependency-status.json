@@ -44,7 +44,8 @@
       "repro/pump/metaplex-candidate-build-6/comparison.json",
       "repro/pump/metaplex-candidate-build-7/comparison.json",
       "repro/pump/metaplex-candidate-build-8/comparison.json",
-      "repro/pump/metaplex-candidate-build-9/comparison.json"
+      "repro/pump/metaplex-candidate-build-9/comparison.json",
+      "repro/pump/metaplex-candidate-build-10/comparison.json"
     ],
     "latest_tested_candidate_full_byte_equality": false
   },
@@ -54,6 +55,7 @@
     "security_audit": "incomplete",
     "embedded_source_evidence": "repro/pump/dependency-exactness/relay-source-attribution.json",
     "embedded_source_repository": "https://github.com/CherryDevelopmentOrg/daas",
-    "source_revision": null
+    "source_revision": null,
+    "provenance_followup": "repro/pump/dependency-exactness/donation-relay-provenance-followup/README.md"
   }
 }

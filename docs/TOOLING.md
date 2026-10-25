@@ -17,8 +17,10 @@ python3 -m venv .venv
 ```
 
 The validation script regenerates `audit/local-validation.json`. Evidence verification
-is distinct from reconstruction verification. CI runs the same checks and compares
-the regenerated local validation record; it does not build reconstructed source.
+is distinct from reconstruction verification. Evidence CI checks captures, source manifests,
+saved candidate executables and bounded regressions, and builds native fragments. The
+separate dependency workflow builds selected pinned dependency candidates. Routine
+evidence CI does not clean-build all four recovered SBF programs.
 
 ## Capture a new deployment snapshot
 
@@ -49,7 +51,9 @@ is original-derived disassembly for analysis, never a rebuilt executable.
 
 ## Compare an independently compiled candidate
 
-No source build recipe is available yet. Once a candidate has actually been built:
+Pinned recipes for the current partial candidates are documented in the program
+READMEs and indexed by `repro/status.json`. After building a candidate, compare its
+complete output as follows:
 
 ```sh
 python3 scripts/compare.py pump /path/to/independently-built/pump.so \

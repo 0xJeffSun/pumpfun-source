@@ -3,6 +3,19 @@
 **Status: incomplete; not a security sign-off.** Scope is the four captured original
 programs listed in `docs/SCOPE.md`. Partial executable handlers have been recovered; no complete program exists.
 
+The current published recovery covers 134 implemented handlers plus four partial
+Pump paths and 53,152 saved comparison receipts: [Pump42](../repro/pump/holder-nested-fortytwo/README.md),
+[AMM37 serializer](../repro/pump_amm/serialization-thirty-seven/README.md),
+[Fees31 serializer](../repro/pump_fees/fee-config-serialization-v144/README.md),
+and [Mayhem24](../repro/mayhem/twentyfour/README.md). These bounded recovery results
+do not extend the source review frozen at commit329fc44 into a complete audit of
+the later candidates. All four original whole-file comparisons still differ.
+The current Pump sell_v2 quote transfer-fee minimum-output/event gap remains an
+explicit reconstruction limitation; no corrected executable is published.
+Mayhem's only remaining identified handler is initialize_mayhem_state; its
+initializer work remains stopped. Historical checkpoints below retain their
+original counts and scope.
+
 | Severity | Confirmed findings |
 | --- | ---: |
 | CRITICAL | 0 |
@@ -26,8 +39,9 @@ This demonstrates basic dispatch and malformed-input rejection for those exact
 inputs and captured hashes only. It does not test valid account substitution,
 privileged signer constraints, successful trading, balances, token-extension edge
 cases, economic invariants, rate limits, migrations, or cross-program calls.
-Mayhem has no official IDL in the captured documentation, so its recognized
-instruction paths are not tested. External programs are captured as dependencies
+That 393-case corpus does not exercise recognized Mayhem instruction paths because
+the captured documentation has no official Mayhem IDL. Later bounded recovery
+coverage is recorded separately. External programs are captured as dependencies
 but are not security-audited here. No mainnet simulation, transaction submission,
 exploit, or broadcast was performed.
 
@@ -75,18 +89,18 @@ confirmed vulnerability without a reachable configuration path.
 
 ### Executing recovered handlers
 
-Pump Fees now has 31 independently compiled instruction bodies, with 17,372 original-
-versus-candidate SBF cases. These cover two query handlers, four authority setters,
+Pump Fees now has 31 independently compiled instruction bodies, with 17,441
+original-versus-candidate SBF comparison receipts, including 69 repeated-input checks. These cover two query handlers, four authority setters,
 global initialization against the historical 740-byte Pump Global layout, and
 three configuration setters, permissionless resize, and two deprecated rejection
 dispatches, two tier upserts and FeeConfig administrator transfer, two donation handlers and three social-fee handlers and referral withdrawal, four buyback handlers, sharing creation, administrative sharing reset, both sharing updates and FeeConfig initialization. All31 bodies have bounded implementations; full source/context equivalence remains unproven. Selected compiler and dependency versions
 remain candidates rather than an established historical graph.
 
-### Parallel reconstruction checkpoint: 111 implemented handlers and four partial paths
+### Historical reconstruction checkpoint: 111 implemented handlers and four partial paths
 
 Saved builds cover Pump 30, PumpSwap 32, Pump Fees 31 and Mayhem 18 implemented
 handlers, plus Pump's partial buy_v3, sell_v3, buy_exact_quote_in_v3 and create_v2 paths. Their 40,105 local SBF
-comparisons are indexed by `repro/status.json`; each report preserves its own
+comparisons were indexed by the then-current `repro/status.json`; each retained report preserves its own
 coverage and limitations. Pump's SOL trade paths include Mayhem buyback suppression,
 holder-reward event fields and explicit cashback rejection. USDC quote behavior adds 130 synthetic SPL/Token2022 cases; other quote routes
 and the final event suffix remain incomplete. Neither is counted
@@ -261,18 +275,18 @@ for ordering corrections, synthetic-state limits and exact build provenance. Ten
 AMM IDL handlers remain absent. This addition is outside the source review frozen
 at commit 329fc44 and does not complete the original-program security assessment.
 
-### Fees error-message fidelity
+### Historical Fees error-message checkpoint
 
-The current Fees build restores the complete 37-variant IDL error enum and the
+That Fees build restores the complete 37-variant IDL error enum and the
 literal `format` messages observed for errors 6003 and 6011. All prior 17,361 SBF
 checks and two added error-message comparisons pass, for 17,363. The earlier
 112 Surfpool comparisons refer to the retained pre-correction executable.
 Source locations and compute logs still differ. This repairs reconstruction
 fidelity and does not assert a vulnerability or complete source equivalence.
 
-### Mayhem burn and framework recovery
+### Historical Mayhem burn and framework checkpoint
 
-The current eighteen-handler Mayhem build passes 2,953 inherited comparisons
+That eighteen-handler Mayhem build passes 2,953 inherited comparisons
 and six genuine-snapshot burn instruction comparisons. Each of three first burns
 succeeds; a second burn on the actual resulting local state rejects with 6004.
 Normal signatures and blockhash checks remain enabled. Raw compute logs and

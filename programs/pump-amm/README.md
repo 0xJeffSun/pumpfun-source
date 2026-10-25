@@ -51,8 +51,9 @@ AMM/curve transition, inline fee allocation, captured CPIs, rollback/error order
 and endpoint/intermediate token transfer fees are covered. See
 [`repro/pump_amm/multi-hop-thirty-seven`](../../repro/pump_amm/multi-hop-thirty-seven/README.md)
 and [`audit/pump_amm/MULTI_HOP_RECOVERY.md`](../../audit/pump_amm/MULTI_HOP_RECOVERY.md).
-Earlier packages remain immutable. Fixed-admin `create_config` evidence is limited
-to legitimate historical signed replays and static analysis; no signer bypass is used.
+Earlier packages remain immutable. Fixed-admin `create_config` remains static-only:
+retained runtime evidence consists of 372 ordinary-signer rejection comparisons,
+with no successful fixed-administrator initialization replay. No signer bypass is used.
 
 Additional SBF suites are `scripts/pump_amm_buyback_differential.py`,
 `scripts/pump_amm_fee_config_differential.py`,

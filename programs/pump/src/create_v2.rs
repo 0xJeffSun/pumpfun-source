@@ -40,6 +40,7 @@ pub fn execute<'info>(ctx:Context<'_,'_,'_,'info,CreateV2<'info>>,name:String,sy
  require!(!is_cashback_enabled.0,PumpError::CashbackDeprecated);
  let creator=if is_holder_reward.0 {require!(a.global.is_holder_reward_enabled,PumpError::HolderRewardDisabled);Pubkey::find_program_address(&[b"holder-rewards",a.mint.key().as_ref()],&crate::ID).0}else{creator};
  require!(creator!=Pubkey::default(),PumpError::CreatorShouldNotBeZero);
+ let mut depth=0u8;
  let (quote_mint,virtual_quote_reserves,can_configure_fee)=if ctx.remaining_accounts.is_empty(){(Pubkey::default(),a.global.initial_virtual_sol_reserves,false)}else{
   require!(ctx.remaining_accounts.len()>=3,PumpError::NotEnoughRemainingAccounts);
   let mint=&ctx.remaining_accounts[0];let ata=&ctx.remaining_accounts[1];let program=&ctx.remaining_accounts[2];
@@ -58,8 +59,17 @@ pub fn execute<'info>(ctx:Context<'_,'_,'_,'info,CreateV2<'info>>,name:String,sy
    require!(data.len()>=size,PumpError::InvalidQuoteControl);
    let entry=data[108..size].chunks_exact(40).find(|entry|entry[..32]==mint.key().to_bytes());
    if let Some(entry)=entry{(u64::from_le_bytes(entry[32..40].try_into().unwrap()),true)}else{
-    require!(ctx.remaining_accounts.len()<5,PumpError::ReconstructionBranchUnsupported);
-    return err!(PumpError::UnsupportedQuoteMint);
+    require!(ctx.remaining_accounts.len()>=5,PumpError::UnsupportedQuoteMint);
+    let parent=&ctx.remaining_accounts[4];let expected=Pubkey::find_program_address(&[b"bonding-curve",mint.key.as_ref()],&crate::ID).0;
+    require!(parent.key()==expected && parent.owner==&crate::ID,PumpError::InvalidQuoteBondingCurve);
+    let bytes=parent.try_borrow_data()?;let root=crate::trade_types::BondingCurve::try_deserialize(&mut &bytes[..]).map_err(|_|error!(PumpError::InvalidQuoteBondingCurve))?;
+    depth=root.depth.checked_add(1).ok_or_else(||error!(PumpError::CurveDepthExceeded))?;
+    require!(depth<=a.global.max_curve_depth && depth<=5,PumpError::CurveDepthExceeded);
+    require!(!root.is_mayhem_mode,PumpError::QuoteBondingCurveNotEligible);
+    require!(root.depth==0,PumpError::QuoteChainAccountsRequired);
+    require!(root.quote_mint==Pubkey::default(),PumpError::ReconstructionBranchUnsupported);
+    require!(!root.complete,PumpError::QuoteCurveAwaitingMigration);
+    (nested_sol_reserves(&a.global,&root)?,true)
    }
   };
   let expected=anchor_spl::associated_token::get_associated_token_address_with_program_id(&a.bonding_curve.key(),mint.key,program.key);
@@ -85,8 +95,8 @@ pub fn execute<'info>(ctx:Context<'_,'_,'_,'info,CreateV2<'info>>,name:String,sy
  invoke_signed(&ix,&[a.mint.to_account_info(),a.mint_authority.to_account_info(),a.token_program.to_account_info()],&[seeds])?;
  token_interface::mint_to(CpiContext::new_with_signer(a.token_program.to_account_info(),token_interface::MintTo{mint:a.mint.to_account_info(),to:a.associated_bonding_curve.to_account_info(),authority:a.mint_authority.to_account_info()},&[seeds]),a.global.token_total_supply)?;
  token_interface::set_authority(CpiContext::new_with_signer(a.token_program.to_account_info(),token_interface::SetAuthority{current_authority:a.mint_authority.to_account_info(),account_or_mint:a.mint.to_account_info()},&[seeds]),token_interface::spl_token_2022::instruction::AuthorityType::MintTokens,None)?;
- let event=CreateEvent{name,symbol,uri,mint:a.mint.key(),bonding_curve:a.bonding_curve.key(),user:a.user.key(),creator,timestamp:Clock::get()?.unix_timestamp,virtual_token_reserves:a.global.initial_virtual_token_reserves,virtual_sol_reserves:virtual_quote_reserves,real_token_reserves:a.global.initial_real_token_reserves,token_total_supply:a.global.token_total_supply,token_program:a.token_program.key(),is_mayhem_mode:false,is_cashback_enabled:false,quote_mint,virtual_quote_reserves,creator_fee_bps:fee,is_holder_reward:is_holder_reward.0,depth:0};
- let g=&ctx.accounts.global;let curve=&mut ctx.accounts.bonding_curve;curve.virtual_token_reserves=g.initial_virtual_token_reserves;curve.virtual_quote_reserves=virtual_quote_reserves;curve.real_token_reserves=g.initial_real_token_reserves;curve.token_total_supply=g.token_total_supply;curve.creator=creator;curve.creator_fee_bps=fee;curve.is_holder_reward=is_holder_reward.0;curve.quote_mint=quote_mint;curve.initial_virtual_quote_reserves=virtual_quote_reserves;
+ let event=CreateEvent{name,symbol,uri,mint:a.mint.key(),bonding_curve:a.bonding_curve.key(),user:a.user.key(),creator,timestamp:Clock::get()?.unix_timestamp,virtual_token_reserves:a.global.initial_virtual_token_reserves,virtual_sol_reserves:virtual_quote_reserves,real_token_reserves:a.global.initial_real_token_reserves,token_total_supply:a.global.token_total_supply,token_program:a.token_program.key(),is_mayhem_mode:false,is_cashback_enabled:false,quote_mint,virtual_quote_reserves,creator_fee_bps:fee,is_holder_reward:is_holder_reward.0,depth};
+ let g=&ctx.accounts.global;let curve=&mut ctx.accounts.bonding_curve;curve.virtual_token_reserves=g.initial_virtual_token_reserves;curve.virtual_quote_reserves=virtual_quote_reserves;curve.real_token_reserves=g.initial_real_token_reserves;curve.token_total_supply=g.token_total_supply;curve.creator=creator;curve.creator_fee_bps=fee;curve.is_holder_reward=is_holder_reward.0;curve.quote_mint=quote_mint;curve.initial_virtual_quote_reserves=virtual_quote_reserves;curve.depth=depth;
  emit!(event.clone());emit_cpi!(event);Ok(())
 }
 
@@ -107,3 +117,26 @@ fn quote_extensions_supported(data:&[u8])->bool {
 }
 
 const CONTROL_DISCRIMINATOR:[u8;8]=[56, 244, 35, 238, 193, 213, 162, 201];
+
+fn nested_sol_reserves(g:&Global,r:&crate::trade_types::BondingCurve)->Result<u64>{
+ let sub=|a:u64,b:u64|a.checked_sub(b).ok_or_else(||error!(PumpError::Overflow));
+ let add=|a:u64,b:u64|a.checked_add(b).ok_or_else(||error!(PumpError::Overflow));
+ let narrow=|v:u128|u64::try_from(v).map_err(|_|error!(PumpError::Truncation));
+ let remainder=sub(g.initial_virtual_token_reserves,g.initial_real_token_reserves)?;
+ require!(remainder>0,PumpError::Overflow);
+ let target=narrow(g.initial_virtual_sol_reserves as u128*g.initial_real_token_reserves as u128/remainder as u128)?;
+ let denominator=r.virtual_quote_reserves as u128+target as u128;
+ require!(denominator>0,PumpError::Overflow);
+ let out=narrow(r.virtual_token_reserves as u128*target as u128/denominator)?;
+ let base=if out>r.real_token_reserves{
+  let rem=sub(r.virtual_token_reserves,r.real_token_reserves)?;require!(rem>0,PumpError::Overflow);
+  let quote=add(narrow(r.virtual_quote_reserves as u128*r.real_token_reserves as u128/rem as u128)?,1)?;
+  let poolq=sub(add(r.real_quote_reserves,quote)?,g.pool_migration_fee)?;
+  let poolb=sub(r.token_total_supply,g.initial_real_token_reserves)?;
+  let remaining=sub(sub(target,quote)?,1)?;
+  add(r.real_token_reserves,narrow(poolb as u128*remaining as u128/(poolq as u128+remaining as u128))?)?
+ }else{out};
+ require!(g.initial_real_token_reserves>0,PumpError::Overflow);
+ let reserves=narrow(base as u128*remainder as u128/g.initial_real_token_reserves as u128)?;
+ require!(reserves>0,PumpError::QuoteReservesOutOfRange);Ok(reserves)
+}

@@ -81,8 +81,9 @@ and v1.46. The complete captured `core::fmt::write` and `__multi3` bodies match
 v1.44 exactly; those representative bodies differ in the other tested releases.
 This makes v1.44 the preferred tested stock candidate for Fees, without excluding
 untested v1.46.1, custom sysroots or different build settings. The current
-thirty-one-body Fees checkpoint compiles with v1.44 and passes all 17,372
-saved behavioral cases. Its full binary still differs from the capture.
+[thirty-one-body Fees serializer checkpoint](../repro/pump_fees/fee-config-serialization-v144/README.md)
+compiles with v1.44 and passes 17,441 saved comparison receipts, including 69
+repeated-input checks. Its full binary still differs from the capture.
 
 The [linked function comparison](../repro/pump_fees/framework-matching/README.md)
 uses the thirty-one-body Fees build's own unstripped symbols to locate complete
@@ -152,7 +153,7 @@ The [35-handler checkpoint](../repro/pump_amm/legacy-buy-thirty-five/README.md) 
 
 ## Metaplex source differences
 
-[Candidate5](../repro/pump/metaplex-candidate-build-5/README.md) is a fresh pinned Linux build with recovered edition conversion resets and master-edition metadata writability checks. All 53 signed boundary comparisons pass; full-file comparison still differs. Diagnostic function alignment finds 1,235 matching normalized instruction windows with corresponding calls and 16 structurally different windows. A [further five-file source trial](../repro/pump/metaplex-audit-source-recovery/README.md) targets captured burn-PDA checking and removal of a legacy metadata authority exception; its [candidate 6 build](../repro/pump/metaplex-candidate-build-6/README.md) compiles and passes all 53 edition regressions but still differs in 16 instruction windows. A [ten-file source trial](../repro/pump/metaplex-uses-source-recovery/README.md) adds captured Uses bounds and token-standard checks; its [candidate 7 build](../repro/pump/metaplex-candidate-build-7/README.md) passes all 109 retained edition/Uses/burn comparisons. The next context-check/seed-ownership trial is pending. These dependency observations do not change the four main-program completeness claims.
+[Candidate5](../repro/pump/metaplex-candidate-build-5/README.md) is a fresh pinned Linux build with recovered edition conversion resets and master-edition metadata writability checks. All 53 signed boundary comparisons pass; full-file comparison still differs. Diagnostic function alignment finds 1,235 matching normalized instruction windows with corresponding calls and 16 structurally different windows. A [further five-file source trial](../repro/pump/metaplex-audit-source-recovery/README.md) targets captured burn-PDA checking and removal of a legacy metadata authority exception; its [candidate 6 build](../repro/pump/metaplex-candidate-build-6/README.md) compiles and passes all 53 edition regressions but still differs in 16 instruction windows. A [ten-file source trial](../repro/pump/metaplex-uses-source-recovery/README.md) adds captured Uses bounds and token-standard checks; its [candidate 7 build](../repro/pump/metaplex-candidate-build-7/README.md) passes all 109 retained edition/Uses/burn comparisons. That context-check/seed-ownership trial subsequently produced candidate 8; see the metadata-context checkpoint below. These dependency observations do not change the four main-program completeness claims.
 
 ## Fees update-admin state access
 
@@ -194,9 +195,9 @@ The [22-handler checkpoint](../repro/mayhem/twentytwo/README.md) adds buy_v2 wit
 
 ## Known current Pump transfer-fee gap
 
-A later review confirmed that the published 41-handler candidate's sell_v2 minimum-output check and fee-event fields differ from the captured original for a quote token with a transfer fee. The 7,957 saved differential passes and 936 Surfpool passes do not cover this boundary. This is a reconstruction limitation; the captured original rejected the observed requested minimum. No corrected executable is published, and the candidate remains unsuitable for deployment.
+A review confirmed that the 41-handler candidate's sell_v2 minimum-output check and fee-event fields differ from the captured original for a quote token with a transfer fee. The current 42-handler candidate preserves that implementation and limitation; its 8,654 differential passes and 1,024 Surfpool passes do not cover this boundary. This is a reconstruction limitation; the captured original rejected the observed requested minimum. No corrected executable is published, and the candidate remains unsuitable for deployment.
 
-The next [twelve-file Metaplex trial](../repro/pump/metaplex-validation-source-recovery/README.md) adds observed collection system-program and mint-owner checks to the preceding context trial. Eighteen ordinary-signed baseline comparisons retain twelve differences and six controls. It is a source input awaiting compilation and combined regression, not a new accepted candidate.
+The next [twelve-file Metaplex trial](../repro/pump/metaplex-validation-source-recovery/README.md) adds observed collection system-program and mint-owner checks to the preceding context trial. Eighteen ordinary-signed baseline comparisons retain twelve differences and six controls. This twelve-file trial subsequently compiled as candidate 9 and passed 135 retained comparisons; see the collection and mint-owner checkpoint below.
 
 
 ## Metaplex metadata-context recovery
@@ -227,3 +228,28 @@ An [independent read-only review](../repro/pump/dependency-exactness/ata-provena
 ## Mayhem PumpSwap trade recovery
 
 The [24-handler checkpoint](../repro/mayhem/twentyfour/README.md) adds `buy_pump_swap` and `sell_pump_swap` with actual Mayhem PDA-signed CPIs and ordinary test-owned outer signers. The six new matrices pass 2,496 comparisons, including 680 successes and 1,816 rejections; all 7,099 inherited cases also pass. Root independently verified all 4,992 new transaction signatures and full saved-state/event/CPI/rollback checks. Main and scratch builds are byte-identical (667,552 bytes). The full 21-suite total is 9,595 comparisons. Twenty-six panic diagnostic cases retain source-location differences, including eight unwrap-message-detail differences; original whole-file identity remains false, and the stopped initializer lane remains absent.
+
+
+## Donation-relay public provenance
+
+A [bounded public-source follow-up](../repro/pump/dependency-exactness/donation-relay-provenance-followup/README.md) confirms the captured program ID in official documentation but recovers no source revision or build recipe tied to the deployment. Twenty-nine timestamped public repository/archive/publisher responses are recorded by URL and hash. Their negative results do not establish universal source or audit absence. No new relay build is proposed from this evidence.
+
+
+## Metaplex handler and dispatch recovery
+
+[Candidate 10](../repro/pump/metaplex-candidate-build-10/README.md) compiles the eighteen-file source trial and passes all 135 inherited comparisons with 270 independently verified signatures. It matches 1,248 of 1,251 inferred normalized instruction/relocation/direct-call windows and the complete 21,043-byte rodata section. Three structural windows and full-file equality remain unresolved. Existing regression passes do not establish coverage of every new branch.
+
+
+## Fees documentation provenance
+
+The source-bound Fees README now points to the serializer checkpoint and labels earlier figures as historical. A [new clean v1.44 build](../repro/pump_fees/readme-provenance-v144/README.md) records all 22 current inputs and produces exactly the prior 769,000-byte executable. All 17,441 existing receipts are retained by whole-file identity; no new runtime comparisons, unique cases or signature claims are added. Prior packages remain immutable.
+
+
+## Pump holder distribution and nested creation
+
+The [42-handler checkpoint](../repro/pump/holder-nested-fortytwo/README.md) integrates holder distribution and depth-one creation under a normal SOL-root parent. Only three reviewed Rust paths changed from Pump41. All 35 differential suites pass 8,654 comparisons, and all 28 signed Surfpool runners pass 1,024 comparisons / 2,048 independently reverified transactions. The clean main executable is byte-identical to the tested scratch build (1,405,520 bytes). Four v3/create paths remain partial, the existing sell_v2 transfer-fee gap is preserved, and whole-file identity and the security audit remain incomplete.
+
+
+## Metaplex zero-use analysis correction
+
+A later [raw control-flow review](../repro/pump/metaplex-zero-use-source-recovery/STATIC-CORRECTION.md) corrects the earlier source hypothesis: the original ApproveUseAuthority and Utilize paths reject zero uses with error86. Candidate10 skips that rejection; its 135 inherited regressions do not cover the boundary. The new source-only trial restores both predicates and the separately observed edition-conversion data-length evaluation order. Exact branch bytes and destinations are retained, and the earlier incorrect analysis remains identifiable as historical evidence. This correction awaits its own build and comparison.
