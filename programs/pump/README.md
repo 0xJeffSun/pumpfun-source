@@ -16,10 +16,10 @@ The Anchor 0.31.1 source implements forty-eight recovered handlers:
 `remove_quote_control_mint` and `set_quote_control_mint_reserves`. It also implements **partial `sell_v3`, `buy_v3`, `buy_exact_quote_in_v3`, `create_v2` and `multi_hop_curve_swap` paths**.
 It is incomplete and is not a deployable replacement. The current sell_v2 quote-transfer-fee minimum-output check and fee-event fields have a confirmed mismatch with the captured original; the saved passing suites do not cover that boundary.
 
-The current frozen checkpoint is [nested-ancestry-fortyeight](../../repro/pump/nested-ancestry-fortyeight/README.md):
-9,253 differential cases across 39 suites and 1,024 Surfpool comparisons across
-28 runners passed. The candidate is 1,598,992 bytes, SHA-256
-`568546bcf038740d995325c1e742528f218f630840ac152f96dcf5c2147eabc2`.
+The current frozen checkpoint is [nested-general-route-fortyeight](../../repro/pump/nested-general-route-fortyeight/README.md):
+9,269 differential comparisons across 40 suites and 1,024 Surfpool comparisons
+across 28 runners passed. The candidate is 1,579,424 bytes, SHA-256
+`731003570927c206353555d9743d70229234e7e3fa167a5915fa146f3007fc93`.
 It preserves 48 recovered handlers and five partial paths. The selected compiler
 is v1.44; the unchanged installed CLI SDK uses v1.52 for its stripping step.
 These observed phases do not establish the historical compiler recipe.
@@ -37,15 +37,24 @@ payer/mint signatures, explicit signature and blockhash checking, default histor
 and the 1232-byte packet limit. Mayhem and exhaustive ancestry/error/input coverage
 remain unresolved; no new Token-2022 ancestry or extension modes are included.
 
-The partial `multi_hop_curve_swap` path now supports exactly SOL→A→B and
-B→A→SOL with ordinary Tokenkeg accounts, canonical pre-existing vaults, a native
-root storing quote zero, and strictly non-completing buys. The new 20-case suite
-uses the captured AMM's genuine PDA-signed Pump CPI and ordinary test-owned outer
-signatures. Sixteen comparisons succeed, two stop in AMM before Pump, and two
-reach successful Pump execution before AMM's final slippage rejection rolls back
-the transaction. Eighteen comparisons reach Pump; the suite records 40 verified
-signatures. Flat/exotic fee selection, endpoint flags and previous-curve transfer
-authority are independently traced. All curve and vault fixture state is explicitly
+The partial `multi_hop_curve_swap` source now handles ordinary noncompleting
+Tokenkeg routes beyond two hops. Sixteen fresh three-hop cases use the captured
+AMM's genuine PDA-signed Pump CPI, flags `[1,0,2]` / `[2,0,1]`, four fixed fee modes
+and two input amounts. All sixteen succeed and match the original in errors,
+normalized logs, events, inner instructions, return data, watched state and
+Pump/Token calls. The 32 original/candidate transactions carry 32 genuine ordinary
+signatures and fit in 1,128-byte packets. A standard 600,000-compute-unit instruction
+precedes the AMM instruction; default signature, blockhash and history checks remain.
+The prior default-budget exhaustion is preserved as a failed attempt. It is not
+included in the passing count. Larger route lengths and arbitrary account/fee
+combinations are not established by these finite tests.
+
+The earlier two-curve suite retains exactly SOL→A→B and B→A→SOL with ordinary
+Tokenkeg accounts, canonical pre-existing vaults, a native root storing quote zero,
+and strictly non-completing buys. Sixteen of its twenty comparisons succeed, two
+stop in AMM before Pump, and two reach successful Pump execution before AMM's final
+slippage rejection rolls back the transaction. Eighteen reach Pump; its paired
+receipts contain forty verified signatures. All curve and vault fixture state is
 synthetic and already exists before invocation.
 
 The earlier [native-curve-partial-fortyeight](../../repro/pump/native-curve-partial-fortyeight/README.md)
@@ -53,23 +62,31 @@ checkpoint added the one-native-curve path with fee flag 3, legacy Tokenkeg
 82/165-byte mint/account layouts and an ordinary 166-byte curve. Its retained
 56-case subset has 50 Pump CPI comparisons, six caller rejections, 11 successes
 and 112 verified signatures. Its one-curve restriction describes that historical
-checkpoint. Broader routing, other quote currencies, arbitrary hop counts,
-Token-2022/extensions, holder/cashback/Mayhem curves and synthetic completion
-remain unsupported by the current routing module. See the current package and
+checkpoint. Other quote currencies, arbitrary hop counts, Token-2022/extensions,
+holder/cashback/Mayhem curves, short-account resizing and completion remain outside
+the current validated routing scope. Explicit reconstruction domain fences are
+not asserted to be original guards. See the current package and
 [the earlier curve-run report](../../audit/pump/MULTI_HOP_CURVE_RECOVERY.md).
 
-All 38 existing differential suites (9,237 cases), the new 16-case nested suite
-and 28 established Surfpool runners were freshly executed on the same scratch ELF.
-The 66 established receipts and focused nested receipt bind that executable and
-its 37 actual compiler inputs. Repeated original-only acceptance of the same 16
-fixtures is recorded separately and adds no unique cases. Legacy embedded source
-maps remain incidental baseline checkout snapshots; quote-control and the new
-suites bind the actual adjacent build report. Main-path reuse requires complete
-executable identity. The differential receipts contain 15,902 transactions and
-24,320 verified signatures; Surfpool records 2,048 signed transactions and 2,980
-verified signatures. These are local synthetic fixtures, not live-network
-transactions. The rejected prior candidate and its missing 6105 diagnostic logs
-remain preserved as negative evidence.
+All 38 existing differential suites (9,237 cases), the sixteen accepted nested
+cases, the sixteen general-route cases and all 28 established Surfpool runners
+were freshly executed on the same combined scratch ELF. Its 37 actual compiler
+inputs are bound to the retained receipts. The clean main executable and symbols
+must equal that scratch output before saved evidence is reused. The differential
+receipts contain 15,934 transactions and 24,352 verified signatures; Surfpool
+records 2,048 transactions and 2,980 signatures. The extra original-only nested
+acceptance run is sixteen transactions / thirty-two signatures and adds no cases.
+Legacy embedded source maps remain incidental baseline checkout snapshots; the
+actual candidate build maps and canonical current-source checks are separate.
+These are local synthetic fixtures, not live-network transactions.
+
+The complete 1,840-byte BondingCurve serializer, 25 immediate target bodies and
+discriminator remain matched. The full nested walker and its 85 immediate callees
+remain normalized-identical to the accepted nested checkpoint. The route hop
+parser has all 33 immediate callees matched; four consumed account labels now
+match the original. Three parser instructions still exchange memcmp arguments.
+The 560-byte hop exit matches, but the full route context/handler/helper/data
+closure remains incomplete. These checks do not establish whole-program equality.
 
 The prior [bonding-curve-serializer-fortyeight](../../repro/pump/bonding-curve-serializer-fortyeight/README.md)
 checkpoint used a 1,534,768-byte executable with SHA-256
@@ -97,8 +114,8 @@ creator/protocol/buyback accounting, Token/Token2022 `transfer_checked` CPI,
 lamport transfers, and log/CPI TradeEvents. USDC quote paths transfer tokens through the supplied quote token program,
 use stable fee tiers, and zero legacy SOL-only event fields. A130-case suite
 checks locally synthesized quote accounts under SPL Token and Token2022, without
-claiming every token extension combination. Other v3 quote branches and curve
-routes outside the native one-curve and ordinary Tokenkeg two-curve paths above remain unsupported. SOL Mayhem trades suppress buyback,
+claiming every token extension combination. Other v3 quote branches remain unsupported; the recovered routing paths above
+have their own limited coverage. SOL Mayhem trades suppress buyback,
 holder-reward trades report the observed creator-fee-derived reward fields, and
 cashback coins are rejected with the original v3 error6094. FeeConfig parsing
 accounts for legacy allocation boundaries2512/4073/4097. The334-case expanded buy suite also compares complete recorded inner
