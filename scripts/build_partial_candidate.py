@@ -2,12 +2,14 @@
 """Build an incomplete program from source and retain an honest whole-file comparison."""
 import argparse,hashlib,json,os,pathlib,subprocess,shutil
 from compare import compare
+from build_source_manifest import source_manifest
 ROOT=pathlib.Path(__file__).resolve().parents[1]
-p=argparse.ArgumentParser();p.add_argument('--manifest',type=pathlib.Path,required=True);p.add_argument('--program',required=True,choices=['pump','pump_amm','pump_fees','mayhem']);p.add_argument('--artifact-name',required=True);p.add_argument('--tools-version',default='v1.52');p.add_argument('--output',type=pathlib.Path,required=True);a=p.parse_args()
+p=argparse.ArgumentParser();p.add_argument('--manifest',type=pathlib.Path,required=True);p.add_argument('--program',required=True,choices=['pump','pump_amm','pump_fees','mayhem']);p.add_argument('--artifact-name',required=True);p.add_argument('--tools-version',default='v1.52');p.add_argument('--output',type=pathlib.Path,required=True);p.add_argument('--extra-input',type=pathlib.Path,action='append',default=[],help='Additional repository-local path dependency or build asset to hash (repeatable)');a=p.parse_args()
 a.output=a.output.resolve();a.output.mkdir(parents=True,exist_ok=False);manifest=a.manifest.resolve();crate=manifest.parent
+workspace=pathlib.Path(subprocess.check_output(['cargo','locate-project','--workspace','--manifest-path',str(manifest),'--message-format','plain'],text=True,cwd=ROOT).strip()).parent
 sha=lambda b:hashlib.sha256(b).hexdigest()
 def sources():
- return {str(f.relative_to(ROOT)):sha(f.read_bytes()) for f in sorted(crate.rglob('*')) if f.is_file() and 'target' not in f.relative_to(crate).parts and (f.suffix=='.rs' or f.name in ['Cargo.toml','Cargo.lock'])}
+ return source_manifest(crate,workspace,ROOT,a.extra_input,cwd=ROOT)
 # Isolate both mutable build-sbf SDK links and rustup's `solana` alias.
 sdk_source=pathlib.Path(shutil.which('cargo-build-sbf')).resolve().parent/'sdk/sbf'
 sdk=a.output/'sdk';shutil.copytree(sdk_source,sdk,ignore=shutil.ignore_patterns('dependencies'))

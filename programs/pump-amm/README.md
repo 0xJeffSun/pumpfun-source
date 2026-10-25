@@ -5,12 +5,25 @@ disassembly. The remaining six published handlers are absent. This is not a
 replacement for the deployed program and does not match its bytes.
 
 ```sh
-cargo build-sbf --tools-version v1.52 --manifest-path programs/pump-amm/Cargo.toml \
-  --sbf-out-dir work/pump-amm-recovery/build
+work/test-env/bin/python scripts/prepare_locked_cargo_home.py \
+  --lockfile programs/pump-amm/Cargo.lock --output work/amm-replay-cargo-home
+CARGO_HOME="$PWD/work/amm-replay-cargo-home" work/test-env/bin/python scripts/build_partial_candidate.py \
+  --manifest programs/pump-amm/Cargo.toml --program pump_amm \
+  --artifact-name pump_amm_recovered.so --tools-version v1.44 --output work/amm-replay-build
 work/test-env/bin/python scripts/pump_amm_admin_differential.py \
-  --candidate work/pump-amm-recovery/build/pump_amm_recovered.so \
-  --output work/pump-amm-recovery/admin-differential.json
+  --candidate work/amm-replay-build/artifacts/pump_amm_recovered.so \
+  --output work/amm-replay-admin.json
 ```
+
+The v1.44 checkpoint uses a pinned, checksum-verified dependency graph and a clean
+main-path build. The previous v1.52 cashback checkpoint remains preserved. Both
+the compiler and lockfile changed, so this is not a compiler-only experiment or
+proof of the historical compiler/dependencies. The 32 implemented handlers and
+14,635 passing comparisons are unchanged. See
+[`repro/pump_amm/compiler-v144`](../../repro/pump_amm/compiler-v144/README.md) and
+[`audit/pump_amm/COMPILER_V144.md`](../../audit/pump_amm/COMPILER_V144.md) for full
+build provenance, artifact identity and limits. Cache preparation requires the
+pinned archives to be locally available; it does not download them.
 
 Additional SBF suites are `scripts/pump_amm_buyback_differential.py`,
 `scripts/pump_amm_fee_config_differential.py`,

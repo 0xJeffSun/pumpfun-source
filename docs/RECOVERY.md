@@ -115,3 +115,7 @@ specializations are associated with Token2022; their order remains unresolved.
 The donation relay embeds a [source-repository attribution](../repro/pump/dependency-exactness/relay-source-attribution.json),
 but the repository returned 404 through the current connection. No exact source
 revision or relay rebuild has been recovered.
+
+## PumpSwap compiler compatibility
+
+The [v1.44 main-path build](../repro/pump_amm/compiler-v144/README.md) reproduces the same candidate as the validated scratch build and retains all 14,635 passing comparisons. The Rust implementation is unchanged; compatible lockfile pins and the selected compiler changed together. The 889,472-byte output has the captured machine/flags family, but both complete-file and parsed-ELF comparisons differ. This is a reproducible candidate configuration, not attribution of the historical compiler or dependency graph.
