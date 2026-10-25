@@ -32,3 +32,7 @@ retain every mismatch. Security remains incomplete, and the checkpoint branch
 remains separate from overlapping remote-main work.
 
 The combined saved-evidence runner initially omitted the repository argument for the new Mayhem report. The failed invocation and packet list are retained under verification; the corrected complete run passed. No target, source or binary was changed to repair that wiring.
+
+## Hosted validation follow-up
+
+Pass 18 finished with 11 of 12 jobs passing. The remaining job passed its 2,299 comparisons, then rejected an outdated source-manifest binding before the extra nested-route candidate replay. The CI binding is repaired with an extracted, unchanged harness and the current successful main-build source map. The same 16 nested cases passed locally with 64 verified signatures. Hosted acceptance for the follow-up is still pending. See [the retained follow-up](https://github.com/lalalune/pumpfun-source/tree/codex/layered-reconstruction/repro/layered-passes/pass-19/ci-followup).

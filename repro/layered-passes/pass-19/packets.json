@@ -97,5 +97,15 @@
       "verify.py"
     ],
     "runtime_args": []
+  },
+  {
+    "path": "repro/layered-passes/pass-19/ci-followup",
+    "manifest": "manifest.json",
+    "sha256": "2c8d10684548af4cdf66b26228f67895a063824a932028b46ee25edbc17f42ef",
+    "command": [
+      "verify.py",
+      "--repo",
+      "."
+    ]
   }
 ]

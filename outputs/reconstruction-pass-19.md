@@ -50,3 +50,7 @@ The [prior dependency review](https://github.com/lalalune/pumpfun-source/blob/co
 | All | Unknown transitive data extents, indirect calls, precise historical source/compiler/dependencies and incomplete security assessment. Normalized matching alone closes none of these globally. |
 
 The exact incomplete instruction names and stopped-scope dispositions remain in [COMPLETION.md](https://github.com/lalalune/pumpfun-source/blob/codex/layered-reconstruction/docs/COMPLETION.md). Published source contracts and finite regressions do not establish exhaustive semantics. The before/after snapshot, current index, package seals, build identities and saved receipt verification make this pass reviewable without claiming completion.
+
+## Hosted validation follow-up
+
+Pass 18 finished with 11 of 12 jobs passing. The remaining job passed its 2,299 comparisons, then rejected an outdated source-manifest binding before the extra nested-route candidate replay. The CI binding is repaired with an extracted, unchanged harness and the current successful main-build source map. The same 16 nested cases passed locally with 64 verified signatures. Hosted acceptance for the follow-up is still pending. See [the retained follow-up](https://github.com/lalalune/pumpfun-source/tree/codex/layered-reconstruction/repro/layered-passes/pass-19/ci-followup).

@@ -21,6 +21,7 @@ jobs:
               python repro/pump_fees/initializer-inline-runtime/verify.py
               python scripts/verify_recovered_builds.py
               python -B repro/layered-passes/pass-19/verify_review_applicability.py --repo .
+              python -B repro/layered-passes/pass-19/ci-followup/verify.py --repo .
               python -B repro/pump/wide-runtime-attribution/verify.py --repo .
               python scripts/pump_verify_dependencies.py
               python repro/pump/metaplex-candidate-build-11/verify.py
@@ -273,9 +274,10 @@ jobs:
               Path('work/pump-group-4.json.gz').write_bytes(gzip.compress((json.dumps(report,separators=(',',':'))+'\n').encode(),mtime=0))
               print(json.dumps({'group':'pump-4','cases':report['case_count'],'suites':list(suites),'mismatches':[]}))
               PY
-              python repro/pump/buy-mode-order-fortyeight/runtime-layer/nested-harness/proposed/pump_nested_general_differential.py --output work/pump-nested-original.json.gz
-              python repro/pump/buy-mode-order-fortyeight/runtime-layer/nested-harness/proposed/pump_nested_general_differential.py --candidate repro/pump/admin-cto-typed-main-fortyeight/main/candidate.so --build-report repro/pump/admin-cto-typed-main-fortyeight/main/build-comparison.json --accepted-original work/pump-nested-original.json.gz --output work/pump-general-nested.json.gz
-              python repro/pump/buy-mode-order-fortyeight/runtime-layer/nested-harness/proposed/verify_saved.py work/pump-general-nested.json.gz
+              python -B scripts/prepare_pump_nested_runtime.py --output work/pump-nested-current
+              python work/pump-nested-current/proposed/pump_nested_general_differential.py --output work/pump-nested-original.json.gz
+              python work/pump-nested-current/proposed/pump_nested_general_differential.py --candidate repro/pump/admin-cto-typed-main-fortyeight/main/candidate.so --build-report repro/pump/admin-cto-typed-main-fortyeight/main/build-comparison.json --accepted-original work/pump-nested-original.json.gz --output work/pump-general-nested.json.gz
+              python work/pump-nested-current/proposed/verify_saved.py work/pump-general-nested.json.gz
               python scripts/verify_current_bindings.py pump
           - suite: pump-amm
             commands: |
