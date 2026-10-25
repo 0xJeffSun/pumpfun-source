@@ -423,3 +423,8 @@ Relay build07 implements the recovered owned error model and passes all twelve u
 ## Layered pass 11: buy rejection order and swap-sell error
 
 [Pass 11](../repro/layered-passes/pass-11/README.md) integrates the reviewed Pump complete-before-cashback order and Mayhem SellPumpSwap typed zero-divisor error. Both main builds equal their tested scratch files, including symbols. All prior corpus and diagnostic limits remain explicit. The AMM formatter review identifies a supported dependency-source proposal; its separate build remains outside this pass's accepted artifacts.
+
+
+## Historical source-path experiment
+
+The [controlled Pump48 path-remap experiment](../repro/pump/path-remap-fortyeight/README.md) preserves its original source snapshot and compiler inputs. It matches sampled path encoding, not executable bytes or the historical build recipe. Its candidate is historical and is not the merged-source candidate.
