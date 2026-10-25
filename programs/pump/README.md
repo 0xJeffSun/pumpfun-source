@@ -11,3 +11,8 @@ The unchanged9269 differential comparisons and1024 Surfpool comparisons are pres
 Original typed FeeConfig admission and whitelist's four-zero bypass remain unintegrated in the current unchecked/late-decoded fee path. Broader buy settlement/error order, volume, events, original source/build provenance and full security assessment remain incomplete. All stopped scopes remain stopped.
 
 Earlier full recovery history remains in the [connected decoder/preparation README](../../repro/pump/curve-preparation-fortyeight/README.md) and the [active fee-basis checkpoint README](../../repro/pump/buy-fee-basis-fortyeight/README.md). Those immutable reports retain their original source, runtime and provenance limitations.
+
+
+## Combined PR integration
+
+The [combined evidence package](../../repro/pump/merged-prs-20261025/README.md) supersedes the executable named above for current source. It adds bounded incentive claims, admin incentive scheduling, synthetic-caller Mayhem virtual parameters and richer curve routes while preserving later upstream native-route validation. Two clean v1.44 builds and fresh bounded replays are bound there. Earlier checkpoint counts and Surfpool results remain historical; full source identity, deployed Mayhem reachability and complete behavior remain unproved.
