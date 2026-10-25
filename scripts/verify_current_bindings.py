@@ -119,6 +119,9 @@ def main():
     if args.program == "pump" and artifact == "repro/pump/buy-fee-basis-main-fortyeight/main/candidate.so":
         subprocess.run([sys.executable, "-B", str(ROOT / "repro/pump/buy-fee-basis-main-fortyeight/verify.py"), "--current-main", str(ROOT)], check=True)
         return
+    if args.program == "pump" and artifact == "repro/pump/creator-full-curve-main-fortyeight/main/candidate.so":
+        subprocess.run([sys.executable, "-B", str(ROOT / "repro/pump/creator-full-curve-main-fortyeight/verify.py"), "--current-main", str(ROOT)], check=True)
+        return
     if args.program == "pump" and artifact == "repro/pump/buy-mode-order-main-fortyeight/main/candidate.so":
         subprocess.run([sys.executable, "-B", str(ROOT / "repro/pump/buy-mode-order-main-fortyeight/verify.py"), "--current-main", str(ROOT)], check=True)
         return

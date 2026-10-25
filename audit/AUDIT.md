@@ -385,3 +385,5 @@ Pass 12 restores a supported dependency algorithm and its typed failure paths, w
 Pass14 reviews the Relay IDL header error lifetime from I/O destruction through owned reporting/lowering. The unchanged ordinary corpus passes but does not validate every changed failure arm. No full original, historical-build or security-audit acceptance follows.
 
 Pass15 restores observed optional-error conversion and account ownership/lifetimes. Finite corpus and full selected function matches do not establish full recursive data identity, untested error arms, or complete security acceptance. Known diagnostic gaps remain visible.
+
+Pass16 adds fresh source-coverage reports for Pump, Fees, AMM and Mayhem under [security-reviews/pass-16](../repro/security-reviews/pass-16/README.md). The reports distinguish candidate-source consequences and conditional concerns from deployed behavior. AMM review binds the preceding context checkpoint; its sole subsequent compiled-source delta is independently retained claim overflow ordering. Full security acceptance, excluded domains and transitive external-program review remain open.

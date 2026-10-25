@@ -435,3 +435,7 @@ The [current Relay source checkpoint](../repro/donation-relay/source-build-09-id
 ## Layered pass15: Fees withdrawal and AMM claim ownership
 
 Both source corrections have single pinned builds, unchanged corpus checks, portable saved-evidence verification and exact main/scratch executable+symbol identity. [Pass15](../repro/layered-passes/pass-15/README.md) retains every byte mismatch and full source limitations, including the AMM handler and recursive parser graph gaps.
+
+## Layered pass16: Pump creator codec and AMM claim ordering
+
+Three Pump creator paths use the already-recovered full BondingCurve account type with source-supported log and mutation order. AMM claim computes its fallible total before mutating accumulator fields. [Pass16](../repro/layered-passes/pass-16/README.md) binds the one-build source corrections to all unchanged receipts, complete before/after ledgers and exact main/scratch executable and symbol equality. Whole-original equality remains unresolved.

@@ -208,3 +208,19 @@ original windows. Parser recursive graph correspondence and the wrapper's handle
 target remain unresolved; normalized wrapper instructions do not prove transitive
 equivalence. No new runtime case or initializer-success fixture was added. Full
 original ELF identity and broader reconstruction obligations remain open.
+
+
+## Claim overflow ordering checkpoint
+
+The [overflow-order checkpoint](../../repro/pump_amm/claim-overflow-order-v144/README.md)
+computes the new claimed total before clearing unclaimed rewards. Static evidence
+shows the original rejects addition overflow before accumulator mutation, and the
+compiled correction restores that order. The clean main executable and symbol ELF
+equal the tested scratch build. Its executable SHA256 is
+`eeca5a51c40489452a71b698e7d7ff5bf3cc6c5002659807133907a4cb5eb5e8`.
+
+All 25 unchanged suites passed 17,462 comparisons; saved checks verify 35,418
+signatures. No new case, probe or compiler variant was added. The full inventory
+remains at 483 normalized original matches and 302 unmatched original windows.
+The claim handler remains a mismatch, and no persisted-state difference is claimed
+for transaction rollback. Whole original ELF equality remains unresolved.
