@@ -140,6 +140,7 @@ struct StageTrade {
     creator_bps: u64,
 }
 
+#[inline(never)]
 fn load_stage<'info>(group: &[AccountInfo<'info>]) -> Result<CurveStage<'info>> {
     let base_mint = group[0].clone();
     let quote_mint = group[1].clone();
@@ -178,6 +179,7 @@ fn load_stage<'info>(group: &[AccountInfo<'info>]) -> Result<CurveStage<'info>> 
                     curve, native_quote })
 }
 
+#[inline(never)]
 fn calculate_stage(stage: &mut CurveStage<'_>, amount: u64, buy: bool, flag: u8,
                    config: &FeeConfig, buyback_bps: u64) -> Result<StageTrade> {
     require!(amount > 0, PumpError::SellZeroAmount);
@@ -229,6 +231,7 @@ fn calculate_stage(stage: &mut CurveStage<'_>, amount: u64, buy: bool, flag: u8,
                     protocol_bps: rates.protocol_fee_bps, creator_bps: rates.creator_fee_bps })
 }
 
+#[inline(never)]
 fn save_stage(stage: &CurveStage<'_>) -> Result<()> {
     if stage.curve_info.data_len() < 166 { stage.curve_info.realloc(166, false)?; }
     let mut data = stage.curve_info.try_borrow_mut_data()?;
@@ -236,6 +239,7 @@ fn save_stage(stage: &CurveStage<'_>) -> Result<()> {
     Ok(())
 }
 
+#[inline(never)]
 fn stage_event(stage: &CurveStage<'_>, trade: &StageTrade, buy: bool,
                user: Pubkey, timestamp: i64, buyback_bps: u64) -> TradeEvent {
     let curve = &stage.curve;
@@ -263,13 +267,25 @@ fn stage_event(stage: &CurveStage<'_>, trade: &StageTrade, buy: bool,
     }
 }
 
+// Keep event serialization in a separate SBF frame from the two live hops.
+#[inline(never)]
+fn emit_stage_event<'info>(ctx: &Context<'_, '_, '_, 'info, MultiHopCurve<'info>>,
+    stage: &CurveStage<'info>, trade: &StageTrade, buy: bool,
+    user: Pubkey, timestamp: i64, buyback_bps: u64) -> Result<()> {
+    let event = stage_event(stage, trade, buy, user, timestamp, buyback_bps);
+    emit!(event.clone());
+    emit_cpi!(event);
+    Ok(())
+}
+
+#[inline(never)]
 fn execute_two_curve<'info>(
     ctx: Context<'_, '_, '_, 'info, MultiHopCurve<'info>>,
     amount_in: u64,
     hop_fees: Vec<u8>,
 ) -> Result<CurveRunResult> {
     require!(hop_fees.len() == 2, PumpError::MultiHopHopFeesMismatch);
-    let mut first = load_stage(&ctx.remaining_accounts[..5])?;
+    let mut first = Box::new(load_stage(&ctx.remaining_accounts[..5])?);
     let source_mint = token_mint(&ctx.accounts.source.to_account_info())?;
     let buy = source_mint == WSOL;
     if buy {
@@ -283,7 +299,7 @@ fn execute_two_curve<'info>(
     }
     let fee_info = ctx.accounts.fee_config.to_account_info();
     let fee_data = fee_info.try_borrow_data()?;
-    let config = read_fees(&fee_data)?;
+    let config = Box::new(read_fees(&fee_data)?);
     drop(fee_data);
     let buyback_bps = ctx.accounts.global.buyback_basis_points;
     let timestamp = Clock::get()?.unix_timestamp;
@@ -304,10 +320,8 @@ fn execute_two_curve<'info>(
             token::sync_native(CpiContext::new(ctx.accounts.token_program.to_account_info(),
                 SyncNative { account: ctx.accounts.buyback_fee_recipient.to_account_info() }))?;
         }
-        let first_event = stage_event(&first, &first_trade, true, user, timestamp, buyback_bps);
-        emit!(first_event.clone());
-        emit_cpi!(first_event);
-        let mut second = load_stage(&ctx.remaining_accounts[5..10])?;
+        emit_stage_event(&ctx, &first, &first_trade, true, user, timestamp, buyback_bps)?;
+        let mut second = Box::new(load_stage(&ctx.remaining_accounts[5..10])?);
         require!(!second.native_quote, PumpError::MultiHopDiscontinuousPath);
         require_keys_eq!(second.curve.quote_mint, first.base_mint.key(),
                          PumpError::MultiHopDiscontinuousPath);
@@ -334,9 +348,7 @@ fn execute_two_curve<'info>(
                 from: second.base_vault.clone(), mint: second.base_mint.clone(),
                 to: ctx.accounts.destination.to_account_info(), authority: second.curve_info.clone(),
             }, &[second_seeds]), second_trade.amount_out, mint_decimals(&second.base_mint)?)?;
-        let second_event = stage_event(&second, &second_trade, true, user, timestamp, buyback_bps);
-        emit!(second_event.clone());
-        emit_cpi!(second_event);
+        emit_stage_event(&ctx, &second, &second_trade, true, user, timestamp, buyback_bps)?;
         Ok(CurveRunResult { amount_out: second_trade.amount_out,
                             buyback_fee: add(first_trade.buyback_fee, second_trade.buyback_fee)? })
     } else {
@@ -349,10 +361,8 @@ fn execute_two_curve<'info>(
                 authority: ctx.accounts.source_authority.to_account_info(),
             }), first_trade.base, mint_decimals(&first.base_mint)?)?;
         save_stage(&first)?;
-        let first_event = stage_event(&first, &first_trade, false, user, timestamp, buyback_bps);
-        emit!(first_event.clone());
-        emit_cpi!(first_event);
-        let mut second = load_stage(&ctx.remaining_accounts[5..10])?;
+        emit_stage_event(&ctx, &first, &first_trade, false, user, timestamp, buyback_bps)?;
+        let mut second = Box::new(load_stage(&ctx.remaining_accounts[5..10])?);
         require!(second.native_quote, PumpError::MultiHopDiscontinuousPath);
         require_keys_eq!(first.curve.quote_mint, second.base_mint.key(),
                          PumpError::MultiHopDiscontinuousPath);
@@ -379,9 +389,7 @@ fn execute_two_curve<'info>(
         }
         second.curve_info.sub_lamports(second_trade.amount_out)?;
         ctx.accounts.user.add_lamports(second_trade.amount_out)?;
-        let second_event = stage_event(&second, &second_trade, false, user, timestamp, buyback_bps);
-        emit!(second_event.clone());
-        emit_cpi!(second_event);
+        emit_stage_event(&ctx, &second, &second_trade, false, user, timestamp, buyback_bps)?;
         Ok(CurveRunResult { amount_out: second_trade.amount_out,
                             buyback_fee: add(first_trade.buyback_fee, second_trade.buyback_fee)? })
     }
@@ -444,7 +452,7 @@ pub fn execute<'info>(
         / curve.virtual_token_reserves as u128;
     let fee_info = ctx.accounts.fee_config.to_account_info();
     let fee_data = fee_info.try_borrow_data()?;
-    let config = read_fees(&fee_data)?;
+    let config = Box::new(read_fees(&fee_data)?);
     drop(fee_data);
     let mut rates = selected_fees(&config, cap, native_quote)?;
     if curve.creator_fee_bps > 0 { rates.creator_fee_bps = curve.creator_fee_bps; }
