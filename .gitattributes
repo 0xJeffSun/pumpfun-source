@@ -130,3 +130,8 @@ repro/pump/remaining-guards-main-fortyeight/promotion-control/baseline/programs/
 repro/pump/remaining-guards-main-fortyeight/promotion-control/baseline/programs/pump/src/create_v2.rs -whitespace
 repro/pump/remaining-guards-main-fortyeight/promotion-control/proposed-source/programs/pump/src/cashback.rs -whitespace
 repro/pump/remaining-guards-main-fortyeight/promotion-control/proposed-source/programs/pump/src/create_v2.rs -whitespace
+
+# Exact frozen source and incoming evidence retained after reconciliation.
+programs/donation-relay/src/dispatch.rs -whitespace
+repro/upstream-reconciliation/main-2f14c36c/incoming/programs/pump/src/create_v2.rs -whitespace
+repro/upstream-reconciliation/main-2f14c36c/selected-restore/programs/pump/src/create_v2.rs -whitespace
