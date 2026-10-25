@@ -1,3 +1,5 @@
+> **⚠ RETRACTED (compiler): this document pins v1.43 for pump/pump_amm/pump_fees — that is WRONG.** The ELF `e_machine` header proves v1.44 (original=263 EM_SBF; v1.43 build=247 EM_BPF; v1.44 build=263). See COMPILER-CORRECTION.md. The non-compiler findings (SDK coverage, token-incentive recovery, version boundaries, the lost-source byte-identicality limit) still stand.
+
 # Reverse-engineering the build recipe from binary evidence
 
 User directive (2026-10-25): no stored recipe exists; reverse-engineer it from the
