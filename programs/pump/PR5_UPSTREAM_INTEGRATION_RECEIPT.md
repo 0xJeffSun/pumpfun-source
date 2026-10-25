@@ -7,3 +7,10 @@ Two independent clean-target Agave 2.1.21 SBF platform-tools v1.44 builds used i
 Signed offline target/candidate comparisons on that **exact ELF** match: upstream native single-curve 56/56 (50 reach Pump), upstream ordinary two-curve 20/20 (18 reach Pump), recovered core 34/34, recovered route matrix 72/72, inherited QuoteControl 507/507 and volume sync 341/341. The six suites comprise **1,030 paired cases and 2,060 verified outer signatures**. Other inherited Pump suites and Surfpool were not rerun on this ELF; the old 9,237-case upstream packet and prior PR #5 packet belong to different ELFs.
 
 The [current integration package](../../repro/pump/pr5-517-integration/README.md) retains the candidate ELF, paired build attempts/comparisons/logs, six raw compressed receipts, package-specific harnesses, hash index and read-only verifier. The earlier [PR #5 checkpoint](../../repro/pump/pr5-current-upstream-integration/README.md) remains historical for its 1,635,144-byte `4c80e0c7…` ELF. This source is not a byte-identical or deployable replacement. No public transaction or real funds were used.
+
+A [controlled path-remap experiment](../../repro/pump/pr5-517-path-remap/README.md)
+holds the 37 source and 53 SDK hashes fixed and adds only
+`--remap-path-prefix=src=programs/pump/src` to the Pump crate's Rustc invocation.
+It makes 91 Pump-attributed source-location path encodings match the target,
+but only one location also matches its line and column. `.text` and
+relocation counts do not change; the remapped ELF remains 254,872 bytes short.
