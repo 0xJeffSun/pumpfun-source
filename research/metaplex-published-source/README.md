@@ -136,4 +136,19 @@ revision used, or the provenance of the deployed program. The 18 recovered files
 are comparison targets, not newly authenticated historical source. Later client
 releases, other crate names, private forks and unpublished archives are outside
 this search. No candidate was built or promoted; the existing byte gaps remain
-unresolved. Original archives preserve upstream authorship and license files.
+unresolved.
+
+## Third-party licensing
+
+The files under `archives/` are unmodified third-party crate distributions,
+redistributed byte-for-byte for offline verification. They are not covered by
+this repository's own license; each archive remains under the license its
+`Cargo.toml` declares, as recorded in `crate-metadata.json`:
+
+| Versions | Declared license | License text inside the archive |
+| --- | --- | --- |
+| `1.1.0`, `1.2.0`-`1.2.5` (7) | `Apache-2.0` | none; SPDX identifier only |
+| `1.2.6`-`1.5.0` (17) | `AGPL-3.0` | none; SPDX identifier only |
+| `1.6.0`-`2.0.0` (33) | Metaplex NFT Open Source License (`license-file`) | `LICENSE` |
+
+Authorship metadata is preserved in each archive's `Cargo.toml`.
