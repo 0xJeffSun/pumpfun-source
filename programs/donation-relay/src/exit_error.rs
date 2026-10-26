@@ -11,11 +11,10 @@ pub fn account_discriminator_not_found() -> Error { ErrorCode::AccountDiscrimina
 // constructor. These values describe that program's Source object; they do not
 // assert that this independently written Rust file occupied the original path.
 pub(crate) fn invalid_message_length() -> Error {
-    let code = crate::business_error_codes::ErrorCode::InvalidMessageLength;
     AnchorError {
-        error_name: code.name(),
-        error_code_number: code.into(),
-        error_msg: code.to_string(),
+        error_name: crate::business_error_codes::ErrorCode::InvalidMessageLength.name(),
+        error_code_number: crate::business_error_codes::ErrorCode::InvalidMessageLength.into(),
+        error_msg: crate::business_error_codes::ErrorCode::InvalidMessageLength.to_string(),
         error_origin: Some(ErrorOrigin::Source(Source {
             filename: "programs/contracts/src/tools/checks.rs",
             line: 55,
@@ -24,11 +23,10 @@ pub(crate) fn invalid_message_length() -> Error {
     }.into()
 }
 pub(crate) fn invalid_bps() -> Error {
-    let code = crate::business_error_codes::ErrorCode::InvalidBps;
     AnchorError {
-        error_name: code.name(),
-        error_code_number: code.into(),
-        error_msg: code.to_string(),
+        error_name: crate::business_error_codes::ErrorCode::InvalidBps.name(),
+        error_code_number: crate::business_error_codes::ErrorCode::InvalidBps.into(),
+        error_msg: crate::business_error_codes::ErrorCode::InvalidBps.to_string(),
         error_origin: Some(ErrorOrigin::Source(Source {
             filename: "programs/contracts/src/tools/checks.rs",
             line: 192,
@@ -39,11 +37,10 @@ pub(crate) fn invalid_bps() -> Error {
 // The checked IDL header constructs Source before boxing, then replaces it
 // with an allocated IdlAccount name. The outer parser replaces that name again.
 pub(crate) fn account_discriminator_mismatch() -> Error {
-    let code = ErrorCode::AccountDiscriminatorMismatch;
     AnchorError {
-        error_name: code.name(),
-        error_code_number: code.into(),
-        error_msg: code.to_string(),
+        error_name: ErrorCode::AccountDiscriminatorMismatch.name(),
+        error_code_number: ErrorCode::AccountDiscriminatorMismatch.into(),
+        error_msg: ErrorCode::AccountDiscriminatorMismatch.to_string(),
         error_origin: Some(ErrorOrigin::Source(Source {
             filename: "programs/contracts/src/lib.rs",
             line: 36,
