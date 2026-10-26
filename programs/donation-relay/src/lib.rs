@@ -13,3 +13,5 @@ pub enum Error { Code(u32), Owned(generated_exit::exit_error::Error), IncorrectP
 pub type R<T> = Result<T, Error>;
 pub fn require(ok:bool,code:u32)->R<()> {if ok {Ok(())} else {Err(Error::Code(code))}}
 pub fn overflow()->Error {Error::Code(6008)}
+
+pub mod business_error_codes;

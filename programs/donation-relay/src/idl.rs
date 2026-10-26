@@ -9,8 +9,8 @@ use crate::idl_runtime::IdlRuntime;
 pub const DISC: [u8; 8] = [24, 70, 98, 191, 58, 144, 123, 158];
 const SYSTEM: Key = [0; 32];
 const HEADER: usize = 44;
-// Captured original origin programs/contracts/src/lib.rs:36 is evidence only.
-// The new source does not claim that original path/line; see diagnostic-gaps.json.
+// Original error-origin data is explicitly reconstructed in the owned3002
+// constructor. This does not attribute this new source file to that location.
 
 pub type ProgramFailure = solana_program::program_error::ProgramError;
 #[derive(Debug)]
@@ -111,8 +111,12 @@ fn checked_header(data: &[u8]) -> I<Header> {
         });
     }
     if data[..8] != DISC {
-        let mut e = code(3002); e.account = Some("IdlAccount");
-        return Err(e); // enclosing generated parser replaces account name.
+        let owned = crate::generated_exit::exit_error::account_discriminator_mismatch()
+            .with_account_name("IdlAccount");
+        return Err(IdlError {
+            cause: Cause::Owned(owned),
+            account: None, keys: None, values: None, origin: None,
+        }); // enclosing generated parser replaces and drops the owned account name.
     }
     unchecked_header(data)
 }
