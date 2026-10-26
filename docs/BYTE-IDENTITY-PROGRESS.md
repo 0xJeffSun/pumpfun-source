@@ -4,6 +4,16 @@ The [full audit](RECONSTRUCTION-AUDIT.md) and its generated tables retain their
 explicit `1463bd22` snapshot. This log records later research without silently
 changing that baseline or promoting new selected artifacts.
 
+## Relay: 13 → 12 unmatched normalized windows
+
+The [mint-fee predicate study](../repro/donation-relay/mint-fee-pair-recovery/README.md)
+recovers the complete 3,440-byte mint-policy window 106 by expressing the same
+zero-fee test as a tuple comparison. Only three register-operand bytes change in
+the full stripped output. No previous match is lost. The current candidate has
+**480/492 normalized windows**, **127 raw local matches**, and **12 unmatched**,
+with all 536 records / 534 unique fixtures passing fresh replay. The separate
+serial-condition trial is retained as a negative result.
+
 ## Relay: 22 → 13 unmatched normalized windows
 
 The [framework/sysroot/share-error study](../repro/donation-relay/framework-sysroot-recovery/README.md)
