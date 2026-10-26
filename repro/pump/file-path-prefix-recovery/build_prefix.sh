@@ -21,10 +21,30 @@ if [[ -e "$OUT" || -L "$OUT" ]]; then
     echo "Output already exists; preserve it and choose a fresh path: $OUT" >&2
     exit 2
 fi
+# Resolve an explicit target relative to the caller, before changing workspace.
+# Both output and target must be fresh; no prior build cache is adopted.
+if [[ -n "${CARGO_TARGET_DIR:-}" ]]; then
+    TARGET_PARENT="$(dirname -- "$CARGO_TARGET_DIR")"
+    TARGET_NAME="$(basename -- "$CARGO_TARGET_DIR")"
+    TARGET_PARENT="$(cd "$TARGET_PARENT" && pwd -P)"
+    CARGO_TARGET_DIR="$TARGET_PARENT/$TARGET_NAME"
+    if [[ -e "$CARGO_TARGET_DIR" || -L "$CARGO_TARGET_DIR" ]]; then
+        echo "Target already exists; preserve it and choose a fresh path: $CARGO_TARGET_DIR" >&2
+        exit 2
+    fi
+    if [[ "$CARGO_TARGET_DIR" == "$OUT" ]]; then
+        echo "Target must be distinct from the fresh output: $CARGO_TARGET_DIR" >&2
+        exit 2
+    fi
+else
+    CARGO_TARGET_DIR="$OUT/target"
+fi
+export CARGO_TARGET_DIR
 mkdir -- "$OUT"
-# Keep the unstripped (symbol) build, which the window scorer needs, under OUT;
+# Exclusive directory creation also rejects a target created after admission.
+mkdir -- "$CARGO_TARGET_DIR"
+# Keep the unstripped (symbol) build under this fresh target directory;
 # the throwaway workspace is removed on exit.
-: "${CARGO_TARGET_DIR:=$OUT/target}"; export CARGO_TARGET_DIR
 : "${RUSTUP_TOOLCHAIN:=1.87-x86_64-unknown-linux-gnu}"; export RUSTUP_TOOLCHAIN
 WS="$(mktemp -d)"; trap 'rm -rf "$WS"' EXIT; mkdir -p "$WS/programs"
 cp -r "$REPO/programs/pump" "$WS/programs/pump"

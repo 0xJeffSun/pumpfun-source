@@ -8,7 +8,7 @@ Linux (WSL) workspace-member build from
 
 | Category | Count | Body bytes | Meaning |
 | --- | ---: | ---: | --- |
-| `metadata_only` | **72** | 96,720 | Differs from the closest same-size reconstruction function only in store-immediate fields; for these 72 those fields are the Anchor error `Source { filename, line }` (one window also has a different error code, see below). |
+| `metadata_only` (historical heuristic label) | **72** | 96,720 | Store-immediate-only differences: 71 reported origin-only windows, plus `0x60260` with a program error-code difference (6025 vs 6109). The aggregate is not 72 metadata-only semantic matches. |
 | `body_diff` | 233 | — | Same size, genuinely different body — real logic/codegen recovery. |
 | `no_same_size_candidate` | 192 | — | No reconstruction function of that size — missing, or compiled to a different size. |
 
@@ -26,11 +26,13 @@ instructions: `line!()` as a `u32`, and the `file!()` `&str` length as a `u64`
 
 The opcode test alone is a heuristic, because any program constant can sit in
 those immediate fields. Review therefore checked the 72 windows slot by slot.
-Every differing `stw` is the `line!()` slot paired with a `file!()`-length
-store (same base register, length slot + 8), and every differing `stdw` is a
-file-length store. One window, `0x60260`, additionally differs in its program
-error code (6025 vs 6109). So for 71 of the 72 the logic is byte-identical
-and only the error origin differs; per-window detail is in
+For the 71 reported origin-only windows, differing `stw` values were identified
+as `line!()` slots paired with `file!()`-length stores (same base register,
+length slot + 8), and differing `stdw` values as file-length stores. The
+remaining window, `0x60260`, additionally differs in its program error code
+(6025 vs 6109). That is an error-behavior divergence, not source metadata.
+These are normalized local-body observations, not proof of transitive logic
+equivalence; per-window detail is in
 [`../metadata-callsite-map`](../metadata-callsite-map/REPORT.md).
 
 All 72 have Hamming distance <= 3 (11 at 1, 9 at 2, 52 at 3), the shape of a
@@ -43,20 +45,22 @@ were disassembled (and re-checked in review):
 
 ## What this means for recovery effort
 
-- **72 windows (about 96 KB of logic that already matches)** need no logic
-  work, only the source *layout* the original compiler saw: each error site at
-  its original file path **and** original line number. The file paths are known
-  (they are embedded in the original); the lines require source laid out
-  line-for-line like the original. A full flip needs both.
-- **233 `body_diff`** are the true logic/codegen frontier — same function size,
-  different body.
-- **192 `no_same_size_candidate`** are the largest gaps. A missing size is not
-  by itself proof of a missing source function; it can also be a function
-  compiled to a different size.
+- **71 reported origin-only windows** are candidates for source-layout recovery.
+  Their normalized differences were attributed to original file/line metadata;
+  this does not establish transitive semantics or authorize forced coordinates.
+- **One additional window, `0x60260`,** differs in program error code 6025 versus
+  6109. It needs error-behavior recovery as well as any origin recovery. The
+  retained 96,720-byte aggregate includes this window and must not be described
+  as entirely matching logic.
+- **233 `body_diff`** windows have a same-size candidate with other body
+  differences.
+- **192 `no_same_size_candidate`** windows lack a same-size function. A missing
+  size alone does not prove a missing source function; codegen can alter size.
 
-So of the 497, only about 14% are "logic already correct, layout wrong"; the
-remaining 86% (425 windows) need genuine function recovery. This bounds how far
-source-layout fixes alone can go and points the hard work at the 425.
+Thus the reported split is 71 origin-only candidates and 426 remaining windows
+(1 error-code divergence + 233 body differences + 192 missing/mis-sized).
+The retained JSON and script keep the historical heuristic label/count of72;
+this report qualifies its interpretation without rewriting the measurements.
 
 ## Reproduce
 
