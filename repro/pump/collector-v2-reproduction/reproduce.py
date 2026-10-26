@@ -14,6 +14,8 @@ import tarfile
 import time
 import tomllib
 
+import offline_inputs
+
 ROOT = Path(__file__).resolve().parents[3]
 PACKAGE = 'repro/pump/cto-shared6093-v2-signed-acceptance'
 SEAL = '4bf6c1ee2403acde6d6f57fcea8c0c1a856ff406130ec28233652ae077bfa1c2'
@@ -179,14 +181,14 @@ def preflight(prepared, output, repository=ROOT, *, fresh=True):
     checked(prepared / 'rustup-seed/toolchains/1.94.0-aarch64-apple-darwin/bin/cargo', HOST_CARGO)
     checked(prepared / 'rustup-seed/toolchains/1.94.0-aarch64-apple-darwin/bin/rustc', HOST_RUSTC)
     host_selection(prepared / 'rustup-seed')
-    checked(Path.home() / '.cache/solana/v1.52/platform-tools/llvm/bin/llvm-objcopy', STRIP)
+    install = offline_inputs.install_inputs()
     reject_selectors((output / 'repo/programs/pump', prepared, repository))
     for name in ('config', 'config.toml', 'credentials', 'credentials.toml'):
         require(not (prepared / 'cargo-home' / name).exists(), 'unexpected Cargo home configuration')
     deps = dependencies(prepared / 'cargo-home', package / 'build-input-source/programs/pump/Cargo.lock')
     return {'source37': sources, 'helpers': helpers, 'sdk_files': len(expected_sdk),
             'compiler_regular_files': compiler['regular_files'],
-            'compiler_symlinks': compiler['symlinks'], 'dependencies': deps}
+            'compiler_symlinks': compiler['symlinks'], 'dependencies': deps, 'sdk_install_inputs': install}
 
 
 def outputs(build, returncode):
@@ -234,7 +236,10 @@ def reproduce(prepared, output, repository=ROOT):
     command = [sys.executable, '-B', str(repo / 'scripts/build_partial_candidate.py'),
                '--manifest', str(repo / 'programs/pump/Cargo.toml'), '--program', 'pump',
                '--artifact-name', 'pump_recovered.so', '--tools-version', 'v1.44', '--output', str(output / 'build')]
-    result = {'status': 'RUNNING', 'command': command, 'cwd': str(repo), 'environment': env,
+    helper_command = command
+    command = offline_inputs.guarded_command(helper_command)
+    result = {'status': 'RUNNING', 'command': command, 'helper_command': helper_command,
+              'network_guard': before['sdk_install_inputs']['network_guard'], 'cwd': str(repo), 'environment': env,
               'inputs': before, 'started_unix': time.time(), 'candidate_selected': False,
               'reproducer_sha256': sha(Path(__file__))}
     receipt = output / 'reproduction.json'
@@ -242,7 +247,10 @@ def reproduce(prepared, output, repository=ROOT):
     try:
         with (output / 'stdout.log').open('wb') as stdout, (output / 'stderr.log').open('wb') as stderr:
             child = subprocess.run(command, cwd=repo, env=env, stdout=stdout, stderr=stderr, check=False)
-        result['helper_returncode'] = child.returncode
+        # This is the OS launcher's aggregate exit, not a separately observed
+        # helper/compiler/strip child status.
+        result['guarded_command_returncode'] = child.returncode
+        result['helper_returncode'] = None
         result['outputs'] = outputs(output / 'build', child.returncode)
         for name, expected in before['source37'].items():
             checked(repo / name, expected)

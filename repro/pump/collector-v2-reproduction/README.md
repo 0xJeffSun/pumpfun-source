@@ -1,7 +1,7 @@
 # Collector v2 reproducible build
 
 Rebuilds the existing **unselected** collector candidate from its exact 37-source
-snapshot. Fresh builds reproduce both complete tested outputs:
+snapshot. The preserved pre-repair build receipts report both complete tested outputs:
 
 | Output | Bytes | SHA-256 |
 | --- | ---: | --- |
@@ -10,8 +10,11 @@ snapshot. Fresh builds reproduce both complete tested outputs:
 
 ## Run
 
-Requires Darwin ARM64, Python 3.12+, the recorded v1.52 platform-tools cache
-(its stripper is hash-checked), and the SDK's Criterion v2.3.2 cache. Preparation
+Requires Darwin ARM64, Python 3.12+, `/usr/bin/sandbox-exec` with the pinned
+executable hash, and complete existing v1.52 platform-tools and Darwin Criterion
+v2.3.2 caches matching [install-cache-identity](install-cache-identity/REPORT.md).
+Those inventories are newly observed local input identities, not official release
+asset authentication, historical provenance or a measured loaded-library set. Preparation
 downloads authenticated v1.44 compiler tools, Agave 2.1.21 and Rustup 1.29.0,
 installs host Cargo 1.94.0 privately, and fetches the unchanged locked dependency
 graph. Existing global toolchain aliases are preserved. The SDK-required v1.44
@@ -26,21 +29,37 @@ python3.12 -m unittest discover -s repro/pump/collector-v2-reproduction -p 'test
 
 `prepare.py --download-cache PATH --registry-cache PATH` can reuse authenticated
 downloads and crate archives. Build output must be fresh and outside the prepared
-tools. Compilation is offline and uses a fresh source copy, target and private
+tools. The repaired reproduction wraps the helper and all descendants in the OS
+profile `(version 1)(allow default)(deny network*)`; it fails closed if the pinned
+sandbox executable is missing or altered. Cargo offline remains enabled. The
+network guard is used for reproduction; preparation remains an online phase.
+Reproduction uses a fresh source copy, target and private
 Rustup aliases. The recorded SDK's content is retained; executable modes come
 from the matching official release. Captured original bytes are staged outside
 the Rust inputs solely for the frozen helper's postcompile comparison. Tested
 candidate bytes are never copied into the build workspace.
 
-`reproduction.json` records the actual commands, exits, authenticated inputs and
+`reproduction.json` records the wrapped and helper commands, OS guard/profile,
+new cache pins, guarded-command aggregate exit, authenticated inputs and
 whole-file equality. Failed attempts retain their logs and cannot become a pass.
 Both output hashes, all source inputs, compiler files and links, SDK files and
-locked crate sources are checked before acceptance.
+locked crate sources are checked before acceptance. The complete v1.52 tree
+(including installer-invoked `rustc`, driver library and stripper) and Criterion
+cache are checked before and after preparation and reproduction: exact membership,
+file hashes/sizes/modes, directory modes, symlink spellings/modes/containment and
+dangling state. The helper, compiler and strip exits remain unknown unless
+separately captured; the OS launcher exit is explicitly named.
 
 ## Validation and scope
 
-[validation.json](validation.json) binds the actual clean builds and local test
-results. The matching executable passed 9,269 existing differential comparisons
+[validation.json](validation.json) and all existing receipts are frozen evidence
+for the earlier recipe, which did not enforce OS network denial or authenticate
+the complete installer inputs. Their successful output comparisons remain evidence;
+they do not establish those stronger offline/tool-closure properties.
+[OFFLINE_REPAIR.md](OFFLINE_REPAIR.md) records the repair and its unexecuted native
+validation boundary. No new native build is claimed for the repaired recipe.
+
+The earlier local validation reports: The matching executable passed 9,269 existing differential comparisons
 and 1,024 offline Surfpool comparisons. Counts include repeated inputs and retain
 the harnesses' existing normalization and coverage limits. Their raw qualification
 receipts remain local; this package publishes their hash inventory, not a portable
@@ -48,7 +67,6 @@ re-verification of unexported data. Build logs and compact reproduction receipts
 are published here. Standard repository CI checks the unchanged selected state;
 the commands above exercise this new recipe.
 
-Active source, selected artifacts and status remain unchanged. This proves
-reproduction of the tested collector candidate; original deployment byte identity
+Active source, selected artifacts and status remain unchanged. The preserved receipts support reproduction of the tested collector candidate; original deployment byte identity
 and historical build provenance remain unresolved. The original controller's
 exit-2/cache review and the local preparation/permission failures remain preserved.

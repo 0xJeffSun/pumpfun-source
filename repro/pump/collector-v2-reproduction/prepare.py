@@ -14,6 +14,8 @@ import time
 import tomllib
 import urllib.request
 
+import offline_inputs
+
 
 ROOT = Path(__file__).resolve().parents[3]
 PACKAGE = 'repro/pump/cto-shared6093-v2-signed-acceptance'
@@ -167,8 +169,7 @@ def prepare(output, download_cache=None, registry_cache=None, repository=ROOT):
     output = output.absolute()
     require(not output.exists() and not output.is_symlink(), 'output must be new')
     home = Path.home()
-    checked(home / '.cache/solana/v1.52/platform-tools/llvm/bin/llvm-objcopy', STRIP_SHA)
-    require((home / '.cache/solana/v2.3.2/criterion').exists(), 'recorded Criterion v2.3.2 cache is required')
+    install_before = offline_inputs.install_inputs(home)
     package = repository / PACKAGE
     checked(package / 'manifest.json', SEAL)
     source_path = checked(package / 'build-input-source37.json', SOURCE_MAP)
@@ -180,7 +181,8 @@ def prepare(output, download_cache=None, registry_cache=None, repository=ROOT):
     require(len(source) == 37, 'expected 37 source inputs')
     output.mkdir(parents=True)
     receipt = {'status': 'PREPARING', 'source37': source, 'real_HOME': str(home),
-               'global_toolchain_aliases_modified': False, 'network_preparation_only': True}
+               'global_toolchain_aliases_modified': False, 'network_preparation_only': True,
+               'sdk_install_inputs': install_before}
     try:
         downloads = output / 'downloads'
         downloads.mkdir()
@@ -243,7 +245,9 @@ def prepare(output, download_cache=None, registry_cache=None, repository=ROOT):
         for part in ('cache', 'index', 'src'):
             shutil.copytree(output / 'cargo-home/registry' / part / NAMESPACES[0], output / 'cargo-home/registry' / part / NAMESPACES[1])
         require(all(sha(repo / name) == digest for name, digest in source.items()), 'fetch changed source or lockfile')
-        receipt.update(status='PASS', compiler_regular_files_verified=len(files), sdk_files_verified=len(sdk_map),
+        require(offline_inputs.install_inputs(home) == install_before,
+                'SDK install inputs changed during preparation')
+        receipt.update(status='PASS', sdk_install_inputs_unchanged=True, compiler_regular_files_verified=len(files), sdk_files_verified=len(sdk_map),
                        locked_archives_verified=len(packages), local_archive_copies=local_copies,
                        asset_sha256={name: sha(path) for name, path in assets.items()})
     except Exception as error:
