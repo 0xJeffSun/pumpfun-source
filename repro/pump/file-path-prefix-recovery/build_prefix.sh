@@ -22,8 +22,11 @@ if [[ -e "$OUT" || -L "$OUT" ]]; then
     exit 2
 fi
 mkdir -- "$OUT"
+# Keep the unstripped (symbol) build, which the window scorer needs, under OUT;
+# the throwaway workspace is removed on exit.
+: "${CARGO_TARGET_DIR:=$OUT/target}"; export CARGO_TARGET_DIR
 : "${RUSTUP_TOOLCHAIN:=1.87-x86_64-unknown-linux-gnu}"; export RUSTUP_TOOLCHAIN
-WS="$(mktemp -d)"; mkdir -p "$WS/programs"
+WS="$(mktemp -d)"; trap 'rm -rf "$WS"' EXIT; mkdir -p "$WS/programs"
 cp -r "$REPO/programs/pump" "$WS/programs/pump"
 # strip the standalone [workspace] table (normalize CRLF first)
 sed -i 's/\r$//' "$WS/programs/pump/Cargo.toml"
@@ -44,4 +47,5 @@ mkdir "$OUT/artifacts"
     --manifest-path "$WS/programs/pump/Cargo.toml" \
     --tools-version v1.44 \
     --sbf-out-dir "$OUT/artifacts" -- --locked )
-echo "stripped: $(sha256sum "$OUT/artifacts/pump_recovered.so")"
+echo "stripped:   $(sha256sum "$OUT/artifacts/pump_recovered.so")"
+echo "unstripped: $(sha256sum "$CARGO_TARGET_DIR/sbf-solana-solana/release/pump_recovered.so")"

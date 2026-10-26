@@ -1,8 +1,9 @@
 # Pump: `file!()` workspace-prefix recovery (+5 normalized windows, 0 regressions)
 
-An author-reported build-environment experiment. The retained scores lack an
-immutable source revision/map and raw build outputs, so they are an unverified
-snapshot rather than independently reproduced evidence. The reconstruction builds `programs/pump` as its
+A build-environment experiment. The committed scores are the author's Linux
+(WSL) measurements of the packet's base source (`0b29240a`); the window-level
+effect (+5, the same five windows, 0 regressions) was independently reproduced
+in review on a second host (see "Independent check" below). The reconstruction builds `programs/pump` as its
 own crate (its `Cargo.toml` declares an empty `[workspace]`), so cargo roots the
 crate at itself and `file!()` expands to `src/<module>.rs`. The original path strings are consistent with a monorepo workspace; the
 historical workspace recipe has not been established. Its Anchor
@@ -55,12 +56,34 @@ set_mint_reserves}` + `QuoteControl as AccountDeserialize::try_deserialize`
 (`quote_control/state.rs`). See [`flipped-windows.json`](flipped-windows.json)
 and [`window-match-before-after.json`](window-match-before-after.json).
 
+Independent check (review): rebuilding the base source `0b29240a` on macOS with
+the canonical pipeline (`cargo-build-sbf` 2.1.21, v1.44), standalone vs this
+workspace-member wrapper, gives 528 -> 533 normalized, 486 -> 495
+direct-call-consistent, +4,272 matched bytes, raw-exact 98 unchanged. The five
+flipped windows are exactly the five above, with no regressions. The deltas
+match this packet; the absolute counts are host-dependent (the Linux build
+scores 5 higher, see
+[`../independent-head-reproduction`](../independent-head-reproduction/REPORT.md)).
+`build_prefix.sh` (with a `sed -i` shim for BSD sed) reproduces that macOS
+workspace-member build byte-for-byte (stripped `0912d0ef…`, unstripped
+`803f56c7…`).
+
 ## Reproduce
 
-`bash build_prefix.sh <repo-root> <out-dir>` (WSL/Linux; needs the v1.44
-platform-tools, auto-fetched by `cargo-build-sbf`). It builds pump in a throwaway
-parent workspace with pump's own `Cargo.lock`, so only the `file!()` rooting
-changes — deps are untouched.
+`bash build_prefix.sh <repo-root> <fresh-out-dir>` (WSL/Linux with GNU `sed`;
+needs the v1.44 platform-tools, auto-fetched by `cargo-build-sbf`). It builds
+pump in a throwaway parent workspace with pump's own `Cargo.lock`, so only the
+`file!()` rooting changes — deps are untouched. The stripped artifact lands in
+`<out>/artifacts/` and the unstripped build in `<out>/target/` (unless
+`CARGO_TARGET_DIR` is set). Score the pair with
+[`../independent-head-reproduction/score_pump.py`](../independent-head-reproduction/score_pump.py).
+
+Main's later
+[`pump-restructured`](../../parallel-work/2026-10-25/independent-reconstruction-review/restructure/pump-restructured/README.md)
+tree uses the same workspace-member wrapper (its `workspace-Cargo.toml` is
+identical to the one this script writes) plus `#[path]` relocations, and
+measures embedded path strings and panic-`Location` records. This packet is
+the window-level measurement of the prefix alone.
 
 ## Why only 5, and the roadmap to more
 
@@ -82,9 +105,14 @@ token_incentives/{claim_token_incentives, init_user_volume_accumulator,
 util/{constant_product, fee, transfer_fee}.rs
 ```
 
-Reorganizing the reconstruction's source into this layout (a proposed module
-structure suggested by retained path observations) is the follow-up that would flip the error
-sites in those modules. This packet does not perform that reorganization.
+Reorganizing the reconstruction's source into this layout (the module paths
+embedded in the original binary) corrects those embedded path strings. It is
+not enough to flip further windows, though: the follow-up
+[`../metadata-callsite-map`](../metadata-callsite-map/REPORT.md) shows that
+every remaining window whose body otherwise matches also differs in `line!()`,
+and that no unmatched window has any same-size reconstruction function that
+differs from it only in `file!()` length. This packet does not perform the
+reorganization.
 
 ## Scope and honesty
 
@@ -99,7 +127,7 @@ path whose parent already exists. Relative output paths are resolved before
 changing directories. The caller must record the exact source commit and source
 hash map, local modifications, lockfile, selected compiler and strip tools before
 claiming a reproduction; this packet does not pin a historical source revision.
-The build helper is opt-in and was not run during review. The original report
-and script are preserved unchanged in `history/`. The score JSON files remain
-unchanged author-reported observations. No `file!()` or `line!()` source
+The build helper is opt-in; the second review ran it (see "Independent
+check"). The original report and script are preserved unchanged in `history/`.
+The score JSON files remain the author's unchanged Linux measurements. No `file!()` or `line!()` source
 coordinates are forced by this helper, and no source/artifact is selected.
