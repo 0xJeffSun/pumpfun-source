@@ -1,0 +1,1 @@
+export const POOL_ACCOUNT_NEW_SIZE = 300;
