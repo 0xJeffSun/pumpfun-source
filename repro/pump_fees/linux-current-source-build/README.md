@@ -1,13 +1,16 @@
-# Independent Linux x86_64 Fees v1.44 builds
+# Linux x86_64 Fees v1.44 builds (contributor-reported)
 
 Builds on the upstream packages `repro/pump_fees/linux-v144-sysroot-provenance`,
 `repro/pump_fees/linux-v144-hosted-comparison` and
 `repro/pump_fees/linux-darwin-v144-attribution`.
 
-Two genuine offline `cargo build-sbf --tools-version v1.44` builds with the
-official Linux platform-tools v1.44 archive
+The contributor reports two offline `cargo build-sbf --tools-version v1.44`
+builds with the official Linux platform-tools v1.44 archive
 (SHA-256 `6719b889d60677a8a2fcf4c82f68441a1afe0ab093edd2efe9f84a67a808b3e9`)
-and CLI 2.1.21 on a Linux x86_64 host:
+and CLI 2.1.21 on a Linux x86_64 host. This package retains only the two output
+binaries and their raw comparisons. It includes no build log, host record,
+toolchain receipt or source-input manifest for either build, so build provenance
+is contributor-reported, not independently verified here.
 
 | Source snapshot | Candidate | SHA-256 |
 | --- | --- | --- |
@@ -16,13 +19,31 @@ and CLI 2.1.21 on a Linux x86_64 host:
 
 ## Findings
 
-1. The frozen-revision Linux build reproduces, byte for byte, the previously
-   published hosted run 40166255149 candidate (`7e823e60…`). This independently
-   confirms the hosted build's determinism on a second Linux host.
-2. The current-source Linux build differs from the retained macOS main
-   candidate `2387f8139a13918a…` only in sysroot path strings
-   (`/home/runner/...` versus `/Users/runner/...`) and dependent stack-frame
-   layout deltas. Same 26 source inputs hash to the same values.
+1. `fees-frozen-linux-v144.so` is byte-identical to the hosted run 40166255149
+   candidate (`7e823e60…`). It is the same Git blob as
+   `repro/pump_fees/linux-v144-hosted-comparison/artifact/pump_fees_candidate.so`.
+   The contributor reports it as a fresh build on a second Linux host. If so,
+   it confirms that build's determinism, but without a build record the
+   committed file cannot be told apart from a copy of the hosted artifact.
+2. Comparison with the retained macOS main candidate `2387f8139a13918a…`
+   (`repro/pump_fees/sharing-authorize-main-v144/main/candidate.so`, 863,808
+   bytes; measured during maintainer review, not recorded in
+   `raw-byte-comparison.json`):
+   - Both files have the same ELF section set. `.dynsym`, `.dynstr` and
+     `.shstrtab` are byte-identical.
+   - `.rodata` is 8 bytes shorter in the Linux build. Its three sysroot path
+     strings start with `/home/runner/` where the macOS build has `/Users/runner/`.
+     Printable strings of six or more characters across the whole file are
+     identical after normalizing that prefix.
+   - `.text` has the same size (789,416 bytes) but 6,423 of its 98,677
+     instruction slots differ. 2,071 are `lddw` immediates consistent with
+     shifted rodata addresses, 247 are call immediates, and 309 are memory
+     offsets only. The rest (3,418 opcode and 279 register differences, plus
+     99 others) point to code-generation differences beyond address shifts,
+     such as instruction selection, register allocation or ordering.
+   - This package does not establish the cause of these code differences. The
+     contributor reports, without a retained receipt, that both builds used the
+     same 26 source inputs.
 3. The raw comparison of the current-source Linux build `6c44d9f2…` against the
    frozen hosted-candidate build `7e823e60…` and the captured original
    `4f2955d0…` is recorded in `raw-byte-comparison.json`: 420,129 differing
@@ -31,12 +52,12 @@ and CLI 2.1.21 on a Linux x86_64 host:
    −85,144) versus the original. The upstream
    `linux-v144-sysroot-provenance` package already establishes that the
    original embeds `/home/runner/work/platform-tools` sysroot paths from the
-   official Linux v1.44 archive; the frozen-source build's byte equality with
-   the hosted candidate independently confirms determinism on a second Linux
-   host.
+   official Linux v1.44 archive.
 4. Whole-file equality remains false for every local candidate versus the
-   captured original. No source patch, binary patch, padding or normalization
-   was applied; all builds were clean and offline after initial locked fetch.
+   captured original. No padding or normalization was applied to any
+   comparison. The contributor reports that no source or binary patch was
+   applied and that the builds were clean and offline after an initial locked
+   fetch.
 
 ## Verify
 
