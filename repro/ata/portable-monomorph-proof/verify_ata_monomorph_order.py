@@ -9,7 +9,8 @@ import sys
 import tempfile
 
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[3]
+WRAPPER = 'repro/ata/portable-monomorph-proof/verify_ata_monomorph_order.py'
 PROOF = 'repro/ata/monomorph-order-proof'
 MANIFEST_SHA256 = '5808bb8fae39ea750f33119b31f8856e91a5c0640cc68a8c0292609378e6cb08'
 RETIRED_VERSION = 'work/ata-toolchain-audit/official/version.md'

@@ -9,7 +9,7 @@ import tempfile
 import unittest
 
 from verify_ata_monomorph_order import (
-    PROOF, PUBLISHED_VERSION, RETIRED_VERSION, ROOT, read_regular,
+    PROOF, PUBLISHED_VERSION, RETIRED_VERSION, ROOT, WRAPPER, read_regular,
 )
 
 
@@ -38,7 +38,7 @@ class PortableAtaProofTests(unittest.TestCase):
 
     def run_wrapper(self):
         return subprocess.run(
-            [sys.executable, '-B', str(ROOT / 'scripts/verify_ata_monomorph_order.py'),
+            [sys.executable, '-B', str(ROOT / WRAPPER),
              '--repository-root', str(self.root)],
             cwd=self.temp.name, text=True, capture_output=True, check=False,
         )

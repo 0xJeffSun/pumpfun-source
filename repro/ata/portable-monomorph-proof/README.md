@@ -10,8 +10,8 @@ The historical command fails on a clean clone because the scratch path is absent
 Run the unchanged proof with the published receipts:
 
 ```sh
-python3 -B scripts/verify_ata_monomorph_order.py
-python3 -B scripts/test_verify_ata_monomorph_order.py
+python3 -B repro/ata/portable-monomorph-proof/verify_ata_monomorph_order.py
+python3 -B repro/ata/portable-monomorph-proof/test_verify_ata_monomorph_order.py
 ```
 
 The wrapper pins the original package manifest to SHA256
@@ -34,3 +34,5 @@ This repairs reproducibility of the static evidence check. It does not add a
 source build, runtime comparison or historical recipe attribution. ATA's
 307-position raw residual and the whole-core binary identity count remain
 unchanged.
+
+The new wrapper and tests live beside this evidence, preserving the existing pinned root script set. The immutable original proof remains in its own sibling package.
