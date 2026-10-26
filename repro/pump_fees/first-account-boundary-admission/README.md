@@ -19,27 +19,63 @@ exact call-site resolution for the three candidate patterns that pass-36 could n
 ## Findings
 
 1. The original encoded boundary 71256 (`0x11658`) is not a free-standing entry: it is the
-   `ldx r3, [r2+0]` continuation immediately after `call → exit` at file offset 71240
+   `ldxdw r3, [r2+8]` continuation immediately after `call → exit` at file offset 71240
    (`0x11648`), where the `call` targets `0x102b1` (66,225). The pattern shape —
-   `call → exit → ldx r3,[r2+0] → jeq r3,14 → mov r10,r2 → add r2,-16 …` — is byte-identical
-   across all four sites; only the leading prelude and the call target differ.
+   `call → exit → ldxdw r3,[r2+8] → jne r3,0,+14 → mov r10,r2 → r2 += -16 …` — is
+   structurally identical across all four sites. Compared value at every site: `r3 != 0`.
+   Only the leading prelude, the jump offset (14 vs 12), and the call target differ.
 2. Candidate patterns in the current build:
-   - **83152** (`0x144d0`): two-instruction prelude (`stx r2…`/`mov r3,r2`) before the call at
-     83168 targeting 0x12b51 (76,625).
+   - **83152** (`0x144d0`): two-instruction prelude (`stx r4,[r0]`/`mov r3,r0`) before the
+     call at 83168 targeting 0x12b51 (76,625).
    - **83352** (`0x14598`): same two-instruction prelude, call at 83368 targeting 0x12d78 (77,176).
    - **83552** (`0x14660`): bare `call` (no prelude) targeting 0x12e99 (77,465).
-3. The shared continuation after the call/exit pair is
-   `ldx r3,[r2+0] → jeq r3,<n> → mov r10,r2 → add r2,-16 → mov r17,r1 → mov r16? …` — the
-   same instruction skeleton at all four sites. The original 71256 context and candidate A
-   (83152) are byte-identical for the full observed tail including the `jeq r3,14` immediate.
-   Candidate B (83352) shares the skeleton; candidate C (83552) differs only in the `jeq`
-   immediate (`12` versus `14`). The sites additionally differ in what precedes the call:
-   A and B carry a two-instruction `stx`/`mov` prelude that the original 71256 site and C
-   lack.
+3. At all four sites the test is identical: `ldxdw r3,[r2+8]` (accounts-slice count) then
+   `jne r3,0,+N` (BPF_JNE with imm=0, dst=r3) — count == 0 falls through to error 3005
+   (Anchor `AccountNotEnoughKeys`). Nothing compares 14 or 12; 0x0e/14 and 0x0c/12 are the
+   jump **offsets**.
+
+4. The fallthrough blocks differ in how the Err value is constructed, which is why the jump
+   offsets differ:
+
+   - **Original (71256) and candidate A (83152):** the error constructor returns, two slots
+     are reloaded from the stack (`ldxdw r1,[r10-16]`, `ldxdw r2,[r10-8]`), and THREE
+     64-bit stores build the value: `stxdw [r6+16],r2`, `stxdw [r6+8],r1`, then
+     `lddw r1,0x8000000000000000` followed by `stxdw [r6+0],r1`. Slot 0 is a **compile-time
+     niche constant `0x8000_0000_0000_0000`** — the canonical Rust `Vec`/`String` capacity
+     for a niche-encoded `Err`, with the payload at `+8`/`+16`. **Layout inference, not
+     proof**: the constant is what a niche-encoded Vec-like Err stores, but the type that
+     the original carried cannot be established from this block alone.
+   - **Candidate B (83352):** same three-store shape but slot 0 receives `r0` — the value
+     returned by the error-constructor call (`stxdw [r6+0],r0`), not a constant.
+   - **Candidate C (83552):** two payload stores (`stxdw [r6+8],r2`,
+     `stxdw [r6+0],r1`) plus a **4-byte tag `imm=2` stored at offset `0x104`**
+     (`stw [r6+0x104],r2`) — an explicit-tag layout with the discriminant in a trailing
+     word.
+
+   The 2-instruction difference in the fallthrough therefore reflects Err-construction
+   style (niche constant vs explicit tag vs returned value), not a different comparison.
 4. The query parser window (127336..129120) is a different region: its own 13 CALL targets
    resolve to 0x1b735/0x1b8e0/0x1ba30/0x1bb1e/0x1dc38/0x30b68/0x30d9f/0x30ec5/0x31015/0x31df9/
    0x333cf/0x336fd/0x338ad — none overlap the 83152 cluster. The boundary 71256 belongs to a
    separate owner/discriminator admission, not to the 1784-byte query parser window.
+
+## Corrected fallthrough comparison (per site)
+
+## Corrected fallthrough comparison (per site)
+
+| Site | Jump at | jne op/imm | Jump offset | Error slot construction | evidence_id |
+|---|---|---|---|---|---|
+| original 71256 | 0x11660 | `jne r3,0` | `+0x0e` (14) | 3×64-bit stores; slot0 = constant `0x8000000000000000` (niche) | `ev_6f5d1f75…` |
+| cand A 83152 | 0x144f8 | `jne r3,0` | `+0x0e` (14) | identical to original incl. the niche constant | `ev_a3999a78…` |
+| cand B 83352 | 0x145c0 | `jne r3,0` | `+0x0c` (12) | 3 stores; slot0 = value returned by the error-constructor call | `ev_e96f64c9…` |
+| cand C 83552 | 0x14678 | `jne r3,0` | `+0x0c` (12) | 2 payload stores + explicit 4-byte tag `2` at `+0x104` | `ev_1cea97d0…` |
+
+The compared value is `r3 != 0` at every site (accounts-slice count). 0x0e/14 and 0x0c/12 are
+jump distances to the instruction after each site's error block, not compared values. The
+2-instruction delta reflects Err-construction style: original and A close with a compile-time
+`0x8000_0000_0000_0000` niche constant (consistent with a niche-encoded Vec/String-like Err —
+layout inference, not proof of the original's type); B stores the constructor-returned value
+into slot 0; C writes an explicit 4-byte tag `2` at offset `0x104` after two payload stores.
 
 ## REA evidence
 
@@ -60,12 +96,16 @@ pass-36 collection payload members used the repo's own `verify_stream.py`-compat
   sBPF), confirming the format REA's native providers reject for direct sBPF decoding.
 - `inspect_with_objdump(operation=architectures)` — evidence `ev_3da08f6a…`: local objdump
   advertises no BFD BPF target; documents why byte-level comparison uses REA raw-binary reads.
+- `inspect_with_objdump(operation=disassemble_all, path=work/cand-fees-current.so)` —
+  evidence `ev_d3602d42…`: objdump refuses machine-0x107 (`can't disassemble for
+  architecture UNKNOWN!`). Retained to document why REA read_bytes, not objdump
+  disassembly, supplies candidate instruction evidence.
 - `read_bytes(address=0x14660, length=64)` on candidate — evidence `ev_3f1f2d01…`; bytes
   `8510000039e8ffff 9500000000000000 7923080000000000 55030c0000000000 …`: the bare
-  `call`→`exit`→`ldx r3,[r2+0]` pattern at site 83552. Supports finding 3 (candidate C shape).
+  `call`→`exit`→`ldxdw r3,[r2+8]`→`jne r3,0,+0x0c` pattern at site 83552. Supports finding 3 (candidate C shape).
 - `read_bytes(address=0x11648, length=48)` on original — evidence `ev_68d5ae20…`; bytes
   `8510000069ecffff 9500000000000000 7923080000000000 55030e0000000000 …`: the
-  `call → exit → ldx r3,[r2+0]` sequence at 71240..71256. Supports finding 1 (boundary shape)
+  `call → exit → ldxdw r3,[r2+8]` sequence at 71248..71288. Supports finding 1 (boundary shape)
   and the continuation byte-identity claimed in finding 3.
 - `search_bytes(pattern="07 04 00 00 30 00 00 00", bounds [0x0, 0xd2cd8))` on original —
   evidence `ev_49a86207…`, 26 matches at

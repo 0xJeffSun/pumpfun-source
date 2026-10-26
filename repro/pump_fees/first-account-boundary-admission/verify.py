@@ -34,6 +34,10 @@ def resolve_call(buf, call_off):
 assert {str(p.relative_to(P)): H(p.read_bytes()) for p in P.rglob('*') if p.is_file() and p != P / 'manifest-sha256.json' and '__pycache__' not in p.parts} == json.loads((P / 'manifest-sha256.json').read_text())
 # REA evidence seal: every cited evidence_id file must exist and its recorded bytes_hex must
 # match the bytes read from the corresponding binary at the recorded address.
+def cand_bytes(root):
+    import subprocess
+    return subprocess.run(['git', '-C', str(root), 'show', 'origin-fork/fees-linux-current-source-build:repro/pump_fees/linux-current-source-build/fees-current-linux-v144.so'], capture_output=True).stdout
+
 def check_rea_evidence(root):
     evdir = P / 'rea-evidence'
     for f in sorted(evdir.glob('ev_*.json')):
@@ -48,21 +52,28 @@ def check_rea_evidence(root):
         if sub['name'] == 'deployed.so':
             data = (root / 'evidence/original/pump_fees/deployed.so').read_bytes()
         elif sub['name'] == 'cand-fees-current.so':
-            import subprocess
-            data = subprocess.run(['git', '-C', str(root), 'show', 'origin-fork/fees-linux-current-source-build:repro/pump_fees/linux-current-source-build/fees-current-linux-v144.so'], capture_output=True).stdout
+            data = cand_bytes(root)
         if data is not None and sub.get('sha256'):
             assert H(data) == sub['sha256'], f'{eid}: subject digest mismatch'
         assert rec['bytes_hex'] == data[addr:addr + nbytes].hex(), f'{eid}: bytes_hex mismatch at {rec["parameters"]}'
         if eid == 'ev_6f5d1f75e667b41d97f76e2287c4ef51662aa840e3e848c518faa0b1be59c54c':
-            # original boundary decode: call 0x11648 -> 0x102b1, exit, ldx r3,[r2+0], jeq r3,14
-            # jeq immediate lives at bytes 4..8 of the jeq instruction at 0x11660
-            # (= read base +24), i.e. read offsets +28..+32 relative to ORIG_CALL.
-            # the distinguishing 14 appears at byte 2 of the jeq instruction (offset +26)
+            # original boundary: call (base+0) -> exit (base+8) -> ldxdw r3,[r2+8] (base+16)
+            # -> jne r3,0,+0x0e (base+24): op 0x55, jump-offset field 0x000e, imm=0
             assert data[ORIG_CALL + 24 + 2: ORIG_CALL + 24 + 4].hex() == '0e00'
+            assert data[ORIG_CALL + 24 + 4: ORIG_CALL + 24 + 8].hex() == '00000000'
+            # niche constant: lddw r1,0x8000000000000000 at 0x116b8 (base+112), value bytes follow
+            assert data[0x116b8 + 8: 0x116b8 + 16].hex() == '0000000000000080'
         if eid == 'ev_e96f64c9f8f9e2516b888a28e008394eb4b2ab944060f2bb9121a723aa1ac180':
-            # candidate B: jeq immediate is 12
+            # site B: prelude stx r4,[r0] (base+0), mov r3,r0 (base+8), call (base+16),
+            # exit (base+24), ldxdw r3,[r2+8] (base+32), jne r3,0,+0x0c (base+40):
+            # op 0x55, jump-offset field 0x000c, imm=0 — error path 2 instructions shorter
             b = bytes.fromhex(rec['bytes_hex'])
             assert b[0:8] == bytes.fromhex('7b42000000000000')
+            assert b[8:16] == bytes.fromhex('bf32000000000000')
+            assert b[40:48].hex().startswith('55030c')
+            # B error path: slot0 = r0 (constructor return value), NOT the 0x8000 constant
+            b_full = cand_bytes(root)
+            assert b_full[0x14618:0x14618+8] == bytes.fromhex('7a06000000000000')
         if eid == 'ev_fc1cce98a45193c89203d75104dbfa3ddb2f8390bb5c13bb4a177987a29954fc':
             # misaligned read: executed while the REA session was still bound to deployed.so,
             # at the candidate's site A address. Its bytes are deployed bytes at 0x144e0 and
@@ -114,7 +125,7 @@ if args.repo:
     print(json.dumps({'verified': True, 'mode': 'repo', 'original_call_target': 66225,
                       'candidate_call_targets': {'A': '0x12b51', 'B': '0x12d78', 'C': '0x12e99'},
                       'continuation_tail_bytes': 40,
-                      'tail_identity': {'A': 'byte-identical-to-original (jeq 14)', 'B': 'skeleton-shared, jeq 12', 'C': 'skeleton-shared, jeq 12'}}, indent=2))
+                      'tail_identity': {'A': 'byte-identical to original incl. jne +0x0e (jump offset 14)', 'B': 'same skeleton, jne +0x0c (jump offset 12)', 'C': 'same skeleton, jne +0x0c (jump offset 12)'}}, indent=2))
 else:
     print(json.dumps({'verified': True, 'mode': 'portable',
                       'manifest_entries': len(json.loads((P / 'manifest-sha256.json').read_text()))}, indent=2))
