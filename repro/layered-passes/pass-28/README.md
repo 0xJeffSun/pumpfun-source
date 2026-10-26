@@ -43,3 +43,9 @@ All original bytes and all 3,338 original function-window records remain retaine
 All three gpt-6.1-sol workers reached the account usage limit after delivering their work. Root continued integration and the separate saved Mayhem review. Further Pump parser expansion remains halted after an automated security filter block; no detailed reason was supplied, and that lane was not retried or reassigned.
 
 The prior stopped executions remain excluded: new Pump sell_v2 corrective/transfer-fee probing; Pump admin-update/claim token incentives; Mayhem initializer; old V3 token-extension leaf; extra Metaplex runtime; filtered BuyV3 partial-fill. Relay sort58/59 and rejected 9d remain opaque. No signer/PDA/owner/source-origin/history bypass, forced source coordinate, binary patch/padding, flag/layout sweep, mainnet transaction or deployment occurred.
+
+## Follow-up using already admitted helper metadata
+
+A separate saved-evidence review now links the two original helpers already admitted in the ca5d inventory. O0201 `[538096,538104)` records only an eight-byte exit instruction. O0359 `[669768,669800)` begins with `r1 != 0`; all eleven recorded O0096 callers set `r1 = 1`, so their encoded branch selects the call at 669792 to target 669800. No new body, literal, opaque row, target execution or source patch was needed.
+
+The next target remains metadata-only O0360 `[669800,669832)`. Its body and noreturn/ownership contracts are not established by this follow-up. Both the earlier caller proof and complete 441/408 ledger remain immutable; classifications and byte-identity counts do not change. The new helper-link packet seal is `e42217f7a6d79027dd3eb0c97d1da215942efd986f154b70ce5704af82f94b9a`. Its independent verifier passed locally and after relocation.
