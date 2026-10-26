@@ -169,6 +169,29 @@ the lock identifies compiler-builtins revision `5380e204aab5be48c798679cc52b1f87
 whose complete license is also retained. These source notices are not a
 source-to-toolchain reproducible-build attestation.
 
+## Third-party notices and receipt redaction
+
+The binary objects in this packet are unmodified third-party build outputs, not
+contributions under the repository license. `core.rcgu.o` (v1.46.1 libcore) and
+the five libcore objects in `v144/objects.tar.gz` are Rust standard-library code;
+`COPYRIGHT`, `LICENSE-APACHE` and `LICENSE-MIT` (and their identical copies under
+`v144/`) are Rust's upstream notices for them and for `v144/rust-Cargo.lock.gz`.
+The five `compiler_builtins` objects in `v144/objects.tar.gz` are covered by
+`v144/compiler-builtins-LICENSE.txt`. `license-sources.json` records each root
+notice's upstream URL (anza-xyz/rust `71e82b8f…`) and SHA-256;
+`v144/license-sources.json` records each `v144/` notice's upstream URL, Git blob
+SHA-1 and SHA-256. At maintainer review every notice's `git hash-object` also equaled
+the corresponding upstream tree blob (`COPYRIGHT` `05993830…`, `LICENSE-APACHE`
+`1b5ec8b7…`, `LICENSE-MIT` `31aa7938…` at both Rust revisions, compiler-builtins
+`LICENSE.txt` `92bbe113…` at `5380e204…`). These notices do
+not relicense the packet's own scripts, tests, JSON analyses or this README, which
+fall under the repository's root `LICENSE`.
+
+Maintainer review replaced one contributor-local absolute Windows path (the curl
+`--output` argument in `v144/download-receipt.json`) with a placeholder and added
+an `output_path_redaction` note. No URL, size, digest, asset ID or exit field
+changed; the verifier does not read the redacted argument.
+
 ## Reproduce
 
 From the repository root, using Python 3.11 or later, standard library only:
