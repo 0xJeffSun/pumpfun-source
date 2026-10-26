@@ -177,8 +177,13 @@ the five libcore objects in `v144/objects.tar.gz` are Rust standard-library code
 `COPYRIGHT`, `LICENSE-APACHE` and `LICENSE-MIT` (and their identical copies under
 `v144/`) are Rust's upstream notices for them and for `v144/rust-Cargo.lock.gz`.
 The five `compiler_builtins` objects in `v144/objects.tar.gz` are covered by
-`v144/compiler-builtins-LICENSE.txt`. Each notice file equals the upstream Git blob
-recorded in `license-sources.json` / `v144/license-sources.json`. These notices do
+`v144/compiler-builtins-LICENSE.txt`. `license-sources.json` records each root
+notice's upstream URL (anza-xyz/rust `71e82b8f…`) and SHA-256;
+`v144/license-sources.json` records each `v144/` notice's upstream URL, Git blob
+SHA-1 and SHA-256. At maintainer review every notice's `git hash-object` also equaled
+the corresponding upstream tree blob (`COPYRIGHT` `05993830…`, `LICENSE-APACHE`
+`1b5ec8b7…`, `LICENSE-MIT` `31aa7938…` at both Rust revisions, compiler-builtins
+`LICENSE.txt` `92bbe113…` at `5380e204…`). These notices do
 not relicense the packet's own scripts, tests, JSON analyses or this README, which
 fall under the repository's root `LICENSE`.
 
