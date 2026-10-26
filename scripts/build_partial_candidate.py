@@ -21,15 +21,7 @@ for entry in (rustup_source/'toolchains').iterdir():
 (rustup/'settings.toml').write_text('version = "12"\ndefault_toolchain = '+json.dumps(active)+'\nprofile = "minimal"\n')
 before=sources();cmd=['cargo','build-sbf','--manifest-path',str(manifest),'--tools-version',a.tools_version,'--offline','--sbf-sdk',str(sdk),'--sbf-out-dir',str(a.output/'artifacts'),'--','--locked','--offline']
 env=os.environ.copy();env['CARGO_TARGET_DIR']=str(a.output/'target');env['RUSTUP_HOME']=str(rustup)
-# Embed the original workspace-relative source path in panic::Location metadata so the candidate's
-# file!() paths read programs/<dir>/src/... (matching the deployed original) instead of the bare
-# src/... a standalone build emits. Metadata only: verified to add no function reordering and no
-# dependency change (only .rodata path bytes + the .text immediates addressing them). mayhem's
-# original crate dir is `mayhem-program`; pump-fees already carries the prefix (workspace member), so
-# its remap is a harmless no-op. See repro/.../WORKSPACE-BYTEMATCH-REPORT.md.
-_remap_dir={'pump':'pump','pump_amm':'pump-amm','pump_fees':'pump-fees','mayhem':'mayhem-program'}[a.program]
-env['RUSTFLAGS']=(env.get('RUSTFLAGS','')+' --remap-path-prefix=src/=programs/'+_remap_dir+'/src/').strip()
-recorded_env={'CARGO_TARGET_DIR':'<output>/target','RUSTUP_HOME':'<output>/rustup','RUSTFLAGS':env['RUSTFLAGS']}
+recorded_env={'CARGO_TARGET_DIR':'<output>/target','RUSTUP_HOME':'<output>/rustup'}
 if 'CARGO_HOME' in env:recorded_env['CARGO_HOME']=str(pathlib.Path(env['CARGO_HOME']).resolve()).replace(str(ROOT),'<repo>')
 attempt={'scope':'Independent source build attempt; captured binaries are not compiler inputs. Failed attempts establish no binary identity.','program':a.program,'source_sha256':before,'selected_toolchain':a.tools_version,'command':[s.replace(str(a.output),'<output>').replace(str(ROOT),'<repo>') for s in cmd],'environment':recorded_env}
 (a.output/'build-attempt.json').write_text(json.dumps(attempt,indent=2)+'\n')
