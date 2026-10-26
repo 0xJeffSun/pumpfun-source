@@ -1,13 +1,15 @@
 # Pump: independent HEAD build + window-match baseline (Windows/WSL)
 
-An independent, from-scratch reproduction of the Pump reconstruction build on a
+An author-reported, from-scratch reproduction of the Pump reconstruction build on a
 clean machine (Windows 11 + WSL2 Debian), to test the repository's core
 reproducibility premise — *clean managed-source builds reproduce the tested
 executables and symbols* — from source present at the current `main` HEAD, and
 to record the resulting instruction-window baseline.
 
-This packet establishes **L0–L1 only** (reproducible toolchain + a scored,
-normalized-body baseline). It is **not** a byte-identity result, **not** a
+This packet records an **unverified author-reported snapshot** of a toolchain
+run and scored normalized-body baseline. The exact source commit, source hash
+map, raw build logs and both compiler outputs are not bundled, so the claimed
+reproduction and determinism have not been independently established here. It is **not** a byte-identity result, **not** a
 source recovery, and **not** a security claim. No original bytes were used as
 a compiler input. No executable was edited or padded.
 
@@ -43,7 +45,8 @@ Two real-world gotchas on a fresh machine, documented so others can reproduce:
 
 ## Results
 
-Built from `main` HEAD source (37 source inputs under `programs/pump/`).
+The author reported building from `main` HEAD (37 source inputs under
+`programs/pump/`), but did not record an immutable source revision/map.
 
 | Artifact | Bytes | SHA256 |
 | --- | ---: | --- |
@@ -57,8 +60,8 @@ produced the identical stripped SHA256 above.
 `remaining-guards-main-fortyeight` artifacts exactly (candidate 1,583,992;
 unstripped 2,165,264), despite this host using `cargo-build-sbf` 3.1.10 versus
 that checkpoint's 2.1.21 — evidence that the wrapper version does not change the
-emitted byte-size structure for this recipe. Hashes differ only because HEAD
-source differs from that checkpoint's frozen source (all 37 inputs changed).
+emitted byte-size structure for this recipe. The cause of the differing hashes is not established by these retained summaries.
+Matching sizes do not isolate source changes from toolchain or build inputs.
 
 ### Whole-file comparison (`scripts/compare.py`, padded to allocation)
 
@@ -95,3 +98,6 @@ HEAD is slightly ahead of the published baseline. Full summary in
 - Reproduced on one machine; the `cargo-build-sbf` 2.1.21 vs 3.1.10 difference
   is argued harmless from matching byte-sizes but is not proven byte-identical
   against a historical checkpoint here.
+
+The original author report is retained unchanged in `history/REPORT.md`.
+The two JSON summaries remain unchanged; neither certifies source provenance.
