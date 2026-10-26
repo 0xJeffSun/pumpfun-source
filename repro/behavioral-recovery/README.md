@@ -14,16 +14,23 @@ need a dispatch-complete build for local SDK testing.
 | v3 Token-2022 transfer-fee quotes (`buy_v3`, `sell_v3`, `buy_exact_quote_in_v3`) | pump | 126 cases, 0 mismatches |
 | `set_mayhem_virtual_params` (dormant, CPI-only) | pump | 84 cases, 0 mismatches (signer-stub driver) |
 
-Known gap: called standalone (not through pump's CPI), `initialize_mayhem_state`
-rejects in a different order than the original. The candidate fails first with
-3010 AccountNotSigner on `mint_authority`; the original first fails mint
-deserialization (3012) and only then raises 2002 ConstraintSigner. This suggests the
-original declares `mint_authority` as an `UncheckedAccount` with a `signer`
-constraint rather than a `Signer<'info>`
-(`scripts/mayhem_initialize_state_differential.py` here reproduces it: 5/5 cases differ).
+The initializer now declares `mint_authority` as an `UncheckedAccount` with an
+explicit `signer` constraint, preserving the Pump PDA check while matching mint
+deserialization before signature validation. Its token vault uses `init_if_needed`,
+matching the original's handling of existing vaults and their owner/mint/address
+constraints. The [controlled reconstruction](../../research/mayhem-initializer-validation/README.md)
+reduces 35/53 standalone validation mismatches to zero; the original five-case
+harness also has zero mismatches. All 17 existing CPI cases pass with the captured
+original Pump as caller on both sides. These are bounded local comparisons, not
+whole-program equivalence or byte identity.
+
+The current Mayhem overlay's pinned Linux v1.52 build is 695,448 bytes, SHA-256
+`8e6a5f8c34a12303096902e50848f556bc7a9d9ce0dc0d9030e632b85b88e166`;
+its source, raw output, symbols, logs and receipts are retained in that package.
 
 With the overlay applied, pump dispatches 56/56 IDL instructions and Mayhem 25/25.
-Builds of this overlay on 2026-10-26 (`scripts/build_partial_candidate.py`):
+Earlier builds on 2026-10-26, before the initializer correction above
+(`scripts/build_partial_candidate.py`; preserved historical outputs):
 
 - Mayhem (v1.52) reproduces the committed candidate byte-for-byte:
   `repro/mayhem/recovered-dispatch-25-from-main-v152/main/candidate.so`
