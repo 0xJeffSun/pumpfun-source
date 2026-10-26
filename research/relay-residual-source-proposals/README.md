@@ -1,9 +1,19 @@
-# Relay: two source hypotheses from the remaining function bodies
+# Relay: historical independent source-hypothesis evidence
 
-**These proposals have not been compiled or executed.** They do not increase the
-latest research baseline of **470/492 normalized windows, 22 unmatched**, or its
-88 raw local matches. No original binary, selected source, prior evidence package,
-match rule, or candidate executable is changed. Whole-binary identity remains false.
+**These independently derived proposals are superseded by measured upstream
+research.** [PR #112](https://github.com/lalalune/pumpfun-source/pull/112)
+compiled the share-total compared-value correction and recovered window 4. It
+also tested the proposed OR-operand reversal with **no recovered window**.
+[PR #114](https://github.com/lalalune/pumpfun-source/pull/114) subsequently recovered
+mint window 106 using a tuple zero predicate, not the OR-reversal proposal.
+
+This packet preserves an independent static derivation against the historical
+**470/492 normalized-window, 22-unmatched, 88-raw-local-match** input snapshot.
+Its verifier deliberately checks that frozen snapshot; those numbers are **not
+the current frontier**. The proposals were not built by this packet, but are no
+longer untested globally. See the [current progress log](../../docs/BYTE-IDENTITY-PROGRESS.md)
+for measured results. No selected source or original binary is changed here;
+whole-binary identity remains false.
 
 The inputs are the captured Relay, the retained unstripped **Token-2022 v8
 research candidate** (`f4691718…`), and its immutable source predecessor plus
@@ -29,11 +39,12 @@ The preceding loads are identical: `r1` receives the older fee basis points
 (offset 88), and `r2` the newer fee basis points (offset 106). The source currently
 computes `older | newer`. The proposed `newer | older` retains the same ordinary
 Rust value semantics and may alter the compiler's destructive-operand register
-choice. **Whether it actually does is an untested compiler hypothesis**, not a
-recovered function or historical-source claim.
+choice. The later framework/sysroot study tested this exact operand-reversal idea and
+recorded no recovered window. This historical hypothesis is not a recovered
+function or historical-source claim.
 
-Apply only `proposals/mint-or-order.patch` to an independently prepared copy of
-the latest source to test this hypothesis. Do not modify the sealed predecessor.
+`proposals/mint-or-order.patch` is retained as the historical proposed negative
+control, not a recommended next recovery step. Do not modify the sealed predecessor.
 
 ## 2. Share-sum error: restore compared values
 
@@ -58,8 +69,8 @@ basis points as `u32` and returns `BpsSumDoesNotEqualTenThousand` at
 `proposals/shares-compared-values.patch` adds `.with_values((sum, 10_000u32))` to
 that error without changing its condition, name, number, source location, or
 successful path. This is a source-level diagnostic correction hypothesis with
-strong static support. A fresh build must establish whether its monomorph matches
-window 4 and how it changes the caller bodies. Privileged-body runtime validation
+strong static support. The later framework/sysroot study compiled this correction and recovered window
+4; its measured source/build evidence supersedes this uncompiled proposal. Privileged-body runtime validation
 is not established by this packet or the parent's rejection-oriented fixtures.
 
 ## Reproduce the static checks
@@ -76,14 +87,11 @@ truncated instructions, distinguish external calls from masked direct calls,
 check both patches, and rederive all saved evidence. They do not launch a compiler,
 VM, network operation, or target-program instruction.
 
-## Required next measurements
+## Follow the measured frontier
 
-1. Reproduce the latest baseline from the bound Rust/dependency source in a clean,
-   reviewed toolchain environment. Original executable bytes must not be compiler
-   inputs.
-2. Compile each proposal separately; preserve failures and negative results.
-3. Compare complete original windows with the unchanged normalization rules,
-   measure gains **and losses**, and compare all raw sections and full-file bytes.
-4. Revalidate the actual resulting candidate with authorized local differential
-   cases before considering any source-selection change. Do not conflate a
-   local body match with data/call closure, complete behavior, or whole-ELF identity.
+Use the [framework/sysroot/share-error study](../../repro/donation-relay/framework-sysroot-recovery/README.md)
+and [mint tuple-predicate recovery](../../repro/donation-relay/mint-fee-pair-recovery/README.md)
+for source inputs, positive and negative builds, gains/losses, and finite replay
+coverage. This packet adds an independent static cross-check, **not** an additional
+reconstruction gain. Further experiments must begin from the current research
+candidate and retain complete source-build provenance and raw whole-file comparison.
