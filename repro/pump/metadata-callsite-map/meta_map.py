@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-"""For each metadata_only unmatched window, extract the ORIGINAL (file, line)
-its error-origin captures, and which reconstruction helper it corresponds to.
-Separates line!() (small 0x62 imm) from the Anchor error code (6000-6999).
-Read-only; produces a call-site map, writes no bytes to any ELF."""
+"""Produce heuristic source-origin guesses for store-immediate-similar windows.
+Pointer proximity and the first small store value do not prove a filename,
+line number or call-site identity. Requires explicit trusted inputs and a fresh
+JSON output; no ELF is modified.
+"""
 import argparse, collections, importlib.util, json, re, struct, sys
 from pathlib import Path
 
