@@ -1,12 +1,11 @@
 """Independent cross-check of the ATA `reserve_for_push` ordering finding.
 
-The repo concludes that its closest Associated-Token-Account candidate differs
-from the deployed binary only by the *order* of two `RawVec::reserve_for_push`
-monomorphizations (element types `u8` and `AccountMeta`), a consequence of
-Rust's `-C metadata` hash that cannot be reproduced without the original build's
-unit-graph inputs.
+Prior repository evidence attributes an ATA residual to two reserve_for_push
+windows. This tool checks the two preset witness windows only. It does not
+independently compare the closest candidate, establish historical Cargo-unit
+metadata causality, or prove byte identity impossible.
 
-This script re-derives that claim from scratch using only:
+This script checks the retained window hashes using:
   - the local deployed binary evidence/dependencies/associated_token/deployed.so
   - our own ELF reader + sBPF disassembler (sbpf.py)
   - the recorded window hashes (vendored below from
@@ -19,6 +18,7 @@ Exits non-zero if any window hash or the deployed order fails to match.
 
 from __future__ import annotations
 
+import argparse
 import hashlib
 import json
 import sys
@@ -77,6 +77,14 @@ def analyze_window(text_buf: bytes, text_off: int, start: int,
 
 
 def main() -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--output", type=Path, required=True,
+                        help="Path for a regenerated report; preserve the saved author receipt")
+    args = parser.parse_args()
+    if args.output.exists() or args.output.is_symlink():
+        parser.error("output already exists or is a symlink; choose a fresh report path")
+    if not args.output.parent.is_dir():
+        parser.error("output parent must already exist")
     data = ATA.read_bytes()
     elf = sbpf.parse_elf(data)
     assert elf.e_machine in (247, 263), f"unexpected machine {elf.e_machine}"
@@ -117,21 +125,22 @@ def main() -> int:
         "u8_body_does_not_use_width_34": no34,
     }
     report["conclusion"] = (
-        "Independently confirmed from the deployed binary: two distinct "
-        "RawVec::reserve_for_push bodies occupy .text file offsets "
-        f"{am['file_offset_start']} (AccountMeta, 34-byte elements) and "
-        f"{u8['file_offset_start']} (u8, 1-byte elements), in that order, with "
-        "SHA-256s equal to the recorded original windows. The order is a "
-        "compiler -C metadata monomorphization artifact and is not reproducible "
-        "without the original build's unit-graph inputs; this cross-check adds "
-        "independent evidence but does not change byte identity."
+        "Preset-window hash cross-check: two retained "
+        "reserve_for_push-attributed windows occupy file offsets "
+        f"{am['file_offset_start']} (AccountMeta-attributed) and "
+        f"{u8['file_offset_start']} (u8-attributed), in that offset order. "
+        "Raw/masked hash-match flags are recorded above. These checks do not independently "
+        "prove historical -C metadata causality, uniquely identify types, "
+        "compare the closest candidate, or establish whole-file identity or "
+        "its impossibility."
     )
 
-    out = Path(__file__).resolve().parent / "ata_order_report.json"
-    out.write_text(json.dumps(report, indent=2))
+    out = args.output
+    with out.open("x") as output_file:
+        output_file.write(json.dumps(report, indent=2))
     passed = all(report["checks"].values())
     print(f"\nchecks: {report['checks']}")
-    print(f"PASS={passed}  report -> {out.relative_to(REPO)}")
+    print(f"PASS={passed}  report -> {out}")
     return 0 if passed else 1
 
 

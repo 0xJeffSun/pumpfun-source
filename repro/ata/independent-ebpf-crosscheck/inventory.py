@@ -10,6 +10,7 @@ set of pc-relative `call` targets that land inside .text, plus the ELF entry.
 
 from __future__ import annotations
 
+import argparse
 import hashlib
 import json
 import sys
@@ -72,6 +73,14 @@ def inventory(path: Path) -> dict:
 
 
 def main() -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--output", type=Path, required=True,
+                        help="Path for the regenerated inventory; saved receipts are not overwritten by the runner")
+    args = parser.parse_args()
+    if args.output.exists() or args.output.is_symlink():
+        parser.error("output already exists or is a symlink; choose a fresh report path")
+    if not args.output.parent.is_dir():
+        parser.error("output parent must already exist")
     results = []
     print(f"{'binary':18} {'mach':14} {'file':>9} {'.text':>8} "
           f"{'insns':>7} {'fns~':>6} {'loc.calls':>9} {'sys.calls':>9}")
@@ -87,8 +96,9 @@ def main() -> int:
               f"{inv['text_bytes']:>8} {inv['linear_instructions']:>7} "
               f"{inv['heuristic_functions']:>6} {inv['local_calls']:>9} "
               f"{inv['syscall_or_extern_calls']:>9}")
-    out = Path("/Users/gilang/ngoding/sbpf-toolkit/inventory.json")
-    out.write_text(json.dumps(results, indent=2))
+    out = args.output
+    with out.open("x") as output_file:
+        output_file.write(json.dumps(results, indent=2))
     print(f"\nWrote {out}")
     return 0
 

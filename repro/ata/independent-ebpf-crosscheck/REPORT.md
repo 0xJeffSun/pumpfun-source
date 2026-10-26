@@ -1,123 +1,90 @@
-# Independent sBPF disassembly cross-check
+# Saved author sBPF cross-check and reproduction source
 
-Independent, dependency-free reverse-engineering of the local Solana binaries in
-`lalalune/pumpfun-source`, with a focus on re-deriving the Associated-Token-Account
-(ATA) `reserve_for_push` ordering finding from first principles.
+This package preserves the author's original ata_order_report.json and
+inventory.json byte-for-byte. Their conclusions and counts are historical raw
+receipts, not rewritten acceptance statements. The corrected source and this
+report qualify their scope. No new decoder/Ghidra/original-image run was made
+while preparing this correction.
 
-Nothing here claims byte identity or modifies any binary. It adds independent
-evidence using a second, from-scratch toolchain and validates that toolchain
-against the mainstream engine (Ghidra).
+## What is retained
 
-## Why a new tool
+The author supplied a dependency-free ELF reader/linear sBPF disassembler, a
+preset ATA-window checker, a nine-input linear inventory and a Ghidra listing
+export script. These are research tools, not an admitted decoder, full CFG
+recovery, ABI verifier or complete identity proof. The report's prior claim that
+REA rejects the images and its Ghidra import observations remain author-reported;
+no REA/Ghidra executable/version or raw admission receipt is bundled.
 
-The requested RE front-end (REA 6.4.0) refuses these files. Its ELF admission
-(`rea/src/domain/binaryTarget.ts`, `elfArchitecture`) accepts only machines
-3/62/8/40/183 (x86, x86_64, MIPS, ARM, ARM64). Solana programs are:
+The saved ATA report records the following two preset intervals of the named
+associated-token image (reported full SHA2566804554e69fd3a58caa191dc4a58f4c67223d30ca28ab8987f39fc18d2f7374d):
 
-- **EM_BPF (247)** — the dependency programs (SPL Token, ATA, Metaplex, …)
-- **EM_SBF (263)** — the four core programs (pump, pump_amm, pump_fees, mayhem)
+| attribution | file offsets | bytes | linear instructions | raw SHA256 |
+|---|---|---|---|---|
+| AccountMeta |28592–29032|440|55|8e46c99eac4736d2fcff3fc0f8133cd49a19b8a7d67a36b26e1804f21fcba7c9|
+| u8 |29032–29384|352|44|37b37fdcf5a13862220b07be1c9fb9d9c90870cfe198748cc96f2aa1052a0a9b|
 
-REA rejects both before any provider runs, so "open it in REA" is not possible
-on this target without modifying REA itself. The engine REA wraps (Ghidra) *does*
-handle these via its stock `eBPF:LE:64` processor, and the sBPF instruction set
-is simple enough to decode directly. So this toolkit:
+Its raw/call-immediate-masked hashes agree with the vendored witness constants.
+The first interval has two34 immediates; the second has none. That supports the
+reported width/type attribution, but does not uniquely prove a Rust element type
+or semantic equivalence. The offset-order check compares these already chosen
+witness offsets. It is not a search recovering all function boundaries or an
+independent comparison of the closest candidate. The checker records a full
+image hash but only the two window hashes are pinned as acceptance conditions.
 
-- `sbpf.py` — a from-scratch ELF reader + sBPF disassembler.
-- `verify_ata_order.py` — the ATA ordering cross-check.
-- `inventory.py` — a function/instruction inventory over every local binary.
-- `ghidra_scripts/DumpText.java` — a read-only Ghidra post-script used as an
-  independent oracle.
+## Oracle and historical-identity limits
 
-## Headline result: the ATA residual, re-derived independently
+The author reported Ghidra12.1.4 eBPF decoding55/44 instructions with zero address-
+stream mismatches and matching operands. That cross-check is UNREVERIFIED here:
+no oracle dump, comparison method/output, command/exit logs, tool/runtime version
+receipt or exact oracle-input binding is bundled. DumpText.java is source for a
+listing export, not the missing oracle evidence. Counts/address streams alone
+would not establish every operand or instruction semantic. No new oracle run or
+original-image acquisition is required or implied by this correction.
 
-The repo's conclusion is that its closest ATA candidate differs from the deployed
-binary only by the **order** of two `RawVec::reserve_for_push` monomorphizations
-(element types `u8` and `AccountMeta`), fixed by Rust's `-C metadata` hash.
+The prior repository attributed an ATA residual307 differing positions to
+monomorphization order and discussed Cargo-unit metadata. This tool does not read
+the closest candidate or historical build graph, so its observations do not
+independently establish that causal history, a unique required recipe, or that
+whole-byte identity is unreachable. The stronger old prose in the unchanged raw
+JSON remains a historical author assertion. Finite negative builds and a
+window-order observation do not prove impossibility. Other programs' source,
+compiler, ABI and whole-byte closure remain separate open obligations.
 
-Using only the local `evidence/dependencies/associated_token/deployed.so`
-(105,032 B, sha256 `6804554e…`) and our own decoder, we independently confirm:
+inventory.json retains the author's nine-image observations and labels function
+counts heuristic. Inventory uses linear decoding and local-call targets/entry;
+it is not complete function or reachable-CFG proof. Missing files are skipped,
+so a successful command can be an incomplete inventory. The saved entries contain
+both machine247 and263, including263 SPL-token entries; no all-dependencies247
+generalization is made. Claimed Ghidra reachable counts/importability are not
+repeated as verified results. No new decoder conformance proof is supplied.
 
-| window | .text file offset | size | insns | our raw sha256 | matches recorded witness |
-|---|---|---|---|---|---|
-| AccountMeta | 28592–29032 | 440 B | 55 | `8e46c99e…` | yes |
-| u8 | 29032–29384 | 352 B | 44 | `37b37fdc…` | yes |
+## Reproduction interfaces and writes
 
-- **Call-immediate-masked** hashes also match (`dc100a37…`, `170c4b5d…`),
-  independently reproducing the repo's body-normalization (zeroing the 4-byte
-  immediate of every `0x85` CALL).
-- The **element width is recovered from the code, not from symbol names**: the
-  AccountMeta body uses the immediate `34` twice (`repr(C)` `Pubkey + 2 bools`);
-  the u8 body never does. This independently corroborates the type attribution.
-- **Order in the deployed binary: AccountMeta (28592) then u8 (29032).** The
-  closest candidate (`ba8dd8a4…`) swaps them; the first whole-file difference is
-  at offset ~28601, inside the first window — matching the README's 307
-  differing positions.
-
-**Oracle validation.** Ghidra 12.1.4's eBPF processor, run headless on the same
-binary, decodes these windows as **55 and 44 instructions with zero
-address-stream mismatches** against our decoder, and identical operands
-(`mov r6,r1` / `add r1,1` / `jgt r2,r1,→0x6fe0` …). Our tool agrees with the
-mainstream engine.
-
-**What this means.** The ordering is a compiler monomorphization artifact driven
-by the `-C metadata` hash of the *original build's* Cargo unit graph. It is not
-present as a symbol or metadata record in the stripped binary and is not
-reproducible without those historical build inputs. This cross-check strengthens
-the evidence for *why* ATA cannot be made identical; it does not reduce the 307
-differing positions.
-
-## Local binary inventory
-
-From `inventory.py` (linear decode; `fns~` = heuristic function count from local
-call targets + entry). Ghidra reachable-instruction counts are shown where run.
-
-| binary | machine | file B | .text B | insns (linear) | fns~ | local calls | syscalls |
-|---|---|---|---|---|---|---|---|
-| pump | EM_SBF 263 | 10,485,715 | 1,792,208 | 215,873 | 1,170 | 10,861 | 144 |
-| pump_amm | EM_SBF 263 | 10,485,715 | 1,162,040 | 139,524 | 832 | 7,397 | 123 |
-| pump_fees | EM_SBF 263 | 948,944 | 799,648 | 96,083 | 638 | 4,741 | 121 |
-| mayhem | EM_SBF 263 | 777,408 | 706,744 | 83,947 | 503 | 4,902 | 93 |
-| spl_token | EM_SBF 263 | 108,600 | 102,608 | 12,061 | 46 | 158 | 8 |
-| spl_token_2022 | EM_SBF 263 | 1,382,016 | 531,640 | 64,164 | 681 | 3,224 | 74 |
-| associated_token | EM_BPF 247 | 105,032 | 92,056 | 11,219 | 240 | 696 | 35 |
-| token_metadata | EM_BPF 247 | 793,991 | 628,040 | 76,037 | 1,457 | 6,036 | 81 |
-| donation_relay | EM_SBF 263 | 830,448 | 752,488 | 89,394 | 512 | 4,419 | 89 |
-
-- Ghidra headless (eBPF processor) opened `associated_token` (247) → 6,552
-  reachable instructions and `pump_fees` (263, processor forced) → 90,081. Both
-  machine types import cleanly.
-
-## Byte-identity status (honest)
-
-Full byte-identity is **not reachable** here, consistent with the repo's own
-exhaustive evidence:
-
-- **pump / pump_amm / pump_fees / mayhem** — no public source; reconstructed
-  handler-by-handler. Not byte-identical (pump differs at ~9.78M positions).
-- **ATA** — 307 bytes, the monomorphization order above; needs the original
-  build's unit-graph inputs. Builds 1–5 exhausted.
-- **token_metadata (Metaplex)** — 1,509 bytes, confined to one function
-  (`Utilize`) plus 29 Rust source-coordinate records; needs the exact non-public
-  source revision. Candidates 1–14 did not close it.
-- **spl_token** — already a whole-file exact rebuild (the 1/5 success).
-
-The repo additionally forbids the only shortcuts that would force identity
-(flag/path brute-force, binary patching). This cross-check respects that: it only
-reads and decodes.
-
-## Reproduce
+From repository root, enter repro/ata/independent-ebpf-crosscheck. Both Python
+entry points now require an explicit --output path. For example:
 
 ```bash
-cd sbpf-toolkit
-python3 verify_ata_order.py     # independent ATA ordering check (+ hash asserts)
-python3 inventory.py            # inventory over all local binaries
-
-# Optional Ghidra oracle (needs GHIDRA_INSTALL_DIR + JDK 21):
-export JAVA_HOME=/path/to/jdk-21 GHIDRA_HEADLESS_MAXMEM=8G
-GHIDRA/support/analyzeHeadless /tmp/p ata -import evidence/.../deployed.so \
-  -processor eBPF:LE:64:default -loader ElfLoader -loader-applyRelocations false \
-  -scriptPath sbpf-toolkit/ghidra_scripts -postScript DumpText.java -deleteProject
+mkdir reproduced
+python3 verify_ata_order.py --output reproduced/ata_order_report.json
+python3 inventory.py --output reproduced/inventory.json
+# Or: bash run.sh /chosen/report-directory
 ```
 
-Inputs are read-only. `verify_ata_order.py` exits non-zero if any window hash or
-the deployed order fails to match.
+These commands read local binary inputs and write regenerated reports; they are
+not globally read-only. The runner defaults to a separate reproduced/ directory and creates it with one
+atomic mkdir without -p. The directory must not exist, and its parent must already
+exist. An existing directory, a symlink or a choice such as . fails before either
+Python tool starts. Both Python CLIs reject an existing/symlink output path before
+reading original inputs, require an existing output parent, and write the new
+report in exclusive x mode. If another process creates the path after the initial
+check, exclusive creation fails without overwriting it. The two saved JSON
+receipts remain protected. No original binary is modified, fetched or installed by
+these tools. Whether executing an original decoder is authorized is a separate
+operator decision; this preserved research package grants no new scope.
+
+run.sh prints an optional Ghidra example with explicit fresh project/listing
+paths. Ghidra writes its project and DumpText writes its output file (its legacy
+fallback is /tmp/ghidra_text_dump.tsv if REA_DUMP_OUT is unset). The example sets
+REA_DUMP_OUT explicitly. No Ghidra invocation is automatically performed by the
+runner. The manifest hashes the corrected source/manual docs and the unchanged
+saved receipts; it authenticates file bytes, not absent execution evidence.
