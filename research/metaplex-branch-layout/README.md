@@ -34,6 +34,15 @@ Metaplex source is supplied to the compiler.
 | After block-placement and pre-emit | Same direction, no unconditional jump | Same direction, no unconditional jump |
 | Final branch bytes, `.text` offset 16 | `2d42040000000000` | `3d24040000000000` |
 
+The two error blocks are identical (store 86, call `sink`, return), so
+branch-folder also tail-merges them in both variants. In the near input
+`underflow_error` disappears into `initial_error`, whose predecessors become
+blocks 0, 1 and 2; the far input merges the same way. That merge is why each
+output has 11 instructions. "Error is fallthrough" in the near column therefore
+means the merged error block. The condition direction is already fixed in the
+dump before Finalize ISel, which runs before this merge, so the merge does not
+explain the direction change.
+
 `analysis.json` records full emitted instruction bytes, section/file offsets,
 signed branch targets, exact stage hashes, complete remaining-check blocks and
 their next layout blocks. Complete logs, IR inputs, ELF objects and disassembly
@@ -75,6 +84,21 @@ mean later passes cannot remove jumps: both synthetic runs remove their explicit
 fallthrough jumps, as the saved before/after branch-folder observations show.
 The source explanation is an inference corroborated by the stages, not a trace
 of calls to `analyzeBranch` or `reverseBranchCondition` in the Metaplex build.
+
+The static
+[branch-selection audit](../../repro/metaplex/branch-selection-audit/README.md)
+reached the same `visitSwitchCase` / `NegateCC` / `analyzeBranch` inference from
+source alone, at the same LLVM gitlink. This packet adds a measured `llc`
+observation of that mechanism. The audit also records the original Metaplex bytes
+at file offset 238832, `3d97070000000000` (unsigned `r7 >= r9` jumps to success,
+error is fallthrough). That is the same orientation as the near variant's `JGE`.
+
+The seven files in `compiler-source.tar.gz` are unmodified LLVM Project files
+from the anza-xyz fork. They are licensed under the Apache License v2.0 with LLVM
+Exceptions; the six source files carry that SPDX header, and the complete license
+is retained as `llvm/LICENSE.TXT` in the same tarball. That license covers those
+retained files only. It does not change the license of this packet's own
+scripts, analyses or README.
 
 ## Execution provenance and retained failures
 
