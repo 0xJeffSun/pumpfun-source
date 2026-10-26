@@ -19,7 +19,7 @@ ENTRYPOINTS = ('verify_current.py', 'verify_metadata.py', 'verify_portable_crypt
 # The reviewed transition is pinned in code, so re-pinning another asset or a new
 # README revision is a reviewable change to this file, not a data edit plus reseal.
 REVIEWED_PATHS = frozenset({'README.md', '.github/workflows/verify.yml'})
-TRANSITION_SHA256 = '4640a46d991bc9cf085e0f1d778cf4223c4544bb05eeccbc122aa571556edbbc'
+TRANSITION_SHA256 = '583e9977e37a3377a1e2b7a5e48e4d246f0052578094394e82d93868001ad695'
 sha = lambda p: hashlib.sha256(Path(p).read_bytes()).hexdigest()
 
 
