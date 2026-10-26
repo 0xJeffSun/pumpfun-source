@@ -2,15 +2,36 @@
 """Full audit spec for every unmatched Pump .text window. Extracts measurable
 signals only (sizes, call structure, external symbols, Anchor error codes,
 original file!()/line!()); reproduces no proprietary logic. Read-only."""
-import json,sys,re,struct,collections
+import argparse, collections, importlib.util, json, re, struct, sys
 from pathlib import Path
-HERE=Path(__file__).resolve().parent
-sys.path.insert(0,str(HERE))
-from elf_reader import Elf
-ROOT=HERE.parents[1]
-orig=Elf(ROOT/'evidence/original/pump/deployed.so')
-sym=Elf(ROOT/'work/head-score/symbols.so')
-d=json.load(open(HERE/'pump-bodies.json'))
+
+ap = argparse.ArgumentParser(description=__doc__)
+ap.add_argument('--elf-reader', type=Path, required=True, help='Explicit trusted elf_reader.py implementation; not bundled')
+ap.add_argument('--original', type=Path, required=True, help='Explicit captured original; inspected only on deliberate invocation')
+ap.add_argument('--symbols', type=Path, required=True, help='Matching unstripped reconstruction ELF')
+ap.add_argument('--catalog', type=Path, required=True, help='Matching pump-bodies.json scorer catalog')
+ap.add_argument('--output', type=Path, required=True, help='Fresh output JSON path; existing evidence is never replaced')
+args = ap.parse_args()
+for name in ['elf_reader', 'original', 'symbols', 'catalog']:
+    path = getattr(args, name).resolve()
+    if not path.is_file():
+        ap.error('--' + name.replace('_', '-') + ': missing explicit input: ' + str(path))
+    setattr(args, name, path)
+args.output = args.output.absolute()
+if args.output.exists() or args.output.is_symlink():
+    ap.error('--output must be fresh; preserve the existing file')
+if not args.output.parent.is_dir():
+    ap.error('--output parent directory must already exist')
+# Import no decoder until all explicit inputs and output admission are valid.
+spec = importlib.util.spec_from_file_location('_explicit_frontier_elf_reader', args.elf_reader)
+reader = importlib.util.module_from_spec(spec)
+sys.modules[spec.name] = reader
+spec.loader.exec_module(reader)
+Elf = reader.Elf
+orig = Elf(args.original)
+sym = Elf(args.symbols)
+with args.catalog.open() as stream:
+    d = json.load(stream)
 unm=[r for r in d['original_windows'] if not r['candidate_matches']]
 bysize=collections.defaultdict(list)
 for fn in sym.funcs: bysize[fn['size']].append(fn)
@@ -45,7 +66,7 @@ def origin_and_codes(elf,start,size):
 
 def classify(on,cn):
     diffs=[i for i in range(len(on)) if on[i]!=cn[i]]
-    return 'metadata_only' if diffs and {on[(i//8)*8] for i in diffs}<={0x62,0x7a} else 'body_diff'
+    return 'metadata_only' if diffs and all(on[(i//8)*8] in (0x62,0x7a) and i%8>=4 for i in diffs) else 'body_diff'
 
 rows=[]
 for r in unm:
@@ -67,7 +88,7 @@ for r in unm:
                  'direct_calls':len(r['direct_calls']),'indirect_calls':len(r['indirect_calls']),
                  'data_refs':len(r['data_references']),'external_calls':ext})
 
-json.dump(rows,open(HERE/'frontier-spec.json','w'),indent=2)
+json.dump(rows,args.output.open('x'),indent=2)
 # ---- summaries ----
 cat=collections.Counter(x['category'] for x in rows)
 print("unmatched windows:",len(rows),dict(cat))
