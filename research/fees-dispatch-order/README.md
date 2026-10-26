@@ -6,10 +6,12 @@ The proposed build includes the parser reconstruction from PR #83 as a control i
 
 | Build | Candidate windows | Unique structural pairs | Unmatched original windows | Unique pair bytes |
 | --- | ---: | ---: | ---: | ---: |
-| Selected-source baseline replay | 582 | 320 | 121 | 343,928 |
+| Selected-source Linux baseline replay | 582 | 320 | 121 | 343,928 |
 | Reconstructed parser control | 582 | 322 | 119 | 347,824 |
 | Reordered dispatcher | 582 | 323 | 118 | 352,840 |
 | Aligned declaration lines | 582 | 326 | 115 | 355,024 |
+
+The baseline row is a Linux rebuild of the unchanged selected sources. Its stripped output is the Linux current-source candidate `6c44d9f2…` already retained in `repro/pump_fees/linux-current-source-build`, **not** the selected macOS candidate `2387f813…` (`repro/pump_fees/sharing-authorize-main-v144/main/candidate.so`). The two have equal `.text` length but differ at 19,484 `.text` bytes; under the masks below they still give the same 582-window map, with 320 unique pairs, 43 ambiguous groups and 121 unmatched original windows.
 
 The dispatcher adds original window `[598128, 603144)` without losing any prior unique structural pair. Three imported account decoders then differ only in their embedded source-line integers: the candidate's `declare_program!` calls are at lines 29/30, versus the original's observed 27/28. Removing the two leading documentation lines aligns these emitted integers and adds the complete 728-byte BondingCurve, Global, and Pool decoder windows at 537312, 539488 and 575408. No prior pair is lost. This controlled result does not establish the unique historical source layout.
 
