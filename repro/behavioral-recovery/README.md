@@ -26,9 +26,23 @@ mismatches for this corrected build with the committed `5392c9a9` Pump candidate
 caller, and for the committed `5392c9a9`/`cbe8c8e7` pair (local runs, 2026-10-26).
 These are bounded local comparisons, not whole-program equivalence or byte identity.
 
+Commit `73cfb605` (the [creator-fixture correction](../../research/mayhem-creator-fixture/README.md))
+made the harness serialize each case's requested creator: the old
+`zero-creator-is-rejected` case had serialized the payer, so it repeated an ordinary
+creation. It also added zero/distinct-creator controls; the zero-creator cases
+reject in Pump (6030) before the Mayhem CPI. That package retains the 20-case
+receipt for the `5392c9a9`/`cbe8c8e7` pair. The [corrected-fixture recheck](../../research/mayhem-overlay-cpi-recheck/README.md)
+retains the 20-case receipts for this corrected build with the `5392c9a9` Pump
+and with the captured Pump as caller (0 mismatches each).
+
 The current Mayhem overlay's pinned Linux v1.52 build is 695,448 bytes, SHA-256
 `8e6a5f8c34a12303096902e50848f556bc7a9d9ce0dc0d9030e632b85b88e166`;
 its source, raw output, symbols, logs and receipts are retained in that package.
+A macOS `scripts/build_partial_candidate.py` (`cargo build-sbf`, v1.52) rebuild
+does not reproduce that Linux output: on the same source it gives 695,456 bytes, SHA-256
+`b088163ae28a3e03649f2da8de03ca7b053a1397275b0fa61716a9f720180d76`, while on the
+pre-correction source it reproduces `cbe8c8e7…` exactly (recorded in the recheck
+package; the rebuilt binary is not retained).
 
 With the overlay applied, pump dispatches 56/56 IDL instructions and Mayhem 25/25.
 Earlier builds on 2026-10-26, before the initializer correction above

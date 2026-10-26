@@ -185,7 +185,9 @@ handling: 53 standalone rejection cases and 17 existing real Pump-CPI cases
 match. PR #80 repairs the creator fixture: the 20-case retained pair genuinely
 tests zero and distinct creators, rather than serializing the payer in every
 case. That retained pair uses older overlay candidates; it is not automatically
-evidence for every later build. The updated Mayhem overlay itself remains
+evidence for every later build. A [follow-up recheck](../research/mayhem-overlay-cpi-recheck/README.md)
+retains the same 20 cases for the corrected Mayhem `8e6a5f8c` with the `5392c9a9`
+and captured Pump callers: 0 mismatches each. The updated Mayhem overlay itself remains
 695,448 bytes and byte-unequal.
 
 Pump’s workspace-member research has 538 normalized windows. Its 497 residual
