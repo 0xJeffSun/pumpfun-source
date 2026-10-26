@@ -87,3 +87,15 @@ No callee body was read, so these targets do not attribute the original site
 to any candidate. Receipt `ev_fc1cce98…` reads the original at `0x144e0`, which
 is a candidate-site offset. Its bytes are unrelated original code and support
 no site claim.
+
+## Later cross-check (PR #82 review, 2026-10-26)
+
+The candidate sites in the table above (`0x144d0` / `0x14598` / `0x14660`) are
+the selected candidate's (`2387f813…`) wrapper addresses retained by pass 36,
+but every candidate byte here was read from the Linux build (`6c44d9f2…`). In
+that build the CALLs at `0x144e0` / `0x145a8` / `0x14660` are each followed by
+`exit`; the three windows equal to original wrapper 71,256 after masking only
+CALL immediates are 82,232 / 82,800 / 83,184, and the query's first CALL
+reaches 82,232 (helper 28,728). These receipts therefore describe neither the
+selected candidate's wrappers nor that build's first-account wrapper. See
+`research/fees-callee-attribution-check/README.md` for the per-build table.
