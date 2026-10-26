@@ -1,0 +1,48 @@
+# Byte-identity progress after the 26 October audit
+
+The [full audit](RECONSTRUCTION-AUDIT.md) and its generated tables retain their
+explicit `1463bd22` snapshot. This log records later research without silently
+changing that baseline or promoting new selected artifacts.
+
+## Relay: 27 → 26 unmatched normalized windows
+
+The [SwapReceipt coordinate study](../repro/donation-relay/swap-receipt-coordinate-recovery/README.md)
+reproduced the retained 465-window build, tested the canonical target with fixed
+source, and recovered the full 1,120-byte decoder at original window 167.
+The observed attribute coordinate is line 5, not line 2. Moving the attribute by
+three blank lines changes exactly two output bytes and loses no normalized match.
+
+Latest research: **466/492 normalized windows**, **88 raw local body matches**,
+**26 unmatched**. Fresh replay of 536 records / 534 unique fixtures gave zero
+mismatches and reproduced the saved original observations. The output remains
+813,968 bytes and is not equal to the 830,448-byte captured allocation.
+These counts do not establish historical source text, all transitive data/calls,
+successful privileged settlement or complete semantic equivalence.
+
+The target-only control recovered no normalized window, so it is retained as a
+negative result for the repeated `Error::type_id` hypothesis. The three type-ID
+windows still need work. The current residual list is in the new package.
+
+## Fees: 98 → 95 unmatched normalized windows
+
+Merged [PR #96](https://github.com/lalalune/pumpfun-source/pull/96) recovers a
+376-byte tier selector, a 656-byte quote selector and a 1,384-byte generated
+quote-query wrapper. Its source separates helper boundaries, derives `Copy` for
+Fees, and uses the observed Pubkey comparison order.
+
+That research output has **343 unique structural pairs** (up from 340), **95
+unmatched original windows**, and retains 17,331 finite passing comparisons.
+The 393 call-attributed-pair count in the earlier audit belongs to the earlier
+stable-sort build; it has not been automatically transferred to this candidate.
+Selected Fees source and binary are unchanged. See the
+[query-selector evidence](../research/fees-query-selectors/README.md).
+
+## PR review and evidence maintenance
+
+PRs #97–#99 clarify provenance, licensing and the distinction between executed
+and post-hoc evidence. PR #95 now checks all pass-27 guard files before import;
+its conflicts were resolved while preserving the newer audit and README pins.
+These are evidence/guard changes, not byte-identity gains.
+
+Whole-program status remains **0/4 selected core programs**, with selected Relay
+also byte-unequal. The original byte-identity goal remains open.
