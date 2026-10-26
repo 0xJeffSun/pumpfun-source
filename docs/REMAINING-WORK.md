@@ -22,7 +22,7 @@ matches with no patching or padding.
 
 | Program | Original windows | Current gap | Most recent lead |
 | --- | ---: | --- | --- |
-| Pump | 1,035 | Open PRs #47/#51 classify 497 unmatched windows: 72 metadata-only, 233 body, 192 missing | `file!()` workspace prefix recovers 5 windows (PR #45); metadata-only windows need call-site layout, not module renames (PR #48) |
+| Pump | 1,035 | 538 normalized matches in a workspace-member build; of the 497 unmatched, 72 are metadata-only, 233 body, 192 missing (`repro/pump/frontier-*`) | `file!()` workspace prefix recovers 5 windows (PR #45); metadata-only windows need call-site layout, not module renames (PR #48) |
 | PumpSwap | 785 | 297 unmatched original windows | Restructured module tree banked under `repro/parallel-work/2026-10-25/independent-reconstruction-review/restructure/` (13 of 33 path strings recovered) |
 | Fees | 585 | Function bodies largely match after masking; residual is layout, scheduling and panic `Location` line/column | First owner/discriminator account parser is the frontier (pass 36) |
 | Mayhem | 441 | 177 bounded normalized matches, 7 admitted handler windows unmatched, 257 opaque | Linux-hosted toolchain confirmed by the alloc `Location` payload (`repro/mayhem/linux-v154-recovery/`) |
@@ -33,8 +33,11 @@ Known structural blockers, from the byte-grind experiments:
 - Exact compiler release is narrowed to platform-tools v1.44–v1.46.1 for Pump, AMM and
   Fees (ELF `e_machine` rules out v1.43), but not pinned to one release.
 - Function order and relocation layout depend on original source item and link order.
-- Panic `Location` path strings are recoverable from workspace layout; their line and
-  column values need the original statement positions.
+- Panic `Location` path strings are recoverable; their line and column values need the
+  original statement positions. Converting programs to workspace members reorders
+  functions or drifts dependencies for no byte gain, so per-program
+  `--remap-path-prefix` is the safer way to recover the paths
+  (`repro/parallel-work/2026-10-25/independent-reconstruction-review/WORKSPACE-BYTEMATCH-REPORT.md`).
 - High-similarity functions differ by instruction scheduling and register allocation,
   which source edits do not reliably control.
 
@@ -94,7 +97,7 @@ call for the repository owner, not a mechanical merge.
 
 ## 4. Repository and process
 
-- **Open pull requests**: see the list at the end of this file.
+- **Open pull requests**: none (see the end of this file).
 - **Relay generated-framework branch** (`codex/relay-generated-framework-20261025`, owned
   by an active Codex agent): its evidence is on main; its `programs/donation-relay`
   change is not, because CI pins that directory to source 15. Landing it needs a new
@@ -114,4 +117,6 @@ call for the repository owner, not a mechanical merge.
 
 ## Open pull requests after consolidation
 
-Updated at merge time; see the consolidation commit on main.
+None. The 24 pull requests open at the start (#32–#56, including draft #52) and the
+review-fix pull requests #57–#59 were all merged into main by 14:13 UTC on
+2026-10-26, and that main is included here.
