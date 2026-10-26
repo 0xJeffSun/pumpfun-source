@@ -24,14 +24,19 @@ matches with no patching or padding.
 | --- | ---: | --- | --- |
 | Pump | 1,035 | 538 normalized matches in a workspace-member build; of the 497 unmatched, 72 are metadata-only, 233 body, 192 missing (`repro/pump/frontier-*`) | `file!()` workspace prefix recovers 5 windows (PR #45); metadata-only windows need call-site layout, not module renames (PR #48) |
 | PumpSwap | 785 | 297 unmatched original windows | Restructured module tree banked under `repro/parallel-work/2026-10-25/independent-reconstruction-review/restructure/` (13 of 33 path strings recovered) |
-| Fees | 585 | Function bodies largely match after masking; residual is layout, scheduling and panic `Location` line/column | First owner/discriminator account parser is the frontier (pass 36) |
+| Fees | 585 | Stable-sort research build: 340 unique structural body pairs, 147 duplicate-body original windows, 98 unmatched. Encoded calls attribute 53 duplicates; 94 remain unattributed. Selected sources unchanged. | Canonical v1.44 sysroot recovers all four raw `type_id` bodies (PR #90); stable sorting recovers merge-sort and memmove (PR #91); see `research/fees-call-target-attribution/` for caller evidence. |
 | Mayhem | 441 | 177 bounded normalized matches, 7 admitted handler windows unmatched, 257 opaque | Linux-hosted toolchain confirmed by the alloc `Location` payload (`repro/mayhem/linux-v154-recovery/`) |
 | Donation Relay | 492 | Selected source 15: 370 unmatched | Generated-framework reconstruction reaches 465/492 normalized windows (27 unmatched) but is not yet selected; see §4 |
 
 Known structural blockers, from the byte-grind experiments:
 
-- Exact compiler release is narrowed to platform-tools v1.44–v1.46.1 for Pump, AMM and
-  Fees (ELF `e_machine` rules out v1.43), but not pinned to one release.
+- Exact historical compiler identity remains unproven. The Fees controlled matrix
+  favors platform-tools v1.44 with the canonical `sbpf-solana-solana` sysroot:
+  all four candidate `type_id` bodies equal their original raw windows. Its legacy
+  sysroot matches none. A v1.52 test still emits machine 263/flags 0, so those ELF
+  fields alone do not establish the previously stated v1.46.1 upper bound
+  (`research/fees-canonical-target/`). This Fees evidence does not independently
+  pin the Pump or AMM compiler.
 - Function order and relocation layout depend on original source item and link order.
 - Panic `Location` path strings are recoverable; their line and column values need the
   original statement positions. A workspace-member Pump build that keeps its own lock
