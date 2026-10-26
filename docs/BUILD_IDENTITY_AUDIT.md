@@ -1,7 +1,5 @@
 # Remaining work for full deployed-byte identity
 
-Current additional evidence and remaining gaps: [collector implementation, SDK wrappers and compiler/unit witnesses](BUILD_IDENTITY_COLLECTOR_AND_SDK_WRAPPERS.md). The new collector is unselected; whole core identity remains0/4. Earlier records below retain their original measured scopes.
-
 Current selected artifacts must agree with [status.json](../repro/status.json) and the complete pass-26 byte/function index. Whole-file identity remains **0/4 core programs**. Dependency capture images remain **2/5**; only SPL Token is a whole-file exact raw compiler output (**1/5**). Token-2022 and Metaplex allocation images are recorded separately from shorter raw compiler output. No overall reconstruction percentage follows from finite tests or normalized function matches.
 
 | Program | Selected executable SHA256 prefix | Differing or missing captured positions |
