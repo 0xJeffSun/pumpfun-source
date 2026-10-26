@@ -7,8 +7,8 @@
     {
       "path": "README.md",
       "before_sha256": "cae913d4d3f2066403162f653a0cf35b39620fb08877b1b308c08ccce4a53678",
-      "after_sha256": "5ad60dd44d49ad34c080015df28a50f44fdecf46d39ddaa846d99261941337ce",
-      "reason": "Link the frozen audit to verified progress: Relay 470 normalized windows with 22 unmatched, and Fees 344 unique structural pairs with 94 unmatched."
+      "after_sha256": "d221e62a30a81b5e2e53d3efb714e9c392010913f870fbf2b71b6f9130049998",
+      "reason": "Link the frozen audit to verified progress: Relay 479 normalized windows with 13 unmatched using the explicit cross-host research recipe; Fees remains at 344 structural pairs and 94 unmatched."
     },
     {
       "path": ".github/workflows/verify.yml",

@@ -4,6 +4,26 @@ The [full audit](RECONSTRUCTION-AUDIT.md) and its generated tables retain their
 explicit `1463bd22` snapshot. This log records later research without silently
 changing that baseline or promoting new selected artifacts.
 
+## Relay: 22 → 13 unmatched normalized windows
+
+The [framework/sysroot/share-error study](../repro/donation-relay/framework-sysroot-recovery/README.md)
+recovers nine more original windows without losing any of the previous 470:
+four framework/CPI/resize helpers, the Pubkey base58 writer, three raw-equal
+`StringError` type-ID bodies, and the missing share-total `with_values` helper.
+
+The best retained candidate has **479/492 normalized matches**, **127 raw local
+matches**, and **13 unmatched windows**. It passes fresh replay of all 536 records
+/ 534 unique fixtures. The share-total error now includes `(sum, 10000)`; its three
+callers and complete captured helper are independently checked. The corpus does
+not establish the protected rejection path end to end.
+
+This is an explicit cross-host recipe: Darwin v1.48 compiler and linker with
+official Linux v1.48 target libraries, Anchor Lang/SPL 0.32.1 and resolved macros
+0.32.2. It is not a claim of a full Linux-host build or the unique historical
+recipe. Whole-file identity and selected-artifact promotion remain open. All 13
+remaining windows belong to donation/settlement bodies, mint policy, Jupiter CPI
+construction, residual burn/close, and the shared donation worker.
+
 ## Relay: repeated type-ID attribution, no count change
 
 The [StringError provenance study](../research/relay-string-error-provenance/README.md)

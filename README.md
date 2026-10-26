@@ -11,8 +11,9 @@ that run the captured original and the rebuilt candidate side by side in a local
 For subsequent gains and the latest research frontier, see the
 [byte-identity progress log](docs/BYTE-IDENTITY-PROGRESS.md).
 
-Latest Relay research: **470/492 normalized windows, 22 unmatched**, with 536
-passing replay records. Latest Fees research: **344 unique structural pairs,
+Latest Relay research: **479/492 normalized windows, 13 unmatched**, with 536
+passing replay records. This candidate uses Anchor 0.32 and official Linux target
+libraries with the Darwin compiler; full byte identity remains unproved. Latest Fees research: **344 unique structural pairs,
 94 unmatched windows**, with the complete `get_fees` wrapper now matched.
 Whole-file identity remains unachieved.
 

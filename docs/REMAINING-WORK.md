@@ -6,11 +6,12 @@ based on selected artifacts and research through commit `1463bd22`. The historic
 candidate paths and “current” prose must not override newer evidence.
 
 Subsequent gains are in the [byte-identity progress log](BYTE-IDENTITY-PROGRESS.md):
-Relay research now has 22 unmatched windows; Fees optional-boolean research has 94.
-The baseline counts below remain those of the dated audit. The repeated Relay
-type-ID frontier now has a [boxed StringError attribution and negative local
-compiler matrix](../research/relay-string-error-provenance/README.md); it remains
-unmatched and requires linked-sysroot provenance work.
+Relay research now has **13 unmatched windows**; Fees optional-boolean research
+has 94. The [latest Relay study](../repro/donation-relay/framework-sysroot-recovery/README.md)
+recovers the three repeated type-ID bodies with official Linux target libraries,
+adds the Anchor 0.32 framework matches and restores share-total compared values.
+Its remaining windows are 90, 92–100, 106, 109 and 112. The baseline counts below
+remain those of the dated audit.
 
 ## Audit baseline
 
