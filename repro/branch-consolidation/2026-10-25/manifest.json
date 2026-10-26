@@ -1,12 +1,12 @@
 {
   "files": {
     "README.md": {
-      "bytes": 5259,
-      "sha256": "4efcb3c3063eee38cad6fe9ad740f9b10a4bb9d6cf608995d294a6f510edab5b"
+      "bytes": 6220,
+      "sha256": "4722b483ab2fef49b4b462b43d39e4ed27f426639a066f3b81078598bc6ab60a"
     },
     "archive-pins.json": {
-      "bytes": 2139,
-      "sha256": "1325783d6b47576d308e6e42f7b5d7ccac4f411bc20aa2b9cd5b803632d93cce"
+      "bytes": 2221,
+      "sha256": "359c9947bc3e698a33aa40237e485c116d3d64de974e64b6daae666780e54370"
     },
     "branches.before.json": {
       "bytes": 3641,
@@ -23,6 +23,10 @@
     "reviews/ata-and-review.md": {
       "bytes": 7630,
       "sha256": "ccb860663e9f0f2c47bf04cc4e815ebb38dce33dfc18c82dac8515005a6b135c"
+    },
+    "reviews/cto-controlled-build-d45.md": {
+      "bytes": 2763,
+      "sha256": "6e4727f5509d41154d509d8d87e066d6638b725f24fc980e23e1905a6d2b2c56"
     },
     "reviews/cto-wallet-effects.md": {
       "bytes": 2802,
@@ -43,6 +47,14 @@
     "reviews/pass27-independent-code.md": {
       "bytes": 3145,
       "sha256": "c2cc1a154040244a035d9cfc74c07c133b929171c8aef539d3107225f8792fb6"
+    },
+    "validation/cto-d45-opaque-integrity.json": {
+      "bytes": 407,
+      "sha256": "a8f8b65f563552769bbe61cc2021327d5e91cb9b635429534f45190d7a89a385"
+    },
+    "validation/cto-d45-retained-whitespace-review.json": {
+      "bytes": 2317,
+      "sha256": "3419e10b6662f2b5ff48399736da4eda6635af1368019af9aac6022d68ea0c87"
     },
     "validation/current.exit.json": {
       "bytes": 817,
