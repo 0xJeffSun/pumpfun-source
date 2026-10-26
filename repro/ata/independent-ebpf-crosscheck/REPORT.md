@@ -115,13 +115,23 @@ Scope and limits. The byte counts, the 282/25 split across the two preset
 windows already named by `verify_ata_order.py`, and the first differing offset
 (28601) are reproducible facts about these specific `original.so` and
 `candidate2.so` files. The attribution of the in-window bytes to swapped
-`RawVec::reserve_for_push` monomorphizations, and the claim that the residual
-cannot be closed without the original build's `-C metadata` unit-graph inputs,
-are carried in the tool's `interpretation` field as the author's reading; this
-measurement does not independently establish them. The tool compares only this
-one candidate pair. It does not search other candidates, recover function
-boundaries, prove the element-type attribution, or prove that whole-byte
-identity is unreachable.
+`RawVec::reserve_for_push` monomorphizations is carried in the tool's
+`interpretation` field as the author's reading; this measurement does not
+independently establish it. The tool compares only this one candidate pair. It
+does not search other candidates, recover function boundaries, prove the
+element-type attribution, or prove that whole-byte identity is unreachable.
+
+Review note (2026-10-26): an earlier version of the `interpretation` field also
+read the residual as "not closable without the historical Cargo unit-graph
+inputs". Later packages contradict that reading:
+[`../reconstructed-order/`](../reconstructed-order/README.md) (a linker
+symbol-ordering file that swaps only this pair) and
+[`../synthetic-ordering-exact-build/`](../synthetic-ordering-exact-build/REPORT.md)
+(an empty, code-free Cargo feature that changes `-C metadata`) both build
+f5ce86 to the exact raw deployed bytes. Both use a non-historical ordering input,
+so the historical recipe is still unknown. The `interpretation` field and
+`byte_distance_report.json` were updated to match; the measured values did not
+change.
 
 Usage:
 
@@ -132,8 +142,8 @@ python3 byte_distance.py A.so B.so  # measure an arbitrary pair (descriptive onl
 ```
 
 The committed `byte_distance_report.json` is the saved receipt of the asserting
-run, retained byte-for-byte alongside the other author receipts; the tools in
-this package do not overwrite it.
+run (`python3 byte_distance.py --json`, byte-for-byte); the tools in this package
+do not overwrite it.
 
 ## Controlled experiment: Darwin build host (negative result)
 

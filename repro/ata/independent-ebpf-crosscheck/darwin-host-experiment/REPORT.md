@@ -50,10 +50,10 @@ same offsets and in the same (wrong) order as candidate2.
 
 ## Interpretation
 
-The mechanism in the hypothesis is real and was exercised: changing only the host
-triple changed Cargo's `-C metadata` for every crate, which re-hashed every
-same-definition monomorphization tie in the program and re-ordered dozens of
-functions. That is the expected signature of a *global* metadata perturbation.
+The result is consistent with the mechanism in the hypothesis: changing only the
+host triple (which the pinned Cargo source hashes into every unit's `-C metadata`;
+the metadata values themselves were not captured) re-ordered dozens of functions.
+That is the expected signature of a *global* metadata perturbation.
 
 The deployed program differs from the Linux candidate by a *single* pair. This
 one pinned Darwin recipe did not reproduce that residual or the deployed bytes.
@@ -66,6 +66,13 @@ uniquely established cause or permission for a flag/version/path sweep.
 What this does **not** do: reduce the 307-byte residual, recover the historical
 recipe, or justify a flag/version/path sweep. It rejects the tested pinned Darwin recipe as an exact reproduction; it does not
 exclude other Darwin contexts or establish a historical single-crate input.
+
+Review note (2026-10-26):
+[`../../synthetic-ordering-exact-build/`](../../synthetic-ordering-exact-build/REPORT.md)
+later produced the exact deployed bytes on a Linux image by adding an empty Cargo
+feature to ATA, `spl-token` and `spl-token-2022` (a narrow, non-historical
+metadata input). That is consistent with a narrow metadata difference, but it
+does not identify the historical input or host.
 
 ## Side observation: `cargo test-bpf` cannot be the missing input
 

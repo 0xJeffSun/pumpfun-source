@@ -144,9 +144,11 @@ def check_ata(emit_json):
         "interpretation": (
             "The 307-byte residual is dominated by the two swapped RawVec::reserve_for_push "
             "monomorphizations; the out-of-window bytes are call-site and relocation fixups "
-            "that shift because the two bodies exchanged order. The ordering is fixed by the "
-            "original build's -C metadata hash and is not present in the stripped binary, so "
-            "the residual is not closable without the historical Cargo unit-graph inputs."
+            "that shift because the two bodies exchanged order. The order is not recorded in "
+            "the stripped binary, and the default f5ce86 recipe selects the candidate2 order. "
+            "Non-historical ordering inputs (repro/ata/reconstructed-order, "
+            "repro/ata/synthetic-ordering-exact-build) close the residual to exact raw bytes; "
+            "the historical input that selected the deployed order remains unknown."
         ),
     }
 

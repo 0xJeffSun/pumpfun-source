@@ -12,13 +12,19 @@ python3 verify_ata_order.py --output "$OUTPUT_DIR/ata_order_report.json"
 echo
 echo "== ATA byte-distance (307 residual, re-derived) =="
 # Read-only: byte_distance.py asserts the recorded ATA result and writes no file.
-# The candidate pair is sparse-excluded by default; materialize it on demand.
-if [ ! -f ../monomorph-order-proof/candidate2.so ]; then
-  echo "candidate pair not present; fetching via sparse-checkout..."
-  (cd "$(git -C . rev-parse --show-toplevel)" \
-     && git sparse-checkout add repro/ata/monomorph-order-proof) || true
+# It exits 3 only when the candidate pair is not materialized (for example in a
+# sparse checkout); that case is reported and skipped. Any other non-zero exit is
+# a measured drift and fails this runner. The runner never changes checkout state.
+set +e
+python3 byte_distance.py
+BYTE_DISTANCE_STATUS=$?
+set -e
+if [ "$BYTE_DISTANCE_STATUS" -eq 3 ]; then
+  echo "(byte_distance skipped: candidate pair not present; in a sparse checkout run"
+  echo " 'git sparse-checkout add repro/ata/monomorph-order-proof' and rerun)"
+elif [ "$BYTE_DISTANCE_STATUS" -ne 0 ]; then
+  exit "$BYTE_DISTANCE_STATUS"
 fi
-python3 byte_distance.py || echo "(byte_distance skipped: candidate pair unavailable)"
 
 echo
 echo "== Local binary inventory (linear/heuristic) =="
