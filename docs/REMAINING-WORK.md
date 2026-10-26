@@ -39,7 +39,7 @@ for function-level details. “No complete match” does not prove source absenc
 | Pump `create_v2` | Partial selected handler; overlay adds real Mayhem CPI coverage | Broader ancestry, modes and Token-2022 interactions |
 | Pump `multi_hop_curve_swap` | Finite one/two/three-hop ordinary coverage | Arbitrary supported depth, quote currencies, lifecycle, resizing and mode combinations |
 | AMM `create_config` | Compiled/static structural evidence | Authentic successful fixed-admin initialization and rejection validation |
-| Mayhem `initialize_mayhem_state` | Corrected overlay: 53 rejection cases and real Pump-CPI evidence | Select intended source/build and cover broader initializer behavior |
+| Mayhem `initialize_mayhem_state` | Corrected overlay: 53 rejection cases and 20 real Pump-CPI cases | Select intended source/build and cover broader initializer behavior |
 | Pump `sell_v2` | Bounded accepted handler with a known quote transfer-fee minimum-output/event discrepancy | Correct the discrepancy and retain regression evidence |
 | Mayhem non-initializer ABI/state | Bounded handlers, known diagnostic/error differences, five unknown GlobalParams field roles | Resolve fields and full error/data contracts |
 

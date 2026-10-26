@@ -7,8 +7,8 @@
     {
       "path": "README.md",
       "before_sha256": "cae913d4d3f2066403162f653a0cf35b39620fb08877b1b308c08ccce4a53678",
-      "after_sha256": "d279d0ca4e211b35c63b3809e0fadce8932cd958f084200610d9886f3bbf0ae8",
-      "reason": "Document the 2026-10-26 reconstruction audit, selected versus research status, exact local body counts, and complete handler/function inventory links."
+      "after_sha256": "2a11246ddfd0ec2987076524565e2c2a498da446ae8c0d39f9d3f116f4fd994d",
+      "reason": "Current reconstruction audit plus corrected Mayhem controller/adapter build provenance; no source or selection changes."
     },
     {
       "path": ".github/workflows/verify.yml",

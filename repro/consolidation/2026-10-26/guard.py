@@ -19,19 +19,24 @@ ENTRYPOINTS = ('verify_current.py', 'verify_metadata.py', 'verify_portable_crypt
 # The reviewed transition is pinned in code, so re-pinning another asset or a new
 # README revision is a reviewable change to this file, not a data edit plus reseal.
 REVIEWED_PATHS = frozenset({'README.md', '.github/workflows/verify.yml'})
-TRANSITION_SHA256 = '583e9977e37a3377a1e2b7a5e48e4d246f0052578094394e82d93868001ad695'
+TRANSITION_SHA256 = '5f2226c1bc3486e4324d83206bfa351a149456b1238217233547207c3031a715'
 sha = lambda p: hashlib.sha256(Path(p).read_bytes()).hexdigest()
 
 
-def own_integrity():
-    sealed = (HERE / 'manifest.json', HERE / 'manifest.sha256')
-    manifest = json.loads(sealed[0].read_text())['files']
-    actual = {str(p.relative_to(HERE)) for p in HERE.rglob('*') if p.is_file() and p not in sealed}
-    assert actual == set(manifest), 'consolidation package membership changed'
-    for name, row in manifest.items():
-        path = HERE / name
-        assert not path.is_symlink() and sha(path) == row['sha256'] and path.stat().st_size == row['bytes'], name
-    assert sealed[1].read_text().split()[0] == sha(sealed[0])
+def package_integrity(folder, seal):
+    """Check every member of a sealed package before any of its code is imported."""
+    sealed = (folder / 'manifest.json', folder / 'manifest.sha256')
+    assert sha(sealed[0]) == seal and sealed[1].read_text().split()[0] == seal, ('package seal changed', str(folder))
+    manifest = json.loads(sealed[0].read_text())
+    rows = manifest.get('files', manifest)
+    actual = {str(p.relative_to(folder)) for p in folder.rglob('*') if p.is_file() and p not in sealed}
+    assert actual == set(rows), ('package membership changed', str(folder))
+    for name, row in rows.items():
+        path = folder / name
+        digest = row['sha256'] if isinstance(row, dict) else row
+        assert not path.is_symlink() and sha(path) == digest, name
+        if isinstance(row, dict) and 'bytes' in row:
+            assert path.stat().st_size == row['bytes'], name
 
 
 def reviewed_changes():
@@ -63,8 +68,8 @@ def install_transition(common, changes):
 def main():
     if len(sys.argv) < 2 or sys.argv[1] not in ENTRYPOINTS:
         sys.exit(f'usage: guard.py {{{",".join(ENTRYPOINTS)}}} <pass-27 arguments>')
-    own_integrity()
-    assert sha(P27 / 'manifest.json') == P27_GUARD_SEAL, 'pass-27 guard code changed'
+    package_integrity(HERE, sha(HERE / 'manifest.json'))
+    package_integrity(P27, P27_GUARD_SEAL)
     changes = reviewed_changes()
     sys.path.insert(0, str(P27))
     import common
