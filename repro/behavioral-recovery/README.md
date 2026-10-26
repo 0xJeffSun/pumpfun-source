@@ -10,7 +10,7 @@ need a dispatch-complete build for local SDK testing.
 | --- | --- | --- |
 | `admin_update_token_incentives` | pump | 299 cases, 0 mismatches |
 | `claim_token_incentives` | pump | recovered; its differential is bound to an older build record and was not re-run |
-| `create_v2` Mayhem mode + `initialize_mayhem_state` (pump→Mayhem CPI) | pump, mayhem | 17 cases, 0 mismatches |
+| `create_v2` Mayhem mode + `initialize_mayhem_state` (pump→Mayhem CPI) | pump, mayhem | 20 cases, 0 mismatches (17 before commit `73cfb605` added three creator cases) |
 | v3 Token-2022 transfer-fee quotes (`buy_v3`, `sell_v3`, `buy_exact_quote_in_v3`) | pump | 126 cases, 0 mismatches |
 | `set_mayhem_virtual_params` (dormant, CPI-only) | pump | 84 cases, 0 mismatches (signer-stub driver) |
 
@@ -20,9 +20,11 @@ deserialization before signature validation. Its token vault uses `init_if_neede
 matching the original's handling of existing vaults and their owner/mint/address
 constraints. The [controlled reconstruction](../../research/mayhem-initializer-validation/README.md)
 reduces 35/53 standalone validation mismatches to zero; the original five-case
-harness also has zero mismatches. All 17 existing CPI cases pass with the captured
-original Pump as caller on both sides. These are bounded local comparisons, not
-whole-program equivalence or byte identity.
+harness also has zero mismatches. The 17 CPI cases of the pre-`73cfb605` harness pass with the captured
+original Pump as caller on both sides. The current 20-case harness gives 0
+mismatches for this corrected build with the committed `5392c9a9` Pump candidate as
+caller, and for the committed `5392c9a9`/`cbe8c8e7` pair (local runs, 2026-10-26).
+These are bounded local comparisons, not whole-program equivalence or byte identity.
 
 The current Mayhem overlay's pinned Linux v1.52 build is 695,448 bytes, SHA-256
 `8e6a5f8c34a12303096902e50848f556bc7a9d9ce0dc0d9030e632b85b88e166`;
@@ -88,10 +90,10 @@ cargo build-sbf --manifest-path programs/mayhem/Cargo.toml --tools-version v1.52
 Validate a build against the captured originals (from the repository root):
 
 ```sh
-python3 repro/behavioral-recovery/scripts/pump_incentives_admin_differential.py --candidate <pump.so> --output work/incentives.json
-python3 repro/behavioral-recovery/scripts/pump_set_mayhem_virtual_params_differential.py --candidate <pump.so> --output work/virtual-params.json
+python3 repro/behavioral-recovery/scripts/pump_incentives_admin_differential.py --candidate <pump.so> --output work/incentives.json.gz
+python3 repro/behavioral-recovery/scripts/pump_set_mayhem_virtual_params_differential.py --candidate <pump.so> --output work/virtual-params.json.gz
 python3 repro/behavioral-recovery/scripts/pump_v3_token_extensions_differential.py --candidate <pump.so> --output work/v3.json
-python3 repro/behavioral-recovery/scripts/pump_create_mayhem_differential.py --candidate-pump <pump.so> --candidate-mayhem <mayhem.so> --output work/create-mayhem.json
+python3 repro/behavioral-recovery/scripts/pump_create_mayhem_differential.py --candidate-pump <pump.so> --candidate-mayhem <mayhem.so> --output work/create-mayhem.json.gz
 python3 repro/behavioral-recovery/scripts/mayhem_initialize_state_differential.py --candidate <mayhem.so> --output work/mayhem-init.json
 ```
 

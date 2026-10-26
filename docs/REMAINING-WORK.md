@@ -22,7 +22,7 @@ matches with no patching or padding.
 
 | Program | Original windows | Current gap | Most recent lead |
 | --- | ---: | --- | --- |
-| Pump | 1,035 | 538 normalized matches in a workspace-member build; of the 497 unmatched, 72 are metadata-only, 233 body, 192 missing (`repro/pump/frontier-*`) | `file!()` workspace prefix recovers 5 windows (PR #45); metadata-only windows need call-site layout, not module renames (PR #48) |
+| Pump | 1,035 | 538 normalized matches in a workspace-member build; of the 497 unmatched, 71 differ only in file/line origin metadata, 1 (`0x60260`) also differs in error code (6025 vs 6109), 233 differ in body and 192 have no same-size candidate (missing or a different size) (`repro/pump/frontier-*`) | `file!()` workspace prefix recovers 5 windows (PR #45); the 71 origin-only windows need call-site layout, not module renames (PR #48) |
 | PumpSwap | 785 | 297 unmatched original windows | Restructured module tree banked under `repro/parallel-work/2026-10-25/independent-reconstruction-review/restructure/` (13 of 33 path strings recovered) |
 | Fees | 585 | Stable-sort research build: 340 unique structural body pairs, 147 duplicate-body original windows, 98 unmatched. Encoded calls attribute 53 duplicates; 94 remain unattributed. Selected sources unchanged. | Canonical v1.44 sysroot recovers all four raw `type_id` bodies (PR #90); stable sorting recovers merge-sort and memmove (PR #91); see `research/fees-call-target-attribution/` for caller evidence. |
 | Mayhem | 441 | 177 bounded normalized matches, 7 admitted handler windows unmatched, 257 opaque | Linux-hosted toolchain confirmed by the alloc `Location` payload (`repro/mayhem/linux-v154-recovery/`) |
@@ -102,8 +102,9 @@ Not covered by the overlay (partial, unrecovered, or accepted with a known gap):
 
 ## 3. Decision needed: admitting recovered source
 
-The overlay builds, passes its differentials and supports the SDK flows, but it cannot
-enter `programs/` today:
+The overlay builds and passes the re-run differentials (`claim_token_incentives`
+excepted); the SDK flows were last shown on the older `5392c9a9`/`cbe8c8e7` candidates.
+It cannot enter `programs/` today:
 
 - `scripts/verify_recovered_builds.py` hash-binds all 37 Pump compile inputs (every
   `programs/pump/src` file, `Cargo.toml`/`Cargo.lock` and `programs/pump/recovered/*`)
@@ -122,7 +123,7 @@ call for the repository owner, not a mechanical merge.
 ## 4. Repository and process
 
 - **Open pull requests**: new contributions keep arriving after the consolidation
-  (#60–#91 so far); a parallel review session merges them. See GitHub for the live list.
+  (PR #60 merged just after it, then #62–#91 so far); a parallel review session merges them. See GitHub for the live list.
 - **Relay generated-framework branch** (`codex/relay-generated-framework-20261025`, owned
   by an active Codex agent): its evidence is on main; its `programs/donation-relay`
   change is not, because CI pins that directory to source 15. Landing it needs a new
@@ -158,7 +159,8 @@ call for the repository owner, not a mechanical merge.
 
 ## Open pull requests after consolidation
 
-At consolidation (PR #61, 14:54 UTC on 2026-10-26) none were open. The 24 pull
-requests open at the start (#32–#56 except #34, including draft #52) and the
-review-fix pull requests #57–#59 had been merged. Later pull requests (#60 onward,
-including PR #79's Mayhem initializer correction) are handled as they arrive.
+When PR #61 merged (14:54 UTC on 2026-10-26), the 24 pull requests open at the start
+(#32–#56 except #34, including draft #52) and the review-fix pull requests #57–#59
+had been merged. PR #60, opened before #61, was still open and merged at 15:03 UTC.
+Later pull requests (#62 onward, including PR #79's Mayhem initializer correction) are
+handled as they arrive.
