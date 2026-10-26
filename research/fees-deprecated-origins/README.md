@@ -1,10 +1,10 @@
 # Fees: recover both deprecated-handler source origins
 
-The two deprecated handlers already match the original instruction structure except for their source-line integers. Aligning their error macros to the observed lines 183 and 188 adds the complete original revoke window `[659640, 660160)` and transfer window `[660160, 660680)`.
+The two deprecated handlers already match the original instruction structure except for their source-line integers. Aligning their error macros to the observed lines 183 and 188 adds the complete original revoke window `[659640, 660160)` and transfer window `[660160, 660680)`. These are structural-signature matches: in each 58-instruction window 47 instructions are raw-identical and 11 differ only at masked operands (4 local CALL immediates and 7 relocated LDDW values).
 
 The transformation removes 17 blank lines before the first error and folds 32 line breaks in five earlier methods. It retains every Rust token. `align_source.py` exactly replays the transformation and verifies that the folded bodies contain no quoted tokens or comments. This recovers the emitted coordinates without identifying unique historical source formatting.
 
-Unique structural pairs increase from **335 to 337**, with none lost. All function names, addresses and sizes remain identical between the retained builds. Their `.text` differs only at 13 immediate 32-bit stores across eight functions; every other instruction byte remains unchanged. The full report enumerates every change, including source-coordinate changes in other windows that remain unmatched.
+Unique structural pairs increase from **335 to 337**, with none lost. All function names, addresses and sizes remain identical between the retained builds. Their `.text` differs only at 13 immediate 32-bit stores across eight functions; every other instruction byte remains unchanged. Outside `.text`, five `lib.rs` panic-location line fields in `.data.rel.ro` also change (164→136, 314→265, 404→355, 405→356, 421→372). The full report enumerates every change, including source-coordinate changes in other windows that remain unmatched.
 
 There are 43 ambiguous groups containing 144 original windows and 104 unmatched original windows. Only 54 unique pairs have identical raw bytes. Neither complete ELF nor captured allocation is byte identical; core raw identity remains **0/4**.
 
