@@ -75,4 +75,4 @@ json.dump({'counts':dict(cats),
            'metadata_only':[{'off':o,'bytes':sz,'ham':h} for o,sz,h,_ in meta_windows],
            'body_diff_sample':[{'off':o,'bytes':sz,'ham':h,'name':n[:70]} for o,sz,h,n in sorted(body_windows,key=lambda x:x[1])[:40]]},
           args.output.open('x'),indent=2)
-print("wrote frontier-classification.json")
+print("wrote",args.output)
