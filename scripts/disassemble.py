@@ -1,12 +1,56 @@
 #!/usr/bin/env python3
-"""Generate analyst disassembly, never a source rebuild or candidate executable."""
-import argparse,hashlib,json,pathlib,subprocess
-ROOT=pathlib.Path(__file__).resolve().parents[1]
-ap=argparse.ArgumentParser(); ap.add_argument('--objdump',type=pathlib.Path,required=True); ap.add_argument('--output',type=pathlib.Path,required=True); args=ap.parse_args()
-args.output.mkdir(parents=True,exist_ok=False)
-manifest={'tool_sha256':hashlib.sha256(args.objdump.read_bytes()).hexdigest(),'version':subprocess.check_output([str(args.objdump),'--version'],text=True),'outputs':{}}
-for name in json.loads((ROOT/'repro/programs.json').read_text()):
-    binary=ROOT/f'evidence/original/{name}/deployed.so'; target=args.output/f'{name}.asm'
-    with target.open('wb') as out: subprocess.run([str(args.objdump),'-d',str(binary)],stdout=out,check=True)
-    manifest['outputs'][name]={'input_sha256':hashlib.sha256(binary.read_bytes()).hexdigest(),'output_sha256':hashlib.sha256(target.read_bytes()).hexdigest()}
-(args.output/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
+"""Generate byte-checked analyst disassembly, never a rebuilt executable."""
+import argparse
+import hashlib
+import json
+from pathlib import Path
+import subprocess
+
+from verify_disassembly import verify_listing
+
+ROOT = Path(__file__).resolve().parents[1]
+
+
+def sha(raw):
+    return hashlib.sha256(raw).hexdigest()
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--objdump', type=Path, required=True)
+    parser.add_argument('--output', type=Path, required=True)
+    args = parser.parse_args()
+    args.objdump = args.objdump.resolve()
+    # Freeze originals before LLVM runs; recheck the tool and inputs afterwards.
+    programs = json.loads((ROOT / 'repro/programs.json').read_text())
+    if not programs:
+        raise ValueError('Program list is empty')
+    inputs = {name: (ROOT / f'evidence/original/{name}/deployed.so').read_bytes()
+              for name in programs}
+    tool_hash = sha(args.objdump.read_bytes())
+    version = subprocess.check_output([str(args.objdump), '--version'], text=True)
+    args.output.mkdir(parents=True, exist_ok=False)
+    manifest = {'tool_sha256': tool_hash, 'version': version, 'outputs': {}}
+    for name, binary in inputs.items():
+        path = ROOT / f'evidence/original/{name}/deployed.so'
+        target = args.output / f'{name}.asm'
+        with target.open('xb') as out:
+            subprocess.run([str(args.objdump), '-d', str(path.relative_to(ROOT))],
+                           cwd=ROOT, stdout=out, check=True)
+        listing = target.read_bytes()
+        coverage = verify_listing(binary, listing.decode('utf-8'))
+        manifest['outputs'][name] = {'input_sha256': sha(binary),
+                                     'output_sha256': sha(listing),
+                                     'listing_validation': coverage}
+    if sha(args.objdump.read_bytes()) != tool_hash:
+        raise ValueError('Disassembler changed during capture')
+    for name, binary in inputs.items():
+        path = ROOT / f'evidence/original/{name}/deployed.so'
+        if sha(path.read_bytes()) != sha(binary):
+            raise ValueError(f'Original changed during disassembly: {name}')
+    manifest['inputs_unchanged'] = True
+    (args.output / 'manifest.json').write_text(json.dumps(manifest, indent=2) + '\n')
+
+
+if __name__ == '__main__':
+    main()

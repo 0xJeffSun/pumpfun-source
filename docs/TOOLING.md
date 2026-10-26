@@ -49,6 +49,27 @@ python3 scripts/disassemble.py --objdump /path/to/platform-tools/llvm/bin/llvm-o
 This records the tool hash, version, input hashes and output hashes. The output
 is original-derived disassembly for analysis, never a rebuilt executable.
 
+New captures also verify every executable file-section byte against the listing,
+require contiguous decimal eight-byte SBF instruction slots, and account for
+sixteen-byte LDDW rows. Empty, truncated, byte-mutated, misaddressed, unknown, or
+unparsed executable rows prevent a success manifest. Input and tool hashes are
+rechecked after capture. Repository-relative binary arguments keep LLVM's listing
+preamble independent of the checkout's absolute path. Historical manifests remain
+unchanged.
+
+To independently check a canonical LLVM SBF listing:
+
+```sh
+python3 scripts/verify_disassembly.py evidence/original/pump/deployed.so \
+  work/disassembly-new/pump.asm
+python3 scripts/test_disassembly.py
+```
+
+Coverage verifies listing bytes and addressing. It does not prove mnemonic/operand
+semantics, reachable control flow, inferred function boundaries, source recovery,
+or rebuilt binary identity. The [v1.44 checkpoint](../repro/disassembly/2026-10-26-v144/README.md)
+records complete executable-byte coverage for all four captured core programs.
+
 ## Compare an independently compiled candidate
 
 Pinned recipes for the current partial candidates are documented in the program
