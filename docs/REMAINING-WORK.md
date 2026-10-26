@@ -115,6 +115,20 @@ call for the repository owner, not a mechanical merge.
 - **Local disk**: the primary checkout holds roughly 300 GB of ignored build output in
   `work/` and `target/`, used by the active Codex agent. Clean it once that agent stops.
 
+## Consolidation record
+
+| Source | Outcome |
+| --- | --- |
+| Primary checkout's uncommitted recovery work | Snapshotted as `1bec3365`, merged as `repro/behavioral-recovery/` |
+| `codex/layered-reconstruction` | Merged: MIT `LICENSE`; its program edits went to the overlay |
+| `review/reconstruction-2026-10-25` | Merged: nine A-reproduction build records |
+| `codex/relay-generated-framework-20261025` @ `9f49231c` | Evidence squashed in; `programs/donation-relay` change left on the branch (§4) |
+| Pull requests #32–#59 | Merged by the parallel PR agent; included |
+| Go-clone `codex/checkout-byte-preservation-transition` | Superseded by PR #32, which contains both commits plus the fix that kept the sealed attributes |
+| Go-clone `research/pr8-harness-bindings-superseded` (`89634a4d`) | Not merged: self-labelled superseded, targets pass-22 bindings and edits two pinned scripts |
+| Scratch worktrees `fees-edit`, `restruct-wt` | Removed after a byte-for-byte match against the banked restructure trees |
+| Codex worktree `main-reconciliation` (`codex/layered-pass-36`) | Clean and contained in main; left for its owner |
+
 ## Open pull requests after consolidation
 
 None. The 24 pull requests open at the start (#32–#56, including draft #52) and the
