@@ -31,13 +31,13 @@ from solders.pubkey import Pubkey
 from solders.transaction import Transaction
 from solders.transaction_metadata import FailedTransactionMetadata
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[3]
 PUMP = Pubkey.from_string('6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P')
 MAYHEM = Pubkey.from_string('MAyhSmzXzV1pTf7LsNkrNwkWKTo4ougAJ1PPg47MD4e')
 TOKEN22 = Pubkey.from_string('TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb')
 ATA = Pubkey.from_string('ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL')
 ORIGINAL = ROOT / 'evidence/original/pump/deployed.so'
-STUB = ROOT / 'scripts/fixtures/signer_stub.so'
+STUB = ROOT / 'repro/behavioral-recovery/fixtures/signer_stub.so'
 BC_DISC = bytes([23, 183, 248, 55, 96, 216, 172, 96])
 SMVP_DISC = bytes([61, 169, 188, 191, 153, 149, 42, 97])
 CAPTURE = next(x for x in json.loads((ROOT / 'research/imported-lab/analysis/pump_fun/config-snapshot.json').read_text())['accounts'] if x['program_name'] == 'pump')

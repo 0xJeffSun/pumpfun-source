@@ -15,7 +15,7 @@ from solders.pubkey import Pubkey
 from solders.transaction import Transaction
 from solders.transaction_metadata import FailedTransactionMetadata
 
-ROOT = pathlib.Path(__file__).resolve().parents[1]
+ROOT = pathlib.Path(__file__).resolve().parents[3]
 IDL = json.loads((ROOT / 'evidence/upstream/pump.json').read_text())
 PROGRAM = Pubkey.from_string(IDL['address'])
 SYSTEM = Pubkey.from_string('11111111111111111111111111111111')

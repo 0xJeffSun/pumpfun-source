@@ -17,7 +17,7 @@ from solders.instruction import AccountMeta, Instruction
 from solders.pubkey import Pubkey
 from solders.transaction import Transaction
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(ROOT / 'scripts'))
 import pump_v3_token_extensions_differential as fixtures
 sys.path.insert(0, str(ROOT / 'localnet'))

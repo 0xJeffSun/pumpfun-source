@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Partial exact-quote v3 recovery with verified signatures and explicit synthetic state."""
-import argparse,hashlib,json,struct,gzip,base64
+import argparse,hashlib,json,struct,gzip,base64,pathlib,sys
+sys.path.insert(0,str(pathlib.Path(__file__).resolve().parents[3]/'scripts'))
 import pump_trade_fixture as f
 from solders.clock import Clock
 program=f.Pubkey.from_string(f.x['program']);user=f.Keypair.from_seed(bytes([231])*32)

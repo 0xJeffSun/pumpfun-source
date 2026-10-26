@@ -12,7 +12,7 @@ executable is written or patched.
 """
 import argparse, hashlib, json, pathlib, re, struct, subprocess
 
-ROOT = pathlib.Path(__file__).resolve().parents[1]
+ROOT = pathlib.Path(__file__).resolve().parents[3]
 ORIGINAL = ROOT / 'evidence/original/pump/deployed.so'
 
 

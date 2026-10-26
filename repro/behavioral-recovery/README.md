@@ -20,7 +20,7 @@ rejects in a different order than the original. The candidate fails first with
 deserialization (3012) and only then raises 2002 ConstraintSigner. This suggests the
 original declares `mint_authority` as an `UncheckedAccount` with a `signer`
 constraint rather than a `Signer<'info>`
-(`scripts/mayhem_initialize_state_differential.py` reproduces it: 5/5 cases differ).
+(`scripts/mayhem_initialize_state_differential.py` here reproduces it: 5/5 cases differ).
 
 With the overlay applied, pump dispatches 56/56 IDL instructions and Mayhem 25/25.
 Builds of this overlay on 2026-10-26 (`scripts/build_partial_candidate.py`):
@@ -57,6 +57,11 @@ replacements, the rest are new modules. `admin_cto.rs` and the Fees sources are
 intentionally absent: main's versions are newer and already include the typed
 CTO errors.
 
+`scripts/` holds the recovery differentials and `fixtures/signer_stub` their
+signer-forwarder program. They live here rather than in the top-level `scripts/`
+and `programs/` because the pass-27 CI guard pins the top-level script set and
+lists these exact active paths as must-not-exist.
+
 ## Use
 
 ```sh
@@ -69,14 +74,14 @@ cargo build-sbf --manifest-path programs/mayhem/Cargo.toml --tools-version v1.52
 Validate a build against the captured originals (from the repository root):
 
 ```sh
-python3 scripts/pump_incentives_admin_differential.py --candidate <pump.so> --output work/incentives.json
-python3 scripts/pump_set_mayhem_virtual_params_differential.py --candidate <pump.so> --output work/virtual-params.json
-python3 scripts/pump_v3_token_extensions_differential.py --candidate <pump.so> --output work/v3.json
-python3 scripts/pump_create_mayhem_differential.py --candidate-pump <pump.so> --candidate-mayhem <mayhem.so> --output work/create-mayhem.json
-python3 scripts/mayhem_initialize_state_differential.py --candidate <mayhem.so> --output work/mayhem-init.json
+python3 repro/behavioral-recovery/scripts/pump_incentives_admin_differential.py --candidate <pump.so> --output work/incentives.json
+python3 repro/behavioral-recovery/scripts/pump_set_mayhem_virtual_params_differential.py --candidate <pump.so> --output work/virtual-params.json
+python3 repro/behavioral-recovery/scripts/pump_v3_token_extensions_differential.py --candidate <pump.so> --output work/v3.json
+python3 repro/behavioral-recovery/scripts/pump_create_mayhem_differential.py --candidate-pump <pump.so> --candidate-mayhem <mayhem.so> --output work/create-mayhem.json
+python3 repro/behavioral-recovery/scripts/mayhem_initialize_state_differential.py --candidate <mayhem.so> --output work/mayhem-init.json
 ```
 
-`scripts/fixtures/signer_stub` is the forwarder used to invoke the CPI-only
+`fixtures/signer_stub` is the forwarder used to invoke the CPI-only
 virtual-params handler with a genuine `invoke_signed` PDA signature.
 
 ## Provenance

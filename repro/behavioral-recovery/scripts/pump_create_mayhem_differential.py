@@ -27,7 +27,7 @@ from solders.pubkey import Pubkey
 from solders.transaction import Transaction
 from solders.transaction_metadata import FailedTransactionMetadata
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[3]
 IDL = json.loads((ROOT/'evidence/upstream/pump.json').read_text())
 PROGRAM = Pubkey.from_string(IDL['address'])
 ORIGINAL_PUMP = ROOT/'evidence/original/pump/deployed.so'
