@@ -54,6 +54,45 @@ omit the beta's program source. Versions `1.2.0` through `1.2.6` contain no
 `.cargo_vcs_info.json`; that absence is explicit. Other versions' embedded VCS
 claims are retained, not asserted to be independently verified Git associations.
 
+## Check of declared Git locations
+
+A separate follow-up queried the exact repository from each archived
+`Cargo.toml.orig`, the commit and package path from `.cargo_vcs_info.json`, and
+the complete file containing Utilize. All 49 program releases that declare a
+VCS revision participate. The GitHub connector returned source for 44 locations;
+every returned file equals its published archive member byte-for-byte. These
+are 19 legacy `processor.rs` observations and 25 split `utilize.rs` observations,
+not 44 distinct source texts or whole-repository verifications.
+
+The other five queries returned `No commit found for the ref` in the declared
+`metaplex-foundation/metaplex-program-library` repository:
+`1.13.1-beta.1`, `1.13.1`, `2.0.0-beta.1`, `1.13.2-beta.1`, and `1.13.2`.
+Those responses remain unresolved observations, not evidence that the revisions
+never existed or cannot be found elsewhere. The seven releases without VCS
+metadata cannot supply such a query. The `2.0.0` client is outside this
+program-handler comparison.
+
+`vcs-observations.json.gz` preserves all 49 connector results, including complete
+successful source text, exact queries and failed responses. A literal digest
+seals the uncompressed observation bytes. `verify_vcs.py` first rechecks the
+original registry/archive evidence, derives the queries from those archives,
+then replays the complete-file comparisons and verifies `vcs-findings.json`.
+It performs no network calls. Changed source, incorrect query bindings, missing
+or duplicate rows, substituted failure types, rewritten findings and output
+replacement are covered by nine tests, including a minimal relocated replay.
+
+```sh
+python3 -B research/metaplex-published-source/verify_vcs.py
+python3 -B research/metaplex-published-source/test_verify_vcs.py
+```
+
+These are source-content observations at GitHub-served commit URLs. They do not
+independently authenticate Git commit objects, verify the rest of an archive
+against Git, or attribute a deployed build to those revisions. The original
+findings and their `vcs_commit_association_independently_verified: false` fields
+remain unchanged. No new handler source variant, target guard or byte-identity
+improvement was found in this follow-up.
+
 ## Reproduce offline
 
 Use Python 3.11 or newer, with the standard library, from the repository root:
