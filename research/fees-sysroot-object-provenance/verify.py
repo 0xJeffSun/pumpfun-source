@@ -318,19 +318,29 @@ def verify(package=HERE, repo=REPO):
             require(len(matches) == 1 and matches[0]["instruction_aligned"] and
                     matches[0]["occupies_complete_direct_call_window"] and
                     not matches[0]["loader_relocations"], "unexpected v144 helper boundary/relocations")
+    import v144
+    positive = v144.analyze(package, repo)
+    require(positive == read_json(package / "v144/analysis.json"), "v144 object analysis differs")
     return dict(verified=True, object_to_link_raw_identity=True, captured_window_raw_identity=False,
                 archive_to_object_rechecked=False, historical_compiler_identified=False,
-                cross_program_captures=3, raw_v144_call_bounded_windows=6)
+                cross_program_captures=3, raw_v144_call_bounded_windows=6,
+                v144_shipped_generic_bodies=positive["positive_generic_object_bodies"],
+                v144_archive_to_object_rechecked=False)
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--archive", type=Path, help="optional official Darwin arm64 v1.46.1 tar.bz2")
+    parser.add_argument("--v144-archive", type=Path, help="optional official Darwin arm64 v1.44 tar.bz2")
     args = parser.parse_args()
     result = verify()
     if args.archive:
         result["archive_validation"] = check_archive(args.archive)
         result["archive_to_object_rechecked"] = True
+    if args.v144_archive:
+        import v144
+        result["v144_archive_validation"] = v144.check_archive(args.v144_archive)
+        result["v144_archive_to_object_rechecked"] = True
     print(json.dumps(result, indent=2))
 
 
