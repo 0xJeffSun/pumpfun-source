@@ -12,9 +12,9 @@ For subsequent gains and the latest research frontier, see the
 [byte-identity progress log](docs/BYTE-IDENTITY-PROGRESS.md).
 
 Latest Relay research: **480/492 normalized windows, 12 unmatched**, with 536
-passing replay records. This candidate uses Anchor 0.32 and official Linux target
-libraries with the Darwin compiler; full byte identity remains unproved. Latest Fees research: **344 unique structural pairs,
-94 unmatched windows**, with the complete `get_fees` wrapper now matched.
+passing replay records. Both the Darwin/Linux-library recipe and a fully Linux build reproduce these
+window matches; their ELF files differ, and full byte identity remains unproved. Latest Fees research: **349 unique structural pairs,
+89 unmatched windows**, with the complete `get_fees` wrapper now matched.
 Whole-file identity remains unachieved.
 
 The [26 October reconstruction audit](docs/RECONSTRUCTION-AUDIT.md) separates

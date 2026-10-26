@@ -7,8 +7,8 @@
     {
       "path": "README.md",
       "before_sha256": "cae913d4d3f2066403162f653a0cf35b39620fb08877b1b308c08ccce4a53678",
-      "after_sha256": "0c7514a5663ebeead79e8383f3b1a133764040ce6703fa3eaa8c18e9c09ccbc6",
-      "reason": "Show the current Relay mint-predicate recovery at 480 normalized windows and 12 unmatched; preserve the explicitly stated cross-host recipe and Fees progress."
+      "after_sha256": "f066dd580ecb8a9fc7cde29b4c1f4035eaff4344e8353e78e56b3338dd0d27a9",
+      "reason": "Record fully Linux reproduction of the 480-window Relay frontier and latest Fees research at 349 unique structural pairs with 89 unmatched, without claiming whole-file equality."
     },
     {
       "path": ".github/workflows/verify.yml",

@@ -4,6 +4,17 @@ The [full audit](RECONSTRUCTION-AUDIT.md) and its generated tables retain their
 explicit `1463bd22` snapshot. This log records later research without silently
 changing that baseline or promoting new selected artifacts.
 
+## Relay: fully Linux build confirms 480-window frontier
+
+The [Linux canonical reproduction](../repro/donation-relay/linux-canonical-reproduction/README.md)
+uses the same recovered source with the official Linux v1.48 SDK. It independently
+reaches **480/492 normalized windows**, **127 raw local matches**, and the same
+**12 unmatched windows**, with 536 fresh replay records passing. A real root-crate
+rebuild was required after two inconclusive Cargo cache-reuse attempts; those
+attempts and the final compiler invocation are retained. The Linux and earlier
+Darwin/Linux-library outputs differ at 9,469 file positions, so this confirms the
+window frontier and finite runtime results, not host-independent ELF equality.
+
 ## Relay: 13 → 12 unmatched normalized windows
 
 The [mint-fee predicate study](../repro/donation-relay/mint-fee-pair-recovery/README.md)
@@ -80,6 +91,26 @@ successful privileged settlement or complete semantic equivalence.
 The target-only control recovered no normalized window, so it is retained as a
 negative result for the repeated `Error::type_id` hypothesis. The three type-ID
 windows still need work. The current residual list is in the new package.
+
+## Fees: 92 → 89 unmatched normalized windows
+
+Merged [PR #117](https://github.com/lalalune/pumpfun-source/pull/117) recovers three
+complete donation, sharing-config and social-creation account-parser windows.
+The [creation-origin packet](../research/fees-creation-account-origins/README.md)
+reaches **349 unique structural pairs**, with no loss and **89 unmatched** original
+windows. It retains exact declaration/path/line evidence, 17,331 proposal suite
+cases and 1,542 focused comparisons. Whole-file identity remains false.
+
+## Fees: 94 → 92 unmatched normalized windows
+
+Merged [PR #116](https://github.com/lalalune/pumpfun-source/pull/116) restores the
+recorded source paths and derive lines for the two initializer account parsers.
+It recovers complete 6,320-byte and 5,888-byte windows, reaching **346 unique
+structural pairs** with no loss and **92 unmatched** original windows. The
+[initializer-origin packet](../research/fees-initializer-account-origins/README.md)
+verifies declaration preservation, exact path/line references, 17,331 proposal
+suite cases and 1,542 focused comparisons. Selection and whole-file identity
+remain unresolved.
 
 ## Fees: 95 → 94 unmatched normalized windows
 

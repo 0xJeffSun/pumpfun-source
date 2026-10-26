@@ -69,8 +69,10 @@ basis points as `u32` and returns `BpsSumDoesNotEqualTenThousand` at
 `proposals/shares-compared-values.patch` adds `.with_values((sum, 10_000u32))` to
 that error without changing its condition, name, number, source location, or
 successful path. This is a source-level diagnostic correction hypothesis with
-strong static support. The later framework/sysroot study compiled this correction and recovered window
-4; its measured source/build evidence supersedes this uncompiled proposal. Privileged-body runtime validation
+strong static support. The later framework/sysroot study recovered window 4 with
+`.with_values((sum,10000))`. Its unsuffixed literal differs from this packet's
+explicit `u32` proposal, which is not claimed to have been compiled. The measured
+source/build evidence supersedes the earlier hypothesis. Privileged-body runtime validation
 is not established by this packet or the parent's rejection-oriented fixtures.
 
 ## Reproduce the static checks
