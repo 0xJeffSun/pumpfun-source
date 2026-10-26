@@ -74,7 +74,7 @@ pub struct Settlement<'a> {pub source:&'a TokenView,pub mint:&'a MintView,pub pr
 fn distribution108(rt:&mut impl Runtime,s:&Settlement<'_>,d:&Distribution,shares:&[Share],recipients:&[Account],total:u64,expected_program:Key)->R<Vec<TransferReceipt>> {
  require(s.program.key==expected_program,6025)?;
  require(recipients.len()>=shares.len(),6030)?;
- let amounts=fair_amounts(total,shares); // admitted sum established by each caller
+ let amounts=fair_amounts(total,&shares.iter().map(|share|share.bps).collect::<Vec<_>>()).map_err(Error::Owned)?; // admitted sum established by each caller
  for (i,share) in shares.iter().enumerate() {
   let t=rt.token(recipients[i])?;
   require(t.authority==share.authority,6014)?;

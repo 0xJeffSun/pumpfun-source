@@ -359,3 +359,30 @@ pub fn account_discriminator_mismatch(source: Source) -> Error {
         compared_values: None,
     }.into()
 }
+
+// The arithmetic helper returns this owned error without attaching an origin.
+enum ArithmeticErrorCode { ArithmeticOverflow }
+impl ArithmeticErrorCode {
+    fn name(&self) -> String {
+        match self {
+            Self::ArithmeticOverflow => "ArithmeticOverflow".to_owned(),
+        }
+    }
+}
+impl Display for ArithmeticErrorCode {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Self::ArithmeticOverflow => f.write_str("Arithmetic overflow"),
+        }
+    }
+}
+pub fn arithmetic_overflow() -> Error {
+    let code = ArithmeticErrorCode::ArithmeticOverflow;
+    AnchorError {
+        error_name: code.name(),
+        error_code_number: 6008,
+        error_msg: code.to_string(),
+        error_origin: None,
+        compared_values: None,
+    }.into()
+}

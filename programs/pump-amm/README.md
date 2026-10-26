@@ -1,3 +1,13 @@
+# PumpSwap source reconstruction
+
+The selected checkpoint is [collect owner6048](../../repro/pump_amm/owner6048-v144/README.md), executable `09bee0dfd751dc6ae0240bbac262933c6bda6e0c94aa643f82c57f2956c3a117`. A genuine managed-source build reproduced the independently tested executable and symbols. The plain require preserves the owner predicate and error6048 while removing unsupported compared-key decoration; the current source origin is truthful `src/collect.rs:20`.
+
+The unchanged corpus retains 17,462 cases, 35,074 submissions and 35,418 verified signature fields. Existing owner-error fixtures do not assert strict compared-key/origin diagnostics, and original parser-versus-handler attribution remains unproved. Whole-original byte equality is false; 297 original windows remain unmatched. Opaque pointer/callee behavior, generic stack safety, complete source/build provenance and exhaustive behavior/security acceptance remain open.
+
+## Prior checkpoint documentation
+
+The following text describes earlier checkpoints and remains preserved as historical evidence.
+
 # Partial PumpSwap source recovery
 
 Thirty-seven of 38 published handlers have bounded runtime validation from

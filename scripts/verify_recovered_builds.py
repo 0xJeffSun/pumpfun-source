@@ -8,6 +8,13 @@ parser=argparse.ArgumentParser();parser.add_argument('--program',choices=['pump'
 for name,status in json.loads((ROOT/'repro/status.json').read_text()).items():
  if args.program and name!=args.program:continue
  if not status.get('candidate_artifact'):continue
+ if name=='mayhem' and status['candidate_artifact']=='repro/mayhem/compiler-v154-main/main/candidate.so':
+  checkpoint=ROOT/'repro/mayhem/compiler-v154-main'
+  known='f5d514664d47a04cc22282fdd19ca9e01d835c8a335aa9acc3f637fc61650acc'
+  assert sha(checkpoint/'manifest.json')==known
+  subprocess.run([sys.executable,'-B',str(checkpoint/'current_bridge.py'),'--current-root',str(ROOT),'--expected-seal',known],check=True)
+  print(name,': genuine directv1.54 main;9595 saved comparisons; original whole-file identity false; historical compiler unresolved')
+  continue
  manifest=ROOT/status['comparison_report'];report=json.loads(manifest.read_text())
  for source,digest in report['source_sha256'].items():assert sha(ROOT/source)==digest,source
  candidate=ROOT/status['candidate_artifact'];original=ROOT/'evidence/original'/name/'deployed.so'
@@ -15,6 +22,10 @@ for name,status in json.loads((ROOT/'repro/status.json').read_text()).items():
  log_path=ROOT/status['build_log'];log=log_path.read_bytes()
  if log_path.suffix=='.gz':log=gzip.decompress(log)
  assert hashlib.sha256(log).hexdigest()==report['build_log_sha256'],name
+ if name=='pump' and status['candidate_artifact']=='repro/pump/remaining-guards-main-fortyeight/main/candidate.so':
+  subprocess.run([sys.executable,'-B',str(ROOT/'scripts/verify_pump_remaining_checkpoint.py')],check=True)
+  print(name,': remaining-guard checkpoint;9269 saved differential cases and1024 Surfpool comparisons; full original byte equality',report['comparison']['full_byte_equality'])
+  continue
  if name=='pump' and status['candidate_artifact']=='repro/pump/admin-cto-compared-errors-main-fortyeight/main/candidate.so':
   subprocess.run([sys.executable,'-B',str(ROOT/'scripts/verify_pump_compared_checkpoint.py')],check=True)
   print(name,': exact compared-error checkpoint;9269 saved differential cases and1024 Surfpool comparisons; full original byte equality',report['comparison']['full_byte_equality'])

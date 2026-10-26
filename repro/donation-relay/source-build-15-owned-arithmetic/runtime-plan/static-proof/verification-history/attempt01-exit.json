@@ -1,0 +1,4 @@
+{
+  "returncode": 1,
+  "failure": "changed path assertion used rglob iteration order rather than sorted order; no source/evidence change"
+}

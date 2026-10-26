@@ -39,6 +39,7 @@ fn program(error:&ProgramError,account:Option<&str>) {
 fn body(error:&Error) {
     match error {
         Error::Code(code)=>framework(*code,None,None,None),
+        Error::Owned(error)=>error.log(),
         Error::IncorrectProgramId=>program(&ProgramError::IncorrectProgramId,None),
         Error::Program(error)=>program(error,None),
         // An analysis boundary is not converted to success or an invented error.
@@ -72,6 +73,7 @@ pub fn lower(error:Failure)->ProgramError {
         Failure::Program{error,..}=>error,
         Failure::Body(e)=>match e {
             Error::Code(code)=>ProgramError::Custom(code),
+            Error::Owned(error)=>error.into(),
             Error::IncorrectProgramId=>ProgramError::IncorrectProgramId,
             Error::Program(error)=>error,
             Error::Incomplete(reason)=>panic!("unimplemented source boundary: {}",reason),

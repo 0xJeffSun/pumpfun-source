@@ -1,3 +1,17 @@
+# Mayhem reconstructed candidate — measured v1.54 recipe
+
+The tested executable is599784bytes, SHA256 ca5d4f54b14e2f67c4eca56fcac29b54801906cecf23c463801916fd9d6b6621. One genuine managed-source direct officialv1.54 Cargo/rustc build, stockgenericV0/sbpf target and fixedv1.52 strip reproduced both whole executable and unstripped symbols exactly. All14source/lock/profile bytes are unchanged. This is a measured reproduction choice; historical compiler/recipe remains unresolved. Global default frontend choices are unchanged.
+
+The exact existing9595 comparisons (including3already-admitted two-call burn sequences) passed on this executable;15 unchanged saved receipt verifiers passed.13284retained raw transactions/26500signatures were independently verified.5906administrative executions lack raw transaction bytes. Their legacy history0 settings and unasserted constructor signature/blockhash defaults remain disclosed; trade/burn explicit true controls are unchanged. No new cases/initializer execution or bypass.
+
+All61prior diagnostic domains remain:58raw candidate compute-consumption-line changes versus7d,3burn rows raw-identical. SDK0Ballowlist produced official warning-only results; actuallocal loader/corpus passed but decisive SDK/mainnet or whole-program equivalence is not claimed. Original777408-byte capture still differs; opaque scopes and transitive ABI/data gaps remain.
+
+Main provenance: repro/mayhem/compiler-v154-main. Runtime: repro/mayhem/compiler-v154-runtime. Full actual frontend/source/tool/dependency/exit/postlink/function-call-data evidence is retained there.
+
+## Historical recovery notes (archived before this recipe selection)
+
+The inherited text below records earlier checkpoints, executable hashes, recipes and limitations. Its earlier “tested executable” and compiler references are historical; the current executable and scope are stated above. The exact prior README is also retained in documentation/README.before.md of the main packet.
+
 # Partial Mayhem implementation recovery
 
 This independently compiled Anchor program implements **24 of the 25 currently
