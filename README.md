@@ -79,3 +79,10 @@ The [nineteenth layered pass](repro/layered-passes/pass-19/README.md) restores P
 The [twentieth layered pass](repro/layered-passes/pass-20/README.md) restores Pump owned CTO error metadata, Fees first typed CPI ownership, and AMM logical module provenance. All three main builds equal tested scratch artifacts;0/4 core originals match. Upstream history is reconciled with excluded executions retained.
 
 [Pass21](repro/layered-passes/pass-21/README.md) restores Pump owned6083 and the second typed Fees Pump CPI, with exact main/scratch identity. Concurrent helper-default integrity failures are preserved and narrowly reconciled through explicit-version AST proof; byte identity remains0/4.
+
+## License
+
+This repository's own code and documentation are released under the [MIT License](LICENSE).
+Third-party and vendored materials (for example the Apache-2.0 Solana SDK files under
+`programs/pump-amm` and the `programs/donation-relay/error-model` crate) keep their
+original licenses, and upstream Pump IDLs and binaries remain with their original authors.
