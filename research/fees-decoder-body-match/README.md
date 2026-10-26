@@ -4,8 +4,8 @@ Returning the current `FeeConfig` from each legacy/stable/full reader in `anchor
 
 | Window | Original extent | Full-results comparison |
 | --- | --- | --- |
-| FeeConfig first-account helper | `[36072, 37320)` | All 1,248 bytes match after 12 CALL immediates and two verified constant addresses |
-| FeeConfig unchecked decoder | `[257264, 259912)` | All 2,648 bytes / 325 decoded instructions match after 13 CALL immediates and one verified message-record address |
+| FeeConfig first-account helper | `[36072, 37320)` | All 1,248 bytes match after masking 12 CALL immediates and two verified constant addresses (raw bytes differ at those 14 instructions) |
+| FeeConfig unchecked decoder | `[257264, 259912)` | All 2,648 bytes / 325 decoded instructions match after masking 13 CALL immediates and one verified message-record address (raw bytes differ at those 14 instructions) |
 
 The decoder differs at precisely one non-CALL instruction: the LDDW at relative offset 2264. Its 24-byte record has the same length (27), opaque trailing integer (37), relocation type (8), and `failed to fill whole buffer` string bytes. The stored relocated string pointer is checked separately in each ELF. Only the instruction's pointer value is masked. Every opcode, register, branch displacement, stack offset, scalar literal and other instruction byte remains intact. The account helper's two pointers resolve to the same 32 zero bytes and Fees program ID bytes in both images.
 
