@@ -2753,6 +2753,7 @@
         },
         {
           "name": "user",
+          "writable": true,
           "signer": true
         },
         {

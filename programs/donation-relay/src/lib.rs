@@ -9,9 +9,7 @@ compile_error!("Relay proposal requires a real SBF loader/syscall target; host s
 pub mod entrypoint;
 pub use model::*;
 #[derive(Debug)]
-pub enum Error { Code(u32), Owned(generated_exit::exit_error::Error), IncorrectProgramId, Incomplete(&'static str), Program(solana_program::program_error::ProgramError) }
+pub enum Error { Code(u32), IncorrectProgramId, Incomplete(&'static str), Program(solana_program::program_error::ProgramError), Owned(generated_exit::exit_error::Error) }
 pub type R<T> = Result<T, Error>;
 pub fn require(ok:bool,code:u32)->R<()> {if ok {Ok(())} else {Err(Error::Code(code))}}
 pub fn overflow()->Error {Error::Code(6008)}
-
-pub mod business_error_codes;

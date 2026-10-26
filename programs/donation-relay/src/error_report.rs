@@ -1,9 +1,8 @@
 //! Observable rich-error adapter, with explicit incomplete diagnostic provenance.
-//! The message-length failure carries explicitly reconstructed diagnostic data.
-//! This is not attribution of the historical Rust source layout.
+//! No captured historical source path/line is emitted as a new-source origin.
 //! Body errors lacking origin/compared metadata remain a documented fidelity gap.
 use solana_program::{program_error::ProgramError,pubkey::Pubkey,log::sol_log};
-use crate::{Error,Key,dispatch::Failure};
+use crate::{Error,Key,dispatch::Failure,idl::Cause as IdlCause};
 #[path="error_catalog.rs"] mod catalog;
 fn keys(pair:Option<(Key,Key)>) {
     if let Some((left,right))=pair {
@@ -54,7 +53,14 @@ pub fn report(error:&Failure) {
         Failure::Program{error,account}=>program(error,*account),
         Failure::Body(e)=>body(e),
         Failure::Exit(e)=>e.log(),
-        Failure::Idl(error)=>error.log(),
+        Failure::Idl(e)=>{
+            match &e.cause {
+                IdlCause::Framework(code)=>framework(*code,e.account,e.origin,e.keys),
+                IdlCause::Owned(error)=>error.log(),
+                IdlCause::Program(error)=>{program(error,e.account);keys(e.keys);},
+            }
+            values(e.values);
+        },
         Failure::Unrecovered(reason)=>panic!("unimplemented source boundary: {}",reason),
     }
 }
@@ -73,7 +79,11 @@ pub fn lower(error:Failure)->ProgramError {
             Error::Incomplete(reason)=>panic!("unimplemented source boundary: {}",reason),
         },
         Failure::Exit(e)=>e.into(),
-        Failure::Idl(error)=>error.into(),
+        Failure::Idl(e)=>match e.cause {
+            IdlCause::Framework(code)=>ProgramError::Custom(code),
+            IdlCause::Owned(error)=>error.into(),
+            IdlCause::Program(error)=>error,
+        },
         Failure::Unrecovered(reason)=>panic!("unimplemented source boundary: {}",reason),
     }
 }

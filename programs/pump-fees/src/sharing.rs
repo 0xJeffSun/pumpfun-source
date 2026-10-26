@@ -23,7 +23,7 @@ const AMM: Pubkey = crate::donation::AMM;
    let expected=Pubkey::create_program_address(&[b"pool",&state.index.to_le_bytes(),state.creator.as_ref(),state.base_mint.as_ref(),state.quote_mint.as_ref(),&[state.pool_bump]],&AMM).map_err(|_|error!(FeeError::InvalidPool))?;
    require_keys_eq!(expected,pool.key(),FeeError::InvalidPool);state.coin_creator
   }else{ctx.accounts.bonding_curve.creator};
-  require_keys_eq!(creator,ctx.accounts.payer.key(),FeeError::NotAuthorized);
+  require!(ctx.accounts.payer.key()==ctx.accounts.global.admin_set_creator_authority || creator==ctx.accounts.payer.key(),FeeError::NotAuthorized);
   let state=&mut ctx.accounts.sharing_config;state.bump=ctx.bumps.sharing_config;state.version=2;state.status=ConfigStatus::Active;state.mint=ctx.accounts.mint.key();state.admin=ctx.accounts.bonding_curve.creator;state.admin_revoked=false;state.shareholders=vec![Shareholder{address:ctx.accounts.bonding_curve.creator,share_bps:10000}];state.exit(&ID)?;
   crate::pump::cpi::extend_account(CpiContext::new(
       ctx.accounts.pump_program.to_account_info(),
@@ -50,8 +50,25 @@ const AMM: Pubkey = crate::donation::AMM;
    state.admin=creator;state.shareholders=vec![Shareholder{address:creator,share_bps:10000}];state.exit(&ID)?;
    let program=ctx.accounts.pump_amm_program.as_ref().ok_or(FeeError::AmmAccountsRequiredForGraduatedCoin)?;
    let event=ctx.accounts.pump_amm_event_authority.as_ref().ok_or(FeeError::AmmAccountsRequiredForGraduatedCoin)?;
-   call(AMM,vec![pool.to_account_info(),ctx.accounts.payer.to_account_info(),ctx.accounts.system_program.to_account_info(),event.to_account_info(),program.to_account_info()],&[(true,false),(true,true),(false,false),(false,false),(false,false)],vec![234,102,194,203,150,72,62,229])?;
-   call(AMM,vec![pool.to_account_info(),state.to_account_info(),event.to_account_info(),program.to_account_info()],&[(true,false),(false,false),(false,false),(false,false)],vec![208,8,159,4,74,175,16,58])?;
+   crate::pump_amm::cpi::extend_account(CpiContext::new(
+       program.to_account_info(),
+       crate::pump_amm::cpi::accounts::ExtendAccount {
+           account: pool.to_account_info(),
+           user: ctx.accounts.payer.to_account_info(),
+           system_program: ctx.accounts.system_program.to_account_info(),
+           event_authority: event.to_account_info(),
+           program: program.to_account_info(),
+       },
+   ))?;
+   crate::pump_amm::cpi::migrate_pool_coin_creator(CpiContext::new(
+       program.to_account_info(),
+       crate::pump_amm::cpi::accounts::MigratePoolCoinCreator {
+           pool: pool.to_account_info(),
+           sharing_config: state.to_account_info(),
+           event_authority: event.to_account_info(),
+           program: program.to_account_info(),
+       },
+   ))?;
   }
   let event=CreateFeeSharingConfigEvent{timestamp:Clock::get()?.unix_timestamp,mint:ctx.accounts.mint.key(),bonding_curve:ctx.accounts.bonding_curve.key(),pool:ctx.accounts.pool.as_ref().map(|x|x.key()),sharing_config:state.key(),admin:creator,initial_shareholders:state.shareholders.clone(),status:ConfigStatus::Active};emit!(event);emit_cpi!(event);Ok(())
  }

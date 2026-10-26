@@ -1,16 +1,11 @@
 # Donation relay reconstruction
 
-The current source-built checkpoint is [build09: IDL header owned errors](source-build-09-idl-owned/README.md), with [complete source](source-build-09-idl-owned/source) and [machine-readable binding](current.json). Its candidate is469,016 bytes, SHA256 `977fa996ec68d82a5b03d718cb2893bfeb51e239dc8d07572969044722b28cbb`.
+Current proposed source-built checkpoint: [build15 owned arithmetic errors](source-build-15-owned-arithmetic/README.md), [tested source23](source-build-15-owned-arithmetic/runtime-plan/static-proof/source), [binding](current.json). Candidate477512B SHA256 `5f6d29410047551f5f4e448937f2de318c2a55546699fbfb33dacd5c89ddaea4`; symbols660912B SHA256 `573c172f0a58fd33b1c28e3908d6bfd0066dabffbd8850c045ca0c0acdb4638b`.
 
-The latest source correction restores the header writer's I/O error destruction, owned3004 construction, account decoration, reporting and consuming lowering. It changes three source files and reuses the existing writer/error implementation. All12 unchanged ordinary cases pass on24 submissions; saved verification checks50 signature fields,25 unique signatures and24 effect sets. These cases do not exercise all header failures or privileged routes.
+The cumulative source restores borrowed u16 weights after both admission guards, skips remainder sorting when no leftover exists, and returns the existing owned6008 ArithmeticOverflow error on three proved arithmetic failures. Quotient low64 truncation and output/remainder-before-allocated-overflow ordering are preserved. Caller propagates the owned error before recipient CPI; logging borrows it before consuming lowering. Global unrelated numeric overflow and IDL3001/3002/3003/3004 stay unchanged. Full static proofs and actual build exits are retained.
 
-The complete original/candidate ledgers retain369 unmatched original windows. Whole-original byte equality, full source/diagnostic/dependency provenance and complete security acceptance remain unresolved. Source is maintained through immutable checkpoints; old packages are retained, and future changes advance `current.json` after verification.
+Unchanged ordinary12 passes:24submissions,50signature fields,12unique transactions,25unique signatures,24effect sets. Dynamic coverage of owned6008/weights/sort/checked-borrow-failure remains ZERO. New saved verification uses unchanged structural assertions(runtime=False) plus stock P24 current cryptography; historical Darwin runtimeTrue evidence remains separately labeled. No new authority/source-origin probe or fixture.
 
-Earlier source reconstruction:
+Complete492original/331candidate inventory retains33raw/122normalized matched originals,370unmatched. Whole original byte equality isFALSE; no normalized match-count improvement, full recursive/source/security equivalence or unique historical spelling is claimed. Truthful diagnostic differences remain unforced. Canonical source23 is installed from the exact tested snapshot after root reconciliation to source13; this is source selection reuse, NOT a genuine canonical/main Relay rebuild. Earlier immutable source13/14 evidence and the rejected v1.47 measurement remain provenance.
 
-- [Dispatch and wrappers](dispatch-source-proposal/README.md)
-- [Account/context composition](context-source-proposal/REPORT.md)
-- [Reserved IDL operations](idl-source-proposal/README.md)
-- [Previous writer/error checkpoint](source-build-08-whitelist-writer/README.md)
-
-Captured filenames and lines are original metadata; current source retains its truthful diagnostic locations. No claimed original bytes are synthesized or patched into the candidate.
+Selection and canonical-source equality are checked by source-build-15-selection-v3/verify.py using supported Python3.12/solders0.27.1 saved-only verification.

@@ -1,6 +1,6 @@
-> **⚠ RETRACTED (compiler): this document pins v1.43 for pump/pump_amm/pump_fees — that is WRONG.** The ELF `e_machine` header proves v1.44 (original=263 EM_SBF; v1.43 build=247 EM_BPF; v1.44 build=263). See COMPILER-CORRECTION.md. The non-compiler findings (SDK coverage, token-incentive recovery, version boundaries, the lost-source byte-identicality limit) still stand.
-
 # Full gap report — everything remaining for byte-identical + SDK + decompilation + versions
+
+> **Evidence correction (2026-10-25):** This retained research synthesis contains claims superseded by the [controlled identity audit](../../../../docs/BUILD_IDENTITY_AUDIT.md) and its hash-bound packets. Stock v1.43 emits an incompatible ELF header; v1.44 is the strongest measured stock candidate, including complete runtime-helper evidence. Section sizes do not pin a compiler or establish source completeness. Mayhem's reconstructed dependency constraints do not prove its historical compiler. Missing original source is not proof that byte identity is impossible. Handler dispatch and finite passing cases do not prove full behavioral or SDK compatibility. Seeding a global account enables dependent flows; it does not establish a successful privileged `create_config`. Multiple semver-incompatible hashbrown versions may coexist, so a failed direct pin is not by itself proof of an unresolvable dependency graph. Treat the remaining text as historical hypotheses requiring the owning source, raw bytes and recipe evidence. The accepted historical build helper remains byte-preserved; use `scripts/build_reconstruction_candidate.py` for qualified research defaults. Candidate12's measured failed Metaplex experiment is documented in the controlled audit; candidate11 remains the comparison.
 
 _2026-10-25. Synthesis of a 4-thread deep research pass (SDK coverage, version forensics,
 decompilation of unrecovered handlers, byte-identicality consolidation) over the live repo
@@ -63,9 +63,7 @@ platform-tools/...`) — none is a stock-rustup build; ELF machine 263, SBPFv1 (
 No in-binary rustc/LLVM producer string (stripped, no `.comment`).
 
 **Actionable version discrepancies:**
-- **mayhem: original links `hashbrown 0.15.4`, reconstruction resolves `0.17.1`.** 0.15 vs
-  0.16/0.17 differ in monomorphized codegen; pinning `hashbrown = "=0.15.4"` in mayhem is a
-  concrete fix that closes codegen drift. (pump/amm/fees embed no hashbrown path.)
+- **Mayhem hashbrown drift claim withdrawn.** The [host/target graph audit](../../../identity-audit/2026-10-25/mayhem-hashbrown/REPORT.md) finds positive hashbrown0.15.4 path witnesses in both original and accepted target binaries. Project0.17.1 belongs to the host proc-macro chain; the v1.52 target sysroot separately locks0.15.4. A direct project pin is not an established target-codegen repair, and multiple versions can coexist. Historical compiler/sysroot identity remains unresolved.
 - **v1.43 vs v1.44 is NOT resolvable by version forensics** (identical Rust 1.79/LLVM 18) —
   the v1.43 pin rests on the section-size sweep (v1.43 matched `.text` to ~99–100% for
   pump_amm/pump_fees), a codegen conclusion, not a version string. The repo is internally
@@ -114,27 +112,13 @@ monomorphizations emitted in swapped order — bounded by lost source/recipe); M
 (the `Utilize` block reordered — bounded); donation_relay ~347 KB short (no public/recovered
 source — ~333 KB of codec/handler logic must be decompiled first, category (a)).
 
-## 5. Implemented this pass (done) + remaining-implementable
-1. **DONE ✅ — pump `claim_token_incentives` + `admin_update_token_incentives` recovered**
-   (commit `294c9186` on main). These were dropped from dispatch in a restructuring (53 vs
-   56 handlers); recovered as genuine logic (repo history `4b3d3dcb` + pump_amm twins +
-   decompiled wrappers) into `programs/pump/src/incentives.rs` + `token_incentives/`, wired
-   in `lib.rs`. **Oracle-verified on a fresh v1.43 build vs the captured original:**
-   `pump_claim_token_incentives_differential` mismatches=[]; `pump_admin_token_incentives_differential`
-   44==44 successes, mismatches=[]. pump now dispatches 55 handlers and the SDK hard-fail is fixed.
-   - **mayhem `initialize_mayhem_state`** — logic decompiled (§3, Medium-High) but **NOT
-     implemented**: there is no behavioral oracle for it (the mayhem suites are trade-only),
-     and implementing unvalidated code would violate the integrity bar. Needs a signed
-     mayhem-init differential built first (blocked on the same genuine-Mayhem-PDA setup that
-     stopped `set_mayhem_virtual_params`).
-2. ~~Pin mayhem `hashbrown = "=0.15.4"`~~ — **attempted, BLOCKED**: `indexmap 2.14.2`
-   (via `anchor-lang 1.0.0` → proc-macro-crate → toml_edit) requires `hashbrown ^0.17`, so a
-   lone pin fails resolution. Closing it needs the original's *whole* older dependency graph
-   (the lost `Cargo.lock`) — this is category-(c) provenance, not a one-line fix. The real
-   signal stands: the original's lockfile differs from the reconstruction's, and the mayhem
-   `.text` gap is partly this codegen drift.
-3. **Re-apply the v1.43 per-program build-recipe default** (reverted by a concurrent edit) — done.
-4. **Localnet `create_config`**: seed/clone the live `GlobalConfig` so SDK `createConfig` tests pass the admin gate.
+## 5. What is implementable now (and being implemented)
+1. **Recover pump `claim_token_incentives` + `admin_update_token_incentives`** — the SDK
+   hard-fail handlers; logic decompiled (§3), pump_amm twins + the differential harnesses
+   (`scripts/pump_{claim,admin}_token_incentives*_differential.py`) exist as oracles.
+2. **Separate host and target dependency evidence.** The previously asserted hashbrown pin failure has no retained command/error/exit receipt in the bounded review-packet search. Adding an independent0.15 dependency would not automatically replace indexmap's0.17 requirement or the target sysroot dependency. Do not attribute the target size gap to this unproved drift.
+3. **Use measured research compiler selection.** Stock v1.43's header contradicts capture; the research wrapper chooses the strongest measured stock candidatev1.44 for the three older programs. Historical helper bytes remain preserved for owning package proofs. No unique historical recipe is established.
+4. **Localnet `create_config`**: seeding `GlobalConfig` prepares dependent flows; it does not establish a successful privileged initializer or satisfy its admin signature.
 
 ## 6. What remains fundamentally bounded (honest)
 - Whole-binary byte-identicality of pump_fees / pump_amm: **not reachable** without the lost

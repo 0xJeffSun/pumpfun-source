@@ -212,6 +212,54 @@ pub mod mayhem_recovered {
         ctx.accounts.global_params.paused = false;
         Ok(())
     }
+    // Reached only via pump's create_v2 Mayhem-mode CPI (pump signs account #2,
+    // the off-curve ["mint-authority"]@pump PDA, via invoke_signed). Handler body
+    // recovered from mayhem `0x82938`; serialized field offsets from the codec at
+    // `0x685f0`. Takes no instruction args: `mint` is read from the mint account,
+    // `duration_hours` is `global_params.reset_middle[0]` (handler read `[ctx+0x2c4]`).
+    pub fn initialize_mayhem_state(ctx: Context<InitializeMayhemState>) -> Result<()> {
+        let now = Clock::get()?.unix_timestamp;
+        let duration_hours = ctx.accounts.global_params.reset_middle[0] as i64;
+        let end_timestamp = now + duration_hours * 3600;
+        let mint = ctx.accounts.mint.key();
+        let state = &mut ctx.accounts.mayhem_state;
+        state.field_8 = now as u64;
+        state.end_timestamp = end_timestamp;
+        state.mint = mint;
+        state.field_56 = 0;
+        state.field_72 = 0;
+        state.flag_88 = false;
+        state.field_89 = now as u64;
+        state.status = state::MayhemStatus::Variant0;
+        state.burned_amount = 0;
+        Ok(())
+    }
+}
+
+/// Account layout recovered by driving the captured original in LiteSVM and by
+/// observing the real pump->mayhem create_v2 CPI (10 accounts, no event_authority).
+/// Account #2 (`mint_authority`) is pump's off-curve ["mint-authority"] PDA and must
+/// sign, so this instruction is reachable only through pump's `invoke_signed`.
+#[derive(Accounts)]
+pub struct InitializeMayhemState<'info> {
+    #[account(mut)]
+    pub payer: Signer<'info>,
+    #[account(seeds = [b"global-params"], bump)]
+    pub global_params: Account<'info, GlobalParams>,
+    /// CHECK: pump's off-curve mint-authority PDA; required signer supplied by pump via invoke_signed.
+    #[account(seeds = [b"mint-authority"], bump, seeds::program = state::PUMP_ID)]
+    pub mint_authority: Signer<'info>,
+    /// CHECK: canonical Mayhem sol-vault PDA, authority of the created token vault.
+    #[account(seeds = [b"sol-vault"], bump)]
+    pub sol_vault: UncheckedAccount<'info>,
+    pub mint: InterfaceAccount<'info, Mint>,
+    #[account(init, payer = payer, associated_token::mint = mint, associated_token::authority = sol_vault, associated_token::token_program = token_program)]
+    pub mayhem_token_vault: InterfaceAccount<'info, TokenAccount>,
+    #[account(init, payer = payer, space = 106, seeds = [b"mayhem-state", mint.key().as_ref()], bump)]
+    pub mayhem_state: Account<'info, state::MayhemState>,
+    pub system_program: CheckedSystemProgram<'info>,
+    pub token_program: Interface<'info, TokenInterface>,
+    pub associated_token_program: Program<'info, AssociatedToken>,
 }
 
 #[derive(Accounts)]

@@ -1,3 +1,38 @@
+# Pump: CTO remaining guard and owned-error restoration
+
+Tested scratch candidate `71ec4d8a646eefc82ba177afbc3d08552deadd65cf2f80ec280862eb768d059c` restores the non-holder target rejection for the holder-rewards PDA, explicit WSOL fee exclusion, and plain named owned errors6019/6091/early6092. The WSOL comparison uses the existing same-type SDK native-mint constant; emitted bytes compare the original32-byte value directly without runtime base58 on this guard. The late numeric6092 guard, account types, wallet evaluation order and prior6030/2006 compared-key fixes remain unchanged.
+
+The unchanged9269 differential +1024 Surfpool corpus,68 receipt bindings and saved signature/effect assertions pass. Exact original/current application coverage is6019 one differential,6091 eleven differential,early6092 five differential plusone Surfpool. Application2006 coverage remainszero; parser failures do not close it. These counts do not establish that the new holder-PDA or explicitWSOL disjunct was exercised. All raw diagnostic differences and natural current source coordinates are retained; no whole original executable/log identity or exhaustive equivalence is claimed.
+
+The original copied owned AccountInfo versus current borrowed UncheckedAccount, original executable-before-owner versus current owner-before-executable, late6092 reload and remaining parser/CPI/header ownership gaps remain explicit. The plain early6092 return has a direct original predicate/constructor counterpart under the admitted immutable-header domain; the source patch does not restore all parser/layout/drop behavior.
+
+Evidence: [`repro/pump/remaining-guards-fortyeight`](../../repro/pump/remaining-guards-fortyeight/README.md). It retains exact37 source, full original/current function/call/data ledgers and bounded windows, actual v1.44 compiler/v1.52 strip/tool/SDK/dependency gates, isolated unchanged corpus, raw signed receipts and failures. The first successful f290 build emitted runtime base58 for the inline macro; that discrepancy and its complete evidence remain historical. The separately prepared const-only95b6 plan was not executed. One reviewed corrective build used the existing SDK constant and early-only owned6092; no flags, layout, coordinate tuning, new fixtures or stopped execution were introduced. Scratch acceptance alone is not a main build or current-selection claim.
+
+<details>
+<summary>Historical e949 compared-key checkpoint and inherited recovery history</summary>
+
+# Pump: CTO compared-key owned-error restoration
+
+Tested scratch candidate `e9494060904aad25f465efd93af9dd0bb09a5ded9f321747c789cbf0310bc6c5` restores original owned error construction for6030 `CreatorShouldNotBeZero` with `(target, Pubkey::default())` and application2006 `ConstraintSeeds` with `(actual holder_creator_vault, derived creator-vault PDA)`. Exact two-site source patch on accepted3ae/d9d source37 changes no guard predicate/order, account requirement, state mutation, borrow, rent or CPI behavior. The original full parser-to-account role and comparedLeft/Right proof is retained. Other numeric6019/6091/6092 occurrences remain unresolved.
+
+The unchanged finite9269 differential +1024 Surfpool corpus and saved signatures/effects are retained in the scratch evidence, subject to its terminal acceptance records. Changed application coverage is one differential6030 case (`new-zero`) and zero application2006 cases; Surfpool reaches neither changed application branch. Parser2006 failures are separate and do not close that gap. Current source107/118 naturally differs from original307/648; no source-coordinate constants/remapping or whole executable/log identity is claimed.
+
+Evidence: [`repro/pump/admin-cto-compared-errors-fortyeight`](../../repro/pump/admin-cto-compared-errors-fortyeight/README.md). It preserves exact37source, bcb source proof, full original/current byte/function/call/data ledgers and complete selected windows, actual v1.44/v1.52 tool/SDK/dependency gates, isolated immutable harness inputs, all raw receipts/logs/signature/effect assertions and previous failures. Initial controlfd733 failed before compiler on missing transitive analyze.py; that actual failure remains immutable. Separately reviewed dabc fixed helper import closure, used a fresh output and compiled once. Runtime45f adds no fixture/probe/build; runtime source/candidate metadata rebindings are explicit, and archived e0 versus actual bb helper explicit-v1.44 equivalence is separately proved. Scratch evidence is not a main build/current selection by itself.
+
+<details>
+<summary>Historical accepted3ae checkpoint and inherited recovery history</summary>
+
+# Pump: five CTO owned-error restorations
+
+Tested scratch candidate `3ae5bb44a614ae083900ca6825fa91946f475457524c1d321e06cf3724555191` (1,582,896 bytes) restores named owned AnchorError construction for existing CTO guards6084,6090,6089,6077,6078. Predicates/order, typed BondingCurve and accepted mutation/borrow/CPI/Clock behavior remain unchanged. Six unresolved numeric-return occurrences remain unchanged;6030/2006 require compared-pubkey ownership, and6019/6091/6092 need further attribution.
+
+Existing changed-guard differential/signed coverage:6084 2/1;6090 4/1;6089 6/1;6077 1/0;6078 9/1. Exact original names/messages are observed on22differential and4signed cases. Current source origins remain truthful and differ from historical coordinates. These finite checks do not prove allocation-failure behavior, every error/cleanup path or whole original byte identity.
+
+Evidence: [`repro/pump/admin-cto-error-batch-fortyeight`](../../repro/pump/admin-cto-error-batch-fortyeight/README.md). The packet preserves exactsource37, full original/current function/call/data/raw residual ledgers, explicitv1.44 compile/v1.52 strip, actual current orchestration hashes, dependency/tool/SDK gates and unchanged9269+1024 receipts/signatures. Initial preparation failed before VM on a pass21 CI-only provenancehash; root approved the exact hash after retaining old/current bytes/maps/diff. No replaygenerator/assertion/fixture changed, no runtime retries or new probes.
+
+<details>
+<summary>Historical ffa checkpoint and inherited recovery history</summary>
+
 # Pump: owned holder-downgrade error checkpoint
 
 The tested scratch executable is `ffa0f3bab34b8cfca6d6aeef5e6b8dcabad0a16eccfeb3d22d5781e22ae3b193` (1,581,624 bytes). One existing admin-CTO holder-downgrade guard now returns the named `HolderRewardCreatorImmutable` Anchor error instead of `ProgramError::Custom(6083)`. Its predicate/order, the accepted owned6088/6080 guards, typed full BondingCurve and scoped borrow/mutation/CPI/Clock ordering remain unchanged.
@@ -62,3 +97,9 @@ The unchanged CTO corpus does not exercise holder mode with an already-cashback 
 </details>
 
 Recorded integrity limit: both differential and Surfpool orchestrators exited1 at their final global check because the build helper changed concurrently. All target child suites exited0 and saved signatures/effects passed. The frozen build passed old-helper before/after gates. Root-reviewed explicit-version AST equivalence proof seal `eb9173e77c85d1b5e55c8556b52e002ad655e5abe3b8a430a13e5a7fe7cb3223` admits only exact old→current helper transition with explicit nonempty v1.44/v1.52; all other inputs were rechecked. This is not a blanket whole-integrity PASS; no runtime rerun occurred.
+
+</details>
+
+</details>
+
+</details>
