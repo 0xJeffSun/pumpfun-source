@@ -134,3 +134,47 @@ python3 byte_distance.py A.so B.so  # measure an arbitrary pair (descriptive onl
 The committed `byte_distance_report.json` is the saved receipt of the asserting
 run, retained byte-for-byte alongside the other author receipts; the tools in
 this package do not overwrite it.
+
+## Controlled experiment: Darwin build host (negative result)
+
+Every retained ATA candidate was compiled on an `x86_64-unknown-linux-gnu` host.
+Cargo at the commit shipped in bpf-tools v1.27 (`49d8809d`,
+`compilation_files.rs::hash_rustc_version`) hashes the `rustc -vV` host triple
+into every unit's `-C metadata` for a `-dev` compiler, and the release asset was
+uploaded twelve minutes before its source tree was committed, consistent with a
+local maintainer build. One pre-registered, single-input experiment was therefore
+run: the same source revision, lockfile, SDK release and compiler commits, with
+only the host changed to `x86_64-apple-darwin`. Hypothesis, inputs, build log,
+toolchain identity, output binary and an offline verifier are retained in
+[darwin-host-experiment/](darwin-host-experiment/REPORT.md).
+
+```
+candidate2 (Linux host)   differing positions vs deployed:  307
+darwin build              differing positions vs deployed: 3288  (vs candidate2: 2981)
+darwin diffs by section: .text 3267, .rel.dyn 21; .rodata and section layout identical
+pair order: deployed AccountMeta->u8 | candidate2 u8->AccountMeta | darwin u8->AccountMeta
+```
+
+The hypothesis is rejected. Changing the host re-hashed every crate's metadata
+and re-ordered dozens of functions (1,314 of 1,438 call-masked 64-byte `.text`
+chunks stay at the same offset; the instruction multiset differs by nine
+address-bearing instructions per side), while the deployed program differs from
+the Linux candidate by a single function pair. A global metadata perturbation
+cannot produce a single-pair difference, so the historical build environment
+agreed with candidate2 on the metadata of essentially every crate, host triple
+included. The reading carried here, as the author's interpretation rather than a
+proved fact, is that the historical host was x86_64 Linux and that the missing
+input perturbs the metadata of `spl_token_2022` or `solana_program` alone.
+
+Reading the v1.10.33 `cargo-test-bpf` source additionally excludes the upstream
+CI invocation as that input without a build: it passes `--features test-bpf`
+only to the subsequent host `cargo test`, never to the `cargo-build-bpf` step,
+so its `.so` output is identical to a plain `cargo build-bpf`.
+
+Scope and limits. This is one build on one host with every other input pinned;
+it does not reduce the 307-position residual, recover the historical recipe, or
+authorize a flag, version or path sweep. The lockfile hash was unchanged by the
+build. The `bpf` rustup link and `~/.cache/solana` directory created by
+`cargo-build-bpf` were removed afterwards; no global toolchain was modified.
+`darwin-host-experiment/verify.py` is standard-library only, offline, and
+asserts every number above from the retained binaries.
