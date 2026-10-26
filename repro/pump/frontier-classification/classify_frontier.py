@@ -1,12 +1,9 @@
 #!/usr/bin/env python3
-"""Classify each unmatched original window by the nature of its best same-size
-candidate's differences:
-  - metadata_only: every differing byte lies in the immediate field of a
-    stw(0x62)/stdw(0x7a) store-immediate instruction -> file!()/line!() origin
-    metadata (heuristic store-immediate-only differences; not a semantics proof).
-  - body_diff: at least one differing byte is in a real logic instruction.
-  - no_same_size_candidate: no candidate function of that size (missing/wrong).
-Read-only."""
+"""Classify normalized nearest-size body differences using a store-immediate heuristic.
+The metadata_only name is historical: immediate similarity does not establish
+source metadata or correct logic. Missing/mis-sized candidates are not proof of
+missing source functions. Requires explicit trusted inputs; writes a fresh JSON.
+"""
 import argparse, collections, importlib.util, json, re, struct, sys
 from pathlib import Path
 
