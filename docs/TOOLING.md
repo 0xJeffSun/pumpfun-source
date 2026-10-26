@@ -60,7 +60,9 @@ python3 scripts/compare.py pump /path/to/independently-built/pump.so \
   --pad-zero-to-allocation --output work/comparison-pump
 ```
 
-Exit status is zero only for full byte equality, including the allocation suffix.
+By default, exit status is zero only for equality of the compared image, including
+the allocation suffix. When padding is requested, this can be an image synthesized
+by the comparator rather than the unmodified compiler output.
 Omit the padding flag when the candidate already contains the complete allocation.
 The optional padding step appends newly allocated zeros only; it never copies data
 from the original. It first checks that the original's bytes beyond all ELF file
@@ -72,6 +74,21 @@ first difference and whether zero padding was requested. It deliberately sets
 obtained a candidate. A future release needs source/compiler manifests and a clean
 build trace in addition to this comparison. Passing the original as the candidate
 would prove nothing about source reconstruction.
+
+For a strict whole-file gate on the unmodified compiler output, use:
+
+```sh
+python3 scripts/compare.py pump /path/to/independently-built/pump.so \
+  --require-raw-equality --output work/raw-comparison-pump
+```
+
+`candidate_input_comparison` always records the unmodified input comparison,
+including its length and hash. `comparison_scope` identifies whether the top-level
+comparison describes that input or a zero-padded allocation image, and
+`padding_bytes_added` records the exact extension. `--require-raw-equality` returns
+nonzero for a shorter input even if `--pad-zero-to-allocation` produces an equal
+allocation image. The existing image-comparison fields and default exit behavior
+are retained for compatibility. Neither mode proves source provenance.
 
 ## Local compiler inputs
 
