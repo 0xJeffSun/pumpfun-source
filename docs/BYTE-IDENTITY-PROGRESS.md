@@ -4,6 +4,16 @@ The [full audit](RECONSTRUCTION-AUDIT.md) and its generated tables retain their
 explicit `1463bd22` snapshot. This log records later research without silently
 changing that baseline or promoting new selected artifacts.
 
+## Relay: repeated type-ID attribution, no count change
+
+The [StringError provenance study](../research/relay-string-error-provenance/README.md)
+connects the candidate's three repeated type-ID bodies to `alloc`'s internal
+boxed `StringError`, rather than `std::io::Error` itself. Seventeen successful
+local compiler/target probes do not reproduce the captured constants; two
+missing-library failures and six build-setting controls are retained. One
+v1.48 canonical-target probe reproduces the latest candidate constants. Full linked-sysroot
+provenance remains open. Relay stays at **470/492**, with **22 unmatched**.
+
 ## Relay: 26 → 22 unmatched normalized windows
 
 The [Token-2022 dependency-path study](../repro/donation-relay/token-extension-version-recovery/README.md)
