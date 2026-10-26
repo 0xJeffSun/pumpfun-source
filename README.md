@@ -1,36 +1,98 @@
 # pumpfun-source
 
-Captured deployment evidence and source reconstruction for Pump.fun Solana programs. **Byte-identical reconstruction remains incomplete.** Captures retain complete account payloads, hashes, observation slots and loader metadata. See [scope](docs/SCOPE.md).
+Reconstructed Rust source for the Pump.fun Solana programs, plus the captured
+on-chain binaries and the evidence used to check the reconstruction against them.
 
-Current selected artifacts must agree with [status.json](repro/status.json) and the complete pass-26 byte/function index. Whole-file identity remains **0/4 core programs**. Dependency capture images remain **2/5**; only SPL Token is a whole-file exact raw compiler output (**1/5**). Token-2022 and Metaplex allocation images are recorded separately from shorter raw compiler output. No overall reconstruction percentage follows from finite tests or normalized function matches.
+**None of the four core programs is byte-identical to its deployed binary yet.**
+Behavior is reconstructed handler by handler and checked with differential tests
+that run the captured original and the rebuilt candidate side by side in a local VM.
 
-| Program | Selected executable SHA256 prefix | Differing or missing captured positions |
-| --- | --- | ---: |
-| Pump | `71ec4d8a646eefc8` | 9,784,703 |
-| PumpSwap | `09bee0dfd751dc6a` | 9,958,512 |
-| Fees | `2387f8139a13918a` | 554,122 |
-| Mayhem | `ca5d4f54b14e2f67` | 501,010 |
-| Donation Relay | `5f6d29410047551f` | 614,726 |
-| ATA | `ba8dd8a42ca7bff4` | 307 |
-| Metaplex retained image | `2c26e081f3faabf0` | 1,509 |
+## Status
 
-Positional counts include common-extent differences and missing allocation bytes; they are not semantic distance or a completion score. The 3,338 original windows remain fully represented: Pump 1,035, AMM 785, Fees 585, Mayhem 441 and Relay 492. Opaque, unmatched, ambiguous, call-conflicting and stopped rows remain explicit.
+Handler counts are bounded reconstructions with saved differential comparisons.
+They are not proof of exhaustive behavior.
 
-The selected Pump remaining-guards checkpoint restores evidenced owned errors and rejection predicates. Mayhem uses the measured official v1.54 recipe with unchanged source. AMM restores plain collect-owner error 6048 without compared Pubkeys. Fees retains the sharing-authorization checkpoint. Relay retains source 15's owned arithmetic errors. Clean managed-source builds reproduce the tested Pump, AMM and Mayhem executables and symbols. Relay's selected canonical source is bound, but a fresh build from that canonical path is not claimed.
+| Program | Handlers reconstructed | Saved comparisons | Byte-identical to deployed |
+| --- | ---: | ---: | --- |
+| Pump | 48 / 56 (56 / 56 with the [recovery overlay](repro/behavioral-recovery/README.md)) | 9,269 + 1,024 Surfpool | No |
+| PumpSwap (AMM) | 37 / 38 | 17,462 | No |
+| Fees | 31 / 31 | 17,461 | No |
+| Mayhem | 24 / 25 (25 / 25 with the overlay) | 9,595 | No |
+| Donation Relay | selected source 15; newer generated-framework source in `repro/donation-relay/` | 12 ordinary | No |
 
-Existing corpora contain 9,269 Pump, 17,462 AMM, 17,461 Fees and 9,595 Mayhem comparisons. Pump also has 1,024 signed Surfpool comparisons; Fees has ten separate sequence steps. Counts overlap and include repeated inputs. They support bounded reconstruction of 140/150 identified instruction dispositions, with five partial and five unrecovered handlers. They do not establish exhaustive behavior, security acceptance or exact captured bytes.
+Dependencies captured alongside the core programs:
 
-The Pump virtual-params reconstruction remains an unaccepted proposal. Its first successful compile exposed an AccountInfo ownership mismatch during emitted review; no current handler or coverage count is added. Broader creation/trading/routing, parser/error/cleanup, recursive call/data, historical source/compiler/dependency and SDK acceptance obligations remain open. ATA's 307 differences and Metaplex's 1,509 retained-image differences lack an evidence-backed further build correction.
+| Dependency | Rebuilt from public source |
+| --- | --- |
+| SPL Token | Byte-identical |
+| Token-2022 | Byte-identical, including zero allocation padding |
+| Associated Token Account | Byte-identical through a reconstructed linker order ([report](repro/ata/reconstructed-order/README.md)); not yet promoted in `repro/dependency-status.json` |
+| Metaplex Token Metadata | 1,509 bytes differ, all in the Utilize branch |
 
-Stopped executions remain excluded: the new Pump sell_v2 corrective/transfer-fee probe; Pump admin-update/claim token incentives; Mayhem initializer; old V3 token-extension leaf; additional Metaplex runtime; and filtered BuyV3 partial-fill. No new signer, PDA, owner, source-origin or history bypass, fabricated source coordinate, binary patch/padding, or flag/layout sweep is part of the current checkpoint.
+[`repro/status.json`](repro/status.json) is the authoritative index of selected
+candidates. [`docs/REMAINING-WORK.md`](docs/REMAINING-WORK.md) lists what is left.
+
+## Quick start
+
+Python 3.12. Evidence checks need only the standard library; local VM execution
+needs the pinned packages.
 
 ```sh
-python3 scripts/verify_evidence.py
-python3 scripts/test_tooling.py
+python3 scripts/verify_evidence.py      # captured bytes and manifests
+python3 scripts/test_tooling.py         # tooling self-tests
+python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
+.venv/bin/python scripts/local_validation.py
 ```
 
-Use [completion and remaining work](docs/COMPLETION.md), [build-identity evidence](docs/BUILD_IDENTITY_AUDIT.md), [parallel ownership](docs/PARALLEL_WORK.md), and the latest complete layered-pass ledgers for detailed boundaries. [Pass 25](repro/layered-passes/pass-25/README.md) is the published predecessor; historical packages remain immutable. [Current status](repro/status.json) and [Relay current selection](repro/donation-relay/current.json) identify the accepted artifacts.
+Build a program and compare it with the deployed original:
 
-Original bytes remain under `evidence/`. Raw compiler output is distinguished from retained allocation images; no padding or byte editing converts an unequal compiler output into a match. Imported harnesses submit signed tests only to offline loopback simulators. No on-chain deployment is claimed. Upstream materials retain their authorship; this repository does not assert a license over them.
+```sh
+cargo build-sbf --manifest-path programs/pump/Cargo.toml --tools-version v1.44 \
+  --sbf-out-dir work/pump-build -- --locked
+python3 scripts/compare.py pump work/pump-build/pump_recovered.so --output work/comparison-pump
+```
 
-The [integrated research lab](research/README.md) retains import provenance and replay tools. The security audit and live SDK/deployment acceptance remain incomplete. Historical checkpoint descriptions are preserved in Git and in the per-pass evidence packages; their candidate pointers are not current selections.
+Toolchains: Pump, PumpSwap and Fees use platform-tools v1.44; Mayhem's selected
+build uses v1.54. `scripts/build_partial_candidate.py` wraps the build with an
+isolated SDK and records a provenance report.
+
+For local SDK testing with every handler present, apply the
+[behavioral recovery overlay](repro/behavioral-recovery/README.md) and use the
+`@pump-fun/pump-sdk` harness in
+`repro/parallel-work/2026-10-25/independent-reconstruction-review/sdk-integration-test/`.
+
+## Layout
+
+| Path | Contents |
+| --- | --- |
+| `programs/` | Reconstructed Rust crates. CI hash-binds these to the selected checkpoints. |
+| `evidence/` | Captured deployed binaries, account payloads and upstream IDLs. Comparison inputs only, never compiler inputs. |
+| `repro/` | One evidence package per checkpoint or study: builds, comparison reports, differential receipts, verifiers. |
+| `scripts/` | Capture, build, compare and differential tooling ([index](scripts/README.md)). |
+| `localnet/` | Surfpool fixtures and transaction tests. |
+| `research/` | Imported research lab and provenance studies. |
+| `audit/`, `docs/`, `outputs/` | Validation scope, design notes and per-pass reports. |
+
+## Rules the evidence follows
+
+- Behavioral equivalence and byte identity are reported separately and never combined into one score.
+- No binary patching, padding or hand edits turn a differing build into a match.
+- Original binaries are read only after compilation finishes.
+- Changing a CI-bound source file means selecting a new checkpoint with fresh build and differential evidence.
+- Tests run only against local VMs and simulators; nothing is sent to a live network.
+
+## More detail
+
+- [Remaining work](docs/REMAINING-WORK.md), consolidated 2026-10-26
+- [Completion ledger](docs/COMPLETION.md) and [scope](docs/SCOPE.md)
+- [Tooling](docs/TOOLING.md) and [build-identity audit](docs/BUILD_IDENTITY_AUDIT.md)
+- Per-pass ledgers in `repro/layered-passes/`; historical packages are immutable.
+- [Security policy](SECURITY.md) and [audit scope](audit/AUDIT.md)
+
+## License
+
+This repository's own code and documentation are released under the
+[MIT License](LICENSE). Third-party and vendored materials (for example the
+Apache-2.0 Solana SDK files under `programs/pump-amm/vendor`, imported research
+and retained crate archives) keep their original licenses, and upstream Pump IDLs
+and binaries remain with their original authors.
