@@ -78,21 +78,30 @@
   "source_ranges": [
     {
       "path": "platform-build.sh",
-      "first": 34,
-      "last": 35,
-      "bytes": 41,
-      "sha256": "3057ff1610d3caa332f22e7efc91afe7a1dbc47daf399175695ffb8e2dc16025",
-      "excerpt_path": "excerpts/platform-build.sh.L34-L35.txt",
+      "first": 37,
+      "last": 38,
+      "bytes": 191,
+      "sha256": "efa5bc013dffc3cd8f087f055459a0c84ce128f8b8f948e40f1f6f6411c0815c",
+      "excerpt_path": "excerpts/platform-build.sh.L37-L38.txt",
       "claim": "Mutable Rust ref and version receipt"
     },
     {
       "path": "platform-build.sh",
-      "first": 67,
-      "last": 70,
-      "bytes": 241,
-      "sha256": "5277d5c0b6880cf66daf83da3762f5d3fe5fe3a09c30509cd7e3d5b8417fd828",
-      "excerpt_path": "excerpts/platform-build.sh.L67-L70.txt",
+      "first": 75,
+      "last": 75,
+      "bytes": 22,
+      "sha256": "5ed165bf4a01681e278d892953d92403a04d122be951a1a6891719ce2524295b",
+      "excerpt_path": "excerpts/platform-build.sh.L75-L75.txt",
       "claim": "Archive includes version.md"
+    },
+    {
+      "path": "platform-build.sh",
+      "first": 156,
+      "last": 156,
+      "bytes": 33,
+      "sha256": "a066097864f59f4e61fe94ec825e4f222a373a1e47624b49f29804de94b4c637",
+      "excerpt_path": "excerpts/platform-build.sh.L156-L156.txt",
+      "claim": "deploy directory becomes the release archive"
     },
     {
       "path": "SBFInstrInfo.cpp",

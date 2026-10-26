@@ -10,7 +10,7 @@ import urllib.request
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
-AUDIT_SHA256 = "6a72c9aca71415b6382c1e76dea15dc4ee414783f6b2e6aa33b60f3062ca0cc3"
+AUDIT_SHA256 = "3549a16f601a4f08ede2b3f61dd9ec5bb340bc2adabda2b5c0b490d2753ac967"
 
 
 def require(condition: bool, message: str) -> None:
