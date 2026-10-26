@@ -7,6 +7,7 @@
     "normalized_hamming": 20,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 8,
     "indirect_calls": 0,
@@ -21,6 +22,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 16,
     "indirect_calls": 0,
@@ -35,6 +37,7 @@
     "normalized_hamming": 90,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 2,
     "indirect_calls": 0,
@@ -49,6 +52,7 @@
     "normalized_hamming": 9,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 3,
     "indirect_calls": 0,
@@ -63,6 +67,7 @@
     "normalized_hamming": 144,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 3,
     "indirect_calls": 0,
@@ -77,6 +82,7 @@
     "normalized_hamming": 323,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 5,
     "indirect_calls": 0,
@@ -91,6 +97,7 @@
     "normalized_hamming": 112,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 10,
     "indirect_calls": 0,
@@ -105,6 +112,7 @@
     "normalized_hamming": 293,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 0,
     "indirect_calls": 0,
@@ -119,6 +127,7 @@
     "normalized_hamming": 16,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 0,
     "indirect_calls": 0,
@@ -133,6 +142,7 @@
     "normalized_hamming": 16,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 0,
     "indirect_calls": 0,
@@ -147,6 +157,7 @@
     "normalized_hamming": 8,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 0,
     "indirect_calls": 0,
@@ -161,6 +172,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 0,
     "indirect_calls": 0,
@@ -175,6 +187,7 @@
     "normalized_hamming": 8,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 0,
     "indirect_calls": 0,
@@ -189,6 +202,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 32,
     "indirect_calls": 0,
@@ -203,6 +217,7 @@
     "normalized_hamming": 61,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 1,
     "indirect_calls": 0,
@@ -217,6 +232,7 @@
     "normalized_hamming": 123,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 2,
     "indirect_calls": 0,
@@ -231,6 +247,7 @@
     "normalized_hamming": 161,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 3,
     "indirect_calls": 0,
@@ -245,6 +262,7 @@
     "normalized_hamming": 85,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 2,
     "indirect_calls": 0,
@@ -259,6 +277,7 @@
     "normalized_hamming": 67,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 2,
     "indirect_calls": 0,
@@ -273,6 +292,7 @@
     "normalized_hamming": 3,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 2,
     "indirect_calls": 0,
@@ -287,6 +307,7 @@
     "normalized_hamming": 500,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 7,
     "indirect_calls": 0,
@@ -301,6 +322,7 @@
     "normalized_hamming": 40,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 1,
     "indirect_calls": 0,
@@ -315,6 +337,7 @@
     "normalized_hamming": 586,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 8,
     "indirect_calls": 0,
@@ -329,6 +352,7 @@
     "normalized_hamming": 75,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 4,
     "indirect_calls": 0,
@@ -343,6 +367,7 @@
     "normalized_hamming": 32,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 5,
     "indirect_calls": 0,
@@ -357,6 +382,12 @@
     "normalized_hamming": null,
     "orig_file": "programs/pump/src/buy_v2.rs",
     "orig_line": 81,
+    "source_sites": [
+      "programs/pump/src/buy_v2.rs:81",
+      "programs/pump/src/buy_v2.rs:55",
+      "programs/pump/src/buy_v2.rs:88",
+      "programs/pump/src/buy_v2.rs:60"
+    ],
     "anchor_error_codes": [
       6004,
       6010
@@ -376,6 +407,11 @@
     "normalized_hamming": null,
     "orig_file": "programs/pump/src/buy_v2.rs",
     "orig_line": 116,
+    "source_sites": [
+      "programs/pump/src/buy_v2.rs:116",
+      "programs/pump/src/buy_v2.rs:109",
+      "programs/pump/src/buy_v2.rs:121"
+    ],
     "anchor_error_codes": [
       6004,
       6010
@@ -393,6 +429,9 @@
     "normalized_hamming": 3,
     "orig_file": "programs/pump/src/buy_v2.rs",
     "orig_line": 465,
+    "source_sites": [
+      "programs/pump/src/buy_v2.rs:465"
+    ],
     "anchor_error_codes": [
       6025
     ],
@@ -409,6 +448,9 @@
     "normalized_hamming": 3,
     "orig_file": "programs/pump/src/buy_v2.rs",
     "orig_line": 469,
+    "source_sites": [
+      "programs/pump/src/buy_v2.rs:469"
+    ],
     "anchor_error_codes": [
       6024
     ],
@@ -425,6 +467,9 @@
     "normalized_hamming": 3,
     "orig_file": "programs/pump/src/buy_v2.rs",
     "orig_line": 881,
+    "source_sites": [
+      "programs/pump/src/buy_v2.rs:881"
+    ],
     "anchor_error_codes": [
       6025
     ],
@@ -441,6 +486,9 @@
     "normalized_hamming": 3,
     "orig_file": "programs/pump/src/buy_v2.rs",
     "orig_line": 927,
+    "source_sites": [
+      "programs/pump/src/buy_v2.rs:927"
+    ],
     "anchor_error_codes": [
       6025
     ],
@@ -457,6 +505,9 @@
     "normalized_hamming": 355,
     "orig_file": "programs/pump/src/buy_v2.rs",
     "orig_line": 949,
+    "source_sites": [
+      "programs/pump/src/buy_v2.rs:949"
+    ],
     "anchor_error_codes": [
       6024
     ],
@@ -473,6 +524,9 @@
     "normalized_hamming": 3,
     "orig_file": "programs/pump/src/buy_v2.rs",
     "orig_line": 959,
+    "source_sites": [
+      "programs/pump/src/buy_v2.rs:959"
+    ],
     "anchor_error_codes": [
       6025
     ],
@@ -489,6 +543,9 @@
     "normalized_hamming": 3,
     "orig_file": "programs/pump/src/buy_v2.rs",
     "orig_line": 983,
+    "source_sites": [
+      "programs/pump/src/buy_v2.rs:983"
+    ],
     "anchor_error_codes": [
       6025
     ],
@@ -505,6 +562,9 @@
     "normalized_hamming": 3,
     "orig_file": "programs/pump/src/buy_v2.rs",
     "orig_line": 995,
+    "source_sites": [
+      "programs/pump/src/buy_v2.rs:995"
+    ],
     "anchor_error_codes": [
       6024
     ],
@@ -521,6 +581,11 @@
     "normalized_hamming": null,
     "orig_file": "programs/pump/src/create_v2.rs",
     "orig_line": 348,
+    "source_sites": [
+      "programs/pump/src/create_v2.rs:348",
+      "programs/pump/src/create_v2.rs:345",
+      "programs/pump/src/create_v2.rs:353"
+    ],
     "anchor_error_codes": [
       6063,
       6075
@@ -538,6 +603,7 @@
     "normalized_hamming": 109,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 3,
     "indirect_calls": 0,
@@ -552,6 +618,13 @@
     "normalized_hamming": null,
     "orig_file": "programs/pump/src/create_v2.rs",
     "orig_line": 395,
+    "source_sites": [
+      "programs/pump/src/create_v2.rs:395",
+      "programs/pump/src/create_v2.rs:466",
+      "programs/pump/src/create_v2.rs:493",
+      "programs/pump/src/create_v2.rs:390",
+      "programs/pump/src/create_v2.rs:473"
+    ],
     "anchor_error_codes": [
       6024,
       6063,
@@ -572,6 +645,9 @@
     "normalized_hamming": 3,
     "orig_file": "programs/pump/src/create_v2.rs",
     "orig_line": 412,
+    "source_sites": [
+      "programs/pump/src/create_v2.rs:412"
+    ],
     "anchor_error_codes": [
       6109
     ],
@@ -588,6 +664,11 @@
     "normalized_hamming": null,
     "orig_file": "programs/pump/src/create_v2.rs",
     "orig_line": 442,
+    "source_sites": [
+      "programs/pump/src/create_v2.rs:442",
+      "programs/pump/src/create_v2.rs:437",
+      "programs/pump/src/create_v2.rs:449"
+    ],
     "anchor_error_codes": [
       6099
     ],
@@ -604,6 +685,9 @@
     "normalized_hamming": 332,
     "orig_file": "programs/pump/src/create_v2.rs",
     "orig_line": 528,
+    "source_sites": [
+      "programs/pump/src/create_v2.rs:528"
+    ],
     "anchor_error_codes": [
       6063
     ],
@@ -620,6 +704,10 @@
     "normalized_hamming": null,
     "orig_file": "programs/pump/src/create_v2.rs",
     "orig_line": 586,
+    "source_sites": [
+      "programs/pump/src/create_v2.rs:586",
+      "programs/pump/src/create_v2.rs:588"
+    ],
     "anchor_error_codes": [
       6024
     ],
@@ -638,6 +726,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 3,
     "indirect_calls": 0,
@@ -654,6 +743,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 3,
     "indirect_calls": 0,
@@ -670,6 +760,25 @@
     "normalized_hamming": 8445,
     "orig_file": "programs/pump/src/create_v2.rs",
     "orig_line": 716,
+    "source_sites": [
+      "programs/pump/src/create_v2.rs:716",
+      "programs/pump/src/create_v2.rs:774",
+      "programs/pump/src/create_v2.rs:732",
+      "programs/pump/src/create_v2.rs:738",
+      "programs/pump/src/create_v2.rs:719",
+      "programs/pump/src/create_v2.rs:258",
+      "programs/pump/src/create_v2.rs:198",
+      "programs/pump/src/create_v2.rs:778",
+      "programs/pump/src/create_v2.rs:205",
+      "programs/pump/src/create_v2.rs:541",
+      "programs/pump/src/create_v2.rs:758",
+      "programs/pump/src/create_v2.rs:210",
+      "programs/pump/src/create_v2.rs:709",
+      "programs/pump/src/create_v2.rs:547",
+      "programs/pump/src/create_v2.rs:553",
+      "programs/pump/src/create_v2.rs:220",
+      "programs/pump/src/create_v2.rs:243"
+    ],
     "anchor_error_codes": [
       6027,
       6030,
@@ -700,6 +809,7 @@
     "normalized_hamming": 688,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 2,
     "indirect_calls": 0,
@@ -714,6 +824,24 @@
     "normalized_hamming": null,
     "orig_file": "programs/pump/src/creator/admin_cto.rs",
     "orig_line": 289,
+    "source_sites": [
+      "programs/pump/src/creator/admin_cto.rs:289",
+      "programs/pump/src/creator/admin_cto.rs:298",
+      "programs/pump/src/creator/admin_cto.rs:306",
+      "programs/pump/src/creator/admin_cto.rs:296",
+      "programs/pump/src/creator/admin_cto.rs:326",
+      "programs/pump/src/creator/admin_cto.rs:312",
+      "programs/pump/src/creator/admin_cto.rs:307",
+      "programs/pump/src/creator/admin_cto.rs:330",
+      "programs/pump/src/creator/admin_cto.rs:338",
+      "programs/pump/src/creator/admin_cto.rs:334",
+      "programs/pump/src/creator/admin_cto.rs:410",
+      "programs/pump/src/creator/admin_cto.rs:719",
+      "programs/pump/src/creator/admin_cto.rs:648",
+      "programs/pump/src/creator/admin_cto.rs:660",
+      "programs/pump/src/creator/admin_cto.rs:284",
+      "programs/pump/src/creator/admin_cto.rs:556"
+    ],
     "anchor_error_codes": [
       6019,
       6030,
@@ -746,6 +874,7 @@
     "normalized_hamming": 201,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 4,
     "indirect_calls": 0,
@@ -760,6 +889,7 @@
     "normalized_hamming": 196,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 4,
     "indirect_calls": 0,
@@ -774,6 +904,9 @@
     "normalized_hamming": null,
     "orig_file": "programs/pump/src/creator/collect_creator_fee.rs",
     "orig_line": 103,
+    "source_sites": [
+      "programs/pump/src/creator/collect_creator_fee.rs:103"
+    ],
     "anchor_error_codes": [
       6050
     ],
@@ -793,6 +926,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 10,
     "indirect_calls": 0,
@@ -809,6 +943,9 @@
     "normalized_hamming": null,
     "orig_file": "programs/pump/src/creator/collect_creator_fee.rs",
     "orig_line": 198,
+    "source_sites": [
+      "programs/pump/src/creator/collect_creator_fee.rs:198"
+    ],
     "anchor_error_codes": [
       6050
     ],
@@ -827,6 +964,16 @@
     "normalized_hamming": null,
     "orig_file": "programs/pump/src/creator/distribute_creator_fee_v2.rs",
     "orig_line": 101,
+    "source_sites": [
+      "programs/pump/src/creator/distribute_creator_fee_v2.rs:101",
+      "programs/pump/src/creator/distribute_creator_fee_v2.rs:112",
+      "programs/pump/src/creator/distribute_creator_fee_v2.rs:125",
+      "programs/pump/src/creator/distribute_creator_fee_v2.rs:152",
+      "programs/pump/src/creator/distribute_creator_fee_v2.rs:163",
+      "programs/pump/src/creator/distribute_creator_fee_v2.rs:168",
+      "programs/pump/src/creator/distribute_creator_fee_v2.rs:149",
+      "programs/pump/src/creator/distribute_creator_fee_v2.rs:173"
+    ],
     "anchor_error_codes": [
       6024,
       6027,
@@ -851,6 +998,10 @@
     "normalized_hamming": null,
     "orig_file": "programs/pump/src/creator/distribute_creator_fee_v2.rs",
     "orig_line": 213,
+    "source_sites": [
+      "programs/pump/src/creator/distribute_creator_fee_v2.rs:213",
+      "programs/pump/src/creator/distribute_creator_fee_v2.rs:205"
+    ],
     "anchor_error_codes": [
       6051,
       6095
@@ -870,6 +1021,11 @@
     "normalized_hamming": null,
     "orig_file": "programs/pump/src/creator/distribute_creator_fee_v2.rs",
     "orig_line": 346,
+    "source_sites": [
+      "programs/pump/src/creator/distribute_creator_fee_v2.rs:346",
+      "programs/pump/src/creator/distribute_creator_fee_v2.rs:340",
+      "programs/pump/src/creator/distribute_creator_fee_v2.rs:378"
+    ],
     "anchor_error_codes": [
       6024,
       6027
@@ -889,6 +1045,14 @@
     "normalized_hamming": null,
     "orig_file": "programs/pump/src/creator/distribute_creator_fees.rs",
     "orig_line": 103,
+    "source_sites": [
+      "programs/pump/src/creator/distribute_creator_fees.rs:103",
+      "programs/pump/src/creator/distribute_creator_fees.rs:116",
+      "programs/pump/src/creator/distribute_creator_fees.rs:158",
+      "programs/pump/src/creator/distribute_creator_fees.rs:148",
+      "programs/pump/src/creator/distribute_creator_fees.rs:143",
+      "programs/pump/src/creator/distribute_creator_fees.rs:165"
+    ],
     "anchor_error_codes": [
       6024,
       6027,
@@ -911,6 +1075,7 @@
     "normalized_hamming": 369,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 5,
     "indirect_calls": 0,
@@ -925,6 +1090,10 @@
     "normalized_hamming": null,
     "orig_file": "programs/pump/src/creator/distribute_creator_fees.rs",
     "orig_line": 249,
+    "source_sites": [
+      "programs/pump/src/creator/distribute_creator_fees.rs:249",
+      "programs/pump/src/creator/distribute_creator_fees.rs:241"
+    ],
     "anchor_error_codes": [
       6051,
       6095
@@ -945,6 +1114,10 @@
     "normalized_hamming": null,
     "orig_file": "programs/pump/src/creator/distribute_creator_fees.rs",
     "orig_line": 325,
+    "source_sites": [
+      "programs/pump/src/creator/distribute_creator_fees.rs:325",
+      "programs/pump/src/creator/distribute_creator_fees.rs:343"
+    ],
     "anchor_error_codes": [
       6024,
       6027
@@ -964,6 +1137,13 @@
     "normalized_hamming": null,
     "orig_file": "programs/pump/src/creator/distribute_fee_to_holders.rs",
     "orig_line": 82,
+    "source_sites": [
+      "programs/pump/src/creator/distribute_fee_to_holders.rs:82",
+      "programs/pump/src/creator/distribute_fee_to_holders.rs:157",
+      "programs/pump/src/creator/distribute_fee_to_holders.rs:120",
+      "programs/pump/src/creator/distribute_fee_to_holders.rs:122",
+      "programs/pump/src/creator/distribute_fee_to_holders.rs:164"
+    ],
     "anchor_error_codes": [
       6024,
       6085,
@@ -985,6 +1165,10 @@
     "normalized_hamming": null,
     "orig_file": "programs/pump/src/creator/migrate_bonding_curve_creator.rs",
     "orig_line": 46,
+    "source_sites": [
+      "programs/pump/src/creator/migrate_bonding_curve_creator.rs:46",
+      "programs/pump/src/creator/migrate_bonding_curve_creator.rs:53"
+    ],
     "anchor_error_codes": [
       6083,
       6095
@@ -1004,6 +1188,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 18,
     "indirect_calls": 0,
@@ -1021,6 +1206,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 11,
     "indirect_calls": 0,
@@ -1038,6 +1224,7 @@
     "normalized_hamming": 182,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 5,
     "indirect_calls": 0,
@@ -1052,6 +1239,7 @@
     "normalized_hamming": 182,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 5,
     "indirect_calls": 0,
@@ -1066,6 +1254,10 @@
     "normalized_hamming": null,
     "orig_file": "programs/pump/src/extend_account.rs",
     "orig_line": 84,
+    "source_sites": [
+      "programs/pump/src/extend_account.rs:84",
+      "programs/pump/src/extend_account.rs:107"
+    ],
     "anchor_error_codes": [
       6010
     ],
@@ -1085,6 +1277,7 @@
     "normalized_hamming": 632,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 4,
     "indirect_calls": 0,
@@ -1101,6 +1294,9 @@
     "normalized_hamming": null,
     "orig_file": "programs/pump/src/extend_account.rs",
     "orig_line": 141,
+    "source_sites": [
+      "programs/pump/src/extend_account.rs:141"
+    ],
     "anchor_error_codes": [
       6024
     ],
@@ -1119,6 +1315,10 @@
     "normalized_hamming": 997,
     "orig_file": "programs/pump/src/fee_recipient.rs",
     "orig_line": 35,
+    "source_sites": [
+      "programs/pump/src/fee_recipient.rs:35",
+      "programs/pump/src/fee_recipient.rs:19"
+    ],
     "anchor_error_codes": [
       6000
     ],
@@ -1135,6 +1335,11 @@
     "normalized_hamming": null,
     "orig_file": "programs/pump/src/fee_recipient.rs",
     "orig_line": 47,
+    "source_sites": [
+      "programs/pump/src/fee_recipient.rs:47",
+      "programs/pump/src/fee_recipient.rs:60",
+      "programs/pump/src/fee_recipient.rs:78"
+    ],
     "anchor_error_codes": [
       6027,
       6028,
@@ -1153,6 +1358,9 @@
     "normalized_hamming": 2773,
     "orig_file": "programs/pump/src/migrate.rs",
     "orig_line": 251,
+    "source_sites": [
+      "programs/pump/src/migrate.rs:251"
+    ],
     "anchor_error_codes": [
       6006
     ],
@@ -1171,6 +1379,9 @@
     "normalized_hamming": 1,
     "orig_file": "programs/pump/src/migrate.rs",
     "orig_line": 280,
+    "source_sites": [
+      "programs/pump/src/migrate.rs:280"
+    ],
     "anchor_error_codes": [
       6024
     ],
@@ -1187,6 +1398,9 @@
     "normalized_hamming": 2,
     "orig_file": "programs/pump/src/migrate.rs",
     "orig_line": 282,
+    "source_sites": [
+      "programs/pump/src/migrate.rs:282"
+    ],
     "anchor_error_codes": [
       6024
     ],
@@ -1203,6 +1417,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 7,
     "indirect_calls": 0,
@@ -1219,6 +1434,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 2,
     "indirect_calls": 0,
@@ -1235,6 +1451,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 12,
     "indirect_calls": 0,
@@ -1251,6 +1468,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 4,
     "indirect_calls": 0,
@@ -1267,6 +1485,9 @@
     "normalized_hamming": null,
     "orig_file": "programs/pump/src/migrate.rs",
     "orig_line": 527,
+    "source_sites": [
+      "programs/pump/src/migrate.rs:527"
+    ],
     "anchor_error_codes": [
       6027
     ],
@@ -1284,7 +1505,8 @@
     "closest_candidate": "_ZN45_$LT$T$u20$as$u20$alloc..string..ToString$GT$9to_string",
     "normalized_hamming": 130,
     "orig_file": null,
-    "orig_line": 2,
+    "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 3,
     "indirect_calls": 0,
@@ -1299,6 +1521,7 @@
     "normalized_hamming": 320,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 1,
     "indirect_calls": 0,
@@ -1315,6 +1538,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 3,
     "indirect_calls": 0,
@@ -1331,6 +1555,7 @@
     "normalized_hamming": 836,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 1,
     "indirect_calls": 0,
@@ -1347,6 +1572,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 4,
     "indirect_calls": 0,
@@ -1363,6 +1589,7 @@
     "normalized_hamming": 180,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 1,
     "indirect_calls": 0,
@@ -1376,7 +1603,12 @@
     "closest_candidate": null,
     "normalized_hamming": null,
     "orig_file": "programs/pump/src/migrate_v2.rs",
-    "orig_line": 2006,
+    "orig_line": 243,
+    "source_sites": [
+      "programs/pump/src/migrate_v2.rs:243",
+      "programs/pump/src/migrate_v2.rs:249",
+      "programs/pump/src/migrate_v2.rs:335"
+    ],
     "anchor_error_codes": [
       6006,
       6110
@@ -1396,6 +1628,9 @@
     "normalized_hamming": 3,
     "orig_file": "programs/pump/src/migrate_v2.rs",
     "orig_line": 309,
+    "source_sites": [
+      "programs/pump/src/migrate_v2.rs:309"
+    ],
     "anchor_error_codes": [
       6024
     ],
@@ -1412,6 +1647,9 @@
     "normalized_hamming": 3,
     "orig_file": "programs/pump/src/migrate_v2.rs",
     "orig_line": 313,
+    "source_sites": [
+      "programs/pump/src/migrate_v2.rs:313"
+    ],
     "anchor_error_codes": [
       6024
     ],
@@ -1428,6 +1666,9 @@
     "normalized_hamming": 3,
     "orig_file": "programs/pump/src/migrate_v2.rs",
     "orig_line": 326,
+    "source_sites": [
+      "programs/pump/src/migrate_v2.rs:326"
+    ],
     "anchor_error_codes": [
       6024
     ],
@@ -1444,6 +1685,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 10,
     "indirect_calls": 0,
@@ -1460,6 +1702,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 1,
     "indirect_calls": 0,
@@ -1476,6 +1719,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 13,
     "indirect_calls": 0,
@@ -1492,6 +1736,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 1,
     "indirect_calls": 0,
@@ -1508,6 +1753,7 @@
     "normalized_hamming": 154,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 2,
     "indirect_calls": 0,
@@ -1522,6 +1768,10 @@
     "normalized_hamming": null,
     "orig_file": "programs/pump/src/migrate_v2.rs",
     "orig_line": 658,
+    "source_sites": [
+      "programs/pump/src/migrate_v2.rs:658",
+      "programs/pump/src/migrate_v2.rs:747"
+    ],
     "anchor_error_codes": [
       6027,
       6063
@@ -1540,7 +1790,8 @@
     "closest_candidate": "_ZN45_$LT$T$u20$as$u20$alloc..string..ToString$GT$9to_string",
     "normalized_hamming": 130,
     "orig_file": null,
-    "orig_line": 2,
+    "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 3,
     "indirect_calls": 0,
@@ -1555,6 +1806,7 @@
     "normalized_hamming": 175,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 3,
     "indirect_calls": 0,
@@ -1569,6 +1821,7 @@
     "normalized_hamming": 833,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 1,
     "indirect_calls": 0,
@@ -1585,6 +1838,7 @@
     "normalized_hamming": 836,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 1,
     "indirect_calls": 0,
@@ -1601,6 +1855,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 4,
     "indirect_calls": 0,
@@ -1617,6 +1872,7 @@
     "normalized_hamming": 180,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 1,
     "indirect_calls": 0,
@@ -1631,6 +1887,12 @@
     "normalized_hamming": null,
     "orig_file": "programs/pump/src/multi_hop_curve_swap.rs",
     "orig_line": 208,
+    "source_sites": [
+      "programs/pump/src/multi_hop_curve_swap.rs:208",
+      "programs/pump/src/multi_hop_curve_swap.rs:214",
+      "programs/pump/src/multi_hop_curve_swap.rs:218",
+      "programs/pump/src/multi_hop_curve_swap.rs:262"
+    ],
     "anchor_error_codes": [
       6020,
       6027,
@@ -1652,6 +1914,9 @@
     "normalized_hamming": 3,
     "orig_file": "programs/pump/src/multi_hop_curve_swap.rs",
     "orig_line": 259,
+    "source_sites": [
+      "programs/pump/src/multi_hop_curve_swap.rs:259"
+    ],
     "anchor_error_codes": [
       6024
     ],
@@ -1668,6 +1933,9 @@
     "normalized_hamming": 1032,
     "orig_file": "programs/pump/src/multi_hop_curve_swap.rs",
     "orig_line": 295,
+    "source_sites": [
+      "programs/pump/src/multi_hop_curve_swap.rs:295"
+    ],
     "anchor_error_codes": [
       6025
     ],
@@ -1684,6 +1952,9 @@
     "normalized_hamming": null,
     "orig_file": "programs/pump/src/multi_hop_curve_swap.rs",
     "orig_line": 359,
+    "source_sites": [
+      "programs/pump/src/multi_hop_curve_swap.rs:359"
+    ],
     "anchor_error_codes": [
       6010
     ],
@@ -1701,7 +1972,10 @@
     "closest_candidate": "anchor_lang8accounts7account16Account$LT$T$GT$8try_from",
     "normalized_hamming": 437,
     "orig_file": "programs/pump/src/multi_hop_curve_swap.rs",
-    "orig_line": 2006,
+    "orig_line": 369,
+    "source_sites": [
+      "programs/pump/src/multi_hop_curve_swap.rs:369"
+    ],
     "anchor_error_codes": [],
     "direct_calls": 8,
     "indirect_calls": 0,
@@ -1716,6 +1990,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 10,
     "indirect_calls": 0,
@@ -1732,6 +2007,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 3,
     "indirect_calls": 0,
@@ -1748,6 +2024,13 @@
     "normalized_hamming": null,
     "orig_file": "programs/pump/src/multi_hop_curve_swap.rs",
     "orig_line": 484,
+    "source_sites": [
+      "programs/pump/src/multi_hop_curve_swap.rs:484",
+      "programs/pump/src/multi_hop_curve_swap.rs:546",
+      "programs/pump/src/multi_hop_curve_swap.rs:686",
+      "programs/pump/src/multi_hop_curve_swap.rs:599",
+      "programs/pump/src/multi_hop_curve_swap.rs:590"
+    ],
     "anchor_error_codes": [
       6020,
       6021,
@@ -1770,6 +2053,9 @@
     "normalized_hamming": 3,
     "orig_file": "programs/pump/src/multi_hop_curve_swap.rs",
     "orig_line": 571,
+    "source_sites": [
+      "programs/pump/src/multi_hop_curve_swap.rs:571"
+    ],
     "anchor_error_codes": [
       6024
     ],
@@ -1786,6 +2072,9 @@
     "normalized_hamming": 3,
     "orig_file": "programs/pump/src/multi_hop_curve_swap.rs",
     "orig_line": 589,
+    "source_sites": [
+      "programs/pump/src/multi_hop_curve_swap.rs:589"
+    ],
     "anchor_error_codes": [
       6025
     ],
@@ -1802,6 +2091,9 @@
     "normalized_hamming": 3,
     "orig_file": "programs/pump/src/multi_hop_curve_swap.rs",
     "orig_line": 624,
+    "source_sites": [
+      "programs/pump/src/multi_hop_curve_swap.rs:624"
+    ],
     "anchor_error_codes": [
       6024
     ],
@@ -1818,6 +2110,9 @@
     "normalized_hamming": 3,
     "orig_file": "programs/pump/src/multi_hop_curve_swap.rs",
     "orig_line": 673,
+    "source_sites": [
+      "programs/pump/src/multi_hop_curve_swap.rs:673"
+    ],
     "anchor_error_codes": [
       6025
     ],
@@ -1834,6 +2129,9 @@
     "normalized_hamming": 3,
     "orig_file": "programs/pump/src/multi_hop_curve_swap.rs",
     "orig_line": 692,
+    "source_sites": [
+      "programs/pump/src/multi_hop_curve_swap.rs:692"
+    ],
     "anchor_error_codes": [
       6024
     ],
@@ -1850,6 +2148,9 @@
     "normalized_hamming": 3,
     "orig_file": "programs/pump/src/multi_hop_curve_swap.rs",
     "orig_line": 736,
+    "source_sites": [
+      "programs/pump/src/multi_hop_curve_swap.rs:736"
+    ],
     "anchor_error_codes": [
       6024
     ],
@@ -1866,6 +2167,9 @@
     "normalized_hamming": 3,
     "orig_file": "programs/pump/src/multi_hop_curve_swap.rs",
     "orig_line": 744,
+    "source_sites": [
+      "programs/pump/src/multi_hop_curve_swap.rs:744"
+    ],
     "anchor_error_codes": [
       6024
     ],
@@ -1882,6 +2186,10 @@
     "normalized_hamming": 521,
     "orig_file": "programs/pump/src/pump_quote.rs",
     "orig_line": 61,
+    "source_sites": [
+      "programs/pump/src/pump_quote.rs:61",
+      "programs/pump/src/pump_quote.rs:62"
+    ],
     "anchor_error_codes": [
       6024,
       6105
@@ -1899,6 +2207,9 @@
     "normalized_hamming": 559,
     "orig_file": "programs/pump/src/pump_quote.rs",
     "orig_line": 90,
+    "source_sites": [
+      "programs/pump/src/pump_quote.rs:90"
+    ],
     "anchor_error_codes": [
       6100
     ],
@@ -1915,6 +2226,10 @@
     "normalized_hamming": 571,
     "orig_file": "programs/pump/src/pump_quote.rs",
     "orig_line": 104,
+    "source_sites": [
+      "programs/pump/src/pump_quote.rs:104",
+      "programs/pump/src/pump_quote.rs:106"
+    ],
     "anchor_error_codes": [
       6024,
       6026
@@ -1932,6 +2247,12 @@
     "normalized_hamming": null,
     "orig_file": "programs/pump/src/pump_quote.rs",
     "orig_line": 117,
+    "source_sites": [
+      "programs/pump/src/pump_quote.rs:117",
+      "programs/pump/src/pump_quote.rs:119",
+      "programs/pump/src/pump_quote.rs:121",
+      "programs/pump/src/pump_quote.rs:122"
+    ],
     "anchor_error_codes": [
       6024,
       6026
@@ -1949,6 +2270,12 @@
     "normalized_hamming": null,
     "orig_file": "programs/pump/src/pump_quote.rs",
     "orig_line": 131,
+    "source_sites": [
+      "programs/pump/src/pump_quote.rs:131",
+      "programs/pump/src/pump_quote.rs:134",
+      "programs/pump/src/pump_quote.rs:137",
+      "programs/pump/src/pump_quote.rs:139"
+    ],
     "anchor_error_codes": [
       6024,
       6026
@@ -1966,6 +2293,10 @@
     "normalized_hamming": null,
     "orig_file": "programs/pump/src/pump_quote.rs",
     "orig_line": 199,
+    "source_sites": [
+      "programs/pump/src/pump_quote.rs:199",
+      "programs/pump/src/pump_quote.rs:201"
+    ],
     "anchor_error_codes": [
       6024,
       6026
@@ -1983,6 +2314,9 @@
     "normalized_hamming": 2,
     "orig_file": "programs/pump/src/pump_quote.rs",
     "orig_line": 212,
+    "source_sites": [
+      "programs/pump/src/pump_quote.rs:212"
+    ],
     "anchor_error_codes": [
       6024
     ],
@@ -1999,6 +2333,9 @@
     "normalized_hamming": 2,
     "orig_file": "programs/pump/src/pump_quote.rs",
     "orig_line": 222,
+    "source_sites": [
+      "programs/pump/src/pump_quote.rs:222"
+    ],
     "anchor_error_codes": [
       6024
     ],
@@ -2015,6 +2352,9 @@
     "normalized_hamming": 425,
     "orig_file": "programs/pump/src/pump_quote.rs",
     "orig_line": 241,
+    "source_sites": [
+      "programs/pump/src/pump_quote.rs:241"
+    ],
     "anchor_error_codes": [
       6104
     ],
@@ -2031,6 +2371,10 @@
     "normalized_hamming": 785,
     "orig_file": "programs/pump/src/pump_quote.rs",
     "orig_line": 279,
+    "source_sites": [
+      "programs/pump/src/pump_quote.rs:279",
+      "programs/pump/src/pump_quote.rs:280"
+    ],
     "anchor_error_codes": [
       6103
     ],
@@ -2047,6 +2391,9 @@
     "normalized_hamming": 320,
     "orig_file": "programs/pump/src/pump_quote.rs",
     "orig_line": 307,
+    "source_sites": [
+      "programs/pump/src/pump_quote.rs:307"
+    ],
     "anchor_error_codes": [
       6103
     ],
@@ -2063,6 +2410,9 @@
     "normalized_hamming": 292,
     "orig_file": "programs/pump/src/pump_quote.rs",
     "orig_line": 334,
+    "source_sites": [
+      "programs/pump/src/pump_quote.rs:334"
+    ],
     "anchor_error_codes": [
       6024
     ],
@@ -2079,6 +2429,13 @@
     "normalized_hamming": null,
     "orig_file": "programs/pump/src/pump_quote.rs",
     "orig_line": 365,
+    "source_sites": [
+      "programs/pump/src/pump_quote.rs:365",
+      "programs/pump/src/pump_quote.rs:366",
+      "programs/pump/src/pump_quote.rs:371",
+      "programs/pump/src/pump_quote.rs:372",
+      "programs/pump/src/pump_quote.rs:378"
+    ],
     "anchor_error_codes": [
       6103
     ],
@@ -2095,6 +2452,12 @@
     "normalized_hamming": null,
     "orig_file": "programs/pump/src/pump_quote.rs",
     "orig_line": 407,
+    "source_sites": [
+      "programs/pump/src/pump_quote.rs:407",
+      "programs/pump/src/pump_quote.rs:406",
+      "programs/pump/src/pump_quote.rs:410",
+      "programs/pump/src/pump_quote.rs:415"
+    ],
     "anchor_error_codes": [
       6102,
       6103
@@ -2112,6 +2475,7 @@
     "normalized_hamming": 497,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 7,
     "indirect_calls": 0,
@@ -2126,6 +2490,13 @@
     "normalized_hamming": 1505,
     "orig_file": "programs/pump/src/quote_control/state.rs",
     "orig_line": 67,
+    "source_sites": [
+      "programs/pump/src/quote_control/state.rs:67",
+      "programs/pump/src/quote_control/state.rs:72",
+      "programs/pump/src/quote_control/state.rs:77",
+      "programs/pump/src/quote_control/state.rs:62",
+      "programs/pump/src/quote_control/state.rs:82"
+    ],
     "anchor_error_codes": [
       6066,
       6067,
@@ -2144,6 +2515,11 @@
     "normalized_hamming": 891,
     "orig_file": "programs/pump/src/quote_control/state.rs",
     "orig_line": 145,
+    "source_sites": [
+      "programs/pump/src/quote_control/state.rs:145",
+      "programs/pump/src/quote_control/state.rs:146",
+      "programs/pump/src/quote_control/state.rs:158"
+    ],
     "anchor_error_codes": [
       6075
     ],
@@ -2160,6 +2536,9 @@
     "normalized_hamming": null,
     "orig_file": "programs/pump/src/quote_control/update_quote_control_mints.rs",
     "orig_line": 71,
+    "source_sites": [
+      "programs/pump/src/quote_control/update_quote_control_mints.rs:71"
+    ],
     "anchor_error_codes": [
       6024
     ],
@@ -2178,6 +2557,14 @@
     "normalized_hamming": null,
     "orig_file": "programs/pump/src/sell.rs",
     "orig_line": 33,
+    "source_sites": [
+      "programs/pump/src/sell.rs:33",
+      "programs/pump/src/sell.rs:23",
+      "programs/pump/src/sell.rs:81",
+      "programs/pump/src/sell.rs:85",
+      "programs/pump/src/sell.rs:107",
+      "programs/pump/src/sell.rs:114"
+    ],
     "anchor_error_codes": [
       6024,
       6072,
@@ -2199,6 +2586,10 @@
     "normalized_hamming": null,
     "orig_file": "programs/pump/src/sell.rs",
     "orig_line": 133,
+    "source_sites": [
+      "programs/pump/src/sell.rs:133",
+      "programs/pump/src/sell.rs:126"
+    ],
     "anchor_error_codes": [
       6074
     ],
@@ -2215,6 +2606,9 @@
     "normalized_hamming": null,
     "orig_file": "programs/pump/src/sell.rs",
     "orig_line": 145,
+    "source_sites": [
+      "programs/pump/src/sell.rs:145"
+    ],
     "anchor_error_codes": [
       6062
     ],
@@ -2231,6 +2625,9 @@
     "normalized_hamming": 3,
     "orig_file": "programs/pump/src/sell_v2.rs",
     "orig_line": 341,
+    "source_sites": [
+      "programs/pump/src/sell_v2.rs:341"
+    ],
     "anchor_error_codes": [
       6025
     ],
@@ -2247,6 +2644,9 @@
     "normalized_hamming": 2,
     "orig_file": "programs/pump/src/sell_v2.rs",
     "orig_line": 366,
+    "source_sites": [
+      "programs/pump/src/sell_v2.rs:366"
+    ],
     "anchor_error_codes": [
       6024
     ],
@@ -2263,6 +2663,9 @@
     "normalized_hamming": 2,
     "orig_file": "programs/pump/src/sell_v2.rs",
     "orig_line": 368,
+    "source_sites": [
+      "programs/pump/src/sell_v2.rs:368"
+    ],
     "anchor_error_codes": [
       6024
     ],
@@ -2279,6 +2682,9 @@
     "normalized_hamming": 2,
     "orig_file": "programs/pump/src/sell_v2.rs",
     "orig_line": 386,
+    "source_sites": [
+      "programs/pump/src/sell_v2.rs:386"
+    ],
     "anchor_error_codes": [
       6024
     ],
@@ -2295,6 +2701,10 @@
     "normalized_hamming": null,
     "orig_file": "programs/pump/src/set_reserved_fee_recipients.rs",
     "orig_line": 40,
+    "source_sites": [
+      "programs/pump/src/set_reserved_fee_recipients.rs:40",
+      "programs/pump/src/set_reserved_fee_recipients.rs:60"
+    ],
     "anchor_error_codes": [
       6027,
       6028
@@ -2314,6 +2724,9 @@
     "normalized_hamming": null,
     "orig_file": "programs/pump/src/set_reserved_fee_recipients.rs",
     "orig_line": 121,
+    "source_sites": [
+      "programs/pump/src/set_reserved_fee_recipients.rs:121"
+    ],
     "anchor_error_codes": [
       6061
     ],
@@ -2330,6 +2743,10 @@
     "normalized_hamming": null,
     "orig_file": "programs/pump/src/sweep_fees.rs",
     "orig_line": 123,
+    "source_sites": [
+      "programs/pump/src/sweep_fees.rs:123",
+      "programs/pump/src/sweep_fees.rs:145"
+    ],
     "anchor_error_codes": [
       6000
     ],
@@ -2349,6 +2766,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 11,
     "indirect_calls": 0,
@@ -2366,6 +2784,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 12,
     "indirect_calls": 0,
@@ -2382,7 +2801,8 @@
     "closest_candidate": null,
     "normalized_hamming": null,
     "orig_file": null,
-    "orig_line": 252,
+    "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [
       6024
     ],
@@ -2402,6 +2822,12 @@
     "normalized_hamming": null,
     "orig_file": "programs/pump/src/token_incentives/claim_token_incentives.rs",
     "orig_line": 305,
+    "source_sites": [
+      "programs/pump/src/token_incentives/claim_token_incentives.rs:305",
+      "programs/pump/src/token_incentives/claim_token_incentives.rs:310",
+      "programs/pump/src/token_incentives/claim_token_incentives.rs:342",
+      "programs/pump/src/token_incentives/claim_token_incentives.rs:333"
+    ],
     "anchor_error_codes": [
       6010,
       6064,
@@ -2423,6 +2849,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 9,
     "indirect_calls": 0,
@@ -2439,6 +2866,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 9,
     "indirect_calls": 0,
@@ -2455,6 +2883,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 10,
     "indirect_calls": 0,
@@ -2472,6 +2901,7 @@
     "normalized_hamming": 93,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 2,
     "indirect_calls": 0,
@@ -2486,6 +2916,7 @@
     "normalized_hamming": 93,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 2,
     "indirect_calls": 0,
@@ -2500,6 +2931,9 @@
     "normalized_hamming": null,
     "orig_file": "programs/pump/src/token_incentives/volume_accumulator.rs",
     "orig_line": 103,
+    "source_sites": [
+      "programs/pump/src/token_incentives/volume_accumulator.rs:103"
+    ],
     "anchor_error_codes": [
       6025
     ],
@@ -2516,6 +2950,17 @@
     "normalized_hamming": null,
     "orig_file": "programs/pump/src/token_incentives/volume_accumulator.rs",
     "orig_line": 369,
+    "source_sites": [
+      "programs/pump/src/token_incentives/volume_accumulator.rs:369",
+      "programs/pump/src/token_incentives/volume_accumulator.rs:297",
+      "programs/pump/src/token_incentives/volume_accumulator.rs:371",
+      "programs/pump/src/token_incentives/volume_accumulator.rs:309",
+      "programs/pump/src/token_incentives/volume_accumulator.rs:373",
+      "programs/pump/src/token_incentives/volume_accumulator.rs:337",
+      "programs/pump/src/token_incentives/volume_accumulator.rs:338",
+      "programs/pump/src/token_incentives/volume_accumulator.rs:359",
+      "programs/pump/src/token_incentives/volume_accumulator.rs:394"
+    ],
     "anchor_error_codes": [
       6031,
       6032,
@@ -2539,6 +2984,7 @@
     "normalized_hamming": 108,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 2,
     "indirect_calls": 0,
@@ -2553,6 +2999,10 @@
     "normalized_hamming": 510,
     "orig_file": "programs/pump/src/trade_v3.rs",
     "orig_line": 149,
+    "source_sites": [
+      "programs/pump/src/trade_v3.rs:149",
+      "programs/pump/src/trade_v3.rs:150"
+    ],
     "anchor_error_codes": [
       6005,
       6094
@@ -2570,6 +3020,11 @@
     "normalized_hamming": null,
     "orig_file": "programs/pump/src/trade_v3.rs",
     "orig_line": 172,
+    "source_sites": [
+      "programs/pump/src/trade_v3.rs:172",
+      "programs/pump/src/trade_v3.rs:180",
+      "programs/pump/src/trade_v3.rs:188"
+    ],
     "anchor_error_codes": [
       6004,
       6010
@@ -2587,6 +3042,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 5,
     "indirect_calls": 0,
@@ -2603,6 +3059,7 @@
     "normalized_hamming": 483,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 4,
     "indirect_calls": 0,
@@ -2619,6 +3076,9 @@
     "normalized_hamming": 309,
     "orig_file": "programs/pump/src/trade_v3.rs",
     "orig_line": 285,
+    "source_sites": [
+      "programs/pump/src/trade_v3.rs:285"
+    ],
     "anchor_error_codes": [
       6024
     ],
@@ -2635,6 +3095,9 @@
     "normalized_hamming": 145,
     "orig_file": "programs/pump/src/trade_v3.rs",
     "orig_line": 294,
+    "source_sites": [
+      "programs/pump/src/trade_v3.rs:294"
+    ],
     "anchor_error_codes": [
       6024
     ],
@@ -2651,6 +3114,10 @@
     "normalized_hamming": 839,
     "orig_file": "programs/pump/src/trade_v3.rs",
     "orig_line": 317,
+    "source_sites": [
+      "programs/pump/src/trade_v3.rs:317",
+      "programs/pump/src/trade_v3.rs:326"
+    ],
     "anchor_error_codes": [
       6041,
       6042
@@ -2668,6 +3135,10 @@
     "normalized_hamming": 972,
     "orig_file": "programs/pump/src/trade_v3.rs",
     "orig_line": 371,
+    "source_sites": [
+      "programs/pump/src/trade_v3.rs:371",
+      "programs/pump/src/trade_v3.rs:375"
+    ],
     "anchor_error_codes": [
       6024
     ],
@@ -2684,6 +3155,9 @@
     "normalized_hamming": 3,
     "orig_file": "programs/pump/src/trade_v3.rs",
     "orig_line": 382,
+    "source_sites": [
+      "programs/pump/src/trade_v3.rs:382"
+    ],
     "anchor_error_codes": [
       6024
     ],
@@ -2700,6 +3174,9 @@
     "normalized_hamming": 3,
     "orig_file": "programs/pump/src/trade_v3.rs",
     "orig_line": 390,
+    "source_sites": [
+      "programs/pump/src/trade_v3.rs:390"
+    ],
     "anchor_error_codes": [
       6024
     ],
@@ -2716,6 +3193,10 @@
     "normalized_hamming": 838,
     "orig_file": "programs/pump/src/trade_v3.rs",
     "orig_line": 442,
+    "source_sites": [
+      "programs/pump/src/trade_v3.rs:442",
+      "programs/pump/src/trade_v3.rs:446"
+    ],
     "anchor_error_codes": [
       6024
     ],
@@ -2732,6 +3213,13 @@
     "normalized_hamming": null,
     "orig_file": "programs/pump/src/trade_v3.rs",
     "orig_line": 494,
+    "source_sites": [
+      "programs/pump/src/trade_v3.rs:494",
+      "programs/pump/src/trade_v3.rs:498",
+      "programs/pump/src/trade_v3.rs:506",
+      "programs/pump/src/trade_v3.rs:502",
+      "programs/pump/src/trade_v3.rs:507"
+    ],
     "anchor_error_codes": [
       6021,
       6024
@@ -2749,6 +3237,10 @@
     "normalized_hamming": 683,
     "orig_file": "programs/pump/src/trade_v3.rs",
     "orig_line": 518,
+    "source_sites": [
+      "programs/pump/src/trade_v3.rs:518",
+      "programs/pump/src/trade_v3.rs:526"
+    ],
     "anchor_error_codes": [
       6021,
       6025
@@ -2766,6 +3258,7 @@
     "normalized_hamming": 507,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 7,
     "indirect_calls": 0,
@@ -2780,6 +3273,9 @@
     "normalized_hamming": 386,
     "orig_file": "programs/pump/src/trade_v3.rs",
     "orig_line": 591,
+    "source_sites": [
+      "programs/pump/src/trade_v3.rs:591"
+    ],
     "anchor_error_codes": [
       6025
     ],
@@ -2796,6 +3292,7 @@
     "normalized_hamming": 530,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 6,
     "indirect_calls": 0,
@@ -2810,6 +3307,9 @@
     "normalized_hamming": null,
     "orig_file": "programs/pump/src/trade_v3.rs",
     "orig_line": 691,
+    "source_sites": [
+      "programs/pump/src/trade_v3.rs:691"
+    ],
     "anchor_error_codes": [
       6024
     ],
@@ -2826,6 +3326,9 @@
     "normalized_hamming": 3,
     "orig_file": "programs/pump/src/trade_v3.rs",
     "orig_line": 721,
+    "source_sites": [
+      "programs/pump/src/trade_v3.rs:721"
+    ],
     "anchor_error_codes": [
       6024
     ],
@@ -2842,6 +3345,9 @@
     "normalized_hamming": 3,
     "orig_file": "programs/pump/src/trade_v3.rs",
     "orig_line": 767,
+    "source_sites": [
+      "programs/pump/src/trade_v3.rs:767"
+    ],
     "anchor_error_codes": [
       6024
     ],
@@ -2858,6 +3364,9 @@
     "normalized_hamming": 3,
     "orig_file": "programs/pump/src/trade_v3.rs",
     "orig_line": 811,
+    "source_sites": [
+      "programs/pump/src/trade_v3.rs:811"
+    ],
     "anchor_error_codes": [
       6025
     ],
@@ -2874,6 +3383,9 @@
     "normalized_hamming": 3,
     "orig_file": "programs/pump/src/trade_v3.rs",
     "orig_line": 904,
+    "source_sites": [
+      "programs/pump/src/trade_v3.rs:904"
+    ],
     "anchor_error_codes": [
       6025
     ],
@@ -2890,6 +3402,9 @@
     "normalized_hamming": 3,
     "orig_file": "programs/pump/src/trade_v3.rs",
     "orig_line": 911,
+    "source_sites": [
+      "programs/pump/src/trade_v3.rs:911"
+    ],
     "anchor_error_codes": [
       6025
     ],
@@ -2906,6 +3421,9 @@
     "normalized_hamming": 3,
     "orig_file": "programs/pump/src/trade_v3.rs",
     "orig_line": 930,
+    "source_sites": [
+      "programs/pump/src/trade_v3.rs:930"
+    ],
     "anchor_error_codes": [
       6025
     ],
@@ -2922,6 +3440,9 @@
     "normalized_hamming": 3,
     "orig_file": "programs/pump/src/trade_v3.rs",
     "orig_line": 970,
+    "source_sites": [
+      "programs/pump/src/trade_v3.rs:970"
+    ],
     "anchor_error_codes": [
       6024
     ],
@@ -2938,6 +3459,9 @@
     "normalized_hamming": 3,
     "orig_file": "programs/pump/src/trade_v3.rs",
     "orig_line": 997,
+    "source_sites": [
+      "programs/pump/src/trade_v3.rs:997"
+    ],
     "anchor_error_codes": [
       6025
     ],
@@ -2954,6 +3478,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 31,
     "indirect_calls": 0,
@@ -2970,6 +3495,9 @@
     "normalized_hamming": 3,
     "orig_file": "programs/pump/src/trade_v3.rs",
     "orig_line": 1140,
+    "source_sites": [
+      "programs/pump/src/trade_v3.rs:1140"
+    ],
     "anchor_error_codes": [
       6025
     ],
@@ -2986,6 +3514,9 @@
     "normalized_hamming": 3,
     "orig_file": "programs/pump/src/trade_v3.rs",
     "orig_line": 1155,
+    "source_sites": [
+      "programs/pump/src/trade_v3.rs:1155"
+    ],
     "anchor_error_codes": [
       6024
     ],
@@ -3002,6 +3533,11 @@
     "normalized_hamming": null,
     "orig_file": "programs/pump/src/util/constant_product.rs",
     "orig_line": 17,
+    "source_sites": [
+      "programs/pump/src/util/constant_product.rs:17",
+      "programs/pump/src/util/constant_product.rs:13",
+      "programs/pump/src/util/constant_product.rs:19"
+    ],
     "anchor_error_codes": [
       6024,
       6026
@@ -3019,6 +3555,11 @@
     "normalized_hamming": 882,
     "orig_file": "programs/pump/src/util/fee.rs",
     "orig_line": 17,
+    "source_sites": [
+      "programs/pump/src/util/fee.rs:17",
+      "programs/pump/src/util/fee.rs:15",
+      "programs/pump/src/util/fee.rs:19"
+    ],
     "anchor_error_codes": [
       6024,
       6026
@@ -3036,6 +3577,9 @@
     "normalized_hamming": 321,
     "orig_file": "programs/pump/src/util/fee.rs",
     "orig_line": 34,
+    "source_sites": [
+      "programs/pump/src/util/fee.rs:34"
+    ],
     "anchor_error_codes": [
       6025
     ],
@@ -3052,6 +3596,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 11,
     "indirect_calls": 0,
@@ -3068,6 +3613,9 @@
     "normalized_hamming": 367,
     "orig_file": "programs/pump/src/util/fee.rs",
     "orig_line": 162,
+    "source_sites": [
+      "programs/pump/src/util/fee.rs:162"
+    ],
     "anchor_error_codes": [
       6096
     ],
@@ -3084,6 +3632,9 @@
     "normalized_hamming": 743,
     "orig_file": "programs/pump/src/util/fee.rs",
     "orig_line": 183,
+    "source_sites": [
+      "programs/pump/src/util/fee.rs:183"
+    ],
     "anchor_error_codes": [
       6097
     ],
@@ -3100,6 +3651,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 1,
     "indirect_calls": 0,
@@ -3116,6 +3668,7 @@
     "normalized_hamming": 146,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 2,
     "indirect_calls": 0,
@@ -3130,6 +3683,7 @@
     "normalized_hamming": 279,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 4,
     "indirect_calls": 0,
@@ -3144,6 +3698,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 3,
     "indirect_calls": 0,
@@ -3158,6 +3713,7 @@
     "normalized_hamming": 526,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 1,
     "indirect_calls": 0,
@@ -3174,6 +3730,7 @@
     "normalized_hamming": 637,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 1,
     "indirect_calls": 0,
@@ -3190,6 +3747,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 1,
     "indirect_calls": 0,
@@ -3206,6 +3764,7 @@
     "normalized_hamming": 525,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 1,
     "indirect_calls": 0,
@@ -3222,6 +3781,7 @@
     "normalized_hamming": 643,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 1,
     "indirect_calls": 0,
@@ -3238,6 +3798,7 @@
     "normalized_hamming": 633,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 1,
     "indirect_calls": 0,
@@ -3254,6 +3815,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 1,
     "indirect_calls": 0,
@@ -3270,6 +3832,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 1,
     "indirect_calls": 0,
@@ -3286,6 +3849,7 @@
     "normalized_hamming": 515,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 1,
     "indirect_calls": 0,
@@ -3302,6 +3866,7 @@
     "normalized_hamming": 924,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 1,
     "indirect_calls": 0,
@@ -3318,6 +3883,7 @@
     "normalized_hamming": 1100,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 1,
     "indirect_calls": 0,
@@ -3334,6 +3900,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 1,
     "indirect_calls": 0,
@@ -3350,6 +3917,7 @@
     "normalized_hamming": 928,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 1,
     "indirect_calls": 0,
@@ -3366,6 +3934,7 @@
     "normalized_hamming": 944,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 1,
     "indirect_calls": 0,
@@ -3382,6 +3951,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 1,
     "indirect_calls": 0,
@@ -3398,6 +3968,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 1,
     "indirect_calls": 0,
@@ -3414,6 +3985,7 @@
     "normalized_hamming": 960,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 1,
     "indirect_calls": 0,
@@ -3430,6 +4002,7 @@
     "normalized_hamming": 981,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 1,
     "indirect_calls": 0,
@@ -3446,6 +4019,7 @@
     "normalized_hamming": 910,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 1,
     "indirect_calls": 0,
@@ -3462,6 +4036,7 @@
     "normalized_hamming": 981,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 1,
     "indirect_calls": 0,
@@ -3478,6 +4053,9 @@
     "normalized_hamming": 613,
     "orig_file": "programs/pump/src/util/transfer_fee.rs",
     "orig_line": 31,
+    "source_sites": [
+      "programs/pump/src/util/transfer_fee.rs:31"
+    ],
     "anchor_error_codes": [
       6063
     ],
@@ -3494,6 +4072,9 @@
     "normalized_hamming": 318,
     "orig_file": "programs/pump/src/util/transfer_fee.rs",
     "orig_line": 48,
+    "source_sites": [
+      "programs/pump/src/util/transfer_fee.rs:48"
+    ],
     "anchor_error_codes": [
       6024
     ],
@@ -3510,6 +4091,9 @@
     "normalized_hamming": 299,
     "orig_file": "programs/pump/src/util/transfer_fee.rs",
     "orig_line": 56,
+    "source_sites": [
+      "programs/pump/src/util/transfer_fee.rs:56"
+    ],
     "anchor_error_codes": [
       6024
     ],
@@ -3526,6 +4110,9 @@
     "normalized_hamming": 317,
     "orig_file": "programs/pump/src/util/transfer_fee.rs",
     "orig_line": 66,
+    "source_sites": [
+      "programs/pump/src/util/transfer_fee.rs:66"
+    ],
     "anchor_error_codes": [
       6024
     ],
@@ -3542,6 +4129,7 @@
     "normalized_hamming": 722,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 2,
     "indirect_calls": 0,
@@ -3558,6 +4146,7 @@
     "normalized_hamming": 412,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 8,
     "indirect_calls": 0,
@@ -3572,6 +4161,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 8,
     "indirect_calls": 0,
@@ -3586,6 +4176,7 @@
     "normalized_hamming": 382,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 8,
     "indirect_calls": 0,
@@ -3600,6 +4191,7 @@
     "normalized_hamming": 522,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 8,
     "indirect_calls": 0,
@@ -3614,6 +4206,7 @@
     "normalized_hamming": 392,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 8,
     "indirect_calls": 0,
@@ -3628,6 +4221,7 @@
     "normalized_hamming": 444,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 4,
     "indirect_calls": 0,
@@ -3644,6 +4238,7 @@
     "normalized_hamming": 593,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 5,
     "indirect_calls": 0,
@@ -3660,6 +4255,7 @@
     "normalized_hamming": 444,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 4,
     "indirect_calls": 0,
@@ -3676,6 +4272,7 @@
     "normalized_hamming": 290,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 4,
     "indirect_calls": 0,
@@ -3692,6 +4289,7 @@
     "normalized_hamming": 290,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 4,
     "indirect_calls": 0,
@@ -3708,6 +4306,7 @@
     "normalized_hamming": 409,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 4,
     "indirect_calls": 0,
@@ -3724,6 +4323,9 @@
     "normalized_hamming": 150,
     "orig_file": "programs/pump/src/lib.rs",
     "orig_line": 1870,
+    "source_sites": [
+      "programs/pump/src/lib.rs:1870"
+    ],
     "anchor_error_codes": [
       6060
     ],
@@ -3740,6 +4342,10 @@
     "normalized_hamming": null,
     "orig_file": "programs/pump/src/lib.rs",
     "orig_line": 1879,
+    "source_sites": [
+      "programs/pump/src/lib.rs:1879",
+      "programs/pump/src/lib.rs:1884"
+    ],
     "anchor_error_codes": [
       6057,
       6062
@@ -3757,6 +4363,10 @@
     "normalized_hamming": null,
     "orig_file": "programs/pump/src/lib.rs",
     "orig_line": 1905,
+    "source_sites": [
+      "programs/pump/src/lib.rs:1905",
+      "programs/pump/src/lib.rs:1895"
+    ],
     "anchor_error_codes": [
       6058,
       6059
@@ -3774,6 +4384,7 @@
     "normalized_hamming": 120,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 4,
     "indirect_calls": 0,
@@ -3788,6 +4399,12 @@
     "normalized_hamming": 1417,
     "orig_file": "programs/pump/src/lib.rs",
     "orig_line": 1971,
+    "source_sites": [
+      "programs/pump/src/lib.rs:1971",
+      "programs/pump/src/lib.rs:1955",
+      "programs/pump/src/lib.rs:1950",
+      "programs/pump/src/lib.rs:1960"
+    ],
     "anchor_error_codes": [
       6066,
       6067,
@@ -3806,6 +4423,10 @@
     "normalized_hamming": 624,
     "orig_file": "programs/pump/src/lib.rs",
     "orig_line": 1986,
+    "source_sites": [
+      "programs/pump/src/lib.rs:1986",
+      "programs/pump/src/lib.rs:1975"
+    ],
     "anchor_error_codes": [
       6068,
       6069
@@ -3823,6 +4444,7 @@
     "normalized_hamming": 331,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 12,
     "indirect_calls": 0,
@@ -3837,6 +4459,7 @@
     "normalized_hamming": 268,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 11,
     "indirect_calls": 0,
@@ -3851,6 +4474,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 15,
     "indirect_calls": 0,
@@ -3865,6 +4489,7 @@
     "normalized_hamming": 782,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 16,
     "indirect_calls": 0,
@@ -3879,6 +4504,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 17,
     "indirect_calls": 0,
@@ -3893,6 +4519,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 18,
     "indirect_calls": 0,
@@ -3907,6 +4534,7 @@
     "normalized_hamming": 982,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 22,
     "indirect_calls": 0,
@@ -3921,6 +4549,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 24,
     "indirect_calls": 0,
@@ -3935,6 +4564,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 25,
     "indirect_calls": 0,
@@ -3949,6 +4579,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 27,
     "indirect_calls": 0,
@@ -3963,6 +4594,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 31,
     "indirect_calls": 0,
@@ -3977,6 +4609,10 @@
     "normalized_hamming": null,
     "orig_file": "programs/pump/src/lib.rs",
     "orig_line": 2428,
+    "source_sites": [
+      "programs/pump/src/lib.rs:2428",
+      "programs/pump/src/lib.rs:2430"
+    ],
     "anchor_error_codes": [
       6024,
       6026
@@ -3994,6 +4630,9 @@
     "normalized_hamming": 343,
     "orig_file": "programs/pump/src/lib.rs",
     "orig_line": 2454,
+    "source_sites": [
+      "programs/pump/src/lib.rs:2454"
+    ],
     "anchor_error_codes": [
       6026
     ],
@@ -4010,6 +4649,7 @@
     "normalized_hamming": 78,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 2,
     "indirect_calls": 0,
@@ -4024,6 +4664,9 @@
     "normalized_hamming": 235,
     "orig_file": "programs/pump/src/lib.rs",
     "orig_line": 2481,
+    "source_sites": [
+      "programs/pump/src/lib.rs:2481"
+    ],
     "anchor_error_codes": [
       6026
     ],
@@ -4040,6 +4683,12 @@
     "normalized_hamming": null,
     "orig_file": "programs/pump/src/lib.rs",
     "orig_line": 2496,
+    "source_sites": [
+      "programs/pump/src/lib.rs:2496",
+      "programs/pump/src/lib.rs:2501",
+      "programs/pump/src/lib.rs:2506",
+      "programs/pump/src/lib.rs:2511"
+    ],
     "anchor_error_codes": [
       6024
     ],
@@ -4056,6 +4705,12 @@
     "normalized_hamming": null,
     "orig_file": "programs/pump/src/lib.rs",
     "orig_line": 2525,
+    "source_sites": [
+      "programs/pump/src/lib.rs:2525",
+      "programs/pump/src/lib.rs:2520",
+      "programs/pump/src/lib.rs:2530",
+      "programs/pump/src/lib.rs:2535"
+    ],
     "anchor_error_codes": [
       6024
     ],
@@ -4072,6 +4727,10 @@
     "normalized_hamming": 690,
     "orig_file": "programs/pump/src/lib.rs",
     "orig_line": 2550,
+    "source_sites": [
+      "programs/pump/src/lib.rs:2550",
+      "programs/pump/src/lib.rs:2554"
+    ],
     "anchor_error_codes": [
       6024
     ],
@@ -4088,6 +4747,9 @@
     "normalized_hamming": 317,
     "orig_file": "programs/pump/src/lib.rs",
     "orig_line": 2562,
+    "source_sites": [
+      "programs/pump/src/lib.rs:2562"
+    ],
     "anchor_error_codes": [
       6024
     ],
@@ -4104,6 +4766,7 @@
     "normalized_hamming": 588,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 9,
     "indirect_calls": 0,
@@ -4118,6 +4781,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 42,
     "indirect_calls": 0,
@@ -4134,6 +4798,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 182,
     "indirect_calls": 0,
@@ -4147,7 +4812,10 @@
     "closest_candidate": "pump_recovered..buy_v2..BuyV2$u20$as$u20$anchor_lang..Accounts$LT$pump_recovered..buy_v2..",
     "normalized_hamming": 1,
     "orig_file": "programs/pump/src/buy_v2.rs",
-    "orig_line": 4101,
+    "orig_line": 129,
+    "source_sites": [
+      "programs/pump/src/buy_v2.rs:129"
+    ],
     "anchor_error_codes": [],
     "direct_calls": 33,
     "indirect_calls": 0,
@@ -4164,6 +4832,7 @@
     "normalized_hamming": 8,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 14,
     "indirect_calls": 0,
@@ -4178,6 +4847,9 @@
     "normalized_hamming": 3,
     "orig_file": "programs/pump/src/buy_v2.rs",
     "orig_line": 498,
+    "source_sites": [
+      "programs/pump/src/buy_v2.rs:498"
+    ],
     "anchor_error_codes": [
       6024
     ],
@@ -4194,6 +4866,9 @@
     "normalized_hamming": 3,
     "orig_file": "programs/pump/src/buy_v2.rs",
     "orig_line": 500,
+    "source_sites": [
+      "programs/pump/src/buy_v2.rs:500"
+    ],
     "anchor_error_codes": [
       6024
     ],
@@ -4209,7 +4884,8 @@
     "closest_candidate": null,
     "normalized_hamming": null,
     "orig_file": null,
-    "orig_line": 2,
+    "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 123,
     "indirect_calls": 0,
@@ -4223,7 +4899,10 @@
     "closest_candidate": "pump_recovered..create_v2..CreateV2$u20$as$u20$anchor_lang..Accounts$LT$pump_recovered..cr",
     "normalized_hamming": 1,
     "orig_file": "programs/pump/src/create_v2.rs",
-    "orig_line": 4101,
+    "orig_line": 27,
+    "source_sites": [
+      "programs/pump/src/create_v2.rs:27"
+    ],
     "anchor_error_codes": [],
     "direct_calls": 32,
     "indirect_calls": 0,
@@ -4239,7 +4918,10 @@
     "closest_candidate": null,
     "normalized_hamming": null,
     "orig_file": "programs/pump/src/create_v2.rs",
-    "orig_line": 4101,
+    "orig_line": 27,
+    "source_sites": [
+      "programs/pump/src/create_v2.rs:27"
+    ],
     "anchor_error_codes": [],
     "direct_calls": 17,
     "indirect_calls": 0,
@@ -4256,6 +4938,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 5,
     "indirect_calls": 0,
@@ -4272,6 +4955,7 @@
     "normalized_hamming": 402,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 12,
     "indirect_calls": 0,
@@ -4286,6 +4970,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 168,
     "indirect_calls": 0,
@@ -4300,6 +4985,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 24,
     "indirect_calls": 0,
@@ -4316,6 +5002,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 50,
     "indirect_calls": 0,
@@ -4332,6 +5019,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 73,
     "indirect_calls": 0,
@@ -4348,6 +5036,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 52,
     "indirect_calls": 0,
@@ -4364,6 +5053,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 36,
     "indirect_calls": 0,
@@ -4380,6 +5070,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 60,
     "indirect_calls": 0,
@@ -4394,6 +5085,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 40,
     "indirect_calls": 0,
@@ -4410,6 +5102,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 48,
     "indirect_calls": 0,
@@ -4426,6 +5119,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 21,
     "indirect_calls": 0,
@@ -4440,6 +5134,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 33,
     "indirect_calls": 0,
@@ -4456,6 +5151,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 23,
     "indirect_calls": 0,
@@ -4471,7 +5167,8 @@
     "closest_candidate": null,
     "normalized_hamming": null,
     "orig_file": null,
-    "orig_line": 2,
+    "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 65,
     "indirect_calls": 0,
@@ -4488,6 +5185,7 @@
     "normalized_hamming": 251,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 7,
     "indirect_calls": 0,
@@ -4502,6 +5200,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 177,
     "indirect_calls": 0,
@@ -4516,6 +5215,7 @@
     "normalized_hamming": 3,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 7,
     "indirect_calls": 0,
@@ -4530,6 +5230,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 178,
     "indirect_calls": 0,
@@ -4544,6 +5245,7 @@
     "normalized_hamming": 2,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 7,
     "indirect_calls": 0,
@@ -4558,6 +5260,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 62,
     "indirect_calls": 0,
@@ -4572,6 +5275,7 @@
     "normalized_hamming": 3,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 33,
     "indirect_calls": 0,
@@ -4585,7 +5289,10 @@
     "closest_candidate": "pump_recovered..quote_control..initialize_quote_control..InitializeQuoteControl$u20$as$u20",
     "normalized_hamming": 1,
     "orig_file": "programs/pump/src/quote_control/initialize_quote_control.rs",
-    "orig_line": 4101,
+    "orig_line": 7,
+    "source_sites": [
+      "programs/pump/src/quote_control/initialize_quote_control.rs:7"
+    ],
     "anchor_error_codes": [],
     "direct_calls": 16,
     "indirect_calls": 0,
@@ -4602,6 +5309,7 @@
     "normalized_hamming": 6,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 36,
     "indirect_calls": 0,
@@ -4618,6 +5326,7 @@
     "normalized_hamming": 86,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 35,
     "indirect_calls": 0,
@@ -4634,6 +5343,7 @@
     "normalized_hamming": 75,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 39,
     "indirect_calls": 0,
@@ -4650,6 +5360,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 175,
     "indirect_calls": 0,
@@ -4663,7 +5374,10 @@
     "closest_candidate": "pump_recovered..sell_v2..SellV2$u20$as$u20$anchor_lang..Accounts$LT$pump_recovered..sell_v",
     "normalized_hamming": 1,
     "orig_file": "programs/pump/src/sell_v2.rs",
-    "orig_line": 4101,
+    "orig_line": 32,
+    "source_sites": [
+      "programs/pump/src/sell_v2.rs:32"
+    ],
     "anchor_error_codes": [],
     "direct_calls": 33,
     "indirect_calls": 0,
@@ -4680,6 +5394,7 @@
     "normalized_hamming": 8,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 14,
     "indirect_calls": 0,
@@ -4694,6 +5409,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 71,
     "indirect_calls": 0,
@@ -4707,7 +5423,8 @@
     "closest_candidate": null,
     "normalized_hamming": null,
     "orig_file": null,
-    "orig_line": 2,
+    "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 63,
     "indirect_calls": 0,
@@ -4721,7 +5438,8 @@
     "closest_candidate": null,
     "normalized_hamming": null,
     "orig_file": null,
-    "orig_line": 2,
+    "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 22,
     "indirect_calls": 0,
@@ -4738,6 +5456,7 @@
     "normalized_hamming": 754,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 18,
     "indirect_calls": 1,
@@ -4751,7 +5470,8 @@
     "closest_candidate": null,
     "normalized_hamming": null,
     "orig_file": null,
-    "orig_line": 2,
+    "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 85,
     "indirect_calls": 0,
@@ -4767,7 +5487,8 @@
     "closest_candidate": null,
     "normalized_hamming": null,
     "orig_file": null,
-    "orig_line": 2,
+    "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 22,
     "indirect_calls": 0,
@@ -4784,6 +5505,7 @@
     "normalized_hamming": 266,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 12,
     "indirect_calls": 0,
@@ -4798,6 +5520,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 26,
     "indirect_calls": 0,
@@ -4814,6 +5537,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 45,
     "indirect_calls": 0,
@@ -4830,6 +5554,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 39,
     "indirect_calls": 0,
@@ -4845,7 +5570,10 @@
     "closest_candidate": null,
     "normalized_hamming": null,
     "orig_file": "programs/pump/src/token_incentives/init_user_volume_accumulator.rs",
-    "orig_line": 4101,
+    "orig_line": 8,
+    "source_sites": [
+      "programs/pump/src/token_incentives/init_user_volume_accumulator.rs:8"
+    ],
     "anchor_error_codes": [],
     "direct_calls": 33,
     "indirect_calls": 0,
@@ -4862,6 +5590,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 31,
     "indirect_calls": 0,
@@ -4877,7 +5606,10 @@
     "closest_candidate": "pump_recovered..volume_sync..GlobalVolumeAccumulator$u20$as$u20$anchor_lang..AccountDeseri",
     "normalized_hamming": 2,
     "orig_file": "programs/pump/src/token_incentives/volume_accumulator.rs",
-    "orig_line": 3002,
+    "orig_line": 8,
+    "source_sites": [
+      "programs/pump/src/token_incentives/volume_accumulator.rs:8"
+    ],
     "anchor_error_codes": [],
     "direct_calls": 7,
     "indirect_calls": 0,
@@ -4892,6 +5624,7 @@
     "normalized_hamming": 147,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 1,
     "indirect_calls": 0,
@@ -4905,7 +5638,10 @@
     "closest_candidate": "pump_recovered..UserVolumeAccumulator$u20$as$u20$anchor_lang..AccountDeserialize$GT$15try_",
     "normalized_hamming": 3,
     "orig_file": "programs/pump/src/token_incentives/volume_accumulator.rs",
-    "orig_line": 3002,
+    "orig_line": 19,
+    "source_sites": [
+      "programs/pump/src/token_incentives/volume_accumulator.rs:19"
+    ],
     "anchor_error_codes": [],
     "direct_calls": 7,
     "indirect_calls": 0,
@@ -4920,6 +5656,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 117,
     "indirect_calls": 0,
@@ -4933,7 +5670,10 @@
     "closest_candidate": "pump_recovered..buy_v2..BuyV2$u20$as$u20$anchor_lang..Accounts$LT$pump_recovered..buy_v2..",
     "normalized_hamming": 2,
     "orig_file": "programs/pump/src/trade_v3.rs",
-    "orig_line": 4101,
+    "orig_line": 38,
+    "source_sites": [
+      "programs/pump/src/trade_v3.rs:38"
+    ],
     "anchor_error_codes": [],
     "direct_calls": 33,
     "indirect_calls": 0,
@@ -4950,6 +5690,7 @@
     "normalized_hamming": 4,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 14,
     "indirect_calls": 0,
@@ -4964,6 +5705,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 28,
     "indirect_calls": 0,
@@ -4979,7 +5721,10 @@
     "closest_candidate": "pump_recovered..Global$u20$as$u20$anchor_lang..AccountDeserialize$GT$15try_deserialize",
     "normalized_hamming": 12,
     "orig_file": "programs/pump/src/lib.rs",
-    "orig_line": 3002,
+    "orig_line": 83,
+    "source_sites": [
+      "programs/pump/src/lib.rs:83"
+    ],
     "anchor_error_codes": [],
     "direct_calls": 7,
     "indirect_calls": 0,
@@ -4994,6 +5739,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 20,
     "indirect_calls": 1,
@@ -5008,6 +5754,7 @@
     "normalized_hamming": 2037,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 10,
     "indirect_calls": 0,
@@ -5024,6 +5771,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 10,
     "indirect_calls": 0,
@@ -5040,6 +5788,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 10,
     "indirect_calls": 0,
@@ -5056,6 +5805,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 10,
     "indirect_calls": 0,
@@ -5072,6 +5822,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 10,
     "indirect_calls": 0,
@@ -5088,6 +5839,7 @@
     "normalized_hamming": 739,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 7,
     "indirect_calls": 0,
@@ -5102,6 +5854,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 36,
     "indirect_calls": 0,
@@ -5116,6 +5869,7 @@
     "normalized_hamming": 840,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 8,
     "indirect_calls": 0,
@@ -5130,6 +5884,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 18,
     "indirect_calls": 0,
@@ -5144,6 +5899,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 54,
     "indirect_calls": 0,
@@ -5158,6 +5914,7 @@
     "normalized_hamming": 1486,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 14,
     "indirect_calls": 0,
@@ -5172,6 +5929,7 @@
     "normalized_hamming": 1702,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 42,
     "indirect_calls": 0,
@@ -5186,6 +5944,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 12,
     "indirect_calls": 0,
@@ -5199,7 +5958,10 @@
     "closest_candidate": "pump_recovered..quote_control..state..QuoteControl$u20$as$u20$anchor_lang..AccountDeserial",
     "normalized_hamming": 11,
     "orig_file": "programs/pump/src/lib.rs",
-    "orig_line": 3002,
+    "orig_line": 84,
+    "source_sites": [
+      "programs/pump/src/lib.rs:84"
+    ],
     "anchor_error_codes": [],
     "direct_calls": 7,
     "indirect_calls": 0,
@@ -5214,6 +5976,7 @@
     "normalized_hamming": 552,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 5,
     "indirect_calls": 1,
@@ -5227,7 +5990,10 @@
     "closest_candidate": "pump_recovered..quote_control..state..QuoteControl$u20$as$u20$anchor_lang..AccountDeserial",
     "normalized_hamming": 11,
     "orig_file": "programs/pump/src/lib.rs",
-    "orig_line": 3002,
+    "orig_line": 84,
+    "source_sites": [
+      "programs/pump/src/lib.rs:84"
+    ],
     "anchor_error_codes": [],
     "direct_calls": 7,
     "indirect_calls": 0,
@@ -5242,6 +6008,7 @@
     "normalized_hamming": 716,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 6,
     "indirect_calls": 1,
@@ -5256,6 +6023,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 10,
     "indirect_calls": 0,
@@ -5272,6 +6040,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 12,
     "indirect_calls": 0,
@@ -5288,6 +6057,7 @@
     "normalized_hamming": 737,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 7,
     "indirect_calls": 0,
@@ -5302,6 +6072,7 @@
     "normalized_hamming": 231,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 6,
     "indirect_calls": 0,
@@ -5316,6 +6087,7 @@
     "normalized_hamming": 2032,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 10,
     "indirect_calls": 0,
@@ -5332,6 +6104,7 @@
     "normalized_hamming": 1007,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 24,
     "indirect_calls": 0,
@@ -5346,6 +6119,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 10,
     "indirect_calls": 0,
@@ -5360,6 +6134,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 30,
     "indirect_calls": 0,
@@ -5374,6 +6149,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 63,
     "indirect_calls": 0,
@@ -5387,7 +6163,10 @@
     "closest_candidate": "pump_recovered9__private5__idl11__idl_write",
     "normalized_hamming": 1,
     "orig_file": "programs/pump/src/lib.rs",
-    "orig_line": 2501,
+    "orig_line": 90,
+    "source_sites": [
+      "programs/pump/src/lib.rs:90"
+    ],
     "anchor_error_codes": [],
     "direct_calls": 12,
     "indirect_calls": 0,
@@ -5403,7 +6182,10 @@
     "closest_candidate": "pump_recovered9__private5__idl16__idl_set_buffer",
     "normalized_hamming": 1,
     "orig_file": "programs/pump/src/lib.rs",
-    "orig_line": 2506,
+    "orig_line": 90,
+    "source_sites": [
+      "programs/pump/src/lib.rs:90"
+    ],
     "anchor_error_codes": [],
     "direct_calls": 12,
     "indirect_calls": 0,
@@ -5420,6 +6202,7 @@
     "normalized_hamming": 27,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 4,
     "indirect_calls": 0,
@@ -5436,6 +6219,7 @@
     "normalized_hamming": 710,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 5,
     "indirect_calls": 0,
@@ -5452,6 +6236,7 @@
     "normalized_hamming": 718,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 7,
     "indirect_calls": 1,
@@ -5468,6 +6253,7 @@
     "normalized_hamming": 718,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 7,
     "indirect_calls": 1,
@@ -5484,6 +6270,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 4,
     "indirect_calls": 0,
@@ -5500,6 +6287,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 9,
     "indirect_calls": 1,
@@ -5516,6 +6304,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 13,
     "indirect_calls": 1,
@@ -5532,6 +6321,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 8,
     "indirect_calls": 1,
@@ -5548,6 +6338,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 8,
     "indirect_calls": 1,
@@ -5564,6 +6355,7 @@
     "normalized_hamming": 705,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 6,
     "indirect_calls": 1,
@@ -5580,6 +6372,7 @@
     "normalized_hamming": 698,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 8,
     "indirect_calls": 1,
@@ -5596,6 +6389,7 @@
     "normalized_hamming": 698,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 8,
     "indirect_calls": 1,
@@ -5612,6 +6406,7 @@
     "normalized_hamming": 84,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 6,
     "indirect_calls": 1,
@@ -5628,6 +6423,7 @@
     "normalized_hamming": 744,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 9,
     "indirect_calls": 1,
@@ -5644,6 +6440,7 @@
     "normalized_hamming": 587,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 5,
     "indirect_calls": 0,
@@ -5660,6 +6457,7 @@
     "normalized_hamming": 588,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 5,
     "indirect_calls": 0,
@@ -5676,6 +6474,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 8,
     "indirect_calls": 1,
@@ -5692,6 +6491,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 8,
     "indirect_calls": 1,
@@ -5708,6 +6508,7 @@
     "normalized_hamming": 696,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 6,
     "indirect_calls": 1,
@@ -5724,6 +6525,7 @@
     "normalized_hamming": 305,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 5,
     "indirect_calls": 0,
@@ -5740,6 +6542,7 @@
     "normalized_hamming": 250,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 4,
     "indirect_calls": 0,
@@ -5756,6 +6559,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 3,
     "indirect_calls": 0,
@@ -5772,6 +6576,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 5,
     "indirect_calls": 0,
@@ -5788,6 +6593,7 @@
     "normalized_hamming": 258,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 5,
     "indirect_calls": 0,
@@ -5804,6 +6610,7 @@
     "normalized_hamming": 97,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 5,
     "indirect_calls": 0,
@@ -5820,6 +6627,7 @@
     "normalized_hamming": 103,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 7,
     "indirect_calls": 1,
@@ -5836,6 +6644,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 11,
     "indirect_calls": 1,
@@ -5852,6 +6661,7 @@
     "normalized_hamming": 753,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 6,
     "indirect_calls": 1,
@@ -5868,6 +6678,7 @@
     "normalized_hamming": 543,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 4,
     "indirect_calls": 0,
@@ -5884,6 +6695,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 5,
     "indirect_calls": 0,
@@ -5900,6 +6712,7 @@
     "normalized_hamming": 747,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 5,
     "indirect_calls": 0,
@@ -5916,6 +6729,7 @@
     "normalized_hamming": 441,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 7,
     "indirect_calls": 1,
@@ -5932,6 +6746,7 @@
     "normalized_hamming": 60,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 5,
     "indirect_calls": 0,
@@ -5948,6 +6763,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 5,
     "indirect_calls": 0,
@@ -5964,6 +6780,7 @@
     "normalized_hamming": 721,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 8,
     "indirect_calls": 0,
@@ -5980,6 +6797,7 @@
     "normalized_hamming": 1018,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 12,
     "indirect_calls": 1,
@@ -5996,6 +6814,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 9,
     "indirect_calls": 0,
@@ -6012,6 +6831,9 @@
     "normalized_hamming": 1,
     "orig_file": "programs/pump/src/lib.rs",
     "orig_line": 114,
+    "source_sites": [
+      "programs/pump/src/lib.rs:114"
+    ],
     "anchor_error_codes": [
       6000
     ],
@@ -6028,6 +6850,9 @@
     "normalized_hamming": 1,
     "orig_file": "programs/pump/src/lib.rs",
     "orig_line": 121,
+    "source_sites": [
+      "programs/pump/src/lib.rs:121"
+    ],
     "anchor_error_codes": [
       6000
     ],
@@ -6044,6 +6869,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 9,
     "indirect_calls": 0,
@@ -6060,6 +6886,14 @@
     "normalized_hamming": null,
     "orig_file": "programs/pump/src/lib.rs",
     "orig_line": 228,
+    "source_sites": [
+      "programs/pump/src/lib.rs:228",
+      "programs/pump/src/lib.rs:278",
+      "programs/pump/src/lib.rs:242",
+      "programs/pump/src/lib.rs:222",
+      "programs/pump/src/lib.rs:249",
+      "programs/pump/src/lib.rs:270"
+    ],
     "anchor_error_codes": [
       6011,
       6012,
@@ -6080,6 +6914,9 @@
     "normalized_hamming": 3,
     "orig_file": "programs/pump/src/lib.rs",
     "orig_line": 268,
+    "source_sites": [
+      "programs/pump/src/lib.rs:268"
+    ],
     "anchor_error_codes": [
       6025
     ],
@@ -6096,6 +6933,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 10,
     "indirect_calls": 0,
@@ -6112,6 +6950,9 @@
     "normalized_hamming": 6090,
     "orig_file": "programs/pump/src/lib.rs",
     "orig_line": 334,
+    "source_sites": [
+      "programs/pump/src/lib.rs:334"
+    ],
     "anchor_error_codes": [
       6030
     ],
@@ -6130,6 +6971,13 @@
     "normalized_hamming": null,
     "orig_file": "programs/pump/src/buy_v2.rs",
     "orig_line": 345,
+    "source_sites": [
+      "programs/pump/src/buy_v2.rs:345",
+      "programs/pump/src/buy_v2.rs:354",
+      "programs/pump/src/buy_v2.rs:356",
+      "programs/pump/src/buy_v2.rs:369",
+      "programs/pump/src/buy_v2.rs:494"
+    ],
     "anchor_error_codes": [
       6002,
       6005,
@@ -6150,6 +6998,19 @@
     "normalized_hamming": null,
     "orig_file": "programs/pump/src/buy_v2.rs",
     "orig_line": 769,
+    "source_sites": [
+      "programs/pump/src/buy_v2.rs:769",
+      "programs/pump/src/buy_v2.rs:767",
+      "programs/pump/src/buy_v2.rs:771",
+      "programs/pump/src/buy_v2.rs:780",
+      "programs/pump/src/buy_v2.rs:873",
+      "programs/pump/src/buy_v2.rs:907",
+      "programs/pump/src/buy_v2.rs:921",
+      "programs/pump/src/buy_v2.rs:967",
+      "programs/pump/src/buy_v2.rs:986",
+      "programs/pump/src/buy_v2.rs:979",
+      "programs/pump/src/buy_v2.rs:997"
+    ],
     "anchor_error_codes": [
       6002,
       6005,
@@ -6174,6 +7035,13 @@
     "normalized_hamming": null,
     "orig_file": "programs/pump/src/sell_v2.rs",
     "orig_line": 243,
+    "source_sites": [
+      "programs/pump/src/sell_v2.rs:243",
+      "programs/pump/src/sell_v2.rs:245",
+      "programs/pump/src/sell_v2.rs:247",
+      "programs/pump/src/sell_v2.rs:260",
+      "programs/pump/src/sell_v2.rs:379"
+    ],
     "anchor_error_codes": [
       6003,
       6005,
@@ -6194,6 +7062,11 @@
     "normalized_hamming": null,
     "orig_file": "programs/pump/src/trade_v3.rs",
     "orig_line": 801,
+    "source_sites": [
+      "programs/pump/src/trade_v3.rs:801",
+      "programs/pump/src/trade_v3.rs:802",
+      "programs/pump/src/trade_v3.rs:842"
+    ],
     "anchor_error_codes": [
       6002,
       6020,
@@ -6212,6 +7085,16 @@
     "normalized_hamming": null,
     "orig_file": "programs/pump/src/trade_v3.rs",
     "orig_line": 881,
+    "source_sites": [
+      "programs/pump/src/trade_v3.rs:881",
+      "programs/pump/src/trade_v3.rs:882",
+      "programs/pump/src/trade_v3.rs:891",
+      "programs/pump/src/trade_v3.rs:926",
+      "programs/pump/src/trade_v3.rs:1001",
+      "programs/pump/src/trade_v3.rs:993",
+      "programs/pump/src/trade_v3.rs:935",
+      "programs/pump/src/trade_v3.rs:971"
+    ],
     "anchor_error_codes": [
       6002,
       6020,
@@ -6232,6 +7115,11 @@
     "normalized_hamming": null,
     "orig_file": "programs/pump/src/trade_v3.rs",
     "orig_line": 1126,
+    "source_sites": [
+      "programs/pump/src/trade_v3.rs:1126",
+      "programs/pump/src/trade_v3.rs:1127",
+      "programs/pump/src/trade_v3.rs:1148"
+    ],
     "anchor_error_codes": [
       6003,
       6022,
@@ -6250,6 +7138,12 @@
     "normalized_hamming": null,
     "orig_file": "programs/pump/src/lib.rs",
     "orig_line": 619,
+    "source_sites": [
+      "programs/pump/src/lib.rs:619",
+      "programs/pump/src/lib.rs:608",
+      "programs/pump/src/lib.rs:617",
+      "programs/pump/src/lib.rs:654"
+    ],
     "anchor_error_codes": [
       6002,
       6005,
@@ -6270,6 +7164,9 @@
     "normalized_hamming": 3,
     "orig_file": "programs/pump/src/lib.rs",
     "orig_line": 629,
+    "source_sites": [
+      "programs/pump/src/lib.rs:629"
+    ],
     "anchor_error_codes": [
       6025
     ],
@@ -6286,6 +7183,9 @@
     "normalized_hamming": 3,
     "orig_file": "programs/pump/src/lib.rs",
     "orig_line": 674,
+    "source_sites": [
+      "programs/pump/src/lib.rs:674"
+    ],
     "anchor_error_codes": [
       6024
     ],
@@ -6302,6 +7202,9 @@
     "normalized_hamming": 3,
     "orig_file": "programs/pump/src/lib.rs",
     "orig_line": 679,
+    "source_sites": [
+      "programs/pump/src/lib.rs:679"
+    ],
     "anchor_error_codes": [
       6024
     ],
@@ -6318,6 +7221,9 @@
     "normalized_hamming": 3,
     "orig_file": "programs/pump/src/lib.rs",
     "orig_line": 684,
+    "source_sites": [
+      "programs/pump/src/lib.rs:684"
+    ],
     "anchor_error_codes": [
       6024
     ],
@@ -6334,6 +7240,9 @@
     "normalized_hamming": 3,
     "orig_file": "programs/pump/src/lib.rs",
     "orig_line": 689,
+    "source_sites": [
+      "programs/pump/src/lib.rs:689"
+    ],
     "anchor_error_codes": [
       6024
     ],
@@ -6350,6 +7259,16 @@
     "normalized_hamming": null,
     "orig_file": "programs/pump/src/buy.rs",
     "orig_line": 53,
+    "source_sites": [
+      "programs/pump/src/buy.rs:53",
+      "programs/pump/src/buy.rs:57",
+      "programs/pump/src/buy.rs:59",
+      "programs/pump/src/buy.rs:92",
+      "programs/pump/src/buy.rs:110",
+      "programs/pump/src/buy.rs:143",
+      "programs/pump/src/buy.rs:151",
+      "programs/pump/src/buy.rs:133"
+    ],
     "anchor_error_codes": [
       6002,
       6005,
@@ -6372,6 +7291,12 @@
     "normalized_hamming": null,
     "orig_file": "programs/pump/src/lib.rs",
     "orig_line": 968,
+    "source_sites": [
+      "programs/pump/src/lib.rs:968",
+      "programs/pump/src/lib.rs:970",
+      "programs/pump/src/lib.rs:972",
+      "programs/pump/src/lib.rs:1012"
+    ],
     "anchor_error_codes": [
       6003,
       6005,
@@ -6391,6 +7316,9 @@
     "normalized_hamming": 3,
     "orig_file": "programs/pump/src/lib.rs",
     "orig_line": 981,
+    "source_sites": [
+      "programs/pump/src/lib.rs:981"
+    ],
     "anchor_error_codes": [
       6025
     ],
@@ -6407,6 +7335,9 @@
     "normalized_hamming": 3,
     "orig_file": "programs/pump/src/lib.rs",
     "orig_line": 1007,
+    "source_sites": [
+      "programs/pump/src/lib.rs:1007"
+    ],
     "anchor_error_codes": [
       6024
     ],
@@ -6423,6 +7354,9 @@
     "normalized_hamming": 3,
     "orig_file": "programs/pump/src/lib.rs",
     "orig_line": 1009,
+    "source_sites": [
+      "programs/pump/src/lib.rs:1009"
+    ],
     "anchor_error_codes": [
       6024
     ],
@@ -6439,6 +7373,9 @@
     "normalized_hamming": 3,
     "orig_file": "programs/pump/src/lib.rs",
     "orig_line": 1022,
+    "source_sites": [
+      "programs/pump/src/lib.rs:1022"
+    ],
     "anchor_error_codes": [
       6024
     ],
@@ -6455,6 +7392,9 @@
     "normalized_hamming": 3,
     "orig_file": "programs/pump/src/lib.rs",
     "orig_line": 1027,
+    "source_sites": [
+      "programs/pump/src/lib.rs:1027"
+    ],
     "anchor_error_codes": [
       6024
     ],
@@ -6471,6 +7411,9 @@
     "normalized_hamming": 3,
     "orig_file": "programs/pump/src/lib.rs",
     "orig_line": 1032,
+    "source_sites": [
+      "programs/pump/src/lib.rs:1032"
+    ],
     "anchor_error_codes": [
       6024
     ],
@@ -6487,6 +7430,9 @@
     "normalized_hamming": 3,
     "orig_file": "programs/pump/src/lib.rs",
     "orig_line": 1037,
+    "source_sites": [
+      "programs/pump/src/lib.rs:1037"
+    ],
     "anchor_error_codes": [
       6024
     ],
@@ -6503,6 +7449,11 @@
     "normalized_hamming": null,
     "orig_file": "programs/pump/src/admin_set_idl_authority.rs",
     "orig_line": 72,
+    "source_sites": [
+      "programs/pump/src/admin_set_idl_authority.rs:72",
+      "programs/pump/src/admin_set_idl_authority.rs:79",
+      "programs/pump/src/admin_set_idl_authority.rs:90"
+    ],
     "anchor_error_codes": [
       6010
     ],
@@ -6520,7 +7471,10 @@
     "closest_candidate": "pump_recovered..Global$u20$as$u20$anchor_lang..AccountDeserialize$GT$15try_deserialize",
     "normalized_hamming": 2,
     "orig_file": "programs/pump/src/lib.rs",
-    "orig_line": 3002,
+    "orig_line": 1815,
+    "source_sites": [
+      "programs/pump/src/lib.rs:1815"
+    ],
     "anchor_error_codes": [],
     "direct_calls": 7,
     "indirect_calls": 0,
@@ -6535,6 +7489,7 @@
     "normalized_hamming": 466,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 5,
     "indirect_calls": 0,
@@ -6548,7 +7503,10 @@
     "closest_candidate": "pump_recovered..global_init..Initialize$u20$as$u20$anchor_lang..Accounts$LT$pump_recovered",
     "normalized_hamming": 3,
     "orig_file": "programs/pump/src/lib.rs",
-    "orig_line": 4101,
+    "orig_line": 2778,
+    "source_sites": [
+      "programs/pump/src/lib.rs:2778"
+    ],
     "anchor_error_codes": [],
     "direct_calls": 16,
     "indirect_calls": 0,
@@ -6565,6 +7523,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 97,
     "indirect_calls": 0,
@@ -6578,7 +7537,10 @@
     "closest_candidate": null,
     "normalized_hamming": null,
     "orig_file": "programs/pump/src/lib.rs",
-    "orig_line": 4101,
+    "orig_line": 2811,
+    "source_sites": [
+      "programs/pump/src/lib.rs:2811"
+    ],
     "anchor_error_codes": [],
     "direct_calls": 18,
     "indirect_calls": 0,
@@ -6594,7 +7556,10 @@
     "closest_candidate": null,
     "normalized_hamming": null,
     "orig_file": "programs/pump/src/lib.rs",
-    "orig_line": 4101,
+    "orig_line": 2811,
+    "source_sites": [
+      "programs/pump/src/lib.rs:2811"
+    ],
     "anchor_error_codes": [],
     "direct_calls": 17,
     "indirect_calls": 0,
@@ -6611,6 +7576,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 5,
     "indirect_calls": 0,
@@ -6627,6 +7593,7 @@
     "normalized_hamming": 394,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 12,
     "indirect_calls": 0,
@@ -6641,6 +7608,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 121,
     "indirect_calls": 0,
@@ -6654,7 +7622,10 @@
     "closest_candidate": "pump_recovered..buy_v2..BuyV2$u20$as$u20$anchor_lang..Accounts$LT$pump_recovered..buy_v2..",
     "normalized_hamming": 3,
     "orig_file": "programs/pump/src/lib.rs",
-    "orig_line": 4101,
+    "orig_line": 2871,
+    "source_sites": [
+      "programs/pump/src/lib.rs:2871"
+    ],
     "anchor_error_codes": [],
     "direct_calls": 33,
     "indirect_calls": 0,
@@ -6671,6 +7642,7 @@
     "normalized_hamming": 14,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 14,
     "indirect_calls": 0,
@@ -6685,6 +7657,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 95,
     "indirect_calls": 0,
@@ -6699,6 +7672,7 @@
     "normalized_hamming": 12,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 12,
     "indirect_calls": 0,
@@ -6713,6 +7687,9 @@
     "normalized_hamming": 3,
     "orig_file": "programs/pump/src/lib.rs",
     "orig_line": 664,
+    "source_sites": [
+      "programs/pump/src/lib.rs:664"
+    ],
     "anchor_error_codes": [
       6024
     ],
@@ -6729,6 +7706,9 @@
     "normalized_hamming": 3,
     "orig_file": "programs/pump/src/lib.rs",
     "orig_line": 666,
+    "source_sites": [
+      "programs/pump/src/lib.rs:666"
+    ],
     "anchor_error_codes": [
       6024
     ],
@@ -6744,7 +7724,10 @@
     "closest_candidate": "pump_recovered..__private..__idl..IdlAccount$u20$as$u20$anchor_lang..AccountDeserialize$GT",
     "normalized_hamming": 1,
     "orig_file": "programs/pump/src/lib.rs",
-    "orig_line": 3002,
+    "orig_line": 90,
+    "source_sites": [
+      "programs/pump/src/lib.rs:90"
+    ],
     "anchor_error_codes": [],
     "direct_calls": 7,
     "indirect_calls": 0,
@@ -6759,6 +7742,7 @@
     "normalized_hamming": 579,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 0,
     "indirect_calls": 0,
@@ -6773,6 +7757,7 @@
     "normalized_hamming": 361,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 0,
     "indirect_calls": 0,
@@ -6787,6 +7772,7 @@
     "normalized_hamming": 153,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 2,
     "indirect_calls": 0,
@@ -6801,6 +7787,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 2,
     "indirect_calls": 0,
@@ -6815,6 +7802,7 @@
     "normalized_hamming": 314,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 0,
     "indirect_calls": 0,
@@ -6829,6 +7817,7 @@
     "normalized_hamming": 463,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 10,
     "indirect_calls": 0,
@@ -6843,6 +7832,7 @@
     "normalized_hamming": 85,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 2,
     "indirect_calls": 0,
@@ -6857,6 +7847,7 @@
     "normalized_hamming": 2,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 22,
     "indirect_calls": 0,
@@ -6871,6 +7862,7 @@
     "normalized_hamming": 455,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 14,
     "indirect_calls": 0,
@@ -6885,6 +7877,7 @@
     "normalized_hamming": 465,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 14,
     "indirect_calls": 0,
@@ -6899,6 +7892,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 28,
     "indirect_calls": 0,
@@ -6915,6 +7909,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 27,
     "indirect_calls": 0,
@@ -6931,6 +7926,7 @@
     "normalized_hamming": 464,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 9,
     "indirect_calls": 0,
@@ -6945,6 +7941,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 28,
     "indirect_calls": 0,
@@ -6959,6 +7956,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 6,
     "indirect_calls": 0,
@@ -6973,6 +7971,7 @@
     "normalized_hamming": 46,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 3,
     "indirect_calls": 0,
@@ -6987,6 +7986,7 @@
     "normalized_hamming": 109,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 2,
     "indirect_calls": 1,
@@ -7001,6 +8001,7 @@
     "normalized_hamming": 108,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 2,
     "indirect_calls": 1,
@@ -7015,6 +8016,7 @@
     "normalized_hamming": 67,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 2,
     "indirect_calls": 1,
@@ -7029,6 +8031,7 @@
     "normalized_hamming": 243,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 6,
     "indirect_calls": 3,
@@ -7043,6 +8046,7 @@
     "normalized_hamming": 67,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 2,
     "indirect_calls": 0,
@@ -7057,6 +8061,7 @@
     "normalized_hamming": 311,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 8,
     "indirect_calls": 0,
@@ -7071,6 +8076,7 @@
     "normalized_hamming": 286,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 6,
     "indirect_calls": 0,
@@ -7085,6 +8091,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 15,
     "indirect_calls": 0,
@@ -7099,6 +8106,7 @@
     "normalized_hamming": 113,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 3,
     "indirect_calls": 0,
@@ -7113,6 +8121,7 @@
     "normalized_hamming": 370,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 6,
     "indirect_calls": 0,
@@ -7127,6 +8136,7 @@
     "normalized_hamming": 245,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 4,
     "indirect_calls": 0,
@@ -7141,6 +8151,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 10,
     "indirect_calls": 0,
@@ -7155,6 +8166,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 5,
     "indirect_calls": 0,
@@ -7169,6 +8181,7 @@
     "normalized_hamming": 383,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 5,
     "indirect_calls": 0,
@@ -7183,6 +8196,7 @@
     "normalized_hamming": 433,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 3,
     "indirect_calls": 0,
@@ -7197,6 +8211,7 @@
     "normalized_hamming": 317,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 5,
     "indirect_calls": 0,
@@ -7211,6 +8226,7 @@
     "normalized_hamming": 426,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 5,
     "indirect_calls": 0,
@@ -7225,6 +8241,7 @@
     "normalized_hamming": 7,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 1,
     "indirect_calls": 0,
@@ -7239,6 +8256,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 15,
     "indirect_calls": 0,
@@ -7253,6 +8271,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 34,
     "indirect_calls": 0,
@@ -7267,6 +8286,7 @@
     "normalized_hamming": 181,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 3,
     "indirect_calls": 0,
@@ -7281,6 +8301,7 @@
     "normalized_hamming": 561,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 13,
     "indirect_calls": 0,
@@ -7295,6 +8316,7 @@
     "normalized_hamming": 156,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 3,
     "indirect_calls": 0,
@@ -7309,6 +8331,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 20,
     "indirect_calls": 0,
@@ -7323,6 +8346,7 @@
     "normalized_hamming": 507,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 8,
     "indirect_calls": 0,
@@ -7336,7 +8360,8 @@
     "closest_candidate": "spl_token_202211instruction7mint_to",
     "normalized_hamming": 1,
     "orig_file": null,
-    "orig_line": 8,
+    "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 8,
     "indirect_calls": 0,
@@ -7351,6 +8376,7 @@
     "normalized_hamming": 279,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 8,
     "indirect_calls": 0,
@@ -7365,6 +8391,7 @@
     "normalized_hamming": 255,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 5,
     "indirect_calls": 1,
@@ -7379,6 +8406,7 @@
     "normalized_hamming": 67,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 2,
     "indirect_calls": 1,
@@ -7393,6 +8421,7 @@
     "normalized_hamming": 188,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 4,
     "indirect_calls": 0,
@@ -7407,6 +8436,7 @@
     "normalized_hamming": 53,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 2,
     "indirect_calls": 0,
@@ -7421,6 +8451,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 5,
     "indirect_calls": 0,
@@ -7435,6 +8466,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 44,
     "indirect_calls": 0,
@@ -7449,6 +8481,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 4,
     "indirect_calls": 0,
@@ -7463,6 +8496,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 4,
     "indirect_calls": 0,
@@ -7477,6 +8511,7 @@
     "normalized_hamming": 40,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 2,
     "indirect_calls": 0,
@@ -7491,6 +8526,7 @@
     "normalized_hamming": 131,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 2,
     "indirect_calls": 0,
@@ -7506,7 +8542,8 @@
     "closest_candidate": "_ZN69_$LT$$u5b$T$u3b$$u20$N$u5d$$u20$as$u20$borsh..ser..BorshSerialize$GT$9serialize",
     "normalized_hamming": 170,
     "orig_file": null,
-    "orig_line": 4102,
+    "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 4,
     "indirect_calls": 0,
@@ -7521,6 +8558,7 @@
     "normalized_hamming": 361,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 13,
     "indirect_calls": 0,
@@ -7535,6 +8573,7 @@
     "normalized_hamming": 36,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 1,
     "indirect_calls": 0,
@@ -7549,6 +8588,7 @@
     "normalized_hamming": 173,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 1,
     "indirect_calls": 0,
@@ -7563,6 +8603,7 @@
     "normalized_hamming": 472,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 14,
     "indirect_calls": 0,
@@ -7577,6 +8618,7 @@
     "normalized_hamming": 1,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 1,
     "indirect_calls": 0,
@@ -7591,6 +8633,7 @@
     "normalized_hamming": null,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 1,
     "indirect_calls": 0,
@@ -7605,6 +8648,7 @@
     "normalized_hamming": 710,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 10,
     "indirect_calls": 0,
@@ -7619,6 +8663,7 @@
     "normalized_hamming": 53,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 2,
     "indirect_calls": 0,
@@ -7633,6 +8678,7 @@
     "normalized_hamming": 1,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 1,
     "indirect_calls": 0,
@@ -7647,6 +8693,7 @@
     "normalized_hamming": 70,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 1,
     "indirect_calls": 0,
@@ -7661,6 +8708,7 @@
     "normalized_hamming": 349,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 3,
     "indirect_calls": 0,
@@ -7675,6 +8723,7 @@
     "normalized_hamming": 158,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 1,
     "indirect_calls": 3,
@@ -7689,6 +8738,7 @@
     "normalized_hamming": 325,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 0,
     "indirect_calls": 5,
@@ -7703,6 +8753,7 @@
     "normalized_hamming": 31,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 0,
     "indirect_calls": 1,
@@ -7717,6 +8768,7 @@
     "normalized_hamming": 6,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 1,
     "indirect_calls": 0,
@@ -7731,6 +8783,7 @@
     "normalized_hamming": 249,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 2,
     "indirect_calls": 2,
@@ -7745,6 +8798,7 @@
     "normalized_hamming": 35,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 0,
     "indirect_calls": 1,
@@ -7759,6 +8813,7 @@
     "normalized_hamming": 29,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 1,
     "indirect_calls": 0,
@@ -7773,6 +8828,7 @@
     "normalized_hamming": 29,
     "orig_file": null,
     "orig_line": null,
+    "source_sites": [],
     "anchor_error_codes": [],
     "direct_calls": 1,
     "indirect_calls": 0,
