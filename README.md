@@ -13,8 +13,8 @@ For subsequent gains and the latest research frontier, see the
 
 Latest Relay research: **480/492 normalized windows, 12 unmatched**, with 536
 passing replay records. Both the Darwin/Linux-library recipe and a fully Linux build reproduce these
-window matches; their ELF files differ, and full byte identity remains unproved. Latest Fees research: **346 unique structural pairs,
-92 unmatched windows**, with the complete `get_fees` wrapper now matched.
+window matches; their ELF files differ, and full byte identity remains unproved. Latest Fees research: **349 unique structural pairs,
+89 unmatched windows**, with the complete `get_fees` wrapper now matched.
 Whole-file identity remains unachieved.
 
 The [26 October reconstruction audit](docs/RECONSTRUCTION-AUDIT.md) separates

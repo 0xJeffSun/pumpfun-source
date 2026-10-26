@@ -7,8 +7,8 @@
     {
       "path": "README.md",
       "before_sha256": "cae913d4d3f2066403162f653a0cf35b39620fb08877b1b308c08ccce4a53678",
-      "after_sha256": "ff51b4c721e6ca0e422f81aee1a0008e30b5c6f39f82579a5186fbb353794593",
-      "reason": "Record fully Linux reproduction of the 480-window Relay frontier and latest Fees research at 346 unique structural pairs with 92 unmatched, without claiming whole-file equality."
+      "after_sha256": "f066dd580ecb8a9fc7cde29b4c1f4035eaff4344e8353e78e56b3338dd0d27a9",
+      "reason": "Record fully Linux reproduction of the 480-window Relay frontier and latest Fees research at 349 unique structural pairs with 89 unmatched, without claiming whole-file equality."
     },
     {
       "path": ".github/workflows/verify.yml",

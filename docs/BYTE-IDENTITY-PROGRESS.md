@@ -92,6 +92,15 @@ The target-only control recovered no normalized window, so it is retained as a
 negative result for the repeated `Error::type_id` hypothesis. The three type-ID
 windows still need work. The current residual list is in the new package.
 
+## Fees: 92 → 89 unmatched normalized windows
+
+Merged [PR #117](https://github.com/lalalune/pumpfun-source/pull/117) recovers three
+complete donation, sharing-config and social-creation account-parser windows.
+The [creation-origin packet](../research/fees-creation-account-origins/README.md)
+reaches **349 unique structural pairs**, with no loss and **89 unmatched** original
+windows. It retains exact declaration/path/line evidence, 17,331 proposal suite
+cases and 1,542 focused comparisons. Whole-file identity remains false.
+
 ## Fees: 94 → 92 unmatched normalized windows
 
 Merged [PR #116](https://github.com/lalalune/pumpfun-source/pull/116) restores the
