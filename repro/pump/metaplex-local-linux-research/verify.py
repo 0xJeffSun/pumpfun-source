@@ -22,7 +22,7 @@ def main():
  assert known['returncode']==0 and known['all_812_source_hashes_unchanged'] and known['equals_linux_candidate11']
  assert H((P/'baseline/resumed-build.log').read_bytes())==known['build_log_sha256']
  assert H((P/'baseline/source-manifest.json').read_bytes())==known['source_manifest_sha256']
- rows=json.loads((P/'results.json').read_text());assert len(rows)==16
+ rows=json.loads((P/'results.json').read_text());assert len(rows)==26
  for row in rows:
   d=P/'cases'/row['name'];r=json.loads((d/'result.json').read_text())
   assert r['returncode']==0 and r['all_planned_source_hashes_unchanged'] and not r['accepted']
@@ -46,5 +46,17 @@ def main():
   assert (candidate.b[candidate.lo:candidate.hi]==target.b[target.lo:target.hi])==r['whole_text_equality']==False
   assert payload!=original and not r['full_byte_equality']
   if r['expected_control_sha256']: assert r['known_control_reproduced'] and H(raw)==r['expected_control_sha256']
+ control=P/'restored-control'
+ assert (control/'candidate.so').read_bytes()==(P/'baseline/candidate.so').read_bytes()
+ cr=json.loads((control/'result.json').read_text());assert cr['known_control_reproduced'] and cr['changed_source_files']==[]
+ assert json.loads((control/'source-manifest.json').read_text())==baseline
+ final_control=P/'restored-after-hints'
+ assert (final_control/'candidate.so').read_bytes()==(P/'baseline/candidate.so').read_bytes()
+ fc=json.loads((final_control/'result.json').read_text());assert fc['known_control_reproduced'] and fc['changed_source_files']==[]
+ assert json.loads((final_control/'source-manifest.json').read_text())==baseline
+ failure=P/'failed-source-form/partial-move'
+ failed=json.loads((failure/'result.json').read_text());assert failed['returncode']!=0 and not (failure/'candidate.so').exists()
+ assert b'error[E0382]' in (failure/'build.log').read_bytes()
+ assert H((failure/'build.log').read_bytes())==failed['build_log_sha256']
  print(json.dumps(dict(verified=True,source_files=812,successful_baseline_builds=1,cached_trials=len(rows),accepted=False)))
 if __name__=='__main__':main()
