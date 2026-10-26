@@ -1,9 +1,11 @@
 # Scripts
 
 Tooling for capturing deployments, building candidates, comparing them with the
-captured originals and running differential tests in a local VM. Every script
-here is listed below by purpose; a check mark means a GitHub workflow runs it
-directly (others run as libraries of those steps or by hand).
+captured originals and running differential tests in a local VM. Every Python
+script here is listed below by purpose; a check mark means a GitHub workflow runs it
+directly (others run as libraries of those steps or by hand). The non-Python files
+(`pump_rustc_source_path_wrapper.sh`, `core_linux_v144_inputs.json` and
+`supported_sbpf_policies/`) are inputs to the build scripts.
 
 ## Conventions
 
@@ -21,17 +23,19 @@ directly (others run as libraries of those steps or by hand).
 
 The pass-27 CI guard pins this directory: the exact set of 187 `scripts/*.py` files
 and the SHA-256 of each one. Evidence packages under `repro/` also record the
-script hashes they ran with. Adding, renaming, merging or editing a script here
-therefore needs a new reviewed guard transition (see
-`repro/consolidation/2026-10-26/`). New tooling belongs in the evidence package
-that uses it, as `repro/behavioral-recovery/scripts/` does.
+script hashes they ran with. Editing an existing script needs a reviewed asset
+transition (as in `repro/consolidation/2026-10-26/`) and must not change a script
+that an immutable checkpoint verifier pins (for example `build_partial_candidate.py`).
+Adding, renaming or merging scripts changes the pinned set itself and needs a new
+guard generation. New tooling belongs in the evidence package that uses it, as
+`repro/behavioral-recovery/scripts/` does.
 
 ## Core: capture, analysis, comparison
 
 | Script | CI | Purpose |
 | --- | :-: | --- |
 | `analyze.py` |  | Offline ELF layout, string provenance and public-interface inventory. |
-| `build_source_manifest.py` | ✓ | Hash local Rust, workspace, Anchor IDL and explicitly supplied build inputs. |
+| `build_source_manifest.py` |  | Hash local Rust, workspace, Anchor IDL and explicitly supplied build inputs. |
 | `capture.py` |  | Read-only finalized RPC capture. Refuses replacing existing evidence. |
 | `compare.py` |  | Compare a separately built artifact, including allocation padding; never copies code. |
 | `disassemble.py` |  | Generate analyst disassembly, never a source rebuild or candidate executable. |
@@ -63,7 +67,7 @@ that uses it, as `repro/behavioral-recovery/scripts/` does.
 
 | Script | CI | Purpose |
 | --- | :-: | --- |
-| `reconstruction_identity_audit.py` | ✓ | Measure exact byte gaps without treating size similarity as source completeness. |
+| `reconstruction_identity_audit.py` |  | Measure exact byte gaps without treating size similarity as source completeness. |
 | `verify_current_bindings.py` | ✓ | Verify current tracked inputs; historical scratch paths use exact published copies. |
 | `verify_current_checkpoint.py` | ✓ | Check immutable checkpoint evidence and actual current sources/helper provenance. |
 | `verify_imported_lab.py` | ✓ | Verify frozen lab import and replay saved receipts in a disposable local tree. |

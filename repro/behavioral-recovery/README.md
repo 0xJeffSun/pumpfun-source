@@ -6,7 +6,7 @@ need a dispatch-complete build for local SDK testing.
 
 ## What it adds
 
-| Handler | Program | Differential result vs. captured original (re-run 2026-10-26) |
+| Handler | Program | Differential result vs. captured original (local re-run 2026-10-26) |
 | --- | --- | --- |
 | `admin_update_token_incentives` | pump | 299 cases, 0 mismatches |
 | `claim_token_incentives` | pump | recovered; its differential is bound to an older build record and was not re-run |
@@ -39,18 +39,25 @@ Earlier builds on 2026-10-26, before the initializer correction above
   `df61557a0bed2450d32b277df56a68d3e58ecd87e41486b9ea4c2071e9a67155`. It differs
   from the older committed candidate
   `repro/pump/recovered-dispatch-56-from-main-v144/main/candidate.so`
-  (`5392c9a9…`) because the overlay now sits on main's newer `admin_cto.rs`. The
-  differentials below were re-run against both builds with identical results.
+  (`5392c9a9…`, built from `14ec9b5c`) because the overlay sits on main's newer
+  `admin_cto.rs` and its `lib.rs` orders module declarations and
+  `UpdateMayhemVirtualParamsEvent` differently; the effect of each change was not
+  measured separately. The differentials in the table above were re-run locally
+  against both builds with identical results. Those receipts and the `df61557a`
+  build record were not retained; the committed `5392c9a9`/`cbe8c8e7` candidates
+  reproduce the same counts.
 
 The `@pump-fun/pump-sdk` harness in
 `repro/parallel-work/2026-10-25/independent-reconstruction-review/sdk-integration-test/`
-runs create/buy/sell, v3, incentives, Mayhem create and AMM flows against them.
+ran create/buy/sell, v3, incentives, Mayhem create and AMM flows against the older
+committed candidates (`5392c9a9…`, `cbe8c8e7…`), not the current overlay builds.
 
 ## Why it is not active source
 
-CI hash-binds `programs/pump/src/{lib,trade,create_v2,admin_cto,volume_sync}.rs`
-to the selected checkpoint (`scripts/verify_recovered_builds.py`), and the
-reconciliation policy only admits source with matching byte-level evidence. None
+`scripts/verify_recovered_builds.py` hash-binds all 37 Pump compile inputs to the
+selected checkpoint, the pass-27 guard pins Mayhem's 14 compile inputs (including
+the `lib.rs` this overlay replaces), and the reconciliation policy only admits
+source with matching byte-level evidence. None
 of these builds is byte-identical to the deployed original, so promoting them
 means selecting a new checkpoint and re-running the bound differential suites.
 Main's checkpoint notes also flag an AccountInfo ownership question on the

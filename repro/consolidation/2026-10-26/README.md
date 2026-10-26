@@ -8,9 +8,12 @@ weakening the guard.
 - `transition.json` lists each changed asset with its pass-27 `before` hash and its
   new `after` hash: `README.md` and `.github/workflows/verify.yml`.
 - `guard.py` runs an unchanged pass-27 entrypoint (`verify_current.py`,
-  `verify_metadata.py` or `verify_portable_crypto.py`). It first checks this
-  package's seal, the pass-27 guard code seal and that `transition.json` is exactly
-  the reviewed revision (`TRANSITION_SHA256`) covering exactly `REVIEWED_PATHS`. It
+  `verify_metadata.py` or `verify_portable_crypto.py`). It first checks that this
+  package's files match its own manifest (an internal seal that nothing else pins),
+  that the pass-27 guard code matches its hard-coded seal, and that `transition.json`
+  is exactly the reviewed revision (`TRANSITION_SHA256`) covering exactly
+  `REVIEWED_PATHS`. Because those two constants live in `guard.py`, any re-pin is a
+  visible code change for review. It
   then applies the transition only while the current-asset check runs. Every other
   pass-27 check, including the pinned script and workflow sets, sources,
   candidates, status files, history and attributes, is unchanged.
@@ -21,7 +24,8 @@ python3 -B repro/consolidation/2026-10-26/guard.py verify_current.py \
 ```
 
 To revise the README again, update its `after` hash in `transition.json`. To re-pin
-another asset, add it there with its pass-27 hash as `before` and add its path to
-`REVIEWED_PATHS` in `guard.py`. Either way, set `TRANSITION_SHA256` in `guard.py` to
-the new `transition.json` hash and reseal `manifest.json` and `manifest.sha256`. A
-data edit alone fails the guard, so every re-pin shows up as a code change in review.
+another asset, add it there with its pass-27 hash as `before`, remove it from
+`unchanged`, confirm no immutable checkpoint verifier pins it separately, and add its
+path to `REVIEWED_PATHS` in `guard.py`. Either way, set `TRANSITION_SHA256` in
+`guard.py` to the new `transition.json` hash and reseal `manifest.json` and
+`manifest.sha256`. A data edit alone fails the guard.
