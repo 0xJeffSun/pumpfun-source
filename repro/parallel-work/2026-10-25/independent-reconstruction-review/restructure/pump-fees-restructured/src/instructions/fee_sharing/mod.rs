@@ -44,3 +44,7 @@ pub(crate) fn admit_associated_token_account<'info>(
 }
 pub mod create_donation_fee_pda;
 pub mod admin_cto_sharing_config;
+pub mod create_social_fee_pda;
+pub mod claim_social_fee_pda;
+pub mod update_fee_shares;
+pub mod update_fee_shares_v2;

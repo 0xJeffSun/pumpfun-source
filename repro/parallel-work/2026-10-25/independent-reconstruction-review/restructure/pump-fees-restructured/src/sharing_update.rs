@@ -6,141 +6,28 @@ use crate::types::Shareholder;
 use crate::instructions::fee_sharing::create_donation_fee_pda::{PUMP, AMM, BondingCurve, ConfigStatus, SharingConfig};
 use crate::sharing::{Pump, Amm};
 // Static legacy source hypothesis, bound to the frozen 8ff12 source. Not compiled.
-pub fn update_fee_shares<'info>(mut ctx:Context<'_, '_, '_, 'info,UpdateFeeShares<'info>>,shareholders:Vec<Shareholder>)->Result<()> {
-  // The temporary AccountInfo and its data borrow end before version/auth checks.
-  let quote_is_zero = legacy_curve_quote_is_zero(&ctx.accounts.bonding_curve.to_account_info())?;
-  require!(quote_is_zero,FeeError::UnsupportedQuoteMint);
-  require!(ctx.accounts.sharing_config.version!=1,FeeError::FeeSharesAlreadyUpdated);
-  legacy_authorize(&ctx.accounts.sharing_config,ctx.accounts.authority.key())?;
-  ctx.remaining_accounts = preprocess_remaining(
-      ctx.remaining_accounts, &ctx.accounts.bonding_curve,
-      &ctx.accounts.mint.key(), &anchor_spl::token::spl_token::native_mint::ID,
-  )?;
-  // Own the fixed accounts before the adapter's reserve/owner guard.
-  legacy_transfer_creator_fees_to_pump(
-      &ctx.accounts.bonding_curve,
-      crate::pump_amm::cpi::accounts::TransferCreatorFeesToPump {
-          program: ctx.accounts.pump_amm_program.to_account_info(),
-          wsol_mint: ctx.accounts.wsol_mint.to_account_info(),
-          token_program: ctx.accounts.token_program.to_account_info(),
-          system_program: ctx.accounts.system_program.to_account_info(),
-          associated_token_program: ctx.accounts.associated_token_program.to_account_info(),
-          coin_creator: ctx.accounts.sharing_config.to_account_info(),
-          coin_creator_vault_authority: ctx.accounts.coin_creator_vault_authority.to_account_info(),
-          coin_creator_vault_ata: ctx.accounts.coin_creator_vault_ata.to_account_info(),
-          pump_creator_vault: ctx.accounts.pump_creator_vault.to_account_info(),
-          event_authority: ctx.accounts.amm_event_authority.to_account_info(),
-      },
-  )?;
-  // Existing shareholder validation belongs here, after the AMM call.
-  let payout_accounts = legacy_payout_accounts(
-      &mut ctx.accounts.sharing_config, ctx.remaining_accounts,
-  )?;
-  if !payout_accounts.is_empty() {
-  legacy_distribute_creator_fees(
-      crate::pump::cpi::accounts::DistributeCreatorFees {
-          program: ctx.accounts.pump_program.to_account_info(),
-          mint: ctx.accounts.mint.to_account_info(),
-          bonding_curve: ctx.accounts.bonding_curve.to_account_info(),
-          sharing_config: ctx.accounts.sharing_config.to_account_info(),
-          creator_vault: ctx.accounts.pump_creator_vault.to_account_info(),
-          system_program: ctx.accounts.system_program.to_account_info(),
-          event_authority: ctx.accounts.pump_event_authority.to_account_info(),
-      },
-      payout_accounts,
-  )?;
-  }
-  legacy_validate_shares(&shareholders)?;
-  let state=&mut ctx.accounts.sharing_config;state.shareholders=shareholders.clone();state.admin_revoked=true;
-  let event=UpdateFeeSharesEvent{timestamp:Clock::get()?.unix_timestamp,mint:ctx.accounts.mint.key(),sharing_config:state.key(),admin:state.admin,new_shareholders:shareholders,version:state.version};emit!(event);emit_cpi!(event);Ok(())
- }
- pub fn update_fee_shares_v2<'info>(mut ctx:Context<'_, '_, '_, 'info,UpdateFeeSharesV2<'info>>,shareholders:Vec<Shareholder>)->Result<()> {
-  require!(ctx.accounts.sharing_config.version!=1,FeeError::FeeSharesAlreadyUpdated);
-  // Same complete authorization target [234096,235304) as legacy.
-  legacy_authorize(&ctx.accounts.sharing_config,ctx.accounts.authority.key())?;
-  let quote = ctx.accounts.quote_mint.key();
-  let expected = v2_expected_quote(&ctx.accounts.bonding_curve.to_account_info());
-  if quote != expected {
-      return Err(error!(FeeError::InvalidQuoteMint).with_pubkeys((quote, expected)));
-  }
-  ctx.remaining_accounts = preprocess_remaining(
-      ctx.remaining_accounts, &ctx.accounts.bonding_curve,
-      &ctx.accounts.mint.key(), &expected,
-  )?;
-  v2_transfer_creator_fees_to_pump(
-      &ctx.accounts.bonding_curve,
-      crate::pump_amm::cpi::accounts::TransferCreatorFeesToPumpV2 {
-          payer: ctx.accounts.authority.to_account_info(),
-          quote_mint: ctx.accounts.quote_mint.to_account_info(),
-          token_program: ctx.accounts.token_program.to_account_info(),
-          system_program: ctx.accounts.system_program.to_account_info(),
-          associated_token_program: ctx.accounts.associated_token_program.to_account_info(),
-          coin_creator: ctx.accounts.sharing_config.to_account_info(),
-          coin_creator_vault_authority: ctx.accounts.coin_creator_vault_authority.to_account_info(),
-          coin_creator_vault_ata: ctx.accounts.coin_creator_vault_ata.to_account_info(),
-          pump_creator_vault: ctx.accounts.pump_creator_vault.to_account_info(),
-          pump_creator_vault_ata: ctx.accounts.pump_creator_vault_ata.to_account_info(),
-          event_authority: ctx.accounts.amm_event_authority.to_account_info(),
-          program: ctx.accounts.pump_amm_program.to_account_info(),
-      },
-  )?;
-  // The cloned AccountInfo/borrow die before payout preparation.
-  let zero_quote = legacy_curve_quote_is_zero(&ctx.accounts.bonding_curve.to_account_info())?;
-  let prepared = if zero_quote {
-      prepare_v2_zero_payout(ctx.remaining_accounts, &ctx.accounts.sharing_config.shareholders)?
-  } else {
-      prepare_v2_quote_payout(ctx.remaining_accounts, &ctx.accounts.sharing_config.shareholders)?
-  };
-  if prepared.changed {
-      ctx.accounts.sharing_config.shareholders = prepared.shareholders;
-      ctx.accounts.sharing_config.exit(&crate::ID)?;
-  }
-  if !prepared.accounts.is_empty() {
-      v2_distribute_creator_fees(
-          crate::pump::cpi::accounts::DistributeCreatorFeesV2 {
-              payer: ctx.accounts.authority.to_account_info(),
-              mint: ctx.accounts.mint.to_account_info(),
-              bonding_curve: ctx.accounts.bonding_curve.to_account_info(),
-              sharing_config: ctx.accounts.sharing_config.to_account_info(),
-              creator_vault: ctx.accounts.pump_creator_vault.to_account_info(),
-              system_program: ctx.accounts.system_program.to_account_info(),
-              event_authority: ctx.accounts.pump_event_authority.to_account_info(),
-              program: ctx.accounts.pump_program.to_account_info(),
-              creator_vault_quote_token_account: ctx.accounts.pump_creator_vault_ata.to_account_info(),
-              quote_mint: ctx.accounts.quote_mint.to_account_info(),
-              quote_token_program: ctx.accounts.token_program.to_account_info(),
-              associated_token_program: ctx.accounts.associated_token_program.to_account_info(),
-          },
-          prepared.accounts,
-      )?;
-  }
-  v2_validate_shares(&shareholders)?;
-  let state=&mut ctx.accounts.sharing_config;state.shareholders=shareholders.clone();state.admin_revoked=true;
-  let event=UpdateFeeSharesEvent{timestamp:Clock::get()?.unix_timestamp,mint:ctx.accounts.mint.key(),sharing_config:state.key(),admin:state.admin,new_shareholders:shareholders,version:state.version};emit!(event);emit_cpi!(event);Ok(())
- }
-
-fn legacy_curve_quote_is_zero(info: &AccountInfo<'_>) -> Result<bool> {
+pub(crate) fn legacy_curve_quote_is_zero(info: &AccountInfo<'_>) -> Result<bool> {
   if info.data_len() < 115 { return Ok(true); }
   let data = info.data.borrow();
   Ok(Pubkey::new_from_array(data[83..115].try_into().unwrap()) == Pubkey::default())
 }
 
-fn authorize(state:&SharingConfig,authority:Pubkey)->Result<()>{
+pub(crate) fn authorize(state:&SharingConfig,authority:Pubkey)->Result<()>{
  require_keys_eq!(state.admin,authority,FeeError::NotAuthorized);
  require!(!state.admin_revoked,FeeError::SharingConfigAdminRevoked);
  require!(state.status==ConfigStatus::Active,FeeError::SharingConfigNotActive);Ok(())
 }
-fn validate_remaining(state:&SharingConfig,remaining:&[AccountInfo],stride:usize)->Result<()>{
+pub(crate) fn validate_remaining(state:&SharingConfig,remaining:&[AccountInfo],stride:usize)->Result<()>{
  require!(remaining.len()>=state.shareholders.len()*stride,FeeError::NotEnoughRemainingAccounts);
  for (i,share) in state.shareholders.iter().enumerate(){require_keys_eq!(remaining[i].key(),share.address,FeeError::ShareholderAccountMismatch);}Ok(())
 }
-fn validate_shares(shares:&[Shareholder])->Result<()>{
+pub(crate) fn validate_shares(shares:&[Shareholder])->Result<()>{
  require!(!shares.is_empty(),FeeError::NoShareholders);require!(shares.len()<=10,FeeError::TooManyShareholders);
  let mut sum=0u16;let mut seen=Vec::new();
  for share in shares {require!(share.share_bps>0,FeeError::ZeroShareNotAllowed);sum=sum.checked_add(share.share_bps).ok_or(error!(FeeError::ShareCalculationOverflow))?;require!(!seen.contains(&share.address),FeeError::DuplicateShareholder);seen.push(share.address);}
  require!(sum==10000,FeeError::InvalidShareTotal);Ok(())
 }
-fn call<'info>(program_id:Pubkey,mut infos:Vec<AccountInfo<'info>>,flags:&[(bool,bool)],data:Vec<u8>,remaining:&[AccountInfo<'info>])->Result<()>{
+pub(crate) fn call<'info>(program_id:Pubkey,mut infos:Vec<AccountInfo<'info>>,flags:&[(bool,bool)],data:Vec<u8>,remaining:&[AccountInfo<'info>])->Result<()>{
  let mut accounts:Vec<AccountMeta>=infos.iter().zip(flags).map(|(a,(w,s))|if *w{AccountMeta::new(a.key(),*s)}else{AccountMeta::new_readonly(a.key(),*s)}).collect();
  accounts.extend(remaining.iter().map(|a|if a.is_writable{AccountMeta::new(a.key(),a.is_signer)}else{AccountMeta::new_readonly(a.key(),a.is_signer)}));infos.extend_from_slice(remaining);invoke(&Instruction{program_id,accounts,data},&infos)?;Ok(())
 }
@@ -204,21 +91,21 @@ pub token_program:Interface<'info,anchor_spl::token_interface::TokenInterface>,
 }
 
 // Original [234096,235304): no compared-key payload on authorization failure.
-fn legacy_authorize(state: &SharingConfig, authority: Pubkey) -> Result<()> {
+pub(crate) fn legacy_authorize(state: &SharingConfig, authority: Pubkey) -> Result<()> {
     require!(authority == state.admin, FeeError::NotAuthorized);
     if state.admin_revoked { return Err(FeeError::SharingConfigAdminRevoked.into()); }
     require!(state.status == ConfigStatus::Active, FeeError::SharingConfigNotActive);
     Ok(())
 }
 
-struct PreparedLegacyPayout<'info> {
-    shareholders: Vec<Shareholder>,
-    changed: bool,
-    accounts: Vec<AccountInfo<'info>>,
+pub(crate) struct PreparedLegacyPayout<'info> {
+    pub(crate) shareholders: Vec<Shareholder>,
+    pub(crate) changed: bool,
+    pub(crate) accounts: Vec<AccountInfo<'info>>,
 }
 
 // Original [199072,204080). Per-entry availability precedes key and executable.
-fn prepare_legacy_payout<'info>(
+pub(crate) fn prepare_legacy_payout<'info>(
     remaining: &[AccountInfo<'info>], shareholders: &[Shareholder],
 ) -> Result<PreparedLegacyPayout<'info>> {
     let mut accounts = Vec::with_capacity(remaining.len());
@@ -266,7 +153,7 @@ fn prepare_legacy_payout<'info>(
 }
 
 // Original [204080,205768). This is a legacy adapter, not the V2 caller.
-fn legacy_payout_accounts<'info>(
+pub(crate) fn legacy_payout_accounts<'info>(
     state: &mut Account<'info, SharingConfig>, remaining: &[AccountInfo<'info>],
 ) -> Result<Vec<AccountInfo<'info>>> {
     let prepared = prepare_legacy_payout(remaining, &state.shareholders)?;
@@ -281,7 +168,7 @@ fn legacy_payout_accounts<'info>(
 }
 
 // Original [205768,211408): scalar validation, then total, then duplicates.
-fn legacy_validate_shares(shares: &[Shareholder]) -> Result<()> {
+pub(crate) fn legacy_validate_shares(shares: &[Shareholder]) -> Result<()> {
     require!(!shares.is_empty(), FeeError::NoShareholders);
     require!(shares.len() <= 10, FeeError::TooManyShareholders);
     let mut sum = 0u16;
@@ -299,7 +186,7 @@ fn legacy_validate_shares(shares: &[Shareholder]) -> Result<()> {
 }
 
 // Original adapters own fixed accounts; generated CPI owns their final cleanup.
-fn legacy_transfer_creator_fees_to_pump<'info>(
+pub(crate) fn legacy_transfer_creator_fees_to_pump<'info>(
     curve: &BondingCurve,
     accounts: crate::pump_amm::cpi::accounts::TransferCreatorFeesToPump<'info>,
 ) -> Result<()> {
@@ -317,7 +204,7 @@ fn legacy_transfer_creator_fees_to_pump<'info>(
     Ok(())
 }
 
-fn legacy_distribute_creator_fees<'info>(
+pub(crate) fn legacy_distribute_creator_fees<'info>(
     accounts: crate::pump::cpi::accounts::DistributeCreatorFees<'info>,
     remaining: Vec<AccountInfo<'info>>,
 ) -> Result<()> {
@@ -328,7 +215,7 @@ fn legacy_distribute_creator_fees<'info>(
     Ok(())
 }
 
-fn preprocess_remaining<'remaining, 'info>(
+pub(crate) fn preprocess_remaining<'remaining, 'info>(
     remaining: &'remaining [AccountInfo<'info>],
     curve: &BondingCurve,
     base_mint: &Pubkey,
@@ -364,14 +251,14 @@ fn preprocess_remaining<'remaining, 'info>(
 }
 
 // Static V2 source fragment. Historical diagnostics/build identity remain open.
-struct PreparedV2Payout<'info> {
-    shareholders: Vec<Shareholder>,
-    changed: bool,
-    accounts: Vec<AccountInfo<'info>>,
+pub(crate) struct PreparedV2Payout<'info> {
+    pub(crate) shareholders: Vec<Shareholder>,
+    pub(crate) changed: bool,
+    pub(crate) accounts: Vec<AccountInfo<'info>>,
 }
 
 // [219376,225920): two account blocks, not interleaved pairs.
-fn prepare_v2_quote_payout<'info>(
+pub(crate) fn prepare_v2_quote_payout<'info>(
     remaining: &[AccountInfo<'info>], shareholders: &[Shareholder],
 ) -> Result<PreparedV2Payout<'info>> {
     let n = shareholders.len();
@@ -418,7 +305,7 @@ fn prepare_v2_quote_payout<'info>(
 }
 
 // Same owned zero-quote contract [199072,204080), without changing legacy code.
-fn prepare_v2_zero_payout<'info>(
+pub(crate) fn prepare_v2_zero_payout<'info>(
     remaining: &[AccountInfo<'info>], shareholders: &[Shareholder],
 ) -> Result<PreparedV2Payout<'info>> {
     let mut accounts = Vec::with_capacity(remaining.len());
@@ -458,7 +345,7 @@ fn prepare_v2_zero_payout<'info>(
 
 // Arithmetic contract shared by the two V2-owned preparation fragments.
 // This factoring is a source hypothesis, not a recovered historical function.
-fn v2_rescale_retained(retained: &mut [Shareholder], sum: u16, max_index: usize) {
+pub(crate) fn v2_rescale_retained(retained: &mut [Shareholder], sum: u16, max_index: usize) {
     let mut normalized_sum = 0u16;
     for share in retained.iter_mut() {
         share.share_bps = if sum == 0 { 0 } else {
@@ -471,7 +358,7 @@ fn v2_rescale_retained(retained: &mut [Shareholder], sum: u16, max_index: usize)
 }
 
 // [212344,213328): data_len and infallible borrow, not try_borrow_data.
-fn v2_expected_quote(info: &AccountInfo<'_>) -> Pubkey {
+pub(crate) fn v2_expected_quote(info: &AccountInfo<'_>) -> Pubkey {
     let stored = if info.data_len() < 115 { Pubkey::default() } else {
         let data = info.data.borrow();
         Pubkey::new_from_array(data[83..115].try_into().unwrap())
@@ -481,7 +368,7 @@ fn v2_expected_quote(info: &AccountInfo<'_>) -> Pubkey {
     } else { stored }
 }
 
-fn v2_transfer_creator_fees_to_pump<'info>(
+pub(crate) fn v2_transfer_creator_fees_to_pump<'info>(
     curve: &BondingCurve,
     accounts: crate::pump_amm::cpi::accounts::TransferCreatorFeesToPumpV2<'info>,
 ) -> Result<()> {
@@ -499,7 +386,7 @@ fn v2_transfer_creator_fees_to_pump<'info>(
     Ok(())
 }
 
-fn v2_distribute_creator_fees<'info>(
+pub(crate) fn v2_distribute_creator_fees<'info>(
     accounts: crate::pump::cpi::accounts::DistributeCreatorFeesV2<'info>,
     remaining: Vec<AccountInfo<'info>>,
 ) -> Result<()> {
@@ -511,7 +398,7 @@ fn v2_distribute_creator_fees<'info>(
 }
 
 // [225920,231576): scalar errors, then total, then duplicate count.
-fn v2_validate_shares(shares: &[Shareholder]) -> Result<()> {
+pub(crate) fn v2_validate_shares(shares: &[Shareholder]) -> Result<()> {
     require!(!shares.is_empty(), FeeError::NoShareholders);
     require!(shares.len() <= 10, FeeError::TooManyShareholders);
     let mut sum = 0u16;
