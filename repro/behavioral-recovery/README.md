@@ -23,12 +23,17 @@ constraint rather than a `Signer<'info>`
 (`scripts/mayhem_initialize_state_differential.py` reproduces it: 5/5 cases differ).
 
 With the overlay applied, pump dispatches 56/56 IDL instructions and Mayhem 25/25.
-The resulting builds are already committed as candidates:
+Builds of this overlay on 2026-10-26 (`scripts/build_partial_candidate.py`):
 
-- `repro/pump/recovered-dispatch-56-from-main-v144/main/candidate.so`
-  (sha256 `5392c9a953db572bf5b1096aa6e3888b4bfaf318a6621fabb525c7dd9174d366`)
-- `repro/mayhem/recovered-dispatch-25-from-main-v152/main/candidate.so`
-  (sha256 `cbe8c8e71f0c256326cf639f303b3d939244320637531d79041585c9358020e2`)
+- Mayhem (v1.52) reproduces the committed candidate byte-for-byte:
+  `repro/mayhem/recovered-dispatch-25-from-main-v152/main/candidate.so`
+  (sha256 `cbe8c8e71f0c256326cf639f303b3d939244320637531d79041585c9358020e2`).
+- Pump (v1.44) builds to sha256
+  `df61557a0bed2450d32b277df56a68d3e58ecd87e41486b9ea4c2071e9a67155`. It differs
+  from the older committed candidate
+  `repro/pump/recovered-dispatch-56-from-main-v144/main/candidate.so`
+  (`5392c9a9…`) because the overlay now sits on main's newer `admin_cto.rs`. The
+  differentials below were re-run against both builds with identical results.
 
 The `@pump-fun/pump-sdk` harness in
 `repro/parallel-work/2026-10-25/independent-reconstruction-review/sdk-integration-test/`
