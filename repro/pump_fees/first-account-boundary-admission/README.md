@@ -4,7 +4,9 @@ This additive packet retains the author's REA receipts and initial report for
 Fees first-account admission. It changes no program source, fixture, selected
 artifact or identity status. The original report/verifier/manifest are retained
 byte-for-byte under `history/`; their call targets and layout interpretation are
-historical claims, not current verified conclusions.
+historical claims, not current verified conclusions. `history/verify.py` is kept
+unchanged and does not pass from its new location: its manifest expects
+`rea-evidence/` beside it, and its repo mode reads a fork remote.
 
 ## Review corrections
 
@@ -16,7 +18,7 @@ an immediate measured in eight-byte instruction units:
 
 This follows the primary Anza implementation: [elf.rs PC-relative CALL fixup](https://github.com/anza-xyz/sbpf/blob/main/src/elf.rs)
 uses instruction index `i + 1 + imm`, and [ebpf.rs](https://github.com/anza-xyz/sbpf/blob/main/src/ebpf.rs)
-defines instruction size8. The historical numeric call-target lists are
+defines the instruction size as 8 bytes. The historical numeric call-target lists are
 withdrawn. No original body was inspected to replace them during this review.
 Only explicit future binary-input invocation computes local targets. Syscall
 hashes, relocated runtime calls and original-to-candidate attribution remain
@@ -48,11 +50,40 @@ python3 -B verify.py --original /path/to/original-fees.so \
 
 This mode checks the original/candidate SHA256 pins retained in `verify.py`,
 compares existing `read_bytes` receipt ranges, and computes local call targets.
-It is not the default and was not run during review. It does not discover new
-original bodies or follow call targets. Both explicit files are required; no
+It is not the default. It was run once during the maintainer merge review
+(below). It does not discover new original bodies or follow call targets. Both explicit files are required; no
 mutable fork remote/ref is assumed. Read/search receipts and mistaken earlier
 observations remain unchanged in `rea-evidence/`.
 
 The byte-range receipts alone do not prove parser ownership, Err layout, call
 mapping, transitive behavior, source reconstruction or whole byte identity.
 The original source function extent and first-account attribution remain open.
+
+## Maintainer merge review run (2026-10-26)
+
+The explicit mode was run with `evidence/original/pump_fees/deployed.so`
+(`4f2955d0…`) and the candidate retained in the merged package
+`repro/pump_fees/linux-current-source-build/fees-current-linux-v144.so`
+(`6c44d9f2…`):
+
+```sh
+# from the repository root
+python3 -B repro/pump_fees/first-account-boundary-admission/verify.py \
+  --original evidence/original/pump_fees/deployed.so \
+  --candidate repro/pump_fees/linux-current-source-build/fees-current-linux-v144.so
+```
+
+All seven saved `read_bytes` receipts matched the pinned inputs. The
+local-CALL formula gives these file-offset targets:
+
+| Site | CALL at | imm32 | Target |
+| --- | --- | --- | --- |
+| original | 71240 (`0x11648`) | -5015 | 31128 (`0x7998`) |
+| candidate A | `0x144e0` | -6543 | 30832 (`0x7870`) |
+| candidate B | `0x145a8` | -6192 | 33840 (`0x8430`) |
+| candidate C | `0x14660` | -6087 | 34864 (`0x8830`) |
+
+No callee body was read, so these targets do not attribute the original site
+to any candidate. Receipt `ev_fc1cce98…` reads the original at `0x144e0`, which
+is a candidate-site offset. Its bytes are unrelated original code and support
+no site claim.
