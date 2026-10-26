@@ -1,7 +1,9 @@
 # Mayhem: one official Linux v1.54 distribution measurement
 
-**The Linux source build reproduced the original alloc Location payload. Whole
-Mayhem byte identity remains false.** [Hosted run 40293434354](https://github.com/pastagotsauce/pumpfun-source/actions/runs/40293434354)
+**The Linux source build reproduced the original alloc Location payload (path
+bytes, length, line and column), which marks the original as built with a
+Linux-hosted toolchain. It does not identify v1.54 specifically, as explained in
+the scope section below. Whole Mayhem byte identity remains false.** [Hosted run 40293434354](https://github.com/pastagotsauce/pumpfun-source/actions/runs/40293434354)
 completed one source compilation and one strip, both with exit zero. The raw
 599,776-byte output has SHA256
 `e59f9f970813102e04327ce0502f8359dd217cfaebec942172614ab84dd6ac88`.
@@ -46,6 +48,29 @@ It does not predict complete Mayhem byte identity or recover a unique historical
 compiler recipe. The seven unmatched admitted handlers and other source gaps
 remain separate. No path replacement, invented source coordinate, ELF editing,
 padding, compiler patch or flag search is used.
+
+## What this does and does not identify
+
+The matched payload separates **Linux-hosted from macOS-hosted** official
+platform-tools distributions: the original's standard-library paths carry the
+`/home/runner/…` prefix, not the `/Users/runner/…` prefix found in the selected
+Darwin candidate. It does **not** single out v1.54 within the Rust 1.89 family:
+
+- The same 85-byte `/home/runner/…/alloc/src/string.rs` path was already found
+  in the official Linux **v1.52** `liballoc` rlib
+  (`repro/function-inventory/2026-10-24-374fcf0/research/mayhem-linux-v152-build-plan/REPORT.md`).
+- `alloc/src/string.rs:2830:14` is one of the stdlib locations that
+  `repro/compiler-fingerprints/REPORT.md` reports as shared by v1.52–v1.56.
+- Linux v1.53, v1.55 and v1.56 archives were not inspected here. Nothing in
+  this package shows that their build-path prefix differs.
+
+So the result is consistent with v1.54 Linux but equally consistent with other
+Linux releases in that family. Mayhem's compiler remains `unresolved` in
+`repro/status.json`, with family candidates v1.52–v1.56. This package changes
+neither that entry nor the selected artifact. The 15,310 Linux-vs-Darwin
+`.text` differences mean the Linux distribution also changes codegen. Whether a
+Linux v1.52 or v1.53 build moves closer to or further from the original remains
+an open, separate measurement.
 
 ## Checks and execution
 
@@ -128,7 +153,8 @@ manifests are regenerated.
 
 `upstream-check.json` records a bounded check of upstream main at `0b29240…`,
 its Mayhem directory, recent commits and Mayhem/Linux search before this run. The repository has
-a separate older v1.52 Linux plan and several Darwin v1.54 experiments; no exact
+a separate older v1.52 Linux plan, which had already found this Linux alloc path
+in the v1.52 distribution, and several Darwin v1.54 experiments; no exact
 fourteen-input Linux v1.54 execution was found in those checked records. This is
 not a claim to have searched every private or unindexed branch. New upstream
 restructure maps infer module placement and do not provide this measured build.
