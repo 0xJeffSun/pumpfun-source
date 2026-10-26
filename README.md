@@ -25,9 +25,13 @@ Dependencies captured alongside the core programs:
 | Dependency | Rebuilt from public source |
 | --- | --- |
 | SPL Token | Byte-identical |
-| Token-2022 | Byte-identical, including zero allocation padding |
+| Token-2022 | Raw ELF matches the captured prefix; generated zero padding reproduces the full allocation ([report](repro/pump/verified-token-2022/README.md)) |
 | Associated Token Account | Byte-identical through a reconstructed linker order ([report](repro/ata/reconstructed-order/README.md)); not yet promoted in `repro/dependency-status.json` |
-| Metaplex Token Metadata | 1,509 bytes differ, all in the Utilize branch |
+| Metaplex Token Metadata | 1,509 differing positions in the allocation comparison: 1,477 text bytes in Utilize, 30 source-coordinate bytes and 2 relocation bytes ([report](repro/pump/metaplex-candidate-build-11/README.md)) |
+
+The Token-2022 and Metaplex raw ELFs are shorter than their captured allocations
+by 770,960 and 86,543 zero bytes respectively. Allocation-image comparisons are
+separate from equality of the unmodified compiler output.
 
 [`repro/status.json`](repro/status.json) is the authoritative index of selected
 candidates. [`docs/REMAINING-WORK.md`](docs/REMAINING-WORK.md) lists what is left.
@@ -76,7 +80,7 @@ For local SDK testing with every handler present, apply the
 ## Rules the evidence follows
 
 - Behavioral equivalence and byte identity are reported separately and never combined into one score.
-- No binary patching, padding or hand edits turn a differing build into a match.
+- Raw compiler-byte identity never uses padding or rewriting; allocation-image matches are labeled separately.
 - Original binaries are read only after compilation finishes.
 - Changing a CI-bound source file means selecting a new checkpoint with fresh build and differential evidence.
 - Tests run only against local VMs and simulators; nothing is sent to a live network.

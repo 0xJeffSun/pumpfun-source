@@ -9,7 +9,7 @@ the pass-27 current-state index and the evidence packages cited below.
 | Area | State | What is left |
 | --- | --- | --- |
 | Core byte identity | 0 / 4 programs | All four, plus Relay. Blocked mainly by unrecovered source layout and exact toolchain. |
-| Dependencies | SPL Token, Token-2022, ATA reproduce exactly | Metaplex Utilize branch (1,509 bytes); promote the ATA result in `repro/dependency-status.json`. |
+| Dependencies | SPL Token and ATA raw outputs match; Token-2022 matches after zero allocation padding | Metaplex: 1,477 differing text bytes in Utilize, 30 source-coordinate bytes and 2 relocation bytes; promote the ATA result in `repro/dependency-status.json`. |
 | Handlers | 140 / 150 accepted; 6 more validated in the overlay | Promote the overlay, finish five partial handlers, replay AMM `create_config`. |
 | Process | One CI guard (pass 27) pins README, scripts, workflows and sources | Decide how recovered-but-not-byte-exact source is admitted; plan the next guard generation. |
 
@@ -43,15 +43,25 @@ Known structural blockers, from the byte-grind experiments:
 
 ### Dependencies
 
+- **Token-2022**: the unmodified 611,056-byte ELF equals the captured prefix.
+  The 1,382,016-byte captured allocation has another 770,960 zero bytes; generating
+  that padding reproduces the allocation image, not raw compiler-file equality
+  (`repro/pump/verified-token-2022/`).
 - **ATA**: byte-identical through a reconstructed linker order
   (`repro/ata/reconstructed-order/`, hosted run 40287588927) and independently through
   one inert Cargo feature (`repro/ata/synthetic-ordering-exact-build/`).
   `repro/dependency-status.json` still says `unresolved`; updating it is a selection
   change and needs the usual review.
-- **Metaplex Token Metadata**: 1,250 of 1,251 windows match. The 5,104-byte Utilize body
-  remains, now traced to a compiler-stage branch-selection boundary
-  (`repro/metaplex/branch-selection-audit/`). The pinned compiler image did not resolve
-  candidate 11's compiler path (`repro/metaplex/compiler-image-observation/`).
+- **Metaplex Token Metadata**: 1,250 of 1,251 inferred function windows match.
+  The 5,104-byte Utilize body contains all 1,477 differing text bytes; 30
+  source-coordinate bytes and two relocation bytes also differ. The raw ELF is
+  707,448 bytes, while the captured allocation is 793,991 bytes; the reported
+  1,509 differing positions come from the separately padded allocation comparison
+  (`repro/pump/metaplex-candidate-build-11/`). A fresh isolated build now reproduces
+  candidate 11's raw output exactly (`research/metaplex-candidate11-offline/`), and
+  captured final LLVM input and machine stages narrow the guard expansion to SBF
+  instruction selection (`research/metaplex-utilize-trace/`). The deployed build's
+  original source/compiler inputs remain unidentified.
 
 ## 2. Handler behavior
 
