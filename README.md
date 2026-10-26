@@ -3,24 +3,45 @@
 Reconstructed Rust source for the Pump.fun Solana programs, plus the captured
 on-chain binaries and the evidence used to check the reconstruction against them.
 
-**None of the four core programs is byte-identical to its deployed binary yet.**
+**None of the four core programs or the selected Relay is byte-identical to its
+deployed binary yet.**
 Behavior is reconstructed handler by handler and checked with differential tests
 that run the captured original and the rebuilt candidate side by side in a local VM.
 
+The [26 October reconstruction audit](docs/RECONSTRUCTION-AUDIT.md) separates
+selected builds from newer research and lists [all 150 handlers](repro/reconstruction-audit-2026-10-26/handlers.md),
+[every exact local body-byte match](repro/reconstruction-audit-2026-10-26/raw-body-matches.md)
+and [all selected/research function windows](repro/reconstruction-audit-2026-10-26/functions.tsv).
+
 ## Status
 
-Handler counts are bounded reconstructions with saved differential comparisons.
-They are not proof of exhaustive behavior. The unaccepted
+Handler counts are bounded reconstructions with saved differential comparisons;
+they are not counts of exhaustively perfect functions. The unaccepted
 [behavioral recovery overlay](repro/behavioral-recovery/README.md) dispatches all
 56 Pump and 25 Mayhem instructions for local testing.
 
-| Program | Handlers reconstructed | Saved comparisons | Byte-identical to deployed |
+| Program | Selected bounded handlers | Saved comparisons | Whole captured file equal |
 | --- | ---: | ---: | --- |
-| Pump | 48 / 56, plus 5 partial | 9,269 + 1,024 Surfpool | No |
+| Pump | 48 / 56; 5 partial, 3 unaccepted | 9,269 + 1,024 Surfpool | No |
 | PumpSwap (AMM) | 37 / 38 | 17,462 | No |
 | Fees | 31 / 31 | 17,461 | No |
 | Mayhem | 24 / 25 | 9,595 | No |
 | Donation Relay | selected source 15; newer generated-framework source in `repro/donation-relay/` | 12 ordinary | No |
+
+Selected original-window inventories contain **384 windows with equal local
+body bytes**, **1,408 additional normalized-only matches**, **1,301 without a
+complete body match**, and **245 remaining opaque windows**. These partition
+3,338 original windows; matching bytes or normalized instructions does not prove
+call/data identity or all behavior. Original boundaries remain inferred.
+
+Newer research is separate: Fees has 340 unique structural pairs, 53 additional
+call-attributed duplicate pairs, 94 still-unattributed duplicate windows and 98
+unmatched windows. Relay's distribution-worker research reaches 465/492 normalized
+windows (86 raw local matches), leaving 27 unmatched; selected Relay remains at
+122/492. These are not source-completion percentages or promoted checkpoints.
+
+Known behavior gaps remain even among bounded handlers, including Pump `sell_v2`
+quote transfer fees. See the [remaining-work list](docs/REMAINING-WORK.md).
 
 Dependencies captured alongside the core programs:
 
@@ -99,9 +120,9 @@ For local SDK testing with every handler present, apply the
 
 ## More detail
 
-- [Remaining work](docs/REMAINING-WORK.md), consolidated 2026-10-26
-- [Completion ledger](docs/COMPLETION.md) and [scope](docs/SCOPE.md)
-- [Tooling](docs/TOOLING.md) and [build-identity audit](docs/BUILD_IDENTITY_AUDIT.md)
+- [Current reconstruction audit](docs/RECONSTRUCTION-AUDIT.md) and [remaining work](docs/REMAINING-WORK.md)
+- [Historical selected-checkpoint completion ledger](docs/COMPLETION.md) and [scope](docs/SCOPE.md)
+- [Tooling](docs/TOOLING.md) and [historical build-identity audit](docs/BUILD_IDENTITY_AUDIT.md)
 - Per-pass ledgers in `repro/layered-passes/`; historical packages are immutable.
 - [Security policy](SECURITY.md) and [audit scope](audit/AUDIT.md)
 
