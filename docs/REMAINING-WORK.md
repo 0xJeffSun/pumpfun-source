@@ -124,11 +124,13 @@ call for the repository owner, not a mechanical merge.
 
 - **Open pull requests**: new contributions keep arriving after the consolidation
   (PR #60 merged just after it, then #62–#91 so far); a parallel review session merges them. See GitHub for the live list.
-- **Relay generated-framework branch** (`codex/relay-generated-framework-20261025`, owned
-  by an active Codex agent): its evidence is on main; its `programs/donation-relay`
-  change is not, because CI pins that directory to source 15. Landing it needs a new
-  Relay selection (current.json, source-selected.json and the Relay15 selection
-  verifier).
+- **Relay generated-framework source** (from `codex/relay-generated-framework-20261025`,
+  owned by an active Codex agent): the code and evidence are on main under
+  `repro/donation-relay/`, but the active `programs/donation-relay` path still holds the
+  selected source 15, because CI's Relay15 selection verifier pins that directory.
+  Promoting it needs a new Relay selection (current.json, source-selected.json and that
+  verifier). The owning agent is already revising the source further (uncommitted
+  Anchor 0.32.1 changes), so it should make that selection.
 - **Pinned tooling**: pass 27 freezes the 187 `scripts/*.py` files and their hashes, so
   the flat script directory and its duplicated LiteSVM boilerplate cannot be
   restructured yet. `repro/consolidation/2026-10-26/` can re-pin an edited asset, but
@@ -150,7 +152,7 @@ call for the repository owner, not a mechanical merge.
 | Primary checkout's uncommitted recovery work | Snapshotted as `1bec3365`, merged as `repro/behavioral-recovery/` |
 | `codex/layered-reconstruction` | Merged: MIT `LICENSE`; its program edits went to the overlay |
 | `review/reconstruction-2026-10-25` | Merged: nine A-reproduction build records |
-| `codex/relay-generated-framework-20261025` @ `9f49231c` | Evidence squashed in; `programs/donation-relay` change left on the branch (§4) |
+| `codex/relay-generated-framework-20261025` @ `9f49231c` | Squashed in: all 15 evidence packages and the complete generated-framework source (its 50 Rust/Cargo inputs, byte-identical, in `repro/donation-relay/distribution-worker-source-recovery/settlement/source/`). Three predecessor packages its verifiers need are restored by PR #94. Only promotion to the active `programs/donation-relay` path is pending (§4) |
 | Pull requests #32–#59 (except #34, closed as superseded by #38) | Merged by the parallel PR agent; included |
 | Go-clone `codex/checkout-byte-preservation-transition` | Superseded by PR #32, which contains both commits plus the fix that kept the sealed attributes |
 | Go-clone `research/pr8-harness-bindings-superseded` (`89634a4d`) | Not merged: self-labelled superseded, targets pass-22 bindings and edits two pinned scripts |
