@@ -106,7 +106,8 @@ def run(c, pump_bin=ORIGINAL_PUMP, mayhem_bin=ORIGINAL_MAYHEM):
     if c.get('wrong'):
         metas = [AccountMeta(OTHER.pubkey() if m.pubkey==NAMES[c['wrong']] else m.pubkey, m.is_signer, m.is_writable) for m in metas]
     payload = (bytes(ix['discriminator']) + _string(c.get('name','Synthetic Coin')) + _string(c.get('symbol','SYNTH'))
-               + _string(c.get('uri','https://example.invalid/metadata.json')) + bytes(USER.pubkey())
+               + _string(c.get('uri','https://example.invalid/metadata.json'))
+               + bytes(Pubkey.from_string(c.get('creator',str(USER.pubkey()))))
                + bytes([1 if c.get('is_mayhem_mode',True) else 0]) + bytes.fromhex(c.get('optional_args','')))
     signers = [k for k in [USER,MINT] if k.pubkey() in {m.pubkey for m in metas if m.is_signer}|{USER.pubkey()}]
     tx = Transaction.new_signed_with_payer([set_compute_unit_limit(1400000), Instruction(PROGRAM,payload,metas)], USER.pubkey(), signers, vm.latest_blockhash())
@@ -123,7 +124,8 @@ def run(c, pump_bin=ORIGINAL_PUMP, mayhem_bin=ORIGINAL_MAYHEM):
     fail=isinstance(r,FailedTransactionMetadata); m=r.meta() if fail else r; raw=json.loads(m.to_json())
     return {'before':before,'after':snap(),'error':str(r.err()) if fail else None,
             'logs':m.logs(),'events':[l for l in m.logs() if l.startswith('Program data:')],
-            'inner':raw['inner_instructions'],'return':raw.get('return_data')}
+            'inner':raw['inner_instructions'],'return':raw.get('return_data'),
+            'signed_transaction_base64':base64.b64encode(bytes(tx)).decode()}
 
 def cases():
     out=[{'case':'mayhem-base'}]
@@ -134,7 +136,10 @@ def cases():
             {'case':'normal-mode-regression','is_mayhem_mode':False}]
     for field,n in [('name',32),('name',33),('symbol',13),('symbol',14),('uri',200),('uri',201)]:
         out.append({'case':'%s-%d'%(field,n),field:'x'*n})
-    out += [{'case':'zero-creator-is-rejected','creator':str(Pubkey.default()),'is_mayhem_mode':True}]
+    out += [{'case':'zero-creator-is-rejected','creator':str(Pubkey.default()),'is_mayhem_mode':True},
+            {'case':'zero-creator-normal-mode','creator':str(Pubkey.default()),'is_mayhem_mode':False},
+            {'case':'distinct-creator-mayhem-mode','creator':str(OTHER.pubkey()),'is_mayhem_mode':True},
+            {'case':'distinct-creator-normal-mode','creator':str(OTHER.pubkey()),'is_mayhem_mode':False}]
     return out
 
 def main():
@@ -148,7 +153,7 @@ def main():
     for c in cases():
         x=run(c)
         y=run(c,a.candidate_pump,a.candidate_mayhem) if has_cand else None
-        diff=[k for k in ['before','after','error','events','inner','return'] if y is not None and x[k]!=y[k]]
+        diff=[k for k in ['before','after','error','events','inner','return','signed_transaction_base64'] if y is not None and x[k]!=y[k]]
         rows.append({'case':c,'original':x,'candidate':y,'diff':diff})
         if diff: bad.append(c['case'])
     report={'scope':'End-to-end pump create_v2 Mayhem-mode -> mayhem initialize_mayhem_state via the real pump->mayhem invoke_signed CPI. No byte-identity claim.',
