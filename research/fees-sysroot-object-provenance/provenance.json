@@ -63,6 +63,19 @@
     "repro/identity-audit/2026-10-25/compiler-v1461/v1461-build-01/unstripped.so": {
       "bytes": 615856,
       "sha256": "ed7346a8bf42fcc64e0fce4c3e4fb6dfb60bf8b95323d7f18695a1eb4de00291"
+    },
+    "evidence/original/pump/deployed.so": {
+      "bytes": 10485715,
+      "sha256": "7a19affaa2c6187e04a5fe0ea298cee81fa5eb8c24cfcc30d85f615e89f7b02d"
+    },
+    "evidence/original/pump_amm/deployed.so": {
+      "bytes": 10485715,
+      "sha256": "6a7ad34596d83b4c435b32f458a56e718e9f82eb4ad38e4316616d15d24d8ff7"
     }
+  },
+  "cross_program_captures": {
+    "pump": "evidence/original/pump/deployed.so",
+    "pump_amm": "evidence/original/pump_amm/deployed.so",
+    "pump_fees": "evidence/original/pump_fees/deployed.so"
   }
 }

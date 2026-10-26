@@ -306,8 +306,21 @@ def verify(package=HERE, repo=REPO):
             observed["builds"]["v146-build-01"]["raw_equals_shipped_object"] and
             not observed["captured_window"]["raw_equals_shipped_object"] and
             not observed["shipped_body_exact_occurrences_in_captured_text"], "unexpected comparison result")
+    import cross_program
+    cross = cross_program.analyze(package, repo)
+    require(cross == read_json(package / "cross-program-analysis.json"), "cross-program analysis differs")
+    require(set(cross["captures"]) == {"pump", "pump_amm", "pump_fees"}, "unexpected capture set")
+    for capture in cross["captures"].values():
+        occurrences = capture["helper_occurrences"]
+        require(not occurrences["v1461_fmt_write"], "unexpected shipped fmt body occurrence")
+        for name in ("v144_core_fmt_write", "v144_integer_entry"):
+            matches = occurrences[name]
+            require(len(matches) == 1 and matches[0]["instruction_aligned"] and
+                    matches[0]["occupies_complete_direct_call_window"] and
+                    not matches[0]["loader_relocations"], "unexpected v144 helper boundary/relocations")
     return dict(verified=True, object_to_link_raw_identity=True, captured_window_raw_identity=False,
-                archive_to_object_rechecked=False, historical_compiler_identified=False)
+                archive_to_object_rechecked=False, historical_compiler_identified=False,
+                cross_program_captures=3, raw_v144_call_bounded_windows=6)
 
 
 def main():

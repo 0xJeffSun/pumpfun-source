@@ -1,10 +1,18 @@
-# Fees formatting helper: shipped sysroot to linked bytes
+# Shipped sysroot helper and direct Pump / AMM / Fees fingerprints
 
 The official Darwin arm64 platform-tools **v1.46.1** archive ships the exact
 1,160-byte `core::fmt::write` body found in the retained v1.46.1 Fees build.
 The same body occurs in the retained v1.46 build. It does not occur anywhere
 in the captured Fees `.text`; the prior audit's corresponding captured window
 is 1,056 bytes and equals the v1.44 build's body.
+
+Direct inspection of **all three captured programs** also finds that v1.44
+formatting body and its 352-byte `__multi3` body, each exactly once per program.
+All six raw matches occupy complete windows between independently decoded direct
+call targets, with no loader relocations inside them. The shipped v1.46.1
+formatting body occurs in none of the three captured `.text` sections. This
+provides direct Pump/AMM byte evidence, instead of inferring their compiler
+family solely from the Fees measurement and common ELF header/source paths.
 
 This adds a direct **release archive → rlib → ELF object symbol → linked
 function** byte comparison to the existing
@@ -40,6 +48,36 @@ its function identification/bounds come from the linked prior audit, not an
 original named symbol. The new check reads that exact captured window and also
 searches all of captured `.text` for the complete shipped 1,160-byte body; there
 are zero occurrences. It makes no behavioral claim about the two implementations.
+
+## Direct cross-program check
+
+`cross-program-analysis.json` retains every matched range, exact caller instruction
+and signed displacement, target address, next direct-call target, and referring
+caller at the end boundary. Addresses are converted through the ELF `.text`
+mapping; the reader does not assume that virtual addresses equal file offsets.
+Relocated external calls are excluded and LDDW continuation words are skipped.
+
+| Captured program | v1.44 formatting body `[start,end)` | v1.44 `__multi3` body `[start,end)` | Shipped v1.46.1 formatting body occurrences |
+| --- | --- | --- | ---: |
+| Pump | `[1762144,1763200)` | `[1791432,1791784)` | 0 |
+| PumpSwap | `[1131744,1132800)` | `[1161264,1161616)` | 0 |
+| Fees | `[775776,776832)` | `[799040,799392)` | 0 |
+
+The multiplication body's SHA-256 is
+`face056642083fcc15c6737f1910030a4b59b6a78a4fa523f142dc0f28635762`.
+The two positive reference bodies are read from the retained **v1.44 linked Fees
+build**, cross-checked against its unstripped symbols, stripped bytes and prior
+helper records. They are not newly attributed to an omitted v1.44 release
+archive. The negative 1,160-byte reference is read from the retained **v1.46.1
+shipped libcore object**, whose archive association is checked as described below.
+
+Each positive match starts at an actual relative-call target; the next such
+target is exactly its end. This is stronger than an unbounded byte-substring
+match, but these stripped captures have no debug symbols proving every possible
+function boundary. Indirect-only entries or undiscovered internal boundaries
+are outside this ledger. The raw occurrences do not prove behavioral equivalence,
+full dependency identity, or a unique compiler release. The captures are read
+unmodified, including their allocation tails, but only `.text` is searched.
 
 ## Archive binding
 
@@ -102,7 +140,8 @@ and hashes are in `license-sources.json`.
 ## Limits and next step
 
 This packet attributes one unchanged linked routine to bytes also shipped in a
-specific sysroot. It does not prove which files a historical compiler loaded:
+specific sysroot and checks two positive reference bodies directly in three
+captured programs. It does not prove which files a historical compiler loaded:
 the v1.46 body is byte-identical despite a different mangled symbol. It does not
 identify the deployed compiler, recover missing application source, or improve
 whole-file identity. Raw output, captured allocation size, and behavioral
