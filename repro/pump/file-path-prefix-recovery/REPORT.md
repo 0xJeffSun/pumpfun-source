@@ -1,9 +1,11 @@
 # Pump: `file!()` workspace-prefix recovery (+5 normalized windows, 0 regressions)
 
-A build-environment recovery. The reconstruction builds `programs/pump` as its
+An author-reported build-environment experiment. The retained scores lack an
+immutable source revision/map and raw build outputs, so they are an unverified
+snapshot rather than independently reproduced evidence. The reconstruction builds `programs/pump` as its
 own crate (its `Cargo.toml` declares an empty `[workspace]`), so cargo roots the
-crate at itself and `file!()` expands to `src/<module>.rs`. The original
-pump.fun program was built as a member of a monorepo workspace, so its Anchor
+crate at itself and `file!()` expands to `src/<module>.rs`. The original path strings are consistent with a monorepo workspace; the
+historical workspace recipe has not been established. Its Anchor
 error macros captured `programs/pump/src/<module>.rs`. That string, length and
 all, is baked into every error site, so the reconstruction's `.text` differs
 from the original at a scatter of single bytes across many functions.
@@ -80,8 +82,8 @@ token_incentives/{claim_token_incentives, init_user_volume_accumulator,
 util/{constant_product, fee, transfer_fee}.rs
 ```
 
-Reorganizing the reconstruction's source into this layout (the original monorepo
-structure, now known from the binary) is the follow-up that would flip the error
+Reorganizing the reconstruction's source into this layout (a proposed module
+structure suggested by retained path observations) is the follow-up that would flip the error
 sites in those modules. This packet does not perform that reorganization.
 
 ## Scope and honesty
@@ -89,3 +91,15 @@ sites in those modules. This packet does not perform that reorganization.
 Build-environment recovery only. No source logic changed, no byte-identity
 achieved, no original bytes used as a compiler input. The `file!()` prefix is one
 necessary condition among many; the 497 remaining unmatched windows stand.
+
+## Review and caller inputs
+
+`build_prefix.sh` requires an existing repository root and a nonexistent output
+path whose parent already exists. Relative output paths are resolved before
+changing directories. The caller must record the exact source commit and source
+hash map, local modifications, lockfile, selected compiler and strip tools before
+claiming a reproduction; this packet does not pin a historical source revision.
+The build helper is opt-in and was not run during review. The original report
+and script are preserved unchanged in `history/`. The score JSON files remain
+unchanged author-reported observations. No `file!()` or `line!()` source
+coordinates are forced by this helper, and no source/artifact is selected.

@@ -11,7 +11,17 @@
 #
 # Usage: build_prefix.sh <repo-root> <out-dir>
 set -euo pipefail
-REPO="${1:?repo root}"; OUT="${2:?out dir}"
+REPO="${1:?repo root}"; OUT="${2:?fresh out dir}"
+REPO="$(cd "$REPO" && pwd -P)"
+# Anchor OUT before entering the throwaway workspace; never overwrite evidence.
+OUT_PARENT="$(dirname -- "$OUT")"; OUT_NAME="$(basename -- "$OUT")"
+OUT_PARENT="$(cd "$OUT_PARENT" && pwd -P)"
+OUT="$OUT_PARENT/$OUT_NAME"
+if [[ -e "$OUT" || -L "$OUT" ]]; then
+    echo "Output already exists; preserve it and choose a fresh path: $OUT" >&2
+    exit 2
+fi
+mkdir -- "$OUT"
 : "${RUSTUP_TOOLCHAIN:=1.87-x86_64-unknown-linux-gnu}"; export RUSTUP_TOOLCHAIN
 WS="$(mktemp -d)"; mkdir -p "$WS/programs"
 cp -r "$REPO/programs/pump" "$WS/programs/pump"
@@ -29,7 +39,7 @@ lto = false
 codegen-units = 1
 EOF
 cp "$REPO/programs/pump/Cargo.lock" "$WS/Cargo.lock"   # pump's own locked deps
-mkdir -p "$OUT/artifacts"
+mkdir "$OUT/artifacts"
 ( cd "$WS" && cargo-build-sbf \
     --manifest-path "$WS/programs/pump/Cargo.toml" \
     --tools-version v1.44 \
