@@ -1,6 +1,6 @@
 # Reconstruction pass 29
 
-The latest main is reconciled while stopped executions remain excluded. Pinned main `44b07e9c9a7f7ac5b5818cacd30e1cdbc15f23d3` adds an unselected Pump wallet implementation and its saved evidence. The subsequent `53e88a9a3ddac932bcbf54c49a95e55ab2f7765d` source/status changes are preserved exactly, with the verified source projection restored in merge `7719246ede05ed2573602939bc96e04be216baa0`. No incoming initializer, incentive, V3 or filtered parser execution is adopted.
+Main is reconciled through pinned `0003e7fa9997c0a7acbedd0f32dfdc394f264acf` while stopped executions remain excluded. Earlier `44b07e9c9a7f7ac5b5818cacd30e1cdbc15f23d3` adds an unselected Pump wallet implementation and its saved evidence. The subsequent `53e88a9a3ddac932bcbf54c49a95e55ab2f7765d` source/status changes are preserved exactly, with the verified source projection restored in merge `7719246ede05ed2573602939bc96e04be216baa0`. Main0003 adds only passive SDK evidence and documentation; the verified compiler inputs remain unchanged. No incoming initializer, incentive, V3 or filtered parser execution is adopted.
 
 Whole-file identity remains **0/4 core programs (0%)**, **2/5 dependency capture images (40%)**, and **1/5 raw dependency compiler outputs (20%)**. These are separate completion criteria. They do not provide an overall implementation percentage. No core program becomes byte-identical in this pass.
 
@@ -68,6 +68,8 @@ Pump's five partial handlers remain sell_v3, buy_v3, buy_exact_quote_in_v3, crea
 
 SDK closure is also incomplete: seventeen of25 account-object sites remain unexpanded, and the four reviewed ordinary swap routes still need complete dynamic resolver/derivation/remaining-account/wrapper/fee/external-constant/JavaScript-graph acceptance. Locked dependency versions and macro labels are not actual compiled-unit counts or historical build receipts.
 
+The [new passive SDK lock audit](../../../docs/BUILD_IDENTITY_SDK_LOCK_RESOLUTION.md) retains a newly resolved99-placement graph and91 authenticated archives. Independent byte/hash/SRI checks pass; all129 incoming paths are preserved and128 package paths pass actual Git-index checking. A saved offline Anchor builder observation covers19 arbitrary supplied keys, buy23/sell21 named accounts and four/two defaults, with152 loaded modules bound to archives. It is a new client experiment: historical graph, independent npm semver/resolver behavior, native bigint identity, npm-ci equivalence, valid pool state, SDK wrappers and target acceptance remain open. Root executes no imported Node, resolver, network, RPC or transaction from this publication.
+
 The complete current queue has Pump1,035, AMM785, Fees585, Mayhem441 and Relay492 records. Positional mismatch counts, normalized pairs, finite regression cases and emitted-body counts are not semantic distance or an estimate of hours remaining. No pass here establishes exhaustive equivalence or production acceptance.
 
 ## Publication and verification
@@ -76,7 +78,9 @@ The [lossless research archive](research-evidence/inventory.json) retains24 expl
 
 The complete separately sealed [packaging plan](packaging-plan/PLAN.md) preserves the original bug, independent review and repair, with twelve synthetic checks including refusal to mutate an existing output directory. [Next-obligation metadata](next-obligations/README.md) retains the AMM four-target mapping and independent packager review. Those AMM targets lack current semantic admission; a historical scalar-method report binds another candidate. Its old absent-creation assertion cannot be carried into the current selected source. No size-driven source reorganization or new build follows from this metadata.
 
-Current-source and complete metadata checks pass locally. The first portable crypto invocation failed because a nested saved reader lacked the local solders import path; the second failed because that nested environment lacked typing_extensions. Both raw failures remain retained. This local crypto gate remains unresolved until an actual successful receipt is recorded. Hosted checks on this new publication are a separate gate and must be observed at its exact head.
+Current-source, complete metadata and portable saved-signature checks pass locally. The final crypto invocation used an existing complete Python3.12.11 environment with solders0.27.1. Its interpreter probe and all five saved readers exited0: Pump, Mayhem, both Relay routes and AMM. This is a current saved-reader environment, not historical runtime or compiler identity. Three earlier environment failures remain retained: missing nested solders, missing typing_extensions, and Mayhem's nested PYTHONPATH replacement. No verifier or assertion changed. Hosted checks on this new publication are a separate gate and must be observed at its exact head.
+
+The publication's raw staged whitespace check also returned2 for four single-space blank context lines in the authenticated packaging-plan successor.diff (lines90/93/95/98). Those are standard unified-diff payload bytes and remain unchanged. The first precommit assertion failure, raw result and exact owning seal are retained; neither a passing raw check nor an attribute waiver is claimed.
 
 PR14's separate disassembly-recovery branch is outside these24 groups and remains pending its independent source/conflict review. This publication does not include or accept that branch's source changes. The retained Relay controller and failed Linux15 publication are distinct from PR14.
 
