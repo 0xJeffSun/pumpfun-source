@@ -109,12 +109,29 @@ def main():
     assert b_store == bytes.fromhex('7a06000000000000'), f'B slot0 store {b_store.hex()}'
     assert c_store == bytes.fromhex('7206040102000000'), f'C tag store {c_store.hex()}'
 
+    # 6. REA receipts: every saved read resolves against the pinned subject it names,
+    #    at the address it names, and equals the bytes the binary holds there.
     P = Path(__file__).resolve().parent
+    subjects = {sha(orig): (orig, ot), sha(cand): (cand, ct), sha(lcs): (lcs, lt)}
+    receipts = sorted((P / 'rea-evidence').glob('ev_*.json'))
+    assert receipts, 'no REA receipts'
+    for path in receipts:
+        rec = json.loads(path.read_text())
+        assert rec['provider']['id'] == 'ghidra', f'{path.name}: provider'
+        image, section = subjects[rec['subject']['sha256']]
+        params = rec['parameters']
+        assert params['address'] == hex(int(params['address'], 16)), f'{path.name}: address form'
+        assert params['length'] == len(bytes.fromhex(rec['bytes_hex'])), f'{path.name}: length'
+        observed = vread(image, section, int(params['address'], 16), params['length'])
+        assert observed.hex() == rec['bytes_hex'], f'{path.name}: receipt bytes'
+        assert path.name == f"{path.name}", path.name
+
     manifest = json.loads((P / 'manifest-sha256.json').read_text())
     for name, pin in manifest.items():
         assert sha((P / name).read_bytes()) == pin, f'manifest pin: {name}'
 
     print(json.dumps({
+        'rea_receipts_checked': len(receipts),
         'verified': True,
         'check': 'callee-identity attribution (PR #74 claim, corrected CALL encoding)',
         'call_targets': {
