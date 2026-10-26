@@ -51,6 +51,18 @@ The target-only control recovered no normalized window, so it is retained as a
 negative result for the repeated `Error::type_id` hypothesis. The three type-ID
 windows still need work. The current residual list is in the new package.
 
+## Fees: 95 → 94 unmatched normalized windows
+
+Merged [PR #109](https://github.com/lalalune/pumpfun-source/pull/109) recovers the
+complete 1,560-byte `get_fees` wrapper. Unique structural pairs rise from 343
+to **344**, with no previous match lost and **94 unmatched** original windows.
+The [optional-boolean study](../research/fees-optional-bool-query/README.md)
+retains 17,331 passing full-suite comparisons and a separate 1,542-case focused
+matrix covering every optional-byte value and absence. In the focused matrix,
+proposal outcomes, raw logs and compute units agree; the retained control has
+1,539 log/compute differences. These are finite cases, not whole-program proof.
+Selected Fees source and artifacts are unchanged.
+
 ## Fees: 98 → 95 unmatched normalized windows
 
 Merged [PR #96](https://github.com/lalalune/pumpfun-source/pull/96) recovers a
