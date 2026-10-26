@@ -1,6 +1,8 @@
 # Reconstruction pass 28 — bounded research publication
 
-Pass 27 reconciled pinned main `998a2275426b140706a08a96034ce02ff3483d65` while keeping stopped executions excluded. Its verified integration is published in [draft PR #12](https://github.com/lalalune/pumpfun-source/pull/12), exact head `67608d457c096cebf73f1685f78f2f0ab9f9bdb0`. Local current-source, metadata, portable saved-signature, raw-archive and actual Git-index checks passed. Hosted acceptance is not established; GitHub records cancelled runs, including a cancellation attributed to the account operator. No cancellation is counted as a pass.
+The verified pass-25/pass-26/pass-27 integration is now on main through [PR #11](https://github.com/lalalune/pumpfun-source/pull/11), merge `594bc7913943ea186087c9f5a7e39aefe3d3ab98`. The exact PR #11 head `f914d0f0e70534212431b761d174a96e0fb7ba99` passed all 24 hosted checks. PR #12 is included by ancestry. Earlier cancelled runs remain cancelled and are not counted as passes.
+
+Pass 28 has reconciled that pinned main, preserving all 280 incoming paths. The 249 research paths were already retained losslessly in earlier archives; all 31 additional consolidation records are now retained at their incoming paths too. No existing selected source/status/helper/workflow changed. Root current-source and exact Git-index checks passed after this merge. PR #13 was briefly closed without merging while its old base branch was removed, then restored open against main. This branch now includes pinned main `65473510aa7212d0f51ef85e15220b4341190c06`, preserving its additional 279 data-only paths. New-head hosted acceptance is still separate from the parent’s 24 checks.
 
 Whole-file core identity remains **0/4**. Dependency capture identity remains **2/5**, with only **1/5** raw compiler outputs exact. Pass 28 changes no selected source, executable, status, workflow, current guard, queue or comparison matrix. It preserves two additional completed research packets in one lossless archive, with 212 exact member byte/mode records.
 
@@ -30,7 +32,7 @@ The outer pass-28 research seal is `9f8d0855a74cc0cb2b45aed66163294607404434e324
 | AMM | 9,958,512 | Selected 09bee0df; 297 unmatched original windows, recursive calls/data, diagnostic coordinates and original compiler/build identity. |
 | Fees | 554,122 | 122 unattributed and two conflicting original windows; conversion, formatter, compared values, ownership and cleanup. Admin-only runtime coverage is zero. |
 | Mayhem | 501,010 | Five GlobalParams field roles, error/ownership/data and historical recipe; the complete ledger still has 257 opaque classifications. |
-| Relay | 614,726 | 370 unmatched original windows; error/serialization/reporting ABI, privileged success routes and original source/build provenance. Fixed-source Linux measurement has not run. |
+| Relay | 614,726 | 370 unmatched original windows; error/serialization/reporting ABI, privileged success routes and original source/build provenance. The new fixed-source Relay15 Linux controller has not run; earlier Linux12/Linux13 measurements remain retained. |
 | ATA | 307 | 304 text and three relocation bytes. Original asset-linked source/dependency/build ordering remains missing. |
 | Metaplex | 1,509 retained-image positions | 1,477 text, 30 diagnostic and two relocation bytes. Raw output additionally lacks 86,543 bytes, giving 88,052 raw differing/missing positions. |
 | SPL Token | 0 | Whole-file raw compiler output exact. |
@@ -49,3 +51,17 @@ The prior stopped executions remain excluded: new Pump sell_v2 corrective/transf
 A separate saved-evidence review now links the two original helpers already admitted in the ca5d inventory. O0201 `[538096,538104)` records only an eight-byte exit instruction. O0359 `[669768,669800)` begins with `r1 != 0`; all eleven recorded O0096 callers set `r1 = 1`, so their encoded branch selects the call at 669792 to target 669800. No new body, literal, opaque row, target execution or source patch was needed.
 
 The next target remains metadata-only O0360 `[669800,669832)`. Its body and noreturn/ownership contracts are not established by this follow-up. Both the earlier caller proof and complete 441/408 ledger remain immutable; classifications and byte-identity counts do not change. The new helper-link packet seal is `e42217f7a6d79027dd3eb0c97d1da215942efd986f154b70ce5704af82f94b9a`. Its independent verifier passed locally and after relocation.
+
+## Main integration qualification
+
+The merge retains the exact incoming CTO source snapshots. Four preexisting whitespace diagnostics in those immutable copies remain: two trailing-whitespace warnings in cashback snapshots and two EOF blank-line warnings in create_v2 snapshots. Their bytes and owning manifest are authenticated. The raw staged whitespace check returned 2; no payload edit, attribute waiver or false passing result is introduced. All pass-28 authored files retain their earlier passing checks. See `main-594-integration` for raw receipts and exact parent-check results.
+
+## Latest retained findings and remaining work
+
+Main 654 adds independently reviewed selected-CTO, SDK account-resolution and dependency-version evidence. The selected Pump 71ec native-mint correction already exists; no duplicate refinement build is needed. The wallet effect gaps remain ATA-prelude ordering, actual-quote WSOL selection, native recipient rent, native event quote bytes and positive frozen shared-source 6093 rejection. Earlier holder/shared eligibility, operand order and full settlement/CPI/cleanup identity also remain open. No older integrated patch is adopted automatically into the already corrected early 6092 source.
+
+The retained SDK analysis expands eight of 25 original nonliteral object sites: four liquidity and four ordinary swaps. Seventeen remain unexpanded. All four newly reviewed swap routes remain open for full runtime compatibility, including numeric PDA/ATA derivation, Anchor resolution, remaining-account order/flags/state, fee selection, wrapper composition, external constants and the resolved JavaScript graph. Static IDL resolver recipes prevent treating an omitted explicit helper field alone as a client defect. No new runtime probe follows.
+
+The version witness distinguishes locked dependency and macro families, local AMM vendoring and Mayhem's different family. Lock-entry totals are not actual compiled-unit counts, version labels do not establish historical deployment recipes, and missing receipt fields remain missing. Full whole-file identity remains 0/4 core, 2/5 captured dependency images and 1/5 raw compiler outputs.
+
+After main654 integration, the unchanged current guard again passed for 107 core and 23 Relay source inputs. Raw source-snapshot whitespace checking reports three additional authenticated inherited warnings, separately retained in `main-654-integration`; no payload fix or attribute waiver is applied. The final pass-28 diff against main contains only supplemental research and documentation.

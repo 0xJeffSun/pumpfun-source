@@ -5,7 +5,7 @@
     "compiler": "unresolved",
     "dependencies": "unresolved",
     "build_flags": "unresolved",
-    "candidate_artifact": "repro/pump/recovered-dispatch-56-from-main-v144/main/candidate.so",
+    "candidate_artifact": "repro/pump/remaining-guards-main-fortyeight/main/candidate.so",
     "full_byte_equality": false,
     "comparison_status": "DIFFERS_PARTIAL_IMPLEMENTATION",
     "implemented_handlers": [
@@ -56,10 +56,7 @@
       "set_quote_control_reserves_admin",
       "add_quote_control_mint",
       "remove_quote_control_mint",
-      "set_quote_control_mint_reserves",
-      "claim_token_incentives",
-      "admin_update_token_incentives",
-      "set_mayhem_virtual_params"
+      "set_quote_control_mint_reserves"
     ],
     "comparison_report": "repro/pump/remaining-guards-main-fortyeight/main/build-comparison.json",
     "build_log": "repro/pump/remaining-guards-main-fortyeight/main/build.log",
@@ -163,7 +160,7 @@
       "Historical e949 compared-key checkpoint: Compared-key6030 uses(target,default); application ConstraintSeeds2006 uses(actual holder_creator_vault,derived PDA). Unchanged9269 differential/1024 signed comparisons pass; changed6030 has1 differential/0 signed application cases and changed2006 has0 in both. Other parser2006 cases are separate. Four numeric source return sites remain:6019once,6091once,6092twice. Full CTO app27816B differs original27400B; source107/118 differs original307/648; raw diagnostic logs still differ. No exhaustive security/body identity.",
       "Current71ec restores non-holder target holder-PDA rejection, explicitWSOL fee exclusion using the existing typedSDKconstant, and plainowned6019/6091/EARLY6092. Existing unchanged9269 differential/1024 Surfpool/68bindings pass. Exact applicationcoverage6019 1diff/0signed,6091 11diff/0signed,early6092 5diff/1signed; application2006remains0. Aggregatehits do not prove newholderPDA/WSOL-arm coverage. Late6092 remainsnumeric; copiedowned versus borrowedheader, walletorderdifference and parser/CPI/header limits remain. Fullapp27856B differsoriginal27400B. Firstf290runtimebase58discrepancy and unexecuted95b6 are retained. Publicouter385 losslesslymaterializes exactinner98; actualmain54453 rawELF/symbols equaltested71ec/6edb. No newfixture/probe or fulloriginal/logidentityclaim."
     ],
-    "candidate_build_identity_report": "repro/pump/recovered-dispatch-56-from-main-v144/main/controls/identity.json",
+    "candidate_build_identity_report": "repro/pump/remaining-guards-main-fortyeight/main/controls/identity.json",
     "prior_checkpoint": "repro/pump/admin-cto-compared-errors-main-fortyeight",
     "holder_nested_recovery_report": "audit/pump/HOLDER_NESTED_RECOVERY.md",
     "surfpool_verified_signatures": 2980,
@@ -236,11 +233,7 @@
     "admin_cto_remaining_guards_wrapper": "repro/pump/remaining-guards-fortyeight/layout.json",
     "admin_cto_remaining_guards_outer_seal": "38558828d8187996e6f9f06db2b4054af7e65e29345a85f4417f71558312beba",
     "admin_cto_remaining_guards_inner_seal": "98c49ab1a0aaad83f51224df4aa44bbfb36308f53e8351dbed51298b87fdc67a",
-    "admin_cto_remaining_guards_main_seal": "8ddf73d78e98005c8f68d189ada95add9690770bbd95c17ba42b25c6b0b95749",
-    "prior_candidate_artifact": "repro/pump/remaining-guards-main-fortyeight/main/candidate.so",
-    "dispatch_coverage": "56/56",
-    "reproduced_from_committed_source": true,
-    "candidate_reproduction_note": "Behavioral/dispatch layer: rebuilds BYTE-IDENTICALLY from committed source (v1.44, sha 5392c9a9), 56/56 incl. 3 recovered handlers, SDK-validated. NOT byte-identical to the deployed original (full_byte_equality false). See repro/.../RECONCILIATION-ANALYSIS.md for why active main may revert this."
+    "admin_cto_remaining_guards_main_seal": "8ddf73d78e98005c8f68d189ada95add9690770bbd95c17ba42b25c6b0b95749"
   },
   "pump_amm": {
     "source_reconstruction": "partial_handlers_compiled",
@@ -800,7 +793,7 @@
     "compiler": "unresolved",
     "dependencies": "unresolved",
     "build_flags": "unresolved",
-    "candidate_artifact": "repro/mayhem/recovered-dispatch-25-from-main-v152/main/candidate.so",
+    "candidate_artifact": "repro/mayhem/compiler-v154-main/main/candidate.so",
     "full_byte_equality": false,
     "comparison_status": "DIFFERS_PARTIAL_IMPLEMENTATION",
     "implemented_handlers": [
@@ -827,8 +820,7 @@
       "sell_v2",
       "buy_v2",
       "buy_pump_swap",
-      "sell_pump_swap",
-      "initialize_mayhem_state"
+      "sell_pump_swap"
     ],
     "comparison_report": "repro/mayhem/compiler-v154-main/main/build-comparison.json",
     "build_log": "repro/mayhem/compiler-v154-main/main/build.log",
@@ -1121,8 +1113,8 @@
       },
       "historical_replay": false
     },
-    "candidate_sha256": "cbe8c8e71f0c256326cf639f303b3d939244320637531d79041585c9358020e2",
-    "candidate_bytes": 691128,
+    "candidate_sha256": "ca5d4f54b14e2f67c4eca56fcac29b54801906cecf23c463801916fd9d6b6621",
+    "candidate_bytes": 599784,
     "source_refinement": "BuyPumpSwap and SellPumpSwap zero-divisor sizing failures preserve original typed PumpSwapCpiMathOverflow Result unwrap; no new handlers/cases.",
     "known_diagnostic_differences": "repro/mayhem/compiler-v154-main/runtime/diagnostic-differences.json",
     "full_inventory": "repro/mayhem/compiler-v154-main/main/complete-inventory.json.gz",
@@ -1131,15 +1123,11 @@
     "main_build_identity_report": "repro/mayhem/compiler-v154-main/main/identity.json",
     "current_full_function_inventory": "repro/mayhem/compiler-v154-main/main/complete-inventory.json.gz",
     "prior_checkpoint": "repro/mayhem/sell-result-error-main-twentyfour",
-    "candidate_build_identity_report": "repro/mayhem/recovered-dispatch-25-from-main-v152/main/controls/identity.json",
+    "candidate_build_identity_report": "repro/mayhem/compiler-v154-main/main/identity.json",
     "compiler_recipe_note": "Current measured candidate uses actual officialv1.54 directCargo/genericV0 with unchanged14source/lock/profile. Genuine managedmain reproduced wholeca5d+f9de; default frontend choices unchanged. This does not recover unique historical compiler/recipe.",
     "candidate_toolchain": "v1.54",
     "candidate_build_frontend": "direct official Cargo/rustc; stock sbpf-solana-solana; fixedv1.52strip",
     "runtime_publication": "repro/mayhem/compiler-v154-runtime",
-    "candidate_symbols_artifact": "repro/mayhem/compiler-v154-main/main/unstripped.so",
-    "prior_candidate_artifact": "repro/mayhem/compiler-v154-main/main/candidate.so",
-    "dispatch_coverage": "25/25",
-    "reproduced_from_committed_source": true,
-    "candidate_reproduction_note": "Behavioral/dispatch layer: rebuilds BYTE-IDENTICALLY (v1.52, sha cbe8c8e7), 25/25 incl. initialize_mayhem_state, SDK-validated. NOT byte-identical to deployed original (full_byte_equality false)."
+    "candidate_symbols_artifact": "repro/mayhem/compiler-v154-main/main/unstripped.so"
   }
 }
