@@ -55,18 +55,17 @@ triple changed Cargo's `-C metadata` for every crate, which re-hashed every
 same-definition monomorphization tie in the program and re-ordered dozens of
 functions. That is the expected signature of a *global* metadata perturbation.
 
-The deployed program differs from the Linux candidate by a *single* pair. A global
-perturbation cannot produce a single-pair difference, so the uploader's build
-environment must have agreed with candidate2 on the metadata of essentially every
-crate — host triple included. **By elimination, the historical build host was
-x86_64 Linux**, and the missing input is one that perturbs the metadata of
-`spl_token_2022` (or `solana_program`) alone: its features, its own version, a
-dependency selected only by it (`spl-memo`, `solana-zk-token-sdk`), or the
-instantiating crate's StableCrateId through some other single-crate input.
+The deployed program differs from the Linux candidate by a *single* pair. This
+one pinned Darwin recipe did not reproduce that residual or the deployed bytes.
+It does not prove that every global metadata perturbation must move many
+functions: hash-based ordering can preserve relative order, and other historical
+inputs remain unknown. The historical host is therefore unresolved. A
+single-crate metadata difference is a possible explanation to investigate, not a
+uniquely established cause or permission for a flag/version/path sweep.
 
 What this does **not** do: reduce the 307-byte residual, recover the historical
-recipe, or justify a flag/version/path sweep. It removes one candidate explanation
-with a reproducible receipt and narrows the search to single-crate inputs.
+recipe, or justify a flag/version/path sweep. It rejects the tested pinned Darwin recipe as an exact reproduction; it does not
+exclude other Darwin contexts or establish a historical single-crate input.
 
 ## Side observation: `cargo test-bpf` cannot be the missing input
 

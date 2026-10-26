@@ -159,12 +159,11 @@ The hypothesis is rejected. Changing the host re-hashed every crate's metadata
 and re-ordered dozens of functions (1,314 of 1,438 call-masked 64-byte `.text`
 chunks stay at the same offset; the instruction multiset differs by nine
 address-bearing instructions per side), while the deployed program differs from
-the Linux candidate by a single function pair. A global metadata perturbation
-cannot produce a single-pair difference, so the historical build environment
-agreed with candidate2 on the metadata of essentially every crate, host triple
-included. The reading carried here, as the author's interpretation rather than a
-proved fact, is that the historical host was x86_64 Linux and that the missing
-input perturbs the metadata of `spl_token_2022` or `solana_program` alone.
+the Linux candidate by a single function pair. This rejects the tested pinned Darwin recipe as an exact reproduction, but one
+negative build cannot exclude all Darwin contexts or all global metadata inputs.
+Hash-based ordering can preserve relative order. The historical host and missing
+metadata inputs remain unresolved; a single-crate perturbation is a hypothesis,
+not a uniquely established explanation.
 
 Reading the v1.10.33 `cargo-test-bpf` source additionally excludes the upstream
 CI invocation as that input without a build: it passes `--features test-bpf`
