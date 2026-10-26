@@ -1,5 +1,10 @@
 # Raw-gated Metaplex Utilize compiler traces
 
+The [final selection-input follow-up](isel-boundary/README.md) adds a second
+raw-identical run: CodeGen Prepare's output equals the exact final input to
+selection, and the combined predicate expands into separate branches during
+SBF selection before finalization. The six-stage evidence below is retained.
+
 The candidate 11 remaining-use guard already branches to the error path in
 machine IR immediately before `finalize-isel`. Its direction is also present
 after finalization, branch folding, block placement and the SBF pre-emission
@@ -142,7 +147,7 @@ This is a provenance and attribution increment. The 1,509 differing positions
 in the existing padded allocation-image comparison remain (1,477 text bytes,
 30 coordinate bytes and two relocation bytes). There is no deployed raw
 identity, historical compiler/source identification or security claim here.
-The next useful discriminator is a narrower observation between optimized IR
-and initial instruction selection, with the same raw-output gate, or new
-historical source/compiler evidence. This result does not justify a flag or
-source-layout sweep.
+The final selection-input follow-up narrows the remaining interval. Historical
+source/compiler evidence or internal DAG decisions are still needed to explain
+the deployed layout. These observations do not justify a flag or source-layout
+sweep.
