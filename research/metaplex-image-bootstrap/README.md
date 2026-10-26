@@ -1,9 +1,14 @@
-# Metaplex compiler installation boundary in the pinned image
+# Metaplex image bootstrap and fresh compiler provenance
 
 **Candidate 11's recorded SBF compiler is not preinstalled at its cache path in
 the clean pinned image.** The SDK installs platform-tools later. The historical
 build script measures the compiler after `cargo build-sbf` completes, so those
 post-build observations cannot be assumed to describe the untouched image.
+
+The follow-up [fresh compiler observation](installed/README.md) authenticates and
+installs official v1.37 bytes into an ephemeral cache, records the initialized
+driver and nine library file hashes, and queries BPF/SBF capabilities successfully.
+It retains both the initial transport failure and the successful hosted run.
 
 This explains the missing-path boundary observed in community
 [PR #50](https://github.com/lalalune/pumpfun-source/pull/50), without repeating
@@ -21,7 +26,8 @@ Its configuration SHA256 is
 equal to the historical image ID. All eight compressed layers were downloaded
 (888,493,373 bytes), checked against the manifest, streamed without extraction,
 and checked against the configuration's complete uncompressed diff IDs, including
-tar padding after the end marker. No container or binary was executed.
+tar padding after the end marker. This static layer check executes no container or
+binary; the separate `installed/` experiment executes compiler queries.
 
 All 28,844 tar headers are retained as losslessly compressed inventories. None
 adds `root/.cache` or a descendant; both `root` records are directories. This is
@@ -86,10 +92,10 @@ derives those observations from bytes authenticated by the pinned image digest.
 Registry digests identify content; they do not attest who built the image.
 Source inspection is not an executed trace of the binary build wrapper.
 
-A future compiler diagnostic must explicitly prepare and authenticate the SDK's
-platform-tools installation before inspecting its compiler and loaded libraries.
-A newly measured installation would still not recover the historical loaded-library
-hashes. Candidate 11's exact 707,448-byte raw output must be reproduced before
+The `installed/` follow-up prepares and authenticates a fresh platform-tools
+installation and observes its driver and initialized library files. These new
+measurements do not recover historical loaded-library hashes. Candidate 11's exact
+707,448-byte raw output must still be reproduced before
 attributing IR or machine-IR traces to that candidate. No new candidate build,
 target execution, selected-artifact change or byte-identity improvement is claimed
 here; the retained allocation image remains distinct from raw compiler output.
