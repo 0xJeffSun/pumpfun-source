@@ -8,6 +8,9 @@ deployed binary yet.**
 Behavior is reconstructed handler by handler and checked with differential tests
 that run the captured original and the rebuilt candidate side by side in a local VM.
 
+For subsequent gains and the latest research frontier, see the
+[byte-identity progress log](docs/BYTE-IDENTITY-PROGRESS.md).
+
 The [26 October reconstruction audit](docs/RECONSTRUCTION-AUDIT.md) separates
 selected builds from newer research and lists [all 150 handlers](repro/reconstruction-audit-2026-10-26/handlers.md),
 [every exact local body-byte match](repro/reconstruction-audit-2026-10-26/raw-body-matches.md)
@@ -34,9 +37,9 @@ complete body match**, and **245 remaining opaque windows**. These partition
 3,338 original windows; matching bytes or normalized instructions does not prove
 call/data identity or all behavior. Original boundaries remain inferred.
 
-Newer research is separate: Fees has 340 unique structural pairs, 53 additional
+At the audit snapshot, research was separate: Fees had 340 unique structural pairs, 53 additional
 call-attributed duplicate pairs, 94 still-unattributed duplicate windows and 98
-unmatched windows. Relay's distribution-worker research reaches 465/492 normalized
+unmatched windows. Relay's distribution-worker research reached 465/492 normalized
 windows (86 raw local matches), leaving 27 unmatched; selected Relay remains at
 122/492. These are not source-completion percentages or promoted checkpoints.
 

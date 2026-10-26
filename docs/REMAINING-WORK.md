@@ -5,7 +5,11 @@ based on selected artifacts and research through commit `1463bd22`. The historic
 [completion ledger](COMPLETION.md) remains a selected-checkpoint record; its old
 candidate paths and “current” prose must not override newer evidence.
 
-## Current position
+Subsequent gains are in the [byte-identity progress log](BYTE-IDENTITY-PROGRESS.md):
+Relay research now has 26 unmatched windows; Fees query-selector research has 95.
+The baseline counts below remain those of the dated audit.
+
+## Audit baseline
 
 - **Whole captured-file identity:** 0/4 selected core programs; selected Relay also differs.
 - **Selected public handlers:** 140/150 bounded implementations, five partial,
