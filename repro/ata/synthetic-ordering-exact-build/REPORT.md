@@ -23,23 +23,24 @@ differs: an empty feature `ordering-probe-b2 = []` is declared in the manifests 
 root with `cargo build-bpf --features ordering-probe-b2` and on the two path
 dependencies from ATA's dependency lines. [source.patch](source.patch) is the
 complete diff: three `Cargo.toml` files, five added lines, two modified dependency
-lines, no `.rs` file. The flag is referenced by no `cfg()`, so no compiled code
-changes. The authentic lockfile (`3c8f402f…`) is unchanged before and after every
+lines, no `.rs` file. The reported patch adds no Rust source or `cfg()`-selected behavior. The
+compiled output nevertheless changes ordering; source-text invariance is not a
+proof that all code generation is unchanged. The authentic lockfile (`3c8f402f…`) is unchanged before and after every
 build; `--locked` passed.
 
 **What this establishes.** The deployed ATA bytes are reproduced by the public
 `f5ce86` source and the official toolchain plus one code-free, non-historical
-Cargo metadata input. Because the same recipe without that input gives candidate2,
-the 307-byte residual the repository has carried was not a source,
-dependency-version or compiler-code difference: it was the order of two
-same-definition `RawVec::reserve_for_push` monomorphizations. The retained
-evidence shows that a code-free metadata change flips that order. The explanation
+Cargo metadata input. The author reports that the same recipe without that input gives candidate2.
+Together with the separate correspondence evidence, this supports an ordering
+explanation for this candidate pair; it does not uniquely exclude all historical
+source, dependency or compiler differences. The retained local records report
+that the manifest metadata input changes the output to the deployed byte hash. The explanation
 that a symbol-hash tie-break seeded by `-C metadata` decides it comes from reading
 the rustc and Cargo sources (below).
 
-**What this does not establish, stated plainly.** The historical recipe. The
-uploader did not add a feature named `ordering-probe-b2`; some other, unknown
-metadata input in the 2022 build environment produced the same tie-break outcome.
+**What this does not establish, stated plainly.** The historical recipe. There is no evidence that the uploader used `ordering-probe-b2`, or which
+historical input produced the deployed layout. A different metadata context is
+a possible explanation, not a recovered historical fact.
 A match obtained by a synthetic input proves "this documented recipe compiles to
 these bytes", not "this is what was run in 2022". Consistent with the repository's
 stated rule that an arbitrary metadata override does not establish historical
@@ -56,8 +57,11 @@ identity, **this package changes no completion count**: `repro/status.json`,
 | Items in a codegen unit are ordered by `(def index, symbol name)`; same-definition instances tie on the first key | rustc `mono.rs` `items_in_deterministic_order` |
 | The deployed/candidate2 difference is exactly one such tie group | [byte-distance](../independent-ebpf-crosscheck/REPORT.md): 282 bytes inside the two `reserve_for_push` bodies, 25 call/relocation fixups. That this is the only order-sensitive group surviving in the binary is the author's reading of an unstripped `spl_token_2022` object, which is not retained in this package; the exact `b2` match is consistent with it |
 
-Under this model each fresh metadata seed acts like a coin flip on the pair's
-order, and a hit reproduces all 307 bytes because every other byte already matched.
+The symbol-hash model provides a possible mechanism for a changed seed to
+reverse this pair. These few retained trials do not establish a probability
+distribution, independence, or a 50% success rate for other metadata inputs. The
+reported `b2` output matches all bytes; this does not uniquely identify the
+historical cause of the earlier residual.
 
 ## Attempt ledger (all retained under `results/`)
 
@@ -69,8 +73,8 @@ order, and a hit reproduces all 307 bytes because every other byte already match
 | `b2` | empty feature on ATA + spl-token + spl-token-2022 | **`6804554e…` = deployed** | **0** | hit |
 | `b2r` | identical rerun of `b2`, fresh tree and container | `6804554e…` | 0 | deterministic |
 
-`a1`'s null result is what a 50% coin produces half the time; it is not evidence
-against the `spl_token_2022` attribution. `b2` perturbed three crates at once and
+`a1` reports unchanged output, but its unretained fingerprint does not establish
+a probability model or isolate the cause. `b2` perturbed three crates at once and
 does not isolate which crate's metadata was sufficient; the minimal lever is not
 claimed.
 
@@ -100,24 +104,42 @@ claimed.
 python3 repro/ata/synthetic-ordering-exact-build/verify.py
 ```
 
-Standard library only, offline. Checks the output's SHA-256 and a raw byte
-comparison against `evidence/dependencies/associated_token/deployed.so`, the
-determinism rerun, the control's equality with candidate2, both retained negatives,
-that the patch touches only the three manifests and only adds the flag, and the
-pinned input, image and vendor hashes. 24 assertions.
+The verifier uses the standard library and performs no build or target replay.
+It hashes the retained `b2` output against the fixed deployed hash and, only when
+the repository capture is present, compares those raw files directly. It checks
+consistency of the saved control/negative/rerun records, manifest-only patch
+shape, recorded command fragments, image label and listed input hashes.
+
+Its vendor check verifies the stated count and nonempty recorded values, not
+actual vendored archives or extracted source bytes. No separate rerun executable
+is retained: the rerun check compares the author's recorded hash/flags. It does
+not authenticate a complete executed source/cache/tool closure or independently
+reproduce the author's local builds. It also does not check `manifest.sha256`;
+that file is a separate Git-tracked payload hash inventory.
+
+The unchanged `verify.py` docstring says it “Re-derives every claim in REPORT.md”.
+That statement is too broad; the narrower checks above define its actual scope.
+The original verifier remains byte-for-byte preserved so this correction does
+not silently alter the historical checking code or strengthen its evidence.
+Likewise, `probe.py` is archived execution source, not an admitted safe launcher:
+it has machine-specific paths, removes an existing attempt tree and can overwrite
+outputs. It should not be reused without a separately reviewed, fresh-output
+adapter. No new probe or build is authorized by this documentation.
 
 ## Relation to prior ATA work
 
 Builds on the measurements in [`../independent-ebpf-crosscheck/`](../independent-ebpf-crosscheck/REPORT.md)
-(PR 36): the 307-position localization and the Darwin-host negative (a global
-metadata change re-orders dozens of functions, read there as indicating an x86_64
-Linux host). Those narrowed the residual to one ordering decision; this package
-flips it with a documented, non-historical input.
+(PR 36): the 307-position localization and one pinned Darwin-host negative.
+That tested Darwin recipe did not match; it does not establish the historical
+host or rule out every global metadata input. The ordering model remains a
+bounded interpretation, and the historical host and recipe remain unresolved.
+This package reports a match using a documented, non-historical input.
 
 [`../reconstructed-order/`](../reconstructed-order/README.md) (PR 39) reaches the
 same 105,032 raw bytes by a different route, with no Cargo change. It builds the
 unchanged source in a public GitHub Actions run and passes the pinned `rust-lld` a
-symbol-ordering file that swaps only this pair. The two packages corroborate each
-other on the cause of the residual. Neither recovers the historical invocation.
+symbol-ordering file that swaps only this pair. The packages support reproducibility of the same raw bytes through distinct
+reported recipes. They do not uniquely establish the historical cause of the
+residual, and neither recovers the historical invocation.
 Historical attribution still requires an uploader-side artifact (build log,
 `target/` directory or unstripped object from 2022-08-03).
