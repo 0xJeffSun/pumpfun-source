@@ -9,6 +9,9 @@ import sys
 import tempfile
 import unittest
 
+HERE = Path(__file__).resolve().parent
+SCRIPTS = HERE.parents[1] / 'scripts'
+sys.path.insert(0, str(HERE))
 from verify_disassembly import verify_listing
 
 
@@ -121,9 +124,12 @@ class DisassemblyCliTests(unittest.TestCase):
         temporary = tempfile.TemporaryDirectory()
         self.addCleanup(temporary.cleanup)
         root = Path(temporary.name)
+        tools = root / 'research/disassembly-coverage'
+        tools.mkdir(parents=True)
         (root / 'scripts').mkdir()
-        for name in ('disassemble.py', 'verify_disassembly.py', 'analyze.py'):
-            shutil.copyfile(Path(__file__).parent / name, root / 'scripts' / name)
+        for name in ('disassemble_checked.py', 'verify_disassembly.py'):
+            shutil.copyfile(HERE / name, tools / name)
+        shutil.copyfile(SCRIPTS / 'analyze.py', root / 'scripts/analyze.py')
         (root / 'repro').mkdir()
         (root / 'repro/programs.json').write_text('{"pump": "fixture"}')
         (root / 'evidence/original/pump').mkdir(parents=True)
@@ -133,7 +139,7 @@ class DisassemblyCliTests(unittest.TestCase):
                         'print("test objdump" if "--version" in sys.argv else ' + repr(payload) + ')\n')
         tool.chmod(0o755)
         process = subprocess.run(
-            [sys.executable, str(root / 'scripts/disassemble.py'), '--objdump',
+            [sys.executable, str(tools / 'disassemble_checked.py'), '--objdump',
              str(tool), '--output', str(root / 'output')], capture_output=True, text=True)
         return process, root / 'output/manifest.json'
 

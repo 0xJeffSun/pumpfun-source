@@ -10,7 +10,10 @@ import hashlib
 import json
 from pathlib import Path
 import re
+import sys
 
+# Reuse the repository ELF parser without changing the digest-pinned scripts/.
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'scripts'))
 from analyze import elf_layout
 
 SECTION = re.compile(r'^Disassembly of section (.+):$')

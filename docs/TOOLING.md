@@ -49,9 +49,13 @@ python3 scripts/disassemble.py --objdump /path/to/platform-tools/llvm/bin/llvm-o
 This records the tool hash, version, input hashes and output hashes. The output
 is original-derived disassembly for analysis, never a rebuilt executable.
 
-New captures also verify every executable file-section byte against the listing,
-require contiguous decimal eight-byte SBF instruction slots, and account for
-sixteen-byte LDDW rows. Empty, truncated, byte-mutated, misaddressed, unknown, or
+`scripts/disassemble.py` is pinned by SHA-256 in saved checkpoints and the P27
+guard, so it stays unchanged. It does not check that the listing covers the
+input. For new captures, use the byte-checked generator
+`research/disassembly-coverage/disassemble_checked.py`, which takes the same
+arguments. It verifies every executable file-section byte against the listing,
+requires contiguous decimal eight-byte SBF instruction slots, and accounts for
+sixteen-byte LDDW rows. Empty, truncated, byte-mutated, misaddressed, unknown or
 unparsed executable rows prevent a success manifest. Input and tool hashes are
 rechecked after capture. Repository-relative binary arguments keep LLVM's listing
 preamble independent of the checkout's absolute path. Historical manifests remain
@@ -60,9 +64,9 @@ unchanged.
 To independently check a canonical LLVM SBF listing:
 
 ```sh
-python3 scripts/verify_disassembly.py evidence/original/pump/deployed.so \
-  work/disassembly-new/pump.asm
-python3 scripts/test_disassembly.py
+python3 research/disassembly-coverage/verify_disassembly.py \
+  evidence/original/pump/deployed.so work/disassembly-new/pump.asm
+python3 research/disassembly-coverage/test_disassembly.py
 ```
 
 Coverage verifies listing bytes and addressing. It does not prove mnemonic/operand
