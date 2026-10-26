@@ -10,7 +10,8 @@ weakening the guard.
 - `guard.py` runs an unchanged pass-27 entrypoint (`verify_current.py`,
   `verify_metadata.py` or `verify_portable_crypto.py`). It first checks that this
   package's files match its own manifest (an internal seal that nothing else pins),
-  that the pass-27 guard code matches its hard-coded seal, and that `transition.json`
+  that every pass-27 guard file matches the pass-27 manifest whose hash is hard-coded
+  (checked before any pass-27 code is imported), and that `transition.json`
   is exactly the reviewed revision (`TRANSITION_SHA256`) covering exactly
   `REVIEWED_PATHS`. Because those two constants live in `guard.py`, any re-pin is a
   visible code change for review. It

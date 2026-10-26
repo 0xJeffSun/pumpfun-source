@@ -66,9 +66,10 @@ python3 scripts/compare.py pump work/pump-build/pump_recovered.so --output work/
 
 Toolchains: Pump, PumpSwap and Fees use platform-tools v1.44 through
 `scripts/build_partial_candidate.py`, which wraps `cargo build-sbf` with an
-isolated SDK and records a provenance report. Mayhem's selected build uses v1.54
-through the direct Cargo/rustc adapter
-(`scripts/build_reconstruction_candidate.py --tools-version v1.54`).
+isolated SDK and records a provenance report. Mayhem's selected v1.54 build came
+from a one-shot direct Cargo/rustc controller (`repro/mayhem/compiler-v154-main/`);
+the repository adapter (`scripts/build_reconstruction_candidate.py --tools-version v1.54`)
+reproduces the same bytes (`repro/build-tooling/supported-sbpf-integration/`).
 
 For local SDK testing with every handler present, apply the
 [behavioral recovery overlay](repro/behavioral-recovery/README.md) and use the
