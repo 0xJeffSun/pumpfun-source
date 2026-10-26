@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
-"""Full audit spec for every unmatched Pump .text window. Extracts measurable
-signals only (sizes, call structure, external symbols, Anchor error codes,
-original file!()/line!()); reproduces no proprietary logic. Read-only."""
+"""Summarize normalized body differences and heuristic origin/code guesses.
+Source paths, small store values and closest-size symbols do not establish
+original function attribution or semantics. Requires explicit trusted inputs
+and a fresh JSON output; no ELF is modified.
+"""
 import argparse, collections, importlib.util, json, re, struct, sys
 from pathlib import Path
 
