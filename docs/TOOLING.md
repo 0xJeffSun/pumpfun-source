@@ -60,9 +60,14 @@ python3 scripts/compare.py pump /path/to/independently-built/pump.so \
   --pad-zero-to-allocation --output work/comparison-pump
 ```
 
-By default, exit status is zero only for equality of the compared image, including
-the allocation suffix. When padding is requested, this can be an image synthesized
-by the comparator rather than the unmodified compiler output.
+Without `--pad-zero-to-allocation`, this is a raw whole-file gate: exit status is
+zero only when the unmodified candidate file equals the complete captured payload,
+including its allocation suffix. With the padding flag, exit status zero means only
+that the comparator-synthesized, zero-padded allocation image equals the capture.
+That is padded allocation equality, not byte identity of the compiler output (the
+unmodified candidate is shorter), and must be reported with that label. In that
+mode the top-level comparison fields describe the padded image;
+`candidate_input_sha256` still identifies the unpadded input.
 Omit the padding flag when the candidate already contains the complete allocation.
 The optional padding step appends newly allocated zeros only; it never copies data
 from the original. It first checks that the original's bytes beyond all ELF file
@@ -75,20 +80,11 @@ obtained a candidate. A future release needs source/compiler manifests and a cle
 build trace in addition to this comparison. Passing the original as the candidate
 would prove nothing about source reconstruction.
 
-For a strict whole-file gate on the unmodified compiler output, use:
-
-```sh
-python3 scripts/compare.py pump /path/to/independently-built/pump.so \
-  --require-raw-equality --output work/raw-comparison-pump
-```
-
-`candidate_input_comparison` always records the unmodified input comparison,
-including its length and hash. `comparison_scope` identifies whether the top-level
-comparison describes that input or a zero-padded allocation image, and
-`padding_bytes_added` records the exact extension. `--require-raw-equality` returns
-nonzero for a shorter input even if `--pad-zero-to-allocation` produces an equal
-allocation image. The existing image-comparison fields and default exit behavior
-are retained for compatibility. Neither mode proves source provenance.
+`scripts/compare.py` is bound by SHA-256 in saved promotion checkpoints and in the
+current P27 guard, so it stays unchanged. For a strict raw comparison that also
+lists every changed, missing and extra byte range of the two unmodified files, use
+`research/byte-diff/byte_diff.py` (see `research/byte-diff/README.md`). It never
+pads either input and exits zero only on complete raw equality.
 
 ## Local compiler inputs
 
