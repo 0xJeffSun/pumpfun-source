@@ -1,0 +1,8 @@
+{
+  "status": "PASS_LOSSLESS_STREAM_ONLY",
+  "groups": 24,
+  "members": 4386,
+  "archive_bytes": 78173384,
+  "archived_code_imports_or_execution": 0,
+  "extracted_files": 0
+}

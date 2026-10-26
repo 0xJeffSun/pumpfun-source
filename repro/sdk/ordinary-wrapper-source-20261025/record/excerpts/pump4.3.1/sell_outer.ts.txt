@@ -1,0 +1,14 @@
+  async sellInstructions(
+    swapSolanaState: SwapSolanaState,
+    baseAmountIn: BN,
+    minQuoteAmountOut: BN,
+  ): Promise<TransactionInstruction[]> {
+    return await this.withFixPoolInstructions(swapSolanaState, async () => {
+      return await this.sellInstructionsNoPool(
+        swapSolanaState,
+        baseAmountIn,
+        minQuoteAmountOut,
+      );
+    });
+  }
+
