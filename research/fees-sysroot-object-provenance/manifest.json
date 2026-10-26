@@ -1,0 +1,17 @@
+{
+  "analysis.json": "d36515c884923597d80e8996b66e8f5b5fa188fca8901e272c63c3895e53c0c5",
+  "archive-validation.json": "1f9ae7182c5aef04f907c18c0fcd8ffe1cd1db50e55b9f9aaa8bd1c3700deeb8",
+  "audit-attempts.json": "93e8489a9c595042c6ef4878d901f0a0693ca6e855bc1d8e95df75f6793893e5",
+  "COPYRIGHT": "bd0581fef622b3d8b25836cf70feb7e1a7a6171ea9e440b46dfda74c46a0ed0d",
+  "core.rcgu.o": "bd8b5c5964af0dd1ac566932938fc44d814c1aaa2bdee95ac4fb0242d18c4476",
+  "download-receipt.json": "571c6838c3e23d2fa82bd82b37b76126b978dafbcc23bf2850d9be47ccd58978",
+  "LICENSE-APACHE": "62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a",
+  "LICENSE-MIT": "23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3",
+  "license-sources.json": "28748bd3b85cfacbc9d2ea47acb043be7cb777878675c348a6ae8fca89299b44",
+  "provenance.json": "2d587221c06994da064411144cba6e4c0556a2d8d5f3e4ffe7a7a81aee151d02",
+  "README.md": "839107f33b65a12f707bc078a7587afe7a841b70483cbbd6c885a7cf6e4a4885",
+  "release-metadata.json": "4f02efd0d64e2160e4f8d8d6056a68c1e8998a748db327007ba0cf1d414d3a66",
+  "test_verify.py": "74cc3b4da32ced1a676462923e5e2771c59e0d7e92bd681c0ea4c8344ca4b46c",
+  "verify.py": "075d84e00437264aa3c4b40c1b852e4b67d9444af3e6d7255cbe89f5b8bcb71d",
+  "version.md": "70c1ac603a68d6967a61b1492d3614c4485274385efd3cc80f91a7723b2e348f"
+}
