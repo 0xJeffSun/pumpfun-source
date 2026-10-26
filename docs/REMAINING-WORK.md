@@ -76,7 +76,7 @@ against a fresh build of the overlay on current main:
 | `pump.admin_update_token_incentives` | 299 cases, 0 mismatches | Promotion (§3) |
 | `pump.claim_token_incentives` | Recovered; its differential is tied to an older build record | Re-bind the differential to the overlay build and re-run |
 | `pump.set_mayhem_virtual_params` | 84 cases, 0 mismatches via signer stub | Close the AccountInfo ownership question raised in review |
-| `mayhem.initialize_mayhem_state` | 17 cases, 0 mismatches through pump's CPI | Standalone calls reject in a different order (candidate 3010 before mint deserialization; original 3012 then 2002). Likely fix: declare `mint_authority` as `UncheckedAccount` with a `signer` constraint |
+| `mayhem.initialize_mayhem_state` | 53 standalone rejection cases and 17 existing CPI cases, 0 mismatches in the [initializer correction](../research/mayhem-initializer-validation/README.md) | Overlay now matches signer-validation order and conditional token-vault creation. Broader behavior and whole-file byte identity remain unresolved; active source is still unpromoted. |
 | `pump.create_v2` Mayhem mode | 17 cases, 0 mismatches | Exhaustive ancestry and new Token-2022 extension modes |
 | `pump.buy_v3`, `sell_v3`, `buy_exact_quote_in_v3` transfer-fee quotes | 126 cases, 0 mismatches | Other quote routes, exhaustive extension/account validation, final event suffix |
 
