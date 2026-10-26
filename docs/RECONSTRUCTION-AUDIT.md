@@ -4,6 +4,9 @@ Audited repository snapshot: `1463bd22fb7811825c5e7acf1cb963eb39ab68d9`, includi
 the PR #71–#94 review batch. This report separates selected artifacts from newer
 research. It does not promote a source tree or change an acceptance decision.
 
+Subsequent gains are tracked in the [byte-identity progress log](BYTE-IDENTITY-PROGRESS.md);
+the tables below retain their dated snapshot.
+
 **No core program, and no selected Relay program, is a complete byte-identical
 reconstruction. No public handler has an exhaustive semantic-equivalence proof.**
 There is substantial verified progress below those two thresholds.
@@ -134,6 +137,11 @@ It is not the selected `2387f813…` output and still differs from the capture.
 - Both stable-sort control and proposal passed 17,331 cases. This is finite
   behavior coverage, not all-state equivalence. The surrounding shareholder
   validators still differ.
+
+The initializer scheduling match is static evidence. The 17,331-case Fees corpus
+does not invoke `initialize_fee_config`; its initialization suite exercises
+`initialize_fee_program_global`. Passing that corpus is not a runtime validation
+of the reconstructed initializer.
 
 The exact compiler is not identified. Canonical `sbpf-solana-solana` and legacy
 `sbf-solana-solana` can select different prebuilt sysroot code despite equal
