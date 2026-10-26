@@ -1,4 +1,4 @@
-# Fees decoder: complete instruction-body match
+# Fees decoder: complete instruction-body match under address masks
 
 Returning the current `FeeConfig` from each legacy/stable/full reader in `anchor_lang::Result<Self>` makes the complete 2,648-byte unchecked decoder match the original instruction stream under the explicit address masks below. Returning smaller legacy structures and converting them in the dispatcher produces the same extent but only 236 matching instructions in sequence. Both variants retain the consuming checked parser that matches the first account helper.
 
