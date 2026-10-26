@@ -40,5 +40,17 @@
     "commit": "afbc9d2aafd89de11fa1298a264376c05c570be6",
     "remote_archive_ref": "refs/tags/archive/2026-10-25/review/reconstruction-2026-10-25",
     "remote_archive_verified": true
+  },
+  {
+    "branch": "codex/cto-wallet-effects-evidence",
+    "commit": "bb3ab827111944174e78d2214baf00f772cc8acf",
+    "remote_archive_ref": "refs/tags/archive/2026-10-25/codex/cto-wallet-effects-evidence",
+    "remote_archive_verified": true
+  },
+  {
+    "branch": "codex/layered-pass-27",
+    "commit": "67608d457c096cebf73f1685f78f2f0ab9f9bdb0",
+    "remote_archive_ref": "refs/tags/archive/2026-10-25/codex/layered-pass-27",
+    "remote_archive_verified": true
   }
 ]
