@@ -6,7 +6,7 @@ based on selected artifacts and research through commit `1463bd22`. The historic
 candidate paths and “current” prose must not override newer evidence.
 
 Subsequent gains are in the [byte-identity progress log](BYTE-IDENTITY-PROGRESS.md):
-Relay research now has 26 unmatched windows; Fees query-selector research has 95.
+Relay research now has 22 unmatched windows; Fees query-selector research has 95.
 The baseline counts below remain those of the dated audit.
 
 ## Audit baseline

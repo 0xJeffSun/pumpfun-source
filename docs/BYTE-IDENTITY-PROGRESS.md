@@ -4,6 +4,24 @@ The [full audit](RECONSTRUCTION-AUDIT.md) and its generated tables retain their
 explicit `1463bd22` snapshot. This log records later research without silently
 changing that baseline or promoting new selected artifacts.
 
+## Relay: 26 → 22 unmatched normalized windows
+
+The [Token-2022 dependency-path study](../repro/donation-relay/token-extension-version-recovery/README.md)
+recovers full original windows 240, 242, 243 and 244: TLV data inspection, total
+TLV sizing, required account extensions and token-instruction packing.
+
+Latest research: **470/492 normalized windows**, **88 raw local body matches**,
+**22 unmatched**, with no prior normalized window lost. All 536 records / 534
+unique fixtures pass fresh original/candidate replay. The 812,864-byte output
+still differs from the original; selection and exhaustive behavior are unresolved.
+
+The direct Token-2022 v8 control had no normalized gain. The successful trial
+also changes Anchor SPL's separately pinned token-interface dependency to v8,
+using otherwise unchanged Anchor SPL Rust source. This identifies a matching
+tested source/dependency arrangement, not the uploader's historical manifest.
+The audit verifies 187 registry packages / 4,135 files; failed offline cache
+preparations and the negative control are retained.
+
 ## Relay: 27 → 26 unmatched normalized windows
 
 The [SwapReceipt coordinate study](../repro/donation-relay/swap-receipt-coordinate-recovery/README.md)

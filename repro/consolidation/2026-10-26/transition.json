@@ -7,8 +7,8 @@
     {
       "path": "README.md",
       "before_sha256": "cae913d4d3f2066403162f653a0cf35b39620fb08877b1b308c08ccce4a53678",
-      "after_sha256": "f743dad6c1460fcdc5bba95f18efd2b1cabbd49b92daad79d16f606423e25ccf",
-      "reason": "Link the dated reconstruction audit to subsequent verified Relay and Fees byte-identity progress."
+      "after_sha256": "38fec85d764096f9092e2c6e11f1dbbe0f1aeaa9950274022fb106b8bfafdcac",
+      "reason": "Link the frozen audit to current verified progress and show Relay research at 470 normalized windows with 22 unmatched."
     },
     {
       "path": ".github/workflows/verify.yml",
