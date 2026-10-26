@@ -10,7 +10,7 @@ need a dispatch-complete build for local SDK testing.
 | --- | --- | --- |
 | `admin_update_token_incentives` | pump | 299 cases, 0 mismatches |
 | `claim_token_incentives` | pump | recovered; its differential is bound to an older build record and was not re-run |
-| `create_v2` Mayhem mode + `initialize_mayhem_state` (pump→Mayhem CPI) | pump, mayhem | 17 cases, 0 mismatches |
+| `create_v2` Mayhem mode + `initialize_mayhem_state` (pump→Mayhem CPI) | pump, mayhem | 20 cases, 0 mismatches (corrected creator fixture; see below) |
 | v3 Token-2022 transfer-fee quotes (`buy_v3`, `sell_v3`, `buy_exact_quote_in_v3`) | pump | 126 cases, 0 mismatches |
 | `set_mayhem_virtual_params` (dormant, CPI-only) | pump | 84 cases, 0 mismatches (signer-stub driver) |
 
@@ -24,9 +24,22 @@ harness also has zero mismatches. All 17 existing CPI cases pass with the captur
 original Pump as caller on both sides. These are bounded local comparisons, not
 whole-program equivalence or byte identity.
 
+The CPI harness's old `zero-creator-is-rejected` case serialized the payer as
+creator; the [creator-fixture correction](../../research/mayhem-creator-fixture/README.md)
+serializes the requested creator and adds zero/distinct-creator controls (20 cases).
+The [corrected-fixture recheck](../../research/mayhem-overlay-cpi-recheck/README.md)
+runs those 20 cases against the corrected Mayhem above: 0 mismatches with either
+the overlay Pump (`5392c9a9…`) or the captured Pump as caller. The zero-creator
+cases reject in Pump (6030) before the Mayhem CPI.
+
 The current Mayhem overlay's pinned Linux v1.52 build is 695,448 bytes, SHA-256
 `8e6a5f8c34a12303096902e50848f556bc7a9d9ce0dc0d9030e632b85b88e166`;
 its source, raw output, symbols, logs and receipts are retained in that package.
+A macOS `scripts/build_partial_candidate.py` (`cargo build-sbf`, v1.52) rebuild
+does not reproduce that Linux output: on the same source it gives 695,456 bytes, SHA-256
+`b088163ae28a3e03649f2da8de03ca7b053a1397275b0fa61716a9f720180d76`, while on the
+pre-correction source it reproduces `cbe8c8e7…` exactly (recorded in the recheck
+package; the rebuilt binary is not retained).
 
 With the overlay applied, pump dispatches 56/56 IDL instructions and Mayhem 25/25.
 Earlier builds on 2026-10-26, before the initializer correction above
