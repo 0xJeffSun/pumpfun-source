@@ -10,6 +10,17 @@ echo "== ATA preset-window hash cross-check =="
 python3 verify_ata_order.py --output "$OUTPUT_DIR/ata_order_report.json"
 
 echo
+echo "== ATA byte-distance (307 residual, re-derived) =="
+# Read-only: byte_distance.py asserts the recorded ATA result and writes no file.
+# The candidate pair is sparse-excluded by default; materialize it on demand.
+if [ ! -f ../monomorph-order-proof/candidate2.so ]; then
+  echo "candidate pair not present; fetching via sparse-checkout..."
+  (cd "$(git -C . rev-parse --show-toplevel)" \
+     && git sparse-checkout add repro/ata/monomorph-order-proof) || true
+fi
+python3 byte_distance.py || echo "(byte_distance skipped: candidate pair unavailable)"
+
+echo
 echo "== Local binary inventory (linear/heuristic) =="
 python3 inventory.py --output "$OUTPUT_DIR/inventory.json"
 

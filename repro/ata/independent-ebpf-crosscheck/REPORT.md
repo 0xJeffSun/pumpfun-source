@@ -88,3 +88,49 @@ fallback is /tmp/ghidra_text_dump.tsv if REA_DUMP_OUT is unset). The example set
 REA_DUMP_OUT explicitly. No Ghidra invocation is automatically performed by the
 runner. The manifest hashes the corrected source/manual docs and the unchanged
 saved receipts; it authenticates file bytes, not absent execution evidence.
+
+## Independent byte-distance: the 307 residual, re-derived
+
+`byte_distance.py` re-measures the ATA residual directly from the two program
+images using only `hashlib`: no disassembler, no symbols, and no dependency on
+any other script in this package. It diffs `original.so` against the closest
+candidate `candidate2.so` and localizes every differing offset. The candidate
+pair lives under `repro/ata/monomorph-order-proof/`, which is sparse-excluded by
+default; materialize it with `git sparse-checkout add
+repro/ata/monomorph-order-proof` before running.
+
+The tool asserts the recorded values below and exits non-zero on any drift, so
+it also serves as a regression guard for the residual:
+
+```
+ATA original  6804554e69fd3a58  105032 B
+ATA candidate ba8dd8a42ca7bff4  105032 B
+total differing bytes: 307 (common-extent 307, length delta 0)
+contiguous diff runs:  126, first at offset 28601
+inside windows [28592, 29384]: 282  (AccountMeta 181, u8 101)
+outside windows (call/reloc fixups): 25
+```
+
+Scope and limits. The byte counts, the 282/25 split across the two preset
+windows already named by `verify_ata_order.py`, and the first differing offset
+(28601) are reproducible facts about these specific `original.so` and
+`candidate2.so` files. The attribution of the in-window bytes to swapped
+`RawVec::reserve_for_push` monomorphizations, and the claim that the residual
+cannot be closed without the original build's `-C metadata` unit-graph inputs,
+are carried in the tool's `interpretation` field as the author's reading; this
+measurement does not independently establish them. The tool compares only this
+one candidate pair. It does not search other candidates, recover function
+boundaries, prove the element-type attribution, or prove that whole-byte
+identity is unreachable.
+
+Usage:
+
+```bash
+python3 byte_distance.py            # assert the recorded ATA pair (read-only)
+python3 byte_distance.py --json     # same result, machine-readable to stdout
+python3 byte_distance.py A.so B.so  # measure an arbitrary pair (descriptive only)
+```
+
+The committed `byte_distance_report.json` is the saved receipt of the asserting
+run, retained byte-for-byte alongside the other author receipts; the tools in
+this package do not overwrite it.
