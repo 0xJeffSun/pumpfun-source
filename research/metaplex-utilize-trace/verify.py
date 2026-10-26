@@ -30,9 +30,9 @@ def sealed(raw, digest, label):
     return raw
 
 
-def artifact(package, receipt):
+def artifact(package, receipt, runs=RUNS):
     run = receipt['run']
-    revision, conclusion, digest = RUNS[run['id']]
+    revision, conclusion, digest = runs[run['id']]
     require(run['head_sha'] == revision and run['conclusion'] == conclusion
             and run['status'] == 'completed' and run['run_attempt'] == 1, 'Run identity differs')
     require(run['repository']['full_name'] == 'startrack3r/pumpfun-source'
@@ -66,7 +66,9 @@ def artifact(package, receipt):
     return members, state
 
 
-def derive(members, state, source_files):
+def derive(members, state, source_files, *, runner_name='trace.py',
+           wrapper_name='rustc-trace-wrapper.sh', argv_name='rustc-4272.argv',
+           build_label='build-candidate11-traced', run_id=40343712336):
     require(state['status'] == 'RAW_MATCH' and state['cleanup_succeeded'] is True, 'Build or cleanup failed')
     require(state['image'] == rebuild.IMAGE and state['source_commit'] == rebuild.SOURCE_COMMIT,
             'Build input identity differs')
@@ -76,7 +78,8 @@ def derive(members, state, source_files):
     rows = {row['label']: row for row in state['commands']}
     require(len(rows) == len(state['commands']) == 19 and all(row['returncode'] == 0 for row in rows.values()),
             'Command count or exit status differs')
-    expected = set(rebuild.PINS) | {'observation.json', 'trace.py', 'rustc-trace-wrapper.sh', 'rustc-4272.argv', 'executed-workflow.yml', 'source-commit.txt',
+    expected = set(rebuild.PINS) | {'observation.json', runner_name, wrapper_name, argv_name,
+        'executed-workflow.yml', 'source-commit.txt',
         'actual-source-before.json.gz', 'actual-source-after.json.gz', 'acquisition.json',
         'registry-archives.json.gz', 'raw-result.json', 'token_metadata.so'}
     for row in rows.values():
@@ -120,14 +123,14 @@ def derive(members, state, source_files):
         f'type=bind,source={out}/registry,target=/usr/local/cargo/registry',
         f'type=bind,source={out}/git-cache,target=/usr/local/cargo/git',
         f'type=bind,source={out}/downloads/platform-tools.tar.bz2,target=/input/platform-tools.tar.bz2,readonly',
-        f'type=bind,source={out}/evidence/rustc-trace-wrapper.sh,target=/observer/rustc-trace-wrapper.sh,readonly',
+        f'type=bind,source={out}/evidence/{wrapper_name},target=/observer/{wrapper_name},readonly',
         f'type=bind,source={out}/trace,target=/trace'],
         'Build mounts differ')
     require(start[start.index('--network') + 1] == 'none'
             and 'CARGO_NET_OFFLINE=true' in start, 'Build networking differs')
     container = text('start-offline-build-container').strip()
-    command('build-candidate11-traced', ['docker', 'exec', '-e', 'RUSTUP_TOOLCHAIN=' + rebuild.HOST_TOOLCHAIN,
-        '-e', 'RUSTC_WRAPPER=/observer/rustc-trace-wrapper.sh',
+    command(build_label, ['docker', 'exec', '-e', 'RUSTUP_TOOLCHAIN=' + rebuild.HOST_TOOLCHAIN,
+        '-e', 'RUSTC_WRAPPER=/observer/' + wrapper_name,
         '-w', '/build/programs/token-metadata', container, 'cargo', 'build-sbf', '--offline', '--',
         '--config', 'registries.crates-io.protocol="sparse"', '--locked', '--offline',
         '--manifest-path', rebuild.MANIFEST])
@@ -140,11 +143,11 @@ def derive(members, state, source_files):
             and result['bytes'] == len(raw) and result['sha256'] == sha(raw)
             and result['padding_bytes_added'] == 0 and result['binary_rewritten'] is False
             and result['deployed_identity_claimed'] is False, 'Raw identity scope differs')
-    build_log = text('build-candidate11-traced', 'stderr')
+    build_log = text(build_label, 'stderr')
     require('Finished release' in build_log and 'Criterion/releases/download/v2.3.3/' in build_log
             and "unable to resolve host address 'github.com'" in build_log,
             'Retained SDK auxiliary-download failure differs')
-    return {'successful_run': 40343712336, 'raw_bytes': len(raw), 'raw_sha256': sha(raw),
+    return {'successful_run': run_id, 'raw_bytes': len(raw), 'raw_sha256': sha(raw),
         'raw_candidate11_equal': True, 'source_files': len(patched), 'locked_registry_archives': len(archives),
         'registry_archive_bytes': sum(row['bytes'] for row in archives),
         'commands': len(rows), 'artifact_members': len(members), 'network_during_compilation': 'none',
