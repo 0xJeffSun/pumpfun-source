@@ -7,8 +7,8 @@
     {
       "path": "README.md",
       "before_sha256": "cae913d4d3f2066403162f653a0cf35b39620fb08877b1b308c08ccce4a53678",
-      "after_sha256": "f00067d0529ae5cc02d3eafbfa9cf6669c37ff7978c573c67ef8b6e4dd9bc64e",
-      "reason": "Simplified overview: status tables, quick start, layout, evidence rules, MIT license section. Dependency summary now distinguishes raw compiler output from padded allocation images and itemizes all Metaplex difference classes."
+      "after_sha256": "2a11246ddfd0ec2987076524565e2c2a498da446ae8c0d39f9d3f116f4fd994d",
+      "reason": "Current reconstruction audit plus corrected Mayhem controller/adapter build provenance; no source or selection changes."
     },
     {
       "path": ".github/workflows/verify.yml",

@@ -6,11 +6,11 @@ need a dispatch-complete build for local SDK testing.
 
 ## What it adds
 
-| Handler | Program | Differential result vs. captured original (re-run 2026-10-26) |
+| Handler | Program | Differential result vs. captured original (local re-run 2026-10-26) |
 | --- | --- | --- |
 | `admin_update_token_incentives` | pump | 299 cases, 0 mismatches |
 | `claim_token_incentives` | pump | recovered; its differential is bound to an older build record and was not re-run |
-| `create_v2` Mayhem mode + `initialize_mayhem_state` (pump→Mayhem CPI) | pump, mayhem | 20 cases, 0 mismatches (corrected creator fixture; see below) |
+| `create_v2` Mayhem mode + `initialize_mayhem_state` (pump→Mayhem CPI) | pump, mayhem | 20 cases, 0 mismatches (17 before commit `73cfb605` added three creator cases) |
 | v3 Token-2022 transfer-fee quotes (`buy_v3`, `sell_v3`, `buy_exact_quote_in_v3`) | pump | 126 cases, 0 mismatches |
 | `set_mayhem_virtual_params` (dormant, CPI-only) | pump | 84 cases, 0 mismatches (signer-stub driver) |
 
@@ -20,17 +20,20 @@ deserialization before signature validation. Its token vault uses `init_if_neede
 matching the original's handling of existing vaults and their owner/mint/address
 constraints. The [controlled reconstruction](../../research/mayhem-initializer-validation/README.md)
 reduces 35/53 standalone validation mismatches to zero; the original five-case
-harness also has zero mismatches. All 17 existing CPI cases pass with the captured
-original Pump as caller on both sides. These are bounded local comparisons, not
-whole-program equivalence or byte identity.
+harness also has zero mismatches. The 17 CPI cases of the pre-`73cfb605` harness pass with the captured
+original Pump as caller on both sides. The current 20-case harness gives 0
+mismatches for this corrected build with the committed `5392c9a9` Pump candidate as
+caller, and for the committed `5392c9a9`/`cbe8c8e7` pair (local runs, 2026-10-26).
+These are bounded local comparisons, not whole-program equivalence or byte identity.
 
-The CPI harness's old `zero-creator-is-rejected` case serialized the payer as
-creator; the [creator-fixture correction](../../research/mayhem-creator-fixture/README.md)
-serializes the requested creator and adds zero/distinct-creator controls (20 cases).
-The [corrected-fixture recheck](../../research/mayhem-overlay-cpi-recheck/README.md)
-runs those 20 cases against the corrected Mayhem above: 0 mismatches with either
-the overlay Pump (`5392c9a9…`) or the captured Pump as caller. The zero-creator
-cases reject in Pump (6030) before the Mayhem CPI.
+Commit `73cfb605` (the [creator-fixture correction](../../research/mayhem-creator-fixture/README.md))
+made the harness serialize each case's requested creator: the old
+`zero-creator-is-rejected` case had serialized the payer, so it repeated an ordinary
+creation. It also added zero/distinct-creator controls; the zero-creator cases
+reject in Pump (6030) before the Mayhem CPI. That package retains the 20-case
+receipt for the `5392c9a9`/`cbe8c8e7` pair. The [corrected-fixture recheck](../../research/mayhem-overlay-cpi-recheck/README.md)
+retains the 20-case receipts for this corrected build with the `5392c9a9` Pump
+and with the captured Pump as caller (0 mismatches each).
 
 The current Mayhem overlay's pinned Linux v1.52 build is 695,448 bytes, SHA-256
 `8e6a5f8c34a12303096902e50848f556bc7a9d9ce0dc0d9030e632b85b88e166`;
@@ -52,18 +55,25 @@ Earlier builds on 2026-10-26, before the initializer correction above
   `df61557a0bed2450d32b277df56a68d3e58ecd87e41486b9ea4c2071e9a67155`. It differs
   from the older committed candidate
   `repro/pump/recovered-dispatch-56-from-main-v144/main/candidate.so`
-  (`5392c9a9…`) because the overlay now sits on main's newer `admin_cto.rs`. The
-  differentials below were re-run against both builds with identical results.
+  (`5392c9a9…`, built from `14ec9b5c`) because the overlay sits on main's newer
+  `admin_cto.rs` and its `lib.rs` orders module declarations and
+  `UpdateMayhemVirtualParamsEvent` differently; the effect of each change was not
+  measured separately. The differentials in the table above were re-run locally
+  against both builds with identical results. Those receipts and the `df61557a`
+  build record were not retained; the committed `5392c9a9`/`cbe8c8e7` candidates
+  reproduce the same counts.
 
 The `@pump-fun/pump-sdk` harness in
 `repro/parallel-work/2026-10-25/independent-reconstruction-review/sdk-integration-test/`
-runs create/buy/sell, v3, incentives, Mayhem create and AMM flows against them.
+ran create/buy/sell, v3, incentives, Mayhem create and AMM flows against the older
+committed candidates (`5392c9a9…`, `cbe8c8e7…`), not the current overlay builds.
 
 ## Why it is not active source
 
-CI hash-binds `programs/pump/src/{lib,trade,create_v2,admin_cto,volume_sync}.rs`
-to the selected checkpoint (`scripts/verify_recovered_builds.py`), and the
-reconciliation policy only admits source with matching byte-level evidence. None
+`scripts/verify_recovered_builds.py` hash-binds all 37 Pump compile inputs to the
+selected checkpoint, the pass-27 guard pins Mayhem's 14 compile inputs (including
+the `lib.rs` this overlay replaces), and the reconciliation policy only admits
+source with matching byte-level evidence. None
 of these builds is byte-identical to the deployed original, so promoting them
 means selecting a new checkpoint and re-running the bound differential suites.
 Main's checkpoint notes also flag an AccountInfo ownership question on the
@@ -94,10 +104,10 @@ cargo build-sbf --manifest-path programs/mayhem/Cargo.toml --tools-version v1.52
 Validate a build against the captured originals (from the repository root):
 
 ```sh
-python3 repro/behavioral-recovery/scripts/pump_incentives_admin_differential.py --candidate <pump.so> --output work/incentives.json
-python3 repro/behavioral-recovery/scripts/pump_set_mayhem_virtual_params_differential.py --candidate <pump.so> --output work/virtual-params.json
+python3 repro/behavioral-recovery/scripts/pump_incentives_admin_differential.py --candidate <pump.so> --output work/incentives.json.gz
+python3 repro/behavioral-recovery/scripts/pump_set_mayhem_virtual_params_differential.py --candidate <pump.so> --output work/virtual-params.json.gz
 python3 repro/behavioral-recovery/scripts/pump_v3_token_extensions_differential.py --candidate <pump.so> --output work/v3.json
-python3 repro/behavioral-recovery/scripts/pump_create_mayhem_differential.py --candidate-pump <pump.so> --candidate-mayhem <mayhem.so> --output work/create-mayhem.json
+python3 repro/behavioral-recovery/scripts/pump_create_mayhem_differential.py --candidate-pump <pump.so> --candidate-mayhem <mayhem.so> --output work/create-mayhem.json.gz
 python3 repro/behavioral-recovery/scripts/mayhem_initialize_state_differential.py --candidate <mayhem.so> --output work/mayhem-init.json
 ```
 

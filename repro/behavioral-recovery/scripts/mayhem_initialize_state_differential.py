@@ -231,8 +231,8 @@ def main():
                       'valid_init_transaction_constructible': False,
                       'terminal_blocker_confirmed': bool(signer_gate),
                       'terminal_blocker': orig_full['anchor_error']}))
-    # Non-zero exit signals that no positive (Ok) oracle case could be formed.
-    raise SystemExit(0 if signer_gate else 2)
+    # 2: the original no longer hits the signer gate; 1: candidate diverges from it.
+    raise SystemExit(2 if not signer_gate else (1 if mismatches else 0))
 
 
 if __name__ == '__main__':

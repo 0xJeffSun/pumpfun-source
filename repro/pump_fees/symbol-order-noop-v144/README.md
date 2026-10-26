@@ -6,16 +6,27 @@ It does not derive a target order, inspect the deployed Pump Fees program, patch
 
 ## Result: baseline exact, name-only ordering not applicable
 
-The compatible-host attempt compiled the unchanged 26-input source successfully. Independent v1.52 stripping reproduced the retained Linux current-source candidate exactly: 863,800 bytes, SHA-256 `6c44d9f2ffe9b18c79a6344b256d8acd7a34c10e77b894c51f46512a447b8ce6`. The actual pinned v1.44 `rust-lld` advertises `--symbol-ordering-file`.
+The compatible-host attempt compiled the unchanged 26-input source successfully. Independent v1.52 stripping reproduced the retained Linux current-source candidate exactly (`repro/pump_fees/linux-current-source-build/fees-current-linux-v144.so`, the same Git blob): 863,800 bytes, SHA-256 `6c44d9f2ffe9b18c79a6344b256d8acd7a34c10e77b894c51f46512a447b8ce6`. The actual pinned v1.44 `rust-lld` advertises `--symbol-ordering-file`.
 
-The unstripped ELF then produced the fail-closed result:
+Parsing the retained unstripped ELF with the corrected parser gives the fail-closed result (see *How the committed results were produced* below):
 
 - 647 defined `STT_FUNC` rows;
 - 635 unique bare names;
 - 8 names duplicated across 20 rows;
 - duplicate rows occupy distinct addresses, and some have different sizes.
 
-Pinned LLD keys the order map by bare `Symbol::getName()` and applies one priority to every matching local or global symbol. It therefore cannot represent the existing separated address positions of those duplicate names. The runner emitted no order file, started no ordered build, read no deployed artifact, and performed no binary mutation. `results/` retains both baseline ELFs, linker help, source/tool receipts, the exact duplicate rows, and the terminal result. This closes the ATA-style complete-name-order route for this Fees baseline; it does not rule out a future object-qualified linker mechanism or source-level removal of duplicate local-name collisions.
+Pinned LLD keys the order map by bare `Symbol::getName()` and applies one priority to every matching local or global symbol. (Maintainer review checked this in `lld/ELF/Writer.cpp` `buildSectionOrder` at LLVM `08aedd64bf3abe4f163407b7bcf680403b84b32d`, the `src/llvm-project` gitlink of Rust revision `08b7341888ab480dfaaa0698300cbbbbb2d75b53` recorded by the Darwin v1.44 archive's `version.md` in `research/fees-sysroot-object-provenance/v144/`; the Linux archive's `version.md` is not retained here. Equal priorities are then ordered with the non-stable `llvm::sort`.) It therefore cannot represent the existing separated address positions of those duplicate names. The runner emitted no order file, started no ordered build, read no deployed artifact, and performed no binary mutation. `results/` retains both baseline ELFs, linker help, source/tool receipts, the exact duplicate rows, and the terminal result. This closes the ATA-style complete-name-order route for this Fees baseline; it does not rule out a future object-qualified linker mechanism or source-level removal of duplicate local-name collisions.
+
+## How the committed results were produced
+
+The committed `results/` files are not the unedited output of one `run.py` attempt:
+
+- `results/raw-attempt-result.json` is the runner's own terminal record. It stopped at stage `baseline-build`, immediately after the successful v1.44 build, when the then-current `elf_utils.py` rejected the unstripped ELF with `unexpected section entry size`. No strip, symbol audit, order file or ordered build ran in that attempt.
+- The parser was then corrected (`test_elf_utils.py` is the regression test); the committed `elf_utils.py` is the corrected version, not the byte-exact executed one (the executed traceback cites a different line number).
+- `results/baseline.stripped.so`, `results/duplicate-functions.json` and `results/result.json` were produced afterwards from the retained unstripped ELF, outside the runner's recorded flow. No strip command receipt is committed, so the strip tool identity is contributor-reported. `run.py` itself never emits `NOT_APPLICABLE_DUPLICATE_LOCAL_SYMBOL_NAMES`; with the corrected parser it would stop with a generic `NOT_APPLICABLE` blocker at `duplicate function names cannot form an order file`.
+- Host checkout, image-inspect, command and container receipts remained in the contributor's ignored `work/` and are not committed, so the container identity and exact command lines are contributor-reported beyond what `results/baseline-build-v144.log` and `results/toolchain.json` show.
+
+What the committed bytes do establish (re-derived by `verify.py`, and independently at maintainer review): the stripped file equals the previously retained 863,800-byte Linux candidate; the unstripped ELF's allocated sections equal the stripped file's; the unstripped `.symtab` contains the 8 duplicate `STB_LOCAL` names over 20 rows at non-adjacent positions in address order; the retained linker help advertises `--symbol-ordering-file`; and `source-inputs.json` equals the 26 Git blobs at the pinned revision.
 
 ## Fixed inputs
 
@@ -44,7 +55,7 @@ The host exports only the 26 pinned Git blobs and the four driver inputs into th
 
 The runner proceeds in this order:
 
-1. Require clean tracked state on `main` at `5faca894…`; only untracked files in this additive package are allowed.
+1. Require clean tracked state on `main` at `58519a8e…` (the revision in `policy.json`); only untracked files in this additive package are allowed.
 2. Export and rehash the 26 pinned source inputs from Git.
 3. Verify the pinned Linux/amd64 container and both downloaded platform-tools archives.
 4. Record the actual v1.44 `rust-lld` version, bytes, and complete `-flavor gnu --help`; require that help to advertise `--symbol-ordering-file`.
@@ -71,6 +82,8 @@ A terminal attempt retains:
 - a machine-readable terminal result or the exact blocker and stage.
 
 Failed attempts are immutable. Use another output path rather than deleting or overwriting evidence.
+
+This package commits only the `results/` subset described above, not a complete attempt directory. `verify.py --output` therefore applies to a fresh local run, not to anything in the repository.
 
 ## Verify
 

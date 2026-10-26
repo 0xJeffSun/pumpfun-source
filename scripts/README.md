@@ -1,37 +1,45 @@
 # Scripts
 
 Tooling for capturing deployments, building candidates, comparing them with the
-captured originals and running differential tests in a local VM. Every script
-here is listed below by purpose; a check mark means a GitHub workflow runs it
-directly (others run as libraries of those steps or by hand).
+captured originals and running differential tests in a local VM. Every Python
+script here is listed below by purpose; a check mark means a GitHub workflow runs it
+directly (others run as libraries of those steps or by hand). The non-Python files
+(`pump_rustc_source_path_wrapper.sh`, `core_linux_v144_inputs.json` and
+`supported_sbpf_policies/`) are inputs to the build scripts.
 
 ## Conventions
 
 - Run from the repository root with Python 3.12. Differential and Surfpool scripts
   need the pinned packages in `requirements.txt` (`solders==0.27.1`).
-- Differentials take `--candidate <program.so>` and `--output <file.json[.gz]>`,
-  load the captured original from `evidence/original/<program>/deployed.so`, run the
-  same signed transactions against both in LiteSVM and report `mismatches`.
+- Differentials take `--candidate <program.so>` and `--output <file.json[.gz]>`, load
+  the captured original from `evidence/original/<program>/deployed.so` (Donation Relay:
+  `evidence/dependencies/donation_relay/deployed.so`), run the same signed transactions
+  against both in LiteSVM and report per-case results. Most write a `mismatches` list;
+  a few use per-row `match` fields instead.
 - `*_surfpool.py` scripts replay the same cases against a local Surfpool validator
   (`localnet/`). Nothing is sent to a live network.
 - `*_fixture.py` modules build the synthetic accounts shared by a family of
-  differentials; `*_probe.py` scripts record observations without asserting equality.
+  differentials. The Pump `*_probe.py` scripts record prerequisite observations
+  without asserting equality; `fees_donation_crank_probe.py` is a full differential
+  despite its name.
 
 ## Why the set is frozen
 
 The pass-27 CI guard pins this directory: the exact set of 187 `scripts/*.py` files
 and the SHA-256 of each one. Evidence packages under `repro/` also record the
-script hashes they ran with. Adding, renaming, merging or editing a script here
-therefore needs a new reviewed guard transition (see
-`repro/consolidation/2026-10-26/`). New tooling belongs in the evidence package
-that uses it, as `repro/behavioral-recovery/scripts/` does.
+script hashes they ran with. Editing an existing script needs a reviewed asset
+transition (as in `repro/consolidation/2026-10-26/`) and must not change a script
+that an immutable checkpoint verifier pins (for example `build_partial_candidate.py`).
+Adding, renaming or merging scripts changes the pinned set itself and needs a new
+guard generation. New tooling belongs in the evidence package that uses it, as
+`repro/behavioral-recovery/scripts/` does.
 
 ## Core: capture, analysis, comparison
 
 | Script | CI | Purpose |
 | --- | :-: | --- |
 | `analyze.py` |  | Offline ELF layout, string provenance and public-interface inventory. |
-| `build_source_manifest.py` | ✓ | Hash local Rust, workspace, Anchor IDL and explicitly supplied build inputs. |
+| `build_source_manifest.py` |  | Hash local Rust, workspace, Anchor IDL and explicitly supplied build inputs. |
 | `capture.py` |  | Read-only finalized RPC capture. Refuses replacing existing evidence. |
 | `compare.py` |  | Compare a separately built artifact, including allocation padding; never copies code. |
 | `disassemble.py` |  | Generate analyst disassembly, never a source rebuild or candidate executable. |
@@ -63,7 +71,7 @@ that uses it, as `repro/behavioral-recovery/scripts/` does.
 
 | Script | CI | Purpose |
 | --- | :-: | --- |
-| `reconstruction_identity_audit.py` | ✓ | Measure exact byte gaps without treating size similarity as source completeness. |
+| `reconstruction_identity_audit.py` |  | Measure exact byte gaps without treating size similarity as source completeness. |
 | `verify_current_bindings.py` | ✓ | Verify current tracked inputs; historical scratch paths use exact published copies. |
 | `verify_current_checkpoint.py` | ✓ | Check immutable checkpoint evidence and actual current sources/helper provenance. |
 | `verify_imported_lab.py` | ✓ | Verify frozen lab import and replay saved receipts in a disposable local tree. |
@@ -147,14 +155,14 @@ that uses it, as `repro/behavioral-recovery/scripts/` does.
 | `pump_set_mayhem_params_synthetic_cpi.py` |  | Local-only Pump Mayhem-parameter differential through a synthetic Mayhem-ID CPI. |
 | `pump_set_params_differential.py` | ✓ | Offline original-vs-recovered Pump administrative instruction differential tests. |
 | `pump_trade_fixture.py` |  | Local captured-dependency sell-v3 fixture; initialization performs no RPC. |
-| `pump_v3_configured_fee_differential.py` | ✓ | Partial exact-quote v3 recovery with verified signatures and explicit synthetic state. |
+| `pump_v3_configured_fee_differential.py` | ✓ | Configured creator-fee correction across three partial v3 handlers (SOL and synthetic USDC). |
 | `pump_validate_admin.py` | ✓ | Offline original-vs-recovered Pump administrative instruction differential tests. |
 | `pump_validate_all.py` |  | Run the published 38-suite bounded Pump corpus against one compiled ELF. |
 | `pump_validate_authority.py` | ✓ | Offline original-vs-recovered Pump administrative instruction differential tests. |
 | `pump_validate_buy.py` | ✓ | Compare the partial regular-SOL buy-v3 SBF path with the captured original. |
 | `pump_validate_config_admin.py` | ✓ | Offline original-vs-recovered Pump administrative instruction differential tests. |
 | `pump_validate_constant_product.py` | ✓ | Compare native recovered arithmetic with original sell-v3 reserve deltas. |
-| `pump_validate_quote.py` | ✓ | Compare the partial regular-SOL sell-v3 SBF path with the captured original. |
+| `pump_validate_quote.py` | ✓ | Partial USDC-quote buy_v3/sell_v3 path vs. the captured original (synthetic quote mint and token accounts). |
 | `pump_validate_sell.py` | ✓ | Compare the partial regular-SOL sell-v3 SBF path with the captured original. |
 | `pump_validate_sell_accounting.py` | ✓ | Validate partial SOL sell accounting against original SBF event and state effects. |
 | `pump_validate_volume.py` | ✓ | Validation: Pump volume accumulators, candidate vs. captured original. |
@@ -166,20 +174,20 @@ that uses it, as `repro/behavioral-recovery/scripts/` does.
 | Script | CI | Purpose |
 | --- | :-: | --- |
 | `pump_buy_v2_surfpool.py` |  | Normally signed offline Surfpool original/candidate Pump buy_v2 / buy_exact_quote_in_v2 checks. |
-| `pump_cashback_surfpool.py` |  | Normally signed offline Surfpool original/candidate Pump creator collection checks. |
+| `pump_cashback_surfpool.py` |  | Normally signed offline Surfpool claim_cashback / claim_cashback_v2 comparisons. |
 | `pump_create_control_surfpool.py` |  | Normally signed offline Surfpool original/candidate Pump creation checks. |
 | `pump_create_nested_surfpool.py` |  | Normally signed offline Surfpool original/candidate Pump creation checks. |
 | `pump_create_quote_surfpool.py` |  | Normally signed offline Surfpool original/candidate Pump creation checks. |
 | `pump_create_surfpool.py` |  | Normally signed offline Surfpool original/candidate Pump creation checks. |
 | `pump_create_v2_surfpool.py` |  | Normally signed offline Surfpool original/candidate Pump creation checks. |
-| `pump_exact_quote_surfpool.py` |  | Signed offline Surfpool direct Pump creator-distribution comparisons with captured CPI programs. |
+| `pump_exact_quote_surfpool.py` |  | Signed offline Surfpool partial exact-quote v3 purchase comparisons. |
 | `pump_global_init_surfpool.py` |  | Normally signed offline Surfpool original/candidate Pump initialize checks. |
-| `pump_holder_distribution_surfpool.py` |  | Signed offline Surfpool Pump migrate_v2 comparisons with captured CPI programs. |
+| `pump_holder_distribution_surfpool.py` |  | Signed offline Surfpool holder-distribution comparisons with captured CPI programs. |
 | `pump_idl_authority_surfpool.py` |  | Normally signed offline Surfpool original/candidate Pump IDL authority checks. |
-| `pump_legacy_buy_surfpool.py` |  | Normally signed offline Surfpool original/candidate Pump creator collection checks. |
-| `pump_migrate_surfpool.py` |  | Signed offline Surfpool direct Pump creator-distribution comparisons with captured CPI programs. |
+| `pump_legacy_buy_surfpool.py` |  | Normally signed offline Surfpool legacy buy / buy_exact_sol_in comparisons. |
+| `pump_migrate_surfpool.py` |  | Signed offline Surfpool legacy migrate comparisons with captured CPI programs. |
 | `pump_migrate_v2_surfpool.py` |  | Signed offline Surfpool Pump migrate_v2 comparisons with captured CPI programs. |
-| `pump_v3_configured_fee_surfpool.py` |  | Signed offline Surfpool direct Pump creator-distribution comparisons with captured CPI programs. |
+| `pump_v3_configured_fee_surfpool.py` |  | Signed offline Surfpool configured creator-fee v3 comparisons. |
 
 ## PumpSwap (AMM) differentials
 
@@ -218,10 +226,10 @@ that uses it, as `repro/behavioral-recovery/scripts/` does.
 | `fees_admin_cto_differential.py` |  | Normally signed local Pump admin_cto invoking captured Fees through real CPI. |
 | `fees_admin_differential.py` |  | Pump Fees administration: independent original/candidate local SBF execution. |
 | `fees_admin_transfer_differential.py` |  | FeeConfig administration transfer with ordinary signatures and synthetic state. |
-| `fees_buyback_differential.py` |  | Original-only buyback probes: normal signatures and synthetic offline accounts. |
+| `fees_buyback_differential.py` |  | Buyback differential: normal signatures and synthetic offline accounts; the candidate is optional. |
 | `fees_config_differential.py` |  | Independent SBF fee-schedule mutations using synthetic authorized local state. |
 | `fees_deprecated_differential.py` |  | Verify two deprecated dispatches reject all tested account/payload shapes. |
-| `fees_donation_crank_probe.py` |  | Read original crank behavior using test-owned payer and synthetic offline state. |
+| `fees_donation_crank_probe.py` |  | Donation crank differential with a test-owned payer and synthetic offline state; reports mismatches. |
 | `fees_donation_create_differential.py` |  | Recover donation-PDA creation with normally signed synthetic local transactions. |
 | `fees_donation_sequence.py` | ✓ | Compare a persistent signed create/deposit/crank sequence in offline LiteSVM. |
 | `fees_error_messages_differential.py` | ✓ | Compare two recovered error messages using normally signed offline fixtures. |
@@ -231,11 +239,11 @@ that uses it, as `repro/behavioral-recovery/scripts/` does.
 | `fees_sharing_create_differential.py` |  | Differential: Fees sharing create, candidate vs. captured original. |
 | `fees_sharing_update_differential.py` |  | Signed local sharing-update cases; original bootstrap precedes candidate load. |
 | `fees_social_claim_differential.py` |  | Normally signed synthetic offline social fee claims, original/candidate comparison. |
-| `fees_social_claim_v2_differential.py` |  | Original-only normal-signed local SocialFeePda v2 claim probes. |
+| `fees_social_claim_v2_differential.py` |  | Normally signed local SocialFeePda v2 claim differential; the candidate is optional. |
 | `fees_social_create_differential.py` |  | Signed synthetic local probes of original social-fee creation; no source claim. |
 | `fees_upsert_differential.py` |  | Synthetic local fee-tier splice tests with actual admin signatures. |
 | `fees_validate_all.py` | ✓ | Run all implemented Pump Fees handler suites against one candidate ELF. |
-| `fees_withdraw_differential.py` |  | Original-only normally signed offline referral withdraw probes. |
+| `fees_withdraw_differential.py` |  | Normally signed offline referral withdraw differential; the candidate is optional. |
 | `validate_fee_handlers.py` |  | Execute recovered query handlers and captured original independently in LiteSVM. |
 | `validate_fee_selection.py` | ✓ | Differential-test the compiled Rust fragment against captured Pump Fees locally. |
 | `validate_quote_fees.py` | ✓ | Compare recovered native quote-selection Rust against original SBF queries. |

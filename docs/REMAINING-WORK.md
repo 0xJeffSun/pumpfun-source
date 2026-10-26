@@ -1,129 +1,100 @@
-# Remaining work
+# Remaining work — 26 October 2026 audit
 
-Consolidated 2026-10-26, after merging every worktree, branch and pull request
-into main. Numbers come from `repro/status.json`, `repro/donation-relay/current.json`,
-the pass-27 current-state index and the evidence packages cited below.
+This is the action list for the [current reconstruction audit](RECONSTRUCTION-AUDIT.md),
+based on selected artifacts and research through commit `1463bd22`. The historical
+[completion ledger](COMPLETION.md) remains a selected-checkpoint record; its old
+candidate paths and “current” prose must not override newer evidence.
 
-## Summary
+## Current position
 
-| Area | State | What is left |
+- **Whole captured-file identity:** 0/4 selected core programs; selected Relay also differs.
+- **Selected public handlers:** 140/150 bounded implementations, five partial,
+  five unaccepted/unrecovered. No exhaustive semantic-perfection claim.
+- **Selected machine windows:** 384 have equal local body bytes, 1,408 additional
+  normalized-only matches, 1,301 have no full body match and 245 remain opaque.
+  This partitions 3,338 windows, not the amount of source or effort recovered.
+- **Newer Fees research:** 340 unique structural pairs plus 53 call-attributed
+  duplicate pairs; 94 duplicate windows still unattributed and 98 unmatched.
+- **Newer Relay research:** 465/492 normalized windows, including 86 raw local
+  matches, with 27 unmatched. Selected source 15 remains at 122/492.
+- **Dependencies:** SPL Token is fully raw-byte equal. Token-2022's raw ELF equals
+  the meaningful prefix and its separately padded allocation equals the capture.
+  ATA has two exact but non-historical research recipes; its selected status is
+  still unresolved. Metaplex has 1,509 differing positions.
+
+Use the [complete handler ledger](../repro/reconstruction-audit-2026-10-26/handlers.md),
+[exact-byte appendix](../repro/reconstruction-audit-2026-10-26/raw-body-matches.md)
+and [full window inventory](../repro/reconstruction-audit-2026-10-26/functions.tsv)
+for function-level details. “No complete match” does not prove source absence;
+“raw local match” does not prove transitive semantics.
+
+## 1. Close public-handler and behavior gaps
+
+| Work item | Current evidence | Completion condition |
 | --- | --- | --- |
-| Core byte identity | 0 / 4 programs | All four, plus Relay. Blocked mainly by unrecovered source layout and exact toolchain. |
-| Dependencies | SPL Token and ATA raw outputs match; Token-2022 matches after zero allocation padding | Metaplex: 1,477 differing text bytes in Utilize, 30 source-coordinate bytes and 2 relocation bytes; promote the ATA result in `repro/dependency-status.json`. |
-| Handlers | 140 / 150 accepted; 6 more validated in the overlay | Promote the overlay, finish five partial handlers, replay AMM `create_config`. |
-| Process | One CI guard (pass 27) pins README, scripts, workflows and sources | Decide how recovered-but-not-byte-exact source is admitted; plan the next guard generation. |
+| Pump `admin_update_token_incentives` | Unselected overlay; 299 bounded comparisons | New selected build, bound receipts and broader validation |
+| Pump `claim_token_incentives` | Recovered overlay source; older build-bound differential | Rebind and replay the actual intended candidate |
+| Pump `set_mayhem_virtual_params` | Static recovery and 84 signer-stub comparisons | Resolve genuine caller and AccountInfo ownership contracts; select/revalidate |
+| Pump `buy_v3`, `sell_v3`, `buy_exact_quote_in_v3` | Partial selected handlers; overlay adds finite transfer-fee coverage | Cover remaining routes, extensions, validation ordering and complete event data |
+| Pump `create_v2` | Partial selected handler; overlay adds real Mayhem CPI coverage | Broader ancestry, modes and Token-2022 interactions |
+| Pump `multi_hop_curve_swap` | Finite one/two/three-hop ordinary coverage | Arbitrary supported depth, quote currencies, lifecycle, resizing and mode combinations |
+| AMM `create_config` | Compiled/static structural evidence | Authentic successful fixed-admin initialization and rejection validation |
+| Mayhem `initialize_mayhem_state` | Corrected overlay: 53 rejection cases ([initializer correction](../research/mayhem-initializer-validation/README.md)) and 20 real Pump-CPI cases ([retained recheck](../research/mayhem-overlay-cpi-recheck/README.md)) | Select intended source/build and cover broader initializer behavior |
+| Pump `sell_v2` | Bounded accepted handler with a known quote transfer-fee minimum-output/event discrepancy | Correct the discrepancy and retain regression evidence |
+| Mayhem non-initializer ABI/state | Bounded handlers, known diagnostic/error differences, five unknown GlobalParams field roles | Resolve fields and full error/data contracts |
 
-## 1. Byte identity
+The selected 140 count includes finite, imperfect reconstructions. It must not be
+presented as 140 fully correct or byte-perfect functions. Existing stopped-lane
+and signing/ownership restrictions are unchanged by this documentation audit.
 
-The deployed binaries remain the target. A build counts only when the whole file
-matches with no patching or padding.
+## 2. Finish source and binary reconstruction
 
-### Core programs
+| Program / research | Concrete remaining frontier |
+| --- | --- |
+| Selected Pump | 507 windows without full normalized matches; calls/data and ambiguous matches also remain. The separate workspace-member build has 538 normalized windows and 497 residuals: 233 different-body, 192 no-same-size, 72 store-immediate-only heuristic rows. One of those 72 changes an error code; only 71 are reported origin-only. |
+| Selected AMM | 297 unmatched original windows, 160 ambiguous normalized rows, original diagnostics, data and full call contracts |
+| Fees research | 98 unmatched windows, 94 unattributed duplicate-body windows, 26 aligned call edges to different-body frontiers; surrounding shareholder validators, transitive calls/data and full ELF/relocation layout |
+| Selected Mayhem | Seven admitted unmatched windows and 257 source-ledger opaque windows; 12 of the opaque windows have local raw matches without semantic attribution |
+| Relay research | Explicit 27 residual windows: donation/settlement business bodies, mint policy, close/CPI/resize, serialization and ten unclassified helpers; privileged successes, transitive callees/data and allocator/borrow behavior |
+| Metaplex | Utilize's 1,477 text differences, 30 source-coordinate differences, two relocation differences; authentic source/compiler layout |
+| ATA | Historical recipe remains unknown despite exact output from explicit symbol ordering and an empty feature. Decide selection independently of historical authenticity. |
+| All programs | Exact historical tool/dependency inputs, complete sections/relocations, data and indirect-call meaning; complete security and lifecycle acceptance |
 
-| Program | Original windows | Current gap | Most recent lead |
-| --- | ---: | --- | --- |
-| Pump | 1,035 | 538 normalized matches in a workspace-member build; of the 497 unmatched, 72 are metadata-only, 233 body, 192 missing (`repro/pump/frontier-*`) | `file!()` workspace prefix recovers 5 windows (PR #45); metadata-only windows need call-site layout, not module renames (PR #48) |
-| PumpSwap | 785 | 297 unmatched original windows | Restructured module tree banked under `repro/parallel-work/2026-10-25/independent-reconstruction-review/restructure/` (13 of 33 path strings recovered) |
-| Fees | 585 | Function bodies largely match after masking; residual is layout, scheduling and panic `Location` line/column | First owner/discriminator account parser is the frontier (pass 36) |
-| Mayhem | 441 | 177 bounded normalized matches, 7 admitted handler windows unmatched, 257 opaque | Linux-hosted toolchain confirmed by the alloc `Location` payload (`repro/mayhem/linux-v154-recovery/`) |
-| Donation Relay | 492 | Selected source 15: 370 unmatched | Generated-framework reconstruction reaches 465/492 normalized windows (27 unmatched) but is not yet selected; see §4 |
+The Fees and Relay research outputs are not selected production/source checkpoints.
+The [audit](RECONSTRUCTION-AUDIT.md) records their full hashes, scope and exact
+function-level evidence. Do not combine counts from different builds or matcher
+rules into a single recovery percentage.
 
-Known structural blockers, from the byte-grind experiments:
+## 3. Integrate deliberately
 
-- Exact compiler release is narrowed to platform-tools v1.44–v1.46.1 for Pump, AMM and
-  Fees (ELF `e_machine` rules out v1.43), but not pinned to one release.
-- Function order and relocation layout depend on original source item and link order.
-- Panic `Location` path strings are recoverable; their line and column values need the
-  original statement positions. Converting programs to workspace members reorders
-  functions or drifts dependencies for no byte gain, so per-program
-  `--remap-path-prefix` is the safer way to recover the paths
-  (`repro/parallel-work/2026-10-25/independent-reconstruction-review/WORKSPACE-BYTEMATCH-REPORT.md`).
-- High-similarity functions differ by instruction scheduling and register allocation,
-  which source edits do not reliably control.
+The behavioral overlay and generated Relay source cannot be promoted by copying
+files alone. Selection entails a new candidate, source/build manifests, exact
+artifact hashes, bound differentials, current status/selection records and an
+explicit guard transition. The current guard pins 37 Pump and 14 Mayhem compile
+inputs; selected Relay uses its source-15 binding. This audit changes none of them.
 
-### Dependencies
+README changes use the reviewed consolidation transition: its exact transition
+hash and allowed paths live in `repro/consolidation/2026-10-26/guard.py`. Changing
+a selected script set or immutable checkpoint package needs a separate reviewed
+change, not a data-only reseal.
 
-- **Token-2022**: the unmodified 611,056-byte ELF equals the captured prefix.
-  The 1,382,016-byte captured allocation has another 770,960 zero bytes; generating
-  that padding reproduces the allocation image, not raw compiler-file equality
-  (`repro/pump/verified-token-2022/`).
-- **ATA**: byte-identical through a reconstructed linker order
-  (`repro/ata/reconstructed-order/`, hosted run 40287588927) and independently through
-  one inert Cargo feature (`repro/ata/synthetic-ordering-exact-build/`).
-  `repro/dependency-status.json` still says `unresolved`; updating it is a selection
-  change and needs the usual review.
-- **Metaplex Token Metadata**: 1,250 of 1,251 inferred function windows match.
-  The 5,104-byte Utilize body contains all 1,477 differing text bytes; 30
-  source-coordinate bytes and two relocation bytes also differ. The raw ELF is
-  707,448 bytes, while the captured allocation is 793,991 bytes; the reported
-  1,509 differing positions come from the separately padded allocation comparison
-  (`repro/pump/metaplex-candidate-build-11/`). A fresh isolated build now reproduces
-  candidate 11's raw output exactly (`research/metaplex-candidate11-offline/`), and
-  captured final LLVM input and machine stages narrow the guard expansion to SBF
-  instruction selection (`research/metaplex-utilize-trace/`). The deployed build's
-  original source/compiler inputs remain unidentified.
+Historical SDK tests used older overlay artifacts. Repeat those flows against
+any candidate actually proposed for selection. Preserve failed experiments and
+finite-coverage limitations. A passing differential suite is not security sign-off.
 
-## 2. Handler behavior
+## Evidence and reproducibility
 
-Accepted bounded reconstructions: Pump 48/56, PumpSwap 37/38, Fees 31/31, Mayhem 24/25.
+The audit generator rechecks all selected input hashes, binary extents and body
+bytes, preserves complete original partitions, and provides current candidate
+bindings for every handler. Run:
 
-The [behavioral recovery overlay](../repro/behavioral-recovery/README.md) adds six
-validated handlers that are not in active source. Re-run during this consolidation
-against a fresh build of the overlay on current main:
+```sh
+python3 -B repro/reconstruction-audit-2026-10-26/audit.py --check
+```
 
-| Handler | Overlay result | Remaining |
-| --- | --- | --- |
-| `pump.admin_update_token_incentives` | 299 cases, 0 mismatches | Promotion (§3) |
-| `pump.claim_token_incentives` | Recovered; its differential is tied to an older build record | Re-bind the differential to the overlay build and re-run |
-| `pump.set_mayhem_virtual_params` | 84 cases, 0 mismatches via signer stub | Close the AccountInfo ownership question raised in review |
-| `mayhem.initialize_mayhem_state` | 53 standalone rejection cases and 17 existing CPI cases, 0 mismatches in the [initializer correction](../research/mayhem-initializer-validation/README.md); 20 corrected-fixture CPI cases, 0 mismatches in the [recheck](../research/mayhem-overlay-cpi-recheck/README.md) | Overlay now matches signer-validation order and conditional token-vault creation. Broader behavior and whole-file byte identity remain unresolved; active source is still unpromoted. |
-| `pump.create_v2` Mayhem mode | 20 cases, 0 mismatches (zero/distinct creator fixture corrected in [#80](../research/mayhem-creator-fixture/README.md)) | Exhaustive ancestry and new Token-2022 extension modes |
-| `pump.buy_v3`, `sell_v3`, `buy_exact_quote_in_v3` transfer-fee quotes | 126 cases, 0 mismatches | Other quote routes, exhaustive extension/account validation, final event suffix |
-
-Still partial or unrecovered everywhere:
-
-- `pump.multi_hop_curve_swap`: arbitrary hop counts, native/WSOL, other quote mints,
-  completion/migration, Token-2022 and holder/cashback/Mayhem modes.
-- `pump_amm.create_config`: compiled, but no authentic positive initializer replay.
-- `pump.sell_v2`: confirmed quote transfer-fee minimum-output/event mismatch.
-- Mayhem: non-initializer error-return ABI differences and five unknown `GlobalParams` field roles.
-
-## 3. Decision needed: admitting recovered source
-
-The overlay builds, passes its differentials and supports the SDK flows, but it cannot
-enter `programs/` today:
-
-- `scripts/verify_recovered_builds.py` hash-binds `programs/pump/src/{lib,trade,create_v2,admin_cto,volume_sync}.rs`
-  to the selected checkpoint.
-- The pass-27 guard lists the incentive, virtual-params and signer-stub paths as
-  must-not-exist and treats those lanes as stopped.
-- CI suites `pump-1` through `pump-4` hard-code the selected candidate hash.
-
-Promoting it means choosing an acceptance tier for behaviorally validated but not
-byte-exact source, building a new checkpoint from the overlay, regenerating its
-comparison report, updating `repro/status.json`, re-running the bound differential
-suites against the new candidate and issuing a new guard generation. That is a policy
-call for the repository owner, not a mechanical merge.
-
-## 4. Repository and process
-
-- **Open pull requests**: none (see the end of this file).
-- **Relay generated-framework branch** (`codex/relay-generated-framework-20261025`, owned
-  by an active Codex agent): its evidence is on main; its `programs/donation-relay`
-  change is not, because CI pins that directory to source 15. Landing it needs a new
-  Relay selection (current.json, source-selected.json and the Relay15 selection
-  verifier).
-- **Pinned tooling**: pass 27 freezes the 187 `scripts/*.py` files and their hashes, so
-  the flat script directory and its duplicated LiteSVM boilerplate cannot be
-  restructured yet. A next guard generation should allow reviewed script-set changes;
-  `repro/consolidation/2026-10-26/` shows the transition pattern for single assets.
-- **Two automation lanes disagree**: the reconciliation pipeline archives and excludes
-  recovery work that the Claude sessions validated. Section 3's decision resolves this.
-- **Security audit**: incomplete. Differential tests are not an audit.
-- **SDK acceptance**: the `@pump-fun/pump-sdk` harness last recorded 6/6 flows against
-  the overlay builds; it was not re-run during this consolidation.
-- **Local disk**: the primary checkout holds roughly 300 GB of ignored build output in
-  `work/` and `target/`, used by the active Codex agent. Clean it once that agent stops.
+No source compilation or target-program execution is performed by that command.
+This is a dated evidence snapshot, not a live PR queue or monitoring promise.
+There is no defensible single overall percent complete or completion date.
 
 ## Consolidation record
 
@@ -133,14 +104,8 @@ call for the repository owner, not a mechanical merge.
 | `codex/layered-reconstruction` | Merged: MIT `LICENSE`; its program edits went to the overlay |
 | `review/reconstruction-2026-10-25` | Merged: nine A-reproduction build records |
 | `codex/relay-generated-framework-20261025` @ `9f49231c` | Evidence squashed in; `programs/donation-relay` change left on the branch (§4) |
-| Pull requests #32–#59 | Merged by the parallel PR agent; included |
+| Pull requests #32–#59 (except #34, closed as superseded by #38) | Merged by the parallel PR agent; included |
 | Go-clone `codex/checkout-byte-preservation-transition` | Superseded by PR #32, which contains both commits plus the fix that kept the sealed attributes |
 | Go-clone `research/pr8-harness-bindings-superseded` (`89634a4d`) | Not merged: self-labelled superseded, targets pass-22 bindings and edits two pinned scripts |
 | Scratch worktrees `fees-edit`, `restruct-wt` | Removed after a byte-for-byte match against the banked restructure trees |
 | Codex worktree `main-reconciliation` (`codex/layered-pass-36`) | Clean and contained in main; left for its owner |
-
-## Open pull requests after consolidation
-
-None. The 24 pull requests open at the start (#32–#56, including draft #52) and the
-review-fix pull requests #57–#59 were all merged into main by 14:13 UTC on
-2026-10-26, and that main is included here.
