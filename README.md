@@ -12,7 +12,9 @@ For subsequent gains and the latest research frontier, see the
 [byte-identity progress log](docs/BYTE-IDENTITY-PROGRESS.md).
 
 Latest Relay research: **470/492 normalized windows, 22 unmatched**, with 536
-passing replay records. Whole-file identity remains unachieved.
+passing replay records. Latest Fees research: **344 unique structural pairs,
+94 unmatched windows**, with the complete `get_fees` wrapper now matched.
+Whole-file identity remains unachieved.
 
 The [26 October reconstruction audit](docs/RECONSTRUCTION-AUDIT.md) separates
 selected builds from newer research and lists [all 150 handlers](repro/reconstruction-audit-2026-10-26/handlers.md),

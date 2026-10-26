@@ -7,8 +7,8 @@
     {
       "path": "README.md",
       "before_sha256": "cae913d4d3f2066403162f653a0cf35b39620fb08877b1b308c08ccce4a53678",
-      "after_sha256": "38fec85d764096f9092e2c6e11f1dbbe0f1aeaa9950274022fb106b8bfafdcac",
-      "reason": "Link the frozen audit to current verified progress and show Relay research at 470 normalized windows with 22 unmatched."
+      "after_sha256": "5ad60dd44d49ad34c080015df28a50f44fdecf46d39ddaa846d99261941337ce",
+      "reason": "Link the frozen audit to verified progress: Relay 470 normalized windows with 22 unmatched, and Fees 344 unique structural pairs with 94 unmatched."
     },
     {
       "path": ".github/workflows/verify.yml",
