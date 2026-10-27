@@ -149,9 +149,11 @@ bytes and the earlier Withdraw, Social and program-ID recoveries. Two fresh
 normal Cargo builds agree; all 17,331 fresh comparisons pass. Four functions,
 absolute layout and complete ELF identity remain unresolved.
 
-The [Fees continuation archive](research/fees-work-continuation-20261027/README.md)
-preserves 12,520 new or updated research files beyond the earlier work checkpoint.
-These experiments retain their individual status and add no accepted matches.
+The [Fees residual-work archive](research/fees-residual-parallel-checkpoint-20261027/README.md)
+preserves another 13,511 new or updated research files beyond the earlier
+checkpoints, including the four parallel reconstruction lanes and compiler
+diagnostics. These experiments retain their individual status and add no
+accepted matches.
 
 The latest [PumpSwap source ABI and return recovery](repro/pump_amm/source-abi-recovery-20261027/README.md) adds two matching initializer windows, fixes shared protocol-recipient validation, and recovers generated CPI return handling and the BuyEvent source module. All 17,462 corpus cases and expanded signed probes pass; 145 AMM windows remain. A separate 160-case resize-order follow-up retains eight sweep differences: pool funding precedes recipient validation in the captured AMM. The signed failing cases and proposed next fix are preserved in [resize-order evidence](repro/pump_amm/source-abi-recovery-20261027/followup/resize-order/README.md).
 
