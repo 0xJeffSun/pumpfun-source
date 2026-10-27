@@ -1395,3 +1395,7 @@ repro/pump_amm/source-abi-recovery-20261027/followup/** -whitespace
 
 # Retain the exact source bytes used by the selected AMM build.
 programs/pump-amm/src/instructions/swap/multi_hop_swap.rs whitespace=-blank-at-eof
+
+# Preserve recovered associated-token source and patch bytes.
+research/fees-ata-prefix-integration/overrides/** -whitespace
+research/fees-ata-prefix-integration/source.patch -whitespace
