@@ -20,6 +20,15 @@ the candidate still has 426 normalized / 70 raw-local original counterparts,
 and remains unequal to deployed Mayhem. The sell-call and 428-window successors
 retain their separate artifact bindings.
 
+The [initializer panic-origin recovery](../research/mayhem-initializer-origins/README.md)
+extends that native recipe to the 428-window trade-source candidate. A whitespace-only
+source correction changes exactly three raw ELF bytes, restoring both initializer
+panic Source records while leaving all executable bytes unchanged. Three fresh
+builds reproduce the corrected raw and stripped artifacts; all 428 normalized / 70
+raw-local matches and the five prior trade Source improvements survive. Eleven
+failed source controls are retained. The initializer body remains unmatched
+(920 candidate bytes versus 960 original); no new runtime replay is claimed.
+
 The [AMM sell-call successor](../research/mayhem-sell-quote-call-recovery/README.md)
 preserves those 426 windows and restores the shared O0093 quote call. Its ten
 callee and typed-data multisets match, and all 1,239 AMM sell cases have equal
