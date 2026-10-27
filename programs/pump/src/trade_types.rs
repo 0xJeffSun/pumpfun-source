@@ -37,6 +37,7 @@ impl anchor_lang::AccountSerialize for BondingCurve {
 // Source proposal only: original checked 0x9b148 and unchecked 0x9b430.
 // Account owner/lamports/borrow checks and field-name errors belong to Anchor.
 impl anchor_lang::AccountDeserialize for BondingCurve {
+    #[inline(never)]
     fn try_deserialize(buf: &mut &[u8]) -> Result<Self> {
         if buf.len() < Self::DISCRIMINATOR.len()
             || &buf[..Self::DISCRIMINATOR.len()] != Self::DISCRIMINATOR

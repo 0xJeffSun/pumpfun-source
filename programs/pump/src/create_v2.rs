@@ -16,8 +16,8 @@ pub struct CreateV2<'info>{
  pub mint:InterfaceAccount<'info,Mint>,
  /// CHECK: canonical mint authority.
  #[account(seeds=[b"mint-authority"],bump)]pub mint_authority:UncheckedAccount<'info>,
- #[account(init,payer=user,space=166,seeds=[b"bonding-curve",mint.key().as_ref()],bump)]pub bonding_curve:Account<'info,trade_types::BondingCurve>,
- #[account(init,payer=user,associated_token::mint=mint,associated_token::authority=bonding_curve,associated_token::token_program=token_program)]pub associated_bonding_curve:InterfaceAccount<'info,TokenAccount>,
+ #[account(init,payer=user,space=166,seeds=[b"bonding-curve",mint.key().as_ref()],bump)]pub bonding_curve:Box<Account<'info,trade_types::BondingCurve>>,
+ #[account(init,payer=user,associated_token::mint=mint,associated_token::authority=bonding_curve,associated_token::token_program=token_program)]pub associated_bonding_curve:Box<InterfaceAccount<'info,TokenAccount>>,
  #[account(seeds=[b"global"],bump)]pub global:Box<Account<'info,Global>>,
  #[account(mut)]pub user:Signer<'info>,
  pub system_program:Program<'info,System>,

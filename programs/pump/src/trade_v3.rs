@@ -61,12 +61,21 @@ fn selected(config:&FeeConfig,cap:u128,quote:Pubkey)->Result<Fees>{
     if cap<first.market_cap_lamports_threshold{return Ok(first.fees.clone())}
     Ok(tiers.iter().rev().find(|t|t.market_cap_lamports_threshold<=cap).unwrap_or(first).fees.clone())
 }
+/// Validate the shared curve flags before quote or amount-specific checks.
+#[inline(never)]
+pub fn validate_trade(complete:u8,cashback:u8,allow_cashback:bool)->Result<()> {
+    require!(complete==0,PumpError::BondingCurveComplete);
+    if !allow_cashback {
+        require!(cashback==0,PumpError::CashbackCoinNotSupported);
+    }
+    Ok(())
+}
+
 pub fn sell(ctx:Context<SellV3>,amount:u64,min_sol_output:u64)->Result<()> {
     let a=&mut *ctx.accounts;
     if a.user_volume_accumulator.user==Pubkey::default(){a.user_volume_accumulator.user=a.user.key();}
     crate::trade_types::prepare_bonding_curve(&a.bonding_curve, &a.system_program, &a.user)?;
-    require!(!a.bonding_curve.complete,PumpError::BondingCurveComplete);
-    require!(!a.bonding_curve.is_cashback_coin,PumpError::CashbackCoinNotSupported);
+    validate_trade(a.bonding_curve.complete as u8,a.bonding_curve.is_cashback_coin as u8,false)?;
     require_gt!(amount,0,PumpError::SellZeroAmount);
     let quote_decimals=check_quote(a)?;
     let is_sol=quote_decimals.is_none();
@@ -74,14 +83,19 @@ pub fn sell(ctx:Context<SellV3>,amount:u64,min_sol_output:u64)->Result<()> {
     if is_sol{require_keys_neq!(a.buyback_fee_recipient.key(),Pubkey::default(),PumpError::BuybackFeeRecipientMissing);require!(a.global.buyback_fee_recipients.contains(&a.buyback_fee_recipient.key()),PumpError::BuybackFeeRecipientNotAuthorized);}
     let curve=&a.bonding_curve;
     let quote=narrow(amount as u128*curve.virtual_quote_reserves as u128/(curve.virtual_token_reserves as u128+amount as u128))?;
-    let cap=curve.token_total_supply as u128*curve.virtual_quote_reserves as u128/curve.virtual_token_reserves as u128;
-    let config_info=a.fee_config.to_account_info();
-    let config_data=config_info.try_borrow_data()?;
-    let config=read_config(&config_data)?;
-    drop(config_data);
-    let mut fees=selected(&config,cap,curve.quote_mint)?;
-    if a.global.creator_fee_configurable && curve.creator_fee_bps>0{fees.creator_fee_bps=curve.creator_fee_bps;}
-    let creator_bps=if curve.creator==Pubkey::default(){0}else{fees.creator_fee_bps};
+    let (fees,creator_bps)=if a.user.key()==a.global.whitelist_pda {
+        (Fees{lp_fee_bps:0,protocol_fee_bps:0,creator_fee_bps:0},0)
+    }else{
+        let cap=curve.token_total_supply as u128*curve.virtual_quote_reserves as u128/curve.virtual_token_reserves as u128;
+        let config_info=a.fee_config.to_account_info();
+        let config_data=config_info.try_borrow_data()?;
+        let config=read_config(&config_data)?;
+        drop(config_data);
+        let mut fees=selected(&config,cap,curve.quote_mint)?;
+        if a.global.creator_fee_configurable && curve.creator_fee_bps>0{fees.creator_fee_bps=curve.creator_fee_bps;}
+        let creator_bps=if curve.creator==Pubkey::default(){0}else{fees.creator_fee_bps};
+        (fees,creator_bps)
+    };
     let protocol_fee=fee(quote,fees.protocol_fee_bps)?;
     let creator_fee=fee(quote,creator_bps)?;
     let buyback_bps=if curve.is_mayhem_mode {0}else{a.global.buyback_basis_points};
@@ -132,8 +146,7 @@ pub fn buy(ctx:Context<SellV3>,amount:u64,max_sol_cost:u64,partial_fill:bool)->R
     let a=&mut *ctx.accounts;
     if a.user_volume_accumulator.user==Pubkey::default(){a.user_volume_accumulator.user=a.user.key();}
     crate::trade_types::prepare_bonding_curve(&a.bonding_curve, &a.system_program, &a.user)?;
-    require!(!a.bonding_curve.complete,PumpError::BondingCurveComplete);
-    require!(!a.bonding_curve.is_cashback_coin,PumpError::CashbackCoinNotSupported);
+    validate_trade(a.bonding_curve.complete as u8,a.bonding_curve.is_cashback_coin as u8,false)?;
     let requested_amount=amount;
     let amount=amount.min(a.bonding_curve.real_token_reserves);
     require_gt!(amount,0,PumpError::BuyZeroAmount);
@@ -141,20 +154,26 @@ pub fn buy(ctx:Context<SellV3>,amount:u64,max_sol_cost:u64,partial_fill:bool)->R
     let is_sol=quote_decimals.is_none();
     if is_sol{require_keys_neq!(a.buyback_fee_recipient.key(),Pubkey::default(),PumpError::BuybackFeeRecipientMissing);require!(a.global.buyback_fee_recipients.contains(&a.buyback_fee_recipient.key()),PumpError::BuybackFeeRecipientNotAuthorized);}
     let curve=&a.bonding_curve;
+    let is_fee_exempt=a.user.key()==a.global.whitelist_pda;
     let exceeds=requested_amount>amount;
-    if curve.is_mayhem_mode && !partial_fill{require_gte!(curve.real_token_reserves,requested_amount,PumpError::NotEnoughTokensToBuy);}
-    let crossing=exceeds && !curve.is_mayhem_mode;
+    if (curve.is_mayhem_mode || is_fee_exempt) && !partial_fill{require_gte!(curve.real_token_reserves,requested_amount,PumpError::NotEnoughTokensToBuy);}
+    let crossing=exceeds && !curve.is_mayhem_mode && !is_fee_exempt;
     let denominator=(curve.virtual_token_reserves as u128).checked_sub(amount as u128).ok_or_else(||error!(PumpError::Overflow))?;
     let quotient=(amount as u128*curve.virtual_quote_reserves as u128).checked_div(denominator).ok_or_else(||error!(PumpError::DivisionByZero))?;
     let quote=narrow(quotient.checked_add(1).ok_or_else(||error!(PumpError::Overflow))?)?;
-    let cap=buy_fee_market_cap(curve, &a.base_mint)?;
-    let config_info=a.fee_config.to_account_info();
-    let config_data=config_info.try_borrow_data()?;
-    let config=read_config(&config_data)?;
-    drop(config_data);
-    let mut fees=selected(&config,cap,curve.quote_mint)?;
-    if a.global.creator_fee_configurable && curve.creator_fee_bps>0{fees.creator_fee_bps=curve.creator_fee_bps;}
-    let creator_bps=if curve.creator==Pubkey::default(){0}else{fees.creator_fee_bps};
+    let (fees,creator_bps)=if is_fee_exempt {
+        (Fees{lp_fee_bps:0,protocol_fee_bps:0,creator_fee_bps:0},0)
+    }else{
+        let cap=buy_fee_market_cap(curve, &a.base_mint)?;
+        let config_info=a.fee_config.to_account_info();
+        let config_data=config_info.try_borrow_data()?;
+        let config=read_config(&config_data)?;
+        drop(config_data);
+        let mut fees=selected(&config,cap,curve.quote_mint)?;
+        if a.global.creator_fee_configurable && curve.creator_fee_bps>0{fees.creator_fee_bps=curve.creator_fee_bps;}
+        let creator_bps=if curve.creator==Pubkey::default(){0}else{fees.creator_fee_bps};
+        (fees,creator_bps)
+    };
     let protocol_fee=fee(quote,fees.protocol_fee_bps)?;
     let creator_fee=fee(quote,creator_bps)?;
     let buyback_bps=if curve.is_mayhem_mode {0}else{a.global.buyback_basis_points};
@@ -165,9 +184,10 @@ pub fn buy(ctx:Context<SellV3>,amount:u64,max_sol_cost:u64,partial_fill:bool)->R
     if crossing{require_gt!(pool_base_before,0,PumpError::NotEnoughTokensToBuy);require_gt!(pool_quote_before,0,PumpError::Overflow);}
     let post_base=if crossing{sub(requested_amount,amount)?}else{0};
     let post_quote=if crossing{
-        let denominator=(pool_base_before as u128).checked_sub(post_base as u128).ok_or_else(||error!(PumpError::Overflow))?;
-        let quotient=(post_base as u128*pool_quote_before as u128).checked_div(denominator).ok_or_else(||error!(PumpError::DivisionByZero))?;
-        narrow(quotient.checked_add(1).ok_or_else(||error!(PumpError::Overflow))?)?
+        require_gt!(pool_base_before,post_base,PumpError::NotEnoughTokensToBuy);
+        let numerator=post_base as u128*pool_quote_before as u128;
+        let denominator=(pool_base_before-post_base) as u128;
+        narrow(crate::legacy_sell::fee_cpi::checked_ceil_div(numerator,denominator)?)?
     }else{0};
     let post_protocol=if crossing{fee(post_quote,fees.protocol_fee_bps)?}else{0};
     let post_creator=if crossing{fee(post_quote,creator_bps)?}else{0};
@@ -230,8 +250,7 @@ pub fn buy_exact_quote(ctx:Context<SellV3>,spendable_quote_in:u64,min_tokens_out
     let a=&mut *ctx.accounts;
     if a.user_volume_accumulator.user==Pubkey::default(){a.user_volume_accumulator.user=a.user.key();}
     crate::trade_types::prepare_bonding_curve(&a.bonding_curve, &a.system_program, &a.user)?;
-    require!(!a.bonding_curve.complete,PumpError::BondingCurveComplete);
-    require!(!a.bonding_curve.is_cashback_coin,PumpError::CashbackCoinNotSupported);
+    validate_trade(a.bonding_curve.complete as u8,a.bonding_curve.is_cashback_coin as u8,false)?;
     require_gt!(min_tokens_out,0,PumpError::BuyZeroAmount);
     require_gt!(spendable_quote_in,0,PumpError::BuyNotEnoughSolToCoverFees);
     let quote_decimals=check_quote(a)?;
@@ -239,19 +258,25 @@ pub fn buy_exact_quote(ctx:Context<SellV3>,spendable_quote_in:u64,min_tokens_out
     if is_sol{require_keys_neq!(a.buyback_fee_recipient.key(),Pubkey::default(),PumpError::BuybackFeeRecipientMissing);require!(a.global.buyback_fee_recipients.contains(&a.buyback_fee_recipient.key()),PumpError::BuybackFeeRecipientNotAuthorized);}
     let available=if is_sol{spendable_quote_in}else{sub(spendable_quote_in,quote_transfer_fee(&a.quote_mint.to_account_info(),spendable_quote_in,false)?)?};
     let curve=&a.bonding_curve;
-    let cap=buy_fee_market_cap(curve, &a.base_mint)?;
-    let config_info=a.fee_config.to_account_info();
-    let config_data=config_info.try_borrow_data()?;
-    if config_data.len()<8{return Err(error!(anchor_lang::error::ErrorCode::AccountDiscriminatorNotFound));}
-    require!(config_data[..8]==[143,52,146,187,219,123,76,155],anchor_lang::error::ErrorCode::AccountDiscriminatorMismatch);
-    let mut config=FeeConfig::deserialize(&mut &config_data[8..]).map_err(|_|error!(anchor_lang::error::ErrorCode::AccountDidNotDeserialize))?;
-    if config_data.len()<4073{config.stable_fee_tiers.clear();}
-    if config_data.len()<4097{config.exotic_flat_fees=Fees{lp_fee_bps:0,protocol_fee_bps:0,creator_fee_bps:0};}
-    require!(config_data.len()>=2512,PumpError::FeeConfigTooShort);
-    drop(config_data);
-    let mut fees=selected(&config,cap,curve.quote_mint)?;
-    if a.global.creator_fee_configurable && curve.creator_fee_bps>0{fees.creator_fee_bps=curve.creator_fee_bps;}
-    let creator_bps=if curve.creator==Pubkey::default(){0}else{fees.creator_fee_bps};
+    let is_fee_exempt=a.user.key()==a.global.whitelist_pda;
+    let (fees,creator_bps)=if is_fee_exempt {
+        (Fees{lp_fee_bps:0,protocol_fee_bps:0,creator_fee_bps:0},0)
+    }else{
+        let cap=buy_fee_market_cap(curve, &a.base_mint)?;
+        let config_info=a.fee_config.to_account_info();
+        let config_data=config_info.try_borrow_data()?;
+        if config_data.len()<8{return Err(error!(anchor_lang::error::ErrorCode::AccountDiscriminatorNotFound));}
+        require!(config_data[..8]==[143,52,146,187,219,123,76,155],anchor_lang::error::ErrorCode::AccountDiscriminatorMismatch);
+        let mut config=FeeConfig::deserialize(&mut &config_data[8..]).map_err(|_|error!(anchor_lang::error::ErrorCode::AccountDidNotDeserialize))?;
+        if config_data.len()<4073{config.stable_fee_tiers.clear();}
+        if config_data.len()<4097{config.exotic_flat_fees=Fees{lp_fee_bps:0,protocol_fee_bps:0,creator_fee_bps:0};}
+        require!(config_data.len()>=2512,PumpError::FeeConfigTooShort);
+        drop(config_data);
+        let mut fees=selected(&config,cap,curve.quote_mint)?;
+        if a.global.creator_fee_configurable && curve.creator_fee_bps>0{fees.creator_fee_bps=curve.creator_fee_bps;}
+        let creator_bps=if curve.creator==Pubkey::default(){0}else{fees.creator_fee_bps};
+        (fees,creator_bps)
+    };
     let _=fee(available,fees.protocol_fee_bps)?;
     let _=fee(available,creator_bps)?;
     let quote_budget=net_quote(available,fees.protocol_fee_bps,creator_bps)?;
@@ -261,8 +286,8 @@ pub fn buy_exact_quote(ctx:Context<SellV3>,spendable_quote_in:u64,min_tokens_out
     let computed_amount=narrow(curve.virtual_token_reserves as u128*effective as u128/(curve.virtual_quote_reserves as u128+effective as u128))?;
     let amount=computed_amount.min(curve.real_token_reserves);
     let exceeds=computed_amount>curve.real_token_reserves;
-    require!(!exceeds || !curve.is_mayhem_mode || partial_fill,PumpError::NotEnoughTokensToBuy);
-    let crossing=exceeds && !curve.is_mayhem_mode;
+    require!(!exceeds || !(curve.is_mayhem_mode || is_fee_exempt) || partial_fill,PumpError::NotEnoughTokensToBuy);
+    let crossing=exceeds && !curve.is_mayhem_mode && !is_fee_exempt;
     let quote=if exceeds{narrow(curve.real_token_reserves as u128*curve.virtual_quote_reserves as u128/(curve.virtual_token_reserves as u128-curve.real_token_reserves as u128))?.checked_add(1).ok_or(error!(PumpError::Overflow))?}else{quote_budget};
     let fee_quote=if exceeds{quote}else{narrow(available as u128*10000/(10000u128+fees.protocol_fee_bps as u128+creator_bps as u128))?};
     let protocol_fee=fee(fee_quote,fees.protocol_fee_bps)?;
@@ -285,7 +310,7 @@ pub fn buy_exact_quote(ctx:Context<SellV3>,spendable_quote_in:u64,min_tokens_out
     let post_protocol=if post_active{post_protocol_raw}else{0};let post_creator=if post_active{post_creator_raw}else{0};
     let post_buyback=narrow(post_protocol as u128*buyback_bps as u128/10000)?;
     let transfer_base=add(amount,post_base)?;
-    if !(exceeds && curve.is_mayhem_mode && partial_fill){require_gte!(transfer_base,min_tokens_out,PumpError::BuySlippageBelowMinTokensOut);};
+    if !(exceeds && (curve.is_mayhem_mode || is_fee_exempt) && partial_fill){require_gte!(transfer_base,min_tokens_out,PumpError::BuySlippageBelowMinTokensOut);};
     let user_output=add(first_cost,add(add(post_quote,post_protocol)?,post_creator)?)?;
 
     let retained=sub(protocol_fee,buyback_fee)?;

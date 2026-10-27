@@ -24,52 +24,10 @@ fn key_at(data: &[u8], at: usize) -> Pubkey {
     Pubkey::new_from_array(data[at..at + 32].try_into().unwrap())
 }
 
-// Only the ancestor reader uses this compatibility decoder. Initialization and
-// account exit continue to use their existing framework/type implementations.
+// The captured ancestor reader calls the shared checked historical decoder.
 fn decode_curve(data: &[u8]) -> Result<BondingCurve> {
-    require!(data.len() >= 8, PumpError::InvalidQuoteBondingCurve);
-    require!(data[..8] == CURVE_DISC, PumpError::InvalidQuoteBondingCurve);
-    let length = data.len() - 8;
-    require!(length >= 41, PumpError::InvalidQuoteBondingCurve);
-    let mut input = &data[8..];
-    fn read<T: AnchorDeserialize>(input: &mut &[u8]) -> Result<T> {
-        T::deserialize(input).map_err(|_| error!(PumpError::InvalidQuoteBondingCurve))
-    }
-    let mut curve = BondingCurve {
-        virtual_token_reserves: read(&mut input)?,
-        virtual_quote_reserves: read(&mut input)?,
-        real_token_reserves: read(&mut input)?,
-        real_quote_reserves: read(&mut input)?,
-        token_total_supply: read(&mut input)?,
-        complete: read(&mut input)?,
-        creator: Pubkey::default(), is_mayhem_mode: false, is_cashback_coin: false,
-        quote_mint: Pubkey::default(), creator_fee_bps: 0,
-        can_edit_creator_fee: false, is_holder_reward: false,
-        creator_fee: 0, protocol_fees: 0, depth: 0,
-        initial_virtual_quote_reserves: 0, post_complete_base_out: 0,
-        post_complete_quote_in: 0,
-    };
-    if length >= 73 { curve.creator = read(&mut input)?; }
-    if length >= 74 { curve.is_mayhem_mode = read(&mut input)?; }
-    if length >= 75 { curve.is_cashback_coin = read(&mut input)?; }
-    if length >= 107 { curve.quote_mint = read(&mut input)?; }
-    // Payload lengths 107..115 intentionally leave creator_fee_bps at zero.
-    if length >= 116 {
-        curve.creator_fee_bps = read(&mut input)?;
-        curve.can_edit_creator_fee = read(&mut input)?;
-    }
-    if length >= 117 { curve.is_holder_reward = read(&mut input)?; }
-    if length >= 133 {
-        curve.creator_fee = read(&mut input)?;
-        curve.protocol_fees = read(&mut input)?;
-    }
-    if length >= 158 {
-        curve.depth = read(&mut input)?;
-        curve.initial_virtual_quote_reserves = read(&mut input)?;
-        curve.post_complete_base_out = read(&mut input)?;
-        curve.post_complete_quote_in = read(&mut input)?;
-    }
-    Ok(curve)
+    BondingCurve::try_deserialize(&mut &data[..])
+        .map_err(|_| error!(PumpError::InvalidQuoteBondingCurve))
 }
 
 fn ancestor(account: &AccountInfo<'_>, mint: &Pubkey) -> Result<BondingCurve> {
