@@ -1,21 +1,24 @@
-# Ready-to-apply patches
+# Archived patch proposals — not approved for application
 
-Both diffs are against `origin/main` @ `a853b393` (the `programs/mayhem/src` and
-`programs/pump-fees` trees are unchanged on `main` since then); both were verified with
-`git apply --check` against `origin/main` on 2026-10-27.
+These diffs record the PR #265 author's proposed changes against `a853b393`.
+They are retained as research inputs; patch applicability does not establish
+correctness, reproducibility, or suitability for the selected reconstruction.
 
-| Diff | What it does | Validation |
+| Diff | Proposed change | Review disposition |
 |---|---|---|
-| [`mayhem-enum-consolidation.diff`](mayhem-enum-consolidation.diff) | Consolidates the 5 split error enums into the original's single 20-variant `MayhemError`, and fixes the pump-swap slippage code (`PumpCpiSlippage` 6012 → `PumpSwapCpiSlippage` 6013). EDITs 1/2/3 of `mayhem-error-enum.patch.txt`, including the `burn.rs` repoint + import. | Compiles clean on the committed v1.54 recipe; `.text` masked-Jaccard +0.6pp ([`mayhem-enum-validation.md`](mayhem-enum-validation.md)) |
-| [`fees-pathstring-relocations.diff`](fees-pathstring-relocations.diff) | 6 TIER-0 `#[path]` relocations: pure file renames plus 6 `lib.rs` module lines, with module names unchanged. | Matching original path strings 4 → 10 of 20; zero `.text` regression (masked-Jaccard 0.789938 → 0.789986) |
+| [`mayhem-enum-consolidation.diff`](mayhem-enum-consolidation.diff) | Consolidate split error enums and replace both swap price-band errors from 6012 to 6013. | **Do not apply as written.** Six retained original/candidate swap comparisons return 6012. The blanket 6013 replacement contradicts that evidence. Enum consolidation requires separate source and runtime validation. |
+| [`fees-pathstring-relocations.diff`](fees-pathstring-relocations.diff) | Six source-file relocations and corresponding `#[path]` module declarations. | Unpromoted source-layout hypothesis. The author's similarity measurements lack retained candidate ELFs and complete reproducible build receipts in this submission. |
 
-Apply from the repo root:
+The original build report is preserved in
+[`../submitted-followups/pr265.md`](../submitted-followups/pr265.md), with provenance
+in [`../followups.json`](../followups.json). Its claimed compilation and similarity
+results are author-reported, not independently reproduced by this review.
+[`mayhem-enum-validation.md`](mayhem-enum-validation.md) retains the report with a
+review warning. See [`../REVIEW.md`](../REVIEW.md),
+[`../review-evidence.json`](../review-evidence.json), and the six hash-bound
+counterexamples checked by `python -I -B research/recovery-findings-20261027/verify.py`.
 
-```bash
-git apply research/recovery-findings-20261027/recovery/mayhem-enum-consolidation.diff
-```
-
-**These are review artifacts, not selected-source changes.** `programs/*` sources are pinned by
-the pass-27 guard, so promoting either patch into active source still takes the normal path:
-build a new candidate, bind receipts and differentials, update `repro/status.json`, and add a
-reviewed guard transition. Pasting a diff into `programs/` on its own will fail CI.
+No `programs/*` source or selected artifact changes here. Any future source
+promotion requires a candidate build, bound receipts and differential validation,
+updated status, and a reviewed guard transition. In particular, a successful
+`git apply --check` is not permission or evidence to promote either patch.

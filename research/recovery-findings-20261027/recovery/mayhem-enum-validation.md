@@ -1,3 +1,11 @@
+> **Review warning:** The text below is the original author-reported build
+> narrative, retained for research history. Its claim that changing swap error
+> 6012 to 6013 is behaviorally correct is contradicted by six retained original
+> and candidate swap executions returning 6012. No candidate ELF, complete build
+> receipt, or new differential evidence accompanies this report. Compilation,
+> similarity, completeness, and source-provenance claims below are not accepted
+> findings. See [the review disposition](APPLY.md) before using these proposals.
+
 # mayhem error-enum consolidation — build validation (2026-10-27)
 
 Applied the **confirmed** edits (EDIT 1/2/3) of `mayhem-error-enum.patch.txt` to the canonical
