@@ -25,11 +25,11 @@ string table from ordinary Rust source. Its Linux candidate retains the same
 482-window frontier and 348 source-location matches; whole-file equality remains
 unachieved. The function inventory keeps its explicitly hashed burn/close inputs.
 
-Latest Fees research: **379 unique structural pairs, 59 unmatched windows**.
+Latest Fees research: **380 unique structural pairs, 58 unmatched windows**.
 The [configuration-event recovery](research/fees-config-event-recovery/README.md)
 adds four complete caller-body matches; the two upsert bodies share a structural
 shape and are distinguished by their callees. The [current call ledger](repro/reconstruction-status-2026-10-26/fees-call-attribution.json)
-also attributes 61 duplicate-body pairs, giving 440 correspondences.
+also attributes 62 duplicate-body pairs, giving 442 correspondences.
 Whole-file identity remains unachieved. The [exotic-fee growth study](research/fees-exotic-growth-precedence/README.md)
 corrects rejection precedence and the realloc flag in new boundary cases;
 that caller still has no complete body match. The [optional-account ownership recovery](research/fees-optional-account-ownership/README.md)
@@ -45,8 +45,9 @@ now has a complete 504-byte match, including both referenced panic locations.
 The [slice-panic location integration](research/fees-slice-origin-integration/README.md)
 now carries all four tier-copy records into the latest candidate, changing only
 eight data bytes and preserving its entire instruction section. The [buyback context recovery](research/fees-buyback-context-ownership/README.md)
-adds the initializer parser, one initialization closure and the exit routine;
-a second closure remains unmatched.
+adds the initializer parser, one initialization closure and the exit routine.
+The [context-origin recovery](research/fees-buyback-context-origin/README.md)
+now closes the second closure and its direct-call mismatch as well.
 
 The [current reconstruction review](docs/RECONSTRUCTION-STATUS.md) lists exact,
 normalized, unmatched and opaque function status, all 10 remaining Relay bodies,
@@ -70,11 +71,11 @@ No handler is certified perfectly recreated. The selected core builds contain
 | --- | ---: | ---: | ---: | ---: |
 | Pump selected | 98 | 430 | 507 | 0 |
 | PumpSwap selected | 93 | 395 | 297 | 0 |
-| Fees research | 118 | 408 | 59 | 0 |
+| Fees research | 118 | 409 | 58 | 0 |
 | Mayhem selected | 58 | 131 | 7 | 245 |
 | Relay research | 130 | 352 | 10 | 0 |
 
-Fees' unresolved bodies span **304,760 / 799,648 original text bytes (38.1%)**;
+Fees' unresolved bodies span **298,504 / 799,648 original text bytes (37.3%)**;
 Relay's span **52,616 / 752,488 (7.0%)**. These are sizes of whole unmatched
 windows, not differing-byte counts or estimates of effort. Calls, data, layout,
 relocations, build provenance and broader behavior remain to be verified even
