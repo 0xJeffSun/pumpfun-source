@@ -164,6 +164,16 @@ proved. Five further mint-key/whitelist source builds all retain 482 matches
 without recovering the worker. Preserve the common cleanup while investigating
 source expression and lifetimes; no experimental source is promoted.
 
+### Donation wrapper argument-binding controls
+
+The [complete 32-subset study](../repro/donation-relay/partial-argument-controls/README.md)
+tests every subset of the five wire-argument fields as partial local bindings,
+with the remaining fields read through `args`. All 128 comparisons of windows
+92–95 remain unmatched. No subset gains or loses any full-window match. This
+rules out partial argument binding alone under the tested compiler recipe; it
+does not rule out different source layouts, ABI choices or compiler inputs.
+The ten-window residual remains unchanged.
+
 ## Fees: new complete bodies, substantial residual business logic
 
 The latest 851,488-byte candidate is SHA-256

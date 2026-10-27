@@ -7,8 +7,8 @@
     {
       "path": "README.md",
       "before_sha256": "cae913d4d3f2066403162f653a0cf35b39620fb08877b1b308c08ccce4a53678",
-      "after_sha256": "4db84e891aef1fbc07b9ec8710b80cc74a6e8eb34d08739cdf729c8491be12cd",
-      "reason": "Document the verified Relay shared-worker cleanup graph and five rejected mint-source controls; preserve the 482/492 frontier and existing identity limits."
+      "after_sha256": "2515833a603a09e1611343332b1a71e037dacb8ffd7a9dd5ec1e01ca0de7362e",
+      "reason": "Record the complete 32-subset Relay donation argument-binding controls; preserve the 482/492 frontier, selected source, and whole-file identity limits."
     },
     {
       "path": ".github/workflows/verify.yml",

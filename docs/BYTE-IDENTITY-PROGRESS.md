@@ -288,3 +288,13 @@ semantic or runtime-success proof. Different linear cleanup offsets do not
 establish different ownership stages. Five additional compiled mint-key and
 whitelist-slice forms remain negative, with no lost matches. Relay remains at
 482/492 with ten unmatched bodies and 130 raw local body matches.
+
+## Complete partial-argument control family
+
+All [32 subsets of donation argument fields](../repro/donation-relay/partial-argument-controls/README.md)
+were compiled across the five source wrappers, yielding 128 negative comparisons
+against original windows 92–95. The other source inputs, context field order and
+compiler recipe remain fixed. Partial binding alone does not recover these
+wrappers under this recipe. Every variant retains the 482/492 frontier and 130
+raw local body matches, with no gained or lost matched window. No candidate is
+promoted and no fresh runtime acceptance is claimed for these controls.

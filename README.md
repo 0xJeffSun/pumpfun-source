@@ -18,6 +18,8 @@ Both compiler recipes retain **130 raw local body matches**, agree on all 348
 recognized source-location pairs, and each pass 536 fresh replay records.
 The [shared-worker flow audit](repro/donation-relay/shared-worker-flow-audit/README.md)
 confirms the common cleanup path; five further mint-source controls add no matches.
+All [32 partial argument-binding variants](repro/donation-relay/partial-argument-controls/README.md)
+also leave the donation wrappers unmatched.
 Latest Fees research: **354 unique structural pairs, 84 unmatched windows**.
 The [refreshed call analysis](research/fees-refreshed-call-attribution/README.md)
 also attributes 61 duplicate-body pairs, giving 415 correspondences; this is not
