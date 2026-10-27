@@ -266,8 +266,7 @@ pub fn execute<'info>(ctx: Context<'_,'_,'info,'info,MultiHopCurve<'info>>,
         let mut h = CurveHop::try_accounts(&crate::ID,&mut remaining,&[],&mut bumps,
             &mut std::collections::BTreeSet::new())?;
         prepare_curve(a,&h)?;
-        require!(!h.bonding_curve.complete,PumpError::BondingCurveComplete);
-        require!(!h.bonding_curve.is_cashback_coin,PumpError::CashbackCoinNotSupported);
+        crate::trade::validate_trade(h.bonding_curve.complete as u8,h.bonding_curve.is_cashback_coin as u8,flag & 2 == 0)?;
         require!(!h.bonding_curve.is_mayhem_mode,PumpError::MultiHopMayhemCurveNotSupported);
         admit_vaults(&h)?;
         if flag & 1 != 0 {

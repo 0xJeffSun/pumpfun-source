@@ -14,17 +14,57 @@ pub fn buy_quote(curve: &BondingCurve, amount: u64) -> Result<u64> {
     u64::try_from(quote).map_err(|_| error!(crate::PumpError::Truncation))
 }
 
-/// The context is constructed before the fallible market-cap calculation.
-/// Its account clones are therefore dropped on both calculation and CPI errors.
-pub fn query_fees<'a, 'b, 'c, 'info>(
-    ctx: CpiContext<'a, 'b, 'c, 'info, GetFeesWithQuoteMint<'info>>,
-    curve: &BondingCurve,
-    mint: &Mint,
-) -> Result<Fees> {
+/// Shared fee query and accounting. Account clones are created here before
+/// the fallible market-cap calculation, as in the original outer helper.
+pub fn trade_fees<'info>(
+    global: &Account<'info, crate::Global>,
+    curve: &Account<'info, BondingCurve>,
+    mint: &InterfaceAccount<'info, Mint>,
+    fee_config: &Account<'info, super::LegacyFeeConfig>,
+    fee_program: &Program<'info, super::LegacyFeesProgram>,
+    program: &AccountInfo<'info>,
+    quote_amount: u64,
+) -> Result<(u64, u64, u64, u64)> {
+    let ctx = CpiContext::new(
+        fee_program.to_account_info(),
+        GetFeesWithQuoteMint {
+            fee_config: fee_config.to_account_info(),
+            config_program_id: program.clone(),
+        },
+    );
     let cap = market_cap(curve, mint)?;
-    Ok(get_fees_with_quote_mint(ctx, true, cap, curve.quote_mint)?.get())
+    let fees = get_fees_with_quote_mint(ctx, true, cap, curve.quote_mint)?.get();
+    let creator_fee_bps = if global.creator_fee_configurable && curve.creator_fee_bps > 0 {
+        curve.creator_fee_bps
+    } else {
+        fees.creator_fee_bps
+    };
+    let protocol_fee = fee(quote_amount, fees.protocol_fee_bps)?;
+    let creator_fee = if curve.creator == Pubkey::default() {
+        0
+    } else {
+        fee(quote_amount, creator_fee_bps)?
+    };
+    Ok((protocol_fee, creator_fee, fees.protocol_fee_bps, creator_fee_bps))
 }
 
+pub fn fee(quote_amount: u64, basis_points: u64) -> Result<u64> {
+    let value = checked_ceil_div(u128::from(quote_amount) * u128::from(basis_points), 10000)?;
+    u64::try_from(value).map_err(|_| error!(crate::PumpError::Truncation))
+}
+
+/// Shared checked ceiling division, preserving addition/subtraction/division order.
+#[inline(never)]
+pub(crate) fn checked_ceil_div(numerator: u128, denominator: u128) -> Result<u128> {
+    let sum = numerator.checked_add(denominator)
+        .ok_or_else(|| error!(crate::PumpError::Overflow))?;
+    let adjusted = sum.checked_sub(1)
+        .ok_or_else(|| error!(crate::PumpError::Overflow))?;
+    adjusted.checked_div(denominator)
+        .ok_or_else(|| error!(crate::PumpError::DivisionByZero))
+}
+
+#[inline(never)]
 fn market_cap(curve: &BondingCurve, mint: &Mint) -> Result<u128> {
     require!(curve.virtual_token_reserves != 0, crate::PumpError::DivisionByZero);
     let supply = if curve.is_mayhem_mode {
@@ -71,6 +111,7 @@ impl<T: AnchorDeserialize> Return<T> {
     }
 }
 
+#[inline(never)]
 pub fn get_fees_with_quote_mint<'a, 'b, 'c, 'info>(
     ctx: CpiContext<'a, 'b, 'c, 'info, GetFeesWithQuoteMint<'info>>,
     is_pump_pool: bool,
