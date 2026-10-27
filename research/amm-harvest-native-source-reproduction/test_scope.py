@@ -13,7 +13,7 @@ PACKAGE = Path(__file__).resolve().parent
 
 class ScopeTests(unittest.TestCase):
     def copy(self, directory):
-        out = Path(directory) / 'packet'
+        out = Path(directory).resolve() / 'packet'
         shutil.copytree(PACKAGE, out)
         return out
 
