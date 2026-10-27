@@ -7,8 +7,8 @@
     {
       "path": "README.md",
       "before_sha256": "cae913d4d3f2066403162f653a0cf35b39620fb08877b1b308c08ccce4a53678",
-      "after_sha256": "6b50fcad648c1a85343d7b73d8d0fe2228d051aa95b557e322228d418ebbae49",
-      "reason": "Document root-profile and Result-helper controls without changing the 482/492 frontier, selected artifacts, or whole-file identity limits."
+      "after_sha256": "2df11603c8d19a999340bc83ecdff0d58f8ac23103fd1d986a1d436b42801963",
+      "reason": "Condense rejected-control history into the linked progress log; record arithmetic controls without changing the 482/492 frontier or identity qualifications."
     },
     {
       "path": ".github/workflows/verify.yml",
