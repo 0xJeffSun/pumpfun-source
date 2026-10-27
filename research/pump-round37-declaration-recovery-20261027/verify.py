@@ -8,11 +8,12 @@ def sha(b):return hashlib.sha256(b).hexdigest()
 assert json.loads((HERE/'MANIFEST.json').read_text())=={p.relative_to(HERE).as_posix():sha(p.read_bytes())for p in sorted(HERE.rglob('*'))if p.is_file()and p.name!='MANIFEST.json'and '__pycache__'not in p.parts}
 spec=importlib.util.spec_from_file_location('name_windows',HERE/'support/window_map.py');w=importlib.util.module_from_spec(spec);spec.loader.exec_module(w)
 w.m.elf_layout=lru_cache(maxsize=8)(w.m.elf_layout);w.m.relocations=lru_cache(maxsize=8)(w.m.relocations)
-original=(ROOT/'evidence/original/pump/deployed.so').read_bytes();ow=w.windows(original);oc=Counter(x['signature']for x in ow);assert len(ow)==1035
+original=(ROOT/'evidence/original/pump/deployed.so').read_bytes();assert sha(original)=='7a19affaa2c6187e04a5fe0ea298cee81fa5eb8c24cfcc30d85f615e89f7b02d';ow=w.windows(original);oc=Counter(x['signature']for x in ow);assert len(ow)==1035
 images={};rows={};records={}
 for label,count in [('parent',766),('migration',769),('legacy',770),('fee',771),('fee-repeat',771),('global',772),('paths',776),('candidate',777),('repeat',777)]:
     build=HERE/'builds'/label;record=json.loads((build/'build-comparison.json').read_text());records[label]=record
     assert record['returncode']==0 and record['source_unchanged']
+    assert record['comparison']['original_sha256']==sha(original)and not record['comparison']['full_byte_equality']
     if label!='linux-baseline':assert record['dependency_cache']['main_freshly_compiled']
     with tarfile.open(build/'primary.tar.gz')as a:source={m.name:sha(a.extractfile(m).read())for m in a.getmembers()if m.isfile()}
     parts=Path(record['primary_source_directory']).parts;bound=record['primary_source_sha256'];prefix=None

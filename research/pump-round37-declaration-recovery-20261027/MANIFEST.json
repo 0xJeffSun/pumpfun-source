@@ -88,5 +88,5 @@
   "support/diagnostic_audit.py": "0343c70e4f9c7860ad392f0a8bd10d90ac94fe17bb2ba5bfd49a45683edbe343",
   "support/elf_helpers.py": "fbf808210b28698a65ca385220c48396fe9ab650284dc446a6b9d9194a250777",
   "support/window_map.py": "eeec82f751ea38827c5149f28590f19a3ff516c7eee57b6aa48949cbaac4a7e5",
-  "verify.py": "4ca1b745e53ef4ddab4a1c12da60249c1c9e2b2c2cfe5c4244aeb7d7ea4bad9f"
+  "verify.py": "1e4d4e398ae9360e2ec13404ebbc1eeaf1ed72de3cdd6b3d9ad24b14eddc46a2"
 }
