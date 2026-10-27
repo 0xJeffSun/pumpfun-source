@@ -116,7 +116,7 @@ The [current-parent AMM event composition](research/amm-current-event-capture-20
 adds the complete 1,784-byte normalized sell-event body, retaining all prior
 matches. Two builds agree; all 17,462 maintained cases and 26 focused event pairs
 pass. Its 641-window research artifact remains bound to its former
-640-window parent; the maintained 643-window checkpoint is reported above.
+640-window parent; the maintained 647-window checkpoint is reported above.
 The parent's other supplemental matrices were not rerun on this artifact.
 
 Pump Round34 passes 10,468 full cases plus 7,536 focused executions, with 18,000

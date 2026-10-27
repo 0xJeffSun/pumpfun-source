@@ -14,12 +14,13 @@ has 137 raw-local matches, 596 normalized-only matches and 302 unmatched windows
 The unmatched windows cover 896,792 original text bytes. Remaining bodies,
 data, relocations, uncovered behavior and original build provenance remain open.
 
-Current [AMM checkpoint](../repro/pump_amm/quote-guard-recovery-20261027/README.md)
-has 148 raw-local, 495 normalized-only and 142 unmatched windows, with
-357,336 original text bytes still unmatched. The independently verified 641-window
+Current [AMM checkpoint](../repro/pump_amm/event-decoder-recovery-20261027/README.md)
+has 148 raw-local, 499 normalized-only and 138 unmatched windows, with
+351,496 original text bytes still unmatched. The independently verified 641-window
 event composition stays bound to its earlier parent and is not added again.
-Complete data/call identity and provenance remain open; the current packet
-records the retained supplemental tests and remaining behavioral limits.
+The later [optional-u64 probe](../repro/pump_amm/event-decoder-recovery-20261027/followup/optional-u64/README.md)
+records 123 differences among 264 short-tail cases; its correction is not in
+this sealed checkpoint. Complete data/call identity and provenance remain open.
 
 Current Mayhem research is the [qualified Buy/Sell quote composition](../research/mayhem-quotes-current-recovery-20261027/README.md):
 100 raw-local, 332 normalized-only and nine unmatched windows / 107,952 original
