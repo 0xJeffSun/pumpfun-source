@@ -4,6 +4,34 @@ The [full audit](RECONSTRUCTION-AUDIT.md) and its generated tables retain their
 explicit `1463bd22` snapshot. This log records later research without silently
 changing that baseline or promoting new selected artifacts.
 
+## Relay: 12 → 11 unmatched normalized windows
+
+The [Jupiter optional-seed recovery](../repro/donation-relay/jupiter-option-source-recovery/README.md)
+recovers the complete 2,496-byte original window 90. The previous four-slot
+residual concealed a pointer-versus-length distinction: the helper accepts an
+optional seed slice, and Rust `match` reproduces its branch layout. `Some(&[])`
+and `None` select different invocation wrappers. Both the Darwin/Linux-library
+and full Linux builds reach **481/492 normalized windows**, **130 raw local
+matches**, and **11 unmatched**, with no losses. Each passes 536 fresh replay
+records; the existing privileged-success coverage limits remain.
+
+All 11 direct-call sites bind to matched callees. The original 346 equal
+source-location pairs are retained and two are added, for **348/348**. Relative
+to the iterator-clone controls, each stripped binary changes at only ten byte
+positions. Whole-file and exhaustive semantic identity remain unproved.
+Nineteen metadata-source trials and the `if let` form are retained as negative
+controls. The full function inventory and remaining-work report are refreshed.
+
+## Fees: Darwin target-library substitution rejected
+
+The [controlled library trial](../research/fees-target-library-control/README.md)
+keeps all 33 source inputs and the Linux compiler unchanged while substituting
+the official Darwin target libraries. It loses four original Type-ID windows:
+352 unique pairs and 89 unmatched versus the retained 353/85 checkpoint. The
+trial is not promoted. Its focused comparisons pass, which does not erase the
+structural regression. An independent stored-artifact comparison also confirms
+that all four selected core programs remain raw-byte unequal to their captures.
+
 ## Relay: narrowed Jupiter CPI residual, no match-count change
 
 The [residual CPI source trials](../repro/donation-relay/residual-cpi-source-trials/README.md)

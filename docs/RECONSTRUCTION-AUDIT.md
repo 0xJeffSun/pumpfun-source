@@ -4,8 +4,8 @@ Audited repository snapshot: `1463bd22fb7811825c5e7acf1cb963eb39ab68d9`, includi
 the PR #71–#94 review batch. This report separates selected artifacts from newer
 research. It does not promote a source tree or change an acceptance decision.
 
-The [post-PR123 review](RECONSTRUCTION-STATUS.md) and [refreshed full inventory](../repro/reconstruction-status-2026-10-26/README.md)
-supersede the research frontier below: **Relay 480/492, 12 unmatched; Fees 353
+The [current review](RECONSTRUCTION-STATUS.md) and [refreshed full inventory](../repro/reconstruction-status-2026-10-26/README.md)
+supersede the research frontier below: **Relay 481/492, 11 unmatched; Fees 353
 unique pairs, 85 unmatched**. Selected checkpoint tables below retain their dated
 snapshot. Subsequent gains are tracked in the [progress log](BYTE-IDENTITY-PROGRESS.md).
 
@@ -254,7 +254,7 @@ roles. “Bounded implementation” must never be displayed as “no known defec
    transaction inputs. Existing stopped-lane rules are not changed by this report.
 3. **Finish the strongest source-recovery paths.** Current Fees: 85 unmatched
    windows; rederive duplicate attributions on the current build, close calls/data
-   and shareholder bodies. Current Relay: its [12 explicit residuals](RECONSTRUCTION-STATUS.md#relay-the-complete-remaining-body-list)
+   and shareholder bodies. Current Relay: its [11 explicit residuals](RECONSTRUCTION-STATUS.md#relay-the-complete-remaining-body-list)
    and successful privileged settlement.
    These are bounded frontiers, not estimates of days or percent effort remaining.
 4. **Recover the remaining selected Pump/AMM/Mayhem structures.** Use the complete

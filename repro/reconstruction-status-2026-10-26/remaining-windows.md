@@ -1635,7 +1635,6 @@ Snapshot and limitations: [inventory](README.md). Addresses are decimal virtual 
 | pump_fees_research | 695672 | 1792 | no_complete_body_match |  |
 | pump_fees_research | 700568 | 192 | no_complete_body_match |  |
 | pump_fees_research | 784168 | 200 | no_complete_body_match |  |
-| donation_relay_research | 64824 | 2496 | no_complete_body_match |  |
 | donation_relay_research | 70200 | 6272 | no_complete_body_match |  |
 | donation_relay_research | 76472 | 6272 | no_complete_body_match |  |
 | donation_relay_research | 82744 | 2568 | no_complete_body_match |  |

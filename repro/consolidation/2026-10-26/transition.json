@@ -7,8 +7,8 @@
     {
       "path": "README.md",
       "before_sha256": "cae913d4d3f2066403162f653a0cf35b39620fb08877b1b308c08ccce4a53678",
-      "after_sha256": "0daa118ebaab8085a63248ee992c8abce7917c61998a0ec54407e11615bb37c2",
-      "reason": "Record the bounded Jupiter four-slot residual and preserved negative CPI source trials; keep all whole-file, selected-checkpoint and match-count claims unchanged."
+      "after_sha256": "20be62bcd08d8ca2eb2d99261f76f74b351185e378808179aa5607bbaeaa0af6",
+      "reason": "Record complete Jupiter optional-seed recovery on both build recipes: Relay 481/492 with 11 unmatched, 348 equal location pairs and fresh bounded replay; keep selected checkpoints unchanged."
     },
     {
       "path": ".github/workflows/verify.yml",

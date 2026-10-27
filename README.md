@@ -11,17 +11,15 @@ that run the captured original and the rebuilt candidate side by side in a local
 For subsequent gains and the latest research frontier, see the
 [byte-identity progress log](docs/BYTE-IDENTITY-PROGRESS.md).
 
-Latest Relay research: **480/492 normalized windows, 12 unmatched**. Source-coordinate
-builds using both compiler recipes have **130 raw local body matches**, resolve
-all 43 location-value differences in the audited subset, and each pass 536
-replay records. This includes a fresh build with the full Linux SDK.
+Latest Relay research: **481/492 normalized windows, 11 unmatched**, including
+[the complete Jupiter optional-seed builder](repro/donation-relay/jupiter-option-source-recovery/README.md).
+Both compiler recipes retain **130 raw local body matches**, agree on all 348
+recognized source-location pairs, and each pass 536 fresh replay records.
 Latest Fees research: **353 unique structural pairs, 85 unmatched windows**.
 Whole-file identity remains unachieved.
-[Residual CPI trials](repro/donation-relay/residual-cpi-source-trials/README.md)
-narrow Jupiter to four differing instruction slots; it remains unmatched.
 
 The [current reconstruction review](docs/RECONSTRUCTION-STATUS.md) lists exact,
-normalized, unmatched and opaque function status, all 12 remaining Relay bodies,
+normalized, unmatched and opaque function status, all 11 remaining Relay bodies,
 and prioritized behavior/build work. The [refreshed 4,415-row inventory](repro/reconstruction-status-2026-10-26/README.md)
 includes every exact local body match and every unresolved window.
 
