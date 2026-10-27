@@ -2287,3 +2287,12 @@ and 111,288 original text bytes remain unmatched.
 Review also closes the packet-manifest exception for nested manifests and Python
 caches, rejects symlinks and special files, and adds the verifier to CI. All 18
 negative/control tests pass with the stricter membership check.
+
+
+## 2026-10-27 — Withdraw tuple ownership: source-only body recovery
+
+The independently gated [Withdraw source proposal](../research/fees-withdraw-tuple-ownership-source/README.md) recovers original 249264 / 8,000 bytes through mint-first tuple evaluation and naturally inlined fallible amount helpers. Exact public #227 source changes from 44 to 45 inputs: 573→574 normalized bodies, 143 raw-local unchanged. The real dispatcher, 25 same-offset complete callee shapes, 14 used operands and two Source constructors are checked; 17 pure tests and nine actual in-memory mutation controls pass.
+
+The same body is freshly rechecked in accepted local union25 (579 normalized / 143 raw). Public #252/#256 remains stronger in raw layout (578 normalized / 198 raw and exact readonly payload), and this packet does not claim a rebuilt 579/198 composition. Its seven unmatched originals include 249264; current source overlap was checked. Historical Source-line repairs are not claimed as new against those later proposals.
+
+Native repeat and finite 17,331/113-case observations are local-only, not downloadable runtime evidence. The 10-file package contains ordinary source, exact public provenance, a reversible patch, source materialization/verification and an optional explicit local-ELF reader. No binary, archive, IR, build/runtime receipt, transaction/log fixture or derivative is published. Default native/runtime/whole-identity claims remain false; no whole ELF identity or checkpoint promotion.

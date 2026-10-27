@@ -1,0 +1,11 @@
+{
+  "README.md": "441ce0d0ff11ab8cc3992c2caffdf5c66059e92bd6160afa5bee8c8fbb927e45",
+  "compare.py": "b5898d6e49a77a8e2773b4b8d0227189026393b6acbe466a9d8d28a447ccc6d0",
+  "overrides/programs/pump-fees/src/instructions/mod.rs": "d0fe57d19111e5d77aa6b9a5e3a798a3131cf56251cfe1d77bca4ce8ac74b937",
+  "overrides/programs/pump-fees/src/instructions/withdraw.rs": "59c1dbb754dad58dd44808f1f18acc060b467c0204abd80a63469184cd5f407e",
+  "overrides/programs/pump-fees/src/withdrawal.rs": "1304cd178eb4c8c7b2e2206382e53c25508171a4bd1e93bb33c418bc34e19790",
+  "source-inputs.json": "acfe82f34faf158beb9686a52ac5a54f546aea6a055f149aa22cfa1b676d5cf7",
+  "source.patch": "1726f5294fac93f37ba592c94d23019d871b9643277a29e408cf6b0cae19ab5d",
+  "source_tools.py": "da3c198b782287e7831f04b06d127046fa0e269962208c220230d83968ee5f58",
+  "test_scope.py": "ae144ab5ed557f46a4e52102db7dff903defb7d5790dc2af7fb998b89cfc0981"
+}
