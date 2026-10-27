@@ -67,19 +67,34 @@ No handler is certified perfectly recreated. The selected core builds contain
 140 bounded implementations, five partial handlers and five unaccepted handlers;
 “unaccepted” can include existing overlay or static-only source.
 
-| Current build | Exact local bodies | Normalized only | Unmatched | Opaque |
-| --- | ---: | ---: | ---: | ---: |
-| Pump selected | 98 | 430 | 507 | 0 |
-| PumpSwap selected | 93 | 395 | 297 | 0 |
-| Fees research | 118 | 409 | 58 | 0 |
-| Mayhem selected | 58 | 131 | 7 | 245 |
-| Relay research | 130 | 352 | 10 | 0 |
+| Current build | Exact local bodies | Normalized only | Unmatched | Opaque | Unresolved original text |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Pump selected | 98 | 430 | 507 | 0 | 1,391,456 / 1,792,208 bytes (77.6%) |
+| PumpSwap selected | 93 | 395 | 297 | 0 | 734,392 / 1,162,040 bytes (63.2%) |
+| Fees research | 118 | 409 | 58 | 0 | 298,504 / 799,648 bytes (37.3%) |
+| Mayhem selected | 58 | 131 | 7 | 245 | 636,128 / 706,744 bytes (90.0%) |
+| Relay research | 130 | 352 | 10 | 0 | 52,616 / 752,488 bytes (7.0%) |
 
-Fees' unresolved bodies span **298,504 / 799,648 original text bytes (37.3%)**;
-Relay's span **52,616 / 752,488 (7.0%)**. These are sizes of whole unmatched
-windows, not differing-byte counts or estimates of effort. Calls, data, layout,
+Unresolved text includes whole unmatched and opaque windows. These are not
+differing-byte counts or estimates of effort. Calls, data, layout,
 relocations, build provenance and broader behavior remain to be verified even
 where a local body matches. Research rows do not replace selected checkpoints.
+
+The public-handler gaps are concrete:
+
+- **Partial:** Pump `buy_exact_quote_in_v3`, `buy_v3`, `sell_v3`, `create_v2`
+  and `multi_hop_curve_swap`.
+- **Unaccepted in selected builds:** Pump `admin_update_token_incentives`,
+  `claim_token_incentives` and `set_mayhem_virtual_params`; PumpSwap
+  `create_config`; Mayhem `initialize_mayhem_state`. Some have overlay or
+  static-only source, so this category does not mean no implementation exists.
+- **Implemented with bounded evidence:** the other 140 handlers. This includes
+  known discrepancies such as Pump `sell_v2` quote transfer-fee behavior;
+  passing finite cases does not establish perfect reconstruction.
+
+The [handler ledger](repro/reconstruction-audit-2026-10-26/handlers.md) records
+the evidence and missing coverage for each name. The [complete window ledger](repro/reconstruction-status-2026-10-26/functions.tsv)
+separately records every raw, normalized, unmatched and opaque machine body.
 
 ## Selected checkpoint and historical audit
 
