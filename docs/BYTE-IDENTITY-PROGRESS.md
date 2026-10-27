@@ -4,6 +4,35 @@ The [full audit](RECONSTRUCTION-AUDIT.md) and its generated tables retain their
 explicit `1463bd22` snapshot. This log records later research without silently
 changing that baseline or promoting new selected artifacts.
 
+## Reviewed PR #266: independent Metaplex exact-artifact evidence
+
+The [Utilize recovery](../research/metaplex-utilize-exact-recovery/README.md)
+retains a second source form producing the already established exact 707,448-byte
+Metaplex ELF. Its packet adds the unstripped compiler artifact, build/environment
+receipts and two 147-case signed replay sets, kept separate rather than counted
+as new unique scenarios. Local verification passes, including signed-transaction
+tampering and the added special-file/optimized-Python controls. Its deliberately
+redundant source guard remains an unpromoted diagnostic; the simpler prior recipe
+and current dependency selection are unchanged.
+
+## Mayhem: compose the complete historical macro with the current source
+
+The [new native packet](../research/mayhem-historical-macro-current-20261027/README.md)
+replaces the manually rendered parser with the complete historical Anchor program
+macro and historical CreateEvent definition. Two native root compilations produce
+the exact existing parser-context stripped ELF, preserving 429 normalized and
+139 raw-local matches, 4,289 positive direct-call observations and 446 Source
+observations. The actual upstream Solana gate reproduces the parent stripped ELF.
+The 67-file program set changes only the curve IDL and macro invocation.
+
+Both host macro builds compile the authenticated historical sources; target root
+builds reuse current dependency libraries and the unchanged qualified layout.
+This is still a cross-version runtime/framework experiment, with no new original
+function match, source-authentication claim, selected promotion or target execution.
+The earlier 6,636 trade and 69 initializer comparisons remain bound to the exact
+same stripped artifact. Nine additional cap/initializer source controls are also
+preserved; none closes a complete body.
+
 ## Reviewed PR #264: Metaplex identity and parallel research packets
 
 The [review](../research/claude-lanes-review-20261027/README.md) independently

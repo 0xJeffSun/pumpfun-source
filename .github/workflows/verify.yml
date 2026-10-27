@@ -12,6 +12,10 @@ jobs:
       max-parallel: 12
       matrix:
         include:
+          - suite: metaplex-exact
+            commands: |
+              python -B research/metaplex-utilize-exact-recovery/verify.py
+              python -B research/metaplex-utilize-exact-recovery/test_verify.py
           - suite: evidence
             commands: |
               python scripts/verify_evidence.py
@@ -121,6 +125,8 @@ jobs:
               python -B research/mayhem-native-quote-controls/test_verify.py
               python -I -B research/mayhem-historical-macro-context/verify.py
               python -I -B research/mayhem-historical-macro-context/test_verify.py
+              python -I -B research/mayhem-historical-macro-current-20261027/verify.py
+              python -I -B research/mayhem-historical-macro-current-20261027/test_verify.py
               python -I -B research/mayhem-allocator-context/verify.py
               python -I -B research/mayhem-allocator-context/test_verify.py
               python -B research/mayhem-provider-sharing/verify.py --repository-root .
