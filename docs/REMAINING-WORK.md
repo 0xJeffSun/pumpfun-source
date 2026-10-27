@@ -9,6 +9,12 @@ snapshot retains `1463bd22` audit bindings; current selections are recorded in
 [completion ledger](COMPLETION.md) remains a selected-checkpoint record; its old
 candidate paths and “current” prose must not override newer evidence.
 
+Current [Pump Round18](../repro/pump/main-contract-round18-20261027/README.md)
+has 118 raw-local matches, 575 normalized-only matches and 342 unmatched windows.
+The unmatched windows cover 959,912 original text bytes. The checkpoint retains
+bounded runtime evidence; the remaining bodies, data, relocations, uncovered
+behavior and original build provenance still require recovery.
+
 Current Mayhem research is the [provider-sharing successor](../research/mayhem-provider-sharing/README.md): 100 raw-local, 328 normalized-only and thirteen unmatched windows / 112,584 original text bytes. Six source inputs change, removing seven duplicate compiled helpers while preserving every earlier positive call and Source observation. Two builds agree; fresh replay passes 69 initializer and 2,496 AMM comparisons. Prior Legacy, V2 and ExtendAccount receipts retain their earlier artifact bindings. The sysvar allocation provider, the missing 328-byte reserve child, the thirteen bodies and full ELF identity remain unresolved. This does not update the selected baseline or prove arbitrary behavior.
 
 The [allocator-context experiment](../research/mayhem-allocator-context/README.md)
