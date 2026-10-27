@@ -56,3 +56,30 @@ while queue:
         edges.append((a,b,x['offset'],oa,cb));queue.append((oa,cb))
 assert len(seen)==31 and len(edges)==115
 print('Verified three complete roots, 31 direct-call pairs / 115 edges, and native repeat identity.')
+corpus=json.loads((HERE/'runtime/corpus.json').read_text())
+runtime=json.loads(gzip.decompress((HERE/'runtime/revalidated.json.gz').read_bytes()))
+assert runtime['candidate_sha256']==sha(images['public-three']['candidate.so'])
+assert runtime['original_sha256']==sha(original) and runtime['loader_profile']=='captured-upgradeable'
+record=json.loads((HERE/'builds/public-three/build-comparison.json').read_text())
+assert runtime['compiled_source_sha256']==record['source_sha256']
+assert set(runtime['suites'])==set(corpus) and len(corpus)==44
+assert runtime['case_count']==sum(row['cases']for row in corpus.values())==10468
+assert not runtime['mismatches']
+for name,definition in corpus.items():
+    result=runtime['suites'][name]
+    assert result['case_count']==definition['cases']
+    assert not result.get('mismatches',result.get('failures',[]))
+    assert runtime['script_sha256'][definition['script']]==definition['sha256']
+spec=importlib.util.spec_from_file_location('retained_diagnostic_audit',HERE/'support/diagnostic_audit.py')
+auditor=importlib.util.module_from_spec(spec);spec.loader.exec_module(auditor)
+diagnostics=auditor.audit(runtime['suites'])
+assert diagnostics==runtime['diagnostics'] and not diagnostics['mismatches']
+assert diagnostics['log_bearing_cases']==10464
+receipts=json.loads(gzip.decompress((HERE/'runtime/loader-receipts.json.gz').read_bytes()))
+assert len(receipts)==44
+for name in corpus:
+    text=receipts[name+'.loader.json'];loaded=json.loads(text)
+    assert sha(text.encode())==runtime['loader_receipts'][name]['sha256']
+    assert {x['elf_sha256']for x in loaded['loads']}=={sha(original),runtime['candidate_sha256']}
+    assert all(x['program_bytes']==36 and x['programdata_bytes']==10485760 and x['elf_prefix_unchanged'] and x['zero_allocation_tail']for x in loaded['loads'])
+print('Verified 44 captured-loader suites / 10,468 cases; 10,464 diagnostic log pairs, zero mismatches.')
