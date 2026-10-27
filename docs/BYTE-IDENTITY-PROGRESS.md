@@ -929,3 +929,31 @@ with no gained or lost matches. No trial is promoted, and no runtime replay is
 claimed for these rejected controls. The next source investigation must explain
 the remaining caller construction differences rather than accept call topology
 or artifact size as byte identity.
+
+
+## Fees: isolated math ownership and authentic SyncNative pack, 545 windows — 27 October 2026
+
+The [four-stage source-only study](../research/fees-math-pack-source-proposal/README.md)
+isolates math compilation-unit ownership from authentic token instruction packing.
+From the pinned PR178 544-window source, the local math crate/root reexports
+preserve all 588 candidate shapes and restore seven contiguous original-order
+windows without a normalized gain. The one-expression runtime-used
+TokenInstruction::SyncNative.pack() recovers complete original 695672 (1,792 bytes),
+reaching **545/585 normalized windows** with no losses and **118 raw local matches**.
+The composition preserves both causes; it is not the latest moving global frontier.
+
+Fresh static verification checks all 3,029 baseline/math direct edges and 3,033
+pack/composition edges, retaining exactly 18 pre-existing callee-shape gaps.
+All 161 Location-shaped uses remain value-equal. The new pack helper has four
+matching actual callees and no direct data/external/indirect operands; its real
+incoming Crank calls pass discriminant 17. The incoming Crank body, complete enum
+extent, recursive semantics and all other data remain open.
+
+The packet provides four exact 41/42-input source maps, ordinary overrides and
+patches, nine tests, a pinned native recipe and optional independent ELF checks.
+All 252 registry package records stay unchanged. No binaries, logs, runtime cases
+or archived build/replay receipts are published; default runtime_verified=false.
+Local finite suites are not downloadable replay proof and omit known Crank
+application-log gaps. Pack's positional file differences worsen 461,447→468,043;
+math+pack retains 466,077 differing common positions. Whole byte identity remains
+false, and the four core programs' full-identical count is still 0/4.
