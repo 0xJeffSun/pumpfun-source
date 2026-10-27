@@ -2624,3 +2624,24 @@ The independently gated [Withdraw source proposal](../research/fees-withdraw-tup
 The same body is freshly rechecked in accepted local union25 (579 normalized / 143 raw). Public #252/#256 remains stronger in raw layout (578 normalized / 198 raw and exact readonly payload), and this packet does not claim a rebuilt 579/198 composition. Its seven unmatched originals include 249264; current source overlap was checked. Historical Source-line repairs are not claimed as new against those later proposals.
 
 Native repeat and finite 17,331/113-case observations are local-only, not downloadable runtime evidence. The 10-file package contains ordinary source, exact public provenance, a reversible patch, source materialization/verification and an optional explicit local-ELF reader. No binary, archive, IR, build/runtime receipt, transaction/log fixture or derivative is published. Default native/runtime/whole-identity claims remain false; no whole ELF identity or checkpoint promotion.
+
+
+## Mayhem ordinary Rust sweep-rate composition
+
+The [current sweep-rate packet](../research/mayhem-sweep-rate-current-recovery/README.md)
+replaces timestamp selection with an ordinary inverted boolean comparison and
+composes the merged sweep diagnostic fixes with the current two-quote parent.
+O0073 shrinks from 920 to its original 912 bytes; 95/114 same-position slots,
+22 register-sensitive blocks and 11 typed references correspond. Nineteen slots
+still differ, so there is no new complete function match. The earlier
+branch-layout proof and PR #292's overlapping Linux compiler controls are credited.
+
+A fresh control reproduces the qualified 432/100 parent exactly; two proposal
+compilations agree. All 432 normalized / 100 raw-local matches, 4,314 positive
+call observations, 456 Source observations and complete observed Source profiles
+survive. Both quotes, the initializer and the closer LegacyBuy shape are retained.
+Fresh replay passes 692 three-way sweeps, 150 three-way rate cases and 6,636
+trade pairs, including the 58 inherited diagnostic repairs. The packet retains
+90 successful helper controls, eight compiler failures and 18 corruption checks.
+Nine functions and complete ELF identity remain open; the selected checkpoint
+is unchanged.
