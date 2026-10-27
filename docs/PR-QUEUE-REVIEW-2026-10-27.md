@@ -389,3 +389,25 @@ eight objects and20 matching immediate calls; it claims no new instruction or
 runtime coverage. The two SDK path differences remain explicit. Later426
 source/data recovery has its own independent binding and is not substituted
 for this historical packet. Hosted checks were still in progress at merge.
+
+## PR237: allocator sharing and native compiler provenance
+
+Reviewed head `ae2b9c990522793c59a41a94bc222ef225e557e3`, merged as
+`aa63cc825b120fe727c3573bff604db2db2a0f1c`. All 141 packet files match the
+reviewed head. The standalone verifier and all ten evidence-scope tests pass.
+The verifier checks five retained native Windows builds (815 rustc invocations),
+two map relinks, six archive members, symbol definitions, burn relocations and
+the linked helper routes. Review reran those saved-evidence checks; it did not
+execute a fresh native compiler or target VM.
+
+The instructions-sysvar dependency sharing control restores the missing 312-byte
+and 408-byte allocator copies. Its 428-function normalized multiset and
+602,936-byte instruction-section size equal the pinned Darwin reference, and
+three provider builds retain identical raw and stripped ELF hashes. The
+original-window result remains 375 normalized / 59 raw-local, with zero new
+matches. Ordered instructions, data, relocations and whole ELF remain unequal;
+the raw instruction comparison still has 7,811 differing byte positions. This
+historical-source experiment does not replace or raise the published 426-window
+checkpoint, nor prove the historical compiler flags. Hosted checks were still
+in progress with no reported failures when the merge was confirmed. The open
+PR queue was empty after the merge.
