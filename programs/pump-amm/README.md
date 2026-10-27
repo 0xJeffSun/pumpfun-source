@@ -1,19 +1,16 @@
 # PumpSwap source reconstruction
 
-The maintained source is the [transfer ABI and entrypoint checkpoint](../../repro/pump_amm/transfer-abi-recovery-20261027/README.md),
-candidate `3fcae02128464717b29a0b3842fbba993d5d0befb4362c4094c8af8e32a8589d`. It matches **642/785 normalized windows (81.8%)**,
-including **129 raw bodies**, and covers **804,472/1,162,040 text bytes (69.2%)**.
-Whole ELF identity is false; **143 windows remain**.
+The maintained source is the [native-quote and execution checkpoint](../../repro/pump_amm/quote-guard-recovery-20261027/README.md),
+candidate `be10ca1a530ef9c62be5c94a5183f339e5d7661dce588a9458767e20a5e488f6`. It matches **643/785 normalized windows (81.9%)**,
+including **148 raw bodies**, and covers **804,704/1,162,040 text bytes (69.2%)**.
+Whole ELF identity is false; **142 windows remain**.
 
-Two strict offline builds agree. All17,462 corpus cases and retained supplemental
-suites pass. The160-case resize matrix closes the eight prior sweep-order
-differences. Shared ATA/payout bodies and actual callees match;17 entrypoint
-source descriptors are restored. The recipe binds50 canonical,51 workspace
-and175 registry inputs,226 total, with762 cached dependency artifacts unchanged.
+Two strict offline builds agree. All 17,462 corpus cases and retained supplemental
+suites pass. The 21-case reserved-recipient matrix closes all 11 prior differences, and 160 resize cases remain matched. Claim/InitBoost and legacy operation boundaries
+are restored; 17 entrypoint source descriptors remain matched. The recipe binds 51 canonical, 52 workspace
+and 175 registry inputs, 227 total, with 762 cached dependency artifacts unchanged.
 Counts overlap. Full code/data/call identity, original provenance and exhaustive
 behavior remain open; the linked checkpoint records the exact proof limits.
-
-The [reserved-account follow-up](../../repro/pump_amm/transfer-abi-recovery-20261027/followup/reserved-accounts/REPORT.md) preserves 11 differences in 21 signed cases. The next private build corrects them; this selected checkpoint retains that known gap.
 
 The paragraphs below describe historical checkpoints.
 

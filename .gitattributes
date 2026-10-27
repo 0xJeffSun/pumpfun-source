@@ -1411,3 +1411,5 @@ repro/pump_amm/transfer-abi-recovery-20261027/results/** -whitespace
 repro/pump_amm/transfer-abi-recovery-20261027/followup/** -whitespace
 research/amm-current-event-capture-20261027/source/** -whitespace
 research/amm-current-event-capture-20261027/source.patch -whitespace
+repro/pump_amm/quote-guard-recovery-20261027/results/** -whitespace
+repro/pump_amm/quote-guard-recovery-20261027/followup/** -whitespace

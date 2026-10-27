@@ -61,7 +61,7 @@ pub fn admin_cto(ctx:Context<AdminCtoPool>,coin_creator:Pubkey,is_holder_reward:
  }
  let is_cashback_coin=if is_holder_reward{false}else{pool.is_cashback_coin};
  if let Some(fee)=creator_fee_bps{
-  require!(pool.quote_mint!=anchor_spl::token::spl_token::native_mint::ID && pool.quote_mint!=anchor_lang::solana_program::pubkey!("EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"),PumpAmmError::CreatorFeeNotConfigurableForQuote);
+  require!(!crate::utils::quote::is_native_or_usdc(&pool.quote_mint),PumpAmmError::CreatorFeeNotConfigurableForQuote);
   require!(!is_cashback_coin,PumpAmmError::CreatorFeeNotAllowedForCashbackCoin);
   require!(ctx.accounts.global_config.creator_fee_configurable,PumpAmmError::CreatorFeeNotConfigurable);
   require!(fee>0 && fee<=ctx.accounts.global_config.max_configurable_creator_fee_bps,PumpAmmError::CreatorFeeBpsOutOfRange);

@@ -14,3 +14,5 @@ pub fn bonding_curve(base_mint: &anchor_lang::prelude::Pubkey) -> anchor_lang::p
     let seeds: &[&[u8]] = &[b"bonding-curve", base_mint.as_ref()];
     anchor_lang::prelude::Pubkey::find_program_address(seeds, &crate::trade::PUMP).0
 }
+
+pub mod quote;

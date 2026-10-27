@@ -9,10 +9,10 @@ import subprocess
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
-CHECKPOINT = 'repro/pump_amm/transfer-abi-recovery-20261027'
+CHECKPOINT = 'repro/pump_amm/quote-guard-recovery-20261027'
 ARTIFACT = CHECKPOINT + '/results/build/candidate.so'
-CANDIDATE = '3fcae02128464717b29a0b3842fbba993d5d0befb4362c4094c8af8e32a8589d'
-MANIFEST = '5ef281a0d6cf4dc23ca651f11d763cec0ebf6a3cd52e863898cb4867ffe662c6'
+CANDIDATE = 'be10ca1a530ef9c62be5c94a5183f339e5d7661dce588a9458767e20a5e488f6'
+MANIFEST = '8ef5d5f28dc6be5b0b54cfa1ac1e35b4f36ea8470fdfceb2acde954d1777a69e'
 
 
 def sha(path):
@@ -59,7 +59,7 @@ def verify(root=ROOT, runtime=None):
                                results / 'build/unstripped.so', results / 'dependency-proof', root)
     finally:
         sys.path.pop(0)
-    assert bound['total_compiled_inputs_verified'] == 226 and bound['current_source_verified']
+    assert bound['total_compiled_inputs_verified'] == 227 and bound['current_source_verified']
     dependencies = module('selected_amm_dependencies', results / 'dependency-proof/verify.py')
     assert dependencies.verify(results / 'canonical-source', results / 'build/build-comparison.json')['packages'] == 9
     runtime = Path(runtime).resolve()
