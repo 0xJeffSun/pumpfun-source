@@ -5,6 +5,11 @@ This review updates the research frontier while preserving the selected-checkpoi
 [baseline audit](RECONSTRUCTION-AUDIT.md). The [recomputed inventory](../repro/reconstruction-status-2026-10-26/README.md)
 contains every one of the **4,415 selected/research function-window rows**.
 
+The generated inventory is a dated snapshot. Later maintained selections now
+include Pump Round9 and the AMM error-order recovery; their current counts and
+evidence are in the [repository overview](../README.md). The current rows below
+are separate from the historical rows, and do not rewrite that snapshot.
+
 The [comprehensive review](../repro/reconstruction-status-2026-10-26/review.md)
 reconciles all 150 named handlers and all 4,415 window rows, gives unresolved
 text size for every build and lists the largest remaining bodies. Its
@@ -41,16 +46,18 @@ analysis. Candidate symbol names are hypotheses about original identity.
 
 | Program / build | Original windows | Exact local bytes | Normalized only | No complete match | Opaque without raw match |
 | --- | ---: | ---: | ---: | ---: | ---: |
-| Pump selected | 1,035 | 98 | 430 | 507 | 0 |
-| PumpSwap selected | 785 | 93 | 395 | 297 | 0 |
+| Pump historical selected | 1,035 | 98 | 430 | 507 | 0 |
+| PumpSwap historical selected | 785 | 93 | 395 | 297 | 0 |
 | Fees selected | 585 | 102 | 363 | 120 | 0 |
-| Mayhem selected | 441 | 58 | 131 | 7 | 245 |
+| Mayhem historical selected | 441 | 58 | 131 | 7 | 245 |
 | Relay historical source 15 | 492 | 33 | 89 | 370 | 0 |
+| **Pump current Round9** | **1,035** | **111** | **488** | **436** | **0** |
+| **PumpSwap current** | **785** | **124** | **460** | **201** | **0** |
 | **Fees latest research** | **585** | **198** | **379** | **8** | **0** |
 | **Mayhem latest research** | **441** | **100** | **328** | **13** | **0** |
 | **Relay canonical selection** | **492** | **492** | **0** | **0** | **0** |
 
-The current research rows are bound to the [Fees qualified linker layout](../research/fees-qualified-linker-layout/README.md) and [Mayhem qualified linker layout](../research/mayhem-qualified-linker-layout/README.md); they extend the dated generated inventory below. Each row is a partition, not a score of semantic correctness. The selected Mayhem source
+The current research rows are bound to the [Fees source/data-order recovery](../research/fees-common-quote-data-order/README.md) and [Mayhem initializer Source recovery](../research/mayhem-initializer-source-origins/README.md); they extend the dated generated inventory below. Each row is a partition, not a score of semantic correctness. The historical selected Mayhem source
 ledger has 257 opaque windows, 12 of which happen to match local raw bytes.
 Selected Fees retains two call-conflicting rows; body existence does not resolve
 those conflicts. Different programs and studies use different matching rules.
@@ -959,7 +966,7 @@ bounded through actual handlers; the AMM Sell subtraction-panic branches remain
 unexecuted by the current corpus. Earlier ExtendAccount, initializer and other
 non-trade receipts retain their parent-artifact bindings.
 
-## Current Mayhem qualified linker layout
+## Prior Mayhem qualified linker layout
 
 The [layout checkpoint](../research/mayhem-qualified-linker-layout/README.md)
 keeps the same 66 Rust inputs and 428 normalized counterparts but increases
@@ -974,3 +981,19 @@ The original-to-candidate mapping retains explicit ambiguity: some unique
 callers require incompatible candidate copies, and two original 328-byte helpers
 have only one candidate counterpart. These sharing/specialization gaps and the
 thirteen unmatched bodies remain open. Complete ELF equality is still false.
+
+## Current Mayhem initializer Source origins
+
+The [initializer successor](../research/mayhem-initializer-source-origins/README.md)
+changes only whitespace in `src/state.rs`, restoring the original Clock unwrap
+and checked-add Source descriptors. Both complete ELFs differ from the qualified
+parent in exactly three data bytes; text and all 456 function placements are
+unchanged. The partition remains 100 raw-local, 328 normalized-only and thirteen
+unmatched windows. All earlier positive call and matched Source observations
+are preserved; the two new Source matches belong to the unmatched initializer.
+
+Two builds agree and fresh replay passes 69 comparisons with 168 signed
+executions, including ten successful Pump-to-Mayhem CPI cases. This does not
+rebind earlier trade/ExtendAccount receipts to the new artifact or establish
+exhaustive behavior. O0193 remains 920 versus 960 bytes, and whole-ELF identity
+remains unresolved.

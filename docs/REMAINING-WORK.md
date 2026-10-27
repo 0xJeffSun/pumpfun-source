@@ -3,12 +3,13 @@
 This is the action list for the [current reconstruction audit](RECONSTRUCTION-AUDIT.md),
 with current research based on reviewed parent revision `6b61b337` and the linked visibility-recovery measurements. The [current review](RECONSTRUCTION-STATUS.md)
 and [complete refreshed inventory](../repro/reconstruction-status-2026-10-26/README.md)
-list every raw match and unresolved window; the four core selected artifacts retain
-`1463bd22` audit bindings, while Relay now has its canonical exact selection. The historical
+list every raw match and unresolved window in their dated snapshot. That core
+snapshot retains `1463bd22` audit bindings; current selections are recorded in
+[`repro/status.json`](../repro/status.json), and Relay has its canonical exact selection. The historical
 [completion ledger](COMPLETION.md) remains a selected-checkpoint record; its old
 candidate paths and “current” prose must not override newer evidence.
 
-Current Mayhem research is the [428-window qualified linker layout](../research/mayhem-qualified-linker-layout/README.md): 100 raw-local, 328 normalized-only and thirteen unmatched windows / 112,584 original text bytes. The unchanged 66-file source preserves all earlier body, call and Source evidence. Fresh trades and ExtendAccount replay pass; complete data/call identity, original sharing/specialization and full ELF equality remain unresolved. This does not update the selected baseline or prove arbitrary behavior.
+Current Mayhem research is the [initializer Source-origin successor](../research/mayhem-initializer-source-origins/README.md): 100 raw-local, 328 normalized-only and thirteen unmatched windows / 112,584 original text bytes. A whitespace-only source correction repairs two panic descriptors and changes exactly three ELF data bytes. Fresh replay passes 69 initializer comparisons; the qualified parent's trade and ExtendAccount receipts retain their original bindings. Complete data/call identity, original sharing/specialization and full ELF equality remain unresolved. This does not update the selected baseline or prove arbitrary behavior.
 
 The [native Windows reproduction](../research/mayhem-native-reference-identity/README.md)
 reproduces the earlier 426-window source/data candidate's complete raw and

@@ -22,8 +22,8 @@ all remaining code, calls, data, relocations and build provenance.
 | --- | ---: | ---: | ---: | ---: | ---: | --- |
 | [Pump Round9](repro/pump/main-contract-round9-20261027/README.md) | 599 / 1,035 | 57.9% | 111 | 488 | 436 | No |
 | [PumpSwap / AMM](repro/pump_amm/error-order-recovery-20261027/README.md) | 584 / 785 | 74.4% | 124 | 460 | 201 | No |
-| [Fees research](research/fees-qualified-linker-layout/README.md) | 577 / 585 | 98.6% | 198 | 379 | 8 | No |
-| [Mayhem research](research/mayhem-qualified-linker-layout/README.md) | 428 / 441 | 97.1% | 100 | 328 | 13 | No |
+| [Fees research](research/fees-common-quote-data-order/README.md) | 577 / 585 | 98.6% | 198 | 379 | 8 | No |
+| [Mayhem research](research/mayhem-initializer-source-origins/README.md) | 428 / 441 | 97.1% | 100 | 328 | 13 | No |
 | [Donation Relay](repro/donation-relay/canonical-exact-selection/README.md) | 492 / 492 | 100.0% | 492 | 0 | 0 | **Yes** |
 | **Total** | **2,680 / 3,338** | **80.3%** | **1,025** | **1,655** | **658** | **1 / 5** |
 
@@ -61,6 +61,18 @@ paired diagnostic-log cases. AMM passes 17,462 full cases plus the separate
 account, fee, CPI, boundary and error-order matrices recorded in its checkpoint.
 These corpora overlap and must not be summed as unique scenarios. Tests use
 captured programs in local VMs; they do not establish current-chain acceptance.
+
+The latest [Mayhem initializer correction](research/mayhem-initializer-source-origins/README.md)
+restores two panic locations while preserving all 428 normalized and 100 raw
+matches. Only three data bytes change; no instruction bytes change. Two builds
+agree and 69 fresh comparisons verify 168 signed executions. The initializer
+still has 920 bytes versus the original 960 and remains unmatched.
+
+The latest [Fees source and data-order recovery](research/fees-common-quote-data-order/README.md)
+restores all 105 original Source records and the relative layout of 265 data
+objects. It preserves 577 normalized and 198 raw matches; 17,331 fresh
+comparisons pass. Absolute pointers, literal data-section equality and complete
+ELF identity remain unresolved.
 
 Remaining priorities are the 436 Pump, 201 AMM, 8 Fees and 13 Mayhem unmatched
 windows; deeper call/data/relocation identity; original build provenance; and
