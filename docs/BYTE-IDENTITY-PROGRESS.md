@@ -475,3 +475,15 @@ matches, unmatched bodies, opaque windows and bounded/partial/unaccepted handler
 It records unresolved text size per build and the largest remaining windows.
 The current Fees call ledger has 2,625 bound-target edges and 20 different-body
 frontier edges; the old overview's 24-edge value has been corrected.
+
+
+## Optional AMM event-authority ownership — 26 October 2026
+
+[The isolated source recovery](../research/fees-optional-account-ownership/README.md)
+recovers original 10,232 (528-byte normalized parser) and 41,560 (160-byte raw
+cleanup) through the real create-sharing account context. Only the optional
+AMM event-authority field changes to owned `AccountInfo`. No matches are lost:
+370 unique structural pairs, 66 unmatched, 117 raw-local windows. The new
+candidate passes 17,331 suite cases, 1,542 exact focused comparisons, 24 growth
+cases and 32 optional-account boundary cases. Its enclosing parser remains
+unmatched; whole-file equality and selected-source promotion remain open.

@@ -1,6 +1,6 @@
-# Reconstruction status after PR #149 — 26 October 2026
+# Reconstruction status after optional-account ownership recovery — 26 October 2026
 
-Reviewed evidence revision: `84031d3ca58684a510a3b1a12e44c01337fb2bad`.
+Reviewed evidence revision: `b7cc14dd31c85a10773692b1026aa80b6004fc02`.
 This review updates the research frontier while preserving the selected-checkpoint
 [baseline audit](RECONSTRUCTION-AUDIT.md). The [recomputed inventory](../repro/reconstruction-status-2026-10-26/README.md)
 contains every one of the **4,415 selected/research function-window rows**.
@@ -44,7 +44,7 @@ analysis. Candidate symbol names are hypotheses about original identity.
 | Fees selected | 585 | 102 | 363 | 120 | 0 |
 | Mayhem selected | 441 | 58 | 131 | 7 | 245 |
 | Relay selected source 15 | 492 | 33 | 89 | 370 | 0 |
-| **Fees latest research** | **585** | **116** | **401** | **68** | **0** |
+| **Fees latest research** | **585** | **117** | **402** | **66** | **0** |
 | **Relay latest research** | **492** | **130** | **352** | **10** | **0** |
 
 Each row is a partition, not a score of semantic correctness. Mayhem's source
@@ -70,13 +70,13 @@ bytes (7.0%)**. Those bytes describe the sizes of unmatched original windows,
 not the number of absent or incorrect bytes. The residual includes large business
 functions; matching the other 482 still leaves their call/data identity to prove.
 
-Fees research has **517/585 windows with a normalized counterpart**: 368 unique
-structural pairs and 149 original windows in ambiguous duplicate groups. Its 68
-unmatched windows span **320,304 of 799,648 original text bytes (40.1%)**, although
-they are only 11.6% of the window count. Many remaining bodies are large. The
+Fees research has **519/585 windows with a normalized counterpart**: 370 unique
+structural pairs and 149 original windows in ambiguous duplicate groups. Its 66
+unmatched windows span **319,616 of 799,648 original text bytes (40.0%)**, although
+they are only 11.3% of the window count. Many remaining bodies are large. The
 [current call ledger](../repro/reconstruction-status-2026-10-26/fees-call-attribution.json)
 recomputes 63 additional duplicate-body correspondences on this candidate, for
-431 attributed pairs. There are 86 still-unattributed duplicate windows and 20
+433 attributed pairs. There are 86 still-unattributed duplicate windows and 20
 call edges to different-body frontiers. This refinement adds no body coverage.
 
 There is no defensible single source-completion percentage or ETA. Whole-program
@@ -248,8 +248,8 @@ additional function is considered recovered.
 
 ## Fees: new complete bodies, substantial residual business logic
 
-The latest 860,464-byte candidate is SHA-256
-`f8a86727ea524a4bb0f1c8e202c7aa50c1de2640ef60f7f50da4274e6d732a54`.
+The latest 861,456-byte candidate is SHA-256
+`1cf0911cfc8402ca43c0842bdbfc22b1012dd8d306b1845683d248b112efc5e6`.
 The newly merged studies recover:
 
 | Complete original window | Evidence |
@@ -267,14 +267,14 @@ The newly merged studies recover:
 | Configuration/stable updates (2,608 / 2,568 bytes), normal/stable upserts (2,528 bytes each) | [Event and admin-source recovery](../research/fees-config-event-recovery/README.md); duplicate upserts distinguished by outgoing calls |
 
 These are complete normalized windows, not merely matching diagnostic fragments.
-There are 63 unique raw-equal structural pairs; counting all original windows
-with any raw counterpart, including ambiguous duplicates, gives 116. Those
+There are 64 unique raw-equal structural pairs; counting all original windows
+with any raw counterpart, including ambiguous duplicates, gives 117. Those
 numbers answer different questions and must not be interchanged.
 
 The candidate retains passing **17,331 cases across 18 suites** and **1,542 exact
 outcome/log/compute comparisons**. The minimal exotic-growth correction was replayed afresh;
 the control is explicitly reused from the verified event-recovery packet. Existing unchecked-input
-and finite-coverage limits remain. The 68 unresolved bodies, ambiguous attribution,
+and finite-coverage limits remain. The 66 unresolved bodies, ambiguous attribution,
 shareholder validation, transitive calls/data and final ELF layout remain open.
 
 The fee-total helper, flat-fee setters, tier helpers and four configuration/upsert
@@ -293,6 +293,18 @@ flag removes all four. The corrected research candidate passes the existing
 17,331-case suite and 1,542-case exact matrix too. Its 5,664-byte caller still
 differs from the original's 5,520 bytes, so coverage remains unchanged. A
 same-sized experimental body also fails full comparison and is not accepted.
+
+### Optional account ownership: two recovered bodies
+
+The [optional-account ownership study](../research/fees-optional-account-ownership/README.md)
+changes only the optional AMM event authority from borrowed unchecked account
+to owned `AccountInfo`. It recovers original 10,232 (528-byte normalized parser)
+and 41,560 (160-byte raw-equal cleanup), with no lost matches. Both direct calls
+in the optional parser bind to matched callee bodies. The enclosing account
+parser remains unmatched. The new candidate passes fresh 17,331 suite cases,
+1,542 exact comparisons, 24 retained growth-boundary cases and 32 new signed
+optional-account cases. The 32-case matrix compares state, errors, lamports,
+events and inner instructions; it makes no log/compute equality claim.
 
 ## Public behavior: reconstructed is not perfect
 

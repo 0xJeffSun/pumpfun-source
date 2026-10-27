@@ -7,8 +7,8 @@
     {
       "path": "README.md",
       "before_sha256": "cae913d4d3f2066403162f653a0cf35b39620fb08877b1b308c08ccce4a53678",
-      "after_sha256": "25396d989c5e1ee43ae7892d455e41f99bfe6bd92f3dc1b16bd9568c64d8b7c4",
-      "reason": "Publish the comprehensive post-PR149 review, with all handler classifications, current body frontier and unresolved-byte scope; retain selected checkpoint distinctions."
+      "after_sha256": "23880c36d3022c32b0ad42b5b57a78058f4df3995514cc45ec806bf25fa70990",
+      "reason": "Record two newly recovered optional-account bodies, the 370/66 Fees frontier and refreshed complete review; keep selected artifacts unchanged."
     },
     {
       "path": ".github/workflows/verify.yml",
