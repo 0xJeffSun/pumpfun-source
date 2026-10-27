@@ -1,0 +1,9 @@
+[
+  "podman",
+  "exec",
+  "codex-relay-worker-build-20261027",
+  "/sdk/llvm/bin/llvm-objcopy",
+  "--strip-all",
+  "/work/donation-event-tag-last/symbols.so",
+  "/work/donation-event-tag-last/candidate.so"
+]

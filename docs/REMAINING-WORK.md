@@ -405,3 +405,11 @@ accepted candidate: this is evidence narrowing source hypotheses, not a new
 recovered function. Compare the remaining argument/context construction and
 stack use with whole-window matching still required; runtime cleanup and failure
 paths need separate coverage before promoting any later candidate.
+
+
+The follow-up [Result/event construction controls](../repro/donation-relay/donation-result-shape-controls/README.md)
+also fail complete-window matching. The eight-byte size gap in the explicit-match
+regular wrapper does not establish that only one instruction needs changing;
+registers, stack slots and ordering still differ throughout the body. Further
+work must explain those source/code-generation differences, preserving full
+window comparison and testing runtime behavior before promotion.

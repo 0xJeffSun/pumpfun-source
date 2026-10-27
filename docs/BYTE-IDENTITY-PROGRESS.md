@@ -957,3 +957,16 @@ Local finite suites are not downloadable replay proof and omit known Crank
 application-log gaps. Pack's positional file differences worsen 461,447→468,043;
 math+pack retains 466,077 differing common positions. Whole byte identity remains
 false, and the four core programs' full-identical count is still 0/4.
+
+
+## Relay Result/event construction controls — 27 October 2026
+
+[Six additional ordinary-source controls](../repro/donation-relay/donation-result-shape-controls/README.md)
+test explicit error propagation, result-field destructuring, event `Result::map`
+and two event initializer orders. None recovers original windows 92–95. Explicit
+matching produces 2,560-byte regular/payer wrappers against 2,568 original bytes,
+but their complete normalized bodies still differ. `Result::map` adds function
+windows and loses two raw-local matches. No trial is promoted; the accepted
+inventory remains 488 normalized / 142 raw-local. One control has a fresh
+all-dependency v1.48 rebuild; other retained controls contain actual root builds
+with dependency-cache reuse. There is no new target execution claim.

@@ -11,7 +11,7 @@ that run the captured original and the rebuilt candidate side by side in a local
 For subsequent gains and the latest research frontier, see the
 [byte-identity progress log](docs/BYTE-IDENTITY-PROGRESS.md).
 The [27 October queue review](docs/PR-QUEUE-REVIEW-2026-10-27.md) covers PRs
-#170–#187, including separately verified 399- and 401-pair Fees context candidates and
+#170–#188, including separately verified 399- and 401-pair Fees context candidates and
 source-only proposals. Those independent branches are not silently combined
 into the inventory below.
 
@@ -26,6 +26,8 @@ Two [donation close-order controls](repro/donation-relay/donation-close-order-co
 restore the native wrappers' cleanup call but recover no complete window.
 The borrowed-key constructor produces identical output to that rejected control;
 the accepted 488-window candidate remains unchanged.
+Six further [result/event construction controls](repro/donation-relay/donation-result-shape-controls/README.md)
+recover no complete window; the `Result::map` variant also loses two raw matches.
 
 This build independently validates the later source proposals and composes the
 worker, epoch-close, swap-only and module-layout recoveries. The

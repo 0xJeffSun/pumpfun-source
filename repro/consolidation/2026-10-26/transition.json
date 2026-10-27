@@ -7,8 +7,8 @@
     {
       "path": "README.md",
       "before_sha256": "cae913d4d3f2066403162f653a0cf35b39620fb08877b1b308c08ccce4a53678",
-      "after_sha256": "6de3767ecef9c9d0337d560e8e5fb53e658532036caf73f34b8f56e0ffdfbf0d",
-      "reason": "Retain the independently verified 488-window Relay checkpoint; document rejected donation cleanup controls and the reviewed PR queue through #187."
+      "after_sha256": "de98b6578b4bc513c58c0da1a90e2b577eb239e1c317da00cc132f0ba40648d3",
+      "reason": "Preserve the accepted 488-window Relay checkpoint while documenting rejected Result/event controls and the reviewed queue through PR #188."
     },
     {
       "path": ".github/workflows/verify.yml",
