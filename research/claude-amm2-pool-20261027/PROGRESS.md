@@ -29,7 +29,16 @@ lane scratch = SP/lanes/pool/out (variant trees in out/src/<v>, native builds ou
   -function-sections): moving `%_246 = load ptr, ptr %a` (the `a.pool` Box pointer) from the checked_add block into the udiv block
   (either before or after the `udiv i128`) reproduces the ORIGINAL deposit byte-for-byte (tools/ocmp.py posdiff 0). So the original
   loads the pool pointer before the `i128::try_from(change)` sign branch and InstCombine must not sink it. d8 (`let reserves = &mut
-  a.pool.virtual_quote_reserves;` at line 157) and d9 (`let pool = &mut *a.pool;`) queued.
+  a.pool.virtual_quote_reserves;` at line 157) and d9 (`let pool = &mut *a.pool;`) → NO CHANGE (still 2 posdiffs); IR of d8
+  being emitted to see where LLVM moved the early pointer. Untested idea: a `&mut`-receiver call whose argument contains the
+  try_from `?` (receiver/address evaluated before the branch, field loaded after), e.g. a deposit.rs-local helper
+  `fn add(reserves: &mut i128, change: i128) -> Result<()>` called as `add(&mut a.pool.virtual_quote_reserves, i128::try_from(..)..?)?`.
+- init_boost 0x1ef90: b5 (`let is_pool_authority = a.creator.key() == Pubkey::find_program_address(..).0;`) 3,856 B ratio .963,
+  all 11 remaining hunks in the prologue: the original copies `find_program_address(..).0` into its own 32-byte temp before the memcmp
+  (creator key temp at r10-40, pda copy at r10-104). b6/b7 = inlined helper `utils::is_pump_pool_authority(&a.creator.key(),
+  &a.pool.base_mint)` that destructures `let (pool_authority, _) = find_program_address(..)` (b7 #[inline(always)]) queued.
+- create_pool 0x2ba60 call skeleton: the original calls 0x73ef0 three times (twice for the mint checks, once after initial_liquidity)
+  and emits require_eq!/require_gt! errors with `with_values` in a different block order; needs a real reconstruction.
 
 ## Earlier notes (647 base)
 - deposit 0x2fb38: e1 (= w2 + withdraw recipe) has deposit 7,128 B with ONE swapped load pair (orig loads `a.pool` Box ptr `[r8+0]`
