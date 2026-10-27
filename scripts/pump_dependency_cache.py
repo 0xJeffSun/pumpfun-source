@@ -50,7 +50,8 @@ def clone_file(source, dest):
 
 class DependencyCache:
     def __init__(
-        self, cache_root, repository, crate, workspace, sdk, env, wrapper, direct=False
+        self, cache_root, repository, crate, workspace, sdk, env, wrapper, direct=False,
+        target_library_profile=None
     ):
         self.sdk = sdk
         self.direct = direct
@@ -178,6 +179,8 @@ class DependencyCache:
             "packages": sorted(self.packages),
             "crates": sorted(self.crates),
         }
+        if target_library_profile is not None:
+            self.context["target_library_profile"] = target_library_profile
         self.key = digest(self.context)
         self.entry = self.root / self.key
         self.record = {
@@ -362,6 +365,9 @@ class DependencyCache:
         report = build / "build-comparison.json"
         r = json.loads(report.read_text())
         assert r["returncode"] == 0 and r["source_unchanged"]
+        assert r.get("target_library_profile", {}).get("cache_context") == self.context.get("target_library_profile"), (
+            "seed target-library profile differs"
+        )
         assert all(sha(self.repo / k) == v for k, v in r["source_sha256"].items())
         assert sha(build / "candidate.so") == r["comparison"]["candidate_sha256"]
         assert sha(build / "unstripped.so") == r["unstripped_sha256"]

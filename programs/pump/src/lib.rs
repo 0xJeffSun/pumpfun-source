@@ -571,4 +571,79 @@ pub mod user_quote_payments {
             token_program, from, to, authority, quote_decimals, quote_mint, amount, &[],
         )
     }
+    #[inline(never)]
+    pub fn transfer_native_owned<'info>(
+        system_program: &AccountInfo<'info>,
+        payer: &Signer<'info>,
+        destination: AccountInfo<'info>,
+        amount: u64,
+    ) -> Result<()> {
+        anchor_lang::system_program::transfer(
+            CpiContext::new(system_program.clone(), anchor_lang::system_program::Transfer {
+                from: payer.to_account_info(),
+                to: destination.clone(),
+            }), amount,
+        )
+    }
+
+    #[inline(never)]
+    pub fn transfer_from_user_owned<'info>(
+        native: bool,
+        system_program: &AccountInfo<'info>,
+        payer: &Signer<'info>,
+        destination: AccountInfo<'info>,
+        amount: u64,
+        token_program: &Interface<'info, TokenInterface>,
+        quote_decimals: u8,
+        quote_mint: &AccountInfo<'info>,
+        quote_source: Option<&AccountInfo<'info>>,
+        quote_destination: Option<&AccountInfo<'info>>,
+    ) -> Result<()> {
+        if native { return transfer_native_owned(system_program, payer, destination, amount); }
+        let from = quote_source.unwrap();
+        let to = quote_destination.unwrap();
+        let authority = payer.to_account_info();
+        crate::sell_v2::quote_token_transfers::transfer_quote_tokens(
+            token_program, from, to, authority, quote_decimals, quote_mint, amount, &[],
+        )
+    }
+
+    #[inline(never)]
+    pub fn transfer_native_recipient<'info>(
+        system_program: &AccountInfo<'info>,
+        payer: &Signer<'info>,
+        destination: &&UncheckedAccount<'info>,
+        amount: u64,
+    ) -> Result<()> {
+        if amount == 0 { return Ok(()); }
+        anchor_lang::system_program::transfer(
+            CpiContext::new(system_program.clone(), anchor_lang::system_program::Transfer {
+                from: payer.to_account_info(),
+                to: destination.to_account_info(),
+            }), amount,
+        )
+    }
+
+    #[inline(never)]
+    pub fn transfer_from_user_recipient<'info>(
+        native: bool,
+        system_program: &AccountInfo<'info>,
+        payer: &Signer<'info>,
+        destination: &&UncheckedAccount<'info>,
+        amount: u64,
+        token_program: &Interface<'info, TokenInterface>,
+        quote_decimals: u8,
+        quote_mint: &AccountInfo<'info>,
+        quote_source: Option<&AccountInfo<'info>>,
+        quote_destination: Option<&AccountInfo<'info>>,
+    ) -> Result<()> {
+        if native { return transfer_native_recipient(system_program, payer, destination, amount); }
+        let from = quote_source.unwrap();
+        let to = quote_destination.unwrap();
+        let authority = payer.to_account_info();
+        crate::sell_v2::quote_token_transfers::transfer_quote_tokens(
+            token_program, from, to, authority, quote_decimals, quote_mint, amount, &[],
+        )
+    }
+
 }
