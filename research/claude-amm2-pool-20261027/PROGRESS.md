@@ -18,7 +18,26 @@ lane scratch = SP/lanes/pool/out (variant trees in out/src/<v>, native builds ou
   `liquidity.checked_sub(100).ok_or_else(|| error!(TooLittlePoolTokenLiquidity))?` closure at :290 (was inline require!), handler
   Sources placed at the original 171..280, initial_liquidity error at :339 (CreatePoolEvent moved below it, tail lines joined).
   Native: 642 → 661 (+19: 0x1ecd8 0x22c80 0x2e260 0x2e468 + 15 liquidity closures), 0 lost, raw 139 → 139.
-- Linux confirmation + runtime + packet g01: in progress.
+- **g01 banked**: Linux ×2 identical (`1d0c282f…`) 647/148/138 → 666/148/119, 0 lost; runtime 25 suites / 17,462 / 0 mismatches.
+  Source tree for further work: SP/lanes/pool/out/src/w3 (== g01 source).
+
+## Work in flight / next (all on top of w3 unless noted)
+- deposit 0x2fb38: e1 (= w2 + withdraw recipe) has deposit 7,128 B with ONE swapped load pair (orig loads `a.pool` Box ptr `[r8+0]`
+  before the `__udivti3` quotient low word `[r10-832]`). MachineSink argument: the original's box-ptr load must sit in the udiv block
+  BEFORE the lo load (sunk order is preserved). Variants: d5 (receiver-first: try_from inside checked_add arg), d7 (`let pool: &mut Pool
+  = &mut a.pool;` at line 157) queued. If neither: LLVM-IR experiment (amm-mid tools/native_ir.sh).
+- withdraw 0x32750: e1 recipe (pub `liquidity` re-export + reserve read order user_base,user_quote,pool_base,pool_quote + Token key ref
+  compare) → 7,176 B, ratio .967, 30 unequal: remaining = block placement of the line-160 try_from error block (candidate lays it out as
+  fallthrough after `jsgt r2,-1`; original jumps to it later) and the ceil_div `?` Err block (candidate jumps back to a shared block),
+  plus ceil_div result slot (-208 vs -608).
+- init_boost 0x1ef90: b2 (`&a.quote_token_program.to_account_info()` + inline seeds + `let clock = Clock::get()?`) 4,112 B ratio .52, call
+  skeleton identical; b3/b4 = b1/b2 + `emit!(event)` without clone (original passes the same event to both Event::data calls).
+- collect 0x22e88: frame layout only (see g01 README).
+- boost_buy_and_burn 0x1fed8 / create_pool 0x2ba60 / extend_account 0x2e720 / 0xe31a0: structural (see g01 README residuals).
 
 ## Negative controls / notes
-- (none yet this round)
+- d3: `change.checked_add(a.pool.virtual_quote_reserves)` (swapped operands) → deposit 12 positional diffs (worse than 2).
+- b2 (init_boost): moving the timestamp into `let clock = Clock::get()?` keeps the event built through temporaries (not in place).
+- Cancelled (not run, low value): d1 `let pool = &mut a.pool` (no Box deref), d2 `let reserves = vqr` before try_from, d4 pool binding
+  for the whole lp_supply/boost block, e2 key-compare without read order.
+- Build hygiene: recipe staging uses shutil.copy2 and APFS `cp -R` clones keep mtimes → touch sources before every build (findings.md).
