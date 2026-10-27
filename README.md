@@ -22,6 +22,9 @@ All [32 partial argument-binding variants](repro/donation-relay/partial-argument
 also leave the donation wrappers unmatched. A
 [conditional caller value-flow diagnostic](repro/donation-relay/wrapper-value-flow/README.md)
 finds matching marshaling under explicit callee/alias assumptions; it adds no byte matches.
+Fourteen [epoch-close source controls](repro/donation-relay/epoch-source-controls/README.md)
+also retain the ten-window residual. A compiler-substitution control loses 256
+existing matches and is rejected.
 Latest Fees research: **354 unique structural pairs, 84 unmatched windows**.
 The [refreshed call analysis](research/fees-refreshed-call-attribution/README.md)
 also attributes 61 duplicate-body pairs, giving 415 correspondences; this is not

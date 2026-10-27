@@ -185,6 +185,18 @@ model; arbitrary aliases and real callee effects are not proved. The four
 conditional traces add no body matches or accepted handlers. Both wrappers and
 the shared worker remain in the residual list.
 
+### Epoch-close source controls
+
+The [fourteen epoch-close controls](../repro/donation-relay/epoch-source-controls/README.md)
+test cached configuration/mint fields and checked-add error/Result forms. None
+recovers original window 96, and all retain the 482-window frontier. Most error
+forms compile to the same body; explicit eager conversion changes the body but
+does not match. The observed post-conversion branch remains a diagnostic clue,
+not proof of a particular source expression. A separate cached v1.50 compiler
+substitution, retaining v1.48 libraries and linker, regresses to 226 normalized
+matches (256 lost, none gained). That combination is rejected; it does not
+establish the original compiler or evaluate every v1.50 recipe.
+
 ## Fees: new complete bodies, substantial residual business logic
 
 The latest 851,488-byte candidate is SHA-256

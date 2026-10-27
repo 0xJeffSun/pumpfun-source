@@ -309,3 +309,18 @@ Eight negative-control tests detect changed bumps, event discriminators, copy
 lengths and unsupported model operations. These are conditional caller findings,
 not fresh runtime acceptance, semantic equivalence, or new byte matches. Relay
 remains at 482/492, with 130 exact local bodies and ten unmatched windows.
+
+## Epoch-close field and error-result controls
+
+Fourteen [compiled controls](../repro/donation-relay/epoch-source-controls/README.md)
+test retaining debouncer fields across initialization and varying the checked-add
+error/Result construction. None recovers the 4,000-byte original epoch-close
+window. Every variant retains 482 normalized and 130 raw local matches with no
+gained or lost window. No candidate is promoted or newly runtime-accepted.
+
+A separate compiler-only control keeps the source, Cargo, linker and Linux target
+libraries fixed while substituting the cached Darwin v1.50 Rust compiler. It
+produces 226 normalized / 108 raw local matches, losing 256 normalized windows
+and gaining none. The rejected 800,608-byte output and tool fingerprints are
+retained in the same packet. This does not identify a historical compiler or
+prove anything about other v1.50 recipes; no runtime acceptance is claimed.

@@ -58,6 +58,14 @@ finds matching selected boundary/return fields for regular and payer wrappers
 under explicit callee and alias assumptions. Preserve that limited scope: it
 does not validate actual worker effects, all input aliases or byte identity.
 
+The [epoch-close field/error controls](../repro/donation-relay/epoch-source-controls/README.md)
+add fourteen rejected source builds without changing the ten-window residual.
+Avoid repeating those cache, conversion and intermediate-Result forms in isolation.
+The historical compiler inputs and remaining instruction/value-flow differences
+still need investigation. The cached v1.50-compiler/v1.48-library substitution
+loses 256 matches without gaining any; do not substitute that rejected output
+for the current checkpoint.
+
 ## Audit baseline
 
 - **Whole captured-file identity:** 0/4 selected core programs; selected Relay also differs.
