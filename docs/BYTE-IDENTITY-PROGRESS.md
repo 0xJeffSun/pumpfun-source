@@ -970,3 +970,31 @@ windows and loses two raw-local matches. No trial is promoted; the accepted
 inventory remains 488 normalized / 142 raw-local. One control has a fresh
 all-dependency v1.48 rebuild; other retained controls contain actual root builds
 with dependency-cache reuse. There is no new target execution claim.
+
+
+## Relay: all 492 normalized windows, but 18,623 bytes still differ — 27 October 2026
+
+The [donation wrapper source proposal](../repro/donation-relay/donation-wrapper-source-proposal/README.md)
+preserves two causal stages on the frozen public 488-window source. Ordinary
+context declaration order and direct post-close event construction recover
+native wrappers 92/93, reaching 490. Matching real context literal field order
+then recovers token wrappers 94/95, reaching **492/492 normalized windows** with
+no losses. Raw local matches rise **142→317**, including raw equality of all
+four wrappers. Their 18 actual direct callees bind complete normalized bodies
+and closed recursive direct-call shapes; the wrappers have no data or indirect
+operands. This does not establish unique function correspondence or semantics.
+
+All section lengths now match and candidate size 818,280 equals the original
+meaningful ELF extent. **Whole byte identity is still false:** 18,623 common
+positions differ (.text 18,453; .data.rel.ro 25; .dynsym 4; .rel.dyn 139; header 2),
+and the capture has 12,168 allocation-tail bytes. The complete 19,863-byte .rodata
+remains equal. Fresh static audit preserves all 359 data-pointer and 507
+nonpointer-qword obligations, with five indirect-call-containing text targets.
+
+Three exact 60-input source states, readable overrides/patches, nine tests and
+independent optional full comparison are supplied without binaries, logs,
+runtime cases or archived build/replay receipts. Local repeated builds and
+finite signed replay are observations, not downloadable runtime proof. Default
+compiler_executed=false and runtime_verified=false; protected relayer success
+remains untested. Raw data semantics, addresses/order, indirect behavior and
+whole-file identity remain open. Full identity of the four core programs is 0/4.
