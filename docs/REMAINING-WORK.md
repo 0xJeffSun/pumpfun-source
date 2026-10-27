@@ -537,3 +537,7 @@ Crank body and compute consumption, authentic fixed-admin success, the 27
 unmatched windows and whole-ELF/data/relocation identity. The separate 43-input
 source-only union and its later exotic-body proposal still need independent
 composition and compilation; their gains are not added to this count.
+
+## Active priority: Mayhem
+
+The [Mayhem work plan](MAYHEM-RECONSTRUCTION-PLAN.md) supersedes earlier cross-program prioritization. Its current research has eight unmatched admitted bodies and 245 opaque windows. Complete the quote-aware validator, trade bodies, unexamined code and full ELF/data/layout proof before claiming Mayhem finished.

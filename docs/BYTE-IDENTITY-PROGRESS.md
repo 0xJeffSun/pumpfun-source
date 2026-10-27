@@ -1542,3 +1542,7 @@ admin transport/update/reset cases (initializers excluded), 396 Sell cases and
 the three-family Burn regression. Independent checks reconstruct complete
 expected account bytes for 624 successful admin cases. Four Sell log differences
 remain, and no full-handler or whole-ELF equality is claimed.
+
+## Mayhem priority and quote-validator controls
+
+A private source build independently reproduces the latest GlobalParams artifact and symbols. Seven ordinary Rust variants preserve 188 examined matches and 58 raw-local windows, but the 1,296-byte O0095 body remains unmatched. Loading expiry before Clock recovers the original register/spill prefix; threshold and error block order remain open. These negative controls and their complete source/build evidence are retained in [the control packet](../research/mayhem-quote-validator-controls/README.md). The [Mayhem plan](MAYHEM-RECONSTRUCTION-PLAN.md) is now the active reconstruction priority.

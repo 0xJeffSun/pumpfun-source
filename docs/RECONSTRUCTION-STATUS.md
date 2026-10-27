@@ -708,3 +708,7 @@ strict Crank cases have identical retained non-log fields and application logs;
 all 304 raw logs differ in explicit compute-consumption lines. Whole identity
 and authentic fixed-admin success remain unproved. The inventory is now 558
 normalized,142 raw-local,411 unique pairs,27 unmatched, with 480 attributed pairs.
+
+## Active Mayhem priority
+
+[GlobalParams layout](../repro/mayhem/global-params-layout-recovery/README.md) is the latest research baseline: 196 examined, 188 matched, eight unmatched and 245 opaque windows. The [active work plan](MAYHEM-RECONSTRUCTION-PLAN.md) includes the opaque inventory, initializer and whole ELF obligations. [Seven quote-validator controls](../research/mayhem-quote-validator-controls/README.md) preserve every existing match but do not close O0095. This research does not change the canonical selected artifact or certify complete handlers.

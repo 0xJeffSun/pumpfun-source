@@ -8,6 +8,8 @@ now reproduces its full ELF and loader-allocated payload byte-for-byte.**
 Behavior is reconstructed handler by handler and checked with differential tests
 that run the captured original and the rebuilt candidate side by side in a local VM.
 
+Mayhem is now the active reconstruction priority. Its [current work plan](docs/MAYHEM-RECONSTRUCTION-PLAN.md) tracks eight unmatched admitted bodies and 245 still-opaque windows. The latest [GlobalParams and shared-helper research](repro/mayhem/global-params-layout-recovery/README.md) reaches 188 normalized matches in its 196-function examined scope; whole-file identity remains unresolved.
+
 For subsequent gains and the latest research frontier, see the
 [byte-identity progress log](docs/BYTE-IDENTITY-PROGRESS.md).
 The [27 October queue review](docs/PR-QUEUE-REVIEW-2026-10-27.md) covers PRs
