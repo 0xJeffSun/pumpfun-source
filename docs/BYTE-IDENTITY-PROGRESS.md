@@ -1754,3 +1754,28 @@ The two builds reproduce the same 625,904-byte candidate. All 6,636 trade cases,
 1,032 admin cases and three Burn families pass; the verifier checks 15,348
 signatures and 624 complete admin account results. The full static remainder is
 100 windows / 350,216 bytes, versus 114 / 495,936 before this source recovery.
+
+## Mayhem: restore BuyV2's shared trade-validator call — 27 October 2026
+
+The [BuyV2 shared-validation proposal](../research/mayhem-buy-v2-shared-validation/README.md)
+replaces one duplicated pause/Clock/rate block with the existing O0094 validator.
+Only BuyV2 source changes on the pinned 15-input Sell-origin baseline. The fully
+matched O0189 wrapper binds original O0083 to the actual candidate handler. The
+original calls O0094 once, the control does not, and the proposal restores that
+edge. The validator's complete 1,192-byte body and nine ordered immediate callee
+bodies match under unchanged normalization. No new complete body match is claimed.
+
+Fresh focused replay corrects 12 non-compute log differences in 24 signed cases.
+Both actual Linux control and proposal also pass 613 existing BuyV2 cases for
+each of native, legacy-token and Token-2022 quotes: 1,839 comparisons per build.
+Independent verification checks 7,356 signature entries, successful state/event/CPI
+results and failed-transaction rollback. The broader non-compute log differences
+decrease 130→118; raw compute differences and all remaining diagnostics stay explicit.
+
+All 188 prior examined matches and the Linux control's 63 raw-local windows remain.
+The latter already includes five platform-related raw matches beyond the Darwin
+parent and is not credited to this source delta. Linux does not reproduce the
+Darwin parent's whole hash. A separate all-dependency-clean build and the portable
+builder reproduce both proposal ELF hashes. BuyV2's complete body, full call/data
+closure, whole-ELF identity and later 16-input AMM composition remain unresolved.
+Originals, existing evidence and selected sources/checkpoints remain unchanged.
