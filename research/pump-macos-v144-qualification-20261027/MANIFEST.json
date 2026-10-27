@@ -1,0 +1,7 @@
+{
+  "scripts/pump_macos_v144_qualification.py": "0b3746a70dba6be4e12575e5790c6a4ff3c13b245933d0314ab0882ccbaab09c",
+  ".github/workflows/qualify-pump-macos-v144.yml": "462ea5ed84f9ad2567efd79717474596a39e59d5ee0a23f45c50b6f4a3f49d69",
+  "research/pump-macos-v144-qualification-20261027/inputs.json": "09ba884a83aad4c828b1766a5c76df1889b6a5601f0ccb71ee1de1d06cfb250d",
+  "research/pump-macos-v144-qualification-20261027/native-tool-probe.json": "a2e31a15916b2a7575269e44ae7b3929a9b69a89c1074d7f9a42e19f6b3de804",
+  "research/pump-macos-v144-qualification-20261027/README.md": "5648ae9fd9742e87ba266d165f83f87983537fe706ba56ecbf8849d79de163ad"
+}
