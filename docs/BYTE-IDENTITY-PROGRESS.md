@@ -768,3 +768,24 @@ but blocked receipt publication means this is not downloadable replay evidence.
 Protected relayer success and complete data/indirect equivalence remain unproved.
 The candidate is not byte-identical: 415,532 common positions differ and the
 original has a further 12,448-byte tail. No selected checkpoint is promoted.
+## Relay: ordinary module layout and Anchor facade — 27 October 2026
+
+The [source-only module/facade proposal](../repro/donation-relay/module-layout-facade-source-proposal/README.md)
+retains 483/492 normalized windows while improving complete raw local-window
+matches **127 → 134 → 142**, with no losses. Ordinary instruction-module expansion
+recovers seven raw windows; using Anchor's corresponding type reexports instead
+of a redundant direct root dependency recovers eight more. All six intermediate
+source states, including positional regressions, remain attributable.
+
+Fresh optional local comparisons reproduce all six full inventories and section
+comparisons. Final `.rodata` differing positions fall from 4,856 to 321 and
+`.data.rel.ro` from 945 to 677; these counts do not measure missing semantics or
+remaining effort. Non-instruction section lengths match, but the instruction
+section remains 320 bytes longer. Whole-file identity is false.
+
+Only readable sources/maps/diffs, static comparison counts and hashes, materializer,
+portable recipe and seven tests are published. No ELF or archived build/replay
+receipts are included or consumed. Default verification is source/static metadata
+only and reports runtime_verified=false; local ELF remeasurement is explicit.
+The later epoch/just-swap body gains are not silently included in this isolated
+483-window series, and no selected checkpoint is promoted.
