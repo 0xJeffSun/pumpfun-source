@@ -5,7 +5,7 @@
       "name": "pump",
       "matched_windows": 723,
       "windows": 1035,
-      "raw_bodies": 123,
+      "raw_bodies": 135,
       "matched_text_bytes": 886312,
       "text_bytes": 1792208
     },
@@ -45,7 +45,7 @@
   "totals": {
     "matched_windows": 2865,
     "windows": 3338,
-    "raw_bodies": 1041,
+    "raw_bodies": 1053,
     "matched_text_bytes": 3784768,
     "text_bytes": 5213128,
     "complete_elf_programs": 1,
