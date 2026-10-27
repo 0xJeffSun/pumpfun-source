@@ -62,24 +62,24 @@
     "pump_fees_research": {
       "body_bytes": 799648,
       "dispositions": {
-        "no_complete_body_match": 32,
-        "normalized_body_only": 435,
+        "no_complete_body_match": 31,
+        "normalized_body_only": 436,
         "raw_body_equal": 118
       },
-      "unmatched_body_bytes": 204008,
+      "unmatched_body_bytes": 199040,
       "windows": 585
     }
   },
   "fees": {
     "additional_call_attributed_pairs": 69,
     "ambiguous_original_windows": 147,
-    "candidate_bytes": 872208,
-    "candidate_sha256": "d85fe4eb037cd91b982eea55169faac1b342e6841ce440bee26c28b5f5617e36",
+    "candidate_bytes": 873232,
+    "candidate_sha256": "ce8e040056b0645e59473306ad6b9fc8f1428461695d7fece8d0b276fc3f10d8",
     "candidate_windows": 591,
     "raw_file_equals_original_elf_extent": false,
     "remaining_unattributed_duplicate_windows": 78,
-    "total_attributed_pairs": 475,
-    "unique_structural_pairs": 406,
+    "total_attributed_pairs": 476,
+    "unique_structural_pairs": 407,
     "whole_capture_equal": false
   },
   "input_sha256": {
@@ -96,13 +96,13 @@
     "repro/donation-relay/swap-receipt-coordinate-recovery/original-windows.json": "c002df05d4489259f1cfd2b2391220cae38f6ffb0055f35f659e68a4935fd7bd",
     "repro/reconstruction-audit-2026-10-26/audit.json": "7301fb2a784c56501fc85eb3272fc8dc111744b2464335edd3051ed1cc65fc7a",
     "repro/reconstruction-audit-2026-10-26/functions.tsv": "c56843dfdfbe1086fa7764e29e1f0a83aef47832e3f4c0d4fdfe5de01b75a93d",
-    "repro/reconstruction-status-2026-10-26/refresh.py": "df8596ef96512e7ba759d984d00032da8283a992fe9ca50cb497021969fe6c27",
-    "research/fees-instruction-visibility/analysis.json.gz": "1bc3574be4903b1ba12d8504a47ff235b73da5ea2fc43f4ff13d27c8501d08ed",
-    "research/fees-instruction-visibility/artifacts/origins-candidate.so.gz": "9ba0d6b333dddcb542065dc6f258f808cd98a6b0186e2ae08949bffc4e041ed0",
-    "research/fees-instruction-visibility/artifacts/origins-symbols.so.gz": "bcc1f12e48bcc1c6b5856bb69e238a6108f91826de41f518ba1c95416b5c91fc",
-    "research/fees-instruction-visibility/elf_helpers.py": "92d28a886a6e5787c03572e5db380711ab11b64de4491414e9ae9b0d08858cfc",
-    "research/fees-instruction-visibility/experiment.json": "3685b75e4c419b668ef19b22687691327f01468b891d9577342ee53f90ddc1ea",
-    "research/fees-instruction-visibility/window_map.py": "eeec82f751ea38827c5149f28590f19a3ff516c7eee57b6aa48949cbaac4a7e5",
+    "repro/reconstruction-status-2026-10-26/refresh.py": "c7e9e3ee68fd3c42ca6eee123a4bd76145e9a30e2fe653c1b547707236445a27",
+    "research/fees-admin-cto-current-integration/analysis.json.gz": "c421c47f58b7ea8ca7cf8ea4876d159757602c6773d38a326adf0f42457f627e",
+    "research/fees-admin-cto-current-integration/artifacts/origins-candidate.so.gz": "e923e862be281135d5d791f5c0609675c015cbcac7c5488c01fb26493f02141e",
+    "research/fees-admin-cto-current-integration/artifacts/origins-symbols.so.gz": "de0aa889dcd47cc1ee42d192ae20fc6f4e83e64287e2ab3568e35910f8e8d5b5",
+    "research/fees-admin-cto-current-integration/elf_helpers.py": "92d28a886a6e5787c03572e5db380711ab11b64de4491414e9ae9b0d08858cfc",
+    "research/fees-admin-cto-current-integration/experiment.json": "7004485f3ed63de6dbfc62d9142a66eb4bcc5660a31bd5d275547142326539da",
+    "research/fees-admin-cto-current-integration/window_map.py": "eeec82f751ea38827c5149f28590f19a3ff516c7eee57b6aa48949cbaac4a7e5",
     "research/fees-refreshed-call-attribution/attribute.py": "b3425eb9c1fba9b09e2c3e7bd01ab0f6d50ef0cfb5500320ff34db96de819c17",
     "research/fees-refreshed-call-attribution/elf_helpers.py": "ca2791ec19de711032d60f489afdc7e36a27081d9e16e67f2cfa91170d64ee4c",
     "research/fees-refreshed-call-attribution/input-provenance.json": "7c546529d694d7fa6d29d0829ad09bb811703581f92b0508a8484633e0a1b69f",
@@ -147,5 +147,5 @@
     "unrecovered": 5
   },
   "selected_snapshot": "1463bd22fb7811825c5e7acf1cb963eb39ab68d9",
-  "snapshot": "6b61b33735106c78f9099743ea405fd293abee10"
+  "snapshot": "45f79b7edd4af70e0933183b09287736eb5c340b"
 }

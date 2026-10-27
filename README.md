@@ -11,7 +11,7 @@ that run the captured original and the rebuilt candidate side by side in a local
 For subsequent gains and the latest research frontier, see the
 [byte-identity progress log](docs/BYTE-IDENTITY-PROGRESS.md).
 The [27 October queue review](docs/PR-QUEUE-REVIEW-2026-10-27.md) covers PRs
-#170–#198, including separately verified 399- and 401-pair Fees context candidates and
+#170–#200, including separately verified 399- and 401-pair Fees context candidates and
 source-only proposals. Those independent branches are not silently combined
 into the inventory below.
 
@@ -32,18 +32,22 @@ The [canonical Relay source](repro/donation-relay/canonical-exact-selection/READ
 is now selected after a fresh build from `programs/donation-relay`. The four core
 checkpoints remain unchanged and byte-unequal.
 
-The pinned Fees inventory has **406 unique structural pairs, 32 unmatched windows**
-(**553/585 normalized counterparts**, including 118 raw-local matches).
-The [instruction visibility recovery](research/fees-instruction-visibility/README.md) combines
+The pinned Fees inventory has **407 unique structural pairs, 31 unmatched windows**
+(**554/585 normalized counterparts**, including 118 raw-local matches).
+The [current AdminCto integration](research/fees-admin-cto-current-integration/README.md) combines
 the reviewed math/SyncNative, sharing-context and social-PDA creation recoveries.
 It preserves the decoder/composition gains and recovers the complete buyback
-initializer wrapper through a single module visibility declaration. It passes 17,331 fresh suite comparisons; earlier strict social-creation evidence retains
+initializer wrapper through a single module visibility declaration. It also
+recovers the 4,968-byte AdminCto body with the included-handler proposal. It passes 17,331 fresh suite comparisons; earlier strict social-creation evidence retains
 its separate candidate binding.
 The [configuration-event recovery](research/fees-config-event-recovery/README.md)
 adds four complete caller-body matches; the two upsert bodies share a structural
 shape and are distinguished by their callees. The [current call ledger](repro/reconstruction-status-2026-10-26/fees-call-attribution.json)
-also attributes 69 duplicate-body pairs, giving 475 correspondences.
-Whole-file identity remains unachieved. The [exotic-fee growth study](research/fees-exotic-growth-precedence/README.md)
+also attributes 69 duplicate-body pairs, giving 476 correspondences.
+The [CPI ownership study](research/fees-cpi-adapter-ownership-controls/README.md)
+reduces two adapter hypotheses to four unmasked copy-scheduling bytes each,
+but neither is a complete match or promoted candidate. Whole-file identity remains
+unachieved. The [exotic-fee growth study](research/fees-exotic-growth-precedence/README.md)
 corrects rejection precedence and the realloc flag in new boundary cases;
 that caller still has no complete body match. The [optional-account ownership recovery](research/fees-optional-account-ownership/README.md)
 adds a complete optional parser and a raw-byte-equal cleanup helper; its enclosing
@@ -98,7 +102,7 @@ No handler is certified perfectly recreated. The selected core builds contain
 | --- | ---: | ---: | ---: | ---: | ---: |
 | Pump selected | 98 | 430 | 507 | 0 | 1,391,456 / 1,792,208 bytes (77.6%) |
 | PumpSwap selected | 93 | 395 | 297 | 0 | 734,392 / 1,162,040 bytes (63.2%) |
-| Fees research | 118 | 435 | 32 | 0 | 204,008 / 799,648 bytes (25.5%) |
+| Fees research | 118 | 436 | 31 | 0 | 199,040 / 799,648 bytes (24.9%) |
 | Mayhem selected | 58 | 131 | 7 | 245 | 636,128 / 706,744 bytes (90.0%) |
 | Relay research | 492 | 0 | 0 | 0 | 0; complete meaningful ELF byte-equal |
 

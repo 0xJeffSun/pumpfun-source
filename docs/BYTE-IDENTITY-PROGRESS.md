@@ -1244,3 +1244,42 @@ and finite offline replay are reported as unpublished observations. Source-only
 negative tests cover metadata/mutation/symlink boundaries. All four core-program
 identities remain unresolved (0/4); Relay is a separate dependency, not completion
 of the entire repository. Prior evidence and selected checkpoints stay unchanged.
+
+
+## Fees: included AdminCto business source recovery — 27 October 2026
+
+The [included-handler source proposal](../research/fees-admin-cto-included-handler-source-proposal/README.md)
+adds one complete normalized business body, original 127776 / 4,968 bytes, on the
+exact public PR194 context-only source: pinned 547→548, no losses, raw 118.
+Earlier boxed-account/typed-program gains belong to PR185/194 and are not claimed
+again. Later public PR195's 552-window source is a separate baseline; this packet
+does not claim a measured composition onto it.
+
+Four ordinary source edits add the observed zero-admin guard, mutation/event
+ordering and a real included block with authentic file/line spans. The local
+event/include organization is inferred, not historical-source proof. Exact public
+42-input provenance, reversible patch, full materialization and thirteen tests
+pass independently. Local native audits report 20/20 business callees and eleven
+complete direct objects; two root-clean outputs and finite offline regression
+were verified locally, but their receipts are not included or downloadable proof.
+
+No binaries, archives, runtime cases, logs or archived build/replay receipt
+excerpts/derivatives are published. Default tools report native_build_verified,
+runtime_verified and whole_binary_identity_verified all false. Indirect behavior,
+transitive data and full raw ELF/capture identity remain unresolved. No selected
+checkpoint or previous evidence is replaced.
+
+## Current AdminCto integration: 554/585
+
+[Independent integration of PR #200](../research/fees-admin-cto-current-integration/README.md)
+recovers original 127776/4,968 bytes while preserving all prior current-source
+matches. Two builds produce candidate
+`ce8e040056b0645e59473306ad6b9fc8f1428461695d7fece8d0b276fc3f10d8`;
+all 20 direct callee bodies and 17,331 fresh runtime cases pass. Current Fees
+coverage is 554 normalized, 407 unique, 118 raw-local and 31 unmatched.
+
+[CPI ownership controls](../research/fees-cpi-adapter-ownership-controls/README.md)
+separately isolate four copy displacement bytes per legacy/V2 adapter. Thirteen
+real controls add no complete matches; a local symbolic copy proof and 417
+sharing-update cases support the limited observations. These artifacts remain
+experimental and do not replace the current candidate.

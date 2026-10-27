@@ -14,8 +14,8 @@ import tempfile
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 INPUTS = {}
-REVISION = '6b61b33735106c78f9099743ea405fd293abee10'
-FEES = 'research/fees-instruction-visibility'
+REVISION = '45f79b7edd4af70e0933183b09287736eb5c340b'
+FEES = 'research/fees-admin-cto-current-integration'
 RELAY = 'repro/donation-relay/linked-elf-reproduction'
 
 
@@ -99,7 +99,7 @@ def generate():
     comparison = wm.compare(ow, cw)
     saved = load(FEES + '/analysis.json.gz')['variants']['origins']
     assert all(comparison[k] == saved[k] for k in comparison)
-    assert len(comparison['unique_pairs']) == 406 and len(comparison['unmatched_original']) == 32
+    assert len(comparison['unique_pairs']) == 407 and len(comparison['unmatched_original']) == 31
     raw_index, normalized_index = collections.defaultdict(list), collections.defaultdict(list)
     for c in cw:
         raw_index[c['raw_sha256']].append(c)
@@ -111,7 +111,7 @@ def generate():
     fees_meta = dict(candidate_sha256=hashlib.sha256(candidate).hexdigest(), candidate_bytes=len(candidate),
                      whole_capture_equal=candidate == original,
                      raw_file_equals_original_elf_extent=candidate == original[:wm.m.elf_layout(original)['elf_extent']],
-                     unique_structural_pairs=406, ambiguous_original_windows=sum(len(g['original']) for g in comparison['ambiguous']),
+                     unique_structural_pairs=407, ambiguous_original_windows=sum(len(g['original']) for g in comparison['ambiguous']),
                      candidate_windows=len(cw))
 
     attribution_path = 'research/fees-refreshed-call-attribution'
@@ -124,7 +124,7 @@ def generate():
     attribution = attribution_module.analyze(provenance)
     assert attribution['candidate_sha256'] == fees_meta['candidate_sha256']
     attributed = {pair['original']['address']: pair['candidate']['address'] for pair in attribution['newly_attributed_pairs']}
-    assert len(attributed) == 69 and attribution['graph_attributed_pairs'] == 475
+    assert len(attributed) == 69 and attribution['graph_attributed_pairs'] == 476
     for record in rows:
         record['call_attributed_candidate_starts'] = []
         if record['program'] == 'pump_fees_research' and record['original_start'] in attributed:
@@ -132,7 +132,7 @@ def generate():
             assert address in record['normalized_candidate_starts']
             record['call_attributed_candidate_starts'] = [address]
             record['source_status'] = 'call_attributed_duplicate_pair'
-    fees_meta.update(additional_call_attributed_pairs=69, total_attributed_pairs=475,
+    fees_meta.update(additional_call_attributed_pairs=69, total_attributed_pairs=476,
                      remaining_unattributed_duplicate_windows=78)
 
     parser = module('status_relay_windows', 'repro/donation-relay/swap-receipt-coordinate-recovery/analyze.py')
