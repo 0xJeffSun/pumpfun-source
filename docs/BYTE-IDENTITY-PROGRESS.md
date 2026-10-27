@@ -1442,3 +1442,20 @@ ordinary source, public provenance, readable patches and freshly remeasured
 static metadata are published; no binary/archive, log, runtime fixture or
 archived build/replay receipt derivative. Default native/runtime/whole identity
 verification stays false. No selected checkpoint changes.
+
+## Pump AMM: buyback split helper and recorded source locations
+
+The [buyback helper recovery](../repro/pump_amm/buyback-helper-recovery/README.md)
+extracts the complete 328-byte original function at 412888 through ordinary
+Rust method ownership, public visibility and an early return. The measured
+candidate reaches **489 complete normalized windows**, including 93 raw matches,
+with 296 unmatched windows and no previous match lost. Both referenced panic
+messages and source-location triples match; all 51 prior location positives
+remain, giving 53. Raw pointer-bearing records and the full ELF still differ.
+
+Baseline and final candidate each pass 1,011 legacy-buy cases and 575 legacy-sell
+cases, with 3,172 signed transactions per build. The source layout and root-only
+path remap are documented reconstructed build inputs, not historical provenance.
+The retained materializer restores its builder's transitive Python imports, and
+the verifier checks ordered complete callees, source, artifacts and signatures.
+The selected checkpoint remains unchanged.

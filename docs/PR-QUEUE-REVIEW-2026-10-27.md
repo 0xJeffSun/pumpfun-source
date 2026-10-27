@@ -89,3 +89,17 @@ bodies and all 165 Locations match. The new candidate reaches 557 normalized
 windows, 118 raw-local, and 410 unique pairs without losses. The Crank caller
 and whole ELF remain unmatched. The current 556 inventory is not silently
 changed by this additive packet. Progress-log conflicts retain both entries.
+
+## PR208–210 review
+
+| PR | Evidence reviewed | Result |
+| --- | --- | --- |
+| #208 | Mayhem alloc type-ID provenance | Verifier and all 16 tests pass; two existing ranges traced to retained library objects. Full publisher archive membership was not rerun during this review. No new body coverage or execution claimed. |
+| #209 | Source-only six-body Fees union | Source verifier and all 13 tests pass; 42→43 input map and seven overrides. Added three exact package-local whitespace rules with literal verification; compiler input bytes unchanged. The reported 558 count is an independent older-baseline source proposal. |
+| #210 | AMM buyback helper | Full artifact/source/window/location/saved-signature verifier and all five resealed negative controls pass. 489 normalized windows, 93 raw, 296 unmatched; 53 Locations and 3,172 signed submissions per retained build. No fresh compiler or VM execution claimed by this review. |
+
+The #209 proposal does not contain #201's native lifetimes or #206's helper
+recoveries. Its count is not added to the current independently compiled union.
+#210 retains explicit synthetic source-line layout and root path mappings,
+not a historical recipe claim. Its publication wording was corrected;
+artifact and source bytes are unchanged.
