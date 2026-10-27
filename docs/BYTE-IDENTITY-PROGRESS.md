@@ -1829,3 +1829,12 @@ fresh BuyV2 comparisons pass; 3,678 new signatures and 3,678 parent signature
 entries verify. Non-compute log differences decrease from 130 to 118. This is a
 restored call edge and diagnostic improvement, not a new complete body or ELF
 match; other parent runtime observations are not rebound to the new artifact.
+
+
+## Current-public Social V2 admission and Source-coordinate proposal
+
+Two ordinary source overrides on the exact 43-input public PR222 source restore V2 feature/deadline/executable admission, zero-amount diagnostics, saturating operators and four actual associated-token helper Source coordinates. PR219's native saturation/messages and PR220/222's existing recoveries are preserved and credited. Legacy Social code and prior helper bodies/physical ranges are unchanged. This isolated source retains 570 normalized / 143 raw local counterparts and 168 equal Locations; both V2 business and ATA helper bodies remain unmatched. Later finish-helper/Sweep integrations are not composed here.
+
+All 43 public compressed source blobs and expanded hashes were authenticated; exact materialization, default verification and 15 tests pass. Two exact-public source builds repeat both full ELF hashes and match the separately executed source-order control byte-for-byte. The finite 640-case current-parent comparison repairs three outcomes and 283 application-log mismatches; 17,331 regression cases pass their defined predicates. This is explicitly full-byte-linked execution evidence, not a new source-path replay. Eight executable-recipient snapshots omit executable-account bytes, and 78 known sharing application-log mismatches remain. All receipts/case data stay local.
+
+Fresh static checks bind the real wrapper, three early callees, four diagnostics/four Source records, plus 729 decoded deadline and 343 saturation combinations—not whole CFG/behavior closure. Raw differing positions worsen 462,922 → 470,275. The nine-file source-only packet has no binary/archive or build/runtime receipt derivative; default native/runtime/whole identity claims remain false. See `research/fees-social-v2-current-source-proposal/README.md`.
