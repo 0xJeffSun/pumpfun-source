@@ -121,8 +121,7 @@ fn execute_inner<'info,const EXACT:bool>(ctx:Context<'_,'_,'_,'info,BuyV2<'info>
  }else if gross_quote>0{
   token_interface::transfer_checked(CpiContext::new(a.quote_token_program.to_account_info(),TransferChecked{from:a.associated_quote_user.to_account_info(),mint:a.quote_mint.to_account_info(),to:a.associated_quote_bonding_curve.to_account_info(),authority:a.user.to_account_info()}),gross_quote,a.quote_mint.decimals)?;
  }
- let bf=u64::try_from(pf as u128*bbps as u128/10000).expect("buyback fee is at most protocol_fee");
- let protocol_fee=pf.checked_sub(bf).expect("buyback_fee never exceeds protocol_fee");
+ let (bf,protocol_fee)=recipient_payments::split_protocol_fee(&a.global,pf,c.is_mayhem_mode);
  let buyback_received=if native{bf}else{sub(bf,crate::trade::quote_transfer_fee(&a.quote_mint.to_account_info(),bf,false)?)?};
  if native{
   recipient_payments::transfer_native(a.system_program.as_ref(),&a.fee_recipient,a.user.as_ref(),protocol_fee)?;
@@ -151,4 +150,4 @@ mod native_payments;
 mod token_transfers;
 
 #[path="v2_recipient_payments.rs"]
-mod recipient_payments;
+pub(crate) mod recipient_payments;

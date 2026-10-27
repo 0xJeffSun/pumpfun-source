@@ -14,7 +14,7 @@ for name,status in json.loads((ROOT/'repro/status.json').read_text()).items():
  if name=='pump_amm' and status['candidate_artifact']=='repro/pump_amm/native-fee-cpi-recovery-20261027/results/build/candidate.so':
   subprocess.run([sys.executable,'-B',str(ROOT/'scripts/verify_pump_amm_checkpoint.py')],check=True)
   continue
- if name=='pump' and status['candidate_artifact']=='repro/pump/main-contract-round21-20261027/candidate.so':
+ if name=='pump' and status['candidate_artifact']=='repro/pump/main-contract-round22-20261027/candidate.so':
   subprocess.run([sys.executable,'-B',str(ROOT/'scripts/verify_pump_main_checkpoint.py')],check=True)
   continue
  if name=='mayhem' and status['candidate_artifact']=='repro/mayhem/compiler-v154-main/main/candidate.so':
