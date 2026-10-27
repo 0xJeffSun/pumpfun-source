@@ -28,7 +28,7 @@ def verify():
             'bytes': len(data), 'sha256': hashlib.sha256(data).hexdigest(),
             'git_blob': hashlib.sha1(b'blob ' + str(len(data)).encode() + b'\0' + data).hexdigest()}
     followups = json.loads((HERE / 'followups.json').read_bytes())
-    assert set(followups) == {'265', '265-patches'}
+    assert set(followups) == {'265', '265-patches', '265-review-update'}
     assert followups['265']['source_commit'] == 'b31f1225db96aae131ab52efba738f50bd9ad9ee'
     assert followups['265']['path'] == 'submitted-followups/pr265.md'
     rows = [followups['265']]
@@ -36,6 +36,10 @@ def verify():
     assert patch_set['source_commit'] == 'd1a8572c9c235458f13e241cb8fe545cf52c5506'
     assert set(patch_set['files']) == {'submitted-followups/pr265-patches/' + name for name in ('APPLY.md', 'fees-pathstring-relocations.diff', 'mayhem-enum-consolidation.diff')}
     rows += [dict(row, path=name) for name, row in patch_set['files'].items()]
+    update = followups['265-review-update']
+    assert update['source_commit'] == '168d1eb9eb6c606f045f1830e4517e316f75985c'
+    assert set(update['files']) == {'submitted-followups/pr265-review-update/' + name for name in ('APPLY.md', '.gitattributes', 'mayhem-enum-validation.md')}
+    rows += [dict(row, path=name) for name, row in update['files'].items()]
     for row in rows:
         path = HERE / row['path']
         assert path.is_file() and not path.is_symlink()
@@ -63,7 +67,7 @@ def verify():
         assert 'InstructionErrorCustom(6012)' in row['original_error']
     results = [json.loads(line) for line in files['sweep/compiler-sweep-results.jsonl'].read_text().splitlines()]
     assert len(results) == 12 and sum(row['ok'] is True for row in results) == 5
-    return {'archived_files': 12, 'archived_followups': 2, 'paired_6012_observations': 6,
+    return {'archived_files': 12, 'archived_followups': 3, 'paired_6012_observations': 6,
             'successful_compiler_rows': 5, 'failed_compiler_rows': 7,
             'source_changes_applied': False, 'new_runtime_execution': False}
 

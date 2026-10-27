@@ -21,9 +21,9 @@ HERE = Path(__file__).resolve().parent
 ROOT = next(p for p in HERE.parents if (p / 'evidence/original/pump/deployed.so').is_file())
 sys.path.insert(0, str(ROOT / 'scripts'))
 from pump_compare_function_bytes import normalize, body  # noqa: E402
-from pump_quote_control_function_match import sections, candidate_functions  # noqa: E402
-
-OBJDUMP = Path.home() / '.cache/solana/v1.52/platform-tools/llvm/bin/llvm-objdump'
+from pump_quote_control_function_match import sections  # noqa: E402
+sys.path.insert(0, str(HERE))
+from measure import elf_functions  # noqa: E402
 
 
 class Image:
@@ -36,7 +36,7 @@ class Image:
         self.text = self.secs['.text']
         self.funcs = {}
         if windows is None:
-            for addr, size, name in candidate_functions(self.path, str(OBJDUMP), '.'):
+            for addr, size, name in elf_functions(self.path):
                 f = self.funcs.setdefault(addr, {'start': addr, 'bytes': size, 'names': []})
                 assert f['bytes'] == size
                 f['names'].append(name)

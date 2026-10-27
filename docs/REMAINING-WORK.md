@@ -15,7 +15,7 @@ The unmatched windows cover 917,856 original text bytes. The checkpoint retains
 bounded runtime evidence; the remaining bodies, data, relocations, uncovered
 behavior and original build provenance still require recovery.
 
-Current [PumpSwap account-context recovery](../repro/pump_amm/account-context-recovery-20261027/README.md) has 128 raw-local, 495 normalized-only and 162 unmatched windows, with 434,688 original text bytes still in unmatched windows.
+Current [PumpSwap guard/data recovery](../repro/pump_amm/guard-data-recovery-20261027/README.md) has 128 raw-local, 510 normalized-only and 147 unmatched windows, with 379,264 original text bytes still in unmatched windows. Its 15 additional complete normalized matches are distinct from local raw-byte gains; the malformed-recipient follow-up remains open.
 
 Current Mayhem research is the [BuyV2 sizing successor](../research/mayhem-sizing-panic-recovery/README.md):
 100 raw-local, 329 normalized-only and twelve unmatched windows / 111,288 original

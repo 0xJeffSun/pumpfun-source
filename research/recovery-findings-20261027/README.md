@@ -29,3 +29,7 @@ The subsequent [patch attachment](submitted-followups/pr265-patches/APPLY.md)
 adds concrete diffs at `d1a8572c9c235458f13e241cb8fe545cf52c5506`; all three
 files are preserved unchanged. Applying cleanly does not resolve the behavioral
 counterexamples or validate the reported build. These remain unvalidated proposals.
+
+The [subsequent review update](submitted-followups/pr265-review-update/APPLY.md) is
+archived separately so the originally submitted patch notes remain byte-identical.
+It adds warnings around the same unsupported 6013 proposal; no contract edits are applied.

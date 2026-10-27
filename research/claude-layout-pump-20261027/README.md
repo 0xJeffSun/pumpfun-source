@@ -137,11 +137,17 @@ crate-dependent hashes), then local items in definition order.
 - **Earlier checkpoint.** The first commit of this packet (`ad32a494b`) holds
   the v2 generator's Round21 evidence: two identical builds (`f69c5682…`),
   130 raw, and the 44-suite corpus with 10,468 cases and 0 mismatches.
-- `verify.py` recomputes every count, gain and residual class from the saved
-  artifacts. It regenerates each `ordered.ld` byte for byte from the saved
-  baseline map and the published round ELF. It re-strips the saved ELF to the
-  claimed candidate hash and re-runs the translation proof. It compiles and
-  executes nothing. `test_scope.py` holds seven negative controls: padding
+- `verify.py` recomputes the raw and normalized counts, raw gains and residual
+  classes from the saved artifacts. It regenerates each `ordered.ld` byte for
+  byte from the saved baseline map and the published round ELF and re-runs the
+  translation proof. It is pure Python: function symbols are read directly from
+  each ELF's `.symtab` (identical, in content and order, to the repository's
+  `llvm-objdump -t` based `candidate_functions` on every round's baseline and
+  ordered ELF), so it needs no Solana platform-tools and compiles nothing. When
+  the v1.44 SDK's `llvm-objcopy` is installed it also re-strips the saved ELF
+  to the claimed candidate hash; without it that one check is reported as
+  skipped and the stripped hash rests on the recorded build receipts.
+  `test_scope.py` holds seven negative controls: padding
   statement, duplicate selector, foreign section change, swapped order,
   changed call immediate, changed `.rodata` byte, and changed entry point.
 

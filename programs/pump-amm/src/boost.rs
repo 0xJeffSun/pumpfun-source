@@ -77,7 +77,7 @@ pub fn execute(ctx: Context<InitBoost>) -> Result<()> {
     let event = InitBoostEvent {
         timestamp: Clock::get()?.unix_timestamp,
         mint: base,
-        bonding_curve: Pubkey::find_program_address(&[b"bonding-curve", base.as_ref()], &pump).0,
+        bonding_curve: crate::utils::bonding_curve(&base),
         pool: a.pool.key(),
         virtual_quote_reserves: amount as i128,
         real_quote_reserves_after: a.pool_quote_token_account.amount,

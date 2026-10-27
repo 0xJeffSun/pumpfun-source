@@ -1,5 +1,28 @@
 use crate::*;
 
+#[account]
+#[derive(Debug)]
+pub struct GlobalVolumeAccumulator {
+    pub start_time:i64,
+    pub end_time:i64,
+    pub seconds_in_a_day:i64,
+    pub mint:Pubkey,
+    pub total_token_supply:[u64;30],
+    pub sol_volumes:[u64;30],
+}
+#[account]
+pub struct UserVolumeAccumulator {
+    pub user: Pubkey,
+    pub needs_claim: bool,
+    pub total_unclaimed_tokens: u64,
+    pub total_claimed_tokens: u64,
+    pub current_sol_volume: u64,
+    pub last_update_timestamp: i64,
+    pub has_total_claimed_tokens: bool,
+    pub cashback_earned: u64,
+    pub total_cashback_claimed: u64,
+}
+
 impl GlobalVolumeAccumulator {
     pub fn update_token_incentives(
         &mut self,

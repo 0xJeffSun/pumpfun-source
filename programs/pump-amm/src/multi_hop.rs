@@ -69,12 +69,13 @@ fn token_amount(a: &AccountInfo) -> Result<u64> {
 }
 fn program_for<'info>(
     a: &MultiHop<'info>,
-    mint: &AccountInfo<'info>,
+    mint: &InterfaceAccount<'info, Mint>,
 ) -> Result<AccountInfo<'info>> {
-    if *mint.owner == anchor_spl::token::ID {
-        Ok(a.token_program.to_account_info())
-    } else if *mint.owner == anchor_spl::token_2022::ID {
+    let owner = mint.to_account_info().owner;
+    if *owner == anchor_spl::token_2022::ID {
         Ok(a.token_2022_program.to_account_info())
+    } else if *owner == anchor_spl::token::ID {
+        Ok(a.token_program.to_account_info())
     } else {
         err!(PumpAmmError::AccountTypeNotSupported)
     }
@@ -188,6 +189,31 @@ pub fn apply_hop_fees(context: HopFeeContext, amount: u64) -> Result<crate::curv
     })
 }
 
+fn vault_for_mint<'info>(
+    accounts: &[AccountInfo<'info>],
+    mint: &Pubkey,
+) -> Result<AccountInfo<'info>> {
+    let account = if accounts[1].key() == *mint {
+        &accounts[4]
+    } else if accounts[0].key() == *mint {
+        &accounts[3]
+    } else {
+        return err!(PumpAmmError::MultiHopDiscontinuousPath);
+    };
+    Ok(account.clone())
+}
+
+fn is_curve_hop(accounts: &[AccountInfo]) -> Result<bool> {
+    let owner = accounts[2].owner;
+    if *owner == crate::ID {
+        Ok(false)
+    } else if *owner == PUMP {
+        Ok(true)
+    } else {
+        err!(PumpAmmError::AccountTypeNotSupported)
+    }
+}
+
 pub fn execute<'info>(
     ctx: Context<'_, '_, 'info, 'info, MultiHop<'info>>,
     amount: u64,
@@ -203,6 +229,7 @@ pub fn execute<'info>(
     );
     let count = remaining.len() / 5;
     let mut current_mint = a.user_in_token_account.mint;
+    let mut hop_output_mints = Vec::with_capacity(count);
     let mut sell = None;
     for group in remaining.chunks(5) {
         let next_sell = if current_mint == group[1].key() {
@@ -219,6 +246,7 @@ pub fn execute<'info>(
         } else {
             sell = Some(next_sell);
         }
+        hop_output_mints.push(current_mint);
     }
     require_keys_eq!(
         current_mint,
@@ -234,16 +262,17 @@ pub fn execute<'info>(
     let mut prepaid = false;
     while i < count {
         let group = &remaining[i * 5..(i + 1) * 5];
-        if *group[2].owner == PUMP {
+        if is_curve_hop(group)? {
             let start = i;
             i += 1;
-            while i < count && *remaining[i * 5 + 2].owner == PUMP {
+            while i < count && is_curve_hop(&remaining[i * 5..(i + 1) * 5])? {
                 i += 1;
             }
+            let current_mint = hop_output_mints[i.saturating_sub(1)];
             let destination = if i == count {
                 a.user_out_token_account.to_account_info()
             } else {
-                remaining[i * 5 + if sell { 3 } else { 4 }].clone()
+                vault_for_mint(&remaining[i * 5..(i + 1) * 5], &current_mint)?
             };
             let before = token_amount(&destination)?;
             let source_before = token_amount(&source)?;
@@ -333,10 +362,6 @@ pub fn execute<'info>(
             prepaid = true;
             source_seeds.clear();
         } else {
-            require!(
-                *group[2].owner == crate::ID,
-                PumpAmmError::AccountTypeNotSupported
-            );
             let mut slice = group;
             let mut bumps = AmmHopBumps {};
             let mut reallocs = BTreeSet::new();
@@ -454,8 +479,8 @@ fn amm_hop<'info>(
         }
         pool_info.realloc(287, false)?;
     }
-    let base_program = program_for(a, &h.base_mint.to_account_info())?;
-    let quote_program = program_for(a, &h.quote_mint.to_account_info())?;
+    let base_program = program_for(a, &h.base_mint)?;
+    let quote_program = program_for(a, &h.quote_mint)?;
     let gates = HopFeeGates {
         protocol: if sell { last } else { first },
         lp: if sell { first } else { last },
