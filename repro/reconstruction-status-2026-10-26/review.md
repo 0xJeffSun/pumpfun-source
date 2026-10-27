@@ -1,6 +1,6 @@
 # Comprehensive reconstruction review
 
-Reviewed merged evidence: `24dc2f9bca64aeb94144b3fc392f8ca9932259c5`. Selected builds remain bound to `1463bd22fb7811825c5e7acf1cb963eb39ab68d9`.
+Reviewed merged evidence: `2966c18690b1dc3c435509f1a190e13174297084`. Selected builds remain bound to `1463bd22fb7811825c5e7acf1cb963eb39ab68d9`.
 
 **No core program or Relay is whole-file byte-identical. No public handler is proved exhaustively perfect.**
 
@@ -22,11 +22,11 @@ Reviewed merged evidence: `24dc2f9bca64aeb94144b3fc392f8ca9932259c5`. Selected b
 | pump | 98 | 430 | 507 | 0 | 1,391,456 / 1,792,208 (77.6%) |
 | pump_amm | 93 | 395 | 297 | 0 | 734,392 / 1,162,040 (63.2%) |
 | pump_fees | 102 | 363 | 120 | 0 | 418,392 / 799,648 (52.3%) |
-| pump_fees_research | 118 | 405 | 62 | 0 | 318,016 / 799,648 (39.8%) |
+| pump_fees_research | 118 | 408 | 59 | 0 | 304,760 / 799,648 (38.1%) |
 
 These byte totals count entire unresolved original windows, not differing bytes or development effort. Raw and normalized matches can still contain unresolved references. Do not add selected and research rows: they represent alternative builds of the same programs. Mayhem has 257 source-ledger opaque windows; 12 have raw counterparts and therefore appear in the exact column.
 
-Fees research has 376 unique structural pairs, 61 additional call-attributed pairs and 86 unattributed duplicate windows. Its encoded-call ledger has 2,639 bound-target edges and 20 different-body frontier edges. A bound edge is not a full semantic proof. Selected Fees retains two call-conflicting rows.
+Fees research has 379 unique structural pairs, 61 additional call-attributed pairs and 86 unattributed duplicate windows. Its encoded-call ledger has 2,725 bound-target edges and 21 different-body frontier edges. A bound edge is not a full semantic proof. Selected Fees retains two call-conflicting rows.
 
 ## Every public handler: source/behavior status
 
@@ -90,7 +90,7 @@ The five largest unresolved windows per build focus the next investigation. Empt
 ## Remaining acceptance gates
 
 1. **Behavior:** finish partial/unaccepted public handlers and known discrepancies. Pump `sell_v2` remains a bounded implementation with a known transfer-fee discrepancy. Mayhem field roles, initialization and diagnostic contracts remain unresolved. Existing stopped lanes remain stopped.
-2. **Complete bodies:** recover the ten Relay donation/settlement/worker windows and 62 Fees residuals; complete Pump/AMM reconstruction and attribute Mayhem opaque windows. Small helper matches alone do not close callers.
+2. **Complete bodies:** recover the ten Relay donation/settlement/worker windows and 59 Fees residuals; complete Pump/AMM reconstruction and attribute Mayhem opaque windows. Small helper matches alone do not close callers.
 3. **Identity:** establish referenced data, call targets, duplicate attribution, indirect calls, layout, relocations, full ELF equality and allocation-padding accounting for each exact proposed build.
 4. **Build provenance:** retain source hashes, dependency/toolchain inputs and reproducible recipes. A synthetic exact recipe does not establish the historical recipe.
 5. **Selection:** research candidates require explicit selected-source integration, rebuilt artifacts, bound validation and guard transitions. Current research gains do not update selected checkpoints.
