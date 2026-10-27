@@ -24,13 +24,16 @@ item-permutation) → `placed/`, `source.patch`, `solve-report.json`. Prediction
   (raw LOST 0x6c248 can_boost: negative control) → reorder with original-text-order keys + `base_for_buy` copy 675/139
   → + call-graph closure pairing in multi_hop_swap.rs 679/139/106; legacy sell move alone 679 → 679.
 
-## In progress (12:50) — 0x119c8 quote_for_base (math lane window; math lane not running)
-- Original computes the denominator as a u128 subtraction (borrow: `mov r5,1; jlt; mov r5,0; neg64 r5`) and has a
-  24-byte deeper frame. `(base_reserve as u128).checked_sub(base_amount_out as u128)` + `ceil_div(numerator, denominator)`
-  (`out/g03-651`, exact native `out/nx-g03`): size 1192 = original, near ratio .85 → .90; remaining diffs = frame
-  offsets only (orig slots 0x18 deeper below fp-0x100: __multi3 result fp-0x140 vs ours -0x128, ceil_div result -0x130 vs
-  -0x118) plus the S-site line (:21/:24, placement once paired). Variant g03b (numerator computed first) building
-  (`out/nx-g03b`). Next ideas: alloca order (let-binding order / an extra Option<u128> local), fnllc.py IR loop.
+## 0x119c8 quote_for_base (math lane window; math lane not running) — open, lead documented
+- Original computes the denominator as a u128 subtraction (borrow: `mov r5,1; jlt; mov r5,0; neg64 r5`).
+  `(base_reserve as u128).checked_sub(base_amount_out as u128)` + `ceil_div(numerator, denominator)` (`out/g03-651`,
+  exact native `out/nx-g03`, 0 lost) makes the body 1192 B = original with identical instructions; only frame offsets
+  differ: every slot below fp-0x100 is 0x18 deeper in the original (__multi3 result -0x140 vs -0x128, ceil_div Result
+  -0x130 vs -0x118, error-path objects -0x160 vs -0x148), plus the S line :21/:24 (placement, once paired).
+  In ours the ceil_div Result slot (-0x118..-0xf8) is stack-colored onto the error-path object at -0x100; in the original
+  it is not → their lifetimes overlap in the original source (e.g. the ceil_div Result/quote still live while the
+  Truncation error is built). Tried without effect: numerator computed first (`nx-g03b`), `Ok(…?)` around try_from
+  (`fl-g03c`). IR loop ready: `out/fl-g03/ir/pump_amm_recovered.ll` + `fnllc.py check … quote_for_base --orig 0x119c8`.
 - Remaining coordinate-only windows after g02 (pairs on the g02 build, `out/pairs-lx-g02.json`): deposit/withdraw 15 +
   toggles 3 + legacy buy 6 (amm-lo, in integrate's c680) + 0xb3460 (buy.rs:409, after the legacy buy merge) + 0x74900
   (amm-hi) + boost 0x1ecd8/0x22c80 (pool lane merge) + multi_hop 0x40308/0x452e0/0xb92c8 (multihop restructure).
