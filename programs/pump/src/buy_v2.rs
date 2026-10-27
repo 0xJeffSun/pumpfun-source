@@ -1,7 +1,7 @@
 use anchor_lang::prelude::*;
 use anchor_spl::token_interface::{self,Mint,TokenAccount,TokenInterface,TransferChecked};
 use crate::{Global,PumpError};
-use crate::trade_types::{TradeEvent,Fees,BondingCurve};
+use crate::trade_types::{TradeEvent,BondingCurve};
 use crate::legacy_sell::{LegacyFeeConfig,LegacyFeesProgram};
 const FEE_PROGRAM:Pubkey=anchor_lang::solana_program::pubkey!("pfeeUxB6jkeY1Hxd7CsFCAjcbHA9rWtchMGdZ6VojVZ");
 const WSOL:Pubkey=anchor_lang::solana_program::pubkey!("So11111111111111111111111111111111111111112");
@@ -88,11 +88,10 @@ fn execute_inner<'info,const EXACT:bool>(ctx:Context<'_,'_,'_,'info,BuyV2<'info>
  let quoted_amount=if exact{0}else{input.min(c.real_token_reserves)};
  let pre_quote=if exact{0}else{add(narrow(quoted_amount as u128*c.virtual_quote_reserves as u128/(c.virtual_token_reserves as u128-quoted_amount as u128))?,1)?};
  let pre_quote_transfer_fee=if !exact && !native{crate::trade::quote_transfer_fee(&a.quote_mint.to_account_info(),pre_quote,true)?}else{0};
- let cap=c.token_total_supply as u128*c.virtual_quote_reserves as u128/c.virtual_token_reserves as u128;
- let mut data=vec![154,237,138,92,162,2,162,187,1];data.extend_from_slice(&cap.to_le_bytes());data.extend_from_slice(c.quote_mint.as_ref());
- let ix=anchor_lang::solana_program::instruction::Instruction{program_id:FEE_PROGRAM,accounts:vec![anchor_lang::solana_program::instruction::AccountMeta::new_readonly(a.fee_config.key(),false),anchor_lang::solana_program::instruction::AccountMeta::new_readonly(crate::ID,false)],data};
- anchor_lang::solana_program::program::invoke(&ix,&[a.fee_config.to_account_info(),a.program.to_account_info(),a.fee_program.to_account_info()])?;
- let (_,ret)=anchor_lang::solana_program::program::get_return_data().unwrap();let mut fees=Fees::deserialize(&mut ret.as_slice())?;if a.global.creator_fee_configurable && c.creator_fee_bps>0{fees.creator_fee_bps=c.creator_fee_bps;}
+ let mut fees=crate::legacy_sell::fee_cpi::query_fees(
+  CpiContext::new(a.fee_program.to_account_info(),crate::legacy_sell::fee_cpi::GetFeesWithQuoteMint{fee_config:a.fee_config.to_account_info(),config_program_id:a.program.to_account_info()}),
+  c,&a.base_mint
+ )?;if a.global.creator_fee_configurable && c.creator_fee_bps>0{fees.creator_fee_bps=c.creator_fee_bps;}
  let cb=if c.creator==Pubkey::default(){0}else{fees.creator_fee_bps};
  let raw_quote=if exact{let _=ceil_fee(available,fees.protocol_fee_bps)?;let _=ceil_fee(available,cb)?;let total_bps=fees.protocol_fee_bps.checked_add(cb).ok_or(PumpError::Overflow)?;let denominator=10000u128+total_bps as u128;narrow(available as u128*10000/denominator)?}else{0};
  let adjusted=if exact && add(add(raw_quote,ceil_fee(raw_quote,fees.protocol_fee_bps)?)?,ceil_fee(raw_quote,cb)?)?>available{sub(raw_quote,1)?}else{raw_quote};

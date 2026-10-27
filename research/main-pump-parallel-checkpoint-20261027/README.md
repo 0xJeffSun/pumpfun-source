@@ -2,7 +2,7 @@
 
 This preserves the main-contract sources, build records, signed comparison results, negative controls and in-progress work available when the snapshot was taken. It excludes rebuildable dependency/compiler caches, private keypair files, unrelated programs and the previously stopped token-owner experiment.
 
-The maintained, published source remains [Round13](../../repro/pump/main-contract-round13-20261027/README.md): 653/1,035 normalized windows (63.1%), with whole-ELF identity unfinished. Round14 and Round15 are verified intermediate candidates; Round16 was still running its full regression at capture time. The manifest records those exact states.
+At snapshot time, the maintained, published source was [Round13](../../repro/pump/main-contract-round13-20261027/README.md): 653/1,035 normalized windows (63.1%), with whole-ELF identity unfinished. Round14 and Round15 are verified intermediate candidates; Round16 was still running its full regression at capture time. The manifest records those exact states.
 
 **This is a research archive, not a selection of every included variant for use.** Failed and superseded controls remain evidence. In particular, an earlier V3 fee-waiver variant has known post-completion differences and remains unpromoted. `updates/` preserves its later714-case corrected successor, the validated legacy/V2 fee-waiver source, and the then-pending creation variant; `UPDATES.json` distinguishes these states. Individual passing corpora do not establish complete reconstruction.
 
@@ -21,3 +21,5 @@ python research/main-pump-parallel-checkpoint-20261027/verify.py --extract /tmp/
 Extraction does not execute any included source. `MANIFEST.json` records all 5,201 files and their hashes, plus omitted active/generated files and the snapshot timestamp. Ongoing work after that timestamp remains separate until the next checkpoint.
 
 `REMAINING-WORK.json` assigns all 365 unmatched Round16 windows to three parallel lanes, with initial source attribution and cross-cutting completion requirements. The later update receipts record completed Round16 and creation validation; the original snapshot retains its exact capture-time state.
+
+The maintained source has since advanced to [Round16](../../repro/pump/main-contract-round16-20261027/README.md), with 670/1,035 matched windows and the complete validation recorded there. This archive retains its original capture-time contents.

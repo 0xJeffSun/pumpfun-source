@@ -1,19 +1,19 @@
 {
   "scope": "Main Pump only; all365 unmatched original function windows assigned for recovery or initial static triage. Attribution is provisional, not proof of semantics.",
   "created_at_utc": "2026-10-27T12:02:42.069370+00:00",
-  "baseline_candidate": "Round16, full validation passed; maintained source stillRound13 until promotion",
+  "baseline_candidate": "Round16 verified and published as maintained source; later isolated deliveries are not counted here.",
   "candidate_sha256": "6faafcf1164cf78336f7b2cd49032048ae0771f386119bb8f03a22996a1db0c1",
   "baseline_normalized_windows": 670,
   "total_windows": 1035,
   "assignment_counts": {
-    "build_identity": 122,
-    "context_finish": 121,
-    "claim_finish": 122
+    "build_identity": 121,
+    "context_finish": 125,
+    "claim_finish": 119
   },
   "assigned_text_bytes": {
-    "build_identity": 338280,
-    "context_finish": 338280,
-    "claim_finish": 338280
+    "build_identity": 336856,
+    "context_finish": 344376,
+    "claim_finish": 333608
   },
   "lanes": {
     "build_identity": "Creation account parsers/wrappers, remaining Anchor/Borsh framework code, then assigned unattributed windows.",
@@ -1384,10 +1384,13 @@
       "original_start": "0x82af8",
       "bytes": 1424,
       "original_body_sha256": "a300335be59ffd0966d4cfa6a23b48ab372459b8cadcdfd190eaa55ae1c00e0b",
-      "owner": "build_identity",
-      "work": "Unattributed function: initial static triage required",
+      "owner": "context_finish",
+      "work": "Shared fee/CPI/math recovery; coordinate V3 caller changes with claim_finish",
       "source_attribution": [],
-      "status": "unmatched in verified Round16; not a completion estimate"
+      "status": "unmatched in verified Round16; not a completion estimate",
+      "collaborators": [
+        "claim_finish"
+      ]
     },
     {
       "original_start": "0x83088",
@@ -1537,30 +1540,39 @@
       "original_start": "0x88908",
       "bytes": 1672,
       "original_body_sha256": "82e1f28fcb9e6c1073fad953114e1569e0ed585e80fb36476bc2485ff21150f4",
-      "owner": "claim_finish",
-      "work": "Unattributed function: initial static triage required",
+      "owner": "context_finish",
+      "work": "Shared fee/CPI/math recovery; coordinate V3 caller changes with claim_finish",
       "source_attribution": [],
-      "status": "unmatched in verified Round16; not a completion estimate"
+      "status": "unmatched in verified Round16; not a completion estimate",
+      "collaborators": [
+        "claim_finish"
+      ]
     },
     {
       "original_start": "0x88f90",
       "bytes": 712,
       "original_body_sha256": "472a75f943fc30f9b7224dcd177a72f5e8170163ba241336bf6d23952e15a0e5",
-      "owner": "claim_finish",
-      "work": "Unattributed function: initial static triage required",
+      "owner": "context_finish",
+      "work": "Shared fee/CPI/math recovery; coordinate V3 caller changes with claim_finish",
       "source_attribution": [],
-      "status": "unmatched in verified Round16; not a completion estimate"
+      "status": "unmatched in verified Round16; not a completion estimate",
+      "collaborators": [
+        "claim_finish"
+      ]
     },
     {
       "original_start": "0x89258",
       "bytes": 2288,
       "original_body_sha256": "1b85b1bde1e261a1e8eb2db9c1b76873042f9ab002e81a366a7293f3290f0412",
-      "owner": "claim_finish",
-      "work": "Other main-contract instruction/helper recovery",
+      "owner": "context_finish",
+      "work": "Shared fee/CPI/math recovery; coordinate V3 caller changes with claim_finish",
       "source_attribution": [
         "programs/pump/src/lib.rs"
       ],
-      "status": "unmatched in verified Round16; not a completion estimate"
+      "status": "unmatched in verified Round16; not a completion estimate",
+      "collaborators": [
+        "claim_finish"
+      ]
     },
     {
       "original_start": "0x89b48",
@@ -2058,9 +2070,12 @@
       "bytes": 760,
       "original_body_sha256": "f6e53db1bc1411afab8bf2abed37edb9694da433b8233b26e23b9594dff9137d",
       "owner": "context_finish",
-      "work": "Unattributed function: initial static triage required",
+      "work": "Shared fee/CPI/math recovery; coordinate V3 caller changes with claim_finish",
       "source_attribution": [],
-      "status": "unmatched in verified Round16; not a completion estimate"
+      "status": "unmatched in verified Round16; not a completion estimate",
+      "collaborators": [
+        "claim_finish"
+      ]
     },
     {
       "original_start": "0xa0bf0",
@@ -2489,9 +2504,12 @@
       "bytes": 3200,
       "original_body_sha256": "95faefddbb740e2d9f4a5e00fe9b72d7c4865e039cb3d8fe9d725dbf9b808cbc",
       "owner": "context_finish",
-      "work": "Unattributed function: initial static triage required",
+      "work": "Shared fee/CPI/math recovery; coordinate V3 caller changes with claim_finish",
       "source_attribution": [],
-      "status": "unmatched in verified Round16; not a completion estimate"
+      "status": "unmatched in verified Round16; not a completion estimate",
+      "collaborators": [
+        "claim_finish"
+      ]
     },
     {
       "original_start": "0x118360",
@@ -3396,5 +3414,6 @@
     }
   ],
   "goal_complete": false,
-  "candidate_symbols_sha256": "093e897bec2c6bbaf1f3f5a1d41087bdb92b244cd8a67f2a815c1f41082fe195"
+  "candidate_symbols_sha256": "093e897bec2c6bbaf1f3f5a1d41087bdb92b244cd8a67f2a815c1f41082fe195",
+  "ownership_rule": "Explicit source ownership takes precedence over initial balanced unknown-window triage; coordinate shared helpers before editing."
 }

@@ -189,9 +189,9 @@
       "bytes": 21226
     },
     "REMAINING-WORK.json": {
-      "sha256": "1c9aba7668dc2dcaecd61dd1eccf41d1146d60738595822755691914f9ce2dcc",
-      "bytes": 141454
+      "bytes": 142120,
+      "sha256": "6853fa04151f233114d26857930d272466275635335eb39b5118931330f191b2"
     }
   },
-  "round16": "Full44/10468 +78/4584 focus suites passed, clean/cache identical; still research rather than maintained selection."
+  "round16": "Full44/10468 +78/4584 focused suites passed; clean/cached/canonical/archived builds agree. Promoted as main-contract-round16-20261027."
 }
