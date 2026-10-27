@@ -9,9 +9,9 @@ snapshot retains `1463bd22` audit bindings; current selections are recorded in
 [completion ledger](COMPLETION.md) remains a selected-checkpoint record; its old
 candidate paths and “current” prose must not override newer evidence.
 
-Current [Pump Round29](../repro/pump/main-contract-round29-20261027/README.md)
-has 135 raw-local matches, 588 normalized-only matches and 312 unmatched windows.
-The unmatched windows cover 905,896 original text bytes. Remaining bodies,
+Current [Pump Round30](../repro/pump/main-contract-round30-20261027/README.md)
+has 137 raw-local matches, 589 normalized-only matches and 309 unmatched windows.
+The unmatched windows cover 903,976 original text bytes. Remaining bodies,
 data, relocations, uncovered behavior and original build provenance remain open.
 
 Current [PumpSwap source ABI recovery](../repro/pump_amm/source-abi-recovery-20261027/README.md)

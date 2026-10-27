@@ -4,6 +4,16 @@ The [full audit](RECONSTRUCTION-AUDIT.md) and its generated tables retain their
 explicit `1463bd22` snapshot. This log records later research without silently
 changing that baseline or promoting new selected artifacts.
 
+## Pump Round30: transfer-fee helpers and ATA cleanup
+
+The maintained [Round30 checkpoint](../repro/pump/main-contract-round30-20261027/README.md)
+reaches 726/1,035 normalized windows and 137 raw-local bodies. The new 24-byte fee
+carrier and native transfer-fee helpers add three complete windows while the
+rest of the verified source, dependency and runtime boundaries remain explicit.
+The independent checkpoint verifier passes. Overall frontiers now have
+2,869/3,338 matched windows, with 1,057 raw-local, 1,812 normalized-only and 469
+unmatched. Whole-ELF identity remains false for all four core programs.
+
 ## Reviewed PR #273 and refreshed Pump/AMM selections
 
 The [Fees associated-token validator](../research/fees-ata-prefix-integration/README.md)
