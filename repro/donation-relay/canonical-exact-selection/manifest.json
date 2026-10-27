@@ -86,7 +86,7 @@
     },
     "governance.json": {
       "bytes": 2769,
-      "sha256": "59e6ced18ad734bdf32322ae10dc62cf791d1dfbb6a5fe134afd4a91c45e8968"
+      "sha256": "239cf7ffb56be1fa3ab0a07aab2fb6ad8d1b127901cdefe9e32b8b0a63288ea5"
     },
     "historical-source23/Cargo.lock": {
       "bytes": 64162,
@@ -274,7 +274,7 @@
     },
     "verify_selection.py": {
       "bytes": 3467,
-      "sha256": "34f171e7a5928b984d6c47d360e159532e04533f2cfa5ad32b2429113759d27e"
+      "sha256": "1dbbd73f61f5e61786a82419073bbd4fbc174371295f7459cd64566101867594"
     }
   }
 }

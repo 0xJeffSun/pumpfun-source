@@ -4,6 +4,28 @@ The [full audit](RECONSTRUCTION-AUDIT.md) and its generated tables retain their
 explicit `1463bd22` snapshot. This log records later research without silently
 changing that baseline or promoting new selected artifacts.
 
+## Fees: V2 finishing helper advances the composed source to 573 matches
+
+The [V2 finishing-helper recovery](../research/fees-v2-finish-source-recovery/README.md)
+adds the complete 5,656-byte body at 225920 to the PR225 source. All 36 direct
+callees and 27 direct data references match. Coverage reaches **573/585 normalized
+windows, 143 raw-local matches, 171 equal Location observations and 12 unmatched
+windows**, preserving every previous match and positive call observation. The
+V2 caller remains unmatched and whole-ELF equality remains false.
+
+Two recorded root builds agree. Review recomputed the body/call/data evidence,
+checked all 17,331 saved non-log comparison results, and independently verified
+18,520 transaction signatures. This review did not rerun the compiler or VM.
+The packet separately retains the 119 arithmetic, eight quote-owner and 24
+preprocessing cases; finite observations do not establish exhaustive semantics.
+
+The [portable native reproduction](../research/fees-v2-transfer-ownership/README.md)
+of PR222 independently reproduces its 570-window candidate and symbol artifacts.
+Its five recorded compilations, source maps, SDK hashes and saved runtime
+receipts are checked; seven mutation controls and 1,668 signature checks pass.
+It adds no matches beyond PR222 and is not substituted for the newer 573-window
+source. Neither packet promotes a canonical selected checkpoint.
+
 ## Fees: V2 transfer adapter recovered at 570 matches
 
 The [V2 transfer recovery](../research/fees-v2-transfer-source-recovery/README.md)

@@ -264,3 +264,28 @@ its measurements are not treated as a tested composition with the newer source.
 A separate follow-up now builds and tests the change on the native Program
 source, preserving the existing fourteen parser gains. Its bounded result and
 remaining 118 diagnostic differences are recorded in that follow-up packet.
+
+## PR227: V2 update finishing helper
+
+Reviewed head `c5fb4efd18521f4c6aa6d5db3479e9d7b1b67ac2` and merged as
+`4379cc8a02d853cf9195e9710a71e1b1f496bd24` after marking the draft ready.
+The parent-chain verifier and all three negative controls pass. Review recomputed
+the full 5,656-byte body, its 36 direct callees and all 27 referenced data objects.
+It also independently compared every saved non-log result in the 17,331-case
+regression and verified 18,520 transaction signatures. No compiler or target VM
+was run during this review. Recorded repeated builds and the bounded runtime
+receipts retain their source/artifact hashes. All 66 merged packet files match
+the reviewed head. Fees reaches 573/585 normalized windows, 143 raw-local matches
+and 171 equal Location observations; the V2 caller and whole ELF remain unequal.
+
+## PR228: independent portable native reproduction
+
+Reviewed head `a5d0226868cdc1f78ee946f85b3050224ed9aa34` and merged as
+`483dbfbd8e4f05e16f268425679b4ffec84323a1`. The offline verifier, seven actual
+mutation controls and 1,668 saved transaction-signature checks pass. All 113
+merged files match the reviewed head. This independently reproduces PR222's
+570-window candidate and symbol artifacts using a portable SDK controller;
+it adds no body coverage beyond PR222. Five recorded compilations are retained,
+with cached dependencies. Review did not rerun the compiler or target VM.
+The newer 573-window source and this reproduction remain separately identified.
+Hosted checks were still running when these research-only PRs were merged.
