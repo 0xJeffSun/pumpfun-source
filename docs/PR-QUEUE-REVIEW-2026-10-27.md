@@ -153,3 +153,11 @@ packet verifiers and the new three negative controls pass. The independent
 Fees composition reaches 564 normalized windows, 143 raw-local matches and
 168 Location observations. These counts belong to that packet; the pinned
 research inventory is unchanged while Mayhem remains the active priority.
+
+## PR218: sharing-parser source integration
+
+The source verifier and all thirteen tests pass. Review preserves patch context
+with a single literal package-local whitespace rule. The two parser gains and
+attributed distribution-helper composition remain an independent 563-window
+source proposal; no new compiler or runtime execution is claimed by this review.
+It is not combined with the other 563/564-window branch or the pinned inventory.

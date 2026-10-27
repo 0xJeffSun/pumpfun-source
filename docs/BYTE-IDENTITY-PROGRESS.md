@@ -1611,3 +1611,33 @@ false. All four core whole identities remain unresolved; no checkpoint changes.
 ## Mayhem Sell arithmetic and source-origin recovery
 
 The [new source composition](../research/mayhem-sell-origin-recovery/README.md) restores the Result-based arithmetic failure and original state.rs locations. Two root builds agree. All 396 Sell cases match on the checked fields and every log line except explicit compute consumption; all 1,032 admin cases and three sequential Burn families pass. Independent verification covers 2,868 signatures and complete expected account bytes for 624 admin successes. No complete-function gain is counted: the current research remains 188/196 examined matches, eight admitted gaps and 245 opaque windows.
+
+
+## Fees: two sharing parsers and attributed CPI helper integration — 27 October 2026
+
+The [source-only sharing integration](../research/fees-sharing-parser-source-integration/README.md)
+changes one ordinary file on exact PR215's 43-input Social-corrected source.
+It recovers complete legacy/V2 account parsers at 484816 / 16,112 bytes and
+502096 / 16,880 bytes through the native ATA constants and explicit quote-mint
+owner constraint. Upstream PR206 owns the composed 235304 / 936-byte and
+236240 / 1,224-byte distribution helpers; they are not claimed as new discoveries.
+Later PR213 preprocessing is explicitly not included in this frozen source.
+Concurrent PR216 reaches the same 563 total with different coverage (preprocessing
+and new adapter204080 rather than these parsers); its overlapping PR206 helpers
+are credited, not claimed as fresh discoveries. Its new adapter is not included.
+
+Fresh measurement reaches **563 normalized / 143 raw / 416 unique pairs**, with
+no loss from actual559. All 252 actual direct callees from the four bodies match;
+all 3,341 prior equal obligations and 166 Location uses survive. Ten actual edges
+still target unequal complete bodies. Local semantic-extent audits also confirm
+47 and 45 parser objects plus the helpers' no-direct-object boundary, without
+claiming transitive data or exhaustive behavior.
+
+Raw positional differences worsen 453,541 to 464,073; the meaningful ELF remains
+1,432 bytes too long. Default verification, thirteen tests, exact materialization
+and fresh opt-in static comparison pass. Two exact root-clean builds and fresh local 17,331-case/18-suite regression pass,
+as do 348 Social checks, 357 covered Crank log cases and both native boundaries.
+Eight quote-owner matrix cases repair four failures in the actual parent. No runtime/build receipts,
+fixtures, logs, binaries or derivatives are included; default execution/identity
+flags remain false. All four core whole identities remain unresolved and no
+selected checkpoint changes.
