@@ -335,3 +335,11 @@ unit-result helper duplicates original window 115, which was already matched by
 an Error-returning helper. This is evidence against inferring a unique Rust return
 type from local body shape, not additional recovery. The Relay frontier stays
 482/492 with 130 raw local bodies and ten unmatched windows.
+
+## Shared-worker arithmetic and tip-order controls
+
+Six [compiled source forms](../repro/donation-relay/arithmetic-order-controls/README.md)
+test in-place checked operations and naming the tip division before/after state
+updates. All retain 482 normalized and 130 raw local matches without recovering
+the worker. The two tip-only forms reproduce the candidate and symbol image
+exactly. No candidate is promoted, and no new runtime acceptance is claimed.

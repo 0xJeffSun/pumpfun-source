@@ -208,6 +208,15 @@ respectively, with no new original match. Seven Result-helper source trials keep
 identify its original return type. Epoch close and the shared worker remain
 unmatched; no candidate from this packet is promoted.
 
+### Shared-worker arithmetic and ordering controls
+
+The [six arithmetic/ordering builds](../repro/donation-relay/arithmetic-order-controls/README.md)
+test in-place checked operations and a separately named tip division. None
+recovers window 112 or changes the 482-window frontier. Both tip-only forms
+reproduce the existing candidate exactly, so that source distinction is removed
+by this compiler. The unit-result helpers do not recover their caller; no trial
+is promoted or newly runtime-accepted.
+
 ## Fees: new complete bodies, substantial residual business logic
 
 The latest 851,488-byte candidate is SHA-256

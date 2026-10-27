@@ -72,6 +72,11 @@ can duplicate the already-matched error body but do not recover its callers.
 Retain the current opt-level 3 / one-codegen-unit recipe while investigating the
 remaining bodies; local helper matches alone do not identify source types.
 
+The [shared-worker arithmetic controls](../repro/donation-relay/arithmetic-order-controls/README.md)
+reject the tested in-place arithmetic and tip-local forms. Naming the tip division
+alone compiles to the unchanged candidate. The worker still needs a complete
+source/body recovery, not promotion of a locally similar trial.
+
 ## Audit baseline
 
 - **Whole captured-file identity:** 0/4 selected core programs; selected Relay also differs.
