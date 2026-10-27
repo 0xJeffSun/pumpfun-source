@@ -300,3 +300,26 @@ flags from replacement. Path remapping changes exactly 1,415 data-section bytes;
 all instruction bytes are unchanged in that control. This uses the historical
 15-input source and adds no original-window match. The 720-byte text gap remains.
 No Windows compiler, full SDK or runtime was freshly executed during review.
+
+## PR229: current Fees573 with SweepBuyback corrections
+
+Reviewed head `4818eada2cf0a5f81e52e529110ac8602e182e5b` and merged as
+`c41d6da175b5b22d4dd83be703cdc810debbee60`. Complete parent-chain verification
+and all three negative controls pass. Review independently checks all 17,331
+non-log comparison results and 18,520 signature entries. All 1,249 Buyback
+application logs now agree, repairing the parent's 275 differences. The exact
+three-file PR224 source composition is checked; 573 normalized / 143 raw / 171
+Location counts remain unchanged. No compiler or target VM was freshly run in
+review. All merged packet files match the reviewed head.
+
+## PR231: source-only Social V2 admission and coordinates
+
+Reviewed head `03d57b94b0f0ded21a3da4f793e0fd2f4dfe0a60` and merged as
+`3528998688b74c9c58c7618098f6fab9fde3fb16`. The source verifier and all 15 tests
+pass; materialization checks all 43 exact public parent inputs and applies two
+overrides. Native-build, runtime and whole-identity verification flags remain
+false. Author-local execution observations have no downloadable receipts in
+this packet and are not adopted as independently verified facts. Its PR222
+570-window source is separate from the later 573-window composition. Merged
+packet files match the reviewed head. Both drafts were marked ready after the
+GitHub API quota reset; selected checkpoints remain unchanged.

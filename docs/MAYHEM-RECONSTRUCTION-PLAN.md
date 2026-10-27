@@ -107,3 +107,16 @@ bodies remain O0003 (2752, padding), O0027 (26272, account decoding), O0212
 (540936, checked decoding) and O0213 (541576, unchecked decoding). Recover their
 field layout, consumption and error construction without weakening the matcher.
 The four core whole-file comparisons still require completion.
+
+The accepted curve artifact narrows the next source-level comparisons:
+
+| Body | Original bytes | Current bytes | Remaining evidence |
+| --- | ---: | ---: | --- |
+| Padding wrapper (O0003) | 3,352 | 3,216 | Serialization, short-input consumption and error exits |
+| Checked external decoder (O0212) | 640 | 1,000 | Account-name error construction and outlining |
+| Unchecked external decoder (O0213) | 2,272 | 2,064 | Field decoding, result layout and error cleanup |
+
+The checked decoder calls original O0202 (538104, 288 bytes), which remains
+unmatched. Isolating account-name formatting changes the candidate's outlining
+but has not produced another complete match. Do not treat a similar size or an
+alignment-aid diff as an identity result; preserve complete call/data checks.

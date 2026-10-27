@@ -46,11 +46,11 @@ analysis. Candidate symbol names are hypotheses about original identity.
 | Fees selected | 585 | 102 | 363 | 120 | 0 |
 | Mayhem selected | 441 | 58 | 131 | 7 | 245 |
 | Relay historical source 15 | 492 | 33 | 89 | 370 | 0 |
-| **Fees latest research (PR227)** | **585** | **143** | **430** | **12** | **0** |
+| **Fees latest research (PR229)** | **585** | **143** | **430** | **12** | **0** |
 | **Mayhem latest research** | **441** | **59** | **286** | **96** | **0** |
 | **Relay canonical selection** | **492** | **492** | **0** | **0** | **0** |
 
-The current research rows are bound to the [Fees V2 finisher](../research/fees-v2-finish-source-recovery/README.md) and [Mayhem full curve recovery](../research/mayhem-full-curve-recovery/README.md); they extend the dated generated inventory below. Each row is a partition, not a score of semantic correctness. Mayhem's source
+The current research rows are bound to the [Fees573 Buyback composition](../research/fees-current-573-buyback-union/README.md) and [Mayhem full curve recovery](../research/mayhem-full-curve-recovery/README.md); they extend the dated generated inventory below. Each row is a partition, not a score of semantic correctness. Mayhem's source
 ledger has 257 opaque windows, 12 of which happen to match local raw bytes.
 Selected Fees retains two call-conflicting rows; body existence does not resolve
 those conflicts. Different programs and studies use different matching rules.
