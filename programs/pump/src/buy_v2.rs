@@ -103,7 +103,7 @@ fn execute_inner<'info,const EXACT:bool>(ctx:Context<'_,'_,'_,'info,BuyV2<'info>
  if exact{if !(partial && computed>c.real_token_reserves){require_gte!(amount,limit,PumpError::BuySlippageBelowMinTokensOut);}}else{require_gte!(limit,add(add(gross_quote,pf)?,cf)?,PumpError::TooMuchSolRequired);}
  let vb=sub(c.virtual_token_reserves,amount)?;let vq=add(c.virtual_quote_reserves,quote)?;let rb=sub(c.real_token_reserves,amount)?;let rq=add(c.real_quote_reserves,quote)?;
  let mint=a.base_mint.key();let bump=[ctx.bumps.bonding_curve];let seeds:&[&[u8]]=&[b"bonding-curve",mint.as_ref(),&bump];
- if amount>0{token_interface::transfer_checked(CpiContext::new_with_signer(a.base_token_program.to_account_info(),TransferChecked{from:a.associated_base_bonding_curve.to_account_info(),mint:a.base_mint.to_account_info(),to:a.associated_base_user.to_account_info(),authority:a.bonding_curve.to_account_info()},&[seeds]),amount,a.base_mint.decimals)?;}
+ token_transfers::transfer_curve_tokens(&a.base_token_program,&a.associated_base_bonding_curve,&a.associated_base_user,&a.bonding_curve,a.base_mint.decimals,a.base_mint.as_ref().as_ref(),amount,&[seeds])?;
  let bb=&a.buyback_fee_recipient;
  let bbps=if c.is_mayhem_mode{0}else{a.global.buyback_basis_points};let bf=narrow(pf as u128*bbps as u128/10000)?;
  let buyback_received=if native{bf}else{sub(bf,crate::trade::quote_transfer_fee(&a.quote_mint.to_account_info(),bf,false)?)?};
@@ -137,3 +137,6 @@ fn check_token(info:&AccountInfo,mint:Pubkey,owner:Pubkey)->Result<()>{let d=inf
 
 #[path="v2_native_payments.rs"]
 mod native_payments;
+
+#[path="v2_token_transfers.rs"]
+mod token_transfers;

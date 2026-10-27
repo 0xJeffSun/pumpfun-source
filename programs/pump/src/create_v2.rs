@@ -84,15 +84,28 @@ pub fn execute<'info>(ctx:Context<'_,'_,'_,'info,CreateV2<'info>>,name:String,sy
  }else{0};
  require_gte!(32,name.len(),PumpError::NameTooLong);require_gte!(13,symbol.len(),PumpError::SymbolTooLong);require_gte!(200,uri.len(),PumpError::UriTooLong);
  let bump=[ctx.bumps.mint_authority];let seeds:&[&[u8]]=&[b"mint-authority",&bump];
- let size=234+4+64+16+name.len()+symbol.len()+uri.len();
- let rent=Rent::get()?.minimum_balance(size).saturating_sub(a.mint.to_account_info().lamports());
+ let metadata=anchor_spl::token_2022_extensions::spl_token_metadata_interface::state::TokenMetadata{
+  name:name.clone(),symbol:symbol.clone(),uri:uri.clone(),..Default::default()
+ };
+ let rent_sysvar=Rent::get()?;
+ let mint_info=a.mint.to_account_info();
+ let base_size=mint_info.data_len();
+ let metadata_size=anchor_lang::solana_program::borsh1::get_instance_packed_len(&metadata)
+  .map_err(anchor_lang::solana_program::program_error::ProgramError::from)?;
+ let size=base_size+4+metadata_size;
+ let rent=rent_sysvar.minimum_balance(size).saturating_sub(mint_info.lamports());
  if rent>0 {anchor_lang::system_program::transfer(CpiContext::new(a.system_program.to_account_info(),anchor_lang::system_program::Transfer{from:a.user.to_account_info(),to:a.mint.to_account_info()}),rent)?;}
- let mut data=vec![210,225,30,162,88,184,77,141];name.serialize(&mut data)?;symbol.serialize(&mut data)?;uri.serialize(&mut data)?;
- let ix=Instruction{program_id:a.token_program.key(),accounts:vec![AccountMeta::new(a.mint.key(),false),AccountMeta::new_readonly(a.mint_authority.key(),false),AccountMeta::new_readonly(a.mint.key(),false),AccountMeta::new_readonly(a.mint_authority.key(),true)],data};
- invoke_signed(&ix,&[a.mint.to_account_info(),a.mint_authority.to_account_info(),a.mint.to_account_info(),a.mint_authority.to_account_info(),a.token_program.to_account_info()],&[seeds])?;
- let mut data=vec![215,228,166,228,84,100,86,123];data.extend_from_slice(&[0;32]);
- let ix=Instruction{program_id:a.token_program.key(),accounts:vec![AccountMeta::new(a.mint.key(),false),AccountMeta::new_readonly(a.mint_authority.key(),true)],data};
- invoke_signed(&ix,&[a.mint.to_account_info(),a.mint_authority.to_account_info(),a.token_program.to_account_info()],&[seeds])?;
+ anchor_spl::token_2022_extensions::token_metadata_initialize(
+  CpiContext::new_with_signer(a.token_program.to_account_info(),anchor_spl::token_2022_extensions::TokenMetadataInitialize{
+   program_id:a.token_program.to_account_info(),metadata:a.mint.to_account_info(),update_authority:a.mint_authority.to_account_info(),mint_authority:a.mint_authority.to_account_info(),mint:a.mint.to_account_info(),
+  },&[seeds]),name.clone(),symbol.clone(),uri.clone(),
+ )?;
+ let new_authority:anchor_spl::token_2022_extensions::spl_pod::optional_keys::OptionalNonZeroPubkey=None::<Pubkey>.try_into()?;
+ anchor_spl::token_2022_extensions::token_metadata_update_authority(
+  CpiContext::new_with_signer(a.token_program.to_account_info(),anchor_spl::token_2022_extensions::TokenMetadataUpdateAuthority{
+   program_id:a.token_program.to_account_info(),metadata:a.mint.to_account_info(),current_authority:a.mint_authority.to_account_info(),new_authority:a.system_program.to_account_info(),
+  },&[seeds]),new_authority,
+ )?;
  // Mayhem-creation CPI: pump signs the ["mint-authority"] PDA into mayhem's
  // initialize_mayhem_state (disc 0x2dcc4555485ebd9d, no args). Mayhem derives the
  // mint from account #4, derives/inits mayhem_state["mayhem-state",mint] and the

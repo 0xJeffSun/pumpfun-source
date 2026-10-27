@@ -86,7 +86,7 @@ pub fn sell(ctx:Context<SellV3>,amount:u64,min_sol_output:u64)->Result<()> {
     let (fees,creator_bps)=if a.user.key()==a.global.whitelist_pda {
         (Fees{lp_fee_bps:0,protocol_fee_bps:0,creator_fee_bps:0},0)
     }else{
-        let cap=curve.token_total_supply as u128*curve.virtual_quote_reserves as u128/curve.virtual_token_reserves as u128;
+        let cap=buy_fee_market_cap(curve, &a.base_mint)?;
         let config_info=a.fee_config.to_account_info();
         let config_data=config_info.try_borrow_data()?;
         let config=read_config(&config_data)?;
