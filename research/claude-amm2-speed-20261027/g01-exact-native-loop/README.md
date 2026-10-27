@@ -16,6 +16,8 @@ Counts are unchanged by design: this packet changes how fast and how exactly lan
 | plain native (Darwin sysroot; lanes' old baseline) | c4ab6fdd… | 420714b2… | 642/139/143 |
 | native + Linux sbpf rlibs + `-vV` host shim (x3, shim v1) | 0ff291b7… | ee7c9e55… | 647/147/138 (raw 0xfd098 lost) |
 | **native exact (x4, shim v2)** | **0881a95d…** | **16ddd88d…** | **647/148/138** |
+| 651 frontier `optional-context-recovery-20261027`: authenticated Linux | 97bd5553… | 0142baee… | 651/148/134 |
+| **651 native exact via the SHARED tools/toolchain (x5)** | **97bd5553…** | **0142baee…** | **651/148/134** |
 
 `evidence/x4-exact-vs-linux.elfdiff.txt`: IDENTICAL. Native cargo time 2m02s (all 181 deps + root, JOBS=6) vs 6m39s for the Linux
 priming build of the same tree (2 CPUs); the root crate alone takes ~1–2 min natively under load.
@@ -35,6 +37,10 @@ How the gap closed:
    of the host probe from `--print=cfg --target x86_64-unknown-linux-gnu` and gives the host-only cpufeatures compile
    `--extern libc=<hostdeps rlib>`; cargo's build plan then has 171/171 crates with the Linux `-C metadata`
    (`evidence/metadata-vs-linux.json`). Nothing host-only reaches the SBPF program; equality is proven by the sha256s above.
+
+Second, independent check (x5): the shared `SP/shared/tools/native_exact_build.sh` + `SP/shared/toolchain/v144x` on the 651 source
+reproduce that checkpoint's authenticated Linux artifacts too (cargo 39.65 s for all 182 crates). Both results are in the shared
+result cache, so every lane's 647/651 exact baseline is a ~6 s cache hit.
 
 ## 2. Build break fixed (every lane, 11:55)
 The 647 recipe pins solana-program-entrypoint 2.2.1 (and, for older cargo homes, 11 more archives); every lane build failed
@@ -59,6 +65,16 @@ Measured on the 647 tree under load average ~80 (16 cores; 6 shared sbf slots, 1
   sha256 of the staged workspace + toolchain id (+ shim). Builds are deterministic: lanes multihop and v2 built the same staged 647
   workspace in separate target caches and got identical bytes (c4ab6fdd…/420714b2…); four lanes had built that same workspace. A hit
   returns in ~6 s (`timing.txt`: `result=cache`). NOCACHE=1 forces a build.
+- Where the root-crate time goes (`evidence/replay-time-passes.txt`, direct rustc, x4 workspace, one slot): total 10.3 s =
+  LLVM_passes 6.6 s (64 %) + front end ~3.0 s (macro expansion 0.58, borrowck 0.57, metadata 0.31, codegen_crate 0.31, …) +
+  link 0.2 s. So a root-only build is ~10 s of CPU; the 27 s–2 min seen in cargo builds is CPU contention (load ~80 on 16 cores),
+  and the 5–10 min waits are the slot queue (Linux builds hold an sbf AND a podman slot for 4–7 min). The big levers are therefore
+  not building (cache), not building on Linux while iterating (exact native), and per-function checks without a build (fnllc).
+- `rustc_replay.py` (direct rustc from cargo's build plan): identical bytes to the cargo build (`evidence/replay-a-vs-x4.elfdiff.txt`
+  IDENTICAL), saves cargo's startup/fingerprinting. `--emit=llvm-ir` only: 8 s. `--emit=llvm-ir,link`: .text/.rodata/all loaded
+  sections identical, only .symtab/.strtab differ (IR emission disables rustc's fewer-names), so the stripped candidate is identical.
+  `-Zthreads=4`: identical bytes, no speed-up (11 s). Hazard found: `cargo --build-plan` deletes .rlib files of planned units in the
+  target dir it is pointed at (cargo's stale-rlib guard), so rustc_replay plans in a throwaway APFS clone.
 - Every build writes `timing.txt` (stage / lock wait / build / measure) and a `cargo -v` log.
 - `tools/variants.py`: N patch files → N parallel builds in APFS-cloned target dirs (exact mode clones the immutable primed cache
   `SP/shared/caches/xnative-v144`) → ranked gained/lost table (`table.json`).
@@ -66,8 +82,11 @@ Measured on the 647 tree under load average ~80 (16 cores; 6 shared sbf slots, 1
   function-level loop.
 - `tools/fnllc.py` (function-level loop, extends amm-mid's irexp/objcmp): extract one function from root-crate IR, run llc with the
   sbpf target's codegen options, compare with an original window under measure.py's normalization (< 1 s). Fixed an extraction bug
-  (unnamed globals). Validation: amm-mid's cum3 IR vs its own linked .so — 460/460 root-crate functions equal
-  (`evidence/fnllc-validate-ammmid-cum3.json`).
+  (unnamed globals). Validation on the EXACT 647 build (IR from `rustc_replay.py run … --emit=llvm-ir,link`):
+  `validate` 472/472 root-crate functions == their linked bytes (1.9 s); `vs-orig` 395/396 normalized-matched windows whose
+  candidate body is a root-crate function reproduce the ORIGINAL window bytes (1.7 s) — the one exception, 0x111a70, is matched by
+  the sysroot alloc copy of `<String as fmt::Write>::write_char` (24 bytes), which has the same mangled name as the root crate's
+  688-byte instance (`evidence/fnllc-*.json`). Also amm-mid's cum3 IR: 460/460.
 
 ## Rebuild
 ```

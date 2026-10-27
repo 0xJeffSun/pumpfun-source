@@ -38,11 +38,21 @@ Base: origin/main 0cc61d636, AMM frontier repro/pump_amm/event-decoder-recovery-
   entry seeded from multihop's build (== v2's).
 - Packet g01-exact-native-loop committed.
 
-## In progress
-- x5: exact build of the 651 frontier (optional-context-recovery) through the SHARED tools/toolchain (expect 97bd5553…/0142baee…);
-  seeds the exact cache for every lane's 651 baseline.
-- exp2: one slot, x4 workspace: direct rustc replay (identical bytes?), --emit=llvm-ir only, -Ztime-passes, -Zthreads=4.
+- x5 (~12:28) EXACT via the SHARED tools/toolchain on the 651 source (optional-context-recovery): 97bd5553…/0142baee… == Linux,
+  651/148/134; cargo 39.65 s for all 182 crates. Cached for all lanes.
+- exp2: direct rustc replay == cargo bytes; root crate = 10.3 s total (LLVM_passes 6.6 s, front end ~3 s, link 0.2 s); llvm-ir only
+  8 s; llvm-ir,link differs only in .symtab/.strtab (fewer-names off); -Zthreads=4 identical bytes, no speed-up.
+- HAZARD: `cargo --build-plan` deleted .rlib files in the target dir it was pointed at (x3-plan at 12:08 gutted target/xnative,
+  the 12:19 plan gutted target/xnative2): rustc_replay now plans in a throwaway APFS clone (fixed + published). target/xnative and
+  xnative2 are therefore incomplete; use clones of SP/shared/caches/xnative-v144 (intact, 122 rlibs) instead.
+- fnllc on exact IR: validate 472/472, vs-orig 395/396 (0x111a70 = same-name sysroot alloc body, not a codegen miss).
+- variants.py smoke (651, comment-only patch twice, --exact --jobs 1): v01 built in 27 s (lock wait 0, root-only from the cloned
+  primed cache), bytes == base 97bd5553…; v02 cache hit in 2 s.
 
-## Next
-- fnllc vs-orig on the exact IR (rp-d); variants.py smoke test (comment-only patch twice: build + cache hit);
-  update g01 evidence + PR.
+## In progress
+- push + PR of g01 (git fetch was slow: many concurrent fetches).
+
+## Next (ideas not yet done)
+- fnllc: report length mismatches separately; a `fnloop` wrapper (stage -> replay --emit=llvm-ir -> check one symbol vs one window).
+- seed the cache for each new main checkpoint as soon as MAIN moves (one exact build each).
+- lock: Linux builds hold an sbf slot for their whole podman run; with exact native builds lanes need Linux only for final claims.

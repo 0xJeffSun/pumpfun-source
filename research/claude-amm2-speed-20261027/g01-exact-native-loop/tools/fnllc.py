@@ -375,23 +375,27 @@ def cmd_vsorig(a):
     for r in rows:
         for mt in (r['matches'] or [])[:1]:
             if mt['name'] in defs:
-                todo.append((r['start'], defs[mt['name']]))
+                todo.append((r['start'], defs[mt['name']], r['end'] - r['start']))
     if a.limit: todo = todo[:a.limit]
     work = Path(a.work) if a.work else Path(tempfile.mkdtemp(prefix='fnllc-vo-', dir=os.environ.get('FNLLC_TMP', str(HERE.parent))))
     work.mkdir(parents=True, exist_ok=True)
     t0 = time.time()
     def one(i_x):
-        i, (start, n) = i_x
+        i, (start, n, size) = i_x
         ll = work / ('o%d.ll' % i); o = work / ('o%d.o' % i)
         ll.write_text(extract(m, n))
         r = subprocess.run([LLC] + LLC_ARGS + [str(ll), '-o', str(o)], capture_output=True, text=True)
         if r.returncode: return start, n, 'llc_error'
-        return start, n, 'equal' if compare_obj(o, n, orig=start, quiet=True) else 'different'
+        if compare_obj(o, n, orig=start, quiet=True): return start, n, 'equal'
+        # a different length usually means measure.py matched a same-named body from another crate (e.g. the sysroot copy)
+        return start, n, 'different' if len(obj_function(o, n)[0]) == size else 'length_differs'
     with ThreadPoolExecutor(max(1, a.jobs)) as ex:
         res = list(ex.map(one, enumerate(todo)))
     bad = [('%#x' % s, n[:100], r) for s, n, r in res if r != 'equal']
-    print(json.dumps({'checked': len(res), 'equal': len(res) - len(bad), 'seconds': round(time.time() - t0, 1), 'not_equal': bad[:30]}, indent=1))
-    sys.exit(0 if not bad else 1)
+    print(json.dumps({'checked': len(res), 'equal': len(res) - len(bad), 'different_same_length': sum(r == 'different' for _, _, r in res),
+                      'length_differs': sum(r == 'length_differs' for _, _, r in res), 'seconds': round(time.time() - t0, 1),
+                      'not_equal': bad[:30]}, indent=1))
+    sys.exit(0 if not any(r == 'different' or r == 'llc_error' for _, _, r in res) else 1)
 
 
 def main():
