@@ -197,6 +197,17 @@ substitution, retaining v1.48 libraries and linker, regresses to 226 normalized
 matches (256 lost, none gained). That combination is rejected; it does not
 establish the original compiler or evaluate every v1.50 recipe.
 
+### Root-profile and Result-helper controls
+
+The [twelve additional builds](../repro/donation-relay/profile-result-controls/README.md)
+include an exact baseline control and four root compiler overrides. Opt-level 2,
+s, z and codegen-units 2 retain 382, 316, 314 and 372 normalized windows,
+respectively, with no new original match. Seven Result-helper source trials keep
+482 matches. A unit-returning error helper reproduces the already-matched
+504-byte window 115, illustrating that identical local shape does not uniquely
+identify its original return type. Epoch close and the shared worker remain
+unmatched; no candidate from this packet is promoted.
+
 ## Fees: new complete bodies, substantial residual business logic
 
 The latest 851,488-byte candidate is SHA-256

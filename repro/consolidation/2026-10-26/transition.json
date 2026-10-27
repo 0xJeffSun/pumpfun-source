@@ -7,8 +7,8 @@
     {
       "path": "README.md",
       "before_sha256": "cae913d4d3f2066403162f653a0cf35b39620fb08877b1b308c08ccce4a53678",
-      "after_sha256": "e5405c4eb51bd826822f3d7d84908ea30ddeb519e0481f2308c8985c4f7130e9",
-      "reason": "Record rejected epoch-close source and cached-compiler substitution controls; preserve the 482/492 frontier and selected-source and identity limits."
+      "after_sha256": "6b50fcad648c1a85343d7b73d8d0fe2228d051aa95b557e322228d418ebbae49",
+      "reason": "Document root-profile and Result-helper controls without changing the 482/492 frontier, selected artifacts, or whole-file identity limits."
     },
     {
       "path": ".github/workflows/verify.yml",

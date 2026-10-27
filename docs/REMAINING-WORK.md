@@ -66,6 +66,12 @@ still need investigation. The cached v1.50-compiler/v1.48-library substitution
 loses 256 matches without gaining any; do not substitute that rejected output
 for the current checkpoint.
 
+The [root-profile/Result controls](../repro/donation-relay/profile-result-controls/README.md)
+reject four root compiler overrides without adding a match. Unit-result helpers
+can duplicate the already-matched error body but do not recover its callers.
+Retain the current opt-level 3 / one-codegen-unit recipe while investigating the
+remaining bodies; local helper matches alone do not identify source types.
+
 ## Audit baseline
 
 - **Whole captured-file identity:** 0/4 selected core programs; selected Relay also differs.
