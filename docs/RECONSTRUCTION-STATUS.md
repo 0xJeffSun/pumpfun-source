@@ -57,7 +57,7 @@ analysis. Candidate symbol names are hypotheses about original identity.
 | **Mayhem latest research** | **441** | **100** | **328** | **13** | **0** |
 | **Relay canonical selection** | **492** | **492** | **0** | **0** | **0** |
 
-The current rows are bound to [Pump Round13](../repro/pump/main-contract-round13-20261027/README.md), [AMM liquidity recovery](../repro/pump_amm/dependency-liquidity-recovery-20261027/README.md), [Fees Sharing recovery](../research/fees-sharing-handler-recovery/README.md) and [Mayhem initializer Source recovery](../research/mayhem-initializer-source-origins/README.md); they extend the dated generated inventory below. Each row is a partition, not a score of semantic correctness. The historical selected Mayhem source
+The current rows are bound to [Pump Round13](../repro/pump/main-contract-round13-20261027/README.md), [AMM liquidity recovery](../repro/pump_amm/dependency-liquidity-recovery-20261027/README.md), [Fees Sharing recovery](../research/fees-sharing-handler-recovery/README.md) and [Mayhem provider sharing](../research/mayhem-provider-sharing/README.md); they extend the dated generated inventory below. Each row is a partition, not a score of semantic correctness. The historical selected Mayhem source
 ledger has 257 opaque windows, 12 of which happen to match local raw bytes.
 Selected Fees retains two call-conflicting rows; body existence does not resolve
 those conflicts. Different programs and studies use different matching rules.
@@ -982,7 +982,7 @@ callers require incompatible candidate copies, and two original 328-byte helpers
 have only one candidate counterpart. These sharing/specialization gaps and the
 thirteen unmatched bodies remain open. Complete ELF equality is still false.
 
-## Current Mayhem initializer Source origins
+## Prior Mayhem initializer Source origins
 
 The [initializer successor](../research/mayhem-initializer-source-origins/README.md)
 changes only whitespace in `src/state.rs`, restoring the original Clock unwrap
@@ -997,3 +997,26 @@ executions, including ten successful Pump-to-Mayhem CPI cases. This does not
 rebind earlier trade/ExtendAccount receipts to the new artifact or establish
 exhaustive behavior. O0193 remains 920 versus 960 bytes, and whole-ELF identity
 remains unresolved.
+
+## Current Mayhem provider sharing
+
+The [provider-sharing successor](../research/mayhem-provider-sharing/README.md)
+routes the two AMM handlers through the curve crate's Anchor SPL reexport and
+uses two code-generation units for the stake interface. The shared Error
+constructor now has one candidate provider instead of two; all nine original
+caller groups reach it, with its four immediate callees and selected vtable
+fields checked. The AccountMeta growth helper has two providers instead of
+three. Seven compiled functions disappear, reducing 456 sections to 449.
+
+The complete partition stays 100 raw-local, 328 normalized-only and thirteen
+unmatched. All 4,280 positive direct-call observations and 444 previously
+matching Source records survive. Both initializer Source fixes are retained.
+Two ordinary Rust builds agree; the section permutation accounts for the
+entire candidate file, including all 4,916 direct calls and 2,530 relocations.
+
+Fresh signed replay covers 69 initializer comparisons and 2,496 AMM cases,
+with 168 and 4,992 checked execution records respectively. Prior Legacy, V2 and
+ExtendAccount results remain bound to their earlier artifacts. Two original
+328-byte helpers still have one candidate counterpart, and no matching
+640-byte reserve helper reaches it. The sysvar growth copy, thirteen unmatched
+bodies, full data/call identity and historical build provenance remain open.

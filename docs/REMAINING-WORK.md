@@ -9,7 +9,7 @@ snapshot retains `1463bd22` audit bindings; current selections are recorded in
 [completion ledger](COMPLETION.md) remains a selected-checkpoint record; its old
 candidate paths and “current” prose must not override newer evidence.
 
-Current Mayhem research is the [initializer Source-origin successor](../research/mayhem-initializer-source-origins/README.md): 100 raw-local, 328 normalized-only and thirteen unmatched windows / 112,584 original text bytes. A whitespace-only source correction repairs two panic descriptors and changes exactly three ELF data bytes. Fresh replay passes 69 initializer comparisons; the qualified parent's trade and ExtendAccount receipts retain their original bindings. Complete data/call identity, original sharing/specialization and full ELF equality remain unresolved. This does not update the selected baseline or prove arbitrary behavior.
+Current Mayhem research is the [provider-sharing successor](../research/mayhem-provider-sharing/README.md): 100 raw-local, 328 normalized-only and thirteen unmatched windows / 112,584 original text bytes. Six source inputs change, removing seven duplicate compiled helpers while preserving every earlier positive call and Source observation. Two builds agree; fresh replay passes 69 initializer and 2,496 AMM comparisons. Prior Legacy, V2 and ExtendAccount receipts retain their earlier artifact bindings. The sysvar allocation provider, the missing 328-byte reserve child, the thirteen bodies and full ELF identity remain unresolved. This does not update the selected baseline or prove arbitrary behavior.
 
 Current [Fees Sharing research](../research/fees-sharing-handler-recovery/README.md)
 has 198 raw-local, 380 normalized-only and seven unmatched windows, covering

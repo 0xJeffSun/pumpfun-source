@@ -60,6 +60,8 @@ jobs:
               python scripts/pump_validate_sell_accounting.py --host work/pump-sell-accounting-host --output work/pump-sell-accounting.json
           - suite: fees
             commands: |
+              python -B research/fees-sharing-handler-recovery/verify.py
+              python -B research/fees-sharing-handler-recovery/test_verify.py
               python scripts/fees_validate_all.py --candidate repro/pump_fees/sharing-authorize-main-v144/main/candidate.so --output work/fee-handlers.json
               python scripts/fees_donation_sequence.py --candidate repro/pump_fees/sharing-authorize-main-v144/main/candidate.so --output work/donation-sequence.json
               python repro/pump_fees/initializer-history/replay_history.py --candidate repro/pump_fees/sharing-authorize-main-v144/main/candidate.so --output work/fees-init-history.json
@@ -95,6 +97,10 @@ jobs:
               python -B scripts/verify_pump_amm_checkpoint.py --runtime work/pump-amm-current-replay
           - suite: mayhem-1
             commands: |
+              python -B research/mayhem-provider-sharing/verify.py --repository-root .
+              python -B research/mayhem-provider-sharing/test_scope.py
+              python -I -B research/mayhem-native-qualified-identity/verify.py
+              python -I -B research/mayhem-native-qualified-identity/test_verify.py
               python -B repro/mayhem/initializer-current-20261027/verify.py --current-source . --expected-seal b6b01b400fb7c5ab10db803ba27fe6a76e0e59e9ea7fad25250dc95760cf485c
               python scripts/mayhem_validate_admin.py --candidate repro/mayhem/initializer-current-20261027/candidate.so --output work/mayhem-admin.json
               python scripts/mayhem_validate_fee_recipient.py --candidate repro/mayhem/initializer-current-20261027/candidate.so --output work/mayhem-recipient.json

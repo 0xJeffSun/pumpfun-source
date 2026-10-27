@@ -4,6 +4,31 @@ The [full audit](RECONSTRUCTION-AUDIT.md) and its generated tables retain their
 explicit `1463bd22` snapshot. This log records later research without silently
 changing that baseline or promoting new selected artifacts.
 
+## Mayhem: recover shared dependency providers
+
+The [provider-sharing successor](../research/mayhem-provider-sharing/README.md)
+removes seven duplicate compiled helpers while preserving all 428 normalized,
+100 raw-local, 4,280 positive immediate-call and 444 matched Source observations.
+The Error constructor has one provider instead of two, and all nine original
+caller groups reach that provider. Its four immediate callees, 88-byte selected
+vtable and 32-byte Display table are checked. AccountMeta growth has two
+providers instead of three; the remaining sysvar copy and missing 328-byte
+reserve child are explicit gaps.
+
+Two Rust builds produce identical complete artifacts. The ordinary linker
+permutation accounts for every byte, 449 sections, 4,916 direct calls and 2,530
+relocations. Fresh replay checks 69 initializer comparisons / 168 signed
+execution records and 2,496 AMM comparisons / 4,992 signed records. No new full
+original function match, selected-source promotion or whole-ELF identity is
+claimed. Prior Legacy, V2 and ExtendAccount receipts remain separately bound.
+
+Reviewed PR #250 also adds the [native qualified reproduction](../research/mayhem-native-qualified-identity/README.md)
+of the preceding initializer checkpoint. Its three Windows builds reproduce
+the same complete ELFs by translating 135 qualified archive/member selectors,
+without changing section names or order. All 20 tests pass. The 54 intermediate
+archive differences are explicitly confined to metadata and symbol indexes;
+no new target execution or original-window recovery is claimed.
+
 ## Fees: recover the complete Sharing handler
 
 Reviewed and merged PR #249 adds the [Sharing source successor](../research/fees-sharing-handler-recovery/README.md).

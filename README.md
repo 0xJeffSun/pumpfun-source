@@ -25,7 +25,7 @@ all remaining code, calls, data, relocations and build provenance.
 | [Pump Round13](repro/pump/main-contract-round13-20261027/README.md) | 653 / 1,035 | 63.1% | 113 | 540 | 382 | No |
 | [PumpSwap / AMM](repro/pump_amm/dependency-liquidity-recovery-20261027/README.md) | 586 / 785 | 74.6% | 123 | 463 | 199 | No |
 | [Fees research](research/fees-sharing-handler-recovery/README.md) | 578 / 585 | 98.8% | 198 | 380 | 7 | No |
-| [Mayhem research](research/mayhem-initializer-source-origins/README.md) | 428 / 441 | 97.1% | 100 | 328 | 13 | No |
+| [Mayhem research](research/mayhem-provider-sharing/README.md) | 428 / 441 | 97.1% | 100 | 328 | 13 | No |
 | [Donation Relay](repro/donation-relay/canonical-exact-selection/README.md) | 492 / 492 | 100.0% | 492 | 0 | 0 | **Yes** |
 | **Total** | **2,737 / 3,338** | **82.0%** | **1,026** | **1,711** | **601** | **1 / 5** |
 
@@ -64,11 +64,13 @@ account, fee, CPI, boundary and error-order matrices recorded in its checkpoint.
 These corpora overlap and must not be summed as unique scenarios. Tests use
 captured programs in local VMs; they do not establish current-chain acceptance.
 
-The latest [Mayhem initializer correction](research/mayhem-initializer-source-origins/README.md)
-restores two panic locations while preserving all 428 normalized and 100 raw
-matches. Only three data bytes change; no instruction bytes change. Two builds
-agree and 69 fresh comparisons verify 168 signed executions. The initializer
-still has 920 bytes versus the original 960 and remains unmatched.
+The latest [Mayhem provider-sharing recovery](research/mayhem-provider-sharing/README.md)
+removes seven duplicate compiled helpers while preserving all 428 normalized
+and 100 raw matches. Two builds agree. Fresh replay covers 69 initializer
+comparisons and 2,496 AMM comparisons; prior Legacy, V2 and ExtendAccount
+receipts retain their earlier artifact bindings. The initializer still has
+920 bytes versus the original 960. A required allocator specialization and
+all thirteen unmatched bodies remain unresolved.
 
 The latest [Fees Sharing recovery](research/fees-sharing-handler-recovery/README.md)
 adds the complete 12,384-byte Sharing handler under the existing normalizer,
