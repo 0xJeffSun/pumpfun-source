@@ -101,6 +101,10 @@ bytes and 578 normalized / 198 raw function matches are preserved. Two native
 builds agree and all 17,331 fresh comparisons pass. Seven functions, absolute
 layout and complete ELF identity remain unresolved.
 
+The [Fees continuation archive](research/fees-work-continuation-20261027/README.md)
+preserves 12,520 new or updated research files beyond the earlier work checkpoint.
+These experiments retain their individual status and add no accepted matches.
+
 The latest [PumpSwap native-fee and CPI recovery](repro/pump_amm/native-fee-cpi-recovery-20261027/README.md) adds 13 matching windows and fixes native fee handling, buyback diagnostics and multihop real-reserve protection. All 17,462 full cases and the expanded signed probes pass; 186 AMM windows remain.
 
 Remaining priorities are the 327 Pump, 186 AMM, 7 Fees and 12 Mayhem unmatched

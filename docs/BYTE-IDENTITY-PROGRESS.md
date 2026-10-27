@@ -27,6 +27,13 @@ relative offsets. The 578 normalized / 198 raw-local inventory and 17,331-case
 runtime corpus are preserved. Eight mutation tests pass. Seven original bodies
 and whole-ELF identity remain unresolved.
 
+The [Fees continuation archive](../research/fees-work-continuation-20261027/README.md)
+preserves another 12,520 new or updated files, yielding a combined snapshot of
+65,473 current regular files. Both complete archives pass their chunk/blob
+checks; source and base-overlay restoration preserve hashes, modes and timestamps.
+The six path/index tests pass. Prepared, failed and interrupted experiments keep
+their original status; this preservation adds no accepted function matches.
+
 The [Mayhem parser-provenance experiment](../research/mayhem-allocator-parser-provenance/README.md)
 uses the historical Anchor event-parser template with current generated event
 types to reproduce the missing allocator form. Its two enabled raw builds agree;
