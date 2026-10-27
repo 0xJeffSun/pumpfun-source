@@ -64,3 +64,17 @@ loader-created capture payload. Two real builds, a fresh isolated dependency
 build, 536 bounded signed records and 912 fresh loader transactions support this
 result. This is an explicitly reconstructed layout, not historical build proof.
 The four core selected programs remain byte-unequal.
+
+## Additional PR204–206 review
+
+| PR | Scope | Review result |
+| --- | --- | --- |
+| [#204](https://github.com/lalalune/pumpfun-source/pull/204) | Constant Pubkey initializer boundary | Source verifier and all 13 tests pass; exact one-file source delta reviewed. The 550→551 observation is source-only and not composed onto later frontiers. |
+| [#205](https://github.com/lalalune/pumpfun-source/pull/205) | Checked Crank destination credit | Saved-evidence verifier passes. Fresh 76-case replay equals the saved JSON exactly: 15 control errors, zero proposal errors. PR201 follow-up preserves the native-only flow; no combined candidate claimed. |
+| [#206](https://github.com/lalalune/pumpfun-source/pull/206) | Complete legacy/V2 distribution helpers | Full verifier and five negative controls pass. All three source maps differ only in sharing_update.rs. Fresh 417-case replay equals the saved JSON exactly; 556 normalized, 118 raw-local, 409 unique pairs, 29 unmatched. |
+
+These additions retain their own immutable baselines. README and remaining-work
+notes distinguish the newest 556-window research candidate from the generated
+554-window pinned inventory. Additive progress-log conflicts were resolved by
+retaining both entries. PR203's rebased head adds no source changes to the tested
+canonical Relay; the reviewed portable guard is retained.

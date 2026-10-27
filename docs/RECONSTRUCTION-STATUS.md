@@ -679,3 +679,19 @@ The four core source maps and their 107 input pins remain unchanged. The current
 4,415-row inventory now reflects this Relay selection rather than labeling the
 old source-15 artifact current. Historical provenance and exhaustive behavior
 remain unproved.
+
+## Reviewed PR204–206 research additions
+
+The [distribution helpers](../repro/pump_fees/distribution-helper-recovery/README.md)
+close the historical copy residuals for both adapters on the 554-window AdminCto
+baseline: 556 normalized, 409 unique pairs, 118 raw-local, 29 unmatched. All 23
+helper callees and 165 Locations check; a fresh 417-case replay equals the retained
+receipt. The generated inventory remains pinned to the preceding 554 candidate.
+The earlier ownership-control results above are preserved as historical experiments.
+
+The [constant-admin parser proposal](../research/fees-initialize-config-const-admin-source-proposal/README.md)
+passes its source verifier and 13 tests; its older 550-to-551 source-only claim is
+not added to the newer candidate. The [Crank checked-credit packet](../research/fees-crank-lamport-overflow/README.md)
+passes evidence checks and a fresh 76-case differential, reproducing 15 control
+failures and zero proposal failures. Its source must be composed with PR201's flow
+before a current combined runtime or byte claim is made.

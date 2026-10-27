@@ -495,14 +495,14 @@ closes original 127776 on the current source. Preserve the included source span,
 zero-admin guard, event ordering and two-build/runtime evidence. There are now
 31 unmatched windows (199,040 original text bytes).
 
-For adapters 235304 and 236240, the [ownership study](../research/fees-cpi-adapter-ownership-controls/README.md)
-retains the observed individual account arguments, corrected program clone
-destination, and V2 parameter order. Four copy-scheduling bytes still differ in
-each closest body. Their local copy effect is equal, but exact body recovery
-requires resolving that emitted order without broadening masks. Constructor,
-visibility, field-order, `mem::take` and typed-return controls are already tested.
-Do not repeat them as new gains or silently combine this older experimental
-source with the AdminCto artifact.
+The [distribution-helper recovery](../repro/pump_fees/distribution-helper-recovery/README.md)
+now closes both adapters, 235304 and 236240, on this same AdminCto baseline.
+It reaches 556 normalized windows, 409 unique pairs, 118 raw-local matches and
+29 unmatched windows, preserving all prior matches and 165 Location uses.
+Fresh review repeats all 417 cases exactly. Reconcile this verified research
+candidate into the generated inventory before treating its 29-window remainder
+as the pinned inventory; the latter still deliberately records 554/31.
+The earlier ownership controls retain their historical four-byte residuals.
 
 ## Crank native-only flow: reviewed, still awaiting current-source integration
 
@@ -513,7 +513,10 @@ conversion. Fresh review reproduces all 304 retained cases exactly: 292 raw
 equalities, 12 compute-log differences, and no application/nonlog differences.
 Its 552-window base is separate from the current 554-window AdminCto source.
 Integrate the ordinary Crank changes into that source, remeasure every window
-and call edge, and retain the unresolved compute/whole-body gaps.
+and call edge, and retain the unresolved compute/whole-body gaps. Also apply the reviewed
+[checked-credit correction](../research/fees-crank-lamport-overflow/README.md)
+using its PR201 follow-up patch, preserving the native-only flow. Fresh review
+repeats all 76 overflow-boundary cases exactly, including 15 corrected errors.
 
 ## Relay canonical promotion completed
 
