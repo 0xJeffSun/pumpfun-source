@@ -74,5 +74,5 @@
   "validation/commands.json": "16fc4c6728c1d41d51422a9e8c27a6ab760cec4ebfac54f687d675be92416355",
   "validation/static.json": "a737e27b3c2ced1d41a4f041ded2093179b17b22833284c206f48480e4814d9e",
   "validation/summary.json": "6f64dfdd846afdaf3d1fff0e8127e4c7bddd239cf25d0ee8c91226915af707e4",
-  "verify.py": "5baefe0c7554239eceae751b9cf5e2bb5904ba771aae1119f995c47cdddbf83e"
+  "verify.py": "974e8fa7b2004a7c74470a248cc5066a41486685fb9f247c407eefc2dc4f6802"
 }
