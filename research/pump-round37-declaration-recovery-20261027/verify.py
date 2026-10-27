@@ -47,3 +47,26 @@ for address,label in checks:
     assert any(has_label(images['candidate']['unstripped.so'],x,label)for x in hits)
 print('Verified 766 -> 769 -> 770 -> 771 -> 772 -> 776 -> 777 / 1035, retaining every earlier match.')
 print('Verified native repeat equality at 771 and 777; eleven recovered source filename references; whole ELF unequal.')
+
+candidate_sha=sha(images['candidate']['candidate.so'])
+spec=importlib.util.spec_from_file_location('full_runtime_diagnostics',HERE/'support/diagnostic_audit.py');auditor=importlib.util.module_from_spec(spec);spec.loader.exec_module(auditor)
+full=json.loads(gzip.decompress((HERE/'runtime/full.json.gz').read_bytes()))
+assert full['candidate_sha256']==candidate_sha and full['original_sha256']==sha(original)
+assert full['compiled_source_sha256']==records['candidate']['source_sha256']
+assert full['loader_profile']=='captured-upgradeable' and not full['mismatches']
+corpus=json.loads((HERE/'runtime/corpus.json').read_text())
+assert set(full['suites'])==set(corpus) and len(corpus)==44
+assert full['case_count']==sum(x['cases']for x in corpus.values())==10468
+for name,definition in corpus.items():
+    case=full['suites'][name];assert case['case_count']==definition['cases']
+    assert not case.get('mismatches',case.get('failures',[]))
+    assert full['script_sha256'][definition['script']]==definition['sha256']
+diagnostics=auditor.audit(full['suites']);assert diagnostics==full['diagnostics']and not diagnostics['mismatches']
+assert diagnostics['log_bearing_cases']==10464
+receipts=json.loads(gzip.decompress((HERE/'runtime/full-loader-receipts.json.gz').read_bytes()));assert len(receipts)==44
+for name in corpus:
+    text=receipts[name+'.loader.json'];receipt=json.loads(text)
+    assert sha(text.encode())==full['loader_receipts'][name]['sha256']
+    assert {x['elf_sha256']for x in receipt['loads']}=={candidate_sha,sha(original)}
+    assert all(x['program_bytes']==36 and x['programdata_bytes']==10485760 and x['elf_prefix_unchanged']and x['zero_allocation_tail']for x in receipt['loads'])
+print('Verified exact 777 candidate: 44 suites / 10,468 cases; 10,464 diagnostic log pairs, zero mismatches.')

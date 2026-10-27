@@ -1,5 +1,5 @@
 {
-  "README.md": "30560f6043fa7f359b29744468d2f3d6aa80c80d5a3352b77fbf831cdd12a9f7",
+  "README.md": "74d9f19d0422ec306c0290d9e14d57b2c6dc2455f3b8a397494965d6f7689bdc",
   "account-paths-measure.json": "d70b0f7b239162eb0e7f0e19c1599d9b42acf28d2e415353d430f14146334116",
   "builds/candidate/build-attempt.json.gz": "694b357d50a6730e0d3eee557c79790441eb7c0e8792fe03828004f6c1814683",
   "builds/candidate/build-comparison.json": "7b95ebc8470f588008f6510081069d4d7811a36f65b4f8c0d81c122139af5640",
@@ -84,9 +84,12 @@
   "proposed/src/trade_types.rs": "ce07cb3dfaa8a187eb024a3962e351c6d3fcceca65bb63d0cd113e6d74cf81d1",
   "proposed/src/util/fee.rs": "2fd225ed4822b63609f3ad1270383ca9e603ae0be3caf2b00e5656da84073cd7",
   "reserved-fee-site-measure.json": "6aac09b81782ea2a5c59b9cd26b95b9eabf8b0ac23f6b968d71d25ec96a97b93",
+  "runtime/corpus.json": "b64760672272bf07c5b6a61ab873b2214f9ab5be440eb3f9ddc4b569e870f507",
+  "runtime/full-loader-receipts.json.gz": "b20e373edb7734c254946c8177a2597b2f7b18850282b95230fc77e594f6b961",
+  "runtime/full.json.gz": "564b97c94df37f7119d08a4038cf4621d0e70a3bf775f8c0d3d58f3f7fa811f3",
   "support/analyze.py": "dd7fb38d795d4dd72a25aab0d65c2223d9f6f75d8b3ecb0de1d87d6e102910ac",
   "support/diagnostic_audit.py": "0343c70e4f9c7860ad392f0a8bd10d90ac94fe17bb2ba5bfd49a45683edbe343",
   "support/elf_helpers.py": "fbf808210b28698a65ca385220c48396fe9ab650284dc446a6b9d9194a250777",
   "support/window_map.py": "eeec82f751ea38827c5149f28590f19a3ff516c7eee57b6aa48949cbaac4a7e5",
-  "verify.py": "1e4d4e398ae9360e2ec13404ebbc1eeaf1ed72de3cdd6b3d9ad24b14eddc46a2"
+  "verify.py": "e1b0a90c86dfe2e1918ef62fa5765d2e9ace1ecaaa567fe9a677c5c1cfffe4f2"
 }

@@ -18,4 +18,4 @@ The declaration and helper moves use ordinary Rust definitions and imports. Fiel
 
 The direct-call traversal visits 122 matched function pairs and 588 edges, with one differing callee explicitly retained in `declaration-closure.json`. It is not a complete direct-call closure certificate. Indirect calls, data identity, host-toolchain qualification and whole ELF identity remain unresolved. No original executable bytes are build inputs; no compiler or linker output is patched.
 
-The exact 777 candidate's own 44-suite regression run is in progress. Earlier binaries' runtime results are not reused. Maintained programs/pump, the selected Round37 checkpoint and the repository headline metrics remain unchanged.
+The exact 777 candidate passes its own full 44-suite / 10,468-case corpus. The diagnostic audit covers 10,464 log-bearing cases with zero mismatches. Its full report, frozen corpus definition and all 44 captured-loader receipts are retained under runtime/. Earlier candidates' runtime results are not reused. Maintained programs/pump, the selected Round37 checkpoint and the repository headline metrics remain unchanged.
