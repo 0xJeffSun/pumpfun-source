@@ -19,17 +19,17 @@ bytes (71.9%)**. **One of five programs has complete meaningful-ELF identity**;
 all four core contracts still differ from their captured binaries.
 
 These percentages measure bounded binary-recovery progress, not a claim that
-85.6% of the engineering work is finished. Complete reconstruction also requires
+85.7% of the engineering work is finished. Complete reconstruction also requires
 all remaining code, calls, data, relocations and build provenance.
 
 | Latest verified checkpoint | Matched windows | Matched % | Raw-equal bodies | Normalized only | Unmatched | Whole ELF equal |
 | --- | ---: | ---: | ---: | ---: | ---: | --- |
 | [Pump Round26](repro/pump/main-contract-round26-20261027/README.md) | 721 / 1,035 | 69.7% | 123 | 598 | 314 | No |
 | [PumpSwap / AMM](repro/pump_amm/guard-data-recovery-20261027/README.md) | 638 / 785 | 81.3% | 128 | 510 | 147 | No |
-| [Fees research](research/fees-social-claim-v2-recovery/README.md) | 579 / 585 | 99.0% | 198 | 381 | 6 | No |
+| [Fees research](research/fees-withdraw-tuple-integration/README.md) | 580 / 585 | 99.1% | 198 | 382 | 5 | No |
 | [Mayhem research](research/mayhem-sizing-panic-recovery/README.md) | 429 / 441 | 97.3% | 100 | 329 | 12 | No |
 | [Donation Relay](repro/donation-relay/canonical-exact-selection/README.md) | 492 / 492 | 100.0% | 492 | 0 | 0 | **Yes** |
-| **Total** | **2,859 / 3,338** | **85.6%** | **1,041** | **1,818** | **479** | **1 / 5** |
+| **Total** | **2,860 / 3,338** | **85.7%** | **1,041** | **1,819** | **478** | **1 / 5** |
 
 “Windows” are inferred original machine-function ranges, including framework and
 runtime helpers. Complete normalized matches mask specified call/address
@@ -41,10 +41,10 @@ the whole program is identical.
 | --- | ---: | ---: | ---: |
 | Pump Round26 | 874,352 / 1,792,208 | 48.8% | 917,856 |
 | PumpSwap / AMM | 782,776 / 1,162,040 | 67.4% | 379,264 |
-| Fees research | 742,520 / 799,648 | 92.9% | 57,128 |
+| Fees research | 750,520 / 799,648 | 93.9% | 49,128 |
 | Mayhem research | 595,456 / 706,744 | 84.3% | 111,288 |
 | Donation Relay | 752,488 / 752,488 | 100.0% | 0 |
-| **Total** | **3,747,592 / 5,213,128** | **71.9%** | **1,465,536** |
+| **Total** | **3,755,592 / 5,213,128** | **72.0%** | **1,457,536** |
 
 Pump and AMM rows describe the verified maintained sources. Fees and Mayhem rows
 are the latest upstream research frontiers, distinct from their maintained
@@ -118,12 +118,12 @@ root builds agree; the upstream-gated control reproduces the parent. The target
 runtime is still current Anchor, and no new original matches or target executions
 are claimed.
 
-The latest [Fees Social claim-v2 recovery](research/fees-social-claim-v2-recovery/README.md)
-recovers the original 1,303-instruction handler through owned key parameters,
-signer-field evaluation order and an explicit final return. Fees now has 579
-normalized / 198 raw-local matches. The program-ID fixes and all 21,079 readonly
-bytes are preserved. Two native builds agree and all 17,331 fresh comparisons
-pass. Six functions, absolute layout and complete ELF identity remain unresolved.
+The latest [Fees Withdraw integration](research/fees-withdraw-tuple-integration/README.md)
+composes the published tuple-ownership source with the current Social recovery
+and linker layout. The recovered 967-instruction handler raises Fees to 580
+normalized / 198 raw-local matches. All 21,079 readonly bytes and the program-ID
+fixes are preserved. Two native builds agree and all 17,331 fresh comparisons
+pass. Five functions, absolute layout and complete ELF identity remain unresolved.
 
 The [Fees continuation archive](research/fees-work-continuation-20261027/README.md)
 preserves 12,520 new or updated research files beyond the earlier work checkpoint.
@@ -131,7 +131,7 @@ These experiments retain their individual status and add no accepted matches.
 
 The latest [PumpSwap guard, route and data recovery](repro/pump_amm/guard-data-recovery-20261027/README.md) adds 15 matching windows, closes the canonical-pool and route-lookahead ordering gaps, and restores accumulator descriptor paths. All 17,462 corpus cases and expanded signed probes pass; 147 AMM windows remain. A separate malformed-recipient follow-up still differs in six of nine cases and remains open.
 
-Remaining priorities are the 314 Pump, 147 AMM, 6 Fees and 12 Mayhem unmatched
+Remaining priorities are the 314 Pump, 147 AMM, 5 Fees and 12 Mayhem unmatched
 windows; deeper call/data/relocation identity; original build provenance; and
 uncovered behavior such as authentic fixed-admin AMM `create_config` success.
 The historical [150-handler audit](repro/reconstruction-audit-2026-10-26/handlers.md)
