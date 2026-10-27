@@ -764,3 +764,20 @@ and transitive call/data closure remain separate obligations. The earlier
 198-window/188-match cohort is retained, not relabelled as semantic completion.
 Root-only MIR levels 0, 1 and 3 do not recover the missing accounting/quote bodies
 and are not promoted. The current candidate and runtime claims are unchanged.
+
+## Current Mayhem source: native Program parser recovery
+
+The [new packet](../research/mayhem-native-program-recovery/README.md) restores
+the captured unconditional program-ID check through a checksum-bound Anchor
+source variant and standard Program account fields. It adds fourteen complete
+normalized bodies (145,720 original text bytes), including all six trade account
+parsers and Burn's parser, with no loss of earlier matches. The complete scan is
+now 58 raw-local / 283 normalized-only / 100 unmatched windows, with 350,216
+unmatched text bytes. The explicit source cohort is 212 windows: 202 matching,
+ten unmatched and 229 without complete source attribution.
+
+Two root builds agree. All 6,636 trade comparisons, 1,032 admin cases and three
+Burn families pass; 15,348 signatures and 624 complete admin account results
+verify independently. Five newly matched bodies retain an unmatched direct
+callee, and data/transitive closure is unproved. Initializer runtime is excluded.
+The canonical selected checkpoint is unchanged; whole Mayhem equality is false.

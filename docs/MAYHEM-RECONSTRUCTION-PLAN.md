@@ -4,19 +4,20 @@ Mayhem is the active reconstruction priority. Other PRs can be reviewed and
 merged, but new body-recovery experiments should advance Mayhem first.
 
 The current research baseline is
-[AMM shared state and source origins](../research/mayhem-amm-source-origins/README.md),
-built on the Sell-origin, GlobalParams and shared-error recoveries. It has 198
-explicitly examined functions: 188 normalized matches and ten unmatched bodies.
-Another 243 original windows remain semantically opaque. Fifty-eight windows
+[native Program parser recovery](../research/mayhem-native-program-recovery/README.md),
+built on the AMM/Sell-origin and GlobalParams recoveries. Its explicit source
+cohort has 212 windows: 202 matches and ten unmatched bodies. Another 229
+windows remain without complete source attribution. Fifty-eight windows
 have literal local body matches, including twelve still-opaque windows. These
 are separate measurements; none implies whole-program or semantic completeness.
 
-The [complete static scan](../research/mayhem-full-window-audit/README.md) covers
-all 441 windows: 58 raw-local matches, 269 normalized-only matches and 114
-unmatched windows spanning 495,936 bytes. The ten named gaps below belong to the
-narrower source-interpreted cohort; another 104 unmatched windows have unresolved
-roles. A further 139 previously opaque windows have structural counterparts,
-including ambiguous duplicates, but no new semantic proof follows from this scan.
+The [complete static scan](../research/mayhem-native-program-recovery/audit.json)
+covers all 441 windows: 58 raw-local matches, 283 normalized-only matches and
+100 unmatched windows spanning 350,216 bytes. The ten named gaps below belong
+to the narrower source cohort; another 90 unmatched windows have unresolved
+roles. Ambiguous structural counterparts and unproved data/callee closure remain
+additional work. Fourteen newly matched bodies are account parsers and their
+program-validation helper, not completed business handlers.
 
 | Unmatched window | Original extent | Work |
 | --- | --- | --- |
@@ -39,7 +40,7 @@ codecs must retain their measured matches while these bodies are recovered.
 
 Next steps:
 
-1. Baseline reproduction is complete. Preserve the 16-input source and both
+1. Baseline reproduction is complete. Preserve the 16 non-vendor inputs, 38 vendor files and both
    artifact hashes as controls before attributing further gains to source.
 2. Recover O0095 from its actual Clock, expiry, quote-mint, reserve-threshold
    and status operations. Verify complete bytes and direct calls/locations;
@@ -56,7 +57,7 @@ Next steps:
    completeness percentage can substitute for this final check.
 
 The canonical source/checkpoint is not changed by these research experiments.
-The latest packet's 5,382 saved signatures and 624 fully reconstructed successful
+The latest packet's 15,348 saved signatures and 624 fully reconstructed successful
 admin account updates are bounded evidence. Initializers remain untested, and no full
 trade handler or whole ELF is equal. All 396 Sell cases now have equal logs after
 removing only explicit compute-consumption lines. Raw compute consumption still
@@ -72,11 +73,20 @@ identifies all six trade bodies through exact instruction log strings and direct
 calls. O0092 is called by BuyPumpSwap and O0093 by SellPumpSwap; their reserve
 arguments must not be assumed to describe legacy Buy.
 
-The latest AMM source-origin packet removes all 27 native and 25 legacy-token
+The preceding AMM source-origin packet removed all 27 native and 25 legacy-token
 non-compute diagnostic differences in the prior AMM control. All 1,653 current
 trade comparisons now have equal logs after removing only compute-consumption
-lines. The final 16-input candidate reproduces across two root builds, preserves
-188 matches, and passes the admin/Burn lanes. O0090 and O0092 are now admitted
+lines. That 16-input candidate reproduced across two root builds, preserved
+188 source-cohort matches, and passed the admin/Burn lanes. O0090 and O0092 are now admitted
 unmatched rows. Next work should resolve O0090's limit-selection branches and
 O0092's quote/cap code generation (1,256 original bytes versus 1,120 candidate),
 then continue O0095 and the full handlers.
+
+The standard Program field syntax plus a one-condition Anchor source patch
+recovers all six trade account parsers, the Burn account parser and six further
+account parsers, as well as the program-validation helper. The patch restores
+the original unconditional ID check, including the all-zero System ID. All
+6,636 trade cases, 1,032 admin cases and three Burn families pass. Five new bodies
+still call an unmatched destination; prioritize the boxed-account helpers and
+initializer closure alongside the ten named gaps. Initializer runtime remains
+unverified.

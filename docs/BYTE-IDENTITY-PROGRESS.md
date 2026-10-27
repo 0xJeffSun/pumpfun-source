@@ -1739,3 +1739,18 @@ accounting or quote helper and do not replace the existing candidate.
 The linked-ELF verifier now reconstructs the same three exact 60-input maps from checked-in public source files authenticated by the unchanged historical source manifest. It no longer requires old Git commit objects merely to read those files. A tiny local depth-one clone reproduces the missing-history failure; ten source-only regression tests pass, including changed/missing input, immutable manifest, unsafe path and symlink rejection. No Git/network fallback is permitted.
 
 The historical wrapper package, compiler source hashes, original and reconstructed ELF bytes, linker recipe, archived builds and runtime evidence remain unchanged. Only the linked verifier and its explicit canonical/status dependency pins change. This fixes CI source retrieval, not a new binary or runtime claim; the complete archived-ELF/portable CI route is checked separately. See `repro/donation-relay/linked-elf-reproduction/SOURCE-CHECKOUT.md`.
+
+## Mayhem native Program parser recovery: fourteen full bodies
+
+[Native Program recovery](../research/mayhem-native-program-recovery/README.md)
+adds 14 strict normalized matches and preserves the preceding 327. Restoring the
+unconditional program-ID check in an authenticated Anchor source copy permits
+standard Program account syntax and reproduces the original generated parser
+layout. All six trade account parsers and Burn's parser now match; their business
+handlers remain separate work. Five new bodies retain a differing direct-callee
+shape. No raw-local gain or whole-ELF equality is claimed.
+
+The two builds reproduce the same 625,904-byte candidate. All 6,636 trade cases,
+1,032 admin cases and three Burn families pass; the verifier checks 15,348
+signatures and 624 complete admin account results. The full static remainder is
+100 windows / 350,216 bytes, versus 114 / 495,936 before this source recovery.

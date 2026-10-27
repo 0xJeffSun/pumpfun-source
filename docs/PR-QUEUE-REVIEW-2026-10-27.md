@@ -201,3 +201,13 @@ locally; this is saved-evidence verification, not a new build or target run.
 The merge preserves the current Mayhem documentation and governance hashes,
 regenerates dependency seals, and leaves historical sources, artifacts and
 runtime receipts unchanged. Hosted CI remains a separate check.
+
+## PR222: complete Fees V2 transfer adapter
+
+Reviewed head `0e8fa80aa560862bb8d2ed1df6e48add8271959b` and merged as
+`350db1c8`. The verifier checks the full 3,096-byte body, thirteen direct callee
+shapes and the complete System ID, preserving the parent frontier and all saved
+17,331 + 119 + 8 + 24 comparisons. All three negative controls pass. No fresh
+compiler or target execution is claimed by this review. The separate Fees
+candidate reaches 570 normalized windows and retains 143 raw-local matches;
+Mayhem remains the active reconstruction priority.
