@@ -45,7 +45,7 @@ analysis. Candidate symbol names are hypotheses about original identity.
 | Mayhem selected | 441 | 58 | 131 | 7 | 245 |
 | Relay selected source 15 | 492 | 33 | 89 | 370 | 0 |
 | **Fees latest research** | **585** | **118** | **433** | **34** | **0** |
-| **Relay latest research** | **492** | **142** | **346** | **4** | **0** |
+| **Relay latest research** | **492** | **317** | **175** | **0** | **0** |
 
 Each row is a partition, not a score of semantic correctness. Mayhem's source
 ledger has 257 opaque windows, 12 of which happen to match local raw bytes.
@@ -64,11 +64,14 @@ calling whole trade or donation handlers perfect.
 
 ## How much remains?
 
-The strongest artifact-backed Relay research candidate matches **488/492 windows
-(99.2% by window count)**. Its four unmatched windows span **17,680 of 752,488
-original text bytes (2.3%)**. These are full unresolved window sizes, not differing
-byte counts or estimates of remaining effort. The remaining bodies are donation
-wrappers; matched bodies still require complete transitive and data identity.
+The strongest artifact-backed Relay research candidate matches **492/492 normalized
+windows**, including **317 raw-local bodies**. All four donation wrappers now
+match raw instruction bytes. This closes the missing normalized-body inventory,
+not complete binary identity: **18,623 positions still differ in the 818,280-byte
+meaningful ELF**, and the capture contains another 12,168 allocation bytes.
+Remaining work includes raw call/address values, relocations, data/indirect
+semantics and broader runtime coverage. There is no missing-window byte count
+to substitute for those requirements.
 
 Fees research has **551/585 windows with a normalized counterpart**: 404 unique
 structural pairs and 147 original windows in ambiguous duplicate groups. Its 34
@@ -104,9 +107,9 @@ these data checks do not establish arbitrary runtime or transitive semantics.
 
 ## Relay: the complete remaining body list
 
-The labels below are working source attributions from the recovery studies,
-not symbols authenticated from the stripped original. Every row remains
-unmatched in the current artifact-backed settlement candidate.
+There are now no unmatched normalized Relay windows. The four former residuals
+below are raw body-equal in the current wrapper artifact. Their labels remain
+working source attributions, not authenticated original symbols.
 
 | Original ordinal | Address | Bytes | Working attribution / next comparison |
 | --- | ---: | ---: | --- |
@@ -120,7 +123,8 @@ coordinates (one), Token-2022/framework versions (four), framework/sysroot and
 share-error behavior (nine), the mint-fee predicate (one), the Jupiter optional-seed
 builder (one), burn/close ownership (one), and the shared donation worker (one),
 without losing previous normalized matches. The latest combined source adds
-epoch close, swap-only and three settlement bodies, bringing that total to 488.
+epoch close, swap-only and three settlement bodies, reaching 488. The wrapper
+artifact then recovers all four rows above, reaching 492.
 Source-location recovery separately
 resolves all 43 differences in a fixed audited cohort of 346 location references;
 it does not add another matched function or establish all-data identity.
@@ -530,10 +534,10 @@ it does not independently re-decode the transaction instruction/event payloads.
 Those payloads need a separate cross-check before the history is used to close
 field-role claims. The five semantic roles remain unresolved; no field is renamed.
 
-1. **Continue Relay body recovery:** isolate one ordinary Rust change per trial,
-   starting with epoch close and the shared donation worker. Keep
-   negative trials; require no lost normalized matches and fresh replay of any
-   proposed candidate. Do not infer a match from equal sizes or fuzzy similarity.
+1. **Continue Relay raw identity recovery:** explain the 18,623 differing
+   meaningful-ELF positions, starting with raw call/address values and relocations.
+   Preserve all 492 normalized matches and require fresh replay for a proposed
+   candidate. Account for the captured allocation tail without output padding.
 2. **Close known behavior defects:** Pump `sell_v2` and the ten partial/unaccepted
    selected dispositions above, with bound success/rejection tests. Cover genuine
    CPI callers, ownership and extension/mode combinations before acceptance.
@@ -589,3 +593,27 @@ The current 551-window candidate freshly passes 17,331 suite comparisons and
 157 strict signed social-creation cases. Earlier matrices retain their own
 artifact bindings. Full data, indirect behavior and whole-file identity remain
 open; these are normalized body gains, not six fully proven public handlers.
+
+
+## Artifact-backed completion of the Relay normalized inventory
+
+The [independently built wrapper recovery](../repro/donation-relay/donation-wrapper-artifact-recovery/README.md)
+reproduces the 488 → 490 → 492 progression. The key source boundary is both
+context field declaration order and caller construction order, with direct event
+construction after native account close. All 18 wrapper callees and the existing
+positional data graph pass; fresh signed replay passes 536 records. No whole-ELF,
+protected-settlement-success or exhaustive semantic identity is claimed. Earlier
+four-window lists below describe preceding checkpoints and are superseded for
+current body coverage by this artifact.
+
+
+## Relay raw-layout accounting
+
+The [raw-layout audit](../repro/donation-relay/raw-layout-audit/README.md) verifies
+that original and candidate have the same multiset of 492 normalized bodies.
+Fifteen permutation regions contain 17,991 positionally differing text bytes;
+outside them, all 462 differing text bytes are direct-call operands. The remaining
+170 differences are pointer, symbol-value, relocation-site and entry-address
+fields. This is complete positional accounting, not proof of unique correspondence
+or semantic pointer identity. Six compiled source-identity controls do not reduce
+the whole-file residual, and none replaces the accepted artifact.

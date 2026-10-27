@@ -1008,6 +1008,31 @@ finite signed replay are observations, not downloadable runtime proof. Default
 compiler_executed=false and runtime_verified=false; protected relayer success
 remains untested. Raw data semantics, addresses/order, indirect behavior and
 whole-file identity remain open. Full identity of the four core programs is 0/4.
+
+
+## Relay 492-window independent artifact verification — 27 October 2026
+
+The [wrapper artifact](../repro/donation-relay/donation-wrapper-artifact-recovery/README.md)
+independently reproduces #189's intermediate and final outputs. All 492 normalized
+windows now match, including 317 raw-local bodies and all four donation wrappers.
+The 18 actual wrapper callees, exact read-only data and positional data graph pass;
+536 fresh signed replay records pass. The meaningful ELF still differs at 18,623
+positions. The current inventory is advanced to the artifact-backed result,
+without changing selected checkpoints or claiming whole-binary identity.
+The fixed-order interleaving search was stopped after 29 completed negative
+trials because #189 supplied the broader declaration/construction fix.
+
+
+## Relay raw-layout audit — 27 October 2026
+
+Complete byte accounting attributes the 18,453 text differences to 15 normalized
+body-permutation regions (17,991 bytes) and otherwise aligned direct-call operands
+(462 bytes). Fourteen data pointers, two symbol values, 81 relocation-site values
+and the entry address account for the other 170 differing bytes. Six compiled
+source-identity controls preserve 492 normalized windows but do not reduce the
+whole output difference; raw gains and losses are retained. The accepted artifact
+and its 18,623-position residual remain unchanged.
+
 ## Relay: context naming recovers three raw bodies — 27 October 2026
 
 The [context naming recovery](../repro/donation-relay/donate-context-raw-recovery/README.md)

@@ -6,11 +6,11 @@
     },
     "guard.py": {
       "bytes": 3744,
-      "sha256": "61c097ee2f7d99e6d824ce415e86c395c6f10dca226ebc7f922fe56b77e050eb"
+      "sha256": "304805bc76373b3b4403dcd68e9de4782a9a4bc2dd3e73db3ff6789dd7a39fd5"
     },
     "transition.json": {
-      "bytes": 1502,
-      "sha256": "3e6fa454c0dc3906471bc0d3d60378aa496df27e5cbd14025690fb994515b9f0"
+      "bytes": 1462,
+      "sha256": "c1f72485a2db56b27b89ded0719638d18d52e5d676c4ee2e9168f783cf52c300"
     }
   }
 }
