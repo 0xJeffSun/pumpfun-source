@@ -4,20 +4,20 @@ use crate::CollectCreatorFeeEvent;
 #[derive(Accounts)]
 pub struct CollectCreatorFeeV2<'info>{
  /// CHECK: recipient only tied to vault/ATA seeds.
- #[account(mut)]pub creator:UncheckedAccount<'info>,
+ #[account(mut)]pub creator:AccountInfo<'info>,
  /// CHECK: token program validates data only during positive token transfer.
  #[account(mut,seeds=[creator.key().as_ref(),quote_token_program.key().as_ref(),quote_mint.key().as_ref()],bump,seeds::program=associated_token_program.key())]pub creator_token_account:UncheckedAccount<'info>,
  /// CHECK: address constrained, native transfer defers owner/data checks.
- #[account(mut,seeds=[b"creator-vault",creator.key().as_ref()],bump)]pub creator_vault:UncheckedAccount<'info>,
+ #[account(mut,seeds=[b"creator-vault",creator.key().as_ref()],bump)]pub creator_vault:AccountInfo<'info>,
  /// CHECK: address constrained, token program validates on transfer.
  #[account(mut,seeds=[creator_vault.key().as_ref(),quote_token_program.key().as_ref(),quote_mint.key().as_ref()],bump,seeds::program=associated_token_program.key())]pub creator_vault_token_account:UncheckedAccount<'info>,
- pub quote_mint:InterfaceAccount<'info,anchor_spl::token_interface::Mint>,
+ pub quote_mint:Box<InterfaceAccount<'info,anchor_spl::token_interface::Mint>>,
  pub quote_token_program:Interface<'info,anchor_spl::token_interface::TokenInterface>,
  pub associated_token_program:Program<'info,anchor_spl::associated_token::AssociatedToken>,
  pub system_program:Program<'info,System>,
 }
 pub fn execute(ctx:Context<CollectCreatorFeeV2>)->Result<()>{
- let a=&ctx.accounts;if a.creator.executable{msg!("Creator account is executable, so it cannot receive lamports");return Ok(());}
+ let a=&ctx.accounts;require!(*a.creator.owner!=crate::distribution::FEES,crate::PumpError::UnableToDistributeCreatorVaultMigratedToSharingConfig);if a.creator.executable{msg!("Creator account is executable, so it cannot receive lamports");return Ok(());}
  let native=a.quote_mint.key()==anchor_spl::token::spl_token::native_mint::ID;
  let amount=if native{a.creator_vault.lamports().saturating_sub(Rent::get()?.minimum_balance(0))}else{
   let data=a.creator_vault_token_account.try_borrow_data()?;anchor_spl::token_interface::TokenAccount::try_deserialize(&mut &data[..])?.amount

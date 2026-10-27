@@ -30,3 +30,37 @@ impl GlobalConfig {
         Ok(())
     }
 }
+
+impl GlobalConfig {
+    pub fn validate_buyback_recipient(
+        &self,
+        recipient: &Pubkey,
+        token_account: &Pubkey,
+        quote_mint: &Pubkey,
+        token_program: &Pubkey,
+    ) -> Result<()> {
+        require_keys_neq!(*recipient, Pubkey::default(), PumpAmmError::BuybackFeeRecipientNotAuthorized);
+        require!(self.buyback_fee_recipients.contains(recipient), PumpAmmError::BuybackFeeRecipientNotAuthorized);
+        let expected = anchor_spl::associated_token::get_associated_token_address_with_program_id(
+            recipient, quote_mint, token_program,
+        );
+        require!(expected == *token_account, PumpAmmError::BuybackFeeRecipientNotAuthorized);
+        Ok(())
+    }
+}
+
+impl GlobalConfig {
+    pub fn split_buyback(&self, protocol_fee: u64, is_mayhem_mode: bool) -> (u64, u64) {
+        if is_mayhem_mode {
+            return (0, protocol_fee);
+        }
+        let buyback_fee = u64::try_from(
+            (self.buyback_basis_points as u128) * (protocol_fee as u128) / 10000,
+        )
+        .expect("buyback fee is at most protocol_fee");
+        let net_protocol = protocol_fee
+            .checked_sub(buyback_fee)
+            .expect("buyback_fee never exceeds protocol_fee");
+        (buyback_fee, net_protocol)
+    }
+}

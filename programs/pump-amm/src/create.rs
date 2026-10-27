@@ -18,7 +18,7 @@ impl AnchorDeserialize for OptionBool {
                 1 => Ok(Self(true)),
                 _ => Err(std::io::Error::new(
                     std::io::ErrorKind::InvalidData,
-                    "Invalid bool representation",
+                    format!("Invalid bool representation: {}", a[0]),
                 )),
             },
             Err(e) if e.kind() == std::io::ErrorKind::UnexpectedEof => Ok(Self(false)),
@@ -56,7 +56,9 @@ pub struct CreatePool<'info> {
     pub global_config: Box<Account<'info, GlobalConfig>>,
     #[account(mut)]
     pub creator: Signer<'info>,
+    #[account(mint::token_program = base_token_program)]
     pub base_mint: Box<InterfaceAccount<'info, Mint>>,
+    #[account(mint::token_program = quote_token_program)]
     pub quote_mint: Box<InterfaceAccount<'info, Mint>>,
     #[account(init,payer=creator,seeds=[b"pool_lp_mint",pool.key().as_ref()],bump,mint::decimals=9,mint::authority=pool,mint::token_program=token_2022_program)]
     pub lp_mint: Box<InterfaceAccount<'info, Mint>>,
@@ -90,25 +92,6 @@ pub fn execute(
     holder: bool,
 ) -> Result<()> {
     let a = &mut *ctx.accounts;
-    require!(
-        a.global_config.disable_flags & 1 == 0,
-        PumpAmmError::DisabledCreatePool
-    );
-    require!(base_in > 0, PumpAmmError::ZeroBaseAmount);
-    require!(quote_in > 0, PumpAmmError::ZeroQuoteAmount);
-    require!(
-        supported_mint(&a.base_mint.to_account_info())?,
-        PumpAmmError::UnsupportedBaseMint
-    );
-    require!(
-        supported_mint(&a.quote_mint.to_account_info())?,
-        PumpAmmError::UnsupportedQuoteMint
-    );
-    require_keys_neq!(
-        a.base_mint.key(),
-        a.quote_mint.key(),
-        PumpAmmError::SameMint
-    );
     let pump = Pubkey::new_from_array([
         1, 86, 224, 246, 147, 102, 90, 207, 68, 219, 21, 104, 191, 23, 91, 170, 81, 137, 203, 151,
         245, 210, 255, 59, 101, 93, 43, 182, 253, 109, 24, 176,
@@ -116,6 +99,26 @@ pub fn execute(
     let canonical =
         Pubkey::find_program_address(&[b"pool-authority", a.base_mint.key().as_ref()], &pump).0
             == a.creator.key();
+
+    require!(
+        a.global_config.disable_flags & 1 == 0,
+        PumpAmmError::DisabledCreatePool
+    );
+    require_gt!(base_in, 0, PumpAmmError::ZeroBaseAmount);
+    require_gt!(quote_in, 0, PumpAmmError::ZeroQuoteAmount);
+    require!(
+        crate::utils::token::supported_mint(a.base_mint.as_ref().as_ref(), false),
+        PumpAmmError::UnsupportedBaseMint
+    );
+    require!(
+        crate::utils::token::supported_mint(a.quote_mint.as_ref().as_ref(), canonical),
+        PumpAmmError::UnsupportedQuoteMint
+    );
+    require_keys_neq!(
+        a.base_mint.key(),
+        a.quote_mint.key(),
+        PumpAmmError::SameMint
+    );
     require!(
         !mayhem || a.global_config.mayhem_mode_enabled,
         PumpAmmError::MayhemModeDisabled
@@ -127,88 +130,29 @@ pub fn execute(
     );
     require!(!cashback || canonical, PumpAmmError::OnlyPumpPoolsCashback);
 
-    for (src, mint, dst, program, amount) in [
-        (
-            a.user_base_token_account.to_account_info(),
-            a.base_mint.to_account_info(),
-            a.pool_base_token_account.to_account_info(),
-            a.base_token_program.to_account_info(),
-            base_in,
-        ),
-        (
-            a.user_quote_token_account.to_account_info(),
-            a.quote_mint.to_account_info(),
-            a.pool_quote_token_account.to_account_info(),
-            a.quote_token_program.to_account_info(),
-            quote_in,
-        ),
-    ] {
-        let decimals = if mint.key() == a.base_mint.key() {
-            a.base_mint.decimals
-        } else {
-            a.quote_mint.decimals
-        };
-        token_interface::transfer_checked(
-            CpiContext::new(
-                program,
-                token_interface::TransferChecked {
-                    from: src,
-                    mint,
-                    to: dst,
-                    authority: a.creator.to_account_info(),
-                },
-            ),
-            amount,
-            decimals,
-        )?;
-    }
+    crate::utils::token::transfer_checked(
+        a.base_token_program.as_ref(), &a.base_mint, &a.user_base_token_account,
+        &a.pool_base_token_account, a.creator.as_ref(), base_in, &[],
+    )?;
+    crate::utils::token::transfer_checked(
+        a.quote_token_program.as_ref(), &a.quote_mint, &a.user_quote_token_account,
+        &a.pool_quote_token_account, a.creator.as_ref(), quote_in, &[],
+    )?;
     a.pool_base_token_account.reload()?;
     a.pool_quote_token_account.reload()?;
     let pb = a.pool_base_token_account.amount;
     let pq = a.pool_quote_token_account.amount;
-    let product = (pb as u128) * (pq as u128);
-    let mut low = 0u128;
-    let mut high = 1u128 << 64;
-    while low + 1 < high {
-        let mid = (low + high) / 2;
-        if mid * mid <= product {
-            low = mid
-        } else {
-            high = mid
-        }
-    }
+    let liquidity = initial_liquidity(pb, pq)?;
     require!(
         (creator_fee == 0 && !can_edit) || canonical,
         PumpAmmError::OnlyCanonicalPumpPoolsCanHaveCoinCreator
     );
-    let liquidity = low as u64;
     require!(liquidity >= 100, PumpAmmError::TooLittlePoolTokenLiquidity);
     let output = liquidity - 100;
     let creator = a.creator.key();
     let base = a.base_mint.key();
     let quote = a.quote_mint.key();
-    let idx = index.to_le_bytes();
     let bump = [ctx.bumps.pool];
-    let seeds: &[&[u8]] = &[
-        b"pool",
-        &idx,
-        creator.as_ref(),
-        base.as_ref(),
-        quote.as_ref(),
-        &bump,
-    ];
-    anchor_spl::token_2022::mint_to(
-        CpiContext::new_with_signer(
-            a.token_2022_program.to_account_info(),
-            anchor_spl::token_2022::MintTo {
-                mint: a.lp_mint.to_account_info(),
-                to: a.user_pool_token_account.to_account_info(),
-                authority: a.pool.to_account_info(),
-            },
-            &[seeds],
-        ),
-        output,
-    )?;
     a.pool.set_inner(Pool {
         pool_bump: bump[0],
         index,
@@ -233,6 +177,9 @@ pub fn execute(
         protocol_fees: 0,
         creator_fees: 0,
     });
+    crate::utils::token::mint_to_pool(
+        &a.token_2022_program, &a.lp_mint, &a.user_pool_token_account, output, &a.pool,
+    )?;
     let event = CreatePoolEvent {
         timestamp: Clock::get()?.unix_timestamp,
         index,
@@ -293,20 +240,8 @@ pub struct CreatePoolEvent {
     pub is_holder_reward: bool,
 }
 
-fn supported_mint(info: &AccountInfo) -> Result<bool> {
-    use anchor_spl::token_2022::spl_token_2022::{
-        extension::{BaseStateWithExtensions, ExtensionType, StateWithExtensions},
-        state::Mint as SplMint,
-    };
-    if *info.owner == anchor_spl::token::ID {
-        return Ok(true);
-    }
-    let data = info.try_borrow_data()?;
-    let mint = StateWithExtensions::<SplMint>::unpack(&data)?;
-    Ok(mint.get_extension_types()?.iter().all(|e| {
-        matches!(
-            e,
-            ExtensionType::MetadataPointer | ExtensionType::TokenMetadata
-        )
-    }))
+fn initial_liquidity(base: u64, quote: u64) -> Result<u64> {
+    let product = (base as u128) * (quote as u128);
+    u64::try_from(crate::utils::math::U128::from(product).integer_sqrt())
+        .map_err(|_| error!(PumpAmmError::Truncation))
 }

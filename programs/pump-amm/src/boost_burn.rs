@@ -38,7 +38,7 @@ pub fn execute(ctx: Context<BoostBuyAndBurn>, requested: u64, minimum: u64) -> R
     require!(effective.map_or(false, |v| v != 0), PumpAmmError::PoolCannotBoost);
     let old_vault = a.boost_vault.amount;
     let used = requested.min(old_vault);
-    require!(used > 0, PumpAmmError::ZeroQuoteAmount);
+    require_gt!(used, 0, PumpAmmError::ZeroQuoteAmount);
     let has_fee = {
         let data = a.quote_mint.to_account_info();
         let data = data.try_borrow_data()?;
@@ -47,18 +47,18 @@ pub fn execute(ctx: Context<BoostBuyAndBurn>, requested: u64, minimum: u64) -> R
     };
     let transfer_fee = crate::quote_transfer_fee(&a.quote_mint.to_account_info(), used, false)?;
     let net = used.checked_sub(transfer_fee).ok_or(PumpAmmError::Overflow)?;
-    require!(net > 0, PumpAmmError::ZeroQuoteAmount);
+    require_gt!(net, 0, PumpAmmError::ZeroQuoteAmount);
     let old_base = a.pool_base_token_account.amount;
     let old_quote = a.pool_quote_token_account.amount;
-    let fees = a.pool.protocol_fees.checked_add(a.pool.creator_fees).ok_or(PumpAmmError::Overflow)?;
-    old_quote.checked_sub(fees).ok_or(PumpAmmError::Overflow)?;
-    let q = u64::try_from(a.pool.virtual_quote_reserves.checked_add(old_quote as i128).ok_or(PumpAmmError::Overflow)?).map_err(|_| error!(PumpAmmError::Overflow))?;
+    let fees = a.pool.protocol_fees.checked_add(a.pool.creator_fees).ok_or_else(|| error!(PumpAmmError::Overflow))?;
+    old_quote.checked_sub(fees).ok_or_else(|| error!(PumpAmmError::Overflow))?;
+    let q = u64::try_from(a.pool.virtual_quote_reserves.checked_add(old_quote as i128).ok_or_else(|| error!(PumpAmmError::Overflow))?).map_err(|_| error!(PumpAmmError::Overflow))?;
     let adjusted = net.checked_sub(1).ok_or(PumpAmmError::Overflow)? as u128;
     let denominator = (q as u128).checked_add(adjusted).ok_or(PumpAmmError::Overflow)?;
-    let burned = u64::try_from((old_base as u128).checked_mul(adjusted).ok_or(PumpAmmError::Overflow)?.checked_div(denominator).ok_or(PumpAmmError::DivisionByZero)?).map_err(|_| error!(PumpAmmError::Truncation))?;
-    require!(burned > 0, PumpAmmError::ZeroBaseAmount);
-    require!(burned >= minimum, PumpAmmError::ExceededSlippage);
-    require!(old_base > burned, PumpAmmError::TooLittlePoolTokenLiquidity);
+    let burned = u64::try_from((old_base as u128).checked_mul(adjusted).ok_or(PumpAmmError::Overflow)?.checked_div(denominator).ok_or_else(|| error!(PumpAmmError::DivisionByZero))?).map_err(|_| error!(PumpAmmError::Truncation))?;
+    require_gt!(burned, 0, PumpAmmError::ZeroBaseAmount);
+    require_gte!(burned, minimum, PumpAmmError::ExceededSlippage);
+    require_gt!(old_base, burned, PumpAmmError::TooLittlePoolTokenLiquidity);
     let pool_key = a.pool.key();
     let boost_bump = [ctx.bumps.boost_vault_authority];
     let boost_seeds: &[&[u8]] = &[b"boost_vault", pool_key.as_ref(), &boost_bump];

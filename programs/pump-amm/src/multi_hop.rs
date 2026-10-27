@@ -17,7 +17,7 @@ pub struct MultiHop<'info> {
     pub user_out_token_account: Box<InterfaceAccount<'info, TokenAccount>>,
     #[account(seeds=[b"global_config"],bump)]
     pub global_config: Box<Account<'info, GlobalConfig>>,
-    #[account(seeds=[b"fee_config",crate::ID.as_ref()],bump,seeds::program=FEE_OWNER)]
+    #[account(seeds=[b"fee_config",crate::ID.as_ref()],bump=fee_config.bump,seeds::program=FEE_OWNER)]
     pub fee_config: Box<Account<'info, TradeFeeConfig>>,
     #[account(init_if_needed,payer=user,space=137,seeds=[b"user_volume_accumulator",user.key().as_ref()],bump)]
     pub user_volume_accumulator: Box<Account<'info, UserVolumeAccumulator>>,
@@ -29,7 +29,7 @@ pub struct MultiHop<'info> {
     pub system_program: Program<'info, System>,
     /// CHECK: Self-event PDA.
     #[account(seeds=[b"__event_authority"],bump)]
-    pub event_authority: UncheckedAccount<'info>,
+    pub event_authority: AccountInfo<'info>,
     pub program: Program<'info, PumpAmmProgram>,
     pub pump_program: Program<'info, PumpProgram>,
     /// CHECK: Forwarded unchanged to Pump, which validates its context.
@@ -63,7 +63,9 @@ fn fee(n: u64, bps: u64) -> Result<u64> {
     checked64(((n as u128) * (bps as u128) + 9999) / 10000)
 }
 fn token_amount(a: &AccountInfo) -> Result<u64> {
-    Ok(TokenAccount::try_deserialize(&mut &a.try_borrow_data()?[..])?.amount)
+    let data = a.try_borrow_data()?;
+    let account = TokenAccount::try_deserialize(&mut &data[..])?;
+    Ok(account.amount)
 }
 fn program_for<'info>(
     a: &MultiHop<'info>,
@@ -148,10 +150,8 @@ fn emit_event<'info, T: anchor_lang::Event + Clone>(a: &MultiHop<'info>, event: 
     Ok(())
 }
 fn fees(a: &MultiHop, h: &AmmHop, quote_reserve: u64, base_reserve: u64) -> Result<TradeFees> {
-    require!(
-        a.fee_config.to_account_info().data_len() >= 2512,
-        PumpAmmError::FeeConfigTooShort
-    );
+    let fee_config_len = a.fee_config.to_account_info().data_len();
+    require!(fee_config_len >= 2512, PumpAmmError::FeeConfigTooShort);
     let authority =
         Pubkey::find_program_address(&[b"pool-authority", h.base_mint.key().as_ref()], &PUMP).0;
     let mut selected = if h.pool.creator != authority {
@@ -165,7 +165,7 @@ fn fees(a: &MultiHop, h: &AmmHop, quote_reserve: u64, base_reserve: u64) -> Resu
             .checked_mul(quote_reserve as u128)
             .ok_or(PumpAmmError::Overflow)?
             .checked_div(base_reserve as u128)
-            .ok_or(PumpAmmError::DivisionByZero)?;
+            .ok_or_else(|| error!(PumpAmmError::DivisionByZero))?;
         let config = &a.fee_config;
         let quote = h.quote_mint.key();
         let other_normal = Pubkey::new_from_array([
@@ -180,20 +180,20 @@ fn fees(a: &MultiHop, h: &AmmHop, quote_reserve: u64, base_reserve: u64) -> Resu
                     "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
                 )
         {
-            if config.exotic_flat_fees.lp_fee_bps == 0
+            if fee_config_len < 4097 || (config.exotic_flat_fees.lp_fee_bps == 0
                 && config.exotic_flat_fees.protocol_fee_bps == 0
-                && config.exotic_flat_fees.creator_fee_bps == 0
+                && config.exotic_flat_fees.creator_fee_bps == 0)
             {
                 config.flat_fees.clone()
             } else {
                 config.exotic_flat_fees.clone()
             }
         } else {
-            let tiers = if quote
+            let tiers: &[crate::trade::TradeFeeTier] = if quote
                 == anchor_lang::solana_program::pubkey!(
                     "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
                 ) {
-                &config.stable_fee_tiers
+                if fee_config_len >= 4073 { &config.stable_fee_tiers } else { &[] }
             } else {
                 &config.fee_tiers
             };
@@ -211,7 +211,7 @@ fn fees(a: &MultiHop, h: &AmmHop, quote_reserve: u64, base_reserve: u64) -> Resu
             }
         }
     };
-    if h.pool.creator_fee_bps != 0 {
+    if a.global_config.creator_fee_configurable && h.pool.creator_fee_bps != 0 {
         selected.creator_fee_bps = h.pool.creator_fee_bps;
     }
     Ok(selected)
@@ -222,8 +222,8 @@ pub fn execute<'info>(
     minimum: u64,
 ) -> Result<()> {
     let a = &mut *ctx.accounts;
-    require!(amount > 0, PumpAmmError::ZeroQuoteAmount);
-    require!(minimum > 0, PumpAmmError::ZeroBaseAmount);
+    require_gt!(amount,0, PumpAmmError::ZeroQuoteAmount);
+    require_gt!(minimum,0, PumpAmmError::ZeroBaseAmount);
     let remaining = ctx.remaining_accounts;
     require!(
         !remaining.is_empty() && remaining.len() % 5 == 0,
@@ -345,13 +345,7 @@ pub fn execute<'info>(
                 &infos,
                 &signers,
             )?;
-            let (program, ret) = get_return_data().ok_or(PumpAmmError::MultiHopCurveRunMismatch)?;
-            require!(
-                program == PUMP && ret.len() == 16,
-                PumpAmmError::MultiHopCurveRunMismatch
-            );
-            let output = u64::from_le_bytes(ret[..8].try_into().unwrap());
-            let buyback = u64::from_le_bytes(ret[8..16].try_into().unwrap());
+            let (output, buyback) = read_cpi_return::<(u64, u64)>();
             if !input_native {
                 let expected = source_before
                     .checked_sub(current)
@@ -369,9 +363,9 @@ pub fn execute<'info>(
                             0
                         })
                     })
-                    .ok_or(PumpAmmError::Overflow)?;
-                require!(
-                    token_amount(&source)? == expected,
+                    .ok_or_else(|| error!(PumpAmmError::Overflow))?;
+                require_eq!(
+                    token_amount(&source)?, expected,
                     PumpAmmError::MultiHopCurveRunMismatch
                 );
             }
@@ -385,9 +379,9 @@ pub fn execute<'info>(
                             0
                         })
                     })
-                    .ok_or(PumpAmmError::Overflow)?;
-                require!(
-                    token_amount(&destination)? == expected,
+                    .ok_or_else(|| error!(PumpAmmError::Overflow))?;
+                require_eq!(
+                    token_amount(&destination)?, expected,
                     PumpAmmError::MultiHopCurveRunMismatch
                 );
             }
@@ -396,9 +390,8 @@ pub fn execute<'info>(
             prepaid = true;
             source_seeds.clear();
         } else {
-            require_keys_eq!(
-                *group[2].owner,
-                crate::ID,
+            require!(
+                *group[2].owner == crate::ID,
                 PumpAmmError::AccountTypeNotSupported
             );
             let mut slice = group;
@@ -431,7 +424,7 @@ pub fn execute<'info>(
             i += 1;
         }
     }
-    require!(current >= minimum, PumpAmmError::ExceededSlippage);
+    require_gte!(current,minimum, PumpAmmError::ExceededSlippage);
     if a.user_volume_accumulator.user == Pubkey::default() {
         a.user_volume_accumulator.user = a.user.key();
     }
@@ -465,7 +458,7 @@ fn amm_hop<'info>(
     );
     let canonical =
         Pubkey::find_program_address(&[b"pool-authority", h.base_mint.key().as_ref()], &PUMP).0;
-    require_keys_eq!(h.pool.creator, canonical, PumpAmmError::OnlyPumpPools);
+    require!(h.pool.creator == canonical, PumpAmmError::OnlyPumpPools);
     require!(
         !h.pool.is_cashback_coin,
         PumpAmmError::CashbackCoinNotSupported
@@ -507,6 +500,7 @@ fn amm_hop<'info>(
             h.quote_mint.key(),
             PumpAmmError::InvalidQuoteMint
         );
+        require_keys_neq!(state.owner, Pubkey::default(), PumpAmmError::BuybackFeeRecipientNotAuthorized);
         require!(
             a.global_config
                 .buyback_fee_recipients
@@ -522,9 +516,8 @@ fn amm_hop<'info>(
             &anchor_spl::associated_token::ID,
         )
         .0;
-        require_keys_eq!(
-            expected,
-            a.buyback_fee_recipient.key(),
+        require!(
+            expected == a.buyback_fee_recipient.key(),
             PumpAmmError::BuybackFeeRecipientNotAuthorized
         );
     }
@@ -577,12 +570,12 @@ fn amm_hop<'info>(
     } else {
         quote_transfer_fee(&h.quote_mint.to_account_info(), amount, false)?
     };
-    let received = amount.checked_sub(input_tf).ok_or(PumpAmmError::Overflow)?;
+    let received = amount.checked_sub(input_tf).ok_or_else(|| error!(PumpAmmError::Overflow))?;
     let b = if sell {
         h.pool_base_token_account
             .amount
             .checked_sub(amount)
-            .ok_or(PumpAmmError::Overflow)?
+            .ok_or_else(|| error!(PumpAmmError::Overflow))?
     } else {
         h.pool_base_token_account.amount
     };
@@ -592,34 +585,49 @@ fn amm_hop<'info>(
         h.pool_quote_token_account
             .amount
             .checked_sub(received)
-            .ok_or(PumpAmmError::Overflow)?
+            .ok_or_else(|| error!(PumpAmmError::Overflow))?
     };
     let old_virtual = h.pool.virtual_quote_reserves;
     let old_accrued = h
         .pool
         .protocol_fees
         .checked_add(h.pool.creator_fees)
-        .ok_or(PumpAmmError::Overflow)?;
+        .ok_or_else(|| error!(PumpAmmError::Overflow))?;
     raw_q
         .checked_sub(old_accrued)
-        .ok_or(PumpAmmError::Overflow)?;
+        .ok_or_else(|| error!(PumpAmmError::Overflow))?;
     let q = u64::try_from(
         (raw_q as i128)
             .checked_add(old_virtual)
-            .ok_or(PumpAmmError::Overflow)?,
+            .ok_or_else(|| error!(PumpAmmError::Overflow))?,
     )
     .map_err(|_| error!(PumpAmmError::Overflow))?;
     let can_boost = old_virtual
         .checked_add(old_accrued as i128)
-        .ok_or(PumpAmmError::Overflow)?
+        .ok_or_else(|| error!(PumpAmmError::Overflow))?
         != 0;
     // Fee selection uses the reserves before the already-completed input transfer.
+    let fee_quote = if sell {
+        crate::curve::constant_product::quote_for_sell(amount, b, q)?
+    } else {
+        received
+    };
     let mut selected = fees(a, h, q, b)?;
+    let mut initial_lp_fee = crate::curve::fees::fee(fee_quote, selected.lp_fee_bps)?;
+    let mut initial_protocol_fee = crate::curve::fees::fee(fee_quote, selected.protocol_fee_bps)?;
+    let mut initial_creator_fee = if h.pool.coin_creator == Pubkey::default() {
+        0
+    } else {
+        crate::curve::fees::fee(fee_quote, selected.creator_fee_bps)?
+    };
     if !creator_end {
+        initial_lp_fee = 0;
+        initial_creator_fee = 0;
         selected.lp_fee_bps = 0;
         selected.creator_fee_bps = 0;
     }
     if !protocol_end {
+        initial_protocol_fee = 0;
         selected.protocol_fee_bps = 0;
     }
     let creator_bps = if h.pool.coin_creator == Pubkey::default() {
@@ -628,27 +636,25 @@ fn amm_hop<'info>(
         selected.creator_fee_bps
     };
     let (base_amount, curve_quote, lp_fee, protocol_fee, creator_fee, total_quote) = if sell {
-        let curve = checked64((q as u128) * (amount as u128) / ((b as u128) + (amount as u128)))?;
-        let l = fee(curve, selected.lp_fee_bps)?;
-        let p = fee(curve, selected.protocol_fee_bps)?;
-        let c = fee(curve, creator_bps)?;
+        let curve = fee_quote;
+        let l = initial_lp_fee;
+        let p = initial_protocol_fee;
+        let c = initial_creator_fee;
         let total = curve
             .checked_sub(l)
             .and_then(|v| v.checked_sub(p))
             .and_then(|v| v.checked_sub(c))
-            .ok_or(PumpAmmError::Overflow)?;
-        require!(total > 0, PumpAmmError::ZeroQuoteAmount);
+            .ok_or_else(|| error!(PumpAmmError::Overflow))?;
+        require_gt!(total,0, PumpAmmError::ZeroQuoteAmount);
         (amount, curve, l, p, c, total)
     } else {
-        let sum = checked64(
-            10000
-                + selected.lp_fee_bps as u128
-                + selected.protocol_fee_bps as u128
-                + creator_bps as u128,
-        )?;
-        let estimate = checked64((received as u128) * 10000 / (sum as u128))?;
-        require!(
-            estimate > 0,
+        let total_fee_bps = selected.lp_fee_bps
+            .saturating_add(selected.protocol_fee_bps)
+            .saturating_add(creator_bps);
+        let sum = 10000u128 + total_fee_bps as u128;
+        let estimate = checked64((received as u128) * 10000 / sum)?;
+        require_gt!(
+            estimate,0,
             PumpAmmError::BuyNotEnoughQuoteTokensToCoverFees
         );
         let l = fee(estimate, selected.lp_fee_bps)?;
@@ -663,8 +669,8 @@ fn amm_hop<'info>(
         let adjusted_estimate = estimate
             .checked_sub(excess)
             .ok_or(PumpAmmError::BuyNotEnoughQuoteTokensToCoverFees)?;
-        require!(
-            adjusted_estimate > 0,
+        require_gt!(
+            adjusted_estimate,0,
             PumpAmmError::BuySlippageBelowMinBaseAmountOut
         );
         let curve = received
@@ -672,16 +678,14 @@ fn amm_hop<'info>(
             .and_then(|v| v.checked_sub(p))
             .and_then(|v| v.checked_sub(c))
             .ok_or(PumpAmmError::BuyNotEnoughQuoteTokensToCoverFees)?;
-        let adjusted = curve.saturating_sub(1);
-        let out = checked64((b as u128) * (adjusted as u128) / ((q as u128) + (adjusted as u128)))?;
-        require!(out > 0, PumpAmmError::ZeroBaseAmount);
-        require!(out < b, PumpAmmError::BuyMoreBaseAmountThanPoolReserves);
+        let out = crate::curve::constant_product::base_for_quote(curve, b, q)?;
+        require_gt!(out,0, PumpAmmError::ZeroBaseAmount);
         (out, curve, l, p, c, curve + l + p + c)
     };
     let buyback_bps = a.global_config.buyback_basis_points;
     let calculate_buyback = || {
         u64::try_from((protocol_fee as u128) * (buyback_bps as u128) / 10000)
-            .expect("buyback fee fits u64")
+            .expect("buyback fee is at most protocol_fee")
     };
     let buyback_fee = if sell { calculate_buyback() } else { 0 };
     let quote_transfer_fee = if sell {
@@ -894,4 +898,9 @@ fn amm_hop<'info>(
         )?;
     }
     Ok(output)
+}
+
+fn read_cpi_return<T: AnchorDeserialize>() -> T {
+    let (_, data) = get_return_data().unwrap();
+    T::try_from_slice(&data).unwrap()
 }

@@ -82,19 +82,20 @@ pub fn execute(ctx: Context<SweepFees>, creator: bool) -> Result<()> {
         .pool
         .protocol_fees
         .checked_add(a.pool.creator_fees)
-        .ok_or(PumpAmmError::Overflow)?;
+        .ok_or_else(|| error!(PumpAmmError::Overflow))?;
     a.pool_quote_token_account
         .amount
         .checked_sub(fees)
-        .ok_or(PumpAmmError::Overflow)?;
+        .ok_or_else(|| error!(PumpAmmError::Overflow))?;
     if amount == 0 {
+        msg!("Nothing to sweep for fee bucket {}", u8::from(creator));
         return Ok(());
     }
     let updated_virtual = a
         .pool
         .virtual_quote_reserves
         .checked_add(amount as i128)
-        .ok_or(PumpAmmError::Overflow)?;
+        .ok_or_else(|| error!(PumpAmmError::Overflow))?;
     if a.recipient_token_account.data_is_empty() {
         associated_token::create_idempotent(CpiContext::new(
             a.associated_token_program.to_account_info(),
@@ -120,9 +121,8 @@ pub fn execute(ctx: Context<SweepFees>, creator: bool) -> Result<()> {
         &bump,
     ];
     if a.pool_quote_token_account.key() == a.recipient_token_account.key() {
-        require_keys_eq!(
-            a.pool_quote_token_account.owner,
-            a.pool.key(),
+        require!(
+            a.pool_quote_token_account.owner == a.pool.key(),
             PumpAmmError::SelfTransferNotAllowed
         );
     }

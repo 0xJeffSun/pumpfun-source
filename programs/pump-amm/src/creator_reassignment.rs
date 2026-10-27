@@ -8,17 +8,45 @@ pub const FEES_PROGRAM: Pubkey = anchor_lang::solana_program::pubkey!("pfeeUxB6j
 impl Owner for SharingConfig{fn owner()->Pubkey{FEES_PROGRAM}}
 impl Discriminator for SharingConfig{const DISCRIMINATOR:&'static[u8]=&[216,74,9,0,56,140,93,75];}
 impl AccountSerialize for SharingConfig{}
-impl AccountDeserialize for SharingConfig{
- fn try_deserialize(buf:&mut &[u8])->Result<Self>{if buf.len()<8{return Err(error!(anchor_lang::error::ErrorCode::AccountDiscriminatorNotFound));}if &buf[..8]!=Self::DISCRIMINATOR{return Err(error!(anchor_lang::error::ErrorCode::AccountDiscriminatorMismatch));}Self::try_deserialize_unchecked(buf)}
- fn try_deserialize_unchecked(buf:&mut &[u8])->Result<Self>{Self::deserialize(&mut &buf[8..]).map_err(|_|error!(anchor_lang::error::ErrorCode::AccountDidNotDeserialize))}
+impl AccountDeserialize for SharingConfig {
+    fn try_deserialize(buf: &mut &[u8]) -> Result<Self> {
+        if buf.len() < Self::DISCRIMINATOR.len() {
+            return Err(anchor_lang::error::ErrorCode::AccountDiscriminatorNotFound.into());
+        }
+        let given_disc = &buf[..Self::DISCRIMINATOR.len()];
+        if Self::DISCRIMINATOR != given_disc {
+            return Err(error!(anchor_lang::error::ErrorCode::AccountDiscriminatorMismatch)
+                .with_account_name(stringify!(SharingConfig)));
+        }
+        Self::try_deserialize_unchecked(buf)
+    }
+    fn try_deserialize_unchecked(buf: &mut &[u8]) -> Result<Self> {
+        let mut data: &[u8] = &buf[Self::DISCRIMINATOR.len()..];
+        AnchorDeserialize::deserialize(&mut data)
+            .map_err(|_| anchor_lang::error::ErrorCode::AccountDidNotDeserialize.into())
+    }
 }
 #[derive(AnchorSerialize,AnchorDeserialize,Clone)]pub struct BondingCurve{pub virtual_token_reserves:u64,pub virtual_sol_reserves:u64,pub real_token_reserves:u64,pub real_sol_reserves:u64,pub token_total_supply:u64,pub complete:bool,pub creator:Pubkey,pub is_mayhem_mode:bool,pub is_cashback_coin:bool}
 impl Owner for BondingCurve{fn owner()->Pubkey{trade::PUMP}}
 impl Discriminator for BondingCurve{const DISCRIMINATOR:&'static[u8]=&[23,183,248,55,96,216,172,96];}
 impl AccountSerialize for BondingCurve{}
-impl AccountDeserialize for BondingCurve{
- fn try_deserialize(buf:&mut &[u8])->Result<Self>{if buf.len()<8{return Err(error!(anchor_lang::error::ErrorCode::AccountDiscriminatorNotFound));}if &buf[..8]!=Self::DISCRIMINATOR{return Err(error!(anchor_lang::error::ErrorCode::AccountDiscriminatorMismatch));}Self::try_deserialize_unchecked(buf)}
- fn try_deserialize_unchecked(buf:&mut &[u8])->Result<Self>{Self::deserialize(&mut &buf[8..]).map_err(|_|error!(anchor_lang::error::ErrorCode::AccountDidNotDeserialize))}
+impl AccountDeserialize for BondingCurve {
+    fn try_deserialize(buf: &mut &[u8]) -> Result<Self> {
+        if buf.len() < Self::DISCRIMINATOR.len() {
+            return Err(anchor_lang::error::ErrorCode::AccountDiscriminatorNotFound.into());
+        }
+        let given_disc = &buf[..Self::DISCRIMINATOR.len()];
+        if Self::DISCRIMINATOR != given_disc {
+            return Err(error!(anchor_lang::error::ErrorCode::AccountDiscriminatorMismatch)
+                .with_account_name(stringify!(BondingCurve)));
+        }
+        Self::try_deserialize_unchecked(buf)
+    }
+    fn try_deserialize_unchecked(buf: &mut &[u8]) -> Result<Self> {
+        let mut data: &[u8] = &buf[Self::DISCRIMINATOR.len()..];
+        AnchorDeserialize::deserialize(&mut data)
+            .map_err(|_| anchor_lang::error::ErrorCode::AccountDidNotDeserialize.into())
+    }
 }
 #[event_cpi]
 #[derive(Accounts)]
@@ -29,7 +57,7 @@ pub struct MigratePoolCoinCreator<'info>{
 pub fn migrate(ctx:Context<MigratePoolCoinCreator>)->Result<()>{
  let pool=&mut ctx.accounts.pool;
  require!(!pool.is_holder_reward,PumpAmmError::HolderRewardCreatorImmutable);
- require_eq!(pool.creator_fees,0,PumpAmmError::CreatorFeesNotSwept);
+ require!(pool.creator_fees==0,PumpAmmError::CreatorFeesNotSwept);
  let old_coin_creator=pool.coin_creator;pool.coin_creator=ctx.accounts.sharing_config.key();
  let event=MigratePoolCoinCreatorEvent{timestamp:Clock::get()?.unix_timestamp,base_mint:pool.base_mint,pool:pool.key(),sharing_config:ctx.accounts.sharing_config.key(),old_coin_creator,new_coin_creator:pool.coin_creator};emit!(event.clone());emit_cpi!(event);Ok(())
 }
@@ -74,7 +102,7 @@ pub fn admin_cto(ctx:Context<AdminCtoPool>,coin_creator:Pubkey,is_holder_reward:
   info.realloc(287,false)?;
  }
  let pool=&mut ctx.accounts.pool;
- require_keys_eq!(pool.creator,ctx.accounts.pool_authority.key(),PumpAmmError::OnlyCanonicalPumpPoolsCanHaveCoinCreator);
+ require!(pool.creator==ctx.accounts.pool_authority.key(),PumpAmmError::OnlyCanonicalPumpPoolsCanHaveCoinCreator);
  require!(!pool.is_mayhem_mode,PumpAmmError::CtoNotAllowedForMayhemPool);
  require!(!pool.is_holder_reward || is_holder_reward,PumpAmmError::HolderRewardCreatorImmutable);
  if is_holder_reward{
@@ -87,7 +115,7 @@ pub fn admin_cto(ctx:Context<AdminCtoPool>,coin_creator:Pubkey,is_holder_reward:
   require!(ctx.accounts.global_config.creator_fee_configurable,PumpAmmError::CreatorFeeNotConfigurable);
   require!(fee>0 && fee<=ctx.accounts.global_config.max_configurable_creator_fee_bps,PumpAmmError::CreatorFeeBpsOutOfRange);
  }
- require_eq!(pool.creator_fees,0,PumpAmmError::CreatorFeesNotSwept);
+ require!(pool.creator_fees==0,PumpAmmError::CreatorFeesNotSwept);
  let old_coin_creator=pool.coin_creator;let old_creator_fee_bps=pool.creator_fee_bps;
  pool.coin_creator=coin_creator;pool.is_holder_reward=is_holder_reward;pool.can_edit_creator_fee=false;
  if let Some(fee)=creator_fee_bps{pool.creator_fee_bps=fee;}

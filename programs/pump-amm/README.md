@@ -1,5 +1,25 @@
 # PumpSwap source reconstruction
 
+The maintained source is the [error-order checkpoint](../../repro/pump_amm/error-order-recovery-20261027/README.md).
+It restores legacy exact-buy, withdrawal and sweep failure precedence, retaining
+separate V2 buy flows, checked arithmetic, and exact Pool decoder frontends.
+
+The candidate has **584/785 normalized original window matches**, **124 raw
+matches**, and **201 unmatched windows**. All prior normalized matches remain.
+Matched original text is **642,616/1,162,040 bytes (55.3%)**; whole-ELF equality
+remains false. Two strict builds reproduce the same artifact.
+
+All 17,462 corpus cases and prior account, fee, trade, buyback, CPI and liquidity
+matrices pass. Another 1,485 signed error-order cases close 67 prior mismatches.
+Recorded-log comparison excludes only compute lines and exact source coordinates;
+synthetic states and absent older logs retain their documented limits.
+
+Full code/data/indirect-call identity and historical provenance remain unfinished.
+The next private investigations recover token-burn and Pool sweep helper structure
+and evaluate authentic older Solana dependencies. None is promoted by this checkpoint.
+
+The paragraphs below describe historical checkpoints.
+
 The selected checkpoint is [collect owner6048](../../repro/pump_amm/owner6048-v144/README.md), executable `09bee0dfd751dc6ae0240bbac262933c6bda6e0c94aa643f82c57f2956c3a117`. A genuine managed-source build reproduced the independently tested executable and symbols. The plain require preserves the owner predicate and error6048 while removing unsupported compared-key decoration; the current source origin is truthful `src/collect.rs:20`.
 
 The unchanged corpus retains 17,462 cases, 35,074 submissions and 35,418 verified signature fields. Existing owner-error fixtures do not assert strict compared-key/origin diagnostics, and original parser-versus-handler attribution remains unproved. Whole-original byte equality is false; 297 original windows remain unmatched. Opaque pointer/callee behavior, generic stack safety, complete source/build provenance and exhaustive behavior/security acceptance remain open.
@@ -111,7 +131,7 @@ for separately from comparison cases. The complete Pool and GlobalConfig exit
 matches and their 24 direct targets each are rechecked at the new candidate locations.
 
 At that checkpoint, the fee-config handler remained structurally unmatched: 6,096 candidate bytes versus
-2,912 original bytes, with no standalone 616-byte scalar-setter match. Its actual
+2, 912 original bytes, with no standalone 616-byte scalar-setter match. Its actual
 error helper retains constant-specialization differences. Compilation uses pinned
 v1.44 and the unchanged installed SDK performs its separate v1.52 strip phase;
 these are recorded as separate tool identities. Whole-file equality and the audit
@@ -136,7 +156,7 @@ The complete create wrapper, handler, account parser and event serializer match
 original normalized instruction bodies. The init helper and recipient setter retain
 truthful source-coordinate differences; their immediate callees match completely.
 Three scalar methods remain 608 bytes versus 616 original bytes. The fee-update
-handler is 3,160 bytes versus 2,912 original bytes, and its actual scalar error helper
+handler is 3,160 bytes versus 2, 912 original bytes, and its actual scalar error helper
 retains four specialization differences. The genuine two-caller graph alone does
 not reproduce the original code generation. Eleven compiler panic/format/I/O data
 references remain outside complete recursive data verification.
@@ -150,7 +170,7 @@ All earlier checkpoints and negative evidence remain immutable.
 
 The preceding [event-borrow checkpoint](../../repro/pump_amm/update-event-borrow-v144/README.md)
 removes only the redundant clone passed to `emit!` in `update_fee_config`.
-The handler now measures 2,912 bytes and its complete normalized instruction body
+The handler now measures 2, 912 bytes and its complete normalized instruction body
 matches the captured original. The 2,296-byte wrapper and 744-byte event serializer
 also match. This is source-derived output from the unchanged pinned build recipe.
 
@@ -174,7 +194,7 @@ false, and the audit remains incomplete. Earlier packages and seals stay immutab
 
 ## Destination rent checkpoint
 
-The preceding AMM is the [destination-rent checkpoint](../../repro/pump_amm/destination-rent-v144/README.md) (`2a8a69f1…`, 1,199,064 bytes). The main executable and symbol ELF equal the reviewed scratch candidate. The one-line correction uses the destination account data length for rent. All 17,462 existing comparisons and 35,418 saved signature checks are retained; no new fixture or main replay is claimed. Pool and GlobalConfig complete normalized serializers, each of their 24 direct targets and discriminators match. The complete 2,912-byte fee-update handler, wrapper and event serializer still match under normalization; 12/16 immediate handler targets match. Scalar methods, recipient source coordinates and transitive data remain unresolved. Initializer static matches remain, but authentic successful replay is absent. The 267 transfer rows include zero-lamport destination-data cases and do not validate live nonempty accounts; the external 8/267 claim remains unverified.
+The preceding AMM is the [destination-rent checkpoint](../../repro/pump_amm/destination-rent-v144/README.md) (`2a8a69f1…`, 1,199,064 bytes). The main executable and symbol ELF equal the reviewed scratch candidate. The one-line correction uses the destination account data length for rent. All 17,462 existing comparisons and 35,418 saved signature checks are retained; no new fixture or main replay is claimed. Pool and GlobalConfig complete normalized serializers, each of their 24 direct targets and discriminators match. The complete 2, 912-byte fee-update handler, wrapper and event serializer still match under normalization; 12/16 immediate handler targets match. Scalar methods, recipient source coordinates and transitive data remain unresolved. Initializer static matches remain, but authentic successful replay is absent. The 267 transfer rows include zero-lamport destination-data cases and do not validate live nonempty accounts; the external 8/267 claim remains unverified.
 
 
 ## Accumulator mutation ordering checkpoint
@@ -306,7 +326,7 @@ The tested scratch executable SHA256 is
 The natural emitted filename has length65 and line4; the original has length83
 and line8. No workspace, remap, padding or flag change was used. The full inventory
 retains488 normalized original matches and297 unmatched windows, with zero gains
-or losses. All25 unchanged suites pass17462 cases and35418 saved signatures;
+or losses. All25 unchanged suites pass17462 cases and 35418 saved signatures;
 all113 existing Sync messages remain exact. No new initializer-success fixture
 or whole-byte-match improvement is claimed. The separate
 [main companion](../../repro/pump_amm/init-logical-module-main-v144/README.md)

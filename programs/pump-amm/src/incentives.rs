@@ -61,32 +61,33 @@ pub fn admin(ctx:Context<AdminUpdateTokenIncentives>,start_time:i64,end_time:i64
     g.mint=ctx.accounts.mint.key();g.seconds_in_a_day=seconds_in_a_day;
     if start_time!=0 && end_time!=0 {
         if start_time!=g.start_time {
-            require!(start_time>timestamp,PumpAmmError::StartTimeInThePast);
+            require_gt!(start_time,timestamp,PumpAmmError::StartTimeInThePast);
             g.start_time=start_time;g.total_token_supply=[0;30];g.sol_volumes=[0;30];
         }
-        require!(end_time>timestamp,PumpAmmError::EndTimeInThePast);
-        require!(end_time>start_time,PumpAmmError::EndTimeBeforeStartTime);
-        require!(end_time-start_time<seconds_in_a_day*30,PumpAmmError::TimeRangeTooLarge);
+        require_gt!(end_time,timestamp,PumpAmmError::EndTimeInThePast);
+        require_gt!(end_time,start_time,PumpAmmError::EndTimeBeforeStartTime);
+        require_gte!(seconds_in_a_day.checked_mul(30).expect("Unexpected overflow")-1,end_time-start_time,PumpAmmError::TimeRangeTooLarge);
         g.end_time=end_time;
         if timestamp>g.start_time {
-            let current=usize::try_from((timestamp-g.start_time)/seconds_in_a_day).unwrap();
-            let end=usize::try_from((g.end_time-g.start_time)/seconds_in_a_day).unwrap();
-            require!(end>current,PumpAmmError::EndTimeBeforeCurrentDay);
+            let current=usize::try_from((timestamp-g.start_time).checked_div(seconds_in_a_day).expect("end_time should be bigger than start_time")).expect("SVM is 64-bit");
+            let end=usize::try_from((g.end_time-g.start_time).checked_div(seconds_in_a_day).expect("end_time should be bigger than start_time")).expect("SVM is 64-bit");
+            require_gt!(end,current,PumpAmmError::EndTimeBeforeCurrentDay);
             for i in current+1..=end {g.sol_volumes[i]=0;}
         }
     }
     if token_supply_per_day>0 {
         require!(timestamp<=g.end_time,PumpAmmError::SupplyUpdateForFinishedRange);
-        let current=if timestamp<g.start_time {0}else{usize::try_from((timestamp-g.start_time)/seconds_in_a_day).unwrap()};
-        let end=usize::try_from((g.end_time-g.start_time)/seconds_in_a_day).unwrap();
+        let current=if timestamp<g.start_time {0}else{usize::try_from((timestamp-g.start_time).checked_div(seconds_in_a_day).expect("end_time should be bigger than start_time")).expect("SVM is 64-bit")};
+        let end=usize::try_from((g.end_time-g.start_time).checked_div(seconds_in_a_day).expect("end_time should be bigger than start_time")).expect("SVM is 64-bit");
         if day_number<30 {
-            require!(day_number as usize<=end,PumpAmmError::DayIndexAfterEndIndex);
-            require!(day_number as usize>=current,PumpAmmError::DayInActiveRange);
+            require_gte!(end,day_number as usize,PumpAmmError::DayIndexAfterEndIndex);
+            require_gte!(day_number as usize,current,PumpAmmError::DayInActiveRange);
             g.total_token_supply[day_number as usize]=token_supply_per_day;
         }else{for i in current..=end {g.total_token_supply[i]=token_supply_per_day;}}
     }
     let event=AdminUpdateTokenIncentivesEvent{start_time,end_time,day_number,token_supply_per_day,mint:ctx.accounts.mint.key(),seconds_in_a_day,timestamp};
     emit!(event.clone());emit_cpi!(event);
+    msg!("GlobalVolumeAccumulator={:?}",*ctx.accounts.global_volume_accumulator);
     Ok(())
 }
 #[derive(Accounts)]
@@ -148,7 +149,7 @@ pub fn claim(ctx:Context<ClaimTokenIncentives>)->Result<()> {
     let bump=[ctx.bumps.global_volume_accumulator];let signer:&[&[u8]]=&[b"global_volume_accumulator",&bump];
     require!(ctx.accounts.global_incentive_token_account.key()!=ctx.accounts.user_ata.key() || ctx.accounts.global_incentive_token_account.owner==g.key(),PumpAmmError::SelfTransferNotAllowed);
     token_interface::transfer_checked(CpiContext::new_with_signer(ctx.accounts.token_program.to_account_info(),TransferChecked{from:ctx.accounts.global_incentive_token_account.to_account_info(),mint:ctx.accounts.mint.to_account_info(),to:ctx.accounts.user_ata.to_account_info(),authority:g.to_account_info()},&[signer]),amount,ctx.accounts.mint.decimals)?;
-    let total_claimed_tokens=u.total_claimed_tokens+amount;
+    let total_claimed_tokens=u.total_claimed_tokens.checked_add(amount).unwrap();
     u.total_unclaimed_tokens=0;u.total_claimed_tokens=total_claimed_tokens;u.has_total_claimed_tokens=true;u.needs_claim=u.current_sol_volume>0;u.last_update_timestamp=timestamp;
     let event=ClaimTokenIncentivesEvent{user:ctx.accounts.user.key(),mint:ctx.accounts.mint.key(),amount,timestamp,total_claimed_tokens:u.total_claimed_tokens,current_sol_volume:u.current_sol_volume};emit!(event.clone());emit_cpi!(event);
     Ok(())

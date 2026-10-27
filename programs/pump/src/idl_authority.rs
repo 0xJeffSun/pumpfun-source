@@ -7,11 +7,11 @@ pub struct AdminSetIdlAuthority<'info> {
     pub global: Account<'info,Global>,
     /// CHECK: canonical Anchor IDL account, checked and resized by the handler.
     #[account(mut,address=anchor_lang::idl::IdlAccount::address(&crate::ID))]
-    pub idl_account: UncheckedAccount<'info>,
+    pub idl_account: AccountInfo<'info>,
     pub system_program: Program<'info,System>,
     /// CHECK: the program signs its own canonical empty-seed PDA.
     #[account(seeds=[],bump)]
-    pub program_signer: UncheckedAccount<'info>,
+    pub program_signer: AccountInfo<'info>,
 }
 pub fn execute(ctx:Context<AdminSetIdlAuthority>,idl_authority:Pubkey)->Result<()> {
     let account=ctx.accounts.idl_account.to_account_info();

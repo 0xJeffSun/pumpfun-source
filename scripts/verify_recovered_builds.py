@@ -8,6 +8,12 @@ parser=argparse.ArgumentParser();parser.add_argument('--program',choices=['pump'
 for name,status in json.loads((ROOT/'repro/status.json').read_text()).items():
  if args.program and name!=args.program:continue
  if not status.get('candidate_artifact'):continue
+ if name=='pump_amm' and status['candidate_artifact']=='repro/pump_amm/error-order-recovery-20261027/results/build/candidate.so':
+  subprocess.run([sys.executable,'-B',str(ROOT/'scripts/verify_pump_amm_checkpoint.py')],check=True)
+  continue
+ if name=='pump' and status['candidate_artifact']=='repro/pump/main-contract-round9-20261027/candidate.so':
+  subprocess.run([sys.executable,'-B',str(ROOT/'scripts/verify_pump_main_checkpoint.py')],check=True)
+  continue
  if name=='mayhem' and status['candidate_artifact']=='repro/mayhem/compiler-v154-main/main/candidate.so':
   checkpoint=ROOT/'repro/mayhem/compiler-v154-main'
   known='f5d514664d47a04cc22282fdd19ca9e01d835c8a335aa9acc3f637fc61650acc'

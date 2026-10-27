@@ -245,7 +245,7 @@ def run_case(binary, case):
     logs = list(meta.logs())
     user_before = parse_user(base64.b64decode(before["user_volume"]["data_base64"]))
     user_after = parse_user(base64.b64decode(after["user_volume"]["data_base64"]))
-    return {"case": case, "error": error,
+    return {"logs": logs, "case": case, "error": error,
             "error_code": int(code.group(1)) if code else None,
             "success": error is None,
             "signature": str(tx.signatures[0]),

@@ -10,8 +10,10 @@ Pump paths and 53,787 saved comparison receipts: [Pump48 decoder/preparation che
 and [Mayhem24](../repro/mayhem/twentyfour/README.md). These bounded recovery results
 do not extend the source review frozen at commit329fc44 into a complete audit of
 the later candidates. All four original whole-file comparisons still differ.
-The current Pump sell_v2 quote transfer-fee minimum-output/event gap remains an
-explicit reconstruction limitation; no corrected executable is published.
+The local [sell_v2 transfer-fee correction](../repro/pump/sell-v2-transfer-fee-20261026/README.md)
+now matches the original in the 206-case handler corpus, including 22 new fee
+cases, and has a reproduced current-source build. This does not extend the
+historical security review or establish whole-program byte identity.
 Mayhem's only remaining identified handler is initialize_mayhem_state; its
 initializer work remains stopped. Historical checkpoints below retain their
 original counts and scope.

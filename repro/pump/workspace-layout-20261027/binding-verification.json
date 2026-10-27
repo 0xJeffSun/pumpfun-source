@@ -1,0 +1,11 @@
+{
+  "workspace_correct": {
+    "accepted": true
+  },
+  "wrong_source": {
+    "accepted": false
+  },
+  "wrong_candidate": {
+    "accepted": false
+  }
+}

@@ -2,6 +2,8 @@
 //! This crate is not the historical source or a byte-identical replacement.
 use anchor_lang::prelude::*;
 mod state;
+pub mod curve;
+pub mod utils;
 mod instructions;
 use instructions::admin::create_config::*;
 pub use instructions::token_incentives::init_user_volume_accumulator::InitUserVolumeAccumulator;
@@ -38,6 +40,7 @@ use anchor_spl::{token::Token, token_2022::Token2022, token_interface::{self, Mi
 use state::*;
 
 declare_id!("pAMMBay6oceH9fJKBRHGP5D4bD4sWpmSwMn52FMfXEA");
+anchor_lang::declare_program!(pump_fees);
 
 #[program]
 pub mod pump_amm_recovered {
@@ -64,79 +67,47 @@ pub mod pump_amm_recovered {
         Ok(())
     }
 
-    pub fn multi_hop_swap<'info>(ctx:Context<'_, '_, 'info, 'info, MultiHop<'info>>,amount_in:u64,min_amount_out:u64)->Result<()>{multi_hop::execute(ctx,amount_in,min_amount_out)}
-    pub fn buy<'info>(ctx:Context<'_,'_,'_,'info,LegacyBuy<'info>>,base_amount_out:u64,max_quote_amount_in:u64,track_volume:OptionBool)->Result<()>{legacy_buy::execute(ctx,base_amount_out,max_quote_amount_in,track_volume.0,false)}
-    pub fn buy_exact_quote_in<'info>(ctx:Context<'_,'_,'_,'info,LegacyBuy<'info>>,spendable_quote_in:u64,min_base_amount_out:u64,track_volume:OptionBool)->Result<()>{legacy_buy::execute(ctx,spendable_quote_in,min_base_amount_out,track_volume.0,true)}
-    pub fn sell<'info>(ctx:Context<'_,'_,'_,'info,LegacySell<'info>>,base_amount_in:u64,min_quote_amount_out:u64)->Result<()>{legacy_sell::execute(ctx,base_amount_in,min_quote_amount_out)}
-    pub fn claim_cashback(ctx:Context<ClaimCashback>)->Result<()>{cashback::claim(ctx)}
-    pub fn sync_user_volume_accumulator(ctx:Context<SyncUserVolumeAccumulator>)->Result<()>{incentives::sync(ctx)}
-    pub fn admin_update_token_incentives(ctx:Context<AdminUpdateTokenIncentives>,start_time:i64,end_time:i64,seconds_in_a_day:i64,day_number:u64,token_supply_per_day:u64)->Result<()>{incentives::admin(ctx,start_time,end_time,seconds_in_a_day,day_number,token_supply_per_day)}
-    pub fn claim_token_incentives(ctx:Context<ClaimTokenIncentives>)->Result<()>{incentives::claim(ctx)}
-    pub fn admin_cto_pool(ctx:Context<AdminCtoPool>,coin_creator:Pubkey,is_holder_reward:bool,creator_fee_bps:Option<u64>)->Result<()>{creator_reassignment::admin_cto(ctx,coin_creator,is_holder_reward,creator_fee_bps)}
-    pub fn migrate_pool_coin_creator(ctx:Context<MigratePoolCoinCreator>)->Result<()>{creator_reassignment::migrate(ctx)}
-    pub fn set_coin_creator(ctx:Context<SetCoinCreator>)->Result<()>{creator_reassignment::set(ctx)}
-
-    pub fn transfer_creator_fees_to_pump(ctx: Context<TransferCreatorFeesToPump>) -> Result<()> { transfer_creator::legacy(ctx) }
-    pub fn transfer_creator_fees_to_pump_v2(ctx: Context<TransferCreatorFeesToPumpV2>) -> Result<()> { transfer_creator::v2(ctx) }
-
-    pub fn collect_coin_creator_fee(ctx: Context<CollectCoinCreatorFee>) -> Result<()> { collect::execute(ctx) }
-
-    pub fn extend_account(ctx: Context<ExtendAccount>) -> Result<()> { extend::execute(ctx) }
-
-    pub fn sweep_protocol_fee(ctx: Context<SweepFees>) -> Result<()> { sweep::execute(ctx,false) }
-    pub fn sweep_creator_fee(ctx: Context<SweepFees>) -> Result<()> { sweep::execute(ctx,true) }
-
-    pub fn boost_buy_and_burn(ctx: Context<BoostBuyAndBurn>, quote_amount_in: u64, min_base_amount_burned: u64) -> Result<()> { boost_burn::execute(ctx, quote_amount_in, min_base_amount_burned) }
-    pub fn init_boost(ctx: Context<InitBoost>) -> Result<()> { boost::execute(ctx) }
-
-    pub fn create_pool(ctx: Context<CreatePool>, index: u16, base_amount_in: u64, quote_amount_in: u64, coin_creator: Pubkey, is_mayhem_mode: bool, is_cashback_coin: OptionBool, creator_fee_bps: OptionU64, can_edit_creator_fee: OptionBool, is_holder_reward: OptionBool) -> Result<()> { create::execute(ctx,index,base_amount_in,quote_amount_in,coin_creator,is_mayhem_mode,is_cashback_coin.0,creator_fee_bps.0,can_edit_creator_fee.0,is_holder_reward.0) }
-
-    pub fn buy_v2(ctx: Context<TradeV2>, base_amount_out: u64, max_quote_amount_in: u64) -> Result<()> { trade::execute(ctx, base_amount_out, max_quote_amount_in, 0) }
-    pub fn sell_v2(ctx: Context<TradeV2>, base_amount_in: u64, min_quote_amount_out: u64) -> Result<()> { trade::execute(ctx, base_amount_in, min_quote_amount_out, 1) }
-    pub fn buy_exact_quote_in_v2(ctx: Context<TradeV2>, spendable_quote_in: u64, min_base_amount_out: u64) -> Result<()> { trade::execute(ctx, spendable_quote_in, min_base_amount_out, 2) }
-    pub fn deposit(ctx: Context<Liquidity>, lp_token_amount_out: u64, max_base_amount_in: u64, max_quote_amount_in: u64) -> Result<()> {
-        liquidity(ctx, lp_token_amount_out, max_base_amount_in, max_quote_amount_in, true)
-    }
-    pub fn withdraw(ctx: Context<Liquidity>, lp_token_amount_in: u64, min_base_amount_out: u64, min_quote_amount_out: u64) -> Result<()> {
-        liquidity(ctx, lp_token_amount_in, min_base_amount_out, min_quote_amount_out, false)
-    }
-
-    pub fn init_user_volume_accumulator(ctx: Context<InitUserVolumeAccumulator>) -> Result<()> {
-        let event = InitUserVolumeAccumulatorEvent { payer: ctx.accounts.payer.key(),
-            user: ctx.accounts.user.key(), timestamp: Clock::get()?.unix_timestamp };
-        ctx.accounts.user_volume_accumulator.user = ctx.accounts.user.key();
+    pub fn disable(ctx: Context<AdminGlobal>, disable_create_pool: bool,
+        disable_deposit: bool, disable_withdraw: bool,
+        disable_buy: bool, disable_sell: bool) -> Result<()> {
+        let flags = &mut ctx.accounts.global_config.disable_flags;
+        *flags = (*flags & !1) | u8::from(disable_create_pool);
+        *flags = (*flags & !2) | (u8::from(disable_deposit) << 1);
+        *flags = (*flags & !4) | (u8::from(disable_withdraw) << 2);
+        *flags = (*flags & !8) | (u8::from(disable_buy) << 3);
+        *flags = (*flags & !16) | (u8::from(disable_sell) << 4);
+        let event = DisableEvent { timestamp: Clock::get()?.unix_timestamp,
+            admin: ctx.accounts.admin.key(), disable_create_pool,
+            disable_deposit, disable_withdraw, disable_buy, disable_sell };
         emit!(event.clone());
         emit_cpi!(event);
         Ok(())
     }
-    pub fn close_user_volume_accumulator(ctx: Context<CloseUserVolumeAccumulator>) -> Result<()> {
-        let account = &ctx.accounts.user_volume_accumulator;
-        let event = CloseUserVolumeAccumulatorEvent { user: ctx.accounts.user.key(),
-            timestamp: Clock::get()?.unix_timestamp, total_unclaimed_tokens: account.total_unclaimed_tokens,
-            total_claimed_tokens: account.total_claimed_tokens, current_sol_volume: account.current_sol_volume,
-            last_update_timestamp: account.last_update_timestamp };
+    pub fn update_admin(ctx: Context<UpdateAdmin>) -> Result<()> {
+        let admin = ctx.accounts.global_config.admin;
+        let new_admin = ctx.accounts.new_admin.key();
+        ctx.accounts.global_config.admin = new_admin;
+        let event = UpdateAdminEvent { timestamp: Clock::get()?.unix_timestamp, admin, new_admin };
         emit!(event.clone());
         emit_cpi!(event);
         Ok(())
     }
-
-    pub fn set_reserved_fee_recipients(ctx: Context<SetReservedFeeRecipients>, whitelist_pda: Pubkey) -> Result<()> {
-        require!(ctx.remaining_accounts.len() >= 8, PumpAmmError::NotEnoughRemainingAccounts);
-        let mut recipients = [Pubkey::default(); 8];
-        for i in 0..8 {
-            recipients[i] = ctx.remaining_accounts[i].key();
-            require_keys_neq!(recipients[i], Pubkey::default(), PumpAmmError::AllProtocolFeeRecipientsShouldBeNonZero);
-        }
-        ctx.accounts.global_config.whitelist_pda = whitelist_pda;
-        ctx.accounts.global_config.reserved_fee_recipient = recipients[0];
-        ctx.accounts.global_config.reserved_fee_recipients.copy_from_slice(&recipients[1..]);
-        let event = ReservedFeeRecipientsEvent { timestamp: Clock::get()?.unix_timestamp,
-            reserved_fee_recipient: recipients[0], reserved_fee_recipients: recipients[1..].try_into().unwrap() };
-        emit!(event.clone());
+    pub fn update_fee_config(ctx: Context<AdminGlobal>, lp_fee_basis_points: u64,
+        protocol_fee_basis_points: u64, protocol_fee_recipients: [Pubkey; 8],
+        coin_creator_fee_basis_points: u64, admin_set_coin_creator_authority: Pubkey) -> Result<()> {
+        let config = &mut ctx.accounts.global_config;
+        config.set_lp_fee_basis_points(lp_fee_basis_points)?;
+        config.set_protocol_fee_basis_points(protocol_fee_basis_points)?;
+        config.set_protocol_fee_recipients(protocol_fee_recipients)?;
+        config.set_coin_creator_fee_basis_points(coin_creator_fee_basis_points)?;
+        config.admin_set_coin_creator_authority = admin_set_coin_creator_authority;
+        let event = UpdateFeeConfigEvent { timestamp: Clock::get()?.unix_timestamp,
+            admin: ctx.accounts.admin.key(), lp_fee_basis_points, protocol_fee_basis_points,
+            protocol_fee_recipients, coin_creator_fee_basis_points, admin_set_coin_creator_authority };
+        emit!(event);
         emit_cpi!(event);
         Ok(())
     }
-
     pub fn update_creator_fee_config(ctx: Context<UpdateCreatorFeeConfig>, creator_fee_configurable: bool,
         max_configurable_creator_fee_bps: u64) -> Result<()> {
         let account = ctx.accounts.global_config.to_account_info();
@@ -160,7 +131,8 @@ pub mod pump_amm_recovered {
         emit_cpi!(event);
         Ok(())
     }
-
+    pub fn create_pool(ctx: Context<CreatePool>, index: u16, base_amount_in: u64, quote_amount_in: u64, coin_creator: Pubkey, is_mayhem_mode: bool, is_cashback_coin: OptionBool, creator_fee_bps: OptionU64, can_edit_creator_fee: OptionBool, is_holder_reward: OptionBool) -> Result<()> { create::execute(ctx,index,base_amount_in,quote_amount_in,coin_creator,is_mayhem_mode,is_cashback_coin.0,creator_fee_bps.0,can_edit_creator_fee.0,is_holder_reward.0) }
+    pub fn init_boost(ctx: Context<InitBoost>) -> Result<()> { boost::execute(ctx) }
     pub fn set_boost_authority(ctx: Context<SetBoostAuthority>) -> Result<()> {
         let account = ctx.accounts.global_config.to_account_info();
         if account.data_len() < 949 {
@@ -184,23 +156,97 @@ pub mod pump_amm_recovered {
         emit_cpi!(event);
         Ok(())
     }
-
-    pub fn update_fee_config(ctx: Context<AdminGlobal>, lp_fee_basis_points: u64,
-        protocol_fee_basis_points: u64, protocol_fee_recipients: [Pubkey; 8],
-        coin_creator_fee_basis_points: u64, admin_set_coin_creator_authority: Pubkey) -> Result<()> {
-        let config = &mut ctx.accounts.global_config;
-        config.set_lp_fee_basis_points(lp_fee_basis_points)?;
-        config.set_protocol_fee_basis_points(protocol_fee_basis_points)?;
-        config.set_protocol_fee_recipients(protocol_fee_recipients)?;
-        config.set_coin_creator_fee_basis_points(coin_creator_fee_basis_points)?;
-        config.admin_set_coin_creator_authority = admin_set_coin_creator_authority;
-        let event = UpdateFeeConfigEvent { timestamp: Clock::get()?.unix_timestamp,
-            admin: ctx.accounts.admin.key(), lp_fee_basis_points, protocol_fee_basis_points,
-            protocol_fee_recipients, coin_creator_fee_basis_points, admin_set_coin_creator_authority };
-        emit!(event);
+    pub fn boost_buy_and_burn(ctx: Context<BoostBuyAndBurn>, quote_amount_in: u64, min_base_amount_burned: u64) -> Result<()> { boost_burn::execute(ctx, quote_amount_in, min_base_amount_burned) }
+    pub fn set_reserved_fee_recipients(ctx: Context<SetReservedFeeRecipients>, whitelist_pda: Pubkey) -> Result<()> {
+        require!(ctx.remaining_accounts.len() >= 8, PumpAmmError::NotEnoughRemainingAccounts);
+        let mut recipients = [Pubkey::default(); 8];
+        for i in 0..8 {
+            recipients[i] = ctx.remaining_accounts[i].key();
+            require_keys_neq!(recipients[i], Pubkey::default(), PumpAmmError::AllProtocolFeeRecipientsShouldBeNonZero);
+        }
+        ctx.accounts.global_config.whitelist_pda = whitelist_pda;
+        ctx.accounts.global_config.reserved_fee_recipient = recipients[0];
+        ctx.accounts.global_config.reserved_fee_recipients.copy_from_slice(&recipients[1..]);
+        let event = ReservedFeeRecipientsEvent { timestamp: Clock::get()?.unix_timestamp,
+            reserved_fee_recipient: recipients[0], reserved_fee_recipients: recipients[1..].try_into().unwrap() };
+        emit!(event.clone());
         emit_cpi!(event);
         Ok(())
     }
+    pub fn deposit(ctx: Context<Liquidity>, lp_token_amount_out: u64, max_base_amount_in: u64, max_quote_amount_in: u64) -> Result<()> {
+        liquidity::<true>(ctx, lp_token_amount_out, max_base_amount_in, max_quote_amount_in)
+    }
+    pub fn withdraw(ctx: Context<Liquidity>, lp_token_amount_in: u64, min_base_amount_out: u64, min_quote_amount_out: u64) -> Result<()> {
+        liquidity::<false>(ctx, lp_token_amount_in, min_base_amount_out, min_quote_amount_out)
+    }
+
+    pub fn admin_update_token_incentives(ctx:Context<AdminUpdateTokenIncentives>,start_time:i64,end_time:i64,seconds_in_a_day:i64,day_number:u64,token_supply_per_day:u64)->Result<()>{incentives::admin(ctx,start_time,end_time,seconds_in_a_day,day_number,token_supply_per_day)}
+    pub fn claim_token_incentives(ctx:Context<ClaimTokenIncentives>)->Result<()>{incentives::claim(ctx)}
+
+    pub fn init_user_volume_accumulator(ctx: Context<InitUserVolumeAccumulator>) -> Result<()> {
+        let event = InitUserVolumeAccumulatorEvent { payer: ctx.accounts.payer.key(),
+            user: ctx.accounts.user.key(), timestamp: Clock::get()?.unix_timestamp };
+        ctx.accounts.user_volume_accumulator.user = ctx.accounts.user.key();
+        emit!(event.clone());
+        emit_cpi!(event);
+        Ok(())
+    }
+
+    pub fn close_user_volume_accumulator(ctx: Context<CloseUserVolumeAccumulator>) -> Result<()> {
+        let account = &ctx.accounts.user_volume_accumulator;
+        let event = CloseUserVolumeAccumulatorEvent { user: ctx.accounts.user.key(),
+            timestamp: Clock::get()?.unix_timestamp, total_unclaimed_tokens: account.total_unclaimed_tokens,
+            total_claimed_tokens: account.total_claimed_tokens, current_sol_volume: account.current_sol_volume,
+            last_update_timestamp: account.last_update_timestamp };
+        emit!(event.clone());
+        emit_cpi!(event);
+        Ok(())
+    }
+
+    pub fn sync_user_volume_accumulator(ctx:Context<SyncUserVolumeAccumulator>)->Result<()>{incentives::sync(ctx)}
+    pub fn buy<'info>(ctx:Context<'_,'_,'_,'info,LegacyBuy<'info>>,base_amount_out:u64,max_quote_amount_in:u64,track_volume:OptionBool)->Result<()>{legacy_buy::execute(ctx,base_amount_out,max_quote_amount_in,track_volume.0,false)}
+
+    pub fn buy_exact_quote_in<'info>(ctx:Context<'_,'_,'_,'info,LegacyBuy<'info>>,spendable_quote_in:u64,min_base_amount_out:u64,track_volume:OptionBool)->Result<()>{legacy_buy::execute(ctx,spendable_quote_in,min_base_amount_out,track_volume.0,true)}
+    pub fn sell<'info>(ctx:Context<'_,'_,'_,'info,LegacySell<'info>>,base_amount_in:u64,min_quote_amount_out:u64)->Result<()>{legacy_sell::execute(ctx,base_amount_in,min_quote_amount_out)}
+
+    pub fn buy_v2(ctx: Context<TradeV2>, base_amount_out: u64, max_quote_amount_in: u64) -> Result<()> { trade::execute_buy(ctx, base_amount_out, max_quote_amount_in) }
+
+    pub fn buy_exact_quote_in_v2(ctx: Context<TradeV2>, spendable_quote_in: u64, min_base_amount_out: u64) -> Result<()> { trade::execute_buy_exact_quote(ctx, spendable_quote_in, min_base_amount_out) }
+    pub fn sell_v2(ctx: Context<TradeV2>, base_amount_in: u64, min_quote_amount_out: u64) -> Result<()> { trade::execute_sell(ctx, base_amount_in, min_quote_amount_out) }
+    pub fn multi_hop_swap<'info>(ctx:Context<'_, '_, 'info, 'info, MultiHop<'info>>,amount_in:u64,min_amount_out:u64)->Result<()>{multi_hop::execute(ctx,amount_in,min_amount_out)}
+    pub fn sweep_protocol_fee(ctx: Context<SweepFees>) -> Result<()> { sweep::execute(ctx,false) }
+    pub fn sweep_creator_fee(ctx: Context<SweepFees>) -> Result<()> { sweep::execute(ctx,true) }
+
+    pub fn extend_account(ctx: Context<ExtendAccount>) -> Result<()> { extend::execute(ctx) }
+    pub fn collect_coin_creator_fee(ctx: Context<CollectCoinCreatorFee>) -> Result<()> { collect::execute(ctx) }
+
+    pub fn set_coin_creator(ctx:Context<SetCoinCreator>)->Result<()>{creator_reassignment::set(ctx)}
+
+    pub fn admin_cto_pool(ctx:Context<AdminCtoPool>,coin_creator:Pubkey,is_holder_reward:bool,creator_fee_bps:Option<u64>)->Result<()>{creator_reassignment::admin_cto(ctx,coin_creator,is_holder_reward,creator_fee_bps)}
+
+    pub fn toggle_mayhem_mode(ctx: Context<AdminGlobal>, enabled: bool) -> Result<()> {
+        require_neq!(ctx.accounts.global_config.mayhem_mode_enabled, enabled, PumpAmmError::MayhemModeInDesiredState);
+        ctx.accounts.global_config.mayhem_mode_enabled = enabled;
+        Ok(())
+    }
+
+    pub fn toggle_boost(ctx: Context<AdminGlobalNoEvent>, enabled: bool) -> Result<()> {
+        require_keys_neq!(ctx.accounts.global_config.boost_authority, Pubkey::default(), PumpAmmError::InvalidAdmin);
+        ctx.accounts.global_config.boost_enabled = enabled;
+        Ok(())
+    }
+
+    pub fn transfer_creator_fees_to_pump(ctx: Context<TransferCreatorFeesToPump>) -> Result<()> { transfer_creator::legacy(ctx) }
+
+    pub fn transfer_creator_fees_to_pump_v2(ctx: Context<TransferCreatorFeesToPumpV2>) -> Result<()> { transfer_creator::v2(ctx) }
+    pub fn migrate_pool_coin_creator(ctx:Context<MigratePoolCoinCreator>)->Result<()>{creator_reassignment::migrate(ctx)}
+    pub fn toggle_cashback_enabled(ctx: Context<AdminGlobal>, enabled: bool) -> Result<()> {
+        require_neq!(ctx.accounts.global_config.is_cashback_enabled, enabled, PumpAmmError::CashbackNotInDesiredState);
+        ctx.accounts.global_config.is_cashback_enabled = enabled;
+        Ok(())
+    }
+
+    pub fn claim_cashback(ctx:Context<ClaimCashback>)->Result<()>{cashback::claim(ctx)}
 
     pub fn update_buyback_config(ctx: Context<AdminGlobal>, buyback_basis_points: Option<u64>) -> Result<()> {
         if let Some(bps) = buyback_basis_points {
@@ -215,49 +261,6 @@ pub mod pump_amm_recovered {
             for i in 0..8 { for j in 0..i { require_keys_neq!(recipients[i], recipients[j], PumpAmmError::NotUniqueBuybackFeeRecipients); } }
             ctx.accounts.global_config.buyback_fee_recipients = recipients;
         }
-        Ok(())
-    }
-
-    pub fn toggle_mayhem_mode(ctx: Context<AdminGlobal>, enabled: bool) -> Result<()> {
-        require_neq!(ctx.accounts.global_config.mayhem_mode_enabled, enabled, PumpAmmError::MayhemModeInDesiredState);
-        ctx.accounts.global_config.mayhem_mode_enabled = enabled;
-        Ok(())
-    }
-    pub fn toggle_cashback_enabled(ctx: Context<AdminGlobal>, enabled: bool) -> Result<()> {
-        require_neq!(ctx.accounts.global_config.is_cashback_enabled, enabled, PumpAmmError::CashbackNotInDesiredState);
-        ctx.accounts.global_config.is_cashback_enabled = enabled;
-        Ok(())
-    }
-    pub fn toggle_boost(ctx: Context<AdminGlobalNoEvent>, enabled: bool) -> Result<()> {
-        require_keys_neq!(ctx.accounts.global_config.boost_authority, Pubkey::default(), PumpAmmError::InvalidAdmin);
-        ctx.accounts.global_config.boost_enabled = enabled;
-        Ok(())
-    }
-
-    pub fn update_admin(ctx: Context<UpdateAdmin>) -> Result<()> {
-        let admin = ctx.accounts.global_config.admin;
-        let new_admin = ctx.accounts.new_admin.key();
-        ctx.accounts.global_config.admin = new_admin;
-        let event = UpdateAdminEvent { timestamp: Clock::get()?.unix_timestamp, admin, new_admin };
-        emit!(event.clone());
-        emit_cpi!(event);
-        Ok(())
-    }
-
-    pub fn disable(ctx: Context<AdminGlobal>, disable_create_pool: bool,
-        disable_deposit: bool, disable_withdraw: bool,
-        disable_buy: bool, disable_sell: bool) -> Result<()> {
-        let flags = &mut ctx.accounts.global_config.disable_flags;
-        *flags = (*flags & !1) | u8::from(disable_create_pool);
-        *flags = (*flags & !2) | (u8::from(disable_deposit) << 1);
-        *flags = (*flags & !4) | (u8::from(disable_withdraw) << 2);
-        *flags = (*flags & !8) | (u8::from(disable_buy) << 3);
-        *flags = (*flags & !16) | (u8::from(disable_sell) << 4);
-        let event = DisableEvent { timestamp: Clock::get()?.unix_timestamp,
-            admin: ctx.accounts.admin.key(), disable_create_pool,
-            disable_deposit, disable_withdraw, disable_buy, disable_sell };
-        emit!(event.clone());
-        emit_cpi!(event);
         Ok(())
     }
 }
@@ -397,7 +400,7 @@ pub enum PumpAmmError {
     MultiHopMixedDirection = 86,
     #[msg("A transfer's source is its destination and the signer does not own it")]
     SelfTransferNotAllowed = 87,
-    #[msg("quote_mint must be writable for a quote with a Token-2022 transfer fee: its withheld fees are harvested to the mint.")]
+    #[msg("quote_mint must be writable for a quote with a Token-2022 transfer fee: its withheld fees are harvested to the mint")]
     QuoteMintNotWritable = 88,
 }
 
@@ -480,65 +483,103 @@ pub struct Liquidity<'info> {
     pub token_program: Program<'info, Token>,
     pub token_2022_program: Program<'info, Token2022>,
 }
-fn liquidity(ctx: Context<Liquidity>, amount: u64, base_limit: u64, quote_limit: u64, deposit: bool) -> Result<()> {
+fn liquidity_total_fees(pool: &Pool) -> Result<u64> {
+    pool.protocol_fees.checked_add(pool.creator_fees).ok_or_else(|| error!(PumpAmmError::Overflow))
+}
+fn liquidity_quote_reserves(pool: &Pool, quote_token_amount: u64) -> Result<u64> {
+    quote_token_amount.checked_sub(liquidity_total_fees(pool)?).ok_or_else(|| error!(PumpAmmError::Overflow))
+}
+fn liquidity_effective_virtual(pool: &Pool) -> Result<i128> {
+    pool.virtual_quote_reserves.checked_add(liquidity_total_fees(pool)? as i128).ok_or_else(|| error!(PumpAmmError::Overflow))
+}
+fn liquidity_can_boost(pool: &Pool) -> bool {
+    liquidity_effective_virtual(pool).is_ok_and(|value| value != 0)
+}
+fn liquidity_floor_ratio(reserve: u64, amount: u64, supply: u64) -> Result<u128> {
+    ((reserve as u128) * (amount as u128)).checked_div(supply as u128)
+        .ok_or_else(|| error!(PumpAmmError::DivisionByZero))
+}
+fn liquidity<const DEPOSIT: bool>(ctx: Context<Liquidity>, amount: u64, base_limit: u64, quote_limit: u64) -> Result<()> {
     let a = &mut *ctx.accounts;
-    if deposit { require!(a.global_config.disable_flags & 2 == 0, PumpAmmError::DisabledDeposit); }
+    if DEPOSIT { require!(a.global_config.disable_flags & 2 == 0, PumpAmmError::DisabledDeposit); }
     else {
         require!(a.global_config.disable_flags & 4 == 0, PumpAmmError::DisabledWithdraw);
-        require!(a.lp_mint.supply <= a.pool.lp_supply, PumpAmmError::SeedLockViolation);
+        require_gte!(a.pool.lp_supply, a.lp_mint.supply, PumpAmmError::SeedLockViolation);
     }
     let old_supply = a.pool.lp_supply;
     let base_reserve = a.pool_base_token_account.amount;
-    let fees = a.pool.protocol_fees.checked_add(a.pool.creator_fees).ok_or(PumpAmmError::Overflow)?;
-    let quote_reserve = a.pool_quote_token_account.amount.checked_sub(fees).ok_or(PumpAmmError::Overflow)?;
+    let quote_reserve = liquidity_quote_reserves(&a.pool, a.pool_quote_token_account.amount)?;
     let ratio = |reserve: u64| -> Result<u64> {
-        let mut n = (reserve as u128).checked_mul(amount as u128).ok_or(PumpAmmError::Overflow)?;
-        if deposit { n = n.checked_add(old_supply as u128).ok_or(PumpAmmError::Overflow)?.checked_sub(1).ok_or(PumpAmmError::Overflow)?; }
-        let n = n.checked_div(old_supply as u128).ok_or(PumpAmmError::DivisionByZero)?;
+        let n = if DEPOSIT {
+            crate::utils::math::ceil_div((reserve as u128) * (amount as u128), old_supply as u128)?
+        } else {
+            liquidity_floor_ratio(reserve, amount, old_supply)?
+        };
         u64::try_from(n).map_err(|_| error!(PumpAmmError::Truncation))
     };
-    let base_amount = ratio(base_reserve)?;
-    let quote_amount = ratio(quote_reserve)?;
-    let quote_transfer_fee = quote_transfer_fee(&a.quote_mint.to_account_info(), quote_amount, deposit)?;
-    let quote_transfer_amount = if deposit { quote_amount.checked_add(quote_transfer_fee) } else { Some(quote_amount) }.ok_or(PumpAmmError::Overflow)?;
-    let quote_received = quote_amount.checked_sub(if deposit { 0 } else { quote_transfer_fee }).ok_or(PumpAmmError::Overflow)?;
-    if deposit { require!(base_amount <= base_limit && quote_transfer_amount <= quote_limit, PumpAmmError::ExceededSlippage); }
-    else { require!(base_amount >= base_limit && quote_received >= quote_limit, PumpAmmError::ExceededSlippage); }
-    let index = a.pool.index.to_le_bytes(); let bump = [a.pool.pool_bump];
-    let creator = a.pool.creator; let base = a.pool.base_mint; let quote = a.pool.quote_mint;
-    let seeds: &[&[u8]] = &[b"pool", &index, creator.as_ref(), base.as_ref(), quote.as_ref(), &bump];
-    let signer_seeds = [seeds];
-    for (mint, user, vault, quantity) in [(&a.base_mint, &a.user_base_token_account, &a.pool_base_token_account, base_amount), (&a.quote_mint, &a.user_quote_token_account, &a.pool_quote_token_account, quote_transfer_amount)] {
-        if quantity == 0 { continue; }
-        if user.key() == vault.key() {
-            require_keys_eq!(user.owner, if deposit { a.user.key() } else { a.pool.key() }, PumpAmmError::SelfTransferNotAllowed);
-        }
-        let program = if *mint.to_account_info().owner == anchor_spl::token::ID { a.token_program.to_account_info() } else { a.token_2022_program.to_account_info() };
-        let transfer = token_interface::TransferChecked { from: if deposit { user.to_account_info() } else { vault.to_account_info() },
-            mint: mint.to_account_info(), to: if deposit { vault.to_account_info() } else { user.to_account_info() },
-            authority: if deposit { a.user.to_account_info() } else { a.pool.to_account_info() } };
-        token_interface::transfer_checked(CpiContext::new_with_signer(program, transfer, if deposit { &[] } else { &signer_seeds }), quantity, mint.decimals)?;
+    let base_amount = if DEPOSIT {
+        ratio(base_reserve)?
+    } else {
+        u64::try_from(liquidity_floor_ratio(base_reserve, amount, old_supply)?)
+            .map_err(|_| error!(PumpAmmError::Truncation))?
+    };
+    if !DEPOSIT {
+        require_gte!(base_amount, base_limit, PumpAmmError::ExceededSlippage);
     }
-    if deposit {
-        token_interface::mint_to(CpiContext::new_with_signer(a.token_2022_program.to_account_info(), token_interface::MintTo {
-            mint: a.lp_mint.to_account_info(), to: a.user_pool_token_account.to_account_info(), authority: a.pool.to_account_info() }, &[seeds]), amount)?;
+    let quote_amount = if DEPOSIT {
+        ratio(quote_reserve)?
+    } else {
+        u64::try_from(liquidity_floor_ratio(quote_reserve, amount, old_supply)?)
+            .map_err(|_| error!(PumpAmmError::Truncation))?
+    };
+    let (quote_transfer_fee, quote_transfer_amount, quote_received) = if DEPOSIT {
+        let fee = quote_transfer_fee(&a.quote_mint.to_account_info(), quote_amount, true)?;
+        (fee, quote_amount.checked_add(fee).ok_or(PumpAmmError::Overflow)?, quote_amount)
+    } else {
+        let fee_data = crate::utils::transfer_fee::from_mint(a.quote_mint.as_ref().as_ref())?;
+        let received = crate::utils::transfer_fee::amount_after_fee(&fee_data, quote_amount)?;
+        let fee = quote_amount.checked_sub(received).ok_or_else(|| error!(PumpAmmError::Overflow))?;
+        (fee, quote_amount, received)
+    };
+    if DEPOSIT {
+        require_gte!(base_limit, base_amount, PumpAmmError::ExceededSlippage);
+        require_gte!(quote_limit, quote_transfer_amount, PumpAmmError::ExceededSlippage);
+    } else {
+        require_gte!(quote_received, quote_limit, PumpAmmError::ExceededSlippage);
+    }
+    if DEPOSIT {
+        let base_program = if *a.base_mint.to_account_info().owner == anchor_spl::token::ID { a.token_program.as_ref() } else { a.token_2022_program.as_ref() };
+        crate::utils::token::transfer_checked(base_program, &a.base_mint, &a.user_base_token_account, &a.pool_base_token_account, a.user.as_ref(), base_amount, &[])?;
+        let quote_program = if *a.quote_mint.to_account_info().owner == anchor_spl::token::ID { a.token_program.as_ref() } else { a.token_2022_program.as_ref() };
+        crate::utils::token::transfer_checked(quote_program, &a.quote_mint, &a.user_quote_token_account, &a.pool_quote_token_account, a.user.as_ref(), quote_transfer_amount, &[])?;
+    } else {
+        let base_program = if *a.base_mint.to_account_info().owner == anchor_spl::token::ID { a.token_program.as_ref() } else { a.token_2022_program.as_ref() };
+        crate::utils::token::transfer_from_pool(base_program, &a.base_mint, &a.pool_base_token_account, &a.user_base_token_account, base_amount, &a.pool)?;
+        let quote_program = if *a.quote_mint.to_account_info().owner == anchor_spl::token::ID { a.token_program.as_ref() } else { a.token_2022_program.as_ref() };
+        crate::utils::token::transfer_from_pool(quote_program, &a.quote_mint, &a.pool_quote_token_account, &a.user_quote_token_account, quote_transfer_amount, &a.pool)?;
+    }
+    if DEPOSIT {
+        crate::utils::token::mint_to_pool(&a.token_2022_program, &a.lp_mint, &a.user_pool_token_account, amount, &a.pool)?;
     } else {
         token_interface::burn(CpiContext::new(a.token_2022_program.to_account_info(), token_interface::Burn {
             mint: a.lp_mint.to_account_info(), from: a.user_pool_token_account.to_account_info(), authority: a.user.to_account_info() }), amount)?;
     }
-    let new_supply = if deposit { old_supply.checked_add(amount) } else { old_supply.checked_sub(amount) }.ok_or(PumpAmmError::Overflow)?;
-    let effective_virtual = a.pool.virtual_quote_reserves.checked_add(fees as i128).ok_or(PumpAmmError::Overflow)?;
-    if effective_virtual != 0 {
+    let new_supply = if DEPOSIT { old_supply.checked_add(amount) } else { old_supply.checked_sub(amount) }.ok_or_else(|| error!(PumpAmmError::Overflow))?;
+    if liquidity_can_boost(&a.pool) {
+        let effective_virtual = liquidity_effective_virtual(&a.pool)?;
         let virtual_reserve = u128::try_from(effective_virtual).map_err(|_| error!(PumpAmmError::Overflow))?;
-        let mut change = virtual_reserve.checked_mul(amount as u128).ok_or(PumpAmmError::Overflow)?;
-        if !deposit { change = change.checked_add(old_supply as u128).ok_or(PumpAmmError::Overflow)?.checked_sub(1).ok_or(PumpAmmError::Overflow)?; }
-        change = change.checked_div(old_supply as u128).ok_or(PumpAmmError::DivisionByZero)?;
-        if !deposit { u64::try_from(change).map_err(|_| error!(PumpAmmError::Truncation))?; }
+        let mut change = virtual_reserve.checked_mul(amount as u128).ok_or_else(|| error!(PumpAmmError::Overflow))?;
+        change = if DEPOSIT {
+            change.checked_div(old_supply as u128).ok_or(PumpAmmError::DivisionByZero)?
+        } else {
+            crate::utils::math::ceil_div(change, old_supply as u128)?
+        };
+        if !DEPOSIT { u64::try_from(change).map_err(|_| error!(PumpAmmError::Truncation))?; }
         let change = i128::try_from(change).map_err(|_| error!(PumpAmmError::Overflow))?;
-        a.pool.virtual_quote_reserves = if deposit { a.pool.virtual_quote_reserves.checked_add(change) } else { a.pool.virtual_quote_reserves.checked_sub(change) }.ok_or(PumpAmmError::Overflow)?;
+        a.pool.virtual_quote_reserves = if DEPOSIT { a.pool.virtual_quote_reserves.checked_add(change) } else { a.pool.virtual_quote_reserves.checked_sub(change) }.ok_or_else(|| error!(PumpAmmError::Overflow))?;
     }
     a.pool.lp_supply = new_supply;
-    if deposit {
+    if DEPOSIT {
         let event = DepositEvent {
             timestamp: Clock::get()?.unix_timestamp,
             lp_token_amount_out: amount,

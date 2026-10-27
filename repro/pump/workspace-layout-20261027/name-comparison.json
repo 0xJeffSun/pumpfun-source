@@ -1,0 +1,16 @@
+{
+  "base_counts": {
+    "total": 1035,
+    "raw": 111,
+    "normalized": 572,
+    "unmatched": 463
+  },
+  "trial_counts": {
+    "total": 1035,
+    "raw": 111,
+    "normalized": 572,
+    "unmatched": 463
+  },
+  "gains": [],
+  "losses": []
+}

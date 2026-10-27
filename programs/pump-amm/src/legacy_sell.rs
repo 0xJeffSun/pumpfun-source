@@ -1,8 +1,4 @@
 use crate::*;
-use anchor_lang::solana_program::{
-    instruction::{AccountMeta, Instruction},
-    program::{get_return_data, invoke},
-};
 use anchor_spl::{associated_token::AssociatedToken, token_interface::TokenInterface};
 #[derive(Accounts)]
 pub struct LegacySell<'info> {
@@ -22,7 +18,7 @@ pub struct LegacySell<'info> {
     #[account(mut)]
     pub pool_quote_token_account: Box<InterfaceAccount<'info, TokenAccount>>,
     /// CHECK: Authorization checked in handler.
-    pub protocol_fee_recipient: UncheckedAccount<'info>,
+    pub protocol_fee_recipient: AccountInfo<'info>,
     #[account(init_if_needed,payer=user,associated_token::mint=quote_mint,associated_token::authority=protocol_fee_recipient,associated_token::token_program=quote_token_program)]
     pub protocol_fee_recipient_token_account: Box<InterfaceAccount<'info, TokenAccount>>,
     pub base_token_program: Interface<'info, TokenInterface>,
@@ -31,15 +27,15 @@ pub struct LegacySell<'info> {
     pub associated_token_program: Program<'info, AssociatedToken>,
     /// CHECK: Self event signer.
     #[account(seeds=[b"__event_authority"],bump)]
-    pub event_authority: UncheckedAccount<'info>,
+    pub event_authority: AccountInfo<'info>,
     pub program: Program<'info, trade::PumpAmmProgram>,
     #[account(init_if_needed,payer=user,associated_token::mint=quote_mint,associated_token::authority=coin_creator_vault_authority,associated_token::token_program=quote_token_program)]
     pub coin_creator_vault_ata: Box<InterfaceAccount<'info, TokenAccount>>,
     /// CHECK: Original PDA constraint.
     #[account(seeds=[b"creator_vault",pool.coin_creator.as_ref()],bump)]
-    pub coin_creator_vault_authority: UncheckedAccount<'info>,
+    pub coin_creator_vault_authority: AccountInfo<'info>,
     #[account(seeds=[b"fee_config",crate::ID.as_ref()],bump,seeds::program=fee_program.key())]
-    pub fee_config: Box<Account<'info, trade::TradeFeeConfig>>,
+    pub fee_config: Account<'info, trade::TradeFeeConfig>,
     pub fee_program: Program<'info, FeesProgram>,
 }
 pub struct FeesProgram;
@@ -51,9 +47,7 @@ impl Id for FeesProgram {
 fn number(n: u128) -> Result<u64> {
     u64::try_from(n).map_err(|_| error!(PumpAmmError::Truncation))
 }
-fn fee(n: u64, bps: u64) -> Result<u64> {
-    number(((n as u128) * (bps as u128) + 9999) / 10000)
-}
+use crate::curve::fees::fee;
 fn transfer<'info>(
     program: &AccountInfo<'info>,
     mint: &InterfaceAccount<'info, Mint>,
@@ -68,11 +62,7 @@ fn transfer<'info>(
     }
     if from.key == to.key {
         let source = TokenAccount::try_deserialize(&mut &from.try_borrow_data()?[..])?;
-        require_keys_eq!(
-            source.owner,
-            authority.key(),
-            PumpAmmError::SelfTransferNotAllowed
-        );
+        require!(source.owner == authority.key(), PumpAmmError::SelfTransferNotAllowed);
     }
     token_interface::transfer_checked(
         CpiContext::new_with_signer(
@@ -130,94 +120,62 @@ pub fn execute<'info>(
         recipients.contains(&a.protocol_fee_recipient.key()),
         PumpAmmError::InvalidProtocolFeeRecipient
     );
-    require!(amount > 0, PumpAmmError::ZeroBaseAmount);
+    require_gt!(amount, 0, PumpAmmError::ZeroBaseAmount);
     let old_virtual = a.pool.virtual_quote_reserves;
     let q = u64::try_from(
         (a.pool_quote_token_account.amount as i128)
             .checked_add(old_virtual)
-            .ok_or(PumpAmmError::Overflow)?,
+            .ok_or_else(|| error!(PumpAmmError::Overflow))?,
     )
     .map_err(|_| error!(PumpAmmError::Overflow))?;
     // Legacy pricing uses the requested gross base input, including for Token-2022.
     let base_amount = amount;
-    let quote = number(
-        (q as u128) * (base_amount as u128)
-            / ((a.pool_base_token_account.amount as u128) + (base_amount as u128)),
+    let quote = crate::curve::constant_product::quote_for_sell(
+        base_amount, a.pool_base_token_account.amount, q,
     )?;
-    let canonical = a.pool.creator
-        == Pubkey::find_program_address(
-            &[b"pool-authority", a.base_mint.key().as_ref()],
-            &trade::PUMP,
-        )
-        .0;
-    let supply = if a.pool.is_mayhem_mode {
-        1_000_000_000_000_000
-    } else {
-        a.base_mint.supply
-    };
-    let cap = (supply as u128)
-        .checked_mul(q as u128)
-        .ok_or(PumpAmmError::Overflow)?
-        .checked_div(a.pool_base_token_account.amount as u128)
-        .ok_or(PumpAmmError::DivisionByZero)?;
-    let mut data = vec![154, 237, 138, 92, 162, 2, 162, 187, canonical as u8];
-    data.extend_from_slice(&cap.to_le_bytes());
-    data.extend_from_slice(a.quote_mint.key().as_ref());
-    // Query the captured Fees interface through a real CPI.
-    invoke(
-        &Instruction {
-            program_id: trade::FEE_OWNER,
-            accounts: vec![
-                AccountMeta::new_readonly(a.fee_config.key(), false),
-                AccountMeta::new_readonly(crate::ID, false),
-            ],
-            data,
-        },
-        &[
-            a.fee_config.to_account_info(),
-            a.program.to_account_info(),
-            a.fee_program.to_account_info(),
-        ],
+    let supply = if a.pool.is_mayhem_mode { 1_000_000_000_000_000 } else { a.base_mint.supply };
+    let mut selected = crate::curve::fees::select_and_apply(
+        &a.pool, &a.global_config, &a.fee_config, &a.fee_program, &a.program,
+        &a.base_mint, a.pool_base_token_account.amount, q, quote,
     )?;
-    let (_, returned) = get_return_data().ok_or(PumpAmmError::AccountTypeNotSupported)?;
-    let mut selected = trade::TradeFees::deserialize(&mut &returned[..])?;
-    if a.pool.creator_fee_bps != 0 {
-        selected.creator_fee_bps = a.pool.creator_fee_bps;
+    let mut lp_fee = selected.lp_fee;
+    let mut protocol_fee = selected.protocol_fee;
+    let mut creator_fee = selected.creator_fee;
+    if a.global_config.whitelist_pda == a.user.key() {
+        selected.lp_fee_bps = 0;
+        selected.protocol_fee_bps = 0;
+        selected.creator_fee_bps = 0;
+        lp_fee = 0;
+        protocol_fee = 0;
+        creator_fee = 0;
     }
+    let quote_less_lp = quote
+        .checked_sub(lp_fee)
+        .ok_or_else(|| error!(PumpAmmError::Overflow))?;
     let old_accrued = a
         .pool
         .protocol_fees
         .checked_add(a.pool.creator_fees)
-        .ok_or(PumpAmmError::Overflow)?;
+        .ok_or_else(|| error!(PumpAmmError::Overflow))?;
     let real_quote = a
         .pool_quote_token_account
         .amount
         .checked_sub(old_accrued)
-        .ok_or(PumpAmmError::Overflow)?;
-    let creator_bps = if a.pool.coin_creator == Pubkey::default() {
-        0
-    } else {
-        selected.creator_fee_bps
-    };
-    let lp_fee = fee(quote, selected.lp_fee_bps)?;
-    let protocol_fee = fee(quote, selected.protocol_fee_bps)?;
-    let creator_fee = fee(quote, creator_bps)?;
-    let total = quote
-        .checked_sub(lp_fee)
-        .and_then(|n| n.checked_sub(protocol_fee))
-        .and_then(|n| n.checked_sub(creator_fee))
-        .ok_or(PumpAmmError::Overflow)?;
-    require!(
-        quote.checked_sub(lp_fee).ok_or(PumpAmmError::Overflow)? <= real_quote,
+        .ok_or_else(|| error!(PumpAmmError::Overflow))?;
+    require_gte!(
+        real_quote,
+        quote_less_lp,
         PumpAmmError::InsufficientRealQuoteReserves
     );
-    require!(total >= limit, PumpAmmError::ExceededSlippage);
+    let total = quote_less_lp
+        .checked_sub(creator_fee)
+        .and_then(|n| n.checked_sub(protocol_fee))
+        .ok_or_else(|| error!(PumpAmmError::Overflow))?;
+    require_gte!(total, limit, PumpAmmError::ExceededSlippage);
     let quote_transfer_fee = quote_transfer_fee(&a.quote_mint.to_account_info(), total, false)?;
-    require!(
-        total
-            .checked_sub(quote_transfer_fee)
-            .ok_or(PumpAmmError::Overflow)?
-            >= limit,
+    require_gte!(
+        total.checked_sub(quote_transfer_fee).ok_or(PumpAmmError::Overflow)?,
+        limit,
         PumpAmmError::ExceededSlippage
     );
     let index = a.pool.index.to_le_bytes();
@@ -234,42 +192,39 @@ pub fn execute<'info>(
         &bump,
     ];
     let signer = &[seeds];
-    transfer(
-        &a.base_token_program.to_account_info(),
+    crate::utils::token::transfer_checked(
+        a.base_token_program.as_ref(),
         &a.base_mint,
-        &a.user_base_token_account.to_account_info(),
-        &a.pool_base_token_account.to_account_info(),
+        &a.user_base_token_account,
+        &a.pool_base_token_account,
         &a.user.to_account_info(),
         amount,
         &[],
     )?;
-    transfer(
-        &a.quote_token_program.to_account_info(),
+    crate::utils::token::transfer_from_pool(
+        a.quote_token_program.as_ref(),
         &a.quote_mint,
-        &a.pool_quote_token_account.to_account_info(),
-        &a.user_quote_token_account.to_account_info(),
-        &pool_info,
+        &a.pool_quote_token_account,
+        &a.user_quote_token_account,
         total,
-        signer,
+        &a.pool,
     )?;
     let buyback_bps = if a.pool.is_mayhem_mode {
         0
     } else {
         a.global_config.buyback_basis_points
     };
-    let buyback_fee = u64::try_from((protocol_fee as u128) * (buyback_bps as u128) / 10000)
-        .expect("buyback fee is at most protocol_fee");
-    let net_protocol = protocol_fee
-        .checked_sub(buyback_fee)
-        .expect("buyback_fee never exceeds protocol_fee");
-    transfer(
-        &a.quote_token_program.to_account_info(),
+    let (buyback_fee, net_protocol) = a.global_config.split_buyback(
+        protocol_fee,
+        a.pool.is_mayhem_mode,
+    );
+    crate::utils::token::transfer_from_pool(
+        a.quote_token_program.as_ref(),
         &a.quote_mint,
-        &a.pool_quote_token_account.to_account_info(),
-        &a.protocol_fee_recipient_token_account.to_account_info(),
-        &pool_info,
+        &a.pool_quote_token_account,
+        &a.protocol_fee_recipient_token_account,
         net_protocol,
-        signer,
+        &a.pool,
     )?;
     // Payouts consume remaining accounts only when a creator/cashback fee is nonzero.
     let mut next = 0;
@@ -278,62 +233,33 @@ pub fn execute<'info>(
             cashback(a, ctx.remaining_accounts, creator_fee, signer)?;
             next = 2;
         }
-        let extra = ctx
-            .remaining_accounts
-            .get(next)
-            .ok_or(PumpAmmError::InvalidPoolV2)?;
-        require_keys_eq!(
-            extra.key(),
-            Pubkey::find_program_address(&[b"pool-v2", a.base_mint.key().as_ref()], &crate::ID).0,
-            PumpAmmError::InvalidPoolV2
-        );
+        crate::legacy_sell::validate_pool_v2(ctx.remaining_accounts, &a.base_mint.key(), next)?;
         next += 1;
         if !a.pool.is_cashback_coin {
-            transfer(
-                &a.quote_token_program.to_account_info(),
-                &a.quote_mint,
-                &a.pool_quote_token_account.to_account_info(),
-                &a.coin_creator_vault_ata.to_account_info(),
-                &pool_info,
-                creator_fee,
-                signer,
-            )?;
+            crate::utils::token::transfer_from_pool(
+        a.quote_token_program.as_ref(),
+        &a.quote_mint,
+        &a.pool_quote_token_account,
+        &a.coin_creator_vault_ata,
+        creator_fee,
+        &a.pool,
+    )?;
         }
     }
     {
-        let owner = ctx
-            .remaining_accounts
-            .get(next)
-            .ok_or(PumpAmmError::BuybackFeeRecipientMissing)?;
-        let dest = ctx
-            .remaining_accounts
-            .get(next + 1)
-            .ok_or(PumpAmmError::BuybackFeeRecipientMissing)?;
-        require!(
-            a.global_config.buyback_fee_recipients.contains(owner.key),
-            PumpAmmError::BuybackFeeRecipientNotAuthorized
-        );
-        let ata = anchor_spl::associated_token::get_associated_token_address_with_program_id(
-            owner.key,
-            &a.quote_mint.key(),
-            &a.quote_token_program.key(),
-        );
-        require_keys_eq!(
-            dest.key(),
-            ata,
-            PumpAmmError::BuybackFeeRecipientNotAuthorized
-        );
+    let (owner, dest) = crate::legacy_buy::get_buyback_accounts(
+        ctx.remaining_accounts, &a.global_config, next, &a.quote_mint.key(), &a.quote_token_program.key(),
+    )?;
         if buyback_fee > 0 && dest.data_is_empty() {
             create_ata(a, dest, owner, true)?;
         }
-        transfer(
-            &a.quote_token_program.to_account_info(),
+        crate::utils::token::transfer_from_pool_to_raw(
+            a.quote_token_program.as_ref(),
             &a.quote_mint,
-            &a.pool_quote_token_account.to_account_info(),
+            &a.pool_quote_token_account,
+            &a.pool,
             dest,
-            &pool_info,
             buyback_fee,
-            signer,
         )?;
     }
     let event = trade::SellEvent {
@@ -441,14 +367,14 @@ fn cashback<'info>(
 ) -> Result<()> {
     let ata = remaining
         .get(0)
-        .ok_or(PumpAmmError::MissingCashbackAccounts)?;
+        .ok_or_else(|| error!(PumpAmmError::MissingCashbackAccounts))?;
     let info = remaining
         .get(1)
-        .ok_or(PumpAmmError::MissingCashbackAccounts)?;
+        .ok_or_else(|| error!(PumpAmmError::MissingCashbackAccounts))?;
     let user = a.user.key();
     let (key, bump) =
         Pubkey::find_program_address(&[b"user_volume_accumulator", user.as_ref()], &crate::ID);
-    require_keys_eq!(info.key(), key, PumpAmmError::InvalidCashbackAccumulator);
+    require!(info.key() == key, PumpAmmError::InvalidCashbackAccumulator);
     require!(info.is_writable, PumpAmmError::InvalidCashbackAccumulator);
     if info.data_is_empty() {
         let rent = Rent::get()?.minimum_balance(137);
@@ -488,11 +414,7 @@ fn cashback<'info>(
         )?;
         info.try_borrow_mut_data()?[..8].copy_from_slice(UserVolumeAccumulator::DISCRIMINATOR);
     } else {
-        require_keys_eq!(
-            *info.owner,
-            crate::ID,
-            PumpAmmError::InvalidCashbackAccumulator
-        );
+        require!(*info.owner == crate::ID, PumpAmmError::InvalidCashbackAccumulator);
         let data = info.try_borrow_data()?;
         require!(
             data.len() >= 8 && &data[..8] == UserVolumeAccumulator::DISCRIMINATOR,
@@ -506,19 +428,12 @@ fn cashback<'info>(
         &a.quote_mint.key(),
         &a.quote_token_program.key(),
     );
-    require_keys_eq!(
-        ata.key(),
-        expected,
-        PumpAmmError::InvalidCashbackAccumulatorAta
-    );
+    require!(ata.key() == expected, PumpAmmError::InvalidCashbackAccumulatorAta);
     require!(ata.is_writable, PumpAmmError::InvalidCashbackAccumulatorAta);
     if ata.data_is_empty() {
         create_ata(a, ata, info, false)?;
     } else {
-        require!(
-            <TokenAccount as anchor_lang::Owners>::owners().contains(ata.owner),
-            anchor_lang::error::ErrorCode::AccountOwnedByWrongProgram
-        );
+        <TokenAccount as anchor_lang::CheckOwner>::check_owner(ata.owner)?;
         TokenAccount::try_deserialize(&mut &ata.try_borrow_data()?[..])?;
     }
     transfer(
@@ -534,7 +449,20 @@ fn cashback<'info>(
     accumulator.cashback_earned = accumulator
         .cashback_earned
         .checked_add(amount)
-        .ok_or(PumpAmmError::Overflow)?;
+        .ok_or_else(|| error!(PumpAmmError::Overflow))?;
     accumulator.try_serialize(&mut &mut info.try_borrow_mut_data()?[..])?;
+    Ok(())
+}
+
+
+pub(crate) fn validate_pool_v2(
+    remaining_accounts: &[AccountInfo<'_>],
+    base_mint: &Pubkey,
+    index: usize,
+) -> Result<()> {
+    let account = remaining_accounts.get(index)
+        .ok_or_else(|| error!(PumpAmmError::InvalidPoolV2))?;
+    let expected = Pubkey::find_program_address(&[b"pool-v2", base_mint.as_ref()], &crate::ID).0;
+    require!(account.key() == expected, PumpAmmError::InvalidPoolV2);
     Ok(())
 }

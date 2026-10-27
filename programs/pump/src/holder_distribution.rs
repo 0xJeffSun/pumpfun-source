@@ -11,7 +11,7 @@ pub struct DistributeFeeToHolders<'info>{
  pub mint:UncheckedAccount<'info>,
  /// CHECK: System transfers enforce the source account ownership.
  #[account(mut,seeds=[b"holder-rewards",mint.key().as_ref()],bump)]pub holder_rewards:UncheckedAccount<'info>,
- #[account(mut)]pub holder_rewards_token_account:Option<Box<InterfaceAccount<'info,TokenAccount>>>,
+ #[account(mut,token::authority=holder_rewards,token::mint=quote_mint,token::token_program=quote_token_program)]pub holder_rewards_token_account:Option<Box<InterfaceAccount<'info,TokenAccount>>>,
  pub quote_mint:Box<InterfaceAccount<'info,Mint>>,
  pub quote_token_program:Interface<'info,TokenInterface>,
  pub associated_token_program:Program<'info,AssociatedToken>,
@@ -21,11 +21,6 @@ pub struct DistributeFeeToHolders<'info>{
 pub fn execute<'info>(ctx:Context<'_, '_, '_, 'info,DistributeFeeToHolders<'info>>,amounts:Vec<u64>)->Result<()>{
  let a=&ctx.accounts;let mint=a.mint.key();let bump=[ctx.bumps.holder_rewards];let seeds:&[&[u8]]=&[b"holder-rewards",mint.as_ref(),&bump];let signer=&[seeds];
  let native=a.quote_mint.key()==anchor_spl::token::spl_token::native_mint::ID;
- if let Some(source)=&a.holder_rewards_token_account {
-  require_keys_eq!(source.owner,a.holder_rewards.key(),anchor_lang::error::ErrorCode::ConstraintTokenOwner);
-  require_keys_eq!(source.mint,a.quote_mint.key(),anchor_lang::error::ErrorCode::ConstraintTokenMint);
-  require_keys_eq!(*source.to_account_info().owner,a.quote_token_program.key(),anchor_lang::error::ErrorCode::ConstraintTokenTokenProgram);
- }
  require!(ctx.remaining_accounts.len()==amounts.len()*2,PumpError::HolderRewardRecipientsMismatch);
  if let Some(source)=&a.holder_rewards_token_account {
   if native {anchor_spl::token_interface::close_account(CpiContext::new_with_signer(a.quote_token_program.to_account_info(),anchor_spl::token_interface::CloseAccount{account:source.to_account_info(),destination:a.holder_rewards.to_account_info(),authority:a.holder_rewards.to_account_info()},signer))?;}
@@ -35,12 +30,12 @@ pub fn execute<'info>(ctx:Context<'_, '_, '_, 'info,DistributeFeeToHolders<'info
   if native {
    if *amount!=0 {invoke_signed(&system_instruction::transfer(&a.holder_rewards.key(),pair[0].key,*amount),&[a.holder_rewards.to_account_info(),pair[0].clone(),a.system_program.to_account_info()],signer)?;}
   }else{
-   let source=a.holder_rewards_token_account.as_ref().ok_or(PumpError::HolderRewardTokenAccountMissing)?;
+   let source=a.holder_rewards_token_account.as_ref().ok_or_else(||error!(PumpError::HolderRewardTokenAccountMissing))?;
    require_keys_eq!(*pair[1].key,anchor_spl::associated_token::get_associated_token_address_with_program_id(pair[0].key,&a.quote_mint.key(),&a.quote_token_program.key()),PumpError::HolderRewardRecipientsMismatch);
    if pair[1].data_is_empty(){let ix=Instruction{program_id:a.associated_token_program.key(),accounts:vec![AccountMeta::new(a.holder_reward_claim_authority.key(),true),AccountMeta::new(*pair[1].key,false),AccountMeta::new_readonly(*pair[0].key,false),AccountMeta::new_readonly(a.quote_mint.key(),false),AccountMeta::new_readonly(a.system_program.key(),false),AccountMeta::new_readonly(a.quote_token_program.key(),false)],data:vec![0]};invoke_signed(&ix,&[a.holder_reward_claim_authority.to_account_info(),pair[1].clone(),pair[0].clone(),a.quote_mint.to_account_info(),a.system_program.to_account_info(),a.quote_token_program.to_account_info(),a.associated_token_program.to_account_info()],&[])?;}
    if *amount!=0 {anchor_spl::token_interface::transfer_checked(CpiContext::new_with_signer(a.quote_token_program.to_account_info(),anchor_spl::token_interface::TransferChecked{from:source.to_account_info(),mint:a.quote_mint.to_account_info(),to:pair[1].clone(),authority:a.holder_rewards.to_account_info()},signer),*amount,a.quote_mint.decimals)?;}
   }
-  total=total.checked_add(*amount).ok_or(PumpError::Overflow)?;
+  total=total.checked_add(*amount).ok_or_else(||error!(PumpError::Overflow))?;
  }
  if native {let balance=a.holder_rewards.lamports();require!(balance==0||balance>=Rent::get()?.minimum_balance(0),PumpError::HolderRewardsRentFloor);}
  let e=DistributeFeeToHoldersEvent{timestamp:Clock::get()?.unix_timestamp,mint,quote_mint:if native {Pubkey::default()}else{a.quote_mint.key()},recipients:amounts.len() as u64,total};emit!(e.clone());emit_cpi!(e);Ok(())
