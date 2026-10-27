@@ -1,6 +1,6 @@
-# Reconstruction status after event-context recovery — 26 October 2026
+# Reconstruction status after unchecked-prefix recovery — 26 October 2026
 
-Reviewed evidence revision: `c238f955099e7e3f66f2f694270a26819d703590`.
+Reviewed evidence revision: `e2d7855848a3411d665deb915077ef20672e7cdd`.
 This review updates the research frontier while preserving the selected-checkpoint
 [baseline audit](RECONSTRUCTION-AUDIT.md). The [recomputed inventory](../repro/reconstruction-status-2026-10-26/README.md)
 contains every one of the **4,415 selected/research function-window rows**.
@@ -44,7 +44,7 @@ analysis. Candidate symbol names are hypotheses about original identity.
 | Fees selected | 585 | 102 | 363 | 120 | 0 |
 | Mayhem selected | 441 | 58 | 131 | 7 | 245 |
 | Relay selected source 15 | 492 | 33 | 89 | 370 | 0 |
-| **Fees latest research** | **585** | **118** | **423** | **44** | **0** |
+| **Fees latest research** | **585** | **118** | **424** | **43** | **0** |
 | **Relay latest research** | **492** | **130** | **352** | **10** | **0** |
 
 Each row is a partition, not a score of semantic correctness. Mayhem's source
@@ -70,13 +70,13 @@ bytes (7.0%)**. Those bytes describe the sizes of unmatched original windows,
 not the number of absent or incorrect bytes. The residual includes large business
 functions; matching the other 482 still leaves their call/data identity to prove.
 
-Fees research has **541/585 windows with a normalized counterpart**: 394 unique
-structural pairs and 147 original windows in ambiguous duplicate groups. Its 44
-unmatched windows span **250,048 of 799,648 original text bytes (31.3%)**, although
-they are only 7.5% of the window count. Many remaining bodies are large. The
+Fees research has **542/585 windows with a normalized counterpart**: 395 unique
+structural pairs and 147 original windows in ambiguous duplicate groups. Its 43
+unmatched windows span **248,904 of 799,648 original text bytes (31.1%)**, although
+they are only 7.4% of the window count. Many remaining bodies are large. The
 [current call ledger](../repro/reconstruction-status-2026-10-26/fees-call-attribution.json)
 recomputes 65 additional duplicate-body correspondences on this candidate, for
-459 attributed pairs. There are 82 still-unattributed duplicate windows and 19
+460 attributed pairs. There are 82 still-unattributed duplicate windows and 18
 call edges to different-body frontiers. This refinement adds no body coverage.
 
 There is no defensible single source-completion percentage or ETA. Whole-program
@@ -481,6 +481,25 @@ trials add no complete body and are not integrated. Do not apply a blanket
 conversion to every unchecked event account. Fresh combined-candidate full and
 focused regressions pass, and earlier context/data contracts remain verified.
 
+### FeeConfig unchecked prefix and initialization evidence
+
+The [unchecked-prefix recovery](../research/fees-unchecked-prefix-recovery/README.md)
+restores full-account input handling for the research decoder. It consumes the
+eight-byte prefix, without checking its value in the unchecked path, and invokes
+the existing payload decoder. The complete 1,144-byte helper now matches, all
+11 direct callee bodies match, and the incoming initializer closure and payload
+decoder remain matched. Owner constants and the decoder error-message record
+are verified independently of instruction normalization.
+
+The parent fails the added native prefix regression; the corrected source passes
+35 host contract cases, including short buffers and format thresholds. The local
+slice control restores the prefix but leaves 22 stack-operand differences and
+does not consume the caller's descriptor. The consuming variant is retained.
+The 17,331-case SBF regression passes but does not invoke `initialize_fee_config`.
+These tests do not establish a successful authorized fixed-admin initializer
+transaction. Older packets' discriminator-free unchecked-input limitation is
+resolved for this current research candidate, not rewritten in those packets.
+
 ## Public behavior: reconstructed is not perfect
 
 Across the four core selected programs, **140/150 handlers have bounded
@@ -515,7 +534,7 @@ field-role claims. The five semantic roles remain unresolved; no field is rename
 2. **Close known behavior defects:** Pump `sell_v2` and the ten partial/unaccepted
    selected dispositions above, with bound success/rejection tests. Cover genuine
    CPI callers, ownership and extension/mode combinations before acceptance.
-3. **Continue Fees business/source recovery:** work from all 44 residual addresses,
+3. **Continue Fees business/source recovery:** work from all 43 residual addresses,
    preserve the refreshed duplicate-call attribution, and validate paths not
    exercised by the existing corpus. Normalize only declared relocations/calls.
 4. **Recover Pump/AMM/Mayhem residuals:** preserve opaque and ambiguous states.
@@ -544,6 +563,7 @@ python3 -B research/fees-crank-event-ownership/verify.py
 python3 -B research/fees-sweep-context-ownership/verify.py
 python3 -B research/fees-buyback-update-ownership/verify.py
 python3 -B research/fees-event-context-ownership/verify.py
+python3 -B research/fees-unchecked-prefix-recovery/verify.py
 python3 -B research/fees-wrapper-codegen-controls/verify.py
 python3 -B repro/reconstruction-status-2026-10-26/refresh.py --check
 ```

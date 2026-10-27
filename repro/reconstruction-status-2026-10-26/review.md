@@ -1,6 +1,6 @@
 # Comprehensive reconstruction review
 
-Reviewed merged evidence: `c238f955099e7e3f66f2f694270a26819d703590`. Selected builds remain bound to `1463bd22fb7811825c5e7acf1cb963eb39ab68d9`.
+Reviewed merged evidence: `e2d7855848a3411d665deb915077ef20672e7cdd`. Selected builds remain bound to `1463bd22fb7811825c5e7acf1cb963eb39ab68d9`.
 
 **No core program or Relay is whole-file byte-identical. No public handler is proved exhaustively perfect.**
 
@@ -22,11 +22,11 @@ Reviewed merged evidence: `c238f955099e7e3f66f2f694270a26819d703590`. Selected b
 | pump | 98 | 430 | 507 | 0 | 1,391,456 / 1,792,208 (77.6%) |
 | pump_amm | 93 | 395 | 297 | 0 | 734,392 / 1,162,040 (63.2%) |
 | pump_fees | 102 | 363 | 120 | 0 | 418,392 / 799,648 (52.3%) |
-| pump_fees_research | 118 | 423 | 44 | 0 | 250,048 / 799,648 (31.3%) |
+| pump_fees_research | 118 | 424 | 43 | 0 | 248,904 / 799,648 (31.1%) |
 
 These byte totals count entire unresolved original windows, not differing bytes or development effort. Raw and normalized matches can still contain unresolved references. Do not add selected and research rows: they represent alternative builds of the same programs. Mayhem has 257 source-ledger opaque windows; 12 have raw counterparts and therefore appear in the exact column.
 
-Fees research has 394 unique structural pairs, 65 additional call-attributed pairs and 85 unattributed duplicate windows. Its encoded-call ledger has 3,133 bound-target edges and 19 different-body frontier edges. A bound edge is not a full semantic proof. Selected Fees retains two call-conflicting rows.
+Fees research has 395 unique structural pairs, 65 additional call-attributed pairs and 85 unattributed duplicate windows. Its encoded-call ledger has 3,145 bound-target edges and 18 different-body frontier edges. A bound edge is not a full semantic proof. Selected Fees retains two call-conflicting rows.
 
 ## Every public handler: source/behavior status
 
