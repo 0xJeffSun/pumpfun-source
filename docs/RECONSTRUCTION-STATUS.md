@@ -62,9 +62,9 @@ ledger has 257 opaque windows, 12 of which happen to match local raw bytes.
 Selected Fees retains two call-conflicting rows; body existence does not resolve
 those conflicts. Different programs and studies use different matching rules.
 
-Across these five frontier rows, **2,890/3,338 windows (86.6%)** match and
-**3,826,408/5,213,128 original text bytes (73.4%)** lie in matched windows.
-There are **448 unmatched windows**. Only Relay has complete meaningful-ELF
+Across these five frontier rows, **2,895/3,338 windows (86.7%)** match and
+**3,831,512/5,213,128 original text bytes (73.5%)** lie in matched windows.
+There are **443 unmatched windows**. Only Relay has complete meaningful-ELF
 identity; the four core programs remain byte-unequal. These are structural
 coverage measures, not a percentage of engineering work completed.
 
