@@ -1582,4 +1582,3 @@ Snapshot and limitations: [inventory](README.md). Addresses are decimal virtual 
 | pump_fees_research | 502096 | 16880 | no_complete_body_match |  |
 | pump_fees_research | 582624 | 4352 | no_complete_body_match |  |
 | pump_fees_research | 586976 | 4608 | no_complete_body_match |  |
-| pump_fees_research | 650064 | 1208 | no_complete_body_match |  |

@@ -1205,3 +1205,16 @@ explicitly unpublished, not downloadable replay evidence. No artifacts, logs,
 replay cases or archived receipt excerpts/derivatives are included; default
 verification neither compiles nor executes and reports runtime_verified=false.
 No selected checkpoint is replaced, and complete Crank semantics remain open.
+
+## Fees public module visibility: 553 normalized windows
+
+The [visibility packet](../research/fees-instruction-visibility/README.md) changes
+a single declaration on the current 42-input source: `mod instructions;` becomes
+`pub mod instructions;`. It restores original 650064's default-bump store and
+complete 1,208-byte initialization wrapper, with all six callee bodies matching.
+Two root builds reproduce candidate
+`d85fe4eb037cd91b982eea55169faac1b342e6841ce440bee26c28b5f5617e36`.
+The fresh 17,331-case suite passes. Coverage advances 552→553 normalized,
+405→406 unique, 33→32 unmatched; raw-local remains 118, with no lost matches.
+The visibility/source/branch controls for authorization at 234096 remain incomplete.
+Whole-program equality and historical source visibility remain unproved.

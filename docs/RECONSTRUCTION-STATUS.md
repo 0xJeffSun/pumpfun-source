@@ -1,6 +1,6 @@
 # Reconstruction status after exact Relay ELF reproduction
 
-Reviewed evidence revision: `5c1f717918495b8508ff5aefedc6d3219abb3439`.
+Reviewed parent revision: `6b61b33735106c78f9099743ea405fd293abee10`; new measurements are bound to the packets below.
 This review updates the research frontier while preserving the selected-checkpoint
 [baseline audit](RECONSTRUCTION-AUDIT.md). The [recomputed inventory](../repro/reconstruction-status-2026-10-26/README.md)
 contains every one of the **4,415 selected/research function-window rows**.
@@ -46,7 +46,7 @@ analysis. Candidate symbol names are hypotheses about original identity.
 | Fees selected | 585 | 102 | 363 | 120 | 0 |
 | Mayhem selected | 441 | 58 | 131 | 7 | 245 |
 | Relay selected source 15 | 492 | 33 | 89 | 370 | 0 |
-| **Fees latest research** | **585** | **118** | **434** | **33** | **0** |
+| **Fees latest research** | **585** | **118** | **435** | **32** | **0** |
 | **Relay latest research** | **492** | **492** | **0** | **0** | **0** |
 
 Each row is a partition, not a score of semantic correctness. Mayhem's source
@@ -77,13 +77,13 @@ payload**, with 12,168 zero bytes allocated by the loader. Compiler output is
 not padded. ProgramData metadata/history, selected-source promotion and broader
 runtime acceptance remain separate requirements.
 
-Fees research has **552/585 windows with a normalized counterpart**: 405 unique
-structural pairs and 147 original windows in ambiguous duplicate groups. Its 33
-unmatched windows span **205,216 of 799,648 original text bytes (25.7%)**, although
-they are only 5.6% of the window count. Many remaining bodies are large. The
+Fees research has **553/585 windows with a normalized counterpart**: 406 unique
+structural pairs and 147 original windows in ambiguous duplicate groups. Its 32
+unmatched windows span **204,008 of 799,648 original text bytes (25.5%)**, although
+they are only 5.5% of the window count. Many remaining bodies are large. The
 [current call ledger](../repro/reconstruction-status-2026-10-26/fees-call-attribution.json)
 recomputes 69 additional duplicate-body correspondences on this candidate, for
-474 attributed pairs. There are 78 still-unattributed duplicate windows and 16
+475 attributed pairs. There are 78 still-unattributed duplicate windows and 15
 call edges to different-body frontiers. This refinement adds no body coverage.
 
 There is no defensible single source-completion percentage or ETA. Whole-program
@@ -545,7 +545,7 @@ field-role claims. The five semantic roles remain unresolved; no field is rename
 2. **Close known behavior defects:** Pump `sell_v2` and the ten partial/unaccepted
    selected dispositions above, with bound success/rejection tests. Cover genuine
    CPI callers, ownership and extension/mode combinations before acceptance.
-3. **Continue Fees business/source recovery:** work from all 33 residual addresses,
+3. **Continue Fees business/source recovery:** work from all 32 residual addresses,
    preserve the refreshed duplicate-call attribution, and validate paths not
    exercised by the existing corpus. Normalize only declared relocations/calls.
 4. **Recover Pump/AMM/Mayhem residuals:** preserve opaque and ambiguous states.
@@ -638,3 +638,18 @@ frontier. Independent compilation matches both published hashes; a fresh full
 suite passes all 17,331 comparisons. Current attribution is 405 unique plus 69
 call-attributed pairs (474 total); 78 duplicate windows remain unattributed and
 16 call edges reach different-body frontiers. No Fees whole-file identity is claimed.
+
+## Public instruction module restores the complete buyback wrapper
+
+The [visibility recovery](../research/fees-instruction-visibility/README.md) changes
+only `mod instructions;` to `pub mod instructions;` on the PR #195 source. This
+restores the missing default-bump store and completes the 1,208-byte initializer
+wrapper, original address 650064. All six direct callee bodies match, including
+the parser, business handler and exit. Both root builds are identical; a fresh
+17,331-case suite passes. The source visibility is a sufficient tested cause,
+not proof of historical visibility or a traced compiler-pass explanation.
+
+Current Fees coverage is 553/585, with 406 unique structural pairs and 32 unmatched
+windows. The authorization-helper source variants remain rejected controls; they
+do not close original 234096. Their source-path and signer-load observations
+guide further work without promoting those variants.

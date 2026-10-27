@@ -1,6 +1,6 @@
 # Comprehensive reconstruction review
 
-Reviewed merged evidence: `5c1f717918495b8508ff5aefedc6d3219abb3439`. Selected builds remain bound to `1463bd22fb7811825c5e7acf1cb963eb39ab68d9`.
+Reviewed merged evidence: `6b61b33735106c78f9099743ea405fd293abee10`. Selected builds remain bound to `1463bd22fb7811825c5e7acf1cb963eb39ab68d9`.
 
 **The four core selected programs remain byte-unequal. Relay research reproduces all meaningful ELF bytes with a reconstructed linker layout; its separate loader receipt reproduces the captured payload. No public handler is proved exhaustively perfect.**
 
@@ -22,11 +22,11 @@ Reviewed merged evidence: `5c1f717918495b8508ff5aefedc6d3219abb3439`. Selected b
 | pump | 98 | 430 | 507 | 0 | 1,391,456 / 1,792,208 (77.6%) |
 | pump_amm | 93 | 395 | 297 | 0 | 734,392 / 1,162,040 (63.2%) |
 | pump_fees | 102 | 363 | 120 | 0 | 418,392 / 799,648 (52.3%) |
-| pump_fees_research | 118 | 434 | 33 | 0 | 205,216 / 799,648 (25.7%) |
+| pump_fees_research | 118 | 435 | 32 | 0 | 204,008 / 799,648 (25.5%) |
 
 These byte totals count entire unresolved original windows, not differing bytes or development effort. Raw and normalized matches can still contain unresolved references. Do not add selected and research rows: they represent alternative builds of the same programs. Mayhem has 257 source-ledger opaque windows; 12 have raw counterparts and therefore appear in the exact column.
 
-Fees research has 405 unique structural pairs, 69 additional call-attributed pairs and 78 unattributed duplicate windows. Its encoded-call ledger has 3,484 bound-target edges and 16 different-body frontier edges. A bound edge is not a full semantic proof. Selected Fees retains two call-conflicting rows.
+Fees research has 406 unique structural pairs, 69 additional call-attributed pairs and 78 unattributed duplicate windows. Its encoded-call ledger has 3,491 bound-target edges and 15 different-body frontier edges. A bound edge is not a full semantic proof. Selected Fees retains two call-conflicting rows.
 
 ## Every public handler: source/behavior status
 
@@ -85,7 +85,7 @@ The five largest unresolved windows per build focus the next investigation. Empt
 ## Remaining acceptance gates
 
 1. **Behavior:** finish partial/unaccepted public handlers and known discrepancies. Pump `sell_v2` remains a bounded implementation with a known transfer-fee discrepancy. Mayhem field roles, initialization and diagnostic contracts remain unresolved. Existing stopped lanes remain stopped.
-2. **Complete bodies:** the current inventory has 0 unmatched Relay normalized windows and 33 Fees residuals; recover those bodies, complete Pump/AMM reconstruction and attribute Mayhem opaque windows. Small helper matches alone do not close callers.
+2. **Complete bodies:** the current inventory has 0 unmatched Relay normalized windows and 32 Fees residuals; recover those bodies, complete Pump/AMM reconstruction and attribute Mayhem opaque windows. Small helper matches alone do not close callers.
 3. **Identity:** Relay now has literal equality across the complete 818,280-byte ELF, including all calls, data, layout and relocations. Its 12,168-byte tail is reproduced by the loader. Establish those properties for the other programs and retain broader runtime/provenance qualifications.
 4. **Build provenance:** retain source hashes, dependency/toolchain inputs and reproducible recipes. A synthetic exact recipe does not establish the historical recipe.
 5. **Selection:** research candidates require explicit selected-source integration, rebuilt artifacts, bound validation and guard transitions. Current research gains do not update selected checkpoints.
@@ -94,6 +94,6 @@ The next practical work is Relay selected-source integration and historical buil
 
 ## Evidence and validation
 
-This report derives from the full window inventory, current call ledger and immutable selected-handler audit. It does not rerun runtime cases or claim new execution coverage. Current Fees retains 17,331 suite comparisons and 157 strict signed social-creation cases. Earlier exact-query, growth, optional-account, social-claim and log matrices retain their own candidate bindings and were not rerun for this composition. Relay retains 536 records / 534 unique fixtures per tested recipe. Their exclusions and observation scopes remain those of their owning packets.
+This report derives from the full window inventory, current call ledger and immutable selected-handler audit. It does not rerun runtime cases or claim new execution coverage. Current Fees has a fresh 17,331-comparison suite. Earlier 157-case strict signed social-creation results retain their prior candidate binding. Earlier exact-query, growth, optional-account, social-claim and log matrices retain their own candidate bindings and were not rerun for this composition. Relay retains 536 records / 534 unique fixtures per tested recipe. Their exclusions and observation scopes remain those of their owning packets.
 
 Verify inventory/binary bindings with `python3 -B repro/reconstruction-status-2026-10-26/refresh.py --check`, then this report with `python3 -B repro/reconstruction-status-2026-10-26/review.py --check`. The [current analysis](../../docs/RECONSTRUCTION-STATUS.md) links the recovery studies and dependency evidence.

@@ -7,8 +7,8 @@
     {
       "path": "README.md",
       "before_sha256": "cae913d4d3f2066403162f653a0cf35b39620fb08877b1b308c08ccce4a53678",
-      "after_sha256": "a669cc1039b47af05d047baeabb2435d588860b999934a68ba1ca751fd1a5f4b",
-      "reason": "Record exact Relay ELF and loader payload reproduction plus reviewed Fees prefix integration; preserve selected checkpoints and historical-provenance limits."
+      "after_sha256": "34a275b2b51d7aa202c74a7a28019d7ad131af46cea0b02505ed72013d5874d2",
+      "reason": "Record verified Fees instruction visibility recovery and PR197 review while preserving exact Relay evidence and selected checkpoints."
     },
     {
       "path": ".github/workflows/verify.yml",
