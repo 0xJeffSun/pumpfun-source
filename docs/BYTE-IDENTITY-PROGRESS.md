@@ -1305,3 +1305,27 @@ excerpt/derivative is published. Default native_build_verified, runtime_verified
 and whole_binary_identity_verified remain false. Full raw ELF/capture identity,
 indirect behavior and unrestricted transitive data remain open. No selected
 checkpoint changes.
+
+
+## Fees: constant Pubkey boundary recovers the initializer parser — 27 October 2026
+
+The [constant-admin source proposal](../research/fees-initialize-config-const-admin-source-proposal/README.md)
+moves the unchanged admin Pubkey expression into a named constant, preserving
+account types, error code, literal value, source line count and dependencies.
+On exact public PR197's integrated550 source, this recovers original 295800 /
+6,232 bytes: isolated 550→551 normalized, raw 118→142, no losses. The ordinary
+constant boundary eliminates an unintended runtime base58-decoder call; its name
+is not claimed historical. Newer combined frontiers remain separate experiments.
+
+All 42 public input mappings and materialized bytes are independently verified;
+thirteen source-only tests pass. Local static audit binds 42 actual callees,
+14 complete direct objects and 163 decoded Location uses. Native outputs repeat
+and finite 17,331-case regression passes locally, but authentic fixed-admin
+initializer success is NOT exercised. These execution observations remain
+unpublished, not evidence supplied by default source verification.
+
+Positional byte differences worsen 456,100→466,938 despite raw-body gains; full
+ELF/capture identity is false. No binary, archive, log, runtime case or archived
+build/replay receipt derivative is included. Default native_build_verified,
+runtime_verified and whole_binary_identity_verified are false. No selected
+checkpoint or prior evidence changes.
