@@ -87,6 +87,10 @@ def verify_round(d, tmp):
         stripped = Path(tmp) / (d.name + '-candidate.so')
         subprocess.run([str(objcopy), '--strip-all', str(ord_elf), str(stripped)], check=True)
         assert sha(stripped.read_bytes()) == claims['ordered']['candidate_sha256']
+        strip_check = 'recomputed'
+    else:
+        strip_check = 'skipped: v1.44 llvm-objcopy not installed'
+        print(f'note: {d.name}: strip check {strip_check}; stripped hash from build receipts', file=sys.stderr)
     # residual classes and blocker pricing recomputed from the saved ELF, map and plan
     import classify
     plan = read(d / 'plan.json.gz')
@@ -111,7 +115,7 @@ def verify_round(d, tmp):
         assert r['case_count'] == claims['runtime']['case_count'] and r['diagnostic_mismatches'] == 0
     return {'round': d.name, 'baseline_raw': base['counts']['raw'], 'ordered_raw': new['counts']['raw'],
             'normalized': new['counts']['normalized'], 'raw_gained': [hex(x) for x in gained],
-            'selectors': len(ordered), 'translation_sections': t['sections']}
+            'selectors': len(ordered), 'translation_sections': t['sections'], 'strip_check': strip_check}
 
 
 def main():

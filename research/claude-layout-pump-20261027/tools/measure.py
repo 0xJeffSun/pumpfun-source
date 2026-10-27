@@ -3,7 +3,8 @@
 
 Uses the repository's own measurement primitives unchanged
 (scripts/pump_compare_function_bytes.normalize/body and
-scripts/pump_quote_control_function_match.sections/candidate_functions):
+scripts/pump_quote_control_function_match.sections, with function symbols
+read from .symtab by elf_functions, equivalent to its candidate_functions):
 for every original window, a candidate function symbol of the same size whose
 normalized body is equal is a normalized match, and a window is raw-matched
 when any such candidate body is byte-identical. Window boundaries come from a
@@ -14,6 +15,7 @@ import argparse
 import gzip
 import hashlib
 import json
+import struct
 import sys
 from pathlib import Path
 
@@ -21,10 +23,36 @@ HERE = Path(__file__).resolve().parent
 ROOT = next(p for p in HERE.parents if (p / 'evidence/original/pump/deployed.so').is_file())
 sys.path.insert(0, str(ROOT / 'scripts'))
 from pump_compare_function_bytes import normalize, body  # noqa: E402
-from pump_quote_control_function_match import sections, candidate_functions  # noqa: E402
+from pump_quote_control_function_match import sections  # noqa: E402
 
-OBJDUMP = Path.home() / '.cache/solana/v1.52/platform-tools/llvm/bin/llvm-objdump'
 sha = lambda b: hashlib.sha256(b).hexdigest()
+
+
+def elf_functions(path):
+    """Function symbols of an unstripped ELF, read directly from .symtab.
+
+    Pure-Python equivalent of the repository's
+    `pump_quote_control_function_match.candidate_functions(path, llvm-objdump, '.')`:
+    STT_FUNC symbols defined in `.text` with nonzero size and default or hidden
+    visibility, as (address, size, name) in symbol-table order. No external tool runs.
+    """
+    b = Path(path).read_bytes()
+    shoff, = struct.unpack_from('<Q', b, 0x28)
+    shentsize, shnum, shstrndx = struct.unpack_from('<HHH', b, 0x3a)
+    hdrs = [struct.unpack_from('<IIQQQQIIQQ', b, shoff + i * shentsize) for i in range(shnum)]
+    cstr = lambda base, off: b[base + off:b.index(b'\0', base + off)].decode()
+    names = [cstr(hdrs[shstrndx][4], h[0]) for h in hdrs]
+    text = names.index('.text')
+    symtab = next(h for h in hdrs if h[1] == 2)  # SHT_SYMTAB
+    strbase, entsize = hdrs[symtab[6]][4], symtab[9]
+    funcs = []
+    for off in range(symtab[4] + entsize, symtab[4] + symtab[5], entsize):  # entry 0 is the null symbol
+        st_name, st_info, st_other, st_shndx, value, size = struct.unpack_from('<IBBHQQ', b, off)
+        if st_info & 0xf == 2 and st_shndx == text and size and st_other & 3 in (0, 2):
+            name = cstr(strbase, st_name)
+            if name:
+                funcs.append((value, size, name))
+    return funcs
 
 
 def read(p):
@@ -32,12 +60,12 @@ def read(p):
     return json.loads(gzip.decompress(b) if b[:2] == b'\x1f\x8b' else b)
 
 
-def inventory(candidate_path, windows, objdump=OBJDUMP):
+def inventory(candidate_path, windows):
     ob = (ROOT / 'evidence/original/pump/deployed.so').read_bytes()
     cb = Path(candidate_path).read_bytes()
     os_, cs = sections(ob), sections(cb)
     by_size, cache = {}, {}
-    for addr, size, name in candidate_functions(Path(candidate_path), str(objdump), '.'):
+    for addr, size, name in elf_functions(candidate_path):
         if (addr, size) not in cache:  # alias symbols share one body; each symbol is listed (objdump order)
             raw = body(cb, cs, addr, size)
             cache[addr, size] = (raw, *normalize(raw, addr, cs))
