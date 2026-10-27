@@ -78,3 +78,14 @@ notes distinguish the newest 556-window research candidate from the generated
 554-window pinned inventory. Additive progress-log conflicts were resolved by
 retaining both entries. PR203's rebased head adds no source changes to the tested
 canonical Relay; the reviewed portable guard is retained.
+
+## PR207: typed Relay donation encoder
+
+The full verifier and all five negative controls pass. Fresh execution of all
+357 donation-Crank cases matches the retained JSON exactly, including the 159
+cases reaching the real captured Relay CPI. Ordinary public module visibility
+retains the borrowed typed encoder and its real caller; nine direct callee
+bodies and all 165 Locations match. The new candidate reaches 557 normalized
+windows, 118 raw-local, and 410 unique pairs without losses. The Crank caller
+and whole ELF remain unmatched. The current 556 inventory is not silently
+changed by this additive packet. Progress-log conflicts retain both entries.
