@@ -1283,3 +1283,25 @@ separately isolate four copy displacement bytes per legacy/V2 adapter. Thirteen
 real controls add no complete matches; a local symbolic copy proof and 417
 sharing-update cases support the limited observations. These artifacts remain
 experimental and do not replace the current candidate.
+
+## Fees: public module boundary restores the Buyback wrapper — 27 October 2026
+
+The [one-line source proposal](../research/fees-buyback-module-source-proposal/README.md)
+changes only `mod instructions;` to `pub mod instructions;` on public PR188's
+exact 42-input math+pack source. This naturally retains the default bump store
+at wrapper offset 104 and recovers original 650064 / 1,208 bytes: pinned
+545→546 normalized windows, no losses, raw 118 unchanged. The later public552
+source still leaves this wrapper unmatched; a combined frontier is not claimed.
+
+Independent source checks preserve all other bytes and inputs, with thirteen
+passing tests and exact full materialization. Local native audit binds six real
+callee bodies and both complete direct objects. Two equal native builds and the
+finite 17,331-case regression passed locally; their evidence remains unpublished.
+The public source boundary is an inferred explanation, not historical provenance.
+
+Only ordinary source, a reversible patch, public input hashes and source-only
+tools are included. No binary, archive, log, runtime case or build/replay receipt
+excerpt/derivative is published. Default native_build_verified, runtime_verified
+and whole_binary_identity_verified remain false. Full raw ELF/capture identity,
+indirect behavior and unrestricted transitive data remain open. No selected
+checkpoint changes.
