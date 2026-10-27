@@ -65,7 +65,7 @@ Base: origin/main 0cc61d636, AMM frontier repro/pump_amm/event-decoder-recovery-
   647/651 dependency set); SP/shared/buildcache/{native-v144,xnative-v144}; SP/shared/registry (entrypoint 2.2.1 archive).
 - My lane dirs: target/xnative and target/xnative2 lost .rlib files to the --build-plan hazard (cargo rebuilds missing ones; or
   re-clone from the shared primed cache). target/linux is primed for the 647/651 dependency set (lin1).
-- PR #318 open (g01 packet), CI pending at 12:58.
+- PR #318 open (g01 packet), CI pending at 12:51.
 
 ## Next (untried ideas)
 - When MAIN moves: `seed_main.sh speed <checkpoint>` (both flavors) so every lane's baseline is a cache hit; then exactcheck.py.
