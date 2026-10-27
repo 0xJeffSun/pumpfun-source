@@ -7,8 +7,8 @@
     {
       "path": "README.md",
       "before_sha256": "cae913d4d3f2066403162f653a0cf35b39620fb08877b1b308c08ccce4a53678",
-      "after_sha256": "6966110ff173109bd5e557879f111aa6a29cedf7ca23f92a0d5626668d54cb3b",
-      "reason": "Record tested Relay source-location recovery on both build recipes and latest Fees research at 351 structural pairs with 87 unmatched; preserve bounded-data and whole-file limits."
+      "after_sha256": "2b7ab7fa7460dfa5e837728f0ed564742558559e9b8791d7c96eafcbb211ca60",
+      "reason": "Refresh the post-PR123 reconstruction review and complete function inventory; record Fees 353 unique pairs/85 unmatched, retain Relay 480/492 and all selected checkpoint limits."
     },
     {
       "path": ".github/workflows/verify.yml",

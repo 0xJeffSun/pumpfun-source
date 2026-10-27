@@ -4,8 +4,10 @@ Audited repository snapshot: `1463bd22fb7811825c5e7acf1cb963eb39ab68d9`, includi
 the PR #71–#94 review batch. This report separates selected artifacts from newer
 research. It does not promote a source tree or change an acceptance decision.
 
-Subsequent gains are tracked in the [byte-identity progress log](BYTE-IDENTITY-PROGRESS.md);
-the tables below retain their dated snapshot.
+The [post-PR123 review](RECONSTRUCTION-STATUS.md) and [refreshed full inventory](../repro/reconstruction-status-2026-10-26/README.md)
+supersede the research frontier below: **Relay 480/492, 12 unmatched; Fees 353
+unique pairs, 85 unmatched**. Selected checkpoint tables below retain their dated
+snapshot. Subsequent gains are tracked in the [progress log](BYTE-IDENTITY-PROGRESS.md).
 
 **No core program, and no selected Relay program, is a complete byte-identical
 reconstruction. No public handler has an exhaustive semantic-equivalence proof.**
@@ -108,11 +110,11 @@ helpers in Mayhem, and Relay’s `__floatundidf`. The appendix lists every match
 including tiny helpers and duplicate bodies; it does not silently call a whole
 trade handler perfect because one of its helpers matches.
 
-## 3. Newer research, kept separate from selection
+## 3. Research at the audit snapshot, kept separate from selection
 
 ### Fees: parser, layout, sysroot and call attribution
 
-The latest stable-sort research output is 852,656 bytes, SHA-256
+At this audit snapshot, the stable-sort research output is 852,656 bytes, SHA-256
 `f6d23ea00a81b97b6f75d036287a326936cd76534cf6b68a40540e338851ae66`.
 It is not the selected `2387f813…` output and still differs from the capture.
 
@@ -250,9 +252,10 @@ roles. “Bounded implementation” must never be displayed as “no known defec
 2. **Close named behavior gaps.** Address the ten dispositions above and the known
    sell_v2 discrepancy; retain successful and rejected fixtures with exact
    transaction inputs. Existing stopped-lane rules are not changed by this report.
-3. **Finish the strongest source-recovery paths.** Fees: 98 unmatched windows,
-   94 unresolved duplicate attributions, call/data closure and shareholder bodies.
-   Relay research: its explicit 27 residuals and successful privileged settlement.
+3. **Finish the strongest source-recovery paths.** Current Fees: 85 unmatched
+   windows; rederive duplicate attributions on the current build, close calls/data
+   and shareholder bodies. Current Relay: its [12 explicit residuals](RECONSTRUCTION-STATUS.md#relay-the-complete-remaining-body-list)
+   and successful privileged settlement.
    These are bounded frontiers, not estimates of days or percent effort remaining.
 4. **Recover the remaining selected Pump/AMM/Mayhem structures.** Use the complete
    address ledgers rather than only high-similarity examples. Preserve ambiguity,

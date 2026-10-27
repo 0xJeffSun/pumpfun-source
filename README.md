@@ -15,8 +15,13 @@ Latest Relay research: **480/492 normalized windows, 12 unmatched**. Source-coor
 builds using both compiler recipes have **130 raw local body matches**, resolve
 all 43 location-value differences in the audited subset, and each pass 536
 replay records. This includes a fresh build with the full Linux SDK.
-Latest Fees research: **351 unique structural pairs, 87 unmatched windows**.
+Latest Fees research: **353 unique structural pairs, 85 unmatched windows**.
 Whole-file identity remains unachieved.
+
+The [current reconstruction review](docs/RECONSTRUCTION-STATUS.md) lists exact,
+normalized, unmatched and opaque function status, all 12 remaining Relay bodies,
+and prioritized behavior/build work. The [refreshed 4,415-row inventory](repro/reconstruction-status-2026-10-26/README.md)
+includes every exact local body match and every unresolved window.
 
 The [26 October reconstruction audit](docs/RECONSTRUCTION-AUDIT.md) separates
 selected builds from newer research and lists [all 150 handlers](repro/reconstruction-audit-2026-10-26/handlers.md),
@@ -130,7 +135,7 @@ For local SDK testing with every handler present, apply the
 
 ## More detail
 
-- [Current reconstruction audit](docs/RECONSTRUCTION-AUDIT.md) and [remaining work](docs/REMAINING-WORK.md)
+- [Current reconstruction review](docs/RECONSTRUCTION-STATUS.md), [selected baseline audit](docs/RECONSTRUCTION-AUDIT.md) and [remaining work](docs/REMAINING-WORK.md)
 - [Historical selected-checkpoint completion ledger](docs/COMPLETION.md) and [scope](docs/SCOPE.md)
 - [Tooling](docs/TOOLING.md) and [historical build-identity audit](docs/BUILD_IDENTITY_AUDIT.md)
 - Per-pass ledgers in `repro/layered-passes/`; historical packages are immutable.

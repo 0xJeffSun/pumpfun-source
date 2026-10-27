@@ -1,13 +1,16 @@
-# Remaining work — 26 October 2026 audit
+# Remaining work — post-PR123 review, 26 October 2026
 
 This is the action list for the [current reconstruction audit](RECONSTRUCTION-AUDIT.md),
-based on selected artifacts and research through commit `1463bd22`. The historical
+with current research reviewed through `a8f2a7b2`. The [current review](RECONSTRUCTION-STATUS.md)
+and [complete refreshed inventory](../repro/reconstruction-status-2026-10-26/README.md)
+list every raw match and unresolved window; selected artifacts retain the
+`1463bd22` audit bindings. The historical
 [completion ledger](COMPLETION.md) remains a selected-checkpoint record; its old
 candidate paths and “current” prose must not override newer evidence.
 
 Subsequent gains are in the [byte-identity progress log](BYTE-IDENTITY-PROGRESS.md):
 Relay research now has **12 unmatched windows**; Fees buyback-origin research
-has 87. The [latest Relay study](../repro/donation-relay/framework-sysroot-recovery/README.md)
+has **85 unmatched windows and 353 unique structural pairs**. The [Relay framework study](../repro/donation-relay/framework-sysroot-recovery/README.md)
 recovers the three repeated type-ID bodies with official Linux target libraries,
 adds the Anchor 0.32 framework matches and restores share-total compared values.
 The subsequent [mint-predicate study](../repro/donation-relay/mint-fee-pair-recovery/README.md)
@@ -70,13 +73,14 @@ and signing/ownership restrictions are unchanged by this documentation audit.
 | --- | --- |
 | Selected Pump | 507 windows without full normalized matches; calls/data and ambiguous matches also remain. The separate workspace-member build has 538 normalized windows and 497 residuals: 233 different-body, 192 no-same-size, 72 store-immediate-only heuristic rows. One of those 72 changes an error code; only 71 are reported origin-only. |
 | Selected AMM | 297 unmatched original windows, 160 ambiguous normalized rows, original diagnostics, data and full call contracts |
-| Fees research | 98 unmatched windows, 94 unattributed duplicate-body windows, 26 aligned call edges to different-body frontiers; surrounding shareholder validators, transitive calls/data and full ELF/relocation layout |
+| Fees current research | 85 unmatched windows (348,264 original body bytes), 147 original windows in duplicate groups; rederive call attribution for this candidate, then close shareholder validators, transitive calls/data and full ELF/relocation layout |
 | Selected Mayhem | Seven admitted unmatched windows and 257 source-ledger opaque windows; 12 of the opaque windows have local raw matches without semantic attribution |
-| Relay research | Explicit 27 residual windows: donation/settlement business bodies, mint policy, close/CPI/resize, serialization and ten unclassified helpers; privileged successes, transitive callees/data and allocator/borrow behavior |
+| Relay current research | [12 explicit residual windows](RECONSTRUCTION-STATUS.md#relay-the-complete-remaining-body-list), spanning 57,968 original body bytes: Jupiter CPI, donation/settlement bodies, burn/close and shared donation worker; privileged successes, transitive callees/data and allocator/borrow behavior |
 | Metaplex | Utilize's 1,477 text differences, 30 source-coordinate differences, two relocation differences; authentic source/compiler layout |
 | ATA | Historical recipe remains unknown despite exact output from explicit symbol ordering and an empty feature. Decide selection independently of historical authenticity. |
 | All programs | Exact historical tool/dependency inputs, complete sections/relocations, data and indirect-call meaning; complete security and lifecycle acceptance |
 
+The historical counts in the audit-baseline section are not the current research frontier.
 The Fees and Relay research outputs are not selected production/source checkpoints.
 The [audit](RECONSTRUCTION-AUDIT.md) records their full hashes, scope and exact
 function-level evidence. Do not combine counts from different builds or matcher
