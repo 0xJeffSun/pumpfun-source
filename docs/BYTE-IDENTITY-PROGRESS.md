@@ -4,6 +4,19 @@ The [full audit](RECONSTRUCTION-AUDIT.md) and its generated tables retain their
 explicit `1463bd22` snapshot. This log records later research without silently
 changing that baseline or promoting new selected artifacts.
 
+## Mayhem: recover the quote validator and trade source origins
+
+The [seven-path Rust successor](../research/mayhem-trade-origins-validator/README.md)
+adds the complete 1,296-byte normalized quote validator, reaching 429/441 matches
+while retaining all 100 raw-local matches. Its eight immediate calls and fourteen
+typed data references are checked. The three partial trade handlers recover
+all 21 observed Source descriptors and three CPI origins; their full bodies
+remain unmatched. Two qualified builds agree, and an independent whole-file
+permutation accounts for 447 sections, 4,838 calls and 10,554 local branches.
+Fresh replay passes 65 paired cases / 130 signed records with matching logs.
+Twelve windows, 111,288 original text bytes, the allocator relationship and full
+program identity remain open. Historical runtime receipts are not relabeled.
+
 ## Mayhem: reproduce the missing allocator form in a source-context control
 
 Reviewed PR #253 adds the [allocator-context experiment](../research/mayhem-allocator-context/README.md).

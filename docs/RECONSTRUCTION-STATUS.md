@@ -6,7 +6,7 @@ This review updates the research frontier while preserving the selected-checkpoi
 contains every one of the **4,415 selected/research function-window rows**.
 
 The generated inventory is a dated snapshot. Later maintained selections now
-include Pump Round18 and the AMM structural/TLV recovery; their current counts and
+include Pump Round20 and the AMM structural/TLV recovery; their current counts and
 evidence are in the [repository overview](../README.md). The current rows below
 are separate from the historical rows, and do not rewrite that snapshot.
 
@@ -51,13 +51,13 @@ analysis. Candidate symbol names are hypotheses about original identity.
 | Fees selected | 585 | 102 | 363 | 120 | 0 |
 | Mayhem historical selected | 441 | 58 | 131 | 7 | 245 |
 | Relay historical source 15 | 492 | 33 | 89 | 370 | 0 |
-| **Pump current Round18** | **1,035** | **118** | **575** | **342** | **0** |
+| **Pump current Round20** | **1,035** | **120** | **585** | **330** | **0** |
 | **PumpSwap current** | **785** | **124** | **462** | **199** | **0** |
 | **Fees latest research** | **585** | **198** | **380** | **7** | **0** |
-| **Mayhem latest research** | **441** | **100** | **328** | **13** | **0** |
+| **Mayhem latest research** | **441** | **100** | **329** | **12** | **0** |
 | **Relay canonical selection** | **492** | **492** | **0** | **0** | **0** |
 
-The current rows are bound to [Pump Round18](../repro/pump/main-contract-round18-20261027/README.md), [AMM structural/TLV recovery](../repro/pump_amm/structural-tlv-recovery-20261027/README.md), [Fees readonly-order recovery](../research/fees-readonly-order-recovery/README.md) and [Mayhem provider sharing](../research/mayhem-provider-sharing/README.md); they extend the dated generated inventory below. Each row is a partition, not a score of semantic correctness. The historical selected Mayhem source
+The current rows are bound to [Pump Round20](../repro/pump/main-contract-round20-20261027/README.md), [AMM structural/TLV recovery](../repro/pump_amm/structural-tlv-recovery-20261027/README.md), [Fees readonly-order recovery](../research/fees-readonly-order-recovery/README.md) and [Mayhem trade origins and validator](../research/mayhem-trade-origins-validator/README.md); they extend the dated generated inventory below. Each row is a partition, not a score of semantic correctness. The historical selected Mayhem source
 ledger has 257 opaque windows, 12 of which happen to match local raw bytes.
 Selected Fees retains two call-conflicting rows; body existence does not resolve
 those conflicts. Different programs and studies use different matching rules.
@@ -998,7 +998,7 @@ rebind earlier trade/ExtendAccount receipts to the new artifact or establish
 exhaustive behavior. O0193 remains 920 versus 960 bytes, and whole-ELF identity
 remains unresolved.
 
-## Current Mayhem provider sharing
+## Preceding Mayhem provider-sharing checkpoint
 
 The [provider-sharing successor](../research/mayhem-provider-sharing/README.md)
 routes the two AMM handlers through the curve crate's Anchor SPL reexport and
@@ -1020,3 +1020,24 @@ ExtendAccount results remain bound to their earlier artifacts. Two original
 328-byte helpers still have one candidate counterpart, and no matching
 640-byte reserve helper reaches it. The sysvar growth copy, thirteen unmatched
 bodies, full data/call identity and historical build provenance remain open.
+
+## Current Mayhem trade origins and quote validator
+
+The [successor packet](../research/mayhem-trade-origins-validator/README.md)
+adds O0095, the 1,296-byte quote validator, under the unchanged normalizer.
+Its eight immediate call targets and fourteen typed data references are checked
+against the original. The partition is now 100 raw-local, 329 normalized-only
+and twelve unmatched windows. Matched windows cover 595,456 of 706,744 original
+text bytes; 111,288 remain in unmatched windows.
+
+The Legacy Buy, Legacy Sell and SellV2 handlers recover all 21 observed Source
+descriptors and three CPI error origins. Their 148 callee-shape observations
+agree as multisets, while their full bodies and call order remain unequal or
+unproved. The new seven-path source delta produces 447 compiled sections; the
+independent linker-permutation proof accounts for the complete artifacts,
+including 4,838 direct calls and 10,554 local branches.
+
+Two qualified Rust builds agree, and 65 fresh paired cases verify 130 signed
+execution records with matching non-compute logs. Parent runtime results retain
+their earlier hashes. The selected maintained source remains unchanged; full
+ELF/capture identity, the allocator relationship and broader behavior are open.
