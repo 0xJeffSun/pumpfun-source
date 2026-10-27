@@ -17,7 +17,7 @@ are distinct from [selected artifacts](repro/status.json).
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
 | [Pump selected](programs/pump/README.md) | 528 / 1,035 | 51.0% | 98 (9.5%) | 430 | 507 | 0 | No |
 | [PumpSwap / AMM selected](programs/pump-amm/README.md) | 488 / 785 | 62.2% | 93 (11.8%) | 395 | 297 | 0 | No |
-| [Fees research](research/fees-sharing-slice-recovery/README.md) | 577 / 585 | 98.6% | 143 (24.4%) | 434 | 8 | 0 | No |
+| [Fees research](research/fees-qualified-linker-layout/README.md) | 577 / 585 | 98.6% | 198 (33.8%) | 379 | 8 | 0 | No |
 | [Mayhem research](research/mayhem-accounting-extend-recovery/README.md) | 428 / 441 | 97.1% | 70 (15.9%) | 358 | 13 | 0 | No |
 | [Donation Relay selected](repro/donation-relay/canonical-exact-selection/README.md) | 492 / 492 | 100.0% | 492 (100.0%) | 0 | 0 | 0 | **Yes** |
 
@@ -60,7 +60,10 @@ retains older selected Pump/PumpSwap measurements separately.
 
 Fees has **430 unique structural pairs** within its 577 matched windows.
 Its current report records 3,870 equal direct-callee observations out of 3,877;
-the seven unequal observations remain unresolved.
+the seven unequal observations remain unresolved. The qualified linker layout
+adds 55 complete raw-local matches while preserving all 577 normalized matches;
+two native builds and 17,331 fresh runtime cases agree. Full ELF equality remains
+unproved.
 
 Relay's exact result covers **818,280 / 818,280 meaningful ELF bytes (100%)**,
 including headers, calls, data and relocations. Two Rust builds agree. A separate
