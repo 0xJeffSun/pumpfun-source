@@ -1196,3 +1196,11 @@ PR #195 also independently reproduces the current Fees prefix correction:
 552/585 normalized windows, 118 raw-local, 405 unique, 33 unmatched (205,216 bytes).
 A fresh 17,331-case suite has zero mismatches. PR #196 preserves the separate
 376-raw default-linker source result and supplies verified allocation history.
+
+An [additional independent clean build](../repro/donation-relay/independent-exact-recheck/README.md)
+reproduced the exact Relay ELF and symbols again in a separate container with an
+empty target and no original mounted. It checked253 registry archives and7,968
+source files before/after. A fresh912-transaction loader run using that newly
+compiled ELF reproduced the entire830,448-byte captured payload. This confirms
+the explicit-layout research recipe; canonical selected source and the four core
+programs remain separate unfinished work.
