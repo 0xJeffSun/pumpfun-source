@@ -1352,3 +1352,7 @@ repro/donation-relay/linux15-v148-one-shot-controller/history/461e-v2a/history/b
 repro/donation-relay/linux15-v148-one-shot-controller/history/461e-v2a/reviewed282c/source15/src/dispatch.rs -whitespace
 repro/donation-relay/linux15-v148-one-shot-controller/history/b0d696-v1/reviewed282c/source15/src/dispatch.rs -whitespace
 repro/donation-relay/linux15-v148-one-shot-controller/reviewed282c/source15/src/dispatch.rs -whitespace
+programs/donation-relay/src/lib.rs -whitespace
+programs/donation-relay/src/donation_handlers.rs -whitespace
+repro/donation-relay/canonical-exact-selection/historical-source23/src/dispatch.rs -whitespace
+repro/donation-relay/canonical-exact-selection/build/link.map -whitespace

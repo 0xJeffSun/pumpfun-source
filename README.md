@@ -3,8 +3,8 @@
 Reconstructed Rust source for the Pump.fun Solana programs, plus the captured
 on-chain binaries and the evidence used to check the reconstruction against them.
 
-**None of the four core programs or the selected Relay is byte-identical to its
-deployed binary yet.**
+**The four core programs remain byte-unequal. The selected Relay reconstruction
+now reproduces its full ELF and loader-allocated payload byte-for-byte.**
 Behavior is reconstructed handler by handler and checked with differential tests
 that run the captured original and the rebuilt candidate side by side in a local VM.
 
@@ -28,7 +28,9 @@ The captured file also has **12,168 loader-allocated zero bytes**. A fresh local
 without padding the compiler output. ProgramData metadata and historical deployment
 sequence are outside that equality claim. The [natural source layout recovery](repro/donation-relay/access-control-layout-artifact/README.md)
 separately reaches 376 raw-local windows using the default linker layout.
-Selected checkpoints remain unchanged; all four core programs remain byte-unequal.
+The [canonical Relay source](repro/donation-relay/canonical-exact-selection/README.md)
+is now selected after a fresh build from `programs/donation-relay`. The four core
+checkpoints remain unchanged and byte-unequal.
 
 The pinned Fees inventory has **406 unique structural pairs, 32 unmatched windows**
 (**553/585 normalized counterparts**, including 118 raw-local matches).
