@@ -1,13 +1,13 @@
 # PumpSwap source reconstruction
 
-The maintained source is the [guard, route and data checkpoint](../../repro/pump_amm/guard-data-recovery-20261027/README.md),
-candidate `e97b3900800d4378486d9b1f7df040e6b7a57d34b31a9470a5f5eb3a9d2fb24b`. It closes the canonical-pool constraint and route
-lookahead ordering gaps, recovers helper code/calls, and restores accumulator
-source descriptor paths.
+The maintained source is the [source ABI and return checkpoint](../../repro/pump_amm/source-abi-recovery-20261027/README.md),
+candidate `e995d6a8211dcd3d05c07cdcb1a7147ec4f4e2b2a81b56c268fd1a3d76a01ce1`. It recovers the TradeV2 and MultiHop initializer helpers,
+fixes shared protocol-recipient validation, and restores generated CPI return
+handling and the BuyEvent source module.
 
-It matches **638/785 normalized original windows (81.3%)**, including **128 raw
-bodies**, and covers **782,776/1,162,040 text bytes (67.4%)**. It gains 15 windows
-without losing any from the prior checkpoint; **147 windows remain** and whole
+It matches **640/785 normalized original windows (81.5%)**, including **128 raw
+bodies**, and covers **799,032/1,162,040 text bytes (68.8%)**. It gains two windows
+without losing any from the prior checkpoint; **145 windows remain** and whole
 ELF identity is false. Two strict offline builds reproduce the same artifact.
 
 All 17,462 corpus cases pass with 35,074 executions and 35,418 verified signature
@@ -17,13 +17,12 @@ ordinary signed ComputeBudget instructions and finish three-hop buy and sell.
 Counts overlap. Normalization and substituted-dependency exceptions are
 explicitly documented in the linked packets.
 
-A separate malformed-recipient follow-up still differs in six of nine cases;
-its scope and evidence are documented in the checkpoint.
-
-The recipe binds 48 canonical inputs to 49 workspace and 169 authenticated registry
+The recipe binds 50 canonical inputs to 51 workspace and 169 authenticated registry
 inputs. Complete code/data/call identity, remaining source coordinates,
 historical toolchain provenance, exhaustive behavior and authentic fixed-admin
 create_config success remain open.
+
+A separate 160-case resize-order follow-up retains eight sweep differences: pool funding precedes recipient validation in the captured AMM. The signed failing cases and proposed next fix are preserved in [resize-order evidence](../../repro/pump_amm/source-abi-recovery-20261027/followup/resize-order/README.md).
 
 The paragraphs below describe historical checkpoints.
 
