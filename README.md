@@ -11,7 +11,7 @@ that run the captured original and the rebuilt candidate side by side in a local
 For subsequent gains and the latest research frontier, see the
 [byte-identity progress log](docs/BYTE-IDENTITY-PROGRESS.md).
 The [27 October queue review](docs/PR-QUEUE-REVIEW-2026-10-27.md) covers PRs
-#170–#200, including separately verified 399- and 401-pair Fees context candidates and
+#170–#202, including separately verified 399- and 401-pair Fees context candidates and
 source-only proposals. Those independent branches are not silently combined
 into the inventory below.
 
@@ -45,7 +45,9 @@ also attributes 69 duplicate-body pairs, giving 476 correspondences.
 The [CPI ownership study](research/fees-cpi-adapter-ownership-controls/README.md)
 reduces two adapter hypotheses to four unmasked copy-scheduling bytes each,
 but neither is a complete match or promoted candidate. Whole-file identity remains
-unachieved. The [exotic-fee growth study](research/fees-exotic-growth-precedence/README.md)
+unachieved. The [Crank native-flow study](research/fees-crank-native-order/README.md)
+separately improves bounded behavior, retaining 12 compute-log discrepancies;
+its older 552-window candidate is not the current composition. The [exotic-fee growth study](research/fees-exotic-growth-precedence/README.md)
 corrects rejection precedence and the realloc flag in new boundary cases;
 that caller still has no complete body match. The [optional-account ownership recovery](research/fees-optional-account-ownership/README.md)
 adds a complete optional parser and a raw-byte-equal cleanup helper; its enclosing

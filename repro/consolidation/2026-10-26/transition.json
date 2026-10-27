@@ -7,7 +7,7 @@
     {
       "path": "README.md",
       "before_sha256": "cae913d4d3f2066403162f653a0cf35b39620fb08877b1b308c08ccce4a53678",
-      "after_sha256": "ed8edc666336306b5ecaf39e2ed08b25184893f7913f3e75d0de05fde3113e8e",
+      "after_sha256": "936410264af4879b8b0a7129fb1fba5cd078f0d6c38b71637efb35e5b581e5db",
       "reason": "Record verified current-source AdminCto integration, bounded CPI controls and reviewed PRs199-200; preserve selected checkpoints."
     },
     {

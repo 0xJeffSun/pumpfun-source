@@ -1,6 +1,6 @@
 # PR queue review — 27 October 2026
 
-Reviewed PRs #170–#200 as a combined merge tree based on `ba7883511942965c5c9def03971bdaff84963d6b`. Selected program sources, captures, scripts and workflows are unchanged. Overlapping append-only progress-log additions were preserved during local conflict resolution.
+Reviewed PRs #170–#202 as a combined merge tree based on `ba7883511942965c5c9def03971bdaff84963d6b`. Selected program sources, captures, scripts and workflows are unchanged. Overlapping append-only progress-log additions were preserved during local conflict resolution.
 
 | PR | Reviewed change | Verification and scope |
 | --- | --- | --- |
@@ -39,6 +39,9 @@ Reviewed PRs #170–#200 as a combined merge tree based on `ba7883511942965c5c9d
 
 | [#199](https://github.com/lalalune/pumpfun-source/pull/199) | Unique Relay reference correspondence | Regenerated graph/certificate and all 18 tests pass. The declared positional graph forces 492 singleton pairs matching the retained linker solution. This is graph-scoped uniqueness, not historical source or indirect-behavior proof. |
 | [#200](https://github.com/lalalune/pumpfun-source/pull/200) | Included AdminCto business source | Source verifier and 13 tests pass. Subsequent independent composition onto the actual current source reaches 554 windows with two identical builds and 17,331 passing cases; the PR's original source-only 547→548 result retains its own scope. |
+
+| [#201](https://github.com/lalalune/pumpfun-source/pull/201) | Crank native-only flow and strict observations | Verifier, six mutation tests and saved-signature checker pass. Fresh 304-case replay exactly reproduces the retained receipt: 292 raw-equal cases, 12 failures limited to compute-log lines; every application/nonlog field agrees. Separate 552-window candidate; not promoted into the current 554-window composition. |
+| [#202](https://github.com/lalalune/pumpfun-source/pull/202) | Public instruction-module source proposal | Source verifier and all 13 tests pass. Its 545→546 parent-specific claim is separate from the independently artifact-backed 553-window visibility recovery already integrated here; no additional current-window gain is counted. |
 
 The checked PR head SHAs are listed in the Git merge parents. No complete-program identity or exhaustive semantic correctness follows from merging these research packets. The generated inventory remains pinned to its declared Fees and artifact-backed Relay candidates; alternative source proposals are not silently combined.
 

@@ -503,3 +503,14 @@ requires resolving that emitted order without broadening masks. Constructor,
 visibility, field-order, `mem::take` and typed-return controls are already tested.
 Do not repeat them as new gains or silently combine this older experimental
 source with the AdminCto artifact.
+
+## Crank native-only flow: reviewed, still awaiting current-source integration
+
+[PR #201's artifact-backed study](../research/fees-crank-native-order/README.md)
+moves donation-account cloning and Rent work into the native branch, preserves
+zero-exit lifetimes and carries the corrected application messages/overflow
+conversion. Fresh review reproduces all 304 retained cases exactly: 292 raw
+equalities, 12 compute-log differences, and no application/nonlog differences.
+Its 552-window base is separate from the current 554-window AdminCto source.
+Integrate the ordinary Crank changes into that source, remeasure every window
+and call edge, and retain the unresolved compute/whole-body gaps.
