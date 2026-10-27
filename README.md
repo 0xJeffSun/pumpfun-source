@@ -24,7 +24,7 @@ all remaining code, calls, data, relocations and build provenance.
 
 | Latest verified checkpoint | Matched windows | Matched % | Raw-equal bodies | Normalized only | Unmatched | Whole ELF equal |
 | --- | ---: | ---: | ---: | ---: | ---: | --- |
-| [Pump Round24](repro/pump/main-contract-round24-20261027/README.md) | 720 / 1,035 | 69.6% | 123 | 597 | 315 | No |
+| [Pump Round25](repro/pump/main-contract-round25-20261027/README.md) | 720 / 1,035 | 69.6% | 123 | 597 | 315 | No |
 | [PumpSwap / AMM](repro/pump_amm/account-context-recovery-20261027/README.md) | 623 / 785 | 79.4% | 128 | 495 | 162 | No |
 | [Fees research](research/fees-social-claim-v2-recovery/README.md) | 579 / 585 | 99.0% | 198 | 381 | 6 | No |
 | [Mayhem research](research/mayhem-sizing-panic-recovery/README.md) | 429 / 441 | 97.3% | 100 | 329 | 12 | No |
@@ -39,7 +39,7 @@ the whole program is identical.
 
 | Checkpoint | Text bytes in matched windows | Text covered | Unmatched text |
 | --- | ---: | ---: | ---: |
-| Pump Round24 | 871,992 / 1,792,208 | 48.7% | 920,216 |
+| Pump Round25 | 871,992 / 1,792,208 | 48.7% | 920,216 |
 | PumpSwap / AMM | 727,352 / 1,162,040 | 62.6% | 434,688 |
 | Fees research | 742,520 / 799,648 | 92.9% | 57,128 |
 | Mayhem research | 595,456 / 706,744 | 84.3% | 111,288 |
@@ -60,7 +60,7 @@ source or build recipe.
 
 ## Behavior and remaining work
 
-Pump Round24 passes 10,468 full cases plus 6,209 focused executions, with 16,673
+Pump Round25 passes 10,468 full cases plus 6,302 focused executions, with 16,766
 paired diagnostic-log cases. AMM passes 17,462 full cases plus the separate
 account, fee, CPI, boundary and error-order matrices recorded in its checkpoint.
 These corpora overlap and must not be summed as unique scenarios. Tests use
