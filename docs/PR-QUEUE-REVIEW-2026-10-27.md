@@ -211,3 +211,17 @@ shapes and the complete System ID, preserving the parent frontier and all saved
 compiler or target execution is claimed by this review. The separate Fees
 candidate reaches 570 normalized windows and retains 143 raw-local matches;
 Mayhem remains the active reconstruction priority.
+
+## PR223: native Windows baseline provenance
+
+Merged as `5905229cd0859e8a423eae39ea8867242382a98b`. Review passed the source/
+artifact verifier and all seventeen tests. All 215 publisher crate archives were
+also independently rehashed, with their complete vendor checksum maps regenerated;
+local Windows SDK files and the provisioned vendor tree were not rechecked.
+No fresh Windows compiler or target execution was performed during review.
+
+This is an independent control of the old fifteen-input PR214 source, preserving
+188 examined and 327 all-window matches. It does not replace the new 341-window
+native Program source or add recoveries. Its 720-byte text-size difference is
+explained by two duplicate function-shape counts, not proved to be a historical
+linker decision. Whole original identity remains unproved.
