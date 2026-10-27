@@ -343,3 +343,13 @@ test in-place checked operations and naming the tip division before/after state
 updates. All retain 482 normalized and 130 raw local matches without recovering
 the worker. The two tip-only forms reproduce the candidate and symbol image
 exactly. No candidate is promoted, and no new runtime acceptance is claimed.
+
+## Swap caller layout and constructor order
+
+The [six-build study](../repro/donation-relay/swap-caller-controls/README.md)
+prints the current Rust account/context layouts without changing the baseline
+binary. A reordered burn-context initializer removes `just_swap`'s extra memcpy
+and passes fresh original/candidate replay of 536 records / 534 unique fixtures.
+Its 4,408-byte body still differs from the original's 4,448 bytes. Four wire-arg
+variants also remain unmatched. No matched window is gained or lost, and no
+candidate is promoted. The original field-name mapping remains an inference.

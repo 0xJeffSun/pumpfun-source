@@ -16,7 +16,7 @@ Latest Relay research: **482/492 normalized windows, 10 unmatched**, including
 and [the complete burn/close helper](repro/donation-relay/burn-mint-ownership-recovery/README.md).
 Both compiler recipes retain **130 raw local body matches**, agree on all 348
 recognized source-location pairs, and each pass 536 fresh replay records.
-Follow-up [source, compiler and value-flow studies](docs/BYTE-IDENTITY-PROGRESS.md)
+Follow-up [source, compiler, layout and value-flow studies](docs/BYTE-IDENTITY-PROGRESS.md)
 have not added whole-body matches. Conditional value-flow agreement and locally
 matching helpers do not establish full function or program identity.
 Latest Fees research: **354 unique structural pairs, 84 unmatched windows**.
