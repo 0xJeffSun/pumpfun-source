@@ -11,10 +11,10 @@
     },
     {
       "name": "pump_amm",
-      "matched_windows": 586,
+      "matched_windows": 599,
       "windows": 785,
-      "raw_bodies": 124,
-      "matched_text_bytes": 644456,
+      "raw_bodies": 125,
+      "matched_text_bytes": 663840,
       "text_bytes": 1162040
     },
     {
@@ -43,10 +43,10 @@
     }
   ],
   "totals": {
-    "matched_windows": 2789,
+    "matched_windows": 2802,
     "windows": 3338,
-    "raw_bodies": 1034,
-    "matched_text_bytes": 3568232,
+    "raw_bodies": 1035,
+    "matched_text_bytes": 3587616,
     "text_bytes": 5213128,
     "complete_elf_programs": 1,
     "programs": 5

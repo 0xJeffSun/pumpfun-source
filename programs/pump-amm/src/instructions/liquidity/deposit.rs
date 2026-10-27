@@ -47,7 +47,7 @@ pub fn deposit(ctx: Context<Liquidity>, amount: u64, base_limit: u64, quote_limi
             .map_err(|_| error!(PumpAmmError::Overflow))?;
         let change = virtual_reserve.checked_mul(amount as u128)
             .ok_or_else(|| error!(PumpAmmError::Overflow))?
-            .checked_div(old_supply as u128).ok_or(PumpAmmError::DivisionByZero)?;
+            .checked_div(old_supply as u128).ok_or_else(|| error!(PumpAmmError::DivisionByZero))?;
         let change = i128::try_from(change).map_err(|_| error!(PumpAmmError::Overflow))?;
         a.pool.virtual_quote_reserves = a.pool.virtual_quote_reserves.checked_add(change)
             .ok_or_else(|| error!(PumpAmmError::Overflow))?;

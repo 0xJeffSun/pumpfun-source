@@ -15,6 +15,8 @@ The unmatched windows cover 946,936 original text bytes. The checkpoint retains
 bounded runtime evidence; the remaining bodies, data, relocations, uncovered
 behavior and original build provenance still require recovery.
 
+Current [PumpSwap native-fee/CPI recovery](../repro/pump_amm/native-fee-cpi-recovery-20261027/README.md) has 125 raw-local, 474 normalized-only and 186 unmatched windows, with 498,200 original text bytes still in unmatched windows.
+
 Current Mayhem research is the [trade-origin and validator successor](../research/mayhem-trade-origins-validator/README.md): 100 raw-local, 329 normalized-only and twelve unmatched windows / 111,288 original text bytes. The quote validator now matches under normalization with all eight immediate calls and fourteen typed references checked. Three partial trade handlers recover 21 Source records and three CPI error origins, but their complete bodies still differ. Two qualified builds agree; 65 fresh paired cases verify 130 signed executions. Earlier initializer, AMM, BuyV2 and extension receipts retain their prior artifact bindings. The sysvar allocation provider, missing 328-byte reserve child, twelve bodies and whole-ELF identity remain unresolved. The selected baseline is unchanged.
 
 The [allocator-context experiment](../research/mayhem-allocator-context/README.md)

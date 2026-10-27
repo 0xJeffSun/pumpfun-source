@@ -19,7 +19,8 @@ use incentives::*;
 mod creator_reassignment;
 use creator_reassignment::*;
 mod multi_hop;
-use multi_hop::*;
+anchor_lang::declare_program!(pump);
+anchor_lang::declare_program!(pump_fees);
 mod trade;
 mod create;
 mod boost;
@@ -37,10 +38,9 @@ use boost_burn::*;
 use create::*;
 use trade::*;
 use anchor_spl::{token::Token, token_2022::Token2022, token_interface::{self, Mint, TokenAccount}};
-use state::*;
-
+use {multi_hop::*, state::*};
+pub use instructions::admin;
 declare_id!("pAMMBay6oceH9fJKBRHGP5D4bD4sWpmSwMn52FMfXEA");
-anchor_lang::declare_program!(pump_fees);
 
 #[program]
 pub mod pump_amm_recovered {
@@ -110,49 +110,31 @@ pub mod pump_amm_recovered {
     }
     pub fn update_creator_fee_config(ctx: Context<UpdateCreatorFeeConfig>, creator_fee_configurable: bool,
         max_configurable_creator_fee_bps: u64) -> Result<()> {
-        let account = ctx.accounts.global_config.to_account_info();
-        if account.data_len() < 949 {
-            let required = Rent::get()?.minimum_balance(949);
-            let top_up = required.saturating_sub(account.lamports());
-            if top_up > 0 {
-                anchor_lang::system_program::transfer(CpiContext::new(
-                    ctx.accounts.system_program.to_account_info(),
-                    anchor_lang::system_program::Transfer {
-                        from: ctx.accounts.admin.to_account_info(), to: account.clone(),
-                    }), top_up)?;
-            }
-            account.realloc(949, false)?;
-        }
-        ctx.accounts.global_config.creator_fee_configurable = creator_fee_configurable;
-        ctx.accounts.global_config.max_configurable_creator_fee_bps = max_configurable_creator_fee_bps;
+        let accounts = &mut *ctx.accounts;
+        instructions::admin::extend_global_config(
+            &accounts.global_config, &accounts.system_program, &accounts.admin,
+        )?;
+        accounts.global_config.creator_fee_configurable = creator_fee_configurable;
+        accounts.global_config.max_configurable_creator_fee_bps = max_configurable_creator_fee_bps;
         let event = UpdateCreatorFeeConfigEvent { timestamp: Clock::get()?.unix_timestamp,
-            admin: ctx.accounts.admin.key(), creator_fee_configurable, max_configurable_creator_fee_bps };
-        emit!(event.clone());
+            admin: accounts.admin.key(), creator_fee_configurable, max_configurable_creator_fee_bps };
+        emit!(event);
         emit_cpi!(event);
         Ok(())
     }
     pub fn create_pool(ctx: Context<CreatePool>, index: u16, base_amount_in: u64, quote_amount_in: u64, coin_creator: Pubkey, is_mayhem_mode: bool, is_cashback_coin: OptionBool, creator_fee_bps: OptionU64, can_edit_creator_fee: OptionBool, is_holder_reward: OptionBool) -> Result<()> { create::execute(ctx,index,base_amount_in,quote_amount_in,coin_creator,is_mayhem_mode,is_cashback_coin.0,creator_fee_bps.0,can_edit_creator_fee.0,is_holder_reward.0) }
     pub fn init_boost(ctx: Context<InitBoost>) -> Result<()> { boost::execute(ctx) }
     pub fn set_boost_authority(ctx: Context<SetBoostAuthority>) -> Result<()> {
-        let account = ctx.accounts.global_config.to_account_info();
-        if account.data_len() < 949 {
-            let required = Rent::get()?.minimum_balance(949);
-            let top_up = required.saturating_sub(account.lamports());
-            if top_up > 0 {
-                anchor_lang::system_program::transfer(CpiContext::new(
-                    ctx.accounts.system_program.to_account_info(),
-                    anchor_lang::system_program::Transfer {
-                        from: ctx.accounts.admin.to_account_info(), to: account.clone(),
-                    }), top_up)?;
-            }
-            account.realloc(949, false)?;
-        }
-        let old_boost_authority = ctx.accounts.global_config.boost_authority;
-        let new_boost_authority = ctx.accounts.boost_authority.key();
-        ctx.accounts.global_config.boost_authority = new_boost_authority;
+        let accounts = &mut *ctx.accounts;
+        instructions::admin::extend_global_config(
+            &accounts.global_config, &accounts.system_program, &accounts.admin,
+        )?;
+        let old_boost_authority = accounts.global_config.boost_authority;
+        let new_boost_authority = accounts.boost_authority.key();
+        accounts.global_config.boost_authority = new_boost_authority;
         let event = SetBoostAuthorityEvent { timestamp: Clock::get()?.unix_timestamp,
-            admin: ctx.accounts.admin.key(), old_boost_authority, new_boost_authority };
-        emit!(event.clone());
+            admin: accounts.admin.key(), old_boost_authority, new_boost_authority };
+        emit!(event);
         emit_cpi!(event);
         Ok(())
     }
@@ -249,17 +231,15 @@ pub mod pump_amm_recovered {
     pub fn claim_cashback(ctx:Context<ClaimCashback>)->Result<()>{cashback::claim(ctx)}
 
     pub fn update_buyback_config(ctx: Context<AdminGlobal>, buyback_basis_points: Option<u64>) -> Result<()> {
+        let accounts = &mut *ctx.accounts;
         if let Some(bps) = buyback_basis_points {
-            require!(bps <= 10_000, PumpAmmError::BuybackBasisPointsOutOfRange);
-            ctx.accounts.global_config.buyback_basis_points = bps;
+            accounts.global_config.set_buyback_basis_points(bps)?;
         }
         if !ctx.remaining_accounts.is_empty() {
-            require_eq!(ctx.remaining_accounts.len(), 8, PumpAmmError::WrongBuybackFeeRecipientsCount);
+            require!(ctx.remaining_accounts.len() == 8, PumpAmmError::WrongBuybackFeeRecipientsCount);
             let mut recipients = [Pubkey::default(); 8];
             for (i, account) in ctx.remaining_accounts.iter().enumerate() { recipients[i] = account.key(); }
-            for recipient in recipients.iter() { require_keys_neq!(*recipient, Pubkey::default(), PumpAmmError::AllBuybackFeeRecipientsShouldBeNonZero); }
-            for i in 0..8 { for j in 0..i { require_keys_neq!(recipients[i], recipients[j], PumpAmmError::NotUniqueBuybackFeeRecipients); } }
-            ctx.accounts.global_config.buyback_fee_recipients = recipients;
+            accounts.global_config.set_buyback_fee_recipients(recipients)?;
         }
         Ok(())
     }
@@ -495,13 +475,11 @@ fn liquidity_effective_virtual(pool: &Pool) -> Result<i128> {
 
 
 fn quote_transfer_fee(mint: &AccountInfo, amount: u64, inverse: bool) -> Result<u64> {
-    use anchor_spl::token_2022::spl_token_2022::{extension::{BaseStateWithExtensions, StateWithExtensions, transfer_fee::TransferFeeConfig}, state::Mint as SplMint};
-    if mint.owner == &anchor_spl::token::ID { return Ok(0); }
-    let data = mint.try_borrow_data()?;
-    let mint = StateWithExtensions::<SplMint>::unpack(&data)?;
-    if let Ok(fees) = mint.get_extension::<TransferFeeConfig>() {
-        let epoch = Clock::get()?.epoch;
-        let fee = if inverse { fees.calculate_inverse_epoch_fee(epoch, amount) } else { fees.calculate_epoch_fee(epoch, amount) };
-        fee.ok_or_else(|| error!(PumpAmmError::Overflow))
-    } else { Ok(0) }
+    let fee = crate::utils::transfer_fee::from_mint(mint)?;
+    let pre_fee_amount = if inverse {
+        crate::utils::transfer_fee::amount_before_fee(&fee, amount)?
+    } else {
+        amount
+    };
+    crate::utils::transfer_fee::calculate_fee(&fee, pre_fee_amount)
 }

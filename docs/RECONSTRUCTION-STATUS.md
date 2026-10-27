@@ -6,7 +6,7 @@ This review updates the research frontier while preserving the selected-checkpoi
 contains every one of the **4,415 selected/research function-window rows**.
 
 The generated inventory is a dated snapshot. Later maintained selections now
-include Pump Round20 and the AMM structural/TLV recovery; their current counts and
+include Pump Round20 and the AMM native-fee/CPI recovery; their current counts and
 evidence are in the [repository overview](../README.md). The current rows below
 are separate from the historical rows, and do not rewrite that snapshot.
 
@@ -52,12 +52,12 @@ analysis. Candidate symbol names are hypotheses about original identity.
 | Mayhem historical selected | 441 | 58 | 131 | 7 | 245 |
 | Relay historical source 15 | 492 | 33 | 89 | 370 | 0 |
 | **Pump current Round20** | **1,035** | **120** | **585** | **330** | **0** |
-| **PumpSwap current** | **785** | **124** | **462** | **199** | **0** |
+| **PumpSwap current** | **785** | **125** | **474** | **186** | **0** |
 | **Fees latest research** | **585** | **198** | **380** | **7** | **0** |
 | **Mayhem latest research** | **441** | **100** | **329** | **12** | **0** |
 | **Relay canonical selection** | **492** | **492** | **0** | **0** | **0** |
 
-The current rows are bound to [Pump Round20](../repro/pump/main-contract-round20-20261027/README.md), [AMM structural/TLV recovery](../repro/pump_amm/structural-tlv-recovery-20261027/README.md), [Fees readonly-order recovery](../research/fees-readonly-order-recovery/README.md) and [Mayhem trade origins and validator](../research/mayhem-trade-origins-validator/README.md); they extend the dated generated inventory below. Each row is a partition, not a score of semantic correctness. The historical selected Mayhem source
+The current rows are bound to [Pump Round20](../repro/pump/main-contract-round20-20261027/README.md), [AMM native-fee/CPI recovery](../repro/pump_amm/native-fee-cpi-recovery-20261027/README.md), [Fees readonly-order recovery](../research/fees-readonly-order-recovery/README.md) and [Mayhem trade origins and validator](../research/mayhem-trade-origins-validator/README.md); they extend the dated generated inventory below. Each row is a partition, not a score of semantic correctness. The historical selected Mayhem source
 ledger has 257 opaque windows, 12 of which happen to match local raw bytes.
 Selected Fees retains two call-conflicting rows; body existence does not resolve
 those conflicts. Different programs and studies use different matching rules.

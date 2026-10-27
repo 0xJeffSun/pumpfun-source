@@ -128,18 +128,13 @@ pub fn execute<'info>(
         require_gt!(amount, 0, PumpAmmError::ZeroBaseAmount);
         require_gt!(limit, 0, PumpAmmError::ZeroQuoteAmount);
     }
-    let available = if exact {
-        let net = amount
-            .checked_sub(crate::quote_transfer_fee(
-                &a.quote_mint.to_account_info(),
-                amount,
-                false,
-            )?)
-            .ok_or_else(|| error!(PumpAmmError::Overflow))?;
+    let (available, quote_fee_data) = if exact {
+        let fee_data = crate::utils::transfer_fee::from_mint(&a.quote_mint.to_account_info())?;
+        let net = crate::utils::transfer_fee::amount_after_fee(&fee_data, amount)?;
         require_gt!(net, 0, PumpAmmError::BuyNotEnoughQuoteTokensToCoverFees);
-        net
+        (net, fee_data)
     } else {
-        amount
+        (amount, None)
     };
     let old_virtual = a.pool.virtual_quote_reserves;
     let old_accrued = a
@@ -184,7 +179,7 @@ pub fn execute<'info>(
         initial_protocol_fee = 0;
         initial_creator_fee = 0;
     }
-    let (curve, lp_fee, protocol_fee, creator_fee, total) = if exact {
+    let (curve, lp_fee, protocol_fee, creator_fee, total, quote_transfer_fee) = if exact {
         let total_fee_bps = selected.lp_fee_bps
             .saturating_add(selected.protocol_fee_bps)
             .saturating_add(creator_bps);
@@ -199,24 +194,38 @@ pub fn execute<'info>(
             .and_then(|n| n.checked_add(p))
             .and_then(|n| n.checked_add(c))
             .ok_or(PumpAmmError::Overflow)?;
-        let curve = available
+        let mut curve = available
             .checked_sub(l)
             .and_then(|n| n.checked_sub(p))
             .and_then(|n| n.checked_sub(c))
             .ok_or(PumpAmmError::BuyNotEnoughQuoteTokensToCoverFees)?
             .min(estimate);
         require_gt!(curve, 0, PumpAmmError::BuySlippageBelowMinBaseAmountOut);
-        (
-            curve,
-            l,
-            p,
-            c,
-            curve
-                .checked_add(l)
-                .and_then(|n| n.checked_add(p))
-                .and_then(|n| n.checked_add(c))
-                .ok_or(PumpAmmError::Overflow)?,
-        )
+        let gross_pool_quote = |quote: u64| {
+            crate::utils::transfer_fee::amount_before_fee(
+                &quote_fee_data,
+                quote.checked_add(l).ok_or(PumpAmmError::Overflow)?,
+            )
+        };
+        let gross_total = gross_pool_quote(curve)?
+            .checked_add(p)
+            .and_then(|n| n.checked_add(c))
+            .ok_or(PumpAmmError::Overflow)?;
+        if gross_total > amount {
+            curve = curve
+                .checked_sub(gross_total.saturating_sub(amount))
+                .ok_or(PumpAmmError::BuyNotEnoughQuoteTokensToCoverFees)?;
+            require_gt!(curve, 0, PumpAmmError::BuySlippageBelowMinBaseAmountOut);
+        }
+        let pool_quote = curve.checked_add(l).ok_or(PumpAmmError::Overflow)?;
+        let transfer_fee = gross_pool_quote(curve)?
+            .checked_sub(pool_quote)
+            .ok_or(PumpAmmError::Overflow)?;
+        let total = pool_quote
+            .checked_add(p)
+            .and_then(|n| n.checked_add(c))
+            .ok_or(PumpAmmError::Overflow)?;
+        (curve, l, p, c, total, transfer_fee)
     } else {
         let l = initial_lp_fee;
         let p = initial_protocol_fee;
@@ -226,11 +235,12 @@ pub fn execute<'info>(
             .and_then(|n| n.checked_add(p))
             .and_then(|n| n.checked_add(c))
             .ok_or_else(|| error!(PumpAmmError::Overflow))?;
-        (curve_initial, l, p, c, total)
+        let pool_quote = curve_initial.checked_add(l).ok_or(PumpAmmError::Overflow)?;
+        let transfer_fee =
+            crate::quote_transfer_fee(&a.quote_mint.to_account_info(), pool_quote, true)?;
+        (curve_initial, l, p, c, total, transfer_fee)
     };
     let pool_quote = curve.checked_add(lp_fee).ok_or(PumpAmmError::Overflow)?;
-    let quote_transfer_fee =
-        crate::quote_transfer_fee(&a.quote_mint.to_account_info(), pool_quote, true)?;
     let base_out = if exact {
         crate::curve::constant_product::base_for_quote(curve, b, q)?
     } else {

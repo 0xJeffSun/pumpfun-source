@@ -2,6 +2,13 @@ use crate::*;
 use crate::curve::fees::AppliedFees;
 use crate::utils::transfer_fee::{self, TransferFeeData};
 
+#[inline(never)]
+pub fn quote_reserves(pool: &Pool, raw_quote_reserves: u64) -> Result<(u64, u64)> {
+    let available = pool.available_quote_reserves(raw_quote_reserves)?;
+    let effective = pool.effective_quote_reserves(raw_quote_reserves)?;
+    Ok((available, effective))
+}
+
 pub struct BuyResult {
     pub fees: AppliedFees,
     pub base_amount_out: u64,

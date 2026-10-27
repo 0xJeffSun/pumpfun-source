@@ -280,21 +280,6 @@ pub fn execute<'info>(
             let output_native = sell
                 && remaining[(i - 1) * 5 + 1].key()
                     == anchor_spl::token::spl_token::native_mint::ID;
-            let mut infos = vec![
-                a.pump_global.to_account_info(),
-                a.pump_fee_config.to_account_info(),
-                a.global_config.to_account_info(),
-                a.user.to_account_info(),
-                authority.clone(),
-                source.clone(),
-                destination.clone(),
-                a.buyback_fee_recipient.to_account_info(),
-                a.token_program.to_account_info(),
-                a.token_2022_program.to_account_info(),
-                a.system_program.to_account_info(),
-                a.pump_event_authority.to_account_info(),
-                a.pump_program.to_account_info(),
-            ];
             let flags: Vec<u8> = (start..i)
                 .map(|j| {
                     let protocol = if sell { j + 1 == count } else { j == 0 };
@@ -302,33 +287,6 @@ pub fn execute<'info>(
                     (protocol as u8) | ((creator as u8) << 1)
                 })
                 .collect();
-            let mut data = vec![225, 154, 117, 22, 215, 86, 246, 103];
-            data.extend(amount_bytes(current));
-            data.extend((flags.len() as u32).to_le_bytes());
-            data.extend(flags);
-            let mut metas = vec![
-                AccountMeta::new_readonly(a.pump_global.key(), false),
-                AccountMeta::new_readonly(a.pump_fee_config.key(), false),
-                AccountMeta::new_readonly(a.global_config.key(), true),
-                AccountMeta::new(a.user.key(), true),
-                AccountMeta::new_readonly(authority.key(), true),
-                AccountMeta::new(source.key(), false),
-                AccountMeta::new(destination.key(), false),
-                AccountMeta::new(a.buyback_fee_recipient.key(), false),
-                AccountMeta::new_readonly(a.token_program.key(), false),
-                AccountMeta::new_readonly(a.token_2022_program.key(), false),
-                AccountMeta::new_readonly(a.system_program.key(), false),
-                AccountMeta::new_readonly(a.pump_event_authority.key(), false),
-                AccountMeta::new_readonly(a.pump_program.key(), false),
-            ];
-            for info in &remaining[start * 5..i * 5] {
-                metas.push(if info.is_writable {
-                    AccountMeta::new(info.key(), info.is_signer)
-                } else {
-                    AccountMeta::new_readonly(info.key(), info.is_signer)
-                });
-                infos.push(info.clone());
-            }
             let bump = [ctx.bumps.global_config];
             let config_seeds: &[&[u8]] = &[b"global_config", &bump];
             let refs: Vec<&[u8]> = source_seeds.iter().map(|v| v.as_slice()).collect();
@@ -336,14 +294,27 @@ pub fn execute<'info>(
             if !refs.is_empty() {
                 signers.push(refs.as_slice());
             }
-            invoke_signed(
-                &Instruction {
-                    program_id: PUMP,
-                    accounts: metas,
-                    data,
-                },
-                &infos,
-                &signers,
+            crate::pump::cpi::multi_hop_curve_swap(
+                CpiContext::new_with_signer(
+                    a.pump_program.to_account_info(),
+                    crate::pump::cpi::accounts::MultiHopCurveSwap {
+                        global: a.pump_global.to_account_info(),
+                        fee_config: a.pump_fee_config.to_account_info(),
+                        pump_amm_global_config: a.global_config.to_account_info(),
+                        user: a.user.to_account_info(),
+                        source_authority: authority.clone(),
+                        source: source.clone(),
+                        destination: destination.clone(),
+                        buyback_fee_recipient: a.buyback_fee_recipient.to_account_info(),
+                        token_program: a.token_program.to_account_info(),
+                        token_2022_program: a.token_2022_program.to_account_info(),
+                        system_program: a.system_program.to_account_info(),
+                        event_authority: a.pump_event_authority.to_account_info(),
+                        program: a.pump_program.to_account_info(),
+                    },
+                    &signers,
+                ).with_remaining_accounts(remaining[start * 5..i * 5].to_vec()),
+                current, flags,
             )?;
             let (output, buyback) = read_cpi_return::<(u64, u64)>();
             if !input_native {
@@ -434,6 +405,34 @@ fn amount_bytes(n: u64) -> [u8; 8] {
     n.to_le_bytes()
 }
 
+/// Fee endpoints carried together through an AMM leg.
+#[derive(Clone, Copy)]
+pub struct HopFeeGates {
+    pub protocol: bool,
+    pub lp: bool,
+    pub creator: bool,
+}
+
+/// Apply this AMM hop's fee accounting before its optional endpoint payout.
+pub fn accrue_hop_fees<'info>(
+    global_config: &Account<'info, GlobalConfig>,
+    recipient: &AccountInfo<'info>,
+    hop: &mut AmmHop<'info>,
+    token_program: &AccountInfo<'info>,
+    protocol_fee: u64,
+    creator_fee: u64,
+    gates: HopFeeGates,
+) -> Result<u64> {
+    let buyback_fee = hop.pool.accrue_fees(global_config, protocol_fee, creator_fee)?;
+    if gates.protocol {
+        crate::utils::token::transfer_from_pool_to_raw(
+            token_program, &hop.quote_mint, &hop.pool_quote_token_account,
+            &hop.pool, recipient, buyback_fee,
+        )?;
+    }
+    Ok(buyback_fee)
+}
+
 #[inline(never)]
 fn amm_hop<'info>(
     a: &MultiHop<'info>,
@@ -485,9 +484,12 @@ fn amm_hop<'info>(
     }
     let base_program = program_for(a, &h.base_mint.to_account_info())?;
     let quote_program = program_for(a, &h.quote_mint.to_account_info())?;
-    let protocol_end = if sell { last } else { first };
-    let creator_end = if sell { first } else { last };
-    if protocol_end {
+    let gates = HopFeeGates {
+        protocol: if sell { last } else { first },
+        lp: if sell { first } else { last },
+        creator: if sell { first } else { last },
+    };
+    if gates.protocol {
         require_keys_eq!(
             *a.buyback_fee_recipient.to_account_info().owner,
             quote_program.key(),
@@ -588,20 +590,12 @@ fn amm_hop<'info>(
             .ok_or_else(|| error!(PumpAmmError::Overflow))?
     };
     let old_virtual = h.pool.virtual_quote_reserves;
+    let (real_quote_reserves, q) = crate::instructions::swap::trade_v2::quote_reserves(&h.pool, raw_q)?;
     let old_accrued = h
         .pool
         .protocol_fees
         .checked_add(h.pool.creator_fees)
         .ok_or_else(|| error!(PumpAmmError::Overflow))?;
-    raw_q
-        .checked_sub(old_accrued)
-        .ok_or_else(|| error!(PumpAmmError::Overflow))?;
-    let q = u64::try_from(
-        (raw_q as i128)
-            .checked_add(old_virtual)
-            .ok_or_else(|| error!(PumpAmmError::Overflow))?,
-    )
-    .map_err(|_| error!(PumpAmmError::Overflow))?;
     let can_boost = old_virtual
         .checked_add(old_accrued as i128)
         .ok_or_else(|| error!(PumpAmmError::Overflow))?
@@ -620,13 +614,15 @@ fn amm_hop<'info>(
     } else {
         crate::curve::fees::fee(fee_quote, selected.creator_fee_bps)?
     };
-    if !creator_end {
+    if !gates.lp {
         initial_lp_fee = 0;
-        initial_creator_fee = 0;
         selected.lp_fee_bps = 0;
+    }
+    if !gates.creator {
+        initial_creator_fee = 0;
         selected.creator_fee_bps = 0;
     }
-    if !protocol_end {
+    if !gates.protocol {
         initial_protocol_fee = 0;
         selected.protocol_fee_bps = 0;
     }
@@ -640,11 +636,18 @@ fn amm_hop<'info>(
         let l = initial_lp_fee;
         let p = initial_protocol_fee;
         let c = initial_creator_fee;
-        let total = curve
-            .checked_sub(l)
-            .and_then(|v| v.checked_sub(p))
-            .and_then(|v| v.checked_sub(c))
-            .ok_or_else(|| error!(PumpAmmError::Overflow))?;
+        let (_, total) = crate::instructions::swap::trade_v2::calculate_sell_quote(
+            curve,
+            &crate::curve::fees::AppliedFees {
+                lp_fee_bps: selected.lp_fee_bps,
+                protocol_fee_bps: selected.protocol_fee_bps,
+                creator_fee_bps: selected.creator_fee_bps,
+                lp_fee: l,
+                protocol_fee: p,
+                creator_fee: c,
+            },
+            real_quote_reserves,
+        )?;
         require_gt!(total,0, PumpAmmError::ZeroQuoteAmount);
         (amount, curve, l, p, c, total)
     } else {
@@ -683,11 +686,6 @@ fn amm_hop<'info>(
         (out, curve, l, p, c, curve + l + p + c)
     };
     let buyback_bps = a.global_config.buyback_basis_points;
-    let calculate_buyback = || {
-        u64::try_from((protocol_fee as u128) * (buyback_bps as u128) / 10000)
-            .expect("buyback fee is at most protocol_fee")
-    };
-    let buyback_fee = if sell { calculate_buyback() } else { 0 };
     let quote_transfer_fee = if sell {
         crate::quote_transfer_fee(&h.quote_mint.to_account_info(), total_quote, false)?
     } else {
@@ -726,49 +724,15 @@ fn amm_hop<'info>(
             )?;
         }
     }
-    let buyback_fee = if sell {
-        buyback_fee
-    } else {
-        calculate_buyback()
-    };
+    let buyback_fee = accrue_hop_fees(
+        &a.global_config, a.buyback_fee_recipient.as_ref(), h, &quote_program,
+        protocol_fee, creator_fee, gates,
+    )?;
     let buyback_received = buyback_fee
         .checked_sub(crate::quote_transfer_fee(
-            &h.quote_mint.to_account_info(),
-            buyback_fee,
-            false,
+            &h.quote_mint.to_account_info(), buyback_fee, false,
         )?)
         .ok_or(PumpAmmError::Overflow)?;
-    let protocol_accrual = protocol_fee
-        .checked_sub(buyback_fee)
-        .expect("buyback_fee never exceeds protocol_fee");
-    let accrued = protocol_accrual
-        .checked_add(creator_fee)
-        .ok_or(PumpAmmError::Overflow)?;
-    h.pool.protocol_fees = h
-        .pool
-        .protocol_fees
-        .checked_add(protocol_accrual)
-        .ok_or(PumpAmmError::Overflow)?;
-    h.pool.creator_fees = h
-        .pool
-        .creator_fees
-        .checked_add(creator_fee)
-        .ok_or(PumpAmmError::Overflow)?;
-    h.pool.virtual_quote_reserves = old_virtual
-        .checked_sub(accrued as i128)
-        .ok_or(PumpAmmError::Overflow)?;
-    if buyback_fee > 0 {
-        transfer(
-            quote_program,
-            h.quote_mint.to_account_info(),
-            h.pool_quote_token_account.to_account_info(),
-            a.buyback_fee_recipient.to_account_info(),
-            h.pool.to_account_info(),
-            buyback_fee,
-            h.quote_mint.decimals,
-            &seeds,
-        )?;
-    }
     let user_base_balance = if sell {
         user_input_balance
     } else {
@@ -900,6 +864,7 @@ fn amm_hop<'info>(
     Ok(output)
 }
 
+#[inline(never)]
 fn read_cpi_return<T: AnchorDeserialize>() -> T {
     let (_, data) = get_return_data().unwrap();
     T::try_from_slice(&data).unwrap()

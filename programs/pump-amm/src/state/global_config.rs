@@ -64,3 +64,23 @@ impl GlobalConfig {
         (buyback_fee, net_protocol)
     }
 }
+
+impl GlobalConfig {
+    pub fn set_buyback_basis_points(&mut self, basis_points: u64) -> Result<()> {
+        require!(basis_points <= 10_000, PumpAmmError::BuybackBasisPointsOutOfRange);
+        self.buyback_basis_points = basis_points;
+        Ok(())
+    }
+
+    pub fn set_buyback_fee_recipients(&mut self, recipients: [Pubkey; 8]) -> Result<()> {
+        require!(recipients.iter().all(|recipient| *recipient != Pubkey::default()),
+            PumpAmmError::AllBuybackFeeRecipientsShouldBeNonZero);
+        for i in 0..8 {
+            for j in i + 1..8 {
+                require_neq!(recipients[i], recipients[j], PumpAmmError::NotUniqueBuybackFeeRecipients);
+            }
+        }
+        self.buyback_fee_recipients = recipients;
+        Ok(())
+    }
+}
