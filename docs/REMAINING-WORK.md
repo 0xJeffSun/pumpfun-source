@@ -51,7 +51,7 @@ relax the normal byte matcher.
 
 Subsequent gains are in the [byte-identity progress log](BYTE-IDENTITY-PROGRESS.md):
 Canonical Relay now has **492/492 raw-equal windows and no unmatched windows**; current Fees research
-has **eight unmatched windows and 430 unique structural pairs** in the [sharing slice composition](../research/fees-sharing-slice-recovery/README.md). Those unmatched windows total 80,176 original text bytes; whole-ELF identity, seven inspected direct-callee differences and exhaustive semantics remain open. The older 558-window generated inventory below retains its original binding. The [Relay framework study](../repro/donation-relay/framework-sysroot-recovery/README.md)
+has **eight unmatched windows and 430 unique structural pairs** in the [qualified linker layout](../research/fees-qualified-linker-layout/README.md), with 198 raw-local matches and the same 577 normalized matches. The 46-file Rust source is unchanged from the sharing slice composition. Those unmatched windows total 80,176 original text bytes; whole-ELF identity, seven inspected direct-callee differences and exhaustive semantics remain open. The older 558-window generated inventory below retains its original binding. The [Relay framework study](../repro/donation-relay/framework-sysroot-recovery/README.md)
 recovers the three repeated type-ID bodies with official Linux target libraries,
 adds the Anchor 0.32 framework matches and restores share-total compared values.
 The subsequent [mint-predicate study](../repro/donation-relay/mint-fee-pair-recovery/README.md)

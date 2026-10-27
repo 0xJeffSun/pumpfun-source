@@ -2062,3 +2062,17 @@ All 6,413 comparable application-log cases agree. The new parallel test runner
 uses the canonical suite plan, with a separate process per suite; a same-binary
 control reproduces the complete sequential report. This is a test-speed change,
 not a relaxation of the acceptance criteria. Whole-ELF identity remains false.
+
+
+## Fees qualified linker layout
+
+The [qualified object/archive-section recipe](../research/fees-qualified-linker-layout/README.md)
+uses the unchanged 46-file Fees577 Rust source. It increases complete raw-local
+function matches from 143 to 198, retaining all 577 normalized matches, 430 unique
+structural pairs, 181 equal Source observations and 3,870 equal direct-callee
+observations. No previous positive observation is lost. Two native builds agree.
+Fresh execution passes 17,331 cases across 18 suites, including equal application
+logs in 6,413 cases. The order includes 499 exact graph bindings, 78 ambiguous equal
+function assignments and 8 unequal semantic-handler assignments; those limitations
+remain explicit. Eight original bodies and complete ELF/data/relocation identity
+remain open.
