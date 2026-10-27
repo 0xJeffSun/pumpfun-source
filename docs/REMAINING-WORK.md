@@ -638,3 +638,22 @@ composition and compilation; their gains are not added to this count.
 ## Active priority: Mayhem
 
 The [Mayhem work plan](MAYHEM-RECONSTRUCTION-PLAN.md) supersedes earlier cross-program prioritization. Its current research has eight unmatched admitted bodies and 245 opaque windows. Complete the quote-aware validator, trade bodies, unexamined code and full ELF/data/layout proof before claiming Mayhem finished.
+
+
+### Mayhem historical event-parser allocator context
+
+[The parser-provenance packet](../research/mayhem-allocator-parser-provenance/README.md)
+extends the allocator diagnostic with a real Anchor source-history mechanism.
+Seven direct controls show that public event definitions alone retain the
+312-byte helper, while a rendered pre-exclusion event parser produces the
+328-byte form; restoring the historical Solana exclusion reverses it. Three
+fresh full builds retain all compiler records. Two enabled repetitions have
+identical raw ELF; their separately stripped output equals the prior zeroed-vector
+diagnostic. The gated stripped output equals the qualified parent. Each new raw
+ELF differs from its earlier counterpart, with differences in symbol/string
+section payloads. The same thirteen bodies remain unmatched in this older
+qualified diagnostic; the separate trade/validator successor reaches 429 matches
+with twelve unmatched bodies. This mixes an old
+parser template with current event types, establishes no historical Mayhem
+source/IDL identity, executes no target and has not been composed with provider
+sharing. A fully version-consistent macro/IDL experiment remains the next step.

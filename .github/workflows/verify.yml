@@ -102,6 +102,8 @@ jobs:
             commands: |
               python -B research/mayhem-trade-origins-validator/verify.py
               python -B research/mayhem-trade-origins-validator/test_verify.py
+              python -I -B research/mayhem-allocator-parser-provenance/verify.py
+              python -I -B research/mayhem-allocator-parser-provenance/test_verify.py
               python -I -B research/mayhem-allocator-context/verify.py
               python -I -B research/mayhem-allocator-context/test_verify.py
               python -B research/mayhem-provider-sharing/verify.py --repository-root .
