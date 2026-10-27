@@ -1244,3 +1244,27 @@ and finite offline replay are reported as unpublished observations. Source-only
 negative tests cover metadata/mutation/symlink boundaries. All four core-program
 identities remain unresolved (0/4); Relay is a separate dependency, not completion
 of the entire repository. Prior evidence and selected checkpoints stay unchanged.
+
+
+## Fees: included AdminCto business source recovery — 27 October 2026
+
+The [included-handler source proposal](../research/fees-admin-cto-included-handler-source-proposal/README.md)
+adds one complete normalized business body, original 127776 / 4,968 bytes, on the
+exact public PR194 context-only source: pinned 547→548, no losses, raw 118.
+Earlier boxed-account/typed-program gains belong to PR185/194 and are not claimed
+again. Later public PR195's 552-window source is a separate baseline; this packet
+does not claim a measured composition onto it.
+
+Four ordinary source edits add the observed zero-admin guard, mutation/event
+ordering and a real included block with authentic file/line spans. The local
+event/include organization is inferred, not historical-source proof. Exact public
+42-input provenance, reversible patch, full materialization and thirteen tests
+pass independently. Local native audits report 20/20 business callees and eleven
+complete direct objects; two root-clean outputs and finite offline regression
+were verified locally, but their receipts are not included or downloadable proof.
+
+No binaries, archives, runtime cases, logs or archived build/replay receipt
+excerpts/derivatives are published. Default tools report native_build_verified,
+runtime_verified and whole_binary_identity_verified all false. Indirect behavior,
+transitive data and full raw ELF/capture identity remain unresolved. No selected
+checkpoint or previous evidence is replaced.
