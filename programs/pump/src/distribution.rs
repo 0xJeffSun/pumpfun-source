@@ -7,9 +7,22 @@ pub const FEES:Pubkey=anchor_lang::solana_program::pubkey!("pfeeUxB6jkeY1Hxd7CsF
 impl Owner for SharingConfig{fn owner()->Pubkey{FEES}}
 impl Discriminator for SharingConfig{const DISCRIMINATOR:&'static[u8]=&[216,74,9,0,56,140,93,75];}
 impl AccountSerialize for SharingConfig{}
-impl AccountDeserialize for SharingConfig{
- fn try_deserialize(buf:&mut &[u8])->Result<Self>{if buf.len()<8{return Err(error!(anchor_lang::error::ErrorCode::AccountDiscriminatorNotFound));}if &buf[..8]!=Self::DISCRIMINATOR{return Err(error!(anchor_lang::error::ErrorCode::AccountDiscriminatorMismatch));}Self::try_deserialize_unchecked(buf)}
- fn try_deserialize_unchecked(buf:&mut &[u8])->Result<Self>{Self::deserialize(&mut &buf[8..]).map_err(|_|error!(anchor_lang::error::ErrorCode::AccountDidNotDeserialize))}
+impl AccountDeserialize for SharingConfig {
+    fn try_deserialize(buf: &mut &[u8]) -> Result<Self> {
+        if buf.len() < Self::DISCRIMINATOR.len() {
+            return Err(anchor_lang::error::ErrorCode::AccountDiscriminatorNotFound.into());
+        }
+        let given_disc = &buf[..Self::DISCRIMINATOR.len()];
+        if Self::DISCRIMINATOR != given_disc {
+            return Err(error!(anchor_lang::error::ErrorCode::AccountDiscriminatorMismatch).with_account_name("SharingConfig"));
+        }
+        Self::try_deserialize_unchecked(buf)
+    }
+    fn try_deserialize_unchecked(buf: &mut &[u8]) -> Result<Self> {
+        let mut data: &[u8] = &buf[Self::DISCRIMINATOR.len()..];
+        AnchorDeserialize::deserialize(&mut data)
+            .map_err(|_| anchor_lang::error::ErrorCode::AccountDidNotDeserialize.into())
+    }
 }
 // Legacy curve layouts omit trailing fields. Keep this read-only view separate from trade state.
 #[derive(Clone)]pub struct DistributionCurve{pub creator:Pubkey,pub quote_mint:Pubkey}

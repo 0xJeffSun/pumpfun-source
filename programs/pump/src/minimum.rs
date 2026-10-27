@@ -6,7 +6,7 @@ pub struct GetMinimumDistributableFee<'info>{
  #[account(seeds=[b"bonding-curve",mint.key().as_ref()],bump,constraint=bonding_curve.creator==sharing_config.key() @ PumpError::BondingCurveAndSharingConfigCreatorMismatch)]pub bonding_curve:Account<'info,BondingCurve>,
  #[account(seeds=[b"sharing-config",mint.key().as_ref()],bump,seeds::program=FEES,has_one=mint @ PumpError::MintDoesNotMatchBondingCurve)]pub sharing_config:Account<'info,SharingConfig>,
  /// CHECK: only seeds and available lamports are used by this readonly query.
- #[account(seeds=[b"creator-vault",sharing_config.key().as_ref()],bump)]pub creator_vault:AccountInfo<'info>,
+ #[account(seeds=[b"creator-vault",bonding_curve.creator.as_ref()],bump)]pub creator_vault:AccountInfo<'info>,
 }
 #[event]
 #[derive(Clone)]

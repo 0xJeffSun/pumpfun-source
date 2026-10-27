@@ -108,7 +108,8 @@ pub fn execute(ctx:Context<AdminCto>,holder:Option<bool>,fee:Option<u64>,new:Opt
  if fee.is_some()&&cashback{return Err(error!(PumpError::CreatorFeeNotAllowedForCashbackCoin));}
  if fee.is_some()&&!a.global.creator_fee_configurable{return Err(error!(PumpError::CreatorFeeNotConfigurable));}
  if let Some(f)=fee{if f==0||f>a.global.max_configurable_creator_fee_bps{return Err(error!(PumpError::CreatorFeeBpsOutOfRange));}}
- let curve_ai=a.bonding_curve.to_account_info();let size=curve_ai.data_len().max(166);let needed=Rent::get()?.minimum_balance(size).saturating_sub(curve_ai.lamports());if needed>0{anchor_lang::system_program::transfer(CpiContext::new(a.system_program.to_account_info(),anchor_lang::system_program::Transfer{from:a.admin_set_creator_authority.to_account_info(),to:curve_ai.clone()}),needed)?;}if curve_ai.data_len()<166{curve_ai.realloc(166,true)?;}
+ crate::trade_types::prepare_bonding_curve(&a.bonding_curve,&a.system_program,&a.admin_set_creator_authority)?;
+ require!(a.bonding_curve.creator_fee==0,PumpError::CreatorFeesNotSwept);
  let shared=a.sharing_config.owner==&FEES && !a.sharing_config.data_is_empty() && old==a.sharing_config.key();
  let shared_amm_frozen=shared&&holder&&!a.coin_creator_vault_ata.data_is_empty()&&token_frozen(&a.coin_creator_vault_ata.to_account_info())?;
  if shared_amm_frozen{require!(token_raw_amount(&a.coin_creator_vault_ata.to_account_info())?==0,PumpError::CtoSharedVaultFrozen);}

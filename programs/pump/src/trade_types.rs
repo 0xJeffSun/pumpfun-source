@@ -313,25 +313,28 @@ mod historical_curve {
 // Original shared preparation 0x3cd50 and rent funding 0x3d250.
 // The Account is already decoded; temporary AccountInfo clones do not keep a
 // data borrow alive across the System CPI or realloc. No state reload follows.
+#[inline(never)]
 pub fn prepare_bonding_curve<'info>(
     curve: &Account<'info, BondingCurve>,
     system_program: &Program<'info, System>,
     payer: &Signer<'info>,
 ) -> Result<()> {
     let current_size = curve.to_account_info().data_len();
-    fund_bonding_curve_rent(curve, system_program, payer, current_size.max(166))?;
-    if current_size < 166 {
+    let funding = fund_bonding_curve_rent(curve, system_program, payer, current_size.max(166));
+    if funding.is_ok() && current_size < 166 {
         curve.to_account_info().realloc(166, false)?;
     }
-    Ok(())
+    funding
 }
 
-fn reserved_bonding_curve_fees(curve: &BondingCurve) -> Result<u64> {
+#[inline(never)]
+pub fn reserved_bonding_curve_fees(curve: &BondingCurve) -> Result<u64> {
     curve.creator_fee.checked_add(curve.protocol_fees)
         .ok_or_else(|| error!(crate::PumpError::Overflow))
 }
 
-fn fund_bonding_curve_rent<'info>(
+#[inline(never)]
+pub fn fund_bonding_curve_rent<'info>(
     curve: &Account<'info, BondingCurve>,
     system_program: &Program<'info, System>,
     payer: &Signer<'info>,
