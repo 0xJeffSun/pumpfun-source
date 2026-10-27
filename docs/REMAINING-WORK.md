@@ -813,3 +813,15 @@ Whole text and ELFs still differ from the older current-runtime control. No
 result here advances the current 432-window checkpoint or proves original
 source identity, build date, runtime qualification or syscall implementation
 identity.
+
+Four further fresh builds isolate the five-loss setup at fixed source paths:
+unchanged registry and local syscall source yield 427/74/426 and 427/69/426,
+respectively, with complete raw and stripped output repetition for each.
+Root relocation alone retains the registry match set. Each affected full caller
+differs only at one direct call whose target shifts 720 bytes, or 90 encoded
+instructions. Two extra allocator helpers account for the net 720 text bytes;
+the providing archive differs between the two measured path-source locations.
+Four called bodies remain raw-equal; O0271's target is normalized-only.
+The source/graph control, all 616 actual compiler commands, complete maps and
+both ownership observations replay offline. This explains a Cargo source
+selection effect without recovering a new body or claiming transitive identity.

@@ -368,6 +368,53 @@ those observations are retained. Whole-original ELF identity is false. This
 supports the bounded return-declaration explanation under the measured native
 recipe, without attributing the original source revision or build date.
 
+## Fixed-location registry-to-path control
+
+The panic experiment combined root relocation with a local crate override in
+its initial setup. A separate control now holds source locations fixed and
+changes only the syscall package's Cargo source selection. Root Rust,
+framework Rust and all six syscall archive files stay byte-identical. The
+syscall still returns unit in both variants; this does not repeat the panic
+return edit. The only root-file changes are the Cargo patch entry and removal
+of that package's registry locator/checksum from the lock. All 204 resolved
+packages and dependency edges are checked, with that source identity explicit.
+
+Two fresh registry builds repeat **427 normalized / 74 raw-local / 426 injective**,
+449 complete functions and 663384 text bytes. Two fresh local-path builds repeat
+**427/69/426**, 451 functions and 664104 text bytes. Moving the registry build
+to the new fixed location loses no match; switching to the identical local
+crate loses exactly the previously observed five raw matches. Each variant's
+raw and separately stripped ELF repeats completely. The four fresh builds
+retain **616 actual compiler commands**; no source code edit or target execution
+is involved. The compiler's automatically derived crate metadata and source
+identity are part of this measured Cargo setup change, not separately isolated.
+
+All five former raw counterparts differ at exactly one eight-byte direct-call
+instruction. Their full boundaries, lengths and addresses stay fixed. Each
+call target moves forward 720 bytes, changing the encoded displacement by 90
+instructions. Four target bodies remain byte-identical; the target called by
+O0271 retains its normalized shape but differs in raw bytes. No recursive
+call-graph or semantic equality follows from these five local observations.
+
+Complete link-map aggregation finds a net increase of two allocator helper
+instances, 312-byte `finish_grow` and 408-byte `grow_one`, in
+`solana_loader_v3_interface`. Their 720 bytes lie between all five callers and
+their targets. All other archive owners retain their total text bytes and
+function counts; individual function ordering is not asserted unchanged.
+The earlier published location has the same five displacement losses but its
+net additional 720 bytes belong to `solana_stake_interface`. Both ownership
+observations are replayed from the actual maps and ELFs. Matching symbol stems
+only locate candidate pairs; full bodies, actual call destinations, complete
+function extents and map ownership are checked before reporting a comparison.
+
+This isolates the five-loss trigger from root relocation under the measured
+recipe and explains the local byte differences. It does not recover a new
+original window, identify a uniquely original dependency source, attribute
+the provider-selection mechanism to one compiler flag, or promote a candidate
+over the current reconstruction. Both negative results and the differing
+archive ownership remain explicit. Fifty of 88 dependency archive identities
+differ between each pair of fresh repeats despite equal final ELFs.
+
 ## Offline replay and retained limits
 
 From a checkout containing both sibling packets, with Python 3.11 or newer:

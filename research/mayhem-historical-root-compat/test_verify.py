@@ -55,6 +55,9 @@ class Evidence(unittest.TestCase):
         self.assertEqual(j['panic_control']['comparison']['source']['raw_gained'],['O0199'])
         self.assertEqual(len(j['panic_control']['comparison']['path_control']['raw_lost']),5)
         self.assertTrue(j['panic_control']['panic']['after_equals_original'])
+        self.assertEqual(j['path_control']['comparison']['path_source']['raw_lost'],['O0255','O0256','O0258','O0265','O0271'])
+        self.assertTrue(j['path_control']['root_rust_and_dependency_source_bytes_unchanged'])
+        self.assertFalse(j['path_control']['layout']['callers']['O0271']['target_raw_equal'])
 
     def test_optimized_mode_rejected(self):
         r=subprocess.run([sys.executable,'-I','-B','-O',str(self.root/'verify.py')],capture_output=True,text=True)
@@ -254,6 +257,31 @@ class Evidence(unittest.TestCase):
 
     def test_panic_complete_text_overclaim(self):
         self.json_mutation('panic-control/current-artifact-comparison.json',lambda j:j.update(text_equal=True),'panic current complete artifact comparison')
+
+
+    def test_path_source_modification(self):
+        self.mutate('path-control/supplement-path.tar.gz',lambda b:(self.root/'panic-control/supplement-after.tar.gz').read_bytes(),'path unchanged local archive source')
+
+    def test_path_metadata_scope(self):
+        self.json_mutation('path-control/metadata-path/stdout.log.gz',lambda j:j.update(version=999),'path locked metadata repeat')
+
+    def test_path_extra_build_flag(self):
+        self.json_mutation('path-control/build-03-path/launch.json.gz',lambda j:j['command'].append('--test'),'Path control Cargo command')
+
+    def test_path_output_swap(self):
+        self.mutate('path-control/build-04-path-repeat/symbols.so.gz',lambda b:(self.root/'path-control/build-01-registry/symbols.so.gz').read_bytes(),'Path control output identity')
+
+    def test_path_hidden_raw_losses(self):
+        self.json_mutation('path-control/comparison.json',lambda j:j['path_source'].update(raw_lost=[]),'path comparison record')
+
+    def test_path_call_displacement(self):
+        self.json_mutation('path-control/layout-comparison.json',lambda j:j['callers']['O0255'].update(call_displacement_delta=89),'path layout/call-target observation')
+
+    def test_path_callee_raw_overclaim(self):
+        self.json_mutation('path-control/layout-comparison.json',lambda j:j['callers']['O0271'].update(target_raw_equal=True),'path layout/call-target observation')
+
+    def test_path_prior_owner_overclaim(self):
+        self.json_mutation('path-control/prior-layout-comparison.json',lambda j:j.update(changed_owner_extents={}),'path prior layout/ownership observation')
 
 
 class Membership(unittest.TestCase):

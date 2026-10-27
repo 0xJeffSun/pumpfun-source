@@ -226,6 +226,8 @@ def verify(parent=None,check_manifest=True):
     report['init_control']=control.verify(SimpleNamespace(**globals()),pv,parent,report,original_data)
     spec=importlib.util.spec_from_file_location('panic_control',HERE/'panic_control.py');control=importlib.util.module_from_spec(spec);spec.loader.exec_module(control)
     report['panic_control']=control.verify(SimpleNamespace(**globals()),pv,parent,report,original_data)
+    spec=importlib.util.spec_from_file_location('path_control',HERE/'path_control.py');control=importlib.util.module_from_spec(spec);spec.loader.exec_module(control)
+    report['path_control']=control.verify(SimpleNamespace(**globals()),pv,parent,report,original_data)
     if check_manifest:require(report==read(HERE/'report.json'),'derived report differs')
     return report
 
