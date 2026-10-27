@@ -487,3 +487,13 @@ AMM event-authority field changes to owned `AccountInfo`. No matches are lost:
 candidate passes 17,331 suite cases, 1,542 exact focused comparisons, 24 growth
 cases and 32 optional-account boundary cases. Its enclosing parser remains
 unmatched; whole-file equality and selected-source promotion remain open.
+
+
+## Social-claim signing-seed vector — 26 October 2026
+
+[Copying the stored user-ID bytes before the V2 token CPI](../research/fees-social-seed-vector/README.md)
+recovers the complete 296-byte original window at 51,608. Raw differences are
+restricted to the two call immediates, whose callee bodies match. No matches are
+lost: 371 unique pairs and 65 residuals. The larger claim caller remains
+unmatched. Fresh regression and 20 user-ID byte-length/token-path cases pass;
+whole-file identity and selection remain open.
