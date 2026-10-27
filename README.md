@@ -11,7 +11,7 @@ that run the captured original and the rebuilt candidate side by side in a local
 For subsequent gains and the latest research frontier, see the
 [byte-identity progress log](docs/BYTE-IDENTITY-PROGRESS.md).
 The [27 October queue review](docs/PR-QUEUE-REVIEW-2026-10-27.md) covers PRs
-#170–#183, including a separately verified 399-pair Fees context candidate and
+#170–#184, including a separately verified 399-pair Fees context candidate and
 source-only proposals. Those independent branches are not silently combined
 into the inventory below.
 

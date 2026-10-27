@@ -1,6 +1,6 @@
 # PR queue review — 27 October 2026
 
-Reviewed PRs #170–#183 as a combined merge tree based on `ba7883511942965c5c9def03971bdaff84963d6b`. Selected program sources, captures, scripts and workflows are unchanged. Overlapping append-only progress-log additions were preserved during local conflict resolution.
+Reviewed PRs #170–#184 as a combined merge tree based on `ba7883511942965c5c9def03971bdaff84963d6b`. Selected program sources, captures, scripts and workflows are unchanged. Overlapping append-only progress-log additions were preserved during local conflict resolution.
 
 | PR | Reviewed change | Verification and scope |
 | --- | --- | --- |
@@ -18,6 +18,7 @@ Reviewed PRs #170–#183 as a combined merge tree based on `ba7883511942965c5c9d
 | [#181](https://github.com/lalalune/pumpfun-source/pull/181) | Relay: exact read-only data through ordinary settlement source | Source/data-graph verifier and 9 tests pass; exact read-only-data result remains a source-only measured proposal. |
 | [#182](https://github.com/lalalune/pumpfun-source/pull/182) | Fees: source-only extension admission diagnostics | Source verifier and 13 tests pass; runtime/build claims are explicitly unverified by the packet. |
 | [#183](https://github.com/lalalune/pumpfun-source/pull/183) | test: run disassembly CLI fixtures on Windows | 20 disassembly tests pass locally, including real fixture subprocesses; native Windows execution remains the author’s retained validation. |
+| [#184](https://github.com/lalalune/pumpfun-source/pull/184) | Relay: recover three complete settlement bodies (488/492) | Source verifier and 9 tests pass; three-file patch preserves a 60-input map. Reported 488-window/data-graph result remains source-only; no independent compiler or VM execution of this variant in this review. |
 
 The checked PR head SHAs are listed in the Git merge parents. No complete-program identity or exhaustive semantic correctness follows from merging these research packets. The generated inventory remains pinned to its declared Fees and artifact-backed Relay candidates; alternative source proposals are not silently combined.
 
