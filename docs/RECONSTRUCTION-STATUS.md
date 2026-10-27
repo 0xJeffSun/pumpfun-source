@@ -44,8 +44,8 @@ analysis. Candidate symbol names are hypotheses about original identity.
 | Fees selected | 585 | 102 | 363 | 120 | 0 |
 | Mayhem selected | 441 | 58 | 131 | 7 | 245 |
 | Relay selected source 15 | 492 | 33 | 89 | 370 | 0 |
-| **Fees latest research** | **585** | **118** | **424** | **43** | **0** |
-| **Relay latest research** | **492** | **142** | **346** | **4** | **0** |
+| **Fees latest research** | **585** | **118** | **433** | **34** | **0** |
+| **Relay latest research** | **492** | **317** | **175** | **0** | **0** |
 
 Each row is a partition, not a score of semantic correctness. Mayhem's source
 ledger has 257 opaque windows, 12 of which happen to match local raw bytes.
@@ -64,19 +64,22 @@ calling whole trade or donation handlers perfect.
 
 ## How much remains?
 
-The strongest artifact-backed Relay research candidate matches **488/492 windows
-(99.2% by window count)**. Its four unmatched windows span **17,680 of 752,488
-original text bytes (2.3%)**. These are full unresolved window sizes, not differing
-byte counts or estimates of remaining effort. The remaining bodies are donation
-wrappers; matched bodies still require complete transitive and data identity.
+The strongest artifact-backed Relay research candidate matches **492/492 normalized
+windows**, including **317 raw-local bodies**. All four donation wrappers now
+match raw instruction bytes. This closes the missing normalized-body inventory,
+not complete binary identity: **18,623 positions still differ in the 818,280-byte
+meaningful ELF**, and the capture contains another 12,168 allocation bytes.
+Remaining work includes raw call/address values, relocations, data/indirect
+semantics and broader runtime coverage. There is no missing-window byte count
+to substitute for those requirements.
 
-Fees research has **542/585 windows with a normalized counterpart**: 395 unique
-structural pairs and 147 original windows in ambiguous duplicate groups. Its 43
-unmatched windows span **248,904 of 799,648 original text bytes (31.1%)**, although
-they are only 7.4% of the window count. Many remaining bodies are large. The
+Fees research has **551/585 windows with a normalized counterpart**: 404 unique
+structural pairs and 147 original windows in ambiguous duplicate groups. Its 34
+unmatched windows span **206,360 of 799,648 original text bytes (25.8%)**, although
+they are only 5.8% of the window count. Many remaining bodies are large. The
 [current call ledger](../repro/reconstruction-status-2026-10-26/fees-call-attribution.json)
-recomputes 65 additional duplicate-body correspondences on this candidate, for
-460 attributed pairs. There are 82 still-unattributed duplicate windows and 18
+recomputes 69 additional duplicate-body correspondences on this candidate, for
+473 attributed pairs. There are 78 still-unattributed duplicate windows and 17
 call edges to different-body frontiers. This refinement adds no body coverage.
 
 There is no defensible single source-completion percentage or ETA. Whole-program
@@ -104,9 +107,9 @@ these data checks do not establish arbitrary runtime or transitive semantics.
 
 ## Relay: the complete remaining body list
 
-The labels below are working source attributions from the recovery studies,
-not symbols authenticated from the stripped original. Every row remains
-unmatched in the current artifact-backed settlement candidate.
+There are now no unmatched normalized Relay windows. The four former residuals
+below are raw body-equal in the current wrapper artifact. Their labels remain
+working source attributions, not authenticated original symbols.
 
 | Original ordinal | Address | Bytes | Working attribution / next comparison |
 | --- | ---: | ---: | --- |
@@ -120,7 +123,8 @@ coordinates (one), Token-2022/framework versions (four), framework/sysroot and
 share-error behavior (nine), the mint-fee predicate (one), the Jupiter optional-seed
 builder (one), burn/close ownership (one), and the shared donation worker (one),
 without losing previous normalized matches. The latest combined source adds
-epoch close, swap-only and three settlement bodies, bringing that total to 488.
+epoch close, swap-only and three settlement bodies, reaching 488. The wrapper
+artifact then recovers all four rows above, reaching 492.
 Source-location recovery separately
 resolves all 43 differences in a fixed audited cohort of 346 location references;
 it does not add another matched function or establish all-data identity.
@@ -530,14 +534,14 @@ it does not independently re-decode the transaction instruction/event payloads.
 Those payloads need a separate cross-check before the history is used to close
 field-role claims. The five semantic roles remain unresolved; no field is renamed.
 
-1. **Continue Relay body recovery:** isolate one ordinary Rust change per trial,
-   starting with epoch close and the shared donation worker. Keep
-   negative trials; require no lost normalized matches and fresh replay of any
-   proposed candidate. Do not infer a match from equal sizes or fuzzy similarity.
+1. **Continue Relay raw identity recovery:** explain the 18,623 differing
+   meaningful-ELF positions, starting with raw call/address values and relocations.
+   Preserve all 492 normalized matches and require fresh replay for a proposed
+   candidate. Account for the captured allocation tail without output padding.
 2. **Close known behavior defects:** Pump `sell_v2` and the ten partial/unaccepted
    selected dispositions above, with bound success/rejection tests. Cover genuine
    CPI callers, ownership and extension/mode combinations before acceptance.
-3. **Continue Fees business/source recovery:** work from all 43 residual addresses,
+3. **Continue Fees business/source recovery:** work from all 34 residual addresses,
    preserve the refreshed duplicate-call attribution, and validate paths not
    exercised by the existing corpus. Normalize only declared relocations/calls.
 4. **Recover Pump/AMM/Mayhem residuals:** preserve opaque and ambiguous states.
@@ -576,3 +580,28 @@ These verify retained evidence and rederive byte/window inventories; they are no
 new compiler builds or fresh VM executions. The owning packages record those
 builds and replays. The new inventory preserves the old selected 3,338 rows and
 recomputes the 1,077 current research rows directly from their artifacts.
+
+
+## Verified Fees composition after PR #188
+
+The [composed artifact](../research/fees-composed-frontier188/README.md) independently
+reproduces the pinned math/SyncNative baseline and adds sharing creation parser,
+exit and dispatch, admin-sharing parser and dispatch, and social-PDA creation.
+All 163 decoded Location-shaped uses agree; the program reader and selected
+literal contracts are rechecked. Dispatches still reach unmatched business code.
+The current 551-window candidate freshly passes 17,331 suite comparisons and
+157 strict signed social-creation cases. Earlier matrices retain their own
+artifact bindings. Full data, indirect behavior and whole-file identity remain
+open; these are normalized body gains, not six fully proven public handlers.
+
+
+## Artifact-backed completion of the Relay normalized inventory
+
+The [independently built wrapper recovery](../repro/donation-relay/donation-wrapper-artifact-recovery/README.md)
+reproduces the 488 → 490 → 492 progression. The key source boundary is both
+context field declaration order and caller construction order, with direct event
+construction after native account close. All 18 wrapper callees and the existing
+positional data graph pass; fresh signed replay passes 536 records. No whole-ELF,
+protected-settlement-success or exhaustive semantic identity is claimed. Earlier
+four-window lists below describe preceding checkpoints and are superseded for
+current body coverage by this artifact.

@@ -7,8 +7,8 @@
     {
       "path": "README.md",
       "before_sha256": "cae913d4d3f2066403162f653a0cf35b39620fb08877b1b308c08ccce4a53678",
-      "after_sha256": "de98b6578b4bc513c58c0da1a90e2b577eb239e1c317da00cc132f0ba40648d3",
-      "reason": "Preserve the accepted 488-window Relay checkpoint while documenting rejected Result/event controls and the reviewed queue through PR #188."
+      "after_sha256": "5045a11e9f8fd4769043a0373f73960f3def08018446429bd8b9f60f2fa32c15",
+      "reason": "Record verified Relay 492 and Fees 551 research frontiers and reviewed queue through #191; preserve selected checkpoints and raw-identity limits."
     },
     {
       "path": ".github/workflows/verify.yml",

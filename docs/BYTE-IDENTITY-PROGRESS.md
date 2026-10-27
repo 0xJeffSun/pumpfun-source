@@ -1016,3 +1016,54 @@ five explicit extensions (33,504,100,000,100,000,40,000,10,000) exactly explains
 830,448 captured payload bytes. The last upgrade slot415422992 and later authority
 change agree with captured metadata. This resolves the unexplained-size question;
 it does not prove a matching Rust ELF or permit padding compiler output.
+
+
+## Fees verified branch composition — 27 October 2026
+
+The [new artifact-backed composition](../research/fees-composed-frontier188/README.md)
+reproduces #188's exact binary hashes, then combines #176/#185 sharing contexts
+and #172 social-PDA creation in four ordinary-source files. The result is
+551/585 normalized counterparts, 404 unique pairs, 118 raw-local matches and
+34 unmatched windows, with no lost matches. Six windows are gained over #188;
+all 163 decoded Location-shaped uses agree. Fresh execution passes 17,331 suite
+comparisons and 157 strict signed social-creation cases. The current inventory
+is advanced to this composed artifact; selected checkpoints remain unchanged.
+## Relay: all 492 normalized windows, but 18,623 bytes still differ — 27 October 2026
+
+The [donation wrapper source proposal](../repro/donation-relay/donation-wrapper-source-proposal/README.md)
+preserves two causal stages on the frozen public 488-window source. Ordinary
+context declaration order and direct post-close event construction recover
+native wrappers 92/93, reaching 490. Matching real context literal field order
+then recovers token wrappers 94/95, reaching **492/492 normalized windows** with
+no losses. Raw local matches rise **142→317**, including raw equality of all
+four wrappers. Their 18 actual direct callees bind complete normalized bodies
+and closed recursive direct-call shapes; the wrappers have no data or indirect
+operands. This does not establish unique function correspondence or semantics.
+
+All section lengths now match and candidate size 818,280 equals the original
+meaningful ELF extent. **Whole byte identity is still false:** 18,623 common
+positions differ (.text 18,453; .data.rel.ro 25; .dynsym 4; .rel.dyn 139; header 2),
+and the capture has 12,168 allocation-tail bytes. The complete 19,863-byte .rodata
+remains equal. Fresh static audit preserves all 359 data-pointer and 507
+nonpointer-qword obligations, with five indirect-call-containing text targets.
+
+Three exact 60-input source states, readable overrides/patches, nine tests and
+independent optional full comparison are supplied without binaries, logs,
+runtime cases or archived build/replay receipts. Local repeated builds and
+finite signed replay are observations, not downloadable runtime proof. Default
+compiler_executed=false and runtime_verified=false; protected relayer success
+remains untested. Raw data semantics, addresses/order, indirect behavior and
+whole-file identity remain open. Full identity of the four core programs is 0/4.
+
+
+## Relay 492-window independent artifact verification — 27 October 2026
+
+The [wrapper artifact](../repro/donation-relay/donation-wrapper-artifact-recovery/README.md)
+independently reproduces #189's intermediate and final outputs. All 492 normalized
+windows now match, including 317 raw-local bodies and all four donation wrappers.
+The 18 actual wrapper callees, exact read-only data and positional data graph pass;
+536 fresh signed replay records pass. The meaningful ELF still differs at 18,623
+positions. The current inventory is advanced to the artifact-backed result,
+without changing selected checkpoints or claiming whole-binary identity.
+The fixed-order interleaving search was stopped after 29 completed negative
+trials because #189 supplied the broader declaration/construction fix.

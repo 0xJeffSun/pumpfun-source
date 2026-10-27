@@ -9,12 +9,12 @@ list every raw match and unresolved window; selected artifacts retain the
 candidate paths and “current” prose must not override newer evidence.
 
 Subsequent gains are in the [byte-identity progress log](BYTE-IDENTITY-PROGRESS.md):
-Relay research now has **four unmatched windows**; current Fees research
-has **43 unmatched windows and 395 unique structural pairs**. The [Relay framework study](../repro/donation-relay/framework-sysroot-recovery/README.md)
+Relay research now has **492/492 normalized counterparts and no unmatched windows**; current Fees research
+has **34 unmatched windows and 404 unique structural pairs**. The [Relay framework study](../repro/donation-relay/framework-sysroot-recovery/README.md)
 recovers the three repeated type-ID bodies with official Linux target libraries,
 adds the Anchor 0.32 framework matches and restores share-total compared values.
 The subsequent [mint-predicate study](../repro/donation-relay/mint-fee-pair-recovery/README.md)
-recovers window 106; the current remaining windows are 92–95 after the
+recovers window 106; the preceding remaining windows were 92–95 after the
 [Jupiter](../repro/donation-relay/jupiter-option-source-recovery/README.md) and
 [burn/close ownership](../repro/donation-relay/burn-mint-ownership-recovery/README.md) recoveries. A
 [fully Linux reproduction](../repro/donation-relay/linux-canonical-reproduction/README.md)
@@ -96,7 +96,7 @@ adds the optional account parser and raw-equal cleanup without lost matches.
 Keep their real caller wired to owned `AccountInfo`; the larger account parser
 still needs full reconstruction. The subsequent [seed-vector recovery](../research/fees-social-seed-vector/README.md)
 recovers a 296-byte clone helper; its V2 claim caller remains unmatched. Current
-Fees attribution totals 460 pairs. The [extension-size log recovery](../research/fees-extend-size-logs/README.md)
+Fees attribution totals 473 pairs. The [extension-size log recovery](../research/fees-extend-size-logs/README.md)
 restores the no-resize messages and formatting helper; the larger resize handler
 remains unmatched.
 
@@ -190,7 +190,8 @@ replay passes.
 The worker packet established the 483-window checkpoint. The later
 [settlement artifact recovery](../repro/donation-relay/settlement-artifact-recovery/README.md)
 independently validates the combined 488-window source and exact read-only data.
-Continue with original ordinals 92–95, broader behavior and transitive data.
+The later wrapper artifact recovers original ordinals 92–95. Continue with
+raw call/address values, relocations, broader behavior and transitive data.
 Whole-file equality and selected-source promotion remain unachieved.
 
 ## Event contexts after isolated ownership trials
@@ -234,7 +235,7 @@ The following are independent requirements; completing one does not close the ot
 
 | Priority | Remaining work | Evidence required to close it |
 | --- | --- | --- |
-| Current research bodies | Relay's four donation windows; Fees' 43 windows, including the exotic-growth caller | Full original-window comparison with no lost matches, source/build hashes and relevant fresh differential coverage |
+| Current research bodies | Relay raw call/address and relocation differences; Fees' 34 windows, including the exotic-growth caller | Full original-window comparison with no lost matches, source/build hashes and relevant fresh differential coverage |
 | Core source/behavior | Pump's five partial and three unaccepted handlers; AMM initializer; Mayhem initializer and opaque attribution | Concrete source, genuine successful and rejected paths, bound receipts and per-handler limitations |
 | Known mismatches | Pump sell_v2 transfer-fee behavior; Mayhem diagnostics and field contracts | Authorized resumed correction where required, then targeted regressions and broader validation |
 | Transitive binary identity | Calls, duplicate attribution, data, relocations, indirect calls and final ELF layout | Exact artifact comparison and explicit explanation of any allocation padding |
@@ -292,9 +293,9 @@ and signing/ownership restrictions are unchanged by this documentation audit.
 | --- | --- |
 | Selected Pump | 507 windows without full normalized matches; calls/data and ambiguous matches also remain. The separate workspace-member build has 538 normalized windows and 497 residuals: 233 different-body, 192 no-same-size, 72 store-immediate-only heuristic rows. One of those 72 changes an error code; only 71 are reported origin-only. |
 | Selected AMM | 297 unmatched original windows, 160 ambiguous normalized rows, original diagnostics, data and full call contracts |
-| Fees current research | 43 unmatched windows (248,904 original body bytes), 65 additional call-attributed pairs and 82 duplicate windows still unattributed; close shareholder validators, transitive calls/data and full ELF/relocation layout |
+| Fees current research | 34 unmatched windows (206,360 original body bytes), 69 additional call-attributed pairs and 78 duplicate windows still unattributed; close shareholder validators, transitive calls/data and full ELF/relocation layout |
 | Selected Mayhem | Seven admitted unmatched windows and 257 source-ledger opaque windows; 12 of the opaque windows have local raw matches without semantic attribution |
-| Relay current research | [four explicit residual windows](RECONSTRUCTION-STATUS.md#relay-the-complete-remaining-body-list), spanning 17,680 original body bytes: donation wrappers; privileged successes, transitive callees/data and allocator/borrow behavior |
+| Relay current research | all 492 normalized windows now matched, with 317 raw-local matches; 18,623 meaningful-ELF positions still differ. Resolve raw linking, relocations, indirect/data semantics, privileged successes and allocator/borrow behavior |
 | Metaplex | Utilize's 1,477 text differences, 30 source-coordinate differences, two relocation differences; authentic source/compiler layout |
 | ATA | Historical recipe remains unknown despite exact output from explicit symbol ordering and an empty feature. Decide selection independently of historical authenticity. |
 | All programs | Exact historical tool/dependency inputs, complete sections/relocations, data and indirect-call meaning; complete security and lifecycle acceptance |
@@ -413,3 +414,40 @@ regular wrapper does not establish that only one instruction needs changing;
 registers, stack slots and ordering still differ throughout the body. Further
 work must explain those source/code-generation differences, preserving full
 window comparison and testing runtime behavior before promotion.
+
+
+The [verified Fees composition](../research/fees-composed-frontier188/README.md)
+closes six more complete windows over the #188 baseline, including social-PDA
+creation and two sharing dispatches. Both dispatches retain unmatched business
+callees. Continue from the now-pinned 551/585 normalized candidate; do not assume
+older query/log matrices were rerun against it. Whole-file and runtime acceptance
+remain distinct from normalized body recovery.
+
+
+## Relay normalized bodies complete; raw identity remains open
+
+[Independent wrapper builds and replay](../repro/donation-relay/donation-wrapper-artifact-recovery/README.md)
+close the four previously unmatched donation windows. Prior rejected controls and
+four-window lists are historical evidence. Next compare the 18,623 meaningful-ELF
+byte differences, keeping address/call relocation changes distinct from source
+semantics. Do not pad the candidate with the captured allocation tail or treat
+492/492 normalized coverage as byte-identical completion.
+
+
+The [independent Mayhem history re-decode](../research/mayhem-globalparams-field-history/REDECODE.md)
+now corroborates all 13 retained transactions and the raw old/new version chain.
+The follow-up fixes package-relative paths and includes negative decoder tests.
+This closes the request for another decoder implementation, while RPC provenance
+and semantic field-role attribution remain separate open requirements.
+## Mayhem retained Linux helper comparison
+
+The [Linux/Darwin helper comparison](../research/mayhem-linux-helper-comparison/README.md)
+applies the same 118-helper method to both retained v1.54 outputs. Linux resolves
+two type-ID negatives, increasing normalized matches from 106 to 108 and raw
+matches from 18 to 23 with no lost raw range. Both type-ID symbols match both
+40-byte capture ranges; the unique-match count remains 66. Three intrinsic
+bodies gain raw equality solely through call layout, and all 13 direct edges
+reach complete raw-equal callee bodies. Ten helper negatives remain. These are
+static observations of existing artifacts, not a new compiler build or evidence
+of complete program identity; component causality and historical host remain
+unproved. No selected artifact or stopped execution lane changes.

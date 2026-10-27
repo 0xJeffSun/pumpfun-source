@@ -1,6 +1,6 @@
 # Current function-window inventory
 
-Evidence snapshot: `849d8140cf897c48d4d1fb2414ec8068079fead7`. Selected inputs retain their verified `1463bd22fb7811825c5e7acf1cb963eb39ab68d9` checkpoint bindings. Research rows replace the older Fees/Relay research inventory; they do not replace selections.
+Evidence snapshot: `90b81af4258304398f40b9bb4a9b22bf98a14a91`. Selected inputs retain their verified `1463bd22fb7811825c5e7acf1cb963eb39ab68d9` checkpoint bindings. Research rows replace the older Fees/Relay research inventory; they do not replace selections.
 
 | Program / build | Windows | Exact local bytes | Normalized only | No complete match | Opaque |
 | --- | ---: | ---: | ---: | ---: | ---: |
@@ -9,10 +9,10 @@ Evidence snapshot: `849d8140cf897c48d4d1fb2414ec8068079fead7`. Selected inputs r
 | pump_fees | 585 | 102 | 363 | 120 | 0 |
 | mayhem | 441 | 58 | 131 | 7 | 245 |
 | donation_relay | 492 | 33 | 89 | 370 | 0 |
-| pump_fees_research | 585 | 118 | 424 | 43 | 0 |
-| donation_relay_research | 492 | 142 | 346 | 4 | 0 |
+| pump_fees_research | 585 | 118 | 433 | 34 | 0 |
+| donation_relay_research | 492 | 317 | 175 | 0 | 0 |
 
-Fees has 395 body-unique pairs plus 65 additional call-attributed duplicate pairs (460 correspondences); 82 duplicate windows remain unattributed. These are not 65 additional body matches. Rows count inferred original windows, not unique source functions or effort. Raw matches may be duplicate/ambiguous and do not establish referenced data or transitive callees. The Fees matcher and Relay matcher use separately documented masks; do not add their counts into a source-completion score.
+Fees has 404 body-unique pairs plus 69 additional call-attributed duplicate pairs (473 correspondences); 78 duplicate windows remain unattributed. These are not 69 additional body matches. Rows count inferred original windows, not unique source functions or effort. Raw matches may be duplicate/ambiguous and do not establish referenced data or transitive callees. The Fees matcher and Relay matcher use separately documented masks; do not add their counts into a source-completion score.
 
 - [Comprehensive review: all handlers, unresolved text size and closure criteria](review.md)
 - [Every window, symbol candidate, match address and evidence path](functions.tsv)

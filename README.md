@@ -11,35 +11,32 @@ that run the captured original and the rebuilt candidate side by side in a local
 For subsequent gains and the latest research frontier, see the
 [byte-identity progress log](docs/BYTE-IDENTITY-PROGRESS.md).
 The [27 October queue review](docs/PR-QUEUE-REVIEW-2026-10-27.md) covers PRs
-#170–#188, including separately verified 399- and 401-pair Fees context candidates and
+#170–#191, including separately verified 399- and 401-pair Fees context candidates and
 source-only proposals. Those independent branches are not silently combined
 into the inventory below.
 
-Latest artifact-backed Relay research: **488/492 normalized windows, four unmatched**.
-The [independent settlement build and replay](repro/donation-relay/settlement-artifact-recovery/README.md)
-retains **142 raw local matches** and reproduces the complete 19,863-byte
-read-only data section. Three newly recovered settlement bodies have 99 matching
-direct callees. Fresh replay passes 536 records / 534 fixtures. Donation windows
-92–95, indirect/data semantics and whole-file equality remain unresolved.
+Latest artifact-backed Relay research: **492/492 normalized windows, no unmatched
+normalized bodies, and 317 raw-local matches**. The [independent wrapper recovery](repro/donation-relay/donation-wrapper-artifact-recovery/README.md)
+reproduces all four donation wrapper bodies byte for byte and passes 536 signed
+replay records / 534 fixtures. The complete 19,863-byte read-only data section
+also matches.
 
-Two [donation close-order controls](repro/donation-relay/donation-close-order-controls/README.md)
-restore the native wrappers' cleanup call but recover no complete window.
-The borrowed-key constructor produces identical output to that rejected control;
-the accepted 488-window candidate remains unchanged.
-Six further [result/event construction controls](repro/donation-relay/donation-result-shape-controls/README.md)
-recover no complete window; the `Result::map` variant also loses two raw matches.
+**Whole-file identity is still unresolved:** 18,623 positions differ within the
+818,280-byte meaningful ELF. The capture has another 12,168 allocation bytes.
+Raw call/address values, relocations, indirect/data semantics and broader runtime
+coverage remain to be established. Earlier rejected controls and source-only
+proposals retain their historical evidence; selected checkpoints are unchanged.
 
-This build independently validates the later source proposals and composes the
-worker, epoch-close, swap-only and module-layout recoveries. The
-[earlier worker artifact](repro/donation-relay/shared-worker-artifact-recovery/README.md)
-retains its own 483-window evidence. Source-only reports remain distinguished
-from compiled and replayed results; selected checkpoints are unchanged.
-
-The pinned Fees inventory has **395 unique structural pairs, 43 unmatched windows**.
+The pinned Fees inventory has **404 unique structural pairs, 34 unmatched windows**
+(**551/585 normalized counterparts**, including 118 raw-local matches).
+The [verified composition](research/fees-composed-frontier188/README.md) combines
+the reviewed math/SyncNative, sharing-context and social-PDA creation recoveries.
+It adds six windows over its independently reproduced 545-window baseline and
+passes 17,331 suite comparisons plus 157 strict signed social-creation cases.
 The [configuration-event recovery](research/fees-config-event-recovery/README.md)
 adds four complete caller-body matches; the two upsert bodies share a structural
 shape and are distinguished by their callees. The [current call ledger](repro/reconstruction-status-2026-10-26/fees-call-attribution.json)
-also attributes 65 duplicate-body pairs, giving 460 correspondences.
+also attributes 69 duplicate-body pairs, giving 473 correspondences.
 Whole-file identity remains unachieved. The [exotic-fee growth study](research/fees-exotic-growth-precedence/README.md)
 corrects rejection precedence and the realloc flag in new boundary cases;
 that caller still has no complete body match. The [optional-account ownership recovery](research/fees-optional-account-ownership/README.md)
@@ -59,8 +56,8 @@ adds the initializer parser, one initialization closure and the exit routine.
 The [context-origin recovery](research/fees-buyback-context-origin/README.md)
 now closes the second closure and its direct-call mismatch as well. The
 [crank event-account recovery](research/fees-crank-event-ownership/README.md)
-adds the complete exit routine and dispatch wrapper; the account parser and
-business handler remain unmatched. Four [root codegen controls](research/fees-wrapper-codegen-controls/README.md)
+adds the complete exit routine and dispatch wrapper; later reviewed work also
+recovers the account parser, while the business handler remains unmatched. Four [root codegen controls](research/fees-wrapper-codegen-controls/README.md)
 add no matches and are retained as rejected experiments. The
 [sweep context recovery](research/fees-sweep-context-ownership/README.md)
 adds its complete account parser, exit and dispatch wrapper; the sweep business
@@ -68,13 +65,13 @@ body remains unmatched. The [buyback-update context recovery](research/fees-buyb
 now closes the shared update parser and both update dispatch wrappers, with
 all 61 direct callee bodies matching. The [event-context integration](research/fees-event-context-ownership/README.md)
 adds six parser/dispatch bodies across social claim, social-PDA creation and
-withdrawal; their three business bodies remain unmatched. The
+withdrawal; the new composition also recovers the social-PDA creation body. The
 [unchecked-prefix recovery](research/fees-unchecked-prefix-recovery/README.md)
 restores the full-account input convention and closes the 1,144-byte initializer
 helper. Its host contract tests and SBF regression evidence have separate scopes.
 
 The [current reconstruction review](docs/RECONSTRUCTION-STATUS.md) lists exact,
-normalized, unmatched and opaque function status, all four remaining Relay bodies,
+normalized, unmatched and opaque function status, Relay raw-linking gaps,
 and prioritized behavior/build work. The [refreshed 4,415-row inventory](repro/reconstruction-status-2026-10-26/README.md)
 includes every exact local body match and every unresolved window.
 
@@ -95,9 +92,9 @@ No handler is certified perfectly recreated. The selected core builds contain
 | --- | ---: | ---: | ---: | ---: | ---: |
 | Pump selected | 98 | 430 | 507 | 0 | 1,391,456 / 1,792,208 bytes (77.6%) |
 | PumpSwap selected | 93 | 395 | 297 | 0 | 734,392 / 1,162,040 bytes (63.2%) |
-| Fees research | 118 | 424 | 43 | 0 | 248,904 / 799,648 bytes (31.1%) |
+| Fees research | 118 | 433 | 34 | 0 | 206,360 / 799,648 bytes (25.8%) |
 | Mayhem selected | 58 | 131 | 7 | 245 | 636,128 / 706,744 bytes (90.0%) |
-| Relay research | 142 | 346 | 4 | 0 | 17,680 / 752,488 bytes (2.3%) |
+| Relay research | 317 | 175 | 0 | 0 | 0 unmatched-window bytes; raw linking still differs |
 
 Unresolved text includes whole unmatched and opaque windows. These are not
 differing-byte counts or estimates of effort. Calls, data, layout,
