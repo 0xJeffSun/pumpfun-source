@@ -76,10 +76,14 @@ diagnostics=auditor.audit(runtime['suites'])
 assert diagnostics==runtime['diagnostics'] and not diagnostics['mismatches']
 assert diagnostics['log_bearing_cases']==10464
 receipts=json.loads(gzip.decompress((HERE/'runtime/loader-receipts.json.gz').read_bytes()))
+admitted_raw=(HERE/'runtime/admitted.json.gz').read_bytes()
+admitted=json.loads(gzip.decompress(admitted_raw))
+assert runtime['validation_only_source_sha256']==sha(admitted_raw)
+assert admitted['suites']==runtime['suites'] and admitted['candidate_sha256']==runtime['candidate_sha256']
 assert len(receipts)==44
 for name in corpus:
     text=receipts[name+'.loader.json'];loaded=json.loads(text)
-    assert sha(text.encode())==runtime['loader_receipts'][name]['sha256']
+    assert sha(text.encode())==admitted['loader_receipts'][name]['sha256']
     assert {x['elf_sha256']for x in loaded['loads']}=={sha(original),runtime['candidate_sha256']}
     assert all(x['program_bytes']==36 and x['programdata_bytes']==10485760 and x['elf_prefix_unchanged'] and x['zero_allocation_tail']for x in loaded['loads'])
 print('Verified 44 captured-loader suites / 10,468 cases; 10,464 diagnostic log pairs, zero mismatches.')
