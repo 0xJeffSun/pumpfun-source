@@ -702,3 +702,27 @@ host contract cases. Fresh full and focused SBF regressions also pass, but their
 17,331-case suite does not invoke the fixed-admin FeeConfig initializer. This
 is not a claim of authorized initializer execution. Selected sources and
 artifacts remain unchanged, and whole-file equality is still unachieved.
+
+
+## Fees: pinned PR171 source integration preserves 544 windows and 161 Locations — 27 October 2026
+
+The [pinned source integration](../research/fees-current-source-integration/README.md)
+combines the previously published extension/source-coordinate recovery with the
+independently reproduced PR171 revision fa8ef804. It retains **544/585 normalized
+windows, 397 unique pairs and 118 raw local matches**, with no losses against that
+542-window baseline. Only the same two earlier extension windows are added;
+15 upstream gains and 27 earlier coordinate fixes are not new discoveries.
+All **161 Location-shaped record uses** have equal decoded file/line/column
+values, versus 134 on the pinned baseline. This is not a claim to the newest
+moving upstream frontier or equal relocated pointer bytes.
+
+The source-only packet provides 36 pinned public mappings, 41 exact recovered
+inputs, the readable 18-path source patch, portable native recipe, materializer,
+15 tests and optional local ELF comparison. Independent checks passed, including
+542→544 with gains 291864/632080, no losses and the 98/99 direct-call ledger; one
+known business callee remains unmatched. Local independent builds and finite
+offline replay were performed, but no binary artifacts or archived build/runtime
+receipts are published. Default verification reports runtime_verified=false.
+Whole-capture and meaningful-ELF identity remain false: 461,447 common positions
+differ, with a 4,272-byte meaningful-ELF length gap. Full core identity remains
+0/4, and all-data, indirect and exhaustive semantic closure remain open.
