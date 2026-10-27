@@ -10,7 +10,6 @@
   "research/fees-social-v2-current-source-proposal/overrides/programs/pump-fees/src/instructions/fee_sharing/mod.rs": "caf93759e3cb6825bc66b3b0b000dc7d2a07d3bd7d866e8436e29e2d189b2000",
   "scripts/fees_validate_all.py": "c0f4a0e78074041cf4a41c5f3578bc3e71d746557a3dc45627eb648f32a4f065",
   "scripts/fees_sharing_update_differential.py": "21ec993ac86f364a58bfb9073d991bb83aba100cc91c6eaa6d4a3adf48216ffe",
-  "scripts/fees_validate_parallel.py": "a79dffe5b7ba26919b9c88d6e32ad3263914ee5e958a103dc8cb9b86c11e6b01",
   "scripts/validate_fee_handlers.py": "de08e7a884d772b76f8bf876e0407fc97379463933f5957f0151f536a67865df",
   "scripts/fees_admin_differential.py": "30ae2037e1bb4288f5fca5a7f1ee4dbf7e59ad8170857113f58e302d65ea3003",
   "scripts/fees_initialize_differential.py": "8faf9d295e80f9fdbae50bb64a728fe7d9bc4dad033239ed45dfe9ff2840a507",

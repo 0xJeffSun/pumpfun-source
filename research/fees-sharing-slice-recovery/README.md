@@ -38,7 +38,7 @@ have equal `Program log:` and `Program data:` lines. The inherited synthetic
 snapshot harness omits executable-account contents; finite test cases do not
 prove exhaustive behavior, mainnet reachability or compute-unit equality.
 
-The parallel runner reads the unchanged canonical 18-suite plan and executes
+The packet-local `run_parallel.py` runner reads the unchanged canonical 18-suite plan and executes
 each suite in its own process. A control run on the same predecessor ELF gives
 an identical complete report to the sequential runner; both reports are retained.
 
