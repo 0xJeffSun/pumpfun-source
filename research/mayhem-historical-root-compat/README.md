@@ -30,8 +30,11 @@ An adjacent `init_if_needed` validation control restores the five remaining
 account-parser matches, reaching **427 normalized / 74 raw-local / 426 injective**
 with unchanged dependency metadata and no lost matches. Only O0199
 (`custom_panic`) differs from the older current-runtime control. Its extra return
-instruction and a syscall declaration difference are retained as an untested
-source hypothesis; the full body remains unmatched.
+instruction and a syscall declaration difference motivate the next source
+control below. That control restores the complete panic body to raw identity
+under a local path override, reaching **428 normalized / 70 raw-local / 427
+injective**. Its path-source baseline retains five raw-local losses compared
+with the preceding registry build; it is not promoted over the current recipe.
 
 ## Source and build boundary
 
@@ -300,12 +303,70 @@ historical function remains unmatched; no shortened window is accepted.
 Checksum-bound source shows `sol_panic_` returning unit in
 solana-define-syscall 3.0.0 and `!` in 4.0.1. The packet retains both declarations
 and exact function comparisons. This is a static candidate explanation only:
-no changed-source build or runtime execution has isolated that return-type effect.
+that stage did not test a changed-source build. The following control tests the
+return declaration with fresh builds; no runtime execution is performed.
 
 This closes the five predicted account-parser differences under the measured
 recipe, not the remaining panic function or whole-ELF gap. It does not exceed
 the older current-runtime control or the newer 432-window checkpoint, identify
 the original framework, or supply runtime/security qualification.
+
+## Panic syscall never-return source control
+
+The selected change in [Solana SDK commit
+f8ea9c6](https://github.com/anza-xyz/solana-sdk/commit/f8ea9c6d99cd763ddc2f9ae7ebd7b71957d483e2)
+declares `sol_panic_` as returning `!`. That commit also adds `abort`; this
+experiment ports **only the panic return declaration** into authenticated
+solana-define-syscall 3.0.0 archive sources. The patched local crate is neither
+an unchanged registry release nor the complete upstream revision.
+
+The baseline copies all six authenticated archive files into a fixed local
+path and adds a Cargo patch. It removes only the package's registry source and
+checksum from the lock, retaining the original archive proof separately.
+The original vendor checksum file is not copied or rewritten. The verifier
+checks all 204 resolved packages and their graph against the preceding build,
+allowing only input path relocation and that one registry-to-path identity.
+There are 187 remaining registry packages, 14 framework packages, two program
+packages and one local syscall package.
+
+| Fresh build | Normalized | Raw-local | Injective | Functions | Text bytes |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Unchanged syscall path-source baseline | 427 | 69 | 426 | 451 | 664104 |
+| One-line never-return port | 428 | 70 | 427 | 451 | 664096 |
+| Fresh repeat of the port | 428 | 70 | 427 | 451 | 664096 |
+
+Root source, framework source, lock, paths, registry configuration and raw
+resolved metadata are identical between baseline and patched builds. Only
+`src/definitions.rs` in the local syscall crate changes. Three fresh builds
+retain **462 actual compiler commands**, complete input observations, linker
+maps and all 441 original-window comparisons.
+
+The exact source change restores only **O0199**, both normalized and raw-local,
+with no lost matches against its path-source baseline. Its complete symbol
+shrinks from 200 to 192 bytes: the extra trailing `exit` disappears, and the
+entire new body equals the captured original window. The unchanged 200-byte
+baseline remains unmatched. No prefix or shortened candidate is admitted.
+The original window boundaries remain those of the retained static inventory,
+not recovered original debug symbols; syscall implementation identity remains
+outside this local body comparison.
+
+The initial path-source setup already loses raw-local matches **O0255, O0256,
+O0258, O0265 and O0271** relative to the preceding registry build. All five
+remain normalized matches. Those losses are retained in the comparison and
+are not caused by the subsequent one-line source change. The patched build
+recovers the older current-runtime control's normalized set, but has five
+fewer raw-local matches. Its whole text, raw ELF and stripped ELF all differ
+from that control. It does not advance the newer 432-window checkpoint.
+
+Both patched builds produce the same **866448-byte raw ELF**, SHA-256
+`6454c8953f96ed59c4834db1af39133419209ddbc40a9e46c467c8bd7e74d03e`,
+and separately stripped **732840-byte ELF**, SHA-256
+`dad1ecf969128daa0cb738e95d18e00cc0712729669e7ee219b6b1264eb23157`.
+These are compiler outputs, not padded allocation images. Fifty of 88 linked
+archive identities differ between the fresh repeats despite equal final ELFs;
+those observations are retained. Whole-original ELF identity is false. This
+supports the bounded return-declaration explanation under the measured native
+recipe, without attributing the original source revision or build date.
 
 ## Offline replay and retained limits
 
