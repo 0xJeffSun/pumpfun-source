@@ -1,6 +1,6 @@
-# Reconstruction status after artifact-backed Relay worker recovery — 26 October 2026
+# Reconstruction status after artifact-backed Relay settlement recovery — 26 October 2026
 
-Reviewed evidence revision: `ba7883511942965c5c9def03971bdaff84963d6b`.
+Reviewed evidence revision: `849d8140cf897c48d4d1fb2414ec8068079fead7`.
 This review updates the research frontier while preserving the selected-checkpoint
 [baseline audit](RECONSTRUCTION-AUDIT.md). The [recomputed inventory](../repro/reconstruction-status-2026-10-26/README.md)
 contains every one of the **4,415 selected/research function-window rows**.
@@ -45,7 +45,7 @@ analysis. Candidate symbol names are hypotheses about original identity.
 | Mayhem selected | 441 | 58 | 131 | 7 | 245 |
 | Relay selected source 15 | 492 | 33 | 89 | 370 | 0 |
 | **Fees latest research** | **585** | **118** | **424** | **43** | **0** |
-| **Relay latest research** | **492** | **130** | **353** | **9** | **0** |
+| **Relay latest research** | **492** | **142** | **346** | **4** | **0** |
 
 Each row is a partition, not a score of semantic correctness. Mayhem's source
 ledger has 257 opaque windows, 12 of which happen to match local raw bytes.
@@ -64,12 +64,11 @@ calling whole trade or donation handlers perfect.
 
 ## How much remains?
 
-The strongest artifact-backed Relay research candidate matches **483/492 windows
-(98.2% by window count)**. Its 9 unmatched windows span **42,368 of 752,488
-original text bytes (5.6%)**. Those bytes describe the sizes of unmatched
-original windows, not the number of absent or incorrect bytes. The residual
-contains donation and settlement business functions; matching the other 483
-still leaves their call/data identity to prove.
+The strongest artifact-backed Relay research candidate matches **488/492 windows
+(99.2% by window count)**. Its four unmatched windows span **17,680 of 752,488
+original text bytes (2.3%)**. These are full unresolved window sizes, not differing
+byte counts or estimates of remaining effort. The remaining bodies are donation
+wrappers; matched bodies still require complete transitive and data identity.
 
 Fees research has **542/585 windows with a normalized counterpart**: 395 unique
 structural pairs and 147 original windows in ambiguous duplicate groups. Its 43
@@ -93,16 +92,21 @@ the recovered build reproduces the proposal's `bdd03c77…` / `1ca9e99a…` hash
 Only worker 112 is gained, no normalized/raw window is lost, and all 51 worker
 callee bodies match. Fresh replay passes 536 records / 534 unique fixtures.
 
-This raises the artifact-backed inventory to 483/492. The source state is still
-the proposal's isolated pre-security-metadata baseline, so it does not claim
-composition with the separate security payload/dynamic-string-table recovery.
-Whole-file equality and selected-source promotion remain unachieved.
+That packet established the 483-window checkpoint on its isolated pre-metadata
+source state. The [new settlement artifact packet](../repro/donation-relay/settlement-artifact-recovery/README.md)
+independently builds the later combined source: epoch close, swap-only and three
+settlement bodies now match as well. Its fresh 485-window control and 488-window
+result reproduce the published hashes exactly. All 99 direct callees of the
+three new settlement bodies match, and fresh replay passes 536 records.
+The complete read-only data section is raw-equal; 359 positional data pointers
+and 507 nonpointer qwords recheck. Five text targets contain indirect calls, so
+these data checks do not establish arbitrary runtime or transitive semantics.
 
 ## Relay: the complete remaining body list
 
 The labels below are working source attributions from the recovery studies,
 not symbols authenticated from the stripped original. Every row remains
-unmatched in the current artifact-backed worker candidate.
+unmatched in the current artifact-backed settlement candidate.
 
 | Original ordinal | Address | Bytes | Working attribution / next comparison |
 | --- | ---: | ---: | --- |
@@ -110,29 +114,26 @@ unmatched in the current artifact-backed worker candidate.
 | 93 | 76,472 | 6,272 | Native-pubkey donation variant |
 | 94 | 82,744 | 2,568 | Regular donation body |
 | 95 | 85,312 | 2,568 | Payer donation variant |
-| 96 | 87,880 | 4,000 | Epoch close: state updates, checked increment and transfer |
-| 97 | 91,880 | 5,216 | Distribution after swap |
-| 98 | 97,096 | 5,696 | Distribution without swap |
-| 99 | 102,792 | 4,448 | Swap-only body |
-| 100 | 107,240 | 5,328 | Swap then distribute |
 
 The former 27-window frontier is obsolete. Subsequent studies recovered receipt
 coordinates (one), Token-2022/framework versions (four), framework/sysroot and
 share-error behavior (nine), the mint-fee predicate (one), the Jupiter optional-seed
 builder (one), burn/close ownership (one), and the shared donation worker (one),
-without losing previous normalized matches. Source-location recovery separately
+without losing previous normalized matches. The latest combined source adds
+epoch close, swap-only and three settlement bodies, bringing that total to 488.
+Source-location recovery separately
 resolves all 43 differences in a fixed audited cohort of 346 location references;
 it does not add another matched function or establish all-data identity.
 
-The current worker candidate passes fresh **536 replay records / 534 unique fixtures**.
-It is 818,016 bytes, SHA-256
-`bdd03c7765c65d5c7ea9f1c16900f766e38c97fcec3071e29678f0ae52772399`.
-Its fresh full-Linux baseline reproduces the prior 818,096-byte candidate
-`c6ae09b906b3c6a88042e40b02e0a2f6598268061d7527b667c0e631655a3921`.
-The new worker body and all 51 callees match only under the documented
-normalization; the worker is not raw-equal. The size difference from the
-original's meaningful ELF is not an estimate of remaining code. Privileged
-successes and allocation-failure paths remain outside the replay coverage.
+The current settlement candidate passes fresh **536 replay records / 534 unique fixtures**.
+It is 818,392 bytes, SHA-256
+`e98ef5d4453ea93ab8189b35d7183a0777b2bf3ee46f87497a11700c263f55a3`.
+The separate 485-window baseline is 818,400 bytes, SHA-256
+`95a5eb2f7a29be9dfe890c93c8f388533c403e999e370e2e00f665c8c49218c6`.
+Both were built from fresh target directories with unchanged source inputs.
+The candidate's 112-byte excess over the meaningful original ELF is not an
+estimate of remaining code. Privileged settlement successes and allocation-failure
+paths remain outside the retained replay coverage.
 
 Evidence: [source-location recovery](../repro/donation-relay/source-location-recovery/README.md),
 [Linux reproduction](../repro/donation-relay/linux-canonical-reproduction/README.md),
@@ -147,9 +148,9 @@ Its 818,664-byte Linux candidate is SHA-256
 `af837c4491a267e144cfb0cb7e1fc6772f22ddd353ada93de2b1286489d4beea`.
 The packet rederives 482/492 normalized matches, 130 raw-local matches, the same
 348 equal source-location pairs and 536 fresh replay records / 534 unique
-fixtures. There are no new or lost instruction-window matches. The complete
-function inventory above remains pinned to its separately named burn/close
-candidate; this metadata candidate is a further research variant.
+fixtures. There are no new or lost instruction-window matches. This is the earlier metadata-only candidate. The current inventory instead binds
+the independently built settlement artifact, which preserves full read-only data
+equality while adding later instruction-body recoveries.
 
 The original meaningful ELF is 818,280 bytes; its captured allocation also has
 12,168 trailing zero bytes. This candidate contains no added allocation padding
@@ -561,6 +562,7 @@ python3 -B research/fees-shareholder-copy-clone/verify.py
 python3 -B research/fees-authority-body-origin/verify.py
 python3 -B research/fees-refreshed-call-attribution/verify.py
 python3 -B repro/donation-relay/burn-mint-ownership-recovery/verify.py
+python3 -B repro/donation-relay/settlement-artifact-recovery/verify.py
 python3 -B research/fees-crank-event-ownership/verify.py
 python3 -B research/fees-sweep-context-ownership/verify.py
 python3 -B research/fees-buyback-update-ownership/verify.py

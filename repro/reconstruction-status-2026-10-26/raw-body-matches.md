@@ -507,10 +507,14 @@ Snapshot and limitations: [inventory](README.md). Addresses are decimal virtual 
 | pump_fees_research | 799392 | 272 | raw_body_equal | __gedf2; __gtdf2 |
 | pump_fees_research | 799664 | 272 | raw_body_equal | __gedf2; __gtdf2 |
 | donation_relay_research | 31368 | 264 | raw_body_equal | _<T as anchor_lang::ToAccountInfo>::to_account_info |
+| donation_relay_research | 31776 | 400 | raw_body_equal | core::ptr::drop_in_place<donation_relay_source_proposal::instructions::v1::relayer_only::distribute::just_swap::JustSwapV1> |
+| donation_relay_research | 32176 | 400 | raw_body_equal | core::ptr::drop_in_place<donation_relay_source_proposal::instructions::v1::relayer_only::distribute::swap_then_distribute::SwapThenDistributeV1> |
 | donation_relay_research | 32576 | 8 | raw_body_equal | _<alloc::vec::Vec<T,A> as core::ops::drop::Drop>::drop; __rust_dealloc; core::error::Error::provide; core::ptr::drop_in_place<alloc::boxed::convert::<impl core::convert::From<alloc::string::String> for alloc::boxed::Box<dyn core::error::Error$u2b$core::marker::Sync$u2b$core::marker::Send>>::from::StringError>; core::ptr::drop_in_place<alloc::string::String>; core::ptr::drop_in_place<solana_program_error::ProgramError> |
 | donation_relay_research | 32584 | 8 | raw_body_equal | _<alloc::vec::Vec<T,A> as core::ops::drop::Drop>::drop; __rust_dealloc; core::error::Error::provide; core::ptr::drop_in_place<alloc::boxed::convert::<impl core::convert::From<alloc::string::String> for alloc::boxed::Box<dyn core::error::Error$u2b$core::marker::Sync$u2b$core::marker::Send>>::from::StringError>; core::ptr::drop_in_place<alloc::string::String>; core::ptr::drop_in_place<solana_program_error::ProgramError> |
 | donation_relay_research | 32592 | 104 | raw_body_equal | core::ptr::drop_in_place<std::io::error::Error> |
+| donation_relay_research | 32696 | 152 | raw_body_equal | core::ptr::drop_in_place<solana_account_info::AccountInfo> |
 | donation_relay_research | 32848 | 8 | raw_body_equal | _<alloc::vec::Vec<T,A> as core::ops::drop::Drop>::drop; __rust_dealloc; core::error::Error::provide; core::ptr::drop_in_place<alloc::boxed::convert::<impl core::convert::From<alloc::string::String> for alloc::boxed::Box<dyn core::error::Error$u2b$core::marker::Sync$u2b$core::marker::Send>>::from::StringError>; core::ptr::drop_in_place<alloc::string::String>; core::ptr::drop_in_place<solana_program_error::ProgramError> |
+| donation_relay_research | 32856 | 528 | raw_body_equal | core::ptr::drop_in_place<$u5b$solana_account_info::AccountInfo$u3b$ 4$u5d$> |
 | donation_relay_research | 34400 | 472 | raw_body_equal | core::ptr::drop_in_place<anchor_lang::context::CpiContext<anchor_lang::system_program::Allocate>> |
 | donation_relay_research | 34872 | 16 | raw_body_equal | core::error::Error::cause |
 | donation_relay_research | 34888 | 8 | raw_body_equal | _<alloc::vec::Vec<T,A> as core::ops::drop::Drop>::drop; __rust_dealloc; core::error::Error::provide; core::ptr::drop_in_place<alloc::boxed::convert::<impl core::convert::From<alloc::string::String> for alloc::boxed::Box<dyn core::error::Error$u2b$core::marker::Sync$u2b$core::marker::Send>>::from::StringError>; core::ptr::drop_in_place<alloc::string::String>; core::ptr::drop_in_place<solana_program_error::ProgramError> |
@@ -518,6 +522,8 @@ Snapshot and limitations: [inventory](README.md). Addresses are decimal virtual 
 | donation_relay_research | 34952 | 696 | raw_body_equal | core::slice::sort::shared::pivot::median3_rec |
 | donation_relay_research | 35648 | 544 | raw_body_equal | core::slice::sort::shared::smallsort::insertion_sort_shift_left |
 | donation_relay_research | 50800 | 48 | raw_body_equal | alloc::rc::Rc<T,A>::drop_slow |
+| donation_relay_research | 130560 | 288 | raw_body_equal | donation_relay_source_proposal::tools::donate::shared::deserialize_token_account |
+| donation_relay_research | 130848 | 288 | raw_body_equal | donation_relay_source_proposal::tools::donate::shared::deserialize_mint |
 | donation_relay_research | 566472 | 208 | raw_body_equal | __rust_alloc |
 | donation_relay_research | 566680 | 8 | raw_body_equal | _<alloc::vec::Vec<T,A> as core::ops::drop::Drop>::drop; __rust_dealloc; core::error::Error::provide; core::ptr::drop_in_place<alloc::boxed::convert::<impl core::convert::From<alloc::string::String> for alloc::boxed::Box<dyn core::error::Error$u2b$core::marker::Sync$u2b$core::marker::Send>>::from::StringError>; core::ptr::drop_in_place<alloc::string::String>; core::ptr::drop_in_place<solana_program_error::ProgramError> |
 | donation_relay_research | 611424 | 16 | raw_body_equal | __rust_alloc_error_handler |
@@ -545,12 +551,18 @@ Snapshot and limitations: [inventory](README.md). Addresses are decimal virtual 
 | donation_relay_research | 652688 | 64 | raw_body_equal | anchor_lang::error::Error::log |
 | donation_relay_research | 662240 | 16 | raw_body_equal | anchor_lang::solana_program::log::sol_log_data; solana_cpi::set_return_data; solana_pubkey::Pubkey::log; std::sys::pal::sbf::sol_log |
 | donation_relay_research | 668456 | 40 | raw_body_equal | solana_invoke::invoke |
+| donation_relay_research | 668496 | 1024 | raw_body_equal | solana_invoke::invoke_signed |
+| donation_relay_research | 669520 | 200 | raw_body_equal | solana_sysvar::rent::_<impl solana_sysvar::Sysvar for solana_rent::Rent>::get |
 | donation_relay_research | 669720 | 16 | raw_body_equal | anchor_lang::solana_program::log::sol_log_data; solana_cpi::set_return_data; solana_pubkey::Pubkey::log; std::sys::pal::sbf::sol_log |
+| donation_relay_research | 670088 | 432 | raw_body_equal | alloc::raw_vec::RawVec<T,A>::grow_one |
+| donation_relay_research | 684048 | 104 | raw_body_equal | core::fmt::num::_<impl core::fmt::Debug for usize>::fmt |
 | donation_relay_research | 689624 | 128 | raw_body_equal | solana_account_info::AccountInfo::try_data_len |
 | donation_relay_research | 689856 | 144 | raw_body_equal | solana_account_info::AccountInfo::try_borrow_lamports |
 | donation_relay_research | 690000 | 144 | raw_body_equal | solana_account_info::AccountInfo::try_borrow_data |
 | donation_relay_research | 690144 | 448 | raw_body_equal | solana_account_info::AccountInfo::resize |
 | donation_relay_research | 690592 | 80 | raw_body_equal | solana_account_info::AccountInfo::assign |
+| donation_relay_research | 690672 | 48 | raw_body_equal | _<&T as core::fmt::Display>::fmt |
+| donation_relay_research | 690720 | 24 | raw_body_equal | _<&T as core::fmt::LowerHex>::fmt |
 | donation_relay_research | 696072 | 16 | raw_body_equal | anchor_lang::solana_program::log::sol_log_data; solana_cpi::set_return_data; solana_pubkey::Pubkey::log; std::sys::pal::sbf::sol_log |
 | donation_relay_research | 703480 | 40 | raw_body_equal | _<solana_pubkey::Pubkey as core::fmt::Debug>::fmt; _<solana_pubkey::Pubkey as core::fmt::Display>::fmt |
 | donation_relay_research | 703520 | 1280 | raw_body_equal | std::io::error::repr_bitpacked::kind_from_prim |
