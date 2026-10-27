@@ -1409,3 +1409,36 @@ reach the captured Relay program. The verifier checks the retained 556 parent
 source/artifact hashes directly, without requiring its Git object in a shallow
 checkout. Whole-ELF equality, full raw logs/compute and the selected checkpoint
 remain unchanged; this is an additional bounded research result.
+
+
+## Fees: six-window source integration on pinned public552 — 27 October 2026
+
+The [source-only integration](../research/fees-six-window-source-integration/README.md)
+composes seven ordinary source changes on exact public PR195 `origins`, with 43
+inputs and unchanged packages/lock/features. It retains all 552 normalized and
+118 raw matches, reaching **558 normalized / 143 raw / 411 unique pairs**.
+Six complete gains are 127776, 270136, 271536, 276672, 295800 and 650064. Attribution
+is explicit: PR200 Admin body, SDK's three typed Relay CPI helpers, PR204
+constant-admin parser and PR202 Buyback wrapper. PR197 diagnostics, independently
+measured native privileges and checked lamport methods also compose here.
+The typed and native-privilege controls were parallel, not a sequential chain;
+the checked arithmetic correction fixes an independently discovered overflow
+boundary also published by PR205, which is explicitly credited.
+
+All 42 public parent input bytes were independently checked, exact 43-input
+materialization and thirteen tests pass, and a fresh opt-in static reader checks
+83 actual new direct callees plus all 3,233 previously equal obligations and 165
+value-equal Location uses. Thirteen actual callee edges remain unequal. Raw
+section inventories and all full output hashes are bound; 446,635 common bytes
+still differ and the candidate meaningful ELF is 784 bytes too long. Whole
+binary identity remains false.
+
+Repeated native builds and finite runtime/application-log/boundary observations
+passed locally but their receipts are not included. Authentic fixed-admin success,
+exhaustive semantics and full runtime log/CU equality are not claimed. Later
+PR201 native-only lifetime work and PR206 distribution-helper recovery are
+explicitly not in this pinned source. Only
+ordinary source, public provenance, readable patches and freshly remeasured
+static metadata are published; no binary/archive, log, runtime fixture or
+archived build/replay receipt derivative. Default native/runtime/whole identity
+verification stays false. No selected checkpoint changes.
