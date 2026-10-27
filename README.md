@@ -65,6 +65,10 @@ it is not part of the stripped compiler artifact. This dependency result remains
 unpromoted and does not change the core-program totals above. The [parallel-lane
 review](research/claude-lanes-review-20261027/README.md) records the other packets
 and their baseline/validation limits.
+The [independent Utilize recovery](research/metaplex-utilize-exact-recovery/README.md)
+adds the retained unstripped compiler output, empty-target build/dependency
+receipts and two separately signed replays of that same 147-case corpus. Its
+alternative source is an unpromoted compiler-context diagnostic.
 
 ## Behavior and remaining work
 

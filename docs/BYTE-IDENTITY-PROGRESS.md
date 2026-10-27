@@ -4,6 +4,17 @@ The [full audit](RECONSTRUCTION-AUDIT.md) and its generated tables retain their
 explicit `1463bd22` snapshot. This log records later research without silently
 changing that baseline or promoting new selected artifacts.
 
+## Reviewed PR #266: independent Metaplex exact-artifact evidence
+
+The [Utilize recovery](../research/metaplex-utilize-exact-recovery/README.md)
+retains a second source form producing the already established exact 707,448-byte
+Metaplex ELF. Its packet adds the unstripped compiler artifact, build/environment
+receipts and two 147-case signed replay sets, kept separate rather than counted
+as new unique scenarios. Local verification passes, including signed-transaction
+tampering and the added special-file/optimized-Python controls. Its deliberately
+redundant source guard remains an unpromoted diagnostic; the simpler prior recipe
+and current dependency selection are unchanged.
+
 ## Mayhem: compose the complete historical macro with the current source
 
 The [new native packet](../research/mayhem-historical-macro-current-20261027/README.md)

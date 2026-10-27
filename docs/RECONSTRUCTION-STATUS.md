@@ -29,7 +29,7 @@ linker recipe is reconstructed; no public handler has an exhaustive semantic pro
 | SPL Token | All 108,600 captured bytes reproduced | Preserve source/build provenance; byte equality is not a security audit |
 | Token-2022 | All 611,056 meaningful ELF bytes reproduced | The full 1,382,016-byte capture is reproduced only by separately adding 770,960 zero bytes |
 | Associated Token Account | All 105,032 bytes reproduced by two research recipes | Explicit linker ordering and an empty Cargo feature are non-historical recipes; authentic recipe and selected promotion remain unresolved |
-| Metaplex Token Metadata | Latest research matches all 707,448 meaningful ELF bytes and 1,251 function windows | Unpromoted; the 86,543-byte zero extension is a separate allocation image. Repeat unstripped output hashes are recorded, but those files are not retained. |
+| Metaplex Token Metadata | Latest research matches all 707,448 meaningful ELF bytes and 1,251 function windows | Unpromoted; the 86,543-byte zero extension is a separate allocation image. The independent Utilize packet now retains unstripped output and build/dependency receipts. |
 
 See the baseline audit's [dependency evidence](RECONSTRUCTION-AUDIT.md#1-whole-program-and-dependency-identity) and the later [reviewed Metaplex packet](../research/claude-lanes-review-20261027/README.md).
 A generated allocation image is not an unchanged compiler output.

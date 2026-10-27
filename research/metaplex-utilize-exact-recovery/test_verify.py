@@ -1,6 +1,6 @@
 """Fail-closed tests for the exact-artifact and signed-receipt claims."""
 from pathlib import Path
-import base64, gzip, hashlib, json, shutil, subprocess, sys, tempfile
+import base64, gzip, hashlib, json, os, shutil, subprocess, sys, tempfile
 
 HERE = Path(__file__).resolve().parent
 
@@ -47,4 +47,15 @@ with tempfile.TemporaryDirectory(prefix='metaplex-proof-') as temporary:
     receipt.write_bytes(gzip.compress(json.dumps(data).encode(), mtime=0)); seal(packet); run(packet, False)
     receipt.write_bytes(saved); seal(packet)
     run(packet, True)
+    alias = packet/'unlisted-broken-link'
+    alias.symlink_to(packet/'missing-target')
+    run(packet, False)
+    alias.unlink()
+    if hasattr(os, 'mkfifo'):
+        fifo = packet/'unlisted-fifo'
+        os.mkfifo(fifo)
+        run(packet, False)
+        fifo.unlink()
+    optimized = subprocess.run([sys.executable, '-O', '-B', str(HERE/'verify.py'), '--packet', str(packet)], capture_output=True, text=True)
+    assert optimized.returncode != 0 and 'verification requires assertions' in optimized.stderr
 print('PASS: exact packet; nested inventory, binary, artifact binding and signed-transaction tampering rejected')

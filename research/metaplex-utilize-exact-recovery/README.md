@@ -7,6 +7,14 @@ ELF bytes match the captured Token Metadata dependency**, including all 1,251
 inferred function windows, data, calls and relocations. No address normalization
 is needed for this result.
 
+Review scope: this is an alternative compiler-context research recipe. Its
+deliberately redundant admission guard is retained as submitted and is not
+promoted into the maintained dependency source. The earlier
+[separate-zero-guard recipe](../claude-deps-metaplex-20261027/README.md) produces
+the identical artifact with a simpler source change. This packet adds retained
+unstripped output and independent build/dependency receipts; it does not add
+new unique runtime scenarios to that earlier 147-case corpus.
+
 | Measurement | Previous owned-Uses checkpoint | This source |
 | --- | ---: | ---: |
 | Different meaningful ELF positions | 80 | **0** |

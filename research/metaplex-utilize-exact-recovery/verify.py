@@ -1,6 +1,9 @@
 """Offline, read-only checks of exact ELF recovery and signed local receipts."""
 from pathlib import Path, PurePosixPath
 import argparse, base64, difflib, gzip, hashlib, json, sys, tarfile, tomllib
+if not __debug__:
+    raise RuntimeError("verification requires assertions; do not use Python -O")
+sys.dont_write_bytecode = True
 from solders.transaction import VersionedTransaction
 
 HERE = Path(__file__).resolve().parent
@@ -13,7 +16,10 @@ def load(name):
     return json.loads(gzip.decompress((packet/name).read_bytes()) if name.endswith('.gz') else (packet/name).read_bytes())
 
 manifest = load('manifest.json')
-actual = {str(f.relative_to(packet)).replace('\\', '/') for f in packet.rglob('*') if f.is_file()}
+paths = list(packet.rglob('*'))
+assert not any(f.is_symlink() for f in paths), 'packet symlink'
+assert all(f.is_file() or f.is_dir() for f in paths), 'packet special file'
+actual = {f.relative_to(packet).as_posix() for f in paths if f.is_file()}
 assert actual == set(manifest) | {'manifest.json'}, 'packet inventory differs'
 for name, digest in manifest.items():
     assert not PurePosixPath(name).is_absolute() and '..' not in PurePosixPath(name).parts

@@ -1,5 +1,5 @@
 {
-  "README.md": "da637aad69645291b08a883b6698947f99a382aa88664d3e887381b7846c4d5f",
+  "README.md": "fecaa0711997106908edca8b6cf21e06b3b3024b51055e779456d939e739679b",
   "build.py": "d3f01a13f17abd740f77cfafcd2916bdc80dec7b13763acaf4dc84396361503d",
   "builds/cached/artifacts.json": "03dca16c749402727a69efae3aadff2d4100ac0d7e2c9552b44a46e854d3b4ce",
   "builds/cached/build.log.gz": "3904eae102fca0ce8b590aa08d8b9f8824450b003ff8188457db2a37d1870711",
@@ -172,9 +172,9 @@
   "source/utilize.rs": "ae109a06cc74ec19fe435183bcc563586cb576deed3c5b6e78c43bc4a9acf6d8",
   "source-manifest.json": "0c5c08d75a558588a79d46c68bd5256f2f97ab28212e997f158c12a9a5df91b9",
   "source-snapshot.tar.gz": "b0eb3f672c26a9a913be86df869516f420c8794c348e8cda2c02f31480ee9797",
-  "test_verify.py": "eef4fe2468938d96a026dff6fb625ed946a5bd95adbc5da121340f6b23695d91",
+  "test_verify.py": "c1c652c90d798b6929493b9e0093cef3164ff2d645efb7d9e5e3abed749e4bd7",
   "upstream-source-manifest.json": "55b0a2f46b574974d3cc35a72dce347537d250794464feb72d4f3cf968c55860",
   "utilize.patch": "04f61359fe08ed907fef753ea866df6c6de6f787386cbbfb30068cd3d5a9c905",
   "validate.py": "fbd42db7f4e7f259960614ea6b1d23b48c517181afbd6662f1bb891e3f6037e3",
-  "verify.py": "4d1e7f5e720d1507b406d310954cc948235b98e983dd5650d23e0c13b1f8e2cb"
+  "verify.py": "060d463b4ee70833b2e734de4f5bd68025ab565aade9f3b41407d2b0f6fea050"
 }
