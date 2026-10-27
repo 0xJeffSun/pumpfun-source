@@ -46,6 +46,14 @@ def check_diagnostic_delta(before,after):
   if x and not y:regressed.append(name)
  return dict(before=old_bad,after=new_bad,fixed=fixed,regressed=regressed)
 
+def check_cohort(summary):
+ assert set(summary['artifacts'])=={'control','candidate'}
+ assert summary['identical_official_target_files']==26
+ assert summary['artifacts']['control']['candidate_sha256']=='9d242979b15dbac90be979732d4929ab58eb9d8b81051127424194ae3e60b291'
+ assert summary['artifacts']['candidate']['candidate_sha256']==CANDIDATE
+ for result in summary['artifacts'].values():
+  assert (result['typed_equal'],result['typed_different'],result['unresolved'])==(156,0,0)
+
 def verify(runtime=True):
  assert not any(p.is_symlink()for p in P.rglob('*'))
  assert load(P/'manifest.json')=={p.relative_to(P).as_posix():sha(p.read_bytes())for p in P.rglob('*')if p.is_file()and p.name!='manifest.json'and '__pycache__'not in p.parts}
@@ -56,6 +64,8 @@ def verify(runtime=True):
   assert raw(P/f'artifacts/{label}/candidate.so.gz')==candidate and raw(P/f'artifacts/{label}/symbols.so.gz')==symbols
  for n,b in module('retained_inventory',P/'analysis.py').generate().items():assert(P/n).read_bytes()==b,n
  assert load(P/'audit.json')['summary']['statuses']==dict(normalized_only=355,raw_local_match=71,unmatched=15)
+ for n,b in module('retained_complete_cohort',P/'cohort.py').generate().items():assert(P/'cohort'/n).read_bytes()==b,n
+ check_cohort(load(P/'cohort/summary.json'))
  result=dict(source_inputs=65,changed_source_files=4,changed_source_lines=4,matched_windows=426,new_complete_matches=0,raw_local_windows=71,compiler_executed=False,target_executed=False)
  with tempfile.TemporaryDirectory()as td:
   t=Path(td);sy=t/'symbols.so';so=t/'candidate.so';base=t/'control.so';sy.write_bytes(symbols);so.write_bytes(candidate);base.write_bytes(raw(N/'artifacts/recovered/symbols.so.gz'))

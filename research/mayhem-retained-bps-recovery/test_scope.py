@@ -24,4 +24,10 @@ class Scope(unittest.TestCase):
  def test_missing_case_rejected(self):
   changed=copy.deepcopy(self.proposal);changed['cases'].pop()
   with self.assertRaises(AssertionError):v.check_diagnostic_delta(self.control,changed)
+ def test_cohort_control_substitution_rejected(self):
+  changed=v.load(P/'cohort/summary.json');changed['artifacts']['candidate']['candidate_sha256']=changed['artifacts']['control']['candidate_sha256']
+  with self.assertRaises(AssertionError):v.check_cohort(changed)
+ def test_cohort_dropped_reference_rejected(self):
+  changed=v.load(P/'cohort/summary.json');changed['artifacts']['candidate']['typed_equal']-=1
+  with self.assertRaises(AssertionError):v.check_cohort(changed)
 if __name__=='__main__':unittest.main()

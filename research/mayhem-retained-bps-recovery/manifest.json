@@ -1,6 +1,6 @@
 {
   ".gitattributes": "ce164097b0f3a0fdfed7be4edb6a99da58d038304ea51ccf2855d5ef71dc3819",
-  "README.md": "0957edd4ff2326289670e663c0439b9d3700fccd55c8c8b9602f86ad600a0680",
+  "README.md": "a7c5266d8175a0062a9afa6b31eaedf76dc16b6a468a90d4b4e9b92332585649",
   "analysis.py": "897b92051fa0b1efc3dcc8484f05f641651d8b0773cfad28e44d78f9dd825ffa",
   "artifacts/recovered/candidate.so.gz": "9bd83a4ad1bfba71ca5ab88923870c9f9881dedcc35427fcf6dd6a5208d06469",
   "artifacts/recovered/symbols.so.gz": "fdca0f773121cad0bb7a4385e0dde6c685b76e18ca20451730b4ee484bca3ea5",
@@ -21,10 +21,18 @@
   "builds/retained-shared/launch.json": "68e11a8844fb81167f91dde1dfaf032edf5f00c0a41deda2c3fab8f98663274b",
   "builds/retained-shared/result.json": "3334735adad3eb7fd3ba74f501b4720e72c59b7c4ff45fc115faef8e857fda39",
   "candidate-data.json": "46bdd88a0f0a5cb9cd76a71c0256dad0a166890fc56028367bce22dc39bfac34",
+  "cohort/candidate/audit.json": "98ac6c89355d3c4f2ce6e5ad52cd319aeed1c463f4a07633f141a3039080853a",
+  "cohort/candidate/complete.json": "43b84d75d949a03568544940e0f376ea045af62061197f2bedfaa5d0a90a3d87",
+  "cohort/candidate/prior-cohort.json": "5014e1fa1f1e28c59dec12a390aa1febad8ca0ca39daf7dc002eddf453c32b4d",
+  "cohort/control/audit.json": "a91b102e00be56fbfb0599ddc058e303509f3bf4787518fae1e9dac4a3f70fc7",
+  "cohort/control/complete.json": "d7eac0cb091a544cced8e5efa31a75b8e6d51eb4255ef49afadcb402155633c8",
+  "cohort/control/prior-cohort.json": "865d092ad32b5b1b00d8fc2ac41031985d89217524ad8ec856b405d20dfa9cef",
+  "cohort/summary.json": "5406cd2000914c44a91fda44a000ac62611ad41cf3e40173d8e8ac71cc99ad83",
+  "cohort.py": "cf9caa6731cad2dcf21051d2192e22da7555d0cd8b84a611094d88c50e0a428e",
   "control-data.json": "728259b75422b7f932f965032f08c785206fee6d1e3e4f2e801a9885506b415b",
   "data.py": "e8b47fbb0cf7c0fb3963d445058be74a7b5ae90275a864daa721113298b8d620",
   "functions.tsv": "bed35a80e673368e1a88e45aa69e80dc3efc3b7ffe39263bcef5b07abae14fa1",
-  "inputs.json": "e83e90a24b767dd74a85a0701178e46d117067c8c4ecec34c06ea191cbd78bca",
+  "inputs.json": "d08e9ab6e6765bc3558c30611de840c264bc8ab1ce89e024151b9bb0c9e3d526",
   "overrides/src/instructions/buy.rs": "8532934f34dc14311e23b0b6983b4f094a807d75dea229c5f868e107eb2128ef",
   "overrides/src/instructions/buy_v2.rs": "fe14cac36edc305a0ba2e00f0864939d285a1ebede91846493d0eb09a66c88b3",
   "overrides/src/instructions/sell_v2.rs": "902491fcc6f7471522c82dad84bb89acf8f93672589ed7eb8dfcbe896709b52c",
@@ -34,7 +42,7 @@
   "source-inputs.json": "e0d003ba845c8d3314acfc819f9fcebc54d5118d1f2ccf593f96aad692b9a148",
   "source.patch": "f3d045254a65f9a0a9d2bb195ff2d8926ed9af5e403aa3fa89ed28aa600058d7",
   "static-inputs.json": "7d3876e2cfd87ec8a6bd7f7bdcfebc9b04f92788dce9843d1a484cca16db83e8",
-  "test_scope.py": "e46722c64f12370bf7890233e454bbbf2785e781342bc9837b1fe3c9d7ed8bce",
+  "test_scope.py": "06fb9b5877ed1fa72a67548228b1d68ab8438394cd20a086bbf74215a6d016f7",
   "unmatched.json": "cde0155d8af22b435306f6f1c58cd769f33ad12749fdcbe7e2471484b6c3f408",
   "validation/commands.json": "6f2f33c7ad039922d70e70d211554e31e0a06c9c9d751ab5bc39034005d57bfb",
   "validation/diagnostic-delta.json": "9a47653fee8e7b69b97e32d4b880e590a2643c1626cdb7d10068bc0c73a7af79",
@@ -95,5 +103,5 @@
   "validation/retained-shared-full-sell_v2-token22.json.gz": "99e07312e0f76f96964689aae12fd008f58c9c94465dac9f1a6dfb7c5af01e83",
   "validation/retained-shared-full-sell_v2-token22.log": "4fee29d632d5cf73f9b387d2aaa2ff07700ce2eac73a311e25e10b2ec1e50c8c",
   "validation/summary.json": "6879d52655621c482d95f316fce23d145ff3b8c901355c211502df7be9b46e07",
-  "verify.py": "1d2025357912079084abd7bf78bdcf262cc21d6a5ad065839bc5674a3ceb3300"
+  "verify.py": "9689b4dc1c9096fd03d720c356f724345ccda657d26ef54ae69ef3347f1aa21c"
 }

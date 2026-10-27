@@ -22,6 +22,14 @@ raw-local windows remain unchanged**, with no new body match claimed.
 All 4,234 previously supported direct-call observations and 441 Source
 observations in the existing matched cohort survive.
 
+An artifact-specific follow-up remeasures the latest published account-data
+proof on both this native control and the proposal: **156 typed-equal references,
+zero typed-different and zero unresolved within that cohort**. All 26 official
+SBF target-library members match the published repeated ABI probe. `cohort.py`
+reuses that probe's bounded layouts and rechecks the actual consuming instructions,
+callee shapes, objects and pointers in these two ELFs. The probe is not rebuilt
+here and no new reference or whole-program data-closure claim is made.
+
 ## Control, builds and runtime
 
 The control is the unchanged 65-input source map from the published
@@ -68,6 +76,7 @@ python -B research/mayhem-native-clean-reproduction/verify.py
 python -B research/mayhem-retained-bps-recovery/verify.py
 python -B research/mayhem-retained-bps-recovery/test_scope.py
 python -B research/mayhem-retained-bps-recovery/analysis.py --check
+python -B research/mayhem-retained-bps-recovery/cohort.py --check
 ```
 
 These are offline saved-evidence checks: no compiler, target VM, RPC or network
