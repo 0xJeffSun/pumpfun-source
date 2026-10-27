@@ -1,5 +1,7 @@
 # PumpSwap lane amm-lo: admin, liquidity and legacy-buy windows
 
+Review status: this is an unpromoted historical-baseline proposal. The candidate ELF is not included in this packet, so this review cannot independently recompute its claimed function matches. Rebase and full artifact validation are still required.
+
 Lane `amm-lo` worked the unmatched PumpSwap windows whose original start lies in
 `0x2288 … 0x3a5a0`. The base is the published frontier
 `repro/pump_amm/native-fee-cpi-recovery-20261027` (candidate `a4b978ee…`).

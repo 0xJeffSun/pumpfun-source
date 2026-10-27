@@ -7,12 +7,20 @@ Run from the repository root:
 from pathlib import Path
 import base64, gzip, hashlib, json, sys, tarfile
 
+if not __debug__:
+    raise RuntimeError('verification requires assertions; do not use Python -O')
+sys.dont_write_bytecode = True
+
 p = Path(__file__).resolve().parent
 root = p.parents[1]
 h = lambda b: hashlib.sha256(b).hexdigest()
 
 # 1. packet manifest
 manifest = json.loads((p / 'manifest.json').read_text())
+paths = list(p.rglob('*'))
+assert not any(f.is_symlink() for f in paths), 'packet includes a symlink'
+assert all(f.is_file() or f.is_dir() for f in paths), 'packet includes a special file'
+assert {f.relative_to(p).as_posix() for f in paths if f.is_file() and f != p / 'manifest.json'} == set(manifest), 'packet file inventory differs'
 for name, digest in manifest.items():
     assert h((p / name).read_bytes()) == digest, name
 
@@ -66,7 +74,7 @@ assert cmp_['whole_file_equal'] and cmp_['differing_payload_positions'] == 0 and
 try:
     from solders.transaction import VersionedTransaction
 except ImportError:
-    VersionedTransaction = None
+    raise RuntimeError('solders is required to verify retained transaction signatures')
 cases = transactions = 0
 for name in ['edition', 'uses', 'burn', 'context', 'validation']:
     data = json.loads(gzip.decompress((p / (name + '-validation.json.gz')).read_bytes()))

@@ -1,5 +1,7 @@
 # PumpSwap lane amm-hi (original windows 0x73ef0 … 0xf6eb0) — in progress
 
+Review status: this is an unpromoted historical-baseline proposal. The candidate ELF is not included in this packet, so this review cannot independently recompute its claimed function matches. Rebase and full artifact validation are still required.
+
 **Status: native-verified only.** All counts below come from native macOS v1.44
 builds. The Linux v1.44 recipe confirmation and the runtime suites are still
 pending; until they run, treat these as research results, not a selected

@@ -58,6 +58,14 @@ loader replay reproduces the **830,448-byte captured payload**, including 12,168
 loader-allocated zero bytes. This does not establish the original historical
 source or build recipe.
 
+The latest [Metaplex research packet](research/claude-deps-metaplex-20261027/README.md)
+matches all 707,448 bytes of the captured meaningful ELF and all 1,251 function
+windows. A separate 86,543-byte zero extension matches the captured allocation;
+it is not part of the stripped compiler artifact. This dependency result remains
+unpromoted and does not change the core-program totals above. The [parallel-lane
+review](research/claude-lanes-review-20261027/README.md) records the other packets
+and their baseline/validation limits.
+
 ## Behavior and remaining work
 
 Pump Round25 passes 10,468 full cases plus 6,302 focused executions, with 16,766

@@ -7,6 +7,13 @@ remaining 86,543 bytes are all zero, so appending 86,543 zeros gives the full 79
 That padded image has SHA-256 `31f0a627dba051a938de650464e55cc5397a4be0fd496929c1f9cf02fe5e9011`,
 the original's own hash. No instruction, relocation, header or padding byte was patched.
 
+Review qualification: the 707,448-byte stripped ELF is independently confirmed to
+equal the captured prefix. The 86,543-byte zero extension is a separately generated
+allocation image, not unchanged compiler output or a loader reproduction. The
+packet retains repeat-build hashes, but not the unstripped compiler outputs;
+this review verifies the stored artifact and source transformation, without a
+fresh compiler run. Historical source spelling and selected promotion remain open.
+
 | | frontier `metaplex-owned-uses-20261026` | this packet |
 |---|---:|---:|
 | raw-equal function windows | 1,250 / 1,251 | **1,251 / 1,251** |

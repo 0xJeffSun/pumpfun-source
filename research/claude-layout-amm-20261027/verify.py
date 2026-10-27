@@ -21,6 +21,10 @@ Checks, without running a compiler, linker, VM or network:
 import argparse, collections, gzip, hashlib, json, sys, tempfile
 from pathlib import Path
 
+if not __debug__:
+    raise RuntimeError('verification requires assertions; do not use Python -O')
+sys.dont_write_bytecode = True
+
 P = Path(__file__).resolve().parent
 
 
@@ -139,6 +143,11 @@ def check_script(default, script, data_order):
 
 
 def main():
+    paths = list(P.rglob('*'))
+    assert not any(f.is_symlink() for f in paths), 'packet includes a symlink'
+    assert all(f.is_file() or f.is_dir() for f in paths), 'packet includes a special file'
+    actual = {f.relative_to(P).as_posix(): sha(f.read_bytes()) for f in paths if f.is_file() and f != P / 'manifest.json'}
+    assert actual == json.loads((P / 'manifest.json').read_text()), 'packet file inventory differs'
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument('--skip-regenerate', action='store_true', help='skip regenerating ordered.ld with tools/plan.py')
     a = ap.parse_args()

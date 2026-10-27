@@ -24,6 +24,10 @@ import sys
 import tempfile
 from pathlib import Path
 
+if not __debug__:
+    raise RuntimeError('verification requires assertions; do not use Python -O')
+sys.dont_write_bytecode = True
+
 P = Path(__file__).resolve().parent
 sys.path.insert(0, str(P / 'tools'))
 import derive_layout  # noqa: E402
@@ -112,8 +116,11 @@ def verify_round(d, tmp):
 
 def main():
     manifest = read(P / 'MANIFEST.json')
-    files = {str(f.relative_to(P)) for f in P.rglob('*') if f.is_file() and '__pycache__' not in f.parts}
-    assert files == set(manifest) | {'MANIFEST.json'}, sorted(files ^ (set(manifest) | {'MANIFEST.json'}))
+    paths = list(P.rglob('*'))
+    assert not any(f.is_symlink() for f in paths), 'packet includes a symlink'
+    assert all(f.is_file() or f.is_dir() for f in paths), 'packet includes a special file'
+    files = {f.relative_to(P).as_posix() for f in paths if f.is_file()}
+    assert files == set(manifest) | {'MANIFEST.json'}, 'packet file inventory differs'
     for name, digest in manifest.items():
         assert sha((P / name).read_bytes()) == digest, name
     results = []

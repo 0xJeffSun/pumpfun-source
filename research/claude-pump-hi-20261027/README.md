@@ -1,5 +1,7 @@
 # Main Pump — lane pump-hi (original windows 0x101170 … 0x1ab9b8)
 
+Review status: this is an unpromoted historical-baseline proposal. The candidate ELF is not included in this packet, so this review cannot independently recompute its claimed function matches. Rebase and full artifact validation are still required.
+
 Isolated, ordinary-source recovery for the upper third of the main Pump program, measured on
 top of the newest published frontier, [Round23](../../repro/pump/main-contract-round23-20261027/README.md).
 **Whole-ELF identity remains false.** This packet does not edit `programs/pump` (the CI guard pins

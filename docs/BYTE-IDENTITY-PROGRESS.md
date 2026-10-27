@@ -4,6 +4,21 @@ The [full audit](RECONSTRUCTION-AUDIT.md) and its generated tables retain their
 explicit `1463bd22` snapshot. This log records later research without silently
 changing that baseline or promoting new selected artifacts.
 
+## Reviewed PR #264: Metaplex identity and parallel research packets
+
+The [review](../research/claude-lanes-review-20261027/README.md) independently
+confirms Metaplex's 707,448-byte meaningful ELF and all 1,251 raw windows, plus
+147 retained comparisons and 294 transaction signatures. The source patch chain
+replays from the authenticated upstream Utilize blob. The captured allocation
+also matches after a separate 86,543-byte zero extension; no new loader deployment
+or compiler run is claimed by this review, and selection remains unchanged.
+
+The AMM/Pump layout verifiers regenerate their old-baseline recipes and preserve
+all prior normalized matches, yielding 166 AMM raw windows and twelve additional
+Pump raw windows per recorded round. Four source-change lanes remain reported
+research: their candidate ELFs are not included, and composition with the latest
+maintained sources is pending. These counts are not combined into current totals.
+
 ## Reviewed PR #263: preserve historical findings with corrected conclusions
 
 The [reviewed archive](../research/recovery-findings-20261027/README.md) retains

@@ -30,6 +30,11 @@ jobs:
               python repro/pump/metaplex-candidate-build-11/verify.py
               python -B repro/identity-audit/2026-10-25/verify.py
               python -I -B research/recovery-findings-20261027/verify.py
+              python -B research/claude-deps-metaplex-20261027/verify.py
+              python -B research/claude-layout-amm-20261027/verify.py
+              python -B research/claude-layout-pump-20261027/verify.py
+              python -B research/claude-layout-pump-20261027/test_scope.py
+              python -B research/claude-lanes-review-20261027/test_integrity.py
               python -B repro/pump/metaplex-utilize-guard-source-recovery/verify.py
               python -B repro/pump/metaplex-candidate-build-12-review/verify.py
               python -B repro/pump/metaplex-candidate-build-13-review/verify.py

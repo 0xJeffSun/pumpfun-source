@@ -1,5 +1,7 @@
 # PumpSwap lane amm-mid (original windows 0x3d828 … 0x724a0)
 
+Review status: this is an unpromoted historical-baseline proposal. The candidate ELF is not included in this packet, so this review cannot independently recompute its claimed function matches. Rebase and full artifact validation are still required.
+
 Research packet from the parallel byte-identity effort. It is based on the
 published AMM frontier
 [`repro/pump_amm/native-fee-cpi-recovery-20261027`](../../repro/pump_amm/native-fee-cpi-recovery-20261027/README.md)
