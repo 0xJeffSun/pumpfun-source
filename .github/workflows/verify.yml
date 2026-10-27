@@ -120,7 +120,8 @@ jobs:
               python -B research/fees-work-continuation-20261027/test_restore.py
               python -B research/fees-residual-parallel-checkpoint-20261027/test_restore.py
               python -B research/fees-residual-source-checkpoint-20261027/test_restore.py
-              python -B research/fees-residual-source-checkpoint-20261027/restore_combined.py
+              python -B research/fees-frame-inline-research-20261027/test_restore.py
+              python -B research/fees-frame-inline-research-20261027/restore_combined.py
               python -B research/fees-withdraw-tuple-ownership-source/source_tools.py
               python -B research/fees-withdraw-tuple-ownership-source/test_scope.py
               python scripts/fees_validate_all.py --candidate repro/pump_fees/sharing-authorize-main-v144/main/candidate.so --output work/fee-handlers.json
