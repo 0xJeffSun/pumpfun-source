@@ -12,6 +12,10 @@ jobs:
       max-parallel: 12
       matrix:
         include:
+          - suite: mayhem-initializer-machine
+            commands: |
+              python -B research/mayhem-initializer-machine-paths/verify.py --signatures
+              python -B research/mayhem-initializer-machine-paths/test_verify.py
           - suite: metaplex-exact
             commands: |
               python -B research/metaplex-utilize-exact-recovery/verify.py
