@@ -24,7 +24,8 @@ also leave the donation wrappers unmatched. A
 finds matching marshaling under explicit callee/alias assumptions; it adds no byte matches.
 Fourteen [epoch-close source controls](repro/donation-relay/epoch-source-controls/README.md)
 also retain the ten-window residual. A compiler-substitution control loses 256
-existing matches and is rejected.
+existing matches and is rejected. Further [root-profile and Result-helper controls](repro/donation-relay/profile-result-controls/README.md)
+add no new matched window.
 Latest Fees research: **354 unique structural pairs, 84 unmatched windows**.
 The [refreshed call analysis](research/fees-refreshed-call-attribution/README.md)
 also attributes 61 duplicate-body pairs, giving 415 correspondences; this is not

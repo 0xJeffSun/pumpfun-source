@@ -324,3 +324,14 @@ produces 226 normalized / 108 raw local matches, losing 256 normalized windows
 and gaining none. The rejected 800,608-byte output and tool fingerprints are
 retained in the same packet. This does not identify a historical compiler or
 prove anything about other v1.50 recipes; no runtime acceptance is claimed.
+
+## Root-profile and Result-helper controls
+
+The [twelve-build packet](../repro/donation-relay/profile-result-controls/README.md)
+reproduces the baseline exactly, then tests four root compiler overrides and seven
+Result-helper source variants. No build gains a new original window. The compiler
+overrides lose 100, 166, 168 and 110 matches; the source variants retain 482. A
+unit-result helper duplicates original window 115, which was already matched by
+an Error-returning helper. This is evidence against inferring a unique Rust return
+type from local body shape, not additional recovery. The Relay frontier stays
+482/492 with 130 raw local bodies and ten unmatched windows.
