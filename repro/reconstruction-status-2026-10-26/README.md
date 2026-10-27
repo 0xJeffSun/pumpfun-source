@@ -1,6 +1,6 @@
-# Function inventory after PR #123
+# Function inventory after Jupiter optional-seed recovery
 
-Evidence snapshot: `a8f2a7b272bffc66988572928670c02630d7e946`. Selected inputs retain their verified `1463bd22fb7811825c5e7acf1cb963eb39ab68d9` checkpoint bindings. Research rows replace the older Fees/Relay research inventory; they do not replace selections.
+Evidence snapshot: `c7d35041ff6a3cefe0129d33a4707f9b010f67ec`. Selected inputs retain their verified `1463bd22fb7811825c5e7acf1cb963eb39ab68d9` checkpoint bindings. Research rows replace the older Fees/Relay research inventory; they do not replace selections.
 
 | Program / build | Windows | Exact local bytes | Normalized only | No complete match | Opaque |
 | --- | ---: | ---: | ---: | ---: | ---: |
@@ -10,7 +10,7 @@ Evidence snapshot: `a8f2a7b272bffc66988572928670c02630d7e946`. Selected inputs r
 | mayhem | 441 | 58 | 131 | 7 | 245 |
 | donation_relay | 492 | 33 | 89 | 370 | 0 |
 | pump_fees_research | 585 | 107 | 393 | 85 | 0 |
-| donation_relay_research | 492 | 130 | 350 | 12 | 0 |
+| donation_relay_research | 492 | 130 | 351 | 11 | 0 |
 
 Rows count inferred original windows, not unique source functions or effort. Raw matches may be duplicate/ambiguous and do not establish referenced data or transitive callees. The Fees matcher and Relay matcher use separately documented masks; do not add their counts into a source-completion score.
 
