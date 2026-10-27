@@ -1158,3 +1158,16 @@ native_build_verified=false and whole_binary_identity_verified=false. The
 business body and whole ELF/capture remain unequal; indirect/transitive data
 and historical source provenance remain unproved. Prior checkpoints and sealed
 evidence are not replaced.
+
+## Verified Relay raw-layout composition — 26 October 2026
+
+The [access-control/DonateContext composition](../repro/donation-relay/access-control-donate-context-source/README.md)
+combines the new runtime placement with the upstream context cleanup recovery.
+Measured raw-local coverage increases376→379 with exactly51,52,112 gained and
+no losses; all492 normalized windows and the exact194–204 runtime block survive.
+The [artifact packet](../repro/donation-relay/access-control-donate-context-artifact/README.md)
+binds two identical real root builds, fresh536-record signed replay,60 source
+inputs and full ELF/call/data comparison. Common-position differences decrease
+9,398→8,901 (text8,829,data.rel.ro25,rel.dyn47). All headers and read-only data remain
+exact. Full captured-file identity is still false; the12,168-byte allocation tail
+is separately reproduced by the verified offline loader route.
