@@ -21,7 +21,7 @@ source and compiler investigations proceed.
 | Integration | Preserve the 432-window parent, qualify combinations with fresh builds and signed local replays, synchronize documentation and PRs |
 
 Sweep/burn work is outside the active scope. O0073 and O0076 are connected to the
-sweep path and are not dispatched. O0075's business attribution is unresolved;
+sweep path and are not dispatched. [O0075 is statically attributed to SweepFeesAdmin](../research/mayhem-sweep-admin-attribution-20261027/README.md);
 it receives no execution assignment here. Historical sweep evidence remains
 available under its original artifact bindings.
 
@@ -34,7 +34,7 @@ attributions, not authenticated original symbols.
 | Window | Original start | Bytes | Remaining body | Lane |
 | --- | ---: | ---: | --- | --- |
 | O0073 | 65472 | 912 | Sweep fee-recipient helper / block placement | Paused scope |
-| O0075 | 69192 | 8008 | Business body; attribution unresolved | Unassigned |
+| O0075 | 69192 | 8008 | SweepFeesAdmin; static wrapper attribution, body unmatched | Paused scope |
 | O0076 | 77200 | 8400 | Sweep business body | Paused scope |
 | O0077 | 85600 | 9736 | AMM Buy | AMM trade and quote |
 | O0079 | 95848 | 17312 | AMM Sell | AMM trade and quote |
