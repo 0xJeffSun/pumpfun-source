@@ -1032,3 +1032,29 @@ and the entry address account for the other 170 differing bytes. Six compiled
 source-identity controls preserve 492 normalized windows but do not reduce the
 whole output difference; raw gains and losses are retained. The accepted artifact
 and its 18,623-position residual remain unchanged.
+
+## Relay: context naming recovers three raw bodies — 27 October 2026
+
+The [context naming recovery](../repro/donation-relay/donate-context-raw-recovery/README.md)
+continues the merged PR189 source with one ordinary Rust type definition and a
+compatibility alias. `DonateContext` restores the context/BTreeSet cleanup order
+and the shared worker's call displacements. Original windows 51, 52 and 112
+(528, 488 and 10,248 bytes) become completely raw-equal at their original addresses.
+Raw local matches rise **317 → 320**, all 492 normalized windows remain matched,
+and no prior raw or normalized match is lost. All 60 direct-call sites in the
+gained bodies retain closed normalized call shapes.
+
+An independent baseline reproduces PR189 exactly. Root-clean and fresh
+all-dependency candidate builds produce identical output pairs, and a fresh
+local replay passes 536 signed records / 534 unique fixtures with zero differences.
+The packet contains the one-file source patch, 60-input maps, isolated portable
+build recipe, static remeasurement and six passing source/ELF tests, including a
+changed-CALL negative control. Local receipt hashes are reported; full build and
+runtime receipts remain local. Default verification does not compile or execute.
+
+Only `.text` and `.rel.dyn` change from PR189. Whole-file common-position differences
+fall 18,623 → 18,126; complete `.rodata` and the bounded positional data graph are
+preserved. This is a reproducible naming/layout hypothesis, not proof of the
+historical identifier, full data/indirect semantics or byte-identical completion.
+Protected relayer settlement success remains untested. Prior evidence and selected
+checkpoints are unchanged.
