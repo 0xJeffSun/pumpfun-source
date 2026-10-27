@@ -2240,3 +2240,21 @@ logs in 6,413 cases. The order includes 499 exact graph bindings, 78 ambiguous e
 function assignments and 8 unequal semantic-handler assignments; those limitations
 remain explicit. Eight original bodies and complete ELF/data/relocation identity
 remain open.
+
+
+## Mayhem BuyV2 typed sizing failure
+
+The [sizing recovery](../research/mayhem-sizing-panic-recovery/README.md) routes
+BuyV2 through the trade-origins/validator parent's shared buy sizing. Only one of
+67 source inputs changes. Three remaining BuyV2 diagnostic differences disappear:
+6,636 fresh trade comparisons agree in complete non-compute logs and functional
+fields. A separate three-case three-way replay checks actual signed inputs,
+account prestate and executed-program identities; these cases overlap the corpus.
+
+A fresh control reproduces the parent exactly; two proposal compilations agree.
+All 429 normalized / 100 raw-local windows, 4,288 positive call observations and
+446 matched Source observations survive. The parent's complete validator reference
+checks and three trade-origin checks also pass against this candidate. The live
+BuyV2 path binds variant 9, its Source record and matching immediate panic/Debug
+callees. No new complete window or whole-ELF identity is claimed. Twelve bodies
+and 111,288 original text bytes remain unmatched.
