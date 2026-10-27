@@ -1,0 +1,23 @@
+name: Verify independent AMM event replay
+on: [push, pull_request, workflow_dispatch]
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  verify:
+    name: amm-event-reproduction
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r requirements.txt
+      - name: Verify saved artifacts and signed receipts
+        run: python -B research/amm-event-capture-independent-replay/verify.py
+      - name: Reject mutated evidence
+        run: python -B research/amm-event-capture-independent-replay/test_verify.py
+      - name: Verify current-parent composition
+        run: python -B research/amm-current-event-capture-20261027/verify.py
+      - name: Reject mutated current-parent evidence
+        run: python -B research/amm-current-event-capture-20261027/test_verify.py

@@ -51,7 +51,7 @@ the whole program is identical.
 | **Total** | **3,802,032 / 5,213,128** | **72.9%** | **1,411,096** |
 
 Pump and AMM rows describe the verified maintained sources. Fees and Mayhem rows
-are the latest upstream research frontiers, distinct from their maintained
+are the latest qualified research frontiers, distinct from their maintained
 selections in [repro/status.json](repro/status.json). The maintained Mayhem initializer now has its own [current-source build and
 signed validation](repro/mayhem/initializer-current-20261027/README.md), separate
 from the larger research frontier. Upstream Relay's canonical selection remains
@@ -75,6 +75,13 @@ receipts and two separately signed replays of that same 147-case corpus. Its
 alternative source is an unpromoted compiler-context diagnostic.
 
 ## Behavior and remaining work
+
+The [current-parent AMM event composition](research/amm-current-event-capture-20261027/README.md)
+adds the complete 1,784-byte normalized sell-event body, retaining all prior
+matches. Two builds agree; all 17,462 maintained cases and 26 focused event pairs
+pass. Its 641-window research artifact remains separate from the selected
+640-window source/ABI checkpoint; the parent's other supplemental matrices
+were not rerun on this artifact.
 
 Pump Round31 passes 10,468 full cases plus 6,703 focused executions, with 17,167
 paired diagnostic-log cases. AMM passes 17,462 full cases plus the separate

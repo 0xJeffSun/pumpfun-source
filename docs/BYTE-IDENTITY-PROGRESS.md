@@ -4,6 +4,22 @@ The [full audit](RECONSTRUCTION-AUDIT.md) and its generated tables retain their
 explicit `1463bd22` snapshot. This log records later research without silently
 changing that baseline or promoting new selected artifacts.
 
+## AMM: compose the event capture with the current source/ABI parent
+
+The [current-parent composition](../research/amm-current-event-capture-20261027/README.md)
+reaches 641/785 normalized windows, retaining all 128 raw matches and adding the
+complete 1,784-byte sell-event body with its three actual immediate callees.
+Both ordinary Rust builds agree. All 17,462 maintained cases and 26 focused
+event pairs pass; the direct audit verifies 35,074 transactions and 35,418
+signature fields. This research artifact remains separate from the selected
+640-window parent, whose other supplemental matrices were not rerun here.
+
+Together with the independently verified Pump Round31 checkpoint, latest
+frontiers now have 2,874/3,338 matches: 1,057 raw, 1,817 normalized-only and 464
+unmatched. Matched windows cover 3,798,376/5,213,128 original text bytes (72.9%).
+Only Relay has complete meaningful-ELF identity; all four core programs remain
+unfinished. The dated records below retain their original measurements.
+
 ## Reviewed PRs #274–275: independent evidence and research preservation
 
 The [AMM event-capture replay](../research/amm-event-capture-independent-replay/README.md)
