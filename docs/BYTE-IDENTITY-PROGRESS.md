@@ -1510,3 +1510,17 @@ locally, but no build/replay receipts, fixtures, logs, binaries or derivatives a
 published. Source/static verification alone reports runtime/build/whole identity
 false. Authentic fixed-admin success and exhaustive runtime log/CU identity remain
 unproven. All four core whole identities remain unresolved; no checkpoint changes.
+## Fees: complete remaining-account preprocessing
+
+The [preprocessing recovery](../repro/pump_fees/remaining-preprocess-recovery/README.md)
+reconstructs the complete 2,520-byte original function at 231576 using the
+observed public module, owned key value and borrowed-result lifetime. The
+cumulative research candidate reaches **558/585 normalized windows**, 411
+unique pairs and 118 raw matches. Every previous match is retained; 166 checked
+source locations agree, with 17 additional matching callee observations.
+
+The ordinary 417-case regression passes. Another 24 cases explicitly exercise
+the completed-curve branch with boundary account lengths and ownership/key
+variants. All compared outcomes and state pass; two incomplete-curve controls
+retain old downstream diagnostic differences. Whole-ELF equality remains open.
+No selected checkpoint is changed.

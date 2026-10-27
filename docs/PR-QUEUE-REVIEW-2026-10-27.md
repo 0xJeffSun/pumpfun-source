@@ -103,3 +103,19 @@ recoveries. Its count is not added to the current independently compiled union.
 #210 retains explicit synthetic source-line layout and root path mappings,
 not a historical recipe claim. Its publication wording was corrected;
 artifact and source bytes are unchanged.
+
+## PR211–213 review
+
+- PR211: full verifier and ten mutation tests pass; 804 saved signatures verify.
+  Six Mayhem helper gains are distinguished from one newly admitted existing
+  match. Full handlers and four Sell log discrepancies remain unresolved.
+- PR212: source verifier and thirteen tests pass on its exact 43-input parent.
+  Two literal package-local whitespace rules preserve the source and patch.
+  Its exotic-body gain is not added to the independent current558 composition.
+- PR213: full body/callee/data verifier and five mutation checks pass. Retained
+  417 plus24 cases remain bound to its independent557 parent; the22 completed-
+  curve cases exercise the new branch, while two incomplete-curve controls
+  retain downstream log differences. No fresh VM run is claimed in this review.
+
+The remaining-account helper's public ownership/borrow reconstruction is
+recorded separately; all three source counts retain their declared baselines.
