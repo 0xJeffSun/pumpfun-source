@@ -14,9 +14,9 @@ import tempfile
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 INPUTS = {}
-REVISION = 'e2d7855848a3411d665deb915077ef20672e7cdd'
+REVISION = 'ba7883511942965c5c9def03971bdaff84963d6b'
 FEES = 'research/fees-unchecked-prefix-recovery'
-RELAY = 'repro/donation-relay/burn-mint-ownership-recovery'
+RELAY = 'repro/donation-relay/shared-worker-artifact-recovery'
 
 
 def read(name):
@@ -148,15 +148,15 @@ def generate():
             raw = read(path)
             (d / output).write_bytes(gzip.decompress(raw) if compressed else raw)
         analysis = parser.analyze(d)
-    assert analysis['comparison-summary.json'] == load(RELAY + '/builds/recovered/comparison-summary.json')
-    assert analysis['match-ledger.json'] == load(RELAY + '/builds/recovered/match-ledger.json')
+    assert analysis['comparison-summary.json'] == load(RELAY + '/analysis/recovered/comparison-summary.json')
+    assert analysis['match-ledger.json'] == load(RELAY + '/analysis/recovered/match-ledger.json')
     multiplicity = collections.Counter(o['normalized_sha256'] for o in analysis['original-function-ledger.json'])
     for o, r in zip(analysis['original-function-ledger.json'], analysis['match-ledger.json']):
         c = analysis['candidate-function-ledger.json']
         convert = lambda indices: [dict(address=c[i]['start'], name=n) for i in indices for n in (c[i]['names'] or [''])]
         rows.append(row('donation_relay_research', dict(address=o['start'], bytes=o['bytes'], unique=multiplicity[o['normalized_sha256']] == 1 and len(r['normalized_candidate_indices']) == 1),
                         convert(r['raw_candidate_indices']),
-                        convert(r['normalized_candidate_indices']), RELAY + '/builds/recovered/match-ledger.json'))
+                        convert(r['normalized_candidate_indices']), RELAY + '/analysis/recovered/match-ledger.json'))
     for record in rows:
         record.setdefault('call_attributed_candidate_starts', [])
     counts = {}
@@ -184,7 +184,8 @@ def generate():
     for program, c in counts.items():
         d = c['dispositions']
         overview.append(f'| {program} | {c["windows"]} | {d.get("raw_body_equal", 0)} | {d.get("normalized_body_only", 0)} | {d.get("no_complete_body_match", 0)} | {d.get("opaque_unassessed", 0)} |')
-    overview += ['', 'Fees has 380 body-unique pairs plus 62 additional call-attributed duplicate pairs (442 correspondences); 85 duplicate windows remain unattributed. These are not 62 additional body matches. Rows count inferred original windows, not unique source functions or effort. Raw matches may be duplicate/ambiguous and do not establish referenced data or transitive callees. The Fees matcher and Relay matcher use separately documented masks; do not add their counts into a source-completion score.', '',
+    fees_extra = attribution['graph_attributed_pairs'] - attribution['body_unique_pairs']
+    overview += ['', f'Fees has {attribution["body_unique_pairs"]} body-unique pairs plus {fees_extra} additional call-attributed duplicate pairs ({attribution["graph_attributed_pairs"]} correspondences); {fees_meta["remaining_unattributed_duplicate_windows"]} duplicate windows remain unattributed. These are not {fees_extra} additional body matches. Rows count inferred original windows, not unique source functions or effort. Raw matches may be duplicate/ambiguous and do not establish referenced data or transitive callees. The Fees matcher and Relay matcher use separately documented masks; do not add their counts into a source-completion score.', '',
                  '- [Comprehensive review: all handlers, unresolved text size and closure criteria](review.md)',
                  '- [Every window, symbol candidate, match address and evidence path](functions.tsv)',
                  '- [Every exact local body match](raw-body-matches.md)',

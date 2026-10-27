@@ -811,3 +811,18 @@ receipts are published. Default verification reports runtime_verified=false.
 Whole-capture and meaningful-ELF identity remain false: 461,447 common positions
 differ, with a 4,272-byte meaningful-ELF length gap. Full core identity remains
 0/4, and all-data, indirect and exhaustive semantic closure remain open.
+## Relay shared worker: source-only result becomes artifact-backed — 26 October 2026
+
+The [artifact-backed worker packet](../repro/donation-relay/shared-worker-artifact-recovery/README.md)
+independently reproduces PR #167's source-only hashes with the official Linux
+x86_64 v1.48 SDK. A fresh baseline matches the previous full-Linux artifact;
+the recovered candidate gains only original worker window 112, loses no
+normalized or raw match, and reaches **483/492 normalized / 130 raw-local**.
+All **51/51** worker direct-call targets have complete normalized counterparts.
+
+A fresh replay passes **536/536 signed records / 534 unique fixtures** with the
+existing bounded comparator. The nine remaining windows are ordinals 92–100 and
+span 42,368 original text bytes. The worker candidate remains whole-file unequal
+and uses the source proposal's pre-security-metadata state; composition with the
+separate security payload/dynamic-string-table gain and selected promotion stay
+open.

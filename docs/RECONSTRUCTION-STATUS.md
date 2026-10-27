@@ -1,6 +1,6 @@
-# Reconstruction status after unchecked-prefix recovery — 26 October 2026
+# Reconstruction status after artifact-backed Relay worker recovery — 26 October 2026
 
-Reviewed evidence revision: `e2d7855848a3411d665deb915077ef20672e7cdd`.
+Reviewed evidence revision: `ba7883511942965c5c9def03971bdaff84963d6b`.
 This review updates the research frontier while preserving the selected-checkpoint
 [baseline audit](RECONSTRUCTION-AUDIT.md). The [recomputed inventory](../repro/reconstruction-status-2026-10-26/README.md)
 contains every one of the **4,415 selected/research function-window rows**.
@@ -45,7 +45,7 @@ analysis. Candidate symbol names are hypotheses about original identity.
 | Mayhem selected | 441 | 58 | 131 | 7 | 245 |
 | Relay selected source 15 | 492 | 33 | 89 | 370 | 0 |
 | **Fees latest research** | **585** | **118** | **424** | **43** | **0** |
-| **Relay latest research** | **492** | **130** | **352** | **10** | **0** |
+| **Relay latest research** | **492** | **130** | **353** | **9** | **0** |
 
 Each row is a partition, not a score of semantic correctness. Mayhem's source
 ledger has 257 opaque windows, 12 of which happen to match local raw bytes.
@@ -64,11 +64,12 @@ calling whole trade or donation handlers perfect.
 
 ## How much remains?
 
-The strongest artifact-backed Relay research candidate matches **482/492 windows (98.0% by
-window count)**. Its 10 unmatched windows span **52,616 of 752,488 original text
-bytes (7.0%)**. Those bytes describe the sizes of unmatched original windows,
-not the number of absent or incorrect bytes. The residual includes large business
-functions; matching the other 482 still leaves their call/data identity to prove.
+The strongest artifact-backed Relay research candidate matches **483/492 windows
+(98.2% by window count)**. Its 9 unmatched windows span **42,368 of 752,488
+original text bytes (5.6%)**. Those bytes describe the sizes of unmatched
+original windows, not the number of absent or incorrect bytes. The residual
+contains donation and settlement business functions; matching the other 483
+still leaves their call/data identity to prove.
 
 Fees research has **542/585 windows with a normalized counterpart**: 395 unique
 structural pairs and 147 original windows in ambiguous duplicate groups. Its 43
@@ -83,24 +84,25 @@ There is no defensible single source-completion percentage or ETA. Whole-program
 identity additionally requires data, layout, relocations, indirect calls and
 build-input recovery, and behavior needs broader successful/rejected execution.
 
-### Source-only shared-worker proposal: separate evidence tier
+### Artifact-backed shared-worker recovery
 
-The [shared-worker source proposal](../repro/donation-relay/shared-worker-source-proposal/README.md)
-reports a local 483/492 result, gaining worker 112 with no loss. Its published
-56-file source map, patch, static verifier and eight tests pass. It includes no
-compiled artifact or replay receipt, and default verification reports
-`runtime_verified=false`. The proposal also uses an isolated pre-metadata source
-baseline; composition with later data work is not established.
+The [shared-worker artifact packet](../repro/donation-relay/shared-worker-artifact-recovery/README.md)
+independently rebuilds the source-only proposal with the official Linux v1.48
+SDK. A fresh baseline reproduces the prior `c6ae09b…` / `786d745…` artifacts;
+the recovered build reproduces the proposal's `bdd03c77…` / `1ca9e99a…` hashes.
+Only worker 112 is gained, no normalized/raw window is lost, and all 51 worker
+callee bodies match. Fresh replay passes 536 records / 534 unique fixtures.
 
-The artifact-backed inventory above therefore remains pinned to 482/492. A fresh
-independent build, complete window/callee comparison and bound replay are needed
-before updating that inventory. Whole-file equality remains unachieved.
+This raises the artifact-backed inventory to 483/492. The source state is still
+the proposal's isolated pre-security-metadata baseline, so it does not claim
+composition with the separate security payload/dynamic-string-table recovery.
+Whole-file equality and selected-source promotion remain unachieved.
 
 ## Relay: the complete remaining body list
 
 The labels below are working source attributions from the recovery studies,
 not symbols authenticated from the stripped original. Every row remains
-unmatched in the current burn/close-recovery candidate on both tested build recipes.
+unmatched in the current artifact-backed worker candidate.
 
 | Original ordinal | Address | Bytes | Working attribution / next comparison |
 | --- | ---: | ---: | --- |
@@ -113,24 +115,24 @@ unmatched in the current burn/close-recovery candidate on both tested build reci
 | 98 | 97,096 | 5,696 | Distribution without swap |
 | 99 | 102,792 | 4,448 | Swap-only body |
 | 100 | 107,240 | 5,328 | Swap then distribute |
-| 112 | 131,136 | 10,248 | Shared donation worker and its error/data paths |
 
 The former 27-window frontier is obsolete. Subsequent studies recovered receipt
 coordinates (one), Token-2022/framework versions (four), framework/sysroot and
-share-error behavior (nine), the mint-fee predicate (one), the Jupiter optional-seed builder (one), and burn/close ownership (one),
-without losing previous normalized matches. Source-location recovery separately resolves all
-43 differences in a fixed audited cohort of 346 location references; it does not
-add another matched function or establish all-data identity.
+share-error behavior (nine), the mint-fee predicate (one), the Jupiter optional-seed
+builder (one), burn/close ownership (one), and the shared donation worker (one),
+without losing previous normalized matches. Source-location recovery separately
+resolves all 43 differences in a fixed audited cohort of 346 location references;
+it does not add another matched function or establish all-data identity.
 
-Both current burn/close-recovery candidates pass fresh **536 replay records / 534 unique fixtures**.
-The Darwin-compiler/Linux-library candidate is 818,096 bytes, SHA-256
-`1eaf3af16fdafdfa9d2ca47e88c07a7f15f13b88aa57df1f63c655c10a1616e2`.
-The full Linux candidate is also 818,096 bytes, SHA-256
+The current worker candidate passes fresh **536 replay records / 534 unique fixtures**.
+It is 818,016 bytes, SHA-256
+`bdd03c7765c65d5c7ea9f1c16900f766e38c97fcec3071e29678f0ae52772399`.
+Its fresh full-Linux baseline reproduces the prior 818,096-byte candidate
 `c6ae09b906b3c6a88042e40b02e0a2f6598268061d7527b667c0e631655a3921`.
-Their equal frontier does not imply equal ELF files or recovered historical tools.
-The 184-byte length difference from the original's meaningful ELF is not an
-estimate of remaining code. Privileged successes and allocation-failure paths
-remain outside the claimed fresh replay coverage.
+The new worker body and all 51 callees match only under the documented
+normalization; the worker is not raw-equal. The size difference from the
+original's meaningful ELF is not an estimate of remaining code. Privileged
+successes and allocation-failure paths remain outside the replay coverage.
 
 Evidence: [source-location recovery](../repro/donation-relay/source-location-recovery/README.md),
 [Linux reproduction](../repro/donation-relay/linux-canonical-reproduction/README.md),
