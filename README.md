@@ -107,11 +107,12 @@ with one additional matching allocator call. Repeated native builds agree;
 bodies cover 33,968 original text bytes. This remains a diagnostic, so the
 established checkpoint counts in the table above are unchanged.
 
-The [complete historical Anchor macro control](research/mayhem-historical-macro-context/README.md)
-also reproduces the allocator form without a manually rendered parser. Its
-historical macro/IDL and current target runtime remain a cross-version experiment
-on an older Mayhem source baseline; it adds no current checkpoint matches or
-runtime qualification.
+The [current-source historical macro composition](research/mayhem-historical-macro-current-20261027/README.md)
+reproduces that same artifact with the complete historical Anchor macro and
+historical event definition, removing the manually rendered parser. Two native
+root builds agree; the upstream-gated control reproduces the parent. The target
+runtime is still current Anchor, and no new original matches or target executions
+are claimed.
 
 The latest [Fees Social claim-v2 recovery](research/fees-social-claim-v2-recovery/README.md)
 recovers the original 1,303-instruction handler through owned key parameters,

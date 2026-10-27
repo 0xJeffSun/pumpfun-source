@@ -31,12 +31,17 @@ and the selected baseline is unchanged.
 The [current parser-context composition](../research/mayhem-control-work-20261027/README.md)
 retains those 429 matches while reaching 139 raw-local bodies and restoring one
 allocator call. Two native builds agree, the gated stripped control reproduces
-the parent, and 6,636 trade plus 69 initializer comparisons pass. The remaining
-source task is a version-consistent explanation for that mixed-era parser/IDL
-context; it is not promoted into the established checkpoint. The initializer
+the parent, and 6,636 trade plus 69 initializer comparisons pass. The
+[complete historical macro and historical-event composition](../research/mayhem-historical-macro-current-20261027/README.md)
+now reproduces that exact artifact from the current source set; the upstream-gated
+control reproduces its parent. The target runtime still uses current Anchor,
+and original historical framework/toolchain attribution remains open. This
+diagnostic is not promoted into the established checkpoint. The initializer
 still has 19 differing instruction slots at its best 960-byte control. The
-separate AMM quote helper improves to 1,104 bytes versus 1,120 original, but cap
-selection differs; equal-size AMM handler controls also remain unmatched.
+separate AMM quote helper has an equal-size 1,120-byte control with 124/140 slots
+equal at their original offsets, but cap selection differs. Nine further cap and
+initializer ownership controls add no complete match; the equal-size AMM handler
+also remains unmatched.
 
 The [allocator-context experiment](../research/mayhem-allocator-context/README.md)
 produces the missing 328-byte reserve child by adding a diagnostic zeroed-vector

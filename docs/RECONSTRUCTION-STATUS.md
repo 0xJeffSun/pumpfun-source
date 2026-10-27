@@ -116,9 +116,12 @@ windows, increases raw-local equality from 100 to 139, and restores the missing
 allocator call; two repeated native outputs and the gated parent reproduction
 are checked. All 6,636 fresh trade and 69 initializer comparisons pass. Its
 [39 new raw-local bodies](../research/mayhem-control-work-20261027/raw-gains.md)
-cover 33,968 original text bytes. The mixed-source explanation remains
-unproven, so this diagnostic is separate from the table's established source
-checkpoint. Twelve complete bodies and whole-ELF identity remain unresolved.
+cover 33,968 original text bytes. The [complete historical macro composition](../research/mayhem-historical-macro-current-20261027/README.md)
+now reproduces that same artifact using the historical macro and event definition,
+without a manually rendered parser. The target runtime still uses current Anchor;
+original source/toolchain attribution remains unproven, so this diagnostic is
+separate from the table's established source checkpoint. Twelve complete bodies
+and whole-ELF identity remain unresolved.
 
 The separately pinned, dated Fees inventory has **558/585 windows with a normalized counterpart**: 411 unique
 structural pairs and 147 original windows in ambiguous duplicate groups. Its 27
