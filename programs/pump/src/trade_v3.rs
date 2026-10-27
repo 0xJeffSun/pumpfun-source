@@ -220,13 +220,18 @@ pub fn buy(ctx:Context<SellV3>,amount:u64,max_sol_cost:u64,partial_fill:bool)->R
     token_interface::transfer_checked(CpiContext::new_with_signer(a.base_token_program.to_account_info(),TransferChecked{
         from:a.associated_base_bonding_curve.to_account_info(),mint:a.base_mint.to_account_info(),to:a.associated_base_user.to_account_info(),authority:a.bonding_curve.to_account_info()
     },&[seeds]),transfer_base,a.base_mint.decimals)?;
+    user_quote_payments::transfer_from_user(
+        is_sol,a.system_program.as_ref(),&a.user,a.bonding_curve.as_ref(),
+        if is_sol{user_output}else{pool_quote},&a.quote_token_program,
+        quote_decimals.unwrap_or_default(),a.quote_mint.as_ref().as_ref(),
+        if is_sol{None}else{Some(a.associated_quote_user.as_ref())},
+        if is_sol{None}else{Some(a.associated_quote_bonding_curve.as_ref())},
+    )?;
     if let Some(decimals)=quote_decimals {
-      for (to,amount) in [(a.associated_quote_bonding_curve.to_account_info(),pool_quote),(a.buyback_fee_recipient.to_account_info(),total_buyback)] {
-        if amount==0{continue}
-        token_interface::transfer_checked(CpiContext::new(a.quote_token_program.to_account_info(),TransferChecked{from:a.associated_quote_user.to_account_info(),mint:a.quote_mint.to_account_info(),to,authority:a.user.to_account_info()}),amount,decimals)?;
+      if total_buyback!=0 {
+        token_interface::transfer_checked(CpiContext::new(a.quote_token_program.to_account_info(),TransferChecked{from:a.associated_quote_user.to_account_info(),mint:a.quote_mint.to_account_info(),to:a.buyback_fee_recipient.to_account_info(),authority:a.user.to_account_info()}),total_buyback,decimals)?;
       }
     }else{
-      anchor_lang::system_program::transfer(CpiContext::new(a.system_program.to_account_info(),anchor_lang::system_program::Transfer{from:a.user.to_account_info(),to:a.bonding_curve.to_account_info()}),user_output)?;
       a.bonding_curve.sub_lamports(total_buyback)?;a.buyback_fee_recipient.add_lamports(total_buyback)?;
     }
     let curve=&mut a.bonding_curve;
@@ -339,13 +344,18 @@ pub fn buy_exact_quote(ctx:Context<SellV3>,spendable_quote_in:u64,min_tokens_out
     token_interface::transfer_checked(CpiContext::new_with_signer(a.base_token_program.to_account_info(),TransferChecked{
         from:a.associated_base_bonding_curve.to_account_info(),mint:a.base_mint.to_account_info(),to:a.associated_base_user.to_account_info(),authority:a.bonding_curve.to_account_info()
     },&[seeds]),transfer_base,a.base_mint.decimals)?;
+    user_quote_payments::transfer_from_user(
+        is_sol,a.system_program.as_ref(),&a.user,a.bonding_curve.as_ref(),
+        if is_sol{user_output}else{pool_quote},&a.quote_token_program,
+        quote_decimals.unwrap_or_default(),a.quote_mint.as_ref().as_ref(),
+        if is_sol{None}else{Some(a.associated_quote_user.as_ref())},
+        if is_sol{None}else{Some(a.associated_quote_bonding_curve.as_ref())},
+    )?;
     if let Some(decimals)=quote_decimals {
-      for (to,amount) in [(a.associated_quote_bonding_curve.to_account_info(),pool_quote),(a.buyback_fee_recipient.to_account_info(),total_buyback)] {
-        if amount==0{continue}
-        token_interface::transfer_checked(CpiContext::new(a.quote_token_program.to_account_info(),TransferChecked{from:a.associated_quote_user.to_account_info(),mint:a.quote_mint.to_account_info(),to,authority:a.user.to_account_info()}),amount,decimals)?;
+      if total_buyback!=0 {
+        token_interface::transfer_checked(CpiContext::new(a.quote_token_program.to_account_info(),TransferChecked{from:a.associated_quote_user.to_account_info(),mint:a.quote_mint.to_account_info(),to:a.buyback_fee_recipient.to_account_info(),authority:a.user.to_account_info()}),total_buyback,decimals)?;
       }
     }else{
-      anchor_lang::system_program::transfer(CpiContext::new(a.system_program.to_account_info(),anchor_lang::system_program::Transfer{from:a.user.to_account_info(),to:a.bonding_curve.to_account_info()}),user_output)?;
       a.bonding_curve.sub_lamports(add(buyback_fee,post_buyback)?)?;a.buyback_fee_recipient.add_lamports(add(buyback_fee,post_buyback)?)?;
     }
     let curve=&mut a.bonding_curve;
@@ -488,3 +498,5 @@ fn buy_fee_market_cap(curve: &BondingCurve, mint: &Mint) -> Result<u128> {
 
 #[path="curve_quote_payments.rs"]
 pub mod quote_payments;
+
+pub use crate::user_quote_payments;

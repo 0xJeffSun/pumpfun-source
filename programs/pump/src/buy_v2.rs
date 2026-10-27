@@ -69,13 +69,11 @@ fn execute_inner<'info,const EXACT:bool>(ctx:Context<'_,'_,'_,'info,BuyV2<'info>
  require!(a.global.buyback_fee_recipients.contains(&a.buyback_fee_recipient.key()),PumpError::BuybackFeeRecipientNotAuthorized);
  if a.user_volume_accumulator.user==Pubkey::default(){a.user_volume_accumulator.user=a.user.key();}
  if a.bonding_curve.quote_mint!=Pubkey::default(){
-  require!(a.associated_quote_bonding_curve.owner!=&anchor_lang::system_program::ID,anchor_lang::error::ErrorCode::AccountNotInitialized);
-  check_token(&a.associated_quote_bonding_curve,a.quote_mint.key(),a.bonding_curve.key())?;
+  admit_associated_token_account(a.associated_quote_bonding_curve.as_ref(),&a.bonding_curve.to_account_info(),&a.quote_mint.key(),&a.quote_token_program.key(),a.user.as_ref(),&a.quote_mint.to_account_info(),false,a.system_program.as_ref(),a.quote_token_program.as_ref())?;
   require_keys_eq!(*a.associated_quote_user.owner,a.quote_token_program.key(),PumpError::AccountTypeNotSupported);
   check_token(&a.associated_quote_user,a.quote_mint.key(),a.user.key())?;{let d=a.associated_quote_user.try_borrow_data()?;let t=TokenAccount::try_deserialize(&mut &d[..])?;require_keys_eq!(t.owner,a.user.key(),PumpError::AccountTypeNotSupported);}
   for (destination,authority) in [(a.associated_creator_vault.to_account_info(),a.creator_vault.to_account_info()),(a.associated_user_volume_accumulator.to_account_info(),a.user_volume_accumulator.to_account_info()),(a.associated_quote_fee_recipient.to_account_info(),a.fee_recipient.to_account_info()),(a.associated_quote_buyback_fee_recipient.to_account_info(),a.buyback_fee_recipient.to_account_info())]{
-   if destination.owner==&anchor_lang::system_program::ID{anchor_spl::associated_token::create_idempotent(CpiContext::new(a.associated_token_program.to_account_info(),anchor_spl::associated_token::Create{payer:a.user.to_account_info(),associated_token:destination.clone(),authority:authority.clone(),mint:a.quote_mint.to_account_info(),system_program:a.system_program.to_account_info(),token_program:a.quote_token_program.to_account_info()}))?;}
-   check_token(&destination,a.quote_mint.key(),authority.key())?;
+   admit_associated_token_account(&destination,&authority,&a.quote_mint.key(),&a.quote_token_program.key(),a.user.as_ref(),&a.quote_mint.to_account_info(),true,a.system_program.as_ref(),a.quote_token_program.as_ref())?;
   }
  }
 
@@ -116,11 +114,13 @@ fn execute_inner<'info,const EXACT:bool>(ctx:Context<'_,'_,'_,'info,BuyV2<'info>
   if cf>0{token_interface::transfer_checked(CpiContext::new(a.quote_token_program.to_account_info(),TransferChecked{from:a.associated_quote_user.to_account_info(),mint:a.quote_mint.to_account_info(),to,authority:a.user.to_account_info()}),cf,a.quote_mint.decimals)?;}
  }
  if cashback_coin{crate::token_incentives::volume_accumulator::record_cashback_earned(&mut a.user_volume_accumulator,cf,native)?;}
- if native{
-  if quote>0{anchor_lang::system_program::transfer(CpiContext::new(a.system_program.to_account_info(),anchor_lang::system_program::Transfer{from:a.user.to_account_info(),to:a.bonding_curve.to_account_info()}),quote)?;}
- }else if gross_quote>0{
-  token_interface::transfer_checked(CpiContext::new(a.quote_token_program.to_account_info(),TransferChecked{from:a.associated_quote_user.to_account_info(),mint:a.quote_mint.to_account_info(),to:a.associated_quote_bonding_curve.to_account_info(),authority:a.user.to_account_info()}),gross_quote,a.quote_mint.decimals)?;
- }
+ crate::trade::user_quote_payments::transfer_from_user(
+  native,a.system_program.as_ref(),&a.user,a.bonding_curve.as_ref(),
+  if native{quote}else{gross_quote},&a.quote_token_program,a.quote_mint.decimals,
+  a.quote_mint.as_ref().as_ref(),
+  if native{None}else{Some(a.associated_quote_user.as_ref())},
+  if native{None}else{Some(a.associated_quote_bonding_curve.as_ref())},
+ )?;
  let (bf,protocol_fee)=recipient_payments::split_protocol_fee(&a.global,pf,c.is_mayhem_mode);
  let buyback_received=if native{bf}else{sub(bf,crate::trade::quote_transfer_fee(&a.quote_mint.to_account_info(),bf,false)?)?};
  if native{
@@ -151,3 +151,21 @@ mod token_transfers;
 
 #[path="v2_recipient_payments.rs"]
 pub(crate) mod recipient_payments;
+
+// Shared main-program admission for an ATA, including the optional idempotent creation.
+#[inline(never)]
+pub fn admit_associated_token_account<'info>(account:&AccountInfo<'info>,authority:&AccountInfo<'info>,mint:&Pubkey,token_program:&Pubkey,payer:&AccountInfo<'info>,mint_info:&AccountInfo<'info>,allow_create:bool,system_program:&AccountInfo<'info>,token_program_info:&AccountInfo<'info>)->Result<()>{
+ let expected=anchor_spl::associated_token::get_associated_token_address_with_program_id(&authority.key(),mint,token_program);
+ require_keys_eq!(account.key(),expected,anchor_lang::error::ErrorCode::ConstraintSeeds);
+ if account.owner==&anchor_lang::system_program::ID {
+  require!(allow_create,anchor_lang::error::ErrorCode::AccountNotInitialized);
+  let instruction=anchor_spl::associated_token::spl_associated_token_account::instruction::create_associated_token_account_idempotent(payer.key,authority.key,mint,token_program);
+  let account_infos=[payer.clone(),account.clone(),authority.clone(),mint_info.clone(),system_program.clone(),token_program_info.clone()];
+  anchor_lang::solana_program::program::invoke(&instruction,&account_infos)?;
+ }
+ require_keys_eq!(*account.owner,*token_program,PumpError::AccountTypeNotSupported);
+ let data=account.try_borrow_data()?;
+ let token=TokenAccount::try_deserialize_unchecked(&mut &data[..])?;
+ require_keys_eq!(token.mint,*mint,PumpError::MintDoesNotMatchBondingCurve);
+ Ok(())
+}

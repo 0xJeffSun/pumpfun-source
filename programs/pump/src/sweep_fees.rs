@@ -34,12 +34,8 @@ pub fn execute(ctx:Context<SweepFees>,creator:bool)->Result<()>{
  }
  else{
 
-  for (index,account) in [a.associated_quote_bonding_curve.to_account_info(),a.associated_quote_recipient.to_account_info()].into_iter().enumerate(){
-  if index==1 && a.associated_quote_recipient.owner==&anchor_lang::system_program::ID{anchor_spl::associated_token::create_idempotent(CpiContext::new(a.associated_token_program.to_account_info(),anchor_spl::associated_token::Create{payer:a.payer.to_account_info(),associated_token:a.associated_quote_recipient.to_account_info(),authority:a.recipient.to_account_info(),mint:a.quote_mint.to_account_info(),system_program:a.system_program.to_account_info(),token_program:a.quote_token_program.to_account_info()}))?;}
-   if account.owner==&anchor_lang::system_program::ID{return Err(error!(anchor_lang::error::ErrorCode::AccountNotInitialized));}
-   if account.owner!=&anchor_spl::token::ID&&account.owner!=&anchor_spl::token_2022::ID{return Err(error!(anchor_lang::error::ErrorCode::AccountOwnedByWrongProgram));}
-   let d=account.try_borrow_data()?;let token=anchor_spl::token_interface::TokenAccount::try_deserialize(&mut &d[..])?;require_keys_eq!(token.mint,a.quote_mint.key(),PumpError::MintDoesNotMatchBondingCurve);
-  }
+  crate::buy_v2::admit_associated_token_account(a.associated_quote_bonding_curve.as_ref(),&a.bonding_curve.to_account_info(),&a.quote_mint.key(),&a.quote_token_program.key(),a.payer.as_ref(),&a.quote_mint.to_account_info(),false,a.system_program.as_ref(),a.quote_token_program.as_ref())?;
+  crate::buy_v2::admit_associated_token_account(a.associated_quote_recipient.as_ref(),a.recipient.as_ref(),&a.quote_mint.key(),&a.quote_token_program.key(),a.payer.as_ref(),&a.quote_mint.to_account_info(),true,a.system_program.as_ref(),a.quote_token_program.as_ref())?;
   let mint=a.base_mint.key();let bump=[ctx.bumps.bonding_curve];let seeds:&[&[u8]]=&[b"bonding-curve",mint.as_ref(),&bump];
   crate::sell_v2::quote_token_transfers::transfer_quote_tokens(&a.quote_token_program,a.associated_quote_bonding_curve.as_ref(),a.associated_quote_recipient.as_ref(),info,a.quote_mint.decimals,a.quote_mint.as_ref().as_ref(),amount,&[seeds])?;
  }
