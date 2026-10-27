@@ -51,13 +51,13 @@ analysis. Candidate symbol names are hypotheses about original identity.
 | Fees selected | 585 | 102 | 363 | 120 | 0 |
 | Mayhem historical selected | 441 | 58 | 131 | 7 | 245 |
 | Relay historical source 15 | 492 | 33 | 89 | 370 | 0 |
-| **Pump current Round33** | **1,035** | **137** | **596** | **302** | **0** |
+| **Pump current Round34** | **1,035** | **137** | **596** | **302** | **0** |
 | **PumpSwap current** | **785** | **148** | **495** | **142** | **0** |
 | **Fees latest research** | **585** | **200** | **382** | **3** | **0** |
 | **Mayhem latest research** | **441** | **100** | **331** | **10** | **0** |
 | **Relay canonical selection** | **492** | **492** | **0** | **0** | **0** |
 
-The current rows are bound to [Pump Round32](../repro/pump/main-contract-round33-20261027/README.md), [AMM native-quote recovery](../repro/pump_amm/quote-guard-recovery-20261027/README.md), [Fees Extend integration](../research/fees-extend-integration/README.md) and [Mayhem current initializer recovery](../research/mayhem-sell-current-recovery-20261027/README.md); they extend the dated generated inventory below. Each row is a partition, not a score of semantic correctness. The historical selected Mayhem source
+The current rows are bound to [Pump Round32](../repro/pump/main-contract-round34-20261027/README.md), [AMM native-quote recovery](../repro/pump_amm/quote-guard-recovery-20261027/README.md), [Fees Extend integration](../research/fees-extend-integration/README.md) and [Mayhem current initializer recovery](../research/mayhem-sell-current-recovery-20261027/README.md); they extend the dated generated inventory below. Each row is a partition, not a score of semantic correctness. The historical selected Mayhem source
 ledger has 257 opaque windows, 12 of which happen to match local raw bytes.
 Selected Fees retains two call-conflicting rows; body existence does not resolve
 those conflicts. Different programs and studies use different matching rules.
