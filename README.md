@@ -78,6 +78,11 @@ A [same-IR compiler diagnostic](research/mayhem-host-llvm-comparison/README.md)
 produces identical Mac and Linux LLVM objects for one earlier initializer
 control. This narrows that investigation without adding a function match.
 
+An [allocator-context experiment](research/mayhem-allocator-context/README.md)
+reproduces the missing reserve helper through a zeroed-allocation probe. It
+identifies a compiler condition to recover through justified source; the probe
+remains a diagnostic and the current reconstruction counts are unchanged.
+
 The latest [Fees readonly-order recovery](research/fees-readonly-order-recovery/README.md)
 reproduces all 21,079 readonly bytes while preserving 578 normalized and 198 raw
 function matches, all 105 Source records and 379 checked data-pointer targets.

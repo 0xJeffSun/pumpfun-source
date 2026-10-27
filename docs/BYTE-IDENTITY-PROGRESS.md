@@ -4,6 +4,18 @@ The [full audit](RECONSTRUCTION-AUDIT.md) and its generated tables retain their
 explicit `1463bd22` snapshot. This log records later research without silently
 changing that baseline or promoting new selected artifacts.
 
+## Mayhem: reproduce the missing allocator form in a source-context control
+
+Reviewed PR #253 adds the [allocator-context experiment](../research/mayhem-allocator-context/README.md).
+A diagnostic zeroed-vector allocation reproduces the 328-byte helper and its
+640-byte reserve caller relationship; a nonzero-vector control retains the
+312-byte form. Two complete builds agree. The earlier qualified baseline gains
+an injective helper assignment and reaches 139 raw-local matches in this
+experimental layout, while normalized coverage remains 428/441. The diagnostic
+is absent from the linked map, but its source context is not historical-source
+evidence and has not been composed with provider sharing. Seventeen offline
+tests pass; no target runtime execution or current-checkpoint promotion is claimed.
+
 ## Mayhem: isolate the host LLVM backend from the initializer gap
 
 The [same-IR host comparison](../research/mayhem-host-llvm-comparison/README.md)
