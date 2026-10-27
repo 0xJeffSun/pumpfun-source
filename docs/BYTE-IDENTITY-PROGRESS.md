@@ -1641,3 +1641,29 @@ Eight quote-owner matrix cases repair four failures in the actual parent. No run
 fixtures, logs, binaries or derivatives are included; default execution/identity
 flags remain false. All four core whole identities remain unresolved and no
 selected checkpoint changes.
+
+## Fees: V2 native social and buyback payout arithmetic — 27 October 2026
+
+The [native payout correction](../research/fees-native-payout-arithmetic/README.md)
+changes three expressions on exact PR215's 43-input source. Legacy social claim
+stays byte-identical to that merged work. V2 native credit now saturates like the
+original; overflowing transactions still fail `UnbalancedInstruction` and roll
+back, retaining the original clamped event/return value. Buyback returns
+`ArithmeticOverflow` instead of panicking. V2's executable-before-zero no-op
+order and both diagnostics are restored.
+
+Fresh normally signed comparison corrects 38 mismatches in 119 focused cases:
+30 overflow and eight native no-op cases. Legacy cases are preservation controls.
+The fresh proposal passes 17,331 existing comparisons across 18 suites. The
+all-dependency-clean baseline reproduces both published PR215 hashes, and a
+separate all-dependency-clean proposal rebuild reproduces both new hashes.
+Commands, logs, artifacts and full comparisons are retained in the packet.
+
+All 559 normalized/143 raw-local counterparts, 412 unique pairs, 166 equal
+Location uses and 3,353 direct-edge observations remain. No complete original
+body is newly matched; 26 windows remain unmatched. Positional differences
+worsen 453,541→466,189 and whole-binary equality remains false. Synthetic extreme
+balances do not establish mainnet reachability or an exploit; failed events are
+not successful payments. Originals, prior evidence and selected sources remain
+unchanged. Earlier 554-based experiments were superseded after PR215 merged and
+are excluded from these acceptance counts.
