@@ -9,6 +9,6 @@ rebuild it.
 
 | packet | base | Linux normalized / raw / unmatched | included | new windows | PR |
 | --- | --- | --- | --- | --- | --- |
-| (in progress) | event-decoder-recovery-20261027 (647/148/138) | | amm-lo + amm-hi | | |
+| [g01-c680](g01-c680/README.md) | event-decoder-recovery-20261027 (647/148/138) | **680 / 148 / 105** | amm-lo dda784ddc + amm-hi d92fefba8 | +33 (25 placement-dependent, counted separately in the packet) | this PR |
 
 See `PROGRESS.md` for the composition ledger and continuation notes.

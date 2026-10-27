@@ -15,10 +15,10 @@ checkpoint, publishes each combined candidate as a packet `gNN-c<normalized>/`, 
 ## Composition ledger on 647 (patch id -> status, counts)
 | step | patch id | status | native (norm/raw) | Linux (norm/raw/unmatched) |
 | --- | --- | --- | --- | --- |
-| u0 | frontier 647 | base | 642/139 | 647/148/138 (control rebuild running) |
+| u0 | frontier 647 | base | 642/139 | 647/148/138: control rebuild reproduces 0881a95d, 763 deps unchanged |
 | u1 | amm-lo@dda784ddc (admin toggles, disable, deposit/withdraw placement, legacy_buy.rs -> instructions/swap/buy.rs after 647's BuyEvent block, get_buyback_accounts 116/121, derive 133) | included via u1b | 663/139 (+21, 0 lost) | |
 | u1b | u1 + 623 inline reserve arithmetic restored in legacy buy, placed at buy.rs 382-404 (closures 387/391/395/404) | included | 667/139 (+4, 0 lost) | |
-| u2b | u1b + amm-hi@d92fefba8 maintained-source gains | included (g01) | 675/139 (+8, 0 lost) | 2 builds running; native runtime 25/17,462/0 |
+| u2b | u1b + amm-hi@d92fefba8 maintained-source gains | included (g01-c680) | 675/139 (+8, 0 lost) | 680/148/105, 0fb1f886… (2 identical builds), runtime 25/17,462/35,074 tx/0 |
 | (u2) | u1 + amm-hi (no arithmetic restore) | superseded by u2b | 671/139 | |
 | — | amm-mid@b49edd851 (0x52c58) | superseded: 0x52c58 already matched in 647 | | |
 | — | amm-hi helper-crate patch | kept out (DIRECTIVES 07:30) | | |
@@ -31,6 +31,15 @@ Notes:
   Overflow closures amm-lo matched, hence variant u1b.
 - Older 638-based composition (superseded, not published): `out/comp2/t{0..3}`; Linux t3 = 672/128/113 (`43c35c4e…`).
 - 623-based g01-c648 (superseded, never PR'd): `out/stale/g01-c648-on-623`.
+
+## Publications
+- g01-c680 (647 base): amm-lo + amm-hi, Linux 680/148/105 `0fb1f886…`/`d691156e…`, +33 normalized, 0 lost, runtime 0 mismatches.
+
+## Next (as of 12:35)
+- origin/main moved to `optional-context-recovery-20261027` = 651/148/134 (`97bd5553…`), which independently matches
+  0xe8ae8 0xe8f10 0xe9338 (V2 dispatch wrappers) + CreatePool dispatch wrapper. g02 = g01 rebased on 651
+  (expect 651 + 30 = 681) + newly published amm2 packets: placement g01-line*, pool g01-liquidity-boost*,
+  layout g01-text-data*, speed g01-exact-native* (check each base + gain).
 
 ## Working trees
 - `SP/lanes/integrate/out/comp3/<step>/programs/pump-amm` — composed source after each step (647 base).
