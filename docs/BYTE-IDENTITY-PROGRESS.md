@@ -4,6 +4,20 @@ The [full audit](RECONSTRUCTION-AUDIT.md) and its generated tables retain their
 explicit `1463bd22` snapshot. This log records later research without silently
 changing that baseline or promoting new selected artifacts.
 
+## Mayhem: complete the 156-reference account-data cohort
+
+The [final refinement](../research/mayhem-account-cohort-complete/README.md)
+closes the three remaining records in this cohort: the two tagged I/O-error
+references and the empty hash-table header. All 156 observations are now
+typed-equal, with zero differences or unresolved records in the cohort. A
+separate SBF-target ABI probe and its independent repeat produce identical IR;
+the actual consumer instructions confirm widths, offsets and pointer uses.
+
+Twelve in-memory mutation controls pass. The accepted program is unchanged,
+and no function-window gain is counted. The earlier formatting-prefix label
+for the hash-table header is corrected. Other data, transitive/indirect closure,
+the fifteen ordered bodies and whole ELF remain work.
+
 ## Mayhem: isolate O0073's block-placement remainder
 
 The [sweep-rate layout study](../research/mayhem-sweep-branch-layout/README.md)

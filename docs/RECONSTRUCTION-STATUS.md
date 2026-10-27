@@ -912,6 +912,14 @@ fields, consumer loads and vtable/code targets. They preserve the initializer's
 known nonmatching callee and do not claim raw relocated addresses or all-program
 data equality. No new compilation or target execution is needed for this audit.
 
+The [final account-cohort refinement](../research/mayhem-account-cohort-complete/README.md)
+subsequently resolves those three references. A repeated SBF-target ABI probe
+identifies the 24-byte tagged I/O error and the 32-byte empty hash-table header
+used in a 48-byte set. All 156 cohort observations are typed-equal. The former
+formatting-prefix interpretation of the header is corrected. The program
+artifact, the known nonmatching initializer callee and broader data/ELF scope
+are unchanged.
+
 The separate [O0073 layout control](../research/mayhem-sweep-branch-layout/README.md)
 reproduces all 22 blocks, eleven typed data references and the branch-free tail
 to the `abort` import. Directed-edge correspondence uses that stated terminal

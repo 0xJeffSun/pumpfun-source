@@ -17,11 +17,12 @@ non-compute logs. O0093 still has 1,096 candidate bytes versus 1,120 original
 bytes; complete instruction order and correspondence remain work. The other
 parent runtime suites retain their original artifact bindings.
 
-The [account-data refinement](../research/mayhem-account-data-extents/README.md)
-reduces that cohort's unresolved references from 59 to three: two uses of the
-tagged I/O error at original `0xb1220` and the empty formatting prefix at
-`0xb1340`. Its 153 typed-equal references do not close unexamined program data,
-transitive/indirect calls, or the known initializer callee mismatch.
+The [completed account-data cohort](../research/mayhem-account-cohort-complete/README.md)
+has 156 typed-equal references and none unresolved within its declared scope.
+The final records are the tagged I/O error at `0xb1220` and the empty hash-table
+header at `0xb1340`; the latter was previously mislabelled a formatting prefix.
+Unexamined program data, transitive/indirect calls and the known initializer
+callee mismatch remain open.
 
 For O0073, the [sweep-rate layout study](../research/mayhem-sweep-branch-layout/README.md)
 maps all 22 blocks, directed edges under the stated abort ABI, and eleven data

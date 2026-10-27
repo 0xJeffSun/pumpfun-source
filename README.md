@@ -100,10 +100,10 @@ Two builds agree and all 6,636 trade cases pass again. The helper's ten callees
 and typed-data multisets agree, but its full body remains unmatched; the window
 count does not increase.
 
-The [account-data refinement](research/mayhem-account-data-extents/README.md)
-resolves 56 previously unknown references using caller-supplied lengths and
-typed layouts. That cohort now has 153 typed-equal references, no differences
-and three unresolved references. This does not establish all-data or whole-ELF identity.
+The [completed account-data cohort](research/mayhem-account-cohort-complete/README.md)
+has 156 typed-equal references, no differences and none unresolved within that
+cohort. Caller-supplied lengths, consumer reads and a repeated SBF ABI probe
+establish the bounds. Other program data and whole-ELF identity remain open.
 
 The [sweep-rate block study](research/mayhem-sweep-branch-layout/README.md)
 maps all 22 helper blocks and eleven data references. Nineteen instruction
