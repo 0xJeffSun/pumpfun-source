@@ -14,6 +14,7 @@ import shutil
 import subprocess
 import tomllib
 from pump_dependency_cache import DependencyCache
+import pump_text_layout
 
 from build_source_manifest import source_manifest
 from compare import compare
@@ -34,6 +35,11 @@ def main():
         default=Path(os.environ.get("CARGO_HOME", Path.home() / ".cargo")),
     )
     p.add_argument("--output", type=Path, required=True)
+    p.add_argument(
+        "--text-section-order",
+        type=Path,
+        help="Optional validated SDK linker script changing only .text input order.",
+    )
     p.add_argument(
         "--workspace-layout",
         action="store_true",
@@ -154,6 +160,23 @@ def main():
             cache.import_clean_build(a.dependency_cache_seed.resolve())
         cache.seed(out / "target")
         command += ["--message-format=json-render-diagnostics"]
+    text_layout = None
+    if a.text_section_order:
+        if cache:
+            assert cache.record["status"] == "hit", (
+                "prepare the ordinary external cache before an ordered build"
+            )
+        name = tomllib.loads((crate / "Cargo.toml").read_text()).get("lib", {}).get(
+            "name", tomllib.loads((crate / "Cargo.toml").read_text())["package"]["name"].replace("-", "_")
+        )
+        layout_env, text_layout = pump_text_layout.configure(
+            a.text_section_order.resolve(), out, sdk, name, wrapper
+        )
+        env.update(layout_env)
+        if cache:
+            # The external context/key above remains the ordinary physical
+            # wrapper. Only the fresh main Cargo plan uses this root-only hook.
+            cache.env = env.copy()
     record = {
         "scope": __doc__,
         "workspace_layout": a.workspace_layout,
@@ -189,6 +212,8 @@ def main():
         record["dependency_cache"]["implementation_sha256"] = sha(
             ROOT / "scripts/pump_dependency_cache.py"
         )
+    if text_layout:
+        record["text_layout"] = text_layout
     receipt = out / "build-attempt.json"
     receipt.write_text(json.dumps(record, indent=2) + "\n")
     with (out / "build.log").open("w") as f:
@@ -212,6 +237,8 @@ def main():
     receipt.write_text(json.dumps(record, indent=2) + "\n")
     result.check_returncode()
     assert record["source_unchanged"]
+    if text_layout:
+        record["text_layout"] = pump_text_layout.finish(text_layout)
     manifest = tomllib.loads((crate / "Cargo.toml").read_text())
     name = manifest.get("lib", {}).get(
         "name", manifest["package"]["name"].replace("-", "_")
