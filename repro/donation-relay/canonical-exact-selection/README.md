@@ -34,3 +34,21 @@ acceptance or the unique historical source spelling.
 - All retained portable signature routes and the exact Relay 536-record check pass; the lossless output is in `build/saved-crypto-verification.json.gz`.
 
 The build controller in `build/` records the actual local invocation and paths, rather than claiming those machine paths are portable defaults. The [portable source recipe](../raw-elf-reconstruction/README.md) rebuilds the same 60-input source; the canonical selection gate proves that those inputs are installed here. Four literal whitespace attributes preserve two current source files, the archived dispatch and the recorded linker map without changing their bytes.
+
+## Current Pump Round9 selection
+
+The original P27 metadata, its 107 source-input snapshot, and its historical
+window inventories remain unchanged. The explicit `pump-round9-transition.json`
+binds the later Pump selection to its 42 current source inputs, archived builds,
+selected artifact and 25 added scripts. The current four-core source inventory
+is now 112 files and the root script inventory is 212 files. Relay retains its
+independent 60-source canonical selection and 492 raw matching windows.
+
+`pump_round9_current.py` checks the exact before/after transition and all
+unchanged program sources, artifacts, status entries, scripts and workflow
+names. Seven historically inactive paths are admitted only at their reviewed
+Pump hashes; other inactive paths remain absent. The updated workflow and root
+README retain explicit governance hashes. Sixteen tests include fifteen negative controls rejecting
+unrelated drift, unknown source/script additions, changed selections, symlinks
+and altered transition data. This transition does not reclassify the old
+metadata as measurements of the new Pump artifact.

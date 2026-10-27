@@ -4,6 +4,22 @@ The [full audit](RECONSTRUCTION-AUDIT.md) and its generated tables retain their
 explicit `1463bd22` snapshot. This log records later research without silently
 changing that baseline or promoting new selected artifacts.
 
+## Mayhem: qualified linker order reaches 100 raw-local windows
+
+The [source-unchanged layout](../research/mayhem-qualified-linker-layout/README.md)
+adds 30 raw-local matches, preserving all 70 earlier raw matches and all 428
+normalized windows. Thirteen original bodies and 112,584 original text bytes
+remain unmatched. The 441-position mapping is explicitly a hypothesis, not an
+authenticated original function map; sharing conflicts and a missing duplicate
+still prevent complete original identity.
+
+Two original-controller builds agree. A separate translation check accounts
+for all 456 compiled sections, 4,929 direct calls, 10,352 local branches and
+2,542 relocations, plus data pointers, exported symbols and entrypoint. Fresh
+6,636 trade comparisons and 301 ExtendAccount cases pass with 13,874 signed
+records checked; the seven previous trade diagnostic differences remain.
+Fifteen tests pass, including fourteen mutation controls. The complete ELF still differs from the original.
+
 ## Mayhem: compose retained-reserve and AMM Sell source origins
 
 The [six-file successor](../research/mayhem-trade-source-origins/README.md)

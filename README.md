@@ -23,9 +23,9 @@ all remaining code, calls, data, relocations and build provenance.
 | [Pump Round9](repro/pump/main-contract-round9-20261027/README.md) | 599 / 1,035 | 57.9% | 111 | 488 | 436 | No |
 | [PumpSwap / AMM](repro/pump_amm/error-order-recovery-20261027/README.md) | 584 / 785 | 74.4% | 124 | 460 | 201 | No |
 | [Fees research](research/fees-qualified-linker-layout/README.md) | 577 / 585 | 98.6% | 198 | 379 | 8 | No |
-| [Mayhem research](research/mayhem-trade-source-origins/README.md) | 428 / 441 | 97.1% | 70 | 358 | 13 | No |
+| [Mayhem research](research/mayhem-qualified-linker-layout/README.md) | 428 / 441 | 97.1% | 100 | 328 | 13 | No |
 | [Donation Relay](repro/donation-relay/canonical-exact-selection/README.md) | 492 / 492 | 100.0% | 492 | 0 | 0 | **Yes** |
-| **Total** | **2,680 / 3,338** | **80.3%** | **995** | **1,685** | **658** | **1 / 5** |
+| **Total** | **2,680 / 3,338** | **80.3%** | **1,025** | **1,655** | **658** | **1 / 5** |
 
 “Windows” are inferred original machine-function ranges, including framework and
 runtime helpers. Complete normalized matches mask specified call/address

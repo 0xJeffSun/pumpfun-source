@@ -2,7 +2,7 @@
 
 The objective remains byte-identical Rust reproduction, including calls, data,
 relocations and ELF layout. The latest published research has 428 matching
-windows and 13 unmatched windows / 112,584 text bytes. Normalized matches are
+windows (100 raw-local) and 13 unmatched windows / 112,584 text bytes. Normalized matches are
 intermediate evidence; complete semantic and whole-ELF equality remain unproved.
 
 | Lane | Owner | Remaining scope |
@@ -47,8 +47,15 @@ now composes the retained-reserve fix and AMM Sell Source corrections. Its fresh
 6,636 trade comparisons leave seven diagnostic differences. Independent
 checkpoints and runtime receipts must not be summed.
 
-The parallel workers hit their account usage limit after saving their completed
-proofs; the main agent continues integration and remaining reconstruction work.
+All three worker lanes resumed after a transient account usage limit. They
+continue trade bodies, initializer recovery and sharing/relocation analysis while
+the main agent integrates, verifies and publishes results.
+
+The [qualified layout](../research/mayhem-qualified-linker-layout/README.md)
+raises raw-local matches from 70 to 100 while preserving every normalized match.
+It exposes concrete sharing conflicts and a missing duplicate that ordering
+alone cannot solve. These remain in the runtime/layout lane alongside the
+thirteen business/validator bodies below.
 
 The following table assigns every remaining original window exactly once.
 Account-data extents, ambiguous counterparts, function placement, absolute

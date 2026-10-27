@@ -8,7 +8,7 @@ list every raw match and unresolved window; the four core selected artifacts ret
 [completion ledger](COMPLETION.md) remains a selected-checkpoint record; its old
 candidate paths and “current” prose must not override newer evidence.
 
-Current Mayhem's largest normalized frontier is the [428-window trade-source composition](../research/mayhem-trade-source-origins/README.md): 13 unmatched windows / 112,584 original text bytes remain, plus data, call, indirect-target and complete ELF identity. All 70 parent raw-local bodies survive. The 34 recorded rate failures and ten earlier counter failures were repaired in the parent; the accounting parent has fresh trade and ExtendAccount replay, and this successor has fresh trade replay. This does not update the selected baseline or prove arbitrary behavior.
+Current Mayhem research is the [428-window qualified linker layout](../research/mayhem-qualified-linker-layout/README.md): 100 raw-local, 328 normalized-only and thirteen unmatched windows / 112,584 original text bytes. The unchanged 66-file source preserves all earlier body, call and Source evidence. Fresh trades and ExtendAccount replay pass; complete data/call identity, original sharing/specialization and full ELF equality remain unresolved. This does not update the selected baseline or prove arbitrary behavior.
 
 The [native Windows reproduction](../research/mayhem-native-reference-identity/README.md)
 reproduces the earlier 426-window source/data candidate's complete raw and

@@ -22,6 +22,7 @@ jobs:
               python scripts/verify_recovered_builds.py
               python -B scripts/verify_current_reconstruction.py --repo .
               python -I -B repro/donation-relay/canonical-exact-selection/test_selection.py
+              python -I -B repro/donation-relay/canonical-exact-selection/test_pump_round9.py
               python -B repro/layered-passes/pass-19/ci-followup/verify.py --repo .
               python -B repro/pump/wide-runtime-attribution/verify.py --repo .
               python scripts/pump_verify_dependencies.py
