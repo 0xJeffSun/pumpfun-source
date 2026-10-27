@@ -360,3 +360,20 @@ matches and eleven unmatched windows (99,696 original text bytes). No complete
 body gain, fresh compiler/VM execution or whole-ELF equality is claimed by this
 review. The PR was conflict-free. At merge, 22 of 24 hosted checks passed and
 two Mayhem checks remained in progress; no failed checks were reported.
+
+
+## PR235: independently built external unchecked curve decoder
+
+Reviewed head `9d4953fe855226f2843466a2a4361aa3cf58e8db` passes its offline
+verifier and materializes all 56 source inputs. All 75 reviewed files match that
+head. The packet retains three agreeing builds and independently rechecks 4,140
+saved comparisons / 8,280 signature entries, with 182 non-compute diagnostic
+differences preserved. O0213 is the only gain over its Linux control (347→348);
+it is already matched in the separately validated 411-window composition.
+The packet's differently named dependency must not replace the composed source.
+No fresh compiler or VM execution was performed in this PR review.
+
+The reviewed head was merged locally as `4b7cc26a`; a concurrent README
+simplification was then merged without overwriting it. Git publication and
+GitHub's final PR state are checked after the push. GraphQL quota blocked the
+draft-to-ready endpoint; direct Git merge uses the user's existing authorization.

@@ -4,6 +4,26 @@ The [full audit](RECONSTRUCTION-AUDIT.md) and its generated tables retain their
 explicit `1463bd22` snapshot. This log records later research without silently
 changing that baseline or promoting new selected artifacts.
 
+## Mayhem: composed recovery reaches 411 windows
+
+The [composed packet](../research/mayhem-composed-recovery/README.md) adds 36
+complete normalized windows / 112,480 original text bytes without losing prior
+raw/body matches or positive direct-call observations. It reaches **411/441**:
+59 raw-local, 352 normalized-only and 30 unmatched windows / 155,520 text bytes.
+Two source-unchanged builds agree. Whole ELF remains unequal.
+
+Fresh replay passes 6,636 trade comparisons, 1,032 admin cases, 1,601 extra cases,
+three Burn families and the 150-case sweep-rate matrix. All 34 parent sweep
+failures are repaired. Initialization adds 53 rejection and 16 genuine Pump CPI
+cases with ten successes. Saved predicates and signatures are independently
+recomputed; three negative controls pass.
+
+Portable data audits retain 63 typed differences and 59 unresolved references
+among the account gains, two SDK Source differences in the interface gains,
+and nonmatching indirect formatting targets. These are not concealed by the
+body count. The selected checkpoint is unchanged; newer private experiments
+remain outside this published candidate.
+
 ## Fees: current 574-window source with Social V2 admission corrections
 
 [PR234's composition](../research/fees-current-574-social-v2-union/README.md) combines the public Social V2 correction with the full Fees574 source. It preserves 574/585 normalized windows, 143 raw-local matches, 171 equal Location observations and 3,792 equal direct-callee observations; it adds no complete body match. Eleven unmatched windows cover 99,696 original text bytes. Whole ELF and capture equality remain false.

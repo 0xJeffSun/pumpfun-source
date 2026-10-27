@@ -8,6 +8,8 @@ list every raw match and unresolved window; the four core selected artifacts ret
 [completion ledger](COMPLETION.md) remains a selected-checkpoint record; its old
 candidate paths and “current” prose must not override newer evidence.
 
+Current Mayhem research is the [411-window composition](../research/mayhem-composed-recovery/README.md): 30 unmatched windows / 155,520 original text bytes remain, plus data, call, indirect-target and complete ELF identity. All 34 recorded sweep-rate mismatches are repaired; ten initializer success cases now execute through the genuine captured Pump CPI. This does not update the selected baseline or prove arbitrary initializer behavior.
+
 Subsequent gains are in the [byte-identity progress log](BYTE-IDENTITY-PROGRESS.md):
 Canonical Relay now has **492/492 raw-equal windows and no unmatched windows**; current Fees research
 has **11 unmatched windows and 427 unique structural pairs** in the [current Social V2 composition](../research/fees-current-574-social-v2-union/README.md). Those unmatched windows total 99,696 original text bytes; whole-ELF identity, nine inspected direct-callee differences and exhaustive semantics remain open. The older 558-window generated inventory below retains its original binding. The [Relay framework study](../repro/donation-relay/framework-sysroot-recovery/README.md)

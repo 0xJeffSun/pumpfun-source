@@ -3,7 +3,21 @@
 Mayhem is the active reconstruction priority. Other PRs can be reviewed and
 merged, but new body-recovery experiments should advance Mayhem first.
 
-The current research baseline is
+The current [composed research checkpoint](../research/mayhem-composed-recovery/README.md)
+has 411 matching windows (59 raw-local), with 30 unmatched windows / 155,520
+text bytes. It preserves all earlier matches and repairs the recorded sweep-rate
+failures. Initializer rejection and genuine Pump CPI success are now covered in
+bounded tests. Complete data, indirect calls, source/build provenance and ELF
+identity remain open. The [parallel work map](MAYHEM-PARALLEL-WORK.md) assigns all
+remaining windows and cross-cutting work.
+
+## Historical native-parser and curve plans
+
+The following records retain their original candidate bindings. Their old
+"current" measurements and unfinished-task lists are superseded by the linked
+411-window checkpoint and work map above.
+
+The then-current research baseline was
 [native Program parser recovery](../research/mayhem-native-program-recovery/README.md),
 built on the AMM/Sell-origin and GlobalParams recoveries. Its explicit source
 cohort has 212 windows: 202 matches and ten unmatched bodies. Another 229

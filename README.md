@@ -18,7 +18,7 @@ are distinct from [selected artifacts](repro/status.json).
 | [Pump selected](programs/pump/README.md) | 528 / 1,035 | 51.0% | 98 (9.5%) | 430 | 507 | 0 | No |
 | [PumpSwap / AMM selected](programs/pump-amm/README.md) | 488 / 785 | 62.2% | 93 (11.8%) | 395 | 297 | 0 | No |
 | [Fees research](research/fees-current-574-social-v2-union/README.md) | 574 / 585 | 98.1% | 143 (24.4%) | 431 | 11 | 0 | No |
-| [Mayhem research](research/mayhem-parallel-recovery/README.md) | 375 / 441 | 85.0% | 59 (13.4%) | 316 | 66 | 0 | No |
+| [Mayhem research](research/mayhem-composed-recovery/README.md) | 411 / 441 | 93.2% | 59 (13.4%) | 352 | 30 | 0 | No |
 | [Donation Relay selected](repro/donation-relay/canonical-exact-selection/README.md) | 492 / 492 | 100.0% | 492 (100.0%) | 0 | 0 | 0 | **Yes** |
 
 Newer **local, unpublished** Pump/PumpSwap evidence was also verified on 27 October.
@@ -48,7 +48,7 @@ Large functions remain, so function count and code coverage differ:
 | Pump selected | 400,752 / 1,792,208 | 22.4% | 1,391,456 |
 | PumpSwap / AMM | 574,808 / 1,162,040 | 49.5% | 587,232 |
 | Fees research | 699,952 / 799,648 | 87.5% | 99,696 |
-| Mayhem research | 438,744 / 706,744 | 62.1% | 268,000 |
+| Mayhem research | 551,224 / 706,744 | 78.0% | 155,520 |
 | Donation Relay selected | 752,488 / 752,488 | 100.0% | 0 |
 
 ³ Sum of original window sizes with a complete counterpart, including normalized
@@ -86,6 +86,13 @@ unaccepted**. Newer focused work does not automatically update that audit.
 Comparison counts come from different checkpoints and scopes; do not sum them
 as unique scenarios. Tests use local VMs and simulators.
 
+The current [Mayhem composition](research/mayhem-composed-recovery/README.md) adds
+36 complete normalized windows with no lost raw/body matches. Two builds agree;
+fresh replay passes 6,636 trade comparisons, 1,032 admin cases, 1,601 additional
+fee/sweep/withdrawal cases, three Burn families and 150 sweep-rate cases. The
+initializer has 53 rejection cases and 16 genuine Pump CPI cases, ten successful.
+Whole-ELF equality and exhaustive semantics remain unproved.
+
 Remaining priorities:
 
 - **Pump:** finish V3 trading, creation and multi-hop paths; close incentive,
@@ -96,8 +103,9 @@ Remaining priorities:
   `create_config` coverage.
 - **Fees:** recover 11 remaining bodies and resolve duplicate attribution,
   call/data identity and complete ELF layout.
-- **Mayhem:** recover 66 remaining research windows, resolve the 34 differences
-  found in the 150-case sweep-rate matrix, and complete initialization acceptance.
+- **Mayhem:** recover 30 remaining research windows and complete call/data,
+  indirect-target and ELF identity. The composed checkpoint repairs all 34
+  recorded sweep-rate differences and adds bounded initializer success coverage.
 - **Relay:** establish historical build provenance and broader runtime coverage
   beyond the selected exact reconstructed ELF.
 

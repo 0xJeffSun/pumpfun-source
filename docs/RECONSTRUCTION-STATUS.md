@@ -47,10 +47,10 @@ analysis. Candidate symbol names are hypotheses about original identity.
 | Mayhem selected | 441 | 58 | 131 | 7 | 245 |
 | Relay historical source 15 | 492 | 33 | 89 | 370 | 0 |
 | **Fees latest research (PR234)** | **585** | **143** | **431** | **11** | **0** |
-| **Mayhem latest research** | **441** | **59** | **316** | **66** | **0** |
+| **Mayhem latest research** | **441** | **59** | **352** | **30** | **0** |
 | **Relay canonical selection** | **492** | **492** | **0** | **0** | **0** |
 
-The current research rows are bound to the [Fees Social V2 composition](../research/fees-current-574-social-v2-union/README.md) and [Mayhem parallel recovery](../research/mayhem-parallel-recovery/README.md); they extend the dated generated inventory below. Each row is a partition, not a score of semantic correctness. Mayhem's source
+The current research rows are bound to the [Fees Social V2 composition](../research/fees-current-574-social-v2-union/README.md) and [Mayhem composed recovery](../research/mayhem-composed-recovery/README.md); they extend the dated generated inventory below. Each row is a partition, not a score of semantic correctness. The selected Mayhem source
 ledger has 257 opaque windows, 12 of which happen to match local raw bytes.
 Selected Fees retains two call-conflicting rows; body existence does not resolve
 those conflicts. Different programs and studies use different matching rules.
@@ -835,3 +835,33 @@ validated. Do not call the current checkpoint semantically complete.
 All remaining windows and the whole-ELF/data/toolchain tasks are assigned in the
 [parallel work map](MAYHEM-PARALLEL-WORK.md). The active lanes continue after this
 checkpoint; their subsequent uncomposed candidates are not silently added here.
+
+
+## Latest Mayhem composition: 411 matching windows
+
+The [composed packet](../research/mayhem-composed-recovery/README.md) adds 36
+complete normalized windows to the published 375-window checkpoint, preserving
+all prior raw matches and positive direct-call observations. It has 59 raw-local,
+352 normalized-only and 30 unmatched windows. The remaining windows span
+155,520 / 706,744 original text bytes (22.0%). No whole-file equality is claimed.
+
+The gains cover external account codecs/owners, global-update arguments and
+helper, fee-recipient parser and ATA closure, six trade exits, the complete
+SellEvent routine, five initializer-related bodies, both AMM interfaces and the
+used BuyV2 serializer. Of the 36 gains, 34 have all immediate callee shapes equal;
+the initializer drop/dispatch still call three unmatched destinations. The 301
+unique counterparts contain 13 differing direct-callee observations overall.
+
+Fresh original/candidate execution passes all 6,636 trade comparisons, 1,032 admin
+cases, 1,601 extra fee/sweep/withdrawal cases, three two-step Burn families and a
+150-case sweep-rate matrix. The latter retains 34 parent failures and zero on
+the composition. Initializer coverage adds 53 signed rejection cases and 16
+real captured-Pump CPI cases with ten successes; this is bounded research
+coverage, not promotion of the selected checkpoint or exhaustive acceptance.
+
+Data work remains substantial. The 26 account gains have 156 reference
+observations: 34 typed-equal, 63 typed-different and 59 unresolved. Seven interface
+bodies retain two differing SDK Source paths out of 48 records. Formatter vtables
+select two nonmatching String implementations even though matching alternatives
+exist elsewhere in the candidate. These failures are part of the verified report.
+The [parallel work map](MAYHEM-PARALLEL-WORK.md) assigns all 30 remaining windows.
