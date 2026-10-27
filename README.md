@@ -17,7 +17,7 @@ are distinct from [selected artifacts](repro/status.json).
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
 | [Pump selected](programs/pump/README.md) | 528 / 1,035 | 51.0% | 98 (9.5%) | 430 | 507 | 0 | No |
 | [PumpSwap / AMM selected](programs/pump-amm/README.md) | 488 / 785 | 62.2% | 93 (11.8%) | 395 | 297 | 0 | No |
-| [Fees research](research/fees-current-574-social-v2-union/README.md) | 574 / 585 | 98.1% | 143 (24.4%) | 431 | 11 | 0 | No |
+| [Fees research](research/fees-sharing-slice-recovery/README.md) | 577 / 585 | 98.6% | 143 (24.4%) | 434 | 8 | 0 | No |
 | [Mayhem research](research/mayhem-sell-quote-call-recovery/README.md) | 426 / 441 | 96.6% | 70 (15.9%) | 356 | 15 | 0 | No |
 | [Donation Relay selected](repro/donation-relay/canonical-exact-selection/README.md) | 492 / 492 | 100.0% | 492 (100.0%) | 0 | 0 | 0 | **Yes** |
 
@@ -47,7 +47,7 @@ Large functions remain, so function count and code coverage differ:
 | --- | ---: | ---: | ---: |
 | Pump selected | 400,752 / 1,792,208 | 22.4% | 1,391,456 |
 | PumpSwap / AMM | 574,808 / 1,162,040 | 49.5% | 587,232 |
-| Fees research | 699,952 / 799,648 | 87.5% | 99,696 |
+| Fees research | 719,472 / 799,648 | 90.0% | 80,176 |
 | Mayhem research | 587,344 / 706,744 | 83.1% | 119,400 |
 | Donation Relay selected | 752,488 / 752,488 | 100.0% | 0 |
 
@@ -58,9 +58,9 @@ table. Counts and sizes come from the linked checkpoint inventories; the
 [baseline and Fees/Relay ledger](repro/reconstruction-status-2026-10-26/README.md)
 retains older selected Pump/PumpSwap measurements separately.
 
-Fees has **427 unique structural pairs** within its 574 matched windows.
-Its current report records 3,792 equal direct-callee observations out of 3,801;
-the nine unequal observations remain unresolved.
+Fees has **430 unique structural pairs** within its 577 matched windows.
+Its current report records 3,870 equal direct-callee observations out of 3,877;
+the seven unequal observations remain unresolved.
 
 Relay's exact result covers **818,280 / 818,280 meaningful ELF bytes (100%)**,
 including headers, calls, data and relocations. Two Rust builds agree. A separate
@@ -117,7 +117,7 @@ Remaining priorities:
 - **PumpSwap:** recover 297 selected-build windows (230 in the local checkpoint),
   referenced data and indirect calls; obtain authentic successful fixed-admin
   `create_config` coverage.
-- **Fees:** recover 11 remaining bodies and resolve duplicate attribution,
+- **Fees:** recover eight remaining bodies and resolve duplicate attribution,
   call/data identity and complete ELF layout.
 - **Mayhem:** recover 15 remaining research windows and complete call/data,
   indirect-target and ELF identity. The composed checkpoint repairs all 34

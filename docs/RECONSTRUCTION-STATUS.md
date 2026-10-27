@@ -46,11 +46,11 @@ analysis. Candidate symbol names are hypotheses about original identity.
 | Fees selected | 585 | 102 | 363 | 120 | 0 |
 | Mayhem selected | 441 | 58 | 131 | 7 | 245 |
 | Relay historical source 15 | 492 | 33 | 89 | 370 | 0 |
-| **Fees latest research (PR234)** | **585** | **143** | **431** | **11** | **0** |
+| **Fees latest research** | **585** | **143** | **434** | **8** | **0** |
 | **Mayhem latest research** | **441** | **70** | **356** | **15** | **0** |
 | **Relay canonical selection** | **492** | **492** | **0** | **0** | **0** |
 
-The current research rows are bound to the [Fees Social V2 composition](../research/fees-current-574-social-v2-union/README.md) and [Mayhem source/data recovery](../research/mayhem-source-data-recovery/README.md); they extend the dated generated inventory below. Each row is a partition, not a score of semantic correctness. The selected Mayhem source
+The current research rows are bound to the [Fees sharing slice recovery](../research/fees-sharing-slice-recovery/README.md) and [Mayhem source/data recovery](../research/mayhem-source-data-recovery/README.md); they extend the dated generated inventory below. Each row is a partition, not a score of semantic correctness. The selected Mayhem source
 ledger has 257 opaque windows, 12 of which happen to match local raw bytes.
 Selected Fees retains two call-conflicting rows; body existence does not resolve
 those conflicts. Different programs and studies use different matching rules.
@@ -78,7 +78,7 @@ payload**, with 12,168 zero bytes allocated by the loader. Compiler output is
 not padded. ProgramData metadata/history and broader runtime acceptance remain separate
 requirements. The source and exact artifact are now canonically selected.
 
-The latest [Fees composition](../research/fees-current-574-social-v2-union/README.md) has **574/585 normalized counterparts**, including 143 raw-local matches. Eleven unmatched windows span **99,696 of 799,648 original text bytes (12.5%)**. It retains 427 unique structural pairs, 171 equal Location observations and 3,792 equal direct-callee observations out of 3,801 inspected. The nine remaining unequal direct-callee observations and whole-program data/layout are unresolved. Its 98-case admission matrix repairs ten behavioral differences; all 627 Social V2 cases now have equal application logs. These are verified saved observations, not new compiler or VM executions during PR review.
+The latest [Fees composition](../research/fees-sharing-slice-recovery/README.md) has **577/585 normalized counterparts**, including 143 raw-local matches. Eight unmatched windows span **80,176 of 799,648 original text bytes (10.0%)**. It retains 430 unique structural pairs, 181 equal Location observations and 3,870 equal direct-callee observations out of 3,877 inspected. The seven remaining unequal direct-callee observations and whole-program data/layout are unresolved. Two native Rust builds agree. Fresh execution passes 17,331 cases across 18 suites, with equal application logs in all 6,413 cases that carry them. These are bounded observations, not whole-ELF identity.
 
 The separately pinned, dated Fees inventory has **558/585 windows with a normalized counterpart**: 411 unique
 structural pairs and 147 original windows in ambiguous duplicate groups. Its 27
