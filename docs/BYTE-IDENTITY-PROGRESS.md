@@ -535,3 +535,13 @@ Two previously ambiguous originals become unique, giving 375 structural pairs,
 covered. Thirty owner/length cases correct ten parent/control discrepancies;
 all broad and retained focused regressions pass. The enclosing crank parser,
 whole ELF and selected-source promotion remain open.
+
+
+## Common zero-quote predicate — 26 October 2026
+
+[The Borsh helper expression](../research/fees-curve-zero-helper/README.md)
+recovers original 75,880 (504 bytes), including four direct callee bodies and two
+source-location records at `common/mod.rs:21`. The array and `TryFrom` controls
+produce an identical 432-byte nonmatching body. Fees reaches 376 unique pairs
+and 62 residuals with no lost normalized or raw coverage. Existing fee-sharing
+callers remain unresolved; fresh broad and focused regressions pass.

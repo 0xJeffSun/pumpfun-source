@@ -67,7 +67,7 @@ def generate():
             lines.append(f"| {program} | {int(r['original_start']):,} | {int(r['bytes']):,} | {r['disposition']} |")
     lines += ['', '## Remaining acceptance gates', '',
         '1. **Behavior:** finish partial/unaccepted public handlers and known discrepancies. Pump `sell_v2` remains a bounded implementation with a known transfer-fee discrepancy. Mayhem field roles, initialization and diagnostic contracts remain unresolved. Existing stopped lanes remain stopped.',
-        '2. **Complete bodies:** recover the ten Relay donation/settlement/worker windows and 63 Fees residuals; complete Pump/AMM reconstruction and attribute Mayhem opaque windows. Small helper matches alone do not close callers.',
+        '2. **Complete bodies:** recover the ten Relay donation/settlement/worker windows and 62 Fees residuals; complete Pump/AMM reconstruction and attribute Mayhem opaque windows. Small helper matches alone do not close callers.',
         '3. **Identity:** establish referenced data, call targets, duplicate attribution, indirect calls, layout, relocations, full ELF equality and allocation-padding accounting for each exact proposed build.',
         '4. **Build provenance:** retain source hashes, dependency/toolchain inputs and reproducible recipes. A synthetic exact recipe does not establish the historical recipe.',
         '5. **Selection:** research candidates require explicit selected-source integration, rebuilt artifacts, bound validation and guard transitions. Current research gains do not update selected checkpoints.', '',
