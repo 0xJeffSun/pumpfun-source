@@ -17,24 +17,23 @@ Reproduce the selected Pump ELF with its [archived Rust/linker recipe](repro/pum
 
 
 
-
-Across the latest verified checkpoints, **2,879 / 3,338 inferred function windows
-match (86.2%)**. Their matched windows cover **3,811,704 / 5,213,128 original text
+Across the latest verified checkpoints, **2,880 / 3,338 inferred function windows
+match (86.3%)**. Their matched windows cover **3,811,936 / 5,213,128 original text
 bytes (73.1%)**. **One of five programs has complete meaningful-ELF identity**;
 all four core contracts still differ from their captured binaries.
 
 These percentages measure bounded binary-recovery progress, not a claim that
-86.2% of the engineering work is finished. Complete reconstruction also requires
+86.3% of the engineering work is finished. Complete reconstruction also requires
 all remaining code, calls, data, relocations and build provenance.
 
 | Latest verified checkpoint | Matched windows | Matched % | Raw-equal bodies | Normalized only | Unmatched | Whole ELF equal |
 | --- | ---: | ---: | ---: | ---: | ---: | --- |
 | [Pump Round32](repro/pump/main-contract-round32-20261027/README.md) | 733 / 1,035 | 70.8% | 137 | 596 | 302 | No |
-| [PumpSwap / AMM](repro/pump_amm/transfer-abi-recovery-20261027/README.md) | 642 / 785 | 81.8% | 129 | 513 | 143 | No |
+| [PumpSwap / AMM](repro/pump_amm/quote-guard-recovery-20261027/README.md) | 643 / 785 | 81.9% | 148 | 495 | 142 | No |
 | [Fees research](research/fees-extend-integration/README.md) | 582 / 585 | 99.5% | 200 | 382 | 3 | No |
 | [Mayhem research](research/mayhem-initializer-current-recovery-20261027/README.md) | 430 / 441 | 97.5% | 100 | 330 | 11 | No |
 | [Donation Relay](repro/donation-relay/canonical-exact-selection/README.md) | 492 / 492 | 100.0% | 492 | 0 | 0 | **Yes** |
-| **Total** | **2,879 / 3,338** | **86.2%** | **1,058** | **1,821** | **459** | **1 / 5** |
+| **Total** | **2,880 / 3,338** | **86.3%** | **1,077** | **1,803** | **458** | **1 / 5** |
 
 “Windows” are inferred original machine-function ranges, including framework and
 runtime helpers. Complete normalized matches mask specified call/address
@@ -45,11 +44,11 @@ the whole program is identical.
 | Checkpoint | Text bytes in matched windows | Text covered | Unmatched text |
 | --- | ---: | ---: | ---: |
 | Pump Round32 | 895,416 / 1,792,208 | 50.0% | 896,792 |
-| PumpSwap / AMM | 804,472 / 1,162,040 | 69.2% | 357,568 |
+| PumpSwap / AMM | 804,704 / 1,162,040 | 69.2% | 357,336 |
 | Fees research | 762,912 / 799,648 | 95.4% | 36,736 |
 | Mayhem research | 596,416 / 706,744 | 84.4% | 110,328 |
 | Donation Relay | 752,488 / 752,488 | 100.0% | 0 |
-| **Total** | **3,811,704 / 5,213,128** | **73.1%** | **1,401,424** |
+| **Total** | **3,811,936 / 5,213,128** | **73.1%** | **1,401,192** |
 
 Pump and AMM rows describe the verified maintained sources. Fees and Mayhem rows
 are the latest qualified research frontiers, distinct from their maintained
@@ -164,9 +163,9 @@ checkpoints, including the four parallel reconstruction lanes and compiler
 diagnostics. These experiments retain their individual status and add no
 accepted matches.
 
-The latest [PumpSwap transfer ABI recovery](repro/pump_amm/transfer-abi-recovery-20261027/README.md) adds two matching windows and one raw-equal body, restores shared ATA/payout boundaries and the authentic entrypoint revision, and fixes the eight sweep-order differences. All17,462 corpus cases and retained supplemental suites pass;143 AMM windows remain. A separate 21-case reserved-recipient follow-up retains 11 differences; its [signed negative evidence](repro/pump_amm/transfer-abi-recovery-20261027/followup/reserved-accounts/REPORT.md) is preserved while the correction is tested.
+The latest [PumpSwap native-quote and execution recovery](repro/pump_amm/quote-guard-recovery-20261027/README.md) matches 643 windows and 148 raw bodies, corrects all 11 reserved-recipient differences, fixes Token-2022 native creator transfers, and restores observed claim/InitBoost and legacy operation boundaries. All 17,462 corpus cases and retained supplemental suites pass; 142 AMM windows remain.
 
-Remaining priorities are the 302 Pump, 143 AMM, 3 Fees and 11 Mayhem unmatched
+Remaining priorities are the 302 Pump, 142 AMM, 3 Fees and 11 Mayhem unmatched
 windows; deeper call/data/relocation identity; original build provenance; and
 uncovered behavior such as authentic fixed-admin AMM `create_config` success.
 The historical [150-handler audit](repro/reconstruction-audit-2026-10-26/handlers.md)

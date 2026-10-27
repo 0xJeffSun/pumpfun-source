@@ -14,12 +14,12 @@ has 137 raw-local matches, 596 normalized-only matches and 302 unmatched windows
 The unmatched windows cover 896,792 original text bytes. Remaining bodies,
 data, relocations, uncovered behavior and original build provenance remain open.
 
-Current [AMM transfer-ABI recovery](../repro/pump_amm/transfer-abi-recovery-20261027/README.md)
-has 129 raw-local, 513 normalized-only and 143 unmatched windows, with 357,568
-original text bytes still unmatched. The separately verified 641-window event
-composition remains bound to its own parent and does not add another window to
-this count. Complete data/call identity and provenance remain open; consult the
-selected checkpoint for retained supplemental tests and unresolved behavior.
+Current [AMM checkpoint](../repro/pump_amm/quote-guard-recovery-20261027/README.md)
+has 148 raw-local, 495 normalized-only and 142 unmatched windows, with
+357,336 original text bytes still unmatched. The independently verified 641-window
+event composition stays bound to its earlier parent and is not added again.
+Complete data/call identity and provenance remain open; the current packet
+records the retained supplemental tests and remaining behavioral limits.
 
 Current Mayhem research is the [current-framework initializer composition](../research/mayhem-initializer-current-recovery-20261027/README.md):
 100 raw-local, 330 normalized-only and eleven unmatched windows / 110,328 original

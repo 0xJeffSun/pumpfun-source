@@ -6,7 +6,7 @@ This review updates the research frontier while preserving the selected-checkpoi
 contains every one of the **4,415 selected/research function-window rows**.
 
 The generated inventory is a dated snapshot. Later maintained selections now
-include Pump Round31 and the AMM transfer ABI recovery; their current counts and
+include Pump Round32 and the AMM native-quote recovery; their current counts and
 evidence are in the [repository overview](../README.md). The current rows below
 are separate from the historical rows, and do not rewrite that snapshot.
 
@@ -52,24 +52,24 @@ analysis. Candidate symbol names are hypotheses about original identity.
 | Mayhem historical selected | 441 | 58 | 131 | 7 | 245 |
 | Relay historical source 15 | 492 | 33 | 89 | 370 | 0 |
 | **Pump current Round32** | **1,035** | **137** | **596** | **302** | **0** |
-| **PumpSwap current** | **785** | **129** | **513** | **143** | **0** |
+| **PumpSwap current** | **785** | **148** | **495** | **142** | **0** |
 | **Fees latest research** | **585** | **200** | **382** | **3** | **0** |
 | **Mayhem latest research** | **441** | **100** | **330** | **11** | **0** |
 | **Relay canonical selection** | **492** | **492** | **0** | **0** | **0** |
 
-The current rows are bound to [Pump Round32](../repro/pump/main-contract-round32-20261027/README.md), [AMM transfer ABI recovery](../repro/pump_amm/transfer-abi-recovery-20261027/README.md), [Fees Extend integration](../research/fees-extend-integration/README.md) and [Mayhem current initializer recovery](../research/mayhem-initializer-current-recovery-20261027/README.md); they extend the dated generated inventory below. Each row is a partition, not a score of semantic correctness. The historical selected Mayhem source
+The current rows are bound to [Pump Round32](../repro/pump/main-contract-round32-20261027/README.md), [AMM native-quote recovery](../repro/pump_amm/quote-guard-recovery-20261027/README.md), [Fees Extend integration](../research/fees-extend-integration/README.md) and [Mayhem current initializer recovery](../research/mayhem-initializer-current-recovery-20261027/README.md); they extend the dated generated inventory below. Each row is a partition, not a score of semantic correctness. The historical selected Mayhem source
 ledger has 257 opaque windows, 12 of which happen to match local raw bytes.
 Selected Fees retains two call-conflicting rows; body existence does not resolve
 those conflicts. Different programs and studies use different matching rules.
 
-Across these five frontier rows, **2,879/3,338 windows (86.2%)** match and
-**3,811,704/5,213,128 original text bytes (73.1%)** lie in matched windows.
-There are **459 unmatched windows**. Only Relay has complete meaningful-ELF
+Across these five frontier rows, **2,880/3,338 windows (86.3%)** match and
+**3,811,936/5,213,128 original text bytes (73.1%)** lie in matched windows.
+There are **458 unmatched windows**. Only Relay has complete meaningful-ELF
 identity; the four core programs remain byte-unequal. These are structural
 coverage measures, not a percentage of engineering work completed.
 
-Current AMM matched windows cover **804,472 of 1,162,040 original text bytes
-(69.2%)**. Its 642 normalized matches include the 129 raw-local matches; complete
+Current AMM matched windows cover **804,704 of 1,162,040 original text bytes
+(69.2%)**. Its 643 normalized matches include the 148 raw-local matches; complete
 ELF identity remains false.
 
 - [Every exact local body, with candidate names and original addresses](../repro/reconstruction-status-2026-10-26/raw-body-matches.md).
