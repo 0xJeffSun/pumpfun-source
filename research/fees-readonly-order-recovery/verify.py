@@ -2,7 +2,7 @@
 from pathlib import Path
 from collections import Counter
 from functools import lru_cache
-import argparse,contextlib,difflib,gzip,hashlib,importlib.util,io,json,re,struct,sys
+import argparse,bisect,contextlib,difflib,gzip,hashlib,importlib.util,io,json,re,struct,sys
 sys.dont_write_bytecode=True
 HERE=Path(__file__).resolve().parent;ROOT=HERE.parents[1]
 PARENT=ROOT/'research/fees-sharing-handler-recovery'
@@ -60,6 +60,66 @@ def function_mapping(w,p2,before,after,old_map,new_map):
  assert calls==4587
  return mapping
 
+def text_data_closure(w,p2,before,after,old_map,new_map,mapping):
+ """Bind actual relocation targets to whole emitted objects, including pool atoms.
+
+ Equal bytes alone do not select a target: each observed pointer must retain its
+ offset within a consistently mapped object. Relocated object fields extend the
+ same graph. Unreferenced duplicate allocations are reported, not guessed.
+ """
+ def objects(image,link_map):
+  reloc=dict(w.m.relocations(image));result=[]
+  for section in ['.rodata','.data.rel.ro']:
+   for row in p2.input_sections(link_map,section):
+    match=re.fullmatch(r'\.rodata\.cst(\d+)',row['section'])if row['owner']=='<internal>'else None
+    step=int(match[1])if match else row['size']
+    assert step>0 and row['size']%step==0
+    for address in range(row['address'],row['address']+row['size'],step):
+     raw=w.m.at_address(image,address,step);normal=bytearray(raw);fields={}
+     for at,kind in reloc.items():
+      if address<=at<address+step:
+       assert kind&0xffffffff==8 and at+8<=address+step
+       low,target=struct.unpack_from('<II',raw,at-address);assert low==0
+       fields[at-address]=target;normal[at-address:at-address+8]=bytes(8)
+     result.append(dict(address=address,size=step,section=section,pool_width=int(match[1])if match else None,normal=bytes(normal),fields=fields))
+  result.sort(key=lambda r:r['address'])
+  assert all(a['address']+a['size']<=b['address']for a,b in zip(result,result[1:]))
+  return result
+ old,new=objects(before,old_map),objects(after,new_map)
+ starts=[[r['address']for r in rows]for rows in [old,new]]
+ def containing(rows,keys,address):
+  i=bisect.bisect_right(keys,address)-1
+  assert i>=0 and address<rows[i]['address']+rows[i]['size'],('text data pointer outside emitted objects',address)
+  return rows[i],address-rows[i]['address']
+ bound={};reverse={};queue=[];references=[]
+ def bind(left,right,context):
+  if left in mapping:
+   assert mapping[left]==right,('text data pointer function target',context,left,right)
+   return dict(kind='function',before_target=left,after_target=right)
+  a,offset=containing(old,starts[0],left);b,other=containing(new,starts[1],right)
+  assert offset==other,('text data pointer interior offset',context,left,right,offset,other)
+  assert (a['section'],a['pool_width'],a['size'],a['normal'],a['fields'].keys())==(b['section'],b['pool_width'],b['size'],b['normal'],b['fields'].keys()),('text data pointer object contents',context,left,right)
+  if a['address']in bound:assert bound[a['address']]==b['address'],('text data pointer inconsistent object',context,left,right)
+  else:
+   assert b['address']not in reverse,('text data pointer merged distinct objects',context,left,right)
+   bound[a['address']]=b['address'];reverse[b['address']]=a['address'];queue.append((a,b))
+  return dict(kind='readonly-object',before_target=left,after_target=right,before_object=a['address'],after_object=b['address'],object_bytes=a['size'],interior_offset=offset,pool_width=a['pool_width'],relocated_fields=len(a['fields']))
+ old_windows={r['address']:r for r in w.windows(before)};rel=dict(w.m.relocations(before))
+ for a,b in sorted(mapping.items()):
+  for x,y in zip(w.m.instructions(before,a,old_windows[a]['bytes']),w.m.instructions(after,b,old_windows[a]['bytes'])):
+   if rel.get(a+x['offset'],0)&0xffffffff!=8:continue
+   assert x['opcode']==y['opcode']==0x18
+   row=bind(x['lddw_value'],y['lddw_value'],(a,x['offset']))
+   references.append(dict(before_function=a,after_function=b,offset=x['offset'],**row))
+ field_count=0
+ while queue:
+  a,b=queue.pop()
+  for offset,target in a['fields'].items():
+   bind(target,b['fields'][offset],('object field',a['address'],offset));field_count+=1
+ # All live object mappings above come from actual references, never the stored
+ # rebinding receipt. Unused objects have no observed consumer in this closure.
+ return dict(schema=2,scope='All type-8 text relocations and the complete recursively referenced emitted readonly objects; unused objects are not assigned identities.',functions=len(mapping),text_relocations=len(references),function_pointer_relocations=sum(r['kind']=='function'for r in references),readonly_pointer_relocations=sum(r['kind']=='readonly-object'for r in references),relocated_object_fields=field_count,object_bindings={str(a):b for a,b in sorted(bound.items())},unreferenced_before=[r['address']for r in old if r['address']not in bound],unreferenced_after=[r['address']for r in new if r['address']not in reverse],text_references=references)
+
 def verify():
  actual={str(p.relative_to(HERE)):sha(p.read_bytes())for p in HERE.rglob('*')if p.is_file()and p!=HERE/'manifest.json'}
  assert not any(p.is_symlink()for p in HERE.rglob('*'));assert actual==load(HERE/'manifest.json')
@@ -88,6 +148,11 @@ def verify():
   assert read(folder/'linker.sh')==expected.encode()
  old_map=parent.read(PARENT/'builds/candidate/link.map').decode();new_map=read(HERE/'builds/candidate/link.map').decode()
  mapping=function_mapping(w,p2,before,candidate,old_map,new_map)
+ closure=text_data_closure(w,p2,before,candidate,old_map,new_map,mapping)
+ assert closure==load(HERE/'layout/rebinding.json')
+ assert closure['text_relocations']==2212
+ assert closure['relocated_object_fields']==379 and len(closure['object_bindings'])==990
+ assert not closure['unreferenced_before']and not closure['unreferenced_after']
  # Only complete input-section selectors may change in the SDK-preserving layout.
  clean=lambda s:re.sub(r'\S+\("[^"\n]+"\)','@INPUT_SECTION@',s)
  assert clean(parent.read(PARENT/'layout/ordered.ld').decode())==clean(read(HERE/'layout/ordered.ld').decode())
@@ -115,7 +180,7 @@ def verify():
  assert counters[0]==counters[1]and sum(counters[0].values())==105
  prior.check_runtime(load(HERE/'runtime.json'),parent.load(PARENT/'runtime.json'),sha(original),sha(stripped))
  execution=load(HERE/'runtime-execution.json');assert execution['jobs']==6 and execution['candidate_sha256']==sha(stripped)
- return dict(normalized_functions=578,raw_local_functions=198,all_compiled_functions_preserved=len(mapping),direct_calls_preserved=4587,global_source_records=105,readonly_bytes=21079,readonly_differing_bytes=0,data_pointer_targets_checked=379,runtime_cases=17331,runtime_suites=18,candidate_sha256=sha(stripped),symbols_sha256=sha(candidate),whole_elf_equal=False,whole_capture_equal=False)
+ return dict(normalized_functions=578,raw_local_functions=198,all_compiled_functions_preserved=len(mapping),direct_calls_preserved=4587,text_relocations_checked=closure['text_relocations'],relocated_object_fields_checked=closure['relocated_object_fields'],global_source_records=105,readonly_bytes=21079,readonly_differing_bytes=0,data_pointer_targets_checked=379,runtime_cases=17331,runtime_suites=18,candidate_sha256=sha(stripped),symbols_sha256=sha(candidate),whole_elf_equal=False,whole_capture_equal=False)
 
 if __name__=='__main__':
  p=argparse.ArgumentParser(description=__doc__);p.add_argument('--materialize',type=Path);a=p.parse_args();result=verify()

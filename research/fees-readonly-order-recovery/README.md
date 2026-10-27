@@ -11,11 +11,11 @@ The linker script rebinds complete compiler-emitted input sections to the prior 
 Two native builds reproduce identical stripped and symbol artifacts. Fresh execution runs all 17,331 cases across 18 suites, including the parent checks for application-log equality. These bounded runtime observations do not prove whole-program byte identity.
 
 ```sh
-python 3 -B research/fees-readonly-order-recovery/verify.py
-python 3 -B research/fees-readonly-order-recovery/test_verify.py
-python 3 -B research/fees-readonly-order-recovery/verify.py --materialize /absolute/new/source
+python3 -B research/fees-readonly-order-recovery/verify.py
+python3 -B research/fees-readonly-order-recovery/test_verify.py
+python3 -B research/fees-readonly-order-recovery/verify.py --materialize /absolute/new/source
 ```
 
-The verifier authenticates the parent and source transformation, rederives all 586 function bindings using actual object ownership, checks all 4587 direct-call targets, checks the linker selectors against the emitted map, compares the full readonly section and all 379 data targets, and verifies both build receipts and saved runtime cases. The materializer recovers 46 source files plus the recorded linker script and wrapper. The original build controllers retain their local mounted paths; adapt those paths for another host while preserving their pinned inputs and flags.
+The verifier authenticates the parent and source transformation, rederives all 586 function bindings using actual object ownership, checks all 4587 direct-call targets, checks the linker selectors against the emitted map, compares the full readonly section and all 379 data targets, and verifies both build receipts and saved runtime cases. It also independently binds all 2,212 text relocations (64 function pointers and 2,148 readonly pointers), all 990 referenced data objects and their 379 relocated fields, preserving interior offsets through the reordered constant pools. Eight mutation tests include redirecting a real non-Source constant pointer while keeping normalized code and artifact hashes consistent. The materializer recovers 46 source files plus the recorded linker script and wrapper. The original build controllers retain their local mounted paths; adapt those paths for another host while preserving their pinned inputs and flags.
 
 The snapshot of all earlier unfinished source and experiments remains in [the work checkpoint](https://github.com/lalalune/pumpfun-source/pull/251). The parent of this accepted data-order change is [the Sharing recovery](../fees-sharing-handler-recovery/README.md).
