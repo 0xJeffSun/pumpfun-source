@@ -1,4 +1,5 @@
 use crate::*;
+use spl_type_length_value::variable_len_pack::VariableLenPack;
 #[path = "nested_create.rs"]
 mod nested_create;
 use anchor_spl::{token_interface::{self,Mint,TokenAccount},token_2022::Token2022,associated_token::AssociatedToken};
@@ -89,10 +90,9 @@ pub fn execute<'info>(ctx:Context<'_,'_,'_,'info,CreateV2<'info>>,name:String,sy
  };
  let rent_sysvar=Rent::get()?;
  let mint_info=a.mint.to_account_info();
- let base_size=mint_info.data_len();
- let metadata_size=anchor_lang::solana_program::borsh1::get_instance_packed_len(&metadata)
-  .map_err(anchor_lang::solana_program::program_error::ProgramError::from)?;
- let size=base_size+4+metadata_size;
+ let base_size=mint_info.data_len().checked_add(4).ok_or_else(|| error!(PumpError::Overflow))?;
+ let metadata_size=metadata.get_packed_len()?;
+ let size=base_size.checked_add(metadata_size).ok_or_else(|| error!(PumpError::Overflow))?;
  let rent=rent_sysvar.minimum_balance(size).saturating_sub(mint_info.lamports());
  if rent>0 {anchor_lang::system_program::transfer(CpiContext::new(a.system_program.to_account_info(),anchor_lang::system_program::Transfer{from:a.user.to_account_info(),to:a.mint.to_account_info()}),rent)?;}
  anchor_spl::token_2022_extensions::token_metadata_initialize(

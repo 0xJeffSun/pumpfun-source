@@ -111,9 +111,7 @@ pub fn sell(ctx:Context<SellV3>,amount:u64,min_sol_output:u64)->Result<()> {
     let next_real_quote=sub(curve.real_quote_reserves,quote)?;
     let next_creator=add(curve.creator_fee,creator_fee)?;
     let next_protocol=add(curve.protocol_fees,retained)?;
-    token_interface::transfer_checked(CpiContext::new(a.base_token_program.to_account_info(),TransferChecked{
-        from:a.associated_base_user.to_account_info(),mint:a.base_mint.to_account_info(),to:a.associated_base_bonding_curve.to_account_info(),authority:a.user.to_account_info()
-    }),amount,a.base_mint.decimals)?;
+    crate::sell_v2::user_token_transfers::transfer_user_tokens(&a.base_token_program,&a.associated_base_user,&a.associated_base_bonding_curve,a.user.as_ref(),a.base_mint.decimals,a.base_mint.as_ref().as_ref(),amount)?;
     if let Some(decimals)=quote_decimals {
       let mint_key=a.base_mint.key();let bump=[ctx.bumps.bonding_curve];let seeds:&[&[u8]]=&[b"bonding-curve",mint_key.as_ref(),&bump];
       for (to,amount) in [(a.associated_quote_user.to_account_info(),user_output),(a.buyback_fee_recipient.to_account_info(),buyback_fee)] {
