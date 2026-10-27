@@ -1305,3 +1305,27 @@ excerpt/derivative is published. Default native_build_verified, runtime_verified
 and whole_binary_identity_verified remain false. Full raw ELF/capture identity,
 indirect behavior and unrestricted transitive data remain open. No selected
 checkpoint changes.
+
+## Fees: checked native Crank credit — 27 October 2026
+
+The [Crank lamport-overflow proposal](../research/fees-crank-lamport-overflow/README.md)
+replaces one native destination `+=` with Anchor's checked `add_lamports`.
+Synthetic destination balances with insufficient `u64` headroom return the
+original's `ArithmeticOverflow` instead of the reconstruction's panic and
+`ProgramFailedToComplete`. This is an error-contract correction, not evidence
+of economically reachable live balances, an exploit or fund loss.
+
+The control preserves the current 553-window source, including the public
+instruction-module recovery, and imports PR197's three diagnostic expressions
+unchanged. Those prior recoveries are separately attributed. Fresh signed local
+replay corrects 15 control mismatches across 76 cases, with matching donation
+PDA/ATA rollback. The 17,331 existing suite comparisons and ten persistent
+create/deposit/crank steps pass. A clean dependency rebuild repeats both output
+hashes. Actual commands, source maps, compiler logs and runtime records are retained.
+
+All 553 normalized/118 raw-local counterparts, 406 unique pairs, 163 equal
+Location uses and 3,255 direct-edge observations remain. No new complete body
+match is claimed; Crank and 31 other original windows remain unmatched.
+Positional differing bytes increase 456,375→456,603 for the one-line fix, so
+the observed behavior improvement is not a whole-binary-distance gain. Selected
+checkpoints, original evidence, dependencies and existing harnesses are unchanged.
