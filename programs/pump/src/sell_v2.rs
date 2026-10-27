@@ -60,13 +60,11 @@ let c=&a.bonding_curve;let native=c.quote_mint==Pubkey::default();
  let bb=&a.buyback_fee_recipient;require_keys_neq!(*bb.key,Pubkey::default(),PumpError::BuybackFeeRecipientMissing);require!(a.global.buyback_fee_recipients.contains(bb.key),PumpError::BuybackFeeRecipientNotAuthorized);
  if a.user_volume_accumulator.user==Pubkey::default(){a.user_volume_accumulator.user=a.user.key();}
  if a.bonding_curve.quote_mint!=Pubkey::default(){
-  require!(a.associated_quote_bonding_curve.owner!=&anchor_lang::system_program::ID,anchor_lang::error::ErrorCode::AccountNotInitialized);
-  check_token(&a.associated_quote_bonding_curve,a.quote_mint.key(),a.bonding_curve.key())?;
+  crate::buy_v2::admit_associated_token_account(a.associated_quote_bonding_curve.as_ref(),&a.bonding_curve.to_account_info(),&a.quote_mint.key(),&a.quote_token_program.key(),a.user.as_ref(),&a.quote_mint.to_account_info(),false,a.system_program.as_ref(),a.quote_token_program.as_ref())?;
   require_keys_eq!(*a.associated_quote_user.owner,a.quote_token_program.key(),PumpError::AccountTypeNotSupported);
   check_token(&a.associated_quote_user,a.quote_mint.key(),a.user.key())?;{let d=a.associated_quote_user.try_borrow_data()?;let t=TokenAccount::try_deserialize(&mut &d[..])?;require_keys_eq!(t.owner,a.user.key(),PumpError::AccountTypeNotSupported);}
   for (destination,authority) in [(a.associated_creator_vault.to_account_info(),a.creator_vault.to_account_info()),(a.associated_user_volume_accumulator.to_account_info(),a.user_volume_accumulator.to_account_info()),(a.associated_quote_fee_recipient.to_account_info(),a.fee_recipient.to_account_info()),(a.associated_quote_buyback_fee_recipient.to_account_info(),a.buyback_fee_recipient.to_account_info())]{
-   if destination.owner==&anchor_lang::system_program::ID{anchor_spl::associated_token::create_idempotent(CpiContext::new(a.associated_token_program.to_account_info(),anchor_spl::associated_token::Create{payer:a.user.to_account_info(),associated_token:destination.clone(),authority:authority.clone(),mint:a.quote_mint.to_account_info(),system_program:a.system_program.to_account_info(),token_program:a.quote_token_program.to_account_info()}))?;}
-   check_token(&destination,a.quote_mint.key(),authority.key())?;
+   crate::buy_v2::admit_associated_token_account(&destination,&authority,&a.quote_mint.key(),&a.quote_token_program.key(),a.user.as_ref(),&a.quote_mint.to_account_info(),true,a.system_program.as_ref(),a.quote_token_program.as_ref())?;
   }
  }
 
