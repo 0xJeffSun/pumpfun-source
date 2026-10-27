@@ -3,19 +3,32 @@
 Mayhem is the active reconstruction priority. Other PRs can be reviewed and
 merged, but new body-recovery experiments should advance Mayhem first.
 
-The current [source/data research checkpoint](../research/mayhem-source-data-recovery/README.md)
-has 426 matching windows (70 raw-local), with 15 unmatched windows / 119,400
-text bytes. It preserves all earlier matches and repairs the recorded sweep-rate
-failures. Initializer rejection and genuine Pump CPI success are now covered in
-bounded tests. Complete data, indirect calls, source/build provenance and ELF
-identity remain open. The [parallel work map](MAYHEM-PARALLEL-WORK.md) assigns all
-remaining windows and cross-cutting work.
+The current [initializer composition](../research/mayhem-initializer-current-recovery-20261027/README.md)
+has **430/441 normalized windows: 100 raw-local, 330 normalized-only and 11
+unmatched**. The unmatched windows cover 110,328 of 706,744 original text bytes.
+The quote-aware validator and complete 960-byte initializer now match normalized
+code. Two current-source builds agree, and the packet binds 6,636 trade pairs
+and 69 initializer pairs to its exact artifact. These are bounded results;
+recursive code/data closure, original build provenance and whole-ELF identity
+remain open.
+
+The [current Legacy Buy composition](../research/mayhem-current-ownership-composition-20261027/README.md)
+retains that frontier with a 13,784-byte partial body versus 13,848 original
+bytes. Its fifty immediate callee shapes and seven Source records agree; two
+builds and 486 fresh signed pairs pass. It adds no complete window.
+
+The [parallel work map](MAYHEM-PARALLEL-WORK.md) lists all eleven remaining
+windows, completed work and cross-cutting obligations. Quote source/IR shape,
+trade ownership and error flow are the next active source-recovery targets.
+The [same-IR quote backend control](../research/mayhem-quote-backend-replay-20261027/README.md)
+adds diagnostic evidence without a new function match. Sweep/burn work remains
+outside the currently active scope.
 
 ## Historical native-parser and curve plans
 
 The following records retain their original candidate bindings. Their old
 "current" measurements and unfinished-task lists are superseded by the linked
-426-window checkpoint and work map above.
+430-window checkpoint and work map above.
 
 The then-current research baseline was
 [native Program parser recovery](../research/mayhem-native-program-recovery/README.md),
@@ -137,11 +150,12 @@ alignment-aid diff as an identity result; preserve complete call/data checks.
 
 ## Parallel continuation
 
-The current checkpoint is the [426-window source/data recovery](../research/mayhem-source-data-recovery/README.md).
-The [work map](MAYHEM-PARALLEL-WORK.md) assigns all fifteen remaining windows,
-unresolved data extents, indirect calls, toolchain provenance and ELF layout.
-Both the earlier 34-case sweep-rate gap and the new ten-case counter gap are
-repaired in this composition, with their failing parent receipts retained.
+Use the [current 430-window composition](../research/mayhem-initializer-current-recovery-20261027/README.md)
+as the integration parent and the [work map](MAYHEM-PARALLEL-WORK.md) as the
+remaining-body inventory. Preserve the exact source/build bindings of all
+historical experiments; their independent gains and runtime cases are not
+additive. Isolated caches and content-based package invalidation make parallel
+screening efficient without sharing mutable build outputs.
 
 Future source changes must preserve previously verified bodies, call targets,
 Source records and runtime behavior. Every new combination needs its own build
