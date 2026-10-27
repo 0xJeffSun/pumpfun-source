@@ -3,10 +3,10 @@
   "programs": [
     {
       "name": "pump",
-      "matched_windows": 712,
+      "matched_windows": 720,
       "windows": 1035,
       "raw_bodies": 123,
-      "matched_text_bytes": 852944,
+      "matched_text_bytes": 871992,
       "text_bytes": 1792208
     },
     {
@@ -43,10 +43,10 @@
     }
   ],
   "totals": {
-    "matched_windows": 2834,
+    "matched_windows": 2842,
     "windows": 3338,
     "raw_bodies": 1041,
-    "matched_text_bytes": 3660096,
+    "matched_text_bytes": 3679144,
     "text_bytes": 5213128,
     "complete_elf_programs": 1,
     "programs": 5

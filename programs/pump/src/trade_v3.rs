@@ -116,27 +116,22 @@ pub fn sell(ctx:Context<SellV3>,amount:u64,min_sol_output:u64)->Result<()> {
     let next_real_quote=sub(curve.real_quote_reserves,quote)?;
     let next_creator=add(curve.creator_fee,creator_fee)?;
     crate::sell_v2::user_token_transfers::transfer_user_tokens(&a.base_token_program,&a.associated_base_user,&a.associated_base_bonding_curve,a.user.as_ref(),a.base_mint.decimals,a.base_mint.as_ref().as_ref(),amount)?;
-    let mint_key=a.base_mint.key();let bump=[ctx.bumps.bonding_curve];
-    let seeds:&[&[u8]]=&[b"bonding-curve",mint_key.as_ref(),&bump];
-    if let Some(decimals)=quote_decimals {
-      if user_output!=0 {
-        token_interface::transfer_checked(CpiContext::new_with_signer(a.quote_token_program.to_account_info(),TransferChecked{from:a.associated_quote_bonding_curve.to_account_info(),mint:a.quote_mint.to_account_info(),to:a.associated_quote_user.to_account_info(),authority:a.bonding_curve.to_account_info()},&[seeds]),user_output,decimals)?;
-      }
-    }else{
-      a.bonding_curve.sub_lamports(user_output)?;
-      a.user.add_lamports(user_output)?;
-    }
+    let source_quote=if is_sol{None}else{Some(a.associated_quote_bonding_curve.as_ref())};
+    let user_quote=if is_sol{None}else{Some(a.associated_quote_user.as_ref())};
+    quote_payments::transfer_to_user(
+        is_sol,a.base_mint.as_ref().as_ref(),a.bonding_curve.as_ref(),a.user.as_ref(),
+        user_output,&a.quote_token_program,quote_decimals.unwrap_or_default(),a.quote_mint.as_ref().as_ref(),
+        source_quote,user_quote,ctx.bumps.bonding_curve,
+    )?;
     let (buyback_fee,retained)=v3_buyback_split(protocol_fee,buyback_bps);
     let next_protocol=add(curve.protocol_fees,retained)?;
     let buyback_received=if is_sol{buyback_fee}else{sub(buyback_fee,quote_fee_for_amount(&quote_fee,buyback_fee,false)?)?};
-    if let Some(decimals)=quote_decimals {
-      if buyback_fee!=0 {
-        token_interface::transfer_checked(CpiContext::new_with_signer(a.quote_token_program.to_account_info(),TransferChecked{from:a.associated_quote_bonding_curve.to_account_info(),mint:a.quote_mint.to_account_info(),to:a.buyback_fee_recipient.to_account_info(),authority:a.bonding_curve.to_account_info()},&[seeds]),buyback_fee,decimals)?;
-      }
-    }else{
-      a.bonding_curve.sub_lamports(buyback_fee)?;
-      a.buyback_fee_recipient.add_lamports(buyback_fee)?;
-    }
+    let buyback_quote=if is_sol{None}else{Some(a.buyback_fee_recipient.as_ref())};
+    quote_payments::transfer_to_owned(
+        is_sol,a.base_mint.as_ref().as_ref(),a.bonding_curve.as_ref(),a.buyback_fee_recipient.to_account_info(),
+        buyback_fee,&a.quote_token_program,quote_decimals.unwrap_or_default(),a.quote_mint.as_ref().as_ref(),
+        source_quote,buyback_quote,ctx.bumps.bonding_curve,
+    )?;
     let curve=&mut a.bonding_curve;
     curve.virtual_token_reserves=next_base;curve.virtual_quote_reserves=next_quote;
     curve.real_token_reserves=next_real_base;curve.real_quote_reserves=next_real_quote;
@@ -489,3 +484,6 @@ fn buy_fee_market_cap(curve: &BondingCurve, mint: &Mint) -> Result<u128> {
     Ok(u128::from(selected_supply) * u128::from(curve.virtual_quote_reserves)
         / u128::from(curve.virtual_token_reserves))
 }
+
+#[path="curve_quote_payments.rs"]
+pub mod quote_payments;

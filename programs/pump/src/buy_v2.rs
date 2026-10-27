@@ -144,7 +144,7 @@ use crate::legacy_sell::fee_cpi::fee as ceil_fee;
 fn check_token(info:&AccountInfo,mint:Pubkey,owner:Pubkey)->Result<()>{let d=info.try_borrow_data()?;let t=TokenAccount::try_deserialize(&mut &d[..])?;require_keys_eq!(t.mint,mint,PumpError::MintDoesNotMatchBondingCurve);let _=owner;Ok(())}
 
 #[path="v2_native_payments.rs"]
-mod native_payments;
+pub(crate) mod native_payments;
 
 #[path="v2_token_transfers.rs"]
 mod token_transfers;
