@@ -4,6 +4,26 @@ The [full audit](RECONSTRUCTION-AUDIT.md) and its generated tables retain their
 explicit `1463bd22` snapshot. This log records later research without silently
 changing that baseline or promoting new selected artifacts.
 
+## Mayhem: sweep count and native-rent failure origins
+
+The [sweep failure recovery](../research/mayhem-sweep-failure-recovery/README.md)
+repairs 58 diagnostic differences in 692 fresh sweep cases: 32 account-count
+errors and 26 rent-underflow panics. Two source-file changes restore the original
+`require!` logs, handler-specific Source locations and SweepEvent origin.
+Another 150 rate-limit cases and all 6,636 trade cases pass on the exact artifact;
+all non-compute logs and checked effects agree. The three-sided sweep receipts
+and trade receipts include 15,798 verified signed records; corpora overlap and
+are not new unique scenario counts.
+
+The current historical-macro initializer parent reproduces byte for byte before
+the patch, and the recovered build repeats exactly. All 430 normalized / 141 raw
+matches, 4,295 positive call observations and 448 positive Source observations
+survive. The raw count is separately qualified historical-macro context; the
+selected current-framework row remains 100. Both full sweep handlers remain
+unmatched, so the frontier stays at eleven unmatched windows. Offline verification
+and twenty instruction/data/receipt corruption tests pass. No checkpoint promotion
+or whole-binary identity is claimed.
+
 ## Pump Round30: transfer-fee helpers and ATA cleanup
 
 The maintained [Round30 checkpoint](../repro/pump/main-contract-round30-20261027/README.md)
