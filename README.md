@@ -123,8 +123,9 @@ Pump Round34 passes 10,468 full cases plus 7,536 focused executions, with 18,000
 paired diagnostic-log cases. AMM passes 17,462 full cases plus the separate
 account, fee, CPI, boundary and error-order matrices recorded in its checkpoint.
 The [independent Pump/AMM migration-pair replay](research/pump-amm-migration-composition/README.md)
-checks 65 signed inputs in four program combinations: 260 executions and 195
-comparisons, with no differences. This remains bounded composition evidence.
+pairs the frozen Round34 Pump and AMM643 artifacts across 65 signed inputs
+in four combinations: 260 executions and 195 comparisons, with no differences.
+It does not qualify the newer AMM647 composition.
 These corpora overlap and must not be summed as unique scenarios. Tests use
 captured programs in local VMs; they do not establish current-chain acceptance.
 
