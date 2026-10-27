@@ -225,3 +225,29 @@ This is an independent control of the old fifteen-input PR214 source, preserving
 native Program source or add recoveries. Its 720-byte text-size difference is
 explained by two duplicate function-shape counts, not proved to be a historical
 linker decision. Whole original identity remains unproved.
+
+## PR224: SweepBuyback source-only proposal
+
+Merged as `aafcc037`. The source verifier, all fourteen source tests (including
+an added narrow-whitespace check), and exact 43-input materialization pass.
+Review preserves the literal reversible patch with a package-local attribute;
+no source input or source patch bytes were changed. The proposal retains its
+explicit false native-build/runtime/whole-identity claims. Unpublished local
+execution claims are not acceptance evidence for this review, and PR219's
+independently published destination arithmetic fix keeps its prior credit.
+
+## PR225: legacy update caller and finishing helper
+
+Merged as `ed5ac169e01c2542a4c1305f7e3a9ba160b54ed5` after marking the reviewed
+draft ready. The complete verifier and all three negative controls pass. The
+packet binds two complete normalized bodies (5,672 and 5,640 bytes), 59 direct
+callee shapes and all 40 direct data references; the independent Fees frontier
+reaches 572/585 with 143 raw-local matches. This review does not rerun the full
+saved 17,331-case suite or compile a new artifact.
+
+Sixteen fresh legacy-update comparisons match errors, accounts, CPI, return
+values and events. Fourteen also have identical application logs. Two retain
+the parent's existing remaining-account source-location difference (original
+update_fee_shares.rs:186 versus candidate sharing_update.rs:230); neither is a
+new regression. The merged packet's files were verified identical to the
+reviewed head. Canonical selected checkpoints remain unchanged.
