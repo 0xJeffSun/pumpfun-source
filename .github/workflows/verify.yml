@@ -151,6 +151,8 @@ jobs:
               python -I -B research/mayhem-historical-macro-current-20261027/test_verify.py
               python -I -B research/mayhem-historical-framework/verify.py
               python -I -B research/mayhem-historical-framework/test_verify.py
+              python -I -B research/mayhem-historical-root-compat/verify.py
+              python -I -B research/mayhem-historical-root-compat/test_verify.py
               python -I -B research/mayhem-allocator-context/verify.py
               python -I -B research/mayhem-allocator-context/test_verify.py
               python -B research/mayhem-provider-sharing/verify.py --repository-root .

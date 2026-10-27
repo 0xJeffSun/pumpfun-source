@@ -728,3 +728,20 @@ Anchor APIs. This is a successful curve-level sufficiency control, not a complet
 program candidate. The earlier mixed dependency failure is retained. Root API
 compatibility, source attribution and runtime qualification remain unresolved;
 no existing whole-program coverage count is changed.
+
+### Historical framework root API compatibility
+
+[The root compatibility packet](../research/mayhem-historical-root-compat/README.md)
+resolves the historical runtime's root compiler errors with two explicit Context
+lifetime expansions and removal of one empty implementation of an absent trait.
+A fresh historical dependency/root build exactly repeats the raw and separately
+stripped ELFs from two incremental roots. The 66-file baseline yields 403/441
+normalized matches, 62 raw-local matches and 402 injective assignments. A fresh
+current-runtime native control yields 428/75/427: the historical family loses 25
+normalized windows and gains none. This bounded comparison does not justify
+replacing the current source. Fifty of 88 dependency archive identities differ
+between fresh and reused cohorts despite equal final ELFs. Full source edits,
+compiler records, all original-window matches and failed setup evidence are
+retained. These counts are separate from the newer current-source composition;
+whole-original byte identity, historical attribution and runtime qualification
+remain open, with zero target executions in this packet.
