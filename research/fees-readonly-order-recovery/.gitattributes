@@ -1,0 +1,3 @@
+# Preserve reconstructed source spans and exact patch context bytes.
+source.patch -text -whitespace
+overrides/** -text -whitespace
