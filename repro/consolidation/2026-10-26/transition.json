@@ -7,8 +7,8 @@
     {
       "path": "README.md",
       "before_sha256": "cae913d4d3f2066403162f653a0cf35b39620fb08877b1b308c08ccce4a53678",
-      "after_sha256": "4bb6a430ec9f9bfaab93d2edf9a72fea65c0878fb1bf40bb81b5f039c48e38cc",
-      "reason": "Record shared buyback update parser and dispatch recovery, refreshed function/call inventory and scoped literal checks while preserving selected checkpoints."
+      "after_sha256": "94cda368a3fb3d582baa9ff8175895065ea9b224393d0ffa1e8a3f4295c2677f",
+      "reason": "Record six recovered event-context bodies, rejected per-context controls, refreshed inventory, and the distinct source-only Relay proposal without changing selected checkpoints."
     },
     {
       "path": ".github/workflows/verify.yml",
