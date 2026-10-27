@@ -23,9 +23,12 @@ for label,count in expected.items():
     if label!='linux-baseline':assert record['dependency_cache']['main_freshly_compiled']
     with tarfile.open(build/'primary.tar.gz')as archive:
         archived={m.name:sha(archive.extractfile(m).read())for m in archive.getmembers()if m.isfile()}
-    primary=Path(record['primary_source_directory'])
-    for name,digest in record['primary_source_sha256'].items():
-        relative=(ROOT/name).relative_to(primary).as_posix();assert archived[relative]==digest
+    parts=Path(record['primary_source_directory']).parts;bound=record['primary_source_sha256'];prefix=None
+    for n in range(1,len(parts)):
+        trial='/'.join(parts[-n:])+'/'
+        if all(k.startswith(trial)for k in bound):prefix=trial;break
+    assert prefix
+    for name,digest in bound.items():assert archived[name[len(prefix):]]==digest
     blobs={name:gzip.decompress((build/(name+'.gz')).read_bytes())for name in['unstripped.so','candidate.so']}
     assert sha(blobs['unstripped.so'])==record['unstripped_sha256']
     assert sha(blobs['candidate.so'])==record['comparison']['candidate_sha256']
