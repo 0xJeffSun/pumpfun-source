@@ -9,9 +9,9 @@ snapshot retains `1463bd22` audit bindings; current selections are recorded in
 [completion ledger](COMPLETION.md) remains a selected-checkpoint record; its old
 candidate paths and “current” prose must not override newer evidence.
 
-Current [Pump Round34](../repro/pump/main-contract-round34-20261027/README.md)
-has 137 raw-local matches, 596 normalized-only matches and 302 unmatched windows.
-The unmatched windows cover 896,792 original text bytes. Remaining bodies,
+Current [Pump Round35](../repro/pump/main-contract-round35-20261027/README.md)
+has 145 raw-local matches, 592 normalized-only matches and 298 unmatched windows.
+The unmatched windows cover 892,160 original text bytes. Remaining bodies,
 data, relocations, uncovered behavior and original build provenance remain open.
 
 Current [AMM checkpoint](../repro/pump_amm/event-decoder-recovery-20261027/README.md)
@@ -22,19 +22,21 @@ The later [optional-u64 probe](../repro/pump_amm/event-decoder-recovery-20261027
 records 123 differences among 264 short-tail cases; its correction is not in
 this sealed checkpoint. Complete data/call identity and provenance remain open.
 
-Current Mayhem research is the [qualified Buy/Sell quote composition](../research/mayhem-quotes-current-recovery-20261027/README.md):
-100 raw-local, 332 normalized-only and nine unmatched windows / 107,952 original
+Current Mayhem research is the [qualified macro composition](../research/mayhem-current-macro-call-closure-20261027/README.md):
+141 raw-local, 291 normalized-only and nine unmatched windows / 107,952 original
 text bytes. O0092 and O0093 match their complete 1,256-byte and 1,120-byte bodies;
 all twenty immediate callees and twenty ordered typed references agree. The
 960-byte initializer remains complete and the previous partial Legacy Buy body
 is preserved. Two builds, 6,636 fresh trade pairs and 69 initializer pairs pass.
-Large trade handlers, data/call closure and whole-ELF identity remain unresolved.
+Large trade handlers, remaining data/call closure and whole-ELF identity remain unresolved.
 
-The [direct-call closure audit](../research/mayhem-direct-call-closure-20261027/README.md)
-adds a specific allocator task: every current O0210 counterpart calls a
-`finish_grow` specialization that differs from original O0209, even though a
-matching O0209 body exists elsewhere. Repair the actual call destination and
-its seven transitive callers while preserving the qualified source's matches.
+The [current macro composition](../research/mayhem-current-macro-call-closure-20261027/README.md)
+closes the allocator task identified by the earlier direct-call audit: O0210 now
+calls the matching 328-byte `finish_grow`, closing it and seven affected windows.
+The direct-call relation now covers 422/432 matched bodies; ten still depend on
+the missing business bodies. Global data, indirect calls, layout and historical
+source/toolchain provenance remain work. The [441-row inventory](../research/mayhem-current-macro-call-closure-20261027/inventory.tsv)
+and [nine-body work map](MAYHEM-PARALLEL-WORK.md#all-remaining-windows) list the exact scope.
 The [O0075 wrapper attribution](../research/mayhem-sweep-admin-attribution-20261027/README.md)
 identifies SweepFeesAdmin without closing its body; that lane remains paused.
 

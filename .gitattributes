@@ -1431,3 +1431,7 @@ research/mayhem-amm-handler-shape-controls-20261027/controls/**/overrides/** -wh
 research/mayhem-amm-handler-shape-controls-20261027/controls/**/source.patch -whitespace
 repro/pump_amm/event-decoder-recovery-20261027/results/** -whitespace
 repro/pump_amm/event-decoder-recovery-20261027/followup/** -whitespace
+
+# Keep sealed empty TSV fields and unified-diff context byte-identical.
+research/mayhem-current-macro-call-closure-20261027/inventory.tsv -whitespace
+research/mayhem-current-macro-call-closure-20261027/source/change.patch -whitespace

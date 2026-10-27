@@ -1,8 +1,8 @@
 # Parallel Mayhem reconstruction work
 
 The objective remains byte-identical Rust reproduction, including calls, data,
-relocations and ELF layout. The [current Buy/Sell quote composition](../research/mayhem-quotes-current-recovery-20261027/README.md)
-has **432/441 normalized windows: 100 raw-local, 332 normalized-only and 9
+relocations and ELF layout. The [current macro composition](../research/mayhem-current-macro-call-closure-20261027/README.md)
+has **432/441 normalized windows: 141 raw-local, 291 normalized-only and 9
 unmatched**. The unmatched windows total **107,952 original text bytes**.
 Normalized body matches do not establish recursive semantic or whole-ELF equality.
 
@@ -17,7 +17,7 @@ source and compiler investigations proceed.
 | --- | --- |
 | AMM trade and quote bodies | O0077 and O0079; cap/min selection, retained-reserve arithmetic, ownership and error flow |
 | Legacy and V2 trade bodies | O0081–O0084; source ownership, fallible arithmetic and CPI error lifetime |
-| Runtime and layout | O0210 → O0209 allocator-provider mismatch and seven transitive callers; remaining data/indirect-call closure, section layout and ELF equality |
+| Runtime and layout | Allocator-provider repair is qualified; continue remaining data/indirect-call closure, section layout and ELF equality |
 | Integration | Preserve the 432-window parent, qualify combinations with fresh builds and signed local replays, synchronize documentation and PRs |
 
 Sweep/burn work is outside the active scope. O0073 and O0076 are connected to the
@@ -27,7 +27,7 @@ available under its original artifact bindings.
 
 ## All remaining windows
 
-The table is derived from the current packet's [441-row inventory](../research/mayhem-quotes-current-recovery-20261027/inventory.json).
+The table is derived from the current packet's [441-row inventory](../research/mayhem-current-macro-call-closure-20261027/inventory.json).
 Each unmatched original window occurs once. Body names are reconstruction
 attributions, not authenticated original symbols.
 
@@ -83,8 +83,9 @@ Buy body; it is not promoted over the qualified 432/100 source.
 
 The [fresh Linux closure follow-up](../research/mayhem-direct-call-closure-20261027/README.md#fresh-linux-follow-up)
 repeats the same 414-window relation and the same 18 unclosed windows on two
-fresh-dependency artifacts. The allocator task remains an actual call-target
-problem; merely rebuilding the previous source with a fresh cache did not fix it.
+fresh-dependency artifacts. Those unchanged-source builds retain the allocator
+call-target problem; the qualified macro/IDL source change now fixes it without
+changing the nine-body list.
 
 ## Integration requirements
 
@@ -102,14 +103,15 @@ explicit for each packet. Whole-ELF identity remains false.
 
 ## Ordered direct-call audit
 
-The [qualified-parent direct-call relation](../research/mayhem-direct-call-closure-20261027/README.md)
-retains 594 of 722 normalized pairs, covering 414 of the 432 body-matched
-windows. Eighteen windows have no direct-closed counterpart: ten depend on
-unmatched handlers, and eight on an allocator-provider mismatch rooted at
-O0210. O0209 has a matching body elsewhere, but O0210 calls a different
-`finish_grow` specialization. This adds a target-by-target recovery obligation,
-not a new body match or semantic-equivalence claim. Indirect/data closure and
-whole-ELF identity remain open.
+The [qualified macro composition](../research/mayhem-current-macro-call-closure-20261027/README.md)
+raises the original 414-window direct-call relation to **422 of 432 matched
+windows**. O0210 now calls the matching O0209 allocator specialization, closing
+O0207, O0208, O0210, O0214, O0215, O0217, O0219 and O0222. Ten matched windows
+still have no direct-closed counterpart because they depend on unmatched handlers.
+All prior raw matches survive, with 41 additional raw-local bodies in the actual
+composed artifact. Two repeat builds and all 6,636 trade / 69 initializer pairs
+pass. Indirect/data closure, historical provenance and whole-ELF identity remain
+open; these counts are separate from a semantic-equivalence claim.
 
 ## Current-source allocator-provider composition
 
@@ -122,7 +124,7 @@ all prior normalized and raw matches preserved. Three enabled builds agree;
 6,636 fresh trade pairs pass independent signature/state/non-compute-log checks.
 
 This remains a mixed-framework source-context diagnostic, separate from the
-selected 100-raw checkpoint. No new normalized body is recovered. The upstream
+qualified ordered 141-raw checkpoint. No new normalized body is recovered. The upstream
 gate returns the direct-closed set to 414, but its complete ELF differs from the
 baseline. Indirect/data closure, initializer qualification on this artifact,
 historical source attribution and whole-original identity remain open.

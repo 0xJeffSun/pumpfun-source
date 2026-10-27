@@ -34,9 +34,9 @@ all remaining code, calls, data, relocations and build provenance.
 | [Pump Round35](repro/pump/main-contract-round35-20261027/README.md) | 737 / 1,035 | 71.2% | 145 | 592 | 298 | No |
 | [PumpSwap / AMM](repro/pump_amm/event-decoder-recovery-20261027/README.md) | 647 / 785 | 82.4% | 148 | 499 | 138 | No |
 | [Fees research](research/fees-extend-integration/README.md) | 582 / 585 | 99.5% | 200 | 382 | 3 | No |
-| [Mayhem research](research/mayhem-quotes-current-recovery-20261027/README.md) | 432 / 441 | 98.0% | 100 | 332 | 9 | No |
+| [Mayhem research](research/mayhem-current-macro-call-closure-20261027/README.md) | 432 / 441 | 98.0% | 141 | 291 | 9 | No |
 | [Donation Relay](repro/donation-relay/canonical-exact-selection/README.md) | 492 / 492 | 100.0% | 492 | 0 | 0 | **Yes** |
-| **Total** | **2,890 / 3,338** | **86.6%** | **1,085** | **1,805** | **448** | **1 / 5** |
+| **Total** | **2,890 / 3,338** | **86.6%** | **1,126** | **1,764** | **448** | **1 / 5** |
 
 “Windows” are inferred original machine-function ranges, including framework and
 runtime helpers. Complete normalized matches mask specified call/address
@@ -79,33 +79,37 @@ alternative source is an unpromoted compiler-context diagnostic.
 
 ## Behavior and remaining work
 
-The [qualified current Mayhem Buy/Sell quote composition](research/mayhem-quotes-current-recovery-20261027/README.md)
-reaches 432/441 normalized windows while retaining all 100 raw matches, the
-complete initializer and the prior Legacy Buy ownership body. Two builds agree;
+The [qualified current Mayhem macro composition](research/mayhem-current-macro-call-closure-20261027/README.md)
+retains 432/441 normalized windows and all prior 100 raw matches, reaching
+141 raw-equal and 291 normalized-only bodies. Two complete builds agree;
 6,636 fresh trade pairs and 69 initializer pairs pass with 13,440 checked signed
-records. Both quote helpers match completely: 1,256 and 1,120 bytes, with twenty
-ordered immediate callees and twenty typed references checked in total.
-[Nine bodies remain](research/mayhem-quotes-current-recovery-20261027/remaining.md),
-with every function classified in the [441-row inventory](research/mayhem-quotes-current-recovery-20261027/inventory.tsv).
+records. The complete 1,256-byte Buy quote, 1,120-byte Sell quote and 960-byte
+initializer retain their ordered calls and 24 bounded typed references.
+The prior partial trade handlers are preserved. [Nine bodies remain](docs/MAYHEM-PARALLEL-WORK.md#all-remaining-windows),
+with every function classified in the [441-row inventory](research/mayhem-current-macro-call-closure-20261027/inventory.tsv).
 
-The [recursive direct-call audit](research/mayhem-direct-call-closure-20261027/README.md)
-retains compatible counterparts for 414 of those 432 matched bodies. Eighteen
-lack direct-call closure: ten depend on missing business handlers, while eight
-trace to an allocator specialization mismatch. Data and indirect-call identity
-remain separate obligations. The formerly unnamed O0075 is now [statically
+The historical macro/IDL context repairs the actual allocator call target and
+raises the recursive direct-call relation from 414 to 422 of the 432 matched
+bodies. Ten matched windows still lack direct-call closure because they depend
+on unmatched business handlers. Data, indirect calls, global layout and original
+build provenance remain open. The formerly unnamed O0075 is now [statically
 attributed to SweepFeesAdmin](research/mayhem-sweep-admin-attribution-20261027/README.md);
 its body remains unmatched and sweep execution remains outside the active scope.
 
 The [native historical-macro composition](research/mayhem-native-current432-composition/README.md)
 also reproduces 432 normalized windows and 85 raw-local matches in its own
-recipe. Its earlier Legacy Buy source does not replace the qualified 432/100
-checkpoint or add to that checkpoint's raw count.
+recipe. Its earlier Legacy Buy source remains distinct. The later
+[current native ownership composition](research/mayhem-current-native-ownership-composition/README.md)
+preserves the closer Legacy Buy body and passes 486 fresh pairs; the independent
+[native allocator composition](research/mayhem-current-provider-closure-20261027/README.md)
+confirms 422 direct-closed windows and 6,636 fresh pairs. These default-order
+85-raw results are not added to the qualified 141-raw count.
 
 The [portable Linux recipe](research/mayhem-clean-linux-build-20261027/README.md)
 reproduces both full artifacts across two fresh dependency builds. It preserves
 432 normalized / 84 raw-local bodies with default section order. Rechecking
-both fresh outputs retains the [same 414-window direct-call relation](research/mayhem-direct-call-closure-20261027/README.md#fresh-linux-follow-up);
-a fresh cache alone does not repair the remaining call targets.
+both unchanged-parent outputs retains the [same 414-window direct-call relation](research/mayhem-direct-call-closure-20261027/README.md#fresh-linux-follow-up);
+the macro source change above supplies the subsequent allocator repair.
 
 The [AMM handler shape controls](research/mayhem-amm-handler-shape-controls-20261027/README.md)
 isolate account-copy expansion, arithmetic error flow and native-key evaluation

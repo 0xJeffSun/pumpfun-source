@@ -4,6 +4,42 @@ The [full audit](RECONSTRUCTION-AUDIT.md) and its generated tables retain their
 explicit `1463bd22` snapshot. This log records later research without silently
 changing that baseline or promoting new selected artifacts.
 
+## Qualified Mayhem macro composition and allocator call closure
+
+The [current 67-file composition](../research/mayhem-current-macro-call-closure-20261027/README.md)
+changes only the curve macro invocation and historical CreateEvent IDL. It
+preserves all 432 normalized and 100 prior raw-local windows, reaching **141
+raw-local / 291 normalized-only / nine unmatched**. No new complete normalized
+function is claimed. The real reserve helper now calls the matching 328-byte
+allocator, raising recursive ordered direct-call closure from **414 to 422**.
+The eight newly closed windows are O0207, O0208, O0210, O0214, O0215, O0217,
+O0219 and O0222. Ten matched bodies still depend on unmatched business handlers.
+
+Two curve builds and two qualified root builds repeat. All 447 linked function
+windows and 567 symbol-name occurrences are checked, including duplicates.
+Both quotes and the initializer retain 24 bounded typed references. Fresh local
+execution passes 6,636 trade pairs and 69 initializer pairs; independent saved
+verification authenticates 13,440 signed records and actual program identities.
+All 24 corruption/control tests pass, including altered allocated data, typed
+references, signed receipts and executable-account hashes. The complete
+[441-row inventory](../research/mayhem-current-macro-call-closure-20261027/inventory.tsv)
+separates local equality, actual counterparts and direct-call closure.
+
+Reviewed [PR #295](https://github.com/lalalune/pumpfun-source/pull/295) reproduces
+the closer partial Legacy Buy body under the native historical macro, with
+486 fresh pairs and 13 mutation tests. [PR #296](https://github.com/lalalune/pumpfun-source/pull/296)
+independently reproduces the same 67-file source in default Linux section order,
+with three repeats, 6,636 fresh pairs, verified signatures and five corruption
+tests in normal and optimized Python. Their 432/85 counts remain bound to those
+artifacts; they are not added to the qualified 141-raw result.
+
+With Pump Round35, AMM647 and Fees Extend, the five frontiers total
+**2,890/3,338 matched windows: 1,126 raw-local, 1,764 normalized-only and 448
+unmatched**. Matched text remains 3,824,784/5,213,128 bytes (73.4%). Only Relay
+has complete meaningful-ELF identity. Mayhem still needs nine bodies / 107,952
+original text bytes, remaining data and indirect calls, global layout and
+original source/toolchain provenance.
+
 ## Mayhem: complete Sell quote on the qualified current source
 
 The [new composition](../research/mayhem-sell-current-recovery-20261027/README.md) incorporates the independently

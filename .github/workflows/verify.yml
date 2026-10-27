@@ -36,6 +36,19 @@ jobs:
             commands: |
               python -B research/mayhem-quotes-current-recovery-20261027/verify.py
               python -B research/mayhem-quotes-current-recovery-20261027/test_verify.py
+          - suite: mayhem-current-macro-closure
+            commands: |
+              python -B research/mayhem-current-macro-call-closure-20261027/verify.py --require-runtime
+              python -B research/mayhem-current-macro-call-closure-20261027/test_verify.py
+          - suite: mayhem-current-native-ownership
+            commands: |
+              python -B research/mayhem-current-native-ownership-composition/verify.py
+              python -B research/mayhem-current-native-ownership-composition/test_verify.py
+          - suite: mayhem-current-provider-closure
+            commands: |
+              python -B research/mayhem-current-provider-closure-20261027/verify.py --signatures
+              python -B research/mayhem-current-provider-closure-20261027/test_verify.py
+              python -O -B research/mayhem-current-provider-closure-20261027/test_verify.py
           - suite: mayhem-current-sell
             commands: |
               python -B research/mayhem-sell-current-recovery-20261027/verify.py
