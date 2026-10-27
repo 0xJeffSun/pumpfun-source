@@ -78,6 +78,14 @@ Measured on the 647 tree under load average ~80 (16 cores; 6 shared sbf slots, 1
 - Every build writes `timing.txt` (stage / lock wait / build / measure) and a `cargo -v` log.
 - `tools/variants.py`: N patch files → N parallel builds in APFS-cloned target dirs (exact mode clones the immutable primed cache
   `SP/shared/caches/xnative-v144`) → ranked gained/lost table (`table.json`).
+- `tools/vbatch.py`: N patches -> ONE slot -> N exact root-crate compiles back to back (direct rustc) -> ranked table. Smoke test on
+  651 (`evidence/vbatch-smoke-*`): prepare 5.6 s; one slot = 496 s wait + 75 s + 44 s compiles (two separate builds would have paid
+  two waits); comment-only patch = cache hit; comment in utils/math.rs -> bytes == base (97bd5553…); blank line atop
+  state/global_config.rs -> new bytes (867b4445…) with 651/148 unchanged. `variants.py` smoke test (parallel mode): comment patch
+  built in 27 s (no wait), duplicate = cache hit in 2 s.
+- `tools/fnloop.sh`: stage -> root-crate `--emit=llvm-ir` (one slot) -> fnllc check per (symbol, original window). 651 test:
+  TradeV2::exit vs 0xbf370 -> EQUAL (43 s wall incl. lock wait).
+- `tools/seed_main.sh`: build a checkpoint in both flavors so every lane's baseline is a cache hit (647 and 651 exact are cached).
 - `tools/rustc_replay.py`: root-crate rustc without cargo, using cargo's build plan (exact args/env/cwd); `--emit=llvm-ir` for the
   function-level loop.
 - `tools/fnllc.py` (function-level loop, extends amm-mid's irexp/objcmp): extract one function from root-crate IR, run llc with the
