@@ -42,6 +42,16 @@ already composes the correction with the 100-raw-local layout and supplies
 69 fresh initializer comparisons. These two evidence sets are not added
 together as extra recovered functions or unique scenarios.
 
+The [native qualified reproduction](../research/mayhem-native-qualified-identity/README.md)
+reproduces that successor's complete raw and stripped ELFs in three fresh Windows
+builds. Compiler-bound archive/member filename substitutions preserve all 456
+qualified input sections and the 100-raw-local / 428-normalized inventory.
+All linker inputs and failed controls are retained. The repeated final ELFs are
+identical even though 54 intermediate archives differ in Rust metadata or symbol
+indexes; their compiled object members repeat. This establishes another host
+recipe for the reconstructed checkpoint, not original build provenance or a
+new original function match. No new runtime execution is claimed.
+
 The [AMM sell-call successor](../research/mayhem-sell-quote-call-recovery/README.md)
 preserves those 426 windows and restores the shared O0093 quote call. Its ten
 callee and typed-data multisets match, and all 1,239 AMM sell cases have equal
