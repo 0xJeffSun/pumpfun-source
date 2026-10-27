@@ -29,6 +29,7 @@ jobs:
               python scripts/pump_verify_dependencies.py
               python repro/pump/metaplex-candidate-build-11/verify.py
               python -B repro/identity-audit/2026-10-25/verify.py
+              python -I -B research/recovery-findings-20261027/verify.py
               python -B repro/pump/metaplex-utilize-guard-source-recovery/verify.py
               python -B repro/pump/metaplex-candidate-build-12-review/verify.py
               python -B repro/pump/metaplex-candidate-build-13-review/verify.py

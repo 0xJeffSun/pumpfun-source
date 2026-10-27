@@ -4,6 +4,17 @@ The [full audit](RECONSTRUCTION-AUDIT.md) and its generated tables retain their
 explicit `1463bd22` snapshot. This log records later research without silently
 changing that baseline or promoting new selected artifacts.
 
+## Reviewed PR #263: preserve historical findings with corrected conclusions
+
+The [reviewed archive](../research/recovery-findings-20261027/README.md) retains
+all twelve original submission files unchanged. Its completion and impossibility
+claims are not adopted, and its proposed source changes remain unvalidated.
+Six retained native PumpSwap comparisons show both the original and candidate
+returning `6012`, contradicting the proposed blanket replacement with `6013`.
+The archive verifier checks those observations and the original submitted blobs.
+This adds no accepted function matches or new runtime execution; the current
+checkpoint tables remain authoritative.
+
 ## Reviewed PRs #261–262: historical Mayhem macro and Fees Social claim-v2
 
 The [complete historical macro control](../research/mayhem-historical-macro-context/README.md)

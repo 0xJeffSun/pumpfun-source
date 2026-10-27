@@ -1375,3 +1375,6 @@ research/fees-social-claim-v2-recovery/source.patch -whitespace
 # Preserve captured Windows line endings and curl progress receipts.
 research/mayhem-historical-macro-context/supplement-packages.json -whitespace
 research/mayhem-historical-macro-context/supplements/*.log -whitespace
+
+# Original submitted research is archived byte-for-byte, including whitespace.
+research/recovery-findings-20261027/submitted/** -whitespace
