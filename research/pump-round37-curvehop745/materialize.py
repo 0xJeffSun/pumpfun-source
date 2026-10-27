@@ -36,8 +36,34 @@ def reserve_swap(data):
         raise ValueError('reserve source, errors or coordinates changed')
     return changed
 
+def arithmetic_apply(staged):
+    pins = json.loads((HERE / 'arithmetic-pins.json').read_text())
+    changed = dict(staged)
+    for name, entry in pins['changes'].items():
+        name = str(safe_relative(name))
+        data = changed.get(name)
+        expected = entry['parent_sha256']
+        if (data is None) != (expected is None) or (data is not None and digest(data) != expected):
+            raise ValueError('exact arithmetic parent source required: ' + name)
+        for operation in entry['operations']:
+            old = operation['old']
+            new = operation['new'].encode()
+            if old is None:
+                if data is not None:
+                    raise ValueError('arithmetic added source already exists')
+                data = new
+            else:
+                old = old.encode()
+                if not old or data is None or data.count(old) != 1:
+                    raise ValueError('arithmetic source context must occur exactly once')
+                data = data.replace(old, new, 1)
+        if data is None or digest(data) != entry['changed_sha256']:
+            raise ValueError('arithmetic source, errors or coordinates changed')
+        changed[name] = data
+    return changed
+
 def materialize(parent, output, stage='curvehop745'):
-    if stage not in ('curvehop745', 'reserve746'):
+    if stage not in ('curvehop745', 'reserve746', 'arithmetic749'):
         raise ValueError('unknown source stage')
     parent, output = Path(parent).absolute(), Path(output).absolute()
     if any(p.is_symlink() for p in [parent, *parent.parents, output, *output.parents]):
@@ -63,11 +89,13 @@ def materialize(parent, output, stage='curvehop745'):
         if digest(data) != expected:
             raise ValueError('source mismatch: ' + name)
         staged[name] = swap(data) if name == PINS['changed_path'] else data
-    if stage == 'reserve746':
+    if stage in ('reserve746', 'arithmetic749'):
         reserve = json.loads((HERE / 'reserve-pins.json').read_text())
         name = str(safe_relative(reserve['changed_path']))
         staged[name] = reserve_swap(staged[name])
-    if len(staged) != 57:
+    if stage == 'arithmetic749':
+        staged = arithmetic_apply(staged)
+    if len(staged) != (58 if stage == 'arithmetic749' else 57):
         raise ValueError('unexpected source inventory')
     output.mkdir(parents=True)
     for name, data in staged.items():
@@ -81,7 +109,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--parent', required=True, type=Path)
     parser.add_argument('--output', required=True, type=Path)
-    parser.add_argument('--stage', choices=['curvehop745', 'reserve746'], default='curvehop745')
+    parser.add_argument('--stage', choices=['curvehop745', 'reserve746', 'arithmetic749'], default='curvehop745')
     args = parser.parse_args()
     result = materialize(args.parent, args.output, args.stage)
     print(json.dumps({'stage': args.stage, 'source_files': len(result), 'source_sha256': result}, indent=2, sort_keys=True))

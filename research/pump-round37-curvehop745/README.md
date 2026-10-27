@@ -51,3 +51,15 @@ Only source line 85 changes; no line is inserted or removed. Both addends are `u
 ```sh
 python3 -B "$PACKET/materialize.py" --parent "$PARENT" --stage reserve746 --output /fresh/path/reserve-source
 ```
+
+## Optional arithmetic stage: 749
+
+`--stage arithmetic749` additionally composes the checked constant-product helper and wrappers from [PR #339](https://github.com/lalalune/pumpfun-source/pull/339), exact head `3ce198c28260d45f7305910df0f3fb4749e42857`, onto the 746 stage. `arithmetic.patch` displays the three modified Rust files and one added helper; `arithmetic-pins.json` binds exact before/after contents and minimal context replacements. All other 54 inputs remain unchanged, including both earlier source corrections, lockfile, manifests and features. The default 745 and optional 746 stages remain independently selectable.
+
+The ordinary Linux SBF composition measures **749 / 1,035 injective normalized windows and 121 raw windows**, retaining all 746 normalized and all 121 raw matches. The three added original windows are `0x834c8` (736 bytes), `0x880b0` (2,136 bytes), and `0xa0838` (192 bytes). Their complete normalized bodies, direct ABI and error-origin boundaries are qualified: 22 direct call sites, 14 consumer-bounded direct data references, three relocated records and six referenced function slots were checked against their original counterparts. This is the direct boundary of these three bodies, not recursive whole-program equivalence.
+
+A separate root recompilation of the exact 58-source arithmetic stage reproduced both complete generated ELF files byte-for-byte, with all 355 dependencies unchanged and prior source/artifacts preserved. **Arithmetic runtime: NOT RUN. Reproducibility repeat: passed. Whole-original identity: false.** Generated-output reproducibility is not identity with the original binary. No public runtime suite or earlier-stage repeat result is inherited.
+
+This is an intentional original-bound error-behavior repair, not semantics-preserving relative to the previous baseline. For a quote of one and zero input reserve, the previous inline division could panic; the reconstructed checked helper instead returns the original DivisionByZero error 6026. Overflow 6024, division 6026 and narrowing 6025 retain their observed error origins. Source line spacing expresses observed Rust error Source coordinates (helper lines 13/17/19 and `trade_v3.rs:591`), not arbitrary instruction-layout padding. The checked subtraction is reached after existing nonzero-quote validation. Historical Rust source and recursive whole-program equivalence are not claimed.
+
+Select the separately preserved arithmetic stage with `--stage arithmetic749`. Its materializer/source tests do not compile or execute any program.

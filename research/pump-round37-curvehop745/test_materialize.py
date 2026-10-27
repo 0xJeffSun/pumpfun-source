@@ -83,4 +83,43 @@ class SourceTests(unittest.TestCase):
         self.assertLess(maximum + maximum, 1 << 128)
         for a in [0, 1, maximum]:
             for b in [0, 1, maximum]: self.assertLess(a+b, 1 << 128)
+    def arithmetic_parent(self):
+        out = self.root / 'reserve-parent'
+        m.materialize(PARENT, out, 'reserve746')
+        return {str(p.relative_to(out)): p.read_bytes() for p in out.rglob('*') if p.is_file()}
+    def test_exact_arithmetic_stage(self):
+        got = m.materialize(PARENT, self.root / 'source', 'arithmetic749')
+        expected = dict(m.PINS['parent_source_sha256'])
+        expected[m.PINS['changed_path']] = m.PINS['changed_source_sha256']
+        reserve = json.loads((m.HERE / 'reserve-pins.json').read_text())
+        expected[reserve['changed_path']] = reserve['changed_sha256']
+        pins = json.loads((m.HERE / 'arithmetic-pins.json').read_text())
+        expected.update({n:e['changed_sha256'] for n,e in pins['changes'].items()})
+        self.assertEqual(got, expected)
+        self.assertEqual(len(got), 58)
+    def test_arithmetic_preserves_other54_inputs(self):
+        before = self.arithmetic_parent(); after = m.arithmetic_apply(before)
+        edits = json.loads((m.HERE / 'arithmetic-pins.json').read_text())['changes']
+        self.assertEqual(sum(n not in edits for n in before), 54)
+        for n in before:
+            if n not in edits: self.assertEqual(before[n], after[n])
+        self.assertEqual(len(before), 57) # caller dictionary is not mutated
+    def test_arithmetic_already_applied_rejected(self):
+        with self.assertRaises(ValueError): m.arithmetic_apply(m.arithmetic_apply(self.arithmetic_parent()))
+    def test_arithmetic_source_mutation_rejected(self):
+        before = self.arithmetic_parent(); before['programs/pump/src/buy.rs'] += b'\n'
+        with self.assertRaises(ValueError): m.arithmetic_apply(before)
+    def test_arithmetic_added_file_collision_rejected(self):
+        before = self.arithmetic_parent(); before['programs/pump/src/util/constant_product.rs'] = b''
+        with self.assertRaises(ValueError): m.arithmetic_apply(before)
+    def test_arithmetic_missing_parent_rejected(self):
+        before = self.arithmetic_parent(); del before['programs/pump/src/trade_v3.rs']
+        with self.assertRaises(ValueError): m.arithmetic_apply(before)
+    def test_arithmetic_observed_source_coordinates(self):
+        after = m.arithmetic_apply(self.arithmetic_parent())
+        helper = after['programs/pump/src/util/constant_product.rs'].decode().splitlines()
+        self.assertIn('PumpError::Overflow', helper[12])
+        self.assertIn('PumpError::Overflow', helper[16])
+        self.assertIn('PumpError::DivisionByZero', helper[18])
+        self.assertIn('PumpError::Truncation', after['programs/pump/src/trade_v3.rs'].decode().splitlines()[590])
 if __name__ == '__main__': unittest.main(argv=['test_materialize.py', *remaining])
