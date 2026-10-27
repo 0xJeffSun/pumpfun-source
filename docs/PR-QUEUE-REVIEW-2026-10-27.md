@@ -251,3 +251,16 @@ the parent's existing remaining-account source-location difference (original
 update_fee_shares.rs:186 versus candidate sharing_update.rs:230); neither is a
 new regression. The merged packet's files were verified identical to the
 reviewed head. Canonical selected checkpoints remain unchanged.
+
+## PR226: BuyV2 shared trade validation
+
+Reviewed head `8a6c43c0f15544a9a610ef13d1bcd0f64eae120b` and merged as `c8db7e2b`
+after marking the draft ready. The packet verifier confirms the original wrapper,
+restored call, matched 1,192-byte validator and its nine ordered callees. It
+independently verifies 7,356 signature entries and the 24-case diagnostic probe.
+The Linux fifteen-input candidate retains its separate hashes and raw count;
+its measurements are not treated as a tested composition with the newer source.
+
+A separate follow-up now builds and tests the change on the native Program
+source, preserving the existing fourteen parser gains. Its bounded result and
+remaining 118 diagnostic differences are recorded in that follow-up packet.

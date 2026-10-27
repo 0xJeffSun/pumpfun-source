@@ -781,3 +781,14 @@ Burn families pass; 15,348 signatures and 624 complete admin account results
 verify independently. Five newly matched bodies retain an unmatched direct
 callee, and data/transitive closure is unproved. Initializer runtime is excluded.
 The canonical selected checkpoint is unchanged; whole Mayhem equality is false.
+
+## BuyV2 validator composition on the parser-recovery source
+
+The [follow-up packet](../research/mayhem-native-buy-v2-validation/README.md)
+keeps all 54 source/vendor inputs except BuyV2's duplicated trade-validation
+block. The restored call targets the complete O0094 counterpart and its nine
+ordered callees. All 341 window matches remain; no new complete body match is
+claimed. Two builds agree and 1,839 fresh comparisons pass. The checker verifies
+7,356 before/after signature entries, including 3,678 fresh candidate entries.
+Non-compute log differences remain in 118 cases, reduced from 130. Other runtime
+lanes retain the parser-recovery parent hash and were not rerun for this change.

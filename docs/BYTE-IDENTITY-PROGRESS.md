@@ -1786,3 +1786,13 @@ Darwin parent's whole hash. A separate all-dependency-clean build and the portab
 builder reproduce both proposal ELF hashes. BuyV2's complete body, full call/data
 closure, whole-ELF identity and later 16-input AMM composition remain unresolved.
 Originals, existing evidence and selected sources/checkpoints remain unchanged.
+
+## Native Program + BuyV2 shared-validator composition
+
+The [new composition](../research/mayhem-native-buy-v2-validation/README.md)
+verifies PR226's call restoration on the newer native Program source. Its two
+root builds are identical and preserve all 341 full-window matches. All 1,839
+fresh BuyV2 comparisons pass; 3,678 new signatures and 3,678 parent signature
+entries verify. Non-compute log differences decrease from 130 to 118. This is a
+restored call edge and diagnostic improvement, not a new complete body or ELF
+match; other parent runtime observations are not rebound to the new artifact.

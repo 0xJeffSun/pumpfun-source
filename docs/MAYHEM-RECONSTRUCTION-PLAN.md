@@ -90,3 +90,9 @@ the original unconditional ID check, including the all-zero System ID. All
 still call an unmatched destination; prioritize the boxed-account helpers and
 initializer closure alongside the ten named gaps. Initializer runtime remains
 unverified.
+
+The [BuyV2 shared-validator composition](../research/mayhem-native-buy-v2-validation/README.md)
+preserves the native Program source's 341 matches and restores O0083's call to
+O0094. Both root builds agree; 1,839 fresh BuyV2 cases pass. Non-compute log
+differences decrease from 130 to 118, so full diagnostics remain incomplete.
+The parent's other runtime lanes keep their original candidate binding.
