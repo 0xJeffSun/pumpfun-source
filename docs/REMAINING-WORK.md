@@ -18,13 +18,12 @@ is eliminated; it does not establish full toolchain equivalence or recover the
 initializer. Further work must still resolve source/IR shape and original
 compilation settings.
 
-Current [Fees Sharing research](../research/fees-sharing-handler-recovery/README.md)
+Current [Fees readonly-order research](../research/fees-readonly-order-recovery/README.md)
 has 198 raw-local, 380 normalized-only and seven unmatched windows, covering
-731,856 of 799,648 original text bytes. The 12,384-byte Sharing handler now
-matches under the existing normalizer with all 64 immediate callees checked.
-Six inspected call-target differences, 73 readonly bytes, an extra event helper,
+731,856 of 799,648 original text bytes. The full 21,079-byte readonly section
+now matches. Six inspected call-target differences, an extra event helper,
 absolute layout and original build provenance remain unresolved. The 46-file
-source successor has two matching builds and 17,331 fresh runtime comparisons;
+Rust successor has two matching builds and 17,331 fresh runtime comparisons;
 it remains separate from the selected Fees baseline.
 
 The [native Windows reproduction](../research/mayhem-native-reference-identity/README.md)

@@ -45,6 +45,16 @@ without changing section names or order. All 20 tests pass. The 54 intermediate
 archive differences are explicitly confined to metadata and symbol indexes;
 no new target execution or original-window recovery is claimed.
 
+## Fees: recover the complete readonly payload
+
+The [readonly-order successor](../research/fees-readonly-order-recovery/README.md)
+changes three Rust source files' declaration order and rebinds complete linker
+input sections. All 21,079 readonly bytes now match, closing the 73-byte gap.
+All 586 compiled function bodies and 4,587 direct-call bindings are preserved;
+the frontier remains 578 normalized and 198 raw-local matches. Both native builds
+are identical, and all 17,331 runtime cases pass. Seven functions, absolute layout,
+the extra event helper and whole-ELF equality remain unresolved.
+
 ## Fees: recover the complete Sharing handler
 
 Reviewed and merged PR #249 adds the [Sharing source successor](../research/fees-sharing-handler-recovery/README.md).
