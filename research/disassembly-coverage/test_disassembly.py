@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Reject incomplete, mutated, or misaddressed SBF disassembly evidence."""
 import json
+import os
 from pathlib import Path
 import shutil
 import struct
@@ -134,10 +135,21 @@ class DisassemblyCliTests(unittest.TestCase):
         (root / 'repro/programs.json').write_text('{"pump": "fixture"}')
         (root / 'evidence/original/pump').mkdir(parents=True)
         (root / 'evidence/original/pump/deployed.so').write_bytes(elf(EXIT))
-        tool = root / 'objdump'
-        tool.write_text('#!' + sys.executable + '\nimport sys\n'
-                        'print("test objdump" if "--version" in sys.argv else ' + repr(payload) + ')\n')
-        tool.chmod(0o755)
+        tool_dir = root / 'tool path with spaces'
+        tool_dir.mkdir()
+        script = tool_dir / 'objdump.py'
+        script.write_text('#!' + sys.executable + '\nimport sys\n'
+                          'print("test objdump" if "--version" in sys.argv else ' + repr(payload) + ')\n',
+                          encoding='utf-8', newline='\n')
+        if os.name == 'nt':
+            # CreateProcess cannot execute a Unix shebang. Keep the real CLI
+            # subprocess boundary, using a batch launcher only for this fixture.
+            tool = tool_dir / 'objdump.cmd'
+            tool.write_text(f'@"{sys.executable}" "%~dp0objdump.py" %*\n',
+                            encoding='utf-8', newline='\r\n')
+        else:
+            tool = script
+            tool.chmod(0o755)
         process = subprocess.run(
             [sys.executable, str(tools / 'disassemble_checked.py'), '--objdump',
              str(tool), '--output', str(root / 'output')], capture_output=True, text=True)
