@@ -1,6 +1,6 @@
 # Reconstruction status after artifact-backed Relay settlement recovery — 26 October 2026
 
-Reviewed evidence revision: `849d8140cf897c48d4d1fb2414ec8068079fead7`.
+Reviewed evidence revision: `2abbcc0a7730e19c7033fc2282459a01c1451f4b`.
 This review updates the research frontier while preserving the selected-checkpoint
 [baseline audit](RECONSTRUCTION-AUDIT.md). The [recomputed inventory](../repro/reconstruction-status-2026-10-26/README.md)
 contains every one of the **4,415 selected/research function-window rows**.
@@ -45,7 +45,7 @@ analysis. Candidate symbol names are hypotheses about original identity.
 | Mayhem selected | 441 | 58 | 131 | 7 | 245 |
 | Relay selected source 15 | 492 | 33 | 89 | 370 | 0 |
 | **Fees latest research** | **585** | **118** | **433** | **34** | **0** |
-| **Relay latest research** | **492** | **317** | **175** | **0** | **0** |
+| **Relay latest research** | **492** | **376** | **116** | **0** | **0** |
 
 Each row is a partition, not a score of semantic correctness. Mayhem's source
 ledger has 257 opaque windows, 12 of which happen to match local raw bytes.
@@ -65,9 +65,9 @@ calling whole trade or donation handlers perfect.
 ## How much remains?
 
 The strongest artifact-backed Relay research candidate matches **492/492 normalized
-windows**, including **317 raw-local bodies**. All four donation wrappers now
+windows**, including **376 raw-local bodies**. All four donation wrappers now
 match raw instruction bytes. This closes the missing normalized-body inventory,
-not complete binary identity: **18,623 positions still differ in the 818,280-byte
+not complete binary identity: **9,398 positions still differ in the 818,280-byte
 meaningful ELF**, and the capture contains another 12,168 allocation bytes.
 Remaining work includes raw call/address values, relocations, data/indirect
 semantics and broader runtime coverage. There is no missing-window byte count
@@ -534,7 +534,7 @@ it does not independently re-decode the transaction instruction/event payloads.
 Those payloads need a separate cross-check before the history is used to close
 field-role claims. The five semantic roles remain unresolved; no field is renamed.
 
-1. **Continue Relay raw identity recovery:** explain the 18,623 differing
+1. **Continue Relay raw identity recovery:** explain the 9,398 differing
    meaningful-ELF positions, starting with raw call/address values and relocations.
    Preserve all 492 normalized matches and require fresh replay for a proposed
    candidate. Account for the captured allocation tail without output padding.
@@ -605,3 +605,6 @@ positional data graph pass; fresh signed replay passes 536 records. No whole-ELF
 protected-settlement-success or exhaustive semantic identity is claimed. Earlier
 four-window lists below describe preceding checkpoints and are superseded for
 current body coverage by this artifact.
+
+
+The [access-control layout recovery](../repro/donation-relay/access-control-layout-artifact/README.md) retains all492 normalized windows, adds59 raw-local matches with no losses, restores the full194–204 runtime/settlement block and all ELF headers, and passes536 fresh signed replay records. There remain9,398 differing meaningful-ELF positions. The [allocation history](../repro/donation-relay/allocation-provenance/README.md) explains the12,168-byte tail; full Rust-build/captured-payload equality remains unproved.

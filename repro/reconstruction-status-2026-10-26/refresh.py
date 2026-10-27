@@ -14,9 +14,9 @@ import tempfile
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 INPUTS = {}
-REVISION = '90b81af4258304398f40b9bb4a9b22bf98a14a91'
+REVISION = '2abbcc0a7730e19c7033fc2282459a01c1451f4b'
 FEES = 'research/fees-composed-frontier188'
-RELAY = 'repro/donation-relay/donation-wrapper-artifact-recovery'
+RELAY = 'repro/donation-relay/access-control-layout-artifact'
 
 
 def read(name):
@@ -136,13 +136,13 @@ def generate():
                      remaining_unattributed_duplicate_windows=78)
 
     parser = module('status_relay_windows', 'repro/donation-relay/swap-receipt-coordinate-recovery/analyze.py')
-    relay_artifacts = load(RELAY + '/metadata.json')['variants']['recovered']['artifacts']
+    relay_artifacts = load(RELAY + '/metadata.json')['recovered']
     with tempfile.TemporaryDirectory() as temp:
         d = Path(temp)
         for output, path, compressed in [
             ('original.so', 'evidence/dependencies/donation_relay/deployed.so', False),
-            ('candidate.so', RELAY + '/' + relay_artifacts['candidate']['path'], True),
-            ('unstripped.so', RELAY + '/' + relay_artifacts['symbols']['path'], True),
+            ('candidate.so', relay_artifacts['candidate']['path'], True),
+            ('unstripped.so', relay_artifacts['symbols']['path'], True),
             ('original-windows.json', 'repro/donation-relay/swap-receipt-coordinate-recovery/original-windows.json', False),
         ]:
             raw = read(path)

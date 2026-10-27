@@ -295,7 +295,7 @@ and signing/ownership restrictions are unchanged by this documentation audit.
 | Selected AMM | 297 unmatched original windows, 160 ambiguous normalized rows, original diagnostics, data and full call contracts |
 | Fees current research | 34 unmatched windows (206,360 original body bytes), 69 additional call-attributed pairs and 78 duplicate windows still unattributed; close shareholder validators, transitive calls/data and full ELF/relocation layout |
 | Selected Mayhem | Seven admitted unmatched windows and 257 source-ledger opaque windows; 12 of the opaque windows have local raw matches without semantic attribution |
-| Relay current research | all 492 normalized windows now matched, with 317 raw-local matches; 18,623 meaningful-ELF positions still differ. Resolve raw linking, relocations, indirect/data semantics, privileged successes and allocator/borrow behavior |
+| Relay current research | all 492 normalized windows now matched, with 376 raw-local matches; 9,398 meaningful-ELF positions still differ. Resolve raw linking, relocations, indirect/data semantics, privileged successes and allocator/borrow behavior |
 | Metaplex | Utilize's 1,477 text differences, 30 source-coordinate differences, two relocation differences; authentic source/compiler layout |
 | ATA | Historical recipe remains unknown despite exact output from explicit symbol ordering and an empty feature. Decide selection independently of historical authenticity. |
 | All programs | Exact historical tool/dependency inputs, complete sections/relocations, data and indirect-call meaning; complete security and lifecycle acceptance |
@@ -428,7 +428,7 @@ remain distinct from normalized body recovery.
 
 [Independent wrapper builds and replay](../repro/donation-relay/donation-wrapper-artifact-recovery/README.md)
 close the four previously unmatched donation windows. Prior rejected controls and
-four-window lists are historical evidence. Next compare the 18,623 meaningful-ELF
+four-window lists are historical evidence. Next compare the 9,398 meaningful-ELF
 byte differences, keeping address/call relocation changes distinct from source
 semantics. Do not pad the candidate with the captured allocation tail or treat
 492/492 normalized coverage as byte-identical completion.
@@ -451,3 +451,6 @@ reach complete raw-equal callee bodies. Ten helper negatives remain. These are
 static observations of existing artifacts, not a new compiler build or evidence
 of complete program identity; component causality and historical host remain
 unproved. No selected artifact or stopped execution lane changes.
+
+
+The [access-control source/layout recovery](../repro/donation-relay/access-control-layout-artifact/README.md) restores runtime/settlement function placement and all headers. Remaining byte differences are9,324 in.text,25 in.data.rel.ro and49 in.rel.dyn. The [recorded allocation history](../repro/donation-relay/allocation-provenance/README.md) now explains the capture capacity. Preserve the exact Rust ELF and actual loader allocation as separate acceptance steps; no padding shortcut is authorized.
