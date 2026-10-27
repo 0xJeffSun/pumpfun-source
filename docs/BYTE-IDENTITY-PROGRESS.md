@@ -4,6 +4,20 @@ The [full audit](RECONSTRUCTION-AUDIT.md) and its generated tables retain their
 explicit `1463bd22` snapshot. This log records later research without silently
 changing that baseline or promoting new selected artifacts.
 
+## Mayhem: isolate O0073's block-placement remainder
+
+The [sweep-rate layout study](../research/mayhem-sweep-branch-layout/README.md)
+recreates all 22 register-preserving blocks and their directed edges under the
+declared SBF abort contract. Eleven data references and the terminal panic
+message agree. Two builds reproduce the control artifact; 150 fresh signed
+sweep cases have no checked-field or non-compute log differences.
+
+The complete 912-byte window remains unequal in 19 instruction slots. The
+control preserves all 426 original matches and all 455 other candidate function
+shapes. Graph-only branch normalization is not used by the inventory. The source
+control is pinned to the earlier 426 checkpoint and does not replace the later
+shared-sell or account-data work.
+
 ## Mayhem: bound 56 more account-data references
 
 The [account-data refinement](../research/mayhem-account-data-extents/README.md)

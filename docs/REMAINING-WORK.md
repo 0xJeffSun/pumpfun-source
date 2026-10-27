@@ -23,6 +23,12 @@ tagged I/O error at original `0xb1220` and the empty formatting prefix at
 `0xb1340`. Its 153 typed-equal references do not close unexamined program data,
 transitive/indirect calls, or the known initializer callee mismatch.
 
+For O0073, the [sweep-rate layout study](../research/mayhem-sweep-branch-layout/README.md)
+maps all 22 blocks, directed edges under the stated abort ABI, and eleven data
+references. The 912-byte body still has 19 differing instruction slots from
+block placement. Its whole-window match remains open; the block graph does not
+relax the normal byte matcher.
+
 Subsequent gains are in the [byte-identity progress log](BYTE-IDENTITY-PROGRESS.md):
 Canonical Relay now has **492/492 raw-equal windows and no unmatched windows**; current Fees research
 has **eight unmatched windows and 430 unique structural pairs** in the [sharing slice composition](../research/fees-sharing-slice-recovery/README.md). Those unmatched windows total 80,176 original text bytes; whole-ELF identity, seven inspected direct-callee differences and exhaustive semantics remain open. The older 558-window generated inventory below retains its original binding. The [Relay framework study](../repro/donation-relay/framework-sysroot-recovery/README.md)

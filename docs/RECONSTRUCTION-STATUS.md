@@ -911,3 +911,11 @@ unresolved references. These comparisons use explicit read lengths, slice
 fields, consumer loads and vtable/code targets. They preserve the initializer's
 known nonmatching callee and do not claim raw relocated addresses or all-program
 data equality. No new compilation or target execution is needed for this audit.
+
+The separate [O0073 layout control](../research/mayhem-sweep-branch-layout/README.md)
+reproduces all 22 blocks, eleven typed data references and the branch-free tail
+to the `abort` import. Directed-edge correspondence uses that stated terminal
+ABI. The body still differs in 19 instruction slots from block placement;
+whole-window equality is false. Two builds agree and 150 fresh sweep cases
+retain equal checked fields and non-compute logs. This earlier-checkpoint
+experiment is not promoted over the subsequent source/data packets.
