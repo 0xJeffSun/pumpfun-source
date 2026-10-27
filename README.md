@@ -105,6 +105,10 @@ resolves 56 previously unknown references using caller-supplied lengths and
 typed layouts. That cohort now has 153 typed-equal references, no differences
 and three unresolved references. This does not establish all-data or whole-ELF identity.
 
+The [sweep-rate block study](research/mayhem-sweep-branch-layout/README.md)
+maps all 22 helper blocks and eleven data references. Nineteen instruction
+slots still differ because of placement, so O0073 remains unmatched.
+
 Remaining priorities:
 
 - **Pump:** finish V3 trading, creation and multi-hop paths; close incentive,

@@ -32,6 +32,11 @@ error at `0xb1220` (two callers) and empty formatting prefix at `0xb1340`.
 Fifty-six formerly unknown references are now bounded and typed-equal. Other
 unexamined data and transitive/indirect edges remain in the account/layout lanes.
 
+O0073 now has a [complete block correspondence](../research/mayhem-sweep-branch-layout/README.md)
+under the stated abort ABI. All eleven data references match, but the ordered
+body still differs in 19 instruction slots. Its remaining placement work stays
+in the trade/layout lanes and does not reduce the fifteen-row inventory below.
+
 The following table assigns every remaining original window exactly once.
 Account-data extents, ambiguous counterparts, function placement, absolute
 addresses, full section contents and relocations remain cross-cutting work.
