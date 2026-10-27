@@ -1,8 +1,9 @@
 {
   "scripts/pump_macos_v144_qualification.py": "0b3746a70dba6be4e12575e5790c6a4ff3c13b245933d0314ab0882ccbaab09c",
-  ".github/workflows/qualify-pump-macos-v144.yml": "462ea5ed84f9ad2567efd79717474596a39e59d5ee0a23f45c50b6f4a3f49d69",
-  "research/pump-macos-v144-qualification-20261027/README.md": "7dc245203d575d3b643d2f5cbbdb5440c3f6e41de426f6fcbbbad7c7967b6e0c",
+  ".github/workflows/qualify-pump-macos-v144.yml": "4056466d77b1a05b3da70ceeea6acd015b118a13de678b58ebaa1714758e9033",
+  "research/pump-macos-v144-qualification-20261027/README.md": "a83c9e0c938445ba251c6a64c3cf58e706453fedceccaf5717bf394270722eb2",
   "research/pump-macos-v144-qualification-20261027/inputs.json": "09ba884a83aad4c828b1766a5c76df1889b6a5601f0ccb71ee1de1d06cfb250d",
   "research/pump-macos-v144-qualification-20261027/native-tool-probe.json": "a2e31a15916b2a7575269e44ae7b3929a9b69a89c1074d7f9a42e19f6b3de804",
-  "research/pump-macos-v144-qualification-20261027/run-attempt.json": "ec25412c62fb2aebb41d53f96e17bf355c7ad8e20bbec7a291897ca9b230c603"
+  "research/pump-macos-v144-qualification-20261027/run-attempt.json": "ec25412c62fb2aebb41d53f96e17bf355c7ad8e20bbec7a291897ca9b230c603",
+  "research/pump-macos-v144-qualification-20261027/run-history.json": "5cfd533c815ea2c305c731e3a1fcf680d5a7cec787f5dc0445deb4e1c7af5abc"
 }

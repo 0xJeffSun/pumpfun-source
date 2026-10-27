@@ -18,6 +18,7 @@ jobs:
           persist-credentials: false
           filter: blob:none
           sparse-checkout: |
+            .github/workflows
             scripts
             programs/pump
             evidence/original/pump
