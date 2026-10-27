@@ -75,7 +75,7 @@ pub fn execute<'info>(ctx:Context<'_, '_, '_, 'info,MigrateV2<'info>>)->Result<(
  if !quote_preexisting{if quote_extensions(&wsol)?.contains(&anchor_spl::token_2022::spl_token_2022::extension::ExtensionType::TransferFeeConfig){if !wsol.is_writable{return err!(MigrateV2Error::QuoteMintNotWritable)}call(&qt,&[(&wsol,false,true),(&tmpq,false,true)],vec![26,4],&[])?;}
  call(&qt,&[(&tmpq,false,true),(&wa,false,true),(&pa,true,false)],vec![9],&[pas])?;}
  let burn_amount=amount(&ulp)?;anchor_spl::token_2022::burn(CpiContext::new_with_signer(t22.clone(),anchor_spl::token_2022::Burn{mint:lp.clone(),from:ulp.clone(),authority:pa.clone()},&[pas]),burn_amount)?;call(&t22,&[(&ulp,false,true),(&wa,false,true),(&pa,true,false)],vec![9],&[pas])?;
- call(&sys,&[(&pa,true,true),(&wa,false,true)],{let mut v=2u32.to_le_bytes().to_vec();v.extend_from_slice(&pa.lamports().to_le_bytes());v},&[pas])?;
+ refund_pool_authority(a,ctx.bumps.pool_authority,&wa,pa.lamports())?;
 
  {let c=&mut ctx.accounts.bonding_curve;c.real_quote_reserves=0;c.real_token_reserves=0;c.virtual_quote_reserves=0;c.virtual_token_reserves=0;}
  let a=&ctx.accounts;
@@ -87,4 +87,12 @@ pub fn execute<'info>(ctx:Context<'_, '_, '_, 'info,MigrateV2<'info>>)->Result<(
 pub enum MigrateV2Error {
  #[msg("quote_mint must be writable for a quote with a Token-2022 transfer fee: its withheld fees are harvested to the mint")]
  QuoteMintNotWritable = 110,
+}
+
+// The original migration skips an empty refund before constructing signer seeds.
+#[inline(never)]
+fn refund_pool_authority<'info>(a:&MigrateV2<'info>,bump:u8,destination:&AccountInfo<'info>,amount:u64)->Result<()>{
+ if amount==0{return Ok(());}
+ let mint=a.base_mint.key();let bump=[bump];let signer_seeds:&[&[&[u8]];1]=&[&[b"pool-authority",mint.as_ref(),&bump]];
+ crate::migrate::transfer_native(a.system_program.as_ref(),&a.pool_authority,destination,amount,signer_seeds)
 }

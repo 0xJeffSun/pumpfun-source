@@ -61,10 +61,24 @@ pub fn execute<'info>(ctx:Context<'_, '_, '_, 'info,Migrate<'info>>)->Result<()>
  if !mayhem{require!(ctx.remaining_accounts.len()>=2,PumpError::NotEnoughRemainingAccounts);let boost=&ctx.remaining_accounts[0];let vault=&ctx.remaining_accounts[1];let top=rent.minimum_balance(165).saturating_sub(vault.lamports());if top>0{call(&sys,&[(&user,true,true),(&pa,false,true)],{let mut v=2u32.to_le_bytes().to_vec();v.extend_from_slice(&top.to_le_bytes());v},&[])?;}call(&am,&[(&pool,false,true),(&cfg,false,false),(&pa,true,true),(&mint,false,false),(&wsol,false,false),(&pb,false,true),(&pq,false,true),(boost,false,false),(vault,false,true),(&tok,false,false),(&sys,false,false),(&ata,false,false),(&ev,false,false),(&am,false,false)],vec![140,233,33,94,132,90,194,143],&[pas])?;}
  for (temp,token) in [(&tmpb,&base_tok),(&tmpq,&tok)]{call(token,&[(temp,false,true),(&wa,false,true),(&pa,true,false)],vec![9],&[pas])?;}
  let burn_amount=amount(&ulp)?;anchor_spl::token_2022::burn(CpiContext::new_with_signer(t22.clone(),anchor_spl::token_2022::Burn{mint:lp.clone(),from:ulp.clone(),authority:pa.clone()},&[pas]),burn_amount)?;call(&t22,&[(&ulp,false,true),(&wa,false,true),(&pa,true,false)],vec![9],&[pas])?;
- call(&sys,&[(&pa,true,true),(&wa,false,true)],{let mut v=2u32.to_le_bytes().to_vec();v.extend_from_slice(&pa.lamports().to_le_bytes());v},&[pas])?;
+ refund_pool_authority(a,ctx.bumps.pool_authority,&wa,pa.lamports())?;
 
  {let c=&mut ctx.accounts.bonding_curve;c.real_quote_reserves=0;c.real_token_reserves=0;c.virtual_quote_reserves=0;c.virtual_token_reserves=0;}
  let a=&ctx.accounts;
  let event=CompletePumpAmmMigrationEvent{user:a.user.key(),mint:mintkey,mint_amount:base,sol_amount:quote,pool_migration_fee:fee,bonding_curve:a.bonding_curve.key(),timestamp:Clock::get()?.unix_timestamp,pool:a.pool.key(),quote_mint:Pubkey::default()};emit!(event.clone());let mut event_data=vec![228,69,165,46,81,203,154,29];event_data.extend_from_slice(&event.data());let eb=[ctx.bumps.event_authority];call(&a.program.to_account_info(),&[(&a.event_authority.to_account_info(),true,false)],event_data,&[&[b"__event_authority",&eb]])?;Ok(())
 }
 #[event]#[derive(Clone)]pub struct CompletePumpAmmMigrationEvent{pub user:Pubkey,pub mint:Pubkey,pub mint_amount:u64,pub sol_amount:u64,pub pool_migration_fee:u64,pub bonding_curve:Pubkey,pub timestamp:i64,pub pool:Pubkey,pub quote_mint:Pubkey}
+
+// The original migration skips an empty refund before constructing signer seeds.
+#[inline(never)]
+fn refund_pool_authority<'info>(a:&Migrate<'info>,bump:u8,destination:&AccountInfo<'info>,amount:u64)->Result<()>{
+ if amount==0{return Ok(());}
+ let mint=a.mint.key();let bump=[bump];let signer_seeds:&[&[&[u8]];1]=&[&[b"pool-authority",mint.as_ref(),&bump]];
+ crate::migrate::transfer_native(a.system_program.as_ref(),&a.pool_authority,destination,amount,signer_seeds)
+}
+
+#[inline(never)]
+pub fn transfer_native<'info>(system_program:&AccountInfo<'info>,source:&UncheckedAccount<'info>,destination:&AccountInfo<'info>,amount:u64,signer_seeds:&[&[&[u8]];1])->Result<()>{
+ if amount==0{return Ok(());}
+ anchor_lang::system_program::transfer(CpiContext::new_with_signer(system_program.clone(),anchor_lang::system_program::Transfer{from:source.to_account_info(),to:destination.clone()},signer_seeds),amount)
+}
