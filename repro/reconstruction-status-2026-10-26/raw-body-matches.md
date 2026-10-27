@@ -613,14 +613,27 @@ Snapshot and limitations: [inventory](README.md). Addresses are decimal virtual 
 | donation_relay_research | 527504 | 680 | raw_body_equal | donation_relay_source_proposal::anchor_framework::__private::__idl::__idl_write |
 | donation_relay_research | 528184 | 120 | raw_body_equal | donation_relay_source_proposal::anchor_framework::__private::__idl::__idl_set_authority |
 | donation_relay_research | 528304 | 1216 | raw_body_equal | donation_relay_source_proposal::anchor_framework::__private::__idl::__idl_set_buffer |
+| donation_relay_research | 544128 | 1664 | raw_body_equal | donation_relay_source_proposal::anchor_framework::__private::__global::swap_then_distribute_v1 |
+| donation_relay_research | 545792 | 1432 | raw_body_equal | donation_relay_source_proposal::anchor_framework::__private::__global::just_swap_v1 |
+| donation_relay_research | 547224 | 1968 | raw_body_equal | donation_relay_source_proposal::anchor_framework::__private::__global::distribute_after_just_swapping_v1 |
+| donation_relay_research | 549192 | 1968 | raw_body_equal | donation_relay_source_proposal::anchor_framework::__private::__global::distribute_non_swap_output_mint_v1 |
 | donation_relay_research | 551160 | 888 | raw_body_equal | donation_relay_source_proposal::anchor_framework::__private::__global::upsert_mint_whitelist_v1 |
 | donation_relay_research | 552048 | 1592 | raw_body_equal | donation_relay_source_proposal::anchor_framework::__private::__events::__event_dispatch |
 | donation_relay_research | 553640 | 3096 | raw_body_equal | donation_relay_source_proposal::anchor_framework::relay_anchor_idl_reconstruction_probe::donate_pubkey_config_id_v1; donation_relay_source_proposal::anchor_framework::relay_anchor_idl_reconstruction_probe::donate_v1 |
 | donation_relay_research | 556736 | 3096 | raw_body_equal | donation_relay_source_proposal::anchor_framework::relay_anchor_idl_reconstruction_probe::donate_native_v1 |
 | donation_relay_research | 559832 | 3096 | raw_body_equal | donation_relay_source_proposal::anchor_framework::relay_anchor_idl_reconstruction_probe::donate_native_pubkey_config_id_v1 |
 | donation_relay_research | 562928 | 3096 | raw_body_equal | donation_relay_source_proposal::anchor_framework::relay_anchor_idl_reconstruction_probe::donate_pubkey_config_id_with_payer_v1 |
+| donation_relay_research | 566024 | 448 | raw_body_equal | entrypoint |
 | donation_relay_research | 566472 | 208 | raw_body_equal | __rust_alloc |
 | donation_relay_research | 566680 | 8 | raw_body_equal | _<alloc::vec::Vec<T,A> as core::ops::drop::Drop>::drop; __rust_dealloc; core::error::Error::provide; core::ptr::drop_in_place<alloc::boxed::convert::<impl core::convert::From<alloc::string::String> for alloc::boxed::Box<dyn core::error::Error$u2b$core::marker::Sync$u2b$core::marker::Send>>::from::StringError>; core::ptr::drop_in_place<alloc::string::String>; core::ptr::drop_in_place<solana_program_error::ProgramError> |
+| donation_relay_research | 566688 | 264 | raw_body_equal | __rust_realloc |
+| donation_relay_research | 566952 | 240 | raw_body_equal | __rust_alloc_zeroed |
+| donation_relay_research | 567192 | 200 | raw_body_equal | custom_panic |
+| donation_relay_research | 567392 | 2984 | raw_body_equal | donation_relay_source_proposal::anchor_framework::relay_anchor_idl_reconstruction_probe::distribute_non_swap_output_mint_v1 |
+| donation_relay_research | 570376 | 2984 | raw_body_equal | donation_relay_source_proposal::anchor_framework::relay_anchor_idl_reconstruction_probe::distribute_after_just_swapping_v1 |
+| donation_relay_research | 573360 | 3096 | raw_body_equal | donation_relay_source_proposal::anchor_framework::relay_anchor_idl_reconstruction_probe::just_swap_v1 |
+| donation_relay_research | 576456 | 3120 | raw_body_equal | donation_relay_source_proposal::anchor_framework::relay_anchor_idl_reconstruction_probe::swap_then_distribute_v1 |
+| donation_relay_research | 579576 | 3232 | raw_body_equal | donation_relay_source_proposal::anchor_framework::relay_anchor_idl_reconstruction_probe::close_donation_epoch_v1 |
 | donation_relay_research | 586976 | 1016 | raw_body_equal | _<donation_relay_source_proposal::anchor_framework::__private::__idl::IdlCloseAccount as anchor_lang::AccountsExit>::exit |
 | donation_relay_research | 608904 | 944 | raw_body_equal | _<donation_relay_source_proposal::anchor_framework::__private::__idl::IdlAccount as anchor_lang::AccountSerialize>::try_serialize |
 | donation_relay_research | 609848 | 1088 | raw_body_equal | _<donation_relay_source_proposal::anchor_framework::__private::__idl::IdlAccount as anchor_lang::AccountDeserialize>::try_deserialize |
@@ -628,26 +641,45 @@ Snapshot and limitations: [inventory](README.md). Addresses are decimal virtual 
 | donation_relay_research | 611440 | 400 | raw_body_equal | core::ptr::drop_in_place<$u5b$solana_account_info::AccountInfo$u3b$ 3$u5d$> |
 | donation_relay_research | 611840 | 528 | raw_body_equal | core::ptr::drop_in_place<$u5b$solana_account_info::AccountInfo$u3b$ 4$u5d$> |
 | donation_relay_research | 612368 | 784 | raw_body_equal | core::ptr::drop_in_place<$u5b$solana_account_info::AccountInfo$u3b$ 6$u5d$> |
+| donation_relay_research | 613152 | 80 | raw_body_equal | alloc::rc::Rc<T,A>::drop_slow |
+| donation_relay_research | 613232 | 80 | raw_body_equal | alloc::rc::Rc<T,A>::drop_slow |
+| donation_relay_research | 613312 | 1120 | raw_body_equal | anchor_spl::associated_token::create |
+| donation_relay_research | 614432 | 2304 | raw_body_equal | anchor_spl::token_2022::transfer_checked |
+| donation_relay_research | 616736 | 2080 | raw_body_equal | anchor_spl::token_2022::burn |
+| donation_relay_research | 618816 | 2280 | raw_body_equal | anchor_spl::token_2022::initialize_account3 |
+| donation_relay_research | 621096 | 2064 | raw_body_equal | anchor_spl::token_2022::close_account |
+| donation_relay_research | 623160 | 1704 | raw_body_equal | anchor_spl::token_2022::sync_native |
 | donation_relay_research | 624864 | 1056 | raw_body_equal | _<anchor_spl::token_interface::TokenAccount as anchor_lang::AccountDeserialize>::try_deserialize_unchecked |
+| donation_relay_research | 625920 | 1168 | raw_body_equal | _<anchor_spl::token_interface::Mint as anchor_lang::AccountDeserialize>::try_deserialize_unchecked |
+| donation_relay_research | 627088 | 264 | raw_body_equal | alloc::raw_vec::finish_grow |
 | donation_relay_research | 628504 | 616 | raw_body_equal | alloc::raw_vec::RawVecInner<A>::reserve::do_reserve_and_handle |
 | donation_relay_research | 629120 | 160 | raw_body_equal | spl_token_2022::extension::get_tlv_indices |
 | donation_relay_research | 629280 | 32 | raw_body_equal | spl_token_2022::extension::adjust_len_for_multisig |
 | donation_relay_research | 630256 | 80 | raw_body_equal | _<spl_token_2022::extension::ExtensionType as core::convert::TryFrom<&$u5b$u8$u5d$>>::try_from |
+| donation_relay_research | 632344 | 2968 | raw_body_equal | spl_token_2022::instruction::TokenInstruction::pack |
+| donation_relay_research | 635312 | 688 | raw_body_equal | spl_token_2022::instruction::initialize_account3 |
+| donation_relay_research | 640832 | 480 | raw_body_equal | spl_token_2022::instruction::sync_native |
 | donation_relay_research | 641312 | 712 | raw_body_equal | _<spl_token_2022::state::Mint as solana_program_pack::Pack>::unpack_from_slice |
 | donation_relay_research | 642024 | 1216 | raw_body_equal | _<spl_token_2022::state::Account as solana_program_pack::Pack>::unpack_from_slice |
 | donation_relay_research | 643240 | 208 | raw_body_equal | spl_pod::optional_keys::_<impl core::convert::From<spl_pod::optional_keys::OptionalNonZeroElGamalPubkey> for core::option::Option<solana_zk_sdk::encryption::pod::elgamal::PodElGamalPubkey>>::from; spl_pod::optional_keys::_<impl core::convert::From<spl_pod::optional_keys::OptionalNonZeroPubkey> for core::option::Option<solana_pubkey::Pubkey>>::from |
 | donation_relay_research | 643448 | 528 | raw_body_equal | spl_associated_token_account_client::address::get_associated_token_address_with_program_id |
+| donation_relay_research | 643976 | 1280 | raw_body_equal | spl_associated_token_account_client::instruction::build_associated_token_account_instruction |
 | donation_relay_research | 645256 | 40 | raw_body_equal | spl_associated_token_account_client::instruction::create_associated_token_account |
+| donation_relay_research | 645296 | 288 | raw_body_equal | std::io::error::Error::new |
 | donation_relay_research | 645744 | 40 | raw_body_equal | _<&T as core::fmt::Display>::fmt |
 | donation_relay_research | 645784 | 48 | raw_body_equal | _<&T as core::fmt::Display>::fmt |
 | donation_relay_research | 645832 | 40 | raw_body_equal | core::fmt::Write::write_fmt |
 | donation_relay_research | 645872 | 16 | raw_body_equal | core::fmt::Formatter::write_fmt |
+| donation_relay_research | 645888 | 48 | raw_body_equal | core::ptr::drop_in_place<alloc::boxed::convert::<impl core::convert::From<alloc::string::String> for alloc::boxed::Box<dyn core::error::Error$u2b$core::marker::Sync$u2b$core::marker::Send>>::from::StringError> |
+| donation_relay_research | 645936 | 48 | raw_body_equal | core::ptr::drop_in_place<alloc::string::String> |
 | donation_relay_research | 645984 | 16 | raw_body_equal | core::error::Error::cause |
 | donation_relay_research | 646000 | 8 | raw_body_equal | _<alloc::vec::Vec<T,A> as core::ops::drop::Drop>::drop; __rust_dealloc; core::error::Error::provide; core::ptr::drop_in_place<alloc::boxed::convert::<impl core::convert::From<alloc::string::String> for alloc::boxed::Box<dyn core::error::Error$u2b$core::marker::Sync$u2b$core::marker::Send>>::from::StringError>; core::ptr::drop_in_place<alloc::string::String>; core::ptr::drop_in_place<solana_program_error::ProgramError> |
 | donation_relay_research | 646008 | 56 | raw_body_equal | core::error::Error::type_id |
+| donation_relay_research | 646064 | 208 | raw_body_equal | _<T as alloc::slice::hack::ConvertVec>::to_vec |
 | donation_relay_research | 646272 | 48 | raw_body_equal | _<core::fmt::Error as core::fmt::Debug>::fmt |
 | donation_relay_research | 646320 | 688 | raw_body_equal | _<alloc::string::String as core::fmt::Write>::write_char |
 | donation_relay_research | 647008 | 184 | raw_body_equal | _<alloc::string::String as core::fmt::Write>::write_str |
+| donation_relay_research | 647352 | 352 | raw_body_equal | alloc::raw_vec::finish_grow |
 | donation_relay_research | 647704 | 312 | raw_body_equal | alloc::raw_vec::RawVec<T,A>::grow_one |
 | donation_relay_research | 648016 | 616 | raw_body_equal | alloc::raw_vec::RawVecInner<A>::reserve::do_reserve_and_handle |
 | donation_relay_research | 648632 | 40 | raw_body_equal | _<alloc::string::String as core::fmt::Display>::fmt |
@@ -656,19 +688,36 @@ Snapshot and limitations: [inventory](README.md). Addresses are decimal virtual 
 | donation_relay_research | 650960 | 104 | raw_body_equal | anchor_lang::accounts::signer::Signer::try_from |
 | donation_relay_research | 651064 | 288 | raw_body_equal | _<anchor_lang::bpf_writer::BpfWriter<&mut $u5b$u8$u5d$> as std::io::Write>::write_all |
 | donation_relay_research | 652280 | 112 | raw_body_equal | anchor_lang::common::is_closed |
+| donation_relay_research | 652392 | 136 | raw_body_equal | _<anchor_lang::error::Error as core::convert::From<anchor_lang::error::AnchorError>>::from |
+| donation_relay_research | 652528 | 160 | raw_body_equal | _<anchor_lang::error::Error as core::convert::From<solana_program_error::ProgramError>>::from |
 | donation_relay_research | 652688 | 64 | raw_body_equal | anchor_lang::error::Error::log |
+| donation_relay_research | 652752 | 536 | raw_body_equal | anchor_lang::error::Error::with_pubkeys |
+| donation_relay_research | 653288 | 1968 | raw_body_equal | anchor_lang::error::ProgramErrorWithOrigin::log |
+| donation_relay_research | 655256 | 1760 | raw_body_equal | anchor_lang::error::AnchorError::log |
+| donation_relay_research | 657016 | 632 | raw_body_equal | anchor_lang::error::_<impl core::convert::From<anchor_lang::error::Error> for solana_program_error::ProgramError>::from |
 | donation_relay_research | 662240 | 16 | raw_body_equal | anchor_lang::solana_program::log::sol_log_data; solana_cpi::set_return_data; solana_pubkey::Pubkey::log; std::sys::pal::sbf::sol_log |
 | donation_relay_research | 662256 | 3056 | raw_body_equal | anchor_lang::error::ErrorCode::name |
+| donation_relay_research | 665312 | 592 | raw_body_equal | _<anchor_lang::error::Error as core::convert::From<anchor_lang::error::ErrorCode>>::from |
 | donation_relay_research | 665904 | 2552 | raw_body_equal | _<anchor_lang::error::ErrorCode as core::fmt::Display>::fmt |
 | donation_relay_research | 668456 | 40 | raw_body_equal | solana_invoke::invoke |
 | donation_relay_research | 668496 | 1024 | raw_body_equal | solana_invoke::invoke_signed |
 | donation_relay_research | 669520 | 200 | raw_body_equal | solana_sysvar::rent::_<impl solana_sysvar::Sysvar for solana_rent::Rent>::get |
 | donation_relay_research | 669720 | 16 | raw_body_equal | anchor_lang::solana_program::log::sol_log_data; solana_cpi::set_return_data; solana_pubkey::Pubkey::log; std::sys::pal::sbf::sol_log |
+| donation_relay_research | 669736 | 352 | raw_body_equal | alloc::raw_vec::finish_grow |
 | donation_relay_research | 670088 | 432 | raw_body_equal | alloc::raw_vec::RawVec<T,A>::grow_one |
+| donation_relay_research | 670520 | 3184 | raw_body_equal | solana_program_entrypoint::deserialize |
 | donation_relay_research | 673704 | 1576 | raw_body_equal | solana_pubkey::_::_<impl serde_core::ser::Serialize for solana_pubkey::Pubkey>::serialize |
+| donation_relay_research | 675280 | 8080 | raw_body_equal | solana_instruction::Instruction::new_with_bincode |
 | donation_relay_research | 684048 | 104 | raw_body_equal | core::fmt::num::_<impl core::fmt::Debug for usize>::fmt |
+| donation_relay_research | 684152 | 360 | raw_body_equal | core::ptr::drop_in_place<alloc::boxed::Box<bincode::error::ErrorKind>> |
+| donation_relay_research | 684512 | 352 | raw_body_equal | alloc::raw_vec::finish_grow |
 | donation_relay_research | 684864 | 616 | raw_body_equal | alloc::raw_vec::RawVecInner<A>::reserve::do_reserve_and_handle |
 | donation_relay_research | 685480 | 760 | raw_body_equal | _<alloc::boxed::Box<T,A> as core::fmt::Debug>::fmt |
+| donation_relay_research | 686240 | 456 | raw_body_equal | solana_system_interface::instruction::create_account |
+| donation_relay_research | 686696 | 928 | raw_body_equal | solana_system_interface::instruction::create_account_with_seed |
+| donation_relay_research | 687624 | 336 | raw_body_equal | solana_system_interface::instruction::assign |
+| donation_relay_research | 687960 | 360 | raw_body_equal | solana_system_interface::instruction::transfer |
+| donation_relay_research | 688320 | 280 | raw_body_equal | solana_system_interface::instruction::allocate |
 | donation_relay_research | 688600 | 400 | raw_body_equal | solana_rent::Rent::minimum_balance |
 | donation_relay_research | 689000 | 424 | raw_body_equal | solana_rent::Rent::is_exempt |
 | donation_relay_research | 689424 | 120 | raw_body_equal | solana_account_info::AccountInfo::lamports |
@@ -682,6 +731,9 @@ Snapshot and limitations: [inventory](README.md). Addresses are decimal virtual 
 | donation_relay_research | 690672 | 48 | raw_body_equal | _<&T as core::fmt::Display>::fmt |
 | donation_relay_research | 690720 | 24 | raw_body_equal | _<&T as core::fmt::LowerHex>::fmt |
 | donation_relay_research | 690744 | 1648 | raw_body_equal | _<solana_program_error::ProgramError as core::fmt::Display>::fmt |
+| donation_relay_research | 692392 | 1040 | raw_body_equal | solana_program_error::_<impl core::convert::From<solana_program_error::ProgramError> for u64>::from |
+| donation_relay_research | 693432 | 1208 | raw_body_equal | _<solana_program_error::ProgramError as core::convert::From<u64>>::from |
+| donation_relay_research | 694640 | 368 | raw_body_equal | solana_instruction::Instruction::new_with_bytes |
 | donation_relay_research | 695296 | 312 | raw_body_equal | solana_pubkey::Pubkey::find_program_address |
 | donation_relay_research | 695608 | 464 | raw_body_equal | solana_pubkey::Pubkey::create_program_address |
 | donation_relay_research | 696072 | 16 | raw_body_equal | anchor_lang::solana_program::log::sol_log_data; solana_cpi::set_return_data; solana_pubkey::Pubkey::log; std::sys::pal::sbf::sol_log |
@@ -698,6 +750,7 @@ Snapshot and limitations: [inventory](README.md). Addresses are decimal virtual 
 | donation_relay_research | 705912 | 40 | raw_body_equal | _<alloc::string::String as core::fmt::Debug>::fmt |
 | donation_relay_research | 705952 | 1280 | raw_body_equal | std::io::error::repr_bitpacked::kind_from_prim |
 | donation_relay_research | 707232 | 16 | raw_body_equal | _<std::io::error::Error as core::fmt::Debug>::fmt |
+| donation_relay_research | 707248 | 120 | raw_body_equal | std::io::error::Error::_new |
 | donation_relay_research | 707368 | 1096 | raw_body_equal | std::io::error::_<impl core::fmt::Debug for std::io::error::repr_bitpacked::Repr>::fmt |
 | donation_relay_research | 708464 | 8 | raw_body_equal | std::process::abort |
 | donation_relay_research | 708472 | 8 | raw_body_equal | rust_begin_unwind |
@@ -710,20 +763,26 @@ Snapshot and limitations: [inventory](README.md). Addresses are decimal virtual 
 | donation_relay_research | 710256 | 8 | raw_body_equal | __rg_oom |
 | donation_relay_research | 710264 | 40 | raw_body_equal | _<&T as core::fmt::Debug>::fmt |
 | donation_relay_research | 710304 | 40 | raw_body_equal | core::fmt::Write::write_fmt |
+| donation_relay_research | 710344 | 48 | raw_body_equal | core::ptr::drop_in_place<alloc::string::String> |
 | donation_relay_research | 710392 | 48 | raw_body_equal | _<core::fmt::Error as core::fmt::Debug>::fmt |
 | donation_relay_research | 710440 | 88 | raw_body_equal | alloc::raw_vec::capacity_overflow |
 | donation_relay_research | 710528 | 144 | raw_body_equal | alloc::raw_vec::RawVec<T,A>::grow_one |
+| donation_relay_research | 710672 | 48 | raw_body_equal | _<alloc::raw_vec::RawVec<T,A> as core::ops::drop::Drop>::drop |
+| donation_relay_research | 710720 | 424 | raw_body_equal | alloc::raw_vec::RawVecInner<A>::try_allocate_in |
 | donation_relay_research | 711144 | 152 | raw_body_equal | alloc::raw_vec::RawVecInner<A>::reserve::do_reserve_and_handle |
 | donation_relay_research | 711296 | 664 | raw_body_equal | alloc::raw_vec::RawVecInner<A>::grow_amortized |
+| donation_relay_research | 711960 | 264 | raw_body_equal | alloc::raw_vec::finish_grow |
 | donation_relay_research | 712224 | 32 | raw_body_equal | alloc::raw_vec::handle_error |
 | donation_relay_research | 712256 | 32 | raw_body_equal | alloc::alloc::handle_alloc_error |
 | donation_relay_research | 712288 | 40 | raw_body_equal | _<alloc::boxed::convert::<impl core::convert::From<alloc::string::String> for alloc::boxed::Box<dyn core::error::Error$u2b$core::marker::Sync$u2b$core::marker::Send>>::from::StringError as core::error::Error>::description |
 | donation_relay_research | 712328 | 40 | raw_body_equal | _<alloc::boxed::convert::<impl core::convert::From<alloc::string::String> for alloc::boxed::Box<dyn core::error::Error$u2b$core::marker::Sync$u2b$core::marker::Send>>::from::StringError as core::fmt::Display>::fmt |
 | donation_relay_research | 712368 | 40 | raw_body_equal | _<alloc::boxed::convert::<impl core::convert::From<alloc::string::String> for alloc::boxed::Box<dyn core::error::Error$u2b$core::marker::Sync$u2b$core::marker::Send>>::from::StringError as core::fmt::Debug>::fmt |
+| donation_relay_research | 712408 | 592 | raw_body_equal | alloc::fmt::format::format_inner |
 | donation_relay_research | 713000 | 24 | raw_body_equal | _<alloc::string::FromUtf8Error as core::fmt::Display>::fmt |
 | donation_relay_research | 713024 | 16 | raw_body_equal | _<alloc::string::String as core::clone::Clone>::clone |
 | donation_relay_research | 713040 | 184 | raw_body_equal | _<alloc::string::String as core::fmt::Write>::write_str |
 | donation_relay_research | 713224 | 696 | raw_body_equal | _<alloc::string::String as core::fmt::Write>::write_char |
+| donation_relay_research | 713920 | 216 | raw_body_equal | _<alloc::vec::Vec<T,A> as core::clone::Clone>::clone |
 | donation_relay_research | 714136 | 8 | raw_body_equal | _<alloc::vec::Vec<T,A> as core::ops::drop::Drop>::drop; __rust_dealloc; core::error::Error::provide; core::ptr::drop_in_place<alloc::boxed::convert::<impl core::convert::From<alloc::string::String> for alloc::boxed::Box<dyn core::error::Error$u2b$core::marker::Sync$u2b$core::marker::Send>>::from::StringError>; core::ptr::drop_in_place<alloc::string::String>; core::ptr::drop_in_place<solana_program_error::ProgramError> |
 | donation_relay_research | 714144 | 448 | raw_body_equal | _<core::ops::range::Range<Idx> as core::fmt::Debug>::fmt |
 | donation_relay_research | 714592 | 120 | raw_body_equal | _<core::cell::BorrowError as core::fmt::Debug>::fmt |

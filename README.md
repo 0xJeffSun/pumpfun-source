@@ -16,12 +16,14 @@ source-only proposals. Those independent branches are not silently combined
 into the inventory below.
 
 Latest artifact-backed Relay research: **492/492 normalized windows, no unmatched
-normalized bodies, and 317 raw-local matches**. The [independent wrapper recovery](repro/donation-relay/donation-wrapper-artifact-recovery/README.md)
+normalized bodies, and 376 raw-local matches**. The [access-control layout recovery](repro/donation-relay/access-control-layout-artifact/README.md)
 reproduces all four donation wrapper bodies byte for byte and passes 536 signed
 replay records / 534 fixtures. The complete 19,863-byte read-only data section
-also matches.
+also matches. The runtime block and all ELF headers now match exactly;
+[deployment history](repro/donation-relay/allocation-provenance/README.md) explains
+the captured allocation capacity.
 
-**Whole-file identity is still unresolved:** 18,623 positions differ within the
+**Whole-file identity is still unresolved:** 9,398 positions differ within the
 818,280-byte meaningful ELF. The capture has another 12,168 allocation bytes.
 Raw call/address values, relocations, indirect/data semantics and broader runtime
 coverage remain to be established. The [raw-layout audit](repro/donation-relay/raw-layout-audit/README.md)
@@ -96,7 +98,7 @@ No handler is certified perfectly recreated. The selected core builds contain
 | PumpSwap selected | 93 | 395 | 297 | 0 | 734,392 / 1,162,040 bytes (63.2%) |
 | Fees research | 118 | 433 | 34 | 0 | 206,360 / 799,648 bytes (25.8%) |
 | Mayhem selected | 58 | 131 | 7 | 245 | 636,128 / 706,744 bytes (90.0%) |
-| Relay research | 317 | 175 | 0 | 0 | 0 unmatched-window bytes; raw linking still differs |
+| Relay research | 376 | 116 | 0 | 0 | 0 unmatched-window bytes; raw linking still differs |
 
 Unresolved text includes whole unmatched and opaque windows. These are not
 differing-byte counts or estimates of effort. Calls, data, layout,

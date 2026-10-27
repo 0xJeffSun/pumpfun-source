@@ -971,6 +971,52 @@ inventory remains 488 normalized / 142 raw-local. One control has a fresh
 all-dependency v1.48 rebuild; other retained controls contain actual root builds
 with dependency-cache reuse. There is no new target execution claim.
 
+## Relay event initializer controls — 26 October 2026
+
+[Two further event initializer orders](../repro/donation-relay/donation-event-initializer-controls/README.md)
+were compiled from the 488-window source after independently reproducing the
+accepted stripped and unstripped baseline artifacts. Ordering expressions by
+physical event layout or reversing the numeric field evaluation order recovers
+no complete original body. Both retain 488 normalized / 142 raw-local matches;
+92–95 and whole-file identity remain open. The retained receipts each contain
+one actual root invocation. An initial cached-root observation was rejected and
+rerun after refreshing input mtimes. No new runtime claim or candidate promotion
+is made.
+
+[All 24 owned AccountInfo construction orders were also rechecked](../repro/donation-relay/donation-context-488-controls/README.md)
+on the recovered 488-window source, rather than relying only on the older
+482-window controls. Every retained run compiled the root crate. All preserve
+exactly the same 488 normalized and 142 raw-local matches; no missing donation
+body is recovered and no existing match is lost. These controls remain rejected.
+
+## Relay argument initializers and ELF layout — 26 October 2026
+
+[Two DonationArgs initializer controls](../repro/donation-relay/donation-argument-initializer-controls/README.md)
+compile to the exact same stripped and unstripped after-close artifacts. Moving
+the message clone first inside its aggregate or following field declaration
+order does not recover a body. This differs from the prior whole-argument-local
+and Context-construction controls.
+
+The [ELF layout audit](../repro/donation-relay/elf-layout-488-audit/README.md)
+independently accounts for the112-byte text surplus using the four unmatched
+body-size deltas. Other section sizes already agree, as do all2327 relocation
+type/symbol records. Function permutations still prevent raw equality even if
+the four sizes were repaired. The capture includes12168 zero bytes after its
+last ELF structure; `capture.py` retained that exact ProgramData account suffix.
+This is a deployment-allocation provenance question, not a compiler-padding fix.
+
+[Three entrypoint/name/module controls](../repro/donation-relay/entrypoint-layout-controls/README.md)
+retain488 normalized bodies but do not restore the original function order.
+The ordinary Anchor entrypoint adds one raw-local match (142→143); the `contracts`
+name and instruction-boundary controls have140 each. No variant is promoted.
+
+The [deployment-allocation provenance packet](../repro/donation-relay/allocation-provenance/README.md)
+now decodes all13 returned ProgramData transactions. Initial capacity546,944 plus
+five explicit extensions (33,504,100,000,100,000,40,000,10,000) exactly explains
+830,448 captured payload bytes. The last upgrade slot415422992 and later authority
+change agree with captured metadata. This resolves the unexplained-size question;
+it does not prove a matching Rust ELF or permit padding compiler output.
+
 
 ## Fees verified branch composition — 27 October 2026
 
@@ -1021,6 +1067,35 @@ positions. The current inventory is advanced to the artifact-backed result,
 without changing selected checkpoints or claiming whole-binary identity.
 The fixed-order interleaving search was stopped after 29 completed negative
 trials because #189 supplied the broader declaration/construction fix.
+
+## Relay access-control layout recovery — 26 October 2026
+
+The [ordinary-source access-control change](../repro/donation-relay/access-control-layout-source/README.md)
+replaces six explicit first-body relayer checks with the equivalent upstream
+Anchor attribute. It restores original windows194–204, including entrypoint,
+allocator/panic routines and the five settlement entry functions, at their exact
+addresses with full raw bodies equal. Their103 direct calls bind closed full
+callee shapes. The full inventory stays492 normalized while raw-local matches
+increase317→376 with59 gains and no losses. ELF/program/section headers and the
+complete dynsym now match. Residual common-position bytes decrease18,623→9,398
+(text9,324,data.rel.ro25,rel.dyn49); allocation-tail handling remains separate.
+
+The [artifact packet](../repro/donation-relay/access-control-layout-artifact/README.md)
+retains a reproduced492 baseline, two identical recovery builds from separate
+source materializations and536 fresh signed offline replay records with no
+mismatch. All359 positional data pointers and507 nonpointer qwords retain their
+prior validation; five text targets containing indirect calls remain outside
+semantic proof. This is a raw-layout gain, not whole-byte identity or selected
+checkpoint promotion. Full captured-file equality remains false.
+
+The [offline loader allocation recipe](../repro/donation-relay/offline-loader-allocation/README.md)
+now executes real local signed buffer creation,910 writes and DeployWithMaxDataLen
+using the historically derived830,448-byte capacity. It produces the unmodified
+818,280-byte compiler ELF plus the12,168-byte loader-allocated zero tail, without
+manual padding, add_program, set_account or RPC. Two fresh local runs reproduced
+the same912-transaction receipt. Five static negative tests pass. This establishes
+a loader-backed allocation route; original-payload equality remains false because
+the ELF prefix still has9,398 differing positions.
 
 
 ## Relay raw-layout audit — 27 October 2026

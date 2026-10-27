@@ -7,8 +7,8 @@
     {
       "path": "README.md",
       "before_sha256": "cae913d4d3f2066403162f653a0cf35b39620fb08877b1b308c08ccce4a53678",
-      "after_sha256": "d651ba8775f833eab35ebedaf7c42fae3f57481ef8dd0649ced7250b51e54ada",
-      "reason": "Add verified Relay raw-layout accounting and reviewed PR #192 while retaining the 492/551 research frontiers and all selected checkpoints."
+      "after_sha256": "db2acc18cc30afe627884d44019020ebe63909ae253a379f1ad4e7234984675c",
+      "reason": "Record verified Relay layout recovery and merged upstream research while preserving selected checkpoints and explicit full-identity limits."
     },
     {
       "path": ".github/workflows/verify.yml",

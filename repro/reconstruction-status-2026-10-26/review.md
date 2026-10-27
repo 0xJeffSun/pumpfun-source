@@ -1,6 +1,6 @@
 # Comprehensive reconstruction review
 
-Reviewed merged evidence: `90b81af4258304398f40b9bb4a9b22bf98a14a91`. Selected builds remain bound to `1463bd22fb7811825c5e7acf1cb963eb39ab68d9`.
+Reviewed merged evidence: `2abbcc0a7730e19c7033fc2282459a01c1451f4b`. Selected builds remain bound to `1463bd22fb7811825c5e7acf1cb963eb39ab68d9`.
 
 **No core program or Relay is whole-file byte-identical. No public handler is proved exhaustively perfect.**
 
@@ -17,7 +17,7 @@ Reviewed merged evidence: `90b81af4258304398f40b9bb4a9b22bf98a14a91`. Selected b
 | Build | Exact local windows | Normalized only | Unmatched | Opaque | Unmatched + opaque bytes / original text |
 | --- | ---: | ---: | ---: | ---: | ---: |
 | donation_relay | 33 | 89 | 370 | 0 | 735,984 / 752,488 (97.8%) |
-| donation_relay_research | 317 | 175 | 0 | 0 | 0 / 752,488 (0.0%) |
+| donation_relay_research | 376 | 116 | 0 | 0 | 0 / 752,488 (0.0%) |
 | mayhem | 58 | 131 | 7 | 245 | 636,128 / 706,744 (90.0%) |
 | pump | 98 | 430 | 507 | 0 | 1,391,456 / 1,792,208 (77.6%) |
 | pump_amm | 93 | 395 | 297 | 0 | 734,392 / 1,162,040 (63.2%) |
