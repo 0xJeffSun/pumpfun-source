@@ -37,15 +37,13 @@ pub struct CreateV2<'info>{
 }
 pub fn execute<'info>(ctx:Context<'_,'_,'_,'info,CreateV2<'info>>,name:String,symbol:String,uri:String,creator:Pubkey,is_mayhem_mode:bool,is_cashback_enabled:OptionBool,creator_fee_bps:CreationOptionU64,is_holder_reward:OptionBool)->Result<()>{
  let a=&ctx.accounts;
- require_eq!(a.global.create_v2_enabled,true,PumpError::CreateV2Disabled);
- require!(!is_cashback_enabled.0,PumpError::CashbackDeprecated);
- // Mayhem-mode gate: requires the admin flag and rejects any quote-mint remaining accounts.
  if is_mayhem_mode {
-  require!(a.global.mayhem_mode_enabled,PumpError::MayhemModeDisabled);
-  require!(ctx.remaining_accounts.is_empty(),PumpError::MayhemModeQuoteMintNotAllowed);
+  require_eq!(a.global.mayhem_mode_enabled,true,PumpError::MayhemModeDisabled);
  }
+ require!(!is_cashback_enabled.0,PumpError::CashbackDeprecated);
  let creator=if is_holder_reward.0 {require!(a.global.is_holder_reward_enabled,PumpError::HolderRewardDisabled);Pubkey::find_program_address(&[b"holder-rewards",a.mint.key().as_ref()],&crate::ID).0}else{creator};
  require_keys_neq!(creator,Pubkey::default(),PumpError::CreatorShouldNotBeZero);
+ require_eq!(a.global.create_v2_enabled,true,PumpError::CreateV2Disabled);
  let mut depth=0u8;
  let (quote_mint,virtual_quote_reserves,can_configure_fee)=if ctx.remaining_accounts.is_empty(){(Pubkey::default(),a.global.initial_virtual_sol_reserves,false)}else{
   require_gte!(ctx.remaining_accounts.len(),3,PumpError::NotEnoughRemainingAccounts);
@@ -78,6 +76,9 @@ pub fn execute<'info>(ctx:Context<'_,'_,'_,'info,CreateV2<'info>>,name:String,sy
   (mint.key(),reserves,can_configure)
   }
  };
+ if is_mayhem_mode && quote_mint!=Pubkey::default() {
+  require!(a.global.whitelisted_quote_mints.contains(&quote_mint),PumpError::MayhemModeQuoteMintNotAllowed);
+ }
  let fee=if can_configure_fee && creator_fee_bps.0>0 {
   require!(a.global.creator_fee_configurable,PumpError::CreatorFeeNotConfigurable);
   require!(creator_fee_bps.0<=a.global.max_configurable_creator_fee_bps,PumpError::CreatorFeeBpsOutOfRange);

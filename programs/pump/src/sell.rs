@@ -60,7 +60,7 @@ let c=&a.bonding_curve;
  let cb=if c.creator==Pubkey::default(){0}else{creator_fee_bps};let pf=initial_protocol_fee;let cf=initial_creator_fee;let output=sub(sub(quote,pf)?,cf)?;require_gte!(output,minimum,PumpError::TooLittleSolReceived);
  let vb=add(c.virtual_token_reserves,amount)?;let vq=sub(c.virtual_quote_reserves,quote)?;let rb=add(c.real_token_reserves,amount)?;let rq=sub(c.real_quote_reserves,quote)?;
  token_interface::transfer_checked(CpiContext::new(a.token_program.to_account_info(),TransferChecked{from:a.associated_user.to_account_info(),mint:a.mint.to_account_info(),to:a.associated_bonding_curve.to_account_info(),authority:a.user.to_account_info()}),amount,a.mint.decimals)?;
- let rem=ctx.remaining_accounts;let index=if c.is_cashback_coin {require!(rem.len()>=2,PumpError::MissingCashbackAccounts);let acc=&rem[0];require!(acc.key()==Pubkey::find_program_address(&[b"user_volume_accumulator",a.user.key().as_ref()],&crate::ID).0&&acc.owner==&crate::ID&&acc.data_len()>=82,PumpError::InvalidCashbackAccumulator);1}else{0};
+ let rem=ctx.remaining_accounts;let index=if c.is_cashback_coin {let acc=rem.first().ok_or_else(||error!(PumpError::MissingCashbackAccounts))?;require!(acc.key()==Pubkey::find_program_address(&[b"user_volume_accumulator",a.user.key().as_ref()],&crate::ID).0&&acc.owner==&crate::ID&&acc.data_len()>=82,PumpError::InvalidCashbackAccumulator);1}else{0};
  let v2=rem.get(index).ok_or_else(||error!(PumpError::InvalidBondingCurveV2))?;require!(v2.key()==Pubkey::find_program_address(&[b"bonding-curve-v2",a.mint.key().as_ref()],&crate::ID).0,PumpError::InvalidBondingCurveV2);
  let bbps=if c.is_mayhem_mode{0}else{a.global.buyback_basis_points};
  let cashback_coin=c.is_cashback_coin;
