@@ -7,8 +7,8 @@
     {
       "path": "README.md",
       "before_sha256": "cae913d4d3f2066403162f653a0cf35b39620fb08877b1b308c08ccce4a53678",
-      "after_sha256": "f7aed875ab0fd034e5bf43c0335cdcb7b238fabf9fdfbde5695c8c7699069f9c",
-      "reason": "Surface merged Relay security-metadata byte recovery while retaining the explicit function-inventory and selected-checkpoint bindings."
+      "after_sha256": "2ac3dda365ddfbf05527ec37063fcd75cfa9379b4f19a96e599a5bee4b7f6060",
+      "reason": "Document the verified crank interface-mint parser and validation recovery, with 375 unique pairs and 63 residuals, preserving selected checkpoints."
     },
     {
       "path": ".github/workflows/verify.yml",

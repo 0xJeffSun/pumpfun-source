@@ -1550,7 +1550,6 @@ Snapshot and limitations: [inventory](README.md). Addresses are decimal virtual 
 | donation_relay | 752416 | 200 | no_complete_body_match |  |
 | donation_relay | 752616 | 72 | no_complete_body_match |  |
 | donation_relay | 752688 | 72 | no_complete_body_match |  |
-| pump_fees_research | 9880 | 352 | no_complete_body_match |  |
 | pump_fees_research | 18384 | 1144 | no_complete_body_match |  |
 | pump_fees_research | 75880 | 504 | no_complete_body_match |  |
 | pump_fees_research | 76384 | 6312 | no_complete_body_match |  |

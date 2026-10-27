@@ -64,24 +64,24 @@
     "pump_fees_research": {
       "body_bytes": 799648,
       "dispositions": {
-        "no_complete_body_match": 64,
-        "normalized_body_only": 403,
+        "no_complete_body_match": 63,
+        "normalized_body_only": 404,
         "raw_body_equal": 118
       },
-      "unmatched_body_bytes": 318872,
+      "unmatched_body_bytes": 318520,
       "windows": 585
     }
   },
   "fees": {
-    "additional_call_attributed_pairs": 63,
-    "ambiguous_original_windows": 149,
-    "candidate_bytes": 862664,
-    "candidate_sha256": "4617fa1c6200daab0516a9a652716c32cf9868f24d47bcada61b6c716e461637",
-    "candidate_windows": 590,
+    "additional_call_attributed_pairs": 61,
+    "ambiguous_original_windows": 147,
+    "candidate_bytes": 859904,
+    "candidate_sha256": "16b13f46151ce47360f4d25eca740fe89a000b6ab83e9cdd2e2c3c12e87e400c",
+    "candidate_windows": 587,
     "raw_file_equals_original_elf_extent": false,
     "remaining_unattributed_duplicate_windows": 86,
-    "total_attributed_pairs": 435,
-    "unique_structural_pairs": 372,
+    "total_attributed_pairs": 436,
+    "unique_structural_pairs": 375,
     "whole_capture_equal": false
   },
   "input_sha256": {
@@ -96,13 +96,13 @@
     "repro/donation-relay/swap-receipt-coordinate-recovery/original-windows.json": "c002df05d4489259f1cfd2b2391220cae38f6ffb0055f35f659e68a4935fd7bd",
     "repro/reconstruction-audit-2026-10-26/audit.json": "7301fb2a784c56501fc85eb3272fc8dc111744b2464335edd3051ed1cc65fc7a",
     "repro/reconstruction-audit-2026-10-26/functions.tsv": "c56843dfdfbe1086fa7764e29e1f0a83aef47832e3f4c0d4fdfe5de01b75a93d",
-    "repro/reconstruction-status-2026-10-26/refresh.py": "7ebb1f7a05cdd2ab02db7d6507aeaeec72095ed0cc26c917a59d46efdef06b8c",
-    "research/fees-extend-size-logs/analysis.json.gz": "5895514b95e1287275a23318cf1eefb713e9ea6b6ef06a25371f9b5ab571e89d",
-    "research/fees-extend-size-logs/artifacts/origins-candidate.so.gz": "205f7b4aadb2118c749db20492077b234bc75d52c0884608196c03cf281fd5fb",
-    "research/fees-extend-size-logs/artifacts/origins-symbols.so.gz": "17146a558f438603e80233bae3e6938bedc413cc16ae7d8f54f0edd0a2a5f877",
-    "research/fees-extend-size-logs/elf_helpers.py": "ca2791ec19de711032d60f489afdc7e36a27081d9e16e67f2cfa91170d64ee4c",
-    "research/fees-extend-size-logs/experiment.json": "52e8939c46895d08161d9a62ba24c2bf09b098cce6ad68573b22862c89f5b03f",
-    "research/fees-extend-size-logs/window_map.py": "5269d40aab42ebc170b03747dcc031563722f1347677e225f8c6a0737fe7128e",
+    "repro/reconstruction-status-2026-10-26/refresh.py": "380b567cbe9899c6f31726707d21162889bf352b4e10370b2edfd8dc5830e97a",
+    "research/fees-crank-interface-mint/analysis.json.gz": "879ca5378dc9b35b201c6e9728104f7d896b6ab14b86714253a8309ec511dd56",
+    "research/fees-crank-interface-mint/artifacts/origins-candidate.so.gz": "9eede72b24d11128ed7b204ddd958dc87f844921eae90ea1004acc5f635085cb",
+    "research/fees-crank-interface-mint/artifacts/origins-symbols.so.gz": "c5c1efb2917ab9112210ebb032853c561a7ac238280ed25d1f56649edbf6e32d",
+    "research/fees-crank-interface-mint/elf_helpers.py": "ca2791ec19de711032d60f489afdc7e36a27081d9e16e67f2cfa91170d64ee4c",
+    "research/fees-crank-interface-mint/experiment.json": "5eade0f14bb49a6f81c415b98336bf58f19024caf133ddb3513aa808be2d2c7c",
+    "research/fees-crank-interface-mint/window_map.py": "5269d40aab42ebc170b03747dcc031563722f1347677e225f8c6a0737fe7128e",
     "research/fees-refreshed-call-attribution/attribute.py": "b3425eb9c1fba9b09e2c3e7bd01ab0f6d50ef0cfb5500320ff34db96de819c17",
     "research/fees-refreshed-call-attribution/elf_helpers.py": "ca2791ec19de711032d60f489afdc7e36a27081d9e16e67f2cfa91170d64ee4c",
     "research/fees-refreshed-call-attribution/input-provenance.json": "7c546529d694d7fa6d29d0829ad09bb811703581f92b0508a8484633e0a1b69f",
@@ -138,5 +138,5 @@
     "unrecovered": 5
   },
   "selected_snapshot": "1463bd22fb7811825c5e7acf1cb963eb39ab68d9",
-  "snapshot": "8a87b1e6a4d25c67e84ec8786df624c5a64a52ba"
+  "snapshot": "19bf93d4b9c1b0bc49797b2ba008f57ec4ecdd0c"
 }
