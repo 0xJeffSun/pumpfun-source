@@ -15,3 +15,9 @@ Reviewed head: `204ee2513d0532193ad88ca4ea43f00a765bcc99`. All seven lane packet
 The three executable packet verifiers now reject extra files, symlinks, special files and optimized Python. Metaplex signature verification requires `solders`. `test_integrity.py` checks those twelve rejection cases in isolated copies; it changes no source or captured artifact.
 
 `metaplex-source-replay.json` records the independently authenticated upstream Git blob and resulting patched source hash. Build receipts establish reported repeat output hashes; they do not substitute for missing unstripped artifacts or a new rebuild. The Metaplex artifact result is genuine byte equality, separate from claims about historical source spelling or runtime environment.
+
+The later [independent Utilize recovery](../metaplex-utilize-exact-recovery/README.md)
+retains the same unstripped output hash as an actual compressed artifact, plus
+empty-target build/dependency receipts and a second replay set. It uses a distinct
+compiler-context source form with a deliberately redundant guard; this does not
+retroactively add files or execution evidence to the seven packets reviewed here.

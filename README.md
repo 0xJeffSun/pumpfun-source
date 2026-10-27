@@ -65,6 +65,10 @@ it is not part of the stripped compiler artifact. This dependency result remains
 unpromoted and does not change the core-program totals above. The [parallel-lane
 review](research/claude-lanes-review-20261027/README.md) records the other packets
 and their baseline/validation limits.
+The [independent Utilize recovery](research/metaplex-utilize-exact-recovery/README.md)
+adds the retained unstripped compiler output, empty-target build/dependency
+receipts and two separately signed replays of that same 147-case corpus. Its
+alternative source is an unpromoted compiler-context diagnostic.
 
 ## Behavior and remaining work
 
@@ -107,11 +111,12 @@ with one additional matching allocator call. Repeated native builds agree;
 bodies cover 33,968 original text bytes. This remains a diagnostic, so the
 established checkpoint counts in the table above are unchanged.
 
-The [complete historical Anchor macro control](research/mayhem-historical-macro-context/README.md)
-also reproduces the allocator form without a manually rendered parser. Its
-historical macro/IDL and current target runtime remain a cross-version experiment
-on an older Mayhem source baseline; it adds no current checkpoint matches or
-runtime qualification.
+The [current-source historical macro composition](research/mayhem-historical-macro-current-20261027/README.md)
+reproduces that same artifact with the complete historical Anchor macro and
+historical event definition, removing the manually rendered parser. Two native
+root builds agree; the upstream-gated control reproduces the parent. The target
+runtime is still current Anchor, and no new original matches or target executions
+are claimed.
 
 The latest [Fees Social claim-v2 recovery](research/fees-social-claim-v2-recovery/README.md)
 recovers the original 1,303-instruction handler through owned key parameters,
