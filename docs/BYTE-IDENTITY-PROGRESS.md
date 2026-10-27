@@ -826,3 +826,31 @@ span 42,368 original text bytes. The worker candidate remains whole-file unequal
 and uses the source proposal's pre-security-metadata state; composition with the
 separate security payload/dynamic-string-table gain and selected promotion stay
 open.
+## Relay: exact read-only data and tighter ordinary settlement source — 27 October 2026
+
+The [settlement/data source proposal](../repro/donation-relay/settlement-data-source-proposal/README.md)
+first composes the already recovered epoch/just-swap bodies with the published
+module/facade source, then refines ordinary share-admission/recipient handling.
+The frozen final candidate retains **485/492 normalized windows, 142 raw local
+matches and 650 direct-call-shape-closed pairs**, with no lost windows. It adds
+no new complete window beyond the previously published ordinals 96 and 99.
+
+The entire **19,863-byte .rodata section is raw-equal**. Its .text length excess
+is reduced from 304 to 120 bytes. A fresh static audit covers all 359 positional
+.data.rel.ro pointers plus 507 nonpointer qwords: 282 read-only-data references
+preserve offsets into the identical section, 74 text targets have closed direct
+call shapes, and three data-to-data references preserve relative offsets.
+Five text targets still contain indirect calls. This is not all-data semantics,
+indirect behavior, historical provenance or whole-binary proof.
+
+The compact source-only packet derives 60 exact inputs per stage from pinned
+public PR175 sources, supplies six ordinary overrides/two patches and includes
+nine passing tests. Independent optional comparison freshly reproduces all three
+section/window inventories and the complete final positional data graph without
+reading build/replay receipts. Local two-build/replay observations remain
+unpublished evidence; default verification reports runtime_verified=false.
+Protected relayer settlement success is not covered dynamically. No binary,
+archive, encoded machine payload, runtime case or archived receipt is published.
+Whole ELF remains unequal: final 818,400 versus meaningful 818,280 bytes, with
+393,528 common differing positions. Seven original windows remain unmatched;
+the four core programs' full byte-identical count remains 0/4.
