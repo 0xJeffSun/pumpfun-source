@@ -35,11 +35,22 @@ Notes:
 ## Publications
 - g01-c680 (647 base): amm-lo + amm-hi, Linux 680/148/105 `0fb1f886…`/`d691156e…`, +33 normalized, 0 lost, runtime 0 mismatches.
 
-## Next (as of 12:35)
-- origin/main moved to `optional-context-recovery-20261027` = 651/148/134 (`97bd5553…`), which independently matches
-  0xe8ae8 0xe8f10 0xe9338 (V2 dispatch wrappers) + CreatePool dispatch wrapper. g02 = g01 rebased on 651
-  (expect 651 + 30 = 681) + newly published amm2 packets: placement g01-line*, pool g01-liquidity-boost*,
-  layout g01-text-data*, speed g01-exact-native* (check each base + gain).
+## g02 on 651 (optional-context-recovery-20261027, 97bd5553…, 651/148/134) — exact native builds (= Linux bytes)
+| step | input | exact native | note |
+| --- | --- | --- | --- |
+| w0 | 651 canonical | 651/148/134 | = checkpoint |
+| w1 | placement g02 667e5417b (PR #315), git apply | 693/148/92 (+42) | |
+| w2 | integrate g01-c680 (PR #319) per file; legacy_sell hunk -> instructions/swap/sell.rs; `pub use trade::{…}` dropped (E0364 on 651, wrappers matched by 651) | 723/148/62 (+30) | g01 alone on 651 (v1n): 681 |
+| w3 | pool g01 d4f38ce26 (PR #314): boost.rs + create_pool.rs from its source/, boost_burn.rs deleted, lib.rs 3 edits, amm-hi harvest re-applied in boost.rs with equal line count | 726/148/59 (+3) | |
+| — | placement solve.py rerun on w3 | 0 changes | |
+Linux x2: 4e58c471…/5d720940… identical = exact native; runtime 25/17,462/35,074/0. Packet g02-c726 (PR #319 updated).
+
+## Publications
+- g02-c726 (651 base): Linux 726/148/59 `4e58c471…`, +75, 0 lost. Shared frontier: SP/shared/frontier/g02-c726.
+
+## Next
+- layout lane: regenerate text/data order on g02 (raw 148 -> ~168 expected); compose when published.
+- Re-check amm2 lanes for new packets (placement, pool, multihop, v2) and Codex checkpoints; rebase on newer main.
 
 ## Working trees
 - `SP/lanes/integrate/out/comp3/<step>/programs/pump-amm` — composed source after each step (647 base).
