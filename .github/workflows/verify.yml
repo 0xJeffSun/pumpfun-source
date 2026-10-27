@@ -51,6 +51,25 @@ jobs:
               python -B research/mayhem-current-provider-closure-20261027/verify.py --signatures
               python -B research/mayhem-current-provider-closure-20261027/test_verify.py
               python -O -B research/mayhem-current-provider-closure-20261027/test_verify.py
+          - suite: mayhem-quote-debug-data
+            commands: |
+              python -B research/mayhem-quote-integer-debug-data/verify.py
+              python -B research/mayhem-quote-integer-debug-data/test_scope.py
+          - suite: fees-current-sweep
+            commands: |
+              python -B research/fees-sweep-entry-recovery-20261027/verify.py
+              python -B research/fees-sweep-entry-recovery-20261027/test_verify.py
+              python -O -B research/fees-sweep-entry-recovery-20261027/test_verify.py
+              python -B research/fees-sweep-integration-20261027/verify.py
+              python -B research/fees-sweep-integration-20261027/test_verify.py
+              python -O -B research/fees-sweep-integration-20261027/test_verify.py
+              python -B research/fees-residual-current583-20261027/verify.py
+          - suite: recovered-source-proposals
+            commands: |
+              python -B research/fees-causal582-source/source_tools.py --public-root .
+              python -B -m unittest discover -s research/fees-causal582-source -p 'test_*.py'
+              python -B research/amm647-harvest-source/source_tools.py
+              python -B research/amm647-harvest-source/test_scope.py
           - suite: mayhem-current-sell
             commands: |
               python -B research/mayhem-sell-current-recovery-20261027/verify.py

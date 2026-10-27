@@ -9,10 +9,18 @@ snapshot retains `1463bd22` audit bindings; current selections are recorded in
 [completion ledger](COMPLETION.md) remains a selected-checkpoint record; its old
 candidate paths and “current” prose must not override newer evidence.
 
-Current [Pump Round35](../repro/pump/main-contract-round35-20261027/README.md)
-has 145 raw-local matches, 592 normalized-only matches and 298 unmatched windows.
-The unmatched windows cover 892,160 original text bytes. Remaining bodies,
+Current [Pump Round36](../repro/pump/main-contract-round36-20261027/README.md)
+has 145 raw-local matches, 593 normalized-only matches and 297 unmatched windows.
+The unmatched windows cover 891,688 original text bytes. Remaining bodies,
 data, relocations, uncovered behavior and original build provenance remain open.
+
+Current [Fees Sweep integration](../research/fees-sweep-integration-20261027/README.md)
+has 200 raw-local matches, 383 normalized-only matches and two unmatched windows.
+The complete 6,960-byte SweepBuyback body and prior readonly/reference matches
+are preserved through repeat builds and 17,331 bounded runtime cases. Crank and
+CreateDonation remain unmatched, covering 29,776 original text bytes. The
+[current residual controls](../research/fees-residual-current583-20261027/README.md)
+preserve the 583-window search frontier but recover neither complete body.
 
 Current [AMM checkpoint](../repro/pump_amm/event-decoder-recovery-20261027/README.md)
 has 148 raw-local, 499 normalized-only and 138 unmatched windows, with

@@ -4,6 +4,43 @@ The [full audit](RECONSTRUCTION-AUDIT.md) and its generated tables retain their
 explicit `1463bd22` snapshot. This log records later research without silently
 changing that baseline or promoting new selected artifacts.
 
+## Reviewed current Fees recovery and independent evidence
+
+The [qualified Fees Sweep composition](../research/fees-sweep-integration-20261027/README.md)
+adds the complete 6,960-byte / 848-instruction SweepBuyback body while retaining
+all 200 raw-local matches and prior data/reference matches. Its repeated normal
+Cargo builds agree; 17,331 bounded runtime cases pass. Fees now has **583/585
+matched windows**, leaving Crank and CreateDonation. The [default-order source
+discovery](../research/fees-sweep-entry-recovery-20261027/README.md) is retained
+separately at 145 raw-local matches. The [17 residual source controls](../research/fees-residual-current583-20261027/README.md)
+preserve the 583-window baseline but close no additional body.
+
+The [independent native Mayhem allocator reproduction](../research/mayhem-allocator-call-closure/README.md)
+repeats both full artifacts from two fresh dependency builds, with its own
+6,636 trade and 69 initializer pairs. Six mutation controls pass. Its 432/85
+default-order result remains separate from the qualified 432/141 composition.
+The [integer-error Debug data audit](../research/mayhem-quote-integer-debug-data/README.md)
+checks four quote routes and the nested name, vtable and formatter references;
+all 15 mutations are rejected. It adds no body, build or runtime claim.
+
+The [independent Metaplex reproduction](../research/metaplex-exact-independent/README.md)
+retains three agreeing fresh compiler builds. Root review reexecutes the local
+loader and reproduces the saved 789-transaction / 791-signature-field result:
+707,448 meaningful compiler bytes and a loader-created 793,991-byte payload
+match. Five corruption controls pass. Synthetic ProgramData metadata remains
+different from the capture; the dependency result does not alter core totals.
+
+The [Fees causal source snapshot](../research/fees-causal582-source/README.md)
+and [AMM647 harvest source composition](../research/amm647-harvest-source/README.md)
+pass 29 and 24 pure source tests respectively. Their local binary/runtime
+observations are not distributed evidence and do not promote the current
+frontiers. Their complete source maps, reversible patches and limits are retained.
+
+With independently verified Pump Round36, AMM647, Fees583 and Mayhem432, the
+five rows total **2,892/3,338 matched windows: 1,126 raw-local, 1,766 normalized-only
+and 446 unmatched**. Matched text is **3,832,216/5,213,128 bytes (73.5%)**.
+All four core programs remain short of whole-ELF identity.
+
 ## Qualified Mayhem macro composition and allocator call closure
 
 The [current 67-file composition](../research/mayhem-current-macro-call-closure-20261027/README.md)
