@@ -26,7 +26,7 @@ all remaining code, calls, data, relocations and build provenance.
 | --- | ---: | ---: | ---: | ---: | ---: | --- |
 | [Pump Round20](repro/pump/main-contract-round20-20261027/README.md) | 705 / 1,035 | 68.1% | 120 | 585 | 330 | No |
 | [PumpSwap / AMM](repro/pump_amm/native-fee-cpi-recovery-20261027/README.md) | 599 / 785 | 76.3% | 125 | 474 | 186 | No |
-| [Fees research](research/fees-readonly-order-recovery/README.md) | 578 / 585 | 98.8% | 198 | 380 | 7 | No |
+| [Fees research](research/fees-program-id-references/README.md) | 578 / 585 | 98.8% | 198 | 380 | 7 | No |
 | [Mayhem research](research/mayhem-trade-origins-validator/README.md) | 429 / 441 | 97.3% | 100 | 329 | 12 | No |
 | [Donation Relay](repro/donation-relay/canonical-exact-selection/README.md) | 492 / 492 | 100.0% | 492 | 0 | 0 | **Yes** |
 | **Total** | **2,803 / 3,338** | **84.0%** | **1,035** | **1,768** | **535** | **1 / 5** |
@@ -84,11 +84,12 @@ reproduces the missing reserve helper through a zeroed-allocation probe. It
 identifies a compiler condition to recover through justified source; the probe
 remains a diagnostic and the current reconstruction counts are unchanged.
 
-The latest [Fees readonly-order recovery](research/fees-readonly-order-recovery/README.md)
-reproduces all 21,079 readonly bytes while preserving 578 normalized and 198 raw
-function matches, all 105 Source records and 379 checked data-pointer targets.
-Two native builds agree and all 17,331 fresh comparisons pass. Seven functions,
-absolute layout and complete ELF identity remain unresolved.
+The latest [Fees program-ID recovery](research/fees-program-id-references/README.md)
+corrects the two remaining program-ID comparison references. All 1,608 checked
+readonly references now have their original relative offsets; all 21,079 readonly
+bytes and 578 normalized / 198 raw function matches are preserved. Two native
+builds agree and all 17,331 fresh comparisons pass. Seven functions, absolute
+layout and complete ELF identity remain unresolved.
 
 The latest [PumpSwap native-fee and CPI recovery](repro/pump_amm/native-fee-cpi-recovery-20261027/README.md) adds 13 matching windows and fixes native fee handling, buyback diagnostics and multihop real-reserve protection. All 17,462 full cases and the expanded signed probes pass; 186 AMM windows remain.
 

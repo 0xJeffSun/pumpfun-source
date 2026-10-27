@@ -1361,3 +1361,7 @@ repro/donation-relay/canonical-exact-selection/build/link.map -whitespace
 repro/pump_amm/structural-tlv-recovery-20261027/results/** -whitespace
 research/amm-parallel-work-20261027/root-and-events/** -whitespace
 repro/pump_amm/native-fee-cpi-recovery-20261027/results/** -whitespace
+
+# Preserve exact Fees program-ID source and patch receipt bytes.
+research/fees-program-id-references/overrides/** -whitespace
+research/fees-program-id-references/source.patch -whitespace
