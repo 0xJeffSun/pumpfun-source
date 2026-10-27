@@ -4,6 +4,35 @@ The [full audit](RECONSTRUCTION-AUDIT.md) and its generated tables retain their
 explicit `1463bd22` snapshot. This log records later research without silently
 changing that baseline or promoting new selected artifacts.
 
+## Reviewed PRs #274–275: independent evidence and research preservation
+
+The [AMM event-capture replay](../research/amm-event-capture-independent-replay/README.md)
+independently reproduces the published source patch and its historical artifact.
+On the frozen 638-window parent it adds the complete 1,784-byte sell-event body,
+reaching 639/785 with all 128 raw matches preserved. Local review recomputes the
+static results, verifies both saved 17,462-case signed replay sets and their
+focused cases, and passes seven negative controls. This does not compose the
+patch onto the later maintained 640-window checkpoint, so current totals stay
+unchanged. The CI conflict was resolved by retaining both independent checks.
+
+The [Fees residual archive](../research/fees-residual-parallel-checkpoint-20261027/README.md)
+preserves 13,511 new or updated files and authenticates the entire three-part
+checkpoint chain. Local verification checks all archived blobs and nine tests;
+the combined inventory has 78,926 regular files. Failed and interrupted trials
+keep their original status. This archive adds no accepted function match.
+
+## Mayhem: replay the same quote IR through installed backends
+
+The [quote backend packet](../research/mayhem-quote-backend-replay-20261027/README.md)
+replays one unchanged saved Rust-generated module through the installed v1.52
+and v1.54 LLVM backends. V1.54 reproduces the reference Rust build's masked
+1,120-byte sell-quote body (124/140 same-position slots against the original).
+V1.52 produces 1,288 bytes, while v1.44 rejects the newer IR attribute. Neither
+successful backend matches the original function. All call immediates and
+address relocations are masked only for this diagnostic, without checking their
+targets. Seven mutation tests and the independent byte comparison pass. No
+complete window, runtime coverage or current frontier changes.
+
 ## Pump Round30: transfer-fee helpers and ATA cleanup
 
 The maintained [Round30 checkpoint](../repro/pump/main-contract-round30-20261027/README.md)
