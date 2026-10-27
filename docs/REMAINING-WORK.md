@@ -10,6 +10,15 @@ candidate paths and “current” prose must not override newer evidence.
 
 Current Mayhem's largest normalized frontier is the [428-window accounting and ExtendAccount recovery](../research/mayhem-accounting-extend-recovery/README.md): 13 unmatched windows / 112,584 original text bytes remain, plus data, call, indirect-target and complete ELF identity. All 70 parent raw-local bodies survive. The 34 recorded rate failures and ten earlier counter failures were repaired in the parent; the new candidate has fresh trade and ExtendAccount replay. This does not update the selected baseline or prove arbitrary behavior.
 
+The [native Windows reproduction](../research/mayhem-native-reference-identity/README.md)
+reproduces the earlier 426-window source/data candidate's complete raw and
+stripped ELFs in three fresh builds. Replayed target-crate metadata from retained compiler logs,
+full-file path remaps and relative registry inputs close the cross-host artifact
+gap without source edits. This supplies a byte-identical experimental baseline;
+the candidate still has 426 normalized / 70 raw-local original counterparts,
+and remains unequal to deployed Mayhem. The sell-call and 428-window successors
+retain their separate artifact bindings.
+
 The [AMM sell-call successor](../research/mayhem-sell-quote-call-recovery/README.md)
 preserves those 426 windows and restores the shared O0093 quote call. Its ten
 callee and typed-data multisets match, and all 1,239 AMM sell cases have equal
