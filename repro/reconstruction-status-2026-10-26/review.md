@@ -1,6 +1,6 @@
 # Comprehensive reconstruction review
 
-Reviewed merged evidence: `8622bdae6f1a5f4a95a258d8e79f8808e4de399b`. Selected builds remain bound to `1463bd22fb7811825c5e7acf1cb963eb39ab68d9`.
+Reviewed merged evidence: `8a87b1e6a4d25c67e84ec8786df624c5a64a52ba`. Selected builds remain bound to `1463bd22fb7811825c5e7acf1cb963eb39ab68d9`.
 
 **No core program or Relay is whole-file byte-identical. No public handler is proved exhaustively perfect.**
 
@@ -22,11 +22,11 @@ Reviewed merged evidence: `8622bdae6f1a5f4a95a258d8e79f8808e4de399b`. Selected b
 | pump | 98 | 430 | 507 | 0 | 1,391,456 / 1,792,208 (77.6%) |
 | pump_amm | 93 | 395 | 297 | 0 | 734,392 / 1,162,040 (63.2%) |
 | pump_fees | 102 | 363 | 120 | 0 | 418,392 / 799,648 (52.3%) |
-| pump_fees_research | 117 | 403 | 65 | 0 | 319,320 / 799,648 (39.9%) |
+| pump_fees_research | 118 | 403 | 64 | 0 | 318,872 / 799,648 (39.9%) |
 
 These byte totals count entire unresolved original windows, not differing bytes or development effort. Raw and normalized matches can still contain unresolved references. Do not add selected and research rows: they represent alternative builds of the same programs. Mayhem has 257 source-ledger opaque windows; 12 have raw counterparts and therefore appear in the exact column.
 
-Fees research has 371 unique structural pairs, 63 additional call-attributed pairs and 86 unattributed duplicate windows. Its encoded-call ledger has 2,629 bound-target edges and 20 different-body frontier edges. A bound edge is not a full semantic proof. Selected Fees retains two call-conflicting rows.
+Fees research has 372 unique structural pairs, 63 additional call-attributed pairs and 86 unattributed duplicate windows. Its encoded-call ledger has 2,632 bound-target edges and 20 different-body frontier edges. A bound edge is not a full semantic proof. Selected Fees retains two call-conflicting rows.
 
 ## Every public handler: source/behavior status
 
@@ -90,7 +90,7 @@ The five largest unresolved windows per build focus the next investigation. Empt
 ## Remaining acceptance gates
 
 1. **Behavior:** finish partial/unaccepted public handlers and known discrepancies. Pump `sell_v2` remains a bounded implementation with a known transfer-fee discrepancy. Mayhem field roles, initialization and diagnostic contracts remain unresolved. Existing stopped lanes remain stopped.
-2. **Complete bodies:** recover the ten Relay donation/settlement/worker windows and 65 Fees residuals; complete Pump/AMM reconstruction and attribute Mayhem opaque windows. Small helper matches alone do not close callers.
+2. **Complete bodies:** recover the ten Relay donation/settlement/worker windows and 64 Fees residuals; complete Pump/AMM reconstruction and attribute Mayhem opaque windows. Small helper matches alone do not close callers.
 3. **Identity:** establish referenced data, call targets, duplicate attribution, indirect calls, layout, relocations, full ELF equality and allocation-padding accounting for each exact proposed build.
 4. **Build provenance:** retain source hashes, dependency/toolchain inputs and reproducible recipes. A synthetic exact recipe does not establish the historical recipe.
 5. **Selection:** research candidates require explicit selected-source integration, rebuilt artifacts, bound validation and guard transitions. Current research gains do not update selected checkpoints.
@@ -99,6 +99,6 @@ The next practical work is targeted Relay value/lifetime recovery and Fees calle
 
 ## Evidence and validation
 
-This report derives from the full window inventory, current call ledger and immutable selected-handler audit. It does not rerun runtime cases or claim new execution coverage. Current Fees retains 17,331 suite comparisons, 1,542 exact outcome/log/compute comparisons and 24 exotic-growth boundary cases, plus 32 signed optional-account and 20 social-claim user-ID cases. Relay retains 536 records / 534 unique fixtures per tested recipe. Their exclusions and observation scopes remain those of their owning packets.
+This report derives from the full window inventory, current call ledger and immutable selected-handler audit. It does not rerun runtime cases or claim new execution coverage. Current Fees retains 17,331 suite comparisons, 1,542 exact outcome/log/compute comparisons and 24 exotic-growth boundary cases, plus 32 signed optional-account and 20 social-claim user-ID cases, plus 8 extension program-log cases. Relay retains 536 records / 534 unique fixtures per tested recipe. Their exclusions and observation scopes remain those of their owning packets.
 
 Verify inventory/binary bindings with `python3 -B repro/reconstruction-status-2026-10-26/refresh.py --check`, then this report with `python3 -B repro/reconstruction-status-2026-10-26/review.py --check`. The [current analysis](../../docs/RECONSTRUCTION-STATUS.md) links the recovery studies and dependency evidence.

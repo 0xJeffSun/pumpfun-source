@@ -497,3 +497,14 @@ restricted to the two call immediates, whose callee bodies match. No matches are
 lost: 371 unique pairs and 65 residuals. The larger claim caller remains
 unmatched. Fresh regression and 20 user-ID byte-length/token-path cases pass;
 whole-file identity and selection remain open.
+
+
+## Extension-size logs and formatting — 26 October 2026
+
+[Two restored no-resize log branches](../research/fees-extend-size-logs/README.md)
+recover original formatting helper 52,568 (448 bytes), with three matched callee
+bodies and no lost coverage. Fees reaches 372 unique pairs / 64 unmatched.
+Eight signed cases have matching program logs after differing in all eight on
+the parent. The enclosing resize body remains unmatched. A 24-byte previously
+normalized body becomes raw-equal under the changed layout without new coverage.
+All broad and focused regression suites pass; no selected checkpoint is promoted.
