@@ -9,12 +9,12 @@ Behavior is reconstructed handler by handler and checked with differential tests
 that run the captured original and the rebuilt candidate side by side in a local VM.
 
 Mayhem is now the active reconstruction priority. Its [current work plan](docs/MAYHEM-RECONSTRUCTION-PLAN.md) tracks eight unmatched admitted bodies and 245 still-opaque windows. The latest [GlobalParams and shared-helper research](repro/mayhem/global-params-layout-recovery/README.md) reaches 188 normalized matches in its 196-function examined scope; whole-file identity remains unresolved.
-The [interval-location correction](research/mayhem-interval-location-recovery/README.md) now reproduces the original overflow location with a one-byte data fix. All 396 Sell cases pass; three known non-compute log differences remain.
+The latest [Sell arithmetic and source-origin recovery](research/mayhem-sell-origin-recovery/README.md) passes all 396 Sell cases with exact logs after removing only compute-consumption lines. Its 1,032 admin cases and three Burn families also pass; 2,868 signatures verify. Full body and whole-file identity remain unresolved.
 
 For subsequent gains and the latest research frontier, see the
 [byte-identity progress log](docs/BYTE-IDENTITY-PROGRESS.md).
 The [27 October queue review](docs/PR-QUEUE-REVIEW-2026-10-27.md) covers PRs
-#170–#206, including separately verified 399- and 401-pair Fees context candidates and
+#170–#217, including separately verified 399- and 401-pair Fees context candidates and
 source-only proposals. Those independent branches are not silently combined
 into the inventory below.
 

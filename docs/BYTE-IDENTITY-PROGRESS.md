@@ -1595,3 +1595,7 @@ false. All four core whole identities remain unresolved; no checkpoint changes.
 ## Mayhem interval-overflow location recovered
 
 [Compiled source-location recovery](../research/mayhem-interval-location-recovery/README.md) corrects exactly one ELF data byte: candidate offset 578012 changes from 27 to 32, matching original state.rs 562:32. All code bytes remain identical. Two clean root builds agree; all 396 Sell comparisons and 792 signed transactions verify. Known non-compute log differences decrease from four to three. Five [further validator controls](../research/mayhem-quote-validator-followups/README.md) preserve all 188 matches but do not close O0095.
+
+## Mayhem Sell arithmetic and source-origin recovery
+
+The [new source composition](../research/mayhem-sell-origin-recovery/README.md) restores the Result-based arithmetic failure and original state.rs locations. Two root builds agree. All 396 Sell cases match on the checked fields and every log line except explicit compute consumption; all 1,032 admin cases and three sequential Burn families pass. Independent verification covers 2,868 signatures and complete expected account bytes for 624 admin successes. No complete-function gain is counted: the current research remains 188/196 examined matches, eight admitted gaps and 245 opaque windows.

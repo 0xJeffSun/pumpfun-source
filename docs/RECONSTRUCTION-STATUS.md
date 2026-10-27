@@ -716,3 +716,7 @@ normalized,142 raw-local,411 unique pairs,27 unmatched, with 480 attributed pair
 ## Latest Mayhem data correction
 
 The [interval-location packet](../research/mayhem-interval-location-recovery/README.md) changes exactly one compiled data byte, reproducing original state.rs 562:32 while retaining every instruction byte and all body matches. Two root builds agree; 396 fresh Sell cases and 792 independently verified signatures pass. Three non-compute log differences remain. The [follow-up controls](../research/mayhem-quote-validator-followups/README.md) add no complete O0095 match; the eight-body and opaque remainders remain.
+
+## Latest Mayhem Sell validation
+
+[Sell source-origin recovery](../research/mayhem-sell-origin-recovery/README.md) builds twice to the same artifact. It passes 396 fresh Sell cases with equality of every non-compute log line, 1,032 admin cases, and three sequential Burn families. All 2,868 signatures and 624 successful admin account-byte outcomes verify independently. The [441-window inventory](../research/mayhem-sell-origin-recovery/functions.tsv) retains 188 matching examined bodies, eight unmatched bodies and 245 opaque windows. The new source fixes the earlier diagnostic differences, not full body or whole-file identity.
