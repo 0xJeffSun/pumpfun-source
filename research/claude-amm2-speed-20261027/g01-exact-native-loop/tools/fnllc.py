@@ -16,7 +16,8 @@ Subcommands
       call immediates (internal or relocated) masked; everything else, including non-relocated lddw
       constants, compared byte for byte. Equal length is required.
   check <module.ll> <symbol> (--orig ADDR | --so FILE)
-      extract + llc + cmp in one step (writes into --work, default a temp dir).
+      extract + llc + cmp in one step (writes into --work, default a temp dir). FNLLC_DIS=1 adds a unified diff of the
+      disassembled (normalized) instruction streams.
   vs-orig <module.ll> <measure.json> [--jobs N]
       For every normalized-matched window whose candidate body is defined in the IR: single-function codegen vs the ORIGINAL.
   validate <module.ll> <unstripped.so> [--limit N] [--orig-matched measure.json]
@@ -274,6 +275,24 @@ def diff_report(a, b, limit=12):
     return out
 
 
+def print_disdiff(a, b, limit=int(os.environ.get('FNLLC_DIS_LINES', '80'))):
+    """Unified diff of the two normalized instruction streams (obj vs reference; masked call/lddw operands)."""
+    import difflib, importlib.util
+    spec = importlib.util.spec_from_file_location('sbfdis', str(HERE.parent / 'sbfdis.py') if (HERE.parent / 'sbfdis.py').exists()
+                                                  else '/private/tmp/claude-501/-Users-shawwalters-Documents-Codex-2026-10-24-pumpfun-source/d810a7ff-a81e-46b2-bacd-4cd9cadc52cb/scratchpad/shared/tools/sbfdis.py')
+    sd = importlib.util.module_from_spec(spec); spec.loader.exec_module(sd)
+    def text(code):
+        out, at = [], 0
+        while at + 8 <= len(code):
+            n, ins = sd.decode(code, at); out.append(' '.join(str(x) for x in ins)); at += n
+        return out
+    d = list(difflib.unified_diff(text(a), text(b), 'obj', 'ref', lineterm='', n=2))
+    for l in d[:limit]:
+        print('   ' + l)
+    if len(d) > limit:
+        print('   ... (%d more diff lines; FNLLC_DIS_LINES=N)' % (len(d) - limit))
+
+
 def compare_obj(obj, symbol, orig=None, so=None, name=None, quiet=False):
     code, raw, opat = obj_function(obj, symbol)
     Elf = load_reader()
@@ -300,6 +319,8 @@ def compare_obj(obj, symbol, orig=None, so=None, name=None, quiet=False):
         if not same:
             for l in diff_report(code, norm):
                 print(l)
+            if os.environ.get('FNLLC_DIS'):
+                print_disdiff(code, norm)
             if len(code) != len(norm):
                 print('  length differs: obj %d ref %d (%+d insns)' % (len(code), len(norm), (len(code) - len(norm)) // 8))
     return same

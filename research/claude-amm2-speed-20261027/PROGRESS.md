@@ -54,10 +54,24 @@ Base: origin/main 0cc61d636, AMM frontier repro/pump_amm/event-decoder-recovery-
 
 - vbatch.py (one slot per sweep) + seed_main.sh published (READY-v3, ~12:46); vbatch smoke test on 651 OK (cache hit, identical, new-bytes-no-change).
 
-## In progress
-- (none)
+- exactcheck.py (12:52): 5/5 lane Linux builds with an exact-native twin are byte-identical (incl. multihop lx-a1-1 16824b58…,
+  placement lx-g02-651 69979ad3…). Plain and exact 651 baselines both in the shared cache (seed_main.sh: both hits).
+- fnllc check FNLLC_DIS=1 disassembly diff; published.
 
-## Next (ideas not yet done)
-- fnllc: report length mismatches separately; a `fnloop` wrapper (stage -> replay --emit=llvm-ir -> check one symbol vs one window).
-- seed the cache for each new main checkpoint as soon as MAIN moves (one exact build each).
-- lock: Linux builds hold an sbf slot for their whole podman run; with exact native builds lanes need Linux only for final claims.
+## State for a continuation agent
+- Shared, published and in use by lanes: tools native_build.sh v2 (cache, EXACT=1, timing.txt), native_exact_build.sh,
+  sync_registry.py, buildcache.py, rustc_replay.py, variants.py, vbatch.py, fnllc.py, fnloop.sh, seed_main.sh, exactcheck.py;
+  SP/shared/toolchain/v144x (shim v2 + hostdeps/liblibc-fde4264cf87f6728.rlib); SP/shared/caches/xnative-v144 (primed deps for the
+  647/651 dependency set); SP/shared/buildcache/{native-v144,xnative-v144}; SP/shared/registry (entrypoint 2.2.1 archive).
+- My lane dirs: target/xnative and target/xnative2 lost .rlib files to the --build-plan hazard (cargo rebuilds missing ones; or
+  re-clone from the shared primed cache). target/linux is primed for the 647/651 dependency set (lin1).
+- PR #318 open (g01 packet), CI pending at 12:58.
+
+## Next (untried ideas)
+- When MAIN moves: `seed_main.sh speed <checkpoint>` (both flavors) so every lane's baseline is a cache hit; then exactcheck.py.
+- If a future recipe changes the host dependency graph (new platform-specific host deps), the shim may need more than the
+  cpufeatures/libc fix: rerun the build-plan metadata comparison (evidence/metadata-vs-linux.json method) against a Linux build.
+- Coordinator decisions to propose: make EXACT the native default; accept one Linux + one exact-native build as the two identical
+  builds; Linux builds hold an sbf slot for their whole emulated podman run (4–7 min).
+- Optional: a refresh step for SP/shared/caches/xnative-v144 when the dependency set changes (clone a target dir right after an
+  exact build of the new checkpoint, never after a --build-plan run).
