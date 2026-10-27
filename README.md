@@ -3,19 +3,19 @@
 Reconstructed Rust source for the Pump.fun Solana programs, plus the captured
 on-chain binaries and the evidence used to check the reconstruction against them.
 
-**None of the four core programs or the selected Relay is byte-identical to its
-deployed binary yet.**
+**The four core programs remain byte-unequal. The selected Relay reconstruction
+now reproduces its full ELF and loader-allocated payload byte-for-byte.**
 Behavior is reconstructed handler by handler and checked with differential tests
 that run the captured original and the rebuilt candidate side by side in a local VM.
 
 For subsequent gains and the latest research frontier, see the
 [byte-identity progress log](docs/BYTE-IDENTITY-PROGRESS.md).
 The [27 October queue review](docs/PR-QUEUE-REVIEW-2026-10-27.md) covers PRs
-#170–#202, including separately verified 399- and 401-pair Fees context candidates and
+#170–#203, including separately verified 399- and 401-pair Fees context candidates and
 source-only proposals. Those independent branches are not silently combined
 into the inventory below.
 
-Latest Relay research reproduces **all 818,280 meaningful ELF bytes exactly**,
+The selected Relay reconstruction reproduces **all 818,280 meaningful ELF bytes exactly**,
 including **492/492 raw function windows**, headers, calls, data and relocations.
 Two Rust builds, including a fresh isolated build, produce the same artifact.
 The [exact ELF recipe](repro/donation-relay/linked-elf-reproduction/README.md)
@@ -28,7 +28,9 @@ The captured file also has **12,168 loader-allocated zero bytes**. A fresh local
 without padding the compiler output. ProgramData metadata and historical deployment
 sequence are outside that equality claim. The [natural source layout recovery](repro/donation-relay/access-control-layout-artifact/README.md)
 separately reaches 376 raw-local windows using the default linker layout.
-Selected checkpoints remain unchanged; all four core programs remain byte-unequal.
+The [canonical Relay source](repro/donation-relay/canonical-exact-selection/README.md)
+is now selected after a fresh build from `programs/donation-relay`. The four core
+checkpoints remain unchanged and byte-unequal.
 
 The pinned Fees inventory has **407 unique structural pairs, 31 unmatched windows**
 (**554/585 normalized counterparts**, including 118 raw-local matches).
@@ -104,12 +106,12 @@ No handler is certified perfectly recreated. The selected core builds contain
 | PumpSwap selected | 93 | 395 | 297 | 0 | 734,392 / 1,162,040 bytes (63.2%) |
 | Fees research | 118 | 436 | 31 | 0 | 199,040 / 799,648 bytes (24.9%) |
 | Mayhem selected | 58 | 131 | 7 | 245 | 636,128 / 706,744 bytes (90.0%) |
-| Relay research | 492 | 0 | 0 | 0 | 0; complete meaningful ELF byte-equal |
+| Relay selected | 492 | 0 | 0 | 0 | 0; complete meaningful ELF byte-equal |
 
 Unresolved text includes whole unmatched and opaque windows. These are not
 differing-byte counts or estimates of effort. For builds without full ELF equality, calls, data, layout and relocations
 remain to be verified even where a local body matches. Historical build provenance
-and broader behavior remain separate requirements for every build. Research rows do not replace selected checkpoints.
+and broader behavior remain separate requirements for every build. Fees research remains separate from its selected checkpoint; Relay now has an explicit canonical selection.
 
 The public-handler gaps are concrete:
 

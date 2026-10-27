@@ -80,7 +80,7 @@ def generate():
     reader = csv.DictReader(io.StringIO(read('repro/reconstruction-audit-2026-10-26/functions.tsv').decode()), delimiter='\t')
     rows = []
     for r in reader:
-        if r['variant'] != 'selected':
+        if r['variant'] != 'selected' or r['program'] == 'donation_relay':
             continue
         for key in ('original_start', 'original_end', 'bytes'):
             r[key] = int(r[key])
@@ -88,7 +88,7 @@ def generate():
             r[key] = json.loads(r[key])
         r['raw_candidate_names'] = selected[r['program'], r['original_start']]['raw_candidate_names']
         rows.append(r)
-    assert len(rows) == 3338
+    assert len(rows) == 2846
 
     wm = module('status_fee_windows', FEES + '/window_map.py')
     read(FEES + '/elf_helpers.py')
@@ -161,13 +161,24 @@ def generate():
     relay_runtime = load(RELAY + '/runtime.json.gz')
     assert relay_runtime['candidate_sha256'] == hashlib.sha256(exact_candidate).hexdigest()
     assert relay_runtime['case_count'] == 536 and not relay_runtime['failures']
+    current_relay = load('repro/donation-relay/current.json')
+    selected_relay = load('programs/donation-relay/source-selected.json')
+    transition = load('repro/donation-relay/canonical-exact-selection/transition.json')
+    assert current_relay['meaningful_elf_equal'] and current_relay['loader_payload_equal']
+    assert read(current_relay['candidate_artifact']) == exact_candidate
+    assert selected_relay['source_inputs'] == transition['new']['source']['files']
+    for name, digest in selected_relay['source_inputs'].items():
+        assert hashlib.sha256(read('programs/donation-relay/' + name)).hexdigest() == digest
+    canonical_rows = []
     multiplicity = collections.Counter(o['normalized_sha256'] for o in analysis['original-function-ledger.json'])
     for o, r in zip(analysis['original-function-ledger.json'], analysis['match-ledger.json']):
         c = analysis['candidate-function-ledger.json']
         convert = lambda indices: [dict(address=c[i]['start'], name=n) for i in indices for n in (c[i]['names'] or [''])]
-        rows.append(row('donation_relay_research', dict(address=o['start'], bytes=o['bytes'], unique=multiplicity[o['normalized_sha256']] == 1 and len(r['normalized_candidate_indices']) == 1),
-                        convert(r['raw_candidate_indices']),
-                        convert(r['normalized_candidate_indices']), RELAY + '/analysis/recovered/match-ledger.json'))
+        record = row('donation_relay_research', dict(address=o['start'], bytes=o['bytes'], unique=multiplicity[o['normalized_sha256']] == 1 and len(r['normalized_candidate_indices']) == 1),
+                     convert(r['raw_candidate_indices']), convert(r['normalized_candidate_indices']), RELAY + '/analysis/recovered/match-ledger.json')
+        rows.append(record)
+        canonical_rows.append(dict(record, program='donation_relay', variant='selected', source_ledger='repro/donation-relay/canonical-exact-selection/transition.json'))
+    rows[2846:2846] = canonical_rows
     for record in rows:
         record.setdefault('call_attributed_candidate_starts', [])
     counts = {}
@@ -177,7 +188,7 @@ def generate():
                                body_bytes=sum(r['bytes'] for r in group),
                                unmatched_body_bytes=sum(r['bytes'] for r in group if r['disposition'] == 'no_complete_body_match'))
     assert len(rows) == 4415
-    report = dict(snapshot=REVISION, selected_snapshot=baseline['audited_revision'], counts=counts,
+    report = dict(snapshot=REVISION, selected_snapshot=baseline['audited_revision'], canonical_relay_selection=current_relay, counts=counts,
                   fees=fees_meta, relay=dict(analysis['comparison-summary.json'], meaningful_elf_equal=True, meaningful_elf_bytes=818280, allocation_tail_bytes=12168, reconstructed_linker_layout=True, historical_recipe_verified=False, loader_payload_equal=True, loader_transactions=912, verified_replay_records=536, static_parser_runtime_fields_are_not_execution_results=True),
                   selected_handler_dispositions=dict(collections.Counter(r['selected_status'] for r in baseline['handlers'])),
                   input_sha256=dict(sorted(INPUTS.items())),
@@ -189,7 +200,7 @@ def generate():
     for r in rows:
         writer.writerow({k: json.dumps(v) if isinstance(v, list) else v for k, v in r.items()})
     generated = {'fees-call-attribution.json': json.dumps(attribution, indent=2, sort_keys=True) + '\n', 'functions.tsv': output.getvalue(), 'status.json': json.dumps(report, indent=2, sort_keys=True) + '\n'}
-    overview = ['# Current function-window inventory', '', f'Evidence snapshot: `{REVISION}`. Selected inputs retain their verified `{baseline["audited_revision"]}` checkpoint bindings. Research rows replace the older Fees/Relay research inventory; they do not replace selections.', '',
+    overview = ['# Current function-window inventory', '', f'Evidence snapshot: `{REVISION}`. Core selected inputs retain `{baseline["audited_revision"]}` bindings. Canonical Relay now selects the exact 60-input reconstruction; the older Relay selection remains in the historical audit. Research rows remain separately labeled alternatives.', '',
                 '| Program / build | Windows | Exact local bytes | Normalized only | No complete match | Opaque |',
                 '| --- | ---: | ---: | ---: | ---: | ---: |']
     for program, c in counts.items():

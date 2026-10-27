@@ -3,13 +3,13 @@
 This is the action list for the [current reconstruction audit](RECONSTRUCTION-AUDIT.md),
 with current research based on reviewed parent revision `6b61b337` and the linked visibility-recovery measurements. The [current review](RECONSTRUCTION-STATUS.md)
 and [complete refreshed inventory](../repro/reconstruction-status-2026-10-26/README.md)
-list every raw match and unresolved window; selected artifacts retain the
-`1463bd22` audit bindings. The historical
+list every raw match and unresolved window; the four core selected artifacts retain
+`1463bd22` audit bindings, while Relay now has its canonical exact selection. The historical
 [completion ledger](COMPLETION.md) remains a selected-checkpoint record; its old
 candidate paths and “current” prose must not override newer evidence.
 
 Subsequent gains are in the [byte-identity progress log](BYTE-IDENTITY-PROGRESS.md):
-Relay research now has **492/492 normalized counterparts and no unmatched windows**; current Fees research
+Canonical Relay now has **492/492 raw-equal windows and no unmatched windows**; current Fees research
 has **31 unmatched windows and 407 unique structural pairs**. The [Relay framework study](../repro/donation-relay/framework-sysroot-recovery/README.md)
 recovers the three repeated type-ID bodies with official Linux target libraries,
 adds the Anchor 0.32 framework matches and restores share-total compared values.
@@ -191,8 +191,8 @@ The worker packet established the 483-window checkpoint. The later
 [settlement artifact recovery](../repro/donation-relay/settlement-artifact-recovery/README.md)
 independently validates the combined 488-window source and exact read-only data.
 The later wrapper artifact recovers original ordinals 92–95. The linked-ELF
-recipe now closes raw calls, data and relocations. Selected-source promotion,
-historical provenance and broader runtime evidence remain open.
+recipe now closes raw calls, data and relocations. The canonical source/artifact are now selected. Historical provenance and
+broader runtime evidence remain open.
 
 ## Event contexts after isolated ownership trials
 
@@ -235,7 +235,7 @@ The following are independent requirements; completing one does not close the ot
 
 | Priority | Remaining work | Evidence required to close it |
 | --- | --- | --- |
-| Current research bodies | Relay selected integration and historical provenance; Fees' 31 windows, including the exotic-growth caller | Full original-window comparison with no lost matches, source/build hashes and relevant fresh differential coverage |
+| Current research bodies | Relay historical provenance and broader coverage; Fees' 31 windows, including the exotic-growth caller | Full original-window comparison with no lost matches, source/build hashes and relevant fresh differential coverage |
 | Core source/behavior | Pump's five partial and three unaccepted handlers; AMM initializer; Mayhem initializer and opaque attribution | Concrete source, genuine successful and rejected paths, bound receipts and per-handler limitations |
 | Known mismatches | Pump sell_v2 transfer-fee behavior; Mayhem diagnostics and field contracts | Authorized resumed correction where required, then targeted regressions and broader validation |
 | Transitive binary identity | Calls, duplicate attribution, data, relocations, indirect calls and final ELF layout | Exact artifact comparison and explicit explanation of any allocation padding |
@@ -295,13 +295,13 @@ and signing/ownership restrictions are unchanged by this documentation audit.
 | Selected AMM | 297 unmatched original windows, 160 ambiguous normalized rows, original diagnostics, data and full call contracts |
 | Fees current research | 31 unmatched windows (199,040 original body bytes), 69 additional call-attributed pairs and 78 duplicate windows still unattributed; close shareholder validators, transitive calls/data and full ELF/relocation layout |
 | Selected Mayhem | Seven admitted unmatched windows and 257 source-ledger opaque windows; 12 of the opaque windows have local raw matches without semantic attribution |
-| Relay current research | all 492 raw windows and the full meaningful ELF match via a reconstructed linker layout; the loader reproduces the full captured payload. Resolve selected integration, historical provenance, privileged successes and broader allocator/borrow coverage |
+| Relay current research | all 492 raw windows and the full meaningful ELF match via a reconstructed linker layout; the loader reproduces the full captured payload. Resolve historical provenance, privileged successes and broader allocator/borrow coverage |
 | Metaplex | Utilize's 1,477 text differences, 30 source-coordinate differences, two relocation differences; authentic source/compiler layout |
 | ATA | Historical recipe remains unknown despite exact output from explicit symbol ordering and an empty feature. Decide selection independently of historical authenticity. |
 | All programs | Exact historical tool/dependency inputs, complete sections/relocations, data and indirect-call meaning; complete security and lifecycle acceptance |
 
 The historical counts in the audit-baseline section are not the current research frontier.
-The Fees and Relay research outputs are not selected production/source checkpoints.
+Fees research outputs remain separate from its selected checkpoint. Relay now has a canonical exact selection; older Relay research states remain historical.
 The [audit](RECONSTRUCTION-AUDIT.md) records their full hashes, scope and exact
 function-level evidence. Do not combine counts from different builds or matcher
 rules into a single recovery percentage.
@@ -430,7 +430,7 @@ The [exact linked recipe](../repro/donation-relay/linked-elf-reproduction/README
 reproduces all 818,280 meaningful ELF bytes from ordinary Rust and an explicit
 input-section order. A fresh loader execution also reproduces all 830,448 captured
 payload bytes. Keep compiler output and loader allocation as separate artifacts.
-The historical recipe is unproved, selected checkpoints are unchanged, and bounded
+The historical recipe is unproved, the Relay canonical selection is now updated, and bounded
 runtime tests do not establish every privileged or allocator/borrow behavior.
 Earlier body lists and raw-layout residuals are historical measurements.
 
@@ -514,3 +514,12 @@ equalities, 12 compute-log differences, and no application/nonlog differences.
 Its 552-window base is separate from the current 554-window AdminCto source.
 Integrate the ordinary Crank changes into that source, remeasure every window
 and call edge, and retain the unresolved compute/whole-body gaps.
+
+## Relay canonical promotion completed
+
+The [canonical exact-selection packet](../repro/donation-relay/canonical-exact-selection/README.md)
+replaces the old selected Relay source with the verified 60-input reconstruction.
+Preserve its exact compiler ELF, loader-created payload and archived historical
+source under the successor checks. Selection itself is no longer a Relay task;
+historical provenance, ProgramData metadata/history and broader execution coverage
+remain separate from byte identity.

@@ -1,5 +1,5 @@
-# Donation relay recovered source
+# Donation Relay
 
-This canonical23-file tree is copied exactly from the tested Relay15 source snapshot in repro/donation-relay/source-build-15-owned-arithmetic/runtime-plan/static-proof/source. Candidate5f6d29410047551f5f4e448937f2de318c2a55546699fbfb33dacd5c89ddaea4 was built once in an isolated source crate using pinned v1.44 compiler/v1.52 strip. No managed canonical/main rebuild is claimed.
+The canonical 60-input reconstructed Rust source builds the exact 818,280-byte ELF with the [explicit linker recipe](../../repro/donation-relay/canonical-exact-selection/README.md). A real offline loader deployment reproduces all 830,448 captured payload bytes. Historical source spelling and historical build provenance remain unproved.
 
-Source13/14 lineage and owned6008 source/static/runtime evidence are retained. Finite ordinary12 passes, but owned6008/weights/sort/borrow-failure dynamic coverage isZERO. Whole original byte equality isFALSE. This README is not a compiled input; exact scanner23 binding is verified independently.
+See [selected metadata](source-selected.json), [build evidence](../../repro/donation-relay/canonical-exact-selection/build/result.json), and [the preserved previous checkpoint](../../repro/donation-relay/canonical-exact-selection/historical-source23/README.md).

@@ -1,4 +1,25 @@
 {
+  "canonical_relay_selection": {
+    "candidate_artifact": "repro/donation-relay/canonical-exact-selection/artifacts/candidate.so",
+    "candidate_sha256": "56d81ec64a0ba070d3d23f3c1547b31d659e85716dfa2198ec4b0ce6cd355333",
+    "canonical_main_build_performed": true,
+    "canonical_source": "programs/donation-relay",
+    "compiler_file_equals_capture": false,
+    "full_original_byte_equality": false,
+    "historical_build_recipe_verified": false,
+    "limits": "Exact reconstructed ELF and loader payload. Nonhistorical explicit linker section ordering. ProgramData metadata/history and exhaustive security acceptance are outside this claim. The four core contracts remain byte-unequal.",
+    "loader_payload_artifact": "repro/donation-relay/canonical-exact-selection/artifacts/loader-payload.so.gz",
+    "loader_payload_equal": true,
+    "loader_payload_sha256": "367f07a62e3f74d358187d175cf3228848e81a56c781a9a75b9df7fed1268563",
+    "meaningful_elf_equal": true,
+    "original_normalized_match_windows": 492,
+    "original_raw_match_windows": 492,
+    "source_manifest": "repro/donation-relay/canonical-exact-selection/transition.json",
+    "source_snapshot": "programs/donation-relay",
+    "symbols_artifact": "repro/donation-relay/canonical-exact-selection/artifacts/symbols.so.gz",
+    "symbols_sha256": "07ab4ac487727385a3b5ec0d4bc1139e10f701c3fac2f95b88d89701a38ab9e1",
+    "unmatched_original_windows": 0
+  },
   "handler_dispositions": {
     "bounded_implementation": 140,
     "partial": 5,
@@ -6,22 +27,18 @@
   },
   "input_sha256": {
     "fees-call-attribution.json": "e3a91cc1d2c44f1b5e7f358bb51400479bd61066d9887530b6240bceb6e83f6e",
-    "functions.tsv": "1b71be7e7081b24a47591f52b3a879021675a1fb567879987943bdc86b9f71b5",
+    "functions.tsv": "0a6f7a819226a0e6c0f777883d8866c1b4fcec50f09f40bb168d28e54097a560",
     "repro/reconstruction-audit-2026-10-26/audit.json": "7301fb2a784c56501fc85eb3272fc8dc111744b2464335edd3051ed1cc65fc7a",
-    "status.json": "f8143f58612cda7767b3ffe6487723b99f1330615190c3819d040d1f53f694e8"
+    "status.json": "702104376133fea3a6bbc7969c16016ffb53364144e2b06c7793ba3f66b9b2dc"
   },
   "programs": {
     "donation_relay": {
       "body_bytes": 752488,
       "bytes_by_disposition": {
-        "no_complete_body_match": 735984,
-        "normalized_body_only": 14608,
-        "raw_body_equal": 1896
+        "raw_body_equal": 752488
       },
       "counts": {
-        "no_complete_body_match": 370,
-        "normalized_body_only": 89,
-        "raw_body_equal": 33
+        "raw_body_equal": 492
       },
       "windows": 492
     },

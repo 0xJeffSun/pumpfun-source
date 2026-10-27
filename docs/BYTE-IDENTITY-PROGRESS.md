@@ -1305,3 +1305,19 @@ excerpt/derivative is published. Default native_build_verified, runtime_verified
 and whole_binary_identity_verified remain false. Full raw ELF/capture identity,
 indirect behavior and unrestricted transitive data remain open. No selected
 checkpoint changes.
+
+## Canonical exact Relay selected
+
+The 60-input reconstructed Rust source is now installed at `programs/donation-relay`.
+Independent review compiled it from that canonical path with a completely empty
+target and no network: candidate and symbols match the exact ELF hashes. A fresh
+real-loader run reproduces all captured payload bytes. The current 4,415-row
+inventory now reflects this Relay selection, while the previous 23-input source
+and metadata remain explicitly historical.
+
+The successor guard preserves core107 and historical signature checks. Review
+fixed a checkout-specific absolute-path check by validating one recorded source/
+configuration root, read-only mounts and the same actual source hashes. Twelve
+selection, portability and critical-code controls pass; the preserved signature
+routes and exact Relay 536-record check pass. Historical source provenance,
+ProgramData metadata/history and broader behavior remain outside byte equality.

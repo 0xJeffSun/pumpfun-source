@@ -1,6 +1,6 @@
 # PR queue review — 27 October 2026
 
-Reviewed PRs #170–#202 as a combined merge tree based on `ba7883511942965c5c9def03971bdaff84963d6b`. Selected program sources, captures, scripts and workflows are unchanged. Overlapping append-only progress-log additions were preserved during local conflict resolution.
+Reviewed PRs #170–#203 as a combined merge tree based on `ba7883511942965c5c9def03971bdaff84963d6b`. Through #202, selected program sources and workflows were unchanged. #203 explicitly promotes Relay and changes its guard entrypoints; the four core source maps, captures and scripts remain preserved. Overlapping append-only progress-log additions were preserved during local conflict resolution.
 
 | PR | Reviewed change | Verification and scope |
 | --- | --- | --- |
@@ -42,6 +42,8 @@ Reviewed PRs #170–#202 as a combined merge tree based on `ba7883511942965c5c9d
 
 | [#201](https://github.com/lalalune/pumpfun-source/pull/201) | Crank native-only flow and strict observations | Verifier, six mutation tests and saved-signature checker pass. Fresh 304-case replay exactly reproduces the retained receipt: 292 raw-equal cases, 12 failures limited to compute-log lines; every application/nonlog field agrees. Separate 552-window candidate; not promoted into the current 554-window composition. |
 | [#202](https://github.com/lalalune/pumpfun-source/pull/202) | Public instruction-module source proposal | Source verifier and all 13 tests pass. Its 545→546 parent-specific claim is separate from the independently artifact-backed 553-window visibility recovery already integrated here; no additional current-window gain is counted. |
+
+| [#203](https://github.com/lalalune/pumpfun-source/pull/203) | Canonical exact Relay source and successor guard | Replaces the canonical Relay source with the 60-input exact recipe and archives the prior 23-input source. Review fixes author-checkout-dependent mount validation, adds portable-locator/read-only/critical-code controls, and updates the current inventory to the canonical selection. Current/historical guards, saved signatures, fresh loader and independent native build are verified in the review evidence. |
 
 The checked PR head SHAs are listed in the Git merge parents. No complete-program identity or exhaustive semantic correctness follows from merging these research packets. The generated inventory remains pinned to its declared Fees and artifact-backed Relay candidates; alternative source proposals are not silently combined.
 

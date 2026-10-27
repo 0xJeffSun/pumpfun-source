@@ -1,8 +1,8 @@
 # Comprehensive reconstruction review
 
-Reviewed merged evidence: `45f79b7edd4af70e0933183b09287736eb5c340b`. Selected builds remain bound to `1463bd22fb7811825c5e7acf1cb963eb39ab68d9`.
+Reviewed merged evidence: `45f79b7edd4af70e0933183b09287736eb5c340b`. Core selected builds retain `1463bd22fb7811825c5e7acf1cb963eb39ab68d9`; Relay selects the separately verified canonical exact reconstruction.
 
-**The four core selected programs remain byte-unequal. Relay research reproduces all meaningful ELF bytes with a reconstructed linker layout; its separate loader receipt reproduces the captured payload. No public handler is proved exhaustively perfect.**
+**The four core selected programs remain byte-unequal. Canonical selected Relay reproduces all meaningful ELF bytes with a reconstructed linker layout; its separate loader receipt reproduces the captured payload. No public handler is proved exhaustively perfect.**
 
 ## How to read the classifications
 
@@ -16,7 +16,7 @@ Reviewed merged evidence: `45f79b7edd4af70e0933183b09287736eb5c340b`. Selected b
 
 | Build | Exact local windows | Normalized only | Unmatched | Opaque | Unmatched + opaque bytes / original text |
 | --- | ---: | ---: | ---: | ---: | ---: |
-| donation_relay | 33 | 89 | 370 | 0 | 735,984 / 752,488 (97.8%) |
+| donation_relay | 492 | 0 | 0 | 0 | 0 / 752,488 (0.0%) |
 | donation_relay_research | 492 | 0 | 0 | 0 | 0 / 752,488 (0.0%) |
 | mayhem | 58 | 131 | 7 | 245 | 636,128 / 706,744 (90.0%) |
 | pump | 98 | 430 | 507 | 0 | 1,391,456 / 1,792,208 (77.6%) |
@@ -51,11 +51,6 @@ The five largest unresolved windows per build focus the next investigation. Empt
 
 | Build | Original address | Bytes | Classification |
 | --- | ---: | ---: | --- |
-| donation_relay | 436,696 | 18,568 | no_complete_body_match |
-| donation_relay | 469,568 | 16,632 | no_complete_body_match |
-| donation_relay | 402,000 | 15,496 | no_complete_body_match |
-| donation_relay | 372,816 | 15,464 | no_complete_body_match |
-| donation_relay | 204,856 | 14,824 | no_complete_body_match |
 | mayhem | 287,608 | 19,256 | opaque_unassessed |
 | mayhem | 314,520 | 18,656 | opaque_unassessed |
 | mayhem | 140,512 | 18,648 | no_complete_body_match |
@@ -88,9 +83,9 @@ The five largest unresolved windows per build focus the next investigation. Empt
 2. **Complete bodies:** the current inventory has 0 unmatched Relay normalized windows and 31 Fees residuals; recover those bodies, complete Pump/AMM reconstruction and attribute Mayhem opaque windows. Small helper matches alone do not close callers.
 3. **Identity:** Relay now has literal equality across the complete 818,280-byte ELF, including all calls, data, layout and relocations. Its 12,168-byte tail is reproduced by the loader. Establish those properties for the other programs and retain broader runtime/provenance qualifications.
 4. **Build provenance:** retain source hashes, dependency/toolchain inputs and reproducible recipes. A synthetic exact recipe does not establish the historical recipe.
-5. **Selection:** research candidates require explicit selected-source integration, rebuilt artifacts, bound validation and guard transitions. Current research gains do not update selected checkpoints.
+5. **Selection:** the exact Relay source and artifacts are now canonical under a successor guard preserving historical metadata. Other research candidates still require explicit integration, rebuilt artifacts and bound validation.
 
-The next practical work is Relay selected-source integration and historical build provenance, and Fees caller/ownership recovery, with regression checks against the retained frontier. Avoid repeating the documented rejected source/compiler variants. Pump/AMM and Mayhem remain substantial independent workstreams. See [the prioritized work list](../../docs/REMAINING-WORK.md). No reliable total effort percentage or ETA follows from these counts.
+The next practical work is Relay historical build provenance and broader runtime coverage, and Fees caller/ownership recovery, with regression checks against the retained frontier. Avoid repeating the documented rejected source/compiler variants. Pump/AMM and Mayhem remain substantial independent workstreams. See [the prioritized work list](../../docs/REMAINING-WORK.md). No reliable total effort percentage or ETA follows from these counts.
 
 ## Evidence and validation
 

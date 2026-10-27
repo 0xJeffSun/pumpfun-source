@@ -1,6 +1,6 @@
 # Current function-window inventory
 
-Evidence snapshot: `45f79b7edd4af70e0933183b09287736eb5c340b`. Selected inputs retain their verified `1463bd22fb7811825c5e7acf1cb963eb39ab68d9` checkpoint bindings. Research rows replace the older Fees/Relay research inventory; they do not replace selections.
+Evidence snapshot: `45f79b7edd4af70e0933183b09287736eb5c340b`. Core selected inputs retain `1463bd22fb7811825c5e7acf1cb963eb39ab68d9` bindings. Canonical Relay now selects the exact 60-input reconstruction; the older Relay selection remains in the historical audit. Research rows remain separately labeled alternatives.
 
 | Program / build | Windows | Exact local bytes | Normalized only | No complete match | Opaque |
 | --- | ---: | ---: | ---: | ---: | ---: |
@@ -8,7 +8,7 @@ Evidence snapshot: `45f79b7edd4af70e0933183b09287736eb5c340b`. Selected inputs r
 | pump_amm | 785 | 93 | 395 | 297 | 0 |
 | pump_fees | 585 | 102 | 363 | 120 | 0 |
 | mayhem | 441 | 58 | 131 | 7 | 245 |
-| donation_relay | 492 | 33 | 89 | 370 | 0 |
+| donation_relay | 492 | 492 | 0 | 0 | 0 |
 | pump_fees_research | 585 | 118 | 436 | 31 | 0 |
 | donation_relay_research | 492 | 492 | 0 | 0 | 0 |
 

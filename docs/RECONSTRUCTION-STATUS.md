@@ -15,7 +15,7 @@ the opening tables and final integration section give the current frontier.
 
 ## What is actually byte-identical?
 
-**The four core selected programs remain byte-unequal. Relay research now has an
+**The four core selected programs remain byte-unequal. Canonical Relay now has an
 exact meaningful ELF and a separately loader-reproduced captured payload. Its
 linker recipe is reconstructed; no public handler has an exhaustive semantic proof.**
 
@@ -45,9 +45,9 @@ analysis. Candidate symbol names are hypotheses about original identity.
 | PumpSwap selected | 785 | 93 | 395 | 297 | 0 |
 | Fees selected | 585 | 102 | 363 | 120 | 0 |
 | Mayhem selected | 441 | 58 | 131 | 7 | 245 |
-| Relay selected source 15 | 492 | 33 | 89 | 370 | 0 |
+| Relay historical source 15 | 492 | 33 | 89 | 370 | 0 |
 | **Fees latest research** | **585** | **118** | **436** | **31** | **0** |
-| **Relay latest research** | **492** | **492** | **0** | **0** | **0** |
+| **Relay canonical selection** | **492** | **492** | **0** | **0** | **0** |
 
 Each row is a partition, not a score of semantic correctness. Mayhem's source
 ledger has 257 opaque windows, 12 of which happen to match local raw bytes.
@@ -74,8 +74,8 @@ linker layout is inferred from the capture, not established as historical.
 Fresh bounded replay passes 536 signed records / 534 fixtures. A separate fresh
 912-transaction loader deployment reproduces the entire **830,448-byte captured
 payload**, with 12,168 zero bytes allocated by the loader. Compiler output is
-not padded. ProgramData metadata/history, selected-source promotion and broader
-runtime acceptance remain separate requirements.
+not padded. ProgramData metadata/history and broader runtime acceptance remain separate
+requirements. The source and exact artifact are now canonically selected.
 
 Fees research has **554/585 windows with a normalized counterpart**: 407 unique
 structural pairs and 147 original windows in ambiguous duplicate groups. Its 31
@@ -538,9 +538,8 @@ it does not independently re-decode the transaction instruction/event payloads.
 Those payloads need a separate cross-check before the history is used to close
 field-role claims. The five semantic roles remain unresolved; no field is renamed.
 
-1. **Integrate the exact Relay recipe:** preserve the fresh-build and loader
-   evidence, decide selected-source promotion through the existing guard process,
-   and investigate authentic source/build provenance. The reconstructed layout
+1. **Preserve the canonical exact Relay recipe:** retain the fresh-build and loader
+   evidence and successor guard; investigate authentic source/build provenance. The reconstructed layout
    closes byte identity, not historical provenance or all runtime coverage.
 2. **Close known behavior defects:** Pump `sell_v2` and the ten partial/unaccepted
    selected dispositions above, with bound success/rejection tests. Cover genuine
@@ -669,3 +668,14 @@ local three-word copy has equal effects and dead temporary-register differences,
 but neither full body is byte-identical. All 13 controls retain their 553-window
 base; 417 bounded sharing-update cases pass on the ordered prototype. These
 controls are not promoted into the current AdminCto artifact.
+
+## Canonical exact Relay selection
+
+[PR #203](../repro/donation-relay/canonical-exact-selection/README.md) installs the
+60-input Rust reconstruction at `programs/donation-relay` and selects the exact
+818,280-byte ELF plus the real-loader 830,448-byte payload. The prior 23-input
+source and selected metadata remain archived and checked as historical evidence.
+The four core source maps and their 107 input pins remain unchanged. The current
+4,415-row inventory now reflects this Relay selection rather than labeling the
+old source-15 artifact current. Historical provenance and exhaustive behavior
+remain unproved.
