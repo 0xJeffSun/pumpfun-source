@@ -26,10 +26,12 @@ separate native control: 25 normalized losses and no gains. All 24 local tests
 pass, including POSIX controls. The experiment is excluded from the current
 frontier and does not authenticate the original compiler or source.
 
-Latest frontiers now total 2,875/3,338 matched windows, with 1,057 raw-local,
-1,818 normalized-only and 463 unmatched. Matched windows cover
-3,804,688/5,213,128 original text bytes (73.0%). Whole-ELF identity remains false
-for all four core programs.
+With the independently verified Pump Round32 and AMM transfer-ABI selections,
+latest frontiers total 2,879/3,338 matched windows: 1,058 raw-local, 1,821
+normalized-only and 459 unmatched. Matched windows cover 3,811,704/5,213,128
+original text bytes (73.1%). Whole-ELF identity remains false for all four core
+programs. The 641-window event result below stays a separate intermediate
+control and is not added twice.
 
 ## AMM: compose the event capture with the current source/ABI parent
 

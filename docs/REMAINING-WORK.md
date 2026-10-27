@@ -9,19 +9,17 @@ snapshot retains `1463bd22` audit bindings; current selections are recorded in
 [completion ledger](COMPLETION.md) remains a selected-checkpoint record; its old
 candidate paths and “current” prose must not override newer evidence.
 
-Current [Pump Round31](../repro/pump/main-contract-round31-20261027/README.md)
-has 137 raw-local matches, 593 normalized-only matches and 305 unmatched windows.
-The unmatched windows cover 900,152 original text bytes. Remaining bodies,
+Current [Pump Round32](../repro/pump/main-contract-round32-20261027/README.md)
+has 137 raw-local matches, 596 normalized-only matches and 302 unmatched windows.
+The unmatched windows cover 896,792 original text bytes. Remaining bodies,
 data, relocations, uncovered behavior and original build provenance remain open.
 
-Current [AMM event research](../research/amm-current-event-capture-20261027/README.md)
-has 128 raw-local, 513 normalized-only and 144 unmatched windows, with 361,224
-original text bytes still unmatched. It composes the complete sell-event body
-onto the 640-window source/ABI parent. Two builds, 17,462 fresh maintained cases
-and 26 focused event pairs pass. Selection still requires the other parent
-supplemental matrices to be rerun; the existing resize-order follow-up retains
-eight differences in 160 signed cases. Complete data/call identity and provenance
-remain open.
+Current [AMM transfer-ABI recovery](../repro/pump_amm/transfer-abi-recovery-20261027/README.md)
+has 129 raw-local, 513 normalized-only and 143 unmatched windows, with 357,568
+original text bytes still unmatched. The separately verified 641-window event
+composition remains bound to its own parent and does not add another window to
+this count. Complete data/call identity and provenance remain open; consult the
+selected checkpoint for retained supplemental tests and unresolved behavior.
 
 Current Mayhem research is the [current-framework initializer composition](../research/mayhem-initializer-current-recovery-20261027/README.md):
 100 raw-local, 330 normalized-only and eleven unmatched windows / 110,328 original

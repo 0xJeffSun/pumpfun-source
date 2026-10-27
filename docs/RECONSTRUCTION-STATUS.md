@@ -51,20 +51,20 @@ analysis. Candidate symbol names are hypotheses about original identity.
 | Fees selected | 585 | 102 | 363 | 120 | 0 |
 | Mayhem historical selected | 441 | 58 | 131 | 7 | 245 |
 | Relay historical source 15 | 492 | 33 | 89 | 370 | 0 |
-| **Pump current Round31** | **1,035** | **137** | **593** | **305** | **0** |
+| **Pump current Round32** | **1,035** | **137** | **596** | **302** | **0** |
 | **PumpSwap current** | **785** | **129** | **513** | **143** | **0** |
-| **Fees latest research** | **585** | **200** | **381** | **4** | **0** |
+| **Fees latest research** | **585** | **200** | **382** | **3** | **0** |
 | **Mayhem latest research** | **441** | **100** | **330** | **11** | **0** |
 | **Relay canonical selection** | **492** | **492** | **0** | **0** | **0** |
 
-The current rows are bound to [Pump Round31](../repro/pump/main-contract-round31-20261027/README.md), [AMM transfer ABI recovery](../repro/pump_amm/transfer-abi-recovery-20261027/README.md), [Fees associated-token integration](../research/fees-ata-prefix-integration/README.md) and [Mayhem current initializer recovery](../research/mayhem-initializer-current-recovery-20261027/README.md); they extend the dated generated inventory below. Each row is a partition, not a score of semantic correctness. The historical selected Mayhem source
+The current rows are bound to [Pump Round32](../repro/pump/main-contract-round32-20261027/README.md), [AMM transfer ABI recovery](../repro/pump_amm/transfer-abi-recovery-20261027/README.md), [Fees Extend integration](../research/fees-extend-integration/README.md) and [Mayhem current initializer recovery](../research/mayhem-initializer-current-recovery-20261027/README.md); they extend the dated generated inventory below. Each row is a partition, not a score of semantic correctness. The historical selected Mayhem source
 ledger has 257 opaque windows, 12 of which happen to match local raw bytes.
 Selected Fees retains two call-conflicting rows; body existence does not resolve
 those conflicts. Different programs and studies use different matching rules.
 
-Across these five frontier rows, **2,875/3,338 windows (86.1%)** match and
-**3,804,688/5,213,128 original text bytes (73.0%)** lie in matched windows.
-There are **463 unmatched windows**. Only Relay has complete meaningful-ELF
+Across these five frontier rows, **2,879/3,338 windows (86.2%)** match and
+**3,811,704/5,213,128 original text bytes (73.1%)** lie in matched windows.
+There are **459 unmatched windows**. Only Relay has complete meaningful-ELF
 identity; the four core programs remain byte-unequal. These are structural
 coverage measures, not a percentage of engineering work completed.
 
