@@ -1,0 +1,19 @@
+name: Verify AMM pool preparation boundaries
+on: [push, pull_request, workflow_dispatch]
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  verify:
+    name: amm-preparation-boundaries
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r requirements.txt
+      - name: Authenticate saved signed boundary replays
+        run: python -B research/amm-pool-preparation-boundaries/verify.py
+      - name: Reject tampered boundary evidence
+        run: python -B research/amm-pool-preparation-boundaries/test_verify.py
