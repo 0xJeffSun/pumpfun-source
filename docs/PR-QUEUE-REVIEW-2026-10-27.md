@@ -1,6 +1,6 @@
 # PR queue review — 27 October 2026
 
-Reviewed PRs #170–#197 as a combined merge tree based on `ba7883511942965c5c9def03971bdaff84963d6b`. Selected program sources, captures, scripts and workflows are unchanged. Overlapping append-only progress-log additions were preserved during local conflict resolution.
+Reviewed PRs #170–#198 as a combined merge tree based on `ba7883511942965c5c9def03971bdaff84963d6b`. Selected program sources, captures, scripts and workflows are unchanged. Overlapping append-only progress-log additions were preserved during local conflict resolution.
 
 | PR | Reviewed change | Verification and scope |
 | --- | --- | --- |
@@ -34,6 +34,8 @@ Reviewed PRs #170–#197 as a combined merge tree based on `ba7883511942965c5c9d
 | [#196](https://github.com/lalalune/pumpfun-source/pull/196) | Relay access-control layout and allocation provenance | All nine evidence verifiers and five negative tests pass; 536 signed records revalidated, all 13 retained loader transactions decoded, and 912 local signed loader transactions freshly replayed. Default-link variant reaches 376 raw-local windows; selected sources remain unchanged. |
 
 | [#197](https://github.com/lalalune/pumpfun-source/pull/197) | Source-only Fees union and Crank diagnostic correction | Source integrity/materialization and all nine tests pass. The safe-materialization test requires a non-symlink temporary directory. Three source stages and reported 545/550/550 measurements remain separate from the later artifact-backed frontier; no optional compiler or runtime verification is claimed in this review. |
+
+| [#198](https://github.com/lalalune/pumpfun-source/pull/198) | Source-only exact Relay ELF/linker recipe | Default verifier, all 12 tests and 60-input materialization pass. Optional literal comparison against the retained fresh exact build passes. All 492 selectors resolve uniquely to the same ordered object sections as that build; the allocator selector is safely generalized. No new compilation or VM run was needed in this review. Its allocation helper constructs a separate zero-filled image; the earlier artifact packet supplies the distinct real-loader execution evidence. |
 
 The checked PR head SHAs are listed in the Git merge parents. No complete-program identity or exhaustive semantic correctness follows from merging these research packets. The generated inventory remains pinned to its declared Fees and artifact-backed Relay candidates; alternative source proposals are not silently combined.
 
