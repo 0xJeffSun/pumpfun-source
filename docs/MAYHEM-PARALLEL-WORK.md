@@ -87,6 +87,14 @@ fresh-dependency artifacts. Those unchanged-source builds retain the allocator
 call-target problem; the qualified macro/IDL source change now fixes it without
 changing the nine-body list.
 
+The [independent allocator composition reproduction](../research/mayhem-allocator-call-closure/README.md)
+repeats PR295/296's complete native artifacts from two empty dependency target
+directories. It provides an executed portable build recipe, current curve/root
+optimized IR comparison and fresh initializer qualification. Its 432 normalized,
+85 native raw and 422 direct-closed counts are inherited source results, not
+additional recovery. The separate qualified 432/100 layout and ten unmatched
+handler-dependent call relationships remain unresolved.
+
 ## Integration requirements
 
 Preserve every prior normalized/raw match, immediate call shape and Source
