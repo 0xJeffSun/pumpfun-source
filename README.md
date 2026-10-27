@@ -9,6 +9,8 @@ ELF and, through a separate loader deployment, its captured payload.**
 
 ## Current progress
 
+[Current main-Pump parallel research snapshot](research/main-pump-parallel-checkpoint-20261027/README.md) preserves the verified intermediates and in-progress source beyond the maintained checkpoint.
+
 **Main Pump: 63.1% of function windows matched; 41.2% of original text covered. Complete reconstruction remains unfinished.**
 
 Across the latest verified checkpoints, **2,737 / 3,338 inferred function windows

@@ -1,0 +1,21 @@
+# Main Pump parallel research checkpoint
+
+This preserves the main-contract sources, build records, signed comparison results, negative controls and in-progress work available when the snapshot was taken. It excludes rebuildable dependency/compiler caches, private keypair files, unrelated programs and the previously stopped token-owner experiment.
+
+The maintained, published source remains [Round13](../../repro/pump/main-contract-round13-20261027/README.md): 653/1,035 normalized windows (63.1%), with whole-ELF identity unfinished. Round14 and Round15 are verified intermediate candidates; Round16 was still running its full regression at capture time. The manifest records those exact states.
+
+**This is a research archive, not a selection of every included variant for use.** Failed and superseded controls remain evidence. In particular, an earlier V3 fee-waiver variant has known post-completion differences and remains unpromoted. `updates/` preserves its later714-case corrected successor, the validated legacy/V2 fee-waiver source, and the then-pending creation variant; `UPDATES.json` distinguishes these states. Individual passing corpora do not establish complete reconstruction.
+
+The compressed snapshot is split into three parts for repository file-size limits. Verify all hashes and archive members with:
+
+```sh
+python research/main-pump-parallel-checkpoint-20261027/verify.py
+```
+
+To inspect the sources in a new directory without overwriting the current workspace:
+
+```sh
+python research/main-pump-parallel-checkpoint-20261027/verify.py --extract /tmp/pump-research-review
+```
+
+Extraction does not execute any included source. `MANIFEST.json` records all 5,201 files and their hashes, plus omitted active/generated files and the snapshot timestamp. Ongoing work after that timestamp remains separate until the next checkpoint.
