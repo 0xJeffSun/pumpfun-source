@@ -51,6 +51,11 @@ The inherited incentive wrapper compiler warnings were reviewed against the
 matching original wrapper, with no new live-range overlap found. This is not
 a general proof of stack safety or historical runtime provenance.
 
+The [expanded helper input binding](followup/swap-helper-inputs.md) repeats 315
+helper cases with two additional import-time fixtures explicitly hashed. It
+supersedes the first helper packet's incomplete explicit import list; the
+original signed observations remain preserved.
+
 ## Remaining work
 
 A [separately sealed follow-up probe](followup/migrate-constraint/README.md)
