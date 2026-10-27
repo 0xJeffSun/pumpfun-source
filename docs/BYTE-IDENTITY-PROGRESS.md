@@ -1546,3 +1546,31 @@ remain, and no full-handler or whole-ELF equality is claimed.
 ## Mayhem priority and quote-validator controls
 
 A private source build independently reproduces the latest GlobalParams artifact and symbols. Seven ordinary Rust variants preserve 188 examined matches and 58 raw-local windows, but the 1,296-byte O0095 body remains unmatched. Loading expiry before Clock recovers the original register/spill prefix; threshold and error block order remain open. These negative controls and their complete source/build evidence are retained in [the control packet](../research/mayhem-quote-validator-controls/README.md). The [Mayhem plan](MAYHEM-RECONSTRUCTION-PLAN.md) is now the active reconstruction priority.
+
+## Fees: legacy social-claim semantics on the pinned 559 source — 27 October 2026
+
+The [source-only Social proposal](../research/fees-social-claim-semantics-source-proposal/README.md)
+changes only the legacy `social.rs` body and its root module visibility on exact
+PR212's 43-input source. It restores saturated-deadline admission, four complete
+diagnostics, ordinary error conversion, saturating transfers and observed borrow/
+event ownership. The V2 handler, account declarations and other 41 inputs stay
+unchanged. Historical source topology is inferred, not proven.
+
+This is semantic progress, **not a complete-window gain**: all 559 normalized /
+143 raw counterparts and 166 Location uses remain, but original 132744's
+4,536-byte body is still unequal because of diagnostic block/branch placement.
+All 26 ordered actual callees and eight complete direct objects were checked
+locally without masking differing offsets. Positional differences worsen from
+448,155 to 453,541; the candidate is 80 bytes shorter than the meaningful original.
+
+Fresh local comparison on BOTH actual559 control and proposal covers 348 cases,
+fixing one state/event mismatch and 144 application-log mismatches. Two exact
+native builds, 17,331-case/18-suite regression and existing arithmetic boundaries
+also pass locally. No execution receipts, fixture/log data or derivatives are
+published; these observations are not downloadable runtime proof. Finite coverage
+is not exhaustive semantics, full log/CU equality or authentic fixed-admin success.
+
+Default source verification, thirteen tests and exact 43-input materialization
+pass. The nine plain-text files contain only ordinary source, reversible patch,
+public provenance and source-only tools; runtime/native/whole identity flags stay
+false. All four core whole identities remain unresolved; no checkpoint changes.

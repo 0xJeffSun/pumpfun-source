@@ -130,3 +130,12 @@ research scope is196 admitted /188 matched /8 unmatched and245 opaque windows;
 twelve raw-equal opaque windows remain semantically opaque. Four Sell log
 differences and all full trade-handler gaps remain. No canonical promotion or
 fresh VM execution is claimed by this review.
+
+## PR215: legacy Social claim source semantics
+
+The source verifier and all thirteen tests pass. Review preserves two exact
+package-local whitespace rules without changing compiler inputs. The claimed
+348-case correction and 559-window parent remain explicitly unpublished
+execution observations, not newly verified runtime evidence. This source-only
+proposal does not alter the current 558-window artifact-backed Fees inventory.
+Mayhem remains the active reconstruction priority.
