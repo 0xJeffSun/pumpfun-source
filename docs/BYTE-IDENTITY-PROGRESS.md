@@ -1966,3 +1966,18 @@ referenced extents remain explicit. Checked decoding and whole ELF still differ.
 The later 375-match parallel composition still lists O0213 as unmatched, but its
 integration and the separate shared-accounting delta are not claimed tested here.
 Original captures and selected checkpoints remain unchanged.
+
+## Fees sharing slice recovery
+
+The [combined Rust reconstruction](../research/fees-sharing-slice-recovery/README.md)
+adds exact normalized windows for legacy preparation (199072, 5,008 bytes), quote
+preparation (219376, 6,544 bytes), and the V2 caller (211408, 7,968 bytes). The
+frontier is 577/585 normalized windows, 143 raw local matches, 430 unique pairs,
+181 equal Locations and 3,870 equal direct-callee observations. No prior positive
+match is lost. Eight functions and complete ELF/data/relocation layout remain open.
+
+Two native builds agree; fresh execution passes 17,331 cases across 18 suites.
+All 6,413 comparable application-log cases agree. The new parallel test runner
+uses the canonical suite plan, with a separate process per suite; a same-binary
+control reproduces the complete sequential report. This is a test-speed change,
+not a relaxation of the acceptance criteria. Whole-ELF identity remains false.
