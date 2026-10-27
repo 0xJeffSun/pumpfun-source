@@ -48,6 +48,11 @@ confirms that every explicit-return path in both decoded graphs crosses that
 helper, including paths after transfer. Linear code offsets do not establish
 different ownership boundaries. Five mint-key/whitelist trials add no matches.
 No experimental candidate from this study is promoted.
+The [32-subset argument study](../repro/donation-relay/partial-argument-controls/README.md)
+also excludes partial argument binding alone under the tested recipe (128
+unmatched target comparisons). Further wrapper work needs evidence beyond
+repeating those subsets, such as tracing the live values passed to the shared
+worker and returned event.
 
 ## Audit baseline
 
