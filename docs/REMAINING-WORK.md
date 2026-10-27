@@ -29,6 +29,14 @@ all twenty immediate callees and twenty ordered typed references agree. The
 is preserved. Two builds, 6,636 fresh trade pairs and 69 initializer pairs pass.
 Large trade handlers, data/call closure and whole-ELF identity remain unresolved.
 
+The [direct-call closure audit](../research/mayhem-direct-call-closure-20261027/README.md)
+adds a specific allocator task: every current O0210 counterpart calls a
+`finish_grow` specialization that differs from original O0209, even though a
+matching O0209 body exists elsewhere. Repair the actual call destination and
+its seven transitive callers while preserving the qualified source's matches.
+The [O0075 wrapper attribution](../research/mayhem-sweep-admin-attribution-20261027/README.md)
+identifies SweepFeesAdmin without closing its body; that lane remains paused.
+
 The [current Legacy Buy ownership composition](../research/mayhem-current-ownership-composition-20261027/README.md)
 preserves the 430/100 frontier and its complete initializer. Its partial handler
 is 13,784 bytes versus 13,848 original bytes, with fifty immediate callee shapes
@@ -761,3 +769,27 @@ and leaving 24 normalized differences against the current-runtime control.
 Three fresh builds retain 459 actual compiler commands; both recovered raw and
 stripped ELFs repeat exactly. This identifies one difference between the recipes,
 adds no match beyond the current reconstruction and claims no runtime coverage.
+
+A second follow-up compares adjacent Anchor revisions before and after the
+duplicate-mutable validation relaxation, with the identical resolved graph and
+the required empty trait implementation restored in the after variant. Three
+fresh builds record 459 actual compiler commands. Normalized matches rise from
+407 to 420 and raw-local matches from 62 to 69, with no losses; fresh after
+outputs repeat as complete raw and separately stripped ELFs. The seven raw gains
+were already normalized matches. Eight differences remain against the older
+current-runtime control, and no match exceeds that control or the newer project
+frontier. Both variants retain the existing recovered Program ID check. Exact
+149/150-file upstream snapshots, five changed framework files, the root adaptation,
+identical metadata outputs and all 441 window comparisons are retained. This is
+a source-generation mechanism control, not original framework/date attribution.
+
+The next adjacent revision restores Borsh's original derives. A separate
+dependency-only control preserves all 420 normalized matches and accounts for
+five raw-local gains. Changing only the two upstream Rust files under the same
+resolved graph then restores O0141 and O0142, yielding 422 normalized, 74
+raw-local and 421 injective matches, with no losses. Four fresh builds retain
+615 actual compiler commands and identical final raw/stripped repetitions.
+The six remaining differences against the older current-runtime control are
+O0106, O0116, O0124, O0127, O0145 and O0199; only O0199 lacks a raw-local match
+that control has. No match exceeds the current-runtime control or advances the
+newer project checkpoint. Source attribution and runtime qualification stay open.

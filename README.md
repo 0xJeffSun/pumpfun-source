@@ -87,6 +87,19 @@ ordered immediate callees and twenty typed references checked in total.
 [Nine bodies remain](research/mayhem-quotes-current-recovery-20261027/remaining.md),
 with every function classified in the [441-row inventory](research/mayhem-quotes-current-recovery-20261027/inventory.tsv).
 
+The [recursive direct-call audit](research/mayhem-direct-call-closure-20261027/README.md)
+retains compatible counterparts for 414 of those 432 matched bodies. Eighteen
+lack direct-call closure: ten depend on missing business handlers, while eight
+trace to an allocator specialization mismatch. Data and indirect-call identity
+remain separate obligations. The formerly unnamed O0075 is now [statically
+attributed to SweepFeesAdmin](research/mayhem-sweep-admin-attribution-20261027/README.md);
+its body remains unmatched and sweep execution remains outside the active scope.
+
+The [native historical-macro composition](research/mayhem-native-current432-composition/README.md)
+also reproduces 432 normalized windows and 85 raw-local matches in its own
+recipe. Its earlier Legacy Buy source does not replace the qualified 432/100
+checkpoint or add to that checkpoint's raw count.
+
 The [AMM handler shape controls](research/mayhem-amm-handler-shape-controls-20261027/README.md)
 isolate account-copy expansion, arithmetic error flow and native-key evaluation
 order. Nine source/compiler controls preserve their 432-window search baseline;
@@ -174,12 +187,12 @@ preserving all 21,079 readonly bytes and the earlier recoveries. Two fresh
 normal Cargo builds agree; all 17,331 fresh comparisons pass. Sweep, Crank,
 CreateDonation, absolute layout and complete ELF identity remain unresolved.
 
-The [Fees source and compiler archive](research/fees-residual-source-checkpoint-20261027/README.md)
-preserves another 7,680 new or updated research files beyond the earlier
-checkpoints, including the three remaining parallel reconstruction lanes,
-compiler diagnostics and verified faster screening. The full recovery chain
-contains 86,598 current files. These experiments retain their individual status
-and add no accepted matches.
+The [Fees frame and inlining archive](research/fees-frame-inline-research-20261027/README.md)
+preserves another 1,675 new or updated research files beyond the earlier
+checkpoints. It includes a current-source Crank build, measured stack-lifetime
+improvements, and Create call-graph recovery. The full recovery chain contains
+88,263 current files. These experiments retain their individual status and add
+no accepted matches.
 
 The latest [PumpSwap event, decoder and rent recovery](repro/pump_amm/event-decoder-recovery-20261027/README.md) matches 647 windows and 148 raw bodies, recovers the optional-bool decoder, both legacy dispatch wrappers and sell-event capture, and corrects creator-transfer rent/error boundaries. All 17,462 corpus cases and retained supplemental suites pass; 138 AMM windows remain. A later [optional-u64 follow-up](repro/pump_amm/event-decoder-recovery-20261027/followup/optional-u64/README.md) records 123 differences in 264 short-tail cases; its correction is under test.
 

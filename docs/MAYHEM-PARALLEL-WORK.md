@@ -17,11 +17,11 @@ source and compiler investigations proceed.
 | --- | --- |
 | AMM trade and quote bodies | O0077 and O0079; cap/min selection, retained-reserve arithmetic, ownership and error flow |
 | Legacy and V2 trade bodies | O0081–O0084; source ownership, fallible arithmetic and CPI error lifetime |
-| Runtime and layout | Recursive call/data closure, allocation-provider provenance, genuine section layout and ELF equality |
+| Runtime and layout | O0210 → O0209 allocator-provider mismatch and seven transitive callers; remaining data/indirect-call closure, section layout and ELF equality |
 | Integration | Preserve the 432-window parent, qualify combinations with fresh builds and signed local replays, synchronize documentation and PRs |
 
 Sweep/burn work is outside the active scope. O0073 and O0076 are connected to the
-sweep path and are not dispatched. O0075's business attribution is unresolved;
+sweep path and are not dispatched. [O0075 is statically attributed to SweepFeesAdmin](../research/mayhem-sweep-admin-attribution-20261027/README.md);
 it receives no execution assignment here. Historical sweep evidence remains
 available under its original artifact bindings.
 
@@ -34,7 +34,7 @@ attributions, not authenticated original symbols.
 | Window | Original start | Bytes | Remaining body | Lane |
 | --- | ---: | ---: | --- | --- |
 | O0073 | 65472 | 912 | Sweep fee-recipient helper / block placement | Paused scope |
-| O0075 | 69192 | 8008 | Business body; attribution unresolved | Unassigned |
+| O0075 | 69192 | 8008 | SweepFeesAdmin; static wrapper attribution, body unmatched | Paused scope |
 | O0076 | 77200 | 8400 | Sweep business body | Paused scope |
 | O0077 | 85600 | 9736 | AMM Buy | AMM trade and quote |
 | O0079 | 95848 | 17312 | AMM Sell | AMM trade and quote |
@@ -76,6 +76,11 @@ arithmetic recover the Sell immediate-callee multiset; evaluation-order changes
 improve partial instruction alignment. The full body and ordered callees still
 differ. These controls add no accepted match or runtime qualification.
 
+The [native historical-macro quote composition](../research/mayhem-native-current432-composition/README.md)
+repeats 432 normalized / 85 native raw-local windows with its own 2,496 signed
+trade pairs and 69 initializer pairs. It retains the earlier 13,680-byte Legacy
+Buy body; it is not promoted over the qualified 432/100 source.
+
 ## Integration requirements
 
 Preserve every prior normalized/raw match, immediate call shape and Source
@@ -89,3 +94,14 @@ dummy operations, invented padding or executable patching is an identity result.
 Finite local replay does not establish exhaustive behavior or current-chain
 acceptance. Source-coordinate and compute-log normalizations must remain
 explicit for each packet. Whole-ELF identity remains false.
+
+## Ordered direct-call audit
+
+The [qualified-parent direct-call relation](../research/mayhem-direct-call-closure-20261027/README.md)
+retains 594 of 722 normalized pairs, covering 414 of the 432 body-matched
+windows. Eighteen windows have no direct-closed counterpart: ten depend on
+unmatched handlers, and eight on an allocator-provider mismatch rooted at
+O0210. O0209 has a matching body elsewhere, but O0210 calls a different
+`finish_grow` specialization. This adds a target-by-target recovery obligation,
+not a new body match or semantic-equivalence claim. Indirect/data closure and
+whole-ELF identity remain open.

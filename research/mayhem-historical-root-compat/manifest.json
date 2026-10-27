@@ -4,6 +4,590 @@
       "bytes": 12394,
       "sha256": "acec0e477524b5705cd069e1f2cfba29d8e0edea0954860c8adafadd3a43ce84"
     },
+    "borsh-control/analysis-summary.json.gz": {
+      "bytes": 8097,
+      "sha256": "ce6675740c0b7d781a620be633a9391bed69e7ea4d517c2f78259b03b343016d"
+    },
+    "borsh-control/build-01-baseline/analysis.json.gz": {
+      "bytes": 3532,
+      "sha256": "be51ee50ae7a2cfd94266723c9c3175d297109e81f694baabd559ad25143f270"
+    },
+    "borsh-control/build-01-baseline/launch.json.gz": {
+      "bytes": 171133,
+      "sha256": "dce347d63986cbb1471f1958c35ecf6d1728b450980b3c3b43431c8042754a57"
+    },
+    "borsh-control/build-01-baseline/link/exit-code.txt.gz": {
+      "bytes": 22,
+      "sha256": "89ed3b723e0e40d8957a2df55fcb04d57b6d95fa665c5fe67b098df7f29694ae"
+    },
+    "borsh-control/build-01-baseline/link/forwarded.rsp.gz": {
+      "bytes": 2148,
+      "sha256": "28d885424641a53a82a82222d477f7f1b71f467d6103fc7fdbbb54c271cfd0f5"
+    },
+    "borsh-control/build-01-baseline/link/input-10.bin.gz": {
+      "bytes": 292,
+      "sha256": "5c9ae372a006a528eebe8b8870fd43e776b5d82aa3f9d52dae066cd39f903ce2"
+    },
+    "borsh-control/build-01-baseline/link/input-11.bin.gz": {
+      "bytes": 194095,
+      "sha256": "154eceba0182d95ffaceb8e0c1d0da576ff6a7c47e48fba4656ead4e5e5195ee"
+    },
+    "borsh-control/build-01-baseline/link/input-12.bin.gz": {
+      "bytes": 445,
+      "sha256": "cfdc4ea79929e1df3c771a41f45592d881d8da95cf73f722a6ed867c3a22ec2c"
+    },
+    "borsh-control/build-01-baseline/link/input-2.bin.gz": {
+      "bytes": 75,
+      "sha256": "46df9abb7321f0c19aefb3ca45a34c7e4050405808a63b6ce6e7008a9fcfd414"
+    },
+    "borsh-control/build-01-baseline/link/invocation.json.gz": {
+      "bytes": 3407,
+      "sha256": "ffd125632f53485274f48c393aed7316b8b55454fb56bdc8d2bdcce92bba44e9"
+    },
+    "borsh-control/build-01-baseline/link/link.map.gz": {
+      "bytes": 43681,
+      "sha256": "d4097f689911717690ac7ecbb9595433c18d44e6309055f8cb094166b2998ab0"
+    },
+    "borsh-control/build-01-baseline/link/os-arguments.json.gz": {
+      "bytes": 190,
+      "sha256": "d08b91e0fd507ce78c91f4ad6f0ef3e6473f4869527ddf7e33fb3d83ac4ea8cc"
+    },
+    "borsh-control/build-01-baseline/link/response.bin.gz": {
+      "bytes": 2124,
+      "sha256": "d21322d1c7e0134d50b03b60e1b0db79c76d1a2735c4a21de510110536b59632"
+    },
+    "borsh-control/build-01-baseline/link-input-identities.json.gz": {
+      "bytes": 6658,
+      "sha256": "bca22ed89ee462583551496f0ffeb9471a1f4962f3a5a1a3bde16c7aff8f4647"
+    },
+    "borsh-control/build-01-baseline/records.json.gz": {
+      "bytes": 32395,
+      "sha256": "83abb479fc7a345b90d4d722253158cea71c615b427887c96261f1b98bb8ec9e"
+    },
+    "borsh-control/build-01-baseline/result.json.gz": {
+      "bytes": 552,
+      "sha256": "7316180d2f86cf8dda3b4a3cbaf4002a7a00a9d836f8de2ad40e0ef2b3306a16"
+    },
+    "borsh-control/build-01-baseline/stderr.log.gz": {
+      "bytes": 21611,
+      "sha256": "325332b5d22cc503ef6f5279716d104ecbf40d83bf7d8a2094f468cf0b54864b"
+    },
+    "borsh-control/build-01-baseline/stdout.log.gz": {
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    "borsh-control/build-01-baseline/strip.stderr.log.gz": {
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    "borsh-control/build-01-baseline/strip.stdout.log.gz": {
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    "borsh-control/build-01-baseline/stripped.so.gz": {
+      "bytes": 158178,
+      "sha256": "3567779370fad6e2bf9189fd8732653037c6a7945a75d7f9d6e0473570d40013"
+    },
+    "borsh-control/build-01-baseline/symbols.so.gz": {
+      "bytes": 185657,
+      "sha256": "c187a535968b9e8047229b668edb4e1ee21dd9f87d64494fb02a6e6f1e0bc39c"
+    },
+    "borsh-control/build-02-graph/analysis.json.gz": {
+      "bytes": 3540,
+      "sha256": "d5d7c73d25f67b33400ad030d62c9d58bd007c790ba5e17005bf6aa4511f6659"
+    },
+    "borsh-control/build-02-graph/launch.json.gz": {
+      "bytes": 171251,
+      "sha256": "fe0251a9467c5c7b928fc187983ad59b3ee780a9e873243aeeb9b593e1354c57"
+    },
+    "borsh-control/build-02-graph/link/exit-code.txt.gz": {
+      "bytes": 22,
+      "sha256": "89ed3b723e0e40d8957a2df55fcb04d57b6d95fa665c5fe67b098df7f29694ae"
+    },
+    "borsh-control/build-02-graph/link/forwarded.rsp.gz": {
+      "bytes": 2149,
+      "sha256": "6872bb4be216f5db8685f1ea3c8d1c23391dfc70c2fd8a72a9f14e1061c1891a"
+    },
+    "borsh-control/build-02-graph/link/input-10.bin.gz": {
+      "bytes": 292,
+      "sha256": "5c9ae372a006a528eebe8b8870fd43e776b5d82aa3f9d52dae066cd39f903ce2"
+    },
+    "borsh-control/build-02-graph/link/input-11.bin.gz": {
+      "bytes": 194151,
+      "sha256": "1df16c69821c6b0ebe2527b548f54e78903df75a385ebcde1df628c9bf325882"
+    },
+    "borsh-control/build-02-graph/link/input-12.bin.gz": {
+      "bytes": 443,
+      "sha256": "9b6732cee938e7a7eafe235f51a6fa44a47fee090b197bfa3ba29ad0b5c0ed68"
+    },
+    "borsh-control/build-02-graph/link/input-2.bin.gz": {
+      "bytes": 75,
+      "sha256": "46df9abb7321f0c19aefb3ca45a34c7e4050405808a63b6ce6e7008a9fcfd414"
+    },
+    "borsh-control/build-02-graph/link/invocation.json.gz": {
+      "bytes": 3404,
+      "sha256": "bc1406dbc705a9ae4ab82806c265322828bd9aba39f17d6ea31a4eb460125864"
+    },
+    "borsh-control/build-02-graph/link/link.map.gz": {
+      "bytes": 43492,
+      "sha256": "bf16452d58d8446c56b995d3270e71c8bd909c90c6544308cf05d4af04c1415f"
+    },
+    "borsh-control/build-02-graph/link/os-arguments.json.gz": {
+      "bytes": 188,
+      "sha256": "19e881310f7cde8861ced61da9d7f84525b8160e43397ae02f955cfc3080e071"
+    },
+    "borsh-control/build-02-graph/link/response.bin.gz": {
+      "bytes": 2125,
+      "sha256": "cda1107fea3851cd00154b38a991f697d3190ab378bc326cc4fd07989aa33a1f"
+    },
+    "borsh-control/build-02-graph/link-input-identities.json.gz": {
+      "bytes": 6640,
+      "sha256": "7382c520ace9958a34a5b85dc7a9d7900bf265943fbb1c52422001e20f5b6eb8"
+    },
+    "borsh-control/build-02-graph/records.json.gz": {
+      "bytes": 35704,
+      "sha256": "cf8a5d37150e2590ceebdcd1418f187a5590fbaa4c0906c4ca133fd029bf5262"
+    },
+    "borsh-control/build-02-graph/result.json.gz": {
+      "bytes": 549,
+      "sha256": "5f1a2a52fdddb220309876ae8d86b615bb6d74a761514bdd8af2af2b072cb13d"
+    },
+    "borsh-control/build-02-graph/stderr.log.gz": {
+      "bytes": 23327,
+      "sha256": "5ed2e51c92333a3e4a002267b508dbd0e240950586fbb2301db41a32150b4b6c"
+    },
+    "borsh-control/build-02-graph/stdout.log.gz": {
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    "borsh-control/build-02-graph/strip.stderr.log.gz": {
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    "borsh-control/build-02-graph/strip.stdout.log.gz": {
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    "borsh-control/build-02-graph/stripped.so.gz": {
+      "bytes": 158139,
+      "sha256": "186424da50b82a1a7416de5dd1f2e065d0ea5024b9d34d4b86e43034fdda8081"
+    },
+    "borsh-control/build-02-graph/symbols.so.gz": {
+      "bytes": 185514,
+      "sha256": "dd80b33b255ac7f771809b8acec185b41d67189071c3692b59292819cab11501"
+    },
+    "borsh-control/build-03-after/analysis.json.gz": {
+      "bytes": 3540,
+      "sha256": "68dd81634b4ab8724af081c6e6c9ecd974c5fcc13d2faa616677698c6191e340"
+    },
+    "borsh-control/build-03-after/launch.json.gz": {
+      "bytes": 171312,
+      "sha256": "01e1ebf2fef7c64c75c6942c5e11a74e9420daf345ae1d2abdc2322dc83ec658"
+    },
+    "borsh-control/build-03-after/link/exit-code.txt.gz": {
+      "bytes": 22,
+      "sha256": "89ed3b723e0e40d8957a2df55fcb04d57b6d95fa665c5fe67b098df7f29694ae"
+    },
+    "borsh-control/build-03-after/link/forwarded.rsp.gz": {
+      "bytes": 2150,
+      "sha256": "3ebcc8307a2e95770a42ce77f6080b7a69be80c7589c8425845af9904406910d"
+    },
+    "borsh-control/build-03-after/link/input-10.bin.gz": {
+      "bytes": 292,
+      "sha256": "5c9ae372a006a528eebe8b8870fd43e776b5d82aa3f9d52dae066cd39f903ce2"
+    },
+    "borsh-control/build-03-after/link/input-11.bin.gz": {
+      "bytes": 194085,
+      "sha256": "bcf4c5db4f125388dc4784fedc7739e0b4a52e0673804d86b665ad6a76ad82bb"
+    },
+    "borsh-control/build-03-after/link/input-12.bin.gz": {
+      "bytes": 443,
+      "sha256": "9b6732cee938e7a7eafe235f51a6fa44a47fee090b197bfa3ba29ad0b5c0ed68"
+    },
+    "borsh-control/build-03-after/link/input-2.bin.gz": {
+      "bytes": 75,
+      "sha256": "46df9abb7321f0c19aefb3ca45a34c7e4050405808a63b6ce6e7008a9fcfd414"
+    },
+    "borsh-control/build-03-after/link/invocation.json.gz": {
+      "bytes": 3407,
+      "sha256": "cb32cee78ba36ea32f4ffa194a427324f01842c18d71dba82a9c9a9f5c79af64"
+    },
+    "borsh-control/build-03-after/link/link.map.gz": {
+      "bytes": 43433,
+      "sha256": "76dc87c6e97a7c3d052aee00884e0527397e05d0319862cc5c76a5ff67396ece"
+    },
+    "borsh-control/build-03-after/link/os-arguments.json.gz": {
+      "bytes": 189,
+      "sha256": "8f8e23fbe1a5220b04259f16b1c8723d1af8ce7a6a7bf3f695c731fd541c2155"
+    },
+    "borsh-control/build-03-after/link/response.bin.gz": {
+      "bytes": 2126,
+      "sha256": "ff1210ea9748f75085dfb3c971fed34b675df060325002a6518ee5e5ad363407"
+    },
+    "borsh-control/build-03-after/link-input-identities.json.gz": {
+      "bytes": 6640,
+      "sha256": "ba38b257623096c85b8f3a9f23dfdd0dd03c30df82d1d602afb5e9901603d006"
+    },
+    "borsh-control/build-03-after/records.json.gz": {
+      "bytes": 35132,
+      "sha256": "21d9d0c5158dadd191b2b80bea3cfbf702234730e18cdfa9860218b350faae4d"
+    },
+    "borsh-control/build-03-after/result.json.gz": {
+      "bytes": 549,
+      "sha256": "a9692e7ae782e7732d17ce603f34de1966b8b60690fd19567bba34fbd78ab5f6"
+    },
+    "borsh-control/build-03-after/stderr.log.gz": {
+      "bytes": 23334,
+      "sha256": "b8701c0f02c69311bc6c71bf74fb7e9fc58c97607cb46827cffe47b50a785511"
+    },
+    "borsh-control/build-03-after/stdout.log.gz": {
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    "borsh-control/build-03-after/strip.stderr.log.gz": {
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    "borsh-control/build-03-after/strip.stdout.log.gz": {
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    "borsh-control/build-03-after/stripped.so.gz": {
+      "bytes": 158054,
+      "sha256": "05388780f5701078fb4438f1cc1557460b301f6ec835fe56343a184abeb7884f"
+    },
+    "borsh-control/build-03-after/symbols.so.gz": {
+      "bytes": 185417,
+      "sha256": "04865aa700904a3fa0acfa5c148785480d9c2e8de41f9158720d22b8128dbccb"
+    },
+    "borsh-control/build-04-repeat/analysis.json.gz": {
+      "bytes": 3540,
+      "sha256": "68dd81634b4ab8724af081c6e6c9ecd974c5fcc13d2faa616677698c6191e340"
+    },
+    "borsh-control/build-04-repeat/launch.json.gz": {
+      "bytes": 171310,
+      "sha256": "c6242902e22e33d0ef66e61eff757426dd4763be7f76c6b4e6255431e934877a"
+    },
+    "borsh-control/build-04-repeat/link/exit-code.txt.gz": {
+      "bytes": 22,
+      "sha256": "89ed3b723e0e40d8957a2df55fcb04d57b6d95fa665c5fe67b098df7f29694ae"
+    },
+    "borsh-control/build-04-repeat/link/forwarded.rsp.gz": {
+      "bytes": 2149,
+      "sha256": "7ca29cfa3dcbaf1c402d2c63f8225170bf73bedea729f220828cccfd2c71186f"
+    },
+    "borsh-control/build-04-repeat/link/input-10.bin.gz": {
+      "bytes": 292,
+      "sha256": "5c9ae372a006a528eebe8b8870fd43e776b5d82aa3f9d52dae066cd39f903ce2"
+    },
+    "borsh-control/build-04-repeat/link/input-11.bin.gz": {
+      "bytes": 194085,
+      "sha256": "bcf4c5db4f125388dc4784fedc7739e0b4a52e0673804d86b665ad6a76ad82bb"
+    },
+    "borsh-control/build-04-repeat/link/input-12.bin.gz": {
+      "bytes": 443,
+      "sha256": "9b6732cee938e7a7eafe235f51a6fa44a47fee090b197bfa3ba29ad0b5c0ed68"
+    },
+    "borsh-control/build-04-repeat/link/input-2.bin.gz": {
+      "bytes": 75,
+      "sha256": "46df9abb7321f0c19aefb3ca45a34c7e4050405808a63b6ce6e7008a9fcfd414"
+    },
+    "borsh-control/build-04-repeat/link/invocation.json.gz": {
+      "bytes": 3409,
+      "sha256": "487c1bca9a413f5905dc74a92bf18562885829cbab2025a8f18b24e864887706"
+    },
+    "borsh-control/build-04-repeat/link/link.map.gz": {
+      "bytes": 43520,
+      "sha256": "eb110205e64d41a91d2088c35b55e061d526e17ca2a000eb8529e1755042ea1b"
+    },
+    "borsh-control/build-04-repeat/link/os-arguments.json.gz": {
+      "bytes": 188,
+      "sha256": "92d8d6e4e46aaa16c5a0bb24f83e538077d379a8f42a221ebea13040aa99cd44"
+    },
+    "borsh-control/build-04-repeat/link/response.bin.gz": {
+      "bytes": 2126,
+      "sha256": "abea34cb98fba916bb2fd0bfd68ae3285b31dff0720a3096922eb2d727b878bf"
+    },
+    "borsh-control/build-04-repeat/link-input-identities.json.gz": {
+      "bytes": 6656,
+      "sha256": "a71fdcf27240cbf2034907c066a426c9977e3f720fcb078edd4da30aa71bf0f2"
+    },
+    "borsh-control/build-04-repeat/records.json.gz": {
+      "bytes": 35595,
+      "sha256": "75fbc810ecc5bfafd45e7c3a6e9bcccdb5ea9847137280a52ad55f9e85dfa6f0"
+    },
+    "borsh-control/build-04-repeat/result.json.gz": {
+      "bytes": 549,
+      "sha256": "e0b775804141919484092529aab38ca9d0b14a78a4ebb25ad30fa5ec8f74c205"
+    },
+    "borsh-control/build-04-repeat/stderr.log.gz": {
+      "bytes": 23334,
+      "sha256": "62b0e027e8c8a1ebc7633a49c6617aa1bcebf825c285a8f2654c2ce5e7d1ca61"
+    },
+    "borsh-control/build-04-repeat/stdout.log.gz": {
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    "borsh-control/build-04-repeat/strip.stderr.log.gz": {
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    "borsh-control/build-04-repeat/strip.stdout.log.gz": {
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    "borsh-control/build-04-repeat/stripped.so.gz": {
+      "bytes": 158054,
+      "sha256": "05388780f5701078fb4438f1cc1557460b301f6ec835fe56343a184abeb7884f"
+    },
+    "borsh-control/build-04-repeat/symbols.so.gz": {
+      "bytes": 185417,
+      "sha256": "04865aa700904a3fa0acfa5c148785480d9c2e8de41f9158720d22b8128dbccb"
+    },
+    "borsh-control/comparison.json": {
+      "bytes": 870,
+      "sha256": "e93f8a0d2b79f3a234a07a1d9dcd4c3204957341663342c1de6681004ac7359e"
+    },
+    "borsh-control/controllers/acquire_borsh_vendor.py": {
+      "bytes": 3849,
+      "sha256": "532cca5b21b2c4d41b93058b59b1c693d04481046df82affcf02e4dee1bfb81c"
+    },
+    "borsh-control/controllers/analyze_historical_borsh.py": {
+      "bytes": 1476,
+      "sha256": "8fdd10e7ae3859a931fccdeaf138978f48c646dcf31679cf793c2e50ce00076e"
+    },
+    "borsh-control/controllers/build_historical_borsh_full.py": {
+      "bytes": 7414,
+      "sha256": "ad812a6bd188ce65acf81ab543b44b4601b5e0510c8dcd0c59e20308d9894114"
+    },
+    "borsh-control/controllers/package_borsh_control.py": {
+      "bytes": 2646,
+      "sha256": "7308e2fb57bdd4d380ee3f650d4652b7e5505a0285eca9321b1a0be7855c4eb8"
+    },
+    "borsh-control/controllers/prepare_borsh_build.py": {
+      "bytes": 7051,
+      "sha256": "51845e060fc47b82c926b827a9d0f28e03795fd5a46c83705529173a1ba01af9"
+    },
+    "borsh-control/controllers/prepare_borsh_sources.py": {
+      "bytes": 4009,
+      "sha256": "7aca01f397d3fe60bd3620fae64bab4c849a65e32c1ae777bdb0c26cbf55a0f5"
+    },
+    "borsh-control/controllers/summarize_borsh_control.py": {
+      "bytes": 1303,
+      "sha256": "4f38974cc26c9e837bf1b12cb9940f78f356f02ec53d969a626e1031a00535e6"
+    },
+    "borsh-control/dependency-closure.json.gz": {
+      "bytes": 32440,
+      "sha256": "34877a8e4f40b25168b8f1d164f98bea957dcf038aaabb85819af3c05060641e"
+    },
+    "borsh-control/framework-after.tar.gz": {
+      "bytes": 211163,
+      "sha256": "298591ac45ee815ea592f86ec876b671c4d0d9d6906d65f15330b3ec184267ac"
+    },
+    "borsh-control/framework-baseline.tar.gz": {
+      "bytes": 211288,
+      "sha256": "bdd96f3710427142a014cf977da9dcd495f2abb1ad93394ef559a201363a944f"
+    },
+    "borsh-control/framework-graph.tar.gz": {
+      "bytes": 211536,
+      "sha256": "863178d871613f163f59f9bc877fa7eeb51ec2d701c10f418962fb5f52d256f6"
+    },
+    "borsh-control/framework-packages.json.gz": {
+      "bytes": 261,
+      "sha256": "0c28cdb35d72ba08410aedd1c5b6b08a0c859dcb329a91f7bf2a570c843a5469"
+    },
+    "borsh-control/locked-vendor-acquisition.json.gz": {
+      "bytes": 15946,
+      "sha256": "fa189014f3632e1528f4a938c026e9ca80214d30028eaed57793ab8275ca625c"
+    },
+    "borsh-control/metadata-after/config.toml": {
+      "bytes": 255,
+      "sha256": "b4ccdf318fe4b051fb0af65fcb36e8e4fd973fb62c167ab93317a227865fe5d4"
+    },
+    "borsh-control/metadata-after/launch.json.gz": {
+      "bytes": 12298,
+      "sha256": "54e2774a4c6438309edab48c52174fc8574745d6dff436900c0b811ca7a5f1bb"
+    },
+    "borsh-control/metadata-after/locked-result.json.gz": {
+      "bytes": 289,
+      "sha256": "fd3b782897f0fdfa0fd278e5eda904f4f25da1a675059f7d49eebb8c274e716d"
+    },
+    "borsh-control/metadata-after/locked.stderr.log.gz": {
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    "borsh-control/metadata-after/locked.stdout.log.gz": {
+      "bytes": 54772,
+      "sha256": "b5f7270b66c7a3ffddc3d0b93efa26bf5c6f1d1d202a4dd1a28bcc87dca93c0f"
+    },
+    "borsh-control/metadata-after/result.json.gz": {
+      "bytes": 207,
+      "sha256": "4afbe7435787fc76de513dc7f09e64b4e602f56f66b8f7b7191cf3295ddcfdca"
+    },
+    "borsh-control/metadata-after/stderr.log.gz": {
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    "borsh-control/metadata-after/stdout.log.gz": {
+      "bytes": 54772,
+      "sha256": "b5f7270b66c7a3ffddc3d0b93efa26bf5c6f1d1d202a4dd1a28bcc87dca93c0f"
+    },
+    "borsh-control/metadata-baseline/config.toml": {
+      "bytes": 255,
+      "sha256": "b4ccdf318fe4b051fb0af65fcb36e8e4fd973fb62c167ab93317a227865fe5d4"
+    },
+    "borsh-control/metadata-baseline/launch.json.gz": {
+      "bytes": 12244,
+      "sha256": "1bc24b0cff0928212077b8b1571daad290673d8159145f1a012dcc3c831372f4"
+    },
+    "borsh-control/metadata-baseline/locked-result.json.gz": {
+      "bytes": 289,
+      "sha256": "fd3b782897f0fdfa0fd278e5eda904f4f25da1a675059f7d49eebb8c274e716d"
+    },
+    "borsh-control/metadata-baseline/locked.stderr.log.gz": {
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    "borsh-control/metadata-baseline/locked.stdout.log.gz": {
+      "bytes": 54550,
+      "sha256": "bb9fe0b780a2e3436954833faa2fbf806734d7c0bdbe1c2c7516e64a63c192ac"
+    },
+    "borsh-control/metadata-baseline/result.json.gz": {
+      "bytes": 206,
+      "sha256": "7a8653b7a43cce6407dd191a366c1b3f3433417544a16909e6c0c77a39e2f33b"
+    },
+    "borsh-control/metadata-baseline/stderr.log.gz": {
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    "borsh-control/metadata-baseline/stdout.log.gz": {
+      "bytes": 54550,
+      "sha256": "bb9fe0b780a2e3436954833faa2fbf806734d7c0bdbe1c2c7516e64a63c192ac"
+    },
+    "borsh-control/metadata-graph/config.toml": {
+      "bytes": 255,
+      "sha256": "b4ccdf318fe4b051fb0af65fcb36e8e4fd973fb62c167ab93317a227865fe5d4"
+    },
+    "borsh-control/metadata-graph/launch.json.gz": {
+      "bytes": 12177,
+      "sha256": "c5f44ec953c7a6449c9714fa2b97f6f4cfbcba0887305afd6ce238e23f4b3f47"
+    },
+    "borsh-control/metadata-graph/locked-result.json.gz": {
+      "bytes": 289,
+      "sha256": "fd3b782897f0fdfa0fd278e5eda904f4f25da1a675059f7d49eebb8c274e716d"
+    },
+    "borsh-control/metadata-graph/locked.stderr.log.gz": {
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    "borsh-control/metadata-graph/locked.stdout.log.gz": {
+      "bytes": 54772,
+      "sha256": "b5f7270b66c7a3ffddc3d0b93efa26bf5c6f1d1d202a4dd1a28bcc87dca93c0f"
+    },
+    "borsh-control/metadata-graph/result.json.gz": {
+      "bytes": 257,
+      "sha256": "d1d31f511aef89252c5246a0cd94ded456218bf892b0b512a87755078e952cef"
+    },
+    "borsh-control/metadata-graph/stderr.log.gz": {
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    "borsh-control/metadata-graph/stdout.log.gz": {
+      "bytes": 54772,
+      "sha256": "b5f7270b66c7a3ffddc3d0b93efa26bf5c6f1d1d202a4dd1a28bcc87dca93c0f"
+    },
+    "borsh-control/registry/memchr-2.7.6-checksum.json.gz": {
+      "bytes": 2768,
+      "sha256": "eb0ed4f0daa1f646e4e105d76fc6bcc3c1e3d1fce169b2d1044856fc8dcee7db"
+    },
+    "borsh-control/registry/memchr-2.7.6.crate": {
+      "bytes": 97616,
+      "sha256": "f52b00d39961fc5b2736ea853c9cc86238e165017a493d1d5c8eac6bdc4cc273"
+    },
+    "borsh-control/registry/proc-macro-crate-3.4.0-checksum.json.gz": {
+      "bytes": 813,
+      "sha256": "76ed02c5f95b227e66188022ac3258c5209e9a6d7fffa535c7d4f8f9738e1e16"
+    },
+    "borsh-control/registry/proc-macro-crate-3.4.0.crate": {
+      "bytes": 12690,
+      "sha256": "219cb19e96be00ab2e37d6e299658a0cfa83e52429179969b0f0121b4ac46983"
+    },
+    "borsh-control/registry/toml_datetime-0.7.5+spec-1.1.0-checksum.json.gz": {
+      "bytes": 635,
+      "sha256": "6ad63ca516484a43934382f6f1813b96a3188566df83159d9f848da777f6f402"
+    },
+    "borsh-control/registry/toml_datetime-0.7.5+spec-1.1.0.crate": {
+      "bytes": 17975,
+      "sha256": "92e1cfed4a3038bc5a127e35a2d360f145e1f4b971b551a2ba5fd7aedf7e1347"
+    },
+    "borsh-control/registry/toml_edit-0.23.10+spec-1.0.0-checksum.json.gz": {
+      "bytes": 2160,
+      "sha256": "fc4d758cfcdda392d722164bc328cf4f3c03404ae5cc209b2b1a5ab684570433"
+    },
+    "borsh-control/registry/toml_edit-0.23.10+spec-1.0.0.crate": {
+      "bytes": 66420,
+      "sha256": "84c8b9f757e028cee9fa244aea147aab2a9ec09d5325a9b01e0a49730c2b5269"
+    },
+    "borsh-control/registry/toml_parser-1.0.6+spec-1.1.0-checksum.json.gz": {
+      "bytes": 1144,
+      "sha256": "0927817b95474045cf56c8e025be0a36f8c3cc2ab05771f26d197328d1f60640"
+    },
+    "borsh-control/registry/toml_parser-1.0.6+spec-1.1.0.crate": {
+      "bytes": 34897,
+      "sha256": "a3198b4b0a8e11f09dd03e133c0280504d0801269e9afa46362ffde1cbeebf44"
+    },
+    "borsh-control/registry/winnow-0.7.14-checksum.json.gz": {
+      "bytes": 4874,
+      "sha256": "ee5aebe11f95b1c43f4df5b271fcf6e15bd95e7ea0b84bd1746a6441c029622d"
+    },
+    "borsh-control/registry/winnow-0.7.14.crate": {
+      "bytes": 184718,
+      "sha256": "5a5364e9d77fcdeeaa6062ced926ee3381faa2ee02d3eb83a5c27a8825540829"
+    },
+    "borsh-control/source-acquisition.json.gz": {
+      "bytes": 8322,
+      "sha256": "88a076b22202376134b26f12fd9f8acfc0d8ae71a6d8c06d69996121d09f3b2f"
+    },
+    "borsh-control/source-after.tar.gz": {
+      "bytes": 91551,
+      "sha256": "9a3fea4130f7c8225827aef147f2b892602c49e9fb5b09335ed5ae69752b8782"
+    },
+    "borsh-control/source-baseline.tar.gz": {
+      "bytes": 91472,
+      "sha256": "c0b299313c221e129c31d6aff47eab0ff53467bf195eff0d71f44d80dd3ed906"
+    },
+    "borsh-control/source-graph.tar.gz": {
+      "bytes": 91551,
+      "sha256": "9a3fea4130f7c8225827aef147f2b892602c49e9fb5b09335ed5ae69752b8782"
+    },
+    "borsh-control/transition-after.json.gz": {
+      "bytes": 21182,
+      "sha256": "b88ed56537db3462b7928339a6079d7b80c6a5afe2e9afe98e3ed7ba671e8544"
+    },
+    "borsh-control/transition-baseline.json.gz": {
+      "bytes": 11019,
+      "sha256": "4898a09ec15fbbf51627aec12fe66419306df624dc177730635f95346783c244"
+    },
+    "borsh-control/transition-graph.json.gz": {
+      "bytes": 21108,
+      "sha256": "b973595ef09d649d19645437633d8ca86bed2bc4ae86edac131496749a69e56c"
+    },
+    "borsh-control/tree-after.json": {
+      "bytes": 45034,
+      "sha256": "5b48e5c12361fcea454acc51e4a3a7315168e3bbdb6778673839178c404e05b5"
+    },
+    "borsh-control/upstream-after.tar.gz": {
+      "bytes": 211161,
+      "sha256": "aacc0b7ab04ebea47efb8bfdacc85d6e5e9cb0c0d7477531c25e3d25a7da936f"
+    },
+    "borsh-control/upstream-commit.json": {
+      "bytes": 862,
+      "sha256": "d5af950ed775f26a1d2aad056d27c728b3fc2f4c1d965c65581df7a8b1269cc2"
+    },
+    "borsh_control.py": {
+      "bytes": 17573,
+      "sha256": "1817d0cea7cdd65758b456bd63c3c2836e2e93ca05828f4ecea4ef754a0288d8"
+    },
     "controllers/analyze_historical_root_compat.py": {
       "bytes": 1640,
       "sha256": "6dfaaee99c857b308fa97aeaf3e0f3d82e49c5019effb7dad5400dee3ce15bd5"
@@ -1828,6 +2412,418 @@
       "bytes": 947,
       "sha256": "73d3dc54cdd516fb8805c0a357022fe7ffd29ad654d8e7e7dd6af0d49e2df325"
     },
+    "duplicate-control/analysis-summary.json.gz": {
+      "bytes": 6927,
+      "sha256": "b41e8fb87e4ee591b8db8ef200eba1d0dfc030ebfc1e5c095bb746438b12a8ef"
+    },
+    "duplicate-control/build-01-before/analysis.json.gz": {
+      "bytes": 3529,
+      "sha256": "e7d5b97b9572befd93b28ec67f2d68c81bcbbe78403845b5e7c317601aafde7b"
+    },
+    "duplicate-control/build-01-before/launch.json.gz": {
+      "bytes": 171212,
+      "sha256": "a6ee77c64cb42884cf2156a33dcc54c397ac168fdf6126f065033125469cf8db"
+    },
+    "duplicate-control/build-01-before/link/exit-code.txt.gz": {
+      "bytes": 22,
+      "sha256": "89ed3b723e0e40d8957a2df55fcb04d57b6d95fa665c5fe67b098df7f29694ae"
+    },
+    "duplicate-control/build-01-before/link/forwarded.rsp.gz": {
+      "bytes": 2149,
+      "sha256": "ec834ab230987796b51963359c7123180650aeed33468b8689cf9854a5f756d9"
+    },
+    "duplicate-control/build-01-before/link/input-10.bin.gz": {
+      "bytes": 292,
+      "sha256": "5c9ae372a006a528eebe8b8870fd43e776b5d82aa3f9d52dae066cd39f903ce2"
+    },
+    "duplicate-control/build-01-before/link/input-11.bin.gz": {
+      "bytes": 192169,
+      "sha256": "d64b1f471764aa9ac6f3da7b6bb6ae79b4ca77081b39e74c0b78ee79624571c1"
+    },
+    "duplicate-control/build-01-before/link/input-12.bin.gz": {
+      "bytes": 441,
+      "sha256": "0a7879e9bccc072dc512db7928756c520928a57ce3fde40c9863841ce5f0ffc4"
+    },
+    "duplicate-control/build-01-before/link/input-2.bin.gz": {
+      "bytes": 75,
+      "sha256": "46df9abb7321f0c19aefb3ca45a34c7e4050405808a63b6ce6e7008a9fcfd414"
+    },
+    "duplicate-control/build-01-before/link/invocation.json.gz": {
+      "bytes": 3432,
+      "sha256": "10e7026ee59a335a0a10ffc7527ae6aa63ee47b5a288dae5d296da8f1f5fe349"
+    },
+    "duplicate-control/build-01-before/link/link.map.gz": {
+      "bytes": 44144,
+      "sha256": "6e651b436259d9d381b6a90e368daa59d899c14aaf243efcc3fda6b02ba7e8c9"
+    },
+    "duplicate-control/build-01-before/link/os-arguments.json.gz": {
+      "bytes": 196,
+      "sha256": "c2fe7fb0d63572820e60661cb74525a6d6caf6cc80520a638b7b76b4dddf3905"
+    },
+    "duplicate-control/build-01-before/link/response.bin.gz": {
+      "bytes": 2125,
+      "sha256": "86a04d99cd7a029df11f655169a3358d3d73dae422e50c557f1e3bceb41148d6"
+    },
+    "duplicate-control/build-01-before/link-input-identities.json.gz": {
+      "bytes": 6659,
+      "sha256": "f0dc446de8645c8e3e1fddf4ae9377c364b18dab6c6e620fc4f61d69dabc6281"
+    },
+    "duplicate-control/build-01-before/records.json.gz": {
+      "bytes": 32194,
+      "sha256": "34eb2f858619bca91d5f9b7a035cb2d279ced314b3663d7bf99b1d831c06677d"
+    },
+    "duplicate-control/build-01-before/result.json.gz": {
+      "bytes": 555,
+      "sha256": "6e6563b611f589ad9c0cf2bd86b67d4d70aa95f208f28c0ad77584e33145fc09"
+    },
+    "duplicate-control/build-01-before/stderr.log.gz": {
+      "bytes": 21695,
+      "sha256": "000c8754634e8c9b35fe8112df9d4a52542a2bd42f51500a937b53757b7a3d22"
+    },
+    "duplicate-control/build-01-before/stdout.log.gz": {
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    "duplicate-control/build-01-before/strip.stderr.log.gz": {
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    "duplicate-control/build-01-before/strip.stdout.log.gz": {
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    "duplicate-control/build-01-before/stripped.so.gz": {
+      "bytes": 160179,
+      "sha256": "14a65f5c48533cbc99fcfc0412d227672f38384bbd2d241423b29ee648bbfb83"
+    },
+    "duplicate-control/build-01-before/symbols.so.gz": {
+      "bytes": 187873,
+      "sha256": "f3cab69fb7ab88c8a15fda39ec240a93bc35b71a4abb142eadcd24aba748b669"
+    },
+    "duplicate-control/build-02-after/analysis.json.gz": {
+      "bytes": 3531,
+      "sha256": "6d6cf2fd883e432515b1d71ba500093f3ca547be304d4aaf75c40362766898d7"
+    },
+    "duplicate-control/build-02-after/launch.json.gz": {
+      "bytes": 171211,
+      "sha256": "b4fb14b394013288abbfb67e119fc00620abdf867f1882f4a9af75cce3468b73"
+    },
+    "duplicate-control/build-02-after/link/exit-code.txt.gz": {
+      "bytes": 22,
+      "sha256": "89ed3b723e0e40d8957a2df55fcb04d57b6d95fa665c5fe67b098df7f29694ae"
+    },
+    "duplicate-control/build-02-after/link/forwarded.rsp.gz": {
+      "bytes": 2150,
+      "sha256": "979c6923d1476acdc7e67a559b1e1e0b26be7569cbc4eb192762df13fd7532fb"
+    },
+    "duplicate-control/build-02-after/link/input-10.bin.gz": {
+      "bytes": 292,
+      "sha256": "5c9ae372a006a528eebe8b8870fd43e776b5d82aa3f9d52dae066cd39f903ce2"
+    },
+    "duplicate-control/build-02-after/link/input-11.bin.gz": {
+      "bytes": 194118,
+      "sha256": "18a33afa99a30a90e861afb656fba272c6dc685da7345c06ed6022dfd464f10c"
+    },
+    "duplicate-control/build-02-after/link/input-12.bin.gz": {
+      "bytes": 441,
+      "sha256": "0a7879e9bccc072dc512db7928756c520928a57ce3fde40c9863841ce5f0ffc4"
+    },
+    "duplicate-control/build-02-after/link/input-2.bin.gz": {
+      "bytes": 75,
+      "sha256": "46df9abb7321f0c19aefb3ca45a34c7e4050405808a63b6ce6e7008a9fcfd414"
+    },
+    "duplicate-control/build-02-after/link/invocation.json.gz": {
+      "bytes": 3433,
+      "sha256": "221f3a812443e09825b7a4bce68a9a8aeb3022f553863e5f0b66706c20cf0f2b"
+    },
+    "duplicate-control/build-02-after/link/link.map.gz": {
+      "bytes": 43854,
+      "sha256": "fb69584cab04a9c6b3b1851fe404bf11c696eb067271a7feb472836dd993d7d9"
+    },
+    "duplicate-control/build-02-after/link/os-arguments.json.gz": {
+      "bytes": 195,
+      "sha256": "219029edb2ab232d47cd17fae26ac648cd4744f23005fe5d5c6ffad87e021a63"
+    },
+    "duplicate-control/build-02-after/link/response.bin.gz": {
+      "bytes": 2126,
+      "sha256": "e0242a8d5537b98c9c8bddf0332533df80ca8997ff652144c78fc0fd3092132c"
+    },
+    "duplicate-control/build-02-after/link-input-identities.json.gz": {
+      "bytes": 6654,
+      "sha256": "220604baa8ccce80c74ff1f0a02a488c9c7c256658c7f1c904a98f2e56963172"
+    },
+    "duplicate-control/build-02-after/records.json.gz": {
+      "bytes": 32341,
+      "sha256": "58ef6e3cd7a0bd8113e9f8bd79e5fd52a0f7f0f35e631825b7e2a6f93d3ec50d"
+    },
+    "duplicate-control/build-02-after/result.json.gz": {
+      "bytes": 555,
+      "sha256": "c77436a1f21f2396a69f29ac2548736f8fd13c36dde88cd77c489222ccf1ac52"
+    },
+    "duplicate-control/build-02-after/stderr.log.gz": {
+      "bytes": 21606,
+      "sha256": "0aaaa416209acfef680d308ef49cb6ce15ef11bdf96a947774a8a883e04a8f8f"
+    },
+    "duplicate-control/build-02-after/stdout.log.gz": {
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    "duplicate-control/build-02-after/strip.stderr.log.gz": {
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    "duplicate-control/build-02-after/strip.stdout.log.gz": {
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    "duplicate-control/build-02-after/stripped.so.gz": {
+      "bytes": 158152,
+      "sha256": "986bfebfd8955d4336a6249ac61b4eeee60c1331e80830219edd8c3b5a4b5d38"
+    },
+    "duplicate-control/build-02-after/symbols.so.gz": {
+      "bytes": 185595,
+      "sha256": "b80d18359d37c087d02b41d500cdd993911f9287ae460633b7c8f95048df5612"
+    },
+    "duplicate-control/build-03-repeat/analysis.json.gz": {
+      "bytes": 3531,
+      "sha256": "6d6cf2fd883e432515b1d71ba500093f3ca547be304d4aaf75c40362766898d7"
+    },
+    "duplicate-control/build-03-repeat/launch.json.gz": {
+      "bytes": 171209,
+      "sha256": "ebddcc5fedf8e90bbe36fe17070124484c1986ee5f255ea9c4a5e0ebbe2df83c"
+    },
+    "duplicate-control/build-03-repeat/link/exit-code.txt.gz": {
+      "bytes": 22,
+      "sha256": "89ed3b723e0e40d8957a2df55fcb04d57b6d95fa665c5fe67b098df7f29694ae"
+    },
+    "duplicate-control/build-03-repeat/link/forwarded.rsp.gz": {
+      "bytes": 2152,
+      "sha256": "7c5e99c2212c1331a98f87efd5c4d73c792faae871b81f3834a382074a7f9195"
+    },
+    "duplicate-control/build-03-repeat/link/input-10.bin.gz": {
+      "bytes": 292,
+      "sha256": "5c9ae372a006a528eebe8b8870fd43e776b5d82aa3f9d52dae066cd39f903ce2"
+    },
+    "duplicate-control/build-03-repeat/link/input-11.bin.gz": {
+      "bytes": 194118,
+      "sha256": "18a33afa99a30a90e861afb656fba272c6dc685da7345c06ed6022dfd464f10c"
+    },
+    "duplicate-control/build-03-repeat/link/input-12.bin.gz": {
+      "bytes": 441,
+      "sha256": "0a7879e9bccc072dc512db7928756c520928a57ce3fde40c9863841ce5f0ffc4"
+    },
+    "duplicate-control/build-03-repeat/link/input-2.bin.gz": {
+      "bytes": 75,
+      "sha256": "46df9abb7321f0c19aefb3ca45a34c7e4050405808a63b6ce6e7008a9fcfd414"
+    },
+    "duplicate-control/build-03-repeat/link/invocation.json.gz": {
+      "bytes": 3439,
+      "sha256": "699e0f359b3d7268d242d8c8024c24cf84adb44a2109c8374a2551b6fa334f24"
+    },
+    "duplicate-control/build-03-repeat/link/link.map.gz": {
+      "bytes": 43869,
+      "sha256": "9aa8a2a227a7cdf5ec82276bec18820b8f040d3696cccd2680ecf07b819355b7"
+    },
+    "duplicate-control/build-03-repeat/link/os-arguments.json.gz": {
+      "bytes": 196,
+      "sha256": "20d3a3cb20ed72b546fe5eb717e4d8b5cb65e1c7e1179c3f57e05f9b3ffb07f5"
+    },
+    "duplicate-control/build-03-repeat/link/response.bin.gz": {
+      "bytes": 2128,
+      "sha256": "b1a8cbed0af892b6418daee1304979f6ee7d50fe69003b0d2c0ead78becc82f9"
+    },
+    "duplicate-control/build-03-repeat/link-input-identities.json.gz": {
+      "bytes": 6658,
+      "sha256": "fc454f3b3a3edb0e2ea606ee604e9c7199561f239506c395c9b313318389b4be"
+    },
+    "duplicate-control/build-03-repeat/records.json.gz": {
+      "bytes": 33334,
+      "sha256": "41fe11493ab5e1d35abb94b743779ba3606a8628be460922584fd091198b7a5c"
+    },
+    "duplicate-control/build-03-repeat/result.json.gz": {
+      "bytes": 554,
+      "sha256": "5897dd736f9c78c53af23979322e21c33ae38763b6863e621b114eaa17f20454"
+    },
+    "duplicate-control/build-03-repeat/stderr.log.gz": {
+      "bytes": 21691,
+      "sha256": "a3606d9568e68544e3244443663cdd4f85c5771f3b6e76a9fc2f73d6871b3a02"
+    },
+    "duplicate-control/build-03-repeat/stdout.log.gz": {
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    "duplicate-control/build-03-repeat/strip.stderr.log.gz": {
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    "duplicate-control/build-03-repeat/strip.stdout.log.gz": {
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    "duplicate-control/build-03-repeat/stripped.so.gz": {
+      "bytes": 158152,
+      "sha256": "986bfebfd8955d4336a6249ac61b4eeee60c1331e80830219edd8c3b5a4b5d38"
+    },
+    "duplicate-control/build-03-repeat/symbols.so.gz": {
+      "bytes": 185595,
+      "sha256": "b80d18359d37c087d02b41d500cdd993911f9287ae460633b7c8f95048df5612"
+    },
+    "duplicate-control/comparison.json": {
+      "bytes": 546,
+      "sha256": "bf93c0b8def046e976fe42df457bddf66fc0d48757ee25ad25edcaa09e174a8f"
+    },
+    "duplicate-control/controllers/acquire_duplicate_vendor.py": {
+      "bytes": 3859,
+      "sha256": "7e2e00f5f18c69bad6beb82b20c0c6ebc927532bfd52fd2506dd539116a60434"
+    },
+    "duplicate-control/controllers/advance_duplicate_framework.py": {
+      "bytes": 3864,
+      "sha256": "44cd6dca82d675d1dad23080cd99726ee7de8a5de618f25a1a95fa43e9233425"
+    },
+    "duplicate-control/controllers/analyze_historical_duplicate.py": {
+      "bytes": 1486,
+      "sha256": "8ff9c52b94c8cc365dce8899d512fc7af105a1e7543338cfbe2a065dba7252ee"
+    },
+    "duplicate-control/controllers/build_historical_duplicate_full.py": {
+      "bytes": 7441,
+      "sha256": "f7adb7718c5727b5ea4367ebd74d33f2889f88c24f48f8c72686543a13d94222"
+    },
+    "duplicate-control/controllers/package_duplicate_control.py": {
+      "bytes": 2680,
+      "sha256": "b8d8a3b8064deb2ac3483253007ba1c743f0ad4e26b039c15390c578e2aad1b3"
+    },
+    "duplicate-control/controllers/prepare_duplicate_build.py": {
+      "bytes": 4894,
+      "sha256": "03b8799ac31ca95e37a64f4f74b8deb1fa8b1893718f28ed3470f62d2f0a1236"
+    },
+    "duplicate-control/controllers/prepare_duplicate_sources.py": {
+      "bytes": 4328,
+      "sha256": "06d49808a8f10a5cc7e2de7b9c01e2858e20312c3c15efb33ef4042cca8d3cdc"
+    },
+    "duplicate-control/controllers/summarize_duplicate_control.py": {
+      "bytes": 1446,
+      "sha256": "b8db37d18bc851ff5f83ab913b7e89298cd928a1cf9ed0cd5a592e369e822807"
+    },
+    "duplicate-control/dependency-closure.json.gz": {
+      "bytes": 32018,
+      "sha256": "3cb318ba43f3d417a30f8d6098dbc8a00034093320024f844a463ac2ec03f4c8"
+    },
+    "duplicate-control/framework-after.tar.gz": {
+      "bytes": 211288,
+      "sha256": "bdd96f3710427142a014cf977da9dcd495f2abb1ad93394ef559a201363a944f"
+    },
+    "duplicate-control/framework-before.tar.gz": {
+      "bytes": 210146,
+      "sha256": "53ebaa667f419c12f242d83c26da4dd9f2d97354dedaed8b7741146f5c77c1f3"
+    },
+    "duplicate-control/framework-packages.json.gz": {
+      "bytes": 261,
+      "sha256": "0c28cdb35d72ba08410aedd1c5b6b08a0c859dcb329a91f7bf2a570c843a5469"
+    },
+    "duplicate-control/locked-vendor-acquisition.json.gz": {
+      "bytes": 15760,
+      "sha256": "1ab2d7607d0eeba9bcf8dc471e9cb1ea58526a1db99d71f5b9f17e0d4967f8d4"
+    },
+    "duplicate-control/metadata-after/config.toml": {
+      "bytes": 265,
+      "sha256": "a512d0c5f5d2303e804eb5a02f05741a7184fd9b67fc12d3d313923b4f76ef0b"
+    },
+    "duplicate-control/metadata-after/launch.json.gz": {
+      "bytes": 12298,
+      "sha256": "749db8753d537aea8b6f836df7420fe1797895d0d8eb72d7b513e13da517be12"
+    },
+    "duplicate-control/metadata-after/result.json.gz": {
+      "bytes": 102,
+      "sha256": "8f190cbfa5420c206edb4391e69310fe27021b07ccbf774918d2f2797092fb95"
+    },
+    "duplicate-control/metadata-after/stderr.log.gz": {
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    "duplicate-control/metadata-after/stdout.log.gz": {
+      "bytes": 54639,
+      "sha256": "422f137c3abbd02be5e9cd213b3668453967e0ab84289c851b0a009bc929d15e"
+    },
+    "duplicate-control/metadata-before/config.toml": {
+      "bytes": 265,
+      "sha256": "a512d0c5f5d2303e804eb5a02f05741a7184fd9b67fc12d3d313923b4f76ef0b"
+    },
+    "duplicate-control/metadata-before/launch.json.gz": {
+      "bytes": 12251,
+      "sha256": "45ee6d43550883b713056e9dfc7df0f0d47b870f46573d957dc63644fdce7ca6"
+    },
+    "duplicate-control/metadata-before/locked-result.json.gz": {
+      "bytes": 294,
+      "sha256": "c45cdb7c2b30dac581ee05f7ca92940ba55831a3eca99e414b1aa4b3ed4a6b18"
+    },
+    "duplicate-control/metadata-before/locked.stderr.log.gz": {
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    "duplicate-control/metadata-before/locked.stdout.log.gz": {
+      "bytes": 54639,
+      "sha256": "422f137c3abbd02be5e9cd213b3668453967e0ab84289c851b0a009bc929d15e"
+    },
+    "duplicate-control/metadata-before/result.json.gz": {
+      "bytes": 251,
+      "sha256": "4656287c368de8ec09f07ad43bd97fe0702d126855cc3de44027f2c0b7f1c942"
+    },
+    "duplicate-control/metadata-before/stderr.log.gz": {
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    "duplicate-control/metadata-before/stdout.log.gz": {
+      "bytes": 54639,
+      "sha256": "422f137c3abbd02be5e9cd213b3668453967e0ab84289c851b0a009bc929d15e"
+    },
+    "duplicate-control/registry/proc-macro2-1.0.105-checksum.json.gz": {
+      "bytes": 1708,
+      "sha256": "1025888f97eba374720afb150224f7c263acaf6b7093dd0737b97b725fbb3c9e"
+    },
+    "duplicate-control/registry/proc-macro2-1.0.105.crate": {
+      "bytes": 60319,
+      "sha256": "535d180e0ecab6268a3e718bb9fd44db66bbbc256257165fc699dadf70d16fe7"
+    },
+    "duplicate-control/source-acquisition.json.gz": {
+      "bytes": 8363,
+      "sha256": "0627f6087c8dedc2c5b6e7f0c3f2d3c0b340f99cce51c121a1a4e29aa919912c"
+    },
+    "duplicate-control/source-after.tar.gz": {
+      "bytes": 91483,
+      "sha256": "493adadaba9e27198ad421bef16c03d6dffd043587147d1f35b5b6628568a25a"
+    },
+    "duplicate-control/source-before.tar.gz": {
+      "bytes": 91444,
+      "sha256": "14a243c7de677e3e0c977250feafc62adb639e61a224d59207f0b5c68fe1de9b"
+    },
+    "duplicate-control/transition.json.gz": {
+      "bytes": 11813,
+      "sha256": "03de7de3bb845ed0d1cc79fa6f91a4aae977ebe4c10e6f5879d0d77f665750af"
+    },
+    "duplicate-control/tree-after.json": {
+      "bytes": 45034,
+      "sha256": "5301fb6bfd9a7c9dd3a9065a89cc8665e9835684e5f4ae43d63559d9515953bd"
+    },
+    "duplicate-control/tree-before.json": {
+      "bytes": 44705,
+      "sha256": "b3040c4a15a5948b1598e69d96ff7ca3d1448d51eeba721e61cad5a4b926c39b"
+    },
+    "duplicate-control/upstream-after.tar.gz": {
+      "bytes": 211284,
+      "sha256": "1f993fba73ba8c5f3b19655430031930388cb728305d1a25118c132cb057ca4e"
+    },
+    "duplicate-control/upstream-before.tar.gz": {
+      "bytes": 210141,
+      "sha256": "d2e30d20283a21c203b7e7b56f66b8a15a8015f75b9ddab50b87cf58cb1663f4"
+    },
+    "duplicate-control/upstream-commit.json": {
+      "bytes": 2677,
+      "sha256": "6c2b1394c5be05962a0629cf44b48746753a6cf3bdf3eb7405c530d4ebf49b2e"
+    },
+    "duplicate_control.py": {
+      "bytes": 18402,
+      "sha256": "2e267a48e691d0c175e0a5f5c3a107eec440aec503da5c42f0308535fcf5c03c"
+    },
     "failed-controller/build_compatible_full.py": {
       "bytes": 7429,
       "sha256": "e121d698dfd52c54f632c040aac8609aaf1c952592c37d81965479194b78a1bf"
@@ -2813,8 +3809,8 @@
       "sha256": "6d2f0c4773f8e5aa688f797977400c094a9f25e980b47737dfd69f552da74cf8"
     },
     "README.md": {
-      "bytes": 9894,
-      "sha256": "bd94716e741b90ab3d8d14968f08d18ebb3a1d1edbcc45275bbc527722a8294e"
+      "bytes": 17852,
+      "sha256": "24fcbb3a2587912caafad60722b55e75382076745cb49feada8c8e904c141797"
     },
     "reference/current-parent-build.py": {
       "bytes": 13539,
@@ -2833,8 +3829,8 @@
       "sha256": "46249213c288a768a25d496d10ed46f665edc39b18ae3a375b4b01941d08c394"
     },
     "report.json": {
-      "bytes": 288931,
-      "sha256": "82c499c5ce2eb8f9ab3add6dd7873869701cb2c4cbeea1a4600943315d0e81be"
+      "bytes": 548297,
+      "sha256": "9426be92632bb18f15a867aa4a7ac1b1ecef41985d22e622e95fe8d36d9cf02d"
     },
     "runs/api-01/analysis.json.gz": {
       "bytes": 3506,
@@ -3369,12 +4365,12 @@
       "sha256": "7e023fb528ad761ac59d48fba9a6e80354fe6c7cd8be33c09eaecadcbeb565ea"
     },
     "test_verify.py": {
-      "bytes": 9236,
-      "sha256": "9bac817e9b8fca32a20b6a27c25176d7219bc92d5424d98a4c37b126074698c5"
+      "bytes": 12426,
+      "sha256": "c58213c5f54a2a615217921fb97d36d0a9b2d43641f22024c9f9e3209963200b"
     },
     "verify.py": {
-      "bytes": 25416,
-      "sha256": "827c453cb9f2a245e91196be5bca6c3b2f73e6bd4e8da95a8d87509613245aeb"
+      "bytes": 25972,
+      "sha256": "e38473cbd121668a1e5723f8f74f81b1c905538a2bcf462317a859b44ffe6c49"
     }
   }
 }

@@ -42,6 +42,12 @@ class Evidence(unittest.TestCase):
         self.assertEqual(len(j['fresh_dependency_archive_differences']),50)
         self.assertEqual(j['program_id_control']['comparison']['gained'],['O0062'])
         self.assertTrue(j['program_id_control']['fresh_raw_and_stripped_repeat'])
+        self.assertEqual(len(j['duplicate_control']['comparison']['gained']),13)
+        self.assertEqual(len(j['duplicate_control']['comparison']['remaining_current_difference']),8)
+        self.assertTrue(j['duplicate_control']['fresh_raw_and_stripped_repeat'])
+        self.assertEqual(j['borsh_control']['comparison']['derive']['gained'],['O0141','O0142'])
+        self.assertEqual(len(j['borsh_control']['comparison']['current']['lost']),6)
+        self.assertEqual(j['borsh_control']['comparison']['repeat'],{'symbols.so':True,'stripped.so':True})
 
     def test_optimized_mode_rejected(self):
         r=subprocess.run([sys.executable,'-I','-B','-O',str(self.root/'verify.py')],capture_output=True,text=True)
@@ -136,6 +142,50 @@ class Evidence(unittest.TestCase):
 
     def test_program_control_output_swap(self):
         self.mutate('program-id-control/build-03-repeat/symbols.so.gz',lambda b:(self.root/'program-id-control/build-01-baseline/symbols.so.gz').read_bytes(),'Program control output identity')
+
+
+    def test_duplicate_revision_pin(self):
+        self.json_mutation('duplicate-control/tree-before.json',lambda j:j.update(revision='0'*40),'adjacent revision association')
+
+    def test_duplicate_upstream_blob(self):
+        self.json_mutation('duplicate-control/tree-after.json',lambda j:j['files'][0].update(sha='0'*40),'adjacent Git blob')
+
+    def test_duplicate_changed_metadata_graph(self):
+        self.json_mutation('duplicate-control/metadata-after/stdout.log.gz',lambda j:j.update(version=999),'adjacent resolved graph')
+
+    def test_duplicate_registry_checksum(self):
+        self.json_mutation('duplicate-control/registry/proc-macro2-1.0.105-checksum.json.gz',lambda j:j.update(package='0'*64),'adjacent registry archive members')
+
+    def test_duplicate_extra_build_flag(self):
+        self.json_mutation('duplicate-control/build-02-after/launch.json.gz',lambda j:j['command'].append('--test'),'Adjacent control Cargo command')
+
+    def test_duplicate_false_gain(self):
+        self.json_mutation('duplicate-control/comparison.json',lambda j:j['gained'].append('O0000'),'adjacent comparison record')
+
+    def test_duplicate_output_swap(self):
+        self.mutate('duplicate-control/build-03-repeat/symbols.so.gz',lambda b:(self.root/'duplicate-control/build-01-before/symbols.so.gz').read_bytes(),'Adjacent control output identity')
+
+
+    def test_borsh_revision_pin(self):
+        self.json_mutation('borsh-control/tree-after.json',lambda j:j.update(revision='0'*40),'Borsh revision association')
+
+    def test_borsh_upstream_blob(self):
+        self.json_mutation('borsh-control/tree-after.json',lambda j:j['files'][0].update(sha='0'*40),'Borsh upstream Git blob')
+
+    def test_borsh_changed_metadata_graph(self):
+        self.json_mutation('borsh-control/metadata-after/stdout.log.gz',lambda j:j.update(version=999),'Borsh locked metadata repeat')
+
+    def test_borsh_registry_checksum(self):
+        self.json_mutation('borsh-control/registry/memchr-2.7.6-checksum.json.gz',lambda j:j.update(package='0'*64),'Borsh registry source map')
+
+    def test_borsh_extra_build_flag(self):
+        self.json_mutation('borsh-control/build-03-after/launch.json.gz',lambda j:j['command'].append('--test'),'Borsh control Cargo command')
+
+    def test_borsh_false_gain(self):
+        self.json_mutation('borsh-control/comparison.json',lambda j:j['derive']['gained'].append('O0000'),'Borsh comparison record')
+
+    def test_borsh_output_swap(self):
+        self.mutate('borsh-control/build-04-repeat/symbols.so.gz',lambda b:(self.root/'borsh-control/build-02-graph/symbols.so.gz').read_bytes(),'Borsh control output identity')
 
 
 class Membership(unittest.TestCase):

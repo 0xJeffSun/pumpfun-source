@@ -12,6 +12,20 @@ Program ID check into that historical graph. It restores **one** of the lost
 windows (O0062), leaving **404 normalized matches and 24 losses** against the
 current-runtime control. It adds no match beyond the current reconstruction.
 
+An adjacent February Anchor revision control then isolates duplicate-mutable
+validation changes with their required empty trait implementation. Identical
+resolved dependency graphs yield **407 to 420 normalized matches**, with no
+losses, seven raw-local gains and identical complete outputs from fresh after
+repeats. Eight differences remain against the older current-runtime control.
+This further explains the historical gap without improving the current frontier.
+
+The following upstream Borsh derive revision restores **O0141 and O0142**,
+reaching **422 normalized matches** with six differences against the older
+current-runtime control. A separate dependency-only control preserves the 420
+normalized matches and accounts for five raw-local gains. Repeated final
+compiler outputs are identical; this remains provenance evidence, not a new
+current reconstruction checkpoint.
+
 ## Source and build boundary
 
 The parent is pinned at `0a881f726f8dae34a2f53f2438cdb271ab830e41`, including
@@ -29,8 +43,8 @@ The compatibility transformation is exact and checked against the parent:
   `src/checked_program.rs`, retaining its three newlines. That trait is absent
   in the archived runtime.
 
-There are no additional handler, arithmetic, CPI-constructor or framework Rust
-edits. The archived CPI constructor already accepts `Pubkey`; its API must be
+Those initial compatibility builds make no additional handler, arithmetic,
+CPI-constructor or framework Rust edits. The archived CPI constructor already accepts `Pubkey`; its API must be
 read from the actual source. These edits are compiler compatibility evidence,
 not proof of behavioral equivalence or the original deployed source.
 
@@ -122,6 +136,118 @@ new source recovery, improvement over the current frontier or runtime test.
 The offline checker binds both complete framework snapshots, the relocated root,
 actual compiler arguments, source/dependency/tool observations, linker inputs,
 all original-window comparisons and both repeated outputs.
+
+## Adjacent duplicate-mutable validation revision
+
+The next control holds the source directory, resolved package graph, compiler,
+target libraries and linker recipe fixed across Anchor parent
+`5d058305cd8a01c9854ea0efdef6e2afaa62cf5c` and its immediate child
+[`d790f27fe240a5a557c93b117f0c4ddda4831ce5`](https://github.com/otter-sec/anchor/commit/d790f27fe240a5a557c93b117f0c4ddda4831ce5).
+That upstream commit narrows duplicate-mutable validation to types that serialize
+on exit, adds composite-account key collection and permits duplicates in remaining
+accounts. The retained selected upstream trees authenticate 149 and 150 files.
+Exactly five framework files change between builds. The root also restores its
+existing empty `DuplicateMutableAccountKeys` implementation, which becomes required
+when the trait is introduced. This measures that revision and its required API
+adaptation together; it does not attribute the result to one edited line.
+
+Both variants retain the recovered Program ID check, four-lifetime Context
+signatures, historical CreateEvent and older 66-file root baseline. The upstream
+lock is identical across revisions; the pruned root lock and all three Cargo
+metadata outputs are byte-identical. The resolved graph has 187 registry packages
+and 14 framework path packages. Compared with the earlier December framework
+control, only proc-macro2 changes registry version (1.0.95 to 1.0.105). The new
+archive and its complete checksum map are retained; all other archive proofs
+come from the authenticated parent packet. Differences from the December result
+are not attributed solely to this one February commit.
+
+| Complete fresh build | Functions | Text bytes | Normalized | Raw-local | Injective |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Before duplicate-mutable relaxation | 455 | 674312 | 407 | 62 | 405 |
+| After relaxation and required empty trait implementation | 451 | 663160 | 420 | 69 | 418 |
+| Fresh after repeat | 451 | 663160 | 420 | 69 | 418 |
+
+The 13 normalized gains are O0066, O0067, O0099, O0102, O0104, O0109, O0111,
+O0120, O0122, O0129, O0131, O0134 and O0136. No normalized or raw-local match
+is lost. Seven raw-local gains (O0045, O0331, O0338, O0362, O0363, O0366,
+O0372) were already normalized matches in the before build; they are not seven
+additional recovered function bodies. Eight differences remain against this
+packet's older current-runtime control: O0106, O0116, O0124, O0127, O0141,
+O0142, O0145 and O0199. There is no new normalized match beyond that control
+or the newer project frontier.
+
+After and repeat produce the same **865648-byte raw ELF**
+(`15d3216e678aa7eb12898b5f7970016cd7264750bc19ca71b4bf35d159086ee8`)
+and the same separately stripped **731880-byte ELF**
+(`61eb8558fd5c4060ed4333d2cd16a81795d05d1dacc10b1bccde767ba579e51c`).
+The before raw ELF is 878640 bytes
+(`fd2927be0cde3440cad64adbd69225df471cb175373a662a980dfe512bc73beb`).
+These are compiler outputs, not allocation images. All differ from the captured
+original. Each of the three builds records 153 actual Cargo compiler commands,
+including 79 target compilations; no target code is executed.
+
+The checker replays the exact upstream blob sets, source transformations, unchanged
+metadata graph, archive checksums, source/tool observations, actual compiler
+records, retained linker objects, function maps and all 441 original windows.
+Complete dependency archives are not retained, and their repeat identity
+differences remain in `report.json` rather than being inferred from equal ELFs.
+This is evidence for a source-generation mechanism under the recorded recipe;
+it is not original framework attribution, a historical date constraint, current
+checkpoint promotion or runtime qualification.
+
+## Original Borsh derive and dependency controls
+
+The immediate child of the duplicate-mutable revision,
+[`2dd5c2473f7964e080f5fa3bc06aa445c07396db`](https://github.com/otter-sec/anchor/commit/2dd5c2473f7964e080f5fa3bc06aa445c07396db),
+replaces Anchor's handwritten serialization derives with Borsh's original derives.
+It changes two Rust files, the derive package manifest and the workspace lock.
+The two selected upstream snapshots each contain 150 authenticated Git blobs.
+
+Four fresh builds separate the source and dependency changes at one fixed source
+path. All retain the recovered Program ID check, historical CreateEvent and
+four-lifetime Context signatures. The baseline relocates the previous d790f27f
+recipe and preserves exactly its normalized and raw-local match sets; its whole
+bytes change, so it is not presented as a raw repetition of that earlier path.
+The synthetic graph control then adopts only the successor manifest and lock,
+leaving every framework Rust file unchanged. Finally, the after variant replaces
+exactly the two upstream Rust files; root sources, pruned lock and raw Cargo
+metadata are identical to the graph control.
+
+| Fresh build | Functions | Text bytes | Normalized | Raw-local | Injective |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Relocated d790f27f baseline | 451 | 663160 | 420 | 69 | 418 |
+| New dependency graph, old Rust | 449 | 662440 | 420 | 74 | 418 |
+| Original Borsh derives | 449 | 662328 | 422 | 74 | 421 |
+| Fresh derive repeat | 449 | 662328 | 422 | 74 | 421 |
+
+The dependency-only control adds raw-local O0255, O0256, O0258, O0265 and
+O0271, with no normalized change or loss. Those functions already matched after
+normalization. The two Rust changes add normalized O0141 (MayhemStatus
+deserialization) and O0142 (MayhemState serialization), with no lost normalized
+or raw-local matches and no additional raw-local gain. This measures the two
+upstream Rust files together, not individual generated statements or runtime
+equivalence. It isolates their effect from the separately measured graph change
+under this recorded recipe.
+
+The lock-resolved registry cohort changes from 187 to 188 packages: five versions
+are replaced and toml_parser is added. The six new archives (memchr,
+proc-macro-crate, toml_datetime, toml_edit, toml_parser and winnow), their source
+files and licenses are retained and authenticated against the upstream lock.
+The initial build records 153 actual compiler commands; the next three record
+154 each, **615 total**. All input and tool observations pass.
+
+After and repeat produce the same **864360-byte raw ELF**
+(`f7aa2b51ccb1d90ea608e73686d8654f9022aa9b5c0c560ce721add235641688`)
+and separately stripped **730992-byte ELF**
+(`e2dde5a7815cd60ecd8c2b87a7a00f4fabf676424cdd0dcbbe8340181a508ad3`).
+Neither equals the captured original. Full dependency archive identity differences
+between repeated builds remain explicit in `report.json`.
+
+Six normalized differences remain against the older current-runtime control:
+O0106, O0116, O0124, O0127, O0145 and O0199. Its only missing raw-local match
+is O0199. No new normalized or raw-local match exceeds that control. This does
+not identify the original framework, constrain the original build date, advance
+the newer current-source checkpoint or supply runtime/security qualification.
 
 ## Offline replay and retained limits
 
