@@ -48,6 +48,9 @@ class Evidence(unittest.TestCase):
         self.assertEqual(j['borsh_control']['comparison']['derive']['gained'],['O0141','O0142'])
         self.assertEqual(len(j['borsh_control']['comparison']['current']['lost']),6)
         self.assertEqual(j['borsh_control']['comparison']['repeat'],{'symbols.so':True,'stripped.so':True})
+        self.assertEqual(j['init_control']['comparison']['current']['lost'],['O0199'])
+        self.assertEqual(len(j['init_control']['comparison']['source']['gained']),5)
+        self.assertFalse(j['init_control']['panic_candidate']['accepted_new_match'])
 
     def test_optimized_mode_rejected(self):
         r=subprocess.run([sys.executable,'-I','-B','-O',str(self.root/'verify.py')],capture_output=True,text=True)
@@ -186,6 +189,31 @@ class Evidence(unittest.TestCase):
 
     def test_borsh_output_swap(self):
         self.mutate('borsh-control/build-04-repeat/symbols.so.gz',lambda b:(self.root/'borsh-control/build-02-graph/symbols.so.gz').read_bytes(),'Borsh control output identity')
+
+
+    def test_init_revision_pin(self):
+        self.json_mutation('init-control/tree-before.json',lambda j:j.update(revision='0'*40),'init revision association')
+
+    def test_init_upstream_blob(self):
+        self.json_mutation('init-control/tree-after.json',lambda j:j['files'][0].update(sha='0'*40),'init upstream Git blob')
+
+    def test_init_changed_metadata_graph(self):
+        self.json_mutation('init-control/metadata-after/stdout.log.gz',lambda j:j.update(version=999),'init resolved metadata graph')
+
+    def test_init_extra_build_flag(self):
+        self.json_mutation('init-control/build-02-after/launch.json.gz',lambda j:j['command'].append('--test'),'Init control Cargo command')
+
+    def test_init_false_gain(self):
+        self.json_mutation('init-control/comparison.json',lambda j:j['source']['gained'].append('O0199'),'init comparison record')
+
+    def test_init_output_swap(self):
+        self.mutate('init-control/build-03-repeat/symbols.so.gz',lambda b:(self.root/'init-control/build-01-before/symbols.so.gz').read_bytes(),'Init control output identity')
+
+    def test_init_panic_return_source(self):
+        self.mutate('init-control/panic-candidate/current-definitions.rs',lambda b:b.replace(b'column: u64) -> !);',b'column: u64));'),'panic candidate source proof')
+
+    def test_init_panic_prefix_observation(self):
+        self.json_mutation('init-control/panic-candidate/comparison.json',lambda j:j.update(historical_prefix_equals_original=False),'panic candidate observation')
 
 
 class Membership(unittest.TestCase):

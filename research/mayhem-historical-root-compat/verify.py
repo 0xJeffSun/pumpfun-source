@@ -222,6 +222,8 @@ def verify(parent=None,check_manifest=True):
     report['duplicate_control']=control.verify(SimpleNamespace(**globals()),pv,parent,report,original_data)
     spec=importlib.util.spec_from_file_location('borsh_control',HERE/'borsh_control.py');control=importlib.util.module_from_spec(spec);spec.loader.exec_module(control)
     report['borsh_control']=control.verify(SimpleNamespace(**globals()),pv,parent,report,original_data)
+    spec=importlib.util.spec_from_file_location('init_control',HERE/'init_control.py');control=importlib.util.module_from_spec(spec);spec.loader.exec_module(control)
+    report['init_control']=control.verify(SimpleNamespace(**globals()),pv,parent,report,original_data)
     if check_manifest:require(report==read(HERE/'report.json'),'derived report differs')
     return report
 
