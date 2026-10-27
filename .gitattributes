@@ -1371,3 +1371,7 @@ repro/pump_amm/account-context-recovery-20261027/followup/** -whitespace
 # Preserve exact Fees Social source and patch receipt bytes.
 research/fees-social-claim-v2-recovery/overrides/** -whitespace
 research/fees-social-claim-v2-recovery/source.patch -whitespace
+
+# Preserve captured Windows line endings and curl progress receipts.
+research/mayhem-historical-macro-context/supplement-packages.json -whitespace
+research/mayhem-historical-macro-context/supplements/*.log -whitespace

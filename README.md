@@ -13,9 +13,9 @@ ELF and, through a separate loader deployment, its captured payload.**
 
 **Main Pump: 68.8% of function windows matched; 47.6% of original text covered. Complete reconstruction remains unfinished.**
 
-Across the latest verified checkpoints, **2,834 / 3,338 inferred function windows
-match (84.9%)**. Their matched windows cover **3,660,096 / 5,213,128 original text
-bytes (70.2%)**. **One of five programs has complete meaningful-ELF identity**;
+Across the latest verified checkpoints, **2,835 / 3,338 inferred function windows
+match (84.9%)**. Their matched windows cover **3,670,760 / 5,213,128 original text
+bytes (70.4%)**. **One of five programs has complete meaningful-ELF identity**;
 all four core contracts still differ from their captured binaries.
 
 These percentages measure bounded binary-recovery progress, not a claim that
@@ -98,6 +98,12 @@ with one additional matching allocator call. Repeated native builds agree;
 6,636 fresh trade and 69 initializer comparisons pass. Its 39 additional raw
 bodies cover 33,968 original text bytes. This remains a diagnostic, so the
 established checkpoint counts in the table above are unchanged.
+
+The [complete historical Anchor macro control](research/mayhem-historical-macro-context/README.md)
+also reproduces the allocator form without a manually rendered parser. Its
+historical macro/IDL and current target runtime remain a cross-version experiment
+on an older Mayhem source baseline; it adds no current checkpoint matches or
+runtime qualification.
 
 The latest [Fees Social claim-v2 recovery](research/fees-social-claim-v2-recovery/README.md)
 recovers the original 1,303-instruction handler through owned key parameters,

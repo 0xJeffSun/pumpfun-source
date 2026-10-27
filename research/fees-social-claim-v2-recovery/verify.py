@@ -3,6 +3,8 @@ from pathlib import Path
 from functools import lru_cache
 from collections import Counter
 import argparse, contextlib, difflib, gzip, hashlib, importlib.util, io, json, re, struct, sys
+if not __debug__:
+    raise RuntimeError('verification requires assertions; do not use Python -O')
 sys.dont_write_bytecode = True
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
@@ -60,10 +62,16 @@ def source_inputs():
     assert len(expected) == 46
     return expected
 
-def verify():
-    actual = {str(p.relative_to(HERE)): sha(p.read_bytes()) for p in HERE.rglob('*') if p.is_file() and p != HERE / 'manifest.json'}
-    assert not any(p.is_symlink() for p in HERE.rglob('*'))
+def check_manifest():
+    paths = list(HERE.rglob('*'))
+    assert not any(p.is_symlink() for p in paths), 'packet includes a symlink'
+    assert all(p.is_dir() or p.is_file() for p in paths), 'packet includes a special file'
+    actual = {p.relative_to(HERE).as_posix(): sha(p.read_bytes())
+              for p in paths if p.is_file() and p != HERE / 'manifest.json'}
     assert actual == load(HERE / 'manifest.json')
+
+def verify():
+    check_manifest()
     assert load(HERE / 'parent.json') == {'path': str(PARENT.relative_to(ROOT)), 'manifest_sha256': sha(read(PARENT / 'manifest.json'))}
     for name, digest in load(HERE / 'external-inputs.json').items(): assert sha(read(ROOT / name)) == digest
     parent, _, vendor = parent_state()

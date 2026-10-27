@@ -15,7 +15,7 @@ The unmatched windows cover 939,264 original text bytes. The checkpoint retains
 bounded runtime evidence; the remaining bodies, data, relocations, uncovered
 behavior and original build provenance still require recovery.
 
-Current [PumpSwap native-fee/CPI recovery](../repro/pump_amm/native-fee-cpi-recovery-20261027/README.md) has 125 raw-local, 474 normalized-only and 186 unmatched windows, with 498,200 original text bytes still in unmatched windows.
+Current [PumpSwap account-context recovery](../repro/pump_amm/account-context-recovery-20261027/README.md) has 128 raw-local, 495 normalized-only and 162 unmatched windows, with 434,688 original text bytes still in unmatched windows.
 
 Current Mayhem research is the [BuyV2 sizing successor](../research/mayhem-sizing-panic-recovery/README.md):
 100 raw-local, 329 normalized-only and twelve unmatched windows / 111,288 original
@@ -54,14 +54,15 @@ is eliminated; it does not establish full toolchain equivalence or recover the
 initializer. Further work must still resolve source/IR shape and original
 compilation settings.
 
-Current [Fees program-ID research](../research/fees-program-id-references/README.md)
-has 198 raw-local, 380 normalized-only and seven unmatched windows, covering
-731,856 of 799,648 original text bytes. The full 21,079-byte readonly section
-now matches, and all 1,608 checked readonly references have their original
-relative offsets. Six inspected call-target differences, an extra event helper,
-absolute layout and original build provenance remain unresolved. The 46-file
-Rust successor has two matching builds and 17,331 fresh runtime comparisons;
-it remains separate from the selected Fees baseline.
+Current [Fees Social claim-v2 research](../research/fees-social-claim-v2-recovery/README.md)
+has 198 raw-local, 381 normalized-only and six unmatched windows, covering
+742,520 of 799,648 original text bytes. It recovers the complete normalized
+Social claim-v2 handler while preserving the program-ID corrections and full
+21,079-byte readonly section. The associated-token validator's body, an extra
+event helper, absolute layout and original build provenance remain unresolved.
+The 46-file Rust successor has two matching builds and 17,331 retained passing
+runtime comparisons; review reruns of both Social claim suites pass 974 cases.
+It remains separate from the selected Fees baseline.
 
 The [native Windows reproduction](../research/mayhem-native-reference-identity/README.md)
 reproduces the earlier 426-window source/data candidate's complete raw and

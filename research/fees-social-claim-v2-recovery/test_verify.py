@@ -1,6 +1,6 @@
 """Reject coherent packet mutations, after authenticating the parent once."""
 from pathlib import Path
-import gzip, hashlib, importlib.util, json, shutil, struct, tempfile, unittest
+import gzip, hashlib, importlib.util, json, os, shutil, struct, subprocess, sys, tempfile, unittest
 
 HERE = Path(__file__).resolve().parent
 def module(name, path):
@@ -96,5 +96,30 @@ class MutationTests(unittest.TestCase):
         report['suites']['queries']['cases'].pop()
         path.write_bytes(gzip.compress(json.dumps(report).encode(), mtime=0))
         self.reject()
+
+    def test_unlisted_nested_manifest_and_cache(self):
+        for name in ('nested/manifest.json', '__pycache__/extra.pyc'):
+            path = self.copy / name
+            path.parent.mkdir(exist_ok=True)
+            path.write_bytes(b'{}')
+            with self.assertRaises(AssertionError): self.verifier.check_manifest()
+            path.unlink()
+
+    def test_symlink_rejected(self):
+        (self.copy / 'alias').symlink_to(self.copy / 'manifest.json')
+        with self.assertRaisesRegex(AssertionError, 'symlink'):
+            self.verifier.check_manifest()
+
+    @unittest.skipUnless(hasattr(os, 'mkfifo'), 'POSIX-only FIFO creation')
+    def test_special_file_rejected(self):
+        os.mkfifo(self.copy / 'fifo')
+        with self.assertRaisesRegex(AssertionError, 'special file'):
+            self.verifier.check_manifest()
+
+    def test_optimized_python_rejected(self):
+        result = subprocess.run([sys.executable, '-I', '-O', '-B', str(self.copy / 'verify.py')],
+                                capture_output=True, text=True)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn('verification requires assertions', result.stderr)
 
 if __name__ == '__main__': unittest.main()

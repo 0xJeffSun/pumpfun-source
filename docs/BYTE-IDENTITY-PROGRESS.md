@@ -4,6 +4,26 @@ The [full audit](RECONSTRUCTION-AUDIT.md) and its generated tables retain their
 explicit `1463bd22` snapshot. This log records later research without silently
 changing that baseline or promoting new selected artifacts.
 
+## Reviewed PRs #261–262: historical Mayhem macro and Fees Social claim-v2
+
+The [complete historical macro control](../research/mayhem-historical-macro-context/README.md)
+reproduces Mayhem's 328-byte allocator using the upstream macro and a historical
+event definition. Review checked all 121 selected blobs against the upstream Git
+tree, the official IDL and the upstream gate revision. All 17 offline tests pass.
+The packet uses the older source baseline, current target runtime and 93 reused
+linker archives; it does not add current-checkpoint matches or target execution.
+
+The [Fees Social successor](../research/fees-social-claim-v2-recovery/README.md)
+recovers all 1,303 normalized instructions in the 10,664-byte claim-v2 handler.
+Coverage advances to 579/585 normalized windows with 198 raw-local bodies;
+six windows and 57,128 original text bytes remain unmatched. All other compiled
+shapes, the readonly payload and original-relative call/data checks survive.
+Two native outputs repeat, and the packet retains 17,331 passing runtime cases.
+Independent review materializes all 46 source inputs and reruns the two Social
+claim suites successfully (974 cases). The verifier now rejects special files
+and optimized Python; twelve regression tests cover its mutation boundaries.
+The associated-token callee and whole ELF remain unequal.
+
 ## Mayhem: compose the historical parser context with the current source
 
 The [control-work packet](../research/mayhem-control-work-20261027/README.md)

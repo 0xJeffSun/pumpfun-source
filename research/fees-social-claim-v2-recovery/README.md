@@ -17,3 +17,5 @@ python3 -B research/fees-social-claim-v2-recovery/verify.py --materialize /absol
 ```
 
 The materializer writes the exact 46 workspace files, inherited macro dependency, and linker recipe. Saved build controllers retain their original `/work/next644` source and `/work/next637/vendor/used-public` dependency mounts; recreate those mounts or adapt paths consistently on another host. The parent is the [program-ID recovery](../fees-program-id-references/README.md).
+
+The review verifier rejects unlisted files, symlinks and special files before reading packet contents, and fails closed under Python `-O`. Twelve regression tests cover these boundaries and coherent source, build, binary, layout and runtime mutations. A separate review rerun of both Social claim suites passes all 974 cases against this candidate; the 17,331-case full-suite receipts retain their original execution bindings.
