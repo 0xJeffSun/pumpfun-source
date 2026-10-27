@@ -361,6 +361,73 @@ def measure(dest, w):
     require(retained == sum(wanted.values()) == 583, "regression in qualified signatures")
     return report
 
+
+def source_controls(compiler, w):
+    """Equivalent error paths with different ownership/evaluation boundaries."""
+    create = SOURCE / "programs/pump-fees/src/instructions/fee_sharing/create_donation_fee_pda.rs"
+    renderer = SOURCE / "fees-error-renderer/src/lib.rs"
+    base = create.read_text()
+    renderer_base = renderer.read_text()
+    macro = next(line for line in base.splitlines()
+                 if line.startswith("macro_rules! recovered_pool_keys"))
+    require(macro.count("return Err(") == 1, "pool macro return")
+    question = macro.replace("return Err(", "Err::<(),anchor_lang::error::Error>(", 1)
+    require("with_pubkeys(($left,$right)));" in question, "pool macro suffix")
+    question = question.replace("with_pubkeys(($left,$right)));",
+                                "with_pubkeys(($left,$right)))?;")
+    value = macro.replace("if $left != $right {",
+        "let left_value=$left; let right_value=$right; if left_value != right_value {")
+    value = value.replace("with_pubkeys(($left,$right))",
+                          "with_pubkeys((left_value,right_value))")
+    reference = macro.replace("if $left != $right {",
+        "let left_value=&$left; let right_value=&$right; if left_value != right_value {")
+    reference = reference.replace("with_pubkeys(($left,$right))",
+                                  "with_pubkeys((*left_value,*right_value))")
+    def as_question(text):
+        return text.replace("return Err(", "Err::<(),anchor_lang::error::Error>(", 1).replace(
+            "with_pubkeys((left_value,right_value)));",
+            "with_pubkeys((left_value,right_value)))?;").replace(
+            "with_pubkeys((*left_value,*right_value)));",
+            "with_pubkeys((*left_value,*right_value)))?;")
+    argument_renderer = (
+        "#[inline(always)]\npub fn render_pool_error(error:&fees_error_types::FeeError)"
+        "->String {error.to_string()}\n")
+    argument = macro.replace("fees_error_renderer::render_pool_error()",
+                            "fees_error_renderer::render_pool_error(&FeeError::InvalidPool)")
+    local = argument.replace("return Err(",
+                             "let error_code=FeeError::InvalidPool; return Err(", 1)
+    local = local.replace("FeeError::InvalidPool.name()", "error_code.name()").replace(
+        "FeeError::InvalidPool.into()", "error_code.into()").replace(
+        "render_pool_error(&FeeError::InvalidPool)", "render_pool_error(&error_code)")
+    separate = macro.replace("return Err(",
+        "let error_name=FeeError::InvalidPool.name(); "
+        "let error_msg=fees_error_renderer::render_pool_error(); return Err(", 1)
+    separate = separate.replace("error_name: FeeError::InvalidPool.name()", "error_name: error_name")
+    separate = separate.replace("error_msg: fees_error_renderer::render_pool_error()",
+                                "error_msg: error_msg")
+    variants = [
+        ("try-residual", question, renderer_base),
+        ("capture-values", value, renderer_base),
+        ("capture-values-residual", as_question(value), renderer_base),
+        ("capture-references", reference, renderer_base),
+        ("capture-references-residual", as_question(reference), renderer_base),
+        ("formatter-reference", argument, argument_renderer),
+        ("local-error-formatter-reference", local, argument_renderer),
+        ("named-error-fields", separate, renderer_base),
+    ]
+    try:
+        for label, replacement, render_source in variants:
+            create.write_text(base.replace(macro, replacement, 1))
+            renderer.write_text(render_source)
+            dest = build("control-" + label, compiler)
+            report = measure(dest, w)
+            if report["create_full_normalized_equal"]:
+                return dest, report
+    finally:
+        create.write_text(base)
+        renderer.write_text(renderer_base)
+    return None, None
+
 def runtime(dest):
     runner = REPO / "scripts/fees_validate_all.py"
     tree = ast.parse(runner.read_text())
@@ -434,7 +501,18 @@ def main():
     function_names = {x["name"] for x in w.m.functions((direct / "symbols.so").read_bytes())}
     require(all(x["name"] in function_names for x in links["callbacks"].values()),
             "callback symbol stability")
+    if not report["create_full_normalized_equal"]:
+        winner, winner_report = source_controls(compiler, w)
+        if winner is not None:
+            direct, report = winner, winner_report
     if report["create_full_normalized_equal"]:
+        # Restore the winning source override after the source-control runner's finally block.
+        with tarfile.open(direct / "source.tar.gz") as archive:
+            for member in archive.getmembers():
+                if member.isfile():
+                    target = SOURCE / member.name
+                    require(target.resolve().is_relative_to(SOURCE), "winning source traversal")
+                    target.write_bytes(archive.extractfile(member).read())
         repeat = build("direct-repeat", compiler)
         require((repeat / "symbols.so").read_bytes() == (direct / "symbols.so").read_bytes(),
                 "repeat symbols differ")
