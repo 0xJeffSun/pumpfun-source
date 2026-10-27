@@ -11,25 +11,25 @@ ELF and, through a separate loader deployment, its captured payload.**
 
 [Current main-Pump parallel research snapshot](research/main-pump-parallel-checkpoint-20261027/README.md) preserves the verified intermediates and in-progress source beyond the maintained checkpoint.
 
-**Main Pump: 67.0% of function windows matched; 46.4% of original text covered. Complete reconstruction remains unfinished.**
+**Main Pump: 68.1% of function windows matched; 47.2% of original text covered. Complete reconstruction remains unfinished.**
 
-Across the latest verified checkpoints, **2,777 / 3,338 inferred function windows
-match (83.2%)**. Their matched windows cover **3,555,256 / 5,213,128 original text
-bytes (68.2%)**. **One of five programs has complete meaningful-ELF identity**;
+Across the latest verified checkpoints, **2,789 / 3,338 inferred function windows
+match (83.6%)**. Their matched windows cover **3,568,232 / 5,213,128 original text
+bytes (68.4%)**. **One of five programs has complete meaningful-ELF identity**;
 all four core contracts still differ from their captured binaries.
 
 These percentages measure bounded binary-recovery progress, not a claim that
-83.2% of the engineering work is finished. Complete reconstruction also requires
+83.6% of the engineering work is finished. Complete reconstruction also requires
 all remaining code, calls, data, relocations and build provenance.
 
 | Latest verified checkpoint | Matched windows | Matched % | Raw-equal bodies | Normalized only | Unmatched | Whole ELF equal |
 | --- | ---: | ---: | ---: | ---: | ---: | --- |
-| [Pump Round18](repro/pump/main-contract-round18-20261027/README.md) | 693 / 1,035 | 67.0% | 118 | 575 | 342 | No |
+| [Pump Round20](repro/pump/main-contract-round20-20261027/README.md) | 705 / 1,035 | 68.1% | 120 | 585 | 330 | No |
 | [PumpSwap / AMM](repro/pump_amm/structural-tlv-recovery-20261027/README.md) | 586 / 785 | 74.6% | 124 | 462 | 199 | No |
 | [Fees research](research/fees-readonly-order-recovery/README.md) | 578 / 585 | 98.8% | 198 | 380 | 7 | No |
 | [Mayhem research](research/mayhem-provider-sharing/README.md) | 428 / 441 | 97.1% | 100 | 328 | 13 | No |
 | [Donation Relay](repro/donation-relay/canonical-exact-selection/README.md) | 492 / 492 | 100.0% | 492 | 0 | 0 | **Yes** |
-| **Total** | **2,777 / 3,338** | **83.2%** | **1,032** | **1,745** | **561** | **1 / 5** |
+| **Total** | **2,789 / 3,338** | **83.6%** | **1,034** | **1,755** | **549** | **1 / 5** |
 
 “Windows” are inferred original machine-function ranges, including framework and
 runtime helpers. Complete normalized matches mask specified call/address
@@ -39,12 +39,12 @@ the whole program is identical.
 
 | Checkpoint | Text bytes in matched windows | Text covered | Unmatched text |
 | --- | ---: | ---: | ---: |
-| Pump Round18 | 832,296 / 1,792,208 | 46.4% | 959,912 |
+| Pump Round20 | 845,272 / 1,792,208 | 47.2% | 946,936 |
 | PumpSwap / AMM | 644,456 / 1,162,040 | 55.5% | 517,584 |
 | Fees research | 731,856 / 799,648 | 91.5% | 67,792 |
 | Mayhem research | 594,160 / 706,744 | 84.1% | 112,584 |
 | Donation Relay | 752,488 / 752,488 | 100.0% | 0 |
-| **Total** | **3,555,256 / 5,213,128** | **68.2%** | **1,657,872** |
+| **Total** | **3,568,232 / 5,213,128** | **68.4%** | **1,644,896** |
 
 Pump and AMM rows describe the verified maintained sources. Fees and Mayhem rows
 are the latest upstream research frontiers, distinct from their maintained
@@ -60,7 +60,7 @@ source or build recipe.
 
 ## Behavior and remaining work
 
-Pump Round18 passes 10,468 full cases plus 5,258 focused executions, with 15,722
+Pump Round20 passes 10,468 full cases plus 5,278 focused executions, with 15,742
 paired diagnostic-log cases. AMM passes 17,462 full cases plus the separate
 account, fee, CPI, boundary and error-order matrices recorded in its checkpoint.
 These corpora overlap and must not be summed as unique scenarios. Tests use
@@ -91,7 +91,7 @@ absolute layout and complete ELF identity remain unresolved.
 
 The latest [PumpSwap decoder and structure recovery](repro/pump_amm/structural-tlv-recovery-20261027/README.md) fixes transfer-fee TLV differences: all 876 independent cases now match the captured original, compared with 430 differences in the preceding candidate. It retains all 586 matched AMM windows and raises raw-equal bodies to 124. The saved workspace recipe preserves the separate Fees workspace.
 
-Remaining priorities are the 342 Pump, 199 AMM, 7 Fees and 13 Mayhem unmatched
+Remaining priorities are the 330 Pump, 199 AMM, 7 Fees and 13 Mayhem unmatched
 windows; deeper call/data/relocation identity; original build provenance; and
 uncovered behavior such as authentic fixed-admin AMM `create_config` success.
 The historical [150-handler audit](repro/reconstruction-audit-2026-10-26/handlers.md)
