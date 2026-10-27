@@ -11,10 +11,11 @@ that run the captured original and the rebuilt candidate side by side in a local
 For subsequent gains and the latest research frontier, see the
 [byte-identity progress log](docs/BYTE-IDENTITY-PROGRESS.md).
 
-Latest Relay research: **480/492 normalized windows, 12 unmatched**, with 536
-passing replay records. Both the Darwin/Linux-library recipe and a fully Linux build reproduce these
-window matches; their ELF files differ, and full byte identity remains unproved. Latest Fees research: **349 unique structural pairs,
-89 unmatched windows**, with the complete `get_fees` wrapper now matched.
+Latest Relay research: **480/492 normalized windows, 12 unmatched**. Source-coordinate
+builds using both compiler recipes have **130 raw local body matches**, resolve
+all 43 location-value differences in the audited subset, and each pass 536
+replay records. This includes a fresh build with the full Linux SDK.
+Latest Fees research: **351 unique structural pairs, 87 unmatched windows**.
 Whole-file identity remains unachieved.
 
 The [26 October reconstruction audit](docs/RECONSTRUCTION-AUDIT.md) separates

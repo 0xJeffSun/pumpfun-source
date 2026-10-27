@@ -6,8 +6,8 @@ based on selected artifacts and research through commit `1463bd22`. The historic
 candidate paths and “current” prose must not override newer evidence.
 
 Subsequent gains are in the [byte-identity progress log](BYTE-IDENTITY-PROGRESS.md):
-Relay research now has **12 unmatched windows**; Fees creation-parser research
-has 89. The [latest Relay study](../repro/donation-relay/framework-sysroot-recovery/README.md)
+Relay research now has **12 unmatched windows**; Fees buyback-origin research
+has 87. The [latest Relay study](../repro/donation-relay/framework-sysroot-recovery/README.md)
 recovers the three repeated type-ID bodies with official Linux target libraries,
 adds the Anchor 0.32 framework matches and restores share-total compared values.
 The subsequent [mint-predicate study](../repro/donation-relay/mint-fee-pair-recovery/README.md)
@@ -15,6 +15,12 @@ recovers window 106; the remaining windows are 90, 92–100, 109 and 112. A
 [fully Linux reproduction](../repro/donation-relay/linux-canonical-reproduction/README.md)
 confirms that same 480-window frontier and finite replay corpus. The baseline counts below
 remain those of the dated audit.
+
+The [compiled location recovery](../repro/donation-relay/source-location-recovery/README.md)
+subsequently resolves all 43 source-location value differences in the audited
+346-pair cohort, retaining 480 matched windows and 12 unmatched on both tested
+compiler recipes, each with fresh replay. Other data,
+absolute pointers, relocations and excluded/ambiguous functions still need work.
 
 ## Audit baseline
 
