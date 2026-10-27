@@ -144,3 +144,12 @@ Mayhem remains the active reconstruction priority.
 
 - PR216: full verifier and three resealed negative controls pass. The 563-window Fees composition preserves both declared parents and adds a complete 1,688-byte caller; its preparation callee remains unequal. Saved 17,331 plus 24-case receipts are checked, with no new compiler/VM execution claimed in this review. It remains separate from the currently pinned research inventory.
 - PR217: the controlled Mayhem sysroot verifier and all 21 tests pass. The saved experiment holds the Windows compiler fixed while replacing the complete target library set. It adds provenance evidence, not new body ranges. Full publisher archives were not rechecked in this review, and no fresh compilation is claimed.
+
+## PR216 updated head: shared authorization
+
+The updated head also retains a complete 1,208-byte authorization helper, with
+nine direct callee bodies and eleven directly referenced objects checked. Both
+packet verifiers and the new three negative controls pass. The independent
+Fees composition reaches 564 normalized windows, 143 raw-local matches and
+168 Location observations. These counts belong to that packet; the pinned
+research inventory is unchanged while Mayhem remains the active priority.

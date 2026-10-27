@@ -4,6 +4,18 @@ The [full audit](RECONSTRUCTION-AUDIT.md) and its generated tables retain their
 explicit `1463bd22` snapshot. This log records later research without silently
 changing that baseline or promoting new selected artifacts.
 
+## Fees: shared authorization body recovered
+
+The [authorization recovery](../research/fees-authorization-source-recovery/README.md)
+adds the complete 1,208-byte function at 234096 on top of the composed563 source.
+The signer-reference ABI, shared-module origin and explicit inequality guard
+reproduce its full normalized body; all nine direct callees and eleven direct
+data objects match. All prior matches remain. Fees now has **564/585 normalized
+original functions, 143 raw local matches, 168 equal Location observations and
+21 unmatched functions**. Repeated native Rust builds are identical and fresh
+regression passes 17,331 cases in 18 suites. Whole-ELF/capture equality remains
+false; the other incomplete helpers and selected-checkpoint boundary remain open.
+
 ## Fees: source frontiers composed, legacy payout adapter recovered
 
 The [payout-context recovery](../research/fees-payout-context-recovery/README.md)
