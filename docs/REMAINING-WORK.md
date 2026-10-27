@@ -77,6 +77,12 @@ reject the tested in-place arithmetic and tip-local forms. Naming the tip divisi
 alone compiles to the unchanged candidate. The worker still needs a complete
 source/body recovery, not promotion of a locally similar trial.
 
+The [swap-caller layout/constructor study](../repro/donation-relay/swap-caller-controls/README.md)
+removes an extra copy and passes fresh bounded replay, but does not recover the
+full `just_swap` body. Retain the corrected source as a partial experiment while
+resolving the remaining argument/Vec handling and instruction differences;
+compiler layout of reconstructed types is not original debug information.
+
 ## Audit baseline
 
 - **Whole captured-file identity:** 0/4 selected core programs; selected Relay also differs.

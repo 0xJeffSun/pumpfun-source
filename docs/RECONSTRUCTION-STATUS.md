@@ -217,6 +217,18 @@ reproduce the existing candidate exactly, so that source distinction is removed
 by this compiler. The unit-result helpers do not recover their caller; no trial
 is promoted or newly runtime-accepted.
 
+### Swap caller constructor order and layout
+
+The [swap-caller controls](../repro/donation-relay/swap-caller-controls/README.md)
+retain compiler-generated layouts for the reconstructed account/context types;
+the diagnostic build reproduces the current candidate exactly. Moving the
+program field to the end of the `just_swap` burn-context initializer removes an
+extra memcpy call, agreeing with the original call count. Its body is still
+4,408 bytes versus the original 4,448 and remains unmatched. A fresh replay of
+both original and this partial correction passes 536 records / 534 unique
+fixtures with the existing exclusions. Four argument-wrapper variants remain
+negative. No candidate is promoted and the frontier remains 482/492.
+
 ## Fees: new complete bodies, substantial residual business logic
 
 The latest 851,488-byte candidate is SHA-256

@@ -7,8 +7,8 @@
     {
       "path": "README.md",
       "before_sha256": "cae913d4d3f2066403162f653a0cf35b39620fb08877b1b308c08ccce4a53678",
-      "after_sha256": "2df11603c8d19a999340bc83ecdff0d58f8ac23103fd1d986a1d436b42801963",
-      "reason": "Condense rejected-control history into the linked progress log; record arithmetic controls without changing the 482/492 frontier or identity qualifications."
+      "after_sha256": "2132c25000a66384907d4ce5537d4d314f5c09ebaf0bb20b0d78c5f99071d1f6",
+      "reason": "Include compiler-layout controls in the linked research summary; preserve the 482/492 frontier, selected artifacts, and whole-program identity qualifications."
     },
     {
       "path": ".github/workflows/verify.yml",
