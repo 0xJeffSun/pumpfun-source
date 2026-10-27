@@ -25,11 +25,11 @@ string table from ordinary Rust source. Its Linux candidate retains the same
 482-window frontier and 348 source-location matches; whole-file equality remains
 unachieved. The function inventory keeps its explicitly hashed burn/close inputs.
 
-Latest Fees research: **385 unique structural pairs, 53 unmatched windows**.
+Latest Fees research: **388 unique structural pairs, 50 unmatched windows**.
 The [configuration-event recovery](research/fees-config-event-recovery/README.md)
 adds four complete caller-body matches; the two upsert bodies share a structural
 shape and are distinguished by their callees. The [current call ledger](repro/reconstruction-status-2026-10-26/fees-call-attribution.json)
-also attributes 64 duplicate-body pairs, giving 449 correspondences.
+also attributes 64 duplicate-body pairs, giving 452 correspondences.
 Whole-file identity remains unachieved. The [exotic-fee growth study](research/fees-exotic-growth-precedence/README.md)
 corrects rejection precedence and the realloc flag in new boundary cases;
 that caller still has no complete body match. The [optional-account ownership recovery](research/fees-optional-account-ownership/README.md)
@@ -54,7 +54,9 @@ business handler remain unmatched. Four [root codegen controls](research/fees-wr
 add no matches and are retained as rejected experiments. The
 [sweep context recovery](research/fees-sweep-context-ownership/README.md)
 adds its complete account parser, exit and dispatch wrapper; the sweep business
-body remains unmatched.
+body remains unmatched. The [buyback-update context recovery](research/fees-buyback-update-ownership/README.md)
+now closes the shared update parser and both update dispatch wrappers, with
+all 61 direct callee bodies matching.
 
 The [current reconstruction review](docs/RECONSTRUCTION-STATUS.md) lists exact,
 normalized, unmatched and opaque function status, all 10 remaining Relay bodies,
@@ -78,7 +80,7 @@ No handler is certified perfectly recreated. The selected core builds contain
 | --- | ---: | ---: | ---: | ---: | ---: |
 | Pump selected | 98 | 430 | 507 | 0 | 1,391,456 / 1,792,208 bytes (77.6%) |
 | PumpSwap selected | 93 | 395 | 297 | 0 | 734,392 / 1,162,040 bytes (63.2%) |
-| Fees research | 118 | 414 | 53 | 0 | 285,168 / 799,648 bytes (35.7%) |
+| Fees research | 118 | 417 | 50 | 0 | 276,000 / 799,648 bytes (34.5%) |
 | Mayhem selected | 58 | 131 | 7 | 245 | 636,128 / 706,744 bytes (90.0%) |
 | Relay research | 130 | 352 | 10 | 0 | 52,616 / 752,488 bytes (7.0%) |
 

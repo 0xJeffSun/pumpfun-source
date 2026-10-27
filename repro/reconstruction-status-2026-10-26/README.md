@@ -1,6 +1,6 @@
 # Current function-window inventory
 
-Evidence snapshot: `19a3362592c2ae9efe93662ec1eaf5b560a20d61`. Selected inputs retain their verified `1463bd22fb7811825c5e7acf1cb963eb39ab68d9` checkpoint bindings. Research rows replace the older Fees/Relay research inventory; they do not replace selections.
+Evidence snapshot: `21ef56a9f9dd43e7b56e3c6ddefaf2ff931a4944`. Selected inputs retain their verified `1463bd22fb7811825c5e7acf1cb963eb39ab68d9` checkpoint bindings. Research rows replace the older Fees/Relay research inventory; they do not replace selections.
 
 | Program / build | Windows | Exact local bytes | Normalized only | No complete match | Opaque |
 | --- | ---: | ---: | ---: | ---: | ---: |
@@ -9,7 +9,7 @@ Evidence snapshot: `19a3362592c2ae9efe93662ec1eaf5b560a20d61`. Selected inputs r
 | pump_fees | 585 | 102 | 363 | 120 | 0 |
 | mayhem | 441 | 58 | 131 | 7 | 245 |
 | donation_relay | 492 | 33 | 89 | 370 | 0 |
-| pump_fees_research | 585 | 118 | 414 | 53 | 0 |
+| pump_fees_research | 585 | 118 | 417 | 50 | 0 |
 | donation_relay_research | 492 | 130 | 352 | 10 | 0 |
 
 Fees has 380 body-unique pairs plus 62 additional call-attributed duplicate pairs (442 correspondences); 85 duplicate windows remain unattributed. These are not 62 additional body matches. Rows count inferred original windows, not unique source functions or effort. Raw matches may be duplicate/ambiguous and do not establish referenced data or transitive callees. The Fees matcher and Relay matcher use separately documented masks; do not add their counts into a source-completion score.

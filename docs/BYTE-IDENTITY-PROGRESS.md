@@ -621,3 +621,22 @@ matches. Call refinement gives 449 correspondences (64 additional duplicates),
 frontier edges. Residual windows total 285,168 bytes (35.7% of original text).
 Fresh full and focused regressions pass. No whole-file identity, exhaustive
 behavior or selected-checkpoint promotion is claimed.
+
+## Fees: shared buyback update context and wrappers recovered
+
+The [buyback-update ownership study](../research/fees-buyback-update-ownership/README.md)
+recovers the shared 5,856-byte parser at 331,936 and both update dispatch wrappers
+at 652,592 (1,744 bytes) and 654,336 (1,568 bytes). Owning both event/program
+account infos is sufficient; each single-field control adds no complete body.
+All 61 direct callees match. No previous normalized or raw match is lost.
+
+The frontier is **388 unique structural pairs, 147 ambiguous original windows
+and 50 unmatched windows**: 118 raw-local plus 417 normalized-only matches.
+Residual bodies span 276,000 bytes (34.5% of original text). Call refinement
+yields 452 correspondences (64 additional duplicates), 83 unattributed duplicate
+windows, 2,938 bound-target edges and 19 different-body frontier edges.
+
+Twenty-five literal ranges, the earlier context/panic-location contracts and
+fresh full/focused regressions pass. Nested panic/format metadata, transitive
+identity and exhaustive behavior remain outside this result. The study does
+not promote selected artifacts or establish whole-file equality.

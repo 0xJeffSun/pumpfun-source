@@ -7,8 +7,8 @@
     {
       "path": "README.md",
       "before_sha256": "cae913d4d3f2066403162f653a0cf35b39620fb08877b1b308c08ccce4a53678",
-      "after_sha256": "4231dd0f605ea8965885cbdf3dea4211fa189feb448bd35faa54b4c9ebbc73aa",
-      "reason": "Record complete sweep parser, exit and dispatch recovery with updated inventory and explicit remaining business-body frontier; preserve selected checkpoints."
+      "after_sha256": "4bb6a430ec9f9bfaab93d2edf9a72fea65c0878fb1bf40bb81b5f039c48e38cc",
+      "reason": "Record shared buyback update parser and dispatch recovery, refreshed function/call inventory and scoped literal checks while preserving selected checkpoints."
     },
     {
       "path": ".github/workflows/verify.yml",

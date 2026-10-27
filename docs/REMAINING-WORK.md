@@ -1,7 +1,7 @@
-# Remaining work — sweep context review, 26 October 2026
+# Remaining work — buyback-update context review, 26 October 2026
 
 This is the action list for the [current reconstruction audit](RECONSTRUCTION-AUDIT.md),
-with current research reviewed through evidence revision `19a33625`. The [current review](RECONSTRUCTION-STATUS.md)
+with current research reviewed through evidence revision `21ef56a9`. The [current review](RECONSTRUCTION-STATUS.md)
 and [complete refreshed inventory](../repro/reconstruction-status-2026-10-26/README.md)
 list every raw match and unresolved window; selected artifacts retain the
 `1463bd22` audit bindings. The historical
@@ -10,7 +10,7 @@ candidate paths and “current” prose must not override newer evidence.
 
 Subsequent gains are in the [byte-identity progress log](BYTE-IDENTITY-PROGRESS.md):
 Relay research now has **10 unmatched windows**; current Fees research
-has **53 unmatched windows and 385 unique structural pairs**. The [Relay framework study](../repro/donation-relay/framework-sysroot-recovery/README.md)
+has **50 unmatched windows and 388 unique structural pairs**. The [Relay framework study](../repro/donation-relay/framework-sysroot-recovery/README.md)
 recovers the three repeated type-ID bodies with official Linux target libraries,
 adds the Anchor 0.32 framework matches and restores share-total compared values.
 The subsequent [mint-predicate study](../repro/donation-relay/mint-fee-pair-recovery/README.md)
@@ -94,7 +94,7 @@ adds the optional account parser and raw-equal cleanup without lost matches.
 Keep their real caller wired to owned `AccountInfo`; the larger account parser
 still needs full reconstruction. The subsequent [seed-vector recovery](../research/fees-social-seed-vector/README.md)
 recovers a 296-byte clone helper; its V2 claim caller remains unmatched. Current
-Fees attribution totals 449 pairs. The [extension-size log recovery](../research/fees-extend-size-logs/README.md)
+Fees attribution totals 452 pairs. The [extension-size log recovery](../research/fees-extend-size-logs/README.md)
 restores the no-resize messages and formatting helper; the larger resize handler
 remains unmatched.
 
@@ -162,6 +162,20 @@ contracts remain unchanged. The new candidate passes fresh full and focused
 regressions; source, build and data evidence are retained separately from the
 local instruction matches. No selected artifact is promoted.
 
+## Buyback update context after ownership recovery
+
+The [buyback-update ownership study](../research/fees-buyback-update-ownership/README.md)
+owns the event authority and program account infos in the shared update context.
+It recovers the complete 5,856-byte parser, 1,744-byte authority-update wrapper
+and 1,568-byte claim-rate wrapper. All 61 direct callee bodies match; single-field
+ownership controls add no complete body. No prior match is lost.
+
+Twenty-five selected message, seed, label and owner-ID ranges also match, with a
+mutation test distinguishing their identity from instruction equality. Nested
+panic/format metadata, wider transitive data and exhaustive behavior still need
+separate proof. Fresh full and focused regression passes; earlier sweep, crank,
+initializer and panic-location contracts remain verified.
+
 ## Current priorities and closure criteria
 
 The [complete review](../repro/reconstruction-status-2026-10-26/review.md)
@@ -170,14 +184,14 @@ The following are independent requirements; completing one does not close the ot
 
 | Priority | Remaining work | Evidence required to close it |
 | --- | --- | --- |
-| Current research bodies | Relay's 10 donation/settlement/worker windows; Fees' 53 windows, including the exotic-growth caller | Full original-window comparison with no lost matches, source/build hashes and relevant fresh differential coverage |
+| Current research bodies | Relay's 10 donation/settlement/worker windows; Fees' 50 windows, including the exotic-growth caller | Full original-window comparison with no lost matches, source/build hashes and relevant fresh differential coverage |
 | Core source/behavior | Pump's five partial and three unaccepted handlers; AMM initializer; Mayhem initializer and opaque attribution | Concrete source, genuine successful and rejected paths, bound receipts and per-handler limitations |
 | Known mismatches | Pump sell_v2 transfer-fee behavior; Mayhem diagnostics and field contracts | Authorized resumed correction where required, then targeted regressions and broader validation |
 | Transitive binary identity | Calls, duplicate attribution, data, relocations, indirect calls and final ELF layout | Exact artifact comparison and explicit explanation of any allocation padding |
 | Provenance and integration | Historical tools/dependencies, ATA recipe, selected-source promotion of research | Reproducible source/tool manifests, new selected artifacts and guard-approved bindings |
 
 Body-count percentages understate large unresolved functions: Fees' residual
-is 35.7% of original text; Relay's is 7.0%. Neither value measures remaining
+is 34.5% of original text; Relay's is 7.0%. Neither value measures remaining
 engineering time. Preserve the documented negative experiments and stopped lanes.
 
 ## Historical immutable audit baseline
@@ -228,7 +242,7 @@ and signing/ownership restrictions are unchanged by this documentation audit.
 | --- | --- |
 | Selected Pump | 507 windows without full normalized matches; calls/data and ambiguous matches also remain. The separate workspace-member build has 538 normalized windows and 497 residuals: 233 different-body, 192 no-same-size, 72 store-immediate-only heuristic rows. One of those 72 changes an error code; only 71 are reported origin-only. |
 | Selected AMM | 297 unmatched original windows, 160 ambiguous normalized rows, original diagnostics, data and full call contracts |
-| Fees current research | 53 unmatched windows (285,168 original body bytes), 64 additional call-attributed pairs and 83 duplicate windows still unattributed; close shareholder validators, transitive calls/data and full ELF/relocation layout |
+| Fees current research | 50 unmatched windows (276,000 original body bytes), 64 additional call-attributed pairs and 83 duplicate windows still unattributed; close shareholder validators, transitive calls/data and full ELF/relocation layout |
 | Selected Mayhem | Seven admitted unmatched windows and 257 source-ledger opaque windows; 12 of the opaque windows have local raw matches without semantic attribution |
 | Relay current research | [10 explicit residual windows](RECONSTRUCTION-STATUS.md#relay-the-complete-remaining-body-list), spanning 52,616 original body bytes: donation/settlement bodies and shared donation worker; privileged successes, transitive callees/data and allocator/borrow behavior |
 | Metaplex | Utilize's 1,477 text differences, 30 source-coordinate differences, two relocation differences; authentic source/compiler layout |
