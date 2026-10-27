@@ -64,24 +64,24 @@
     "pump_fees_research": {
       "body_bytes": 799648,
       "dispositions": {
-        "no_complete_body_match": 72,
-        "normalized_body_only": 397,
+        "no_complete_body_match": 68,
+        "normalized_body_only": 401,
         "raw_body_equal": 116
       },
-      "unmatched_body_bytes": 330536,
+      "unmatched_body_bytes": 320304,
       "windows": 585
     }
   },
   "fees": {
-    "additional_call_attributed_pairs": 61,
-    "ambiguous_original_windows": 147,
-    "candidate_bytes": 863168,
-    "candidate_sha256": "27806e4888d4f18059ac172698c91e3ea9ba7baaaa9a89f2a2afa5e29675f087",
+    "additional_call_attributed_pairs": 63,
+    "ambiguous_original_windows": 149,
+    "candidate_bytes": 860512,
+    "candidate_sha256": "d5b45304cc75fb883cefd606c9ba7866f8c976f3163ba70312d96e391a985c56",
     "candidate_windows": 587,
     "raw_file_equals_original_elf_extent": false,
     "remaining_unattributed_duplicate_windows": 86,
-    "total_attributed_pairs": 427,
-    "unique_structural_pairs": 366,
+    "total_attributed_pairs": 431,
+    "unique_structural_pairs": 368,
     "whole_capture_equal": false
   },
   "input_sha256": {
@@ -96,17 +96,17 @@
     "repro/donation-relay/swap-receipt-coordinate-recovery/original-windows.json": "c002df05d4489259f1cfd2b2391220cae38f6ffb0055f35f659e68a4935fd7bd",
     "repro/reconstruction-audit-2026-10-26/audit.json": "7301fb2a784c56501fc85eb3272fc8dc111744b2464335edd3051ed1cc65fc7a",
     "repro/reconstruction-audit-2026-10-26/functions.tsv": "c56843dfdfbe1086fa7764e29e1f0a83aef47832e3f4c0d4fdfe5de01b75a93d",
-    "repro/reconstruction-status-2026-10-26/refresh.py": "ba810104b3e42705d6f389784f6ea32733886f8f9d9df4d100971c5420652170",
+    "repro/reconstruction-status-2026-10-26/refresh.py": "166416ad93a0d718eb012e0fc0d677af72c5f73c6eb0a29516566df3a2b4e895",
+    "research/fees-config-event-recovery/analysis.json.gz": "e64d68a06020e8d58d5cf9eff7b2c0153e4bc641cb042773633f9b9da0157411",
+    "research/fees-config-event-recovery/artifacts/origins-candidate.so.gz": "18d789f45ac67808458a3c4bf905f461e7f3db1ef8e8966df84f3d7dcfb106b6",
+    "research/fees-config-event-recovery/artifacts/origins-symbols.so.gz": "43f12b20f2833012a2b365f5a9487c84a0841fa95f7afc210436f3bb9c41817b",
+    "research/fees-config-event-recovery/elf_helpers.py": "ca2791ec19de711032d60f489afdc7e36a27081d9e16e67f2cfa91170d64ee4c",
+    "research/fees-config-event-recovery/experiment.json": "172128282070f463bf6f2ba51a8cbea99854168f8be9242a0a6f934991cb7f1f",
+    "research/fees-config-event-recovery/window_map.py": "5269d40aab42ebc170b03747dcc031563722f1347677e225f8c6a0737fe7128e",
     "research/fees-refreshed-call-attribution/attribute.py": "b3425eb9c1fba9b09e2c3e7bd01ab0f6d50ef0cfb5500320ff34db96de819c17",
     "research/fees-refreshed-call-attribution/elf_helpers.py": "ca2791ec19de711032d60f489afdc7e36a27081d9e16e67f2cfa91170d64ee4c",
     "research/fees-refreshed-call-attribution/input-provenance.json": "7c546529d694d7fa6d29d0829ad09bb811703581f92b0508a8484633e0a1b69f",
     "research/fees-refreshed-call-attribution/window_map.py": "5269d40aab42ebc170b03747dcc031563722f1347677e225f8c6a0737fe7128e",
-    "research/fees-tier-splice-recovery/analysis.json.gz": "f75709a56ffa06c671e0ac1e82085e8e79c644d00031c94a7cf4d7c339cd7220",
-    "research/fees-tier-splice-recovery/artifacts/origins-candidate.so.gz": "3f8cb4970c481c0cb8e3ee9303407dd27f4597fce72ae2c9f35cee940bdfeba2",
-    "research/fees-tier-splice-recovery/artifacts/origins-symbols.so.gz": "8d38e9478632490bac5448a720f234fb14a80621546604dabca7ca49eee93247",
-    "research/fees-tier-splice-recovery/elf_helpers.py": "ca2791ec19de711032d60f489afdc7e36a27081d9e16e67f2cfa91170d64ee4c",
-    "research/fees-tier-splice-recovery/experiment.json": "72b0f9a8ebceea45d9f9cac729f1e7591ff4632754ed28b7d0b7a2e553ca7e65",
-    "research/fees-tier-splice-recovery/window_map.py": "5269d40aab42ebc170b03747dcc031563722f1347677e225f8c6a0737fe7128e",
     "scripts/analyze.py": "dd7fb38d795d4dd72a25aab0d65c2223d9f6f75d8b3ecb0de1d87d6e102910ac"
   },
   "relay": {
@@ -138,5 +138,5 @@
     "unrecovered": 5
   },
   "selected_snapshot": "1463bd22fb7811825c5e7acf1cb963eb39ab68d9",
-  "snapshot": "2a8fef2393085cdf9fa18d35c1b1df2e0f1acf20"
+  "snapshot": "155203f30b9c69e4c57a4dd51e0665a33cb06e12"
 }
