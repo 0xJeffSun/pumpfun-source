@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Verify the selected AMM checkpoint or a fresh replay of that exact artifact."""
+"""Verify the selected AMM source recipe, saved proof, or its exact fresh replay."""
 from pathlib import Path
 import argparse
 import hashlib
@@ -9,13 +9,21 @@ import subprocess
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
-ARTIFACT = 'repro/pump_amm/dependency-liquidity-recovery-20261027/results/build/candidate.so'
-CANDIDATE = '5cd7879af0d9733d1f7d3847be46aa4c5ff214fca2250d1c69d03c49cbc85d1a'
-MANIFEST = '4b015b381eba19ea7a627b3d0e7e8e78fae7d12522e195e264cfa7176b04deb6'
+CHECKPOINT = 'repro/pump_amm/structural-tlv-recovery-20261027'
+ARTIFACT = CHECKPOINT + '/results/build/candidate.so'
+CANDIDATE = '5c1e8b18ead27d0b3c1840f37b24ef5044adb65e2a3a566d5be7694ff8737c05'
+MANIFEST = 'e2c125883a298ce9219dd83c5dbdf89a1b585e805b193d2acabdb149ef71d269'
 
 
 def sha(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def module(name, path):
+    spec = importlib.util.spec_from_file_location(name, path)
+    value = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(value)
+    return value
 
 
 def verify(root=ROOT, runtime=None):
@@ -23,26 +31,10 @@ def verify(root=ROOT, runtime=None):
     selected = json.loads((root / 'repro/status.json').read_text())['pump_amm']
     assert selected['candidate_artifact'] == ARTIFACT
     assert selected['candidate_sha256'] == CANDIDATE
+    checkpoint = root / CHECKPOINT
+    results = checkpoint / 'results'
     candidate = root / ARTIFACT
-    checkpoint = candidate.parents[2]
-    assert sha(candidate) == CANDIDATE
-    assert sha(checkpoint / 'results/manifest.json') == MANIFEST
-    record = json.loads((checkpoint / 'results/build/build-comparison.json').read_text())
-    local = {}
-    for name, digest in record['source_sha256'].items():
-        if '/registry/src/' in name:
-            continue
-        relative = 'programs/pump-amm/' + name.split('programs/pump-amm/', 1)[1]
-        assert sha(root / relative) == digest, relative
-        local[relative] = digest
-    assert len(local) == 41 and len(record['source_sha256']) == 210
-    spec = importlib.util.spec_from_file_location('selected_amm_dependencies', checkpoint / 'results/dependency-proof/verify.py')
-    dependencies = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(dependencies)
-    assert dependencies.verify(root, checkpoint / 'results/build/build-comparison.json')['total_build_inputs_bound'] == 210
-    from build_source_manifest import source_manifest
-    crate = root / 'programs/pump-amm'
-    assert source_manifest(crate, crate, root, [crate / 'vendor/solana-pubkey'], cwd=root) == local
+    assert sha(candidate) == CANDIDATE and sha(results / 'manifest.json') == MANIFEST
     if runtime is None:
         result = subprocess.run(
             [sys.executable, '-B', str(checkpoint / 'verify_saved.py'), '--current-source'],
@@ -51,16 +43,33 @@ def verify(root=ROOT, runtime=None):
         report = json.loads(result.stdout.strip().splitlines()[-1])
         assert report['current_source_checked'] and report['candidate_sha256'] == CANDIDATE
         return {'status': 'PASS', 'program': 'pump_amm', **report}
+    entries = json.loads((results / 'manifest.json').read_text())
+    assert set(entries) | {'manifest.json'} == {
+        str(path.relative_to(results)) for path in results.rglob('*') if path.is_file()
+    }
+    for name, digest in entries.items():
+        assert sha(results / name) == digest, name
+    for name in ['verify_source_binding.py', 'workspace_recipe_v2.py']:
+        assert sha(checkpoint / name) == sha(results / 'harness' / name)
+    sys.path.insert(0, str(checkpoint))
+    try:
+        binding = module('selected_amm_source', checkpoint / 'verify_source_binding.py')
+        bound = binding.verify(results / 'canonical-source', results / 'source',
+                               results / 'build/build-comparison.json', candidate,
+                               results / 'build/unstripped.so', results / 'dependency-proof', root)
+    finally:
+        sys.path.pop(0)
+    assert bound['total_compiled_inputs_verified'] == 214 and bound['current_source_verified']
+    dependencies = module('selected_amm_dependencies', results / 'dependency-proof/verify.py')
+    assert dependencies.verify(results / 'canonical-source', results / 'build/build-comparison.json')['packages'] == 8
     runtime = Path(runtime).resolve()
     inputs = json.loads((runtime / 'inputs.json').read_text())
     assert inputs['candidate_sha256'] == CANDIDATE
     for name, digest in inputs['harness_sha256'].items():
         assert sha(root / name) == digest, name
     assert inputs['observer_sha256'] == sha(root / 'repro/pump_amm/owner6048-v144/runtime/observe_suite.py')
-    spec = importlib.util.spec_from_file_location('selected_amm_audit', checkpoint / 'compare_direct_cached.py')
-    module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
-    report = module.audit(runtime, CANDIDATE)
+    audit = module('selected_amm_audit', checkpoint / 'compare_direct_cached.py')
+    report = audit.audit(runtime, CANDIDATE)
     assert report['cases'] == 17462 and not report['mismatches']
     return {'status': 'PASS', 'program': 'pump_amm', 'candidate_sha256': CANDIDATE, **report}
 
