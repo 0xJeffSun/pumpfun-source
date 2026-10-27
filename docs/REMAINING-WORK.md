@@ -9,15 +9,24 @@ snapshot retains `1463bd22` audit bindings; current selections are recorded in
 [completion ledger](COMPLETION.md) remains a selected-checkpoint record; its old
 candidate paths and “current” prose must not override newer evidence.
 
-Current [Pump Round20](../repro/pump/main-contract-round20-20261027/README.md)
-has 120 raw-local matches, 585 normalized-only matches and 330 unmatched windows.
-The unmatched windows cover 946,936 original text bytes. The checkpoint retains
+Current [Pump Round21](../repro/pump/main-contract-round21-20261027/README.md)
+has 123 raw-local matches, 585 normalized-only matches and 327 unmatched windows.
+The unmatched windows cover 944,128 original text bytes. The checkpoint retains
 bounded runtime evidence; the remaining bodies, data, relocations, uncovered
 behavior and original build provenance still require recovery.
 
 Current [PumpSwap native-fee/CPI recovery](../repro/pump_amm/native-fee-cpi-recovery-20261027/README.md) has 125 raw-local, 474 normalized-only and 186 unmatched windows, with 498,200 original text bytes still in unmatched windows.
 
-Current Mayhem research is the [trade-origin and validator successor](../research/mayhem-trade-origins-validator/README.md): 100 raw-local, 329 normalized-only and twelve unmatched windows / 111,288 original text bytes. The quote validator now matches under normalization with all eight immediate calls and fourteen typed references checked. Three partial trade handlers recover 21 Source records and three CPI error origins, but their complete bodies still differ. Two qualified builds agree; 65 fresh paired cases verify 130 signed executions. Earlier initializer, AMM, BuyV2 and extension receipts retain their prior artifact bindings. The sysvar allocation provider, missing 328-byte reserve child, twelve bodies and whole-ELF identity remain unresolved. The selected baseline is unchanged.
+Current Mayhem research is the [BuyV2 sizing successor](../research/mayhem-sizing-panic-recovery/README.md):
+100 raw-local, 329 normalized-only and twelve unmatched windows / 111,288 original
+text bytes. It preserves the parent's complete quote-validator reference checks
+and three partial trade handlers' 21 Source records and three CPI error origins.
+Its one-file change restores BuyV2's typed sizing error in all three quote
+families. Two proposal builds agree; all 6,636 fresh trade comparisons have equal
+functional results and non-compute logs. Complete trade bodies, the sysvar
+allocation provider, the missing 328-byte reserve child and whole-ELF identity
+remain unresolved. Other earlier receipts keep their original artifact bindings,
+and the selected baseline is unchanged.
 
 The [allocator-context experiment](../research/mayhem-allocator-context/README.md)
 produces the missing 328-byte reserve child by adding a diagnostic zeroed-vector
@@ -35,10 +44,11 @@ is eliminated; it does not establish full toolchain equivalence or recover the
 initializer. Further work must still resolve source/IR shape and original
 compilation settings.
 
-Current [Fees readonly-order research](../research/fees-readonly-order-recovery/README.md)
+Current [Fees program-ID research](../research/fees-program-id-references/README.md)
 has 198 raw-local, 380 normalized-only and seven unmatched windows, covering
 731,856 of 799,648 original text bytes. The full 21,079-byte readonly section
-now matches. Six inspected call-target differences, an extra event helper,
+now matches, and all 1,608 checked readonly references have their original
+relative offsets. Six inspected call-target differences, an extra event helper,
 absolute layout and original build provenance remain unresolved. The 46-file
 Rust successor has two matching builds and 17,331 fresh runtime comparisons;
 it remains separate from the selected Fees baseline.

@@ -1,0 +1,4 @@
+* -text
+**/* -text
+overrides/** -whitespace
+source.patch -whitespace

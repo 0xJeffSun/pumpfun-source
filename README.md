@@ -27,7 +27,7 @@ all remaining code, calls, data, relocations and build provenance.
 | [Pump Round21](repro/pump/main-contract-round21-20261027/README.md) | 708 / 1,035 | 68.4% | 123 | 585 | 327 | No |
 | [PumpSwap / AMM](repro/pump_amm/native-fee-cpi-recovery-20261027/README.md) | 599 / 785 | 76.3% | 125 | 474 | 186 | No |
 | [Fees research](research/fees-program-id-references/README.md) | 578 / 585 | 98.8% | 198 | 380 | 7 | No |
-| [Mayhem research](research/mayhem-trade-origins-validator/README.md) | 429 / 441 | 97.3% | 100 | 329 | 12 | No |
+| [Mayhem research](research/mayhem-sizing-panic-recovery/README.md) | 429 / 441 | 97.3% | 100 | 329 | 12 | No |
 | [Donation Relay](repro/donation-relay/canonical-exact-selection/README.md) | 492 / 492 | 100.0% | 492 | 0 | 0 | **Yes** |
 | **Total** | **2,806 / 3,338** | **84.1%** | **1,038** | **1,768** | **532** | **1 / 5** |
 
@@ -75,6 +75,11 @@ fresh case pairs pass. Twelve bodies, a required allocator specialization and
 whole-ELF identity remain unresolved; older runtime receipts keep their original
 artifact bindings.
 
+The [BuyV2 sizing follow-up](research/mayhem-sizing-panic-recovery/README.md)
+preserves that frontier and restores the original typed sizing failure for all
+three quote families. Its 6,636 fresh trade comparisons agree in functional
+results and complete non-compute logs. The BuyV2 body remains unmatched.
+
 A [same-IR compiler diagnostic](research/mayhem-host-llvm-comparison/README.md)
 produces identical Mac and Linux LLVM objects for one earlier initializer
 control. This narrows that investigation without adding a function match.
@@ -83,6 +88,11 @@ An [allocator-context experiment](research/mayhem-allocator-context/README.md)
 reproduces the missing reserve helper through a zeroed-allocation probe. It
 identifies a compiler condition to recover through justified source; the probe
 remains a diagnostic and the current reconstruction counts are unchanged.
+
+The [historical parser follow-up](research/mayhem-allocator-parser-provenance/README.md)
+reproduces that allocator form with an earlier Anchor event-parser template and
+current event types. It is a mixed-source compiler experiment; original Mayhem
+source and composition with the current checkpoint remain unproven.
 
 The latest [Fees program-ID recovery](research/fees-program-id-references/README.md)
 corrects the two remaining program-ID comparison references. All 1,608 checked

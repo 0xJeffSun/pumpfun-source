@@ -145,6 +145,8 @@ jobs:
               python scripts/verify_mayhem_pump_swap.py --candidate repro/mayhem/initializer-current-20261027/candidate.so --receipts work/mayhem-sell-pump-swap-token.json --output work/mayhem-sell-pump-swap-token-verification.json
           - suite: mayhem-3
             commands: |
+              python -B research/mayhem-sizing-panic-recovery/verify.py
+              python -B research/mayhem-sizing-panic-recovery/test_scope.py
               python scripts/mayhem_validate_extend.py --candidate repro/mayhem/initializer-current-20261027/candidate.so --output work/mayhem-extend.json
               python scripts/mayhem_sell_differential.py --candidate repro/mayhem/initializer-current-20261027/candidate.so --output work/mayhem-sell.json
               python scripts/verify_mayhem_sell.py --candidate repro/mayhem/initializer-current-20261027/candidate.so --receipts work/mayhem-sell.json --output work/mayhem-sell-verification.json

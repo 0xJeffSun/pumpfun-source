@@ -17,6 +17,24 @@ Fresh replay passes 65 paired cases / 130 signed records with matching logs.
 Twelve windows, 111,288 original text bytes, the allocator relationship and full
 program identity remain open. Historical runtime receipts are not relabeled.
 
+## Reviewed follow-ups: Fees ID references and Mayhem parser provenance
+
+The [Fees program-ID successor](../research/fees-program-id-references/README.md)
+corrects two comparison pointers through Rust static references and a pinned
+one-attribute macro change. All other allocated bytes are unchanged from the
+readonly-order parent; all 1,608 checked readonly references have their original
+relative offsets. The 578 normalized / 198 raw-local inventory and 17,331-case
+runtime corpus are preserved. Eight mutation tests pass. Seven original bodies
+and whole-ELF identity remain unresolved.
+
+The [Mayhem parser-provenance experiment](../research/mayhem-allocator-parser-provenance/README.md)
+uses the historical Anchor event-parser template with current generated event
+types to reproduce the missing allocator form. Its two enabled raw builds agree;
+their stripped outputs equal the earlier diagnostic, while the gated stripped
+output equals its parent. Seventeen local tests pass. This mixed-source control
+has not been composed with the current 429-match successor and authenticates no
+original Mayhem source or runtime behavior.
+
 ## Mayhem: reproduce the missing allocator form in a source-context control
 
 Reviewed PR #253 adds the [allocator-context experiment](../research/mayhem-allocator-context/README.md).
@@ -2240,3 +2258,25 @@ logs in 6,413 cases. The order includes 499 exact graph bindings, 78 ambiguous e
 function assignments and 8 unequal semantic-handler assignments; those limitations
 remain explicit. Eight original bodies and complete ELF/data/relocation identity
 remain open.
+
+
+## Mayhem BuyV2 typed sizing failure
+
+The [sizing recovery](../research/mayhem-sizing-panic-recovery/README.md) routes
+BuyV2 through the trade-origins/validator parent's shared buy sizing. Only one of
+67 source inputs changes. Three remaining BuyV2 diagnostic differences disappear:
+6,636 fresh trade comparisons agree in complete non-compute logs and functional
+fields. A separate three-case three-way replay checks actual signed inputs,
+account prestate and executed-program identities; these cases overlap the corpus.
+
+A fresh control reproduces the parent exactly; two proposal compilations agree.
+All 429 normalized / 100 raw-local windows, 4,288 positive call observations and
+446 matched Source observations survive. The parent's complete validator reference
+checks and three trade-origin checks also pass against this candidate. The live
+BuyV2 path binds variant 9, its Source record and matching immediate panic/Debug
+callees. No new complete window or whole-ELF identity is claimed. Twelve bodies
+and 111,288 original text bytes remain unmatched.
+
+Review also closes the packet-manifest exception for nested manifests and Python
+caches, rejects symlinks and special files, and adds the verifier to CI. All 18
+negative/control tests pass with the stricter membership check.

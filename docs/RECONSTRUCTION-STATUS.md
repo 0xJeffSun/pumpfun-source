@@ -6,7 +6,7 @@ This review updates the research frontier while preserving the selected-checkpoi
 contains every one of the **4,415 selected/research function-window rows**.
 
 The generated inventory is a dated snapshot. Later maintained selections now
-include Pump Round20 and the AMM native-fee/CPI recovery; their current counts and
+include Pump Round21 and the AMM native-fee/CPI recovery; their current counts and
 evidence are in the [repository overview](../README.md). The current rows below
 are separate from the historical rows, and do not rewrite that snapshot.
 
@@ -51,13 +51,13 @@ analysis. Candidate symbol names are hypotheses about original identity.
 | Fees selected | 585 | 102 | 363 | 120 | 0 |
 | Mayhem historical selected | 441 | 58 | 131 | 7 | 245 |
 | Relay historical source 15 | 492 | 33 | 89 | 370 | 0 |
-| **Pump current Round20** | **1,035** | **120** | **585** | **330** | **0** |
+| **Pump current Round21** | **1,035** | **123** | **585** | **327** | **0** |
 | **PumpSwap current** | **785** | **125** | **474** | **186** | **0** |
 | **Fees latest research** | **585** | **198** | **380** | **7** | **0** |
 | **Mayhem latest research** | **441** | **100** | **329** | **12** | **0** |
 | **Relay canonical selection** | **492** | **492** | **0** | **0** | **0** |
 
-The current rows are bound to [Pump Round20](../repro/pump/main-contract-round20-20261027/README.md), [AMM native-fee/CPI recovery](../repro/pump_amm/native-fee-cpi-recovery-20261027/README.md), [Fees readonly-order recovery](../research/fees-readonly-order-recovery/README.md) and [Mayhem trade origins and validator](../research/mayhem-trade-origins-validator/README.md); they extend the dated generated inventory below. Each row is a partition, not a score of semantic correctness. The historical selected Mayhem source
+The current rows are bound to [Pump Round21](../repro/pump/main-contract-round21-20261027/README.md), [AMM native-fee/CPI recovery](../repro/pump_amm/native-fee-cpi-recovery-20261027/README.md), [Fees program-ID recovery](../research/fees-program-id-references/README.md) and [Mayhem BuyV2 sizing recovery](../research/mayhem-sizing-panic-recovery/README.md); they extend the dated generated inventory below. Each row is a partition, not a score of semantic correctness. The historical selected Mayhem source
 ledger has 257 opaque windows, 12 of which happen to match local raw bytes.
 Selected Fees retains two call-conflicting rows; body existence does not resolve
 those conflicts. Different programs and studies use different matching rules.
@@ -89,7 +89,25 @@ payload**, with 12,168 zero bytes allocated by the loader. Compiler output is
 not padded. ProgramData metadata/history and broader runtime acceptance remain separate
 requirements. The source and exact artifact are now canonically selected.
 
-The latest [Fees readonly-order recovery](../research/fees-readonly-order-recovery/README.md) preserves **578/585 normalized counterparts**, including 198 raw-local matches, and reproduces all 21,079 readonly bytes. It preserves all 586 compiled function bodies and 4,587 direct-call bindings from the Sharing checkpoint. Seven unmatched windows span **67,792 of 799,648 original text bytes (8.5%)**. All 105 global Source records and 379 checked data-pointer targets survive. Six unequal direct-callee observations, the extra event helper and whole-program layout remain unresolved. Two native Rust builds agree. Fresh execution passes 17,331 cases across 18 suites with equal application logs in all 6,413 cases that carry them. These are bounded observations, not whole-ELF identity.
+The latest [Fees program-ID recovery](../research/fees-program-id-references/README.md)
+preserves **578/585 normalized counterparts**, including 198 raw-local matches,
+and all 21,079 readonly bytes. Its two corrected comparison references bring all
+1,608 checked readonly references to their original relative offsets. Every
+other allocated byte is unchanged from the readonly-order parent. Seven
+unmatched windows span **67,792 of 799,648 original text bytes (8.5%)**. Six unequal
+direct-callee observations, the extra event helper and whole-program layout
+remain unresolved. Two native Rust builds agree. Fresh execution passes 17,331
+cases across 18 suites with equal application logs in all 6,413 cases that carry
+them. These are bounded observations, not whole-ELF identity.
+
+The [Mayhem BuyV2 sizing successor](../research/mayhem-sizing-panic-recovery/README.md)
+retains 429 normalized / 100 raw-local matches and the trade-origin/validator
+proofs. It restores the typed sizing error for three quote families; all 6,636
+fresh trade comparisons agree in functional results and non-compute logs.
+The twelve unmatched bodies still cover 111,288 original text bytes. The
+[historical parser experiment](../research/mayhem-allocator-parser-provenance/README.md)
+explains one sufficient allocator context using mixed-era source, but does not
+authenticate original Mayhem source or compose it into this successor.
 
 The separately pinned, dated Fees inventory has **558/585 windows with a normalized counterpart**: 411 unique
 structural pairs and 147 original windows in ambiguous duplicate groups. Its 27
