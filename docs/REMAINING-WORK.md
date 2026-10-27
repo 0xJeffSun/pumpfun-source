@@ -205,7 +205,20 @@ Both duplicate-shaped upsert bodies are independently identified by their outgoi
 callees; the global incoming-call refinement agrees. Fresh 17,331-case and
 1,542-case exact replays pass.
 
-Continue with the exotic-fee setter/caller at original address 88552, generated
-account/dispatch wrappers and the other 68 unmatched windows. Preserve the newly
-recovered field, event and tier-helper behavior. Referenced data and full transitive
+The [exotic growth correction](../research/fees-exotic-growth-precedence/README.md)
+now reproduces error precedence on 24 new boundary cases, with existing broad
+and exact-matrix passes retained. The caller at 88552 remains unmatched despite
+one same-sized trial. Continue with its account-info lifetime, source structure
+and generated account/dispatch wrappers; do not equate equal byte lengths with
+identity. The remaining count stays 68. Referenced data and full transitive
 identity remain unproven even where caller and direct callee bodies match.
+
+## Mayhem history follow-up
+
+[PR #148's captured history](../research/mayhem-globalparams-field-history/README.md)
+provides new value trajectories for the five unnamed fields. Offline manifest,
+account and derived-version-chain checks pass. Independently re-decode the raw
+transaction arguments and event payloads before relying on the reported history
+to close role attribution; the current checker does not perform that step. Field
+names and consumer semantics remain open. This does not resume any stopped
+Mayhem initializer or other execution lane.

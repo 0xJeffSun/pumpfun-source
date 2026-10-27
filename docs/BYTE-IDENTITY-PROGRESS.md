@@ -447,3 +447,19 @@ ambiguous body groups and 68 unmatched windows. The full partition is 116 raw,
 edges; 86 duplicates remain unattributed. All 49 local calls in the four recovered
 callers have matching callee bodies. Fresh 17,331-case and 1,542-case exact
 replays pass. Whole-file identity still fails.
+
+## Exotic-fee growth and rejection precedence
+
+The [new 24-case matrix](../research/fees-exotic-growth-precedence/README.md)
+finds four disagreements in the previous research candidate. The original can
+fund/grow a short account before validating fees and uses realloc zero-init=false.
+The minimal correction removes all four disagreements and passes fresh 17,331
+broad cases plus 1,542 exact focused comparisons. Nine source trials are retained;
+one matches the original caller's size but not its body. No full body is gained
+or lost: 368 unique pairs, 68 unmatched. The current research candidate hash is
+refreshed; selected sources and checkpoint pins are not promoted.
+
+PR #148's Mayhem history package was merged and its offline checker passed. That
+checker verifies hashes, account captures and a derived version chain, not an
+independent raw transaction re-decode. The five field roles remain open and the
+new history is linked as evidence for further checking.
