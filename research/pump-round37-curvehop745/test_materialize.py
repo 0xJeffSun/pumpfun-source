@@ -122,4 +122,28 @@ class SourceTests(unittest.TestCase):
         self.assertIn('PumpError::Overflow', helper[16])
         self.assertIn('PumpError::DivisionByZero', helper[18])
         self.assertIn('PumpError::Truncation', after['programs/pump/src/trade_v3.rs'].decode().splitlines()[590])
+    def test_exact_sourcefronts_stage(self):
+        got = m.materialize(PARENT, self.root / 'source', 'sourcefronts780')
+        self.assertEqual(got, json.loads((m.HERE / 'sourcefronts-pins.json').read_text())['source_sha256'])
+        self.assertEqual(len(got), 60)
+    def sourcefronts_parent(self):
+        out = self.root / 'arithmetic-parent'
+        m.materialize(PARENT, out, 'arithmetic749')
+        return {str(p.relative_to(out)): p.read_bytes() for p in out.rglob('*') if p.is_file()}
+    def test_sourcefronts_already_changed_rejected(self):
+        data = m.sourcefronts_apply(self.sourcefronts_parent())
+        with self.assertRaises(ValueError): m.sourcefronts_apply(data)
+    def test_sourcefronts_missing_source_rejected(self):
+        data = self.sourcefronts_parent(); data.pop('programs/pump/src/lib.rs')
+        with self.assertRaises(ValueError): m.sourcefronts_apply(data)
+    def test_sourcefronts_extra_source_rejected(self):
+        data = self.sourcefronts_parent(); data['extra.rs'] = b''
+        with self.assertRaises(ValueError): m.sourcefronts_apply(data)
+    def test_sourcefronts_changed_source_rejected(self):
+        data = self.sourcefronts_parent(); data['programs/pump/src/lib.rs'] += b'\n'
+        with self.assertRaises(ValueError): m.sourcefronts_apply(data)
+    def test_sourcefronts_preserves_prior_corrections(self):
+        data = self.sourcefronts_parent(); changed = m.sourcefronts_apply(data)
+        for name in ['multi_hop_curve_swap.rs', 'mayhem_virtual_params.rs', 'util/constant_product.rs']:
+            self.assertEqual(data['programs/pump/src/' + name], changed['programs/pump/src/' + name])
 if __name__ == '__main__': unittest.main(argv=['test_materialize.py', *remaining])

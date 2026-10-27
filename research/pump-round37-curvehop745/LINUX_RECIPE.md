@@ -47,3 +47,7 @@ The measured 746 control produced candidate SHA-256 `2fa9a70d3cf712f10658297fa07
 ## Optional arithmetic749 input stage
 
 The same ordinary SBF environment applies after selecting `--stage arithmetic749`; no dependency, compiler, target-library or flag change is involved. The first build produced candidate SHA-256 `dbc423b1f8fe650ee8d051557e7f30373b64ca1c2e94e18b24f98fdea8aac959` and symbols SHA-256 `fae0f0a03667f6d97dab3d6fe1333fefff0458f49776e4014a08c37611bcf9c8`. These are post-build comparison values only, never compiler inputs. The three new bodies have direct ABI/callee/data/error-origin qualification, and a separate arithmetic-stage recompilation reproduced both complete generated ELFs byte-for-byte with all 355 dependencies unchanged. This is its own repeat proof, not a transfer of the 745 or 746 repeats. Runtime remains NOT RUN and original whole-binary identity remains false.
+
+## Optional Source/declaration composition
+
+Select `--stage sourcefronts780` when materializing the 60-input composition described in the README. The same ordinary Linux SBF profile, lockfile, package set, wrapper, SDK and target libraries apply; only the attributed Rust source transformations differ. This stage does not establish the historical recipe. Do not substitute a public SBPF-profile count or runtime claim. Runtime remains NOT RUN; the known decoder and data-consumer qualification limits remain explicit in the README.
