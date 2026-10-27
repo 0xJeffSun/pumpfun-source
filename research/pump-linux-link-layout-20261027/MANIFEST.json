@@ -1,5 +1,5 @@
 {
-  "README.md": "54d043014cf4aa3e13d11ecf0520215d923eeb908ed9f771ef2c1b1ecc9f6230",
+  "README.md": "6dc6cbabe34f8a4fe3e6d30eafeece7b7cd883034a2f7d940677f1f83f8b029a",
   "builds/baseline-default/build-attempt.json.gz": "0025a328ab0c17b2558b129de77dc3bcdfb1b21db6091121dba03f57dc5da35d",
   "builds/baseline-default/build-comparison.json": "eb081156709cfb90d5566e3cb9e7473afcde4e3d34e281758fe40b748934c549",
   "builds/baseline-default/build.log.gz": "50922a67b77da0a72df3f470482252eededf0e5aa05fbca2d83aea93fe7145a4",
@@ -28,6 +28,7 @@
   "builds/candidate-ordered/build-plan.json.gz": "540e6e3860658396a7b8dd77e9771434f185b38e297be33594c9fb7067036c25",
   "builds/candidate-ordered/build.log.gz": "e266c3025355b63ce5fe9c3deb490d45bdcaabe1d9020ef2815f8a5b8dfd0b1b",
   "builds/candidate-ordered/candidate.so.gz": "9c28027f596ce8d5250b150062bbdf3fa1b6afe10d112199ff9c09377c5b3ff3",
+  "builds/candidate-ordered/link.map.gz": "4e10e3ea40f176eec4d796da09ea5ea7dc9f8dcc4303f043f4877d14565bd468",
   "builds/candidate-ordered/linker-invocation.json.gz": "b24c20082432835f7937c34bde2d515ab86c3fae6155b4ff7ed364e878a39b77",
   "builds/candidate-ordered/ordered.ld": "cdbcb06228f94d41a003fafa66fe1819a3da48472a2da829456b6eb4116dcafc",
   "builds/candidate-ordered/primary.tar.gz": "3afb86d68081e6dc75a88970da279a5ae5f09301bda8bfa040a394858844d426",
@@ -176,9 +177,10 @@
   "runtime/exact-quote.json.gz": "0ef5bb4a593531a8bc937e827fcf73ec54563c5db581eddb12b82915ca0d93b3",
   "runtime/exact-quote.loader.json": "fe010e77a7264350afa8ba7800f59102682a9548ff38c1fd5bb938394803319e",
   "runtime/exact-quote.log": "e6d984e21944cc5b25eab33d0138e2236dc9c444ebb56e97d57fe33d1104c422",
+  "selector-coverage.json": "7742e5ed8efbb341f4a47bd6f9c8a7d8ade1af399a8a0964c3c82dc5d6f9ab04",
   "support/analyze.py": "dd7fb38d795d4dd72a25aab0d65c2223d9f6f75d8b3ecb0de1d87d6e102910ac",
   "support/diagnostic_audit.py": "0343c70e4f9c7860ad392f0a8bd10d90ac94fe17bb2ba5bfd49a45683edbe343",
   "support/elf_helpers.py": "fbf808210b28698a65ca385220c48396fe9ab650284dc446a6b9d9194a250777",
   "support/window_map.py": "eeec82f751ea38827c5149f28590f19a3ff516c7eee57b6aa48949cbaac4a7e5",
-  "verify.py": "dcb42bf59bbf2ebb951b900bf75b7e7e8a1b0a266452fb127e09d8fb2cb876e4"
+  "verify.py": "1177e7e9ae5d87dd120176c0ef8d0a325714cf63ea9ca965ad166d053a0881eb"
 }

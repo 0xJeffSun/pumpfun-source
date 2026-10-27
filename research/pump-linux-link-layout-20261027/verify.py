@@ -72,3 +72,24 @@ assert all(x['program_bytes']==36 and x['programdata_bytes']==10485760 and x['el
 spec=importlib.util.spec_from_file_location('trade_add_diagnostics',HERE/'support/diagnostic_audit.py');auditor=importlib.util.module_from_spec(spec);spec.loader.exec_module(auditor)
 diagnostics=auditor.audit({'exact_quote_v3':runtime});assert not diagnostics['mismatches']
 print('Verified exact ordered 778 candidate: 352 focused exact-quote cases passed; diagnostic audit found zero mismatches.')
+
+# Verify actual explicit-selector coverage separately from fallback layout effects.
+import re,fnmatch
+coverage=json.loads((HERE/'selector-coverage.json').read_text())
+script=(HERE/'builds/candidate-ordered/ordered.ld').read_bytes()
+link_map=gzip.decompress((HERE/'builds/candidate-ordered/link.map.gz').read_bytes())
+assert sha(script)==coverage['script_sha256'] and sha(link_map)==coverage['link_map_sha256']
+selectors=re.findall(r'^\s+(\S+)\("([^"]+)"\)',script.decode(),re.M)
+actual=[]
+for line in link_map.decode().splitlines():
+    m=re.match(r'\s*([0-9a-f]+)\s+[0-9a-f]+\s+([0-9a-f]+)\s+\d+\s+(.+):\((\.text[^)]*)\)$',line)
+    if not m:continue
+    addr,size,owner,section=m.groups()
+    if '(' in owner:owner=owner[:-1].replace('(',':')
+    actual.append({'address':int(addr,16),'size':int(size,16),'owner':owner,'section':section,'selectors':[i for i,(o,s)in enumerate(selectors)if fnmatch.fnmatchcase(owner,o)and section==s]})
+assert actual==coverage['rows'] and len(selectors)==coverage['explicit_selector_count']==960
+assert len(actual)==coverage['live_input_sections']==964
+assert sum(bool(x['selectors'])for x in actual)==coverage['explicitly_selected_sections']==141
+assert sum(x['size']for x in actual if x['selectors'])==coverage['explicitly_selected_bytes']==54768
+assert sum(x['size']for x in actual)==coverage['live_bytes']==1706504
+print('Verified explicit selector coverage: 141 / 964 sections; remaining sections use fallback ordering.')
