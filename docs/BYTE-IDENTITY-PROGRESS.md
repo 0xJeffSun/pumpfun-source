@@ -4,6 +4,23 @@ The [full audit](RECONSTRUCTION-AUDIT.md) and its generated tables retain their
 explicit `1463bd22` snapshot. This log records later research without silently
 changing that baseline or promoting new selected artifacts.
 
+## Fees: source frontiers composed, legacy payout adapter recovered
+
+The [payout-context recovery](../research/fees-payout-context-recovery/README.md)
+combines the latest 43-input Social/Crank/exotic source line with the independent
+Fees558 preprocessing and distribution recoveries. It retains both sets of
+normalized/raw matches, decoded source locations and positive direct-callee
+observations, then adds the complete 1,688-byte adapter at 204080. The result is
+**563/585 normalized original functions, 143 raw local matches, 167 equal
+Location observations and 22 unmatched functions**. Its preparation callee at
+199072 remains unequal; the caller match does not close that dependency.
+
+Two native Rust builds reproduce identical outputs. Fresh regression passes
+17,331 cases across 18 suites plus 24 preprocessing boundary cases. The packet
+retains the two independently reproduced baselines, full source maps and scoped
+checks. Whole-ELF/capture equality remains false; selected checkpoints are not
+changed, and these counts are not completion percentages.
+
 ## Fees: social-PDA creation body recovered
 
 The [creation-body recovery](../research/fees-social-creation-body/README.md)

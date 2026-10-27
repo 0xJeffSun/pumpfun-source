@@ -139,3 +139,8 @@ package-local whitespace rules without changing compiler inputs. The claimed
 execution observations, not newly verified runtime evidence. This source-only
 proposal does not alter the current 558-window artifact-backed Fees inventory.
 Mayhem remains the active reconstruction priority.
+
+## PR216–217 review
+
+- PR216: full verifier and three resealed negative controls pass. The 563-window Fees composition preserves both declared parents and adds a complete 1,688-byte caller; its preparation callee remains unequal. Saved 17,331 plus 24-case receipts are checked, with no new compiler/VM execution claimed in this review. It remains separate from the currently pinned research inventory.
+- PR217: the controlled Mayhem sysroot verifier and all 21 tests pass. The saved experiment holds the Windows compiler fixed while replacing the complete target library set. It adds provenance evidence, not new body ranges. Full publisher archives were not rechecked in this review, and no fresh compilation is claimed.
