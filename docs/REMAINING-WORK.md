@@ -52,7 +52,11 @@ The [32-subset argument study](../repro/donation-relay/partial-argument-controls
 also excludes partial argument binding alone under the tested recipe (128
 unmatched target comparisons). Further wrapper work needs evidence beyond
 repeating those subsets, such as tracing the live values passed to the shared
-worker and returned event.
+worker and returned event. The subsequent
+[conditional caller diagnostic](../repro/donation-relay/wrapper-value-flow/README.md)
+finds matching selected boundary/return fields for regular and payer wrappers
+under explicit callee and alias assumptions. Preserve that limited scope: it
+does not validate actual worker effects, all input aliases or byte identity.
 
 ## Audit baseline
 

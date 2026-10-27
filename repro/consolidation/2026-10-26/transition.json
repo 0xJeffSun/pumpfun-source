@@ -7,8 +7,8 @@
     {
       "path": "README.md",
       "before_sha256": "cae913d4d3f2066403162f653a0cf35b39620fb08877b1b308c08ccce4a53678",
-      "after_sha256": "2515833a603a09e1611343332b1a71e037dacb8ffd7a9dd5ec1e01ca0de7362e",
-      "reason": "Record the complete 32-subset Relay donation argument-binding controls; preserve the 482/492 frontier, selected source, and whole-file identity limits."
+      "after_sha256": "dcfa7f3b6a390ec745967f2236c59f746065727a7231c2d759218bd5e188d788",
+      "reason": "Document the conditional Relay wrapper value-flow diagnostic and its limits; preserve 482/492, selected source, and all whole-file identity qualifications."
     },
     {
       "path": ".github/workflows/verify.yml",

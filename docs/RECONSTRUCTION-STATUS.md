@@ -174,6 +174,17 @@ rules out partial argument binding alone under the tested compiler recipe; it
 does not rule out different source layouts, ABI choices or compiler inputs.
 The ten-window residual remains unchanged.
 
+### Conditional wrapper value-flow diagnostic
+
+The [caller diagnostic](../repro/donation-relay/wrapper-value-flow/README.md)
+compares regular and payer wrappers on modeled success/error paths. Selected
+context and argument fields match at the shared-worker boundary, and selected
+return fields match given identical abstract worker results. This depends on
+explicit clone/copy summaries, nonwrapping increments and the input-address
+model; arbitrary aliases and real callee effects are not proved. The four
+conditional traces add no body matches or accepted handlers. Both wrappers and
+the shared worker remain in the residual list.
+
 ## Fees: new complete bodies, substantial residual business logic
 
 The latest 851,488-byte candidate is SHA-256

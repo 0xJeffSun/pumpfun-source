@@ -298,3 +298,14 @@ compiler recipe remain fixed. Partial binding alone does not recover these
 wrappers under this recipe. Every variant retains the 482/492 frontier and 130
 raw local body matches, with no gained or lost matched window. No candidate is
 promoted and no fresh runtime acceptance is claimed for these controls.
+
+## Conditional regular/payer wrapper value flow
+
+The [restricted caller diagnostic](../repro/donation-relay/wrapper-value-flow/README.md)
+compares four modeled success/error traces. Both wrappers agree on 204 selected
+context bytes, 68 argument bytes, and 153 success/24 error return bytes under
+explicit callee summaries, nonwrapping guards and input-address assumptions.
+Eight negative-control tests detect changed bumps, event discriminators, copy
+lengths and unsupported model operations. These are conditional caller findings,
+not fresh runtime acceptance, semantic equivalence, or new byte matches. Relay
+remains at 482/492, with 130 exact local bodies and ten unmatched windows.
