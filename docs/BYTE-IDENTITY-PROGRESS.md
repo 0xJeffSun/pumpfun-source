@@ -1708,3 +1708,10 @@ No new whole-body match is claimed. Explicitly admitting O0090 and O0092 expands
 the ledger to 198 examined / 188 matched / ten unmatched / 243 opaque, retaining
 all 58 all-inventory raw-local counterparts. The ten examined extents total
 101,480 bytes; opaque code and whole-ELF obligations are additional work.
+
+
+## Shallow-checkout Relay source verification repair
+
+The linked-ELF verifier now reconstructs the same three exact 60-input maps from checked-in public source files authenticated by the unchanged historical source manifest. It no longer requires old Git commit objects merely to read those files. A tiny local depth-one clone reproduces the missing-history failure; ten source-only regression tests pass, including changed/missing input, immutable manifest, unsafe path and symlink rejection. No Git/network fallback is permitted.
+
+The historical wrapper package, compiler source hashes, original and reconstructed ELF bytes, linker recipe, archived builds and runtime evidence remain unchanged. Only the linked verifier and its explicit canonical/status dependency pins change. This fixes CI source retrieval, not a new binary or runtime claim; the complete archived-ELF/portable CI route is checked separately. See `repro/donation-relay/linked-elf-reproduction/SOURCE-CHECKOUT.md`.

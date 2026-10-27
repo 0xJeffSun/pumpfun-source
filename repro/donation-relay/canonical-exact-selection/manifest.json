@@ -246,7 +246,7 @@
     },
     "transition.json": {
       "bytes": 29054,
-      "sha256": "9cb8f436a234c221af359f39eb236d5b3a90a3ef5fc94b752a5c3498fec95ba7"
+      "sha256": "6ab2acd5bf4194dedf4e7ec1a6a5e5bb2a6007635042b199392599b02463daa9"
     },
     "verify_current.py": {
       "bytes": 862,
@@ -274,7 +274,7 @@
     },
     "verify_selection.py": {
       "bytes": 3465,
-      "sha256": "aecc01b8333688b311ac4176dd0c94d748cd975c060b31d5d671a152f2c32296"
+      "sha256": "fb9bedb246f87cd1b21cb4338e06ac1c8596acc99693dd1363e9352467543885"
     }
   }
 }
