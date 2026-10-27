@@ -10,6 +10,10 @@ that run the captured original and the rebuilt candidate side by side in a local
 
 For subsequent gains and the latest research frontier, see the
 [byte-identity progress log](docs/BYTE-IDENTITY-PROGRESS.md).
+The [27 October queue review](docs/PR-QUEUE-REVIEW-2026-10-27.md) covers PRs
+#170–#183, including a separately verified 399-pair Fees context candidate and
+source-only proposals. Those independent branches are not silently combined
+into the inventory below.
 
 Latest artifact-backed Relay research: **483/492 normalized windows, 9 unmatched**.
 The [Jupiter optional-seed builder](repro/donation-relay/jupiter-option-source-recovery/README.md)
@@ -26,7 +30,7 @@ string table from ordinary Rust source while retaining the 482-window baseline
 and 348 source-location matches. The worker artifact uses that packet's
 pre-metadata source state, so the two data/body gains are not yet composed.
 
-Latest Fees research: **395 unique structural pairs, 43 unmatched windows**.
+The pinned Fees inventory has **395 unique structural pairs, 43 unmatched windows**.
 The [configuration-event recovery](research/fees-config-event-recovery/README.md)
 adds four complete caller-body matches; the two upsert bodies share a structural
 shape and are distinguished by their callees. The [current call ledger](repro/reconstruction-status-2026-10-26/fees-call-attribution.json)
