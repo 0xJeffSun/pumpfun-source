@@ -76,3 +76,6 @@ let c=&a.bonding_curve;
 
 #[path="fee_cpi.rs"]
 pub(crate) mod fee_cpi;
+
+#[path="util/fee.rs"]
+pub mod fee_math;

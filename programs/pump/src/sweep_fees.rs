@@ -26,7 +26,7 @@ pub fn execute(ctx:Context<SweepFees>,creator:bool)->Result<()>{
  crate::trade_types::prepare_bonding_curve(&a.bonding_curve,&a.system_program,&a.payer)?;
  let native=a.bonding_curve.quote_mint==Pubkey::default();let cf=a.bonding_curve.creator_fee;let pf=a.bonding_curve.protocol_fees;let info=a.bonding_curve.to_account_info();
  if creator{let expected=Pubkey::find_program_address(&[b"creator-vault",a.bonding_curve.creator.as_ref()],&crate::ID).0;require_keys_eq!(a.recipient.key(),expected,anchor_lang::error::ErrorCode::ConstraintSeeds);}
- else{let k=a.recipient.key();let valid=if a.bonding_curve.is_mayhem_mode{a.global.reserved_fee_recipient==k||a.global.reserved_fee_recipients.contains(&k)}else{a.global.fee_recipient==k||classic_search(&a.global.fee_recipients,&k)};require!(valid,PumpError::NotAuthorized);}
+ else{crate::legacy_sell::fee_recipient::validate_fee_recipient(&a.recipient,&a.global,&a.bonding_curve)?;}
  let amount=if creator{cf}else{pf};if amount==0{return Ok(());}
  if native{a.bonding_curve.sub_lamports(amount)?;a.recipient.add_lamports(amount)?;}
  else{
@@ -44,4 +44,3 @@ pub fn execute(ctx:Context<SweepFees>,creator:bool)->Result<()>{
  let event=SweepBondingCurveFeeEvent{timestamp:Clock::get()?.unix_timestamp,mint:a.base_mint.key(),bonding_curve:a.bonding_curve.key(),quote_mint:a.bonding_curve.quote_mint,recipient:a.recipient.key(),amount,bucket:if creator{1}else{0}};emit!(event.clone());emit_cpi!(event);Ok(())
 }
 
-fn classic_search(values:&[Pubkey],key:&Pubkey)->bool{let(mut lo,mut hi)=(0,values.len());while lo<hi{let mid=lo+(hi-lo)/2;match values[mid].cmp(key){std::cmp::Ordering::Equal=>return true,std::cmp::Ordering::Less=>lo=mid+1,std::cmp::Ordering::Greater=>hi=mid}}false}

@@ -85,7 +85,7 @@ pub fn sell(ctx:Context<SellV3>,amount:u64,min_sol_output:u64)->Result<()> {
     crate::trade_types::prepare_bonding_curve(&a.bonding_curve, &a.system_program, &a.user)?;
     validate_trade(a.bonding_curve.complete as u8,a.bonding_curve.is_cashback_coin as u8,false)?;
     require_gt!(amount,0,PumpError::SellZeroAmount);
-    let quote_decimals=check_quote(a)?;
+    let (quote_decimals,quote_fee)=check_quote(a)?;
     let is_sol=quote_decimals.is_none();
     require_gte!(a.associated_base_user.amount,amount,PumpError::NotEnoughTokensToSell);
     if is_sol{require_keys_neq!(a.buyback_fee_recipient.key(),Pubkey::default(),PumpError::BuybackFeeRecipientMissing);require!(a.global.buyback_fee_recipients.contains(&a.buyback_fee_recipient.key()),PumpError::BuybackFeeRecipientNotAuthorized);}
@@ -108,7 +108,7 @@ pub fn sell(ctx:Context<SellV3>,amount:u64,min_sol_output:u64)->Result<()> {
     let creator_fee=fee(quote,creator_bps)?;
     let buyback_bps=if curve.is_mayhem_mode {0}else{a.global.buyback_basis_points};
     let user_output=sub(sub(quote,protocol_fee)?,creator_fee)?;
-    let quote_transfer_fee=if is_sol{0}else{quote_transfer_fee(&a.quote_mint.to_account_info(),user_output,false)?};
+    let quote_transfer_fee=if is_sol{0}else{quote_fee_for_amount(&quote_fee,user_output,false)?};
     require_gte!(sub(user_output,quote_transfer_fee)?,min_sol_output,PumpError::TooLittleSolReceived);
     let next_base=add(curve.virtual_token_reserves,amount)?;
     let next_quote=sub(curve.virtual_quote_reserves,quote)?;
@@ -128,7 +128,7 @@ pub fn sell(ctx:Context<SellV3>,amount:u64,min_sol_output:u64)->Result<()> {
     }
     let (buyback_fee,retained)=v3_buyback_split(protocol_fee,buyback_bps);
     let next_protocol=add(curve.protocol_fees,retained)?;
-    let buyback_received=if is_sol{buyback_fee}else{sub(buyback_fee,crate::trade::quote_transfer_fee(&a.quote_mint.to_account_info(),buyback_fee,false)?)?};
+    let buyback_received=if is_sol{buyback_fee}else{sub(buyback_fee,quote_fee_for_amount(&quote_fee,buyback_fee,false)?)?};
     if let Some(decimals)=quote_decimals {
       if buyback_fee!=0 {
         token_interface::transfer_checked(CpiContext::new_with_signer(a.quote_token_program.to_account_info(),TransferChecked{from:a.associated_quote_bonding_curve.to_account_info(),mint:a.quote_mint.to_account_info(),to:a.buyback_fee_recipient.to_account_info(),authority:a.bonding_curve.to_account_info()},&[seeds]),buyback_fee,decimals)?;
@@ -163,7 +163,7 @@ pub fn buy(ctx:Context<SellV3>,amount:u64,max_sol_cost:u64,partial_fill:bool)->R
     let requested_amount=amount;
     let amount=amount.min(a.bonding_curve.real_token_reserves);
     require_gt!(amount,0,PumpError::BuyZeroAmount);
-    let quote_decimals=check_quote(a)?;
+    let (quote_decimals,quote_fee)=check_quote(a)?;
     let is_sol=quote_decimals.is_none();
     if is_sol{require_keys_neq!(a.buyback_fee_recipient.key(),Pubkey::default(),PumpError::BuybackFeeRecipientMissing);require!(a.global.buyback_fee_recipients.contains(&a.buyback_fee_recipient.key()),PumpError::BuybackFeeRecipientNotAuthorized);}
     let curve=&a.bonding_curve;
@@ -209,8 +209,8 @@ pub fn buy(ctx:Context<SellV3>,amount:u64,max_sol_cost:u64,partial_fill:bool)->R
     let first_cost=add(add(quote,protocol_fee)?,creator_fee)?;
     let user_output=add(first_cost,add(add(post_quote,post_protocol)?,post_creator)?)?;
     let net_pool_quote=sub(user_output,total_buyback)?;
-    let buyback_received=if is_sol{buyback_fee}else{sub(buyback_fee,quote_transfer_fee(&a.quote_mint.to_account_info(),buyback_fee,false)?)?};
-    let quote_transfer_fee=if is_sol{0}else{quote_transfer_fee(&a.quote_mint.to_account_info(),net_pool_quote,true)?};
+    let buyback_received=if is_sol{buyback_fee}else{sub(buyback_fee,quote_fee_for_amount(&quote_fee,buyback_fee,false)?)?};
+    let quote_transfer_fee=if is_sol{0}else{quote_fee_for_amount(&quote_fee,net_pool_quote,true)?};
     let pool_quote=add(net_pool_quote,quote_transfer_fee)?;
     require_gte!(max_sol_cost,add(pool_quote,total_buyback)?,PumpError::TooMuchSolRequired);
     let next_base=sub(curve.virtual_token_reserves,amount)?;
@@ -265,10 +265,10 @@ pub fn buy_exact_quote(ctx:Context<SellV3>,spendable_quote_in:u64,min_tokens_out
     validate_trade(a.bonding_curve.complete as u8,a.bonding_curve.is_cashback_coin as u8,false)?;
     require_gt!(min_tokens_out,0,PumpError::BuyZeroAmount);
     require_gt!(spendable_quote_in,0,PumpError::BuyNotEnoughSolToCoverFees);
-    let quote_decimals=check_quote(a)?;
+    let (quote_decimals,quote_fee)=check_quote(a)?;
     let is_sol=quote_decimals.is_none();
     if is_sol{require_keys_neq!(a.buyback_fee_recipient.key(),Pubkey::default(),PumpError::BuybackFeeRecipientMissing);require!(a.global.buyback_fee_recipients.contains(&a.buyback_fee_recipient.key()),PumpError::BuybackFeeRecipientNotAuthorized);}
-    let available=if is_sol{spendable_quote_in}else{sub(spendable_quote_in,quote_transfer_fee(&a.quote_mint.to_account_info(),spendable_quote_in,false)?)?};
+    let available=if is_sol{spendable_quote_in}else{sub(spendable_quote_in,quote_fee_for_amount(&quote_fee,spendable_quote_in,false)?)?};
     let curve=&a.bonding_curve;
     let is_fee_exempt=a.user.key()==a.global.whitelist_pda;
     let (fees,creator_bps)=if is_fee_exempt {
@@ -335,8 +335,8 @@ pub fn buy_exact_quote(ctx:Context<SellV3>,spendable_quote_in:u64,min_tokens_out
     let net_pool_quote=sub(user_output,total_buyback)?;
     // Main-event buyback_fee reports the net of the first-fill buyback only; any
     // post-complete buyback is carried separately by PostCompleteBuyEvent.
-    let buyback_received=if is_sol{buyback_fee}else{sub(buyback_fee,quote_transfer_fee(&a.quote_mint.to_account_info(),buyback_fee,false)?)?};
-    let quote_transfer_fee=if is_sol{0}else{quote_transfer_fee(&a.quote_mint.to_account_info(),net_pool_quote,true)?};
+    let buyback_received=if is_sol{buyback_fee}else{sub(buyback_fee,quote_fee_for_amount(&quote_fee,buyback_fee,false)?)?};
+    let quote_transfer_fee=if is_sol{0}else{quote_fee_for_amount(&quote_fee,net_pool_quote,true)?};
     let pool_quote=add(net_pool_quote,quote_transfer_fee)?;
     let mint_key=a.base_mint.key();let bump=[ctx.bumps.bonding_curve];
     let seeds:&[&[u8]]=&[b"bonding-curve",mint_key.as_ref(),&bump];
@@ -394,8 +394,8 @@ fn read_config(data:&[u8])->Result<FeeConfig>{
 
 const QUOTE_2:Pubkey=Pubkey::new_from_array([131,13,252,159,222,95,230,184,170,124,4,164,118,233,30,138,198,187,38,74,173,144,250,25,201,223,73,216,92,62,91,94]);
 const USDC:Pubkey=anchor_lang::solana_program::pubkey!("EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v");
-fn check_quote(a:&SellV3)->Result<Option<u8>>{
- if a.bonding_curve.quote_mint==Pubkey::default(){return Ok(None)}
+fn check_quote(a:&SellV3)->Result<(Option<u8>,Option<(u64,u64,u64)>)>{
+ if a.bonding_curve.quote_mint==Pubkey::default(){return Ok((None,None))}
  require!(*a.quote_mint.to_account_info().owner==a.quote_token_program.key(),anchor_lang::error::ErrorCode::AccountOwnedByWrongProgram);
  let decimals=a.quote_mint.decimals;
  for (role,info) in [(0,a.associated_quote_bonding_curve.to_account_info()),(1,a.associated_quote_user.to_account_info()),(2,a.buyback_fee_recipient.to_account_info())]{
@@ -410,7 +410,8 @@ fn check_quote(a:&SellV3)->Result<Option<u8>>{
    require_keys_eq!(info.key(),expected,anchor_lang::error::ErrorCode::ConstraintSeeds);
   }
  }
- Ok(Some(decimals))
+ let fee=quote_fee_snapshot(&a.quote_mint.to_account_info())?;
+ Ok((Some(decimals),fee))
 }
 
 fn net_quote(spend:u64,pb:u64,cb:u64)->Result<u64>{let total=pb.checked_add(cb).ok_or(PumpError::Overflow)?;let mut quote=narrow(spend as u128*10000/(10000u128+total as u128))?;if quote>0 && add(add(quote,fee(quote,pb)?)?,fee(quote,cb)?)?>spend{quote-=1;}Ok(quote)}
@@ -418,9 +419,9 @@ fn net_quote(spend:u64,pb:u64,cb:u64)->Result<u64>{let total=pb.checked_add(cb).
 // epoch fee selection. `inverse` grosses up an amount the pool must RECEIVE net;
 // otherwise it returns the fee withheld from a sent amount. SOL / SPL-Token quotes
 // carry no transfer fee.
-pub(crate) fn quote_transfer_fee(mint:&AccountInfo,amount:u64,inverse:bool)->Result<u64>{
+fn quote_fee_snapshot(mint:&AccountInfo)->Result<Option<(u64,u64,u64)>>{
     use anchor_spl::token_2022::spl_token_2022::{extension::{BaseStateWithExtensions,ExtensionType,StateWithExtensions,transfer_fee::TransferFeeConfig},state::Mint as SplMint};
-    if mint.owner==&anchor_spl::token::ID{return Ok(0);}
+    if mint.owner==&anchor_spl::token::ID{return Ok(None);}
     let data=mint.try_borrow_data()?;
     let parsed=StateWithExtensions::<SplMint>::unpack(&data)?;
     // TLV tags are forward compatible. Validate every declared payload while
@@ -439,20 +440,41 @@ pub(crate) fn quote_transfer_fee(mint:&AccountInfo,amount:u64,inverse:bool)->Res
         let value=tlv.get(begin..end).ok_or_else(||error!(PumpError::UnsupportedQuoteMint))?;
         if tag==ExtensionType::TransferFeeConfig as u16 {
             if selected.is_some() {return err!(PumpError::UnsupportedQuoteMint);}
-            selected=Some(anchor_lang::__private::bytemuck::try_from_bytes::<TransferFeeConfig>(value)
+            let prefix=value.get(..std::mem::size_of::<TransferFeeConfig>())
+                .ok_or_else(||error!(PumpError::UnsupportedQuoteMint))?;
+            selected=Some(anchor_lang::__private::bytemuck::try_from_bytes::<TransferFeeConfig>(prefix)
                 .map_err(|_|error!(PumpError::UnsupportedQuoteMint))?);
         }
         cursor=end;
     }
-    match selected {
+    Ok(match selected {
         Some(fees)=>{
             let epoch=Clock::get()?.epoch;
-            let fee=if inverse{fees.calculate_inverse_epoch_fee(epoch,amount)}else{fees.calculate_epoch_fee(epoch,amount)};
+            let selected=fees.get_epoch_fee(epoch);
+            Some((u64::from(selected.epoch),u64::from(selected.maximum_fee),u16::from(selected.transfer_fee_basis_points) as u64))
+        }
+        None=>None,
+    })
+}
+
+pub(crate) fn quote_transfer_fee(mint:&AccountInfo,amount:u64,inverse:bool)->Result<u64>{
+    let snapshot=quote_fee_snapshot(mint)?;
+    quote_fee_for_amount(&snapshot,amount,inverse)
+}
+
+fn quote_fee_for_amount(snapshot:&Option<(u64,u64,u64)>,amount:u64,inverse:bool)->Result<u64>{
+    match *snapshot {
+        Some((epoch,maximum_fee,basis_points))=>{
+            let selected=anchor_spl::token_2022::spl_token_2022::extension::transfer_fee::TransferFee{
+                epoch:epoch.into(),maximum_fee:maximum_fee.into(),transfer_fee_basis_points:(basis_points as u16).into(),
+            };
+            let fee=if inverse{selected.calculate_inverse_fee(amount)}else{selected.calculate_fee(amount)};
             fee.ok_or_else(||error!(PumpError::Overflow))
         }
         None=>Ok(0),
     }
 }
+
 #[event]
 #[derive(Clone)]pub struct PostCompleteBuyEvent{pub user:Pubkey,pub mint:Pubkey,pub bonding_curve:Pubkey,pub quote_mint:Pubkey,pub timestamp:i64,pub base_out:u64,pub quote_in:u64,pub fee_basis_points:u64,pub fee:u64,pub creator_fee_basis_points:u64,pub creator_fee:u64,pub buyback_fee:u64,pub pool_base_reserves_before:u64,pub pool_quote_reserves_before:u64,pub pool_base_reserves_after:u64,pub pool_quote_reserves_after:u64}
 
