@@ -14,8 +14,8 @@ import tempfile
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 INPUTS = {}
-REVISION = 'b55a3ade09e20c7f8755d777df3d69a5312dd3b8'
-FEES = 'research/fees-sharing-owned-legacy'
+REVISION = '8e9f09d5ef703590f6be89c7710c2fff0c71337f'
+FEES = 'research/fees-total-predicate-integration'
 RELAY = 'repro/donation-relay/burn-mint-ownership-recovery'
 
 
@@ -99,7 +99,7 @@ def generate():
     comparison = wm.compare(ow, cw)
     saved = load(FEES + '/analysis.json.gz')['variants']['origins']
     assert all(comparison[k] == saved[k] for k in comparison)
-    assert len(comparison['unique_pairs']) == 356 and len(comparison['unmatched_original']) == 82
+    assert len(comparison['unique_pairs']) == 357 and len(comparison['unmatched_original']) == 81
     raw_index, normalized_index = collections.defaultdict(list), collections.defaultdict(list)
     for c in cw:
         raw_index[c['raw_sha256']].append(c)
@@ -111,7 +111,7 @@ def generate():
     fees_meta = dict(candidate_sha256=hashlib.sha256(candidate).hexdigest(), candidate_bytes=len(candidate),
                      whole_capture_equal=candidate == original,
                      raw_file_equals_original_elf_extent=candidate == original[:wm.m.elf_layout(original)['elf_extent']],
-                     unique_structural_pairs=356, ambiguous_original_windows=sum(len(g['original']) for g in comparison['ambiguous']),
+                     unique_structural_pairs=357, ambiguous_original_windows=sum(len(g['original']) for g in comparison['ambiguous']),
                      candidate_windows=len(cw))
 
     attribution_path = 'research/fees-refreshed-call-attribution'
@@ -119,12 +119,12 @@ def generate():
     for filename in ['window_map.py', 'elf_helpers.py', 'input-provenance.json']:
         read(attribution_path + '/' + filename)
     experiment = load(FEES + '/experiment.json')
-    provenance = dict(files={key: dict(value, path='../fees-sharing-owned-legacy/' + value['path'])
+    provenance = dict(files={key: dict(value, path='../' + FEES.split('/')[-1] + '/' + value['path'])
                             for key, value in experiment['variants']['origins']['files'].items()})
     attribution = attribution_module.analyze(provenance)
     assert attribution['candidate_sha256'] == fees_meta['candidate_sha256']
     attributed = {pair['original']['address']: pair['candidate']['address'] for pair in attribution['newly_attributed_pairs']}
-    assert len(attributed) == 61 and attribution['graph_attributed_pairs'] == 417
+    assert len(attributed) == 61 and attribution['graph_attributed_pairs'] == 418
     for record in rows:
         record['call_attributed_candidate_starts'] = []
         if record['program'] == 'pump_fees_research' and record['original_start'] in attributed:
@@ -132,7 +132,7 @@ def generate():
             assert address in record['normalized_candidate_starts']
             record['call_attributed_candidate_starts'] = [address]
             record['source_status'] = 'call_attributed_duplicate_pair'
-    fees_meta.update(additional_call_attributed_pairs=61, total_attributed_pairs=417,
+    fees_meta.update(additional_call_attributed_pairs=61, total_attributed_pairs=418,
                      remaining_unattributed_duplicate_windows=86)
 
     parser = module('status_relay_windows', 'repro/donation-relay/swap-receipt-coordinate-recovery/analyze.py')
@@ -184,7 +184,7 @@ def generate():
     for program, c in counts.items():
         d = c['dispositions']
         overview.append(f'| {program} | {c["windows"]} | {d.get("raw_body_equal", 0)} | {d.get("normalized_body_only", 0)} | {d.get("no_complete_body_match", 0)} | {d.get("opaque_unassessed", 0)} |')
-    overview += ['', 'Fees has 356 body-unique pairs plus 61 additional call-attributed duplicate pairs (417 correspondences); 86 duplicate windows remain unattributed. These are not 61 additional body matches. Rows count inferred original windows, not unique source functions or effort. Raw matches may be duplicate/ambiguous and do not establish referenced data or transitive callees. The Fees matcher and Relay matcher use separately documented masks; do not add their counts into a source-completion score.', '',
+    overview += ['', 'Fees has 357 body-unique pairs plus 61 additional call-attributed duplicate pairs (418 correspondences); 86 duplicate windows remain unattributed. These are not 61 additional body matches. Rows count inferred original windows, not unique source functions or effort. Raw matches may be duplicate/ambiguous and do not establish referenced data or transitive callees. The Fees matcher and Relay matcher use separately documented masks; do not add their counts into a source-completion score.', '',
                  '- [Every window, symbol candidate, match address and evidence path](functions.tsv)',
                  '- [Every exact local body match](raw-body-matches.md)',
                  '- [Every unmatched or opaque window](remaining-windows.md)',
