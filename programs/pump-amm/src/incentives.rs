@@ -45,9 +45,9 @@ pub fn sync(ctx:Context<SyncUserVolumeAccumulator>)->Result<()> {
 pub struct AdminUpdateTokenIncentives<'info>{
     #[account(mut)] pub admin:Signer<'info>,
     #[account(seeds=[b"global_config"],bump,has_one=admin @ PumpAmmError::InvalidAdmin)]
-    pub global_config:Box<Account<'info,GlobalConfig>>,
+    pub global_config:Account<'info,GlobalConfig>,
     #[account(mut,seeds=[b"global_volume_accumulator"],bump)]
-    pub global_volume_accumulator:Box<Account<'info,GlobalVolumeAccumulator>>,
+    pub global_volume_accumulator:Account<'info,GlobalVolumeAccumulator>,
     pub mint:InterfaceAccount<'info,Mint>,
     #[account(init_if_needed,payer=admin,associated_token::mint=mint,associated_token::authority=global_volume_accumulator,associated_token::token_program=token_program)]
     pub global_incentive_token_account:InterfaceAccount<'info,TokenAccount>,
@@ -57,37 +57,10 @@ pub struct AdminUpdateTokenIncentives<'info>{
 }
 pub fn admin(ctx:Context<AdminUpdateTokenIncentives>,start_time:i64,end_time:i64,seconds_in_a_day:i64,day_number:u64,token_supply_per_day:u64)->Result<()> {
     let timestamp=Clock::get()?.unix_timestamp;
-    let g=&mut ctx.accounts.global_volume_accumulator;
-    g.mint=ctx.accounts.mint.key();g.seconds_in_a_day=seconds_in_a_day;
-    if start_time!=0 && end_time!=0 {
-        if start_time!=g.start_time {
-            require_gt!(start_time,timestamp,PumpAmmError::StartTimeInThePast);
-            g.start_time=start_time;g.total_token_supply=[0;30];g.sol_volumes=[0;30];
-        }
-        require_gt!(end_time,timestamp,PumpAmmError::EndTimeInThePast);
-        require_gt!(end_time,start_time,PumpAmmError::EndTimeBeforeStartTime);
-        require_gte!(seconds_in_a_day.checked_mul(30).expect("Unexpected overflow")-1,end_time-start_time,PumpAmmError::TimeRangeTooLarge);
-        g.end_time=end_time;
-        if timestamp>g.start_time {
-            let current=usize::try_from((timestamp-g.start_time).checked_div(seconds_in_a_day).expect("end_time should be bigger than start_time")).expect("SVM is 64-bit");
-            let end=usize::try_from((g.end_time-g.start_time).checked_div(seconds_in_a_day).expect("end_time should be bigger than start_time")).expect("SVM is 64-bit");
-            require_gt!(end,current,PumpAmmError::EndTimeBeforeCurrentDay);
-            for i in current+1..=end {g.sol_volumes[i]=0;}
-        }
-    }
-    if token_supply_per_day>0 {
-        require!(timestamp<=g.end_time,PumpAmmError::SupplyUpdateForFinishedRange);
-        let current=if timestamp<g.start_time {0}else{usize::try_from((timestamp-g.start_time).checked_div(seconds_in_a_day).expect("end_time should be bigger than start_time")).expect("SVM is 64-bit")};
-        let end=usize::try_from((g.end_time-g.start_time).checked_div(seconds_in_a_day).expect("end_time should be bigger than start_time")).expect("SVM is 64-bit");
-        if day_number<30 {
-            require_gte!(end,day_number as usize,PumpAmmError::DayIndexAfterEndIndex);
-            require_gte!(day_number as usize,current,PumpAmmError::DayInActiveRange);
-            g.total_token_supply[day_number as usize]=token_supply_per_day;
-        }else{for i in current..=end {g.total_token_supply[i]=token_supply_per_day;}}
-    }
+    ctx.accounts.global_volume_accumulator.update_token_incentives(start_time,end_time,seconds_in_a_day,&ctx.accounts.mint.key(),day_number,token_supply_per_day,timestamp)?;
     let event=AdminUpdateTokenIncentivesEvent{start_time,end_time,day_number,token_supply_per_day,mint:ctx.accounts.mint.key(),seconds_in_a_day,timestamp};
     emit!(event.clone());emit_cpi!(event);
-    msg!("GlobalVolumeAccumulator={:?}",*ctx.accounts.global_volume_accumulator);
+    msg!("GlobalVolumeAccumulator={:?}",ctx.accounts.global_volume_accumulator);
     Ok(())
 }
 #[derive(Accounts)]

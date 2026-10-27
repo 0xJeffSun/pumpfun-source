@@ -29,16 +29,7 @@ mod sweep;
 mod extend;
 mod collect;
 mod transfer_creator;
-use transfer_creator::*;
-use collect::*;
-use extend::*;
-use sweep::*;
-use boost::*;
-use boost_burn::*;
-use create::*;
-use trade::*;
 use anchor_spl::{token::Token, token_2022::Token2022, token_interface::{self, Mint, TokenAccount}};
-use {multi_hop::*, state::*};
 pub use instructions::admin;
 declare_id!("pAMMBay6oceH9fJKBRHGP5D4bD4sWpmSwMn52FMfXEA");
 
@@ -244,6 +235,15 @@ pub mod pump_amm_recovered {
         Ok(())
     }
 }
+use transfer_creator::*;
+use collect::*;
+use extend::*;
+use sweep::*;
+use boost::*;
+use boost_burn::*;
+use create::*;
+use trade::*;
+use {multi_hop::*, state::*};
 
 #[event_cpi]
 #[derive(Accounts)]
@@ -391,7 +391,7 @@ pub struct UpdateAdmin<'info> {
     #[account(mut, has_one = admin @ PumpAmmError::InvalidAdmin)]
     pub global_config: Box<Account<'info, GlobalConfig>>,
     /// CHECK: Only this account's public key is stored as the new admin.
-    pub new_admin: UncheckedAccount<'info>,
+    pub new_admin: AccountInfo<'info>,
 }
 
 #[derive(Accounts)]
@@ -408,7 +408,7 @@ pub struct SetBoostAuthority<'info> {
     #[account(mut, has_one = admin @ PumpAmmError::InvalidAdmin)]
     pub global_config: Box<Account<'info, GlobalConfig>>,
     /// CHECK: Only its public key is stored as authority.
-    pub boost_authority: UncheckedAccount<'info>,
+    pub boost_authority: AccountInfo<'info>,
     pub system_program: Program<'info, System>,
 }
 
@@ -426,7 +426,7 @@ pub struct UpdateCreatorFeeConfig<'info> {
 #[derive(Accounts)]
 pub struct SetReservedFeeRecipients<'info> {
     #[account(mut, seeds = [b"global_config"], bump, has_one = admin @ PumpAmmError::InvalidAdmin)]
-    pub global_config: Box<Account<'info, GlobalConfig>>,
+    pub global_config: Account<'info, GlobalConfig>,
     pub admin: Signer<'info>,
 }
 

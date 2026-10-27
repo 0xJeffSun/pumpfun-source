@@ -100,6 +100,15 @@ pub fn execute(
         Pubkey::find_program_address(&[b"pool-authority", a.base_mint.key().as_ref()], &pump).0
             == a.creator.key();
 
+    if mayhem {
+        require_eq!(a.global_config.mayhem_mode_enabled, true, PumpAmmError::MayhemModeDisabled);
+        require_eq!(canonical, true, PumpAmmError::OnlyPumpPoolsMayhemMode);
+    }
+    if cashback {
+        require_eq!(a.global_config.is_cashback_enabled, true, PumpAmmError::CashbackNotEnabled);
+        require_eq!(canonical, true, PumpAmmError::OnlyPumpPoolsCashback);
+    }
+
     require!(
         a.global_config.disable_flags & 1 == 0,
         PumpAmmError::DisabledCreatePool
@@ -119,16 +128,6 @@ pub fn execute(
         a.quote_mint.key(),
         PumpAmmError::SameMint
     );
-    require!(
-        !mayhem || a.global_config.mayhem_mode_enabled,
-        PumpAmmError::MayhemModeDisabled
-    );
-    require!(!mayhem || canonical, PumpAmmError::OnlyPumpPoolsMayhemMode);
-    require!(
-        !cashback || a.global_config.is_cashback_enabled,
-        PumpAmmError::CashbackNotEnabled
-    );
-    require!(!cashback || canonical, PumpAmmError::OnlyPumpPoolsCashback);
 
     crate::utils::token::transfer_checked(
         a.base_token_program.as_ref(), &a.base_mint, &a.user_base_token_account,

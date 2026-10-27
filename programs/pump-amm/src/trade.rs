@@ -139,7 +139,9 @@ pub fn execute(ctx: Context<TradeV2>, amount: u64, limit: u64, mode: u8) -> Resu
         require_gt!(amount, 0, PumpAmmError::ZeroBaseAmount);
         if mode == 0 { require_gt!(limit, 0, PumpAmmError::ZeroQuoteAmount); }
     }
-    prepare_buyback(a)?;
+    crate::instructions::swap::trade_v2::validate_buyback_token_account(
+        &a.global_config, a.buyback_fee_recipient.as_ref(), &a.quote_mint.key(), &a.quote_token_program.key(),
+    )?;
     if mode == 1 && a.user_volume_accumulator.user == Pubkey::default() {
         a.user_volume_accumulator.user = a.user.key();
     }
@@ -344,7 +346,7 @@ fn transfer<'info>(program: &AccountInfo<'info>, mint: &InterfaceAccount<'info, 
 
 #[inline(never)]
 fn prepare(a:&mut TradeV2) -> Result<()> {
-    require!(!a.pool.is_cashback_coin, PumpAmmError::CashbackCoinNotSupported);
+    crate::instructions::swap::trade_v2::validate_cashback_coin(a.pool.is_cashback_coin as u8)?;
     let pool_info=a.pool.to_account_info();
     if pool_info.data_len()<287 {
         let needed=Rent::get()?.minimum_balance(287).saturating_sub(pool_info.lamports());
@@ -353,18 +355,7 @@ fn prepare(a:&mut TradeV2) -> Result<()> {
     }
     Ok(())
 }
-fn prepare_buyback(a:&mut TradeV2) -> Result<()> {
-    require_keys_eq!(*a.buyback_fee_recipient.to_account_info().owner,a.quote_token_program.key(),PumpAmmError::AccountTypeNotSupported);
-    let buyback_info=a.buyback_fee_recipient.to_account_info();
-    let buyback_token=TokenAccount::try_deserialize(&mut &buyback_info.try_borrow_data()?[..])?;
-    require_keys_eq!(buyback_token.mint, a.quote_mint.key(), PumpAmmError::InvalidQuoteMint);
-    require_keys_neq!(buyback_token.owner, Pubkey::default(), PumpAmmError::BuybackFeeRecipientNotAuthorized);
-    require!(a.global_config.buyback_fee_recipients.contains(&buyback_token.owner), PumpAmmError::BuybackFeeRecipientNotAuthorized);
-    let ata_program = anchor_lang::solana_program::pubkey!("ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL");
-    let recipient = Pubkey::find_program_address(&[buyback_token.owner.as_ref(),a.quote_token_program.key().as_ref(),a.quote_mint.key().as_ref()], &ata_program).0;
-    require!(recipient == a.buyback_fee_recipient.key(), PumpAmmError::BuybackFeeRecipientNotAuthorized);
-    Ok(())
-}
+
 
 
 #[inline(never)]
@@ -395,7 +386,9 @@ pub fn execute_sell(ctx: Context<TradeV2>, base_amount: u64, limit: u64) -> Resu
     require!(a.global_config.disable_flags & 16 == 0, PumpAmmError::DisabledSell);
     prepare(a)?;
     require_gt!(base_amount, 0, PumpAmmError::ZeroBaseAmount);
-    prepare_buyback(a)?;
+    crate::instructions::swap::trade_v2::validate_buyback_token_account(
+        &a.global_config, a.buyback_fee_recipient.as_ref(), &a.quote_mint.key(), &a.quote_token_program.key(),
+    )?;
 
     let user_base_reserves = a.user_base_token_account.amount;
     let user_quote_reserves = a.user_quote_token_account.amount;
@@ -457,7 +450,9 @@ pub fn execute_buy(ctx: Context<TradeV2>, amount: u64, limit: u64) -> Result<()>
     prepare(a)?;
     require_gt!(amount, 0, PumpAmmError::ZeroBaseAmount);
     require_gt!(limit, 0, PumpAmmError::ZeroQuoteAmount);
-    prepare_buyback(a)?;
+    crate::instructions::swap::trade_v2::validate_buyback_token_account(
+        &a.global_config, a.buyback_fee_recipient.as_ref(), &a.quote_mint.key(), &a.quote_token_program.key(),
+    )?;
     let user_base_reserves = a.user_base_token_account.amount;
     let user_quote_reserves = a.user_quote_token_account.amount;
     let b = a.pool_base_token_account.amount;
@@ -495,7 +490,9 @@ pub fn execute_buy_exact_quote(ctx: Context<TradeV2>, amount: u64, limit: u64) -
     prepare(a)?;
     require_gt!(limit, 0, PumpAmmError::ZeroBaseAmount);
     require_gt!(amount, 0, PumpAmmError::ZeroQuoteAmount);
-    prepare_buyback(a)?;
+    crate::instructions::swap::trade_v2::validate_buyback_token_account(
+        &a.global_config, a.buyback_fee_recipient.as_ref(), &a.quote_mint.key(), &a.quote_token_program.key(),
+    )?;
     let user_base_reserves = a.user_base_token_account.amount;
     let user_quote_reserves = a.user_quote_token_account.amount;
     let b = a.pool_base_token_account.amount;

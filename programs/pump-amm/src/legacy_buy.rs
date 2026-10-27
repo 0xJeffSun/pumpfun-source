@@ -295,7 +295,7 @@ pub fn execute<'info>(
             )?;
             next = 2;
         } else {
-            crate::legacy_sell::validate_pool_v2(ctx.remaining_accounts, &a.base_mint.key(), 0)?;
+            crate::instructions::swap::sell::validate_pool_v2(ctx.remaining_accounts, &a.base_mint.key(), 0)?;
             next = 1;
             transfer_fee(a, &a.coin_creator_vault_ata.to_account_info(), creator_fee)?;
         }
@@ -507,5 +507,5 @@ fn distribute_cashback<'info>(
     user_volume.cashback_earned = user_volume.cashback_earned.checked_add(amount)
         .ok_or(error!(PumpAmmError::Overflow))?;
     user_volume.exit(&crate::ID)?;
-    crate::legacy_sell::validate_pool_v2(remaining_accounts, base_mint, 1)
+    crate::instructions::swap::sell::validate_pool_v2(remaining_accounts, base_mint, 1)
 }
