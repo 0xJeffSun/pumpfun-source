@@ -1,9 +1,9 @@
 # Parallel Mayhem reconstruction work
 
 The objective remains byte-identical Rust reproduction, including calls, data,
-relocations and ELF layout. The [current Sell quote composition](../research/mayhem-sell-current-recovery-20261027/README.md)
-has **431/441 normalized windows: 100 raw-local, 331 normalized-only and 10
-unmatched**. The unmatched windows total **109,208 original text bytes**.
+relocations and ELF layout. The [current Buy/Sell quote composition](../research/mayhem-quotes-current-recovery-20261027/README.md)
+has **432/441 normalized windows: 100 raw-local, 332 normalized-only and 9
+unmatched**. The unmatched windows total **107,952 original text bytes**.
 Normalized body matches do not establish recursive semantic or whole-ELF equality.
 
 ## Independent lanes
@@ -15,10 +15,10 @@ source and compiler investigations proceed.
 
 | Lane | Next scope |
 | --- | --- |
-| AMM trade and quote bodies | O0077, O0079 and O0092; cap/min selection, retained-reserve arithmetic, ownership and error flow |
+| AMM trade and quote bodies | O0077 and O0079; cap/min selection, retained-reserve arithmetic, ownership and error flow |
 | Legacy and V2 trade bodies | O0081–O0084; source ownership, fallible arithmetic and CPI error lifetime |
 | Runtime and layout | Recursive call/data closure, allocation-provider provenance, genuine section layout and ELF equality |
-| Integration | Preserve the 431-window parent, qualify combinations with fresh builds and signed local replays, synchronize documentation and PRs |
+| Integration | Preserve the 432-window parent, qualify combinations with fresh builds and signed local replays, synchronize documentation and PRs |
 
 Sweep/burn work is outside the active scope. O0073 and O0076 are connected to the
 sweep path and are not dispatched. O0075's business attribution is unresolved;
@@ -27,7 +27,7 @@ available under its original artifact bindings.
 
 ## All remaining windows
 
-The table is derived from the current packet's [441-row inventory](../research/mayhem-sell-current-recovery-20261027/inventory.json).
+The table is derived from the current packet's [441-row inventory](../research/mayhem-quotes-current-recovery-20261027/inventory.json).
 Each unmatched original window occurs once. Body names are reconstruction
 attributions, not authenticated original symbols.
 
@@ -42,7 +42,6 @@ attributions, not authenticated original symbols.
 | O0082 | 127520 | 12992 | Legacy Sell | Legacy and V2 trade |
 | O0083 | 140512 | 18648 | BuyV2 | Legacy and V2 trade |
 | O0084 | 159160 | 18096 | SellV2 | Legacy and V2 trade |
-| O0092 | 185296 | 1256 | AMM Buy quote | AMM trade and quote |
 
 ## Closed windows and partial controls
 
@@ -62,7 +61,7 @@ The [qualified Sell quote composition](../research/mayhem-sell-current-recovery-
 closes O0093 with all 140 instruction slots, ten ordered immediate callee shapes
 and ten ordered typed references checked. Two builds repeat and fresh trade and
 initializer matrices pass. The earlier 124/140-slot controls and backend replay
-remain negative evidence; they do not add another match. O0092 remains open.
+remain negative evidence; they do not add another match. The [qualified Buy/Sell composition](../research/mayhem-quotes-current-recovery-20261027/README.md) also closes O0092 with all 157 slots, ten ordered immediate callees and ten typed references, without losing any earlier match. Its own repeat builds and fresh runtime matrices pass.
 
 The [account-data cohort](../research/mayhem-account-cohort-complete/README.md)
 checks 156 typed references. The [historical parser composition](../research/mayhem-historical-macro-current-20261027/README.md)

@@ -19,8 +19,8 @@ Reproduce the selected Pump ELF with its [archived Rust/linker recipe](repro/pum
 
 
 
-Across the latest verified checkpoints, **2,881 / 3,338 inferred function windows
-match (86.3%)**. Their matched windows cover **3,813,056 / 5,213,128 original text
+Across the latest verified checkpoints, **2,882 / 3,338 inferred function windows
+match (86.3%)**. Their matched windows cover **3,814,312 / 5,213,128 original text
 bytes (73.1%)**. **One of five programs has complete meaningful-ELF identity**;
 all four core contracts still differ from their captured binaries.
 
@@ -33,9 +33,9 @@ all remaining code, calls, data, relocations and build provenance.
 | [Pump Round34](repro/pump/main-contract-round34-20261027/README.md) | 733 / 1,035 | 70.8% | 137 | 596 | 302 | No |
 | [PumpSwap / AMM](repro/pump_amm/quote-guard-recovery-20261027/README.md) | 643 / 785 | 81.9% | 148 | 495 | 142 | No |
 | [Fees research](research/fees-extend-integration/README.md) | 582 / 585 | 99.5% | 200 | 382 | 3 | No |
-| [Mayhem research](research/mayhem-sell-current-recovery-20261027/README.md) | 431 / 441 | 97.7% | 100 | 331 | 10 | No |
+| [Mayhem research](research/mayhem-quotes-current-recovery-20261027/README.md) | 432 / 441 | 98.0% | 100 | 332 | 9 | No |
 | [Donation Relay](repro/donation-relay/canonical-exact-selection/README.md) | 492 / 492 | 100.0% | 492 | 0 | 0 | **Yes** |
-| **Total** | **2,881 / 3,338** | **86.3%** | **1,077** | **1,804** | **457** | **1 / 5** |
+| **Total** | **2,882 / 3,338** | **86.3%** | **1,077** | **1,805** | **456** | **1 / 5** |
 
 “Windows” are inferred original machine-function ranges, including framework and
 runtime helpers. Complete normalized matches mask specified call/address
@@ -48,9 +48,9 @@ the whole program is identical.
 | Pump Round34 | 895,416 / 1,792,208 | 50.0% | 896,792 |
 | PumpSwap / AMM | 804,704 / 1,162,040 | 69.2% | 357,336 |
 | Fees research | 762,912 / 799,648 | 95.4% | 36,736 |
-| Mayhem research | 597,536 / 706,744 | 84.5% | 109,208 |
+| Mayhem research | 598,792 / 706,744 | 84.7% | 107,952 |
 | Donation Relay | 752,488 / 752,488 | 100.0% | 0 |
-| **Total** | **3,813,056 / 5,213,128** | **73.1%** | **1,400,072** |
+| **Total** | **3,814,312 / 5,213,128** | **73.1%** | **1,398,816** |
 
 Pump and AMM rows describe the verified maintained sources. Fees and Mayhem rows
 are the latest qualified research frontiers, distinct from their maintained
@@ -78,20 +78,21 @@ alternative source is an unpromoted compiler-context diagnostic.
 
 ## Behavior and remaining work
 
-The [qualified current Mayhem Sell quote composition](research/mayhem-sell-current-recovery-20261027/README.md)
-reaches 431/441 normalized windows while retaining all 100 raw matches, the
+The [qualified current Mayhem Buy/Sell quote composition](research/mayhem-quotes-current-recovery-20261027/README.md)
+reaches 432/441 normalized windows while retaining all 100 raw matches, the
 complete initializer and the prior Legacy Buy ownership body. Two builds agree;
 6,636 fresh trade pairs and 69 initializer pairs pass with 13,440 checked signed
-records. The complete 1,120-byte Sell quote has ten matching immediate callees
-and ten ordered typed references. [Ten bodies remain](research/mayhem-sell-current-recovery-20261027/remaining.md),
-with every function classified in the [441-row inventory](research/mayhem-sell-current-recovery-20261027/inventory.tsv).
+records. Both quote helpers match completely: 1,256 and 1,120 bytes, with twenty
+ordered immediate callees and twenty typed references checked in total.
+[Nine bodies remain](research/mayhem-quotes-current-recovery-20261027/remaining.md),
+with every function classified in the [441-row inventory](research/mayhem-quotes-current-recovery-20261027/inventory.tsv).
 
 The [current-parent AMM event composition](research/amm-current-event-capture-20261027/README.md)
 adds the complete 1,784-byte normalized sell-event body, retaining all prior
 matches. Two builds agree; all 17,462 maintained cases and 26 focused event pairs
-pass. Its 641-window research artifact remains separate from the selected
-640-window source/ABI checkpoint; the parent's other supplemental matrices
-were not rerun on this artifact.
+pass. Its 641-window research artifact remains bound to its former
+640-window parent; the maintained 643-window checkpoint is reported above.
+The parent's other supplemental matrices were not rerun on this artifact.
 
 Pump Round34 passes 10,468 full cases plus 7,536 focused executions, with 18,000
 paired diagnostic-log cases. AMM passes 17,462 full cases plus the separate

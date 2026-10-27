@@ -21,13 +21,13 @@ event composition stays bound to its earlier parent and is not added again.
 Complete data/call identity and provenance remain open; the current packet
 records the retained supplemental tests and remaining behavioral limits.
 
-Current Mayhem research is the [qualified Sell quote composition](../research/mayhem-sell-current-recovery-20261027/README.md):
-100 raw-local, 331 normalized-only and ten unmatched windows / 109,208 original
-text bytes. O0093 now matches its complete 1,120-byte body, all ten immediate
-callees and ten ordered typed references. The 960-byte initializer remains
-complete and the previous partial Legacy Buy body is preserved. Two builds,
-6,636 fresh trade pairs and 69 initializer pairs pass. Large trade handlers,
-the AMM Buy quote, data/call closure and whole-ELF identity remain unresolved.
+Current Mayhem research is the [qualified Buy/Sell quote composition](../research/mayhem-quotes-current-recovery-20261027/README.md):
+100 raw-local, 332 normalized-only and nine unmatched windows / 107,952 original
+text bytes. O0092 and O0093 match their complete 1,256-byte and 1,120-byte bodies;
+all twenty immediate callees and twenty ordered typed references agree. The
+960-byte initializer remains complete and the previous partial Legacy Buy body
+is preserved. Two builds, 6,636 fresh trade pairs and 69 initializer pairs pass.
+Large trade handlers, data/call closure and whole-ELF identity remain unresolved.
 
 The [current Legacy Buy ownership composition](../research/mayhem-current-ownership-composition-20261027/README.md)
 preserves the 430/100 frontier and its complete initializer. Its partial handler
