@@ -15,7 +15,7 @@ pub struct AdminUpdateTokenIncentives<'info> {
     #[account(seeds = [b"global"], bump, has_one = authority @ PumpError::NotAuthorized)]
     pub global: Box<Account<'info, Global>>,
     #[account(mut, seeds = [b"global_volume_accumulator"], bump)]
-    pub global_volume_accumulator: Box<Account<'info, GlobalVolumeAccumulator>>,
+    pub global_volume_accumulator: Account<'info, GlobalVolumeAccumulator>,
     pub mint: InterfaceAccount<'info, Mint>,
     #[account(
         init_if_needed,
@@ -74,7 +74,7 @@ pub fn execute(
     emit_cpi!(event);
     msg!(
         "GlobalVolumeAccumulator={:?}",
-        *ctx.accounts.global_volume_accumulator
+        ctx.accounts.global_volume_accumulator
     );
     Ok(())
 }

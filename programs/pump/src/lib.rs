@@ -107,16 +107,8 @@ pub mod pump_recovered {
     pub fn get_minimum_distributable_fee<'info>(ctx:Context<'_,'_,'_,'info,GetMinimumDistributableFee<'info>>)->Result<MinimumDistributableFeeEvent>{minimum::execute(ctx)}
 
     pub fn buy_v3(ctx: Context<SellV3>, amount:u64,max_sol_cost:u64,partial_fill:OptionBool)->Result<()>{trade::buy(ctx,amount,max_sol_cost,partial_fill.0)}
-    pub fn add_quote_mint(ctx:Context<AdminGlobal>,quote_mint:Pubkey)->Result<()>{
-     require_keys_neq!(quote_mint,Pubkey::default(),PumpError::QuoteMintNotEligibleForWhitelist);
-     require_keys_neq!(quote_mint,anchor_spl::token::spl_token::native_mint::ID,PumpError::QuoteMintNotEligibleForWhitelist);
-     require_eq!(ctx.accounts.global.whitelisted_quote_mints.contains(&quote_mint),false,PumpError::QuoteMintAlreadyWhitelisted);
-     let slot=ctx.accounts.global.whitelisted_quote_mints.iter_mut().find(|key|**key==Pubkey::default()).ok_or_else(||error!(PumpError::QuoteMintWhitelistFull))?;*slot=quote_mint;Ok(())
-    }
-    pub fn remove_quote_mint(ctx:Context<AdminGlobal>,quote_mint:Pubkey)->Result<()>{
-     require_keys_neq!(quote_mint,Pubkey::default(),PumpError::QuoteMintNotEligibleForWhitelist);
-     let slot=ctx.accounts.global.whitelisted_quote_mints.iter_mut().find(|key|**key==quote_mint).ok_or_else(||error!(PumpError::QuoteMintNotWhitelisted))?;*slot=Pubkey::default();Ok(())
-    }
+    pub fn add_quote_mint(ctx:Context<AdminGlobal>,quote_mint:Pubkey)->Result<()>{ctx.accounts.global.add_quote_mint(quote_mint)}
+    pub fn remove_quote_mint(ctx:Context<AdminGlobal>,quote_mint:Pubkey)->Result<()>{ctx.accounts.global.remove_quote_mint(quote_mint)}
     pub fn collect_creator_fee(ctx:Context<CollectCreatorFee>)->Result<()>{
       require!(*ctx.accounts.creator.owner!=crate::distribution::FEES,PumpError::UnableToDistributeCreatorVaultMigratedToSharingConfig);
       if ctx.accounts.creator.executable{msg!("Creator account is executable, so it cannot receive lamports");return Ok(());}
@@ -435,7 +427,7 @@ pub enum PumpError {
 pub struct OptionBool(pub bool);
 impl AnchorDeserialize for OptionBool {
  fn deserialize_reader<R:std::io::Read>(reader:&mut R)->std::io::Result<Self>{
-  let mut b=[0u8];match reader.read(&mut b)?{0=>Ok(Self(false)),_=>match b[0]{0=>Ok(Self(false)),1=>Ok(Self(true)),_=>Err(std::io::Error::new(std::io::ErrorKind::InvalidData,"Invalid bool representation"))}}
+  let mut b=[0u8];match reader.read(&mut b)?{0=>Ok(Self(false)),_=>match b[0]{0=>Ok(Self(false)),1=>Ok(Self(true)),value=>Err(std::io::Error::new(std::io::ErrorKind::InvalidData,format!("Invalid bool representation: {}",value)))}}
  }
 }
 
@@ -520,4 +512,17 @@ impl Global {
   self.buyback_fee_recipients=recipients;
   Ok(())
  }
+}
+
+impl Global {
+    pub fn add_quote_mint(&mut self,quote_mint:Pubkey)->Result<()>{
+     require_keys_neq!(quote_mint,Pubkey::default(),PumpError::QuoteMintNotEligibleForWhitelist);
+     require_keys_neq!(quote_mint,anchor_spl::token::spl_token::native_mint::ID,PumpError::QuoteMintNotEligibleForWhitelist);
+     require_eq!(self.whitelisted_quote_mints.contains(&quote_mint),false,PumpError::QuoteMintAlreadyWhitelisted);
+     let slot=self.whitelisted_quote_mints.iter_mut().find(|key|**key==Pubkey::default()).ok_or_else(||error!(PumpError::QuoteMintWhitelistFull))?;*slot=quote_mint;Ok(())
+        }
+    pub fn remove_quote_mint(&mut self,quote_mint:Pubkey)->Result<()>{
+     require_keys_neq!(quote_mint,Pubkey::default(),PumpError::QuoteMintNotEligibleForWhitelist);
+     let slot=self.whitelisted_quote_mints.iter_mut().find(|key|**key==quote_mint).ok_or_else(||error!(PumpError::QuoteMintNotWhitelisted))?;*slot=Pubkey::default();Ok(())
+        }
 }

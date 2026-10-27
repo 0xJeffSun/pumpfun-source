@@ -9,23 +9,25 @@ ELF and, through a separate loader deployment, its captured payload.**
 
 ## Current progress
 
-Across the latest verified checkpoints, **2,682 / 3,338 inferred function windows
-match (80.3%)**. Their matched windows cover **3,229,024 / 5,213,128 original text
-bytes (61.9%)**. **One of five programs has complete meaningful-ELF identity**;
+**Main Pump: 63.1% of function windows matched; 41.2% of original text covered. Complete reconstruction remains unfinished.**
+
+Across the latest verified checkpoints, **2,736 / 3,338 inferred function windows
+match (82.0%)**. Their matched windows cover **3,449,376 / 5,213,128 original text
+bytes (66.2%)**. **One of five programs has complete meaningful-ELF identity**;
 all four core contracts still differ from their captured binaries.
 
 These percentages measure bounded binary-recovery progress, not a claim that
-80.3% of the engineering work is finished. Complete reconstruction also requires
+82.0% of the engineering work is finished. Complete reconstruction also requires
 all remaining code, calls, data, relocations and build provenance.
 
 | Latest verified checkpoint | Matched windows | Matched % | Raw-equal bodies | Normalized only | Unmatched | Whole ELF equal |
 | --- | ---: | ---: | ---: | ---: | ---: | --- |
-| [Pump Round9](repro/pump/main-contract-round9-20261027/README.md) | 599 / 1,035 | 57.9% | 111 | 488 | 436 | No |
+| [Pump Round13](repro/pump/main-contract-round13-20261027/README.md) | 653 / 1,035 | 63.1% | 113 | 540 | 382 | No |
 | [PumpSwap / AMM](repro/pump_amm/dependency-liquidity-recovery-20261027/README.md) | 586 / 785 | 74.6% | 123 | 463 | 199 | No |
 | [Fees research](research/fees-common-quote-data-order/README.md) | 577 / 585 | 98.6% | 198 | 379 | 8 | No |
 | [Mayhem research](research/mayhem-initializer-source-origins/README.md) | 428 / 441 | 97.1% | 100 | 328 | 13 | No |
 | [Donation Relay](repro/donation-relay/canonical-exact-selection/README.md) | 492 / 492 | 100.0% | 492 | 0 | 0 | **Yes** |
-| **Total** | **2,682 / 3,338** | **80.3%** | **1,024** | **1,658** | **656** | **1 / 5** |
+| **Total** | **2,736 / 3,338** | **82.0%** | **1,026** | **1,710** | **602** | **1 / 5** |
 
 “Windows” are inferred original machine-function ranges, including framework and
 runtime helpers. Complete normalized matches mask specified call/address
@@ -35,12 +37,12 @@ the whole program is identical.
 
 | Checkpoint | Text bytes in matched windows | Text covered | Unmatched text |
 | --- | ---: | ---: | ---: |
-| Pump Round9 | 518,448 / 1,792,208 | 28.9% | 1,273,760 |
+| Pump Round13 | 738,800 / 1,792,208 | 41.2% | 1,053,408 |
 | PumpSwap / AMM | 644,456 / 1,162,040 | 55.5% | 517,584 |
 | Fees research | 719,472 / 799,648 | 90.0% | 80,176 |
 | Mayhem research | 594,160 / 706,744 | 84.1% | 112,584 |
 | Donation Relay | 752,488 / 752,488 | 100.0% | 0 |
-| **Total** | **3,229,024 / 5,213,128** | **61.9%** | **1,984,104** |
+| **Total** | **3,449,376 / 5,213,128** | **66.2%** | **1,763,752** |
 
 Pump and AMM rows describe the verified maintained sources. Fees and Mayhem rows
 are the latest upstream research frontiers, distinct from their maintained
@@ -56,7 +58,7 @@ source or build recipe.
 
 ## Behavior and remaining work
 
-Pump Round9 passes 10,468 full cases plus 3,187 focused executions, with 13,651
+Pump Round13 passes 10,468 full cases plus 4,192 focused executions, with 14,656
 paired diagnostic-log cases. AMM passes 17,462 full cases plus the separate
 account, fee, CPI, boundary and error-order matrices recorded in its checkpoint.
 These corpora overlap and must not be summed as unique scenarios. Tests use
@@ -74,7 +76,7 @@ objects. It preserves 577 normalized and 198 raw matches; 17,331 fresh
 comparisons pass. Absolute pointers, literal data-section equality and complete
 ELF identity remain unresolved.
 
-Remaining priorities are the 436 Pump, 199 AMM, 8 Fees and 13 Mayhem unmatched
+Remaining priorities are the 382 Pump, 199 AMM, 8 Fees and 13 Mayhem unmatched
 windows; deeper call/data/relocation identity; original build provenance; and
 uncovered behavior such as authentic fixed-admin AMM `create_config` success.
 The historical [150-handler audit](repro/reconstruction-audit-2026-10-26/handlers.md)

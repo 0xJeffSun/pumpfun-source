@@ -1,8 +1,8 @@
 use anchor_lang::prelude::*;
 use anchor_spl::token_interface::{self,Mint,TokenAccount,TokenInterface,TransferChecked};
 use crate::{Global,PumpError};
-use crate::trade_types::{TradeEvent,Fees};
-use crate::legacy_sell::{LegacyCurve,LegacyFeeConfig,LegacyFeesProgram};
+use crate::trade_types::{TradeEvent,Fees,BondingCurve};
+use crate::legacy_sell::{LegacyFeeConfig,LegacyFeesProgram};
 const FEE_PROGRAM:Pubkey=anchor_lang::solana_program::pubkey!("pfeeUxB6jkeY1Hxd7CsFCAjcbHA9rWtchMGdZ6VojVZ");
 const WSOL:Pubkey=anchor_lang::solana_program::pubkey!("So11111111111111111111111111111111111111112");
 #[derive(Accounts)]
@@ -16,30 +16,30 @@ pub struct SellV2<'info>{
  /// CHECK: handler checks membership.
  #[account(mut)]pub fee_recipient:UncheckedAccount<'info>,
  /// CHECK: quote ATA.
- #[account(mut,seeds=[fee_recipient.key().as_ref(),quote_token_program.key().as_ref(),quote_mint.key().as_ref()],bump,seeds::program=associated_token_program.key())]pub associated_quote_fee_recipient:UncheckedAccount<'info>,
+ #[account(mut,seeds=[fee_recipient.key().as_ref(),quote_token_program.key().as_ref(),quote_mint.key().as_ref()],bump,seeds::program=anchor_spl::associated_token::ID)]pub associated_quote_fee_recipient:UncheckedAccount<'info>,
  /// CHECK: handler checks membership.
  #[account(mut)]pub buyback_fee_recipient:UncheckedAccount<'info>,
  /// CHECK: quote ATA.
- #[account(mut,seeds=[buyback_fee_recipient.key().as_ref(),quote_token_program.key().as_ref(),quote_mint.key().as_ref()],bump,seeds::program=associated_token_program.key())]pub associated_quote_buyback_fee_recipient:UncheckedAccount<'info>,
- #[account(mut,seeds=[b"bonding-curve",base_mint.key().as_ref()],bump,constraint=quote_mint.key()==if bonding_curve.quote_mint==Pubkey::default(){WSOL}else{bonding_curve.quote_mint} @ PumpError::UnsupportedQuoteMint)]pub bonding_curve:Box<Account<'info,LegacyCurve>>,
+ #[account(mut,seeds=[buyback_fee_recipient.key().as_ref(),quote_token_program.key().as_ref(),quote_mint.key().as_ref()],bump,seeds::program=anchor_spl::associated_token::ID)]pub associated_quote_buyback_fee_recipient:UncheckedAccount<'info>,
+ #[account(mut,seeds=[b"bonding-curve",base_mint.key().as_ref()],bump,constraint=quote_mint.key()==bonding_curve.quote_mint || (bonding_curve.quote_mint==Pubkey::default() && quote_mint.key()==WSOL) @ PumpError::MintDoesNotMatchBondingCurve)]pub bonding_curve:Box<Account<'info,BondingCurve>>,
  #[account(mut,associated_token::mint=base_mint,associated_token::authority=bonding_curve,associated_token::token_program=base_token_program)]pub associated_base_bonding_curve:Box<InterfaceAccount<'info,TokenAccount>>,
  /// CHECK: quote ATA.
- #[account(mut,seeds=[bonding_curve.key().as_ref(),quote_token_program.key().as_ref(),quote_mint.key().as_ref()],bump,seeds::program=associated_token_program.key())]pub associated_quote_bonding_curve:UncheckedAccount<'info>,
+ #[account(mut,seeds=[bonding_curve.key().as_ref(),quote_token_program.key().as_ref(),quote_mint.key().as_ref()],bump,seeds::program=anchor_spl::associated_token::ID)]pub associated_quote_bonding_curve:UncheckedAccount<'info>,
  #[account(mut)]pub user:Signer<'info>,
- #[account(mut,token::mint=base_mint,token::authority=user,token::token_program=base_token_program)]pub associated_base_user:Box<InterfaceAccount<'info,TokenAccount>>,
+ #[account(mut,token::mint=base_mint)]pub associated_base_user:Box<InterfaceAccount<'info,TokenAccount>>,
  /// CHECK: quote ATA.
  #[account(mut)]pub associated_quote_user:UncheckedAccount<'info>,
  /// CHECK: PDA.
- #[account(mut,seeds=[b"creator-vault",bonding_curve.creator.as_ref()],bump)]pub creator_vault:UncheckedAccount<'info>,
+ #[account(mut,seeds=[b"creator-vault",bonding_curve.creator.as_ref()],bump)]pub creator_vault:AccountInfo<'info>,
  /// CHECK: quote ATA.
- #[account(mut,seeds=[creator_vault.key().as_ref(),quote_token_program.key().as_ref(),quote_mint.key().as_ref()],bump,seeds::program=associated_token_program.key())]pub associated_creator_vault:UncheckedAccount<'info>,
+ #[account(mut,seeds=[creator_vault.key().as_ref(),quote_token_program.key().as_ref(),quote_mint.key().as_ref()],bump,seeds::program=anchor_spl::associated_token::ID)]pub associated_creator_vault:UncheckedAccount<'info>,
  /// CHECK: sharing validation later.
  #[account(seeds=[b"sharing-config",base_mint.key().as_ref()],bump,seeds::program=FEE_PROGRAM)]pub sharing_config:UncheckedAccount<'info>,
  /// CHECK: volume state validated when used.
  #[account(init_if_needed,payer=user,space=137,seeds=[b"user_volume_accumulator",user.key().as_ref()],bump)]pub user_volume_accumulator:Box<Account<'info,crate::UserVolumeAccumulator>>,
  /// CHECK: quote ATA.
- #[account(mut,seeds=[user_volume_accumulator.key().as_ref(),quote_token_program.key().as_ref(),quote_mint.key().as_ref()],bump,seeds::program=associated_token_program.key())]pub associated_user_volume_accumulator:UncheckedAccount<'info>,
- #[account(seeds=[b"fee_config",crate::ID.as_ref()],bump,seeds::program=FEE_PROGRAM)]pub fee_config:Account<'info,LegacyFeeConfig>,
+ #[account(mut,seeds=[user_volume_accumulator.key().as_ref(),quote_token_program.key().as_ref(),quote_mint.key().as_ref()],bump,seeds::program=anchor_spl::associated_token::ID)]pub associated_user_volume_accumulator:UncheckedAccount<'info>,
+ #[account(seeds=[b"fee_config",crate::ID.as_ref()],bump,seeds::program=fee_program.key())]pub fee_config:Account<'info,LegacyFeeConfig>,
  pub fee_program:Program<'info,LegacyFeesProgram>,
  pub system_program:Program<'info,System>,
  /// CHECK: event PDA.
@@ -63,7 +63,7 @@ pub fn execute(ctx:Context<SellV2>,amount:u64,minimum:u64)->Result<()>{
   }
  }
 
- {let info=a.bonding_curve.to_account_info();let reserve=if a.bonding_curve.quote_mint==Pubkey::default(){add(add(a.bonding_curve.real_quote_reserves,a.bonding_curve.creator_fee)?,a.bonding_curve.protocol_fees)?}else{0};let target=add(Rent::get()?.minimum_balance(info.data_len().max(166)),reserve)?;let deficit=target.saturating_sub(info.lamports());if deficit>0{anchor_lang::system_program::transfer(CpiContext::new(a.system_program.to_account_info(),anchor_lang::system_program::Transfer{from:a.user.to_account_info(),to:info.clone()}),deficit)?;}if info.data_len()<166{info.realloc(166,false)?;a.bonding_curve.1=166;}}
+ {let info=a.bonding_curve.to_account_info();let reserve=if a.bonding_curve.quote_mint==Pubkey::default(){add(add(a.bonding_curve.real_quote_reserves,a.bonding_curve.creator_fee)?,a.bonding_curve.protocol_fees)?}else{0};let target=add(Rent::get()?.minimum_balance(info.data_len().max(166)),reserve)?;let deficit=target.saturating_sub(info.lamports());if deficit>0{anchor_lang::system_program::transfer(CpiContext::new(a.system_program.to_account_info(),anchor_lang::system_program::Transfer{from:a.user.to_account_info(),to:info.clone()}),deficit)?;}if info.data_len()<166{info.realloc(166,false)?;}}
 
 let c=&a.bonding_curve;let native=c.quote_mint==Pubkey::default();
  require!(if c.is_mayhem_mode{a.fee_recipient.key()==a.global.reserved_fee_recipient||a.global.reserved_fee_recipients.contains(&a.fee_recipient.key())}else{a.fee_recipient.key()==a.global.fee_recipient||a.global.fee_recipients.contains(&a.fee_recipient.key())},PumpError::NotAuthorized);

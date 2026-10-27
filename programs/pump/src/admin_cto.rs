@@ -17,7 +17,7 @@ pub global:Box<Account<'info,Global>>,
 /// CHECK: constrained address or handler validation.
 pub mint:UncheckedAccount<'info>,
 /// CHECK: constrained address or handler validation.
-#[account(constraint=quote_mint.key()==if bonding_curve.quote_mint==Pubkey::default(){anchor_lang::solana_program::pubkey!("So11111111111111111111111111111111111111112")}else{bonding_curve.quote_mint} @ PumpError::MintDoesNotMatchBondingCurve)]
+#[account(mint::token_program=quote_token_program,constraint=quote_mint.key()==bonding_curve.quote_mint||(bonding_curve.quote_mint==Pubkey::default()&&quote_mint.key()==anchor_spl::token::spl_token::native_mint::ID) @ PumpError::MintDoesNotMatchBondingCurve)]
 pub quote_mint:Box<InterfaceAccount<'info,anchor_spl::token_interface::Mint>>,
 /// CHECK: constrained address or handler validation.
 pub quote_token_program:Interface<'info,anchor_spl::token_interface::TokenInterface>,
@@ -36,13 +36,13 @@ pub current_creator:AccountInfo<'info>,
 pub current_creator_quote_token_account:UncheckedAccount<'info>,
 #[account(mut,seeds=[&[99,114,101,97,116,111,114,45,118,97,117,108,116],current_creator.key().as_ref()],bump)]
 /// CHECK: constrained address or handler validation.
-pub creator_vault:UncheckedAccount<'info>,
+pub creator_vault:AccountInfo<'info>,
 #[account(mut,seeds=[creator_vault.key().as_ref(),quote_token_program.key().as_ref(),quote_mint.key().as_ref()],bump,seeds::program=associated_token_program.key())]
 /// CHECK: constrained address or handler validation.
 pub creator_vault_quote_token_account:UncheckedAccount<'info>,
 #[account(mut)]
 /// CHECK: constrained address or handler validation.
-pub holder_creator_vault:UncheckedAccount<'info>,
+pub holder_creator_vault:AccountInfo<'info>,
 #[account(mut,seeds=[holder_creator_vault.key().as_ref(),quote_token_program.key().as_ref(),quote_mint.key().as_ref()],bump,seeds::program=associated_token_program.key())]
 /// CHECK: constrained address or handler validation.
 pub holder_creator_vault_quote_token_account:UncheckedAccount<'info>,
@@ -54,7 +54,7 @@ pub amm_global_config:UncheckedAccount<'info>,
 #[account(seeds=[&[112,111,111,108,45,97,117,116,104,111,114,105,116,121],mint.key().as_ref()],bump)]
 /// CHECK: constrained address or handler validation.
 pub pool_authority:UncheckedAccount<'info>,
-#[account(mut,seeds=[&[112,111,111,108],&[0,0],pool_authority.key().as_ref(),mint.key().as_ref(),quote_mint.key().as_ref()],bump,seeds::program=pump_amm.key())]
+#[account(mut,seeds=[&[112,111,111,108],&0u16.to_le_bytes(),pool_authority.key().as_ref(),mint.key().as_ref(),quote_mint.key().as_ref()],bump,seeds::program=pump_amm.key())]
 /// CHECK: constrained address or handler validation.
 pub pool:UncheckedAccount<'info>,
 #[account(seeds=[&[95,95,101,118,101,110,116,95,97,117,116,104,111,114,105,116,121]],bump,seeds::program=pump_amm.key())]
@@ -76,9 +76,9 @@ pub pump_fees:Program<'info,Fees>,
 pub pump_fees_event_authority:UncheckedAccount<'info>,
 #[account(seeds=[&[95,95,101,118,101,110,116,95,97,117,116,104,111,114,105,116,121]],bump)]
 /// CHECK: constrained address or handler validation.
-pub event_authority:UncheckedAccount<'info>,
+pub event_authority:AccountInfo<'info>,
 /// CHECK: constrained address or handler validation.
-pub program:UncheckedAccount<'info>,
+pub program:AccountInfo<'info>,
 }
 #[event]
 #[derive(Clone)]

@@ -15,13 +15,13 @@ const EVENT_CPI_DISCRIMINATOR: [u8; 8] = [228, 69, 165, 46, 81, 203, 154, 29];
 #[derive(Accounts)]
 pub struct ClaimTokenIncentives<'info> {
     /// CHECK: The user key names its ATA and volume PDA; it is not a signer.
-    pub user: UncheckedAccount<'info>,
+    pub user: AccountInfo<'info>,
     #[account(init_if_needed, payer = payer, associated_token::mint = mint,
         associated_token::authority = user,
         associated_token::token_program = token_program)]
     pub user_ata: InterfaceAccount<'info, TokenAccount>,
     #[account(seeds = [b"global_volume_accumulator"], bump,
-        has_one = mint)]
+        has_one = mint @ crate::PumpError::InvalidIncentiveMint)]
     pub global_volume_accumulator: Account<'info, GlobalVolumeAccumulator>,
     #[account(mut, associated_token::mint = mint,
         associated_token::authority = global_volume_accumulator,
@@ -35,7 +35,7 @@ pub struct ClaimTokenIncentives<'info> {
     pub associated_token_program: Program<'info, AssociatedToken>,
     /// CHECK: This is the program's event CPI signer PDA.
     #[account(seeds = [b"__event_authority"], bump)]
-    pub event_authority: UncheckedAccount<'info>,
+    pub event_authority: AccountInfo<'info>,
     pub program: Program<'info, crate::program::PumpRecovered>,
     #[account(mut)]
     pub payer: Signer<'info>,
@@ -59,6 +59,7 @@ pub fn claim(ctx: Context<ClaimTokenIncentives>) -> Result<()> {
     super::volume_accumulator::update(global, user, now, 0, &ctx.accounts.user.key())?;
     let amount = user.total_unclaimed_tokens;
     if amount == 0 {
+        msg!("No tokens to claim");
         return Ok(());
     }
     let bump = [ctx.bumps.global_volume_accumulator];

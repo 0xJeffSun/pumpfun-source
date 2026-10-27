@@ -4,21 +4,21 @@ use crate::{Global,PumpError};
 use crate::trade_types::{BondingCurve,TradeEvent,Fees};
 const FEE_PROGRAM:Pubkey=anchor_lang::solana_program::pubkey!("pfeeUxB6jkeY1Hxd7CsFCAjcbHA9rWtchMGdZ6VojVZ");
 
-use crate::legacy_sell::{LegacyCurve,LegacyFeeConfig,LegacyFeesProgram};
+use crate::legacy_sell::{LegacyFeeConfig,LegacyFeesProgram};
 #[derive(Accounts)]
 pub struct LegacyBuy<'info>{
  #[account(seeds=[b"global"],bump)]pub global:Box<Account<'info,Global>>,
  /// CHECK: handler validates recipient.
  #[account(mut)]pub fee_recipient:UncheckedAccount<'info>,
- pub mint:Box<InterfaceAccount<'info,Mint>>,
- #[account(mut,seeds=[b"bonding-curve",mint.key().as_ref()],bump,constraint=bonding_curve.quote_mint==Pubkey::default() @ PumpError::UnsupportedQuoteMint)]pub bonding_curve:Box<Account<'info,LegacyCurve>>,
+ pub mint:InterfaceAccount<'info,Mint>,
+ #[account(mut,seeds=[b"bonding-curve",mint.key().as_ref()],bump,constraint=bonding_curve.quote_mint==Pubkey::default() @ PumpError::UnsupportedQuoteMint)]pub bonding_curve:Account<'info,BondingCurve>,
  #[account(mut,associated_token::mint=mint,associated_token::authority=bonding_curve,associated_token::token_program=token_program)]pub associated_bonding_curve:InterfaceAccount<'info,TokenAccount>,
- #[account(mut,token::mint=mint,token::authority=user,token::token_program=token_program)]pub associated_user:InterfaceAccount<'info,TokenAccount>,
+ #[account(mut,token::mint=mint)]pub associated_user:InterfaceAccount<'info,TokenAccount>,
  #[account(mut)]pub user:Signer<'info>,
  pub system_program:Program<'info,System>,
  pub token_program:Interface<'info,TokenInterface>,
  /// CHECK: PDA checked.
- #[account(mut,seeds=[b"creator-vault",bonding_curve.creator.as_ref()],bump)]pub creator_vault:UncheckedAccount<'info>,
+ #[account(mut,seeds=[b"creator-vault",bonding_curve.creator.as_ref()],bump)]pub creator_vault:AccountInfo<'info>,
  /// CHECK: event authority.
  #[account(seeds=[b"__event_authority"],bump)]pub event_authority:AccountInfo<'info>,
  /// CHECK: self CPI.
@@ -26,7 +26,7 @@ pub struct LegacyBuy<'info>{
  #[account(seeds=[b"global_volume_accumulator"],bump)]pub global_volume_accumulator:Box<Account<'info,crate::GlobalVolumeAccumulator>>,
  #[account(init_if_needed,payer=user,space=137,seeds=[b"user_volume_accumulator",user.key().as_ref()],bump)]pub user_volume_accumulator:Box<Account<'info,crate::UserVolumeAccumulator>>,
  /// CHECK: fee program validates config.
- #[account(seeds=[b"fee_config",crate::ID.as_ref()],bump,seeds::program=FEE_PROGRAM)]
+ #[account(seeds=[b"fee_config",crate::ID.as_ref()],bump,seeds::program=fee_program.key())]
  pub fee_config:Account<'info,LegacyFeeConfig>,
  /// CHECK: canonical dependency.
  pub fee_program:Program<'info,LegacyFeesProgram>,
@@ -36,14 +36,16 @@ fn sub(a:u64,b:u64)->Result<u64>{a.checked_sub(b).ok_or_else(||error!(PumpError:
 fn narrow(a:u128)->Result<u64>{u64::try_from(a).map_err(|_|error!(PumpError::Truncation))}
 pub fn execute<'info>(ctx:Context<'_,'_,'_,'info,LegacyBuy<'info>>,input:u64,limit:u64,track:bool,partial:bool,exact:bool)->Result<()>{
  let a=&mut *ctx.accounts;
- {let info=a.bonding_curve.to_account_info();let reserve=add(add(a.bonding_curve.real_quote_reserves,a.bonding_curve.creator_fee)?,a.bonding_curve.protocol_fees)?;let target=add(Rent::get()?.minimum_balance(info.data_len().max(166)),reserve)?;let deficit=target.saturating_sub(info.lamports());if deficit>0{anchor_lang::system_program::transfer(CpiContext::new(a.system_program.to_account_info(),anchor_lang::system_program::Transfer{from:a.user.to_account_info(),to:info.clone()}),deficit)?;}if info.data_len()<166{info.realloc(166,false)?;a.bonding_curve.1=166;}}
+ crate::trade_types::prepare_bonding_curve(&a.bonding_curve,&a.system_program,&a.user)?;
 
  let c=&a.bonding_curve;
  require!(if c.is_mayhem_mode{a.fee_recipient.key()==a.global.reserved_fee_recipient||a.global.reserved_fee_recipients.contains(&a.fee_recipient.key())}else{a.fee_recipient.key()==a.global.fee_recipient||a.global.fee_recipients.contains(&a.fee_recipient.key())},PumpError::NotAuthorized);
- require!(ctx.remaining_accounts.len()>=2,PumpError::BuybackFeeRecipientMissing);
+ let rem=ctx.remaining_accounts;
+ let bb=rem.get(1).ok_or_else(||error!(PumpError::BuybackFeeRecipientMissing))?;require_keys_neq!(*bb.key,Pubkey::default(),PumpError::BuybackFeeRecipientMissing);require!(a.global.buyback_fee_recipients.contains(bb.key),PumpError::BuybackFeeRecipientNotAuthorized);
  require!(!c.complete,PumpError::BondingCurveComplete);
  if exact{require_gt!(limit,0,PumpError::BuyZeroAmount);require_gt!(input,0,PumpError::BuyNotEnoughSolToCoverFees);}else{require_gt!(input,0,PumpError::BuyZeroAmount);}
  if !exact{if !partial{require_gte!(c.real_token_reserves,input,PumpError::NotEnoughTokensToBuy);}}
+ if !exact && partial{require_gt!(input.min(c.real_token_reserves),0,PumpError::BuyZeroAmount);}
  let cap=c.token_total_supply as u128*c.virtual_quote_reserves as u128/c.virtual_token_reserves as u128;
  let mut data=vec![154,237,138,92,162,2,162,187,1];data.extend_from_slice(&cap.to_le_bytes());data.extend_from_slice(Pubkey::default().as_ref());
  let ix=anchor_lang::solana_program::instruction::Instruction{program_id:FEE_PROGRAM,accounts:vec![anchor_lang::solana_program::instruction::AccountMeta::new_readonly(a.fee_config.key(),false),anchor_lang::solana_program::instruction::AccountMeta::new_readonly(crate::ID,false)],data};
@@ -59,9 +61,8 @@ pub fn execute<'info>(ctx:Context<'_,'_,'_,'info,LegacyBuy<'info>>,input:u64,lim
  if exact{if !(partial && computed>c.real_token_reserves){require_gte!(amount,limit,PumpError::BuySlippageBelowMinTokensOut);}}else{require_gte!(limit,add(add(quote,pf)?,cf)?,PumpError::TooMuchSolRequired);}
  let vb=sub(c.virtual_token_reserves,amount)?;let vq=add(c.virtual_quote_reserves,quote)?;let rb=sub(c.real_token_reserves,amount)?;let rq=add(c.real_quote_reserves,quote)?;
  let mint=a.mint.key();let bump=[ctx.bumps.bonding_curve];let seeds:&[&[u8]]=&[b"bonding-curve",mint.as_ref(),&bump];
- token_interface::transfer_checked(CpiContext::new_with_signer(a.token_program.to_account_info(),TransferChecked{from:a.associated_bonding_curve.to_account_info(),mint:a.mint.to_account_info(),to:a.associated_user.to_account_info(),authority:a.bonding_curve.to_account_info()},&[seeds]),amount,a.mint.decimals)?;
- let rem=ctx.remaining_accounts;let v2=rem.get(0).ok_or_else(||error!(PumpError::InvalidBondingCurveV2))?;require!(v2.key()==Pubkey::find_program_address(&[b"bonding-curve-v2",a.mint.key().as_ref()],&crate::ID).0,PumpError::InvalidBondingCurveV2);
- let bb=rem.get(1).ok_or_else(||error!(PumpError::BuybackFeeRecipientMissing))?;require!(a.global.buyback_fee_recipients.contains(bb.key),PumpError::BuybackFeeRecipientNotAuthorized);
+ if amount>0{token_interface::transfer_checked(CpiContext::new_with_signer(a.token_program.to_account_info(),TransferChecked{from:a.associated_bonding_curve.to_account_info(),mint:a.mint.to_account_info(),to:a.associated_user.to_account_info(),authority:a.bonding_curve.to_account_info()},&[seeds]),amount,a.mint.decimals)?;}
+ let v2=rem.get(0).ok_or_else(||error!(PumpError::InvalidBondingCurveV2))?;require!(v2.key()==Pubkey::find_program_address(&[b"bonding-curve-v2",a.mint.key().as_ref()],&crate::ID).0,PumpError::InvalidBondingCurveV2);
  let bbps=if c.is_mayhem_mode{0}else{a.global.buyback_basis_points};let bf=narrow(pf as u128*bbps as u128/10000)?;
  let ev=TradeEvent{mint:a.mint.key(),sol_amount:quote,token_amount:amount,is_buy:true,user:a.user.key(),timestamp:Clock::get()?.unix_timestamp,virtual_sol_reserves:vq,virtual_token_reserves:vb,real_sol_reserves:rq,real_token_reserves:rb,fee_recipient:a.fee_recipient.key(),fee_basis_points:fees.protocol_fee_bps,fee:pf,creator:c.creator,creator_fee_basis_points:if c.is_cashback_coin{0}else{fees.creator_fee_bps},creator_fee:if c.is_cashback_coin{0}else{cf},track_volume:track,total_unclaimed_tokens:a.user_volume_accumulator.total_unclaimed_tokens,total_claimed_tokens:a.user_volume_accumulator.total_claimed_tokens,current_sol_volume:a.user_volume_accumulator.current_sol_volume,last_update_timestamp:a.user_volume_accumulator.last_update_timestamp,ix_name:if exact{"buy_exact_sol_in".into()}else{"buy".into()},mayhem_mode:c.is_mayhem_mode,cashback_fee_basis_points:if c.is_cashback_coin{cb}else{0},cashback:if c.is_cashback_coin{cf}else{0},buyback_fee_basis_points:bbps,buyback_fee:bf,shareholders:vec![],quote_mint:Pubkey::default(),quote_amount:quote,virtual_quote_reserves:vq,real_quote_reserves:rq,holder_rewards_bps:if c.is_holder_reward{cb}else{0},holder_rewards:if c.is_holder_reward{cf}else{0},creator_fee_unclaimed:c.creator_fee,unparsed_trailing_field:0};
  let cashback_coin=c.is_cashback_coin;

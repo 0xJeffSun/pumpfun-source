@@ -13,7 +13,7 @@ pub struct SellV3<'info> {
     pub base_token_program: Interface<'info, TokenInterface>,
     pub quote_token_program: Interface<'info, TokenInterface>,
     #[account(mut,seeds=[b"bonding-curve",base_mint.key().as_ref()],bump,
-        constraint=quote_mint.key()==if bonding_curve.quote_mint==Pubkey::default(){WSOL}else{bonding_curve.quote_mint} @ PumpError::MintDoesNotMatchBondingCurve)]
+        constraint=quote_mint.key()==bonding_curve.quote_mint || (bonding_curve.quote_mint==Pubkey::default() && quote_mint.key()==WSOL) @ PumpError::MintDoesNotMatchBondingCurve)]
     pub bonding_curve: Box<Account<'info, BondingCurve>>,
     #[account(mut,associated_token::mint=base_mint,associated_token::authority=bonding_curve,associated_token::token_program=base_token_program)]
     pub associated_base_bonding_curve: Box<InterfaceAccount<'info, TokenAccount>>,
@@ -22,7 +22,7 @@ pub struct SellV3<'info> {
     pub associated_quote_bonding_curve: UncheckedAccount<'info>,
     #[account(mut)]
     pub user: Signer<'info>,
-    #[account(mut,token::mint=base_mint,token::authority=user,token::token_program=base_token_program)]
+    #[account(mut,token::mint=base_mint)]
     pub associated_base_user: Box<InterfaceAccount<'info, TokenAccount>>,
     /// CHECK: token-quote checks validate owner, mint and relevant authority/address.
     #[account(mut)]
@@ -31,7 +31,7 @@ pub struct SellV3<'info> {
     #[account(init_if_needed,payer=user,space=137,seeds=[b"user_volume_accumulator",user.key().as_ref()],bump)]
     pub user_volume_accumulator: Box<Account<'info,crate::UserVolumeAccumulator>>,
     /// CHECK: cross-program FeeConfig owner, address and serialization checked.
-    #[account(owner=FEE_PROGRAM @ anchor_lang::error::ErrorCode::AccountOwnedByWrongProgram,seeds=[b"fee_config",crate::ID.as_ref()],bump=fee_config.0.bump,seeds::program=FEE_PROGRAM)]
+    #[account(seeds=[b"fee_config",crate::ID.as_ref()],bump=fee_config.0.bump,seeds::program=FEE_PROGRAM)]
     pub fee_config: Box<Account<'info, crate::multi_hop_curve::RouteFeeConfig>>,
     /// CHECK: membership in global buyback recipients is checked in handler.
     #[account(mut)]
@@ -65,13 +65,13 @@ pub fn sell(ctx:Context<SellV3>,amount:u64,min_sol_output:u64)->Result<()> {
     let a=&mut *ctx.accounts;
     if a.user_volume_accumulator.user==Pubkey::default(){a.user_volume_accumulator.user=a.user.key();}
     crate::trade_types::prepare_bonding_curve(&a.bonding_curve, &a.system_program, &a.user)?;
+    require!(!a.bonding_curve.complete,PumpError::BondingCurveComplete);
+    require!(!a.bonding_curve.is_cashback_coin,PumpError::CashbackCoinNotSupported);
+    require_gt!(amount,0,PumpError::SellZeroAmount);
     let quote_decimals=check_quote(a)?;
     let is_sol=quote_decimals.is_none();
-    require!(!a.bonding_curve.is_cashback_coin,PumpError::CashbackCoinNotSupported);
-    require!(!a.bonding_curve.complete,PumpError::BondingCurveComplete);
-    require_gt!(amount,0,PumpError::SellZeroAmount);
     require_gte!(a.associated_base_user.amount,amount,PumpError::NotEnoughTokensToSell);
-    if is_sol{require!(a.global.buyback_fee_recipients.contains(&a.buyback_fee_recipient.key()),PumpError::BuybackFeeRecipientNotAuthorized);}
+    if is_sol{require_keys_neq!(a.buyback_fee_recipient.key(),Pubkey::default(),PumpError::BuybackFeeRecipientMissing);require!(a.global.buyback_fee_recipients.contains(&a.buyback_fee_recipient.key()),PumpError::BuybackFeeRecipientNotAuthorized);}
     let curve=&a.bonding_curve;
     let quote=narrow(amount as u128*curve.virtual_quote_reserves as u128/(curve.virtual_token_reserves as u128+amount as u128))?;
     let cap=curve.token_total_supply as u128*curve.virtual_quote_reserves as u128/curve.virtual_token_reserves as u128;
@@ -132,14 +132,14 @@ pub fn buy(ctx:Context<SellV3>,amount:u64,max_sol_cost:u64,partial_fill:bool)->R
     let a=&mut *ctx.accounts;
     if a.user_volume_accumulator.user==Pubkey::default(){a.user_volume_accumulator.user=a.user.key();}
     crate::trade_types::prepare_bonding_curve(&a.bonding_curve, &a.system_program, &a.user)?;
-    let quote_decimals=check_quote(a)?;
-    let is_sol=quote_decimals.is_none();
     require!(!a.bonding_curve.complete,PumpError::BondingCurveComplete);
     require!(!a.bonding_curve.is_cashback_coin,PumpError::CashbackCoinNotSupported);
     let requested_amount=amount;
     let amount=amount.min(a.bonding_curve.real_token_reserves);
     require_gt!(amount,0,PumpError::BuyZeroAmount);
-    if is_sol{require!(a.global.buyback_fee_recipients.contains(&a.buyback_fee_recipient.key()),PumpError::BuybackFeeRecipientNotAuthorized);}
+    let quote_decimals=check_quote(a)?;
+    let is_sol=quote_decimals.is_none();
+    if is_sol{require_keys_neq!(a.buyback_fee_recipient.key(),Pubkey::default(),PumpError::BuybackFeeRecipientMissing);require!(a.global.buyback_fee_recipients.contains(&a.buyback_fee_recipient.key()),PumpError::BuybackFeeRecipientNotAuthorized);}
     let curve=&a.bonding_curve;
     let exceeds=requested_amount>amount;
     if curve.is_mayhem_mode && !partial_fill{require_gte!(curve.real_token_reserves,requested_amount,PumpError::NotEnoughTokensToBuy);}
@@ -230,13 +230,13 @@ pub fn buy_exact_quote(ctx:Context<SellV3>,spendable_quote_in:u64,min_tokens_out
     let a=&mut *ctx.accounts;
     if a.user_volume_accumulator.user==Pubkey::default(){a.user_volume_accumulator.user=a.user.key();}
     crate::trade_types::prepare_bonding_curve(&a.bonding_curve, &a.system_program, &a.user)?;
-    let quote_decimals=check_quote(a)?;
-    let is_sol=quote_decimals.is_none();
-    require!(!a.bonding_curve.is_cashback_coin,PumpError::CashbackCoinNotSupported);
     require!(!a.bonding_curve.complete,PumpError::BondingCurveComplete);
+    require!(!a.bonding_curve.is_cashback_coin,PumpError::CashbackCoinNotSupported);
     require_gt!(min_tokens_out,0,PumpError::BuyZeroAmount);
     require_gt!(spendable_quote_in,0,PumpError::BuyNotEnoughSolToCoverFees);
-    if is_sol{require!(a.global.buyback_fee_recipients.contains(&a.buyback_fee_recipient.key()),PumpError::BuybackFeeRecipientNotAuthorized);}
+    let quote_decimals=check_quote(a)?;
+    let is_sol=quote_decimals.is_none();
+    if is_sol{require_keys_neq!(a.buyback_fee_recipient.key(),Pubkey::default(),PumpError::BuybackFeeRecipientMissing);require!(a.global.buyback_fee_recipients.contains(&a.buyback_fee_recipient.key()),PumpError::BuybackFeeRecipientNotAuthorized);}
     let available=if is_sol{spendable_quote_in}else{sub(spendable_quote_in,quote_transfer_fee(&a.quote_mint.to_account_info(),spendable_quote_in,false)?)?};
     let curve=&a.bonding_curve;
     let cap=buy_fee_market_cap(curve, &a.base_mint)?;
@@ -367,7 +367,7 @@ fn check_quote(a:&SellV3)->Result<Option<u8>>{
   let token=TokenAccount::try_deserialize(&mut &info.try_borrow_data()?[..])?;
   require_keys_eq!(token.mint,a.quote_mint.key(),PumpError::MintDoesNotMatchBondingCurve);
   if role==1{require_keys_eq!(token.owner,a.user.key(),PumpError::AccountTypeNotSupported)}
-  if role==2{require!(a.global.buyback_fee_recipients.contains(&token.owner),PumpError::BuybackFeeRecipientNotAuthorized)}
+  if role==2{require_keys_neq!(token.owner,Pubkey::default(),PumpError::BuybackFeeRecipientMissing);require!(a.global.buyback_fee_recipients.contains(&token.owner),PumpError::BuybackFeeRecipientNotAuthorized)}
   if role!=1 {
    let authority=if role==0{a.bonding_curve.key()}else{token.owner};
    let expected=anchor_spl::associated_token::get_associated_token_address_with_program_id(&authority,&a.quote_mint.key(),&a.quote_token_program.key());

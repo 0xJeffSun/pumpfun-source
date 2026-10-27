@@ -22,21 +22,21 @@ pub struct LegacySell<'info>{
  #[account(seeds=[b"global"],bump)]pub global:Box<Account<'info,Global>>,
  /// CHECK: handler validates recipient.
  #[account(mut)]pub fee_recipient:UncheckedAccount<'info>,
- pub mint:Box<InterfaceAccount<'info,Mint>>,
- #[account(mut,seeds=[b"bonding-curve",mint.key().as_ref()],bump,constraint=bonding_curve.quote_mint==Pubkey::default() @ PumpError::UnsupportedQuoteMint)]pub bonding_curve:Box<Account<'info,LegacyCurve>>,
+ pub mint:InterfaceAccount<'info,Mint>,
+ #[account(mut,seeds=[b"bonding-curve",mint.key().as_ref()],bump,constraint=bonding_curve.quote_mint==Pubkey::default() @ PumpError::UnsupportedQuoteMint)]pub bonding_curve:Account<'info,BondingCurve>,
  #[account(mut,associated_token::mint=mint,associated_token::authority=bonding_curve,associated_token::token_program=token_program)]pub associated_bonding_curve:InterfaceAccount<'info,TokenAccount>,
- #[account(mut,token::mint=mint,token::authority=user,token::token_program=token_program)]pub associated_user:InterfaceAccount<'info,TokenAccount>,
+ #[account(mut,token::mint=mint)]pub associated_user:InterfaceAccount<'info,TokenAccount>,
  #[account(mut)]pub user:Signer<'info>,
  pub system_program:Program<'info,System>,
  /// CHECK: PDA checked.
- #[account(mut,seeds=[b"creator-vault",bonding_curve.creator.as_ref()],bump)]pub creator_vault:UncheckedAccount<'info>,
+ #[account(mut,seeds=[b"creator-vault",bonding_curve.creator.as_ref()],bump)]pub creator_vault:AccountInfo<'info>,
  pub token_program:Interface<'info,TokenInterface>,
  /// CHECK: event authority.
  #[account(seeds=[b"__event_authority"],bump)]pub event_authority:AccountInfo<'info>,
  /// CHECK: self CPI.
  pub program:Program<'info,crate::program::PumpRecovered>,
  /// CHECK: fee program validates config.
- #[account(seeds=[b"fee_config",crate::ID.as_ref()],bump,seeds::program=FEE_PROGRAM)]
+ #[account(seeds=[b"fee_config",crate::ID.as_ref()],bump,seeds::program=fee_program.key())]
  pub fee_config:Account<'info,LegacyFeeConfig>,
  /// CHECK: canonical dependency.
  pub fee_program:Program<'info,LegacyFeesProgram>,
@@ -46,7 +46,7 @@ fn sub(a:u64,b:u64)->Result<u64>{a.checked_sub(b).ok_or_else(||error!(PumpError:
 fn narrow(a:u128)->Result<u64>{u64::try_from(a).map_err(|_|error!(PumpError::Truncation))}
 pub fn execute(ctx:Context<LegacySell>,amount:u64,minimum:u64)->Result<()>{
  let a=&mut *ctx.accounts;
- {let info=a.bonding_curve.to_account_info();let reserve=add(add(a.bonding_curve.real_quote_reserves,a.bonding_curve.creator_fee)?,a.bonding_curve.protocol_fees)?;let target=add(Rent::get()?.minimum_balance(info.data_len().max(166)),reserve)?;let deficit=target.saturating_sub(info.lamports());if deficit>0{anchor_lang::system_program::transfer(CpiContext::new(a.system_program.to_account_info(),anchor_lang::system_program::Transfer{from:a.user.to_account_info(),to:info.clone()}),deficit)?;}if info.data_len()<166{info.realloc(166,false)?;a.bonding_curve.1=166;}}
+ crate::trade_types::prepare_bonding_curve(&a.bonding_curve,&a.system_program,&a.user)?;
 
 let c=&a.bonding_curve;
  require!(if c.is_mayhem_mode{a.fee_recipient.key()==a.global.reserved_fee_recipient||a.global.reserved_fee_recipients.contains(&a.fee_recipient.key())}else{a.fee_recipient.key()==a.global.fee_recipient||a.global.fee_recipients.contains(&a.fee_recipient.key())},PumpError::NotAuthorized);

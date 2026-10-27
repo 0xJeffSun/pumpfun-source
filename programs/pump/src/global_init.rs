@@ -8,7 +8,7 @@ pub struct Initialize<'info>{
  pub system_program:Program<'info,System>,
 }
 pub fn execute(ctx:Context<Initialize>)->Result<()>{
- ctx.accounts.global.initialized=true;
  ctx.accounts.global.authority=ctx.accounts.user.key();
+ ctx.accounts.global.initialized=true;
  Ok(())
 }

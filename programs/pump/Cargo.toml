@@ -16,7 +16,7 @@ custom-heap = []
 custom-panic = []
 [dependencies]
 anchor-lang = {version = "=0.31.1", features = ["event-cpi", "init-if-needed"]}
-anchor-spl = { version = "=0.31.1", features = ["token_2022", "associated_token"] }
+anchor-spl = { version = "=0.31.1", features = ["token_2022", "associated_token", "metadata"] }
 [profile.release]
 panic = "abort"
 overflow-checks = true
