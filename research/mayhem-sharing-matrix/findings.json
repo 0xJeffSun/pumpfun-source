@@ -7559,5 +7559,138 @@
     "reason": "Wrong working directory; completed compilation failed exact Cargo baseline gate.",
     "accepted_as_control": false
   },
-  "total_rustc_invocations": 1309
+  "wrapper_control": {
+    "builds": {
+      "passthrough": {
+        "cargo_reported_compilations": 163,
+        "target": 85,
+        "host": 78,
+        "observed_crate_compilations": 163,
+        "accepted_as_full_trace": true,
+        "observations": 176,
+        "auxiliary_invocations": 13,
+        "missing_crate_observations": 0,
+        "auxiliary_compile_probes": 2,
+        "observed_flags_removed": 0,
+        "observed_cargo_arguments_equal_after_build_root_relocation": true,
+        "raw_elf_equal": true,
+        "stripped_elf_equal": true,
+        "direct_comparison": "replay",
+        "dependency_code_objects": {
+          "solana_instructions_sysvar-8ed2238e6ba68942.solana_instructions_sysvar.f7fd50290c7f3ca1-cgu.0.rcgu.o": "11c454d9c921368911675e32bd342307e363561739a70267999e50330a3363d4"
+        },
+        "dependency_archive_equal": false,
+        "dependency_metadata_equal": false,
+        "dependency_archive_sha256": "a93553abb939b9c7d4289d8df59f3c6010b6ee40844073cc946c0b0b6a96ab59",
+        "wrapper_sha256": "13c347f6811cca1de5400054eaf686c699599b63fdaeebabb22f7d31686ad5b3",
+        "raw_elf_sha256": "2f799d509c5e7b66fcbe377ef79b56e6a9a0d2f82cea37bbc2c760fa60b552de"
+      },
+      "omit": {
+        "cargo_reported_compilations": 163,
+        "target": 85,
+        "host": 78,
+        "observed_crate_compilations": 161,
+        "accepted_as_full_trace": false,
+        "observations": 173,
+        "auxiliary_invocations": 12,
+        "missing_crate_observations": 2,
+        "auxiliary_compile_probes": 2,
+        "observed_flags_removed": 1,
+        "observed_cargo_arguments_equal_after_build_root_relocation": true,
+        "raw_elf_equal": true,
+        "stripped_elf_equal": true,
+        "direct_comparison": "toggle",
+        "dependency_code_objects": {
+          "solana_instructions_sysvar-8ed2238e6ba68942.solana_instructions_sysvar.f7fd50290c7f3ca1-cgu.0.rcgu.o": "11c454d9c921368911675e32bd342307e363561739a70267999e50330a3363d4"
+        },
+        "dependency_archive_equal": false,
+        "dependency_metadata_equal": false,
+        "dependency_archive_sha256": "fdcf6d549020cc5fcee32fa74c427cb6c7df744acf47c2bb19ab82712d589e89",
+        "wrapper_sha256": "13c347f6811cca1de5400054eaf686c699599b63fdaeebabb22f7d31686ad5b3",
+        "raw_elf_sha256": "2f799d509c5e7b66fcbe377ef79b56e6a9a0d2f82cea37bbc2c760fa60b552de"
+      },
+      "omit-repeat": {
+        "cargo_reported_compilations": 163,
+        "target": 85,
+        "host": 78,
+        "observed_crate_compilations": 163,
+        "accepted_as_full_trace": true,
+        "observations": 176,
+        "auxiliary_invocations": 13,
+        "missing_crate_observations": 0,
+        "auxiliary_compile_probes": 2,
+        "observed_flags_removed": 1,
+        "observed_cargo_arguments_equal_after_build_root_relocation": true,
+        "raw_elf_equal": true,
+        "stripped_elf_equal": true,
+        "direct_comparison": "toggle",
+        "dependency_code_objects": {
+          "solana_instructions_sysvar-8ed2238e6ba68942.solana_instructions_sysvar.f7fd50290c7f3ca1-cgu.0.rcgu.o": "11c454d9c921368911675e32bd342307e363561739a70267999e50330a3363d4"
+        },
+        "dependency_archive_equal": false,
+        "dependency_metadata_equal": false,
+        "dependency_archive_sha256": "660ad13cafbedbc50f4638e906c73cca00570e0080f15ab76e16f93b2f757ce4",
+        "wrapper_sha256": "13c347f6811cca1de5400054eaf686c699599b63fdaeebabb22f7d31686ad5b3",
+        "raw_elf_sha256": "2f799d509c5e7b66fcbe377ef79b56e6a9a0d2f82cea37bbc2c760fa60b552de"
+      },
+      "portable-omit": {
+        "cargo_reported_compilations": 163,
+        "target": 85,
+        "host": 78,
+        "observed_crate_compilations": 160,
+        "accepted_as_full_trace": false,
+        "observations": 173,
+        "auxiliary_invocations": 13,
+        "missing_crate_observations": 3,
+        "auxiliary_compile_probes": 2,
+        "observed_flags_removed": 1,
+        "observed_cargo_arguments_equal_after_build_root_relocation": true,
+        "raw_elf_equal": true,
+        "stripped_elf_equal": true,
+        "direct_comparison": "toggle",
+        "dependency_code_objects": {
+          "solana_instructions_sysvar-8ed2238e6ba68942.solana_instructions_sysvar.f7fd50290c7f3ca1-cgu.0.rcgu.o": "11c454d9c921368911675e32bd342307e363561739a70267999e50330a3363d4"
+        },
+        "dependency_archive_equal": false,
+        "dependency_metadata_equal": false,
+        "dependency_archive_sha256": "3f052ec9820926f7f0892c3260e3fcf94bb564a43ce187fe29d7f07b2b34e491",
+        "wrapper_sha256": "131fbd65f0072ff864401f53259f44ddef64427c66195faf287bd945056815a6",
+        "raw_elf_sha256": "2f799d509c5e7b66fcbe377ef79b56e6a9a0d2f82cea37bbc2c760fa60b552de"
+      },
+      "portable-fixed": {
+        "cargo_reported_compilations": 163,
+        "target": 85,
+        "host": 78,
+        "observed_crate_compilations": 163,
+        "accepted_as_full_trace": true,
+        "observations": 176,
+        "auxiliary_invocations": 13,
+        "missing_crate_observations": 0,
+        "auxiliary_compile_probes": 2,
+        "observed_flags_removed": 1,
+        "observed_cargo_arguments_equal_after_build_root_relocation": true,
+        "raw_elf_equal": true,
+        "stripped_elf_equal": true,
+        "direct_comparison": "toggle",
+        "dependency_code_objects": {
+          "solana_instructions_sysvar-8ed2238e6ba68942.solana_instructions_sysvar.f7fd50290c7f3ca1-cgu.0.rcgu.o": "11c454d9c921368911675e32bd342307e363561739a70267999e50330a3363d4"
+        },
+        "dependency_archive_equal": false,
+        "dependency_metadata_equal": false,
+        "dependency_archive_sha256": "84793934777607e98728083356dbe9585f7dad553ff2e18c61a4fbfb6083ec3c",
+        "wrapper_sha256": "7ee4415322c95e903d89006c8e6dab155581f221bc79935f40f9375e7345580d",
+        "raw_elf_sha256": "2f799d509c5e7b66fcbe377ef79b56e6a9a0d2f82cea37bbc2c760fa60b552de"
+      }
+    },
+    "cargo_reported_crate_compilations": 815,
+    "host_wrapper_compilations": 3,
+    "complete_traces": 3,
+    "retained_incomplete_traces": 2,
+    "target_executions": 0,
+    "explicit_no_flag_required_for_control_elf": false,
+    "metadata_only_cause_proven": false,
+    "historical_flags_proven": false
+  },
+  "retained_primary_compilations": 2127,
+  "compilation_count_scope": "Cargo-reported crate compilations plus direct and host-wrapper compilations; auxiliary compiler probes and queries counted separately where wrapper observations exist."
 }

@@ -143,6 +143,30 @@ def build(args):
         expected = {n.replace('\\', '/').split('/')[-1]: h for n, h in original.items()}
         require(len(expected) == len(original), 'ambiguous executable identity')
         require({p.name: checked[str(p)] for p in tools} == expected, 'host/tool identity differs')
+        wrapper_build = None
+        if args.wrapper_mode != 'none':
+            require(args.variant == 'alloc-provider', 'wrapper control requires alloc-provider Cargo profile')
+            wrapper_source = HERE / 'wrapper-control/wrapper.rs'
+            wrapper = output / 'wrapper.exe'
+            wrapper_command = [str(sdk / 'rust/bin/rustc.exe'), '--crate-name', 'sharing_wrapper',
+                               '--edition=2021', '-C', 'opt-level=2', str(wrapper_source), '-o', str(wrapper)]
+            wrapper_build = dict(command=wrapper_command, source_sha256=sha(wrapper_source),
+                                 compiler_sha256=sha(sdk / 'rust/bin/rustc.exe'))
+            save(output / 'wrapper-compile-launch.json', wrapper_build)
+            wrapper_run = subprocess.run(wrapper_command, env=env, capture_output=True, timeout=120,
+                                         creationflags=subprocess.CREATE_NO_WINDOW)
+            (output / 'wrapper-compile.stdout.log').write_bytes(wrapper_run.stdout)
+            (output / 'wrapper-compile.stderr.log').write_bytes(wrapper_run.stderr)
+            wrapper_build['returncode'] = wrapper_run.returncode
+            save(output / 'wrapper-compile-result.json', wrapper_build)
+            require(wrapper_run.returncode == 0, 'host wrapper compilation failed')
+            wrapper_build['wrapper_sha256'] = sha(wrapper)
+            save(output / 'wrapper-compile-result.json', wrapper_build)
+            records = output / 'wrapper-records'
+            records.mkdir()
+            extra.update(RUSTC_WRAPPER=str(wrapper), MAYHEM_SHARING_MODE=args.wrapper_mode,
+                         MAYHEM_WRAPPER_RECORDS=str(records))
+            env.update(extra)
         command = [str(sdk / 'rust/bin/cargo.exe'), 'rustc', '--manifest-path', str(source / 'Cargo.toml'),
                    '--release', '--target', 'sbpf-solana-solana', '--locked', '--offline', '--verbose',
                    '--', '--remap-path-prefix=src/=programs/mayhem-program/src/',
@@ -151,6 +175,8 @@ def build(args):
                       source_inputs=before, checked_executables=checked, vendor_packages=vendor_count,
                       started_at=datetime.now(timezone.utc).isoformat(), target_directory_initially_absent=True,
                       scope='Fresh dependency and root build; native Windows compiler, Linux target libraries.')
+        if wrapper_build is not None:
+            launch['wrapper_build'] = wrapper_build
         save(output / 'launch.json', launch)
         with (output / 'stdout.log').open('wb') as stdout, (output / 'stderr.log').open('wb') as stderr:
             process = subprocess.Popen(command, cwd=source.parent.parent, env=env, stdout=stdout,
@@ -173,6 +199,8 @@ def build(args):
         pin(target.parent, target_rows)
         vendor_check(vendor)
         require(all(sha(Path(n)) == h for n, h in checked.items()), 'executable changed')
+        if wrapper_build is not None:
+            require(sha(wrapper) == wrapper_build['wrapper_sha256'], 'wrapper changed')
         result['outputs'] = {p.name: dict(bytes=p.stat().st_size, sha256=sha(p)) for p in output.glob('*.so')}
         result['status'] = 'SUCCEEDED'
         result['comparison'] = 'Deferred until compilation is complete.'
@@ -191,5 +219,6 @@ if __name__ == '__main__':
     for name in ('sdk', 'target-sysroot', 'vendor', 'msvc', 'windows-sdk', 'output'):
         parser.add_argument('--' + name, type=Path, required=True)
     parser.add_argument('--variant', choices=_controls.VARIANTS, default='baseline')
+    parser.add_argument('--wrapper-mode', choices=('none', 'passthrough', 'omit-sysvar-no'), default='none')
     parser.add_argument('--kit-version', default='10.0.26100.0')
     print(json.dumps(build(parser.parse_args()), indent=2))

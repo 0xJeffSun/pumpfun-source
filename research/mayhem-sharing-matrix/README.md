@@ -15,6 +15,14 @@ archive remain unequal. This is a bounded object result; it does not establish
 that every downstream compiler effect is caused solely by Cargo's metadata
 argument. No historical compiler flag is established.
 
+A full-build wrapper control goes further: **removing the explicit `no` flag
+after Cargo computes its compiler identities preserves the complete raw and
+stripped control ELF**. A passthrough build and two omission builds retain
+complete observations for all 163 Cargo-reported crate compilations each.
+Only one forwarded argument changes in either omission build. Thus the explicit
+flag is not required to obtain this control ELF with those Cargo identities.
+The ELF remains unequal to the published mixed-SDK reference.
+
 ## Full-build matrix
 
 This packet freezes all 65 source inputs of
@@ -94,9 +102,13 @@ python -I -B research/mayhem-sharing-matrix/test_verify.py
 ```
 
 The standalone verifier uses only the standard library and hash-pinned existing
-ELF/archive readers. It checks eight full builds (1,304 rustc invocations), four
-accepted direct compilations and the failed direct baseline: 1,309 retained
-invocations total. A fresh run of the included portable builder repeats the
+ELF/archive readers. It checks thirteen full builds: eight matrix builds and
+five wrapper builds, containing 2,119 Cargo-reported crate compilations. Four
+accepted direct compilations, the failed direct baseline and three host-wrapper
+compilations bring the retained primary compilation count to 2,127. Auxiliary
+compiler queries and compile probes are counted separately where wrapper
+observations exist; Cargo's verbose log alone is not a full process trace.
+A fresh run of the included portable builder repeats the
 sysvar `no` raw and stripped artifacts exactly:
 
 - Raw compiler ELF: `2f799d509c5e7b66fcbe377ef79b56e6a9a0d2f82cea37bbc2c760fa60b552de` (868,520 bytes).
@@ -109,6 +121,31 @@ MSVC/Windows SDK to build another fresh output directory:
 ```text
 python -I -B research/mayhem-sharing-matrix/build.py --variant alloc-provider --sdk <windows-platform-tools> --target-sysroot <linux-platform-tools>/rust --vendor <locked-vendor> --msvc <VC/Tools/MSVC/14.44.35207> --windows-sdk <Windows-Kits/10> --output <new-directory>
 ```
+
+Add `--wrapper-mode omit-sysvar-no` to reproduce the omission control, or
+`--wrapper-mode passthrough` for the instrumentation baseline. The builder
+compiles the host wrapper from retained Rust source with the same pinned SDK,
+then records the actual arguments it forwards. The omission mode keeps the
+Cargo profile unchanged and removes only the sysvar sharing flag after Cargo
+has calculated metadata and dependency names. All observed Cargo compilation
+arguments and working directories match after relocating the build root.
+
+The five wrapper builds all produce the same raw/stripped ELFs. Three have
+complete traces. Two early runs (`omit`, `portable-omit`) retain only 161/160
+of 163 crate observations; **they are rejected as complete trace evidence**.
+The old logger used PID-only filenames, which can overwrite records when
+Windows reuses a PID. The corrected logger uses atomic create-new files with
+distinct record IDs; the portable repeat records all 163 crate compilations,
+plus thirteen auxiliary invocations including two compile probes. The original
+logger, incomplete traces and all artifacts are retained. Seventeen regression
+tests include explicit rejection of incomplete traces and extra argument edits.
+
+The retained sysvar machine-code object also equals the corresponding direct
+replay object. Whole dependency archives and `.rmeta` members vary between
+these relocated full builds, even for passthrough. They are not claimed to
+repeat or to isolate a single metadata field. Raw final-ELF equality bounds
+the observed effect; it does not identify the historical Cargo inputs or prove
+that one metadata argument is the sole cause of the original helper-copy gap.
 
 The builder checks 2,639 SDK components, 27 Linux target components, 215 vendored
 packages and nine executable/library identities before and after compilation.
