@@ -109,18 +109,11 @@ pub fn execute<'info>(
         }
         pool_info.realloc(287, false)?;
     }
-    let recipients = if a.pool.is_mayhem_mode {
-        let mut r = [Pubkey::default(); 8];
-        r[0] = a.global_config.reserved_fee_recipient;
-        r[1..].copy_from_slice(&a.global_config.reserved_fee_recipients);
-        r
-    } else {
-        a.global_config.protocol_fee_recipients
-    };
-    require!(
-        recipients.contains(&a.protocol_fee_recipient.key()),
-        PumpAmmError::InvalidProtocolFeeRecipient
-    );
+    crate::instructions::swap::validate_protocol_fee_recipient(
+        &a.global_config,
+        &a.protocol_fee_recipient,
+        a.pool.is_mayhem_mode,
+    )?;
     if exact {
         require_gt!(limit, 0, PumpAmmError::ZeroBaseAmount);
         require_gt!(amount, 0, PumpAmmError::ZeroQuoteAmount);

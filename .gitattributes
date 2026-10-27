@@ -1390,3 +1390,8 @@ repro/pump_amm/guard-data-recovery-20261027/followup/** -whitespace
 # Preserve exact integrated Withdraw source and patch bytes.
 research/fees-withdraw-tuple-integration/overrides/** -whitespace
 research/fees-withdraw-tuple-integration/source.patch -whitespace
+repro/pump_amm/source-abi-recovery-20261027/results/** -whitespace
+repro/pump_amm/source-abi-recovery-20261027/followup/** -whitespace
+
+# Retain the exact source bytes used by the selected AMM build.
+programs/pump-amm/src/instructions/swap/multi_hop_swap.rs whitespace=-blank-at-eof

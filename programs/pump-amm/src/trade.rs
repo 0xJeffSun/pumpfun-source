@@ -2,54 +2,9 @@ use super::*;
 use crate::instructions::swap::trade_v2::{calculate_buy_result, calculate_sell_quote, preview_total_quote, BuyPreviewContext};
 use crate::utils::transfer_fee;
 use crate::instructions::swap::trade_v2::BuyResult;
-use anchor_spl::token_interface::TokenInterface;
 use anchor_lang::Discriminator;
 
-#[event]
-#[derive(Clone)]
-pub struct BuyEvent {
-    pub timestamp: i64,
-    pub base_amount_out: u64,
-    pub max_quote_amount_in: u64,
-    pub user_base_token_reserves: u64,
-    pub user_quote_token_reserves: u64,
-    pub pool_base_token_reserves: u64,
-    pub pool_quote_token_reserves: u64,
-    pub quote_amount_in: u64,
-    pub lp_fee_basis_points: u64,
-    pub lp_fee: u64,
-    pub protocol_fee_basis_points: u64,
-    pub protocol_fee: u64,
-    pub quote_amount_in_with_lp_fee: u64,
-    pub user_quote_amount_in: u64,
-    pub pool: Pubkey,
-    pub user: Pubkey,
-    pub user_base_token_account: Pubkey,
-    pub user_quote_token_account: Pubkey,
-    pub protocol_fee_recipient: Pubkey,
-    pub protocol_fee_recipient_token_account: Pubkey,
-    pub coin_creator: Pubkey,
-    pub coin_creator_fee_basis_points: u64,
-    pub coin_creator_fee: u64,
-    pub track_volume: bool,
-    pub total_unclaimed_tokens: u64,
-    pub total_claimed_tokens: u64,
-    pub current_sol_volume: u64,
-    pub last_update_timestamp: i64,
-    pub min_base_amount_out: u64,
-    pub ix_name: String,
-    pub cashback_fee_basis_points: u64,
-    pub cashback: u64,
-    pub buyback_fee_basis_points: u64,
-    pub buyback_fee: u64,
-    pub virtual_quote_reserves: i128,
-    pub can_boost: bool,
-    pub base_supply: u64,
-    pub holder_rewards_bps: u64,
-    pub holder_rewards: u64,
-    pub creator_fee_unclaimed: u64,
-    pub quote_transfer_fee: u64,
-}
+pub use crate::instructions::swap::buy::BuyEvent;
 
 #[event]
 #[derive(Clone)]
@@ -90,37 +45,7 @@ pub struct SellEvent {
     pub quote_transfer_fee: u64,
 }
 
-pub use crate::pump_fees::types::{Fees as TradeFees, FeeTier as TradeFeeTier};
-pub use crate::pump_fees::accounts::FeeConfig as TradeFeeConfig;
-pub const FEE_OWNER: Pubkey = anchor_lang::solana_program::pubkey!("pfeeUxB6jkeY1Hxd7CsFCAjcbHA9rWtchMGdZ6VojVZ");
-pub const PUMP: Pubkey = anchor_lang::solana_program::pubkey!("6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P");
-#[derive(Accounts)]
-pub struct TradeV2<'info> {
-    #[account(mut, has_one = base_mint @ PumpAmmError::InvalidBaseMint, has_one = quote_mint @ PumpAmmError::InvalidQuoteMint, has_one = pool_base_token_account @ PumpAmmError::InvalidPoolBaseTokenAccount, has_one = pool_quote_token_account @ PumpAmmError::InvalidPoolQuoteTokenAccount)]
-    pub pool: Box<Account<'info, Pool>>,
-    #[account(mut)] pub user: Signer<'info>,
-    pub global_config: Box<Account<'info, GlobalConfig>>,
-    pub base_mint: Box<InterfaceAccount<'info, Mint>>,
-    pub quote_mint: Box<InterfaceAccount<'info, Mint>>,
-    #[account(mut)] pub user_base_token_account: Box<InterfaceAccount<'info, TokenAccount>>,
-    #[account(mut)] pub user_quote_token_account: Box<InterfaceAccount<'info, TokenAccount>>,
-    #[account(mut)] pub pool_base_token_account: Box<InterfaceAccount<'info, TokenAccount>>,
-    #[account(mut)] pub pool_quote_token_account: Box<InterfaceAccount<'info, TokenAccount>>,
-    pub base_token_program: Interface<'info, TokenInterface>,
-    pub quote_token_program: Interface<'info, TokenInterface>,
-    pub system_program: Program<'info, System>,
-    #[account(init_if_needed, payer = user, space = 137, seeds = [b"user_volume_accumulator", user.key().as_ref()], bump)]
-    pub user_volume_accumulator: Box<Account<'info, UserVolumeAccumulator>>,
-    #[account(seeds = [b"fee_config", crate::ID.as_ref()], bump = fee_config.bump, seeds::program = FEE_OWNER)]
-    pub fee_config: Box<Account<'info, TradeFeeConfig>>,
-    /// CHECK: Token owner, mint and associated address are checked by the handler.
-    #[account(mut)] pub buyback_fee_recipient: UncheckedAccount<'info>,
-    /// CHECK: PDA signer for self events.
-    #[account(seeds=[b"__event_authority"], bump)] pub event_authority: AccountInfo<'info>,
-    pub program: Program<'info, PumpAmmProgram>,
-}
-pub struct PumpAmmProgram;
-impl Id for PumpAmmProgram {fn id()->Pubkey {crate::ID}}
+pub(crate) use crate::instructions::swap::trade_v2::*;
 fn checked64(x: u128) -> Result<u64> { u64::try_from(x).map_err(|_| error!(PumpAmmError::Truncation)) }
 use crate::curve::fees::fee;
 fn fees(a: &TradeV2, base_reserve: u64, quote_reserve: u64, quote_amount: u64) -> Result<crate::curve::fees::AppliedFees> {

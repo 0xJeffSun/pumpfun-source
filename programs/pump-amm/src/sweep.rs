@@ -42,17 +42,11 @@ pub fn execute(ctx: Context<SweepFees>, creator: bool) -> Result<()> {
             anchor_lang::error::ErrorCode::ConstraintSeeds
         );
     } else {
-        let key = a.recipient.key();
-        let valid = if a.pool.is_mayhem_mode {
-            a.global_config.reserved_fee_recipient == key
-                || a.global_config.reserved_fee_recipients.contains(&key)
-        } else {
-            a.global_config
-                .protocol_fee_recipients
-                .binary_search(&key)
-                .is_ok()
-        };
-        require!(valid, PumpAmmError::InvalidProtocolFeeRecipient);
+        crate::instructions::swap::validate_protocol_fee_recipient(
+            &a.global_config,
+            &a.recipient,
+            a.pool.is_mayhem_mode,
+        )?;
     }
     let info = a.pool.to_account_info();
     if info.data_len() < 287 {
