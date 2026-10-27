@@ -1667,3 +1667,14 @@ balances do not establish mainnet reachability or an exploit; failed events are
 not successful payments. Originals, prior evidence and selected sources remain
 unchanged. Earlier 554-based experiments were superseded after PR215 merged and
 are excluded from these acceptance counts.
+
+## Mayhem deployed trade-wrapper attribution
+
+The [new audit and source controls](../research/mayhem-trade-wrapper-attribution/README.md)
+map all six trade bodies from actual wrapper log literals and direct calls.
+O0092/O0093 belong to PumpSwap Buy/Sell rather than legacy Buy/Sell. Two actual
+15-input builds preserve all 188 examined normalized matches and 58 raw-local
+matches; neither quote helper is a full counterpart. The branch/error control
+passes 1,257 fresh BuyPumpSwap comparisons across three quote families with
+2,514 verified signatures. Token-2022 fixtures all reject. Full handlers, eight
+admitted body gaps, opaque scope and whole-file equality remain unresolved.

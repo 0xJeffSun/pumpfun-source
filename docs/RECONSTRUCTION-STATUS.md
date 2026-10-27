@@ -720,3 +720,15 @@ The [interval-location packet](../research/mayhem-interval-location-recovery/REA
 ## Latest Mayhem Sell validation
 
 [Sell source-origin recovery](../research/mayhem-sell-origin-recovery/README.md) builds twice to the same artifact. It passes 396 fresh Sell cases with equality of every non-compute log line, 1,032 admin cases, and three sequential Burn families. All 2,868 signatures and 624 successful admin account-byte outcomes verify independently. The [441-window inventory](../research/mayhem-sell-origin-recovery/functions.tsv) retains 188 matching examined bodies, eight unmatched bodies and 245 opaque windows. The new source fixes the earlier diagnostic differences, not full body or whole-file identity.
+
+## Mayhem trade attribution and AMM controls
+
+The [wrapper audit](../research/mayhem-trade-wrapper-attribution/README.md)
+verifies the six trade handler names from deployed instruction log literals and
+direct calls. O0077/O0079 are PumpSwap Buy/Sell; O0081/O0082 are legacy Buy/Sell;
+O0083/O0084 are V2 Buy/Sell. Two source controls retain the 188 known normalized
+and 58 all-inventory raw-local matches. The refined AMM Buy control passes 1,257
+fresh comparisons and 2,514 signatures, including rejection-only Token-2022
+coverage. Neither it nor its 1,104-byte helper matches the complete original body.
+These controls do not replace the Sell-origin baseline or change the eight
+admitted gaps, 245 opaque windows, or unresolved ELF identity.

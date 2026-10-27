@@ -14,12 +14,12 @@ are separate measurements; none implies whole-program or semantic completeness.
 | Unmatched window | Original extent | Work |
 | --- | --- | --- |
 | O0071 | 55,448–61,200 | Burn body |
-| O0077 | 85,600–95,336 | Trade handler body |
-| O0079 | 95,848–113,160 | Trade handler body |
-| O0081 | 113,672–127,520 | Trade handler body |
+| O0077 | 85,600–95,336 | BuyPumpSwap body |
+| O0079 | 95,848–113,160 | SellPumpSwap body |
+| O0081 | 113,672–127,520 | Legacy Buy body |
 | O0082 | 127,520–140,512 | Legacy Sell body |
-| O0083 | 140,512–159,160 | Trade handler body |
-| O0084 | 159,160–177,256 | Trade handler body |
+| O0083 | 140,512–159,160 | BuyV2 body |
+| O0084 | 159,160–177,256 | SellV2 body |
 | O0095 | 188,864–190,160 | Quote-aware state/reserve validation |
 
 The eight extents total 97,680 bytes. This is only the admitted body remainder;
@@ -57,3 +57,14 @@ The [quote-validator controls](../research/mayhem-quote-validator-controls/READM
 The [interval-location recovery](../research/mayhem-interval-location-recovery/README.md) corrects the overflow location with exactly one changed data byte and identical instructions. Its fresh 396-case/792-signature Sell run passes, reducing known non-compute log differences from four to three. O0095 is still unmatched after five further [source controls](../research/mayhem-quote-validator-followups/README.md). The remaining subtraction and division panic evidence points to state.rs 321 and state.rs 398; O0092/O0093 are additional arithmetic-body leads, not yet admitted as recovered.
 
 The [refreshed 441-window Mayhem inventory](../research/mayhem-sell-origin-recovery/functions.tsv) retains opaque scope explicitly. Recovering the shared arithmetic and validation source origins removed the previous four diagnostic discrepancies without adding complete body matches. The eight admitted body gaps and whole-ELF work remain.
+
+The [deployed-wrapper attribution](../research/mayhem-trade-wrapper-attribution/README.md)
+now identifies all six trade bodies through exact instruction log strings and
+direct calls. O0092 is called by BuyPumpSwap and O0093 by SellPumpSwap; their
+reserve arguments must not be assumed to describe legacy Buy. Two actual AMM
+helper builds preserve 188 normalized and 58 raw-local matches without recovering
+a new complete body. The branch/error control passes 1,257 fresh BuyPumpSwap
+comparisons across three quote families (2,514 signatures); Token-2022 covers
+rejections only. The baseline remains the Sell-origin packet. Next AMM arithmetic
+work should reconcile the original 1,256-byte O0092 with the 1,104-byte control,
+including argument lowering and cap-branch structure, before promoting it.

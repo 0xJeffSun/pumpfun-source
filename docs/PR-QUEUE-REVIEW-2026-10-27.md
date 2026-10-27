@@ -161,3 +161,14 @@ with a single literal package-local whitespace rule. The two parser gains and
 attributed distribution-helper composition remain an independent 563-window
 source proposal; no new compiler or runtime execution is claimed by this review.
 It is not combined with the other 563/564-window branch or the pinned inventory.
+
+## PR219: native payout arithmetic
+
+Merged as `427ddc0783ff306ee26eb66f2586ed637379b00c`. Review checked the three
+source changes and saved build/regression evidence, then independently reran
+all 119 focused cases: 38 baseline mismatches, zero proposal mismatches. Overflow
+rollback and V2 native no-op diagnostics are covered. The packet reports 17,331
+saved regression comparisons and preserves 559 normalized / 143 raw-local
+counterparts; no new complete body is claimed. This review did not rerun that
+full suite or compile the candidate. The separate Fees proposal does not replace
+the pinned inventory. GitHub confirms the PR is merged.
