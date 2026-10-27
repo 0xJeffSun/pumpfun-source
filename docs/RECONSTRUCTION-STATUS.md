@@ -282,7 +282,7 @@ The newly merged studies recover:
 | 192-byte fee-total predicate at 700568 | [Full Linux integration](../research/fees-total-predicate-integration/README.md); panic leaf, message and source coordinates checked |
 | Two 624-byte setters at 260568 and 261192 | [Setter recovery](../research/fees-config-setter-recovery/README.md); error origins, field stores and ten direct callee bindings checked |
 | V2 parser (352 bytes), cleanup (776 bytes), dispatcher (1,104 bytes) | [V2 ownership](../research/fees-sharing-owned-v2/README.md), integrated with the setters; cleanup raw bytes equal |
-| Two 4,160-byte tier bodies, 368-byte reserve and 200-byte bounds-panic bodies | [Tier replacement/upsert recovery](../research/fees-tier-splice-recovery/README.md); 57 direct callee-body bindings checked |
+| Two 4,160-byte tier bodies, 368-byte reserve and 200-byte slice-length-mismatch panic bodies | [Tier replacement/upsert recovery](../research/fees-tier-splice-recovery/README.md); 57 direct callee-body bindings checked |
 | Configuration/stable updates (2,608 / 2,568 bytes), normal/stable upserts (2,528 bytes each) | [Event and admin-source recovery](../research/fees-config-event-recovery/README.md); duplicate upserts distinguished by outgoing calls |
 
 These are complete normalized windows, not merely matching diagnostic fragments.
@@ -368,6 +368,17 @@ All four direct callee bodies and both referenced panic locations match. The
 helper is wired into both existing fee-sharing callers; those full callers
 remain unresolved. The change adds one normalized body with no lost coverage,
 and passes fresh broad and retained focused regression suites.
+
+### Tier-copy slice panic data
+
+The [slice-origin contract study](../research/fees-slice-origin-contract/README.md)
+corrects four location records on its reproduced PR #149 baseline. Only eight
+ELF bytes change and the full instruction section remains raw-equal. It also
+binds the real caller edges, three message pieces and numeric/panic callees,
+identifying original 784,168 as a source/destination slice-length-mismatch
+panic, rather than an ordinary index-bounds panic. It adds no body matches.
+Those four location corrections still need to be carried into the latest
+research source; its earlier 368-pair counts do not replace the current frontier.
 
 ## Public behavior: reconstructed is not perfect
 

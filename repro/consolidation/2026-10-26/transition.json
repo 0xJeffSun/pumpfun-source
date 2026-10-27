@@ -7,8 +7,8 @@
     {
       "path": "README.md",
       "before_sha256": "cae913d4d3f2066403162f653a0cf35b39620fb08877b1b308c08ccce4a53678",
-      "after_sha256": "5c8aae3572a93ef12ce1c273c138139abeff1db3e35c68305588cbb78170c279",
-      "reason": "Record the recovered common quote predicate, exact panic-location records and 376/62 Fees frontier without changing selected artifacts."
+      "after_sha256": "e28660befc67c586b74b9816f6f4f78b0de311cd9a6b25235dc072c581a2900e",
+      "reason": "Link verified tier-copy panic data and accurately retain its older-candidate scope and pending integration into the latest research frontier."
     },
     {
       "path": ".github/workflows/verify.yml",
