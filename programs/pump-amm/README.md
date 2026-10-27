@@ -1,26 +1,25 @@
 # PumpSwap source reconstruction
 
-The maintained source is the [native-fee and CPI checkpoint](../../repro/pump_amm/native-fee-cpi-recovery-20261027/README.md),
-candidate `a4b978ee1ab15dd822a31bc42e85d55e409f4e777f7af671a3197ea175891101`.
-It recovers native transfer-fee handling, buyback diagnostics, multihop real-reserve
-protection and generated account/CPI interfaces while preserving earlier recovery.
+The maintained source is the [account-context and ordering checkpoint](../../repro/pump_amm/account-context-recovery-20261027/README.md),
+candidate `badc94982f2ae20adc2a6be7fd22bba9d900c289de7c3b9e7475847af960ca7d`. It restores native account layouts, helper boundaries
+and fee, mint-mode, incentive and creator-reassignment ordering.
 
-The candidate has **599/785 normalized original window matches (76.3%)**, including
-**125 raw matches**, and **186 unmatched windows**. It gains 13 normalized matches
-without losing any from the preceding checkpoint. Matched original text is
-**663,840/1,162,040 bytes (57.1%)**; whole-ELF equality remains false. Two strict
-offline Linux v1.44 builds reproduce the same artifact.
+It matches **623/785 normalized original windows (79.4%)**, including **128 raw
+bodies**, and covers **727,352/1,162,040 text bytes (62.6%)**. It gains 24 windows
+without losing any from the prior checkpoint; **162 windows remain** and whole
+ELF identity is false. Two strict offline builds reproduce the same artifact.
 
-All 17,462 corpus cases pass, with 35,074 executions and 35,418 verified signature
-fields. Retained supplemental suites were rerun, including 934 decoder/TLV cases,
-91 CPI probes and expanded fee, cap, buyback, account and legacy-preview cases.
-These counts overlap. Recorded-log comparisons exclude source coordinates and
-consumed compute where documented; the local synthetic fixtures do not establish
-current-chain acceptance or exhaustive behavior.
+All 17,462 full cases pass with 35,074 executions and 35,418 verified signatures.
+Retained supplemental and expanded continuation probes also pass. Counts overlap.
+A separate follow-up probe still differs in 12 of 24 creator-migration constraint
+cases; the missing canonical-pool guard remains open in this checkpoint.
+Eight creator-order cases use an explicitly synthetic Pump CPI caller; the other
+named continuation groups use captured dependencies. Source-coordinate and
+compute log normalization is documented in each packet.
 
-Full code/data/call identity, historical build provenance and authentic fixed-admin
-`create_config` success remain unfinished. The checkpoint binds 45 canonical source
-inputs to 46 workspace inputs and 169 authenticated registry inputs.
+The recipe binds 47 canonical inputs to 48 workspace and 169 authenticated registry
+inputs. Full code/data/call identity, historical toolchain provenance, exhaustive
+behavior and authentic fixed-admin create_config success remain open.
 
 The paragraphs below describe historical checkpoints.
 

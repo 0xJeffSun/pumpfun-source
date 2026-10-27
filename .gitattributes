@@ -1365,3 +1365,4 @@ repro/pump_amm/native-fee-cpi-recovery-20261027/results/** -whitespace
 # Preserve exact Fees program-ID source and patch receipt bytes.
 research/fees-program-id-references/overrides/** -whitespace
 research/fees-program-id-references/source.patch -whitespace
+repro/pump_amm/account-context-recovery-20261027/results/** -whitespace

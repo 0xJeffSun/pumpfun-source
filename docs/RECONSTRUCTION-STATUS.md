@@ -6,7 +6,7 @@ This review updates the research frontier while preserving the selected-checkpoi
 contains every one of the **4,415 selected/research function-window rows**.
 
 The generated inventory is a dated snapshot. Later maintained selections now
-include Pump Round21 and the AMM native-fee/CPI recovery; their current counts and
+include Pump Round21 and the AMM account-context recovery; their current counts and
 evidence are in the [repository overview](../README.md). The current rows below
 are separate from the historical rows, and do not rewrite that snapshot.
 
@@ -52,18 +52,18 @@ analysis. Candidate symbol names are hypotheses about original identity.
 | Mayhem historical selected | 441 | 58 | 131 | 7 | 245 |
 | Relay historical source 15 | 492 | 33 | 89 | 370 | 0 |
 | **Pump current Round21** | **1,035** | **123** | **585** | **327** | **0** |
-| **PumpSwap current** | **785** | **125** | **474** | **186** | **0** |
+| **PumpSwap current** | **785** | **128** | **495** | **162** | **0** |
 | **Fees latest research** | **585** | **198** | **380** | **7** | **0** |
 | **Mayhem latest research** | **441** | **100** | **329** | **12** | **0** |
 | **Relay canonical selection** | **492** | **492** | **0** | **0** | **0** |
 
-The current rows are bound to [Pump Round21](../repro/pump/main-contract-round21-20261027/README.md), [AMM native-fee/CPI recovery](../repro/pump_amm/native-fee-cpi-recovery-20261027/README.md), [Fees program-ID recovery](../research/fees-program-id-references/README.md) and [Mayhem BuyV2 sizing recovery](../research/mayhem-sizing-panic-recovery/README.md); they extend the dated generated inventory below. Each row is a partition, not a score of semantic correctness. The historical selected Mayhem source
+The current rows are bound to [Pump Round21](../repro/pump/main-contract-round21-20261027/README.md), [AMM account-context recovery](../repro/pump_amm/account-context-recovery-20261027/README.md), [Fees program-ID recovery](../research/fees-program-id-references/README.md) and [Mayhem BuyV2 sizing recovery](../research/mayhem-sizing-panic-recovery/README.md); they extend the dated generated inventory below. Each row is a partition, not a score of semantic correctness. The historical selected Mayhem source
 ledger has 257 opaque windows, 12 of which happen to match local raw bytes.
 Selected Fees retains two call-conflicting rows; body existence does not resolve
 those conflicts. Different programs and studies use different matching rules.
 
-Current AMM matched windows cover **663,840 of 1,162,040 original text bytes
-(57.1%)**. Its 599 normalized matches include the 125 raw-local matches; complete
+Current AMM matched windows cover **727,352 of 1,162,040 original text bytes
+(62.6%)**. Its 623 normalized matches include the 128 raw-local matches; complete
 ELF identity remains false.
 
 - [Every exact local body, with candidate names and original addresses](../repro/reconstruction-status-2026-10-26/raw-body-matches.md).
@@ -552,7 +552,7 @@ count excludes the separately tracked Relay. In particular:
 | Program | Partial / unaccepted selected handlers | Other known gaps |
 | --- | --- | --- |
 | Pump | Partial: `buy_v3`, `sell_v3`, `buy_exact_quote_in_v3`, `create_v2`, `multi_hop_curve_swap`. Unaccepted: `admin_update_token_incentives`, `claim_token_incentives`, `set_mayhem_virtual_params` | `sell_v2` quote transfer-fee minimum-output/event discrepancy; full extension, account, error precedence and event coverage |
-| PumpSwap | `create_config` successful fixed-admin initialization lacks accepted runtime validation | 186 unmatched windows; full code/data/call identity, diagnostics and historical provenance remain open |
+| PumpSwap | `create_config` successful fixed-admin initialization lacks accepted runtime validation | 162 unmatched windows; full code/data/call identity, diagnostics and historical provenance remain open |
 | Fees | All 31 selected handlers have bounded coverage | Does not make remaining business bodies exact or establish all-state equivalence |
 | Mayhem | `initialize_mayhem_state` unaccepted in selected build; corrected overlay has rejection and real Pump-CPI evidence | Seven admitted unmatched bodies, 257 opaque rows, diagnostic/error differences and five unknown GlobalParams field roles |
 

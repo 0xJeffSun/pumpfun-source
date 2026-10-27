@@ -232,7 +232,7 @@ pub fn execute<'info>(
             cashback(a, ctx.remaining_accounts, creator_fee, signer)?;
             next = 2;
         }
-        crate::legacy_sell::validate_pool_v2(ctx.remaining_accounts, &a.base_mint.key(), next)?;
+        crate::instructions::swap::sell::validate_pool_v2(ctx.remaining_accounts, &a.base_mint.key(), next)?;
         next += 1;
         if !a.pool.is_cashback_coin {
             crate::utils::token::transfer_from_pool(
@@ -450,18 +450,5 @@ fn cashback<'info>(
         .checked_add(amount)
         .ok_or_else(|| error!(PumpAmmError::Overflow))?;
     accumulator.try_serialize(&mut &mut info.try_borrow_mut_data()?[..])?;
-    Ok(())
-}
-
-
-pub(crate) fn validate_pool_v2(
-    remaining_accounts: &[AccountInfo<'_>],
-    base_mint: &Pubkey,
-    index: usize,
-) -> Result<()> {
-    let account = remaining_accounts.get(index)
-        .ok_or_else(|| error!(PumpAmmError::InvalidPoolV2))?;
-    let expected = Pubkey::find_program_address(&[b"pool-v2", base_mint.as_ref()], &crate::ID).0;
-    require!(account.key() == expected, PumpAmmError::InvalidPoolV2);
     Ok(())
 }

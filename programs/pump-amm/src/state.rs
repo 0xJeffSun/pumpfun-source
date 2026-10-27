@@ -1,5 +1,6 @@
 mod global_config;
 mod pool;
+mod volume_accumulator;
 use anchor_lang::Discriminator;
 use anchor_lang::prelude::*;
 #[event]

@@ -35,6 +35,29 @@ pub fn transfer_checked<'info>(
     ), amount, mint.decimals)
 }
 
+pub fn transfer_from_user_volume_accumulator<'info>(
+    token_program: &AccountInfo<'info>,
+    mint: &InterfaceAccount<'info, Mint>,
+    source: &InterfaceAccount<'info, TokenAccount>,
+    destination: &InterfaceAccount<'info, TokenAccount>,
+    amount: u64,
+    user: &Pubkey,
+    accumulator: &Account<'info, UserVolumeAccumulator>,
+    bump: u8,
+) -> Result<()> {
+    let authority = accumulator.to_account_info();
+    let result = transfer_checked(
+        token_program,
+        mint,
+        source,
+        destination,
+        &authority,
+        amount,
+        &[&[b"user_volume_accumulator", user.as_ref(), &[bump]]],
+    );
+    result
+}
+
 pub fn mint_to_pool<'info>(
     token_program: &Program<'info, Token2022>,
     mint: &InterfaceAccount<'info, Mint>,
