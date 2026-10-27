@@ -15,10 +15,11 @@ checkpoint, publishes each combined candidate as a packet `gNN-c<normalized>/`, 
 ## Composition ledger on 647 (patch id -> status, counts)
 | step | patch id | status | native (norm/raw) | Linux (norm/raw/unmatched) |
 | --- | --- | --- | --- | --- |
-| u0 | frontier 647 | base | 642/139 | 647/148/138 (control build pending) |
-| u1 | amm-lo@dda784ddc (admin toggles, disable, deposit/withdraw placement, legacy_buy.rs -> instructions/swap/buy.rs with 647's BuyEvent block, get_buyback_accounts 116/121, derive 133) | building | | |
-| u1b | u1 + 623 inline reserve arithmetic restored in legacy buy (closures buy.rs:387/391/395/404; event uses the start-of-trade values again) | building | | |
-| u2/u2b | u1/u1b + amm-hi@d92fefba8 maintained-source gains (harvest helper, `pub mod sweep`, `pub use trade::{…}`, transfer_fee.rs:57) | building | | |
+| u0 | frontier 647 | base | 642/139 | 647/148/138 (control rebuild running) |
+| u1 | amm-lo@dda784ddc (admin toggles, disable, deposit/withdraw placement, legacy_buy.rs -> instructions/swap/buy.rs after 647's BuyEvent block, get_buyback_accounts 116/121, derive 133) | included via u1b | 663/139 (+21, 0 lost) | |
+| u1b | u1 + 623 inline reserve arithmetic restored in legacy buy, placed at buy.rs 382-404 (closures 387/391/395/404) | included | 667/139 (+4, 0 lost) | |
+| u2b | u1b + amm-hi@d92fefba8 maintained-source gains | included (g01) | 675/139 (+8, 0 lost) | 2 builds running; native runtime 25/17,462/0 |
+| (u2) | u1 + amm-hi (no arithmetic restore) | superseded by u2b | 671/139 | |
 | — | amm-mid@b49edd851 (0x52c58) | superseded: 0x52c58 already matched in 647 | | |
 | — | amm-hi helper-crate patch | kept out (DIRECTIVES 07:30) | | |
 | — | layout-amm text order | layout lane owns re-generation on the composition | | |
