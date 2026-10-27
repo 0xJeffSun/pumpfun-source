@@ -89,3 +89,14 @@ dummy operations, invented padding or executable patching is an identity result.
 Finite local replay does not establish exhaustive behavior or current-chain
 acceptance. Source-coordinate and compute-log normalizations must remain
 explicit for each packet. Whole-ELF identity remains false.
+
+## Ordered direct-call audit
+
+The [qualified-parent direct-call relation](../research/mayhem-direct-call-closure-20261027/README.md)
+retains 594 of 722 normalized pairs, covering 414 of the 432 body-matched
+windows. Eighteen windows have no direct-closed counterpart: ten depend on
+unmatched handlers, and eight on an allocator-provider mismatch rooted at
+O0210. O0209 has a matching body elsewhere, but O0210 calls a different
+`finish_grow` specialization. This adds a target-by-target recovery obligation,
+not a new body match or semantic-equivalence claim. Indirect/data closure and
+whole-ELF identity remain open.
