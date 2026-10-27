@@ -970,3 +970,49 @@ windows and loses two raw-local matches. No trial is promoted; the accepted
 inventory remains 488 normalized / 142 raw-local. One control has a fresh
 all-dependency v1.48 rebuild; other retained controls contain actual root builds
 with dependency-cache reuse. There is no new target execution claim.
+
+## Relay event initializer controls — 26 October 2026
+
+[Two further event initializer orders](../repro/donation-relay/donation-event-initializer-controls/README.md)
+were compiled from the 488-window source after independently reproducing the
+accepted stripped and unstripped baseline artifacts. Ordering expressions by
+physical event layout or reversing the numeric field evaluation order recovers
+no complete original body. Both retain 488 normalized / 142 raw-local matches;
+92–95 and whole-file identity remain open. The retained receipts each contain
+one actual root invocation. An initial cached-root observation was rejected and
+rerun after refreshing input mtimes. No new runtime claim or candidate promotion
+is made.
+
+[All 24 owned AccountInfo construction orders were also rechecked](../repro/donation-relay/donation-context-488-controls/README.md)
+on the recovered 488-window source, rather than relying only on the older
+482-window controls. Every retained run compiled the root crate. All preserve
+exactly the same 488 normalized and 142 raw-local matches; no missing donation
+body is recovered and no existing match is lost. These controls remain rejected.
+
+## Relay argument initializers and ELF layout — 26 October 2026
+
+[Two DonationArgs initializer controls](../repro/donation-relay/donation-argument-initializer-controls/README.md)
+compile to the exact same stripped and unstripped after-close artifacts. Moving
+the message clone first inside its aggregate or following field declaration
+order does not recover a body. This differs from the prior whole-argument-local
+and Context-construction controls.
+
+The [ELF layout audit](../repro/donation-relay/elf-layout-488-audit/README.md)
+independently accounts for the112-byte text surplus using the four unmatched
+body-size deltas. Other section sizes already agree, as do all2327 relocation
+type/symbol records. Function permutations still prevent raw equality even if
+the four sizes were repaired. The capture includes12168 zero bytes after its
+last ELF structure; `capture.py` retained that exact ProgramData account suffix.
+This is a deployment-allocation provenance question, not a compiler-padding fix.
+
+[Three entrypoint/name/module controls](../repro/donation-relay/entrypoint-layout-controls/README.md)
+retain488 normalized bodies but do not restore the original function order.
+The ordinary Anchor entrypoint adds one raw-local match (142→143); the `contracts`
+name and instruction-boundary controls have140 each. No variant is promoted.
+
+The [deployment-allocation provenance packet](../repro/donation-relay/allocation-provenance/README.md)
+now decodes all13 returned ProgramData transactions. Initial capacity546,944 plus
+five explicit extensions (33,504,100,000,100,000,40,000,10,000) exactly explains
+830,448 captured payload bytes. The last upgrade slot415422992 and later authority
+change agree with captured metadata. This resolves the unexplained-size question;
+it does not prove a matching Rust ELF or permit padding compiler output.
