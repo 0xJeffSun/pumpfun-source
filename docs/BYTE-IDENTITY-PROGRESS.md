@@ -682,3 +682,23 @@ correspondences (65 additional duplicates), 82 unattributed duplicate windows,
 3,133 bound-target edges and 19 different-body frontier edges. Fresh full and
 focused regressions, preserved data contracts and instruction-message checks
 pass. This is a research result, not selected promotion or whole-file equality.
+
+## Fees: unchecked full-buffer convention restored
+
+The [prefix recovery](../research/fees-unchecked-prefix-recovery/README.md)
+recovers original 18,384 (1,144 bytes) by consuming the eight-byte account prefix
+before the payload decoder. It preserves checked parsing and the existing
+2,648-byte payload body. All 11 direct helper callees and the real incoming
+initializer closure match; no prior raw or normalized match is lost.
+
+Fees now has **395 unique pairs, 147 ambiguous original windows and 43 unmatched
+windows**, partitioned as 118 raw-local and 424 normalized-only matches. Residual
+windows span 248,904 bytes (31.1% of original text). The graph has 460 attributed
+pairs, 82 unattributed duplicate windows, 3,145 bound-target edges and 18
+different-body frontier edges.
+
+The parent fails the added native prefix regression; the correction passes 35
+host contract cases. Fresh full and focused SBF regressions also pass, but their
+17,331-case suite does not invoke the fixed-admin FeeConfig initializer. This
+is not a claim of authorized initializer execution. Selected sources and
+artifacts remain unchanged, and whole-file equality is still unachieved.
