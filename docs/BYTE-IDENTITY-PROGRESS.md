@@ -4,6 +4,22 @@ The [full audit](RECONSTRUCTION-AUDIT.md) and its generated tables retain their
 explicit `1463bd22` snapshot. This log records later research without silently
 changing that baseline or promoting new selected artifacts.
 
+## Fees: current source recoveries composed at 569 matches
+
+The [current-source union](../research/fees-current-569-union/README.md) preserves
+the merged authorization, sharing-parser and native-payout recoveries, then adds
+the full legacy transfer adapter and both generated transfer CPI bodies. The
+result is **569/585 normalized original functions, 143 raw local matches, 168
+equal Location observations and 16 unmatched functions**. All earlier matches
+and positive direct-callee observations remain; the V2 outer transfer adapter
+is still unmatched.
+
+Two native Rust builds are byte-identical to each other. Fresh execution passes
+17,331 regression cases, 119 arithmetic-boundary cases, eight quote-owner cases
+and 24 preprocessing-boundary cases. The 119-case matrix preserves the merged
+38 behavioral corrections. Whole-ELF/capture equality remains false and no
+canonical selected checkpoint changes.
+
 ## Fees: shared authorization body recovered
 
 The [authorization recovery](../research/fees-authorization-source-recovery/README.md)
