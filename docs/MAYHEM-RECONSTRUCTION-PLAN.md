@@ -120,3 +120,18 @@ The checked decoder calls original O0202 (538104, 288 bytes), which remains
 unmatched. Isolating account-name formatting changes the candidate's outlining
 but has not produced another complete match. Do not treat a similar size or an
 alignment-aid diff as an identity result; preserve complete call/data checks.
+
+## Parallel continuation
+
+The current composed checkpoint is [375 matching windows](../research/mayhem-parallel-recovery/README.md).
+The [work map](MAYHEM-PARALLEL-WORK.md) assigns all 66 remaining windows plus
+transitive data/call, compiler, dependency and ELF-layout work. Accounts/codecs,
+trade/state logic and runtime/interface/layout each run in an isolated build
+lane while integration verifies the combined source and signed runtime output.
+
+The next correctness obligation includes the missing sweep rate check exposed
+by 34/150 targeted cases. A separate local correction passes those cases and the
+692-case sweep suite, but it must be composed and independently verified before
+its behavior is credited to this checkpoint. Subsequent account, withdrawal and
+AMM interface recoveries likewise retain their own source/artifact boundaries
+until integration. No current count is a whole-program completion percentage.

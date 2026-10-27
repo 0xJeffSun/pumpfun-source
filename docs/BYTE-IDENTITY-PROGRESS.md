@@ -4,6 +4,20 @@ The [full audit](RECONSTRUCTION-AUDIT.md) and its generated tables retain their
 explicit `1463bd22` snapshot. This log records later research without silently
 changing that baseline or promoting new selected artifacts.
 
+## Mayhem: thirty windows recovered by composed parallel work
+
+The [parallel checkpoint](../research/mayhem-parallel-recovery/README.md) adds
+30 complete normalized windows and preserves every prior normalized/raw match.
+It reaches **375/441**, with **59 raw-local matches** and **66 unmatched windows**
+covering 268,000 original text bytes. The two-build, 60-input source includes real
+account/data layouts and source locations, Burn evaluation order, shared state
+methods, and a separate dependency for the used Pump V2 CPI interface.
+
+Fresh regressions pass, but a new 150-case rate-limit matrix reveals 34 known
+sweep differences. These are recorded as remaining behavior, not hidden by the
+passing legacy suite. The parallel lanes are continuing the correction and the
+remaining function/data/ELF work; whole Mayhem identity is still false.
+
 ## Mayhem: complete curve representation recovers four more windows
 
 The [full curve recovery](../research/mayhem-full-curve-recovery/README.md)

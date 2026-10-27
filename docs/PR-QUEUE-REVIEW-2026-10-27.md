@@ -323,3 +323,25 @@ this packet and are not adopted as independently verified facts. Its PR222
 570-window source is separate from the later 573-window composition. Merged
 packet files match the reviewed head. Both drafts were marked ready after the
 GitHub API quota reset; selected checkpoints remain unchanged.
+
+## PR232: complete legacy Social branch layout
+
+Reviewed head `c5e0c53e5b9f6395aa61aae93e831d3933a02b7f`, merged as
+`baef79f07fe862ab930155ca2c6e66834b0bf510`. Full parent-chain verification and
+three negative controls pass. Independent review recomputed 17,331 non-log
+comparisons and 18,520 signature entries. The complete 4,536-byte Social claim
+body, 26 callees and eight data references match; Fees advances to 574/585
+normalized windows with eleven unmatched. The nightly branch-likelihood hint
+is a sufficient reconstruction, not authenticated historical source syntax.
+
+## PR233: shared post-buy accounting calls
+
+Reviewed head `01905802324a9fd48c15bf4f97520c2b78b0b61a`, merged as
+`44bd439cc529f39f16819b81eb92e33788b4d9e6`. The packet verifier passed all
+5,907 saved comparisons and 11,814 signed-transaction checks, and rederived
+quote/CPI, successful account/event and rollback predicates. Diagnostic differences
+fall from 148 to 32 with no new differing case. It restores two real calls but
+adds no complete body match. The Linux control's 343 normalized/63 raw matches
+remain separate from the published Darwin source. This review did not execute
+a compiler or target, and did not assert composition with the newer parallel
+checkpoint's source. Original and selected checkpoints remain preserved.

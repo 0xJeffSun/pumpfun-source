@@ -8,13 +8,13 @@ now reproduces its full ELF and loader-allocated payload byte-for-byte.**
 Behavior is reconstructed handler by handler and checked with differential tests
 that run the captured original and the rebuilt candidate side by side in a local VM.
 
-Mayhem is the active reconstruction priority. The latest [full external curve recovery](research/mayhem-full-curve-recovery/README.md) adds four complete normalized windows while preserving the fourteen earlier parser gains. The full 441-window scan now has **59 raw-local matches, 286 normalized-only matches and 96 unmatched windows** spanning 348,576 text bytes. Whole-file identity and complete semantic/call/data closure remain unresolved.
-Two root builds agree. The new candidate passes 6,636 trade comparisons, 1,032 admin cases and three Burn families; 15,348 signature entries verify. The [work plan](docs/MAYHEM-RECONSTRUCTION-PLAN.md) tracks the remaining work, and the [trade-wrapper audit](research/mayhem-trade-wrapper-attribution/README.md) identifies the six handler bodies.
+Mayhem is the active reconstruction priority. The [parallel recovery checkpoint](research/mayhem-parallel-recovery/README.md) adds 30 complete normalized windows without losing earlier matches. The full 441-window scan now has **59 raw-local matches, 316 normalized-only matches and 66 unmatched windows** spanning 268,000 text bytes. Whole-file identity and complete semantic/call/data closure remain unresolved.
+Two builds agree. Fresh regression covers 6,636 trade comparisons, 1,032 admin cases, 1,601 fee-recipient/sweep/withdrawal cases and three Burn families. A separate targeted sweep-rate matrix exposes 34 differences in 150 cases; that known gap and its follow-up are tracked explicitly. The [parallel work map](docs/MAYHEM-PARALLEL-WORK.md) assigns all remaining windows, and the [work plan](docs/MAYHEM-RECONSTRUCTION-PLAN.md) records the broader completion gates.
 
 For subsequent gains and the latest research frontier, see the
 [byte-identity progress log](docs/BYTE-IDENTITY-PROGRESS.md).
 The [27 October queue review](docs/PR-QUEUE-REVIEW-2026-10-27.md) covers PRs
-#170–#231, including separately verified 399- and 401-pair Fees context candidates and
+#170–#233, including separately verified 399- and 401-pair Fees context candidates and
 source-only proposals. Those independent branches are not silently combined
 into the inventory below.
 

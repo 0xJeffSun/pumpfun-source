@@ -46,11 +46,11 @@ analysis. Candidate symbol names are hypotheses about original identity.
 | Fees selected | 585 | 102 | 363 | 120 | 0 |
 | Mayhem selected | 441 | 58 | 131 | 7 | 245 |
 | Relay historical source 15 | 492 | 33 | 89 | 370 | 0 |
-| **Fees latest research (PR229)** | **585** | **143** | **430** | **12** | **0** |
-| **Mayhem latest research** | **441** | **59** | **286** | **96** | **0** |
+| **Fees latest research (PR232)** | **585** | **143** | **431** | **11** | **0** |
+| **Mayhem latest research** | **441** | **59** | **316** | **66** | **0** |
 | **Relay canonical selection** | **492** | **492** | **0** | **0** | **0** |
 
-The current research rows are bound to the [Fees573 Buyback composition](../research/fees-current-573-buyback-union/README.md) and [Mayhem full curve recovery](../research/mayhem-full-curve-recovery/README.md); they extend the dated generated inventory below. Each row is a partition, not a score of semantic correctness. Mayhem's source
+The current research rows are bound to the [Fees Social branch recovery](../research/fees-social-branch-recovery/README.md) and [Mayhem parallel recovery](../research/mayhem-parallel-recovery/README.md); they extend the dated generated inventory below. Each row is a partition, not a score of semantic correctness. Mayhem's source
 ledger has 257 opaque windows, 12 of which happen to match local raw bytes.
 Selected Fees retains two call-conflicting rows; body existence does not resolve
 those conflicts. Different programs and studies use different matching rules.
@@ -811,3 +811,25 @@ Fresh runtime passes all 6,636 trade comparisons, 1,032 admin cases and 12 Burn
 transactions; 15,348 signatures verify. No initializer, whole-ELF or exhaustive
 semantic completion is claimed. The interpreted source cohort is 216 windows,
 with 206 matched, ten unmatched and 225 remaining without full source attribution.
+
+## Parallel Mayhem source checkpoint
+
+The [parallel recovery](../research/mayhem-parallel-recovery/README.md) composes
+30 additional normalized windows: serializers and decoders, account parsers,
+withdraw/pause methods, post-sell accounting, initialization closures, the Burn
+body, CPI error adapters and used Pump V2 interface builders. It retains all
+previous matches and reaches 375/441 (59 raw-local, 316 normalized-only), leaving
+66 windows and 268,000 text bytes unmatched. All immediate callee shapes match
+for 28 of the new windows; two account conversion helpers retain unmatched
+decoder callees. Data and transitive closure remain separate obligations.
+
+Two builds agree. Fresh standard regression passes 6,636 trade comparisons,
+1,032 admin cases, 1,601 extra fee/sweep/withdrawal cases and 12 Burn transactions.
+The expanded targeted sweep-rate matrix has 34 known differences in 150 cases;
+the earlier zero-rate fixtures did not establish that missing behavior. Its
+signed evidence is retained and a separate corrective candidate is being
+validated. Do not call the current checkpoint semantically complete.
+
+All remaining windows and the whole-ELF/data/toolchain tasks are assigned in the
+[parallel work map](MAYHEM-PARALLEL-WORK.md). The active lanes continue after this
+checkpoint; their subsequent uncomposed candidates are not silently added here.
