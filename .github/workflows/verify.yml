@@ -67,6 +67,8 @@ jobs:
               python -B research/fees-readonly-order-recovery/test_verify.py
               # Includes positive native-receipt verification before mutation checks.
               python -B research/fees-program-id-references/test_verify.py
+              python -B research/fees-work-continuation-20261027/test_restore.py
+              python -B research/fees-work-continuation-20261027/restore_combined.py
               python scripts/fees_validate_all.py --candidate repro/pump_fees/sharing-authorize-main-v144/main/candidate.so --output work/fee-handlers.json
               python scripts/fees_donation_sequence.py --candidate repro/pump_fees/sharing-authorize-main-v144/main/candidate.so --output work/donation-sequence.json
               python repro/pump_fees/initializer-history/replay_history.py --candidate repro/pump_fees/sharing-authorize-main-v144/main/candidate.so --output work/fees-init-history.json
