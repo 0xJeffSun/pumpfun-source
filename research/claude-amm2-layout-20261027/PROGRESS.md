@@ -22,13 +22,33 @@ for `pump_amm` (link order of `.text` / `.rodata` / `.data.rel.ro`, dependency-o
   Packet `g01-text-data-order-647/`. The second Linux build (`out/builds/edr-data-1`) was queued on the slot lock.
 - Shared tools published: `SP/shared/tools/elfdiff.py`, `SP/shared/tools/scoreboard.py` (README lines added).
 
+- g01 finalized (two identical Linux builds b05f7268/5edda6f5), PR #316 opened 12:29.
+- Main moved to `optional-context-recovery-20261027` (651/148/134, 97bd5553; same deps/lock as 647). Re-generated:
+  g02 = 651/168/134 (+20 raw, same windows, 0 lost), Linux ×2 identical `ef65f2fe…`/`039554e2…`, runtime
+  25/17,462/35,074/0, verify.py passes. Pushed into PR #316.
+
+## Pipeline for a new candidate (about 15 min of lane work plus slot-lock waits)
+
+    O=SP/lanes/layout/out; T=<packet>/tools
+    cp -c -R <checkpoint>/results/source $O/src/<x>; cp -c -R SP/lanes/layout/target/linux-ep221 SP/lanes/layout/target/b-<x>
+    cp -c -R SP/lanes/layout/cargo-home-ep221 SP/lanes/layout/ch-<x>        # one clone per concurrent build
+    python3 $T/build_linux.py --source $O/src/<x> --output $O/builds/<x>-default --cargo-home ... --target-cache ... --lock SP/shared/sbf_lock.py
+    python3 $T/dataplan.py --symbols D/artifacts/unstripped.so --map D/link/link.map --default-script D/link/sdk-default.ld --out-dir $O/plan-<x>
+    python3 $T/relink.py --kit D/link --script $O/plan-<x>/ordered.ld --output $O/relink/<x>.so --target-cache ... --map $O/relink/<x>.map
+    measure.py → cmpm.py; then two `build_linux.py --ordered` builds; replay_parallel.py of the checkpoint;
+    $O/mkpacket.sh <gdir> <frontier-name> <checkpoint rel> <layout-name> <default> <ordA> <ordB> <runtime> <plan> <base measure> <layout measure> <target>
+    then README, `tools/manifest.py`, `verify.py`, `test_scope.py`.
+For a source composition that is not a checkpoint packet (integrate's tree), stage it with the frontier recipe
+(`repro/pump_amm/<ck>/workspace_recipe_v2.py stage --source-root <tree> --output <ws>`) and pass `--source <ws>`;
+`verify.py` reads the baseline from `<packet>/results/build`, so add a frontier entry pointing at the composed build.
+
 ## Next
 
-1. Add the repeat build to g01 claims (`out/mkclaims.py <g01> event-decoder repro/pump_amm/event-decoder-recovery-20261027
-   event-decoder-text-data builds/text-data builds/text-data-repeat`), then `tools/manifest.py`, `verify.py`,
-   `test_scope.py`, commit, PR.
-2. Re-run the generator on the integrate lane's composition when `SP/shared/frontier/current.json` appears
-   (amm-hi's harvest change should remove the 0xf4030/0xf4180 multiplicity deficit; check `multiplicity_deficit`).
+1. Re-run the generator on the integrate lane's composition when `SP/shared/frontier/current.json` appears
+   (amm-hi's harvest change should remove the 0xf4030/0xf4180 multiplicity deficit; check `multiplicity_deficit`;
+   expect more raw in the dependency region, where only 0xf28b8 0xf2d60 0xf2ed0 0xf31d8 0xf6eb0 are unmatched).
+2. The four helper-crate bodies (0xf28b8…0xf31d8) block raw for ~374 bodies each; they need a separate upstream
+   crate (link-order evidence), kept out of main by DIRECTIVES 07:30 because its name/location is unevidenced.
 
 ## Findings this round
 
