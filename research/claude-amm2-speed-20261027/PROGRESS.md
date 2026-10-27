@@ -52,7 +52,7 @@ Base: origin/main 0cc61d636, AMM frontier repro/pump_amm/event-decoder-recovery-
 - PR #318 (g01) opened 12:44: https://github.com/lalalune/pumpfun-source/pull/318. fnloop.sh published (READY-v2), tested EQUAL on 0xbf370.
 - git note: worktree refs are shared with REPO; concurrent fetches can fail with 'cannot lock ref refs/remotes/origin/main' — just retry.
 
-- vbatch.py (one slot per sweep) + seed_main.sh published (READY-v3, ~12:58); vbatch smoke test on 651 OK (cache hit, identical, new-bytes-no-change).
+- vbatch.py (one slot per sweep) + seed_main.sh published (READY-v3, ~12:46); vbatch smoke test on 651 OK (cache hit, identical, new-bytes-no-change).
 
 ## In progress
 - (none)

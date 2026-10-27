@@ -42,6 +42,10 @@ Second, independent check (x5): the shared `SP/shared/tools/native_exact_build.s
 reproduce that checkpoint's authenticated Linux artifacts too (cargo 39.65 s for all 182 crates). Both results are in the shared
 result cache, so every lane's 647/651 exact baseline is a ~6 s cache hit.
 
+Third check, on lane-modified sources (`tools/exactcheck.py`, `evidence/exactcheck.json`): every lane Linux build whose staged
+workspace also has an exact-native result in the shared cache is byte-identical in candidate and unstripped sha256 — 5/5, including
+multihop `lx-a1-1` (16824b58…, exact build by multihop) and placement `lx-g02-651-a/-b` (69979ad3…, exact build by integrate).
+
 ## 2. Build break fixed (every lane, 11:55)
 The 647 recipe pins solana-program-entrypoint 2.2.1 (and, for older cargo homes, 11 more archives); every lane build failed
 offline. `tools/sync_registry.py` (run by native_build.sh and linux_build.py after staging) copies missing archives from the shared
