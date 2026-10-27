@@ -11,6 +11,15 @@ candidate paths and “current” prose must not override newer evidence.
 
 Current Mayhem research is the [provider-sharing successor](../research/mayhem-provider-sharing/README.md): 100 raw-local, 328 normalized-only and thirteen unmatched windows / 112,584 original text bytes. Six source inputs change, removing seven duplicate compiled helpers while preserving every earlier positive call and Source observation. Two builds agree; fresh replay passes 69 initializer and 2,496 AMM comparisons. Prior Legacy, V2 and ExtendAccount receipts retain their earlier artifact bindings. The sysvar allocation provider, the missing 328-byte reserve child, the thirteen bodies and full ELF identity remain unresolved. This does not update the selected baseline or prove arbitrary behavior.
 
+The [allocator-context experiment](../research/mayhem-allocator-context/README.md)
+produces the missing 328-byte reserve child by adding a diagnostic zeroed-vector
+allocation to the earlier qualified source. A nonzero-vector control leaves the
+312-byte form unchanged. Two fresh builds agree; injective local-shape capacity
+rises from 427 to 428 and raw-local matches from 100 to 139. The probe is discarded
+by the linker. This is a sufficient compilation context, not recovered historical
+source or a composed provider-sharing successor. Find a justified source/use
+relationship before promoting it; the thirteen unmatched bodies remain.
+
 The [same-IR host diagnostic](../research/mayhem-host-llvm-comparison/README.md)
 produces identical complete objects with pinned Mac and Linux LLVM tools for
 one earlier initializer-control IR input. That specific host-backend hypothesis

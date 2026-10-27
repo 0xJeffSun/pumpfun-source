@@ -98,6 +98,8 @@ jobs:
               python -B scripts/verify_pump_amm_checkpoint.py --runtime work/pump-amm-current-replay
           - suite: mayhem-1
             commands: |
+              python -I -B research/mayhem-allocator-context/verify.py
+              python -I -B research/mayhem-allocator-context/test_verify.py
               python -B research/mayhem-provider-sharing/verify.py --repository-root .
               python -B research/mayhem-provider-sharing/test_scope.py
               python -B research/mayhem-host-llvm-comparison/verify.py
