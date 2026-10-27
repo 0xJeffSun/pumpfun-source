@@ -9,7 +9,7 @@ ELF and, through a separate loader deployment, its captured payload.**
 
 ## Current progress
 
-The table uses the latest published research for Fees and Mayhem, the selected
+The table uses the largest published normalized frontiers for Fees and Mayhem, the selected
 Pump/PumpSwap builds and the canonical Relay selection. Research checkpoints
 are distinct from [selected artifacts](repro/status.json).
 
@@ -18,7 +18,7 @@ are distinct from [selected artifacts](repro/status.json).
 | [Pump selected](programs/pump/README.md) | 528 / 1,035 | 51.0% | 98 (9.5%) | 430 | 507 | 0 | No |
 | [PumpSwap / AMM selected](programs/pump-amm/README.md) | 488 / 785 | 62.2% | 93 (11.8%) | 395 | 297 | 0 | No |
 | [Fees research](research/fees-sharing-slice-recovery/README.md) | 577 / 585 | 98.6% | 143 (24.4%) | 434 | 8 | 0 | No |
-| [Mayhem research](research/mayhem-retained-bps-recovery/README.md) | 426 / 441 | 96.6% | 71 (16.1%) | 355 | 15 | 0 | No |
+| [Mayhem research](research/mayhem-accounting-extend-recovery/README.md) | 428 / 441 | 97.1% | 70 (15.9%) | 358 | 13 | 0 | No |
 | [Donation Relay selected](repro/donation-relay/canonical-exact-selection/README.md) | 492 / 492 | 100.0% | 492 (100.0%) | 0 | 0 | 0 | **Yes** |
 
 Newer **local, unpublished** Pump/PumpSwap evidence was also verified on 27 October.
@@ -48,7 +48,7 @@ Large functions remain, so function count and code coverage differ:
 | Pump selected | 400,752 / 1,792,208 | 22.4% | 1,391,456 |
 | PumpSwap / AMM | 574,808 / 1,162,040 | 49.5% | 587,232 |
 | Fees research | 719,472 / 799,648 | 90.0% | 80,176 |
-| Mayhem research | 587,344 / 706,744 | 83.1% | 119,400 |
+| Mayhem research | 594,160 / 706,744 | 84.1% | 112,584 |
 | Donation Relay selected | 752,488 / 752,488 | 100.0% | 0 |
 
 ³ Sum of original window sizes with a complete counterpart, including normalized
@@ -86,7 +86,7 @@ unaccepted**. Newer focused work does not automatically update that audit.
 Comparison counts come from different checkpoints and scopes; do not sum them
 as unique scenarios. Tests use local VMs and simulators.
 
-The current [Mayhem source/data recovery](research/mayhem-source-data-recovery/README.md)
+The earlier [Mayhem source/data recovery](research/mayhem-source-data-recovery/README.md)
 adds 15 complete normalized windows and 11 raw-local matches over the 411-window
 checkpoint. Two mixed-SDK builds agree. Fresh replay covers 6,636 trade comparisons,
 1,032 admin cases, 1,601 additional cases, three Burn families, 150 sweep-rate cases,
@@ -100,6 +100,14 @@ Two builds agree and all 6,636 trade cases pass again. The helper's ten callees
 and typed-data multisets agree, but its full body remains unmatched; the window
 count does not increase.
 
+The [accounting and ExtendAccount recovery](research/mayhem-accounting-extend-recovery/README.md)
+adds two complete normalized windows: ExtendAccount (4,272 bytes) and shared
+post-buy accounting (2,544 bytes). All prior 426 matches and 70 raw-local bodies
+survive. Two clean root builds agree; 6,636 fresh trade comparisons and 301
+ExtendAccount cases pass, with 13,874 signed transaction records checked. All 33
+ExtendAccount callees and 19 data references, and all twelve accounting callees
+and twelve data references, have bounded matching proofs. Whole ELF is unequal.
+
 The [retained-reserve recovery](research/mayhem-retained-bps-recovery/README.md)
 reuses the recovered arithmetic in Legacy Buy, BuyV2 and SellV2, repairing fourteen
 executed overflow diagnostics. All 6,636 fresh trade comparisons pass; seven
@@ -107,6 +115,11 @@ division-by-zero diagnostic differences remain. Its native control independently
 rebuilds all dependencies and preserves the existing 426 matches, 4,234 supported
 calls and 441 Source observations. The 71st raw-local window is a native-build
 placement observation on already matched O0297, not a new recovered function.
+
+The native retained-reserve artifact has 71 raw-local windows and 426 normalized
+matches. It is separate from the combined 428-window artifact above, which has
+70 raw-local windows and still retains the 21 earlier trade diagnostic differences.
+The retained-reserve source fix has not yet been composed into that artifact.
 
 The [completed account-data cohort](research/mayhem-account-cohort-complete/README.md)
 has 156 typed-equal references, no differences and none unresolved within that
@@ -127,7 +140,7 @@ Remaining priorities:
   `create_config` coverage.
 - **Fees:** recover eight remaining bodies and resolve duplicate attribution,
   call/data identity and complete ELF layout.
-- **Mayhem:** recover 15 remaining research windows and complete call/data,
+- **Mayhem:** recover 13 remaining research windows and complete call/data,
   indirect-target and ELF identity. The composed checkpoint repairs all 34
   recorded sweep-rate differences and adds bounded initializer success coverage.
 - **Relay:** establish historical build provenance and broader runtime coverage

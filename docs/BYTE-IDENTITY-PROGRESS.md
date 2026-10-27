@@ -4,6 +4,25 @@ The [full audit](RECONSTRUCTION-AUDIT.md) and its generated tables retain their
 explicit `1463bd22` snapshot. This log records later research without silently
 changing that baseline or promoting new selected artifacts.
 
+## Mayhem: complete ExtendAccount and shared buy accounting
+
+The [combined recovery](../research/mayhem-accounting-extend-recovery/README.md)
+reaches **428/441** normalized windows, preserving all 70 raw-local matches.
+O0072 ExtendAccount (4,272 bytes) and O0090 shared buy accounting (2,544 bytes)
+now match completely under the unchanged normalizer. The remaining thirteen
+windows total 112,584 original text bytes. Whole ELF equality remains false.
+
+All prior positive call and Source observations survive. The two new bodies
+have explicit immediate-callee and bounded-data proofs: 33/19 for ExtendAccount
+and 12/12 for accounting. The same source restores the real native AMM Buy
+system-transfer helper, without claiming a complete AMM Buy body match.
+
+Two original-controller root builds agree. Fresh execution passes 6,636 trade
+comparisons plus 301 ExtendAccount cases, with 13,874 signed transaction records
+checked. The 21 prior trade diagnostic differences remain; none is added. The
+separate native retained-reserve fix below is not composed into this candidate.
+Twenty-four mutation controls reject corrupted evidence and unsupported claims.
+
 ## Mayhem: restore retained-bps arithmetic in three trade handlers
 
 The [four-line recovery](../research/mayhem-retained-bps-recovery/README.md)

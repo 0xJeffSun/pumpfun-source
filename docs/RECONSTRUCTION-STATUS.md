@@ -47,10 +47,10 @@ analysis. Candidate symbol names are hypotheses about original identity.
 | Mayhem selected | 441 | 58 | 131 | 7 | 245 |
 | Relay historical source 15 | 492 | 33 | 89 | 370 | 0 |
 | **Fees latest research** | **585** | **143** | **434** | **8** | **0** |
-| **Mayhem latest research** | **441** | **70** | **356** | **15** | **0** |
+| **Mayhem latest research** | **441** | **70** | **358** | **13** | **0** |
 | **Relay canonical selection** | **492** | **492** | **0** | **0** | **0** |
 
-The current research rows are bound to the [Fees sharing slice recovery](../research/fees-sharing-slice-recovery/README.md) and [Mayhem source/data recovery](../research/mayhem-source-data-recovery/README.md); they extend the dated generated inventory below. Each row is a partition, not a score of semantic correctness. The selected Mayhem source
+The current research rows are bound to the [Fees sharing slice recovery](../research/fees-sharing-slice-recovery/README.md) and [Mayhem accounting/ExtendAccount recovery](../research/mayhem-accounting-extend-recovery/README.md); they extend the dated generated inventory below. Each row is a partition, not a score of semantic correctness. The selected Mayhem source
 ledger has 257 opaque windows, 12 of which happen to match local raw bytes.
 Selected Fees retains two call-conflicting rows; body existence does not resolve
 those conflicts. Different programs and studies use different matching rules.
@@ -867,7 +867,7 @@ exist elsewhere in the candidate. These failures are part of the verified report
 The [parallel work map](MAYHEM-PARALLEL-WORK.md) assigns all 30 remaining windows.
 
 
-## Latest Mayhem source/data recovery: 426 matching windows
+## Earlier Mayhem source/data recovery: 426 matching windows
 
 The [successor packet](../research/mayhem-source-data-recovery/README.md) has
 70 raw-local matches, 356 normalized-only matches and 15 unmatched windows.
@@ -927,3 +927,22 @@ ABI. The body still differs in 19 instruction slots from block placement;
 whole-window equality is false. Two builds agree and 150 fresh sweep cases
 retain equal checked fields and non-compute logs. This earlier-checkpoint
 experiment is not promoted over the subsequent source/data packets.
+
+## Latest Mayhem accounting and ExtendAccount recovery: 428 matching windows
+
+The [combined source and evidence](../research/mayhem-accounting-extend-recovery/README.md)
+adds full normalized O0072 ExtendAccount and O0090 shared buy-accounting bodies,
+with 6,816 original text bytes newly covered. All 70 raw-local and 426 earlier
+normalized matches survive, as do prior positive direct-call and Source profiles.
+The partition is 70 raw-local, 358 normalized-only and 13 unmatched windows.
+The unmatched windows contain 112,584 of 706,744 original text bytes (15.9%).
+
+Two clean root compilations agree. The exact artifact passes 6,636 fresh trade
+comparisons and 301 ExtendAccount cases; all 13,874 signed transaction records
+are verified. The 21 earlier trade diagnostic differences remain and no new
+ones appear. There are bounded proofs for all immediate callees/data operands
+of the two newly matched bodies and the restored AMM native transfer helper.
+This remains a mixed-SDK research artifact with unequal complete ELF bytes.
+The separately reviewed native retained-reserve artifact has 426 normalized
+matches, 71 raw-local bodies and seven trade diagnostic differences; those
+results are not added to or relabeled as this combined artifact's results.

@@ -8,7 +8,7 @@ list every raw match and unresolved window; the four core selected artifacts ret
 [completion ledger](COMPLETION.md) remains a selected-checkpoint record; its old
 candidate paths and “current” prose must not override newer evidence.
 
-Current Mayhem research is the [426-window source/data recovery](../research/mayhem-source-data-recovery/README.md): 15 unmatched windows / 119,400 original text bytes remain, plus data, call, indirect-target and complete ELF identity. The 34 recorded rate failures and ten newly found counter failures are repaired. The mixed SDK recipe repairs Source paths and TypeId metadata; matching formatter vtables, typed Buy/BuyV2 CPIs and bounded initializer success are verified. This does not update the selected baseline or prove arbitrary behavior.
+Current Mayhem's largest normalized frontier is the [428-window accounting and ExtendAccount recovery](../research/mayhem-accounting-extend-recovery/README.md): 13 unmatched windows / 112,584 original text bytes remain, plus data, call, indirect-target and complete ELF identity. All 70 parent raw-local bodies survive. The 34 recorded rate failures and ten earlier counter failures were repaired in the parent; the new candidate has fresh trade and ExtendAccount replay. This does not update the selected baseline or prove arbitrary behavior.
 
 The [AMM sell-call successor](../research/mayhem-sell-quote-call-recovery/README.md)
 preserves those 426 windows and restores the shared O0093 quote call. Its ten
@@ -22,8 +22,9 @@ repairs fourteen overflow diagnostics in three actual trade handlers, using the
 existing shared arithmetic. All 6,636 new trade comparisons pass, with seven
 `quote_extreme_1_0_1` division-by-zero diagnostic differences still visible.
 Its native clean-build control preserves all 426 normalized windows; the source
-change adds no complete body match. The 58 sweep diagnostics and fifteen
-unmatched bodies remain separate work.
+change adds no complete body match. The native artifact retains 15 unmatched bodies; the separate mixed-SDK
+428-window artifact has 13 and does not yet include this four-line source fix.
+The 58 sweep diagnostic cases remain separate work.
 
 The [completed account-data cohort](../research/mayhem-account-cohort-complete/README.md)
 has 156 typed-equal references and none unresolved within its declared scope.
