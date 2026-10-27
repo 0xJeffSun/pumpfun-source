@@ -42,9 +42,10 @@ in the trade/layout lanes and does not reduce the thirteen-row inventory below.
 
 The [accounting/ExtendAccount checkpoint](../research/mayhem-accounting-extend-recovery/README.md)
 composes the two completed bodies and the real AMM native-transfer call. Its
-6,636 trade comparisons and 301 ExtendAccount cases pass. The separate native
-retained-reserve fix and the private AMM Sell Source corrections still need
-composition; independent gains and runtime receipts must not be summed.
+6,636 trade comparisons and 301 ExtendAccount cases pass. The [trade-source successor](../research/mayhem-trade-source-origins/README.md)
+now composes the retained-reserve fix and AMM Sell Source corrections. Its fresh
+6,636 trade comparisons leave seven diagnostic differences. Independent
+checkpoints and runtime receipts must not be summed.
 
 The parallel workers hit their account usage limit after saving their completed
 proofs; the main agent continues integration and remaining reconstruction work.

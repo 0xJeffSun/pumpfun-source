@@ -4,6 +4,21 @@ The [full audit](RECONSTRUCTION-AUDIT.md) and its generated tables retain their
 explicit `1463bd22` snapshot. This log records later research without silently
 changing that baseline or promoting new selected artifacts.
 
+## Mayhem: compose retained-reserve and AMM Sell source origins
+
+The [six-file successor](../research/mayhem-trade-source-origins/README.md)
+retains 428 normalized windows and all 70 raw-local bodies. The retained-reserve
+repair now runs in the combined source; fourteen executed overflow diagnostics
+are corrected. All 6,636 fresh trade comparisons and 13,272 signed transaction
+records pass, leaving seven diagnostic differences and no new ones.
+
+Five bounded Source observations in four live handlers are restored, including
+the two AMM Sell post-CPI subtractions. Those two panic branches are not exercised
+by the corpus; their evidence is static. Two clean-root builds agree, all prior
+positive calls/Source profiles survive, and six mutation checks reject altered
+source, source locations and test coverage. No additional complete body is counted;
+thirteen windows and whole-ELF identity remain unresolved.
+
 ## Mayhem: complete ExtendAccount and shared buy accounting
 
 The [combined recovery](../research/mayhem-accounting-extend-recovery/README.md)

@@ -8,7 +8,7 @@ list every raw match and unresolved window; the four core selected artifacts ret
 [completion ledger](COMPLETION.md) remains a selected-checkpoint record; its old
 candidate paths and “current” prose must not override newer evidence.
 
-Current Mayhem's largest normalized frontier is the [428-window accounting and ExtendAccount recovery](../research/mayhem-accounting-extend-recovery/README.md): 13 unmatched windows / 112,584 original text bytes remain, plus data, call, indirect-target and complete ELF identity. All 70 parent raw-local bodies survive. The 34 recorded rate failures and ten earlier counter failures were repaired in the parent; the new candidate has fresh trade and ExtendAccount replay. This does not update the selected baseline or prove arbitrary behavior.
+Current Mayhem's largest normalized frontier is the [428-window trade-source composition](../research/mayhem-trade-source-origins/README.md): 13 unmatched windows / 112,584 original text bytes remain, plus data, call, indirect-target and complete ELF identity. All 70 parent raw-local bodies survive. The 34 recorded rate failures and ten earlier counter failures were repaired in the parent; the accounting parent has fresh trade and ExtendAccount replay, and this successor has fresh trade replay. This does not update the selected baseline or prove arbitrary behavior.
 
 The [native Windows reproduction](../research/mayhem-native-reference-identity/README.md)
 reproduces the earlier 426-window source/data candidate's complete raw and
@@ -31,8 +31,9 @@ repairs fourteen overflow diagnostics in three actual trade handlers, using the
 existing shared arithmetic. All 6,636 new trade comparisons pass, with seven
 `quote_extreme_1_0_1` division-by-zero diagnostic differences still visible.
 Its native clean-build control preserves all 426 normalized windows; the source
-change adds no complete body match. The native artifact retains 15 unmatched bodies; the separate mixed-SDK
-428-window artifact has 13 and does not yet include this four-line source fix.
+change adds no complete body match. The native artifact retains 15 unmatched bodies; the mixed-SDK
+428-window successor has 13 and now includes this fix plus two corrected AMM Sell
+Source records. Its fresh replay retains seven trade diagnostic differences.
 The 58 sweep diagnostic cases remain separate work.
 
 The [completed account-data cohort](../research/mayhem-account-cohort-complete/README.md)

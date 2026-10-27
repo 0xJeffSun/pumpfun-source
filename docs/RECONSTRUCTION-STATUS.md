@@ -50,7 +50,7 @@ analysis. Candidate symbol names are hypotheses about original identity.
 | **Mayhem latest research** | **441** | **70** | **358** | **13** | **0** |
 | **Relay canonical selection** | **492** | **492** | **0** | **0** | **0** |
 
-The current research rows are bound to the [Fees sharing slice recovery](../research/fees-sharing-slice-recovery/README.md) and [Mayhem accounting/ExtendAccount recovery](../research/mayhem-accounting-extend-recovery/README.md); they extend the dated generated inventory below. Each row is a partition, not a score of semantic correctness. The selected Mayhem source
+The current research rows are bound to the [Fees sharing slice recovery](../research/fees-sharing-slice-recovery/README.md) and [Mayhem trade-source composition](../research/mayhem-trade-source-origins/README.md); they extend the dated generated inventory below. Each row is a partition, not a score of semantic correctness. The selected Mayhem source
 ledger has 257 opaque windows, 12 of which happen to match local raw bytes.
 Selected Fees retains two call-conflicting rows; body existence does not resolve
 those conflicts. Different programs and studies use different matching rules.
@@ -946,3 +946,15 @@ This remains a mixed-SDK research artifact with unequal complete ELF bytes.
 The separately reviewed native retained-reserve artifact has 426 normalized
 matches, 71 raw-local bodies and seven trade diagnostic differences; those
 results are not added to or relabeled as this combined artifact's results.
+
+## Current Mayhem trade-source composition
+
+The [six-file successor](../research/mayhem-trade-source-origins/README.md)
+keeps the same 428/441 normalized matches, 70 raw-local bodies and thirteen
+unmatched windows. It composes the retained-reserve repair into this source and
+restores two AMM Sell Source origins. Fresh replay passes 6,636 comparisons and
+13,272 signed transaction records; fourteen diagnostic cases are repaired and
+seven remain. Two builds agree. The five restored Source observations are
+bounded through actual handlers; the AMM Sell subtraction-panic branches remain
+unexecuted by the current corpus. Earlier ExtendAccount, initializer and other
+non-trade receipts retain their parent-artifact bindings.

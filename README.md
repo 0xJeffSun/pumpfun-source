@@ -18,7 +18,7 @@ are distinct from [selected artifacts](repro/status.json).
 | [Pump selected](programs/pump/README.md) | 528 / 1,035 | 51.0% | 98 (9.5%) | 430 | 507 | 0 | No |
 | [PumpSwap / AMM selected](programs/pump-amm/README.md) | 488 / 785 | 62.2% | 93 (11.8%) | 395 | 297 | 0 | No |
 | [Fees research](research/fees-sharing-slice-recovery/README.md) | 577 / 585 | 98.6% | 143 (24.4%) | 434 | 8 | 0 | No |
-| [Mayhem research](research/mayhem-accounting-extend-recovery/README.md) | 428 / 441 | 97.1% | 70 (15.9%) | 358 | 13 | 0 | No |
+| [Mayhem research](research/mayhem-trade-source-origins/README.md) | 428 / 441 | 97.1% | 70 (15.9%) | 358 | 13 | 0 | No |
 | [Donation Relay selected](repro/donation-relay/canonical-exact-selection/README.md) | 492 / 492 | 100.0% | 492 (100.0%) | 0 | 0 | 0 | **Yes** |
 
 Newer **local, unpublished** Pump/PumpSwap evidence was also verified on 27 October.
@@ -116,10 +116,14 @@ rebuilds all dependencies and preserves the existing 426 matches, 4,234 supporte
 calls and 441 Source observations. The 71st raw-local window is a native-build
 placement observation on already matched O0297, not a new recovered function.
 
-The native retained-reserve artifact has 71 raw-local windows and 426 normalized
-matches. It is separate from the combined 428-window artifact above, which has
-70 raw-local windows and still retains the 21 earlier trade diagnostic differences.
-The retained-reserve source fix has not yet been composed into that artifact.
+The [composed trade-source update](research/mayhem-trade-source-origins/README.md)
+applies that retained-reserve repair and corrects the two AMM Sell subtraction
+origins in the 428-window source. Fresh replay passes all 6,636 trade comparisons;
+non-compute diagnostic differences fall from 21 to seven. Five Source records in
+four live handlers now agree. The AMM Sell panic branches are covered statically,
+not exercised by this test corpus. All 428 matches and 70 raw-local bodies survive.
+The separate native artifact has 71 raw-local bodies and 426 normalized matches;
+its extra raw-local observation is not added to the combined artifact's count.
 
 The [completed account-data cohort](research/mayhem-account-cohort-complete/README.md)
 has 156 typed-equal references, no differences and none unresolved within that
