@@ -23,6 +23,12 @@ other architectures. Its paths can be overridden with `PUMPFUN_REA_TOOL_ROOT`,
 This is an experimental local integration, not upstream REA sBPF support or a
 validation of every instruction in the third-party processor.
 
+For a fresh checkout, the [portable adapter preparer](../research/rea-portable-adapter/README.md)
+accepts explicit package, dependency and output paths. It reproduces the twelve
+recorded adapter hashes without replacing an existing directory. Its offline
+checks cover preparation and the real header reader; Ghidra and processor setup
+remain separate prerequisites.
+
 Example, from the repository root:
 
 ```sh
