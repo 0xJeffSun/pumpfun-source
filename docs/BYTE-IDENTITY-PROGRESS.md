@@ -1678,3 +1678,17 @@ matches; neither quote helper is a full counterpart. The branch/error control
 passes 1,257 fresh BuyPumpSwap comparisons across three quote families with
 2,514 verified signatures. Token-2022 fixtures all reject. Full handlers, eight
 admitted body gaps, opaque scope and whole-file equality remain unresolved.
+
+## Mayhem AMM source origins and expanded audit scope
+
+[Shared state/origin recovery](../research/mayhem-amm-source-origins/README.md)
+restores AMM validation/risk diagnostics and the balance-delta adapter's original
+source sites. All 1,653 fresh trade comparisons have exact logs after removing
+only compute-consumption lines. The full packet verifies 5,382 signatures,
+1,032 admin cases with 624 independently reconstructed account results, and three
+Burn families. Two root builds reproduce the 625,488-byte candidate.
+
+No new whole-body match is claimed. Explicitly admitting O0090 and O0092 expands
+the ledger to 198 examined / 188 matched / ten unmatched / 243 opaque, retaining
+all 58 all-inventory raw-local counterparts. The ten examined extents total
+101,480 bytes; opaque code and whole-ELF obligations are additional work.

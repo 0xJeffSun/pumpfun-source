@@ -8,10 +8,9 @@ now reproduces its full ELF and loader-allocated payload byte-for-byte.**
 Behavior is reconstructed handler by handler and checked with differential tests
 that run the captured original and the rebuilt candidate side by side in a local VM.
 
-Mayhem is now the active reconstruction priority. Its [current work plan](docs/MAYHEM-RECONSTRUCTION-PLAN.md) tracks eight unmatched admitted bodies and 245 still-opaque windows. The latest [GlobalParams and shared-helper research](repro/mayhem/global-params-layout-recovery/README.md) reaches 188 normalized matches in its 196-function examined scope; whole-file identity remains unresolved.
-The latest [Sell arithmetic and source-origin recovery](research/mayhem-sell-origin-recovery/README.md) passes all 396 Sell cases with exact logs after removing only compute-consumption lines. Its 1,032 admin cases and three Burn families also pass; 2,868 signatures verify. Full body and whole-file identity remain unresolved.
-
-The [deployed trade-wrapper audit](research/mayhem-trade-wrapper-attribution/README.md) identifies all six Mayhem trade bodies and binds O0092/O0093 to PumpSwap Buy/Sell. A separate AMM arithmetic control passes 1,257 fresh comparisons while preserving 188 normalized matches; it adds no complete body match and remains a research control.
+Mayhem is the active reconstruction priority. Its [current work plan](docs/MAYHEM-RECONSTRUCTION-PLAN.md) now explicitly examines 198 windows: 188 matched and ten unmatched, with 243 still opaque. The two additional examined helpers remain unmatched; the original 188 matches are preserved.
+The latest [AMM shared-state and source-origin recovery](research/mayhem-amm-source-origins/README.md) passes 1,257 AMM Buy and 396 legacy Sell comparisons with exact logs after removing only compute-consumption lines. It also passes 1,032 admin cases and three Burn families; all 5,382 saved signatures verify. Full body and whole-file identity remain unresolved.
+The [deployed trade-wrapper audit](research/mayhem-trade-wrapper-attribution/README.md) identifies all six Mayhem trade bodies and binds O0092/O0093 to PumpSwap Buy/Sell.
 
 For subsequent gains and the latest research frontier, see the
 [byte-identity progress log](docs/BYTE-IDENTITY-PROGRESS.md).

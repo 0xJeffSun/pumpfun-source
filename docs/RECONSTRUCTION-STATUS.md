@@ -711,13 +711,13 @@ normalized,142 raw-local,411 unique pairs,27 unmatched, with 480 attributed pair
 
 ## Active Mayhem priority
 
-[GlobalParams layout](../repro/mayhem/global-params-layout-recovery/README.md) is the latest research baseline: 196 examined, 188 matched, eight unmatched and 245 opaque windows. The [active work plan](MAYHEM-RECONSTRUCTION-PLAN.md) includes the opaque inventory, initializer and whole ELF obligations. [Seven quote-validator controls](../research/mayhem-quote-validator-controls/README.md) preserve every existing match but do not close O0095. This research does not change the canonical selected artifact or certify complete handlers.
+[AMM shared state and source origins](../research/mayhem-amm-source-origins/README.md) is the current research baseline: 198 examined, 188 matched, ten unmatched and 243 opaque windows. The preceding [GlobalParams layout](../repro/mayhem/global-params-layout-recovery/README.md) used a narrower 196-window scope. The [active work plan](MAYHEM-RECONSTRUCTION-PLAN.md) includes the opaque inventory, initializer and whole ELF obligations. [Seven quote-validator controls](../research/mayhem-quote-validator-controls/README.md) preserve every existing match but do not close O0095. This research does not change the canonical selected artifact or certify complete handlers.
 
-## Latest Mayhem data correction
+## Earlier Mayhem interval correction
 
 The [interval-location packet](../research/mayhem-interval-location-recovery/README.md) changes exactly one compiled data byte, reproducing original state.rs 562:32 while retaining every instruction byte and all body matches. Two root builds agree; 396 fresh Sell cases and 792 independently verified signatures pass. Three non-compute log differences remain. The [follow-up controls](../research/mayhem-quote-validator-followups/README.md) add no complete O0095 match; the eight-body and opaque remainders remain.
 
-## Latest Mayhem Sell validation
+## Mayhem Sell baseline validation
 
 [Sell source-origin recovery](../research/mayhem-sell-origin-recovery/README.md) builds twice to the same artifact. It passes 396 fresh Sell cases with equality of every non-compute log line, 1,032 admin cases, and three sequential Burn families. All 2,868 signatures and 624 successful admin account-byte outcomes verify independently. The [441-window inventory](../research/mayhem-sell-origin-recovery/functions.tsv) retains 188 matching examined bodies, eight unmatched bodies and 245 opaque windows. The new source fixes the earlier diagnostic differences, not full body or whole-file identity.
 
@@ -730,5 +730,20 @@ O0083/O0084 are V2 Buy/Sell. Two source controls retain the 188 known normalized
 and 58 all-inventory raw-local matches. The refined AMM Buy control passes 1,257
 fresh comparisons and 2,514 signatures, including rejection-only Token-2022
 coverage. Neither it nor its 1,104-byte helper matches the complete original body.
-These controls do not replace the Sell-origin baseline or change the eight
-admitted gaps, 245 opaque windows, or unresolved ELF identity.
+At that checkpoint these controls did not replace the Sell-origin baseline or
+change its eight admitted gaps and 245 opaque windows. The expanded current
+research scope is recorded below; ELF identity is still unresolved.
+
+## Mayhem current research: shared AMM state and source origins
+
+The [latest packet](../research/mayhem-amm-source-origins/README.md) preserves
+188 normalized matches and admits two previously opaque helpers for explicit
+comparison: 198 examined, ten unmatched and 243 opaque. Its complete ledger has
+46 examined raw-local matches, 142 normalized-only matches and twelve additional
+opaque raw-local matches. This scope expansion adds no complete-body gain or loss.
+
+Two 16-input root builds agree. Fresh 1,257 AMM Buy and 396 legacy Sell comparisons
+have equal non-compute logs; 1,032 admin cases and three Burn families also pass.
+All 5,382 signatures verify, and 624 admin account results are reconstructed.
+Token-2022 AMM cases cover rejection paths only. Whole Mayhem identity remains
+false, and this research packet does not change canonical source/checkpoints.

@@ -4,10 +4,10 @@ Mayhem is the active reconstruction priority. Other PRs can be reviewed and
 merged, but new body-recovery experiments should advance Mayhem first.
 
 The current research baseline is
-[Sell arithmetic and source-origin recovery](../research/mayhem-sell-origin-recovery/README.md),
-built on the GlobalParams, shared-error and typed Sell CPI recoveries. It has 196
-explicitly examined functions: 188 normalized matches and eight unmatched bodies.
-Another 245 original windows remain semantically opaque. Fifty-eight windows
+[AMM shared state and source origins](../research/mayhem-amm-source-origins/README.md),
+built on the Sell-origin, GlobalParams and shared-error recoveries. It has 198
+explicitly examined functions: 188 normalized matches and ten unmatched bodies.
+Another 243 original windows remain semantically opaque. Fifty-eight windows
 have literal local body matches, including twelve still-opaque windows. These
 are separate measurements; none implies whole-program or semantic completeness.
 
@@ -20,16 +20,19 @@ are separate measurements; none implies whole-program or semantic completeness.
 | O0082 | 127,520–140,512 | Legacy Sell body |
 | O0083 | 140,512–159,160 | BuyV2 body |
 | O0084 | 159,160–177,256 | SellV2 body |
+| O0090 | 181,656–184,200 | Shared buy accounting and risk checks |
+| O0092 | 185,296–186,552 | AMM Buy quote arithmetic |
 | O0095 | 188,864–190,160 | Quote-aware state/reserve validation |
 
-The eight extents total 97,680 bytes. This is only the admitted body remainder;
+The ten extents total 101,480 bytes. Two formerly opaque helpers are now explicitly
+examined; all prior matches remain. This is only the admitted body remainder;
 opaque windows, data, relocations, ELF layout and deployment bytes remain
 additional obligations. The existing shared-error, scalar-field layout and
 codecs must retain their measured matches while these bodies are recovered.
 
 Next steps:
 
-1. Baseline reproduction is complete. Preserve the 15-input source and both
+1. Baseline reproduction is complete. Preserve the 16-input source and both
    artifact hashes as controls before attributing further gains to source.
 2. Recover O0095 from its actual Clock, expiry, quote-mint, reserve-threshold
    and status operations. Verify complete bytes and direct calls/locations;
@@ -46,25 +49,27 @@ Next steps:
    completeness percentage can substitute for this final check.
 
 The canonical source/checkpoint is not changed by these research experiments.
-The latest packet's 2,868 saved signatures and 624 fully reconstructed successful
-account updates are bounded evidence. Initializers remain untested, and no full
+The latest packet's 5,382 saved signatures and 624 fully reconstructed successful
+admin account updates are bounded evidence. Initializers remain untested, and no full
 trade handler or whole ELF is equal. All 396 Sell cases now have equal logs after
-removing only explicit compute-consumption lines; 337 raw logs still differ in
-compute consumption.
+removing only explicit compute-consumption lines. Raw compute consumption still
+differs.
 
-The [quote-validator controls](../research/mayhem-quote-validator-controls/README.md) independently reproduce the baseline and preserve all 188 matches across seven source controls. They recover the expiry-before-Clock register/spill prefix, but threshold branching and error layout still differ. None is promoted as a complete O0095 recovery.
-
-The [interval-location recovery](../research/mayhem-interval-location-recovery/README.md) corrects the overflow location with exactly one changed data byte and identical instructions. Its fresh 396-case/792-signature Sell run passes, reducing known non-compute log differences from four to three. O0095 is still unmatched after five further [source controls](../research/mayhem-quote-validator-followups/README.md). The remaining subtraction and division panic evidence points to state.rs 321 and state.rs 398; O0092/O0093 are additional arithmetic-body leads, not yet admitted as recovered.
-
-The [refreshed 441-window Mayhem inventory](../research/mayhem-sell-origin-recovery/functions.tsv) retains opaque scope explicitly. Recovering the shared arithmetic and validation source origins removed the previous four diagnostic discrepancies without adding complete body matches. The eight admitted body gaps and whole-ELF work remain.
+The [quote-validator controls](../research/mayhem-quote-validator-controls/README.md)
+and [followups](../research/mayhem-quote-validator-followups/README.md) preserve
+the existing matches but leave O0095 unmatched. Their threshold branching and
+error layout remain useful comparison points.
 
 The [deployed-wrapper attribution](../research/mayhem-trade-wrapper-attribution/README.md)
-now identifies all six trade bodies through exact instruction log strings and
-direct calls. O0092 is called by BuyPumpSwap and O0093 by SellPumpSwap; their
-reserve arguments must not be assumed to describe legacy Buy. Two actual AMM
-helper builds preserve 188 normalized and 58 raw-local matches without recovering
-a new complete body. The branch/error control passes 1,257 fresh BuyPumpSwap
-comparisons across three quote families (2,514 signatures); Token-2022 covers
-rejections only. The baseline remains the Sell-origin packet. Next AMM arithmetic
-work should reconcile the original 1,256-byte O0092 with the 1,104-byte control,
-including argument lowering and cap-branch structure, before promoting it.
+identifies all six trade bodies through exact instruction log strings and direct
+calls. O0092 is called by BuyPumpSwap and O0093 by SellPumpSwap; their reserve
+arguments must not be assumed to describe legacy Buy.
+
+The latest AMM source-origin packet removes all 27 native and 25 legacy-token
+non-compute diagnostic differences in the prior AMM control. All 1,653 current
+trade comparisons now have equal logs after removing only compute-consumption
+lines. The final 16-input candidate reproduces across two root builds, preserves
+188 matches, and passes the admin/Burn lanes. O0090 and O0092 are now admitted
+unmatched rows. Next work should resolve O0090's limit-selection branches and
+O0092's quote/cap code generation (1,256 original bytes versus 1,120 candidate),
+then continue O0095 and the full handlers.
