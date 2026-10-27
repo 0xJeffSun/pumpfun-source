@@ -1,264 +1,141 @@
 # pumpfun-source
 
-Reconstructed Rust source for the Pump.fun Solana programs, plus the captured
-on-chain binaries and the evidence used to check the reconstruction against them.
+Reconstructed Rust source for Pump.fun's Solana programs, with captured binaries,
+reproducible builds and local differential tests.
 
-**The four core programs remain byte-unequal. The selected Relay reconstruction
-now reproduces its full ELF and loader-allocated payload byte-for-byte.**
-Behavior is reconstructed handler by handler and checked with differential tests
-that run the captured original and the rebuilt candidate side by side in a local VM.
+**Progress as of 27 October 2026: all four core programs still differ from their
+captured binaries. The selected Donation Relay reconstruction reproduces its complete meaningful
+ELF and, through a separate loader deployment, its captured payload.**
 
-Mayhem is the active reconstruction priority. The [parallel recovery checkpoint](research/mayhem-parallel-recovery/README.md) adds 30 complete normalized windows without losing earlier matches. The full 441-window scan now has **59 raw-local matches, 316 normalized-only matches and 66 unmatched windows** spanning 268,000 text bytes. Whole-file identity and complete semantic/call/data closure remain unresolved.
-Two builds agree. Fresh regression covers 6,636 trade comparisons, 1,032 admin cases, 1,601 fee-recipient/sweep/withdrawal cases and three Burn families. A separate targeted sweep-rate matrix exposes 34 differences in 150 cases; that known gap and its follow-up are tracked explicitly. The [parallel work map](docs/MAYHEM-PARALLEL-WORK.md) assigns all remaining windows, and the [work plan](docs/MAYHEM-RECONSTRUCTION-PLAN.md) records the broader completion gates.
+## Current progress
 
-Fees' [current Social V2 composition](research/fees-current-574-social-v2-union/README.md) retains **574/585 normalized windows** (143 raw-local, 431 normalized-only), leaving **11 unmatched windows / 99,696 original text bytes**. Its saved runtime evidence repairs 277 Social V2 application-log differences and ten admission mismatches. The review rechecked those receipts and signatures; it did not rerun the compiler or target VM. Whole-file identity remains false.
+The table uses the latest published research for Fees and Mayhem, the selected
+Pump/PumpSwap builds and the canonical Relay selection. Research checkpoints
+are distinct from [selected artifacts](repro/status.json).
 
-For subsequent gains and the latest research frontier, see the
-[byte-identity progress log](docs/BYTE-IDENTITY-PROGRESS.md).
-The [27 October queue review](docs/PR-QUEUE-REVIEW-2026-10-27.md) covers PRs
-#170–#234, including separately verified 399- and 401-pair Fees context candidates and
-source-only proposals. Those independent branches are not silently combined
-into the inventory below.
+| Program | Matched functions¹ | Matched % | Exact local bytes² | Normalized only | Unmatched | Unassessed | Whole ELF equal |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
+| [Pump selected](programs/pump/README.md) | 528 / 1,035 | 51.0% | 98 (9.5%) | 430 | 507 | 0 | No |
+| [PumpSwap / AMM selected](programs/pump-amm/README.md) | 488 / 785 | 62.2% | 93 (11.8%) | 395 | 297 | 0 | No |
+| [Fees research](research/fees-current-574-social-v2-union/README.md) | 574 / 585 | 98.1% | 143 (24.4%) | 431 | 11 | 0 | No |
+| [Mayhem research](research/mayhem-parallel-recovery/README.md) | 375 / 441 | 85.0% | 59 (13.4%) | 316 | 66 | 0 | No |
+| [Donation Relay selected](repro/donation-relay/canonical-exact-selection/README.md) | 492 / 492 | 100.0% | 492 (100.0%) | 0 | 0 | 0 | **Yes** |
 
-The selected Relay reconstruction reproduces **all 818,280 meaningful ELF bytes exactly**,
-including **492/492 raw function windows**, headers, calls, data and relocations.
-Two Rust builds, including a fresh isolated build, produce the same artifact.
-The [exact ELF recipe](repro/donation-relay/linked-elf-reproduction/README.md)
-uses ordinary reconstructed Rust and an explicit linker layout; the historical
-source/build recipe remains unproved. The [portable source-only recipe](repro/donation-relay/raw-elf-reconstruction/README.md)
-retains the same section ordering. Fresh bounded replay passes 536 records.
+Newer **local, unpublished** Pump/PumpSwap evidence was also verified on 27 October.
+These saved checkpoints are separate from the published selections above; their
+source and evidence packets are not included in this README-only update.
 
-The captured file also has **12,168 loader-allocated zero bytes**. A fresh local
-912-transaction loader deployment reproduces **all 830,448 captured payload bytes**
-without padding the compiler output. ProgramData metadata and historical deployment
-sequence are outside that equality claim. The [natural source layout recovery](repro/donation-relay/access-control-layout-artifact/README.md)
-separately reaches 376 raw-local windows using the default linker layout.
-The [canonical Relay source](repro/donation-relay/canonical-exact-selection/README.md)
-is now selected after a fresh build from `programs/donation-relay`. The four core
-checkpoints remain unchanged and byte-unequal.
-
-The pinned Fees inventory has **411 unique structural pairs, 27 unmatched windows**
-(**558/585 normalized counterparts**, including 142 raw-local matches).
-The [current AdminCto integration](research/fees-admin-cto-current-integration/README.md) combines
-the reviewed math/SyncNative, sharing-context and social-PDA creation recoveries.
-It preserves the decoder/composition gains and recovers the complete buyback
-initializer wrapper through a single module visibility declaration. It also
-recovers the 4,968-byte AdminCto body with the included-handler proposal. It passes 17,331 fresh suite comparisons; earlier strict social-creation evidence retains
-its separate candidate binding.
-The [configuration-event recovery](research/fees-config-event-recovery/README.md)
-adds four complete caller-body matches; the two upsert bodies share a structural
-shape and are distinguished by their callees. The [current call ledger](repro/reconstruction-status-2026-10-26/fees-call-attribution.json)
-also attributes 69 duplicate-body pairs, giving 480 correspondences.
-The [CPI ownership study](research/fees-cpi-adapter-ownership-controls/README.md)
-retains the earlier four-byte copy-scheduling residuals. The subsequent
-[distribution-helper recovery](repro/pump_fees/distribution-helper-recovery/README.md)
-closes both complete helper bodies on the AdminCto baseline: **556/585 normalized,
-409 unique pairs, 118 raw-local and 29 unmatched windows**. Its fresh 417-case
-review replay matches the retained receipt exactly. The subsequent
-[current 558-window integration](research/fees-current-558-integration/README.md)
-adds the constant initializer parser and typed Relay encoder while composing
-the native-only Crank flow with checked lamport credit. Two builds agree; all
-17,331 regression cases and 76 boundary cases pass. Its 304-case strict Crank
-matrix retains only compute-log differences. This integration is now pinned; whole-file identity remains
-unachieved. The [Crank native-flow study](research/fees-crank-native-order/README.md)
-separately improves bounded behavior, retaining 12 compute-log discrepancies;
-its older 552-window candidate is not the current composition. The
-[checked-credit correction](research/fees-crank-lamport-overflow/README.md)
-additionally fixes 15 synthetic overflow cases, with zero proposal mismatches
-in a fresh 76-case replay; composing it with the native-flow study remains work. The [exotic-fee growth study](research/fees-exotic-growth-precedence/README.md)
-corrects rejection precedence and the realloc flag in new boundary cases;
-that caller still has no complete body match. The [optional-account ownership recovery](research/fees-optional-account-ownership/README.md)
-adds a complete optional parser and a raw-byte-equal cleanup helper; its enclosing
-account parser still differs. The [social-claim seed-vector recovery](research/fees-social-seed-vector/README.md)
-adds the complete 296-byte user-ID copy helper; its claim caller still differs.
-The [extension-size log recovery](research/fees-extend-size-logs/README.md) restores
-the original no-resize messages and a complete 448-byte formatting helper.
-The [crank interface-mint recovery](research/fees-crank-interface-mint/README.md)
-adds one boxed parser match, removes two structural ambiguities, and corrects
-the tested mint owner/length validation. The [shared zero-quote predicate](research/fees-curve-zero-helper/README.md)
-now has a complete 504-byte match, including both referenced panic locations.
-The [slice-panic location integration](research/fees-slice-origin-integration/README.md)
-now carries all four tier-copy records into the latest candidate, changing only
-eight data bytes and preserving its entire instruction section. The [buyback context recovery](research/fees-buyback-context-ownership/README.md)
-adds the initializer parser, one initialization closure and the exit routine.
-The [context-origin recovery](research/fees-buyback-context-origin/README.md)
-now closes the second closure and its direct-call mismatch as well. The
-[crank event-account recovery](research/fees-crank-event-ownership/README.md)
-adds the complete exit routine and dispatch wrapper; later reviewed work also
-recovers the account parser, while the business handler remains unmatched. Four [root codegen controls](research/fees-wrapper-codegen-controls/README.md)
-add no matches and are retained as rejected experiments. The
-[sweep context recovery](research/fees-sweep-context-ownership/README.md)
-adds its complete account parser, exit and dispatch wrapper; the sweep business
-body remains unmatched. The [buyback-update context recovery](research/fees-buyback-update-ownership/README.md)
-now closes the shared update parser and both update dispatch wrappers, with
-all 61 direct callee bodies matching. The [event-context integration](research/fees-event-context-ownership/README.md)
-adds six parser/dispatch bodies across social claim, social-PDA creation and
-withdrawal; the new composition also recovers the social-PDA creation body. The
-[unchecked-prefix recovery](research/fees-unchecked-prefix-recovery/README.md)
-restores the full-account input convention and closes the 1,144-byte initializer
-helper. Its host contract tests and SBF regression evidence have separate scopes.
-
-The [current reconstruction review](docs/RECONSTRUCTION-STATUS.md) lists exact,
-normalized, unmatched and opaque function status, Relay provenance limits,
-and prioritized behavior/build work. The [refreshed 4,415-row inventory](repro/reconstruction-status-2026-10-26/README.md)
-includes every exact local body match and every unresolved window.
-
-The [26 October reconstruction audit](docs/RECONSTRUCTION-AUDIT.md) separates
-selected builds from newer research and lists [all 150 handlers](repro/reconstruction-audit-2026-10-26/handlers.md),
-[every exact local body-byte match](repro/reconstruction-audit-2026-10-26/raw-body-matches.md)
-and [all selected/research function windows](repro/reconstruction-audit-2026-10-26/functions.tsv).
-
-## Current review
-
-The [comprehensive review](repro/reconstruction-status-2026-10-26/review.md)
-classifies **all 150 public handlers and all 4,415 selected/research window rows**.
-No handler is certified perfectly recreated. The selected core builds contain
-140 bounded implementations, five partial handlers and five unaccepted handlers;
-“unaccepted” can include existing overlay or static-only source.
-
-| Current build | Exact local bodies | Normalized only | Unmatched | Opaque | Unresolved original text |
+| Local checkpoint | Matched functions | Matched % | Exact local bodies | Normalized only | Unmatched |
 | --- | ---: | ---: | ---: | ---: | ---: |
-| Pump selected | 98 | 430 | 507 | 0 | 1,391,456 / 1,792,208 bytes (77.6%) |
-| PumpSwap selected | 93 | 395 | 297 | 0 | 734,392 / 1,162,040 bytes (63.2%) |
-| Fees pinned research inventory | 142 | 416 | 27 | 0 | 189,248 / 799,648 bytes (23.7%) |
-| Fees latest research (PR234) | 143 | 431 | 11 | 0 | 99,696 / 799,648 bytes (12.5%) |
-| Mayhem latest research | 59 | 316 | 66 | 0 | 268,000 / 706,744 bytes (37.9%) |
-| Mayhem selected | 58 | 131 | 7 | 245 | 636,128 / 706,744 bytes (90.0%) |
-| Relay selected | 492 | 0 | 0 | 0 | 0; complete meaningful ELF byte-equal |
+| Pump legacy cashback order | 548 / 1,035 | 52.9% | 112 (10.8%) | 436 | 487 |
+| PumpSwap integrated reader/behavior recovery | 555 / 785 | 70.7% | 109 (13.9%) | 446 | 230 |
 
-Unresolved text includes whole unmatched and opaque windows. These are not
-differing-byte counts or estimates of effort. For builds without full ELF equality, calls, data, layout and relocations
-remain to be verified even where a local body matches. Historical build provenance
-and broader behavior remain separate requirements for every build. Fees research remains separate from its selected checkpoint; Relay now has an explicit canonical selection.
+¹ “Functions” means inferred original machine-function windows, including
+framework and runtime helpers. Matched counts include exact local bodies and
+complete normalized counterparts. Normalization masks specified call/address
+operands; it does not prove matching callees, data or behavior. Duplicate bodies
+can have several candidate counterparts. Each original window counts once.
 
-The public-handler gaps are concrete:
+² The exact column counts functions whose entire local body is byte-equal; its
+percentage uses the same original-window denominator. Local body equality alone
+does not establish whole-program equality. The published Mayhem research scan assesses all 441 windows; its older selected
+ledger still has 245 opaque windows.
 
-- **Partial:** Pump `buy_exact_quote_in_v3`, `buy_v3`, `sell_v3`, `create_v2`
-  and `multi_hop_curve_swap`.
-- **Unaccepted in selected builds:** Pump `admin_update_token_incentives`,
-  `claim_token_incentives` and `set_mayhem_virtual_params`; PumpSwap
-  `create_config`; Mayhem `initialize_mayhem_state`. Some have overlay or
-  static-only source, so this category does not mean no implementation exists.
-- **Implemented with bounded evidence:** the other 140 handlers. This includes
-  known discrepancies such as Pump `sell_v2` quote transfer-fee behavior;
-  passing finite cases does not establish perfect reconstruction.
+Large functions remain, so function count and code coverage differ:
 
-The [handler ledger](repro/reconstruction-audit-2026-10-26/handlers.md) records
-the evidence and missing coverage for each name. The [complete window ledger](repro/reconstruction-status-2026-10-26/functions.tsv)
-separately records every raw, normalized, unmatched and opaque machine body.
+| Program | Text bytes in matched windows³ | Text covered | Text in unmatched / unassessed windows |
+| --- | ---: | ---: | ---: |
+| Pump selected | 400,752 / 1,792,208 | 22.4% | 1,391,456 |
+| PumpSwap / AMM | 574,808 / 1,162,040 | 49.5% | 587,232 |
+| Fees research | 699,952 / 799,648 | 87.5% | 99,696 |
+| Mayhem research | 438,744 / 706,744 | 62.1% | 268,000 |
+| Donation Relay selected | 752,488 / 752,488 | 100.0% | 0 |
 
-## Selected checkpoint and historical audit
+³ Sum of original window sizes with a complete counterpart, including normalized
+matches. This is **not** a count of identical bytes, a source-completion score or
+an estimate of remaining effort. Headers, data and relocations are outside this
+table. Counts and sizes come from the linked checkpoint inventories; the
+[baseline and Fees/Relay ledger](repro/reconstruction-status-2026-10-26/README.md)
+retains older selected Pump/PumpSwap measurements separately.
 
-Handler counts are bounded reconstructions with saved differential comparisons;
-they are not counts of exhaustively perfect functions. The unaccepted
-[behavioral recovery overlay](repro/behavioral-recovery/README.md) dispatches all
-56 Pump and 25 Mayhem instructions for local testing.
+Fees has **427 unique structural pairs** within its 574 matched windows.
+Its current report records 3,792 equal direct-callee observations out of 3,801;
+the nine unequal observations remain unresolved.
 
-| Program | Selected bounded handlers | Saved comparisons | Whole captured file equal |
-| --- | ---: | ---: | --- |
-| Pump | 48 / 56; 5 partial, 3 unaccepted | 9,269 + 1,024 Surfpool | No |
-| PumpSwap (AMM) | 37 / 38 | 17,462 | No |
-| Fees | 31 / 31 | 17,461 | No |
-| Mayhem | 24 / 25 | 9,595 | No |
-| Donation Relay | selected source 15; newer generated-framework source in `repro/donation-relay/` | 12 ordinary | No |
+Relay's exact result covers **818,280 / 818,280 meaningful ELF bytes (100%)**,
+including headers, calls, data and relocations. Two Rust builds agree. A separate
+912-transaction local loader deployment reproduces **830,448 / 830,448 captured
+payload bytes**, including 12,168 loader-allocated zero bytes. Historical source,
+build recipe and ProgramData metadata are not established by that result.
 
-Selected original-window inventories contain **384 windows with equal local
-body bytes**, **1,408 additional normalized-only matches**, **1,301 without a
-complete body match**, and **245 remaining opaque windows**. These partition
-3,338 original windows; matching bytes or normalized instructions does not prove
-call/data identity or all behavior. Original boundaries remain inferred.
+## Behavior and remaining work
 
-At the earlier immutable audit snapshot (not the current research frontier), research was separate: Fees had 340 unique structural pairs, 53 additional
-call-attributed duplicate pairs, 94 still-unattributed duplicate windows and 98
-unmatched windows. Relay's distribution-worker research reached 465/492 normalized
-windows (86 raw local matches), leaving 27 unmatched; selected Relay remains at
-122/492. These are not source-completion percentages or promoted checkpoints.
+| Program / checkpoint | Bounded public handlers⁴ | Saved comparisons |
+| --- | ---: | ---: |
+| Pump selected baseline | 48 / 56 (85.7%); 5 partial, 3 unaccepted | 9,269 + 1,024 Surfpool |
+| Pump local unpublished checkpoint | Baseline handler classifications not re-audited | 10,468 across 44 suites |
+| PumpSwap / AMM | 37 / 38 (97.4%) | 17,462 + separately reported focused matrices |
+| Fees selected | 31 / 31 (100%) | 17,461 |
+| Mayhem selected | 24 / 25 (96.0%) | 9,595 |
+| Relay selected | No exhaustive handler certification | 536 replay records / 534 unique fixtures |
 
-Known behavior gaps remain even among bounded handlers, including Pump `sell_v2`
-quote transfer fees. See the [remaining-work list](docs/REMAINING-WORK.md).
+⁴ Handler counts describe bounded implementation evidence, not perfect semantic
+reconstruction. The [150-handler audit](repro/reconstruction-audit-2026-10-26/handlers.md)
+classifies the selected core baseline as **140 bounded, 5 partial and 5
+unaccepted**. Newer focused work does not automatically update that audit.
+Comparison counts come from different checkpoints and scopes; do not sum them
+as unique scenarios. Tests use local VMs and simulators.
 
-Dependencies captured alongside the core programs:
+Remaining priorities:
 
-| Dependency | Rebuilt from public source |
+- **Pump:** finish V3 trading, creation and multi-hop paths; close incentive,
+  transfer-fee, account-validation and diagnostic discrepancies. The selected
+  build has 507 unmatched windows; the newer local checkpoint has 487.
+- **PumpSwap:** recover 297 selected-build windows (230 in the local checkpoint),
+  referenced data and indirect calls; obtain authentic successful fixed-admin
+  `create_config` coverage.
+- **Fees:** recover 11 remaining bodies and resolve duplicate attribution,
+  call/data identity and complete ELF layout.
+- **Mayhem:** recover 66 remaining research windows, resolve the 34 differences
+  found in the 150-case sweep-rate matrix, and complete initialization acceptance.
+- **Relay:** establish historical build provenance and broader runtime coverage
+  beyond the selected exact reconstructed ELF.
+
+See [remaining work](docs/REMAINING-WORK.md),
+[current reconstruction review](docs/RECONSTRUCTION-STATUS.md) and the
+[research history](docs/BYTE-IDENTITY-PROGRESS.md) for evidence and limitations.
+
+## Dependencies
+
+| Dependency | Current byte result |
 | --- | --- |
-| SPL Token | Byte-identical |
-| Token-2022 | Raw ELF matches the captured prefix; generated zero padding reproduces the full allocation ([report](repro/pump/verified-token-2022/README.md)) |
-| Associated Token Account | Raw bytes reproduced (105,032 bytes, `6804554e…`) only through two non-historical recipes: a linker symbol order ([report](repro/ata/reconstructed-order/README.md)) and one empty Cargo feature ([report](repro/ata/synthetic-ordering-exact-build/REPORT.md)). The authentic recipe is unknown; `repro/dependency-status.json` still says unresolved |
-| Metaplex Token Metadata | 1,509 differing positions in the allocation comparison: 1,477 text bytes in Utilize, 30 source-coordinate bytes and 2 relocation bytes ([report](repro/pump/metaplex-candidate-build-11/README.md)) |
+| SPL Token | 108,600 / 108,600 captured bytes reproduced (100%) |
+| Token-2022 | 611,056 / 611,056 meaningful ELF bytes reproduced (100%); full 1,382,016-byte allocation requires 770,960 separately added zero bytes |
+| Associated Token Account | 105,032 / 105,032 bytes reproduced (100%) by two non-historical research recipes; authentic recipe and selected promotion unresolved |
+| Metaplex Token Metadata | Latest reviewed inventory: 1,509 differing positions—1,477 text, 30 source-coordinate and 2 relocation bytes; allocation padding assessed separately |
 
-The Token-2022 and Metaplex raw ELFs are shorter than their captured allocations
-by 770,960 and 86,543 zero bytes respectively. Allocation-image comparisons are
-separate from equality of the unmodified compiler output.
-
-Selections live in [`repro/status.json`](repro/status.json) (the four core
-programs), [`repro/donation-relay/current.json`](repro/donation-relay/current.json)
-(Relay) and [`repro/dependency-status.json`](repro/dependency-status.json)
-(dependencies). [`docs/REMAINING-WORK.md`](docs/REMAINING-WORK.md) lists what is left.
+[Dependency evidence and selection status](repro/dependency-status.json).
+Allocation-image equality is separate from unchanged compiler-output equality.
 
 ## Quick start
 
-Python 3.12. Evidence checks need only the standard library; local VM execution
-needs the pinned packages. Clone with line-ending conversion off, or converted
-receipts break the evidence hashes
-([checkout integrity](repro/checkout-integrity/README.md)).
+Use Python 3.12. Clone without line-ending conversion to preserve evidence hashes:
 
 ```sh
 git clone --config core.autocrlf=false https://github.com/lalalune/pumpfun-source.git
 cd pumpfun-source
-python3 scripts/verify_evidence.py      # captured bytes and manifests
-python3 scripts/test_tooling.py         # tooling self-tests
-python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
+python3 scripts/verify_evidence.py
+python3 scripts/test_tooling.py
+python3 -m venv .venv
+.venv/bin/pip install -r requirements.txt
 .venv/bin/python scripts/local_validation.py
 ```
 
-Build a program and compare it with the deployed original:
-
-```sh
-cargo build-sbf --manifest-path programs/pump/Cargo.toml --tools-version v1.44 \
-  --sbf-out-dir work/pump-build -- --locked
-python3 scripts/compare.py pump work/pump-build/pump_recovered.so --output work/comparison-pump
-```
-
-Toolchains: Pump, PumpSwap and Fees use platform-tools v1.44 through
-`scripts/build_partial_candidate.py`, which wraps `cargo build-sbf` with an
-isolated SDK and records a provenance report. Mayhem's selected v1.54 build came
-from a one-shot direct Cargo/rustc controller (`repro/mayhem/compiler-v154-main/`);
-the repository adapter (`scripts/build_reconstruction_candidate.py --tools-version v1.54`)
-reproduces the same bytes (`repro/build-tooling/supported-sbpf-integration/`).
-
-For local SDK testing with every handler present, apply the
-[behavioral recovery overlay](repro/behavioral-recovery/README.md) and use the
-`@pump-fun/pump-sdk` harness in
-`repro/parallel-work/2026-10-25/independent-reconstruction-review/sdk-integration-test/`.
-
-## Layout
-
-| Path | Contents |
-| --- | --- |
-| `programs/` | Reconstructed Rust crates. CI hash-binds these to the selected checkpoints. |
-| `evidence/` | Captured deployed binaries, account payloads and upstream IDLs. Comparison inputs only, never compiler inputs. |
-| `repro/` | One evidence package per checkpoint or study: builds, comparison reports, differential receipts, verifiers. |
-| `scripts/` | Capture, build, compare and differential tooling ([index](scripts/README.md)). |
-| `localnet/` | Surfpool fixtures and transaction tests. |
-| `research/` | Imported research lab and provenance studies. |
-| `binaries/` | Standalone compiler-experiment objects; never selected candidates. |
-| `audit/`, `docs/`, `outputs/` | Validation scope, design notes and per-pass reports. |
-
-## Rules the evidence follows
-
-- Behavioral equivalence and byte identity are reported separately and never combined into one score.
-- Raw compiler-byte identity never uses padding or rewriting; allocation-image matches are labeled separately.
-- Original binaries are read only after compilation finishes.
-- Changing a CI-bound source file means selecting a new checkpoint with fresh build and differential evidence.
-- Tests run only against local VMs and simulators; nothing is sent to a live network.
-
-## More detail
-
-- [Current reconstruction review](docs/RECONSTRUCTION-STATUS.md), [selected baseline audit](docs/RECONSTRUCTION-AUDIT.md) and [remaining work](docs/REMAINING-WORK.md)
-- [Historical selected-checkpoint completion ledger](docs/COMPLETION.md) and [scope](docs/SCOPE.md)
-- [Tooling](docs/TOOLING.md) and [historical build-identity audit](docs/BUILD_IDENTITY_AUDIT.md)
-- Per-pass ledgers in `repro/layered-passes/`; historical packages are immutable.
-- [Security policy](SECURITY.md) and [audit scope](audit/AUDIT.md)
+Build and compare instructions: [tooling guide](docs/TOOLING.md) and
+[scripts index](scripts/README.md). Source is in `programs/`, captured comparison
+inputs in `evidence/`, and reproducibility records in `repro/` and `research/`.
+See also [scope](docs/SCOPE.md), [security policy](SECURITY.md) and
+[audit scope](audit/AUDIT.md).
 
 ## License
 
