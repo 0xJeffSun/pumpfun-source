@@ -11,5 +11,6 @@ allows, whole-fn moves among same-type impl blocks where it does not, with token
 | gain | base | counts (Linux) | new windows | PR |
 | --- | --- | --- | --- | --- |
 | [g01-line-placement](g01-line-placement/) | event-decoder-recovery-20261027 (647/148/138) | 684 / 148 / 101 (+37, 0 lost), 418c2ea3… | 37 | [#315](https://github.com/lalalune/pumpfun-source/pull/315) |
+| [g02-rebase-651-legacy-sell](g02-rebase-651-legacy-sell/) | optional-context-recovery-20261027 (651/148/134) | 693 / 148 / 92 (+42, 0 lost), 69979ad3… | 42 (supersedes g01) | [#315](https://github.com/lalalune/pumpfun-source/pull/315) |
 
 `PROGRESS.md` has the continuation notes, residuals and negative controls.

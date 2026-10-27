@@ -15,17 +15,14 @@ reorder.py (whole-fn moves among same-type impl blocks for order-impossible site
 text order as keys) → placer.py (whitespace-only) → proofs (rlex token stream, whitespace-squeezed text,
 item-permutation) → `placed/`, `source.patch`, `solve-report.json`. Prediction was exact on 647 (26/26, 32/32).
 
-## Status (12:33)
-- g01 BANKED: g06 tree, Linux ×2 identical (candidate 418c2ea3…, unstripped 3d6b9edd…) = 684/148/101 (+37 normalized,
-  0 lost), runtime 25 suites / 17,462 cases / 0 mismatches. Packet `g01-line-placement/`.
-- Native ladder (base 642/139/143): whitespace only 668/139 (+26, exact prediction) → + impl-fn reorder 674/138
+## Status (12:45)
+- g01 (647): Linux ×2 418c2ea3… = 684/148/101 (+37), runtime 17,462/0. PR #315.
+- g02 (651 = new main, optional-context-recovery-20261027): solver rerun on 651 (+0x57e20, now placeable) + base_for_buy
+  copy + legacy_sell.rs merged into instructions/swap/sell.rs (+4 closures) → Linux ×2 69979ad3… = 693/148/92 (+42 vs 651,
+  0 lost), runtime 17,462/0. Pushed to the same branch (updates PR #315).
+- Native ladder on 647 (base 642/139/143): whitespace only 668/139 (+26, exact prediction) → + impl-fn reorder 674/138
   (raw LOST 0x6c248 can_boost: negative control) → reorder with original-text-order keys + `base_for_buy` copy 675/139
-  → + call-graph closure pairing in multi_hop_swap.rs 679/139/106.
-- NEXT (s1 → g02): legacy_sell.rs merged into instructions/swap/sell.rs (`out/s1-647`; lib.rs
-  `use instructions::swap::sell as legacy_sell;` keeps every path): native 679 → 679, 0 lost; pair.py now pairs the
-  4 legacy sell closures through the caller (file-aware votes; 'caller-subset' DP because the candidate has 5 members
-  for 4 originals); `solve.py --tree out/s1-647 --symbols out/nb-s1/unstripped.so --only-files instructions/swap/sell.rs`
-  predicts +4 (0x4bf30 0x4c138 0x4c340 0x4c548), tree `out/solve-s1/placed`. Build + Linux ×2 + runtime pending.
+  → + call-graph closure pairing in multi_hop_swap.rs 679/139/106; legacy sell move alone 679 → 679.
 
 ## File selection for the first packet
 Included: state/{global_config,pool,volume_accumulator}.rs, instructions/create_pool.rs, curve/{constant_product,fees}.rs,
@@ -39,10 +36,8 @@ instructions/boost.rs 0x1ecd8 (pool lane merges boost files first).
   before vault_for_mint (orig 772): the original's amm_hop is shorter after 718 (curve-run code is the separate
   executor 0x45940 at 838..941). Code move → multihop lane. 0xb92c8 (941) belongs to that executor. 0x3d8d0 needs
   is_curve_hop before program_for (orig 233 < 414) — whole-fn top-level move, blocked by the same restructure.
-- 0x57e20 (trade_v2.rs:913, caller sell_v2 0x56710) pairs with trade.rs:329 (`trade::execute_sell`): code must move
-  into trade_v2.rs (v2 lane).
-- legacy sell 0x4bf30 0x4c138 0x4c340 0x4c548 (sell.rs:167/179/183/196): legacy_sell.rs must become
-  instructions/swap/sell.rs (validate_pool_v2 at 520/526 already placed there).
+- 0x57e20: CLOSED in g02 (651 moved the sell_v2 body into trade_v2.rs).
+- legacy sell closures: CLOSED in g02. Handler 0x49b50 / cashback 0x4c750 stay code-level (site counts differ).
 - 0x123a0 (constant_product.rs:85/87): one candidate site serves two original copies (0x11e70 at 45/47 and 0x123a0)
   → needs a source duplicate (math).
 - legacy buy 0x37150 0x39d80 0x39f88 0x3a190 0x3a398 0xaf3b0 0xb3460, toggles 0x1b510 0x1b7c0 0x1bb00: module moves
