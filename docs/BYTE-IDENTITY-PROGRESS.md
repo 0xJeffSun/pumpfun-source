@@ -4,6 +4,18 @@ The [full audit](RECONSTRUCTION-AUDIT.md) and its generated tables retain their
 explicit `1463bd22` snapshot. This log records later research without silently
 changing that baseline or promoting new selected artifacts.
 
+## Mayhem: replay the same quote IR through installed backends
+
+The [quote backend packet](../research/mayhem-quote-backend-replay-20261027/README.md)
+replays one unchanged saved Rust-generated module through the installed v1.52
+and v1.54 LLVM backends. V1.54 reproduces the reference Rust build's masked
+1,120-byte sell-quote body (124/140 same-position slots against the original).
+V1.52 produces 1,288 bytes, while v1.44 rejects the newer IR attribute. Neither
+successful backend matches the original function. All call immediates and
+address relocations are masked only for this diagnostic, without checking their
+targets. Seven mutation tests and the independent byte comparison pass. No
+complete window, runtime coverage or current frontier changes.
+
 ## Pump Round30: transfer-fee helpers and ATA cleanup
 
 The maintained [Round30 checkpoint](../repro/pump/main-contract-round30-20261027/README.md)

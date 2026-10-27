@@ -114,6 +114,12 @@ A [same-IR compiler diagnostic](research/mayhem-host-llvm-comparison/README.md)
 produces identical Mac and Linux LLVM objects for one earlier initializer
 control. This narrows that investigation without adding a function match.
 
+The [quote backend replay](research/mayhem-quote-backend-replay-20261027/README.md)
+holds the saved Rust IR fixed: v1.54 reproduces the reference helper's masked
+1,120-byte body, while v1.52 emits 1,288 bytes and v1.44 rejects the IR. The
+original quote helper still differs in sixteen instruction slots; this
+diagnostic adds no recovered function or runtime coverage.
+
 An [allocator-context experiment](research/mayhem-allocator-context/README.md)
 reproduces the missing reserve helper through a zeroed-allocation probe. It
 identifies a compiler condition to recover through justified source; the probe

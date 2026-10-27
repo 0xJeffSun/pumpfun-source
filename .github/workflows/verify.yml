@@ -157,6 +157,8 @@ jobs:
               python -B research/mayhem-provider-sharing/test_scope.py
               python -B research/mayhem-host-llvm-comparison/verify.py
               python -B research/mayhem-host-llvm-comparison/test_scope.py
+              python -B research/mayhem-quote-backend-replay-20261027/verify.py
+              python -B research/mayhem-quote-backend-replay-20261027/test_verify.py
               python -I -B research/mayhem-native-qualified-identity/verify.py
               python -I -B research/mayhem-native-qualified-identity/test_verify.py
               python -B repro/mayhem/initializer-current-20261027/verify.py --current-source . --expected-seal b6b01b400fb7c5ab10db803ba27fe6a76e0e59e9ea7fad25250dc95760cf485c

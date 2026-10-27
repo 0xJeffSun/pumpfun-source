@@ -49,6 +49,13 @@ equal at their original offsets, but cap selection differs. Nine further cap and
 initializer ownership controls add no complete match; the equal-size AMM handler
 also remains unmatched.
 
+The [quote backend replay](../research/mayhem-quote-backend-replay-20261027/README.md)
+holds one saved Rust IR input fixed. V1.54 reproduces its reference masked body;
+v1.52 changes code generation but does not match the original, and v1.44 cannot
+parse the unchanged IR. Recover the remaining quote source/IR and scheduling
+differences before claiming identity. This is a diagnostic of one input, not
+general toolchain equivalence or a new runtime result.
+
 The [conditional initializer machine-path evidence](../research/mayhem-initializer-machine-paths/README.md)
 constrains state updates and panic outcomes over its stated valid, disjoint
 objects and immediate-call ABI. It does not determine the missing stack or
@@ -680,7 +687,7 @@ composition and compilation; their gains are not added to this count.
 
 ## Active priority: Mayhem
 
-The [Mayhem work plan](MAYHEM-RECONSTRUCTION-PLAN.md) supersedes earlier cross-program prioritization. Its current normalized research frontier has 429 of 441 matched windows, with twelve unmatched bodies. The quote-aware validator is recovered; remaining trade/initializer bodies, recursive data/call closure, full ELF layout and historical provenance are still open. The separate parser-context composition and historical-framework controls do not establish complete Mayhem identity.
+The [Mayhem work plan](MAYHEM-RECONSTRUCTION-PLAN.md) supersedes earlier cross-program prioritization. Its current normalized research frontier has 430 of 441 matched windows, with eleven unmatched bodies. The quote-aware validator and initializer are recovered; remaining trade and quote bodies, recursive data/call closure, full ELF layout and historical provenance are still open. The separate parser-context composition and historical-framework controls do not establish complete Mayhem identity.
 
 
 ### Mayhem historical event-parser allocator context
