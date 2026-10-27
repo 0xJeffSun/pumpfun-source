@@ -3,7 +3,7 @@ from pathlib import Path
 import ast,hashlib,json
 HERE=Path(__file__).resolve().parent
 TRANSITION_SHA256 = '0f52fdd352d0472467e6b31d837864ee2f38b5ebcbaa862e83a8400765d30f51'
-GOVERNANCE_SHA256 = 'c3e0870d4a55df644e46021b70f15bbfbdde945ee844a909f8e16255bcb4a8ab'
+GOVERNANCE_SHA256 = '905467d9dce9313c85d5f15697903076dc00445bd01e63b6fffe2e6af9a2d1e1'
 def authenticate():
  assert hashlib.sha256((HERE/'governance.json').read_bytes()).hexdigest()==GOVERNANCE_SHA256
  for n,h in json.loads((HERE/'governance.json').read_bytes())['critical_code'].items():
