@@ -46,7 +46,7 @@ class ScopeTests(unittest.TestCase):
                 relative(name)
 
     def test_changed_override_rejected(self):
-        with tempfile.TemporaryDirectory() as directory:
+        with tempfile.TemporaryDirectory(dir=Path(tempfile.gettempdir()).resolve()) as directory:
             out = self.copy(directory)
             p = out / 'source/crank_donation_fee_pda.rs'
             p.write_bytes(p.read_bytes() + b'// drift\n')
@@ -54,7 +54,7 @@ class ScopeTests(unittest.TestCase):
                 verify(out)
 
     def test_changed_patch_rejected(self):
-        with tempfile.TemporaryDirectory() as directory:
+        with tempfile.TemporaryDirectory(dir=Path(tempfile.gettempdir()).resolve()) as directory:
             out = self.copy(directory)
             p = out / 'source.patch'
             p.write_bytes(p.read_bytes() + b'not a source patch\n')
@@ -62,7 +62,7 @@ class ScopeTests(unittest.TestCase):
                 verify(out)
 
     def test_runtime_claim_rejected(self):
-        with tempfile.TemporaryDirectory() as directory:
+        with tempfile.TemporaryDirectory(dir=Path(tempfile.gettempdir()).resolve()) as directory:
             out = self.copy(directory)
             p = out / 'manifest.json'
             m = json.loads(p.read_text())
@@ -72,14 +72,14 @@ class ScopeTests(unittest.TestCase):
                 verify(out)
 
     def test_undeclared_file_rejected(self):
-        with tempfile.TemporaryDirectory() as directory:
+        with tempfile.TemporaryDirectory(dir=Path(tempfile.gettempdir()).resolve()) as directory:
             out = self.copy(directory)
             (out / 'unexpected.txt').write_text('This is not a declared source input.')
             with self.assertRaises(ValueError):
                 verify(out)
 
     def test_symlink_override_rejected(self):
-        with tempfile.TemporaryDirectory() as directory:
+        with tempfile.TemporaryDirectory(dir=Path(tempfile.gettempdir()).resolve()) as directory:
             out = self.copy(directory)
             p = out / 'source/crank_donation_fee_pda.rs'
             external = Path(directory) / 'source-copy.rs'
@@ -90,7 +90,7 @@ class ScopeTests(unittest.TestCase):
                 verify(out)
 
     def test_wrong_parent_creates_no_output(self):
-        with tempfile.TemporaryDirectory() as directory:
+        with tempfile.TemporaryDirectory(dir=Path(tempfile.gettempdir()).resolve()) as directory:
             parent, output = Path(directory) / 'parent', Path(directory) / 'output'
             parent.mkdir()
             with self.assertRaises(ValueError):
@@ -98,7 +98,7 @@ class ScopeTests(unittest.TestCase):
             self.assertFalse(output.exists())
 
     def test_symlink_output_ancestor_rejected(self):
-        with tempfile.TemporaryDirectory() as directory:
+        with tempfile.TemporaryDirectory(dir=Path(tempfile.gettempdir()).resolve()) as directory:
             root = Path(directory)
             parent, outside = root / 'parent', root / 'outside'
             parent.mkdir()
@@ -110,7 +110,7 @@ class ScopeTests(unittest.TestCase):
             self.assertFalse((outside / 'new').exists())
 
     def test_existing_output_is_never_overwritten(self):
-        with tempfile.TemporaryDirectory() as directory:
+        with tempfile.TemporaryDirectory(dir=Path(tempfile.gettempdir()).resolve()) as directory:
             output = Path(directory) / 'output'
             output.mkdir()
             sentinel = output / 'keep.txt'
@@ -120,14 +120,14 @@ class ScopeTests(unittest.TestCase):
             self.assertEqual(sentinel.read_text(), 'keep')
 
     def test_broken_extra_symlink_rejected(self):
-        with tempfile.TemporaryDirectory() as directory:
+        with tempfile.TemporaryDirectory(dir=Path(tempfile.gettempdir()).resolve()) as directory:
             out = self.copy(directory)
             (out / 'broken-extra').symlink_to(Path(directory) / 'absent')
             with self.assertRaisesRegex(ValueError, 'Symlink packet'):
                 verify(out)
 
     def test_symlink_source_root_rejected(self):
-        with tempfile.TemporaryDirectory() as directory:
+        with tempfile.TemporaryDirectory(dir=Path(tempfile.gettempdir()).resolve()) as directory:
             root = Path(directory)
             real = root / 'real'
             real.mkdir()
@@ -137,14 +137,14 @@ class ScopeTests(unittest.TestCase):
                 inventory(alias)
 
     def test_symlink_packet_root_rejected(self):
-        with tempfile.TemporaryDirectory() as directory:
+        with tempfile.TemporaryDirectory(dir=Path(tempfile.gettempdir()).resolve()) as directory:
             alias = Path(directory) / 'packet'
             alias.symlink_to(PACKAGE, target_is_directory=True)
             with self.assertRaisesRegex(ValueError, 'Symlink packet'):
                 verify(alias)
 
     def test_symlink_source_ancestor_rejected(self):
-        with tempfile.TemporaryDirectory() as directory:
+        with tempfile.TemporaryDirectory(dir=Path(tempfile.gettempdir()).resolve()) as directory:
             root=Path(directory);real=root/'real';(real/'source').mkdir(parents=True)
             alias=root/'alias';alias.symlink_to(real,target_is_directory=True)
             with self.assertRaisesRegex(ValueError,'Symlink source root'):
@@ -152,7 +152,7 @@ class ScopeTests(unittest.TestCase):
 
     def test_resealed_runtime_claim_rejected(self):
         import hashlib
-        with tempfile.TemporaryDirectory() as directory:
+        with tempfile.TemporaryDirectory(dir=Path(tempfile.gettempdir()).resolve()) as directory:
             out=self.copy(directory);p=out/'source-inputs.json';m=json.loads(p.read_text());m['runtime_verified']=True;p.write_text(json.dumps(m))
             seal=json.loads((out/'manifest.json').read_text());seal['source-inputs.json']=hashlib.sha256(p.read_bytes()).hexdigest();(out/'manifest.json').write_text(json.dumps(seal))
             with self.assertRaisesRegex(ValueError,'cannot attest'):
@@ -160,7 +160,7 @@ class ScopeTests(unittest.TestCase):
 
     def test_resealed_false_public_parent_rejected(self):
         import hashlib
-        with tempfile.TemporaryDirectory() as directory:
+        with tempfile.TemporaryDirectory(dir=Path(tempfile.gettempdir()).resolve()) as directory:
             out=self.copy(directory);p=out/'source-inputs.json';m=json.loads(p.read_text());m['public_parent_materialization_provided']=True;p.write_text(json.dumps(m))
             seal=json.loads((out/'manifest.json').read_text());seal['source-inputs.json']=hashlib.sha256(p.read_bytes()).hexdigest();(out/'manifest.json').write_text(json.dumps(seal))
             with self.assertRaisesRegex(ValueError,'external exact'):
@@ -168,7 +168,7 @@ class ScopeTests(unittest.TestCase):
 
     def test_resealed_parent_map_drift_rejected(self):
         import hashlib
-        with tempfile.TemporaryDirectory() as directory:
+        with tempfile.TemporaryDirectory(dir=Path(tempfile.gettempdir()).resolve()) as directory:
             out=self.copy(directory);p=out/'source-inputs.json';m=json.loads(p.read_text());m['before']['Cargo.lock']='0'*64;p.write_text(json.dumps(m))
             seal=json.loads((out/'manifest.json').read_text());seal['source-inputs.json']=hashlib.sha256(p.read_bytes()).hexdigest();(out/'manifest.json').write_text(json.dumps(seal))
             with self.assertRaisesRegex(ValueError,'Pinned complete source map'):

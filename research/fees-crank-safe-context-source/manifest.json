@@ -6,5 +6,5 @@
   "source/crank_donation_fee_pda.rs": "b8c834db90ba419b50c05ac65bcec049ce5f5ee2fbf114749aed8858aaa0a384",
   "source_tools.py": "7a65eb20eed4e479b48109f650d652b879d7393953d5dac79a6c1631f75b28aa",
   "test_compare.py": "7a921bda308939b63d785464ede69d433d8daf5d2e63ad06f9bf9d6957358e62",
-  "test_scope.py": "6cb4b581ad3860dd2381f683b84fdeca6e717776c60d569eb3bfd426f8a2b793"
+  "test_scope.py": "85f420fb41e54c9ca41a13a5bee32f76526f622e16f45df6166fb2ab6747e981"
 }
