@@ -474,3 +474,16 @@ all 42 source inputs and the repeat-build/runtime evidence. Earlier unit-count
 controls remain rejected. The shared authorization helper at 234096 still needs
 its exact signer-input and branch layout recovered; source-path/line corrections
 and signer-reference variants alone did not close it.
+
+
+## Relay correspondence verification
+
+The [independent reference-graph check](../research/relay-reference-bijection/README.md)
+finds a unique 492-window bijection for the historical complete492 baseline under
+explicit instruction, relocation and positional data constraints. It agrees with
+every pair used by the later exact linker recipe, without a name/address tie-break.
+It checks 4,320 calls, 54 relocated code references, 77 fixed roots and all 2,327
+relocations. Eighteen tests include real operand mutations that preserve normalized
+body multisets but fail the graph check. This adds correspondence verification;
+the later exact ELF/payload evidence remains the current frontier. Historical
+source names, natural compiler ordering and indirect behavior remain unproved.
