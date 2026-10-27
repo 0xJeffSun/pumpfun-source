@@ -63,10 +63,10 @@ fn root_seed(g: &Global, quote: &Pubkey, control: &[u8]) -> Result<u64> {
 fn vault_amount(account: &AccountInfo<'_>, data: &[u8]) -> Result<u64> {
     require!(account.owner == &anchor_spl::token::ID || account.owner == &anchor_spl::token_2022::ID,
         PumpError::InvalidQuotePool);
-    require!(data.len() >= 165, PumpError::InvalidQuotePool);
-    require!(data.len() != 355, PumpError::InvalidQuotePool);
-    require!(data[108] == 1, PumpError::InvalidQuotePool);
-    if data.len() != 165 { require!(data[165] == 2, PumpError::InvalidQuotePool); }
+    require_gte!(data.len(), 165usize, PumpError::InvalidQuotePool);
+    require_neq!(data.len(), 355usize, PumpError::InvalidQuotePool);
+    require_eq!(data[108], 1u8, PumpError::InvalidQuotePool);
+    if data.len() != 165 { require_eq!(data[165], 2u8, PumpError::InvalidQuotePool); }
     Ok(u64_at(data, 64))
 }
 
@@ -91,8 +91,8 @@ fn pool_record(mint: &Pubkey, quote: &Pubkey, pool: &AccountInfo<'_>,
     let adjustment = if pool_data.len() >= 261 {
         i128::from_le_bytes(pool_data[245..261].try_into().unwrap())
     } else { 0 };
-    require!(base.key == &base_key, PumpError::InvalidQuotePool);
-    require!(quote_vault.key == &quote_key, PumpError::InvalidQuotePool);
+    require_keys_eq!(base.key(), base_key, PumpError::InvalidQuotePool);
+    require_keys_eq!(quote_vault.key(), quote_key, PumpError::InvalidQuotePool);
     let base_amount = vault_amount(base, &base_data)?;
     let quote_amount = vault_amount(quote_vault, &quote_data)?;
     let adjusted = (quote_amount as i128).checked_add(adjustment).ok_or_else(overflow)?;
