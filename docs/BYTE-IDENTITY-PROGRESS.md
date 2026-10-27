@@ -378,3 +378,20 @@ Separately, the [fee-total probe](../research/fees-total-predicate-probe/README.
 reproduces a 192-byte predicate's instruction sequence using ordinary Rust. It
 uses the Darwin v1.44 compiler and an isolated object; panic operands and full
 Linux-candidate integration remain unresolved. It adds zero inventory matches.
+
+## Fee-total predicate integrated and original diagnostic restored
+
+The [full Linux packet](../research/fees-total-predicate-integration/README.md)
+rebuilds PR #140's control exactly, then connects the predicate to the real fee
+validator. Both variants gain original window 700568 (192 bytes), losing none:
+357 unique structural pairs, 81 unmatched windows and 58 unique raw pairs. The
+complete inventory partitions Fees into 108 raw, 396 normalized-only and 81
+unmatched original windows. Call refinement yields 418 correspondences, 2,494
+bound-target edges and 23 different-body edges; 86 duplicates stay unattributed.
+
+The preferred method also reconstructs the observed `pump-fees-math/src/lib.rs`
+line 28, column 9 and the overflow message. Both candidates pass fresh 17,331-case
+suite and 1,542-case exact focused replays; all 15 applicable overflow diagnostic
+cases match for the preferred candidate. Original helper callers remain open.
+The failed missing-host-linker attempt and rejected stale-cache attempt are
+retained explicitly. This updates research evidence, not selected program pins.

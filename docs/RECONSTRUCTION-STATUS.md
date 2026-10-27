@@ -37,7 +37,7 @@ analysis. Candidate symbol names are hypotheses about original identity.
 | Fees selected | 585 | 102 | 363 | 120 | 0 |
 | Mayhem selected | 441 | 58 | 131 | 7 | 245 |
 | Relay selected source 15 | 492 | 33 | 89 | 370 | 0 |
-| **Fees latest research** | **585** | **108** | **395** | **82** | **0** |
+| **Fees latest research** | **585** | **108** | **396** | **81** | **0** |
 | **Relay latest research** | **492** | **130** | **352** | **10** | **0** |
 
 Each row is a partition, not a score of semantic correctness. Mayhem's source
@@ -63,13 +63,13 @@ bytes (7.0%)**. Those bytes describe the sizes of unmatched original windows,
 not the number of absent or incorrect bytes. The residual includes large business
 functions; matching the other 482 still leaves their call/data identity to prove.
 
-Fees research has **503/585 windows with a normalized counterpart**: 356 unique
-structural pairs and 147 original windows in ambiguous duplicate groups. Its 82
-unmatched windows span **343,096 of 799,648 original text bytes (42.9%)**, although
-they are only 14.0% of the window count. Many remaining bodies are large. The
+Fees research has **504/585 windows with a normalized counterpart**: 357 unique
+structural pairs and 147 original windows in ambiguous duplicate groups. Its 81
+unmatched windows span **342,904 of 799,648 original text bytes (42.9%)**, although
+they are only 13.8% of the window count. Many remaining bodies are large. The
 [current call ledger](../repro/reconstruction-status-2026-10-26/fees-call-attribution.json)
 recomputes 61 additional duplicate-body correspondences on this candidate, for
-417 attributed pairs. There are 86 still-unattributed duplicate windows and 23
+418 attributed pairs. There are 86 still-unattributed duplicate windows and 23
 call edges to different-body frontiers. This refinement adds no body coverage.
 
 There is no defensible single source-completion percentage or ETA. Whole-program
@@ -242,7 +242,7 @@ additional function is considered recovered.
 ## Fees: new complete bodies, substantial residual business logic
 
 The latest 854,672-byte candidate is SHA-256
-`a4dab9d0f0044880e7bb13cae93fd4ff4caee72ee067652d8f174d4fe261bc68`.
+`6868e9b5e1a2736592a0f7eb2440ed24614d32ac9af243996652e552c5d95706`.
 The newly merged studies recover:
 
 | Complete original window | Evidence |
@@ -253,6 +253,7 @@ The newly merged studies recover:
 | 600-byte buyback initializer at 120,216 | [Unchanged helper relocated to its diagnostic source path](../research/fees-buyback-initializer-origin/README.md) |
 | 3,320-byte authority-update body at 103,408 | [Preserved body tokens and diagnostic source coordinates](../research/fees-authority-body-origin/README.md) |
 | 776-byte legacy account cleanup and 1,072-byte dispatcher | [Owned account/context recovery](../research/fees-sharing-owned-legacy/README.md); cleanup raw bytes equal |
+| 192-byte fee-total predicate at 700568 | [Full Linux integration](../research/fees-total-predicate-integration/README.md); panic leaf, message and source coordinates checked |
 
 These are complete normalized windows, not merely matching diagnostic fragments.
 There are 58 unique raw-equal structural pairs; counting all original windows
@@ -260,16 +261,17 @@ with any raw counterpart, including ambiguous duplicates, gives 108. Those
 numbers answer different questions and must not be interchanged.
 
 The candidate retains passing **17,331 cases across 18 suites** and **1,542 exact
-outcome/log/compute comparisons**. The legacy-sharing proposal was replayed afresh;
-its identical control receipts were reused explicitly. Existing unchecked-input
-and finite-coverage limits remain. The 82 unresolved bodies, ambiguous attribution,
+outcome/log/compute comparisons**. Both fee-total proposals were replayed afresh;
+the fresh control build reproduces the prior artifact exactly. Existing unchecked-input
+and finite-coverage limits remain. The 81 unresolved bodies, ambiguous attribution,
 shareholder validation, transitive calls/data and final ELF layout remain open.
 
-An [isolated ordinary-Rust probe](../research/fees-total-predicate-probe/README.md)
-also reproduces the 192-byte fee-total predicate at 700568, excluding its panic
-address operands. It has not been integrated into a full candidate and does not
-change the 82-window remainder. Original field names, panic data/target and all
-four caller correspondences still require evidence.
+The [isolated probe](../research/fees-total-predicate-probe/README.md) is now
+followed by a full canonical Linux build. Both the root-module and source-location
+variants gain the predicate without losing a match. The preferred method at
+`pump-fees-math/src/lib.rs:28:9` reproduces all 15 applicable original overflow
+diagnostics. Its one current caller does not recreate all four original callers;
+this remains a local helper recovery, not a complete configuration-path proof.
 
 ## Public behavior: reconstructed is not perfect
 
@@ -297,7 +299,7 @@ receipts, acceptance decisions and explicit guard changes are still required.
 2. **Close known behavior defects:** Pump `sell_v2` and the ten partial/unaccepted
    selected dispositions above, with bound success/rejection tests. Cover genuine
    CPI callers, ownership and extension/mode combinations before acceptance.
-3. **Continue Fees business/source recovery:** work from all 82 residual addresses,
+3. **Continue Fees business/source recovery:** work from all 81 residual addresses,
    preserve the refreshed duplicate-call attribution, and validate paths not
    exercised by the existing corpus. Normalize only declared relocations/calls.
 4. **Recover Pump/AMM/Mayhem residuals:** preserve opaque and ambiguous states.
