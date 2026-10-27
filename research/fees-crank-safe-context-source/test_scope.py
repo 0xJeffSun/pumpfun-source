@@ -2,6 +2,7 @@
 """Source-only regression tests; no compiler, target, network or replay inputs."""
 from pathlib import Path
 import json
+import os
 import shutil
 import tempfile
 import unittest
@@ -16,6 +17,12 @@ class ScopeTests(unittest.TestCase):
         out = Path(directory) / 'packet'
         shutil.copytree(PACKAGE, out)
         return out
+
+    def test_unlisted_special_file(self):
+        with tempfile.TemporaryDirectory(dir=Path(tempfile.gettempdir()).resolve()) as directory:
+            packet=self.copy(directory)
+            os.mkfifo(packet/'unlisted.pipe')
+            with self.assertRaises(ValueError):verify(packet)
 
     def test_default_claims_are_source_only(self):
         m, hunks = verify(PACKAGE)

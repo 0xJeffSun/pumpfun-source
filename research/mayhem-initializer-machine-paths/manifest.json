@@ -91,9 +91,9 @@
   "runtime/rejections-cases.json": "9049ce6d92c4077eba3a2c44aaa3c48bf9417993e5539986d55c7c262b809b1e",
   "runtime/rejections.json.gz": "b7505c2e948bec2e4e240e6979471b394f7f958e0f33d72017a4f0b81c46a257",
   "scope.json": "b3ede772becdfb1bbd2e902ea7c21d4d826dd5a6a827e67798a664f773629a9c",
-  "test_verify.py": "49892ae667f7940ff18255733edbea559d8b1ae7eb46ad03e333720f07fad772",
+  "test_verify.py": "96ddb131a8422627df18a3cbacc1f799954514b81320d9328413b6a9585da9c6",
   "validation/mutation-and-boundary-results.json": "2b1075673c5b97598834779b7d6c713edefdc583780cbb6a5e7dc6be8b2790b1",
   "validation/record-and-signatures.log": "7c3ba03d8f1bf016d24af4f68948f5d4cc4a04b50e56df29d0fc20a837fd8d8b",
-  "verify.py": "a52b5c93f1553084bfedc99a9345f57b30fcc4defb1a1397ba0918753762ae4b",
+  "verify.py": "d64646832e12cdb7fcb4075317f2de3708b52ec2dbb03286bc6390a2f2540b24",
   "window_map.py": "eeec82f751ea38827c5149f28590f19a3ff516c7eee57b6aa48949cbaac4a7e5"
 }

@@ -13,8 +13,8 @@ ELF and, through a separate loader deployment, its captured payload.**
 
 **Main Pump: 69.9% of function windows matched; 49.5% of original text covered. Complete reconstruction remains unfinished.**
 
-Across the latest verified checkpoints, **2,864 / 3,338 inferred function windows
-match (85.8%)**. Their matched windows cover **3,783,808 / 5,213,128 original text
+Across the latest verified checkpoints, **2,865 / 3,338 inferred function windows
+match (85.8%)**. Their matched windows cover **3,784,768 / 5,213,128 original text
 bytes (72.6%)**. **One of five programs has complete meaningful-ELF identity**;
 all four core contracts still differ from their captured binaries.
 
@@ -27,9 +27,9 @@ all remaining code, calls, data, relocations and build provenance.
 | [Pump Round28](repro/pump/main-contract-round28-20261027/README.md) | 723 / 1,035 | 69.9% | 123 | 600 | 312 | No |
 | [PumpSwap / AMM](repro/pump_amm/source-abi-recovery-20261027/README.md) | 640 / 785 | 81.5% | 128 | 512 | 145 | No |
 | [Fees research](research/fees-withdraw-tuple-integration/README.md) | 580 / 585 | 99.1% | 198 | 382 | 5 | No |
-| [Mayhem research](research/mayhem-sizing-panic-recovery/README.md) | 429 / 441 | 97.3% | 100 | 329 | 12 | No |
+| [Mayhem research](research/mayhem-initializer-current-recovery-20261027/README.md) | 430 / 441 | 97.5% | 100 | 330 | 11 | No |
 | [Donation Relay](repro/donation-relay/canonical-exact-selection/README.md) | 492 / 492 | 100.0% | 492 | 0 | 0 | **Yes** |
-| **Total** | **2,864 / 3,338** | **85.8%** | **1,041** | **1,823** | **474** | **1 / 5** |
+| **Total** | **2,865 / 3,338** | **85.8%** | **1,041** | **1,824** | **473** | **1 / 5** |
 
 “Windows” are inferred original machine-function ranges, including framework and
 runtime helpers. Complete normalized matches mask specified call/address
@@ -42,9 +42,9 @@ the whole program is identical.
 | Pump Round28 | 886,312 / 1,792,208 | 49.5% | 905,896 |
 | PumpSwap / AMM | 799,032 / 1,162,040 | 68.8% | 363,008 |
 | Fees research | 750,520 / 799,648 | 93.9% | 49,128 |
-| Mayhem research | 595,456 / 706,744 | 84.3% | 111,288 |
+| Mayhem research | 596,416 / 706,744 | 84.4% | 110,328 |
 | Donation Relay | 752,488 / 752,488 | 100.0% | 0 |
-| **Total** | **3,783,808 / 5,213,128** | **72.6%** | **1,429,320** |
+| **Total** | **3,784,768 / 5,213,128** | **72.6%** | **1,428,360** |
 
 Pump and AMM rows describe the verified maintained sources. Fees and Mayhem rows
 are the latest upstream research frontiers, distinct from their maintained
@@ -78,13 +78,22 @@ account, fee, CPI, boundary and error-order matrices recorded in its checkpoint.
 These corpora overlap and must not be summed as unique scenarios. Tests use
 captured programs in local VMs; they do not establish current-chain acceptance.
 
-The latest [Mayhem trade-origin and validator recovery](research/mayhem-trade-origins-validator/README.md)
+The [current Mayhem initializer recovery](research/mayhem-initializer-current-recovery-20261027/README.md)
+adds the complete 960-byte normalized initializer, including its five immediate
+callees and four typed data references. Two current-framework builds agree;
+6,636 fresh trade pairs and 69 initializer pairs pass, with ten successful
+creations. Mayhem now has 430/441 normalized matches and eleven unmatched
+windows. The [complete per-window inventory](research/mayhem-initializer-current-recovery-20261027/inventory.json)
+separates raw-equal, normalized-only and unmatched bodies. A separate historical
+macro composition reaches 430/141, kept outside the current row.
+
+The earlier [Mayhem trade-origin and validator recovery](research/mayhem-trade-origins-validator/README.md)
 adds the complete 1,296-byte normalized quote validator with its eight immediate
 callees and fourteen typed data references checked. It reaches 429 normalized
 and retains all 100 raw matches. Three partial trade handlers now reproduce 21
 Source records and three CPI error origins. Two qualified builds agree, and 65
-fresh case pairs pass. Twelve bodies, a required allocator specialization and
-whole-ELF identity remain unresolved; older runtime receipts keep their original
+fresh case pairs pass. At that checkpoint twelve bodies, an allocator specialization and
+whole-ELF identity remained unresolved; older runtime receipts keep their original
 artifact bindings.
 
 The [BuyV2 sizing follow-up](research/mayhem-sizing-panic-recovery/README.md)
@@ -104,7 +113,7 @@ remains a diagnostic and the current reconstruction counts are unchanged.
 The [historical parser follow-up](research/mayhem-allocator-parser-provenance/README.md)
 reproduces that allocator form with an earlier Anchor event-parser template and
 current event types. It is a mixed-source compiler experiment; original Mayhem
-source remains unproven. The [current-source composition](research/mayhem-control-work-20261027/README.md)
+source remains unproven. The [earlier current-source composition](research/mayhem-control-work-20261027/README.md)
 now preserves all 429 normalized matches and reaches 139 raw-local bodies,
 with one additional matching allocator call. Repeated native builds agree;
 6,636 fresh trade and 69 initializer comparisons pass. Its 39 additional raw
@@ -129,7 +138,7 @@ unresolved.
 The [safe Crank source proposal](research/fees-crank-safe-context-source/README.md)
 preserves a separate 579-window / 143-raw local composition and adds no matched
 window. Its exact parent and native/runtime receipts are not published. The
-28 source/path tests pass, including canonical temporary-path handling on macOS;
+29 source/path tests pass, including canonical temporary-path handling on macOS;
 these tests do not establish a reproduced build or justify adding its counts
 to the qualified frontier.
 
@@ -139,7 +148,7 @@ These experiments retain their individual status and add no accepted matches.
 
 The latest [PumpSwap source ABI and return recovery](repro/pump_amm/source-abi-recovery-20261027/README.md) adds two matching initializer windows, fixes shared protocol-recipient validation, and recovers generated CPI return handling and the BuyEvent source module. All 17,462 corpus cases and expanded signed probes pass; 145 AMM windows remain. A separate 160-case resize-order follow-up retains eight sweep differences: pool funding precedes recipient validation in the captured AMM. The signed failing cases and proposed next fix are preserved in [resize-order evidence](repro/pump_amm/source-abi-recovery-20261027/followup/resize-order/README.md).
 
-Remaining priorities are the 312 Pump, 145 AMM, 5 Fees and 12 Mayhem unmatched
+Remaining priorities are the 312 Pump, 145 AMM, 5 Fees and 11 Mayhem unmatched
 windows; deeper call/data/relocation identity; original build provenance; and
 uncovered behavior such as authentic fixed-admin AMM `create_config` success.
 The historical [150-handler audit](repro/reconstruction-audit-2026-10-26/handlers.md)

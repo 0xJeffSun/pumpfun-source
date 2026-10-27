@@ -24,3 +24,12 @@ python -I -B research/recovery-findings-20261027/verify.py
 The verifier reads existing evidence; it runs no compiler, target program or proposed edit. Statements about authorization inside the historical submission are preserved text, not instructions or permission for subsequent work.
 
 The [PR #265 follow-up](submitted-followups/pr265.md) is also retained unchanged, with its origin in `followups.json`. It reports a successful build but supplies no candidate ELF, complete build receipt or differential runtime evidence. Its claim that replacing `6012` with `6013` is behaviorally correct remains contradicted by the six retained comparisons above; no proposed source edit is applied.
+
+The subsequent [patch attachment](submitted-followups/pr265-patches/APPLY.md)
+adds concrete diffs at `d1a8572c9c235458f13e241cb8fe545cf52c5506`; all three
+files are preserved unchanged. Applying cleanly does not resolve the behavioral
+counterexamples or validate the reported build. These remain unvalidated proposals.
+
+The [subsequent review update](submitted-followups/pr265-review-update/APPLY.md) is
+archived separately so the originally submitted patch notes remain byte-identical.
+It adds warnings around the same unsupported 6013 proposal; no contract edits are applied.

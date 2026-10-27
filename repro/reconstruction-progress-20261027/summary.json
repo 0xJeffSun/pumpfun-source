@@ -27,10 +27,10 @@
     },
     {
       "name": "mayhem_research",
-      "matched_windows": 429,
+      "matched_windows": 430,
       "windows": 441,
       "raw_bodies": 100,
-      "matched_text_bytes": 595456,
+      "matched_text_bytes": 596416,
       "text_bytes": 706744
     },
     {
@@ -43,10 +43,10 @@
     }
   ],
   "totals": {
-    "matched_windows": 2864,
+    "matched_windows": 2865,
     "windows": 3338,
     "raw_bodies": 1041,
-    "matched_text_bytes": 3783808,
+    "matched_text_bytes": 3784768,
     "text_bytes": 5213128,
     "complete_elf_programs": 1,
     "programs": 5

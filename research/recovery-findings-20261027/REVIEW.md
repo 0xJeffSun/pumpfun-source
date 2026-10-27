@@ -31,3 +31,10 @@ All four core whole-ELF comparisons remain unequal. This archive contributes res
 The follow-up at `b31f1225db96aae131ab52efba738f50bd9ad9ee` reports compile success and improved aggregate instruction similarity for enum consolidation plus a blanket slippage-code replacement. It includes one Markdown file, not the modified sources, candidate binaries, full command/receipt set or runtime reports needed to verify that result independently. Its baseline also differs from the selected candidate, with a cache-related explanation that is not independently established by this file.
 
 A successful compile does not show equivalence to the original. The six original/candidate `6012` observations still refute the claimed unconditional `6013` correction. Preserve the report as an unverified historical follow-up; no behavioral fix, new function match or current selection follows from it.
+
+The later `d1a8572c9c235458f13e241cb8fe545cf52c5506` attachment supplies a
+433-line enum diff and a Fees path-relocation diff, plus application instructions.
+The enum diff still replaces the two swap slippage sites with `6013`; the same
+counterexamples apply. A successful `git apply --check` establishes patch context,
+not compiler reproduction or behavioral equivalence. The submitted patch files
+are retained without applying them to the maintained programs.
