@@ -25,6 +25,9 @@ pub struct SweepFees<'info> {
 }
 pub fn execute(ctx: Context<SweepFees>, creator: bool) -> Result<()> {
     let a = &mut *ctx.accounts;
+    crate::instructions::swap::prepare_pool(
+        &a.pool, a.system_program.as_ref(), a.payer.as_ref(),
+    )?;
     require_keys_neq!(
         a.recipient.key(),
         Pubkey::default(),
@@ -48,74 +51,20 @@ pub fn execute(ctx: Context<SweepFees>, creator: bool) -> Result<()> {
             a.pool.is_mayhem_mode,
         )?;
     }
-    let info = a.pool.to_account_info();
-    if info.data_len() < 287 {
-        let topup = Rent::get()?
-            .minimum_balance(287)
-            .saturating_sub(info.lamports());
-        if topup > 0 {
-            anchor_lang::system_program::transfer(
-                CpiContext::new(
-                    a.system_program.to_account_info(),
-                    anchor_lang::system_program::Transfer {
-                        from: a.payer.to_account_info(),
-                        to: info.clone(),
-                    },
-                ),
-                topup,
-            )?;
-        }
-        info.realloc(287, false)?;
-    }
     a.pool.available_quote_reserves(a.pool_quote_token_account.amount)?;
     let amount = a.pool.take_accrued_fees(creator)?;
     if amount == 0 {
         msg!("Nothing to sweep for fee bucket {}", u8::from(creator));
         return Ok(());
     }
-    if a.recipient_token_account.data_is_empty() {
-        associated_token::create_idempotent(CpiContext::new(
-            a.associated_token_program.to_account_info(),
-            associated_token::Create {
-                payer: a.payer.to_account_info(),
-                associated_token: a.recipient_token_account.to_account_info(),
-                authority: a.recipient.to_account_info(),
-                mint: a.quote_mint.to_account_info(),
-                system_program: a.system_program.to_account_info(),
-                token_program: a.quote_token_program.to_account_info(),
-            },
-        ))?;
-    }
-    let p = &a.pool;
-    let index = p.index.to_le_bytes();
-    let bump = [p.pool_bump];
-    let seeds: &[&[u8]] = &[
-        b"pool",
-        &index,
-        p.creator.as_ref(),
-        p.base_mint.as_ref(),
-        p.quote_mint.as_ref(),
-        &bump,
-    ];
-    if a.pool_quote_token_account.key() == a.recipient_token_account.key() {
-        require!(
-            a.pool_quote_token_account.owner == a.pool.key(),
-            PumpAmmError::SelfTransferNotAllowed
-        );
-    }
-    token_interface::transfer_checked(
-        CpiContext::new_with_signer(
-            a.quote_token_program.to_account_info(),
-            token_interface::TransferChecked {
-                from: a.pool_quote_token_account.to_account_info(),
-                mint: a.quote_mint.to_account_info(),
-                to: a.recipient_token_account.to_account_info(),
-                authority: a.pool.to_account_info(),
-            },
-            &[seeds],
-        ),
-        amount,
-        a.quote_mint.decimals,
+    crate::utils::token::create_ata_if_empty(
+        a.quote_token_program.as_ref(), &a.quote_mint, a.recipient.as_ref(),
+        a.recipient_token_account.as_ref(), a.payer.as_ref(),
+        &a.system_program, &a.associated_token_program,
+    )?;
+    crate::utils::token::transfer_from_pool_to_raw(
+        a.quote_token_program.as_ref(), &a.quote_mint, &a.pool_quote_token_account,
+        &a.pool, a.recipient_token_account.as_ref(), amount,
     )?;
     let event = SweepPoolFeeEvent {
         timestamp: Clock::get()?.unix_timestamp,

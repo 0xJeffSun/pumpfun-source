@@ -15,6 +15,7 @@ import subprocess
 import tomllib
 from pump_dependency_cache import DependencyCache
 import pump_text_layout
+import pump_target_library_profile
 
 from build_source_manifest import source_manifest
 from compare import compare
@@ -35,6 +36,10 @@ def main():
         default=Path(os.environ.get("CARGO_HOME", Path.home() / ".cargo")),
     )
     p.add_argument("--output", type=Path, required=True)
+    p.add_argument("--target-library-profile", choices=["linux-v1.44-sbf"],
+                   help="Opt in to a private native-host SDK with the pinned Linux v1.44 SBF libraries.")
+    p.add_argument("--target-library-directory", type=Path,
+                   help="Directory containing exactly the admitted profile's target libraries.")
     p.add_argument(
         "--text-section-order",
         type=Path,
@@ -58,12 +63,19 @@ def main():
     a = p.parse_args()
     if a.dependency_cache_seed and not a.dependency_cache:
         p.error("--dependency-cache-seed requires --dependency-cache")
+    if bool(a.target_library_profile) != bool(a.target_library_directory):
+        p.error("--target-library-profile and --target-library-directory must be supplied together")
     crate = a.source_directory.resolve()
     sdk = a.sdk.resolve()
     out = a.output.resolve()
     registry = a.registry_home.resolve()
     crate.relative_to(ROOT)
     out.mkdir(parents=True, exist_ok=False)
+    target_library_profile = None
+    if a.target_library_profile:
+        sdk, target_library_profile = pump_target_library_profile.prepare(
+            a.target_library_profile, sdk, a.target_library_directory, out / "profile-sdk"
+        )
     primary = crate
     primary_before = source_manifest(primary, primary, ROOT)
     workspace = crate
@@ -150,7 +162,8 @@ def main():
         env["PUMP_LOGICAL_REGISTRY_SRC"] = str(registry / "registry/src")
     cache = (
         DependencyCache(
-            a.dependency_cache, ROOT, crate, workspace, sdk, env, wrapper, direct=True
+            a.dependency_cache, ROOT, crate, workspace, sdk, env, wrapper, direct=True,
+            target_library_profile=(target_library_profile["cache_context"] if target_library_profile else None)
         )
         if a.dependency_cache
         else None
@@ -210,8 +223,10 @@ def main():
     if cache:
         record["dependency_cache"] = cache.record
         record["dependency_cache"]["implementation_sha256"] = sha(
-            ROOT / "scripts/pump_dependency_cache.py"
+            Path(DependencyCache.__init__.__code__.co_filename)
         )
+    if target_library_profile:
+        record["target_library_profile"] = target_library_profile
     if text_layout:
         record["text_layout"] = text_layout
     receipt = out / "build-attempt.json"
@@ -234,6 +249,8 @@ def main():
     record["source_unchanged"] = record[
         "source_after_sha256"
     ] == before and primary_before == source_manifest(primary, primary, ROOT)
+    if target_library_profile:
+        record["target_library_profile"] = pump_target_library_profile.finish(target_library_profile)
     receipt.write_text(json.dumps(record, indent=2) + "\n")
     result.check_returncode()
     assert record["source_unchanged"]
@@ -263,7 +280,7 @@ def main():
         cache.finish(out / "target", out / "build.log", report)
         record["dependency_cache"] = cache.record
         record["dependency_cache"]["implementation_sha256"] = sha(
-            ROOT / "scripts/pump_dependency_cache.py"
+            Path(DependencyCache.__init__.__code__.co_filename)
         )
         report.write_text(json.dumps(record, indent=2) + "\n")
     print(json.dumps(record["comparison"], indent=2))

@@ -89,25 +89,9 @@ pub fn execute<'info>(
         a.global_config.disable_flags & 16 == 0,
         PumpAmmError::DisabledSell
     );
-    let pool_info = a.pool.to_account_info();
-    if pool_info.data_len() < 287 {
-        let need = Rent::get()?
-            .minimum_balance(287)
-            .saturating_sub(pool_info.lamports());
-        if need > 0 {
-            anchor_lang::system_program::transfer(
-                CpiContext::new(
-                    a.system_program.to_account_info(),
-                    anchor_lang::system_program::Transfer {
-                        from: a.user.to_account_info(),
-                        to: pool_info.clone(),
-                    },
-                ),
-                need,
-            )?;
-        }
-        pool_info.realloc(287, false)?;
-    }
+    crate::instructions::swap::prepare_pool(
+        &a.pool, a.system_program.as_ref(), a.user.as_ref(),
+    )?;
     crate::instructions::swap::validate_protocol_fee_recipient(
         &a.global_config,
         &a.protocol_fee_recipient,
@@ -242,8 +226,11 @@ pub fn execute<'info>(
     let (owner, dest) = crate::legacy_buy::get_buyback_accounts(
         ctx.remaining_accounts, &a.global_config, next, &a.quote_mint.key(), &a.quote_token_program.key(),
     )?;
-        if buyback_fee > 0 && dest.data_is_empty() {
-            create_ata(a, dest, owner, true)?;
+        if buyback_fee > 0 {
+            crate::utils::token::create_ata_if_empty(
+                a.quote_token_program.as_ref(), &a.quote_mint, owner, dest, a.user.as_ref(),
+                &a.system_program, &a.associated_token_program,
+            )?;
         }
         crate::utils::token::transfer_from_pool_to_raw(
             a.quote_token_program.as_ref(),

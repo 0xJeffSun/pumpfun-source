@@ -1,6 +1,6 @@
 use anchor_lang::{
     accounts::{account::Account, interface_account::InterfaceAccount, program::Program},
-    prelude::{AccountInfo, CpiContext, Key, Pubkey, Result, ToAccountInfo},
+    prelude::{AccountInfo, CpiContext, Key, Pubkey, Result, System, ToAccountInfo},
     require,
 };
 use anchor_spl::{
@@ -265,4 +265,59 @@ pub fn burn_from_user<'info>(
             authority: authority.clone(),
         },
     ), amount)
+}
+
+
+pub fn create_ata_if_empty<'info>(
+    token_program: &AccountInfo<'info>,
+    mint: &InterfaceAccount<'info, Mint>,
+    authority: &AccountInfo<'info>,
+    ata: &AccountInfo<'info>,
+    payer: &AccountInfo<'info>,
+    system_program: &Program<'info, System>,
+    associated_token_program: &Program<'info, anchor_spl::associated_token::AssociatedToken>,
+) -> Result<()> {
+    if ata.data_is_empty() {
+        anchor_spl::associated_token::create_idempotent(CpiContext::new(
+            associated_token_program.to_account_info(),
+            anchor_spl::associated_token::Create {
+                payer: payer.clone(),
+                associated_token: ata.clone(),
+                authority: authority.clone(),
+                mint: mint.to_account_info(),
+                system_program: system_program.to_account_info(),
+                token_program: token_program.clone(),
+            },
+        ))?;
+    }
+    Ok(())
+}
+
+
+pub fn transfer_checked_with_ata<'info>(
+    token_program: &AccountInfo<'info>,
+    mint: &InterfaceAccount<'info, Mint>,
+    source: &InterfaceAccount<'info, TokenAccount>,
+    ata_owner: &AccountInfo<'info>,
+    destination: &AccountInfo<'info>,
+    authority: &AccountInfo<'info>,
+    system_program: &Program<'info, System>,
+    associated_token_program: &Program<'info, anchor_spl::associated_token::AssociatedToken>,
+    amount: u64,
+    signer_seeds: &[&[&[u8]]],
+) -> Result<()> {
+    if amount == 0 {
+        return Ok(());
+    }
+    validate_self_transfer(&source.key(), &source.owner, destination.key, authority.key)?;
+    create_ata_if_empty(token_program, mint, ata_owner, destination, authority,
+        system_program, associated_token_program)?;
+    token_interface::transfer_checked(CpiContext::new_with_signer(
+        token_program.clone(),
+        token_interface::TransferChecked {
+            from: source.to_account_info(), mint: mint.to_account_info(),
+            to: destination.clone(), authority: authority.clone(),
+        },
+        signer_seeds,
+    ), amount, mint.decimals)
 }

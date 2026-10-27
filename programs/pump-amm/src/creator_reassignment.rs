@@ -67,12 +67,9 @@ pub fn admin_cto(ctx:Context<AdminCtoPool>,coin_creator:Pubkey,is_holder_reward:
   require!(fee>0 && fee<=ctx.accounts.global_config.max_configurable_creator_fee_bps,PumpAmmError::CreatorFeeBpsOutOfRange);
  }
  require!(pool.creator_fees==0,PumpAmmError::CreatorFeesNotSwept);
- let info=pool.to_account_info();
- if info.data_len()<287{
-  let needed=Rent::get()?.minimum_balance(287).saturating_sub(info.lamports());
-  if needed>0{anchor_lang::system_program::transfer(CpiContext::new(ctx.accounts.system_program.to_account_info(),anchor_lang::system_program::Transfer{from:ctx.accounts.payer.to_account_info(),to:info.clone()}),needed)?;}
-  info.realloc(287,false)?;
- }
+ crate::instructions::swap::prepare_pool(
+  pool, ctx.accounts.system_program.as_ref(), ctx.accounts.payer.as_ref(),
+ )?;
  let old_coin_creator=pool.coin_creator;let old_creator_fee_bps=pool.creator_fee_bps;
  pool.coin_creator=coin_creator;pool.is_holder_reward=is_holder_reward;pool.is_cashback_coin=is_cashback_coin;pool.can_edit_creator_fee=false;
  if let Some(fee)=creator_fee_bps{pool.creator_fee_bps=fee;}

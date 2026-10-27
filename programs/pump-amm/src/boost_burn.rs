@@ -29,8 +29,7 @@ pub struct BoostBuyAndBurn<'info> {
 
 pub fn execute(ctx: Context<BoostBuyAndBurn>, requested: u64, minimum: u64) -> Result<()> {
     let a = &mut *ctx.accounts;
-    require_keys_neq!(a.global_config.boost_authority, Pubkey::default(), PumpAmmError::InvalidAdmin);
-    require_keys_eq!(a.global_config.boost_authority, a.authority.key(), PumpAmmError::InvalidAdmin);
+    a.global_config.validate_boost_authority(&a.authority.key())?;
     require!(a.global_config.boost_enabled, PumpAmmError::BoostDisabled);
     require!(a.global_config.disable_flags & 8 == 0, PumpAmmError::DisabledBuy);
     let effective = a.pool.protocol_fees.checked_add(a.pool.creator_fees)

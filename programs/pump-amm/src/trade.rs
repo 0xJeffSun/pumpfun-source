@@ -272,12 +272,9 @@ fn transfer<'info>(program: &AccountInfo<'info>, mint: &InterfaceAccount<'info, 
 #[inline(never)]
 fn prepare(a:&mut TradeV2) -> Result<()> {
     crate::instructions::swap::trade_v2::validate_cashback_coin(a.pool.is_cashback_coin as u8)?;
-    let pool_info=a.pool.to_account_info();
-    if pool_info.data_len()<287 {
-        let needed=Rent::get()?.minimum_balance(287).saturating_sub(pool_info.lamports());
-        if needed>0 {anchor_lang::system_program::transfer(CpiContext::new(a.system_program.to_account_info(),anchor_lang::system_program::Transfer {from:a.user.to_account_info(),to:pool_info.clone()}),needed)?;}
-        pool_info.realloc(287,false)?;
-    }
+    crate::instructions::swap::prepare_pool(
+        &a.pool, a.system_program.as_ref(), a.user.as_ref(),
+    )?;
     Ok(())
 }
 
