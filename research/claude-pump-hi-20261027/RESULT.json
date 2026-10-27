@@ -1,0 +1,39 @@
+{
+  "scope": "pump-hi lane: ordinary-source recovery of main-Pump windows 0x101170..0x1ab9b8 on top of the newest published frontier. Not whole-ELF identity.",
+  "frontier_packet": "repro/pump/main-contract-round23-20261027",
+  "frontier_candidate_sha256": "d9fd8f1ec1d7bb6e06ea8ee221609c0275d52057ff6ef59087aa402db956a813",
+  "frontier_unstripped_sha256": "d5a80618c18c66be757634ad3d7bf8394e39dd337c510be4cbb74688e56d15d0",
+  "frontier_counts": {
+    "normalized": 712,
+    "raw": 123,
+    "matched_text_bytes": 852944
+  },
+  "changed_files_sha256": {
+    "src/lib.rs": "499967898d50157df8ee84f31e1e5a2d751206bbff230f927cf39c946bd7b449"
+  },
+  "frontier_files_sha256": {
+    "src/lib.rs": "acb78a38367a3eadc820ba053d87a5382d5e30ed47b435ef08a857d384d30d4c"
+  },
+  "candidate_sha256": "07f3f871ed8027c8b10f9c9c77369e565af72dc974814924c18b76059fc249bd",
+  "unstripped_sha256": "5b65eade056826eed16c14e356a4a13be53d9fbe52349e790f04cfc0f0282ca9",
+  "counts": {
+    "total": 1035,
+    "raw": 123,
+    "normalized": 714,
+    "unmatched": 321,
+    "matched_text_bytes": 864904
+  },
+  "normalized_gains": [
+    "0x11b758",
+    "0x1348c0"
+  ],
+  "normalized_losses": [],
+  "raw_gains": [],
+  "raw_losses": [],
+  "identical_builds": [
+    "evidence/builds/r23-gain",
+    "evidence/builds/r23-gain-maintained"
+  ],
+  "whole_elf_equal": false,
+  "goal_complete": false
+}
