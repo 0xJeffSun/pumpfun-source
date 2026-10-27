@@ -1,0 +1,3 @@
+override.rs -whitespace
+layout/* -whitespace
+source.patch -whitespace
