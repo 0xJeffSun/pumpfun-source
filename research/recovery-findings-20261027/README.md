@@ -22,3 +22,5 @@ python -I -B research/recovery-findings-20261027/verify.py
 ```
 
 The verifier reads existing evidence; it runs no compiler, target program or proposed edit. Statements about authorization inside the historical submission are preserved text, not instructions or permission for subsequent work.
+
+The [PR #265 follow-up](submitted-followups/pr265.md) is also retained unchanged, with its origin in `followups.json`. It reports a successful build but supplies no candidate ELF, complete build receipt or differential runtime evidence. Its claim that replacing `6012` with `6013` is behaviorally correct remains contradicted by the six retained comparisons above; no proposed source edit is applied.

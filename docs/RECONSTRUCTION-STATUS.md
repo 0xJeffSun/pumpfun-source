@@ -6,7 +6,7 @@ This review updates the research frontier while preserving the selected-checkpoi
 contains every one of the **4,415 selected/research function-window rows**.
 
 The generated inventory is a dated snapshot. Later maintained selections now
-include Pump Round25 and the AMM account-context recovery; their current counts and
+include Pump Round26 and the AMM account-context recovery; their current counts and
 evidence are in the [repository overview](../README.md). The current rows below
 are separate from the historical rows, and do not rewrite that snapshot.
 
@@ -29,7 +29,7 @@ linker recipe is reconstructed; no public handler has an exhaustive semantic pro
 | SPL Token | All 108,600 captured bytes reproduced | Preserve source/build provenance; byte equality is not a security audit |
 | Token-2022 | All 611,056 meaningful ELF bytes reproduced | The full 1,382,016-byte capture is reproduced only by separately adding 770,960 zero bytes |
 | Associated Token Account | All 105,032 bytes reproduced by two research recipes | Explicit linker ordering and an empty Cargo feature are non-historical recipes; authentic recipe and selected promotion remain unresolved |
-| Metaplex Token Metadata | Latest research matches all 707,448 meaningful ELF bytes and 1,251 function windows | Unpromoted; the 86,543-byte zero extension is a separate allocation image. Repeat unstripped output hashes are recorded, but those files are not retained. |
+| Metaplex Token Metadata | Latest research matches all 707,448 meaningful ELF bytes and 1,251 function windows | Unpromoted; the 86,543-byte zero extension is a separate allocation image. The independent Utilize packet now retains unstripped output and build/dependency receipts. |
 
 See the baseline audit's [dependency evidence](RECONSTRUCTION-AUDIT.md#1-whole-program-and-dependency-identity) and the later [reviewed Metaplex packet](../research/claude-lanes-review-20261027/README.md).
 A generated allocation image is not an unchanged compiler output.
@@ -51,13 +51,13 @@ analysis. Candidate symbol names are hypotheses about original identity.
 | Fees selected | 585 | 102 | 363 | 120 | 0 |
 | Mayhem historical selected | 441 | 58 | 131 | 7 | 245 |
 | Relay historical source 15 | 492 | 33 | 89 | 370 | 0 |
-| **Pump current Round25** | **1,035** | **123** | **597** | **315** | **0** |
+| **Pump current Round26** | **1,035** | **123** | **598** | **314** | **0** |
 | **PumpSwap current** | **785** | **128** | **495** | **162** | **0** |
 | **Fees latest research** | **585** | **198** | **381** | **6** | **0** |
 | **Mayhem latest research** | **441** | **100** | **329** | **12** | **0** |
 | **Relay canonical selection** | **492** | **492** | **0** | **0** | **0** |
 
-The current rows are bound to [Pump Round25](../repro/pump/main-contract-round25-20261027/README.md), [AMM account-context recovery](../repro/pump_amm/account-context-recovery-20261027/README.md), [Fees Social claim-v2 recovery](../research/fees-social-claim-v2-recovery/README.md) and [Mayhem BuyV2 sizing recovery](../research/mayhem-sizing-panic-recovery/README.md); they extend the dated generated inventory below. Each row is a partition, not a score of semantic correctness. The historical selected Mayhem source
+The current rows are bound to [Pump Round26](../repro/pump/main-contract-round26-20261027/README.md), [AMM account-context recovery](../repro/pump_amm/account-context-recovery-20261027/README.md), [Fees Social claim-v2 recovery](../research/fees-social-claim-v2-recovery/README.md) and [Mayhem BuyV2 sizing recovery](../research/mayhem-sizing-panic-recovery/README.md); they extend the dated generated inventory below. Each row is a partition, not a score of semantic correctness. The historical selected Mayhem source
 ledger has 257 opaque windows, 12 of which happen to match local raw bytes.
 Selected Fees retains two call-conflicting rows; body existence does not resolve
 those conflicts. Different programs and studies use different matching rules.
@@ -116,9 +116,12 @@ windows, increases raw-local equality from 100 to 139, and restores the missing
 allocator call; two repeated native outputs and the gated parent reproduction
 are checked. All 6,636 fresh trade and 69 initializer comparisons pass. Its
 [39 new raw-local bodies](../research/mayhem-control-work-20261027/raw-gains.md)
-cover 33,968 original text bytes. The mixed-source explanation remains
-unproven, so this diagnostic is separate from the table's established source
-checkpoint. Twelve complete bodies and whole-ELF identity remain unresolved.
+cover 33,968 original text bytes. The [complete historical macro composition](../research/mayhem-historical-macro-current-20261027/README.md)
+now reproduces that same artifact using the historical macro and event definition,
+without a manually rendered parser. The target runtime still uses current Anchor;
+original source/toolchain attribution remains unproven, so this diagnostic is
+separate from the table's established source checkpoint. Twelve complete bodies
+and whole-ELF identity remain unresolved.
 
 The separately pinned, dated Fees inventory has **558/585 windows with a normalized counterpart**: 411 unique
 structural pairs and 147 original windows in ambiguous duplicate groups. Its 27

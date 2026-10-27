@@ -25,3 +25,9 @@ The path-string plans may supply useful hypotheses, but filenames, line/column c
 Missing original source or exact toolchain provenance is an unresolved research constraint, not proof of mathematical impossibility. A fixed-admin signature is relevant to authentic successful runtime initialization; static handler recovery and whole-ELF comparison do not require possession of that private key. No signer bypass or credential acquisition is proposed by this review.
 
 All four core whole-ELF comparisons remain unequal. This archive contributes research history and corrected attribution, not new recovered functions, accepted runtime coverage or permission to override other task constraints.
+
+## PR #265 follow-up
+
+The follow-up at `b31f1225db96aae131ab52efba738f50bd9ad9ee` reports compile success and improved aggregate instruction similarity for enum consolidation plus a blanket slippage-code replacement. It includes one Markdown file, not the modified sources, candidate binaries, full command/receipt set or runtime reports needed to verify that result independently. Its baseline also differs from the selected candidate, with a cache-related explanation that is not independently established by this file.
+
+A successful compile does not show equivalence to the original. The six original/candidate `6012` observations still refute the claimed unconditional `6013` correction. Preserve the report as an unverified historical follow-up; no behavioral fix, new function match or current selection follows from it.
