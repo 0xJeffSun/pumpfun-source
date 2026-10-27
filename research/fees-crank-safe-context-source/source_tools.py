@@ -36,6 +36,8 @@ def inventory(root):
     for p in root.rglob('*'):
         if p.is_symlink():
             raise ValueError('Symlink source input is not accepted')
+        if not (p.is_file() or p.is_dir()):
+            raise ValueError('Special source input is not accepted')
         if p.is_file():
             result[str(p.relative_to(root))] = sha(p.read_bytes())
     return result
@@ -106,7 +108,10 @@ def verify(package):
     package=Path(package)
     if any(p.is_symlink()for p in [package,*package.absolute().parents]) or any(p.is_symlink()for p in package.rglob('*')):
         raise ValueError('Symlink packet entry is not accepted')
-    actual={str(p.relative_to(package))for p in package.rglob('*')if p.is_file()}
+    paths=list(package.rglob('*'))
+    if not all(p.is_file() or p.is_dir() for p in paths):
+        raise ValueError('Special packet entry is not accepted')
+    actual={str(p.relative_to(package))for p in paths if p.is_file()}
     if actual!=ALLOWED:raise ValueError('Unexpected packet membership')
     seal=json.loads(read_under(package,'manifest.json'))
     if set(seal)!=ALLOWED-{'manifest.json'}:raise ValueError('Unexpected integrity membership')
