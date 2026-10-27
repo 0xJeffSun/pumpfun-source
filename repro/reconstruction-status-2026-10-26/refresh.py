@@ -14,8 +14,8 @@ import tempfile
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 INPUTS = {}
-REVISION = '725fb7e7ec7eb6442fd4062fb04b5cbe5b9dcb68'
-FEES = 'research/fees-authority-body-origin'
+REVISION = 'b55a3ade09e20c7f8755d777df3d69a5312dd3b8'
+FEES = 'research/fees-sharing-owned-legacy'
 RELAY = 'repro/donation-relay/burn-mint-ownership-recovery'
 
 
@@ -99,7 +99,7 @@ def generate():
     comparison = wm.compare(ow, cw)
     saved = load(FEES + '/analysis.json.gz')['variants']['origins']
     assert all(comparison[k] == saved[k] for k in comparison)
-    assert len(comparison['unique_pairs']) == 354 and len(comparison['unmatched_original']) == 84
+    assert len(comparison['unique_pairs']) == 356 and len(comparison['unmatched_original']) == 82
     raw_index, normalized_index = collections.defaultdict(list), collections.defaultdict(list)
     for c in cw:
         raw_index[c['raw_sha256']].append(c)
@@ -111,18 +111,20 @@ def generate():
     fees_meta = dict(candidate_sha256=hashlib.sha256(candidate).hexdigest(), candidate_bytes=len(candidate),
                      whole_capture_equal=candidate == original,
                      raw_file_equals_original_elf_extent=candidate == original[:wm.m.elf_layout(original)['elf_extent']],
-                     unique_structural_pairs=354, ambiguous_original_windows=sum(len(g['original']) for g in comparison['ambiguous']),
+                     unique_structural_pairs=356, ambiguous_original_windows=sum(len(g['original']) for g in comparison['ambiguous']),
                      candidate_windows=len(cw))
 
     attribution_path = 'research/fees-refreshed-call-attribution'
     attribution_module = module('status_fee_attribution', attribution_path + '/attribute.py')
     for filename in ['window_map.py', 'elf_helpers.py', 'input-provenance.json']:
         read(attribution_path + '/' + filename)
-    attribution = attribution_module.analyze()
-    assert attribution == load(attribution_path + '/analysis.json.gz')
+    experiment = load(FEES + '/experiment.json')
+    provenance = dict(files={key: dict(value, path='../fees-sharing-owned-legacy/' + value['path'])
+                            for key, value in experiment['variants']['origins']['files'].items()})
+    attribution = attribution_module.analyze(provenance)
     assert attribution['candidate_sha256'] == fees_meta['candidate_sha256']
     attributed = {pair['original']['address']: pair['candidate']['address'] for pair in attribution['newly_attributed_pairs']}
-    assert len(attributed) == 61 and attribution['graph_attributed_pairs'] == 415
+    assert len(attributed) == 61 and attribution['graph_attributed_pairs'] == 417
     for record in rows:
         record['call_attributed_candidate_starts'] = []
         if record['program'] == 'pump_fees_research' and record['original_start'] in attributed:
@@ -130,7 +132,7 @@ def generate():
             assert address in record['normalized_candidate_starts']
             record['call_attributed_candidate_starts'] = [address]
             record['source_status'] = 'call_attributed_duplicate_pair'
-    fees_meta.update(additional_call_attributed_pairs=61, total_attributed_pairs=415,
+    fees_meta.update(additional_call_attributed_pairs=61, total_attributed_pairs=417,
                      remaining_unattributed_duplicate_windows=86)
 
     parser = module('status_relay_windows', 'repro/donation-relay/swap-receipt-coordinate-recovery/analyze.py')
@@ -175,14 +177,14 @@ def generate():
     writer.writeheader()
     for r in rows:
         writer.writerow({k: json.dumps(v) if isinstance(v, list) else v for k, v in r.items()})
-    generated = {'functions.tsv': output.getvalue(), 'status.json': json.dumps(report, indent=2, sort_keys=True) + '\n'}
+    generated = {'fees-call-attribution.json': json.dumps(attribution, indent=2, sort_keys=True) + '\n', 'functions.tsv': output.getvalue(), 'status.json': json.dumps(report, indent=2, sort_keys=True) + '\n'}
     overview = ['# Function inventory after burn/close ownership recovery', '', f'Evidence snapshot: `{REVISION}`. Selected inputs retain their verified `{baseline["audited_revision"]}` checkpoint bindings. Research rows replace the older Fees/Relay research inventory; they do not replace selections.', '',
                 '| Program / build | Windows | Exact local bytes | Normalized only | No complete match | Opaque |',
                 '| --- | ---: | ---: | ---: | ---: | ---: |']
     for program, c in counts.items():
         d = c['dispositions']
         overview.append(f'| {program} | {c["windows"]} | {d.get("raw_body_equal", 0)} | {d.get("normalized_body_only", 0)} | {d.get("no_complete_body_match", 0)} | {d.get("opaque_unassessed", 0)} |')
-    overview += ['', 'Fees has 354 body-unique pairs plus 61 additional call-attributed duplicate pairs (415 correspondences); 86 duplicate windows remain unattributed. These are not 61 additional body matches. Rows count inferred original windows, not unique source functions or effort. Raw matches may be duplicate/ambiguous and do not establish referenced data or transitive callees. The Fees matcher and Relay matcher use separately documented masks; do not add their counts into a source-completion score.', '',
+    overview += ['', 'Fees has 356 body-unique pairs plus 61 additional call-attributed duplicate pairs (417 correspondences); 86 duplicate windows remain unattributed. These are not 61 additional body matches. Rows count inferred original windows, not unique source functions or effort. Raw matches may be duplicate/ambiguous and do not establish referenced data or transitive callees. The Fees matcher and Relay matcher use separately documented masks; do not add their counts into a source-completion score.', '',
                  '- [Every window, symbol candidate, match address and evidence path](functions.tsv)',
                  '- [Every exact local body match](raw-body-matches.md)',
                  '- [Every unmatched or opaque window](remaining-windows.md)',

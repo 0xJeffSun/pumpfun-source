@@ -362,3 +362,19 @@ candidate forms. All callees have normalized-body counterparts; three baseline
 caller multisets agree, and the constructor-order candidate agrees for all four.
 No linear sequence or full caller body matches. The result narrows investigation
 without asserting control-flow or semantic equivalence. Counts remain 482/492.
+
+## Legacy Fees account ownership and total-check source probe
+
+[PR #140](https://github.com/lalalune/pumpfun-source/pull/140) adds two complete
+Fees body counterparts without losing a prior match: a 776-byte raw-equal
+legacy cleanup and a 1,072-byte normalized dispatcher. Its standalone verifier
+passes. The refreshed 585-window inventory now contains 108 raw, 395
+normalized-only and 82 unmatched windows. There are 356 unique structural pairs
+and 61 additional call-attributed pairs (417 total); 86 duplicates remain
+unattributed. The newly recomputed call ledger has 2,493 bound-target edges and
+23 different-body edges. Candidate size is 854,672 bytes; full ELF identity fails.
+
+Separately, the [fee-total probe](../research/fees-total-predicate-probe/README.md)
+reproduces a 192-byte predicate's instruction sequence using ordinary Rust. It
+uses the Darwin v1.44 compiler and an isolated object; panic operands and full
+Linux-candidate integration remain unresolved. It adds zero inventory matches.
