@@ -1,5 +1,6 @@
 {
   "README.md": "b9058502e2b372d4e8e6c63bfdb721966606579ba08d1b44cc999947e60a946a",
+  "SOURCE-CHECKOUT.md": "18c5b68dea93313928a263f047322dc33fc4be35ac8feb2a2e0761523fb6a85f",
   "analysis/recovered/allocated-strip-identity.json": "f1c392c7eb199af31cc5e06ae92c0e4d3101316e10c6416f0ec3246bfbf1d0ce",
   "analysis/recovered/candidate-function-ledger.json.gz": "a50f0341694bc23606281818b43e29c9b2d6271754fbff3baea3d501529de3ba",
   "analysis/recovered/comparison-summary.json": "0488796726641d630ffdd70c069954aec8b4d8bc3518dd2725428c723cff6402",
@@ -43,7 +44,9 @@
   "metadata.json": "bec12bf85cd0f148e749a3d9b886dbb771cb2aa31d256b3844b942b573dfd54f",
   "parents.json": "fa700fd02451fd578bdb921ae8368b98e7e466d0fb10b9b0e5874a8fc86e08c6",
   "runtime.json.gz": "edca1c56dd9599cd57f02d229fa109b4aaa131f856a474001d11768bcaa6c9b1",
+  "source_checkout.py": "5f6125980b58e11da81f98d99d1946fc2168dc8d5eaeaeae27631015c0a93939",
   "test_scope.py": "6dbec6613bdb170dfa1dba6749edfd5dd35f766406db07da163b21ec3d3adb1b",
-  "verify.py": "957a5936fcd56210e7c2a5f34c4b6c7bc8e97b8550b686b14ccee025fa196765",
+  "test_source_checkout.py": "c49366760d2316744f216917ea35adad11bf55d592a521e63b29c80374087fb8",
+  "verify.py": "ddcbea32165df51546400e4ff5f6a8846793c17434a29e4debb629fa08c7c37c",
   "verify_loader.py": "3b3f43129c5c5b93a22fd18513987d8ef02839ec89ff517e83ec1fa785c74394"
 }

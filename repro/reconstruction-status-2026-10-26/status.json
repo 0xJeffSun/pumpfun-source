@@ -166,7 +166,7 @@
     "programs/donation-relay/src/tools/donate/shared.rs": "260f377e26c51a4c8a47ecf51edf4df830a8a58439d9d49c4562baf81a010fef",
     "programs/donation-relay/src/tools/fair_distribution.rs": "be38395447d5afc7a6fb6bba8b50e9eac66afa3c7ac4a3b74ac58d4f4f4cd1b6",
     "repro/donation-relay/canonical-exact-selection/artifacts/candidate.so": "56d81ec64a0ba070d3d23f3c1547b31d659e85716dfa2198ec4b0ce6cd355333",
-    "repro/donation-relay/canonical-exact-selection/transition.json": "9cb8f436a234c221af359f39eb236d5b3a90a3ef5fc94b752a5c3498fec95ba7",
+    "repro/donation-relay/canonical-exact-selection/transition.json": "0f52fdd352d0472467e6b31d837864ee2f38b5ebcbaa862e83a8400765d30f51",
     "repro/donation-relay/current.json": "f81a4a5126f0756de9581b010963b33ec6f9d02d89fe011b745920292d3740d2",
     "repro/donation-relay/linked-elf-reproduction/analysis/recovered/comparison-summary.json": "0488796726641d630ffdd70c069954aec8b4d8bc3518dd2725428c723cff6402",
     "repro/donation-relay/linked-elf-reproduction/analysis/recovered/match-ledger.json": "7aa8a2853cb3d8effb9b243fc33d98393a63f798c45147d80a7fc0635be9192f",

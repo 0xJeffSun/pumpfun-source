@@ -187,3 +187,17 @@ Another process merged the same reviewed head as
 tree was verified identical to the local reviewed merge. This independent Fees
 frontier does not silently replace the pinned inventory or change the Mayhem
 priority.
+
+## PR221: history-independent Relay source authentication
+
+The source loader verifies the unchanged historical manifest, complete package
+membership, all three 60-input source maps and both patches without Git or
+network access. Review found macOS temporary fixtures traversed the `/var`
+symlink; the tests now resolve their temporary roots, while the loader's strict
+symlink checks remain intact. All ten tests pass, including an actual shallow
+fixture and a no-subprocess export. The archived linked-ELF verifier also passes
+locally; this is saved-evidence verification, not a new build or target run.
+
+The merge preserves the current Mayhem documentation and governance hashes,
+regenerates dependency seals, and leaves historical sources, artifacts and
+runtime receipts unchanged. Hosted CI remains a separate check.
