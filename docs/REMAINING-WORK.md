@@ -378,3 +378,16 @@ This closes the retained-cohort decoding gap, not RPC authentication or complete
 lifetime history. The unrelated fee-recipient log remains explicitly truncated.
 Field names, units and consumer semantics still need independent attribution.
 This does not resume any stopped Mayhem initializer or other execution lane.
+
+
+## Mayhem shipped-library provenance
+
+The [v1.54 sysroot object check](../research/mayhem-sysroot-object-provenance/README.md)
+binds ten distinct raw capture ranges to complete functions in the official
+Darwin arm64 generic-v0 libcore/compiler-builtins objects and the retained linked
+Mayhem build. Eight already occur in the earlier helper audit; two conversion
+bodies add matches to that bounded table. The full publisher archive digest and
+all 354 retained ELF member associations rechecked locally. Sixteen symbol labels
+collapse to ten ranges; 270 eligible no-hit symbols and 1,067 excluded symbols
+remain recorded. This narrows shipped-library provenance, without proving a
+unique historical compiler, whole-program byte identity or behavioral coverage.
