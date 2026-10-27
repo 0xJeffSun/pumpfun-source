@@ -1,9 +1,9 @@
 # Parallel Mayhem reconstruction work
 
 The objective remains byte-identical Rust reproduction, including calls, data,
-relocations and ELF layout. The [current initializer composition](../research/mayhem-initializer-current-recovery-20261027/README.md)
-has **430/441 normalized windows: 100 raw-local, 330 normalized-only and 11
-unmatched**. The unmatched windows total **110,328 original text bytes**.
+relocations and ELF layout. The [current Sell quote composition](../research/mayhem-sell-current-recovery-20261027/README.md)
+has **431/441 normalized windows: 100 raw-local, 331 normalized-only and 10
+unmatched**. The unmatched windows total **109,208 original text bytes**.
 Normalized body matches do not establish recursive semantic or whole-ELF equality.
 
 ## Independent lanes
@@ -15,10 +15,10 @@ source and compiler investigations proceed.
 
 | Lane | Next scope |
 | --- | --- |
-| AMM trade and quote bodies | O0077, O0079, O0092 and O0093; cap/min selection, retained-reserve arithmetic, ownership and error flow |
+| AMM trade and quote bodies | O0077, O0079 and O0092; cap/min selection, retained-reserve arithmetic, ownership and error flow |
 | Legacy and V2 trade bodies | O0081–O0084; source ownership, fallible arithmetic and CPI error lifetime |
 | Runtime and layout | Recursive call/data closure, allocation-provider provenance, genuine section layout and ELF equality |
-| Integration | Preserve the 430-window parent, qualify combinations with fresh builds and signed local replays, synchronize documentation and PRs |
+| Integration | Preserve the 431-window parent, qualify combinations with fresh builds and signed local replays, synchronize documentation and PRs |
 
 Sweep/burn work is outside the active scope. O0073 and O0076 are connected to the
 sweep path and are not dispatched. O0075's business attribution is unresolved;
@@ -27,7 +27,7 @@ available under its original artifact bindings.
 
 ## All remaining windows
 
-The table is derived from the current packet's [441-row inventory](../research/mayhem-initializer-current-recovery-20261027/inventory.json).
+The table is derived from the current packet's [441-row inventory](../research/mayhem-sell-current-recovery-20261027/inventory.json).
 Each unmatched original window occurs once. Body names are reconstruction
 attributions, not authenticated original symbols.
 
@@ -43,7 +43,6 @@ attributions, not authenticated original symbols.
 | O0083 | 140512 | 18648 | BuyV2 | Legacy and V2 trade |
 | O0084 | 159160 | 18096 | SellV2 | Legacy and V2 trade |
 | O0092 | 185296 | 1256 | AMM Buy quote | AMM trade and quote |
-| O0093 | 186552 | 1120 | AMM Sell quote | AMM trade and quote |
 
 ## Closed windows and partial controls
 
@@ -59,12 +58,11 @@ preserves the frontier. Its 13,784-byte body remains different from the original
 13,848 bytes despite equal immediate-callee and Source profiles. Its 486 signed
 pairs are bound to that exact artifact, not to every private source variant.
 
-O0093 has an equal-size 1,120-byte source control with 124/140 instruction slots
-matching at the original positions and 125 aligned slots. It is still unmatched.
-The [same-IR backend replay](../research/mayhem-quote-backend-replay-20261027/README.md)
-reproduces that masked body with v1.54, while v1.52 produces 1,288 bytes and v1.44
-rejects the input. Its broad diagnostic masks do not verify call targets or data
-and do not replace the full matcher. Original source/IR shape remains unresolved.
+The [qualified Sell quote composition](../research/mayhem-sell-current-recovery-20261027/README.md)
+closes O0093 with all 140 instruction slots, ten ordered immediate callee shapes
+and ten ordered typed references checked. Two builds repeat and fresh trade and
+initializer matrices pass. The earlier 124/140-slot controls and backend replay
+remain negative evidence; they do not add another match. O0092 remains open.
 
 The [account-data cohort](../research/mayhem-account-cohort-complete/README.md)
 checks 156 typed references. The [historical parser composition](../research/mayhem-historical-macro-current-20261027/README.md)

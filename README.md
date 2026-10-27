@@ -18,8 +18,8 @@ Reproduce the selected Pump ELF with its [archived Rust/linker recipe](repro/pum
 
 
 
-Across the latest verified checkpoints, **2,880 / 3,338 inferred function windows
-match (86.3%)**. Their matched windows cover **3,811,936 / 5,213,128 original text
+Across the latest verified checkpoints, **2,881 / 3,338 inferred function windows
+match (86.3%)**. Their matched windows cover **3,813,056 / 5,213,128 original text
 bytes (73.1%)**. **One of five programs has complete meaningful-ELF identity**;
 all four core contracts still differ from their captured binaries.
 
@@ -32,9 +32,9 @@ all remaining code, calls, data, relocations and build provenance.
 | [Pump Round33](repro/pump/main-contract-round33-20261027/README.md) | 733 / 1,035 | 70.8% | 137 | 596 | 302 | No |
 | [PumpSwap / AMM](repro/pump_amm/quote-guard-recovery-20261027/README.md) | 643 / 785 | 81.9% | 148 | 495 | 142 | No |
 | [Fees research](research/fees-extend-integration/README.md) | 582 / 585 | 99.5% | 200 | 382 | 3 | No |
-| [Mayhem research](research/mayhem-initializer-current-recovery-20261027/README.md) | 430 / 441 | 97.5% | 100 | 330 | 11 | No |
+| [Mayhem research](research/mayhem-sell-current-recovery-20261027/README.md) | 431 / 441 | 97.7% | 100 | 331 | 10 | No |
 | [Donation Relay](repro/donation-relay/canonical-exact-selection/README.md) | 492 / 492 | 100.0% | 492 | 0 | 0 | **Yes** |
-| **Total** | **2,880 / 3,338** | **86.3%** | **1,077** | **1,803** | **458** | **1 / 5** |
+| **Total** | **2,881 / 3,338** | **86.3%** | **1,077** | **1,804** | **457** | **1 / 5** |
 
 “Windows” are inferred original machine-function ranges, including framework and
 runtime helpers. Complete normalized matches mask specified call/address
@@ -47,9 +47,9 @@ the whole program is identical.
 | Pump Round33 | 895,416 / 1,792,208 | 50.0% | 896,792 |
 | PumpSwap / AMM | 804,704 / 1,162,040 | 69.2% | 357,336 |
 | Fees research | 762,912 / 799,648 | 95.4% | 36,736 |
-| Mayhem research | 596,416 / 706,744 | 84.4% | 110,328 |
+| Mayhem research | 597,536 / 706,744 | 84.5% | 109,208 |
 | Donation Relay | 752,488 / 752,488 | 100.0% | 0 |
-| **Total** | **3,811,936 / 5,213,128** | **73.1%** | **1,401,192** |
+| **Total** | **3,813,056 / 5,213,128** | **73.1%** | **1,400,072** |
 
 Pump and AMM rows describe the verified maintained sources. Fees and Mayhem rows
 are the latest qualified research frontiers, distinct from their maintained
@@ -77,6 +77,14 @@ alternative source is an unpromoted compiler-context diagnostic.
 
 ## Behavior and remaining work
 
+The [qualified current Mayhem Sell quote composition](research/mayhem-sell-current-recovery-20261027/README.md)
+reaches 431/441 normalized windows while retaining all 100 raw matches, the
+complete initializer and the prior Legacy Buy ownership body. Two builds agree;
+6,636 fresh trade pairs and 69 initializer pairs pass with 13,440 checked signed
+records. The complete 1,120-byte Sell quote has ten matching immediate callees
+and ten ordered typed references. [Ten bodies remain](research/mayhem-sell-current-recovery-20261027/remaining.md),
+with every function classified in the [441-row inventory](research/mayhem-sell-current-recovery-20261027/inventory.tsv).
+
 The [current-parent AMM event composition](research/amm-current-event-capture-20261027/README.md)
 adds the complete 1,784-byte normalized sell-event body, retaining all prior
 matches. Two builds agree; all 17,462 maintained cases and 26 focused event pairs
@@ -94,7 +102,7 @@ The [current Mayhem initializer recovery](research/mayhem-initializer-current-re
 adds the complete 960-byte normalized initializer, including its five immediate
 callees and four typed data references. Two current-framework builds agree;
 6,636 fresh trade pairs and 69 initializer pairs pass, with ten successful
-creations. Mayhem now has 430/441 normalized matches and eleven unmatched
+creations. That checkpoint has 430/441 normalized matches and eleven unmatched
 windows. The [complete per-window inventory](research/mayhem-initializer-current-recovery-20261027/inventory.json)
 separates raw-equal, normalized-only and unmatched bodies. A separate historical
 macro composition reaches 430/141, kept outside the current row.
@@ -166,7 +174,7 @@ accepted matches.
 
 The latest [PumpSwap native-quote and execution recovery](repro/pump_amm/quote-guard-recovery-20261027/README.md) matches 643 windows and 148 raw bodies, corrects all 11 reserved-recipient differences, fixes Token-2022 native creator transfers, and restores observed claim/InitBoost and legacy operation boundaries. All 17,462 corpus cases and retained supplemental suites pass; 142 AMM windows remain.
 
-Remaining priorities are the 302 Pump, 142 AMM, 3 Fees and 11 Mayhem unmatched
+Remaining priorities are the 302 Pump, 142 AMM, 3 Fees and 10 Mayhem unmatched
 windows; deeper call/data/relocation identity; original build provenance; and
 uncovered behavior such as authentic fixed-admin AMM `create_config` success.
 The historical [150-handler audit](repro/reconstruction-audit-2026-10-26/handlers.md)

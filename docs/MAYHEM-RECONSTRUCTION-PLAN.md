@@ -3,21 +3,21 @@
 Mayhem is the active reconstruction priority. Other PRs can be reviewed and
 merged, but new body-recovery experiments should advance Mayhem first.
 
-The current [initializer composition](../research/mayhem-initializer-current-recovery-20261027/README.md)
-has **430/441 normalized windows: 100 raw-local, 330 normalized-only and 11
-unmatched**. The unmatched windows cover 110,328 of 706,744 original text bytes.
-The quote-aware validator and complete 960-byte initializer now match normalized
+The current [Sell quote composition](../research/mayhem-sell-current-recovery-20261027/README.md)
+has **431/441 normalized windows: 100 raw-local, 331 normalized-only and 10
+unmatched**. The unmatched windows cover 109,208 of 706,744 original text bytes.
+The Sell quote, quote-aware validator and complete 960-byte initializer match normalized
 code. Two current-source builds agree, and the packet binds 6,636 trade pairs
 and 69 initializer pairs to its exact artifact. These are bounded results;
 recursive code/data closure, original build provenance and whole-ELF identity
 remain open.
 
-The [current Legacy Buy composition](../research/mayhem-current-ownership-composition-20261027/README.md)
-retains that frontier with a 13,784-byte partial body versus 13,848 original
+The preceding [Legacy Buy composition](../research/mayhem-current-ownership-composition-20261027/README.md)
+retained the 430/100 frontier with a 13,784-byte partial body versus 13,848 original
 bytes. Its fifty immediate callee shapes and seven Source records agree; two
 builds and 486 fresh signed pairs pass. It adds no complete window.
 
-The [parallel work map](MAYHEM-PARALLEL-WORK.md) lists all eleven remaining
+The [parallel work map](MAYHEM-PARALLEL-WORK.md) lists all ten remaining
 windows, completed work and cross-cutting obligations. Quote source/IR shape,
 trade ownership and error flow are the next active source-recovery targets.
 The [same-IR quote backend control](../research/mayhem-quote-backend-replay-20261027/README.md)
@@ -28,7 +28,7 @@ outside the currently active scope.
 
 The following records retain their original candidate bindings. Their old
 "current" measurements and unfinished-task lists are superseded by the linked
-430-window checkpoint and work map above.
+431-window checkpoint and work map above.
 
 The then-current research baseline was
 [native Program parser recovery](../research/mayhem-native-program-recovery/README.md),
@@ -150,7 +150,7 @@ alignment-aid diff as an identity result; preserve complete call/data checks.
 
 ## Parallel continuation
 
-Use the [current 430-window composition](../research/mayhem-initializer-current-recovery-20261027/README.md)
+Use the [current 431-window composition](../research/mayhem-sell-current-recovery-20261027/README.md)
 as the integration parent and the [work map](MAYHEM-PARALLEL-WORK.md) as the
 remaining-body inventory. Preserve the exact source/build bindings of all
 historical experiments; their independent gains and runtime cases are not

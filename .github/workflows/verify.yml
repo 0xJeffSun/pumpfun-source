@@ -12,6 +12,10 @@ jobs:
       max-parallel: 12
       matrix:
         include:
+          - suite: mayhem-current-sell
+            commands: |
+              python -B research/mayhem-sell-current-recovery-20261027/verify.py
+              python -B research/mayhem-sell-current-recovery-20261027/test_verify.py
           - suite: mayhem-sweep-failures
             commands: |
               python -B research/mayhem-sweep-failure-recovery/verify.py

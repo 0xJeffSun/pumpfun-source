@@ -9,7 +9,7 @@ snapshot retains `1463bd22` audit bindings; current selections are recorded in
 [completion ledger](COMPLETION.md) remains a selected-checkpoint record; its old
 candidate paths and “current” prose must not override newer evidence.
 
-Current [Pump Round32](../repro/pump/main-contract-round32-20261027/README.md)
+Current [Pump Round33](../repro/pump/main-contract-round33-20261027/README.md)
 has 137 raw-local matches, 596 normalized-only matches and 302 unmatched windows.
 The unmatched windows cover 896,792 original text bytes. Remaining bodies,
 data, relocations, uncovered behavior and original build provenance remain open.
@@ -21,13 +21,13 @@ event composition stays bound to its earlier parent and is not added again.
 Complete data/call identity and provenance remain open; the current packet
 records the retained supplemental tests and remaining behavioral limits.
 
-Current Mayhem research is the [current-framework initializer composition](../research/mayhem-initializer-current-recovery-20261027/README.md):
-100 raw-local, 330 normalized-only and eleven unmatched windows / 110,328 original
-text bytes. The complete 960-byte initializer now matches with five immediate
-callee shapes and four typed data references checked. Two native builds agree;
-6,636 trade pairs and 69 initializer pairs pass. The full per-window inventory
-records every remaining body. Large trade handlers, both AMM quote helpers,
-allocation-provider provenance and whole-ELF identity remain unresolved.
+Current Mayhem research is the [qualified Sell quote composition](../research/mayhem-sell-current-recovery-20261027/README.md):
+100 raw-local, 331 normalized-only and ten unmatched windows / 109,208 original
+text bytes. O0093 now matches its complete 1,120-byte body, all ten immediate
+callees and ten ordered typed references. The 960-byte initializer remains
+complete and the previous partial Legacy Buy body is preserved. Two builds,
+6,636 fresh trade pairs and 69 initializer pairs pass. Large trade handlers,
+the AMM Buy quote, data/call closure and whole-ELF identity remain unresolved.
 
 The [current Legacy Buy ownership composition](../research/mayhem-current-ownership-composition-20261027/README.md)
 preserves the 430/100 frontier and its complete initializer. Its partial handler

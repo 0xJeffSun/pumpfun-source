@@ -1417,3 +1417,5 @@ research/fees-extend-integration/overrides/** -whitespace
 research/fees-extend-integration/source.patch -whitespace
 repro/pump_amm/quote-guard-recovery-20261027/results/** -whitespace
 repro/pump_amm/quote-guard-recovery-20261027/followup/** -whitespace
+research/mayhem-sell-current-recovery-20261027/overrides/** -whitespace
+research/mayhem-sell-current-recovery-20261027/source.patch -whitespace

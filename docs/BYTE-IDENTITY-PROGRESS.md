@@ -4,6 +4,41 @@ The [full audit](RECONSTRUCTION-AUDIT.md) and its generated tables retain their
 explicit `1463bd22` snapshot. This log records later research without silently
 changing that baseline or promoting new selected artifacts.
 
+## Mayhem: complete Sell quote on the qualified current source
+
+The [new composition](../research/mayhem-sell-current-recovery-20261027/README.md) incorporates the independently
+reviewed #280 source recovery while preserving the full current initializer and
+prior Legacy Buy ownership body. It reaches 431/441 normalized windows and
+retains all 100 raw-local matches. O0093 is a complete 1,120-byte body with ten
+ordered immediate callee shapes and ten typed references checked.
+
+Two root compilations produce identical complete artifacts. Fresh 6,636 trade
+pairs and 69 initializer pairs pass, with 13,440 checked signed records. Ten
+windows / 109,208 original text bytes remain. The native 431/84 and historical
+macro 430/85 results in #279–280 remain separate artifact-bound evidence. The
+qualified 431/100 result is the row used in current totals.
+
+With current Pump Round33, AMM quote-guard and Fees Extend, the five frontiers
+have 2,881/3,338 matches: 1,077 raw-local, 1,804 normalized-only and 457 unmatched.
+Matched windows cover 3,813,056/5,213,128 original text bytes (73.1%). All four
+core programs remain short of whole-ELF identity.
+
+## Reviewed PRs #279–281: native controls and source-only harvest
+
+The [native Linux macro/initializer replay](../research/mayhem-historical-macro-linux/README.md)
+independently reproduces the bounded native 430/85 result. Its earlier trade
+and later initializer records retain separate artifact bindings; ten actual
+corruption checks pass. Its raw count is not added to the qualified current row.
+The [native Sell quote packet](../research/mayhem-sell-retained-recovery/README.md)
+closes O0093 at 431/84; fourteen tests and the explicit 2,478-signature replay
+pass. The qualified 431/100 composition above is independently built and replayed.
+
+The [harvest source proposal](../research/amm-harvest-native-source-reproduction/README.md)
+retains only nine source/provenance files. It contributes no accepted binary or
+runtime match because its measured native artifacts and receipts are not
+published. All 35 source/graph tests pass after resolving temporary fixture paths
+on macOS; production symlink rejection remains intact.
+
 ## Reviewed PRs #276–278: Fees Extend and bounded Mayhem evidence
 
 The [Fees Extend integration](../research/fees-extend-integration/README.md)
@@ -22,8 +57,8 @@ adds no complete function and does not change the current 430/100 row.
 The [historical root API controls](../research/mayhem-historical-root-compat/README.md)
 reproduce the older framework root after minimal API compatibility edits.
 That frozen source has 403 normalized / 62 raw matches versus 428/75 for its
-separate native control: 25 normalized losses and no gains. All 24 local tests
-pass, including POSIX controls. The experiment is excluded from the current
+separate native control: 25 normalized losses and no gains. The later existing-Program-ID control reaches 404/62, still 24 normalized
+windows behind that native control. All 29 local tests pass, including POSIX controls. The experiment is excluded from the current
 frontier and does not authenticate the original compiler or source.
 
 With the independently verified Pump Round32 and current AMM selections,
