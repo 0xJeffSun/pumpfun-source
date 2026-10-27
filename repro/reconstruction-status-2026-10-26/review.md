@@ -1,6 +1,6 @@
 # Comprehensive reconstruction review
 
-Reviewed merged evidence: `152af337446e05a7fdd48fe470b23066c02e1706`. Selected builds remain bound to `1463bd22fb7811825c5e7acf1cb963eb39ab68d9`.
+Reviewed merged evidence: `24dc2f9bca64aeb94144b3fc392f8ca9932259c5`. Selected builds remain bound to `1463bd22fb7811825c5e7acf1cb963eb39ab68d9`.
 
 **No core program or Relay is whole-file byte-identical. No public handler is proved exhaustively perfect.**
 

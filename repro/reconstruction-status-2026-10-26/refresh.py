@@ -14,8 +14,8 @@ import tempfile
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 INPUTS = {}
-REVISION = '152af337446e05a7fdd48fe470b23066c02e1706'
-FEES = 'research/fees-curve-zero-helper'
+REVISION = '24dc2f9bca64aeb94144b3fc392f8ca9932259c5'
+FEES = 'research/fees-slice-origin-integration'
 RELAY = 'repro/donation-relay/burn-mint-ownership-recovery'
 
 

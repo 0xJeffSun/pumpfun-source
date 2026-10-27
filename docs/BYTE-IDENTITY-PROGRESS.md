@@ -545,3 +545,14 @@ source-location records at `common/mod.rs:21`. The array and `TryFrom` controls
 produce an identical 432-byte nonmatching body. Fees reaches 376 unique pairs
 and 62 residuals with no lost normalized or raw coverage. Existing fee-sharing
 callers remain unresolved; fresh broad and focused regressions pass.
+
+
+## Current-frontier slice-location integration — 26 October 2026
+
+[The four location corrections](../research/fees-slice-origin-integration/README.md)
+are now integrated into the 376-pair Fees research source. A fresh build changes
+exactly eight `.data.rel.ro` bytes and preserves the complete instruction
+section. Actual location records, panic message pieces, formatter, callers and
+panic target are checked. Counts remain 376 unique pairs / 62 unmatched; all
+intervening body/runtime gains are preserved. Fresh broad/focused regressions
+and three mutation tests pass. Whole-file identity remains open.
