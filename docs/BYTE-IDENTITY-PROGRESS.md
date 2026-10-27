@@ -1470,3 +1470,20 @@ agree. All 165 Locations and 3,284 prior positive direct-call observations survi
 with 3,336 equal observations in the new build. All 17,331 suite and 76 boundary
 cases pass. Strict304-case Crank observations agree except explicit compute
 lines in every case; raw runtime equivalence is not claimed.
+## Mayhem: shared error namespace and typed Sell CPI
+
+The [shared-error and typed-CPI recovery](../repro/mayhem/shared-errors-typed-cpi/README.md)
+reconstructs six complete normalized helpers from Rust: three error helpers and
+three generated Sell CPI helpers. A fourth newly examined dependency already
+matched the baseline and is recorded as an admission result, not a source gain.
+All 177 prior admitted matches are retained. The expanded examined scope is
+191 admitted functions, 184 matching and seven still unmatched, with 250
+semantically opaque windows. All 58 literal raw windows remain equal; that
+includes 46 admitted and 12 still-opaque windows.
+
+Original data tables and bounded dispatch prove the twenty error names, numbers
+and messages. The typed CPI retains fourteen core accounts and two remaining
+accounts, with independently checked ordering and flags. Legacy Sell passes
+396 cases / 792 signed transactions, and the Burn regression adds 12 signed
+transactions. Four panic/overflow log differences remain. Full handlers and the
+whole ELF are still unequal, and no canonical source is promoted by this packet.
