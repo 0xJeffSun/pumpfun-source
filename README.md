@@ -18,7 +18,7 @@ are distinct from [selected artifacts](repro/status.json).
 | [Pump selected](programs/pump/README.md) | 528 / 1,035 | 51.0% | 98 (9.5%) | 430 | 507 | 0 | No |
 | [PumpSwap / AMM selected](programs/pump-amm/README.md) | 488 / 785 | 62.2% | 93 (11.8%) | 395 | 297 | 0 | No |
 | [Fees research](research/fees-qualified-linker-layout/README.md) | 577 / 585 | 98.6% | 198 (33.8%) | 379 | 8 | 0 | No |
-| [Mayhem research](research/mayhem-trade-source-origins/README.md) | 428 / 441 | 97.1% | 70 (15.9%) | 358 | 13 | 0 | No |
+| [Mayhem research](research/mayhem-qualified-linker-layout/README.md) | 428 / 441 | 97.1% | 100 (22.7%) | 328 | 13 | 0 | No |
 | [Donation Relay selected](repro/donation-relay/canonical-exact-selection/README.md) | 492 / 492 | 100.0% | 492 (100.0%) | 0 | 0 | 0 | **Yes** |
 
 Newer **local, unpublished** Pump/PumpSwap evidence was also verified on 27 October.
@@ -127,6 +127,13 @@ four live handlers now agree. The AMM Sell panic branches are covered statically
 not exercised by this test corpus. All 428 matches and 70 raw-local bodies survive.
 The separate native artifact has 71 raw-local bodies and 426 normalized matches;
 its extra raw-local observation is not added to the combined artifact's count.
+
+The [qualified linker layout](research/mayhem-qualified-linker-layout/README.md)
+raises Mayhem's raw-local matches from 70 to 100 without changing the 66 source
+files or losing any of the 428 normalized matches. Two builds agree and 6,937
+fresh comparisons pass. All 456 compiled functions, 4,929 direct calls and
+2,542 relocations are checked across the reorder. Original function-sharing
+conflicts and a missing duplicate remain unresolved; whole-ELF identity is false.
 
 The [completed account-data cohort](research/mayhem-account-cohort-complete/README.md)
 has 156 typed-equal references, no differences and none unresolved within that

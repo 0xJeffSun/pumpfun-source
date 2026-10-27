@@ -47,10 +47,10 @@ analysis. Candidate symbol names are hypotheses about original identity.
 | Mayhem selected | 441 | 58 | 131 | 7 | 245 |
 | Relay historical source 15 | 492 | 33 | 89 | 370 | 0 |
 | **Fees latest research** | **585** | **198** | **379** | **8** | **0** |
-| **Mayhem latest research** | **441** | **70** | **358** | **13** | **0** |
+| **Mayhem latest research** | **441** | **100** | **328** | **13** | **0** |
 | **Relay canonical selection** | **492** | **492** | **0** | **0** | **0** |
 
-The current research rows are bound to the [Fees qualified linker layout](../research/fees-qualified-linker-layout/README.md) and [Mayhem trade-source composition](../research/mayhem-trade-source-origins/README.md); they extend the dated generated inventory below. Each row is a partition, not a score of semantic correctness. The selected Mayhem source
+The current research rows are bound to the [Fees qualified linker layout](../research/fees-qualified-linker-layout/README.md) and [Mayhem qualified linker layout](../research/mayhem-qualified-linker-layout/README.md); they extend the dated generated inventory below. Each row is a partition, not a score of semantic correctness. The selected Mayhem source
 ledger has 257 opaque windows, 12 of which happen to match local raw bytes.
 Selected Fees retains two call-conflicting rows; body existence does not resolve
 those conflicts. Different programs and studies use different matching rules.
@@ -947,7 +947,7 @@ The separately reviewed native retained-reserve artifact has 426 normalized
 matches, 71 raw-local bodies and seven trade diagnostic differences; those
 results are not added to or relabeled as this combined artifact's results.
 
-## Current Mayhem trade-source composition
+## Prior Mayhem trade-source composition
 
 The [six-file successor](../research/mayhem-trade-source-origins/README.md)
 keeps the same 428/441 normalized matches, 70 raw-local bodies and thirteen
@@ -958,3 +958,19 @@ seven remain. Two builds agree. The five restored Source observations are
 bounded through actual handlers; the AMM Sell subtraction-panic branches remain
 unexecuted by the current corpus. Earlier ExtendAccount, initializer and other
 non-trade receipts retain their parent-artifact bindings.
+
+## Current Mayhem qualified linker layout
+
+The [layout checkpoint](../research/mayhem-qualified-linker-layout/README.md)
+keeps the same 66 Rust inputs and 428 normalized counterparts but increases
+complete raw-local windows to 100. Its partition is 100 raw-local, 328
+normalized-only and thirteen unmatched. No earlier raw, normalized, positive
+callee or Source observation is lost. Two builds agree; fresh replay passes
+6,636 trades plus 301 ExtendAccount cases (13,874 checked signed records), with
+the same seven trade diagnostic differences. Every baseline function section,
+branch, direct call and relocation is accounted for across the reorder.
+
+The original-to-candidate mapping retains explicit ambiguity: some unique
+callers require incompatible candidate copies, and two original 328-byte helpers
+have only one candidate counterpart. These sharing/specialization gaps and the
+thirteen unmatched bodies remain open. Complete ELF equality is still false.
