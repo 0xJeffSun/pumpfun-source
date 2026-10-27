@@ -4,6 +4,17 @@ The [full audit](RECONSTRUCTION-AUDIT.md) and its generated tables retain their
 explicit `1463bd22` snapshot. This log records later research without silently
 changing that baseline or promoting new selected artifacts.
 
+## Fees: social-PDA creation body recovered
+
+The [creation-body recovery](../research/fees-social-creation-body/README.md)
+reproduces the complete 3,296-byte original function at 190104, including feature
+logging, existing-state precedence and its error location. All 18 direct callees
+match, with no prior raw-local or normalized match lost. Fees advances to
+**396 unique structural pairs and 42 unmatched windows**. A fresh control
+reproduces the parent exactly; the proposal passes 17,331 existing comparisons
+and 157 strict signed controls, fixing 12 instruction-outcome differences in
+the added existing-PDA cases. Whole-file identity remains unachieved.
+
 ## Relay: original security metadata recovered from source
 
 The [security declaration recovery](../repro/donation-relay/security-metadata-source-recovery/README.md)
