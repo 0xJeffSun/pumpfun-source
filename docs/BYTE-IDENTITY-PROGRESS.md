@@ -1087,3 +1087,12 @@ mismatch. All359 positional data pointers and507 nonpointer qwords retain their
 prior validation; five text targets containing indirect calls remain outside
 semantic proof. This is a raw-layout gain, not whole-byte identity or selected
 checkpoint promotion. Full captured-file equality remains false.
+
+The [offline loader allocation recipe](../repro/donation-relay/offline-loader-allocation/README.md)
+now executes real local signed buffer creation,910 writes and DeployWithMaxDataLen
+using the historically derived830,448-byte capacity. It produces the unmodified
+818,280-byte compiler ELF plus the12,168-byte loader-allocated zero tail, without
+manual padding, add_program, set_account or RPC. Two fresh local runs reproduced
+the same912-transaction receipt. Five static negative tests pass. This establishes
+a loader-backed allocation route; original-payload equality remains false because
+the ELF prefix still has9,398 differing positions.
