@@ -94,3 +94,9 @@ impl Pool {
             .ok_or_else(|| error!(PumpAmmError::Overflow))
     }
 }
+
+impl Pool {
+    pub fn can_boost(&self) -> bool {
+        self.total_virtual_quote_reserves().unwrap_or_default() != 0
+    }
+}

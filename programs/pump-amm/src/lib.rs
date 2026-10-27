@@ -174,10 +174,10 @@ pub mod pump_amm_recovered {
         Ok(())
     }
     pub fn deposit(ctx: Context<Liquidity>, lp_token_amount_out: u64, max_base_amount_in: u64, max_quote_amount_in: u64) -> Result<()> {
-        liquidity::<true>(ctx, lp_token_amount_out, max_base_amount_in, max_quote_amount_in)
+        instructions::liquidity::deposit::deposit(ctx, lp_token_amount_out, max_base_amount_in, max_quote_amount_in)
     }
     pub fn withdraw(ctx: Context<Liquidity>, lp_token_amount_in: u64, min_base_amount_out: u64, min_quote_amount_out: u64) -> Result<()> {
-        liquidity::<false>(ctx, lp_token_amount_in, min_base_amount_out, min_quote_amount_out)
+        instructions::liquidity::withdraw::withdraw(ctx, lp_token_amount_in, min_base_amount_out, min_quote_amount_out)
     }
 
     pub fn admin_update_token_incentives(ctx:Context<AdminUpdateTokenIncentives>,start_time:i64,end_time:i64,seconds_in_a_day:i64,day_number:u64,token_supply_per_day:u64)->Result<()>{incentives::admin(ctx,start_time,end_time,seconds_in_a_day,day_number,token_supply_per_day)}
@@ -492,140 +492,7 @@ fn liquidity_quote_reserves(pool: &Pool, quote_token_amount: u64) -> Result<u64>
 fn liquidity_effective_virtual(pool: &Pool) -> Result<i128> {
     pool.total_virtual_quote_reserves()
 }
-fn liquidity_can_boost(pool: &Pool) -> bool {
-    liquidity_effective_virtual(pool).unwrap_or_default() != 0
-}
-fn liquidity_floor_ratio(reserve: u64, amount: u64, supply: u64) -> Result<u128> {
-    ((reserve as u128) * (amount as u128)).checked_div(supply as u128)
-        .ok_or_else(|| error!(PumpAmmError::DivisionByZero))
-}
-fn liquidity<const DEPOSIT: bool>(ctx: Context<Liquidity>, amount: u64, base_limit: u64, quote_limit: u64) -> Result<()> {
-    let a = &mut *ctx.accounts;
-    if DEPOSIT { require!(a.global_config.disable_flags & 2 == 0, PumpAmmError::DisabledDeposit); }
-    else {
-        require!(a.global_config.disable_flags & 4 == 0, PumpAmmError::DisabledWithdraw);
-        require_gte!(a.pool.lp_supply, a.lp_mint.supply, PumpAmmError::SeedLockViolation);
-    }
-    let old_supply = a.pool.lp_supply;
-    let base_reserve = a.pool_base_token_account.amount;
-    let quote_reserve = liquidity_quote_reserves(&a.pool, a.pool_quote_token_account.amount)?;
-    let base_amount = if DEPOSIT {
-        u64::try_from(crate::utils::math::ceil_div(
-            (base_reserve as u128) * (amount as u128), old_supply as u128,
-        )?).map_err(|_| error!(PumpAmmError::Truncation))?
-    } else {
-        u64::try_from(liquidity_floor_ratio(base_reserve, amount, old_supply)?)
-            .map_err(|_| error!(PumpAmmError::Truncation))?
-    };
-    if DEPOSIT {
-        require_gte!(base_limit, base_amount, PumpAmmError::ExceededSlippage);
-    } else {
-        require_gte!(base_amount, base_limit, PumpAmmError::ExceededSlippage);
-    }
-    let quote_amount = if DEPOSIT {
-        u64::try_from(crate::utils::math::ceil_div(
-            (quote_reserve as u128) * (amount as u128), old_supply as u128,
-        )?).map_err(|_| error!(PumpAmmError::Truncation))?
-    } else {
-        u64::try_from(liquidity_floor_ratio(quote_reserve, amount, old_supply)?)
-            .map_err(|_| error!(PumpAmmError::Truncation))?
-    };
-    let (quote_transfer_fee, quote_transfer_amount, quote_received) = if DEPOSIT {
-        let fee_data = crate::utils::transfer_fee::from_mint(&a.quote_mint.to_account_info())?;
-        let transfer_amount = crate::utils::transfer_fee::amount_before_fee(&fee_data, quote_amount)?;
-        let fee = transfer_amount.checked_sub(quote_amount).ok_or_else(|| error!(PumpAmmError::Overflow))?;
-        (fee, transfer_amount, quote_amount)
-    } else {
-        let fee_data = crate::utils::transfer_fee::from_mint(&a.quote_mint.to_account_info())?;
-        let received = crate::utils::transfer_fee::amount_after_fee(&fee_data, quote_amount)?;
-        let fee = quote_amount.checked_sub(received).ok_or_else(|| error!(PumpAmmError::Overflow))?;
-        (fee, quote_amount, received)
-    };
-    if DEPOSIT {
-        require_gte!(quote_limit, quote_transfer_amount, PumpAmmError::ExceededSlippage);
-    } else {
-        require_gte!(quote_received, quote_limit, PumpAmmError::ExceededSlippage);
-    }
-    if DEPOSIT {
-        let base_program = if *a.base_mint.to_account_info().owner == anchor_spl::token::ID { a.token_program.as_ref() } else { a.token_2022_program.as_ref() };
-        crate::utils::token::transfer_checked(base_program, &a.base_mint, &a.user_base_token_account, &a.pool_base_token_account, a.user.as_ref(), base_amount, &[])?;
-        let quote_program = if *a.quote_mint.to_account_info().owner == anchor_spl::token::ID { a.token_program.as_ref() } else { a.token_2022_program.as_ref() };
-        crate::utils::token::transfer_checked(quote_program, &a.quote_mint, &a.user_quote_token_account, &a.pool_quote_token_account, a.user.as_ref(), quote_transfer_amount, &[])?;
-    } else {
-        let base_program = if *a.base_mint.to_account_info().owner == anchor_spl::token::ID { a.token_program.as_ref() } else { a.token_2022_program.as_ref() };
-        crate::utils::token::transfer_from_pool(base_program, &a.base_mint, &a.pool_base_token_account, &a.user_base_token_account, base_amount, &a.pool)?;
-        let quote_program = if *a.quote_mint.to_account_info().owner == anchor_spl::token::ID { a.token_program.as_ref() } else { a.token_2022_program.as_ref() };
-        crate::utils::token::transfer_from_pool(quote_program, &a.quote_mint, &a.pool_quote_token_account, &a.user_quote_token_account, quote_transfer_amount, &a.pool)?;
-    }
-    if DEPOSIT {
-        crate::utils::token::mint_to_pool(&a.token_2022_program, &a.lp_mint, &a.user_pool_token_account, amount, &a.pool)?;
-    } else {
-        crate::utils::token::burn_from_user(
-            &a.token_2022_program, &a.lp_mint, &a.user_pool_token_account, a.user.as_ref(), amount,
-        )?;
-    }
-    let new_supply = if DEPOSIT { old_supply.checked_add(amount) } else { old_supply.checked_sub(amount) }.ok_or_else(|| error!(PumpAmmError::Overflow))?;
-    a.pool.lp_supply = new_supply;
-    if liquidity_can_boost(&a.pool) {
-        let effective_virtual = liquidity_effective_virtual(&a.pool)?;
-        let virtual_reserve = u128::try_from(effective_virtual).map_err(|_| error!(PumpAmmError::Overflow))?;
-        let mut change = virtual_reserve.checked_mul(amount as u128).ok_or_else(|| error!(PumpAmmError::Overflow))?;
-        change = if DEPOSIT {
-            change.checked_div(old_supply as u128).ok_or(PumpAmmError::DivisionByZero)?
-        } else {
-            crate::utils::math::ceil_div(change, old_supply as u128)?
-        };
-        if !DEPOSIT { u64::try_from(change).map_err(|_| error!(PumpAmmError::Truncation))?; }
-        let change = i128::try_from(change).map_err(|_| error!(PumpAmmError::Overflow))?;
-        a.pool.virtual_quote_reserves = if DEPOSIT { a.pool.virtual_quote_reserves.checked_add(change) } else { a.pool.virtual_quote_reserves.checked_sub(change) }.ok_or_else(|| error!(PumpAmmError::Overflow))?;
-    }
-    if DEPOSIT {
-        let event = DepositEvent {
-            timestamp: Clock::get()?.unix_timestamp,
-            lp_token_amount_out: amount,
-            max_base_amount_in: base_limit,
-            max_quote_amount_in: quote_limit,
-            user_base_token_reserves: a.user_base_token_account.amount,
-            user_quote_token_reserves: a.user_quote_token_account.amount,
-            pool_base_token_reserves: base_reserve,
-            pool_quote_token_reserves: a.pool_quote_token_account.amount,
-            base_amount_in: base_amount,
-            quote_amount_in: quote_amount,
-            lp_mint_supply: old_supply,
-            pool: a.pool.key(),
-            user: a.user.key(),
-            user_base_token_account: a.user_base_token_account.key(),
-            user_quote_token_account: a.user_quote_token_account.key(),
-            user_pool_token_account: a.user_pool_token_account.key(),
-            quote_transfer_fee,
-        };
-        emit!(event.clone());
-        emit_cpi!(event);
-    } else {
-        let event = WithdrawEvent {
-            timestamp: Clock::get()?.unix_timestamp,
-            lp_token_amount_in: amount,
-            min_base_amount_out: base_limit,
-            min_quote_amount_out: quote_limit,
-            user_base_token_reserves: a.user_base_token_account.amount,
-            user_quote_token_reserves: a.user_quote_token_account.amount,
-            pool_base_token_reserves: base_reserve,
-            pool_quote_token_reserves: a.pool_quote_token_account.amount,
-            base_amount_out: base_amount,
-            quote_amount_out: quote_amount,
-            lp_mint_supply: old_supply,
-            pool: a.pool.key(),
-            user: a.user.key(),
-            user_base_token_account: a.user_base_token_account.key(),
-            user_quote_token_account: a.user_quote_token_account.key(),
-            user_pool_token_account: a.user_pool_token_account.key(),
-            quote_transfer_fee,
-        };
-        emit!(event.clone());
-        emit_cpi!(event);
-    }
-    Ok(())
-}
+
 
 fn quote_transfer_fee(mint: &AccountInfo, amount: u64, inverse: bool) -> Result<u64> {
     use anchor_spl::token_2022::spl_token_2022::{extension::{BaseStateWithExtensions, StateWithExtensions, transfer_fee::TransferFeeConfig}, state::Mint as SplMint};

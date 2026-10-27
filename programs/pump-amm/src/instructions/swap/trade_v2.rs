@@ -135,9 +135,9 @@ pub fn create_sell_event(
     buyback_received: u64,
     quote_transfer_fee: u64,
 ) -> Result<crate::trade::SellEvent> {
-    let base_supply = context.base_supply;
-    let global_config = context.global_config;
     let pool = context.pool;
+    let global_config = context.global_config;
+    let base_supply = context.base_supply;
     let timestamp = Clock::get()?.unix_timestamp;
         let event = crate::trade::SellEvent {
             timestamp,
@@ -155,9 +155,6 @@ pub fn create_sell_event(
             quote_amount_out_without_lp_fee: quote_without_lp_fee,
             user_quote_amount_out: total_quote,
             pool: pool.key(),
-            user: context.user,
-            user_base_token_account: context.user_base_token_account,
-            user_quote_token_account: context.user_quote_token_account,
             protocol_fee_recipient: Pubkey::default(),
             protocol_fee_recipient_token_account: Pubkey::default(),
             coin_creator: pool.coin_creator,
@@ -167,11 +164,14 @@ pub fn create_sell_event(
             cashback: 0,
             buyback_fee: buyback_received,
             virtual_quote_reserves: old_virtual,
+            user: context.user,
+            user_base_token_account: context.user_base_token_account,
+            user_quote_token_account: context.user_quote_token_account,
             holder_rewards_bps: if pool.is_holder_reward { selected.creator_fee_bps } else { 0 },
             holder_rewards: if pool.is_holder_reward { selected.creator_fee } else { 0 },
-            base_supply: if pool.is_mayhem_mode {1_000_000_000_000_000} else {base_supply},
             buyback_fee_basis_points: if pool.is_mayhem_mode { 0 } else { global_config.buyback_basis_points },
-            can_boost: crate::liquidity_can_boost(pool),
+            base_supply: if pool.is_mayhem_mode {1_000_000_000_000_000} else {base_supply},
+            can_boost: pool.can_boost(),
             creator_fee_unclaimed: pool.creator_fees,
             quote_transfer_fee,
         };
@@ -194,24 +194,17 @@ pub fn create_buy_event(
     buyback_received: u64,
     ix_name: &str,
 ) -> Result<crate::trade::BuyEvent> {
-    let quote_with_lp_fee = result.quote_amount_in.checked_add(result.fees.lp_fee)
-        .ok_or_else(|| error!(PumpAmmError::Overflow))?;
     let pool = context.pool;
     let global_config = context.global_config;
-    let volume = context.user_volume_accumulator;
     let base_supply = context.base_supply;
+    let volume = context.user_volume_accumulator;
+    let quote_with_lp_fee = result.quote_amount_in.checked_add(result.fees.lp_fee)
+        .ok_or_else(|| error!(PumpAmmError::Overflow))?;
     let total_unclaimed_tokens = volume.total_unclaimed_tokens;
     let total_claimed_tokens = volume.total_claimed_tokens;
     let current_sol_volume = volume.current_sol_volume;
     let last_update_timestamp = volume.last_update_timestamp;
     let timestamp = Clock::get()?.unix_timestamp;
-    let coin_creator = pool.coin_creator;
-    let holder_rewards_bps = if pool.is_holder_reward { result.fees.creator_fee_bps } else { 0 };
-    let holder_rewards = if pool.is_holder_reward { result.fees.creator_fee } else { 0 };
-    let ix_name = ix_name.to_string();
-    let base_supply = if pool.is_mayhem_mode { 1_000_000_000_000_000 } else { base_supply };
-    let buyback_fee_basis_points = if pool.is_mayhem_mode { 0 } else { global_config.buyback_basis_points };
-    let can_boost = crate::liquidity_can_boost(pool);
         let event = crate::trade::BuyEvent {
             timestamp,
             base_amount_out: result.base_amount_out,
@@ -233,25 +226,25 @@ pub fn create_buy_event(
             user_quote_token_account: context.user_quote_token_account,
             protocol_fee_recipient: Pubkey::default(),
             protocol_fee_recipient_token_account: Pubkey::default(),
-            coin_creator,
+            coin_creator: pool.coin_creator,
             coin_creator_fee_basis_points: result.fees.creator_fee_bps,
             coin_creator_fee: result.fees.creator_fee,
+            holder_rewards_bps: if pool.is_holder_reward { result.fees.creator_fee_bps } else { 0 },
+            holder_rewards: if pool.is_holder_reward { result.fees.creator_fee } else { 0 },
             track_volume: false,
             total_unclaimed_tokens,
             total_claimed_tokens,
             current_sol_volume,
             last_update_timestamp,
             min_base_amount_out,
-            ix_name,
+            ix_name: ix_name.to_string(),
             cashback_fee_basis_points: 0,
             cashback: 0,
-            buyback_fee_basis_points,
+            buyback_fee_basis_points: if pool.is_mayhem_mode { 0 } else { global_config.buyback_basis_points },
+            base_supply: if pool.is_mayhem_mode { 1_000_000_000_000_000 } else { base_supply },
             buyback_fee: buyback_received,
             virtual_quote_reserves: old_virtual,
-            can_boost,
-            base_supply,
-            holder_rewards_bps,
-            holder_rewards,
+            can_boost: pool.can_boost(),
             creator_fee_unclaimed: pool.creator_fees,
             quote_transfer_fee: result.quote_transfer_fee,
         };
