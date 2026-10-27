@@ -56,3 +56,7 @@ This closes the unexplained-capacity question. Reconstructing the four donation
 bodies, authentic function placement, complete Rust ELF bytes and any eventual
 loader-backed payload reproduction remain open. No runtime execution or
 byte-identical Rust build is claimed by this packet.
+
+The retained `solana-loader-v3-interface`3.0.0 schema/archive is from the
+[Agave project](https://github.com/anza-xyz/agave), published under Apache-2.0.
+Its separate [license text](LICENSE-APACHE) applies to those third-party files.
