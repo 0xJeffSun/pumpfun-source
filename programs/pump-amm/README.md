@@ -1,12 +1,13 @@
 # PumpSwap source reconstruction
 
-The maintained source is the [native-quote and execution checkpoint](../../repro/pump_amm/quote-guard-recovery-20261027/README.md),
-candidate `be10ca1a530ef9c62be5c94a5183f339e5d7661dce588a9458767e20a5e488f6`. It matches **643/785 normalized windows (81.9%)**,
-including **148 raw bodies**, and covers **804,704/1,162,040 text bytes (69.2%)**.
-Whole ELF identity is false; **142 windows remain**.
+The maintained source is the [event, decoder and rent checkpoint](../../repro/pump_amm/event-decoder-recovery-20261027/README.md),
+candidate `0881a95dafe465623c7220fb3da84b3f9c7d9b0094d572f62487f05cbd80a07c`. It matches **647/785 normalized windows (82.4%)**,
+including **148 raw bodies**, and covers **810,544/1,162,040 text bytes (69.8%)**.
+Whole ELF identity is false; **138 windows remain**.
 
 Two strict offline builds agree. All 17,462 corpus cases and retained supplemental
-suites pass. The 21-case reserved-recipient matrix closes all 11 prior differences, and 160 resize cases remain matched. Claim/InitBoost and legacy operation boundaries
+suites pass. The 21-case reserved-recipient matrix closes all11 prior differences, and
+160 resize cases remain matched. Claim/InitBoost and legacy operation boundaries
 are restored; 17 entrypoint source descriptors remain matched. The recipe binds 51 canonical, 52 workspace
 and 175 registry inputs, 227 total, with 762 cached dependency artifacts unchanged.
 Counts overlap. Full code/data/call identity, original provenance and exhaustive

@@ -14,9 +14,9 @@ impl AnchorDeserialize for OptionBool {
             Ok(()) => match a[0] {
                 0 => Ok(Self(false)),
                 1 => Ok(Self(true)),
-                _ => Err(std::io::Error::new(
+                value => Err(std::io::Error::new(
                     std::io::ErrorKind::InvalidData,
-                    format!("Invalid bool representation: {}", a[0]),
+                    format!("Invalid bool representation: {}", value),
                 )),
             },
             Err(e) if e.kind() == std::io::ErrorKind::UnexpectedEof => Ok(Self(false)),

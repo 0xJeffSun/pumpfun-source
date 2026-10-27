@@ -1429,3 +1429,5 @@ research/mayhem-quotes-current-recovery-20261027/overrides/** -whitespace
 research/mayhem-quotes-current-recovery-20261027/source.patch -whitespace
 research/mayhem-amm-handler-shape-controls-20261027/controls/**/overrides/** -whitespace
 research/mayhem-amm-handler-shape-controls-20261027/controls/**/source.patch -whitespace
+repro/pump_amm/event-decoder-recovery-20261027/results/** -whitespace
+repro/pump_amm/event-decoder-recovery-20261027/followup/** -whitespace

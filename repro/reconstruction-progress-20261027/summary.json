@@ -11,26 +11,26 @@
     },
     {
       "name": "pump_amm",
-      "matched_windows": 643,
+      "matched_windows": 647,
       "windows": 785,
       "raw_bodies": 148,
-      "matched_text_bytes": 804704,
+      "matched_text_bytes": 810544,
       "text_bytes": 1162040
     },
     {
       "name": "fees_research",
-      "matched_windows": 581,
+      "matched_windows": 582,
       "windows": 585,
       "raw_bodies": 200,
-      "matched_text_bytes": 756600,
+      "matched_text_bytes": 762912,
       "text_bytes": 799648
     },
     {
       "name": "mayhem_research",
-      "matched_windows": 430,
+      "matched_windows": 432,
       "windows": 441,
       "raw_bodies": 100,
-      "matched_text_bytes": 596416,
+      "matched_text_bytes": 598792,
       "text_bytes": 706744
     },
     {
@@ -43,10 +43,10 @@
     }
   ],
   "totals": {
-    "matched_windows": 2879,
+    "matched_windows": 2886,
     "windows": 3338,
     "raw_bodies": 1077,
-    "matched_text_bytes": 3805624,
+    "matched_text_bytes": 3820152,
     "text_bytes": 5213128,
     "complete_elf_programs": 1,
     "programs": 5
