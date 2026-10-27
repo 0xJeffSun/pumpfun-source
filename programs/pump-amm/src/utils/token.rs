@@ -213,3 +213,21 @@ fn supported_mint_data(data: &[u8], allow_extensions: bool) -> bool {
         };
     }
 }
+
+#[inline(never)]
+pub fn burn_from_user<'info>(
+    token_program: &Program<'info, Token2022>,
+    mint: &InterfaceAccount<'info, Mint>,
+    source: &InterfaceAccount<'info, TokenAccount>,
+    authority: &AccountInfo<'info>,
+    amount: u64,
+) -> Result<()> {
+    token_interface::burn(CpiContext::new(
+        token_program.to_account_info(),
+        token_interface::Burn {
+            mint: mint.to_account_info(),
+            from: source.to_account_info(),
+            authority: authority.clone(),
+        },
+    ), amount)
+}

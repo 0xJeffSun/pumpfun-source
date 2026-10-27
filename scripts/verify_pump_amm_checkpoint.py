@@ -9,9 +9,9 @@ import subprocess
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
-ARTIFACT = 'repro/pump_amm/error-order-recovery-20261027/results/build/candidate.so'
-CANDIDATE = '8e69bb1b3d95dab5fb398f7842efbb9d2234075ec206fa447060bdd92714f328'
-MANIFEST = '527d3ea27c4710bab497b38de651db75f057a0712d5109e0a6dda8ca3c1aace2'
+ARTIFACT = 'repro/pump_amm/dependency-liquidity-recovery-20261027/results/build/candidate.so'
+CANDIDATE = '5cd7879af0d9733d1f7d3847be46aa4c5ff214fca2250d1c69d03c49cbc85d1a'
+MANIFEST = '4b015b381eba19ea7a627b3d0e7e8e78fae7d12522e195e264cfa7176b04deb6'
 
 
 def sha(path):
@@ -28,9 +28,21 @@ def verify(root=ROOT, runtime=None):
     assert sha(candidate) == CANDIDATE
     assert sha(checkpoint / 'results/manifest.json') == MANIFEST
     record = json.loads((checkpoint / 'results/build/build-comparison.json').read_text())
+    local = {}
     for name, digest in record['source_sha256'].items():
+        if '/registry/src/' in name:
+            continue
         relative = 'programs/pump-amm/' + name.split('programs/pump-amm/', 1)[1]
         assert sha(root / relative) == digest, relative
+        local[relative] = digest
+    assert len(local) == 41 and len(record['source_sha256']) == 210
+    spec = importlib.util.spec_from_file_location('selected_amm_dependencies', checkpoint / 'results/dependency-proof/verify.py')
+    dependencies = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(dependencies)
+    assert dependencies.verify(root, checkpoint / 'results/build/build-comparison.json')['total_build_inputs_bound'] == 210
+    from build_source_manifest import source_manifest
+    crate = root / 'programs/pump-amm'
+    assert source_manifest(crate, crate, root, [crate / 'vendor/solana-pubkey'], cwd=root) == local
     if runtime is None:
         result = subprocess.run(
             [sys.executable, '-B', str(checkpoint / 'verify_saved.py'), '--current-source'],

@@ -48,3 +48,49 @@ impl Pool {
         u64::try_from(amount).map_err(|_| error!(PumpAmmError::Overflow))
     }
 }
+
+impl Pool {
+    #[inline(never)]
+    pub fn total_accrued_fees(&self) -> Result<u64> {
+        self.protocol_fees
+            .checked_add(self.creator_fees)
+            .ok_or_else(|| error!(PumpAmmError::Overflow))
+    }
+
+    #[inline(never)]
+    pub fn available_quote_reserves(&self, quote_token_reserves: u64) -> Result<u64> {
+        quote_token_reserves
+            .checked_sub(self.total_accrued_fees()?)
+            .ok_or_else(|| error!(PumpAmmError::Overflow))
+    }
+
+    #[inline(never)]
+    pub fn take_accrued_fees(&mut self, creator: bool) -> Result<u64> {
+        let amount = core::mem::take(if creator {
+            &mut self.creator_fees
+        } else {
+            &mut self.protocol_fees
+        });
+        self.virtual_quote_reserves = self.virtual_quote_reserves
+            .checked_add(amount as i128)
+            .ok_or_else(|| error!(PumpAmmError::Overflow))?;
+        Ok(amount)
+    }
+}
+
+impl Pool {
+    #[inline(never)]
+    pub fn market_cap(&self, base_supply: u64, base_reserve: u64, quote_reserve: u64) -> Result<u128> {
+        let supply = if self.is_mayhem_mode { 1_000_000_000_000_000 } else { base_supply };
+        ((supply as u128) * (quote_reserve as u128))
+            .checked_div(base_reserve as u128)
+            .ok_or_else(|| error!(PumpAmmError::DivisionByZero))
+    }
+
+    #[inline(never)]
+    pub fn total_virtual_quote_reserves(&self) -> Result<i128> {
+        self.virtual_quote_reserves
+            .checked_add(self.total_accrued_fees()? as i128)
+            .ok_or_else(|| error!(PumpAmmError::Overflow))
+    }
+}

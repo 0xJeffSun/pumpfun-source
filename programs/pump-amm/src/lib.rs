@@ -484,16 +484,16 @@ pub struct Liquidity<'info> {
     pub token_2022_program: Program<'info, Token2022>,
 }
 fn liquidity_total_fees(pool: &Pool) -> Result<u64> {
-    pool.protocol_fees.checked_add(pool.creator_fees).ok_or_else(|| error!(PumpAmmError::Overflow))
+    pool.total_accrued_fees()
 }
 fn liquidity_quote_reserves(pool: &Pool, quote_token_amount: u64) -> Result<u64> {
-    quote_token_amount.checked_sub(liquidity_total_fees(pool)?).ok_or_else(|| error!(PumpAmmError::Overflow))
+    pool.available_quote_reserves(quote_token_amount)
 }
 fn liquidity_effective_virtual(pool: &Pool) -> Result<i128> {
-    pool.virtual_quote_reserves.checked_add(liquidity_total_fees(pool)? as i128).ok_or_else(|| error!(PumpAmmError::Overflow))
+    pool.total_virtual_quote_reserves()
 }
 fn liquidity_can_boost(pool: &Pool) -> bool {
-    liquidity_effective_virtual(pool).is_ok_and(|value| value != 0)
+    liquidity_effective_virtual(pool).unwrap_or_default() != 0
 }
 fn liquidity_floor_ratio(reserve: u64, amount: u64, supply: u64) -> Result<u128> {
     ((reserve as u128) * (amount as u128)).checked_div(supply as u128)
@@ -509,40 +509,39 @@ fn liquidity<const DEPOSIT: bool>(ctx: Context<Liquidity>, amount: u64, base_lim
     let old_supply = a.pool.lp_supply;
     let base_reserve = a.pool_base_token_account.amount;
     let quote_reserve = liquidity_quote_reserves(&a.pool, a.pool_quote_token_account.amount)?;
-    let ratio = |reserve: u64| -> Result<u64> {
-        let n = if DEPOSIT {
-            crate::utils::math::ceil_div((reserve as u128) * (amount as u128), old_supply as u128)?
-        } else {
-            liquidity_floor_ratio(reserve, amount, old_supply)?
-        };
-        u64::try_from(n).map_err(|_| error!(PumpAmmError::Truncation))
-    };
     let base_amount = if DEPOSIT {
-        ratio(base_reserve)?
+        u64::try_from(crate::utils::math::ceil_div(
+            (base_reserve as u128) * (amount as u128), old_supply as u128,
+        )?).map_err(|_| error!(PumpAmmError::Truncation))?
     } else {
         u64::try_from(liquidity_floor_ratio(base_reserve, amount, old_supply)?)
             .map_err(|_| error!(PumpAmmError::Truncation))?
     };
-    if !DEPOSIT {
+    if DEPOSIT {
+        require_gte!(base_limit, base_amount, PumpAmmError::ExceededSlippage);
+    } else {
         require_gte!(base_amount, base_limit, PumpAmmError::ExceededSlippage);
     }
     let quote_amount = if DEPOSIT {
-        ratio(quote_reserve)?
+        u64::try_from(crate::utils::math::ceil_div(
+            (quote_reserve as u128) * (amount as u128), old_supply as u128,
+        )?).map_err(|_| error!(PumpAmmError::Truncation))?
     } else {
         u64::try_from(liquidity_floor_ratio(quote_reserve, amount, old_supply)?)
             .map_err(|_| error!(PumpAmmError::Truncation))?
     };
     let (quote_transfer_fee, quote_transfer_amount, quote_received) = if DEPOSIT {
-        let fee = quote_transfer_fee(&a.quote_mint.to_account_info(), quote_amount, true)?;
-        (fee, quote_amount.checked_add(fee).ok_or(PumpAmmError::Overflow)?, quote_amount)
+        let fee_data = crate::utils::transfer_fee::from_mint(&a.quote_mint.to_account_info())?;
+        let transfer_amount = crate::utils::transfer_fee::amount_before_fee(&fee_data, quote_amount)?;
+        let fee = transfer_amount.checked_sub(quote_amount).ok_or_else(|| error!(PumpAmmError::Overflow))?;
+        (fee, transfer_amount, quote_amount)
     } else {
-        let fee_data = crate::utils::transfer_fee::from_mint(a.quote_mint.as_ref().as_ref())?;
+        let fee_data = crate::utils::transfer_fee::from_mint(&a.quote_mint.to_account_info())?;
         let received = crate::utils::transfer_fee::amount_after_fee(&fee_data, quote_amount)?;
         let fee = quote_amount.checked_sub(received).ok_or_else(|| error!(PumpAmmError::Overflow))?;
         (fee, quote_amount, received)
     };
     if DEPOSIT {
-        require_gte!(base_limit, base_amount, PumpAmmError::ExceededSlippage);
         require_gte!(quote_limit, quote_transfer_amount, PumpAmmError::ExceededSlippage);
     } else {
         require_gte!(quote_received, quote_limit, PumpAmmError::ExceededSlippage);
@@ -561,10 +560,12 @@ fn liquidity<const DEPOSIT: bool>(ctx: Context<Liquidity>, amount: u64, base_lim
     if DEPOSIT {
         crate::utils::token::mint_to_pool(&a.token_2022_program, &a.lp_mint, &a.user_pool_token_account, amount, &a.pool)?;
     } else {
-        token_interface::burn(CpiContext::new(a.token_2022_program.to_account_info(), token_interface::Burn {
-            mint: a.lp_mint.to_account_info(), from: a.user_pool_token_account.to_account_info(), authority: a.user.to_account_info() }), amount)?;
+        crate::utils::token::burn_from_user(
+            &a.token_2022_program, &a.lp_mint, &a.user_pool_token_account, a.user.as_ref(), amount,
+        )?;
     }
     let new_supply = if DEPOSIT { old_supply.checked_add(amount) } else { old_supply.checked_sub(amount) }.ok_or_else(|| error!(PumpAmmError::Overflow))?;
+    a.pool.lp_supply = new_supply;
     if liquidity_can_boost(&a.pool) {
         let effective_virtual = liquidity_effective_virtual(&a.pool)?;
         let virtual_reserve = u128::try_from(effective_virtual).map_err(|_| error!(PumpAmmError::Overflow))?;
@@ -578,7 +579,6 @@ fn liquidity<const DEPOSIT: bool>(ctx: Context<Liquidity>, amount: u64, base_lim
         let change = i128::try_from(change).map_err(|_| error!(PumpAmmError::Overflow))?;
         a.pool.virtual_quote_reserves = if DEPOSIT { a.pool.virtual_quote_reserves.checked_add(change) } else { a.pool.virtual_quote_reserves.checked_sub(change) }.ok_or_else(|| error!(PumpAmmError::Overflow))?;
     }
-    a.pool.lp_supply = new_supply;
     if DEPOSIT {
         let event = DepositEvent {
             timestamp: Clock::get()?.unix_timestamp,

@@ -33,5 +33,3 @@ codegen-units = 1
 
 [workspace]
 
-[patch.crates-io]
-solana-pubkey = { path = "vendor/solana-pubkey" }

@@ -44,7 +44,7 @@ pub fn select_and_apply<'info>(
     });
     let canonical = pool.creator == Pubkey::find_program_address(
         &[b"pool-authority", pool.base_mint.as_ref()], &trade::PUMP).0;
-    let cap = crate::utils::math::market_cap(pool, base_mint.supply, base_reserve, quote_reserve)?;
+    let cap = pool.market_cap(base_mint.supply, base_reserve, quote_reserve)?;
     let mut selected = crate::pump_fees::cpi::get_fees_with_quote_mint(context, canonical, cap, pool.quote_mint)?.get();
     if global_config.creator_fee_configurable && pool.creator_fee_bps != 0 {
         selected.creator_fee_bps = pool.creator_fee_bps;
@@ -71,7 +71,7 @@ pub fn select_and_apply_v2(
     quote_reserve: u64,
     quote_amount: u64,
 ) -> Result<AppliedFees> {
-    let cap = crate::utils::math::market_cap(pool, base_supply, base_reserve, quote_reserve)?;
+    let cap = pool.market_cap(base_supply, base_reserve, quote_reserve)?;
     let authority = Pubkey::find_program_address(&[b"pool-authority", pool.base_mint.as_ref()], &trade::PUMP).0;
     let canonical = pool.creator == authority;
     require!(fee_config_len >= 2512, PumpAmmError::FeeConfigTooShort);

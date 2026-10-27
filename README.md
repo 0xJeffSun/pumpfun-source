@@ -9,8 +9,8 @@ ELF and, through a separate loader deployment, its captured payload.**
 
 ## Current progress
 
-Across the latest verified checkpoints, **2,680 / 3,338 inferred function windows
-match (80.3%)**. Their matched windows cover **3,227,184 / 5,213,128 original text
+Across the latest verified checkpoints, **2,682 / 3,338 inferred function windows
+match (80.3%)**. Their matched windows cover **3,229,024 / 5,213,128 original text
 bytes (61.9%)**. **One of five programs has complete meaningful-ELF identity**;
 all four core contracts still differ from their captured binaries.
 
@@ -21,11 +21,11 @@ all remaining code, calls, data, relocations and build provenance.
 | Latest verified checkpoint | Matched windows | Matched % | Raw-equal bodies | Normalized only | Unmatched | Whole ELF equal |
 | --- | ---: | ---: | ---: | ---: | ---: | --- |
 | [Pump Round9](repro/pump/main-contract-round9-20261027/README.md) | 599 / 1,035 | 57.9% | 111 | 488 | 436 | No |
-| [PumpSwap / AMM](repro/pump_amm/error-order-recovery-20261027/README.md) | 584 / 785 | 74.4% | 124 | 460 | 201 | No |
+| [PumpSwap / AMM](repro/pump_amm/dependency-liquidity-recovery-20261027/README.md) | 586 / 785 | 74.6% | 123 | 463 | 199 | No |
 | [Fees research](research/fees-qualified-linker-layout/README.md) | 577 / 585 | 98.6% | 198 | 379 | 8 | No |
 | [Mayhem research](research/mayhem-qualified-linker-layout/README.md) | 428 / 441 | 97.1% | 100 | 328 | 13 | No |
 | [Donation Relay](repro/donation-relay/canonical-exact-selection/README.md) | 492 / 492 | 100.0% | 492 | 0 | 0 | **Yes** |
-| **Total** | **2,680 / 3,338** | **80.3%** | **1,025** | **1,655** | **658** | **1 / 5** |
+| **Total** | **2,682 / 3,338** | **80.3%** | **1,024** | **1,658** | **656** | **1 / 5** |
 
 “Windows” are inferred original machine-function ranges, including framework and
 runtime helpers. Complete normalized matches mask specified call/address
@@ -36,11 +36,11 @@ the whole program is identical.
 | Checkpoint | Text bytes in matched windows | Text covered | Unmatched text |
 | --- | ---: | ---: | ---: |
 | Pump Round9 | 518,448 / 1,792,208 | 28.9% | 1,273,760 |
-| PumpSwap / AMM | 642,616 / 1,162,040 | 55.3% | 519,424 |
+| PumpSwap / AMM | 644,456 / 1,162,040 | 55.5% | 517,584 |
 | Fees research | 719,472 / 799,648 | 90.0% | 80,176 |
 | Mayhem research | 594,160 / 706,744 | 84.1% | 112,584 |
 | Donation Relay | 752,488 / 752,488 | 100.0% | 0 |
-| **Total** | **3,227,184 / 5,213,128** | **61.9%** | **1,985,944** |
+| **Total** | **3,229,024 / 5,213,128** | **61.9%** | **1,984,104** |
 
 Pump and AMM rows describe the verified maintained sources. Fees and Mayhem rows
 are the latest upstream research frontiers, distinct from their maintained
@@ -62,7 +62,7 @@ account, fee, CPI, boundary and error-order matrices recorded in its checkpoint.
 These corpora overlap and must not be summed as unique scenarios. Tests use
 captured programs in local VMs; they do not establish current-chain acceptance.
 
-Remaining priorities are the 436 Pump, 201 AMM, 8 Fees and 13 Mayhem unmatched
+Remaining priorities are the 436 Pump, 199 AMM, 8 Fees and 13 Mayhem unmatched
 windows; deeper call/data/relocation identity; original build provenance; and
 uncovered behavior such as authentic fixed-admin AMM `create_config` success.
 The historical [150-handler audit](repro/reconstruction-audit-2026-10-26/handlers.md)

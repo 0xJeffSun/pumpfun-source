@@ -73,29 +73,12 @@ pub fn execute(ctx: Context<SweepFees>, creator: bool) -> Result<()> {
         }
         info.realloc(287, false)?;
     }
-    let amount = if creator {
-        a.pool.creator_fees
-    } else {
-        a.pool.protocol_fees
-    };
-    let fees = a
-        .pool
-        .protocol_fees
-        .checked_add(a.pool.creator_fees)
-        .ok_or_else(|| error!(PumpAmmError::Overflow))?;
-    a.pool_quote_token_account
-        .amount
-        .checked_sub(fees)
-        .ok_or_else(|| error!(PumpAmmError::Overflow))?;
+    a.pool.available_quote_reserves(a.pool_quote_token_account.amount)?;
+    let amount = a.pool.take_accrued_fees(creator)?;
     if amount == 0 {
         msg!("Nothing to sweep for fee bucket {}", u8::from(creator));
         return Ok(());
     }
-    let updated_virtual = a
-        .pool
-        .virtual_quote_reserves
-        .checked_add(amount as i128)
-        .ok_or_else(|| error!(PumpAmmError::Overflow))?;
     if a.recipient_token_account.data_is_empty() {
         associated_token::create_idempotent(CpiContext::new(
             a.associated_token_program.to_account_info(),
@@ -140,12 +123,6 @@ pub fn execute(ctx: Context<SweepFees>, creator: bool) -> Result<()> {
         amount,
         a.quote_mint.decimals,
     )?;
-    a.pool.virtual_quote_reserves = updated_virtual;
-    if creator {
-        a.pool.creator_fees = 0
-    } else {
-        a.pool.protocol_fees = 0
-    }
     let event = SweepPoolFeeEvent {
         timestamp: Clock::get()?.unix_timestamp,
         pool: a.pool.key(),
