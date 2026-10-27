@@ -19,6 +19,12 @@ recognized source-location pairs, and each pass 536 fresh replay records.
 Follow-up [reconstruction studies](docs/BYTE-IDENTITY-PROGRESS.md)
 have not added whole-body matches. Conditional value-flow agreement and locally
 matching helpers do not establish full function or program identity.
+The [Relay security-metadata recovery](repro/donation-relay/security-metadata-source-recovery/README.md)
+now reproduces the complete 510-byte security declaration and 247-byte dynamic
+string table from ordinary Rust source. Its Linux candidate retains the same
+482-window frontier and 348 source-location matches; whole-file equality remains
+unachieved. The function inventory keeps its explicitly hashed burn/close inputs.
+
 Latest Fees research: **372 unique structural pairs, 64 unmatched windows**.
 The [configuration-event recovery](research/fees-config-event-recovery/README.md)
 adds four complete caller-body matches; the two upsert bodies share a structural

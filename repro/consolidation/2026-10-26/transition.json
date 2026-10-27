@@ -7,8 +7,8 @@
     {
       "path": "README.md",
       "before_sha256": "cae913d4d3f2066403162f653a0cf35b39620fb08877b1b308c08ccce4a53678",
-      "after_sha256": "3cf7eb9e6a23e3b5fda74c51b3b0515a6e417e577a5fe285151217681a48de9b",
-      "reason": "Record restored extension-size log behavior and formatting body, 372/64 Fees frontier and full inventory without changing selected checkpoints."
+      "after_sha256": "f7aed875ab0fd034e5bf43c0335cdcb7b238fabf9fdfbde5695c8c7699069f9c",
+      "reason": "Surface merged Relay security-metadata byte recovery while retaining the explicit function-inventory and selected-checkpoint bindings."
     },
     {
       "path": ".github/workflows/verify.yml",
