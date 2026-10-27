@@ -32,8 +32,8 @@ The [canonical Relay source](repro/donation-relay/canonical-exact-selection/READ
 is now selected after a fresh build from `programs/donation-relay`. The four core
 checkpoints remain unchanged and byte-unequal.
 
-The pinned Fees inventory has **407 unique structural pairs, 31 unmatched windows**
-(**554/585 normalized counterparts**, including 118 raw-local matches).
+The pinned Fees inventory has **409 unique structural pairs, 29 unmatched windows**
+(**556/585 normalized counterparts**, including 118 raw-local matches).
 The [current AdminCto integration](research/fees-admin-cto-current-integration/README.md) combines
 the reviewed math/SyncNative, sharing-context and social-PDA creation recoveries.
 It preserves the decoder/composition gains and recovers the complete buyback
@@ -43,14 +43,14 @@ its separate candidate binding.
 The [configuration-event recovery](research/fees-config-event-recovery/README.md)
 adds four complete caller-body matches; the two upsert bodies share a structural
 shape and are distinguished by their callees. The [current call ledger](repro/reconstruction-status-2026-10-26/fees-call-attribution.json)
-also attributes 69 duplicate-body pairs, giving 476 correspondences.
+also attributes 69 duplicate-body pairs, giving 478 correspondences.
 The [CPI ownership study](research/fees-cpi-adapter-ownership-controls/README.md)
 retains the earlier four-byte copy-scheduling residuals. The subsequent
 [distribution-helper recovery](repro/pump_fees/distribution-helper-recovery/README.md)
 closes both complete helper bodies on the AdminCto baseline: **556/585 normalized,
 409 unique pairs, 118 raw-local and 29 unmatched windows**. Its fresh 417-case
-review replay matches the retained receipt exactly. This newer research candidate
-is separate from the pinned 554-window inventory above; whole-file identity remains
+review replay matches the retained receipt exactly. This research candidate
+is now the pinned inventory above; whole-file identity remains
 unachieved. The [Crank native-flow study](research/fees-crank-native-order/README.md)
 separately improves bounded behavior, retaining 12 compute-log discrepancies;
 its older 552-window candidate is not the current composition. The
@@ -111,7 +111,7 @@ No handler is certified perfectly recreated. The selected core builds contain
 | --- | ---: | ---: | ---: | ---: | ---: |
 | Pump selected | 98 | 430 | 507 | 0 | 1,391,456 / 1,792,208 bytes (77.6%) |
 | PumpSwap selected | 93 | 395 | 297 | 0 | 734,392 / 1,162,040 bytes (63.2%) |
-| Fees research | 118 | 436 | 31 | 0 | 199,040 / 799,648 bytes (24.9%) |
+| Fees research | 118 | 438 | 29 | 0 | 196,880 / 799,648 bytes (24.6%) |
 | Mayhem selected | 58 | 131 | 7 | 245 | 636,128 / 706,744 bytes (90.0%) |
 | Relay selected | 492 | 0 | 0 | 0 | 0; complete meaningful ELF byte-equal |
 

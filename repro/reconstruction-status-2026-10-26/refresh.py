@@ -14,8 +14,8 @@ import tempfile
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 INPUTS = {}
-REVISION = '45f79b7edd4af70e0933183b09287736eb5c340b'
-FEES = 'research/fees-admin-cto-current-integration'
+REVISION = '26c03fd7825b9e3b597be66703b4fbec94943454'
+FEES = 'repro/pump_fees/distribution-helper-recovery'
 RELAY = 'repro/donation-relay/linked-elf-reproduction'
 
 
@@ -90,16 +90,20 @@ def generate():
         rows.append(r)
     assert len(rows) == 2846
 
-    wm = module('status_fee_windows', FEES + '/window_map.py')
-    read(FEES + '/elf_helpers.py')
+    wm = module('status_fee_windows', 'research/fees-composed-frontier188/window_map.py')
+    read('research/fees-composed-frontier188/elf_helpers.py')
     original = read('evidence/original/pump_fees/deployed.so')
-    symbols = gzip.decompress(read(FEES + '/artifacts/origins-symbols.so.gz'))
-    candidate = gzip.decompress(read(FEES + '/artifacts/origins-candidate.so.gz'))
+    symbols = gzip.decompress(read(FEES + '/artifacts/candidate-symbols.so.gz'))
+    candidate = gzip.decompress(read(FEES + '/artifacts/candidate-candidate.so.gz'))
     ow, cw = wm.windows(original), wm.windows(symbols)
     comparison = wm.compare(ow, cw)
-    saved = load(FEES + '/analysis.json.gz')['variants']['origins']
-    assert all(comparison[k] == saved[k] for k in comparison)
-    assert len(comparison['unique_pairs']) == 407 and len(comparison['unmatched_original']) == 31
+    saved = load(FEES + '/cumulative-summary.json')['composed556']
+    assert len(comparison['unique_pairs']) == saved['unique_pairs'] == 409
+    assert len(comparison['unmatched_original']) == 29
+    assert sum(o['signature'] in {c['signature'] for c in cw} for o in ow) == saved['normalized'] == 556
+    build = load(FEES + '/builds/candidate-result.json')
+    assert hashlib.sha256(candidate).hexdigest() == build['candidate_sha256']
+    assert hashlib.sha256(symbols).hexdigest() == build['symbols_sha256']
     raw_index, normalized_index = collections.defaultdict(list), collections.defaultdict(list)
     for c in cw:
         raw_index[c['raw_sha256']].append(c)
@@ -107,24 +111,24 @@ def generate():
     unique = {r['original']['address'] for r in comparison['unique_pairs']}
     for o in ow:
         o['unique'] = o['address'] in unique
-        rows.append(row('pump_fees_research', o, raw_index[o['raw_sha256']], normalized_index[o['signature']], FEES + '/analysis.json.gz'))
+        rows.append(row('pump_fees_research', o, raw_index[o['raw_sha256']], normalized_index[o['signature']], FEES + '/cumulative-summary.json'))
     fees_meta = dict(candidate_sha256=hashlib.sha256(candidate).hexdigest(), candidate_bytes=len(candidate),
                      whole_capture_equal=candidate == original,
                      raw_file_equals_original_elf_extent=candidate == original[:wm.m.elf_layout(original)['elf_extent']],
-                     unique_structural_pairs=407, ambiguous_original_windows=sum(len(g['original']) for g in comparison['ambiguous']),
+                     unique_structural_pairs=409, ambiguous_original_windows=sum(len(g['original']) for g in comparison['ambiguous']),
                      candidate_windows=len(cw))
 
     attribution_path = 'research/fees-refreshed-call-attribution'
     attribution_module = module('status_fee_attribution', attribution_path + '/attribute.py')
     for filename in ['window_map.py', 'elf_helpers.py', 'input-provenance.json']:
         read(attribution_path + '/' + filename)
-    experiment = load(FEES + '/experiment.json')
-    provenance = dict(files={key: dict(value, path='../' + FEES.split('/')[-1] + '/' + value['path'])
-                            for key, value in experiment['variants']['origins']['files'].items()})
+    provenance = dict(files={key: dict(path='../../' + FEES + '/artifacts/candidate-' + suffix + '.so.gz',
+                                      bytes=len(data), sha256=hashlib.sha256(data).hexdigest())
+                             for key, suffix, data in [('candidate', 'candidate', candidate), ('symbols', 'symbols', symbols)]})
     attribution = attribution_module.analyze(provenance)
     assert attribution['candidate_sha256'] == fees_meta['candidate_sha256']
     attributed = {pair['original']['address']: pair['candidate']['address'] for pair in attribution['newly_attributed_pairs']}
-    assert len(attributed) == 69 and attribution['graph_attributed_pairs'] == 476
+    assert len(attributed) == 69 and attribution['graph_attributed_pairs'] == 478
     for record in rows:
         record['call_attributed_candidate_starts'] = []
         if record['program'] == 'pump_fees_research' and record['original_start'] in attributed:
@@ -132,7 +136,7 @@ def generate():
             assert address in record['normalized_candidate_starts']
             record['call_attributed_candidate_starts'] = [address]
             record['source_status'] = 'call_attributed_duplicate_pair'
-    fees_meta.update(additional_call_attributed_pairs=69, total_attributed_pairs=476,
+    fees_meta.update(additional_call_attributed_pairs=69, total_attributed_pairs=478,
                      remaining_unattributed_duplicate_windows=78)
 
     parser = module('status_relay_windows', 'repro/donation-relay/swap-receipt-coordinate-recovery/analyze.py')

@@ -1,6 +1,6 @@
 # Comprehensive reconstruction review
 
-Reviewed merged evidence: `45f79b7edd4af70e0933183b09287736eb5c340b`. Core selected builds retain `1463bd22fb7811825c5e7acf1cb963eb39ab68d9`; Relay selects the separately verified canonical exact reconstruction.
+Reviewed merged evidence: `26c03fd7825b9e3b597be66703b4fbec94943454`. Core selected builds retain `1463bd22fb7811825c5e7acf1cb963eb39ab68d9`; Relay selects the separately verified canonical exact reconstruction.
 
 **The four core selected programs remain byte-unequal. Canonical selected Relay reproduces all meaningful ELF bytes with a reconstructed linker layout; its separate loader receipt reproduces the captured payload. No public handler is proved exhaustively perfect.**
 
@@ -22,11 +22,11 @@ Reviewed merged evidence: `45f79b7edd4af70e0933183b09287736eb5c340b`. Core selec
 | pump | 98 | 430 | 507 | 0 | 1,391,456 / 1,792,208 (77.6%) |
 | pump_amm | 93 | 395 | 297 | 0 | 734,392 / 1,162,040 (63.2%) |
 | pump_fees | 102 | 363 | 120 | 0 | 418,392 / 799,648 (52.3%) |
-| pump_fees_research | 118 | 436 | 31 | 0 | 199,040 / 799,648 (24.9%) |
+| pump_fees_research | 118 | 438 | 29 | 0 | 196,880 / 799,648 (24.6%) |
 
 These byte totals count entire unresolved original windows, not differing bytes or development effort. Raw and normalized matches can still contain unresolved references. Do not add selected and research rows: they represent alternative builds of the same programs. Mayhem has 257 source-ledger opaque windows; 12 have raw counterparts and therefore appear in the exact column.
 
-Fees research has 407 unique structural pairs, 69 additional call-attributed pairs and 78 unattributed duplicate windows. Its encoded-call ledger has 3,512 bound-target edges and 14 different-body frontier edges. A bound edge is not a full semantic proof. Selected Fees retains two call-conflicting rows.
+Fees research has 409 unique structural pairs, 69 additional call-attributed pairs and 78 unattributed duplicate windows. Its encoded-call ledger has 3,535 bound-target edges and 14 different-body frontier edges. A bound edge is not a full semantic proof. Selected Fees retains two call-conflicting rows.
 
 ## Every public handler: source/behavior status
 
@@ -80,7 +80,7 @@ The five largest unresolved windows per build focus the next investigation. Empt
 ## Remaining acceptance gates
 
 1. **Behavior:** finish partial/unaccepted public handlers and known discrepancies. Pump `sell_v2` remains a bounded implementation with a known transfer-fee discrepancy. Mayhem field roles, initialization and diagnostic contracts remain unresolved. Existing stopped lanes remain stopped.
-2. **Complete bodies:** the current inventory has 0 unmatched Relay normalized windows and 31 Fees residuals; recover those bodies, complete Pump/AMM reconstruction and attribute Mayhem opaque windows. Small helper matches alone do not close callers.
+2. **Complete bodies:** the current inventory has 0 unmatched Relay normalized windows and 29 Fees residuals; recover those bodies, complete Pump/AMM reconstruction and attribute Mayhem opaque windows. Small helper matches alone do not close callers.
 3. **Identity:** Relay now has literal equality across the complete 818,280-byte ELF, including all calls, data, layout and relocations. Its 12,168-byte tail is reproduced by the loader. Establish those properties for the other programs and retain broader runtime/provenance qualifications.
 4. **Build provenance:** retain source hashes, dependency/toolchain inputs and reproducible recipes. A synthetic exact recipe does not establish the historical recipe.
 5. **Selection:** the exact Relay source and artifacts are now canonical under a successor guard preserving historical metadata. Other research candidates still require explicit integration, rebuilt artifacts and bound validation.

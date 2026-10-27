@@ -1197,8 +1197,6 @@ Snapshot and limitations: [inventory](README.md). Addresses are decimal virtual 
 | pump_fees_research | 225920 | 5656 | no_complete_body_match |  |
 | pump_fees_research | 231576 | 2520 | no_complete_body_match |  |
 | pump_fees_research | 234096 | 1208 | no_complete_body_match |  |
-| pump_fees_research | 235304 | 936 | no_complete_body_match |  |
-| pump_fees_research | 236240 | 1224 | no_complete_body_match |  |
 | pump_fees_research | 237464 | 2624 | no_complete_body_match |  |
 | pump_fees_research | 240088 | 3096 | no_complete_body_match |  |
 | pump_fees_research | 243184 | 6080 | no_complete_body_match |  |

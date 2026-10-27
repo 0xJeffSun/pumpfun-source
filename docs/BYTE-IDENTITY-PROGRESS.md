@@ -1384,3 +1384,13 @@ sharing-update cases, exercising the legacy CPI in 90 cases and V2 CPI in 120.
 Raw logs and compute are not fully equal, and whole-file identity remains open.
 The packet retains all three builds, source snapshots, complete comparisons,
 compressed receipts, and a verifier with mutation tests.
+
+## Fees 556 inventory integration
+
+The verified PR206 candidate is now the current Fees research inventory: 556/585
+normalized windows, 409 unique structural pairs, 118 raw-local, and 29 unmatched
+windows spanning 196,880 original instruction bytes. Fresh execution of all
+17,331 suite comparisons passes. Call-graph refinement recomputes 69 additional
+pairs for 478 attributed correspondences, leaving 78 duplicate windows unassigned.
+The core selected checkpoint remains unchanged; this is a research inventory
+update, not whole-program identity or historical-source proof.

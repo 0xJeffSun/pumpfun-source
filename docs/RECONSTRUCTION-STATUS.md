@@ -77,13 +77,13 @@ payload**, with 12,168 zero bytes allocated by the loader. Compiler output is
 not padded. ProgramData metadata/history and broader runtime acceptance remain separate
 requirements. The source and exact artifact are now canonically selected.
 
-Fees research has **554/585 windows with a normalized counterpart**: 407 unique
-structural pairs and 147 original windows in ambiguous duplicate groups. Its 31
-unmatched windows span **199,040 of 799,648 original text bytes (24.9%)**, although
-they are only 5.3% of the window count. Many remaining bodies are large. The
+Fees research has **556/585 windows with a normalized counterpart**: 409 unique
+structural pairs and 147 original windows in ambiguous duplicate groups. Its 29
+unmatched windows span **196,880 of 799,648 original text bytes (24.6%)**, although
+they are only 5.0% of the window count. Many remaining bodies are large. The
 [current call ledger](../repro/reconstruction-status-2026-10-26/fees-call-attribution.json)
 recomputes 69 additional duplicate-body correspondences on this candidate, for
-476 attributed pairs. There are 78 still-unattributed duplicate windows and 14
+478 attributed pairs. There are 78 still-unattributed duplicate windows and 14
 call edges to different-body frontiers. This refinement adds no body coverage.
 
 There is no defensible single source-completion percentage or ETA. Whole-program
@@ -659,7 +659,7 @@ The [current AdminCto composition](../research/fees-admin-cto-current-integratio
 independently integrates PR #200 into the 553-window source and recovers original
 127776 in full. Two root builds agree, all 20 direct callee bodies match, and
 17,331 fresh regression cases pass. No existing normalized or raw match is lost.
-Current coverage is 554/585 with 407 unique pairs and 31 unmatched windows.
+That historical composition reaches 554/585 with 407 unique pairs and 31 unmatched windows.
 
 The separate [CPI ownership controls](../research/fees-cpi-adapter-ownership-controls/README.md)
 recover the observed argument/construction boundaries for 235304 and 236240.
@@ -686,7 +686,7 @@ The [distribution helpers](../repro/pump_fees/distribution-helper-recovery/READM
 close the historical copy residuals for both adapters on the 554-window AdminCto
 baseline: 556 normalized, 409 unique pairs, 118 raw-local, 29 unmatched. All 23
 helper callees and 165 Locations check; a fresh 417-case replay equals the retained
-receipt. The generated inventory remains pinned to the preceding 554 candidate.
+receipt. The generated inventory now uses this 556 candidate; all 17,331 fresh suite comparisons pass.
 The earlier ownership-control results above are preserved as historical experiments.
 
 The [constant-admin parser proposal](../research/fees-initialize-config-const-admin-source-proposal/README.md)
