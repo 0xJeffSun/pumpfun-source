@@ -82,6 +82,7 @@ jobs:
               # Includes positive native-receipt verification before mutation checks.
               python -B research/fees-program-id-references/test_verify.py
               python -B research/fees-social-claim-v2-recovery/test_verify.py
+              python -B -m unittest discover -s research/fees-crank-safe-context-source -p 'test_*.py'
               python -B research/fees-work-continuation-20261027/test_restore.py
               python -B research/fees-work-continuation-20261027/restore_combined.py
               python -B research/fees-withdraw-tuple-ownership-source/source_tools.py
