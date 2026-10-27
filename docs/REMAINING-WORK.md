@@ -9,13 +9,15 @@ snapshot retains `1463bd22` audit bindings; current selections are recorded in
 [completion ledger](COMPLETION.md) remains a selected-checkpoint record; its old
 candidate paths and “current” prose must not override newer evidence.
 
-Current [Pump Round18](../repro/pump/main-contract-round18-20261027/README.md)
-has 118 raw-local matches, 575 normalized-only matches and 342 unmatched windows.
-The unmatched windows cover 959,912 original text bytes. The checkpoint retains
+Current [Pump Round20](../repro/pump/main-contract-round20-20261027/README.md)
+has 120 raw-local matches, 585 normalized-only matches and 330 unmatched windows.
+The unmatched windows cover 946,936 original text bytes. The checkpoint retains
 bounded runtime evidence; the remaining bodies, data, relocations, uncovered
 behavior and original build provenance still require recovery.
 
-Current Mayhem research is the [provider-sharing successor](../research/mayhem-provider-sharing/README.md): 100 raw-local, 328 normalized-only and thirteen unmatched windows / 112,584 original text bytes. Six source inputs change, removing seven duplicate compiled helpers while preserving every earlier positive call and Source observation. Two builds agree; fresh replay passes 69 initializer and 2,496 AMM comparisons. Prior Legacy, V2 and ExtendAccount receipts retain their earlier artifact bindings. The sysvar allocation provider, the missing 328-byte reserve child, the thirteen bodies and full ELF identity remain unresolved. This does not update the selected baseline or prove arbitrary behavior.
+Current [PumpSwap native-fee/CPI recovery](../repro/pump_amm/native-fee-cpi-recovery-20261027/README.md) has 125 raw-local, 474 normalized-only and 186 unmatched windows, with 498,200 original text bytes still in unmatched windows.
+
+Current Mayhem research is the [trade-origin and validator successor](../research/mayhem-trade-origins-validator/README.md): 100 raw-local, 329 normalized-only and twelve unmatched windows / 111,288 original text bytes. The quote validator now matches under normalization with all eight immediate calls and fourteen typed references checked. Three partial trade handlers recover 21 Source records and three CPI error origins, but their complete bodies still differ. Two qualified builds agree; 65 fresh paired cases verify 130 signed executions. Earlier initializer, AMM, BuyV2 and extension receipts retain their prior artifact bindings. The sysvar allocation provider, missing 328-byte reserve child, twelve bodies and whole-ELF identity remain unresolved. The selected baseline is unchanged.
 
 The [allocator-context experiment](../research/mayhem-allocator-context/README.md)
 produces the missing 328-byte reserve child by adding a diagnostic zeroed-vector
