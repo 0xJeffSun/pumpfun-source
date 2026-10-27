@@ -25,3 +25,5 @@ Extraction does not execute any included source. `MANIFEST.json` records all 5,2
 The maintained source has since advanced to [Round22](../../repro/pump/main-contract-round22-20261027/README.md), with 711/1,035 matched windows and the complete validation recorded there. This archive retains its original capture-time contents.
 
 [Later main-Pump follow-up research](follow-up-round18/README.md) preserves additional creation, V2-transfer and V3-fee work, including negative and pending variants. Its separate manifest and verifier retain the captured state without promoting those variants.
+
+[Round22 follow-up research](follow-up-round22/README.md) preserves 8,939 additional main-contract research files, including validated, negative and unfinished controls. Its manifest and verifier bind four archive parts; inclusion does not promote a variant or establish full reconstruction.
