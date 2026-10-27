@@ -7,8 +7,8 @@
     {
       "path": "README.md",
       "before_sha256": "cae913d4d3f2066403162f653a0cf35b39620fb08877b1b308c08ccce4a53678",
-      "after_sha256": "5fa746deaea3f80358dec27268f4ae0a2409c4146433386d8ff14f3823867adc",
-      "reason": "Refresh Fees to 368 unique pairs and 68 residuals after configuration-event recovery, preserving distinct duplicate attribution and whole-program qualifications."
+      "after_sha256": "51e26898823e2a88b2097f13434df452bed44de1748fb110ddd5b94e2ad0827a",
+      "reason": "Link the verified exotic-growth behavior correction while preserving 368 unique pairs, 68 residuals and full-identity limitations."
     },
     {
       "path": ".github/workflows/verify.yml",

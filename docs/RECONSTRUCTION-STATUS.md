@@ -241,8 +241,8 @@ additional function is considered recovered.
 
 ## Fees: new complete bodies, substantial residual business logic
 
-The latest 860,512-byte candidate is SHA-256
-`d5b45304cc75fb883cefd606c9ba7866f8c976f3163ba70312d96e391a985c56`.
+The latest 860,464-byte candidate is SHA-256
+`f8a86727ea524a4bb0f1c8e202c7aa50c1de2640ef60f7f50da4274e6d732a54`.
 The newly merged studies recover:
 
 | Complete original window | Evidence |
@@ -265,8 +265,8 @@ with any raw counterpart, including ambiguous duplicates, gives 116. Those
 numbers answer different questions and must not be interchanged.
 
 The candidate retains passing **17,331 cases across 18 suites** and **1,542 exact
-outcome/log/compute comparisons**. The final event-recovery candidate was replayed afresh;
-the control is explicitly reused from the verified tier-recovery packet. Existing unchecked-input
+outcome/log/compute comparisons**. The minimal exotic-growth correction was replayed afresh;
+the control is explicitly reused from the verified event-recovery packet. Existing unchecked-input
 and finite-coverage limits remain. The 68 unresolved bodies, ambiguous attribution,
 shareholder validation, transitive calls/data and final ELF layout remain open.
 
@@ -276,6 +276,16 @@ body shape but are distinguished by their callee targets; both local outgoing
 checks and the global incoming-call refinement agree. Other callers, referenced
 data and full transitive behavior remain open. These matches do not establish
 whole-program or exhaustive semantic equivalence.
+
+
+The [exotic-fee growth study](../research/fees-exotic-growth-precedence/README.md)
+adds 24 signed boundary cases crossing allocation size, account/admin funding,
+invalid totals and overflow. The previous research candidate disagrees in four
+cases; moving validation after growth and using the original false zero-init
+flag removes all four. The corrected research candidate passes the existing
+17,331-case suite and 1,542-case exact matrix too. Its 5,664-byte caller still
+differs from the original's 5,520 bytes, so coverage remains unchanged. A
+same-sized experimental body also fails full comparison and is not accepted.
 
 ## Public behavior: reconstructed is not perfect
 
@@ -295,6 +305,14 @@ but cannot acquire selected status by documentation. Candidate rebuilding, bound
 receipts, acceptance decisions and explicit guard changes are still required.
 
 ## Recommended execution order and completion criteria
+
+
+The [Mayhem configuration-history packet](../research/mayhem-globalparams-field-history/README.md)
+adds captured account values and a reported ten-update trajectory. Its offline
+checker passes file hashes, account decoding and the derived version chain;
+it does not independently re-decode the transaction instruction/event payloads.
+Those payloads need a separate cross-check before the history is used to close
+field-role claims. The five semantic roles remain unresolved; no field is renamed.
 
 1. **Continue Relay body recovery:** isolate one ordinary Rust change per trial,
    starting with epoch close and the shared donation worker. Keep

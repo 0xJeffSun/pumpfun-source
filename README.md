@@ -24,7 +24,9 @@ The [configuration-event recovery](research/fees-config-event-recovery/README.md
 adds four complete caller-body matches; the two upsert bodies share a structural
 shape and are distinguished by their callees. The [current call ledger](repro/reconstruction-status-2026-10-26/fees-call-attribution.json)
 also attributes 63 duplicate-body pairs, giving 431 correspondences.
-Whole-file identity remains unachieved.
+Whole-file identity remains unachieved. The [exotic-fee growth study](research/fees-exotic-growth-precedence/README.md)
+corrects rejection precedence and the realloc flag in new boundary cases;
+that caller still has no complete body match.
 
 The [current reconstruction review](docs/RECONSTRUCTION-STATUS.md) lists exact,
 normalized, unmatched and opaque function status, all 10 remaining Relay bodies,
