@@ -1,0 +1,3 @@
+usage: mayhem_sell_differential.py [-h] --candidate CANDIDATE --output OUTPUT
+                                   [--limit LIMIT]
+mayhem_sell_differential.py: error: unrecognized arguments: --cases /home/ahi200/pumpfun-work/20261027-mayhem/runtime-mirror/repro/mayhem/nineteen/sell-cases.json

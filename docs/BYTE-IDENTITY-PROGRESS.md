@@ -1877,3 +1877,22 @@ rollback. Fresh dependency-clean and portable builds reproduce both artifacts.
 The later full-curve source delta is independent and not claimed composed here.
 Original captures and selected checkpoints remain unchanged; complete handlers,
 O0090, transitive/data closure and whole-file identity remain unresolved.
+
+
+## Mayhem: external unchecked curve decoder — 27 October 2026
+
+The [external decoder packet](../research/mayhem-external-curve-decoder/README.md)
+recovers complete O0213 (2,272 bytes) by moving the full external curve into an
+ordinary dependency crate with the pinned Anchor account macro. All 15 immediate
+direct-callee bodies match. The exact Linux full-curve control's 347 matches and
+64 raw-local windows survive, reaching 348 matches. Platform differences from
+the 345-match Darwin parent are not credited to the source change.
+
+Three builds, including a fresh dependency build and portable materialization,
+reproduce both artifacts. All 4,140 local Legacy Buy/Sell and BuyV2/SellV2 cases
+pass independent functional checks with 8,280 verified signature entries.
+The 182 non-compute diagnostic differences, one indirect call and six unresolved
+referenced extents remain explicit. Checked decoding and whole ELF still differ.
+The later 375-match parallel composition still lists O0213 as unmatched, but its
+integration and the separate shared-accounting delta are not claimed tested here.
+Original captures and selected checkpoints remain unchanged.
