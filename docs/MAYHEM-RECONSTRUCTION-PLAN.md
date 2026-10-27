@@ -3,8 +3,8 @@
 Mayhem is the active reconstruction priority. Other PRs can be reviewed and
 merged, but new body-recovery experiments should advance Mayhem first.
 
-The current [composed research checkpoint](../research/mayhem-composed-recovery/README.md)
-has 411 matching windows (59 raw-local), with 30 unmatched windows / 155,520
+The current [source/data research checkpoint](../research/mayhem-source-data-recovery/README.md)
+has 426 matching windows (70 raw-local), with 15 unmatched windows / 119,400
 text bytes. It preserves all earlier matches and repairs the recorded sweep-rate
 failures. Initializer rejection and genuine Pump CPI success are now covered in
 bounded tests. Complete data, indirect calls, source/build provenance and ELF
@@ -15,7 +15,7 @@ remaining windows and cross-cutting work.
 
 The following records retain their original candidate bindings. Their old
 "current" measurements and unfinished-task lists are superseded by the linked
-411-window checkpoint and work map above.
+426-window checkpoint and work map above.
 
 The then-current research baseline was
 [native Program parser recovery](../research/mayhem-native-program-recovery/README.md),
@@ -137,15 +137,12 @@ alignment-aid diff as an identity result; preserve complete call/data checks.
 
 ## Parallel continuation
 
-The current composed checkpoint is [375 matching windows](../research/mayhem-parallel-recovery/README.md).
-The [work map](MAYHEM-PARALLEL-WORK.md) assigns all 66 remaining windows plus
-transitive data/call, compiler, dependency and ELF-layout work. Accounts/codecs,
-trade/state logic and runtime/interface/layout each run in an isolated build
-lane while integration verifies the combined source and signed runtime output.
+The current checkpoint is the [426-window source/data recovery](../research/mayhem-source-data-recovery/README.md).
+The [work map](MAYHEM-PARALLEL-WORK.md) assigns all fifteen remaining windows,
+unresolved data extents, indirect calls, toolchain provenance and ELF layout.
+Both the earlier 34-case sweep-rate gap and the new ten-case counter gap are
+repaired in this composition, with their failing parent receipts retained.
 
-The next correctness obligation includes the missing sweep rate check exposed
-by 34/150 targeted cases. A separate local correction passes those cases and the
-692-case sweep suite, but it must be composed and independently verified before
-its behavior is credited to this checkpoint. Subsequent account, withdrawal and
-AMM interface recoveries likewise retain their own source/artifact boundaries
-until integration. No current count is a whole-program completion percentage.
+Future source changes must preserve previously verified bodies, call targets,
+Source records and runtime behavior. Every new combination needs its own build
+and replay evidence. The current counts are not whole-program completion claims.

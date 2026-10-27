@@ -377,3 +377,15 @@ The reviewed head was merged locally as `4b7cc26a`; a concurrent README
 simplification was then merged without overwriting it. Git publication and
 GitHub's final PR state are checked after the push. GraphQL quota blocked the
 draft-to-ready endpoint; direct Git merge uses the user's existing authorization.
+
+
+## PR236: pause/resume direct-data audit
+
+Reviewed head `e8fd1f65a5c88588a5e1408fe946ccbeff30183c`, merged as
+`ff44b0afcb4b08e698941d1eaa138b3007b6bd18`. All eight files match the reviewed
+head. The standalone standard-library verifier and all six actual mutation
+controls pass. Its pinned375 candidate has 14 equal and2 unequal data uses across
+eight objects and20 matching immediate calls; it claims no new instruction or
+runtime coverage. The two SDK path differences remain explicit. Later426
+source/data recovery has its own independent binding and is not substituted
+for this historical packet. Hosted checks were still in progress at merge.

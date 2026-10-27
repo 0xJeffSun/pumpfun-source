@@ -47,10 +47,10 @@ analysis. Candidate symbol names are hypotheses about original identity.
 | Mayhem selected | 441 | 58 | 131 | 7 | 245 |
 | Relay historical source 15 | 492 | 33 | 89 | 370 | 0 |
 | **Fees latest research (PR234)** | **585** | **143** | **431** | **11** | **0** |
-| **Mayhem latest research** | **441** | **59** | **352** | **30** | **0** |
+| **Mayhem latest research** | **441** | **70** | **356** | **15** | **0** |
 | **Relay canonical selection** | **492** | **492** | **0** | **0** | **0** |
 
-The current research rows are bound to the [Fees Social V2 composition](../research/fees-current-574-social-v2-union/README.md) and [Mayhem composed recovery](../research/mayhem-composed-recovery/README.md); they extend the dated generated inventory below. Each row is a partition, not a score of semantic correctness. The selected Mayhem source
+The current research rows are bound to the [Fees Social V2 composition](../research/fees-current-574-social-v2-union/README.md) and [Mayhem source/data recovery](../research/mayhem-source-data-recovery/README.md); they extend the dated generated inventory below. Each row is a partition, not a score of semantic correctness. The selected Mayhem source
 ledger has 257 opaque windows, 12 of which happen to match local raw bytes.
 Selected Fees retains two call-conflicting rows; body existence does not resolve
 those conflicts. Different programs and studies use different matching rules.
@@ -837,7 +837,7 @@ All remaining windows and the whole-ELF/data/toolchain tasks are assigned in the
 checkpoint; their subsequent uncomposed candidates are not silently added here.
 
 
-## Latest Mayhem composition: 411 matching windows
+## Historical Mayhem composition: 411 matching windows
 
 The [composed packet](../research/mayhem-composed-recovery/README.md) adds 36
 complete normalized windows to the published 375-window checkpoint, preserving
@@ -865,3 +865,32 @@ bodies retain two differing SDK Source paths out of 48 records. Formatter vtable
 select two nonmatching String implementations even though matching alternatives
 exist elsewhere in the candidate. These failures are part of the verified report.
 The [parallel work map](MAYHEM-PARALLEL-WORK.md) assigns all 30 remaining windows.
+
+
+## Latest Mayhem source/data recovery: 426 matching windows
+
+The [successor packet](../research/mayhem-source-data-recovery/README.md) has
+70 raw-local matches, 356 normalized-only matches and 15 unmatched windows.
+The remaining bodies span 119,400 / 706,744 original text bytes (16.9%); whole
+ELF and capture equality remain false. Fifteen new complete counterparts cover
+36,120 bytes and preserve all earlier bodies and positive direct-call observations.
+The new bodies cover typed Buy/BuyV2 interfaces, initialization, native token
+helpers and two TypeId thunks. This does not certify whole public handlers.
+
+A mixed recipe using the unchanged macOS compiler and Linux SBF libraries
+repairs platform Source paths and metadata. All 26 target files were checked
+against their members of the pinned official archive. Two builds agree; no
+output is patched or padded. The actual V2 interface shares a crate with the
+external account types, so both formatting vtables select the matching methods.
+The earlier account cohort now has 97 typed-equal references, 0 typed-different,
+and 59 unresolved. Fifty interface Source records and nineteen Buy/global-init
+references agree. Other unexamined data extents and indirect paths remain work.
+
+Fresh signed execution covers the standard 6,636 trade / 1,032 admin / 1,601 extra
+suites and three Burn families. The 150-case rate matrix retains 34 failures on
+the old 375 candidate and none on the successor. The 48-case counter matrix
+retains 10 failures on 411 and none on the successor; its independent per-recipient
+oracle and exact non-compute logs pass. Initializer coverage adds 53 rejections,
+16 real Pump CPI cases (10 successes), 2 token-program negatives, and 6 global-init
+cases (2 successes). The 692-case ordinary sweep corpus still has 58 non-compute log
+differences. Full records and the diagnostic ledger preserve these distinctions.

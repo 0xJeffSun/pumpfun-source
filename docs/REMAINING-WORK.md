@@ -8,7 +8,7 @@ list every raw match and unresolved window; the four core selected artifacts ret
 [completion ledger](COMPLETION.md) remains a selected-checkpoint record; its old
 candidate paths and “current” prose must not override newer evidence.
 
-Current Mayhem research is the [411-window composition](../research/mayhem-composed-recovery/README.md): 30 unmatched windows / 155,520 original text bytes remain, plus data, call, indirect-target and complete ELF identity. All 34 recorded sweep-rate mismatches are repaired; ten initializer success cases now execute through the genuine captured Pump CPI. This does not update the selected baseline or prove arbitrary initializer behavior.
+Current Mayhem research is the [426-window source/data recovery](../research/mayhem-source-data-recovery/README.md): 15 unmatched windows / 119,400 original text bytes remain, plus data, call, indirect-target and complete ELF identity. The 34 recorded rate failures and ten newly found counter failures are repaired. The mixed SDK recipe repairs Source paths and TypeId metadata; matching formatter vtables, typed Buy/BuyV2 CPIs and bounded initializer success are verified. This does not update the selected baseline or prove arbitrary behavior.
 
 Subsequent gains are in the [byte-identity progress log](BYTE-IDENTITY-PROGRESS.md):
 Canonical Relay now has **492/492 raw-equal windows and no unmatched windows**; current Fees research

@@ -4,6 +4,25 @@ The [full audit](RECONSTRUCTION-AUDIT.md) and its generated tables retain their
 explicit `1463bd22` snapshot. This log records later research without silently
 changing that baseline or promoting new selected artifacts.
 
+## Mayhem: source and data recovery reaches 426 windows
+
+The [successor packet](../research/mayhem-source-data-recovery/README.md) adds 15
+complete windows/36,120 original bytes to 411. It reaches 426/441 (70 raw-local,
+356 normalized-only), with 15 windows / 119,400 text bytes still unmatched. All prior
+body/raw matches and positive immediate-call observations survive. Two builds
+agree using the documented macOS-compiler/Linux-target-library recipe.
+
+Typed initialization, Buy/BuyV2 and native token interfaces recover the new
+bodies. The actual shared crate also repairs both formatter vtables. In the
+older account cohort 97 references are typed-equal, none typed-different, and 59
+remain unresolved. This is not all-data or whole-ELF equality.
+
+Fresh signed suites pass; the new 48-case counter oracle repairs 10 parent
+failures, in addition to the 34 earlier rate failures. Remaining diagnostic
+mismatches are retained separately, including 58 ordinary sweep cases. Source
+and SDK file hashes, exact archive-member checks, raw receipts and negative
+controls are included. Canonical selected checkpoints remain unchanged.
+
 ## Mayhem: composed recovery reaches 411 windows
 
 The [composed packet](../research/mayhem-composed-recovery/README.md) adds 36
