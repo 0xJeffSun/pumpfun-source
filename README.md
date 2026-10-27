@@ -18,23 +18,23 @@ Reproduce the selected Pump ELF with its [archived Rust/linker recipe](repro/pum
 
 
 
-Across the latest verified checkpoints, **2,879 / 3,338 inferred function windows
-match (86.2%)**. Their matched windows cover **3,805,624 / 5,213,128 original text
-bytes (73.0%)**. **One of five programs has complete meaningful-ELF identity**;
+Across the latest verified checkpoints, **2,880 / 3,338 inferred function windows
+match (86.3%)**. Their matched windows cover **3,811,936 / 5,213,128 original text
+bytes (73.1%)**. **One of five programs has complete meaningful-ELF identity**;
 all four core contracts still differ from their captured binaries.
 
 These percentages measure bounded binary-recovery progress, not a claim that
-86.2% of the engineering work is finished. Complete reconstruction also requires
+86.3% of the engineering work is finished. Complete reconstruction also requires
 all remaining code, calls, data, relocations and build provenance.
 
 | Latest verified checkpoint | Matched windows | Matched % | Raw-equal bodies | Normalized only | Unmatched | Whole ELF equal |
 | --- | ---: | ---: | ---: | ---: | ---: | --- |
 | [Pump Round33](repro/pump/main-contract-round33-20261027/README.md) | 733 / 1,035 | 70.8% | 137 | 596 | 302 | No |
 | [PumpSwap / AMM](repro/pump_amm/quote-guard-recovery-20261027/README.md) | 643 / 785 | 81.9% | 148 | 495 | 142 | No |
-| [Fees research](research/fees-ata-prefix-integration/README.md) | 581 / 585 | 99.3% | 200 | 381 | 4 | No |
+| [Fees research](research/fees-extend-integration/README.md) | 582 / 585 | 99.5% | 200 | 382 | 3 | No |
 | [Mayhem research](research/mayhem-initializer-current-recovery-20261027/README.md) | 430 / 441 | 97.5% | 100 | 330 | 11 | No |
 | [Donation Relay](repro/donation-relay/canonical-exact-selection/README.md) | 492 / 492 | 100.0% | 492 | 0 | 0 | **Yes** |
-| **Total** | **2,879 / 3,338** | **86.2%** | **1,077** | **1,802** | **459** | **1 / 5** |
+| **Total** | **2,880 / 3,338** | **86.3%** | **1,077** | **1,803** | **458** | **1 / 5** |
 
 “Windows” are inferred original machine-function ranges, including framework and
 runtime helpers. Complete normalized matches mask specified call/address
@@ -46,10 +46,10 @@ the whole program is identical.
 | --- | ---: | ---: | ---: |
 | Pump Round33 | 895,416 / 1,792,208 | 50.0% | 896,792 |
 | PumpSwap / AMM | 804,704 / 1,162,040 | 69.2% | 357,336 |
-| Fees research | 756,600 / 799,648 | 94.6% | 43,048 |
+| Fees research | 762,912 / 799,648 | 95.4% | 36,736 |
 | Mayhem research | 596,416 / 706,744 | 84.4% | 110,328 |
 | Donation Relay | 752,488 / 752,488 | 100.0% | 0 |
-| **Total** | **3,805,624 / 5,213,128** | **73.0%** | **1,407,504** |
+| **Total** | **3,811,936 / 5,213,128** | **73.1%** | **1,401,192** |
 
 Pump and AMM rows describe the verified maintained sources. Fees and Mayhem rows
 are the latest qualified research frontiers, distinct from their maintained
@@ -151,12 +151,12 @@ root builds agree; the upstream-gated control reproduces the parent. The target
 runtime is still current Anchor, and no new original matches or target executions
 are claimed.
 
-The latest [Fees associated-token recovery](research/fees-ata-prefix-integration/README.md)
-reconstructs the 739-instruction validator through scoped error handling. Fees
-now has 581 normalized / 200 raw-local matches, preserving all 21,079 readonly
-bytes and the earlier Withdraw, Social and program-ID recoveries. Two fresh
-normal Cargo builds agree; all 17,331 fresh comparisons pass. Four functions,
-absolute layout and complete ELF identity remain unresolved.
+The latest [Fees Extend recovery](research/fees-extend-integration/README.md)
+reconstructs the 750-instruction handler through ordinary Rust ownership and
+error propagation. Fees now has 582 normalized / 200 raw-local matches,
+preserving all 21,079 readonly bytes and the earlier recoveries. Two fresh
+normal Cargo builds agree; all 17,331 fresh comparisons pass. Sweep, Crank,
+CreateDonation, absolute layout and complete ELF identity remain unresolved.
 
 The [Fees residual-work archive](research/fees-residual-parallel-checkpoint-20261027/README.md)
 preserves another 13,511 new or updated research files beyond the earlier
@@ -166,7 +166,7 @@ accepted matches.
 
 The latest [PumpSwap native-quote and execution recovery](repro/pump_amm/quote-guard-recovery-20261027/README.md) matches 643 windows and 148 raw bodies, corrects all 11 reserved-recipient differences, fixes Token-2022 native creator transfers, and restores observed claim/InitBoost and legacy operation boundaries. All 17,462 corpus cases and retained supplemental suites pass; 142 AMM windows remain.
 
-Remaining priorities are the 302 Pump, 142 AMM, 4 Fees and 11 Mayhem unmatched
+Remaining priorities are the 302 Pump, 142 AMM, 3 Fees and 11 Mayhem unmatched
 windows; deeper call/data/relocation identity; original build provenance; and
 uncovered behavior such as authentic fixed-admin AMM `create_config` success.
 The historical [150-handler audit](repro/reconstruction-audit-2026-10-26/handlers.md)
