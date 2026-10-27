@@ -19,6 +19,7 @@ import subprocess
 import sys
 import tarfile
 import time
+import tomllib
 import traceback
 import urllib.request
 
@@ -390,15 +391,32 @@ def main():
     require(not WORK.exists(), "use a fresh remote workspace")
     WORK.mkdir(parents=True)
     prepare()
+    baseline_lock = tomllib.loads((SOURCE / "Cargo.lock").read_text())
     transform()
     compiler, linker = make_wrappers()
     env = environment()
     for command, filename in [
-        ([str(SDK / "rust/bin/cargo"), "fetch", "--locked"], "fetch.log"),
+        ([str(SDK / "rust/bin/cargo"), "fetch"], "fetch.log"),
         ([str(SDK / "rust/bin/cargo"), "update", "--offline", "-p", "pump-fun-fees-candidate"], "lock-update.log"),
     ]:
         with (EVIDENCE / filename).open("wb") as log:
             subprocess.run(command, cwd=SOURCE, env=env, stdout=log, stderr=subprocess.STDOUT, check=True)
+    def package_key(p):
+        return (p["name"], p["version"], p.get("source", ""))
+    before_packages = {package_key(p): p for p in baseline_lock["package"]}
+    current_lock = tomllib.loads((SOURCE / "Cargo.lock").read_text())
+    after_packages = {package_key(p): p for p in current_lock["package"]}
+    new_names = {p["name"] for key, p in after_packages.items() if key not in before_packages}
+    require(new_names == {"fees-error-types", "fees-error-renderer"}, "only two local packages added")
+    for key, original_package in before_packages.items():
+        require(key in after_packages, "locked package removed")
+        actual = dict(after_packages[key])
+        if key[0] == "pump-fun-fees-candidate":
+            actual["dependencies"] = [x for x in actual["dependencies"]
+                                      if x not in ["fees-error-types", "fees-error-renderer"]]
+        require(actual == original_package, "locked dependency changed: " + key[0])
+    write_json(EVIDENCE / "lock-audit.json", {"existing_packages_unchanged": True,
+               "new_local_packages": sorted(new_names)})
     w = reader()
     baseline = build("alias-baseline", compiler, linker)
     baseline_report = measure(baseline, w)
