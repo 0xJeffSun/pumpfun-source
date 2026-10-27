@@ -9,9 +9,9 @@ snapshot retains `1463bd22` audit bindings; current selections are recorded in
 [completion ledger](COMPLETION.md) remains a selected-checkpoint record; its old
 candidate paths and “current” prose must not override newer evidence.
 
-Current [Pump Round25](../repro/pump/main-contract-round25-20261027/README.md)
-has 123 raw-local matches, 597 normalized-only matches and 315 unmatched windows.
-The unmatched windows cover 920,216 original text bytes. The checkpoint retains
+Current [Pump Round26](../repro/pump/main-contract-round26-20261027/README.md)
+has 123 raw-local matches, 598 normalized-only matches and 314 unmatched windows.
+The unmatched windows cover 917,856 original text bytes. The checkpoint retains
 bounded runtime evidence; the remaining bodies, data, relocations, uncovered
 behavior and original build provenance still require recovery.
 
