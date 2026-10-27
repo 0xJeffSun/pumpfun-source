@@ -4,6 +4,33 @@ The [full audit](RECONSTRUCTION-AUDIT.md) and its generated tables retain their
 explicit `1463bd22` snapshot. This log records later research without silently
 changing that baseline or promoting new selected artifacts.
 
+## Reviewed PRs #276–278: Fees Extend and bounded Mayhem evidence
+
+The [Fees Extend integration](../research/fees-extend-integration/README.md)
+adds a complete 750-instruction / 6,312-byte normalized body, preserving all
+200 raw matches. The frontier is 582/585, with three unmatched functions.
+Local review verifies both retained normal-Cargo artifacts, 17,331 saved
+runtime cases, the original-relative code/data checks and 17 corruption tests.
+
+The [Mayhem diagnostic packet](../research/mayhem-sweep-failure-recovery/README.md)
+repairs 58 logged differences in its historical-macro composition. Read-only
+review verifies its saved 692 sweep, 150 rate and 6,636 trade comparisons and
+20 corruption checks; no compiler or target execution occurs during review.
+Its 430 normalized / 141 raw count belongs to that separate historical context,
+adds no complete function and does not change the current 430/100 row.
+
+The [historical root API controls](../research/mayhem-historical-root-compat/README.md)
+reproduce the older framework root after minimal API compatibility edits.
+That frozen source has 403 normalized / 62 raw matches versus 428/75 for its
+separate native control: 25 normalized losses and no gains. All 24 local tests
+pass, including POSIX controls. The experiment is excluded from the current
+frontier and does not authenticate the original compiler or source.
+
+Latest frontiers now total 2,875/3,338 matched windows, with 1,057 raw-local,
+1,818 normalized-only and 463 unmatched. Matched windows cover
+3,804,688/5,213,128 original text bytes (73.0%). Whole-ELF identity remains false
+for all four core programs.
+
 ## AMM: compose the event capture with the current source/ABI parent
 
 The [current-parent composition](../research/amm-current-event-capture-20261027/README.md)

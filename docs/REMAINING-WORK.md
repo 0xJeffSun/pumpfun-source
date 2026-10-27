@@ -81,13 +81,14 @@ is eliminated; it does not establish full toolchain equivalence or recover the
 initializer. Further work must still resolve source/IR shape and original
 compilation settings.
 
-Current [Fees associated-token integration](../research/fees-ata-prefix-integration/README.md)
-has 200 raw-local, 381 normalized-only and four unmatched windows, covering
-756,600 of 799,648 original text bytes. Extend, Sweep, Crank and CreateDonation
-remain unmatched; their windows total 43,048 bytes. Absolute layout, recursive
-callee/data closure and original build provenance remain unresolved. Two native
-builds agree and 17,331 retained comparisons across 18 suites pass. This research
-frontier remains separate from the selected Fees baseline.
+Current [Fees Extend integration](../research/fees-extend-integration/README.md)
+has 200 raw-local, 382 normalized-only and three unmatched windows, covering
+762,912 of 799,648 original text bytes. Sweep, Crank and CreateDonation remain
+unmatched; their windows total 36,736 bytes. Absolute layout, recursive
+callee/data closure and original build provenance remain unresolved. Two normal
+Cargo builds agree and 17,331 retained comparisons across 18 suites verify,
+along with 17 corruption tests. This research frontier remains separate from
+the selected Fees baseline.
 
 The [safe Crank source proposal](../research/fees-crank-safe-context-source/README.md)
 adds no accepted coverage. To advance it, publish or independently recover its
