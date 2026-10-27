@@ -70,6 +70,12 @@ not authenticate the original framework. The later historical initializer
 composition reaches 430 normalized / 141 raw windows separately; its raw gains
 are not added to the current 430/100 row.
 
+The [AMM handler controls](../research/mayhem-amm-handler-shape-controls-20261027/README.md)
+retain nine source/compiler comparisons. Explicit AccountInfo copies and enum-valued
+arithmetic recover the Sell immediate-callee multiset; evaluation-order changes
+improve partial instruction alignment. The full body and ordered callees still
+differ. These controls add no accepted match or runtime qualification.
+
 ## Integration requirements
 
 Preserve every prior normalized/raw match, immediate call shape and Source

@@ -87,6 +87,12 @@ ordered immediate callees and twenty typed references checked in total.
 [Nine bodies remain](research/mayhem-quotes-current-recovery-20261027/remaining.md),
 with every function classified in the [441-row inventory](research/mayhem-quotes-current-recovery-20261027/inventory.tsv).
 
+The [AMM handler shape controls](research/mayhem-amm-handler-shape-controls-20261027/README.md)
+isolate account-copy expansion, arithmetic error flow and native-key evaluation
+order. Nine source/compiler controls preserve their 432-window search baseline;
+one separately compiled variant also preserves all 100 qualified raw matches.
+They add no complete function match and have no fresh runtime qualification.
+
 The [current-parent AMM event composition](research/amm-current-event-capture-20261027/README.md)
 adds the complete 1,784-byte normalized sell-event body, retaining all prior
 matches. Two builds agree; all 17,462 maintained cases and 26 focused event pairs
