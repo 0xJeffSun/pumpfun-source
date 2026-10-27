@@ -105,3 +105,19 @@ O0210. O0209 has a matching body elsewhere, but O0210 calls a different
 `finish_grow` specialization. This adds a target-by-target recovery obligation,
 not a new body match or semantic-equivalence claim. Indirect/data closure and
 whole-ELF identity remain open.
+
+## Current-source allocator-provider composition
+
+The [current 432-window provider composition](../research/mayhem-current-provider-closure-20261027/README.md)
+combines the qualified quote/initializer program source with the complete historical
+macro/IDL context. In the fresh Linux cohort, the curve reserve now calls the
+matching 328-byte allocator at relative offset 528. Eight windows regain ordered
+direct-call closure (414 to 422), and O0207 becomes raw-equal (84 to 85), with
+all prior normalized and raw matches preserved. Three enabled builds agree;
+6,636 fresh trade pairs pass independent signature/state/non-compute-log checks.
+
+This remains a mixed-framework source-context diagnostic, separate from the
+selected 100-raw checkpoint. No new normalized body is recovered. The upstream
+gate returns the direct-closed set to 414, but its complete ELF differs from the
+baseline. Indirect/data closure, initializer qualification on this artifact,
+historical source attribution and whole-original identity remain open.
