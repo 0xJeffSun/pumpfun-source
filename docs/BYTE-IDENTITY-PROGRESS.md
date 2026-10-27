@@ -1305,3 +1305,21 @@ excerpt/derivative is published. Default native_build_verified, runtime_verified
 and whole_binary_identity_verified remain false. Full raw ELF/capture identity,
 indirect behavior and unrestricted transitive data remain open. No selected
 checkpoint changes.
+
+## Fees: complete legacy and V2 distribution helpers
+
+The [distribution helper recovery](../repro/pump_fees/distribution-helper-recovery/README.md)
+composes two reconstructed Rust helpers with the AdminCto-integrated source at
+`3aa90d02`. The measured research candidate reaches **556/585 normalized windows,
+409 unique structural pairs and 118 raw-local matches**, with 29 unmatched
+windows. The selected checkpoint and pinned research inventory remain unchanged.
+
+The complete 936-byte legacy and 1,224-byte V2 bodies match under the existing
+call/relocation normalization. All 23 outgoing callee observations match, all
+165 checked source locations remain equal, and no prior positive match is lost.
+The changes follow original argument order and Rust ownership/evaluation order;
+no emitted bytes are patched. Both original/candidate pairs pass all 417 fresh
+sharing-update cases, exercising the legacy CPI in 90 cases and V2 CPI in 120.
+Raw logs and compute are not fully equal, and whole-file identity remains open.
+The packet retains all three builds, source snapshots, complete comparisons,
+compressed receipts, and a verifier with mutation tests.
