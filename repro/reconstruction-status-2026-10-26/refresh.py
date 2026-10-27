@@ -14,9 +14,9 @@ import tempfile
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 INPUTS = {}
-REVISION = '2abbcc0a7730e19c7033fc2282459a01c1451f4b'
+REVISION = '1b7c43cf2a74d5ef0d4d8f74a249fede12a00468'
 FEES = 'research/fees-composed-frontier188'
-RELAY = 'repro/donation-relay/access-control-layout-artifact'
+RELAY = 'repro/donation-relay/access-control-donate-context-artifact'
 
 
 def read(name):
@@ -148,15 +148,15 @@ def generate():
             raw = read(path)
             (d / output).write_bytes(gzip.decompress(raw) if compressed else raw)
         analysis = parser.analyze(d)
-    assert analysis['comparison-summary.json'] == load(RELAY + '/analysis/recovered/comparison-summary.json')
-    assert analysis['match-ledger.json'] == load(RELAY + '/analysis/recovered/match-ledger.json')
+    assert analysis['comparison-summary.json'] == load(RELAY + '/analysis/recovered/comparison-summary.json.gz')
+    assert analysis['match-ledger.json'] == load(RELAY + '/analysis/recovered/match-ledger.json.gz')
     multiplicity = collections.Counter(o['normalized_sha256'] for o in analysis['original-function-ledger.json'])
     for o, r in zip(analysis['original-function-ledger.json'], analysis['match-ledger.json']):
         c = analysis['candidate-function-ledger.json']
         convert = lambda indices: [dict(address=c[i]['start'], name=n) for i in indices for n in (c[i]['names'] or [''])]
         rows.append(row('donation_relay_research', dict(address=o['start'], bytes=o['bytes'], unique=multiplicity[o['normalized_sha256']] == 1 and len(r['normalized_candidate_indices']) == 1),
                         convert(r['raw_candidate_indices']),
-                        convert(r['normalized_candidate_indices']), RELAY + '/analysis/recovered/match-ledger.json'))
+                        convert(r['normalized_candidate_indices']), RELAY + '/analysis/recovered/match-ledger.json.gz'))
     for record in rows:
         record.setdefault('call_attributed_candidate_starts', [])
     counts = {}
