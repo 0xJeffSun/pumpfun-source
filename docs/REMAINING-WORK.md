@@ -9,12 +9,16 @@ snapshot retains `1463bd22` audit bindings; current selections are recorded in
 [completion ledger](COMPLETION.md) remains a selected-checkpoint record; its old
 candidate paths and “current” prose must not override newer evidence.
 
-Current [Pump Round27](../repro/pump/main-contract-round27-20261027/README.md)
-has 123 raw-local matches, 600 normalized-only matches and 312 unmatched windows.
+Current [Pump Round29](../repro/pump/main-contract-round29-20261027/README.md)
+has 135 raw-local matches, 588 normalized-only matches and 312 unmatched windows.
 The unmatched windows cover 905,896 original text bytes. Remaining bodies,
 data, relocations, uncovered behavior and original build provenance remain open.
 
-Current [PumpSwap guard/data recovery](../repro/pump_amm/guard-data-recovery-20261027/README.md) has 128 raw-local, 510 normalized-only and 147 unmatched windows, with 379,264 original text bytes still in unmatched windows. Its 15 additional complete normalized matches are distinct from local raw-byte gains; the malformed-recipient follow-up remains open.
+Current [PumpSwap source ABI recovery](../repro/pump_amm/source-abi-recovery-20261027/README.md)
+has 128 raw-local, 512 normalized-only and 145 unmatched windows, with 363,008
+original text bytes still unmatched. The prior malformed-recipient check is
+recovered; the separate resize-order follow-up retains eight differences in
+160 signed cases. Complete data/call identity and provenance remain open.
 
 Current Mayhem research is the [current-framework initializer composition](../research/mayhem-initializer-current-recovery-20261027/README.md):
 100 raw-local, 330 normalized-only and eleven unmatched windows / 110,328 original
@@ -67,14 +71,13 @@ is eliminated; it does not establish full toolchain equivalence or recover the
 initializer. Further work must still resolve source/IR shape and original
 compilation settings.
 
-Current [Fees Withdraw integration](../research/fees-withdraw-tuple-integration/README.md)
-has 198 raw-local, 382 normalized-only and five unmatched windows, covering
-750,520 of 799,648 original text bytes. Extend, Sweep, Crank, CreateDonation and
-the associated-token validator remain unmatched; their windows total 49,128
-original bytes. Absolute layout, recursive callee/data closure and original
-build provenance remain unresolved. Two native builds agree, and 17,331 retained
-comparisons across 18 suites pass. This is a research frontier, separate from
-the selected Fees baseline.
+Current [Fees associated-token integration](../research/fees-ata-prefix-integration/README.md)
+has 200 raw-local, 381 normalized-only and four unmatched windows, covering
+756,600 of 799,648 original text bytes. Extend, Sweep, Crank and CreateDonation
+remain unmatched; their windows total 43,048 bytes. Absolute layout, recursive
+callee/data closure and original build provenance remain unresolved. Two native
+builds agree and 17,331 retained comparisons across 18 suites pass. This research
+frontier remains separate from the selected Fees baseline.
 
 The [safe Crank source proposal](../research/fees-crank-safe-context-source/README.md)
 adds no accepted coverage. To advance it, publish or independently recover its

@@ -4,6 +4,23 @@ The [full audit](RECONSTRUCTION-AUDIT.md) and its generated tables retain their
 explicit `1463bd22` snapshot. This log records later research without silently
 changing that baseline or promoting new selected artifacts.
 
+## Reviewed PR #273 and refreshed Pump/AMM selections
+
+The [Fees associated-token validator](../research/fees-ata-prefix-integration/README.md)
+adds a complete 6,080-byte normalized body. The verified frontier is now 581/585
+normalized and 200 raw-local windows, retaining all prior matches, the complete
+21,079-byte readonly payload and 105 Source records. The retained 17,331 runtime
+cases and twelve corruption tests pass. Four functions and full ELF identity
+remain unresolved.
+
+The maintained Pump Round29 retains 723 normalized windows and reaches 135 raw
+bodies through its qualified text-section ordering. The AMM source-ABI checkpoint
+reaches 640/785, including 128 raw-local, while retaining an explicitly open
+resize-order follow-up. Both saved checkpoints independently verify. Across the
+five frontiers, 2,866/3,338 windows match, with 1,055 raw-local, 1,811 normalized-only
+and 472 unmatched. These are bounded reconstruction measures, not engineering
+completion or security acceptance.
+
 ## Mayhem: compose price and CPI ownership on the current source
 
 The [current Legacy Buy control](../research/mayhem-current-ownership-composition-20261027/README.md)

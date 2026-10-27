@@ -6,7 +6,7 @@ This review updates the research frontier while preserving the selected-checkpoi
 contains every one of the **4,415 selected/research function-window rows**.
 
 The generated inventory is a dated snapshot. Later maintained selections now
-include Pump Round28 and the AMM source ABI recovery; their current counts and
+include Pump Round29 and the AMM source ABI recovery; their current counts and
 evidence are in the [repository overview](../README.md). The current rows below
 are separate from the historical rows, and do not rewrite that snapshot.
 
@@ -51,20 +51,20 @@ analysis. Candidate symbol names are hypotheses about original identity.
 | Fees selected | 585 | 102 | 363 | 120 | 0 |
 | Mayhem historical selected | 441 | 58 | 131 | 7 | 245 |
 | Relay historical source 15 | 492 | 33 | 89 | 370 | 0 |
-| **Pump current Round28** | **1,035** | **123** | **600** | **312** | **0** |
+| **Pump current Round29** | **1,035** | **135** | **588** | **312** | **0** |
 | **PumpSwap current** | **785** | **128** | **512** | **145** | **0** |
-| **Fees latest research** | **585** | **198** | **382** | **5** | **0** |
+| **Fees latest research** | **585** | **200** | **381** | **4** | **0** |
 | **Mayhem latest research** | **441** | **100** | **330** | **11** | **0** |
 | **Relay canonical selection** | **492** | **492** | **0** | **0** | **0** |
 
-The current rows are bound to [Pump Round28](../repro/pump/main-contract-round28-20261027/README.md), [AMM source ABI recovery](../repro/pump_amm/source-abi-recovery-20261027/README.md), [Fees Withdraw integration](../research/fees-withdraw-tuple-integration/README.md) and [Mayhem current initializer recovery](../research/mayhem-initializer-current-recovery-20261027/README.md); they extend the dated generated inventory below. Each row is a partition, not a score of semantic correctness. The historical selected Mayhem source
+The current rows are bound to [Pump Round29](../repro/pump/main-contract-round29-20261027/README.md), [AMM source ABI recovery](../repro/pump_amm/source-abi-recovery-20261027/README.md), [Fees associated-token integration](../research/fees-ata-prefix-integration/README.md) and [Mayhem current initializer recovery](../research/mayhem-initializer-current-recovery-20261027/README.md); they extend the dated generated inventory below. Each row is a partition, not a score of semantic correctness. The historical selected Mayhem source
 ledger has 257 opaque windows, 12 of which happen to match local raw bytes.
 Selected Fees retains two call-conflicting rows; body existence does not resolve
 those conflicts. Different programs and studies use different matching rules.
 
-Across these five frontier rows, **2,863/3,338 windows (85.8%)** match and
-**3,768,512/5,213,128 original text bytes (72.3%)** lie in matched windows.
-There are **475 unmatched windows**. Only Relay has complete meaningful-ELF
+Across these five frontier rows, **2,866/3,338 windows (85.9%)** match and
+**3,790,848/5,213,128 original text bytes (72.7%)** lie in matched windows.
+There are **472 unmatched windows**. Only Relay has complete meaningful-ELF
 identity; the four core programs remain byte-unequal. These are structural
 coverage measures, not a percentage of engineering work completed.
 

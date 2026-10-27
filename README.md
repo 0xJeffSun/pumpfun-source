@@ -15,9 +15,9 @@ ELF and, through a separate loader deployment, its captured payload.**
 
 Reproduce the selected Pump ELF with its [archived Rust/linker recipe](repro/pump/main-contract-round29-20261027/reproduce.py).
 
-Across the latest verified checkpoints, **2,865 / 3,338 inferred function windows
-match (85.8%)**. Their matched windows cover **3,784,768 / 5,213,128 original text
-bytes (72.6%)**. **One of five programs has complete meaningful-ELF identity**;
+Across the latest verified checkpoints, **2,866 / 3,338 inferred function windows
+match (85.9%)**. Their matched windows cover **3,790,848 / 5,213,128 original text
+bytes (72.7%)**. **One of five programs has complete meaningful-ELF identity**;
 all four core contracts still differ from their captured binaries.
 
 These percentages measure bounded binary-recovery progress, not a claim that
