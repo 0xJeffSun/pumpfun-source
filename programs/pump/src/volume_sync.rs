@@ -1,5 +1,6 @@
 use crate::*;
 #[account]
+#[derive(Debug)]
 pub struct GlobalVolumeAccumulator {
     pub start_time: i64,
     pub end_time: i64,
@@ -12,7 +13,7 @@ pub struct GlobalVolumeAccumulator {
 #[derive(Accounts)]
 pub struct SyncUserVolumeAccumulator<'info> {
     /// CHECK: used to derive the user accumulator and name the event.
-    pub user: UncheckedAccount<'info>,
+    pub user: AccountInfo<'info>,
     #[account(seeds=[b"global_volume_accumulator"],bump)]
     pub global_volume_accumulator: Account<'info,GlobalVolumeAccumulator>,
     #[account(mut,seeds=[b"user_volume_accumulator",user.key().as_ref()],bump)]

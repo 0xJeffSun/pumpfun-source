@@ -1,6 +1,6 @@
 use anchor_lang::prelude::*;
 use anchor_lang::Discriminator;
-use crate::{PumpError,trade_types::Shareholder};
+use crate::{PumpError,trade_types::{Shareholder,BondingCurve}};
 pub const FEES:Pubkey=anchor_lang::solana_program::pubkey!("pfeeUxB6jkeY1Hxd7CsFCAjcbHA9rWtchMGdZ6VojVZ");
 #[derive(AnchorSerialize,AnchorDeserialize,Clone,PartialEq)]pub enum ConfigStatus{Paused,Active}
 #[derive(AnchorSerialize,AnchorDeserialize,Clone)]pub struct SharingConfig{pub bump:u8,pub version:u8,pub status:ConfigStatus,pub mint:Pubkey,pub admin:Pubkey,pub admin_revoked:bool,pub shareholders:Vec<Shareholder>}
@@ -29,7 +29,7 @@ impl AccountDeserialize for DistributionCurve{
 #[derive(Accounts)]
 pub struct DistributeCreatorFees<'info>{
  pub mint:InterfaceAccount<'info,anchor_spl::token_interface::Mint>,
- #[account(seeds=[b"bonding-curve",mint.key().as_ref()],bump)]pub bonding_curve:Account<'info,DistributionCurve>,
+ #[account(seeds=[b"bonding-curve",mint.key().as_ref()],bump,constraint=bonding_curve.creator==sharing_config.key() @ PumpError::BondingCurveAndSharingConfigCreatorMismatch)]pub bonding_curve:Account<'info,BondingCurve>,
  #[account(seeds=[b"sharing-config",mint.key().as_ref()],bump,seeds::program=FEES,has_one=mint @ PumpError::MintDoesNotMatchBondingCurve)]pub sharing_config:Account<'info,SharingConfig>,
  #[account(mut,seeds=[b"creator-vault",sharing_config.key().as_ref()],bump)]pub creator_vault:UncheckedAccount<'info>,
  pub system_program:Program<'info,System>,
@@ -39,14 +39,13 @@ pub struct DistributeCreatorFees<'info>{
 }
 pub fn execute<'info>(ctx:Context<'_, '_, '_, 'info,DistributeCreatorFees<'info>>)->Result<DistributeCreatorFeesEvent>{
  let a=&ctx.accounts;
- require_keys_eq!(a.bonding_curve.creator,a.sharing_config.key(),PumpError::BondingCurveAndSharingConfigCreatorMismatch);
  require!(a.sharing_config.status==ConfigStatus::Active,PumpError::SharingConfigNotActive);
  require!(ctx.remaining_accounts.len()>=a.sharing_config.shareholders.len(),PumpError::NotEnoughRemainingAccounts);
  let available=a.creator_vault.lamports().saturating_sub(Rent::get()?.minimum_balance(0));let mut distributed=0u64;
  let eligible=native_eligible(&a.sharing_config.shareholders,ctx.remaining_accounts,available)?;
  let bump=[ctx.bumps.creator_vault];let seeds:&[&[u8]]=&[b"creator-vault",a.bonding_curve.creator.as_ref(),&bump];
  for (share,recipient) in a.sharing_config.shareholders.iter().zip(ctx.remaining_accounts){
-  require_keys_eq!(share.address,recipient.key(),PumpError::ShareholdersAndRemainingAccountsMismatch);
+  require!(share.address==recipient.key(),PumpError::ShareholdersAndRemainingAccountsMismatch);
   require!(!recipient.executable,PumpError::UnableToDistributeCreatorFeesToExecutableRecipient);
   require!(share.share_bps>0,PumpError::InvalidShareBps);
   let amount=((available as u128)*(share.share_bps as u128)/10000) as u64;
@@ -59,7 +58,7 @@ pub fn execute<'info>(ctx:Context<'_, '_, '_, 'info,DistributeCreatorFees<'info>
 pub struct DistributeCreatorFeesV2<'info>{
  #[account(mut)]pub payer:Signer<'info>,
  pub mint:InterfaceAccount<'info,anchor_spl::token_interface::Mint>,
- #[account(seeds=[b"bonding-curve",mint.key().as_ref()],bump)]pub bonding_curve:Account<'info,DistributionCurve>,
+ #[account(seeds=[b"bonding-curve",mint.key().as_ref()],bump,constraint=bonding_curve.creator==sharing_config.key() @ PumpError::BondingCurveAndSharingConfigCreatorMismatch)]pub bonding_curve:Account<'info,BondingCurve>,
  #[account(seeds=[b"sharing-config",mint.key().as_ref()],bump,seeds::program=FEES,has_one=mint @ PumpError::MintDoesNotMatchBondingCurve)]pub sharing_config:Account<'info,SharingConfig>,
  /// CHECK: Native vault address validated by PDA seeds.
  #[account(mut,seeds=[b"creator-vault",sharing_config.key().as_ref()],bump)]pub creator_vault:UncheckedAccount<'info>,
@@ -69,17 +68,16 @@ pub struct DistributeCreatorFeesV2<'info>{
  pub program:Program<'info,crate::program::PumpRecovered>,
  /// CHECK: Nonlegacy branch parses token data manually.
  #[account(mut,seeds=[creator_vault.key().as_ref(),quote_token_program.key().as_ref(),quote_mint.key().as_ref()],bump,seeds::program=associated_token_program.key())]pub creator_vault_quote_token_account:UncheckedAccount<'info>,
+ #[account(constraint=quote_mint.key()==if bonding_curve.quote_mint==Pubkey::default()||bonding_curve.quote_mint==anchor_spl::token::spl_token::native_mint::ID{anchor_spl::token::spl_token::native_mint::ID}else{bonding_curve.quote_mint} @ PumpError::MintDoesNotMatchBondingCurve)]
  pub quote_mint:InterfaceAccount<'info,anchor_spl::token_interface::Mint>,
  pub quote_token_program:Interface<'info,anchor_spl::token_interface::TokenInterface>,
  pub associated_token_program:Program<'info,anchor_spl::associated_token::AssociatedToken>,
 }
 pub fn execute_v2<'info>(ctx:Context<'_, '_, '_, 'info,DistributeCreatorFeesV2<'info>>,initialize_ata:bool)->Result<DistributeCreatorFeesEvent>{
  let a=&ctx.accounts;
- require_keys_eq!(a.bonding_curve.creator,a.sharing_config.key(),PumpError::BondingCurveAndSharingConfigCreatorMismatch);
  require!(a.sharing_config.status==ConfigStatus::Active,PumpError::SharingConfigNotActive);
  let native=a.bonding_curve.quote_mint==Pubkey::default() || a.bonding_curve.quote_mint==anchor_spl::token::spl_token::native_mint::ID;
  let count=a.sharing_config.shareholders.len();
- require_keys_eq!(a.quote_mint.key(),if native{anchor_spl::token::spl_token::native_mint::ID}else{a.bonding_curve.quote_mint},PumpError::MintDoesNotMatchBondingCurve);
  let available=if native{a.creator_vault.lamports().saturating_sub(Rent::get()?.minimum_balance(0))}else{
   let data=a.creator_vault_quote_token_account.try_borrow_data()?;
   anchor_spl::token_interface::TokenAccount::try_deserialize(&mut data.as_ref())?.amount
@@ -89,7 +87,7 @@ pub fn execute_v2<'info>(ctx:Context<'_, '_, '_, 'info,DistributeCreatorFeesV2<'
  let mut distributed=0u64;let bump=[ctx.bumps.creator_vault];let seeds:&[&[u8]]=&[b"creator-vault",a.bonding_curve.creator.as_ref(),&bump];
  for (i,share) in a.sharing_config.shareholders.iter().enumerate(){
   let recipient=&ctx.remaining_accounts[i];
-  require_keys_eq!(share.address,recipient.key(),PumpError::ShareholdersAndRemainingAccountsMismatch);
+  require!(share.address==recipient.key(),PumpError::ShareholdersAndRemainingAccountsMismatch);
   require!(!recipient.executable,PumpError::UnableToDistributeCreatorFeesToExecutableRecipient);
   require!(share.share_bps>0,PumpError::InvalidShareBps);
   let amount=((available as u128)*(share.share_bps as u128)/10000) as u64;
@@ -98,7 +96,7 @@ pub fn execute_v2<'info>(ctx:Context<'_, '_, '_, 'info,DistributeCreatorFeesV2<'
   }else{
    let ata=&ctx.remaining_accounts[count+i];
    let expected=anchor_spl::associated_token::get_associated_token_address_with_program_id(&recipient.key(),&a.quote_mint.key(),&a.quote_token_program.key());
-   require_keys_eq!(ata.key(),expected,PumpError::ShareholdersAndRemainingAccountsMismatch);
+   require!(ata.key()==expected,PumpError::ShareholdersAndRemainingAccountsMismatch);
    if ata.data_is_empty(){
     require!(initialize_ata,PumpError::UnableToDistributeCreatorFeesToUninitializedAccount);
     anchor_spl::associated_token::create(CpiContext::new(a.associated_token_program.to_account_info(),anchor_spl::associated_token::Create{payer:a.payer.to_account_info(),associated_token:ata.clone(),authority:recipient.clone(),mint:a.quote_mint.to_account_info(),system_program:a.system_program.to_account_info(),token_program:a.quote_token_program.to_account_info()}))?;
@@ -114,7 +112,7 @@ fn native_eligible(shares:&[Shareholder],recipients:&[AccountInfo],available:u64
  require!(recipients.len()>=shares.len(),PumpError::NotEnoughRemainingAccounts);
  let rent=Rent::get()?;let mut minimum=0u128;
  for (share,recipient) in shares.iter().zip(recipients){
-  require_keys_eq!(share.address,recipient.key(),PumpError::ShareholdersAndRemainingAccountsMismatch);
+  require!(share.address==recipient.key(),PumpError::ShareholdersAndRemainingAccountsMismatch);
   require!(!recipient.executable,PumpError::UnableToDistributeCreatorFeesToExecutableRecipient);
   require!(share.share_bps>0,PumpError::InvalidShareBps);
   let deficit=rent.minimum_balance(recipient.data_len()).saturating_sub(recipient.lamports()) as u128;

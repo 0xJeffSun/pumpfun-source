@@ -1,4 +1,16 @@
-# Pump: CTO remaining guard and owned-error restoration
+# Main Pump contract reconstruction
+
+Current verified source: [Round9](../../repro/pump/main-contract-round9-20261027/README.md). Clean, dependency-cached, canonical and archived-source workspace-layout builds agree on both ELF hashes. The [promotion record](../../repro/pump/main-contract-round9-20261027/promotion.json) binds all 42 source files; the [build comparison](../../repro/pump/main-contract-round9-20261027/build-parity.json) records reproducibility.
+
+The full regression passed 44 suites / 10,468 cases, and 45 focused suites passed 3,187 additional executions. These corpora overlap. Strict diagnostics agree in 13,651 paired log cases. All main-program executions use the captured upgradeable-loader account layout.
+
+The strict inventory is 599 / 1,035 normalized function windows and 111 raw matches, covering 518,448 / 1,792,208 text bytes (28.9%). The closed direct-call subset contains 132 original windows and excludes ELF data references. Whole-ELF identity and full reconstruction remain unfinished.
+
+Round9 adds all nine historical curve decoders, owned user-volume synchronization, and creator/migration balance, frozen-vault and account-lifetime corrections. Additional distribution and account-context refinements are under independent validation. Work remains focused on main Pump.
+
+The earlier [sealed Round6 checkpoint](../../repro/pump/main-contract-round6-20261027/README.md) retains its immutable source, reproduction recipe and bounded evidence.
+
+## Earlier checkpoint: CTO remaining guard and owned-error restoration
 
 Tested scratch candidate `71ec4d8a646eefc82ba177afbc3d08552deadd65cf2f80ec280862eb768d059c` restores the non-holder target rejection for the holder-rewards PDA, explicit WSOL fee exclusion, and plain named owned errors6019/6091/early6092. The WSOL comparison uses the existing same-type SDK native-mint constant; emitted bytes compare the original32-byte value directly without runtime base58 on this guard. The late numeric6092 guard, account types, wallet evaluation order and prior6030/2006 compared-key fixes remain unchanged.
 

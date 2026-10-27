@@ -21,7 +21,7 @@ def execute(binary,mutation,amount=1000000):
  if mutation.startswith('missing_'):metas=metas[:int(mutation[8:])]
  creator_before=vm.get_account(creator)
  tx=Transaction.new_signed_with_payer([Instruction(P,bytes(idef['discriminator'])+(b'\xff' if mutation=='trailing_data' else b''),metas)],PAY.pubkey(),[PAY],vm.latest_blockhash());verified=tx.verify_with_results();assert all(verified);r=vm.send_transaction(tx);failed=isinstance(r,FailedTransactionMetadata);meta=r.meta() if failed else r;a=vm.get_account(vault);c=vm.get_account(creator)
- return {'transaction_base64':base64.b64encode(bytes(tx)).decode(),'signature_verification':verified,'error':str(r.err()) if failed else None,'account':json.loads(a.to_json()) if a else None,'creator':({'lamports_delta':c.lamports-creator_before.lamports,'executable_data_unchanged':c.data==creator_before.data} if c.executable else json.loads(c.to_json())) if c else None,'payer_lamports':vm.get_account(PAY.pubkey()).lamports,'events':[s[14:] for s in meta.logs() if s.startswith('Program data: ')],'inner_instructions':json.loads(meta.to_json())['inner_instructions']}
+ return {'transaction_base64':base64.b64encode(bytes(tx)).decode(),'signature_verification':verified,'error':str(r.err()) if failed else None,'account':json.loads(a.to_json()) if a else None,'creator':({'lamports_delta':c.lamports-creator_before.lamports,'executable_data_unchanged':c.data==creator_before.data} if c.executable else json.loads(c.to_json())) if c else None,'payer_lamports':vm.get_account(PAY.pubkey()).lamports,'logs':meta.logs(),'events':[s[14:] for s in meta.logs() if s.startswith('Program data: ')],'inner_instructions':json.loads(meta.to_json())['inner_instructions']}
 
 def cases():
  return [dict(mutation=m,amount=a) for m in ['none','pda_wrong','event_authority_wrong','program_wrong','creator_readonly','creator_vault_readonly','trailing_data','creator_zero','creator_program','vault_owner','vault_data','system_program_wrong']+['missing_'+str(i) for i in range(5)] for a in [0,1,890879,890880,890881,1000000,1000000000]]
@@ -31,7 +31,7 @@ def main():
  original=R/'evidence/original/pump/deployed.so';sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
  provenance={str(p):sha(p) for p in [original,a.candidate,pathlib.Path(__file__),R/'evidence/upstream/pump.json']};rows=[]
  for c in cases():
-  o=execute(original,**c);n=execute(a.candidate,**c);diff=[k for k in o if o[k]!=n[k]];rows.append(dict(c,different_fields=diff,original=o,candidate=n))
+  o=execute(original,**c);n=execute(a.candidate,**c);diff=[k for k in o if k!='logs' and o[k]!=n[k]];rows.append(dict(c,different_fields=diff,original=o,candidate=n))
  assert provenance=={str(p):sha(p) for p in [original,a.candidate,pathlib.Path(__file__),R/'evidence/upstream/pump.json']}
  report={'scope':'Synthetic offline normally signed transactions; full binaries are unequal. No captured binary used as compiler input.','provenance':provenance,'case_count':len(rows),'mismatches':[i for i,c in enumerate(rows) if c['different_fields']],'cases':rows}
  a.output.parent.mkdir(parents=True,exist_ok=True);a.output.write_bytes(gzip.compress(json.dumps(report,indent=2).encode(),mtime=0));print(json.dumps({k:report[k] for k in ['case_count','mismatches']}))

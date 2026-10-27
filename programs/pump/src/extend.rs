@@ -4,7 +4,7 @@ use crate::*;
 pub struct ExtendAccount<'info> {
     /// CHECK: this instruction handles raw supported account discriminators.
     #[account(mut,owner=crate::ID)]
-    pub account: UncheckedAccount<'info>,
+    pub account: AccountInfo<'info>,
     #[account(mut)]
     pub user: Signer<'info>,
     pub system_program: Program<'info, System>,
