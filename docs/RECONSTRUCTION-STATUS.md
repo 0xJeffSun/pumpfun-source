@@ -1,6 +1,6 @@
-# Reconstruction status after social-claim seed-vector recovery — 26 October 2026
+# Reconstruction status after extension-size log recovery — 26 October 2026
 
-Reviewed evidence revision: `8622bdae6f1a5f4a95a258d8e79f8808e4de399b`.
+Reviewed evidence revision: `8a87b1e6a4d25c67e84ec8786df624c5a64a52ba`.
 This review updates the research frontier while preserving the selected-checkpoint
 [baseline audit](RECONSTRUCTION-AUDIT.md). The [recomputed inventory](../repro/reconstruction-status-2026-10-26/README.md)
 contains every one of the **4,415 selected/research function-window rows**.
@@ -44,7 +44,7 @@ analysis. Candidate symbol names are hypotheses about original identity.
 | Fees selected | 585 | 102 | 363 | 120 | 0 |
 | Mayhem selected | 441 | 58 | 131 | 7 | 245 |
 | Relay selected source 15 | 492 | 33 | 89 | 370 | 0 |
-| **Fees latest research** | **585** | **117** | **403** | **65** | **0** |
+| **Fees latest research** | **585** | **118** | **403** | **64** | **0** |
 | **Relay latest research** | **492** | **130** | **352** | **10** | **0** |
 
 Each row is a partition, not a score of semantic correctness. Mayhem's source
@@ -70,13 +70,13 @@ bytes (7.0%)**. Those bytes describe the sizes of unmatched original windows,
 not the number of absent or incorrect bytes. The residual includes large business
 functions; matching the other 482 still leaves their call/data identity to prove.
 
-Fees research has **520/585 windows with a normalized counterpart**: 371 unique
-structural pairs and 149 original windows in ambiguous duplicate groups. Its 65
-unmatched windows span **319,320 of 799,648 original text bytes (39.9%)**, although
-they are only 11.1% of the window count. Many remaining bodies are large. The
+Fees research has **521/585 windows with a normalized counterpart**: 372 unique
+structural pairs and 149 original windows in ambiguous duplicate groups. Its 64
+unmatched windows span **318,872 of 799,648 original text bytes (39.9%)**, although
+they are only 10.9% of the window count. Many remaining bodies are large. The
 [current call ledger](../repro/reconstruction-status-2026-10-26/fees-call-attribution.json)
 recomputes 63 additional duplicate-body correspondences on this candidate, for
-434 attributed pairs. There are 86 still-unattributed duplicate windows and 20
+435 attributed pairs. There are 86 still-unattributed duplicate windows and 20
 call edges to different-body frontiers. This refinement adds no body coverage.
 
 There is no defensible single source-completion percentage or ETA. Whole-program
@@ -248,8 +248,8 @@ additional function is considered recovered.
 
 ## Fees: new complete bodies, substantial residual business logic
 
-The latest 861,792-byte candidate is SHA-256
-`6c58680b2bcd0c6a7ab616bb5f119c8357e7e4cccdcdae918a935399f6650f1f`.
+The latest 862,664-byte candidate is SHA-256
+`4617fa1c6200daab0516a9a652716c32cf9868f24d47bcada61b6c716e461637`.
 The newly merged studies recover:
 
 | Complete original window | Evidence |
@@ -268,13 +268,13 @@ The newly merged studies recover:
 
 These are complete normalized windows, not merely matching diagnostic fragments.
 There are 64 unique raw-equal structural pairs; counting all original windows
-with any raw counterpart, including ambiguous duplicates, gives 117. Those
+with any raw counterpart, including ambiguous duplicates, gives 118. Those
 numbers answer different questions and must not be interchanged.
 
 The candidate retains passing **17,331 cases across 18 suites** and **1,542 exact
-outcome/log/compute comparisons**. The current seed-vector candidate was replayed afresh;
-its control reuses the verified optional-account ownership artifact. Existing unchecked-input
-and finite-coverage limits remain. The 65 unresolved bodies, ambiguous attribution,
+outcome/log/compute comparisons**. The current extension-log candidate was replayed afresh;
+its control reuses the verified seed-vector artifact. Existing unchecked-input
+and finite-coverage limits remain. The 64 unresolved bodies, ambiguous attribution,
 shareholder validation, transitive calls/data and final ELF layout remain open.
 
 The fee-total helper, flat-fee setters, tier helpers and four configuration/upsert
@@ -316,6 +316,17 @@ claim caller remains unmatched. Fresh suite, exact-matrix, growth and optional
 replays pass; 20 extra cases cross native/token paths, token programs and user-ID
 byte lengths including UTF-8. They compare state/errors/events/CPI/return data,
 not all logs or compute.
+
+### Extension no-resize messages
+
+The [extension-size log study](../research/fees-extend-size-logs/README.md) restores
+the original exact-size and oversized-account messages. Its eight signed cases
+show program-log disagreement in the parent and agreement in the new candidate,
+with other observed results unchanged. The change also recovers the complete
+448-byte formatting helper at 52,568, with only three call-immediate differences
+and matched callees. The larger resize handler remains unmatched. One previously
+normalized 24-byte window also becomes raw-equal due to the new layout; that
+adds no new body coverage. Fresh regression and all retained focused matrices pass.
 
 ## Public behavior: reconstructed is not perfect
 

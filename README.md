@@ -19,17 +19,19 @@ recognized source-location pairs, and each pass 536 fresh replay records.
 Follow-up [reconstruction studies](docs/BYTE-IDENTITY-PROGRESS.md)
 have not added whole-body matches. Conditional value-flow agreement and locally
 matching helpers do not establish full function or program identity.
-Latest Fees research: **371 unique structural pairs, 65 unmatched windows**.
+Latest Fees research: **372 unique structural pairs, 64 unmatched windows**.
 The [configuration-event recovery](research/fees-config-event-recovery/README.md)
 adds four complete caller-body matches; the two upsert bodies share a structural
 shape and are distinguished by their callees. The [current call ledger](repro/reconstruction-status-2026-10-26/fees-call-attribution.json)
-also attributes 63 duplicate-body pairs, giving 434 correspondences.
+also attributes 63 duplicate-body pairs, giving 435 correspondences.
 Whole-file identity remains unachieved. The [exotic-fee growth study](research/fees-exotic-growth-precedence/README.md)
 corrects rejection precedence and the realloc flag in new boundary cases;
 that caller still has no complete body match. The [optional-account ownership recovery](research/fees-optional-account-ownership/README.md)
 adds a complete optional parser and a raw-byte-equal cleanup helper; its enclosing
 account parser still differs. The [social-claim seed-vector recovery](research/fees-social-seed-vector/README.md)
 adds the complete 296-byte user-ID copy helper; its claim caller still differs.
+The [extension-size log recovery](research/fees-extend-size-logs/README.md) restores
+the original no-resize messages and a complete 448-byte formatting helper.
 
 The [current reconstruction review](docs/RECONSTRUCTION-STATUS.md) lists exact,
 normalized, unmatched and opaque function status, all 10 remaining Relay bodies,
@@ -53,11 +55,11 @@ No handler is certified perfectly recreated. The selected core builds contain
 | --- | ---: | ---: | ---: | ---: |
 | Pump selected | 98 | 430 | 507 | 0 |
 | PumpSwap selected | 93 | 395 | 297 | 0 |
-| Fees research | 117 | 403 | 65 | 0 |
+| Fees research | 118 | 403 | 64 | 0 |
 | Mayhem selected | 58 | 131 | 7 | 245 |
 | Relay research | 130 | 352 | 10 | 0 |
 
-Fees' unresolved bodies span **319,320 / 799,648 original text bytes (39.9%)**;
+Fees' unresolved bodies span **318,872 / 799,648 original text bytes (39.9%)**;
 Relay's span **52,616 / 752,488 (7.0%)**. These are sizes of whole unmatched
 windows, not differing-byte counts or estimates of effort. Calls, data, layout,
 relocations, build provenance and broader behavior remain to be verified even
