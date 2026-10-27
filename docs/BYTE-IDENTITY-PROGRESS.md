@@ -277,3 +277,14 @@ These are evidence/guard changes, not byte-identity gains.
 
 Whole-program status remains **0/4 selected core programs**, with selected Relay
 also byte-unequal. The original byte-identity goal remains open.
+
+## Shared-worker flow audit and mint-source controls
+
+The [flow audit](../repro/donation-relay/shared-worker-flow-audit/README.md)
+recomputes the original/current shared-worker instruction graphs. Every path
+to an explicit return crosses the matched context-drop helper, including paths
+from the transfer continuation. Calls are assumed to return; this is not a
+semantic or runtime-success proof. Different linear cleanup offsets do not
+establish different ownership stages. Five additional compiled mint-key and
+whitelist-slice forms remain negative, with no lost matches. Relay remains at
+482/492 with ten unmatched bodies and 130 raw local body matches.

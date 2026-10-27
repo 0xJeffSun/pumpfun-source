@@ -152,6 +152,18 @@ window 51. The control builds reproduce their respective 482-window parent
 binaries exactly; experimental candidates are not promoted. This rules out the
 tested source forms without claiming that all donation logic is understood.
 
+### Shared-worker cleanup: verified graph, unresolved source
+
+The [shared-worker flow audit](../repro/donation-relay/shared-worker-flow-audit/README.md)
+shows that all paths in the conservative decoded graph to an explicit return
+pass through the matched context-drop helper, in both original and current
+workers. This also holds after the transfer call. The drop block is at different
+linear offsets (3,152 versus 352); those positions do not establish a different
+ownership boundary. Calls are assumed to return and branch feasibility is not
+proved. Five further mint-key/whitelist source builds all retain 482 matches
+without recovering the worker. Preserve the common cleanup while investigating
+source expression and lifetimes; no experimental source is promoted.
+
 ## Fees: new complete bodies, substantial residual business logic
 
 The latest 851,488-byte candidate is SHA-256

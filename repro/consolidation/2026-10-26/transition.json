@@ -7,8 +7,8 @@
     {
       "path": "README.md",
       "before_sha256": "cae913d4d3f2066403162f653a0cf35b39620fb08877b1b308c08ccce4a53678",
-      "after_sha256": "02090a8a41ad4a44b3a6c2b0001006dbacba05869b38791775f0a90df2f96382",
-      "reason": "Refresh reviewed Fees authority-body and duplicate-call attribution results; retain Relay 482/492 and whole-file identity limits."
+      "after_sha256": "4db84e891aef1fbc07b9ec8710b80cc74a6e8eb34d08739cdf729c8491be12cd",
+      "reason": "Document the verified Relay shared-worker cleanup graph and five rejected mint-source controls; preserve the 482/492 frontier and existing identity limits."
     },
     {
       "path": ".github/workflows/verify.yml",
