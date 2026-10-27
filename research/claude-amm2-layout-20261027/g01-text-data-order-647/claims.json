@@ -43,7 +43,8 @@
      "runtime_suites": "runtime/event-decoder-text-data/suites.json",
      "runtime_cases": "runtime/event-decoder-text-data/cases.json.gz",
      "linux_builds": [
-      "builds/text-data/build-attempt.json"
+      "builds/text-data/build-attempt.json",
+      "builds/text-data-repeat/build-attempt.json"
      ],
      "candidate_sha256": "b05f7268b9d5ddfd723b060be1a32359bd2e8702a5d294646958895973eb55e0",
      "symbols_sha256": "5edda6f5cdfefee7466374a820dd4ab75f0eb224e47b2cda7185f1c335228d60",
