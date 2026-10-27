@@ -577,3 +577,25 @@ components now bind 104/104 direct callee bodies. Counts reach 380 unique pairs
 and 58 unmatched; one further duplicate attribution gives 442 total pairs.
 The initializer function stays on line 94, previous location fixes survive,
 and fresh broad/focused regressions pass. Whole-file identity remains open.
+
+## Fees: crank event-account ownership recovers two bodies
+
+The [event-account ownership study](../research/fees-crank-event-ownership/README.md)
+recovers the complete crank exit (424,824; 952 bytes) and dispatch wrapper
+(656,832; 840 bytes). Using an owned `AccountInfo` reproduces two original field
+loads that were 40 bytes off. All 12 exit callees and the separately checked
+owner/field-label bytes match. The parser and business handler called by the
+wrapper remain unmatched. No previous raw or normalized match is lost.
+
+The frontier is **382 unique structural pairs, 147 ambiguous original windows,
+and 56 unmatched windows**, with 118 raw-local matches. Call refinement yields
+444 correspondences (62 additional duplicates), 85 unattributed duplicate
+windows, 2,768 bound-target edges and 21 different-body frontier edges. The
+residual spans 296,712 original text bytes (37.1%). Fresh regression passes all
+17,331 suite cases, 1,542 exact flag comparisons and the five focused matrices.
+This remains a research build, with no whole-file or exhaustive behavior claim.
+
+The separate [root compiler controls](../research/fees-wrapper-codegen-controls/README.md)
+retain a fresh byte-equal one-unit control and four rejected unit-count variants.
+None recovers the buyback wrapper or gains any body; all four lose prior matches.
+They are static evidence only and are not promoted or replayed as candidates.
