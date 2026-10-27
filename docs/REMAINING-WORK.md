@@ -754,3 +754,10 @@ compiler records, all original-window matches and failed setup evidence are
 retained. These counts are separate from the newer current-source composition;
 whole-original byte identity, historical attribution and runtime qualification
 remain open, with zero target executions in this packet.
+
+An isolated follow-up ports the current reconstruction's existing Program ID
+check into the historical runtime. It restores only O0062, yielding 404/62/403
+and leaving 24 normalized differences against the current-runtime control.
+Three fresh builds retain 459 actual compiler commands; both recovered raw and
+stripped ELFs repeat exactly. This identifies one difference between the recipes,
+adds no match beyond the current reconstruction and claims no runtime coverage.

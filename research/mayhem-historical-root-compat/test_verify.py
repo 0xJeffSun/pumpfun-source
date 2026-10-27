@@ -40,6 +40,8 @@ class Evidence(unittest.TestCase):
         self.assertEqual(r.returncode,0,r.stderr);j=json.loads(r.stdout)
         self.assertTrue(j['fresh_historical_reproduces_incremental']);self.assertEqual(len(j['normalized_lost']),25)
         self.assertEqual(len(j['fresh_dependency_archive_differences']),50)
+        self.assertEqual(j['program_id_control']['comparison']['gained'],['O0062'])
+        self.assertTrue(j['program_id_control']['fresh_raw_and_stripped_repeat'])
 
     def test_optimized_mode_rejected(self):
         r=subprocess.run([sys.executable,'-I','-B','-O',str(self.root/'verify.py')],capture_output=True,text=True)
@@ -111,6 +113,29 @@ class Evidence(unittest.TestCase):
 
     def test_current_controller_extra_change(self):
         self.mutate('current-controller/build.py',lambda b:b+b'\n','current builder has extra changes')
+
+    def test_program_control_framework_extra_edit(self):
+        def apply(b):
+            out=io.BytesIO()
+            with tarfile.open(fileobj=io.BytesIO(gzip.decompress(b)))as src,tarfile.open(fileobj=out,mode='w')as dst:
+                for m in src:
+                    data=src.extractfile(m).read()
+                    if m.name=='lang/src/accounts/program.rs':data+=b'\n// extra change\n'
+                    m.size=len(data);dst.addfile(m,io.BytesIO(data))
+            return gzip.compress(out.getvalue(),mtime=0)
+        self.mutate('program-id-control/framework-program-id.tar.gz',apply,'Program check source scope')
+
+    def test_program_control_extra_flag(self):
+        self.json_mutation('program-id-control/build-02-program-id/launch.json.gz',lambda j:j['command'].append('--test'),'Program control Cargo command')
+
+    def test_program_control_missing_compiler_record(self):
+        self.json_mutation('program-id-control/build-03-repeat/records.json.gz',lambda j:j.pop(),'compiler record cohort')
+
+    def test_program_control_false_gain(self):
+        self.json_mutation('program-id-control/comparison.json',lambda j:j['gained'].append('O0000'),'Program control current-family comparison')
+
+    def test_program_control_output_swap(self):
+        self.mutate('program-id-control/build-03-repeat/symbols.so.gz',lambda b:(self.root/'program-id-control/build-01-baseline/symbols.so.gz').read_bytes(),'Program control output identity')
 
 
 class Membership(unittest.TestCase):

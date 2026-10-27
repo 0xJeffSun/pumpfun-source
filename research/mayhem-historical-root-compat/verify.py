@@ -2,6 +2,7 @@
 """Replay root compatibility controls offline, with the pinned PR269 parent."""
 from collections import Counter
 from pathlib import Path, PureWindowsPath
+from types import SimpleNamespace
 import argparse, gzip, hashlib, importlib.util, json, re, sys, tempfile, tomllib
 
 if not __debug__:
@@ -215,6 +216,8 @@ def verify(parent=None,check_manifest=True):
     require(set(report['runs']['api-01']['raw_ids'])-set(report['runs']['api-03-gated']['raw_ids'])=={'O0207'}and not(set(report['runs']['api-03-gated']['raw_ids'])-set(report['runs']['api-01']['raw_ids'])),'gated raw-local delta differs')
     require('FileNotFoundError'in raw(HERE/'failed-controller/stderr.log.gz').decode()and 'mayhem-historical-root-compat\\\\mayhem-qualified-native'in raw(HERE/'failed-controller/stderr.log.gz').decode(),'failed setup evidence differs')
     report.update(fresh_historical_reproduces_incremental=True,normalized_gained=[],normalized_lost=LOST)
+    spec=importlib.util.spec_from_file_location('program_id_control',HERE/'program_id_control.py');control=importlib.util.module_from_spec(spec);spec.loader.exec_module(control)
+    report['program_id_control']=control.verify(SimpleNamespace(**globals()),pv,parent,report,original_data)
     if check_manifest:require(report==read(HERE/'report.json'),'derived report differs')
     return report
 
