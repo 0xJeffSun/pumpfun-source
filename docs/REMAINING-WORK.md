@@ -761,3 +761,16 @@ and leaving 24 normalized differences against the current-runtime control.
 Three fresh builds retain 459 actual compiler commands; both recovered raw and
 stripped ELFs repeat exactly. This identifies one difference between the recipes,
 adds no match beyond the current reconstruction and claims no runtime coverage.
+
+A second follow-up compares adjacent Anchor revisions before and after the
+duplicate-mutable validation relaxation, with the identical resolved graph and
+the required empty trait implementation restored in the after variant. Three
+fresh builds record 459 actual compiler commands. Normalized matches rise from
+407 to 420 and raw-local matches from 62 to 69, with no losses; fresh after
+outputs repeat as complete raw and separately stripped ELFs. The seven raw gains
+were already normalized matches. Eight differences remain against the older
+current-runtime control, and no match exceeds that control or the newer project
+frontier. Both variants retain the existing recovered Program ID check. Exact
+149/150-file upstream snapshots, five changed framework files, the root adaptation,
+identical metadata outputs and all 441 window comparisons are retained. This is
+a source-generation mechanism control, not original framework/date attribution.

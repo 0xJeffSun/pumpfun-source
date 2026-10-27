@@ -12,6 +12,13 @@ Program ID check into that historical graph. It restores **one** of the lost
 windows (O0062), leaving **404 normalized matches and 24 losses** against the
 current-runtime control. It adds no match beyond the current reconstruction.
 
+An adjacent February Anchor revision control then isolates duplicate-mutable
+validation changes with their required empty trait implementation. Identical
+resolved dependency graphs yield **407 to 420 normalized matches**, with no
+losses, seven raw-local gains and identical complete outputs from fresh after
+repeats. Eight differences remain against the older current-runtime control.
+This further explains the historical gap without improving the current frontier.
+
 ## Source and build boundary
 
 The parent is pinned at `0a881f726f8dae34a2f53f2438cdb271ab830e41`, including
@@ -29,8 +36,8 @@ The compatibility transformation is exact and checked against the parent:
   `src/checked_program.rs`, retaining its three newlines. That trait is absent
   in the archived runtime.
 
-There are no additional handler, arithmetic, CPI-constructor or framework Rust
-edits. The archived CPI constructor already accepts `Pubkey`; its API must be
+Those initial compatibility builds make no additional handler, arithmetic,
+CPI-constructor or framework Rust edits. The archived CPI constructor already accepts `Pubkey`; its API must be
 read from the actual source. These edits are compiler compatibility evidence,
 not proof of behavioral equivalence or the original deployed source.
 
@@ -122,6 +129,64 @@ new source recovery, improvement over the current frontier or runtime test.
 The offline checker binds both complete framework snapshots, the relocated root,
 actual compiler arguments, source/dependency/tool observations, linker inputs,
 all original-window comparisons and both repeated outputs.
+
+## Adjacent duplicate-mutable validation revision
+
+The next control holds the source directory, resolved package graph, compiler,
+target libraries and linker recipe fixed across Anchor parent
+`5d058305cd8a01c9854ea0efdef6e2afaa62cf5c` and its immediate child
+[`d790f27fe240a5a557c93b117f0c4ddda4831ce5`](https://github.com/otter-sec/anchor/commit/d790f27fe240a5a557c93b117f0c4ddda4831ce5).
+That upstream commit narrows duplicate-mutable validation to types that serialize
+on exit, adds composite-account key collection and permits duplicates in remaining
+accounts. The retained selected upstream trees authenticate 149 and 150 files.
+Exactly five framework files change between builds. The root also restores its
+existing empty `DuplicateMutableAccountKeys` implementation, which becomes required
+when the trait is introduced. This measures that revision and its required API
+adaptation together; it does not attribute the result to one edited line.
+
+Both variants retain the recovered Program ID check, four-lifetime Context
+signatures, historical CreateEvent and older 66-file root baseline. The upstream
+lock is identical across revisions; the pruned root lock and all three Cargo
+metadata outputs are byte-identical. The resolved graph has 187 registry packages
+and 14 framework path packages. Compared with the earlier December framework
+control, only proc-macro2 changes registry version (1.0.95 to 1.0.105). The new
+archive and its complete checksum map are retained; all other archive proofs
+come from the authenticated parent packet. Differences from the December result
+are not attributed solely to this one February commit.
+
+| Complete fresh build | Functions | Text bytes | Normalized | Raw-local | Injective |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Before duplicate-mutable relaxation | 455 | 674312 | 407 | 62 | 405 |
+| After relaxation and required empty trait implementation | 451 | 663160 | 420 | 69 | 418 |
+| Fresh after repeat | 451 | 663160 | 420 | 69 | 418 |
+
+The 13 normalized gains are O0066, O0067, O0099, O0102, O0104, O0109, O0111,
+O0120, O0122, O0129, O0131, O0134 and O0136. No normalized or raw-local match
+is lost. Seven raw-local gains (O0045, O0331, O0338, O0362, O0363, O0366,
+O0372) were already normalized matches in the before build; they are not seven
+additional recovered function bodies. Eight differences remain against this
+packet's older current-runtime control: O0106, O0116, O0124, O0127, O0141,
+O0142, O0145 and O0199. There is no new normalized match beyond that control
+or the newer project frontier.
+
+After and repeat produce the same **865648-byte raw ELF**
+(`15d3216e678aa7eb12898b5f7970016cd7264750bc19ca71b4bf35d159086ee8`)
+and the same separately stripped **731880-byte ELF**
+(`61eb8558fd5c4060ed4333d2cd16a81795d05d1dacc10b1bccde767ba579e51c`).
+The before raw ELF is 878640 bytes
+(`fd2927be0cde3440cad64adbd69225df471cb175373a662a980dfe512bc73beb`).
+These are compiler outputs, not allocation images. All differ from the captured
+original. Each of the three builds records 153 actual Cargo compiler commands,
+including 79 target compilations; no target code is executed.
+
+The checker replays the exact upstream blob sets, source transformations, unchanged
+metadata graph, archive checksums, source/tool observations, actual compiler
+records, retained linker objects, function maps and all 441 original windows.
+Complete dependency archives are not retained, and their repeat identity
+differences remain in `report.json` rather than being inferred from equal ELFs.
+This is evidence for a source-generation mechanism under the recorded recipe;
+it is not original framework attribution, a historical date constraint, current
+checkpoint promotion or runtime qualification.
 
 ## Offline replay and retained limits
 
