@@ -1,6 +1,6 @@
 # PR queue review — 27 October 2026
 
-Reviewed PRs #170–#191 as a combined merge tree based on `ba7883511942965c5c9def03971bdaff84963d6b`. Selected program sources, captures, scripts and workflows are unchanged. Overlapping append-only progress-log additions were preserved during local conflict resolution.
+Reviewed PRs #170–#192 as a combined merge tree based on `ba7883511942965c5c9def03971bdaff84963d6b`. Selected program sources, captures, scripts and workflows are unchanged. Overlapping append-only progress-log additions were preserved during local conflict resolution.
 
 | PR | Reviewed change | Verification and scope |
 | --- | --- | --- |
@@ -26,6 +26,7 @@ Reviewed PRs #170–#191 as a combined merge tree based on `ba7883511942965c5c9d
 | [#189](https://github.com/lalalune/pumpfun-source/pull/189) | Complete Relay normalized inventory | Source verifier and nine tests pass; independent 490/492 builds match published hashes, full optional measurement and 536 fresh signed replay records pass. Whole ELF remains unequal. |
 | [#190](https://github.com/lalalune/pumpfun-source/pull/190) | Fees social/context composition | Artifact/source/callee/data verifier and four mutation tests pass. Its 402-pair candidate remains separate from the later 404-pair composition now used in the current inventory. |
 | [#191](https://github.com/lalalune/pumpfun-source/pull/191) | Independent Mayhem history decoder | Fixed package-relative input paths and added an actual decoded old/new version-chain check. All 13 captures match; five negative/path tests and the original package verifier pass. Claims are limited to captured-data consistency, with no RPC authentication or semantic field attribution. |
+| [#192](https://github.com/lalalune/pumpfun-source/pull/192) | Mayhem Linux helper comparison | Saved-artifact verifier and 18 tests pass. Five additional raw ranges are reproduced with ambiguity retained; no new compilation, runtime or unique historical compiler claim. |
 
 The checked PR head SHAs are listed in the Git merge parents. No complete-program identity or exhaustive semantic correctness follows from merging these research packets. The generated inventory remains pinned to its declared Fees and artifact-backed Relay candidates; alternative source proposals are not silently combined.
 

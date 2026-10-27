@@ -1096,3 +1096,65 @@ manual padding, add_program, set_account or RPC. Two fresh local runs reproduced
 the same912-transaction receipt. Five static negative tests pass. This establishes
 a loader-backed allocation route; original-payload equality remains false because
 the ELF prefix still has9,398 differing positions.
+
+
+## Relay raw-layout audit — 27 October 2026
+
+Complete byte accounting attributes the 18,453 text differences to 15 normalized
+body-permutation regions (17,991 bytes) and otherwise aligned direct-call operands
+(462 bytes). Fourteen data pointers, two symbol values, 81 relocation-site values
+and the entry address account for the other 170 differing bytes. Six compiled
+source-identity controls preserve 492 normalized windows but do not reduce the
+whole output difference; raw gains and losses are retained. The accepted artifact
+and its 18,623-position residual remain unchanged.
+
+## Relay: context naming recovers three raw bodies — 27 October 2026
+
+The [context naming recovery](../repro/donation-relay/donate-context-raw-recovery/README.md)
+continues the merged PR189 source with one ordinary Rust type definition and a
+compatibility alias. `DonateContext` restores the context/BTreeSet cleanup order
+and the shared worker's call displacements. Original windows 51, 52 and 112
+(528, 488 and 10,248 bytes) become completely raw-equal at their original addresses.
+Raw local matches rise **317 → 320**, all 492 normalized windows remain matched,
+and no prior raw or normalized match is lost. All 60 direct-call sites in the
+gained bodies retain closed normalized call shapes.
+
+An independent baseline reproduces PR189 exactly. Root-clean and fresh
+all-dependency candidate builds produce identical output pairs, and a fresh
+local replay passes 536 signed records / 534 unique fixtures with zero differences.
+The packet contains the one-file source patch, 60-input maps, isolated portable
+build recipe, static remeasurement and six passing source/ELF tests, including a
+changed-CALL negative control. Local receipt hashes are reported; full build and
+runtime receipts remain local. Default verification does not compile or execute.
+
+Only `.text` and `.rel.dyn` change from PR189. Whole-file common-position differences
+fall 18,623 → 18,126; complete `.rodata` and the bounded positional data graph are
+preserved. This is a reproducible naming/layout hypothesis, not proof of the
+historical identifier, full data/indirect semantics or byte-identical completion.
+Protected relayer settlement success remains untested. Prior evidence and selected
+checkpoints are unchanged.
+
+## Fees: boxed AdminCto ownership and typed self-program source — 27 October 2026
+
+The [AdminCto source proposal](../research/fees-admin-cto-boxed-context-source-proposal/README.md)
+changes exactly three declarations in one file on the pinned PR188 math+pack
+combined source: box Global and SharingConfig and use a typed self-program field.
+The handler and all other source inputs remain unchanged. Independent public
+source hash checks, full 42-input materialization and thirteen source-only tests
+pass; the readable patch reverses exactly to the pinned public parent.
+
+Local development observed 545→547 normalized original windows with no losses:
+parser 381352 (6,152 bytes) and generated wrapper 642848 (1,416 bytes), preserving
+118 raw local matches. Local static audit checked 51/51 parser callees and 19
+complete direct data objects; wrapper 8/9 callees and six direct data objects
+hold, while the business callee remains unmatched. These native/static/runtime
+observations are explicitly unpublished evidence, not claims established by the
+packet's default source checks. The local root-clean repeat reused a verified
+dependency/math cache, not a fresh all-dependency rebuild.
+
+No binaries, logs, runtime cases, archived build/replay receipts or encoded
+derivatives are included. Source tools report runtime_verified=false,
+native_build_verified=false and whole_binary_identity_verified=false. The
+business body and whole ELF/capture remain unequal; indirect/transitive data
+and historical source provenance remain unproved. Prior checkpoints and sealed
+evidence are not replaced.

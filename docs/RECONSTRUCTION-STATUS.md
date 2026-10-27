@@ -608,3 +608,14 @@ current body coverage by this artifact.
 
 
 The [access-control layout recovery](../repro/donation-relay/access-control-layout-artifact/README.md) retains all492 normalized windows, adds59 raw-local matches with no losses, restores the full194–204 runtime/settlement block and all ELF headers, and passes536 fresh signed replay records. There remain9,398 differing meaningful-ELF positions. The [allocation history](../repro/donation-relay/allocation-provenance/README.md) explains the12,168-byte tail; full Rust-build/captured-payload equality remains unproved.
+
+## Relay raw-layout accounting
+
+The [raw-layout audit](../repro/donation-relay/raw-layout-audit/README.md) verifies
+that original and candidate have the same multiset of 492 normalized bodies.
+Fifteen permutation regions contain 17,991 positionally differing text bytes;
+outside them, all 462 differing text bytes are direct-call operands. The remaining
+170 differences are pointer, symbol-value, relocation-site and entry-address
+fields. This is complete positional accounting, not proof of unique correspondence
+or semantic pointer identity. Six compiled source-identity controls do not reduce
+the whole-file residual, and none replaces the accepted artifact.

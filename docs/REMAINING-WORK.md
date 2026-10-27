@@ -454,3 +454,12 @@ unproved. No selected artifact or stopped execution lane changes.
 
 
 The [access-control source/layout recovery](../repro/donation-relay/access-control-layout-artifact/README.md) restores runtime/settlement function placement and all headers. Remaining byte differences are9,324 in.text,25 in.data.rel.ro and49 in.rel.dyn. The [recorded allocation history](../repro/donation-relay/allocation-provenance/README.md) now explains the capture capacity. Preserve the exact Rust ELF and actual loader allocation as separate acceptance steps; no padding shortcut is authorized.
+
+The [Relay raw-layout audit](../repro/donation-relay/raw-layout-audit/README.md)
+narrows ordinary-source ordering work to 15 permutation regions. Prioritize the
+Anchor account specializations at 7984–13984, drop functions at 33384–34400,
+program/entrypoint emission at 566024–582808, and library helpers at
+703520–705720. These are closed normalized-body multisets with equal extents;
+they are not permission to reorder or patch captured machine instructions.
+Program-module, library and package/version name controls are now recorded and
+should not be repeated as though untested.
