@@ -4,6 +4,26 @@ The [full audit](RECONSTRUCTION-AUDIT.md) and its generated tables retain their
 explicit `1463bd22` snapshot. This log records later research without silently
 changing that baseline or promoting new selected artifacts.
 
+## Mayhem: compose the historical parser context with the current source
+
+The [control-work packet](../research/mayhem-control-work-20261027/README.md)
+preserves 4,287 research files, including the new source controls and their
+actual build outputs. The current 67-input parser composition preserves all
+429 normalized matches, increases raw-local bodies from 100 to 139, and restores
+one allocator call. The new local bodies cover 33,968 original text bytes.
+Two native root rebuilds agree; gating the parser reproduces the parent's
+stripped artifact exactly. A whole-file permutation checks all 447 sections,
+4,838 direct calls and 10,553 local branches. All 6,636 fresh trade comparisons
+and 69 initializer comparisons pass; 14 regression tests pass.
+
+The parser template and generated event types still come from different source
+eras. No original-source authentication or selected-checkpoint promotion is
+claimed, and the established README totals remain unchanged. Initializer
+ownership/scope/aggregate controls remain negative; the best body differs in
+19 slots. Typed Result arithmetic improves the separate AMM quote helper to
+1,104 versus 1,120 original bytes, but neither it nor its equal-size outer
+handler is a complete match. The archive retains those limits and failed builds.
+
 ## Mayhem: recover the quote validator and trade source origins
 
 The [seven-path Rust successor](../research/mayhem-trade-origins-validator/README.md)

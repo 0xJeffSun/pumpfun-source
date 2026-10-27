@@ -28,6 +28,16 @@ allocation provider, the missing 328-byte reserve child and whole-ELF identity
 remain unresolved. Other earlier receipts keep their original artifact bindings,
 and the selected baseline is unchanged.
 
+The [current parser-context composition](../research/mayhem-control-work-20261027/README.md)
+retains those 429 matches while reaching 139 raw-local bodies and restoring one
+allocator call. Two native builds agree, the gated stripped control reproduces
+the parent, and 6,636 trade plus 69 initializer comparisons pass. The remaining
+source task is a version-consistent explanation for that mixed-era parser/IDL
+context; it is not promoted into the established checkpoint. The initializer
+still has 19 differing instruction slots at its best 960-byte control. The
+separate AMM quote helper improves to 1,104 bytes versus 1,120 original, but cap
+selection differs; equal-size AMM handler controls also remain unmatched.
+
 The [allocator-context experiment](../research/mayhem-allocator-context/README.md)
 produces the missing 328-byte reserve child by adding a diagnostic zeroed-vector
 allocation to the earlier qualified source. A nonzero-vector control leaves the

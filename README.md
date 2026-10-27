@@ -92,7 +92,12 @@ remains a diagnostic and the current reconstruction counts are unchanged.
 The [historical parser follow-up](research/mayhem-allocator-parser-provenance/README.md)
 reproduces that allocator form with an earlier Anchor event-parser template and
 current event types. It is a mixed-source compiler experiment; original Mayhem
-source and composition with the current checkpoint remain unproven.
+source remains unproven. The [current-source composition](research/mayhem-control-work-20261027/README.md)
+now preserves all 429 normalized matches and reaches 139 raw-local bodies,
+with one additional matching allocator call. Repeated native builds agree;
+6,636 fresh trade and 69 initializer comparisons pass. Its 39 additional raw
+bodies cover 33,968 original text bytes. This remains a diagnostic, so the
+established checkpoint counts in the table above are unchanged.
 
 The latest [Fees program-ID recovery](research/fees-program-id-references/README.md)
 corrects the two remaining program-ID comparison references. All 1,608 checked

@@ -109,6 +109,16 @@ The twelve unmatched bodies still cover 111,288 original text bytes. The
 explains one sufficient allocator context using mixed-era source, but does not
 authenticate original Mayhem source or compose it into this successor.
 
+The later [current-source control packet](../research/mayhem-control-work-20261027/README.md)
+does compose that experiment with the successor. It retains 429 normalized
+windows, increases raw-local equality from 100 to 139, and restores the missing
+allocator call; two repeated native outputs and the gated parent reproduction
+are checked. All 6,636 fresh trade and 69 initializer comparisons pass. Its
+[39 new raw-local bodies](../research/mayhem-control-work-20261027/raw-gains.md)
+cover 33,968 original text bytes. The mixed-source explanation remains
+unproven, so this diagnostic is separate from the table's established source
+checkpoint. Twelve complete bodies and whole-ELF identity remain unresolved.
+
 The separately pinned, dated Fees inventory has **558/585 windows with a normalized counterpart**: 411 unique
 structural pairs and 147 original windows in ambiguous duplicate groups. Its 27
 unmatched windows span **189,248 of 799,648 original text bytes (23.7%)**, although

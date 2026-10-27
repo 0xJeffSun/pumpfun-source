@@ -110,6 +110,8 @@ jobs:
               python -B research/mayhem-trade-origins-validator/test_verify.py
               python -I -B research/mayhem-allocator-parser-provenance/verify.py
               python -I -B research/mayhem-allocator-parser-provenance/test_verify.py
+              python -B research/mayhem-native-quote-controls/verify.py
+              python -B research/mayhem-native-quote-controls/test_verify.py
               python -I -B research/mayhem-allocator-context/verify.py
               python -I -B research/mayhem-allocator-context/test_verify.py
               python -B research/mayhem-provider-sharing/verify.py --repository-root .
@@ -151,6 +153,10 @@ jobs:
             commands: |
               python -B research/mayhem-sizing-panic-recovery/verify.py
               python -B research/mayhem-sizing-panic-recovery/test_scope.py
+              command -v zstd >/dev/null || { sudo apt-get update && sudo apt-get install -y zstd; }
+              python -B research/mayhem-control-work-20261027/verify_frontier.py
+              python -B research/mayhem-control-work-20261027/test_restore.py
+              python -B research/mayhem-control-work-20261027/test_frontier.py
               python scripts/mayhem_validate_extend.py --candidate repro/mayhem/initializer-current-20261027/candidate.so --output work/mayhem-extend.json
               python scripts/mayhem_sell_differential.py --candidate repro/mayhem/initializer-current-20261027/candidate.so --output work/mayhem-sell.json
               python scripts/verify_mayhem_sell.py --candidate repro/mayhem/initializer-current-20261027/candidate.so --receipts work/mayhem-sell.json --output work/mayhem-sell-verification.json
