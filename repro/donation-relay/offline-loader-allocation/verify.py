@@ -43,7 +43,7 @@ def execute(elf,CAPACITY,original):
      receipts.append({'label':label,'transaction_bytes':len(raw),'signature':str(tx.signatures[0]),'compute_units':result.compute_units_consumed()})
      return result
     meta=lambda k,s=False,w=False:AccountMeta(k,s,w)
-    
+
     send('create-and-initialize-buffer',[create_account(dict(from_pubkey=payer.pubkey(),to_pubkey=buffer.pubkey(),lamports=vm.minimum_balance_for_rent_exemption(37+len(elf)),space=37+len(elf),owner=loader)),Instruction(loader,struct.pack('<I',0),[meta(buffer.pubkey(),w=True),meta(payer.pubkey())])],[payer,buffer])
     for offset in range(0,len(elf),900):
      chunk=elf[offset:offset+900]

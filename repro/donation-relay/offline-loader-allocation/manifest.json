@@ -8,7 +8,7 @@
     "repro/donation-relay/offline-loader-allocation/README.md": "bdd96767e7a73aae932ce5881cfc96eee3db81cc061ccecb55d3b90b8adfa878",
     "repro/donation-relay/offline-loader-allocation/receipt.json": "e0d47feaaec3791fc1cd070379d85bc30c61ca07c97bb01b148e43b9ae6c1b23",
     "repro/donation-relay/offline-loader-allocation/test_verify.py": "e21a51187df0fa7740882fabb7a7e495646dfc1925b9efb429b72d76ffe528c0",
-    "repro/donation-relay/offline-loader-allocation/verify.py": "9fa3968a7e598ce1a64b86498e76322e62debdeb9394d3279c054a48ba8413c1"
+    "repro/donation-relay/offline-loader-allocation/verify.py": "741e6be8b0910f440b2ebc4ee65e01254a61d71ffaef416fcc26d815516486e2"
   },
   "schema": 1
 }
