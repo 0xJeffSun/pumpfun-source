@@ -42,6 +42,21 @@ For a source composition that is not a checkpoint packet (integrate's tree), sta
 (`repro/pump_amm/<ck>/workspace_recipe_v2.py stage --source-root <tree> --output <ws>`) and pass `--source <ws>`;
 `verify.py` reads the baseline from `<packet>/results/build`, so add a frontier entry pointing at the composed build.
 
+## Raw priority ledger (tools/raw_priority.py on the 651 ordered diagnose)
+
+Only call-only windows can become raw before `.text` has its original size (data immediates are absolute):
+close {0xf28b8 0xf2d60 0xf2ed0 0xf31d8 0xf4030 0xf4180 0xf6eb0} → +59 raw; then {0xb3460 0xb92c8 0xe9b90 0xe9fc0} → +7;
+then {0x73ef0 0x74128 0x74648 0x74900 0x74e30} → +5; the remaining 71 call-only windows need ~100 root slots.
+The ordered raw set is the same 168 windows on 623, 647 and 651: source gains since 623 added no raw window because
+every new match sits behind these blockers.
+
+## In flight (12:50)
+
+- `out/builds/u2b-default`: default build with link capture of the integrate lane's u2b workspace
+  (`SP/lanes/integrate/out/linux-u2b-a/ws`, their Linux 0fb1f886 = 680/148/105, includes amm-hi's harvest change),
+  to measure order + harvest (deficit should vanish). Composed-base helpers ready: `out/verify-composed.py`
+  (`baseline_artifacts` in claims), `out/mkclaims.py` (env BASE_C/BASE_S).
+
 ## Next
 
 1. Re-run the generator on the integrate lane's composition when `SP/shared/frontier/current.json` appears
