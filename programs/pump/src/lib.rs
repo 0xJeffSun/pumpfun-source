@@ -527,3 +527,48 @@ fn update_global_authority_handler(ctx:Context<UpdateGlobalAuthority>)->Result<(
     let event=UpdateGlobalAuthorityEvent{global:ctx.accounts.global.key(),authority:ctx.accounts.authority.key(),new_authority:ctx.accounts.new_authority.key(),timestamp:Clock::get()?.unix_timestamp};
     emit!(event.clone());emit_cpi!(event);Ok(())
 }
+
+// Shared user-signed quote payment helpers.
+pub mod user_quote_payments {
+    use anchor_lang::prelude::*;
+    use anchor_spl::token_interface::TokenInterface;
+    use crate::trade_types::BondingCurve;
+
+    #[inline(never)]
+    pub fn transfer_native<'info>(
+        system_program: &AccountInfo<'info>,
+        payer: &Signer<'info>,
+        destination: &Account<'info, BondingCurve>,
+        amount: u64,
+    ) -> Result<()> {
+        if amount == 0 { return Ok(()); }
+        anchor_lang::system_program::transfer(
+            CpiContext::new(system_program.clone(), anchor_lang::system_program::Transfer {
+                from: payer.to_account_info(),
+                to: destination.to_account_info(),
+            }), amount,
+        )
+    }
+
+    #[inline(never)]
+    pub fn transfer_from_user<'info>(
+        native: bool,
+        system_program: &AccountInfo<'info>,
+        payer: &Signer<'info>,
+        destination: &Account<'info, BondingCurve>,
+        amount: u64,
+        token_program: &Interface<'info, TokenInterface>,
+        quote_decimals: u8,
+        quote_mint: &AccountInfo<'info>,
+        quote_source: Option<&AccountInfo<'info>>,
+        quote_destination: Option<&AccountInfo<'info>>,
+    ) -> Result<()> {
+        if native { return transfer_native(system_program, payer, destination, amount); }
+        let from = quote_source.unwrap();
+        let to = quote_destination.unwrap();
+        let authority = payer.to_account_info();
+        crate::sell_v2::quote_token_transfers::transfer_quote_tokens(
+            token_program, from, to, authority, quote_decimals, quote_mint, amount, &[],
+        )
+    }
+}
