@@ -698,3 +698,16 @@ Anchor remains 1.0.0, parent target libraries are reused, and the counts bind th
 older qualified diagnostic. This is neither a complete historical-framework
 reproduction nor a composition with the current trade/validator successor. Original
 source provenance, current-source composition and runtime qualification remain open.
+
+### Historical runtime and dependency allocator control
+
+[The historical-framework packet](../research/mayhem-historical-framework/README.md)
+reproduces the 328-byte curve helper with all Anchor packages from one historical
+revision and 187 checksum-authenticated registry packages at historical lock
+versions. The actual Solana gate and no-event controls return 312 bytes; a direct
+repeat reproduces the complete curve archive. Three fresh dependency/root attempts
+retain 459 compiler commands, but all roots fail on the reconstruction's newer
+Anchor APIs. This is a successful curve-level sufficiency control, not a complete
+program candidate. The earlier mixed dependency failure is retained. Root API
+compatibility, source attribution and runtime qualification remain unresolved;
+no existing whole-program coverage count is changed.
