@@ -1,0 +1,19 @@
+name: Verify Pump AMM migration composition
+on: [push, pull_request, workflow_dispatch]
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  verify:
+    name: pump-amm-migration-composition
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r requirements.txt
+      - name: Verify four-way signed migration evidence
+        run: python -B research/pump-amm-migration-composition/verify.py
+      - name: Reject corrupted and mislabeled compositions
+        run: python -B research/pump-amm-migration-composition/test_verify.py
