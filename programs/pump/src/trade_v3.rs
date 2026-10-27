@@ -1,6 +1,7 @@
 use anchor_lang::prelude::*;
 use anchor_spl::token_interface::{self, Mint, TokenAccount, TokenInterface, TransferChecked};
 use crate::{Global, PumpError};
+#[path="v3_native_transfer_fee.rs"] pub mod native_transfer_fee;
 use crate::trade_types::{BondingCurve, FeeConfig, Fees, TradeEvent};
 const FEE_PROGRAM: Pubkey = anchor_lang::solana_program::pubkey!("pfeeUxB6jkeY1Hxd7CsFCAjcbHA9rWtchMGdZ6VojVZ");
 const WSOL: Pubkey = anchor_lang::solana_program::pubkey!("So11111111111111111111111111111111111111112");
@@ -460,10 +461,10 @@ pub(crate) fn quote_transfer_fee(mint:&AccountInfo,amount:u64,inverse:bool)->Res
 fn quote_fee_for_amount(snapshot:&Option<(u64,u64,u64)>,amount:u64,inverse:bool)->Result<u64>{
     match *snapshot {
         Some((epoch,maximum_fee,basis_points))=>{
-            let selected=anchor_spl::token_2022::spl_token_2022::extension::transfer_fee::TransferFee{
-                epoch:epoch.into(),maximum_fee:maximum_fee.into(),transfer_fee_basis_points:(basis_points as u16).into(),
-            };
-            let fee=if inverse{selected.calculate_inverse_fee(amount)}else{selected.calculate_fee(amount)};
+            let selected=native_transfer_fee::Fee { epoch, maximum_fee, basis_points: basis_points as u16 };
+            let fee=if inverse{
+                selected.calculate_pre_fee_amount(amount).and_then(|gross| selected.calculate_fee(gross))
+            }else{selected.calculate_fee(amount)};
             fee.ok_or_else(||error!(PumpError::Overflow))
         }
         None=>Ok(0),
