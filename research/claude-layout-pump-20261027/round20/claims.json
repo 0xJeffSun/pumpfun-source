@@ -1,0 +1,78 @@
+{
+ "frontier_packet": "repro/pump/main-contract-round20-20261027",
+ "baseline": {
+  "unstripped_sha256": "41edcce6621e8d6eeb68f926e370699b50bf150885f92e1b50377e2c422cee7d",
+  "candidate_sha256": "e434fb025f65c18367351b973c1443816ad1cb01108b31f2723cd865c35079c0",
+  "normalized": 705,
+  "raw": 120,
+  "unmatched": 330,
+  "matched_text_bytes": 845272,
+  "raw_text_bytes": 22752
+ },
+ "ordered": {
+  "unstripped_sha256": "89a34a0b52c70aca3cf97988b99da3a082856a9817273a28b137d062a9189015",
+  "candidate_sha256": "667edb89a4f37dd2dead6b7b6f65d258e9388238a80d0f704b1b2a1101f02da9",
+  "normalized": 705,
+  "raw": 132,
+  "unmatched": 330,
+  "matched_text_bytes": 845272,
+  "raw_text_bytes": 32416
+ },
+ "raw_gained_windows": [
+  1615064,
+  1616008,
+  1707880,
+  1712960,
+  1729392,
+  1730880,
+  1749536,
+  1750832,
+  1782304,
+  1784000,
+  1785992,
+  1786064
+ ],
+ "raw_lost_windows": [],
+ "normalized_lost_windows": [],
+ "translation": {
+  "sections": 917,
+  "moved_sections": 916,
+  "direct_calls": 10710,
+  "lddw_text": 116,
+  "data_text_pointers": 158,
+  "relocations": 5737,
+  "local_branches": 20611
+ },
+ "residual_classes": {
+  "call (drift from unmatched windows between caller and callee)": 199,
+  "call+data (referenced 8-byte prefixes equal)": 261,
+  "call (callee instance differs; drift from unmatched windows between caller and callee)": 1,
+  "call+data (some referenced prefix differs)": 53,
+  "call (callee window unmatched; drift from unmatched windows between caller and callee)": 2,
+  "data (referenced 8-byte prefixes equal)": 53,
+  "call (callee window unmatched)": 2,
+  "data (some referenced prefix differs)": 2
+ },
+ "ordered_builds": [],
+ "evidence": "relink of the recorded default-layout build with the generated script (relink output equals build.py output on every round where both ran)",
+ "unlock": {
+  "call_only_raw_now": 132,
+  "raw_if_all_size_changing_windows_neutral": 328,
+  "regions": [
+   {
+    "region": "dependency region from the allocator shim",
+    "bytes": 15392,
+    "raw_if_neutral": 188,
+    "gain": 56,
+    "windows": 15
+   },
+   {
+    "region": "from __rust_dealloc",
+    "bytes": 17472,
+    "raw_if_neutral": 268,
+    "gain": 136,
+    "windows": 18
+   }
+  ]
+ }
+}
