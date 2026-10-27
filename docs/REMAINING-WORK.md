@@ -10,7 +10,7 @@ candidate paths and “current” prose must not override newer evidence.
 
 Subsequent gains are in the [byte-identity progress log](BYTE-IDENTITY-PROGRESS.md):
 Canonical Relay now has **492/492 raw-equal windows and no unmatched windows**; current Fees research
-has **29 unmatched windows and 409 unique structural pairs**. The [Relay framework study](../repro/donation-relay/framework-sysroot-recovery/README.md)
+has **27 unmatched windows and 411 unique structural pairs**. The [Relay framework study](../repro/donation-relay/framework-sysroot-recovery/README.md)
 recovers the three repeated type-ID bodies with official Linux target libraries,
 adds the Anchor 0.32 framework matches and restores share-total compared values.
 The subsequent [mint-predicate study](../repro/donation-relay/mint-fee-pair-recovery/README.md)
@@ -96,7 +96,7 @@ adds the optional account parser and raw-equal cleanup without lost matches.
 Keep their real caller wired to owned `AccountInfo`; the larger account parser
 still needs full reconstruction. The subsequent [seed-vector recovery](../research/fees-social-seed-vector/README.md)
 recovers a 296-byte clone helper; its V2 claim caller remains unmatched. Current
-Fees attribution totals 478 pairs. The [extension-size log recovery](../research/fees-extend-size-logs/README.md)
+Fees attribution totals 480 pairs. The [extension-size log recovery](../research/fees-extend-size-logs/README.md)
 restores the no-resize messages and formatting helper; the larger resize handler
 remains unmatched.
 
@@ -293,7 +293,7 @@ and signing/ownership restrictions are unchanged by this documentation audit.
 | --- | --- |
 | Selected Pump | 507 windows without full normalized matches; calls/data and ambiguous matches also remain. The separate workspace-member build has 538 normalized windows and 497 residuals: 233 different-body, 192 no-same-size, 72 store-immediate-only heuristic rows. One of those 72 changes an error code; only 71 are reported origin-only. |
 | Selected AMM | 297 unmatched original windows, 160 ambiguous normalized rows, original diagnostics, data and full call contracts |
-| Fees current research | 29 unmatched windows (196,880 original body bytes), 69 additional call-attributed pairs and 78 duplicate windows still unattributed; close shareholder validators, transitive calls/data and full ELF/relocation layout |
+| Fees current research | 27 unmatched windows (189,248 original body bytes), 69 additional call-attributed pairs and 78 duplicate windows still unattributed; close shareholder validators, transitive calls/data and full ELF/relocation layout |
 | Selected Mayhem | Seven admitted unmatched windows and 257 source-ledger opaque windows; 12 of the opaque windows have local raw matches without semantic attribution |
 | Relay current research | all 492 raw windows and the full meaningful ELF match via a reconstructed linker layout; the loader reproduces the full captured payload. Resolve historical provenance, privileged successes and broader allocator/borrow coverage |
 | Metaplex | Utilize's 1,477 text differences, 30 source-coordinate differences, two relocation differences; authentic source/compiler layout |
@@ -526,3 +526,14 @@ Preserve its exact compiler ELF, loader-created payload and archived historical
 source under the successor checks. Selection itself is no longer a Relay task;
 historical provenance, ProgramData metadata/history and broader execution coverage
 remain separate from byte identity.
+
+## Current-source composition completed
+
+The [558 integration](../research/fees-current-558-integration/README.md) composes
+the reviewed native Crank lifetimes, checked credit, constant initializer and
+borrowed Relay encoder onto the artifact-backed556 source. Earlier instructions
+to perform that combination are now satisfied. Remaining work includes the
+Crank body and compute consumption, authentic fixed-admin success, the 27
+unmatched windows and whole-ELF/data/relocation identity. The separate 43-input
+source-only union and its later exotic-body proposal still need independent
+composition and compilation; their gains are not added to this count.

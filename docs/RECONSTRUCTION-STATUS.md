@@ -77,13 +77,13 @@ payload**, with 12,168 zero bytes allocated by the loader. Compiler output is
 not padded. ProgramData metadata/history and broader runtime acceptance remain separate
 requirements. The source and exact artifact are now canonically selected.
 
-Fees research has **556/585 windows with a normalized counterpart**: 409 unique
-structural pairs and 147 original windows in ambiguous duplicate groups. Its 29
-unmatched windows span **196,880 of 799,648 original text bytes (24.6%)**, although
-they are only 5.0% of the window count. Many remaining bodies are large. The
+Fees research has **558/585 windows with a normalized counterpart**: 411 unique
+structural pairs and 147 original windows in ambiguous duplicate groups. Its 27
+unmatched windows span **189,248 of 799,648 original text bytes (23.7%)**, although
+they are only 4.6% of the window count. Many remaining bodies are large. The
 [current call ledger](../repro/reconstruction-status-2026-10-26/fees-call-attribution.json)
 recomputes 69 additional duplicate-body correspondences on this candidate, for
-478 attributed pairs. There are 78 still-unattributed duplicate windows and 14
+480 attributed pairs. There are 78 still-unattributed duplicate windows and 13
 call edges to different-body frontiers. This refinement adds no body coverage.
 
 There is no defensible single source-completion percentage or ETA. Whole-program
@@ -695,3 +695,16 @@ not added to the newer candidate. The [Crank checked-credit packet](../research/
 passes evidence checks and a fresh 76-case differential, reproducing 15 control
 failures and zero proposal failures. Its source must be composed with PR201's flow
 before a current combined runtime or byte claim is made.
+
+## Current 558-window composition
+
+[Independent current-source integration](../research/fees-current-558-integration/README.md)
+adds original encoder 270136 and initializer parser 295800 to the 556 baseline,
+while composing PR201's native-only Crank and PR205's checked credit. Two builds
+agree; the fresh all-dependency baseline matches the preceding published artifact.
+All prior raw/normalized matches,165 Location uses and positive direct-call
+observations survive. All 17,331 regression and 76 boundary cases pass. The304
+strict Crank cases have identical retained non-log fields and application logs;
+all 304 raw logs differ in explicit compute-consumption lines. Whole identity
+and authentic fixed-admin success remain unproved. The inventory is now 558
+normalized,142 raw-local,411 unique pairs,27 unmatched, with 480 attributed pairs.

@@ -1201,10 +1201,8 @@ Snapshot and limitations: [inventory](README.md). Addresses are decimal virtual 
 | pump_fees_research | 240088 | 3096 | no_complete_body_match |  |
 | pump_fees_research | 243184 | 6080 | no_complete_body_match |  |
 | pump_fees_research | 249264 | 8000 | no_complete_body_match |  |
-| pump_fees_research | 270136 | 1400 | no_complete_body_match |  |
 | pump_fees_research | 271536 | 5136 | no_complete_body_match |  |
 | pump_fees_research | 276672 | 4304 | no_complete_body_match |  |
-| pump_fees_research | 295800 | 6232 | no_complete_body_match |  |
 | pump_fees_research | 484816 | 16112 | no_complete_body_match |  |
 | pump_fees_research | 502096 | 16880 | no_complete_body_match |  |
 | pump_fees_research | 582624 | 4352 | no_complete_body_match |  |

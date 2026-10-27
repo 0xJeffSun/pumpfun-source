@@ -14,8 +14,8 @@ import tempfile
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 INPUTS = {}
-REVISION = '26c03fd7825b9e3b597be66703b4fbec94943454'
-FEES = 'repro/pump_fees/distribution-helper-recovery'
+REVISION = '8d223468ecf3a0be208c144df666faa104c8d8e9'
+FEES = 'research/fees-current-558-integration'
 RELAY = 'repro/donation-relay/linked-elf-reproduction'
 
 
@@ -97,13 +97,13 @@ def generate():
     candidate = gzip.decompress(read(FEES + '/artifacts/candidate-candidate.so.gz'))
     ow, cw = wm.windows(original), wm.windows(symbols)
     comparison = wm.compare(ow, cw)
-    saved = load(FEES + '/cumulative-summary.json')['composed556']
-    assert len(comparison['unique_pairs']) == saved['unique_pairs'] == 409
-    assert len(comparison['unmatched_original']) == 29
-    assert sum(o['signature'] in {c['signature'] for c in cw} for o in ow) == saved['normalized'] == 556
-    build = load(FEES + '/builds/candidate-result.json')
-    assert hashlib.sha256(candidate).hexdigest() == build['candidate_sha256']
-    assert hashlib.sha256(symbols).hexdigest() == build['symbols_sha256']
+    saved = load(FEES + '/summary.json')
+    assert len(comparison['unique_pairs']) == saved['unique_pairs'] == 411
+    assert len(comparison['unmatched_original']) == 27
+    assert sum(o['signature'] in {c['signature'] for c in cw} for o in ow) == saved['normalized'] == 558
+    build = load(FEES + '/builds/candidate/result.json')['artifacts']
+    assert hashlib.sha256(candidate).hexdigest() == build['candidate.so']['sha256']
+    assert hashlib.sha256(symbols).hexdigest() == build['symbols.so']['sha256']
     raw_index, normalized_index = collections.defaultdict(list), collections.defaultdict(list)
     for c in cw:
         raw_index[c['raw_sha256']].append(c)
@@ -111,11 +111,11 @@ def generate():
     unique = {r['original']['address'] for r in comparison['unique_pairs']}
     for o in ow:
         o['unique'] = o['address'] in unique
-        rows.append(row('pump_fees_research', o, raw_index[o['raw_sha256']], normalized_index[o['signature']], FEES + '/cumulative-summary.json'))
+        rows.append(row('pump_fees_research', o, raw_index[o['raw_sha256']], normalized_index[o['signature']], FEES + '/summary.json'))
     fees_meta = dict(candidate_sha256=hashlib.sha256(candidate).hexdigest(), candidate_bytes=len(candidate),
                      whole_capture_equal=candidate == original,
                      raw_file_equals_original_elf_extent=candidate == original[:wm.m.elf_layout(original)['elf_extent']],
-                     unique_structural_pairs=409, ambiguous_original_windows=sum(len(g['original']) for g in comparison['ambiguous']),
+                     unique_structural_pairs=411, ambiguous_original_windows=sum(len(g['original']) for g in comparison['ambiguous']),
                      candidate_windows=len(cw))
 
     attribution_path = 'research/fees-refreshed-call-attribution'
@@ -128,7 +128,7 @@ def generate():
     attribution = attribution_module.analyze(provenance)
     assert attribution['candidate_sha256'] == fees_meta['candidate_sha256']
     attributed = {pair['original']['address']: pair['candidate']['address'] for pair in attribution['newly_attributed_pairs']}
-    assert len(attributed) == 69 and attribution['graph_attributed_pairs'] == 478
+    assert len(attributed) == 69 and attribution['graph_attributed_pairs'] == 480
     for record in rows:
         record['call_attributed_candidate_starts'] = []
         if record['program'] == 'pump_fees_research' and record['original_start'] in attributed:
@@ -136,7 +136,7 @@ def generate():
             assert address in record['normalized_candidate_starts']
             record['call_attributed_candidate_starts'] = [address]
             record['source_status'] = 'call_attributed_duplicate_pair'
-    fees_meta.update(additional_call_attributed_pairs=69, total_attributed_pairs=478,
+    fees_meta.update(additional_call_attributed_pairs=69, total_attributed_pairs=480,
                      remaining_unattributed_duplicate_windows=78)
 
     parser = module('status_relay_windows', 'repro/donation-relay/swap-receipt-coordinate-recovery/analyze.py')

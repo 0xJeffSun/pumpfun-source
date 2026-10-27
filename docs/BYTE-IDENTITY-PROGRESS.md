@@ -1459,3 +1459,14 @@ path remap are documented reconstructed build inputs, not historical provenance.
 The retained materializer restores its builder's transitive Python imports, and
 the verifier checks ordered complete callees, source, artifacts and signatures.
 The selected checkpoint remains unchanged.
+
+## Independently compiled current558 source
+
+The [558 integration](../research/fees-current-558-integration/README.md) closes
+encoder 270136 and parser 295800 on the 556 base and preserves every previous
+match. It adds 24 raw-local counterparts:558 normalized,142 raw-local,411 unique,
+27 unmatched;189,248 original instruction bytes remain unmatched. Two builds
+agree. All 165 Locations and 3,284 prior positive direct-call observations survive,
+with 3,336 equal observations in the new build. All 17,331 suite and 76 boundary
+cases pass. Strict304-case Crank observations agree except explicit compute
+lines in every case; raw runtime equivalence is not claimed.
