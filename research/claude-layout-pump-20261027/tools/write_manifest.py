@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """Write MANIFEST.json (sha256 of every packet file except itself and caches)."""
+import sys
+sys.dont_write_bytecode = True  # keep the packet free of __pycache__
 import hashlib
 import json
 from pathlib import Path

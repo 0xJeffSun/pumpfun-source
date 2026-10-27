@@ -38,11 +38,12 @@ def find_root(start):
     for p in [start, *start.parents]:
         if (p / 'evidence/original/pump_amm/deployed.so').is_file() and (p / 'repro/pump_amm/claim-self-transfer-v144/static-tool/elf_reader.py').is_file():
             return p
-    raise SystemExit('repository root not found')
+    return None   # packet copied outside the repository: the caller supplies the reader path and ROOT
 
 
 ROOT = find_root(HERE)
-sys.path.insert(0, str(ROOT / 'repro/pump_amm/claim-self-transfer-v144/static-tool'))
+if ROOT is not None:
+    sys.path.insert(0, str(ROOT / 'repro/pump_amm/claim-self-transfer-v144/static-tool'))
 from elf_reader import Elf  # noqa: E402  (the measurement tool's own reader)
 
 

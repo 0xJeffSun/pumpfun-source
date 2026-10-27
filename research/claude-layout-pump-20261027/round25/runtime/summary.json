@@ -1,6 +1,6 @@
 {
  "scope": "Unchanged 44-suite main-Pump corpus (captured upgradeable loader), original vs ordered candidate; each suite checked with validate_optimized_loader.validate_result; diagnostics via scripts/pump_diagnostic_audit.audit.",
- "candidate_sha256": "076584d4ac8d7327f5abcd93485ef8b2b6702438c2484221bd077efc56d6074a",
+ "candidate_sha256": "87ba67cc472d98a6d160586d7d0b71cc0661bac0b315adc7597755596762cfe9",
  "original_sha256": "7a19affaa2c6187e04a5fe0ea298cee81fa5eb8c24cfcc30d85f615e89f7b02d",
  "suite_count": 44,
  "case_count": 10468,
@@ -10,265 +10,265 @@
   {
    "suite": "volume",
    "cases": 66,
-   "result_sha256": "2aa542f517ed5dec986cb5d523ac24f9fb68673b672cae7a86f5a4c72dca1f21",
+   "result_sha256": "da9748e61a8073123b2d40ed80ea8dc2f4937a0489f4ef93b0492a2bd6fcc572",
    "loader_loads": 132
   },
   {
    "suite": "administration",
    "cases": 93,
-   "result_sha256": "3b002eeefef53eb3225cccea3be9de3ffde29f895a270dbd17c3d177a0432ca3",
+   "result_sha256": "b25160d20aa0491fb36936c68602497781206869de39f085eb2c00297d87c7bd",
    "loader_loads": 186
   },
   {
    "suite": "authority",
    "cases": 59,
-   "result_sha256": "63a441ef168e52d270b7923a666931c7529a774aedea498a884282cde603580a",
+   "result_sha256": "81cf971bf8eb16ed18dc3b9e0dfab69269bf084cd6004b6e2eb36a6089ee8d5f",
    "loader_loads": 118
   },
   {
    "suite": "configuration",
    "cases": 351,
-   "result_sha256": "7fa411a27c276c86c7efedff52d5f4c4ca8a6b2bd06db6fbbe411ebed99b416c",
+   "result_sha256": "05892d75a728acdbfd00976253054e75a5724e6e2ce8a80ed28717b7403443ef",
    "loader_loads": 702
   },
   {
    "suite": "buy",
    "cases": 334,
-   "result_sha256": "b7581d03b0996e4871b7af72b237187d3f62ebcfcca27bc6b1aa1b64e973da5a",
+   "result_sha256": "0b9634f0ff8a2451cd171cdb3d145b66ce6ff05a5d03a6c3efd7a234a312cb20",
    "loader_loads": 669
   },
   {
    "suite": "sell",
    "cases": 301,
-   "result_sha256": "b34bf92234ea07a236259c0eb7ec1de2a9375573be84e72b4299f794703aab02",
+   "result_sha256": "ed0e59f6937ee1976b683b02c18d693ba39bdaeb4c953e84ad507a287394233a",
    "loader_loads": 603
   },
   {
    "suite": "quote",
    "cases": 130,
-   "result_sha256": "f9df3649c1088a4189c4ff1ee0353b9d75e37bc19f952498891d6b6b6bf4fc21",
+   "result_sha256": "ba5f0d99ab3a813d6d58211035fb14d247decb8be68d4560a0a6ddb822f19576",
    "loader_loads": 261
   },
   {
    "suite": "creator_collection",
    "cases": 119,
-   "result_sha256": "62c290d59153f71d4d2f48390431075fb5287d6e0df6cd8454b9c8f771e07b32",
+   "result_sha256": "982f77d5ac2a7f9cb5c40aae9a0a49f6e705461acaa4aa38cee79090f5a4e8ce",
    "loader_loads": 238
   },
   {
    "suite": "creator_distribution",
    "cases": 298,
-   "result_sha256": "18386adf3e18461c9ef51546de4572db5014cefbf2a83de2ae5b16dda2790d4f",
+   "result_sha256": "c9cffff8bfd600c2d2ca31bb41b2fd5f5ac1247fdbff79d06bc3a547be693a65",
    "loader_loads": 894
   },
   {
    "suite": "minimum_distribution",
    "cases": 181,
-   "result_sha256": "e7e36a795319846b183cf28037f478c7a7c9718795bc738f3795b5896088c1e2",
+   "result_sha256": "b5ba359a81873923568ec892b6442bbe4fdf4520a08a84917a319ecff1bca7de",
    "loader_loads": 543
   },
   {
    "suite": "creator_collection_v2",
    "cases": 154,
-   "result_sha256": "4897479d1a3a857c743232bfce9cadc12a301b20b87abf8778d745dc67ed72e4",
+   "result_sha256": "77dade1a0a3c32a37e175d4d2ccf5af2846cb91cc42c272e1aa37093ac5de590",
    "loader_loads": 308
   },
   {
    "suite": "extension",
    "cases": 308,
-   "result_sha256": "bfc3d35bb5ed947ea104cdfd1e501a3bf86d9dff7268bb90876eec4d414808f2",
+   "result_sha256": "ad797b36410402ad8348c5af7f498dea95411c91e1b3b4f798d5a511ed39be7d",
    "loader_loads": 616
   },
   {
    "suite": "volume_sync",
    "cases": 341,
-   "result_sha256": "b7413481af9f7ff0ca70aea8f87d1f9553d37342fc6f4b136d94cb043d4054cf",
+   "result_sha256": "dbe7520eafb18ee4cdb3974dca2d3e5c3d5b7da4579256055ea1d683cde7f1cd",
    "loader_loads": 682
   },
   {
    "suite": "fee_sweeps",
    "cases": 504,
-   "result_sha256": "573f2723df4f53c85449c3ffc38b37f91e8e3a8347a820d2af43b72e94a45f5c",
+   "result_sha256": "3d8283f8875d92a8b309e842a00eb1b90034681f8854805b48a05a4f6bc2a2d9",
    "loader_loads": 1512
   },
   {
    "suite": "creator_migration",
    "cases": 139,
-   "result_sha256": "16893ca1092f2ea453d427a42030c74ad7c4e1a696336242998c3d8b2a865267",
+   "result_sha256": "6a5a0f70d18c50ccfd7f00f80fb77b3bcd0b0e6e4424e39b110393e6a0d31c4b",
    "loader_loads": 417
   },
   {
    "suite": "admin_cto",
    "cases": 363,
-   "result_sha256": "6f751469bafe2d9bbcdb72466bc51669d648b84581ff1c8e103c94ffadf9d75c",
+   "result_sha256": "7264daecd595342540c79fa3bbc6ff653de7153329de04e0372a4a8756834ceb",
    "loader_loads": 726
   },
   {
    "suite": "set_params",
    "cases": 169,
-   "result_sha256": "000a753617b1afafe75824f087e73c37fcea57af908ecb8d9cad780f8e6628b8",
+   "result_sha256": "c0d31ddf38ef2215f5611ee848f4f2392776962073271c553fad93a6dcdca3f6",
    "loader_loads": 338
   },
   {
    "suite": "set_creator",
    "cases": 509,
-   "result_sha256": "2d8bebdabe3109fbc61c0f11429ec64a91c1050ea6d90b8cd4fd8ca0c505aacd",
+   "result_sha256": "27b3096e99d3d183a71ece20b6c76ff28aa19264a4c9ce0371b9b26f28fcf782",
    "loader_loads": 1018
   },
   {
    "suite": "idl_authority",
    "cases": 171,
-   "result_sha256": "11651a56082b058e36451ec435bb9d42ec71827f3af37a0fb7a7b8b65a64f0fd",
+   "result_sha256": "c9948ee290c3b575b18f4728cb299f9baf18a1df983dda43d67f20286935dd47",
    "loader_loads": 342
   },
   {
    "suite": "legacy_create",
    "cases": 87,
-   "result_sha256": "23c8aea460fe4840a26e143b4e91bc37fb35a4ec0f00748e5b21cd13ddf86723",
+   "result_sha256": "b2686c5fedfb00ee63c8a4d7694d3d237445110b0c3b281c307cfd026731035a",
    "loader_loads": 174
   },
   {
    "suite": "exact_quote_v3",
    "cases": 352,
-   "result_sha256": "8d7e500b0aee57aa6f4262be8b87b724df3be586cbc0005b215a8eb40a38e180",
+   "result_sha256": "510b0f3af7880a2906b0ca7bb736f951d45ec9fe938cc5b30d239c8eaf35bee2",
    "loader_loads": 705
   },
   {
    "suite": "create_v2",
    "cases": 297,
-   "result_sha256": "ab946c99ec2dfec6baddbb564ede359a6e4a7095ab2e869dd305a2d6ba6fbfad",
+   "result_sha256": "9484dcba955c9c603b659ea72bb6ca9205bb873dcd74b4c9e55d19752fdb6d99",
    "loader_loads": 594
   },
   {
    "suite": "legacy_sell",
    "cases": 115,
-   "result_sha256": "e454ebd15bba2cc8000f74c82fcaeedf8de593bbdd94acb27b2e02a09e1b7c61",
+   "result_sha256": "16f25cb9ed1acdb1eec0db038cb6600e06dd71cda5a95d8b361943135e4e4bc6",
    "loader_loads": 231
   },
   {
    "suite": "legacy_sell_configured_fee",
    "cases": 28,
-   "result_sha256": "73284169b9a24806e1ee6e8eb00f2c9bbe06c316346d8cd7086866716c0ade29",
+   "result_sha256": "86b9a6fbeda3e9baed542cee185b475960715b8b374d1aee5f9123ce51da2bdc",
    "loader_loads": 57
   },
   {
    "suite": "sell_v2",
    "cases": 206,
-   "result_sha256": "afd1b3212c9d70397f4caf30775466ba923bb197b421a32eb1c2c20e663ae102",
+   "result_sha256": "8584e00661bd864997a89dc94afde900528529216feef7e3de53685dc9d65adc",
    "loader_loads": 413
   },
   {
    "suite": "create_control",
    "cases": 85,
-   "result_sha256": "7e611506b6e001d0632628511172010a98dce77581a45586fc5de13c64dcb5d6",
+   "result_sha256": "d3850021166efe6670df15b397c5bf9754da26cdfde2b381602cfd3a83975643",
    "loader_loads": 170
   },
   {
    "suite": "migration",
    "cases": 228,
-   "result_sha256": "dd1000b3c9bcf17fcea5800b146a4e62de167d1d205380a22b4af56d1eb53a9c",
+   "result_sha256": "761bac32ad40d88fc7e4fe664a5c8c7e8c34353eb6e9dedeb49be6aab1b75d97",
    "loader_loads": 684
   },
   {
    "suite": "v3_configured_fee",
    "cases": 372,
-   "result_sha256": "f32d4b68b5298f874f102c14c68d6d9c6cb07774bdfc2484e14183bca5de61e2",
+   "result_sha256": "06baf0d13bc52499f66371bcc19b161390724cbae1c08d38011683ee657e756b",
    "loader_loads": 745
   },
   {
    "suite": "legacy_buy",
    "cases": 284,
-   "result_sha256": "2d8e9d272cd090116ba188159938799f792ae82ac4ca9bfb22381be02c6ffebc",
+   "result_sha256": "7b90efcacf7d3d4c2647fc47df27f5cc3a368afa302c236565f4cbd94d160596",
    "loader_loads": 569
   },
   {
    "suite": "buy_v2",
    "cases": 216,
-   "result_sha256": "a84132bf7373f75d7d052396cc61b3b4ee5f5e9ad4813509e7d94e983ab7782c",
+   "result_sha256": "a87569a2d3402beb0ba255e95a81b5aa622f1e266ca0270fafcb65f5e4167b5a",
    "loader_loads": 433
   },
   {
    "suite": "migrate_v2",
    "cases": 827,
-   "result_sha256": "988a23d1b8f20964b8b146eaedc45f2b930ac1cd58120fad232affa04bcbbf83",
+   "result_sha256": "99ba8c6032c31a7da7cc42b43f96cf3cf980b4d708db1b30f879441afb9e65ea",
    "loader_loads": 2481
   },
   {
    "suite": "cashback",
    "cases": 283,
-   "result_sha256": "f0494cf03e0ee06000591c22faa705d2629b398c9c991e1c783675a23ae13118",
+   "result_sha256": "575592873b8c44b9a69fa15d7d9aa8b6d3fee5996f95852491b1a55a7bbe85f6",
    "loader_loads": 567
   },
   {
    "suite": "global_init",
    "cases": 40,
-   "result_sha256": "fbd40d3ed928dc85ec11566fd49614a11b486e77c7555a1f1b51f2ccc4d8b8ab",
+   "result_sha256": "e0818c78b09717583bba60a132d29bc2b435a33e218c5decb3a3c70fab53ff8c",
    "loader_loads": 80
   },
   {
    "suite": "holder_distribution",
    "cases": 649,
-   "result_sha256": "fc78dfcb5ee921d97d78c1250fd5b8dc9d93630c37573ff26ea6e18c6b8261da",
+   "result_sha256": "69cdf64ef3acb07d8ac073acd96b52a115c1042aaf966fe2e3ba44f29dac9686",
    "loader_loads": 1947
   },
   {
    "suite": "nested_create",
    "cases": 48,
-   "result_sha256": "f70e4edcedbcb7cf4c80216bbfbb59e8419dd1ecaa9be4a8e9b09d1440533101",
+   "result_sha256": "1d7e2f958d9b13280e76168be5e5d35ce37fb49f3d83b8e2e648d8b384e0b05d",
    "loader_loads": 144
   },
   {
    "suite": "quote_control",
    "cases": 507,
-   "result_sha256": "99f42c376f4bc57cfdc405b153624d40cd34c8afea9352ea87f1ed424fb39f36",
+   "result_sha256": "f3b9e0a9bb13387ad37a8cc15a240be013488b7ffb14b54c9b66f4d899e575f7",
    "loader_loads": 1014
   },
   {
    "suite": "multi_hop_curve_partial",
    "cases": 56,
-   "result_sha256": "03f3c16e850b1b54bd2c5304a7e6a2480fb451932ba5ad55d9f0d0fc7c7b1155",
+   "result_sha256": "e8aa5ed344317267d9d157a0ebcb2cf324d9e96ae2e0236856b422739171da8e",
    "loader_loads": 112
   },
   {
    "suite": "tokenkeg_two_curve",
    "cases": 20,
-   "result_sha256": "cb5330e096c03ad1a83576a63be86096f54c64432d99be40d18f45e965f856f5",
+   "result_sha256": "281af34aca3946975eafdee978935092c73134587323c0fc7e1653dc283a6953",
    "loader_loads": 40
   },
   {
    "suite": "incentive_claim",
    "cases": 334,
-   "result_sha256": "da32f7721c3a434f303f49a460e7ef7c2c30b3e0c2887020b9baeedac23d7142",
+   "result_sha256": "da655f07ae21e7c651e3dd73cc142ea53084287edecab2d65b5f37068e352114",
    "loader_loads": 668
   },
   {
    "suite": "virtual_reserve_sync",
    "cases": 192,
-   "result_sha256": "1c76157928033c0efaa7308824a2f56279be7b25c7591271a45349d30c8515eb",
+   "result_sha256": "0c49383e23378ef2abba4e3940cb7b506592a01011fac715f655c4ca4bc4f7f0",
    "loader_loads": 384
   },
   {
    "suite": "claim_panic_diagnostics",
    "cases": 2,
-   "result_sha256": "29ee521b981bf914524ff57041cf16586d5c9b08446a4484d094de76cccd304d",
+   "result_sha256": "c2eb31485bff37d11db92bdcdd8580aedd9031c51fa19d867c12b9dc6e85b2af",
    "loader_loads": 4
   },
   {
    "suite": "incentive_schedule",
    "cases": 575,
-   "result_sha256": "aed8797c10b777774b5765f1ce0153f26f155c531e1cec6cfb21ce87d93a36ba",
+   "result_sha256": "46f10204b2cce9b3361542e5d4caff9b4bca0d54670f414c4ebf11a73a3805d4",
    "loader_loads": 1150
   },
   {
    "suite": "earned_cashback",
    "cases": 61,
-   "result_sha256": "a5a7dcd82e47b192e1a449fb13249df0d3c93acd524c9b68c71873e60841a059",
+   "result_sha256": "323786dfbb637e0154e9737f5426cf83da7d0d4092610080bf519e61325acdde",
    "loader_loads": 132
   },
   {
    "suite": "legacy_cashback",
    "cases": 14,
-   "result_sha256": "bbdb798692ae17abeda67981ab952a79f8f130746eb7af00f7e1f36e99ac8fd6",
+   "result_sha256": "ca40e0ad293a0c36c7312062394f1e6b882828a05f1ba39c8d235e918f1ab089",
    "loader_loads": 31
   }
  ],
@@ -279,5 +279,5 @@
   "work/parallel-main-loader-optimized/pump_captured_loader.py": "844decb7fd4ffe0eaa2ff6243433c7290c478083320cfcdf5bd35debeb2e4858",
   "scripts/pump_diagnostic_audit.py": "0343c70e4f9c7860ad392f0a8bd10d90ac94fe17bb2ba5bfd49a45683edbe343"
  },
- "note": "Single validate_optimized_loader.py run (2 workers) over all 44 suites; its own final report: 10,468 cases, 10,464 log-bearing cases, 0 diagnostic mismatches."
+ "note": "Single validate_optimized_loader.py run (2 workers) over all 44 suites."
 }
