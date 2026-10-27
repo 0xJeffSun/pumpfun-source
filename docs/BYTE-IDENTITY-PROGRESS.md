@@ -1409,3 +1409,18 @@ reach the captured Relay program. The verifier checks the retained 556 parent
 source/artifact hashes directly, without requiring its Git object in a shallow
 checkout. Whole-ELF equality, full raw logs/compute and the selected checkpoint
 remain unchanged; this is an additional bounded research result.
+
+## Fees: complete remaining-account preprocessing
+
+The [preprocessing recovery](../repro/pump_fees/remaining-preprocess-recovery/README.md)
+reconstructs the complete 2,520-byte original function at 231576 using the
+observed public module, owned key value and borrowed-result lifetime. The
+cumulative research candidate reaches **558/585 normalized windows**, 411
+unique pairs and 118 raw matches. Every previous match is retained; 166 checked
+source locations agree, with 17 additional matching callee observations.
+
+The ordinary 417-case regression passes. Another 24 cases explicitly exercise
+the completed-curve branch with boundary account lengths and ownership/key
+variants. All compared outcomes and state pass; two incomplete-curve controls
+retain old downstream diagnostic differences. Whole-ELF equality remains open.
+No selected checkpoint is changed.
