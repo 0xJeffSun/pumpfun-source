@@ -17,13 +17,13 @@ impl AccountDeserialize for CreatorMetadata{
 #[derive(Accounts)]pub struct SetCreator<'info>{
  pub set_creator_authority:Signer<'info>,
  #[account(seeds=[b"global"],bump,has_one=set_creator_authority @ PumpError::NotAuthorized)]pub global:Box<Account<'info,Global>>,
- pub mint:InterfaceAccount<'info,anchor_spl::token_interface::Mint>,
+ pub mint:Account<'info,anchor_spl::token::Mint>,
  #[account(seeds=[b"metadata",METAPLEX.as_ref(),mint.key().as_ref()],bump,seeds::program=METAPLEX)]pub metadata:Account<'info,CreatorMetadata>,
  #[account(mut,seeds=[b"bonding-curve",mint.key().as_ref()],bump)]pub bonding_curve:Account<'info,BondingCurve>,
 }
 #[event_cpi]
 #[derive(Accounts)]pub struct SetMetaplexCreator<'info>{
- pub mint:InterfaceAccount<'info,anchor_spl::token_interface::Mint>,
+ pub mint:Account<'info,anchor_spl::token::Mint>,
  #[account(seeds=[b"metadata",METAPLEX.as_ref(),mint.key().as_ref()],bump,seeds::program=METAPLEX)]pub metadata:Account<'info,CreatorMetadata>,
  #[account(mut,seeds=[b"bonding-curve",mint.key().as_ref()],bump)]pub bonding_curve:Account<'info,BondingCurve>,
 }

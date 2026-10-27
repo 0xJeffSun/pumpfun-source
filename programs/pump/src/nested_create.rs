@@ -74,8 +74,8 @@ fn decode_curve(data: &[u8]) -> Result<BondingCurve> {
 
 fn ancestor(account: &AccountInfo<'_>, mint: &Pubkey) -> Result<BondingCurve> {
     let expected = Pubkey::find_program_address(&[b"bonding-curve", mint.as_ref()], &crate::ID).0;
-    require!(account.key == &expected, PumpError::InvalidQuoteBondingCurve);
-    require!(account.owner == &crate::ID, PumpError::InvalidQuoteBondingCurve);
+    require_keys_eq!(account.key(), expected, PumpError::InvalidQuoteBondingCurve);
+    require_keys_eq!(*account.owner, crate::ID, PumpError::InvalidQuoteBondingCurve);
     let data = account.try_borrow_data()?;
     decode_curve(&data)
 }
@@ -225,6 +225,6 @@ fn price(g: &Global, seed: u64, records: &[Record]) -> Result<u64> {
     let numerator = amount.checked_mul(difference as u128).ok_or_else(overflow)?;
     require!(real != 0, PumpError::DivisionByZero);
     let reserves = u64::try_from(numerator / real as u128).map_err(|_| overflow())?;
-    require!(reserves != 0, PumpError::QuoteReservesOutOfRange);
+    require_gte!(reserves, 1, PumpError::QuoteReservesOutOfRange);
     Ok(reserves)
 }

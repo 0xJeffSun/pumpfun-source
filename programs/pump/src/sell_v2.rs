@@ -55,8 +55,8 @@ pub fn execute(ctx:Context<SellV2>,amount:u64,minimum:u64)->Result<()>{
  if a.bonding_curve.quote_mint!=Pubkey::default(){
   require!(a.associated_quote_bonding_curve.owner!=&anchor_lang::system_program::ID,anchor_lang::error::ErrorCode::AccountNotInitialized);
   check_token(&a.associated_quote_bonding_curve,a.quote_mint.key(),a.bonding_curve.key())?;
-  require!(a.associated_quote_user.owner!=&anchor_lang::system_program::ID,PumpError::AccountTypeNotSupported);
-  check_token(&a.associated_quote_user,a.quote_mint.key(),a.user.key())?;{let d=a.associated_quote_user.try_borrow_data()?;let t=TokenAccount::try_deserialize(&mut &d[..])?;require!(t.owner==a.user.key(),PumpError::AccountTypeNotSupported);}
+  require_keys_eq!(*a.associated_quote_user.owner,a.quote_token_program.key(),PumpError::AccountTypeNotSupported);
+  check_token(&a.associated_quote_user,a.quote_mint.key(),a.user.key())?;{let d=a.associated_quote_user.try_borrow_data()?;let t=TokenAccount::try_deserialize(&mut &d[..])?;require_keys_eq!(t.owner,a.user.key(),PumpError::AccountTypeNotSupported);}
   for (destination,authority) in [(a.associated_quote_fee_recipient.to_account_info(),a.fee_recipient.to_account_info()),(a.associated_quote_buyback_fee_recipient.to_account_info(),a.buyback_fee_recipient.to_account_info()),(a.associated_creator_vault.to_account_info(),a.creator_vault.to_account_info()),(a.associated_user_volume_accumulator.to_account_info(),a.user_volume_accumulator.to_account_info())]{
    if destination.owner==&anchor_lang::system_program::ID{anchor_spl::associated_token::create_idempotent(CpiContext::new(a.associated_token_program.to_account_info(),anchor_spl::associated_token::Create{payer:a.user.to_account_info(),associated_token:destination.clone(),authority:authority.clone(),mint:a.quote_mint.to_account_info(),system_program:a.system_program.to_account_info(),token_program:a.quote_token_program.to_account_info()}))?;}
    check_token(&destination,a.quote_mint.key(),authority.key())?;
@@ -67,33 +67,38 @@ pub fn execute(ctx:Context<SellV2>,amount:u64,minimum:u64)->Result<()>{
 
 let c=&a.bonding_curve;let native=c.quote_mint==Pubkey::default();
  require!(if c.is_mayhem_mode{a.fee_recipient.key()==a.global.reserved_fee_recipient||a.global.reserved_fee_recipients.contains(&a.fee_recipient.key())}else{a.fee_recipient.key()==a.global.fee_recipient||a.global.fee_recipients.contains(&a.fee_recipient.key())},PumpError::NotAuthorized);
- require!(!c.complete,PumpError::BondingCurveComplete);require!(amount>0,PumpError::SellZeroAmount);require!(a.associated_base_user.amount>=amount,PumpError::NotEnoughTokensToSell);
+ require!(!c.complete,PumpError::BondingCurveComplete);require_gt!(amount,0,PumpError::SellZeroAmount);require_gte!(a.associated_base_user.amount,amount,PumpError::NotEnoughTokensToSell);
  let quote=narrow(amount as u128*c.virtual_quote_reserves as u128/(c.virtual_token_reserves as u128+amount as u128))?;
  let cap=c.token_total_supply as u128*c.virtual_quote_reserves as u128/c.virtual_token_reserves as u128;
  let mut data=vec![154,237,138,92,162,2,162,187,1];data.extend_from_slice(&cap.to_le_bytes());data.extend_from_slice(c.quote_mint.as_ref());
  let ix=anchor_lang::solana_program::instruction::Instruction{program_id:FEE_PROGRAM,accounts:vec![anchor_lang::solana_program::instruction::AccountMeta::new_readonly(a.fee_config.key(),false),anchor_lang::solana_program::instruction::AccountMeta::new_readonly(crate::ID,false)],data};
  anchor_lang::solana_program::program::invoke(&ix,&[a.fee_config.to_account_info(),a.program.to_account_info(),a.fee_program.to_account_info()])?;
- let (_,ret)=anchor_lang::solana_program::program::get_return_data().unwrap();let mut fees=Fees::deserialize(&mut ret.as_slice())?;if c.creator_fee_bps>0{fees.creator_fee_bps=c.creator_fee_bps;}
- let cb=if c.creator==Pubkey::default(){0}else{fees.creator_fee_bps};let pf=narrow((quote as u128*fees.protocol_fee_bps as u128+9999)/10000)?;let cf=narrow((quote as u128*cb as u128+9999)/10000)?;let output=sub(sub(quote,pf)?,cf)?;require!(output>=minimum,PumpError::TooLittleSolReceived);
+ let (_,ret)=anchor_lang::solana_program::program::get_return_data().unwrap();let mut fees=Fees::deserialize(&mut ret.as_slice())?;if a.global.creator_fee_configurable && c.creator_fee_bps>0{fees.creator_fee_bps=c.creator_fee_bps;}
+ let cb=if c.creator==Pubkey::default(){0}else{fees.creator_fee_bps};let pf=narrow((quote as u128*fees.protocol_fee_bps as u128+9999)/10000)?;let cf=narrow((quote as u128*cb as u128+9999)/10000)?;let output=sub(sub(quote,pf)?,cf)?;
+ let quote_transfer_fee=if native{0}else{crate::trade::quote_transfer_fee(&a.quote_mint.to_account_info(),output,false)?};
+ require_gte!(sub(output,quote_transfer_fee)?,minimum,PumpError::TooLittleSolReceived);
  let vb=add(c.virtual_token_reserves,amount)?;let vq=sub(c.virtual_quote_reserves,quote)?;let rb=add(c.real_token_reserves,amount)?;let rq=sub(c.real_quote_reserves,quote)?;
  token_interface::transfer_checked(CpiContext::new(a.base_token_program.to_account_info(),TransferChecked{from:a.associated_base_user.to_account_info(),mint:a.base_mint.to_account_info(),to:a.associated_base_bonding_curve.to_account_info(),authority:a.user.to_account_info()}),amount,a.base_mint.decimals)?;
  let rem=ctx.remaining_accounts;
  let bb=&a.buyback_fee_recipient;require!(a.global.buyback_fee_recipients.contains(bb.key),PumpError::BuybackFeeRecipientNotAuthorized);
  let bbps=if c.is_mayhem_mode{0}else{a.global.buyback_basis_points};let bf=narrow(pf as u128*bbps as u128/10000)?;
+ let buyback_received=if native{bf}else{sub(bf,crate::trade::quote_transfer_fee(&a.quote_mint.to_account_info(),bf,false)?)?};
  let shareholders={let d=a.sharing_config.try_borrow_data()?;crate::SharingConfig::try_deserialize(&mut &d[..]).map(|s|s.shareholders).unwrap_or_default()};
- let ev=TradeEvent{mint:a.base_mint.key(),sol_amount:if native{quote}else{0},token_amount:amount,is_buy:false,user:a.user.key(),timestamp:Clock::get()?.unix_timestamp,virtual_sol_reserves:if native{vq}else{0},virtual_token_reserves:vb,real_sol_reserves:if native{rq}else{0},real_token_reserves:rb,fee_recipient:a.fee_recipient.key(),fee_basis_points:fees.protocol_fee_bps,fee:pf,creator:c.creator,creator_fee_basis_points:if c.is_cashback_coin{0}else{fees.creator_fee_bps},creator_fee:if c.is_cashback_coin{0}else{cf},track_volume:false,total_unclaimed_tokens:0,total_claimed_tokens:0,current_sol_volume:0,last_update_timestamp:0,ix_name:"sell".into(),mayhem_mode:c.is_mayhem_mode,cashback_fee_basis_points:if c.is_cashback_coin{cb}else{0},cashback:if c.is_cashback_coin{cf}else{0},buyback_fee_basis_points:bbps,buyback_fee:bf,shareholders,quote_mint:c.quote_mint,quote_amount:quote,virtual_quote_reserves:vq,real_quote_reserves:rq,holder_rewards_bps:if c.is_holder_reward{cb}else{0},holder_rewards:if c.is_holder_reward{cf}else{0},creator_fee_unclaimed:c.creator_fee,unparsed_trailing_field:0};
+ let ev=TradeEvent{mint:a.base_mint.key(),sol_amount:if native{quote}else{0},token_amount:amount,is_buy:false,user:a.user.key(),timestamp:Clock::get()?.unix_timestamp,virtual_sol_reserves:if native{vq}else{0},virtual_token_reserves:vb,real_sol_reserves:if native{rq}else{0},real_token_reserves:rb,fee_recipient:a.fee_recipient.key(),fee_basis_points:fees.protocol_fee_bps,fee:pf,creator:c.creator,creator_fee_basis_points:if c.is_cashback_coin{0}else{fees.creator_fee_bps},creator_fee:if c.is_cashback_coin{0}else{cf},track_volume:false,total_unclaimed_tokens:0,total_claimed_tokens:0,current_sol_volume:0,last_update_timestamp:0,ix_name:"sell".into(),mayhem_mode:c.is_mayhem_mode,cashback_fee_basis_points:if c.is_cashback_coin{cb}else{0},cashback:if c.is_cashback_coin{cf}else{0},buyback_fee_basis_points:bbps,buyback_fee:buyback_received,shareholders,quote_mint:c.quote_mint,quote_amount:quote,virtual_quote_reserves:vq,real_quote_reserves:rq,holder_rewards_bps:if c.is_holder_reward{cb}else{0},holder_rewards:if c.is_holder_reward{cf}else{0},creator_fee_unclaimed:c.creator_fee,unparsed_trailing_field:quote_transfer_fee};
  let cashback_coin=c.is_cashback_coin;
 
 
  if native{
- a.bonding_curve.sub_lamports(quote)?;a.user.add_lamports(output)?;a.fee_recipient.add_lamports(sub(pf,bf)?)?;if cashback_coin{a.user_volume_accumulator.add_lamports(cf)?;a.user_volume_accumulator.cashback_earned=add(a.user_volume_accumulator.cashback_earned,cf)?;}else{a.creator_vault.add_lamports(cf)?;}bb.add_lamports(bf)?;
+ a.bonding_curve.sub_lamports(quote)?;if cashback_coin{a.user_volume_accumulator.add_lamports(cf)?;crate::token_incentives::volume_accumulator::record_cashback_earned(&mut a.user_volume_accumulator,cf,true)?;}a.user.add_lamports(output)?;a.fee_recipient.add_lamports(sub(pf,bf)?)?;if !cashback_coin{a.creator_vault.add_lamports(cf)?;}bb.add_lamports(bf)?;
  }else{
  let mint=a.base_mint.key();let bump=[ctx.bumps.bonding_curve];let seeds:&[&[u8]]=&[b"bonding-curve",mint.as_ref(),&bump];
- for (to,n) in [(if cashback_coin{a.associated_user_volume_accumulator.to_account_info()}else{a.associated_creator_vault.to_account_info()},cf),(a.associated_quote_user.to_account_info(),output),(a.associated_quote_buyback_fee_recipient.to_account_info(),bf),(a.associated_quote_fee_recipient.to_account_info(),sub(pf,bf)?)]{if n>0{token_interface::transfer_checked(CpiContext::new_with_signer(a.quote_token_program.to_account_info(),TransferChecked{from:a.associated_quote_bonding_curve.to_account_info(),mint:a.quote_mint.to_account_info(),to,authority:a.bonding_curve.to_account_info()},&[seeds]),n,a.quote_mint.decimals)?;}}
- if cashback_coin{a.user_volume_accumulator.stable_cashback_earned=add(a.user_volume_accumulator.stable_cashback_earned,cf)?;}
+ let to=if cashback_coin{a.associated_user_volume_accumulator.to_account_info()}else{a.associated_creator_vault.to_account_info()};
+ if cf>0{token_interface::transfer_checked(CpiContext::new_with_signer(a.quote_token_program.to_account_info(),TransferChecked{from:a.associated_quote_bonding_curve.to_account_info(),mint:a.quote_mint.to_account_info(),to,authority:a.bonding_curve.to_account_info()},&[seeds]),cf,a.quote_mint.decimals)?;}
+ if cashback_coin{crate::token_incentives::volume_accumulator::record_cashback_earned(&mut a.user_volume_accumulator,cf,false)?;}
+ for (to,n) in [(a.associated_quote_user.to_account_info(),output),(a.associated_quote_buyback_fee_recipient.to_account_info(),bf),(a.associated_quote_fee_recipient.to_account_info(),sub(pf,bf)?)]{if n>0{token_interface::transfer_checked(CpiContext::new_with_signer(a.quote_token_program.to_account_info(),TransferChecked{from:a.associated_quote_bonding_curve.to_account_info(),mint:a.quote_mint.to_account_info(),to,authority:a.bonding_curve.to_account_info()},&[seeds]),n,a.quote_mint.decimals)?;}}
  }
 
  let c=&mut a.bonding_curve;c.virtual_token_reserves=vb;c.virtual_quote_reserves=vq;c.real_token_reserves=rb;c.real_quote_reserves=rq;emit!(ev.clone());emit_cpi!(ev);Ok(())
 }
 
-fn check_token(info:&AccountInfo,mint:Pubkey,owner:Pubkey)->Result<()>{let d=info.try_borrow_data()?;let t=TokenAccount::try_deserialize(&mut &d[..])?;require!(t.mint==mint,PumpError::MintDoesNotMatchBondingCurve);let _=owner;Ok(())}
+fn check_token(info:&AccountInfo,mint:Pubkey,owner:Pubkey)->Result<()>{let d=info.try_borrow_data()?;let t=TokenAccount::try_deserialize(&mut &d[..])?;require_keys_eq!(t.mint,mint,PumpError::MintDoesNotMatchBondingCurve);let _=owner;Ok(())}

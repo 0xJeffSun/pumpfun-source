@@ -9,25 +9,26 @@ ELF and, through a separate loader deployment, its captured payload.**
 
 ## Current progress
 
+**Main Pump checkpoint: 57.9% of original function windows matched; 28.9% of executable text covered. Full binary identity remains unfinished.** [Verified source, builds and signed regression evidence](repro/pump/main-contract-round9-20261027/README.md).
+
 The table uses the largest published normalized frontiers for Fees and Mayhem, the selected
 Pump/PumpSwap builds and the canonical Relay selection. Research checkpoints
 are distinct from [selected artifacts](repro/status.json).
 
 | Program | Matched functions¹ | Matched % | Exact local bytes² | Normalized only | Unmatched | Unassessed | Whole ELF equal |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| [Pump selected](programs/pump/README.md) | 528 / 1,035 | 51.0% | 98 (9.5%) | 430 | 507 | 0 | No |
+| [Pump current](programs/pump/README.md) | 599 / 1,035 | 57.9% | 111 (10.7%) | 488 | 436 | 0 | No |
 | [PumpSwap / AMM selected](programs/pump-amm/README.md) | 488 / 785 | 62.2% | 93 (11.8%) | 395 | 297 | 0 | No |
 | [Fees research](research/fees-qualified-linker-layout/README.md) | 577 / 585 | 98.6% | 198 (33.8%) | 379 | 8 | 0 | No |
 | [Mayhem research](research/mayhem-qualified-linker-layout/README.md) | 428 / 441 | 97.1% | 100 (22.7%) | 328 | 13 | 0 | No |
 | [Donation Relay selected](repro/donation-relay/canonical-exact-selection/README.md) | 492 / 492 | 100.0% | 492 (100.0%) | 0 | 0 | 0 | **Yes** |
 
-Newer **local, unpublished** Pump/PumpSwap evidence was also verified on 27 October.
-These saved checkpoints are separate from the published selections above; their
-source and evidence packets are not included in this README-only update.
+Earlier local checkpoints are retained below for historical comparison. The current
+Pump selection and its published evidence appear in the table above.
 
 | Local checkpoint | Matched functions | Matched % | Exact local bodies | Normalized only | Unmatched |
 | --- | ---: | ---: | ---: | ---: | ---: |
-| Pump legacy cashback order | 548 / 1,035 | 52.9% | 112 (10.8%) | 436 | 487 |
+| Historical Pump legacy cashback order | 548 / 1,035 | 52.9% | 112 (10.8%) | 436 | 487 |
 | PumpSwap integrated reader/behavior recovery | 555 / 785 | 70.7% | 109 (13.9%) | 446 | 230 |
 
 ¹ “Functions” means inferred original machine-function windows, including
@@ -45,7 +46,7 @@ Large functions remain, so function count and code coverage differ:
 
 | Program | Text bytes in matched windows³ | Text covered | Text in unmatched / unassessed windows |
 | --- | ---: | ---: | ---: |
-| Pump selected | 400,752 / 1,792,208 | 22.4% | 1,391,456 |
+| Pump current | 518,448 / 1,792,208 | 28.9% | 1,273,760 |
 | PumpSwap / AMM | 574,808 / 1,162,040 | 49.5% | 587,232 |
 | Fees research | 719,472 / 799,648 | 90.0% | 80,176 |
 | Mayhem research | 594,160 / 706,744 | 84.1% | 112,584 |
@@ -76,7 +77,7 @@ build recipe and ProgramData metadata are not established by that result.
 | Program / checkpoint | Bounded public handlers⁴ | Saved comparisons |
 | --- | ---: | ---: |
 | Pump selected baseline | 48 / 56 (85.7%); 5 partial, 3 unaccepted | 9,269 + 1,024 Surfpool |
-| Pump local unpublished checkpoint | Baseline handler classifications not re-audited | 10,468 across 44 suites |
+| Pump current | Baseline handler classifications not re-audited | 10,468 across 44 suites + 3,187 focused executions (overlap) |
 | PumpSwap / AMM | 37 / 38 (97.4%) | 17,462 + separately reported focused matrices |
 | Fees selected | 31 / 31 (100%) | 17,461 |
 | Mayhem selected | 24 / 25 (96.0%) | 9,595 |
@@ -148,7 +149,7 @@ Remaining priorities:
 
 - **Pump:** finish V3 trading, creation and multi-hop paths; close incentive,
   transfer-fee, account-validation and diagnostic discrepancies. The selected
-  build has 507 unmatched windows; the newer local checkpoint has 487.
+  main checkpoint has 436 unmatched windows; whole-ELF identity is still unresolved.
 - **PumpSwap:** recover 297 selected-build windows (230 in the local checkpoint),
   referenced data and indirect calls; obtain authentic successful fixed-admin
   `create_config` coverage.

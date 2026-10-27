@@ -29,7 +29,7 @@ pub struct Create<'info>{
  pub rent:Sysvar<'info,Rent>,
 }
 pub fn execute(ctx:Context<Create>,name:String,symbol:String,uri:String,creator:Pubkey)->Result<()>{
- require!(creator!=Pubkey::default(),PumpError::CreatorShouldNotBeZero);
+ require_keys_neq!(creator,Pubkey::default(),PumpError::CreatorShouldNotBeZero);
  let a=&ctx.accounts;let bump=[ctx.bumps.mint_authority];let seeds:&[&[u8]]=&[b"mint-authority",&bump];
  let mut data=vec![33];name.serialize(&mut data)?;symbol.serialize(&mut data)?;uri.serialize(&mut data)?;
  0u16.serialize(&mut data)?;data.push(1);1u32.serialize(&mut data)?;creator.serialize(&mut data)?;data.extend_from_slice(&[0,100,0,0,0,0]);

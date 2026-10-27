@@ -91,6 +91,9 @@ def _verify_amm_owner6048(root):
 
 def verify(program, root):
     status = read(root / 'repro/status.json')[program]
+    if program == 'pump' and status['candidate_artifact'] == 'repro/pump/main-contract-round9-20261027/candidate.so':
+        from verify_pump_main_checkpoint import verify as verify_main
+        return verify_main(root)
     suffix = '/main/candidate.so'
     assert status['candidate_artifact'].endswith(suffix)
     name = status['candidate_artifact'][:-len(suffix)]

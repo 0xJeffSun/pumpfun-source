@@ -29,6 +29,12 @@ def run(c,binary=None):
  mint=bytearray(82);struct.pack_into('<Q',mint,36,10**15);mint[44]=6 if c.get('token_quote') else 9;mint[45]=1;vm.set_account(quote,f.Account(10**9,bytes(mint),token))
  for name,authority in [('associated_quote_fee_recipient',recipient),('associated_quote_buyback_fee_recipient',keys['buyback_fee_recipient']),('associated_quote_bonding_curve',CURVE),('associated_quote_user',USER.pubkey()),('associated_creator_vault',vault),('associated_user_volume_accumulator',keys['user_volume_accumulator'])]:
   key=f.Pubkey.find_program_address([bytes(authority),bytes(token),bytes(quote)],ATA)[0];keys[name]=key;d=bytearray(165);d[:32]=bytes(quote);d[32:64]=bytes(authority);struct.pack_into('<Q',d,64,10**12);d[108]=1;vm.set_account(key,f.Account(10**9,bytes(d),token))
+ if c.get('transfer_fee_bps') is not None:
+  ac=vm.get_account(quote);conf=bytes(72)+struct.pack('<QQH',0,c.get('max_fee',2**64-1),c['transfer_fee_bps'])+struct.pack('<QQH',0,c.get('max_fee',2**64-1),c['transfer_fee_bps'])
+  blob=ac.data[:82]+bytes(83)+bytes([1])+struct.pack('<HH',1,len(conf))+conf
+  vm.set_account(quote,f.Account(ac.lamports,blob,ac.owner))
+  for name in ['associated_quote_fee_recipient','associated_quote_buyback_fee_recipient','associated_quote_bonding_curve','associated_quote_user','associated_creator_vault','associated_user_volume_accumulator']:
+   key=keys[name];ac=vm.get_account(key);blob=ac.data[:165]+bytes([2])+struct.pack('<HHQ',2,8,0);vm.set_account(key,f.Account(ac.lamports,blob,ac.owner))
  for name,spec in c.get('account_mutations',{}).items():
   key=keys[name];ac=vm.get_account(key);d=bytearray(ac.data)
   for off,val in spec.get('bytes',[]):d[off]=val
@@ -81,6 +87,15 @@ def cases():
  for token in [False,True]:
   for bps in [0,1,500,10000,10001]:cases.append({'name':f'configured_fee_{token}_{bps}','token_quote':token,'curve_bytes':[(115+i,v) for i,v in enumerate(struct.pack('<Q',bps))]})
  for bps in [0,500]:cases.append({'name':f'exotic_fee_{bps}','token_quote':True,'exotic':True,'curve_bytes':[(115+i,v) for i,v in enumerate(struct.pack('<Q',bps))]})
+ # Frozen fixture output before quote transfer fees is 13,804. Exercise both
+ # sides of the original program's observed net-output slippage boundary.
+ for bps,net in [(0,13804),(100,13665),(250,13458),(10000,0)]:
+  for minimum in sorted({0,max(0,net-1),net,net+1,13804}):
+   cases.append({'name':f'transfer_fee_{bps}_minimum_{minimum}','token_quote':True,'token22':True,'transfer_fee_bps':bps,'minimum':minimum})
+ for max_fee in [0,1,7]:
+  cases.append({'name':f'transfer_fee_cap_{max_fee}','token_quote':True,'token22':True,'transfer_fee_bps':250,'max_fee':max_fee})
+ for flags in [[[82,1]],[[124,1]]]:
+  cases.append({'name':f'transfer_fee_flags_{flags}','token_quote':True,'token22':True,'transfer_fee_bps':250,'curve_bytes':flags})
  return cases
 
 def main():

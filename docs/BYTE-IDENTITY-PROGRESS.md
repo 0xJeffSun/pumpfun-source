@@ -18,7 +18,7 @@ for all 456 compiled sections, 4,929 direct calls, 10,352 local branches and
 2,542 relocations, plus data pointers, exported symbols and entrypoint. Fresh
 6,636 trade comparisons and 301 ExtendAccount cases pass with 13,874 signed
 records checked; the seven previous trade diagnostic differences remain.
-Fifteen mutation controls pass. The complete ELF still differs from the original.
+Fifteen tests pass, including fourteen mutation controls. The complete ELF still differs from the original.
 
 ## Mayhem: compose retained-reserve and AMM Sell source origins
 

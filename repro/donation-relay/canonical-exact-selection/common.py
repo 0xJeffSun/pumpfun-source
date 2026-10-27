@@ -15,6 +15,11 @@ CONTROLLER_SEAL='627a70041f0e32600528b44a5c116a5ad8460f74bbbc8482809df1716f7b108
 BASE_CAPSULE='77abefd0a1624d3bb2df53fb27f6879d7b85aa0568d72063b360c81526b5c00c'
 H=lambda p:hashlib.sha256(Path(p).read_bytes()).hexdigest()
 J=lambda p:json.loads(Path(p).read_bytes())
+PUMP_CURRENT_HELPER_SHA256='513f12ad61014971139b876d32627369c34f5e37f34b7b25088ac8c3d82f1265'
+def pump_current_helper(root):
+ assert J(Path(root)/'repro/status.json')['pump']['candidate_artifact']=='repro/pump/main-contract-round9-20261027/candidate.so'
+ path=file_digest(root,'repro/donation-relay/canonical-exact-selection/pump_round9_current.py',PUMP_CURRENT_HELPER_SHA256)
+ spec=importlib.util.spec_from_file_location('pump_round9_current',path);module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module);return module
 def write(p,v):p=Path(p);p.parent.mkdir(parents=True,exist_ok=True);p.write_text(json.dumps(v,indent=2)+'\n')
 def safe(root,name):
  root=Path(root);q=PurePosixPath(name);assert str(q)==name and not q.is_absolute()and'..'not in q.parts
@@ -108,7 +113,9 @@ class Context:
   self.sealed(self.oldA['incoming_preservation_path'],self.R['pinned515_plan_seal']);file_digest(self.root,self.oldA['incoming_preservation_path']+'/opaque-archive-manifest.json',self.R['pinned515_archive_seal'])
   for row in J(self.old/'seed/passive-retention-exact343.json'):
    p=file_digest(self.root,row['path'],row['incoming']['sha256']);assert bool(p.stat().st_mode&stat.S_IXUSR)==(row['incoming']['mode']=='100755')
-  for row in J(self.old/'seed/inactive-exact10.json'):assert not(self.root/row['path']).exists()and not(self.root/row['path']).is_symlink()
+  for row in J(self.old/'seed/inactive-exact10.json'):
+   if (self.root/row['path']).exists():pump_current_helper(self.root).admitted_path(self.root,row['path'])
+   else:assert not(self.root/row['path']).is_symlink()
  def owner_witness(self,w):
   p=file_digest(self.root,w['path'],w['sha256']);owner=w['owning_manifest'];rows=self.row(owner);assert owner['path']+'/'+w['member']==w['path'];row=rows[w['member']];assert(row['sha256']if isinstance(row,dict)else row)==w['sha256'];return p
  def attributes(self):
@@ -136,6 +143,7 @@ class Context:
    assert w['owning_manifest_path']==CONTROLLER+'/manifest.json'and w['owning_manifest_sha256']==CONTROLLER_SEAL and CONTROLLER+'/'+w['member']==w['path'];assert rows[w['member']]['sha256']==w['sha256'];p=file_digest(root,w['path'],w['sha256']);assert p.stat().st_size==w['bytes']
  def current(self):
   F=self.F;root=self.root
+  if J(root/'repro/status.json')['pump']['candidate_artifact']=='repro/pump/main-contract-round9-20261027/candidate.so':return pump_current_helper(root).verify_context(self)
   from verify_selection import verify
   verify(root)
   self.history();self.attributes();self.sealed(CONTROLLER,CONTROLLER_SEAL)
