@@ -4,6 +4,18 @@ The [full audit](RECONSTRUCTION-AUDIT.md) and its generated tables retain their
 explicit `1463bd22` snapshot. This log records later research without silently
 changing that baseline or promoting new selected artifacts.
 
+## Relay: 43 audited location differences → 0
+
+The [compiled source-location study](../repro/donation-relay/source-location-recovery/README.md)
+executes all four proposals from the independent location audit, separately and
+combined. The same 346 recognized `(window, reference-offset)` pairs remain
+present; all now agree in path, line and column. Instruction matching remains
+**480/492**, with **12 unmatched** and no normalized losses. The combined build
+has **130 raw local matches** and passes all 536 records / 534 unique fixtures.
+An independent full Linux SDK build of the same 56 source inputs confirms all
+those matches and location values, with its own fresh replay. This closes the
+audited location-value differences, not all data or relocation equality.
+
 ## Relay: fully Linux build confirms 480-window frontier
 
 The [Linux canonical reproduction](../repro/donation-relay/linux-canonical-reproduction/README.md)
@@ -91,6 +103,16 @@ successful privileged settlement or complete semantic equivalence.
 The target-only control recovered no normalized window, so it is retained as a
 negative result for the repeated `Error::type_id` hypothesis. The three type-ID
 windows still need work. The current residual list is in the new package.
+
+## Fees: 89 → 87 unmatched normalized windows
+
+Merged [PR #120](https://github.com/lalalune/pumpfun-source/pull/120) restores the
+source origin of two unchanged buyback helpers and recovers their complete
+inlined program-body windows. The [buyback-origin packet](../research/fees-buyback-update-origins/README.md)
+reaches **351 unique structural pairs**, with no loss and **87 unmatched** windows.
+It retains 17,331 proposal suite cases, 1,542 focused comparisons, and a separate
+1,249-case buyback suite. The initial missing-fixture attempt is preserved.
+Selected artifacts and whole-file identity remain unchanged.
 
 ## Fees: 92 → 89 unmatched normalized windows
 

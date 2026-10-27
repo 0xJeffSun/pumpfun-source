@@ -7,8 +7,8 @@
     {
       "path": "README.md",
       "before_sha256": "cae913d4d3f2066403162f653a0cf35b39620fb08877b1b308c08ccce4a53678",
-      "after_sha256": "f066dd580ecb8a9fc7cde29b4c1f4035eaff4344e8353e78e56b3338dd0d27a9",
-      "reason": "Record fully Linux reproduction of the 480-window Relay frontier and latest Fees research at 349 unique structural pairs with 89 unmatched, without claiming whole-file equality."
+      "after_sha256": "6966110ff173109bd5e557879f111aa6a29cedf7ca23f92a0d5626668d54cb3b",
+      "reason": "Record tested Relay source-location recovery on both build recipes and latest Fees research at 351 structural pairs with 87 unmatched; preserve bounded-data and whole-file limits."
     },
     {
       "path": ".github/workflows/verify.yml",
