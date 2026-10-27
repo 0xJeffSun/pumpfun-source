@@ -1,6 +1,6 @@
 # Reconstruction audit — 26 October 2026
 
-For the post-PR #149 frontier and all current handler/window classifications, see the
+For the latest research frontier and all current handler/window classifications, see the
 [comprehensive review](../repro/reconstruction-status-2026-10-26/review.md).
 This page retains the immutable selected-checkpoint audit; its older research
 counts are historical.

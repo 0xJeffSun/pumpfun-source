@@ -400,6 +400,7 @@ Snapshot and limitations: [inventory](README.md). Addresses are decimal virtual 
 | pump_fees_research | 40472 | 776 | raw_body_equal | core::ptr::drop_in_place<$u5b$solana_account_info::AccountInfo$u3b$ 6$u5d$> |
 | pump_fees_research | 41248 | 208 | raw_body_equal | core::ptr::drop_in_place<alloc::vec::Vec<solana_account_info::AccountInfo>> |
 | pump_fees_research | 41456 | 104 | raw_body_equal | core::ptr::drop_in_place<core::result::Result<u64,anchor_lang::error::Error>> |
+| pump_fees_research | 41560 | 160 | raw_body_equal | core::ptr::drop_in_place<core::option::Option<solana_account_info::AccountInfo>> |
 | pump_fees_research | 41720 | 1672 | raw_body_equal | core::ptr::drop_in_place<$u5b$solana_account_info::AccountInfo$u3b$ 13$u5d$> |
 | pump_fees_research | 43856 | 776 | raw_body_equal | core::ptr::drop_in_place<pump_fees_candidate::sharing_update::UpdateFeeShares> |
 | pump_fees_research | 44632 | 776 | raw_body_equal | core::ptr::drop_in_place<pump_fees_candidate::sharing_update::UpdateFeeSharesV2> |
