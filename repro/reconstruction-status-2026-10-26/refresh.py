@@ -14,9 +14,9 @@ import tempfile
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 INPUTS = {}
-REVISION = '1b7c43cf2a74d5ef0d4d8f74a249fede12a00468'
-FEES = 'research/fees-composed-frontier188'
-RELAY = 'repro/donation-relay/access-control-donate-context-artifact'
+REVISION = '5c1f717918495b8508ff5aefedc6d3219abb3439'
+FEES = 'research/fees-frontier-prefix-integration'
+RELAY = 'repro/donation-relay/linked-elf-reproduction'
 
 
 def read(name):
@@ -99,7 +99,7 @@ def generate():
     comparison = wm.compare(ow, cw)
     saved = load(FEES + '/analysis.json.gz')['variants']['origins']
     assert all(comparison[k] == saved[k] for k in comparison)
-    assert len(comparison['unique_pairs']) == 404 and len(comparison['unmatched_original']) == 34
+    assert len(comparison['unique_pairs']) == 405 and len(comparison['unmatched_original']) == 33
     raw_index, normalized_index = collections.defaultdict(list), collections.defaultdict(list)
     for c in cw:
         raw_index[c['raw_sha256']].append(c)
@@ -111,7 +111,7 @@ def generate():
     fees_meta = dict(candidate_sha256=hashlib.sha256(candidate).hexdigest(), candidate_bytes=len(candidate),
                      whole_capture_equal=candidate == original,
                      raw_file_equals_original_elf_extent=candidate == original[:wm.m.elf_layout(original)['elf_extent']],
-                     unique_structural_pairs=404, ambiguous_original_windows=sum(len(g['original']) for g in comparison['ambiguous']),
+                     unique_structural_pairs=405, ambiguous_original_windows=sum(len(g['original']) for g in comparison['ambiguous']),
                      candidate_windows=len(cw))
 
     attribution_path = 'research/fees-refreshed-call-attribution'
@@ -124,7 +124,7 @@ def generate():
     attribution = attribution_module.analyze(provenance)
     assert attribution['candidate_sha256'] == fees_meta['candidate_sha256']
     attributed = {pair['original']['address']: pair['candidate']['address'] for pair in attribution['newly_attributed_pairs']}
-    assert len(attributed) == 69 and attribution['graph_attributed_pairs'] == 473
+    assert len(attributed) == 69 and attribution['graph_attributed_pairs'] == 474
     for record in rows:
         record['call_attributed_candidate_starts'] = []
         if record['program'] == 'pump_fees_research' and record['original_start'] in attributed:
@@ -132,31 +132,42 @@ def generate():
             assert address in record['normalized_candidate_starts']
             record['call_attributed_candidate_starts'] = [address]
             record['source_status'] = 'call_attributed_duplicate_pair'
-    fees_meta.update(additional_call_attributed_pairs=69, total_attributed_pairs=473,
+    fees_meta.update(additional_call_attributed_pairs=69, total_attributed_pairs=474,
                      remaining_unattributed_duplicate_windows=78)
 
     parser = module('status_relay_windows', 'repro/donation-relay/swap-receipt-coordinate-recovery/analyze.py')
-    relay_artifacts = load(RELAY + '/metadata.json')['recovered']
+    relay_artifacts = load(RELAY + '/metadata.json')['variants']['recovered']['artifacts']
     with tempfile.TemporaryDirectory() as temp:
         d = Path(temp)
         for output, path, compressed in [
             ('original.so', 'evidence/dependencies/donation_relay/deployed.so', False),
-            ('candidate.so', relay_artifacts['candidate']['path'], True),
-            ('unstripped.so', relay_artifacts['symbols']['path'], True),
+            ('candidate.so', RELAY + '/' + relay_artifacts['candidate']['path'], True),
+            ('unstripped.so', RELAY + '/' + relay_artifacts['symbols']['path'], True),
             ('original-windows.json', 'repro/donation-relay/swap-receipt-coordinate-recovery/original-windows.json', False),
         ]:
             raw = read(path)
             (d / output).write_bytes(gzip.decompress(raw) if compressed else raw)
+        exact_original = (d / 'original.so').read_bytes()
+        exact_candidate = (d / 'candidate.so').read_bytes()
+        assert exact_candidate == exact_original[:818280] and len(exact_candidate) == 818280
+        assert len(exact_original) == 830448 and not any(exact_original[818280:])
         analysis = parser.analyze(d)
-    assert analysis['comparison-summary.json'] == load(RELAY + '/analysis/recovered/comparison-summary.json.gz')
-    assert analysis['match-ledger.json'] == load(RELAY + '/analysis/recovered/match-ledger.json.gz')
+    assert analysis['comparison-summary.json'] == load(RELAY + '/analysis/recovered/comparison-summary.json')
+    assert analysis['match-ledger.json'] == load(RELAY + '/analysis/recovered/match-ledger.json')
+    loader_receipt = load(RELAY + '/loader-receipt.json')
+    assert loader_receipt['elf_sha256'] == hashlib.sha256(exact_candidate).hexdigest()
+    assert loader_receipt['payload_sha256'] == hashlib.sha256(exact_original).hexdigest()
+    assert loader_receipt['whole_original_payload_equal'] and loader_receipt['transactions'] == 912
+    relay_runtime = load(RELAY + '/runtime.json.gz')
+    assert relay_runtime['candidate_sha256'] == hashlib.sha256(exact_candidate).hexdigest()
+    assert relay_runtime['case_count'] == 536 and not relay_runtime['failures']
     multiplicity = collections.Counter(o['normalized_sha256'] for o in analysis['original-function-ledger.json'])
     for o, r in zip(analysis['original-function-ledger.json'], analysis['match-ledger.json']):
         c = analysis['candidate-function-ledger.json']
         convert = lambda indices: [dict(address=c[i]['start'], name=n) for i in indices for n in (c[i]['names'] or [''])]
         rows.append(row('donation_relay_research', dict(address=o['start'], bytes=o['bytes'], unique=multiplicity[o['normalized_sha256']] == 1 and len(r['normalized_candidate_indices']) == 1),
                         convert(r['raw_candidate_indices']),
-                        convert(r['normalized_candidate_indices']), RELAY + '/analysis/recovered/match-ledger.json.gz'))
+                        convert(r['normalized_candidate_indices']), RELAY + '/analysis/recovered/match-ledger.json'))
     for record in rows:
         record.setdefault('call_attributed_candidate_starts', [])
     counts = {}
@@ -167,7 +178,7 @@ def generate():
                                unmatched_body_bytes=sum(r['bytes'] for r in group if r['disposition'] == 'no_complete_body_match'))
     assert len(rows) == 4415
     report = dict(snapshot=REVISION, selected_snapshot=baseline['audited_revision'], counts=counts,
-                  fees=fees_meta, relay=analysis['comparison-summary.json'],
+                  fees=fees_meta, relay=dict(analysis['comparison-summary.json'], meaningful_elf_equal=True, meaningful_elf_bytes=818280, allocation_tail_bytes=12168, reconstructed_linker_layout=True, historical_recipe_verified=False, loader_payload_equal=True, loader_transactions=912, verified_replay_records=536, static_parser_runtime_fields_are_not_execution_results=True),
                   selected_handler_dispositions=dict(collections.Counter(r['selected_status'] for r in baseline['handlers'])),
                   input_sha256=dict(sorted(INPUTS.items())),
                   scope='Local body equality and separately scoped normalized windows; no semantic-perfection, transitive identity, selection promotion or effort-percentage claim.')

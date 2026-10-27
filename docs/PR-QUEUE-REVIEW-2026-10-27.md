@@ -1,6 +1,6 @@
 # PR queue review — 27 October 2026
 
-Reviewed PRs #170–#192 as a combined merge tree based on `ba7883511942965c5c9def03971bdaff84963d6b`. Selected program sources, captures, scripts and workflows are unchanged. Overlapping append-only progress-log additions were preserved during local conflict resolution.
+Reviewed PRs #170–#196 as a combined merge tree based on `ba7883511942965c5c9def03971bdaff84963d6b`. Selected program sources, captures, scripts and workflows are unchanged. Overlapping append-only progress-log additions were preserved during local conflict resolution.
 
 | PR | Reviewed change | Verification and scope |
 | --- | --- | --- |
@@ -28,6 +28,11 @@ Reviewed PRs #170–#192 as a combined merge tree based on `ba7883511942965c5c9d
 | [#191](https://github.com/lalalune/pumpfun-source/pull/191) | Independent Mayhem history decoder | Fixed package-relative input paths and added an actual decoded old/new version-chain check. All 13 captures match; five negative/path tests and the original package verifier pass. Claims are limited to captured-data consistency, with no RPC authentication or semantic field attribution. |
 | [#192](https://github.com/lalalune/pumpfun-source/pull/192) | Mayhem Linux helper comparison | Saved-artifact verifier and 18 tests pass. Five additional raw ranges are reproduced with ambiguity retained; no new compilation, runtime or unique historical compiler claim. |
 
+| [#193](https://github.com/lalalune/pumpfun-source/pull/193) | Relay DonateContext source identity | Independent native build reproduces both hashes; full optional ELF measurement and all six tests pass. Natural-link raw matches improve 317→320 without losses. |
+| [#194](https://github.com/lalalune/pumpfun-source/pull/194) | Fees boxed admin context source proposal | Source verifier and 13 tests pass. Rebased head was re-reviewed with identical proposal files. This source change was already present in the current composition. |
+| [#195](https://github.com/lalalune/pumpfun-source/pull/195) | Fees full-account prefix integration | Verifier and five mutation tests pass; independent native build matches both hashes. Fresh 17,331-case suite passes. Current frontier: 552 normalized, 118 raw-local, 405 unique, 33 unmatched. |
+| [#196](https://github.com/lalalune/pumpfun-source/pull/196) | Relay access-control layout and allocation provenance | All nine evidence verifiers and five negative tests pass; 536 signed records revalidated, all 13 retained loader transactions decoded, and 912 local signed loader transactions freshly replayed. Default-link variant reaches 376 raw-local windows; selected sources remain unchanged. |
+
 The checked PR head SHAs are listed in the Git merge parents. No complete-program identity or exhaustive semantic correctness follows from merging these research packets. The generated inventory remains pinned to its declared Fees and artifact-backed Relay candidates; alternative source proposals are not silently combined.
 
 ## Review checks
@@ -39,3 +44,11 @@ The checked PR head SHAs are listed in the Git merge parents. No complete-progra
 - Fresh runtime review: Relay 536 records / 534 fixtures, social creation 157 cases, and relay rejection 16 cases; zero comparator failures. These retain their documented exclusions.
 
 The source-only packets deliberately omit compiled artifacts and replay receipts. Their default verifiers establish source integrity, not their reported local runtime observations. Genuine fixed-admin initialization, protected settlement success, all-data/transitive/indirect identity, historical recipes and whole-file equality remain open.
+
+## Subsequent exact-link integration
+
+The separate linked-ELF packet now reproduces all meaningful Relay bytes and the
+loader-created capture payload. Two real builds, a fresh isolated dependency
+build, 536 bounded signed records and 912 fresh loader transactions support this
+result. This is an explicitly reconstructed layout, not historical build proof.
+The four core selected programs remain byte-unequal.

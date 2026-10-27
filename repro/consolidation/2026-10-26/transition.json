@@ -7,8 +7,8 @@
     {
       "path": "README.md",
       "before_sha256": "cae913d4d3f2066403162f653a0cf35b39620fb08877b1b308c08ccce4a53678",
-      "after_sha256": "4a1dfd59034eb287bc02bfc7c627ee2089c1b4597d82c9ecd9397764db742177",
-      "reason": "Record verified composed Relay research at 492 normalized and 379 raw-local matches, preserving selected checkpoints and full-identity limits."
+      "after_sha256": "a669cc1039b47af05d047baeabb2435d588860b999934a68ba1ca751fd1a5f4b",
+      "reason": "Record exact Relay ELF and loader payload reproduction plus reviewed Fees prefix integration; preserve selected checkpoints and historical-provenance limits."
     },
     {
       "path": ".github/workflows/verify.yml",

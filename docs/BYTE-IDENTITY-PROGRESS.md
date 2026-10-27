@@ -1171,3 +1171,28 @@ inputs and full ELF/call/data comparison. Common-position differences decrease
 9,398→8,901 (text8,829,data.rel.ro25,rel.dyn47). All headers and read-only data remain
 exact. Full captured-file identity is still false; the12,168-byte allocation tail
 is separately reproduced by the verified offline loader route.
+
+## Exact Relay ELF and loader payload reproduction
+
+The [explicit linker-layout packet](../repro/donation-relay/linked-elf-reproduction/README.md)
+reproduces all 818,280 original meaningful ELF bytes and all 492 raw windows.
+The layout is solved from complete normalized bodies, direct-call constraints
+and code-pointer positions, then expressed through ordinary linker input-section
+selectors. No original instructions, assembly, output patching or padding enter
+the build. Both the first build and an isolated fresh dependency build produce
+candidate `56d81ec64a0ba070d3d23f3c1547b31d659e85716dfa2198ec4b0ce6cd355333`
+and symbols `07ab4ac487727385a3b5ec0d4bc1139e10f701c3fac2f95b88d89701a38ab9e1`.
+Fresh bounded replay passes 536 records / 534 fixtures.
+
+A fresh 912-transaction offline loader deployment writes this exact ELF and
+allocates the history-derived capacity. Its full 830,448-byte payload equals
+the capture (SHA-256 `367f07a62e3f74d358187d175cf3228848e81a56c781a9a75b9df7fed1268563`).
+The extra 12,168 zeros come from the loader; compiler output remains 818,280 bytes.
+ProgramData metadata/history and historical compiler/source provenance remain
+unproved. Four core selected programs are still byte-unequal; no selection promotion
+is made by this research packet.
+
+PR #195 also independently reproduces the current Fees prefix correction:
+552/585 normalized windows, 118 raw-local, 405 unique, 33 unmatched (205,216 bytes).
+A fresh 17,331-case suite has zero mismatches. PR #196 preserves the separate
+376-raw default-linker source result and supplies verified allocation history.
