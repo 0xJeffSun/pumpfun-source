@@ -702,3 +702,24 @@ host contract cases. Fresh full and focused SBF regressions also pass, but their
 17,331-case suite does not invoke the fixed-admin FeeConfig initializer. This
 is not a claim of authorized initializer execution. Selected sources and
 artifacts remain unchanged, and whole-file equality is still unachieved.
+
+
+## Fees: ordinary extension-admission diagnostic source — 27 October 2026
+
+The [extension admission source proposal](../research/fees-extension-admission-source-proposal/README.md)
+preserves a pinned 36-input public baseline and exactly reconstructs 37 proposed
+source inputs with three ordinary overrides and a reversible patch. It owns the
+raw account info, preserves diagnostic precedence/compared values and moves
+admission checks to the captured source-attributed instruction coordinates,
+without changing the parent resize/event tail or unrelated root line numbers.
+
+Thirteen stdlib tests, exact public-source hash checks and independent complete
+37-file materialization pass. The packet's successful checks attest source
+integrity only: runtime_verified, native_build_verified and
+whole_binary_identity_verified all remain false. Local development observed
+99 corrected application-log comparisons, but that runtime evidence is
+unpublished and cannot be independently verified from this source-only packet.
+No logs, replay cases, binary/encoded artifacts or archived receipt excerpts
+are included. The extension business body and whole original binary remain
+unequal; this is diagnostic-source progress, not a new complete-body or global
+frontier claim. Protected checkpoints and prior evidence remain unchanged.
