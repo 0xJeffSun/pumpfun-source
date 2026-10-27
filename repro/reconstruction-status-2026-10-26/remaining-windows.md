@@ -1556,7 +1556,6 @@ Snapshot and limitations: [inventory](README.md). Addresses are decimal virtual 
 | pump_fees_research | 41560 | 160 | no_complete_body_match |  |
 | pump_fees_research | 51608 | 296 | no_complete_body_match |  |
 | pump_fees_research | 52568 | 448 | no_complete_body_match |  |
-| pump_fees_research | 54864 | 368 | no_complete_body_match |  |
 | pump_fees_research | 75880 | 504 | no_complete_body_match |  |
 | pump_fees_research | 76384 | 6312 | no_complete_body_match |  |
 | pump_fees_research | 88552 | 5520 | no_complete_body_match |  |
@@ -1587,8 +1586,6 @@ Snapshot and limitations: [inventory](README.md). Addresses are decimal virtual 
 | pump_fees_research | 240088 | 3096 | no_complete_body_match |  |
 | pump_fees_research | 243184 | 6080 | no_complete_body_match |  |
 | pump_fees_research | 249264 | 8000 | no_complete_body_match |  |
-| pump_fees_research | 261816 | 4160 | no_complete_body_match |  |
-| pump_fees_research | 265976 | 4160 | no_complete_body_match |  |
 | pump_fees_research | 270136 | 1400 | no_complete_body_match |  |
 | pump_fees_research | 271536 | 5136 | no_complete_body_match |  |
 | pump_fees_research | 276672 | 4304 | no_complete_body_match |  |
@@ -1625,7 +1622,6 @@ Snapshot and limitations: [inventory](README.md). Addresses are decimal virtual 
 | pump_fees_research | 656832 | 840 | no_complete_body_match |  |
 | pump_fees_research | 657672 | 1104 | no_complete_body_match |  |
 | pump_fees_research | 695672 | 1792 | no_complete_body_match |  |
-| pump_fees_research | 784168 | 200 | no_complete_body_match |  |
 | donation_relay_research | 70200 | 6272 | no_complete_body_match |  |
 | donation_relay_research | 76472 | 6272 | no_complete_body_match |  |
 | donation_relay_research | 82744 | 2568 | no_complete_body_match |  |

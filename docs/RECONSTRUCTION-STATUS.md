@@ -37,7 +37,7 @@ analysis. Candidate symbol names are hypotheses about original identity.
 | Fees selected | 585 | 102 | 363 | 120 | 0 |
 | Mayhem selected | 441 | 58 | 131 | 7 | 245 |
 | Relay selected source 15 | 492 | 33 | 89 | 370 | 0 |
-| **Fees latest research** | **585** | **109** | **400** | **76** | **0** |
+| **Fees latest research** | **585** | **116** | **397** | **72** | **0** |
 | **Relay latest research** | **492** | **130** | **352** | **10** | **0** |
 
 Each row is a partition, not a score of semantic correctness. Mayhem's source
@@ -63,13 +63,13 @@ bytes (7.0%)**. Those bytes describe the sizes of unmatched original windows,
 not the number of absent or incorrect bytes. The residual includes large business
 functions; matching the other 482 still leaves their call/data identity to prove.
 
-Fees research has **509/585 windows with a normalized counterpart**: 362 unique
-structural pairs and 147 original windows in ambiguous duplicate groups. Its 76
-unmatched windows span **339,424 of 799,648 original text bytes (42.4%)**, although
-they are only 13.0% of the window count. Many remaining bodies are large. The
+Fees research has **513/585 windows with a normalized counterpart**: 366 unique
+structural pairs and 147 original windows in ambiguous duplicate groups. Its 72
+unmatched windows span **330,536 of 799,648 original text bytes (41.3%)**, although
+they are only 12.3% of the window count. Many remaining bodies are large. The
 [current call ledger](../repro/reconstruction-status-2026-10-26/fees-call-attribution.json)
 recomputes 61 additional duplicate-body correspondences on this candidate, for
-423 attributed pairs. There are 86 still-unattributed duplicate windows and 24
+427 attributed pairs. There are 86 still-unattributed duplicate windows and 24
 call edges to different-body frontiers. This refinement adds no body coverage.
 
 There is no defensible single source-completion percentage or ETA. Whole-program
@@ -241,8 +241,8 @@ additional function is considered recovered.
 
 ## Fees: new complete bodies, substantial residual business logic
 
-The latest 859,256-byte candidate is SHA-256
-`17d51bc9c2196a46ffa25cefd7d90beaa02e0682a765f8463364ab29ccce1b14`.
+The latest 863,168-byte candidate is SHA-256
+`27806e4888d4f18059ac172698c91e3ea9ba7baaaa9a89f2a2afa5e29675f087`.
 The newly merged studies recover:
 
 | Complete original window | Evidence |
@@ -256,24 +256,25 @@ The newly merged studies recover:
 | 192-byte fee-total predicate at 700568 | [Full Linux integration](../research/fees-total-predicate-integration/README.md); panic leaf, message and source coordinates checked |
 | Two 624-byte setters at 260568 and 261192 | [Setter recovery](../research/fees-config-setter-recovery/README.md); error origins, field stores and ten direct callee bindings checked |
 | V2 parser (352 bytes), cleanup (776 bytes), dispatcher (1,104 bytes) | [V2 ownership](../research/fees-sharing-owned-v2/README.md), integrated with the setters; cleanup raw bytes equal |
+| Two 4,160-byte tier bodies, 368-byte reserve and 200-byte bounds-panic bodies | [Tier replacement/upsert recovery](../research/fees-tier-splice-recovery/README.md); 57 direct callee-body bindings checked |
 
 These are complete normalized windows, not merely matching diagnostic fragments.
-There are 59 unique raw-equal structural pairs; counting all original windows
-with any raw counterpart, including ambiguous duplicates, gives 109. Those
+There are 63 unique raw-equal structural pairs; counting all original windows
+with any raw counterpart, including ambiguous duplicates, gives 116. Those
 numbers answer different questions and must not be interchanged.
 
 The candidate retains passing **17,331 cases across 18 suites** and **1,542 exact
-outcome/log/compute comparisons**. The corrected setter and combined V2 candidates were replayed afresh;
-the control is explicitly reused from the verified predicate packet. Existing unchecked-input
-and finite-coverage limits remain. The 76 unresolved bodies, ambiguous attribution,
+outcome/log/compute comparisons**. The final tier-recovery candidate was replayed afresh;
+the control is explicitly reused from the verified setter/V2 packet. Existing unchecked-input
+and finite-coverage limits remain. The 72 unresolved bodies, ambiguous attribution,
 shareholder validation, transitive calls/data and final ELF layout remain open.
 
-The [fee-total helper](../research/fees-total-predicate-integration/README.md)
-and [flat-fee setters](../research/fees-config-setter-recovery/README.md) now have
-complete normalized bodies. The setters preserve the observed error locations
-and each of their five local callees has a matching body. Their public callers
-and the two 4,160-byte tier-setting bodies remain unmatched. These are local
-recoveries, not a complete configuration-path or transitive-equivalence proof.
+The fee-total helper, flat-fee setters and both tier replacement/upsert bodies
+now have complete normalized counterparts. The newest recovery preserves the
+observed error order, source lines and vector-field offsets, and separately
+checks every direct local callee body. Public callers, data identity and complete
+transitive behavior remain open; local body recovery is not a whole-program or
+exhaustive semantic-equivalence proof.
 
 ## Public behavior: reconstructed is not perfect
 
@@ -301,7 +302,7 @@ receipts, acceptance decisions and explicit guard changes are still required.
 2. **Close known behavior defects:** Pump `sell_v2` and the ten partial/unaccepted
    selected dispositions above, with bound success/rejection tests. Cover genuine
    CPI callers, ownership and extension/mode combinations before acceptance.
-3. **Continue Fees business/source recovery:** work from all 76 residual addresses,
+3. **Continue Fees business/source recovery:** work from all 72 residual addresses,
    preserve the refreshed duplicate-call attribution, and validate paths not
    exercised by the existing corpus. Normalize only declared relocations/calls.
 4. **Recover Pump/AMM/Mayhem residuals:** preserve opaque and ambiguous states.

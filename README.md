@@ -19,11 +19,11 @@ recognized source-location pairs, and each pass 536 fresh replay records.
 Follow-up [reconstruction studies](docs/BYTE-IDENTITY-PROGRESS.md)
 have not added whole-body matches. Conditional value-flow agreement and locally
 matching helpers do not establish full function or program identity.
-Latest Fees research: **362 unique structural pairs, 76 unmatched windows**.
-The [combined setter and V2 ownership recovery](research/fees-config-setter-recovery/README.md)
-adds two configuration setters and three V2 sharing bodies without losing earlier
-matches. The [current call ledger](repro/reconstruction-status-2026-10-26/fees-call-attribution.json)
-also attributes 61 duplicate-body pairs, giving 423 correspondences; this is not
+Latest Fees research: **366 unique structural pairs, 72 unmatched windows**.
+The [tier replacement/upsert recovery](research/fees-tier-splice-recovery/README.md)
+adds both 4,160-byte tier bodies and two helpers without losing prior matches.
+The [current call ledger](repro/reconstruction-status-2026-10-26/fees-call-attribution.json)
+also attributes 61 duplicate-body pairs, giving 427 correspondences; this is not
 additional body coverage. Whole-file identity remains unachieved.
 
 The [current reconstruction review](docs/RECONSTRUCTION-STATUS.md) lists exact,

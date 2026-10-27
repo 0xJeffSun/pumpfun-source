@@ -413,3 +413,20 @@ all five gains survive in one actual binary, for 362 unique structural pairs,
 2,515 bound-target edges and 24 different-body edges; 86 duplicates stay
 unattributed. Both the corrected setter and combined candidates pass fresh
 17,331-case suites and 1,542-case exact matrices. Whole-file identity still fails.
+
+## Complete normal and stable tier replacement/upsert bodies
+
+The [six-variant packet](../research/fees-tier-splice-recovery/README.md) recovers
+both 4,160-byte tier bodies and two helpers at 54864 and 784168. `FeeTier: Copy`,
+an explicit usize limit, an aggregate validity predicate, and the correct stable
+vector base/source positions explain the successive compiled differences.
+No prior body is lost. [PR #145](https://github.com/lalalune/pumpfun-source/pull/145)
+independently recovered the reserve helper and was verified/merged; that body is
+counted only once in the combined candidate.
+
+The final build has 366 unique structural pairs, 72 unmatched originals and 63
+unique raw pairs. The full inventory records 116 raw, 397 normalized-only and 72
+unmatched original windows. Call refinement gives 427 correspondences, 2,572
+bound-target edges and 24 different-body edges; 86 duplicates remain unattributed.
+All 57 direct calls in the four new bodies reach matching local callee bodies.
+Fresh 17,331-case and 1,542-case exact replays pass. Whole-file identity still fails.
