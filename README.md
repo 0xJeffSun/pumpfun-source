@@ -167,11 +167,12 @@ preserving all 21,079 readonly bytes and the earlier recoveries. Two fresh
 normal Cargo builds agree; all 17,331 fresh comparisons pass. Sweep, Crank,
 CreateDonation, absolute layout and complete ELF identity remain unresolved.
 
-The [Fees residual-work archive](research/fees-residual-parallel-checkpoint-20261027/README.md)
-preserves another 13,511 new or updated research files beyond the earlier
-checkpoints, including the four parallel reconstruction lanes and compiler
-diagnostics. These experiments retain their individual status and add no
-accepted matches.
+The [Fees source and compiler archive](research/fees-residual-source-checkpoint-20261027/README.md)
+preserves another 7,680 new or updated research files beyond the earlier
+checkpoints, including the three remaining parallel reconstruction lanes,
+compiler diagnostics and verified faster screening. The full recovery chain
+contains 86,598 current files. These experiments retain their individual status
+and add no accepted matches.
 
 The latest [PumpSwap native-quote and execution recovery](repro/pump_amm/quote-guard-recovery-20261027/README.md) matches 643 windows and 148 raw bodies, corrects all 11 reserved-recipient differences, fixes Token-2022 native creator transfers, and restores observed claim/InitBoost and legacy operation boundaries. All 17,462 corpus cases and retained supplemental suites pass; 142 AMM windows remain.
 
