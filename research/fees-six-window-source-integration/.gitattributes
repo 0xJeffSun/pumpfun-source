@@ -1,0 +1,3 @@
+source.patch whitespace=-blank-at-eol
+overrides/programs/pump-fees/src/lib.rs whitespace=-blank-at-eol
+overrides/programs/pump-fees/src/sharing_admin.rs whitespace=-blank-at-eof
