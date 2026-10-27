@@ -702,3 +702,26 @@ host contract cases. Fresh full and focused SBF regressions also pass, but their
 17,331-case suite does not invoke the fixed-admin FeeConfig initializer. This
 is not a claim of authorized initializer execution. Selected sources and
 artifacts remain unchanged, and whole-file equality is still unachieved.
+
+
+## Fees: isolated source-only native recipe and 27 Location corrections — 27 October 2026
+
+The [core Fees source-only proposal](../research/fees-core-source-recovery/README.md)
+reproduces an isolated PR162-derived research build with **529/585 normalized
+windows, 382 unique pairs and 118 raw local matches**. Two complete windows
+(291864 and 632080) are gained relative to that pinned 527-window baseline;
+this is not a replacement for the newer global Fees frontier.
+
+Ordinary event-module placement, math-module placement and the authentic published
+solana-program-entrypoint 2.2.1 dependency close all 27 mismatches in a 160-use
+Location-shaped-record cohort. Ninety-eight of 99 checked direct call targets
+match complete normalized bodies; the extension wrapper's business callee remains
+unmatched. The source-only packet supplies 36 public baseline mappings, 41 exact
+recovered inputs, materializer, portable native build recipe, static verifier
+and 15 passing tests. Independent local output comparison reproduces every claim.
+
+Local independent builds and finite replay were performed, but no compiled
+artifacts or runtime/build receipts are published; default verification reports
+runtime_verified=false. Whole capture and meaningful ELF extent remain unequal,
+with 469,722 common differing positions. Raw/data/indirect and exhaustive semantic
+closure remain open; the four core programs' byte-identical count is still 0/4.
