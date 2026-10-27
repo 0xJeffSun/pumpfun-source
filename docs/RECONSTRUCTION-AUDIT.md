@@ -5,8 +5,8 @@ the PR #71–#94 review batch. This report separates selected artifacts from new
 research. It does not promote a source tree or change an acceptance decision.
 
 The [current review](RECONSTRUCTION-STATUS.md) and [refreshed full inventory](../repro/reconstruction-status-2026-10-26/README.md)
-supersede the research frontier below: **Relay 482/492, 10 unmatched; Fees 357
-unique pairs, 81 unmatched**. Selected checkpoint tables below retain their dated
+supersede the research frontier below: **Relay 482/492, 10 unmatched; Fees 362
+unique pairs, 76 unmatched**. Selected checkpoint tables below retain their dated
 snapshot. Subsequent gains are tracked in the [progress log](BYTE-IDENTITY-PROGRESS.md).
 
 **No core program, and no selected Relay program, is a complete byte-identical

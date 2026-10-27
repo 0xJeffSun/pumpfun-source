@@ -1550,12 +1550,10 @@ Snapshot and limitations: [inventory](README.md). Addresses are decimal virtual 
 | donation_relay | 752416 | 200 | no_complete_body_match |  |
 | donation_relay | 752616 | 72 | no_complete_body_match |  |
 | donation_relay | 752688 | 72 | no_complete_body_match |  |
-| pump_fees_research | 9528 | 352 | no_complete_body_match |  |
 | pump_fees_research | 9880 | 352 | no_complete_body_match |  |
 | pump_fees_research | 10232 | 528 | no_complete_body_match |  |
 | pump_fees_research | 18384 | 1144 | no_complete_body_match |  |
 | pump_fees_research | 41560 | 160 | no_complete_body_match |  |
-| pump_fees_research | 44632 | 776 | no_complete_body_match |  |
 | pump_fees_research | 51608 | 296 | no_complete_body_match |  |
 | pump_fees_research | 52568 | 448 | no_complete_body_match |  |
 | pump_fees_research | 54864 | 368 | no_complete_body_match |  |
@@ -1589,8 +1587,6 @@ Snapshot and limitations: [inventory](README.md). Addresses are decimal virtual 
 | pump_fees_research | 240088 | 3096 | no_complete_body_match |  |
 | pump_fees_research | 243184 | 6080 | no_complete_body_match |  |
 | pump_fees_research | 249264 | 8000 | no_complete_body_match |  |
-| pump_fees_research | 260568 | 624 | no_complete_body_match |  |
-| pump_fees_research | 261192 | 624 | no_complete_body_match |  |
 | pump_fees_research | 261816 | 4160 | no_complete_body_match |  |
 | pump_fees_research | 265976 | 4160 | no_complete_body_match |  |
 | pump_fees_research | 270136 | 1400 | no_complete_body_match |  |
@@ -1619,7 +1615,6 @@ Snapshot and limitations: [inventory](README.md). Addresses are decimal virtual 
 | pump_fees_research | 586976 | 4608 | no_complete_body_match |  |
 | pump_fees_research | 632080 | 1272 | no_complete_body_match |  |
 | pump_fees_research | 639104 | 1360 | no_complete_body_match |  |
-| pump_fees_research | 641744 | 1104 | no_complete_body_match |  |
 | pump_fees_research | 642848 | 1416 | no_complete_body_match |  |
 | pump_fees_research | 644264 | 1600 | no_complete_body_match |  |
 | pump_fees_research | 645864 | 2104 | no_complete_body_match |  |

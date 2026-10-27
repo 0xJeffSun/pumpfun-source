@@ -395,3 +395,21 @@ suite and 1,542-case exact focused replays; all 15 applicable overflow diagnosti
 cases match for the preferred candidate. Original helper callers remain open.
 The failed missing-host-linker attempt and rejected stale-cache attempt are
 retained explicitly. This updates research evidence, not selected program pins.
+
+## Flat-fee setters and V2 sharing combined
+
+The [new packet](../research/fees-config-setter-recovery/README.md) recovers the
+two 624-byte flat/exotic setters, including their field writes, source origins
+and all ten direct local callee bindings. The first edit lost two unrelated
+matches by shifting source lines; restoring the blank line preserves both.
+The rejected build is retained. The corrected setter candidate gains two and
+loses none.
+
+[PR #143](https://github.com/lalalune/pumpfun-source/pull/143) was also verified
+and merged. Its V2 ownership change was compiled together with the setters:
+all five gains survive in one actual binary, for 362 unique structural pairs,
+59 unique raw pairs and 76 unmatched windows. Full window counts are 109 raw,
+400 normalized-only and 76 unmatched. Call refinement gives 423 correspondences,
+2,515 bound-target edges and 24 different-body edges; 86 duplicates stay
+unattributed. Both the corrected setter and combined candidates pass fresh
+17,331-case suites and 1,542-case exact matrices. Whole-file identity still fails.

@@ -7,8 +7,8 @@
     {
       "path": "README.md",
       "before_sha256": "cae913d4d3f2066403162f653a0cf35b39620fb08877b1b308c08ccce4a53678",
-      "after_sha256": "e4f2f3955bea7110dee98e5a2fc9df45ce629d5af7a0937c0d284505b0a65449",
-      "reason": "Refresh Fees to 357 unique pairs and 81 residuals after full Linux fee-total integration, retaining local-body and whole-program qualifications."
+      "after_sha256": "c7281d40f99c14f1d1f60bf94c8ca0c394b35c272f59add4f025197452834969",
+      "reason": "Refresh Fees to 362 unique pairs and 76 residuals after combined setter and V2 ownership recovery, retaining local-body and whole-program qualifications."
     },
     {
       "path": ".github/workflows/verify.yml",
