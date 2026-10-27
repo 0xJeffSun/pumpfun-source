@@ -37,3 +37,17 @@ python3 -B "$PACKET/materialize.py" --parent "$PARENT" --output /fresh/path/sour
 ```
 
 Do not modify the archived parent/checkpoint in place. The materializer verifies content hashes rather than trusting a directory name or branch label. This packet contains no original/generated binaries, compiler IR, raw experimental receipts, dependency archives or runtime fixtures.
+
+## Optional reserve-sync stage: 746
+
+The default `curvehop745` stage above remains unchanged. Select `--stage reserve746` to additionally apply the one-line checked-add source expression from [PR #340](https://github.com/lalalune/pumpfun-source/pull/340), exact head `d2c01ad86df5f9088cca6a255df30ed65ee2a96c`, credited there to PR #323. `reserve.patch` shows that separate edit; `reserve-pins.json` binds its entire before/after Rust file. Both stages retain all 57 inputs, unchanged dependency/SDK configuration, and the CurveHop correction.
+
+The ordinary Linux **SBF** reserve composition measures **746 / 1,035 injective normalized windows and 121 raw windows**, retaining every 745-stage match and its entire raw-match set. Its sole new match is reserve-sync at original `0xa23f0`, 1,168 bytes. The complete normalized body and nine direct callee bodies match; there are no direct data operands. Compared with the 745 stage, both complete generated ELF files differ by exactly four bytes exchanging two independent loads from initialized converter-return slots. Other loaded sections and their addresses are unchanged.
+
+Only source line 85 changes; no line is inserted or removed. Both addends are `u64` values widened to `u128`, so their sum is at most `2^65 - 2`: the new checked-add failure arm is unreachable. Existing checked multiplication, division, fallible narrowing and capping keep their evaluation and error order. This is source-level reconstruction evidence, not proof of the historical source or recursive program equivalence.
+
+**Reserve-stage runtime: NOT RUN. Reserve-stage reproducibility repeat: passed for both complete generated ELFs. Whole-binary identity against the original: false.** A separate recompilation of the exact 746 source reproduced both complete generated ELF files byte-for-byte, with all 355 dependencies and retained source/artifacts unchanged. This is a distinct 746 repeat proof, not a transfer of the 745 result. Neither stage inherits any public runtime suite or compute-unit claim. No program execution is part of materialization or the source tests.
+
+```sh
+python3 -B "$PACKET/materialize.py" --parent "$PARENT" --stage reserve746 --output /fresh/path/reserve-source
+```

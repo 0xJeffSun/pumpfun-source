@@ -53,4 +53,34 @@ class SourceTests(unittest.TestCase):
     def test_traversal_rejected(self):
         for name in ['../outside', '/absolute']:
             with self.assertRaises(ValueError): m.safe_relative(name)
+    def test_exact_reserve_stage(self):
+        got = m.materialize(PARENT, self.root / 'source', 'reserve746')
+        expected = dict(m.PINS['parent_source_sha256'])
+        expected[m.PINS['changed_path']] = m.PINS['changed_source_sha256']
+        pins = json.loads((m.HERE / 'reserve-pins.json').read_text())
+        expected[pins['changed_path']] = pins['changed_sha256']
+        self.assertEqual(got, expected)
+        self.assertEqual(len(got), 57)
+    def test_reserve_only_line85(self):
+        data = (PARENT / 'primary/src/mayhem_virtual_params.rs').read_bytes()
+        new = m.reserve_swap(data)
+        self.assertEqual(len(data.splitlines()), len(new.splitlines()))
+        self.assertEqual([i+1 for i,(a,b) in enumerate(zip(data.splitlines(),new.splitlines())) if a != b], [85])
+    def test_reserve_already_changed_rejected(self):
+        data = (PARENT / 'primary/src/mayhem_virtual_params.rs').read_bytes()
+        with self.assertRaises(ValueError): m.reserve_swap(m.reserve_swap(data))
+    def test_reserve_wrong_error_rejected(self):
+        data = (PARENT / 'primary/src/mayhem_virtual_params.rs').read_bytes()
+        with self.assertRaises(ValueError): m.reserve_swap(data.replace(b'PumpError::Overflow',b'PumpError::MintDoesNotMatchBondingCurve'))
+    def test_reserve_coordinate_shift_rejected(self):
+        data = (PARENT / 'primary/src/mayhem_virtual_params.rs').read_bytes()
+        with self.assertRaises(ValueError): m.reserve_swap(b'\n'+data)
+    def test_unknown_stage_before_write(self):
+        with self.assertRaises(ValueError): m.materialize(PARENT, self.root / 'source', 'unapproved')
+        self.assertFalse((self.root / 'source').exists())
+    def test_widened_add_unreachable_error_bound(self):
+        maximum = (1 << 64) - 1
+        self.assertLess(maximum + maximum, 1 << 128)
+        for a in [0, 1, maximum]:
+            for b in [0, 1, maximum]: self.assertLess(a+b, 1 << 128)
 if __name__ == '__main__': unittest.main(argv=['test_materialize.py', *remaining])

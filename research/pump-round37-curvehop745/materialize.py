@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Materialize authenticated Round37 Rust inputs and one attributed source change.
+"""Materialize authenticated Round37 Rust inputs and explicitly selected attributed source stages.
 
 No compiler, subprocess, network, ELF, VM, or original-program input is used.
 """
@@ -25,7 +25,20 @@ def safe_relative(name):
         raise ValueError('unsafe relative source path')
     return p
 
-def materialize(parent, output):
+def reserve_swap(data):
+    pins = json.loads((HERE / 'reserve-pins.json').read_text())
+    old = b'let numerator = (denominator as u128 + virtual_token_reserves as u128)'
+    new = b'let numerator = (denominator as u128).checked_add(virtual_token_reserves as u128).ok_or(PumpError::Overflow)?'
+    if digest(data) != pins['parent_sha256'] or data.count(old) != 1:
+        raise ValueError('exact reserve parent source required')
+    changed = data.replace(old, new, 1)
+    if digest(changed) != pins['changed_sha256']:
+        raise ValueError('reserve source, errors or coordinates changed')
+    return changed
+
+def materialize(parent, output, stage='curvehop745'):
+    if stage not in ('curvehop745', 'reserve746'):
+        raise ValueError('unknown source stage')
     parent, output = Path(parent).absolute(), Path(output).absolute()
     if any(p.is_symlink() for p in [parent, *parent.parents, output, *output.parents]):
         raise ValueError('symlink path')
@@ -50,6 +63,10 @@ def materialize(parent, output):
         if digest(data) != expected:
             raise ValueError('source mismatch: ' + name)
         staged[name] = swap(data) if name == PINS['changed_path'] else data
+    if stage == 'reserve746':
+        reserve = json.loads((HERE / 'reserve-pins.json').read_text())
+        name = str(safe_relative(reserve['changed_path']))
+        staged[name] = reserve_swap(staged[name])
     if len(staged) != 57:
         raise ValueError('unexpected source inventory')
     output.mkdir(parents=True)
@@ -64,8 +81,9 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--parent', required=True, type=Path)
     parser.add_argument('--output', required=True, type=Path)
+    parser.add_argument('--stage', choices=['curvehop745', 'reserve746'], default='curvehop745')
     args = parser.parse_args()
-    result = materialize(args.parent, args.output)
-    print(json.dumps({'source_files': len(result), 'source_sha256': result}, indent=2, sort_keys=True))
+    result = materialize(args.parent, args.output, args.stage)
+    print(json.dumps({'stage': args.stage, 'source_files': len(result), 'source_sha256': result}, indent=2, sort_keys=True))
 if __name__ == '__main__':
     main()

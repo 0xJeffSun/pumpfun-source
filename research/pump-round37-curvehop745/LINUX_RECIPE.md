@@ -37,3 +37,9 @@ LD_LIBRARY_PATH="$SDK/rust/lib:$SDK/llvm/lib" \
 The measured control produced candidate SHA-256 `3222ecbdea27ba8190a410c354f7e40d961988e77666ec4c4d966fb51b7f9114` and symbols SHA-256 `0be153b2a2a67a70882f06f76b7f19a3d9a7c00a7f29d17576f64cb97a7d2c96`. Treat these strictly as **post-build comparisons**, never compiler inputs. Different output hashes require investigation, not byte patching. The original binary is needed only for a subsequent independent static comparison, not building. This prose recipe is a transparent description of the measured ordinary build; the source materializer/tests do not launch it.
 
 For another independent build use fresh outputs and preserve prior artifacts. A result from a reused dependency cache must establish every dependency unchanged and the root freshly compiled. The measured independent root recompilation reproduced both complete output files byte-for-byte; this does not qualify future builds without checking their actual outputs. Runtime remains NOT RUN. This packet does not include or execute runtime fixtures.
+
+## Optional reserve746 input stage
+
+The same ordinary SBF command/environment applies to the optional reserve stage; only materialize with `--stage reserve746` into a new source directory first. Do not change target libraries, flags or dependency inputs. The 745 source and result hashes above remain independently selectable and unchanged.
+
+The measured 746 control produced candidate SHA-256 `2fa9a70d3cf712f10658297fa072e4addc25f33c1627d18ac4fc229445fab9c6` and symbols SHA-256 `a06a0f7cdf7e6ba1743b1190b8d7c1856a0a438c7eb9155ee0368ea515580506`. These are post-build comparisons only, never compiler inputs. A separate reserve-stage root recompilation reproduced both complete generated ELFs byte-for-byte; runtime was NOT RUN. Original whole-binary identity remains false. Preserve separate stage outputs and do not reuse the 745 repeat as a 746 qualification.
