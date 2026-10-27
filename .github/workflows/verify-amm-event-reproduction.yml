@@ -17,3 +17,7 @@ jobs:
         run: python -B research/amm-event-capture-independent-replay/verify.py
       - name: Reject mutated evidence
         run: python -B research/amm-event-capture-independent-replay/test_verify.py
+      - name: Verify current-parent composition
+        run: python -B research/amm-current-event-capture-20261027/verify.py
+      - name: Reject mutated current-parent evidence
+        run: python -B research/amm-current-event-capture-20261027/test_verify.py

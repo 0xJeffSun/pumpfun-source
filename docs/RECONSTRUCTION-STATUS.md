@@ -51,26 +51,28 @@ analysis. Candidate symbol names are hypotheses about original identity.
 | Fees selected | 585 | 102 | 363 | 120 | 0 |
 | Mayhem historical selected | 441 | 58 | 131 | 7 | 245 |
 | Relay historical source 15 | 492 | 33 | 89 | 370 | 0 |
-| **Pump current Round30** | **1,035** | **137** | **589** | **309** | **0** |
-| **PumpSwap current** | **785** | **128** | **512** | **145** | **0** |
+| **Pump current Round31** | **1,035** | **137** | **593** | **305** | **0** |
+| **PumpSwap latest research** | **785** | **128** | **513** | **144** | **0** |
 | **Fees latest research** | **585** | **200** | **381** | **4** | **0** |
 | **Mayhem latest research** | **441** | **100** | **330** | **11** | **0** |
 | **Relay canonical selection** | **492** | **492** | **0** | **0** | **0** |
 
-The current rows are bound to [Pump Round30](../repro/pump/main-contract-round30-20261027/README.md), [AMM source ABI recovery](../repro/pump_amm/source-abi-recovery-20261027/README.md), [Fees associated-token integration](../research/fees-ata-prefix-integration/README.md) and [Mayhem current initializer recovery](../research/mayhem-initializer-current-recovery-20261027/README.md); they extend the dated generated inventory below. Each row is a partition, not a score of semantic correctness. The historical selected Mayhem source
+The current rows are bound to [Pump Round31](../repro/pump/main-contract-round31-20261027/README.md), [current-parent AMM event composition](../research/amm-current-event-capture-20261027/README.md), [Fees associated-token integration](../research/fees-ata-prefix-integration/README.md) and [Mayhem current initializer recovery](../research/mayhem-initializer-current-recovery-20261027/README.md); they extend the dated generated inventory below. Each row is a partition, not a score of semantic correctness. The historical selected Mayhem source
 ledger has 257 opaque windows, 12 of which happen to match local raw bytes.
 Selected Fees retains two call-conflicting rows; body existence does not resolve
 those conflicts. Different programs and studies use different matching rules.
 
-Across these five frontier rows, **2,869/3,338 windows (85.9%)** match and
-**3,792,768/5,213,128 original text bytes (72.8%)** lie in matched windows.
-There are **469 unmatched windows**. Only Relay has complete meaningful-ELF
+Across these five frontier rows, **2,874/3,338 windows (86.1%)** match and
+**3,798,376/5,213,128 original text bytes (72.9%)** lie in matched windows.
+There are **464 unmatched windows**. Only Relay has complete meaningful-ELF
 identity; the four core programs remain byte-unequal. These are structural
 coverage measures, not a percentage of engineering work completed.
 
-Current AMM matched windows cover **799,032 of 1,162,040 original text bytes
-(68.8%)**. Its 640 normalized matches include the 128 raw-local matches; complete
-ELF identity remains false.
+Current AMM research windows cover **800,816 of 1,162,040 original text bytes
+(68.9%)**. Its 641 normalized matches include 128 raw-local matches. The selected
+source/ABI checkpoint remains at 640; the new research composition has two equal
+builds, 17,462 fresh cases and 26 focused event pairs, but not a rerun of every
+parent supplemental matrix. Complete ELF identity remains false.
 
 - [Every exact local body, with candidate names and original addresses](../repro/reconstruction-status-2026-10-26/raw-body-matches.md).
 - [Every matched/unmatched/opaque window and candidate correspondence](../repro/reconstruction-status-2026-10-26/functions.tsv).

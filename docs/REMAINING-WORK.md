@@ -9,16 +9,19 @@ snapshot retains `1463bd22` audit bindings; current selections are recorded in
 [completion ledger](COMPLETION.md) remains a selected-checkpoint record; its old
 candidate paths and “current” prose must not override newer evidence.
 
-Current [Pump Round30](../repro/pump/main-contract-round30-20261027/README.md)
-has 137 raw-local matches, 589 normalized-only matches and 309 unmatched windows.
-The unmatched windows cover 903,976 original text bytes. Remaining bodies,
+Current [Pump Round31](../repro/pump/main-contract-round31-20261027/README.md)
+has 137 raw-local matches, 593 normalized-only matches and 305 unmatched windows.
+The unmatched windows cover 900,152 original text bytes. Remaining bodies,
 data, relocations, uncovered behavior and original build provenance remain open.
 
-Current [PumpSwap source ABI recovery](../repro/pump_amm/source-abi-recovery-20261027/README.md)
-has 128 raw-local, 512 normalized-only and 145 unmatched windows, with 363,008
-original text bytes still unmatched. The prior malformed-recipient check is
-recovered; the separate resize-order follow-up retains eight differences in
-160 signed cases. Complete data/call identity and provenance remain open.
+Current [AMM event research](../research/amm-current-event-capture-20261027/README.md)
+has 128 raw-local, 513 normalized-only and 144 unmatched windows, with 361,224
+original text bytes still unmatched. It composes the complete sell-event body
+onto the 640-window source/ABI parent. Two builds, 17,462 fresh maintained cases
+and 26 focused event pairs pass. Selection still requires the other parent
+supplemental matrices to be rerun; the existing resize-order follow-up retains
+eight differences in 160 signed cases. Complete data/call identity and provenance
+remain open.
 
 Current Mayhem research is the [current-framework initializer composition](../research/mayhem-initializer-current-recovery-20261027/README.md):
 100 raw-local, 330 normalized-only and eleven unmatched windows / 110,328 original
