@@ -39,6 +39,7 @@ code and checks every archive chunk and every decoded content blob:
 
 ```sh
 python3 restore.py
+python3 -B test_restore.py
 python3 restore.py --list --prefix fees-next-trial/parallel-donation/
 python3 restore.py --output /absolute/new/recovery --prefix fees-next-trial/parallel-donation/
 ```
@@ -48,6 +49,11 @@ already exist. Restored files are ordinary independent files, including duplicat
 editing one restored experiment cannot mutate another through a hardlink.
 No symlinks or build processes are activated. If the index records symlinks,
 inspect them and recreate them explicitly when needed.
+
+Before creating an output directory, the restorer checks every indexed path and
+blob reference. Paths with Windows drive syntax, backslashes, traversal or
+noncanonical components are rejected. The regression checks also authenticate
+all package files and verify the index's recorded lengths and blob membership.
 
 The snapshot can contain logs captured while the final in-flight diagnostic was
 finishing. Changes detected during the snapshot are retained in the index's

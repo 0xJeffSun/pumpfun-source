@@ -1,6 +1,6 @@
 {
   ".gitattributes": "a1e9409d3451312f5f72cb676fdfe78acff0eef04839c5156005c34b7cd4eddd",
-  "README.md": "88b962973cbda61d58e0ea2903ab3bda8ee76810df466a415bc6d2eb2ebe36be",
+  "README.md": "d1444696be33cf3636aab036d80f4d854b2895082cb692ee726b81a85b9ff182",
   "archive/checkpoint.tar.zst.part000": "12aa075aa79c77daa96adb2b5fd551098a036d0e68402998aa700655f6ad3ff1",
   "archive/checkpoint.tar.zst.part001": "7fd2858550683dec1c0550ea495d877139076c327f5f55fac5b8f9df113eecee",
   "archive/checkpoint.tar.zst.part002": "8c71de9ff2d0fb8fda33e0423f69610cdcce52ddac250fbeb0d421743504001d",
@@ -12,6 +12,7 @@
   "capture-tools/inventory.py": "473a1c419a22a990da99af5df0020624a6bc3a7dbe4076da0691c674040cdf7b",
   "capture-tools/pack.py": "958af94d4712c9180249dd8925731dac9c010d1f651b574b0b7bca98b740e1bf",
   "index.json.gz": "992bdc6e6f0a9f9b2b679da41e1a59811ef918f7231486c687bd6fc23fefb924",
-  "restore.py": "d80c1e9717e9dae6248aac26f32b97ddf8fd34aae1ea0e0508eb4cb25fdc96bb",
+  "restore.py": "d1b5dbcebf2be6d708682a32e9d949590ffce90a578b93aece5591237f8e1e0e",
+  "test_restore.py": "3578b09b9c97a565899f7efb17e35141188ba8e1d61cffe89bd0177659c3f9a3",
   "verification.json": "a785c5f8b825ff8910b066b92a1fc5489e8656c3d1685d7fad18da9948313f0c"
 }

@@ -18,8 +18,25 @@ HERE = Path(__file__).resolve().parent
 
 def safe(name):
     path = PurePosixPath(name)
-    assert not path.is_absolute() and '..' not in path.parts and str(path) == name
+    assert name and not path.is_absolute() and '..' not in path.parts
+    assert str(path) == name and path.parts and ':' not in name and '\\' not in name
     return path
+
+
+def check_index(index, manifest):
+    assert index['format'] == manifest['format'] == 'FEES_WORK_CHECKPOINT_V1'
+    assert index['base_commit'] == manifest['base_commit']
+    assert len(index['files']) == manifest['files']
+    assert len(index['blobs']) == manifest['unique_blobs']
+    assert len(index['history']) == manifest['historical_versions']
+    for digest, size in index['blobs'].items():
+        assert re.fullmatch(r'[0-9a-f]{64}', digest) and isinstance(size, int) and size >= 0
+    for name, row in [*index['files'].items(), *[(r['path'], r) for r in index['history']]]:
+        safe(name)
+        assert row['blob'] in index['blobs']
+        assert row['bytes'] == index['blobs'][row['blob']]
+    assert sum(row['bytes'] for row in index['files'].values()) == manifest['logical_bytes']
+    assert sum(index['blobs'].values()) == manifest['unique_bytes']
 
 
 def verify_or_restore(output=None, prefix=''):
@@ -29,7 +46,7 @@ def verify_or_restore(output=None, prefix=''):
     raw_index = gzip.decompress(packed_index)
     assert hashlib.sha256(raw_index).hexdigest() == manifest['index_sha256']
     index = json.loads(raw_index)
-    assert index['format'] == manifest['format'] == 'FEES_WORK_CHECKPOINT_V1'
+    check_index(index, manifest)
     selected = {name: row for name, row in index['files'].items() if name.startswith(prefix)}
     for name in selected:
         safe(name)

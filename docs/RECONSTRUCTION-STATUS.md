@@ -6,7 +6,7 @@ This review updates the research frontier while preserving the selected-checkpoi
 contains every one of the **4,415 selected/research function-window rows**.
 
 The generated inventory is a dated snapshot. Later maintained selections now
-include Pump Round13 and the AMM liquidity recovery; their current counts and
+include Pump Round13 and the AMM structural/TLV recovery; their current counts and
 evidence are in the [repository overview](../README.md). The current rows below
 are separate from the historical rows, and do not rewrite that snapshot.
 
@@ -52,12 +52,12 @@ analysis. Candidate symbol names are hypotheses about original identity.
 | Mayhem historical selected | 441 | 58 | 131 | 7 | 245 |
 | Relay historical source 15 | 492 | 33 | 89 | 370 | 0 |
 | **Pump current Round13** | **1,035** | **113** | **540** | **382** | **0** |
-| **PumpSwap current** | **785** | **123** | **463** | **199** | **0** |
+| **PumpSwap current** | **785** | **124** | **462** | **199** | **0** |
 | **Fees latest research** | **585** | **198** | **380** | **7** | **0** |
 | **Mayhem latest research** | **441** | **100** | **328** | **13** | **0** |
 | **Relay canonical selection** | **492** | **492** | **0** | **0** | **0** |
 
-The current rows are bound to [Pump Round13](../repro/pump/main-contract-round13-20261027/README.md), [AMM liquidity recovery](../repro/pump_amm/dependency-liquidity-recovery-20261027/README.md), [Fees Sharing recovery](../research/fees-sharing-handler-recovery/README.md) and [Mayhem provider sharing](../research/mayhem-provider-sharing/README.md); they extend the dated generated inventory below. Each row is a partition, not a score of semantic correctness. The historical selected Mayhem source
+The current rows are bound to [Pump Round13](../repro/pump/main-contract-round13-20261027/README.md), [AMM structural/TLV recovery](../repro/pump_amm/structural-tlv-recovery-20261027/README.md), [Fees Sharing recovery](../research/fees-sharing-handler-recovery/README.md) and [Mayhem provider sharing](../research/mayhem-provider-sharing/README.md); they extend the dated generated inventory below. Each row is a partition, not a score of semantic correctness. The historical selected Mayhem source
 ledger has 257 opaque windows, 12 of which happen to match local raw bytes.
 Selected Fees retains two call-conflicting rows; body existence does not resolve
 those conflicts. Different programs and studies use different matching rules.

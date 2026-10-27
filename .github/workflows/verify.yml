@@ -62,6 +62,7 @@ jobs:
             commands: |
               python -B research/fees-sharing-handler-recovery/verify.py
               python -B research/fees-sharing-handler-recovery/test_verify.py
+              python -B research/fees-work-checkpoint-20261027/test_restore.py
               python scripts/fees_validate_all.py --candidate repro/pump_fees/sharing-authorize-main-v144/main/candidate.so --output work/fee-handlers.json
               python scripts/fees_donation_sequence.py --candidate repro/pump_fees/sharing-authorize-main-v144/main/candidate.so --output work/donation-sequence.json
               python repro/pump_fees/initializer-history/replay_history.py --candidate repro/pump_fees/sharing-authorize-main-v144/main/candidate.so --output work/fees-init-history.json
