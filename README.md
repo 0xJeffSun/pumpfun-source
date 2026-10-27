@@ -25,11 +25,11 @@ string table from ordinary Rust source. Its Linux candidate retains the same
 482-window frontier and 348 source-location matches; whole-file equality remains
 unachieved. The function inventory keeps its explicitly hashed burn/close inputs.
 
-Latest Fees research: **375 unique structural pairs, 63 unmatched windows**.
+Latest Fees research: **376 unique structural pairs, 62 unmatched windows**.
 The [configuration-event recovery](research/fees-config-event-recovery/README.md)
 adds four complete caller-body matches; the two upsert bodies share a structural
 shape and are distinguished by their callees. The [current call ledger](repro/reconstruction-status-2026-10-26/fees-call-attribution.json)
-also attributes 61 duplicate-body pairs, giving 436 correspondences.
+also attributes 61 duplicate-body pairs, giving 437 correspondences.
 Whole-file identity remains unachieved. The [exotic-fee growth study](research/fees-exotic-growth-precedence/README.md)
 corrects rejection precedence and the realloc flag in new boundary cases;
 that caller still has no complete body match. The [optional-account ownership recovery](research/fees-optional-account-ownership/README.md)
@@ -40,7 +40,8 @@ The [extension-size log recovery](research/fees-extend-size-logs/README.md) rest
 the original no-resize messages and a complete 448-byte formatting helper.
 The [crank interface-mint recovery](research/fees-crank-interface-mint/README.md)
 adds one boxed parser match, removes two structural ambiguities, and corrects
-the tested mint owner/length validation.
+the tested mint owner/length validation. The [shared zero-quote predicate](research/fees-curve-zero-helper/README.md)
+now has a complete 504-byte match, including both referenced panic locations.
 
 The [current reconstruction review](docs/RECONSTRUCTION-STATUS.md) lists exact,
 normalized, unmatched and opaque function status, all 10 remaining Relay bodies,
@@ -64,11 +65,11 @@ No handler is certified perfectly recreated. The selected core builds contain
 | --- | ---: | ---: | ---: | ---: |
 | Pump selected | 98 | 430 | 507 | 0 |
 | PumpSwap selected | 93 | 395 | 297 | 0 |
-| Fees research | 118 | 404 | 63 | 0 |
+| Fees research | 118 | 405 | 62 | 0 |
 | Mayhem selected | 58 | 131 | 7 | 245 |
 | Relay research | 130 | 352 | 10 | 0 |
 
-Fees' unresolved bodies span **318,520 / 799,648 original text bytes (39.8%)**;
+Fees' unresolved bodies span **318,016 / 799,648 original text bytes (39.8%)**;
 Relay's span **52,616 / 752,488 (7.0%)**. These are sizes of whole unmatched
 windows, not differing-byte counts or estimates of effort. Calls, data, layout,
 relocations, build provenance and broader behavior remain to be verified even

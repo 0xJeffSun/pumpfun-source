@@ -1,6 +1,6 @@
-# Reconstruction status after crank mint-interface recovery — 26 October 2026
+# Reconstruction status after common quote-predicate recovery — 26 October 2026
 
-Reviewed evidence revision: `19bf93d4b9c1b0bc49797b2ba008f57ec4ecdd0c`.
+Reviewed evidence revision: `152af337446e05a7fdd48fe470b23066c02e1706`.
 This review updates the research frontier while preserving the selected-checkpoint
 [baseline audit](RECONSTRUCTION-AUDIT.md). The [recomputed inventory](../repro/reconstruction-status-2026-10-26/README.md)
 contains every one of the **4,415 selected/research function-window rows**.
@@ -44,7 +44,7 @@ analysis. Candidate symbol names are hypotheses about original identity.
 | Fees selected | 585 | 102 | 363 | 120 | 0 |
 | Mayhem selected | 441 | 58 | 131 | 7 | 245 |
 | Relay selected source 15 | 492 | 33 | 89 | 370 | 0 |
-| **Fees latest research** | **585** | **118** | **404** | **63** | **0** |
+| **Fees latest research** | **585** | **118** | **405** | **62** | **0** |
 | **Relay latest research** | **492** | **130** | **352** | **10** | **0** |
 
 Each row is a partition, not a score of semantic correctness. Mayhem's source
@@ -70,13 +70,13 @@ bytes (7.0%)**. Those bytes describe the sizes of unmatched original windows,
 not the number of absent or incorrect bytes. The residual includes large business
 functions; matching the other 482 still leaves their call/data identity to prove.
 
-Fees research has **522/585 windows with a normalized counterpart**: 375 unique
-structural pairs and 147 original windows in ambiguous duplicate groups. Its 63
-unmatched windows span **318,520 of 799,648 original text bytes (39.8%)**, although
-they are only 10.8% of the window count. Many remaining bodies are large. The
+Fees research has **523/585 windows with a normalized counterpart**: 376 unique
+structural pairs and 147 original windows in ambiguous duplicate groups. Its 62
+unmatched windows span **318,016 of 799,648 original text bytes (39.8%)**, although
+they are only 10.6% of the window count. Many remaining bodies are large. The
 [current call ledger](../repro/reconstruction-status-2026-10-26/fees-call-attribution.json)
 recomputes 61 additional duplicate-body correspondences on this candidate, for
-436 attributed pairs. There are 86 still-unattributed duplicate windows and 20
+437 attributed pairs. There are 86 still-unattributed duplicate windows and 20
 call edges to different-body frontiers. This refinement adds no body coverage.
 
 There is no defensible single source-completion percentage or ETA. Whole-program
@@ -267,8 +267,8 @@ additional function is considered recovered.
 
 ## Fees: new complete bodies, substantial residual business logic
 
-The latest 859,904-byte candidate is SHA-256
-`16b13f46151ce47360f4d25eca740fe89a000b6ab83e9cdd2e2c3c12e87e400c`.
+The latest 860,008-byte candidate is SHA-256
+`e35c745fe8238ef4199a6e23cf449b3c42767bf7db9df26ded77b8339275479a`.
 The newly merged studies recover:
 
 | Complete original window | Evidence |
@@ -291,9 +291,9 @@ with any raw counterpart, including ambiguous duplicates, gives 118. Those
 numbers answer different questions and must not be interchanged.
 
 The candidate retains passing **17,331 cases across 18 suites** and **1,542 exact
-outcome/log/compute comparisons**. The current boxed-interface candidate was replayed afresh;
-its control reuses the verified extension-log artifact. Existing unchecked-input
-and finite-coverage limits remain. The 63 unresolved bodies, ambiguous attribution,
+outcome/log/compute comparisons**. The current common-helper candidate was replayed afresh;
+its control reuses the verified crank interface-mint artifact. Existing unchecked-input
+and finite-coverage limits remain. The 62 unresolved bodies, ambiguous attribution,
 shareholder validation, transitive calls/data and final ELF layout remain open.
 
 The fee-total helper, flat-fee setters, tier helpers and four configuration/upsert
@@ -358,6 +358,16 @@ larger account parser remains unmatched. Thirty new signed owner/length cases
 correct ten observed discrepancies in both the parent and boxed-legacy control.
 All retained broad/focused regressions pass. This does not claim successful
 Token-2022 transfers through the crank's downstream legacy token program.
+
+### Shared zero-quote predicate
+
+The [common-helper recovery](../research/fees-curve-zero-helper/README.md) emits
+the 504-byte zero-quote predicate from ordinary Borsh pubkey deserialization.
+Array conversion and `TryFrom` controls emit 432-byte bodies and do not match.
+All four direct callee bodies and both referenced panic locations match. The
+helper is wired into both existing fee-sharing callers; those full callers
+remain unresolved. The change adds one normalized body with no lost coverage,
+and passes fresh broad and retained focused regression suites.
 
 ## Public behavior: reconstructed is not perfect
 
