@@ -1524,3 +1524,21 @@ the completed-curve branch with boundary account lengths and ownership/key
 variants. All compared outcomes and state pass; two incomplete-curve controls
 retain old downstream diagnostic differences. Whole-ELF equality remains open.
 No selected checkpoint is changed.
+
+## Mayhem: typed GlobalParams layout and complete codecs
+
+The [GlobalParams recovery](../repro/mayhem/global-params-layout-recovery/README.md)
+replaces opaque byte groups with transport-proven fields. The original serializer
+independently maps all 254 serialized bytes and 26 native fields. The shared
+trade-validation method and all three GlobalParams codecs now have complete
+normalized matches, preserving the six preceding helper gains and all 58 raw
+windows. Including the explicitly examined but unmatched quote-aware validator,
+the admitted scope is 196 functions, 188 matching and eight unmatched, with
+245 still semantically opaque. This does not turn opaque raw equality into a
+claim of analyzed behavior.
+
+The candidate passes 2,868 independently verified signed transactions: 1,032
+admin transport/update/reset cases (initializers excluded), 396 Sell cases and
+the three-family Burn regression. Independent checks reconstruct complete
+expected account bytes for 624 successful admin cases. Four Sell log differences
+remain, and no full-handler or whole-ELF equality is claimed.

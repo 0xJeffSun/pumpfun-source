@@ -119,3 +119,14 @@ artifact and source bytes are unchanged.
 
 The remaining-account helper's public ownership/borrow reconstruction is
 recorded separately; all three source counts retain their declared baselines.
+
+## PR214: Mayhem GlobalParams layout
+
+The full verifier and fourteen mutation tests pass, including independent
+verification of 2,868 saved signatures and complete expected account bytes for
+624 successful transport/update/reset cases. Four complete helper matches are
+added; the quote-aware validator remains explicitly unmatched. The latest
+research scope is196 admitted /188 matched /8 unmatched and245 opaque windows;
+twelve raw-equal opaque windows remain semantically opaque. Four Sell log
+differences and all full trade-handler gaps remain. No canonical promotion or
+fresh VM execution is claimed by this review.
