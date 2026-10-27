@@ -1,6 +1,6 @@
 # PR queue review — 27 October 2026
 
-Reviewed PRs #170–#186 as a combined merge tree based on `ba7883511942965c5c9def03971bdaff84963d6b`. Selected program sources, captures, scripts and workflows are unchanged. Overlapping append-only progress-log additions were preserved during local conflict resolution.
+Reviewed PRs #170–#187 as a combined merge tree based on `ba7883511942965c5c9def03971bdaff84963d6b`. Selected program sources, captures, scripts and workflows are unchanged. Overlapping append-only progress-log additions were preserved during local conflict resolution.
 
 | PR | Reviewed change | Verification and scope |
 | --- | --- | --- |
@@ -21,6 +21,7 @@ Reviewed PRs #170–#186 as a combined merge tree based on `ba7883511942965c5c9d
 | [#184](https://github.com/lalalune/pumpfun-source/pull/184) | Relay: recover three complete settlement bodies (488/492) | Source verifier and 9 tests pass; three-file patch preserves a 60-input map. Reported 488-window/data-graph result remains source-only; no independent compiler or VM execution of this variant in this review. |
 | [#185](https://github.com/lalalune/pumpfun-source/pull/185) | Fees admin-sharing parser and dispatch | Artifact/source/data verifier and three mutation checks pass; fresh 63-case captured-Pump admin-CTO replay passes. Separate 401-pair Fees candidate; business body remains unmatched. |
 | [#186](https://github.com/lalalune/pumpfun-source/pull/186) | Artifact-backed Relay settlement recovery | Independent fresh baseline/recovered builds reproduce expected outputs; 488 normalized and 142 raw-local windows, 99 settlement callees, data graph and 536 fresh replay records pass. This advances the retained Relay inventory to four unmatched windows. |
+| [#187](https://github.com/lalalune/pumpfun-source/pull/187) | Mayhem shipped v1.54 sysroot object provenance | Offline verifier and 21 regression tests pass; ten raw capture ranges match retained objects and linked bodies. GitHub publisher metadata independently matches the recorded archive digest. Full archive/member associations were not rerun in this review; their author receipt is retained. |
 
 The checked PR head SHAs are listed in the Git merge parents. No complete-program identity or exhaustive semantic correctness follows from merging these research packets. The generated inventory remains pinned to its declared Fees and artifact-backed Relay candidates; alternative source proposals are not silently combined.
 

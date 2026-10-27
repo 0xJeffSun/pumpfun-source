@@ -392,3 +392,16 @@ all 354 retained ELF member associations rechecked locally. Sixteen symbol label
 collapse to ten ranges; 270 eligible no-hit symbols and 1,067 excluded symbols
 remain recorded. This narrows shipped-library provenance, without proving a
 unique historical compiler, whole-program byte identity or behavioral coverage.
+
+
+## Relay donation caller construction follow-up
+
+The [488-window cleanup controls](../repro/donation-relay/donation-close-order-controls/README.md)
+show that constructing the native event after closing the temporary account
+restores the missing cleanup call but leaves original windows 92/93 unmatched
+(6,232 versus 6,272 bytes). A borrowed-key `DonationArgs` constructor gives the
+same complete output. Windows 94/95 remain 2,552 versus 2,568 bytes. Preserve the
+accepted candidate: this is evidence narrowing source hypotheses, not a new
+recovered function. Compare the remaining argument/context construction and
+stack use with whole-window matching still required; runtime cleanup and failure
+paths need separate coverage before promoting any later candidate.

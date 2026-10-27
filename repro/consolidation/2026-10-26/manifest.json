@@ -1,16 +1,16 @@
 {
   "files": {
     "README.md": {
-      "sha256": "e45495b29465d676d0a468364c89aa11fa8a88809e711638f6c69b5e9ac0a0e1",
-      "bytes": 1879
+      "bytes": 1879,
+      "sha256": "e45495b29465d676d0a468364c89aa11fa8a88809e711638f6c69b5e9ac0a0e1"
     },
     "guard.py": {
-      "sha256": "1410325297d3c74a21cba29799c65bf37d5a94c51ee9958ebe40786ce37b580b",
-      "bytes": 3744
+      "bytes": 3744,
+      "sha256": "66e967d52a04e0978e69e6b7f6d47a7f3fecd60d2303f659971da22ed7793fee"
     },
     "transition.json": {
-      "sha256": "e74a622c00132cfae9995ce96b6c353e66f0bac2024e7e9c798b258ae577293d",
-      "bytes": 1491
+      "bytes": 1470,
+      "sha256": "9badea4cc0ab7b06f970033f7657d948d529eaede996688e42082d7bdced4822"
     }
   }
 }

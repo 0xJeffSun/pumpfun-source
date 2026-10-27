@@ -915,3 +915,17 @@ unmatched donation windows (92–95), totaling 17,680 original text bytes (2.3%)
 This does not imply whole-program or arbitrary semantic identity. The compiler
 ELF is 818,392 bytes versus 818,280 meaningful original bytes; no allocation
 padding is added. Privileged successes and indirect/data semantics remain open.
+
+
+## Relay donation cleanup controls — 27 October 2026
+
+Two actual v1.48 root-crate builds on the accepted 488-window source tested
+native event/close ordering and a borrowed-key argument constructor.
+[The retained controls](../repro/donation-relay/donation-close-order-controls/README.md)
+restore the original native cleanup-call sequence, but native bodies remain
+40 bytes shorter and regular/payer bodies 16 bytes shorter. Both variants produce
+identical binaries; full analysis remains 488 normalized / 142 raw-local windows,
+with no gained or lost matches. No trial is promoted, and no runtime replay is
+claimed for these rejected controls. The next source investigation must explain
+the remaining caller construction differences rather than accept call topology
+or artifact size as byte identity.
