@@ -43,11 +43,11 @@ the whole program is identical.
 | **Total** | **3,227,184 / 5,213,128** | **61.9%** | **1,985,944** |
 
 Pump and AMM rows describe the verified maintained sources. Fees and Mayhem rows
-are the latest upstream research frontiers, distinct from their older maintained
-selections in [repro/status.json](repro/status.json). The additional Mayhem
-initializer source committed with this checkpoint is work in progress and does
-not inherit either research or selected-artifact validation. Upstream Relay's
-canonical selection remains the authority for its exact result.
+are the latest upstream research frontiers, distinct from their maintained
+selections in [repro/status.json](repro/status.json). The maintained Mayhem initializer now has its own [current-source build and
+signed validation](repro/mayhem/initializer-current-20261027/README.md), separate
+from the larger research frontier. Upstream Relay's canonical selection remains
+the authority for its exact result.
 
 Relay reproduces all **818,280 meaningful ELF bytes**. Its separate signed local
 loader replay reproduces the **830,448-byte captured payload**, including 12,168

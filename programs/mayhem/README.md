@@ -1,3 +1,9 @@
+# Current Mayhem source checkpoint
+
+The [initializer-current checkpoint](../../repro/mayhem/initializer-current-20261027/README.md) binds the maintained14 source inputs to two identical native v1.54 builds. Its fresh baseline covers9,595 instruction comparisons, plus16 original-Pump-to-Mayhem initialization cases (nine successful creates). The saved verifier authenticates19,252 transactions and38,286 signatures.
+
+The current candidate is `8dac1ff7575e3aa74ffa1ab4c4db2152781f0c644665dbf1c278e284751b19cb`. It is not whole-ELF equal to the original, and this current-source selection is separate from the larger428/441-window research frontier. The historical checkpoint documentation remains below.
+
 # Mayhem reconstructed candidate — measured v1.54 recipe
 
 The tested executable is599784bytes, SHA256 ca5d4f54b14e2f67c4eca56fcac29b54801906cecf23c463801916fd9d6b6621. One genuine managed-source direct officialv1.54 Cargo/rustc build, stockgenericV0/sbpf target and fixedv1.52 strip reproduced both whole executable and unstripped symbols exactly. All14source/lock/profile bytes are unchanged. This is a measured reproduction choice; historical compiler/recipe remains unresolved. Global default frontend choices are unchanged.

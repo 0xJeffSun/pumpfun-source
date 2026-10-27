@@ -8,6 +8,9 @@ parser=argparse.ArgumentParser();parser.add_argument('--program',choices=['pump'
 for name,status in json.loads((ROOT/'repro/status.json').read_text()).items():
  if args.program and name!=args.program:continue
  if not status.get('candidate_artifact'):continue
+ if name=='mayhem' and status['candidate_artifact']=='repro/mayhem/initializer-current-20261027/candidate.so':
+  subprocess.run([sys.executable,'-B',str(ROOT/'repro/mayhem/initializer-current-20261027/verify.py'),'--current-source',str(ROOT),'--expected-seal','b6b01b400fb7c5ab10db803ba27fe6a76e0e59e9ea7fad25250dc95760cf485c'],check=True)
+  continue
  if name=='pump_amm' and status['candidate_artifact']=='repro/pump_amm/error-order-recovery-20261027/results/build/candidate.so':
   subprocess.run([sys.executable,'-B',str(ROOT/'scripts/verify_pump_amm_checkpoint.py')],check=True)
   continue
