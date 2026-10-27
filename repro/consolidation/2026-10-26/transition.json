@@ -7,8 +7,8 @@
     {
       "path": "README.md",
       "before_sha256": "cae913d4d3f2066403162f653a0cf35b39620fb08877b1b308c08ccce4a53678",
-      "after_sha256": "27683907e2b7cb3af400b6b0c83c0aaa3ae77781677e4159cfbd135622d202b4",
-      "reason": "Record reviewed PR queue and distinguish newly merged research candidates from the explicitly pinned inventory, preserving selected checkpoints."
+      "after_sha256": "3734abd503d905872c36e4a3d10454c866bbd2f5171bc601ce33db9443e9bf12",
+      "reason": "Promote independently built and replayed 488-window Relay settlement research into the current inventory; preserve all selected checkpoints and whole-file limitations."
     },
     {
       "path": ".github/workflows/verify.yml",

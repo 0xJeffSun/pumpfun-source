@@ -898,3 +898,20 @@ protected relayer settlement success remains untested. The 818,392-byte candidat
 is not equal to the 818,280-byte meaningful original ELF or 830,448-byte capture.
 All-data semantics, indirect behavior and unique historical source remain open;
 whole identity across the four core programs remains 0/4.
+
+## Relay: independent artifact-backed 488-window settlement checkpoint
+
+The [new artifact packet](../repro/donation-relay/settlement-artifact-recovery/README.md)
+builds both exact 60-input source states from the settlement proposal with fresh
+target directories. Both reproduce their expected hashes. The three new
+settlement bodies (97, 98, 100) have all 99 direct callees matched, with no loss
+relative to the combined 485-window baseline. The candidate retains 142 raw-local
+matches, complete raw equality of the 19,863-byte read-only data section, and the
+359-pointer / 507-nonpointer positional data audit. Fresh signed replay passes
+536 records / 534 fixtures with the existing comparison exclusions.
+
+The artifact-backed inventory now records 488/492 normalized matches and four
+unmatched donation windows (92–95), totaling 17,680 original text bytes (2.3%).
+This does not imply whole-program or arbitrary semantic identity. The compiler
+ELF is 818,392 bytes versus 818,280 meaningful original bytes; no allocation
+padding is added. Privileged successes and indirect/data semantics remain open.

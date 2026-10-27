@@ -9,12 +9,12 @@ list every raw match and unresolved window; selected artifacts retain the
 candidate paths and “current” prose must not override newer evidence.
 
 Subsequent gains are in the [byte-identity progress log](BYTE-IDENTITY-PROGRESS.md):
-Relay research now has **9 unmatched windows**; current Fees research
+Relay research now has **four unmatched windows**; current Fees research
 has **43 unmatched windows and 395 unique structural pairs**. The [Relay framework study](../repro/donation-relay/framework-sysroot-recovery/README.md)
 recovers the three repeated type-ID bodies with official Linux target libraries,
 adds the Anchor 0.32 framework matches and restores share-total compared values.
 The subsequent [mint-predicate study](../repro/donation-relay/mint-fee-pair-recovery/README.md)
-recovers window 106; the current remaining windows are 92–100 after the
+recovers window 106; the current remaining windows are 92–95 after the
 [Jupiter](../repro/donation-relay/jupiter-option-source-recovery/README.md) and
 [burn/close ownership](../repro/donation-relay/burn-mint-ownership-recovery/README.md) recoveries. A
 [fully Linux reproduction](../repro/donation-relay/linux-canonical-reproduction/README.md)
@@ -187,10 +187,11 @@ the recovered build reaches 483/492, gains only worker 112, loses no normalized
 or raw match and binds all 51 direct callees. A fresh 536-record / 534-unique
 replay passes.
 
-The artifact-backed inventory is therefore 483/492. Continue with original
-ordinals 92–100. The worker candidate uses the isolated pre-security-metadata
-source state, so composition with the separate metadata/data recovery remains
-open. Whole-file equality and selected-source promotion remain unachieved.
+The worker packet established the 483-window checkpoint. The later
+[settlement artifact recovery](../repro/donation-relay/settlement-artifact-recovery/README.md)
+independently validates the combined 488-window source and exact read-only data.
+Continue with original ordinals 92–95, broader behavior and transitive data.
+Whole-file equality and selected-source promotion remain unachieved.
 
 ## Event contexts after isolated ownership trials
 
@@ -233,14 +234,14 @@ The following are independent requirements; completing one does not close the ot
 
 | Priority | Remaining work | Evidence required to close it |
 | --- | --- | --- |
-| Current research bodies | Relay's 9 donation/settlement windows; Fees' 43 windows, including the exotic-growth caller | Full original-window comparison with no lost matches, source/build hashes and relevant fresh differential coverage |
+| Current research bodies | Relay's four donation windows; Fees' 43 windows, including the exotic-growth caller | Full original-window comparison with no lost matches, source/build hashes and relevant fresh differential coverage |
 | Core source/behavior | Pump's five partial and three unaccepted handlers; AMM initializer; Mayhem initializer and opaque attribution | Concrete source, genuine successful and rejected paths, bound receipts and per-handler limitations |
 | Known mismatches | Pump sell_v2 transfer-fee behavior; Mayhem diagnostics and field contracts | Authorized resumed correction where required, then targeted regressions and broader validation |
 | Transitive binary identity | Calls, duplicate attribution, data, relocations, indirect calls and final ELF layout | Exact artifact comparison and explicit explanation of any allocation padding |
 | Provenance and integration | Historical tools/dependencies, ATA recipe, selected-source promotion of research | Reproducible source/tool manifests, new selected artifacts and guard-approved bindings |
 
 Body-count percentages understate large unresolved functions: Fees' residual
-is 31.1% of original text; Relay's is 5.6%. Neither value measures remaining
+is 31.1% of original text; Relay's is 2.3%. Neither value measures remaining
 engineering time. Preserve the documented negative experiments and stopped lanes.
 
 ## Historical immutable audit baseline
@@ -293,7 +294,7 @@ and signing/ownership restrictions are unchanged by this documentation audit.
 | Selected AMM | 297 unmatched original windows, 160 ambiguous normalized rows, original diagnostics, data and full call contracts |
 | Fees current research | 43 unmatched windows (248,904 original body bytes), 65 additional call-attributed pairs and 82 duplicate windows still unattributed; close shareholder validators, transitive calls/data and full ELF/relocation layout |
 | Selected Mayhem | Seven admitted unmatched windows and 257 source-ledger opaque windows; 12 of the opaque windows have local raw matches without semantic attribution |
-| Relay current research | [9 explicit residual windows](RECONSTRUCTION-STATUS.md#relay-the-complete-remaining-body-list), spanning 42,368 original body bytes: donation and settlement bodies; privileged successes, transitive callees/data and allocator/borrow behavior |
+| Relay current research | [four explicit residual windows](RECONSTRUCTION-STATUS.md#relay-the-complete-remaining-body-list), spanning 17,680 original body bytes: donation wrappers; privileged successes, transitive callees/data and allocator/borrow behavior |
 | Metaplex | Utilize's 1,477 text differences, 30 source-coordinate differences, two relocation differences; authentic source/compiler layout |
 | ATA | Historical recipe remains unknown despite exact output from explicit symbol ordering and an empty feature. Decide selection independently of historical authenticity. |
 | All programs | Exact historical tool/dependency inputs, complete sections/relocations, data and indirect-call meaning; complete security and lifecycle acceptance |

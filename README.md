@@ -15,20 +15,18 @@ The [27 October queue review](docs/PR-QUEUE-REVIEW-2026-10-27.md) covers PRs
 source-only proposals. Those independent branches are not silently combined
 into the inventory below.
 
-Latest artifact-backed Relay research: **483/492 normalized windows, 9 unmatched**.
-The [Jupiter optional-seed builder](repro/donation-relay/jupiter-option-source-recovery/README.md)
-and [complete burn/close helper](repro/donation-relay/burn-mint-ownership-recovery/README.md)
-reach 482 windows on both compiler recipes. The subsequent
-[shared-worker artifact recovery](repro/donation-relay/shared-worker-artifact-recovery/README.md)
-adds the 10,248-byte worker with no loss, binds all 51 direct callees and passes
-536 fresh replay records / 534 unique fixtures. It retains **130 raw local body
-matches**; whole-file identity remains unachieved.
+Latest artifact-backed Relay research: **488/492 normalized windows, four unmatched**.
+The [independent settlement build and replay](repro/donation-relay/settlement-artifact-recovery/README.md)
+retains **142 raw local matches** and reproduces the complete 19,863-byte
+read-only data section. Three newly recovered settlement bodies have 99 matching
+direct callees. Fresh replay passes 536 records / 534 fixtures. Donation windows
+92–95, indirect/data semantics and whole-file equality remain unresolved.
 
-The separate [Relay security-metadata recovery](repro/donation-relay/security-metadata-source-recovery/README.md)
-reproduces the complete 510-byte security declaration and 247-byte dynamic
-string table from ordinary Rust source while retaining the 482-window baseline
-and 348 source-location matches. The worker artifact uses that packet's
-pre-metadata source state, so the two data/body gains are not yet composed.
+This build independently validates the later source proposals and composes the
+worker, epoch-close, swap-only and module-layout recoveries. The
+[earlier worker artifact](repro/donation-relay/shared-worker-artifact-recovery/README.md)
+retains its own 483-window evidence. Source-only reports remain distinguished
+from compiled and replayed results; selected checkpoints are unchanged.
 
 The pinned Fees inventory has **395 unique structural pairs, 43 unmatched windows**.
 The [configuration-event recovery](research/fees-config-event-recovery/README.md)
@@ -69,7 +67,7 @@ restores the full-account input convention and closes the 1,144-byte initializer
 helper. Its host contract tests and SBF regression evidence have separate scopes.
 
 The [current reconstruction review](docs/RECONSTRUCTION-STATUS.md) lists exact,
-normalized, unmatched and opaque function status, all 10 remaining Relay bodies,
+normalized, unmatched and opaque function status, all four remaining Relay bodies,
 and prioritized behavior/build work. The [refreshed 4,415-row inventory](repro/reconstruction-status-2026-10-26/README.md)
 includes every exact local body match and every unresolved window.
 
@@ -92,7 +90,7 @@ No handler is certified perfectly recreated. The selected core builds contain
 | PumpSwap selected | 93 | 395 | 297 | 0 | 734,392 / 1,162,040 bytes (63.2%) |
 | Fees research | 118 | 424 | 43 | 0 | 248,904 / 799,648 bytes (31.1%) |
 | Mayhem selected | 58 | 131 | 7 | 245 | 636,128 / 706,744 bytes (90.0%) |
-| Relay research | 130 | 353 | 9 | 0 | 42,368 / 752,488 bytes (5.6%) |
+| Relay research | 142 | 346 | 4 | 0 | 17,680 / 752,488 bytes (2.3%) |
 
 Unresolved text includes whole unmatched and opaque windows. These are not
 differing-byte counts or estimates of effort. Calls, data, layout,
