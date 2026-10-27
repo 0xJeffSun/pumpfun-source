@@ -1,0 +1,11 @@
+{
+  "files": {
+    "README.md": "54465f59a19b45fae23423da92e0fd57b2f1ba0bb4a485050adb6fbf84b9f40c",
+    "direct_outer.patch": "fc9103b0672d2268d701337da11904acbbc77afd4507696d1a66a0e10dd8d07f",
+    "explicit_branches.patch": "7f6138f89cb557610ec7571ee4992df415077e2219a8faa35eca214092cf95b4",
+    "source-stages.json": "0765712d667624f50ca4ddc26adb621f8807dfd0c1534b6dd39df0c4c3d870c8",
+    "source_tools.py": "2ac8e2c013aab32d7c80c9795918bc0c5df77afe92bbec1e9ced577dad025b16",
+    "test_source.py": "7904979bbac51501fb786bf1b45644d4bef63e8184f3067f70ec2e016d6e9a28"
+  },
+  "scope": "Seven UTF-8 source patches/maps/tools/tests/report only; independent exact PR320 box parent branches."
+}
