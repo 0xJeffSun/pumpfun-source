@@ -72,6 +72,10 @@ receipts retain their earlier artifact bindings. The initializer still has
 920 bytes versus the original 960. A required allocator specialization and
 all thirteen unmatched bodies remain unresolved.
 
+A [same-IR compiler diagnostic](research/mayhem-host-llvm-comparison/README.md)
+produces identical Mac and Linux LLVM objects for one earlier initializer
+control. This narrows that investigation without adding a function match.
+
 The latest [Fees Sharing recovery](research/fees-sharing-handler-recovery/README.md)
 adds the complete 12,384-byte Sharing handler under the existing normalizer,
 with all 64 immediate callees checked. It reaches 578 normalized and 198 raw

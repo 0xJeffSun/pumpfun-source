@@ -4,6 +4,22 @@ The [full audit](RECONSTRUCTION-AUDIT.md) and its generated tables retain their
 explicit `1463bd22` snapshot. This log records later research without silently
 changing that baseline or promoting new selected artifacts.
 
+## Mayhem: isolate the host LLVM backend from the initializer gap
+
+The [same-IR host comparison](../research/mayhem-host-llvm-comparison/README.md)
+lowers one unchanged compiler-emitted IR input with pinned macOS and Linux
+LLVM 20.1.7 tools. Both produce the same complete 1,096,664-byte relocatable
+object. The source and IR belong to the earlier initializer key-snapshot
+control, not the current selected program or the provider-sharing successor.
+The packet retains one compressed copy of the identical object, both execution
+records, source inputs, tool hashes and six passing mutation controls.
+
+This rules out a host-dependent lowering difference for that input and command.
+It does not prove equivalence between full Rust build pipelines or add an
+original function match. Source/IR construction, original build options and
+the thirteen unmatched bodies remain work. The task-owned VM is stopped;
+the verifier only reads saved evidence.
+
 ## Mayhem: recover shared dependency providers
 
 The [provider-sharing successor](../research/mayhem-provider-sharing/README.md)

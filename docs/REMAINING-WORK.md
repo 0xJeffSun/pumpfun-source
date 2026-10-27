@@ -11,6 +11,13 @@ candidate paths and “current” prose must not override newer evidence.
 
 Current Mayhem research is the [provider-sharing successor](../research/mayhem-provider-sharing/README.md): 100 raw-local, 328 normalized-only and thirteen unmatched windows / 112,584 original text bytes. Six source inputs change, removing seven duplicate compiled helpers while preserving every earlier positive call and Source observation. Two builds agree; fresh replay passes 69 initializer and 2,496 AMM comparisons. Prior Legacy, V2 and ExtendAccount receipts retain their earlier artifact bindings. The sysvar allocation provider, the missing 328-byte reserve child, the thirteen bodies and full ELF identity remain unresolved. This does not update the selected baseline or prove arbitrary behavior.
 
+The [same-IR host diagnostic](../research/mayhem-host-llvm-comparison/README.md)
+produces identical complete objects with pinned Mac and Linux LLVM tools for
+one earlier initializer-control IR input. That specific host-backend hypothesis
+is eliminated; it does not establish full toolchain equivalence or recover the
+initializer. Further work must still resolve source/IR shape and original
+compilation settings.
+
 Current [Fees Sharing research](../research/fees-sharing-handler-recovery/README.md)
 has 198 raw-local, 380 normalized-only and seven unmatched windows, covering
 731,856 of 799,648 original text bytes. The 12,384-byte Sharing handler now
