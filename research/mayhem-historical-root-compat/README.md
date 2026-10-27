@@ -7,6 +7,10 @@ stripped ELFs from two incremental root builds. It matches fewer captured
 original windows than a fresh current-runtime control: **403 versus 428**
 normalized matches, with **25 losses and no gains**. This bounded result does
 not support replacing the current reconstruction with this historical graph.
+An isolated follow-up ports the current reconstruction's already recovered
+Program ID check into that historical graph. It restores **one** of the lost
+windows (O0062), leaving **404 normalized matches and 24 losses** against the
+current-runtime control. It adds no match beyond the current reconstruction.
 
 ## Source and build boundary
 
@@ -80,6 +84,44 @@ changes framework, registry graph and necessary root API adaptations together.
 It cannot isolate their causal contributions or exclude all historical recipes.
 These older-source counts must not be combined with the newer 67-file,
 429-window current-source historical-macro composition.
+
+## Control for the existing Program ID recovery
+
+The current baseline already modifies `Program::try_from` to check all IDs,
+including the all-zero System ID. The unmodified historical runtime omits that
+check for the all-zero ID. `program-id-control/` isolates this difference:
+
+1. Copy the same historical framework and API-compatible root to a fixed,
+   separate location. Only two framework paths in the root manifest change;
+   the same lock is accepted offline without modification.
+2. Build the unmodified historical framework in a fresh target directory.
+3. Port exactly the current recovery to `lang/src/accounts/program.rs`,
+   preserving line count; build twice more in fresh target directories.
+
+The three builds each record 153 actual compiler commands (459 total).
+The relocated baseline preserves exactly the parent's normalized and raw-local
+match sets (403/62/402), but its raw ELF and linked function cohort differ:
+460 functions and 674,384 text bytes versus 455 and 674,096 in the prior path
+context. It is retained as the immediate comparison, without attributing that
+layout difference to a specific compiler mechanism.
+
+The single-condition recovery yields **404/62/403**, with 460 functions and
+674,608 text bytes. Only O0062 is gained; no normalized or raw-local match is
+lost, and no new raw-local match appears. The complete 881,408-byte raw ELF
+repeats at SHA-256
+`1a746a194866babfc88cb5ece258ef28eecda81fdf1dbc5d790646fcd50e2d2d`;
+the separate 745,320-byte stripped ELF repeats at
+`49c259aa19578a54a667a74a1e8ba304b1fd693ec372ef5c321f10e47cdf9f5c`.
+Both remain different from the captured original. `report.json` records the
+remaining 24 current-family differences and the dependency archive identities
+that differ between the two repeated full builds.
+
+This explains one confound in the historical/current comparison. It is a
+reconstructed runtime patch, not an authenticated historical Anchor revision,
+new source recovery, improvement over the current frontier or runtime test.
+The offline checker binds both complete framework snapshots, the relocated root,
+actual compiler arguments, source/dependency/tool observations, linker inputs,
+all original-window comparisons and both repeated outputs.
 
 ## Offline replay and retained limits
 
