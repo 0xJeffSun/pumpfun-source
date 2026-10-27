@@ -19,10 +19,11 @@ recognized source-location pairs, and each pass 536 fresh replay records.
 Follow-up [reconstruction studies](docs/BYTE-IDENTITY-PROGRESS.md)
 have not added whole-body matches. Conditional value-flow agreement and locally
 matching helpers do not establish full function or program identity.
-Latest Fees research: **354 unique structural pairs, 84 unmatched windows**.
-The [refreshed call analysis](research/fees-refreshed-call-attribution/README.md)
-also attributes 61 duplicate-body pairs, giving 415 correspondences; this is not
-additional body coverage. Whole-file identity remains unachieved.
+Latest Fees research: **356 unique structural pairs, 82 unmatched windows**.
+The [current call ledger](repro/reconstruction-status-2026-10-26/fees-call-attribution.json)
+also attributes 61 duplicate-body pairs, giving 417 correspondences; this is not
+additional body coverage. [Legacy sharing recovery](research/fees-sharing-owned-legacy/README.md)
+adds a raw-equal cleanup body and a normalized dispatcher. Whole-file identity remains unachieved.
 
 The [current reconstruction review](docs/RECONSTRUCTION-STATUS.md) lists exact,
 normalized, unmatched and opaque function status, all 10 remaining Relay bodies,

@@ -7,8 +7,8 @@
     {
       "path": "README.md",
       "before_sha256": "cae913d4d3f2066403162f653a0cf35b39620fb08877b1b308c08ccce4a53678",
-      "after_sha256": "fe94289bd1ef65ebecbcb681e323d4fb202af2524264b2b9a6b4b34930511330",
-      "reason": "Link the accumulated reconstruction studies, including settlement direct-call evidence, while preserving the 482/492 frontier and identity qualifications."
+      "after_sha256": "deaa3e2fe1506e83e812322f528f726223c7f279f6226a1059b8239fa2ed2d87",
+      "reason": "Refresh Fees research to 356 unique pairs and 82 residuals after legacy ownership recovery; retain all local-body and whole-program qualifications."
     },
     {
       "path": ".github/workflows/verify.yml",
