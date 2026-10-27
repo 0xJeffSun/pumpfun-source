@@ -25,6 +25,12 @@ subsequently resolves all 43 source-location value differences in the audited
 compiler recipes, each with fresh replay. Other data,
 absolute pointers, relocations and excluded/ambiguous functions still need work.
 
+The [residual CPI trials](../repro/donation-relay/residual-cpi-source-trials/README.md)
+narrow Jupiter window 90 to four differing normalized instruction slots after
+iterator-based account-vector cloning. Thirty-two burn/close source variants
+remain negative. These experiments add no complete match and do not reduce the
+12-window residual list.
+
 ## Audit baseline
 
 - **Whole captured-file identity:** 0/4 selected core programs; selected Relay also differs.

@@ -116,6 +116,16 @@ Evidence: [source-location recovery](../repro/donation-relay/source-location-rec
 [Linux reproduction](../repro/donation-relay/linux-canonical-reproduction/README.md),
 [framework recovery](../repro/donation-relay/framework-sysroot-recovery/README.md).
 
+### Follow-up: Jupiter is narrowed, still unmatched
+
+The [residual CPI trials](../repro/donation-relay/residual-cpi-source-trials/README.md)
+subsequently replace the Jupiter account-vector `to_vec()` with iterator cloning.
+That partial candidate has 308/312 normalized instruction slots equal; four stack
+load/store slots remain unequal. It preserves the same 480 matched windows and
+passes fresh bounded replay, but does not replace the research checkpoint above.
+Thirty-two compiled burn/close variants are negative results. Window 90 and
+window 109 both remain in the twelve-row residual list.
+
 ## Fees: new complete bodies, substantial residual business logic
 
 The latest 851,424-byte candidate is SHA-256
