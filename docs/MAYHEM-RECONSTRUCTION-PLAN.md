@@ -11,6 +11,13 @@ Another 243 original windows remain semantically opaque. Fifty-eight windows
 have literal local body matches, including twelve still-opaque windows. These
 are separate measurements; none implies whole-program or semantic completeness.
 
+The [complete static scan](../research/mayhem-full-window-audit/README.md) covers
+all 441 windows: 58 raw-local matches, 269 normalized-only matches and 114
+unmatched windows spanning 495,936 bytes. The ten named gaps below belong to the
+narrower source-interpreted cohort; another 104 unmatched windows have unresolved
+roles. A further 139 previously opaque windows have structural counterparts,
+including ambiguous duplicates, but no new semantic proof follows from this scan.
+
 | Unmatched window | Original extent | Work |
 | --- | --- | --- |
 | O0071 | 55,448–61,200 | Burn body |
@@ -41,9 +48,9 @@ Next steps:
    typed-CPI call site. Preserve the original fixed and remaining account order.
 4. Work through Burn and the other trade bodies with bounded success, rejection,
    rollback and arithmetic cases. Keep raw log/compute differences explicit.
-5. Examine the opaque inventory and initializer separately. Exclusion from a
-   prior execution lane is not completion, and unexamined code cannot count as
-   reconstructed. No stopped process is automatically resumed by this plan.
+5. Attribute the 104 additional unmatched windows and resolve the 93 ambiguous
+   counterpart mappings in the complete static scan. Initializer semantics and
+   runtime acceptance remain separate; static matching does not prove them.
 6. Reproduce data, relocations and whole-file layout from real Rust builds,
    then compare literal ELF and capture bytes. No output patching or invented
    completeness percentage can substitute for this final check.

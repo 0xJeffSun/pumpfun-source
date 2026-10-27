@@ -747,3 +747,20 @@ have equal non-compute logs; 1,032 admin cases and three Burn families also pass
 All 5,382 signatures verify, and 624 admin account results are reconstructed.
 Token-2022 AMM cases cover rejection paths only. Whole Mayhem identity remains
 false, and this research packet does not change canonical source/checkpoints.
+
+## Complete Mayhem static scan
+
+The [full-window audit](../research/mayhem-full-window-audit/README.md) removes
+the prior scope limit for mechanical byte comparison: all 441 windows and
+706,744 text bytes are covered. It finds 58 raw-local matches, 269 normalized-only
+matches and 114 unmatched extents totaling 495,936 bytes. There is no new compiled
+recovery in this count: the 243 rows outside the prior interpreted cohort already
+contain 139 structural matches and 104 unmatched windows.
+
+234 matched windows have a unique candidate; 93 have ambiguous counterparts.
+Among unique pairs, 27 have at least one different direct-callee shape and 138
+have unresolved referenced-data extents. Source attribution, interface semantics
+and transitive call/data closure remain separate obligations. The earlier
+198-window/188-match cohort is retained, not relabelled as semantic completion.
+Root-only MIR levels 0, 1 and 3 do not recover the missing accounting/quote bodies
+and are not promoted. The current candidate and runtime claims are unchanged.

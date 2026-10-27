@@ -172,3 +172,18 @@ saved regression comparisons and preserves 559 normalized / 143 raw-local
 counterparts; no new complete body is claimed. This review did not rerun that
 full suite or compile the candidate. The separate Fees proposal does not replace
 the pinned inventory. GitHub confirms the PR is merged.
+
+## PR220: composed Fees transfer frontier
+
+Reviewed head `944e06e79e0d3018a1003b27ddb9119a7462ce95`. The verifier recomputes
+569 normalized matches, 143 raw-local matches, 168 Location observations and all
+33 direct callee shapes for the three new transfer bodies. It checks the native
+payout and parser composition plus saved 17,331 + 119 + 8 + 24 comparisons. All
+four negative controls pass, and eight fresh quote-owner replays pass. No fresh
+compiler or full 17,331-case execution is claimed by this review.
+
+Another process merged the same reviewed head as
+`3dc06e669571ed12290339df96f08866fca43eb0` while review was running. The published
+tree was verified identical to the local reviewed merge. This independent Fees
+frontier does not silently replace the pinned inventory or change the Mayhem
+priority.

@@ -1708,3 +1708,14 @@ No new whole-body match is claimed. Explicitly admitting O0090 and O0092 expands
 the ledger to 198 examined / 188 matched / ten unmatched / 243 opaque, retaining
 all 58 all-inventory raw-local counterparts. The ten examined extents total
 101,480 bytes; opaque code and whole-ELF obligations are additional work.
+
+## Full Mayhem window accounting
+
+The [complete static scan](../research/mayhem-full-window-audit/README.md) now
+reports every original window rather than restricting its headline to the
+source-interpreted subset. Existing artifacts have 58 raw-local matches,
+269 normalized-only matches and 114 unmatched windows (495,936 bytes). The
+139 additional structural matches were previously classified as opaque, not
+newly reconstructed. All 441 windows cover text without gaps; 93 counterpart
+mappings remain ambiguous. Three retained root MIR controls fail to improve the
+accounting or quote helper and do not replace the existing candidate.
