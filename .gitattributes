@@ -1,6 +1,11 @@
 *.so binary
 *.bin binary
 
+# Preserve the independent AMM replay's exact retained bytes on every checkout.
+research/amm-event-capture-independent-replay/** -text
+research/amm-event-capture-independent-replay/source.patch -whitespace
+research/amm-event-capture-independent-replay/source/** -whitespace
+
 # Preserve exact upstream source receipts, including their original whitespace.
 repro/identity-audit/2026-10-25/compiler-sdk/v1.52-build.sh -whitespace
 repro/identity-audit/2026-10-25/compiler-sdk/v1.53-build.sh -whitespace

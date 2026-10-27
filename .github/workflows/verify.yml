@@ -24,6 +24,10 @@ jobs:
               python -B research/mayhem-initializer-owned-snapshot-20261027/test_verify.py
               python -B research/mayhem-legacy-buy-cpi-ownership/verify.py
               python -B research/mayhem-legacy-buy-cpi-ownership/test_verify.py
+          - suite: amm-event-reproduction
+            commands: |
+              python -B research/amm-event-capture-independent-replay/verify.py
+              python -B research/amm-event-capture-independent-replay/test_verify.py
           - suite: mayhem-initializer-machine
             commands: |
               python -B research/mayhem-initializer-machine-paths/verify.py --signatures
