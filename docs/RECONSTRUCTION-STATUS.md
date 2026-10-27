@@ -229,6 +229,17 @@ both original and this partial correction passes 536 records / 534 unique
 fixtures with the existing exclusions. Four argument-wrapper variants remain
 negative. No candidate is promoted and the frontier remains 482/492.
 
+### Settlement direct-call inventory
+
+The [direct-call audit](../repro/donation-relay/settlement-call-audit/README.md)
+checks original windows 97–100 against the baseline and constructor-order
+candidate. Every direct local callee has a normalized-body counterpart. Callee
+body-group multiplicities agree for three baseline callers and all four after
+the constructor change removes one memcpy. Linear call sequences and caller
+bodies still differ. This narrows missing-call hypotheses without proving
+arguments, inline checks, branch conditions, data or transitive behavior; no
+additional function is considered recovered.
+
 ## Fees: new complete bodies, substantial residual business logic
 
 The latest 851,488-byte candidate is SHA-256
