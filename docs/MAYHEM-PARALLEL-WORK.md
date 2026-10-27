@@ -2,8 +2,9 @@
 
 The objective remains byte-identical Rust reproduction, including calls, data,
 relocations and ELF layout. The latest published research has 428 matching
-windows (100 raw-local) and 13 unmatched windows / 112,584 text bytes. Normalized matches are
-intermediate evidence; complete semantic and whole-ELF equality remain unproved.
+windows (100 raw-local) and 13 unmatched windows / 112,584 text bytes. Normalized
+matches are intermediate evidence; complete semantic and whole-ELF equality
+remain unproved.
 
 | Lane | Owner | Remaining scope |
 | --- | --- | --- |
@@ -57,6 +58,12 @@ It exposes concrete sharing conflicts and a missing duplicate that ordering
 alone cannot solve. These remain in the runtime/layout lane alongside the
 thirteen business/validator bodies below.
 
+The [initializer Source-origin successor](../research/mayhem-initializer-source-origins/README.md)
+preserves that layout and corrects two panic descriptors with three changed
+data bytes. Its 69 fresh comparisons contain 168 verified signed executions;
+the initializer's 920-byte body still differs from the original 960 bytes.
+All prior matched-body, call and Source observations remain intact.
+
 The following table assigns every remaining original window exactly once.
 Account-data extents, ambiguous counterparts, function placement, absolute
 addresses, full section contents and relocations remain cross-cutting work.
@@ -79,4 +86,4 @@ addresses, full section contents and relocations remain cross-cutting work.
 
 These body labels are reconstruction attributions, not authenticated original
 symbol names. The complete raw/normalized/unmatched function partition is in
-the checkpoint's [441-row inventory](../research/mayhem-accounting-extend-recovery/functions.tsv).
+the checkpoint's [441-row inventory](../research/mayhem-initializer-source-origins/functions.tsv).

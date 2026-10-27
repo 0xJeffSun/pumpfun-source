@@ -3,12 +3,13 @@
 This is the action list for the [current reconstruction audit](RECONSTRUCTION-AUDIT.md),
 with current research based on reviewed parent revision `6b61b337` and the linked visibility-recovery measurements. The [current review](RECONSTRUCTION-STATUS.md)
 and [complete refreshed inventory](../repro/reconstruction-status-2026-10-26/README.md)
-list every raw match and unresolved window; the four core selected artifacts retain
-`1463bd22` audit bindings, while Relay now has its canonical exact selection. The historical
+list every raw match and unresolved window in their dated snapshot. That core
+snapshot retains `1463bd22` audit bindings; current selections are recorded in
+[`repro/status.json`](../repro/status.json), and Relay has its canonical exact selection. The historical
 [completion ledger](COMPLETION.md) remains a selected-checkpoint record; its old
 candidate paths and “current” prose must not override newer evidence.
 
-Current Mayhem research is the [428-window qualified linker layout](../research/mayhem-qualified-linker-layout/README.md): 100 raw-local, 328 normalized-only and thirteen unmatched windows / 112,584 original text bytes. The unchanged 66-file source preserves all earlier body, call and Source evidence. Fresh trades and ExtendAccount replay pass; complete data/call identity, original sharing/specialization and full ELF equality remain unresolved. This does not update the selected baseline or prove arbitrary behavior.
+Current Mayhem research is the [initializer Source-origin successor](../research/mayhem-initializer-source-origins/README.md): 100 raw-local, 328 normalized-only and thirteen unmatched windows / 112,584 original text bytes. A whitespace-only source correction repairs two panic descriptors and changes exactly three ELF data bytes. Fresh replay passes 69 initializer comparisons; the qualified parent's trade and ExtendAccount receipts retain their original bindings. Complete data/call identity, original sharing/specialization and full ELF equality remain unresolved. This does not update the selected baseline or prove arbitrary behavior.
 
 The [native Windows reproduction](../research/mayhem-native-reference-identity/README.md)
 reproduces the earlier 426-window source/data candidate's complete raw and
@@ -18,6 +19,19 @@ gap without source edits. This supplies a byte-identical experimental baseline;
 the candidate still has 426 normalized / 70 raw-local original counterparts,
 and remains unequal to deployed Mayhem. The sell-call and 428-window successors
 retain their separate artifact bindings.
+
+The [initializer panic-origin recovery](../research/mayhem-initializer-origins/README.md)
+extends that native recipe to the 428-window trade-source candidate. A whitespace-only
+source correction changes exactly three raw ELF bytes, restoring both initializer
+panic Source records while leaving all executable bytes unchanged. Three fresh
+builds reproduce the corrected raw and stripped artifacts; all 428 normalized / 70
+raw-local matches and the five prior trade Source improvements survive. Eleven
+failed source controls are retained. The initializer body remains unmatched
+(920 candidate bytes versus 960 original); no new runtime replay is claimed.
+The separate [qualified successor](../research/mayhem-initializer-source-origins/README.md)
+already composes the correction with the 100-raw-local layout and supplies
+69 fresh initializer comparisons. These two evidence sets are not added
+together as extra recovered functions or unique scenarios.
 
 The [AMM sell-call successor](../research/mayhem-sell-quote-call-recovery/README.md)
 preserves those 426 windows and restores the shared O0093 quote call. Its ten

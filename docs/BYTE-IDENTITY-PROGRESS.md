@@ -4,6 +4,40 @@ The [full audit](RECONSTRUCTION-AUDIT.md) and its generated tables retain their
 explicit `1463bd22` snapshot. This log records later research without silently
 changing that baseline or promoting new selected artifacts.
 
+## Mayhem: recover the initializer's two Source locations
+
+The [initializer Source-origin successor](../research/mayhem-initializer-source-origins/README.md)
+corrects the Clock unwrap location to `state.rs:531:43` and the checked-add
+location to `532:32`. A whitespace-only change in one of 66 source inputs changes
+exactly three data bytes in both stripped and symbol ELFs. Their entire text
+sections are unchanged; all 428 normalized and 100 raw-local matches survive.
+The initializer body remains unmatched at 920 versus 960 bytes.
+
+Two qualified builds agree. Fresh replay covers 53 rejection cases and 16 Pump
+CPI cases, including ten successes, with 168 signed executions and actual
+program-account hashes checked. Thirteen mutation tests reject source-data,
+build-recipe, case-inventory and signed-execution corruption. Earlier unqualified
+receipts remain explicitly bound to their different artifact.
+
+The independent [native Windows reproduction](../research/mayhem-initializer-origins/README.md)
+reaches the same corrected unqualified ELF in three builds. It retains 19 full
+builds and 3,097 recorded Cargo compilations across the earlier and later
+source baselines, plus eleven unsuccessful initializer controls. Its 21 tests
+pass. That packet adds native build and typed-data evidence, with no new target
+execution or function match; the separate qualified successor above supplies
+the 100-raw layout and fresh initializer replay.
+
+## Fees: recover shared quote locations and relative data order
+
+Reviewed and merged PRs #245 and #246 preserve the 577 normalized and 198 raw
+matches. The [shared-reader study](../research/fees-donation-quote-source-recovery/README.md)
+adds 96 successful creation cases per artifact. The
+[data-order successor](../research/fees-common-quote-data-order/README.md) recovers
+all 105 original Source records and the relative offsets of 265 relocatable
+data objects. Its 3,712 nonpointer bytes and 379 pointer-field positions match;
+literal section and whole-ELF equality remain false. Two builds and 17,331 fresh
+comparisons agree. Neither study adds a complete original function match.
+
 ## Mayhem: qualified linker order reaches 100 raw-local windows
 
 The [source-unchanged layout](../research/mayhem-qualified-linker-layout/README.md)
