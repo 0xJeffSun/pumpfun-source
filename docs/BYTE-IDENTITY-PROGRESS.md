@@ -4,6 +4,18 @@ The [full audit](RECONSTRUCTION-AUDIT.md) and its generated tables retain their
 explicit `1463bd22` snapshot. This log records later research without silently
 changing that baseline or promoting new selected artifacts.
 
+## Reviewed PR #267: conditional initializer machine paths
+
+The [initializer machine-path packet](../research/mayhem-initializer-machine-paths/README.md)
+checks the original and two native controls under explicit disjoint-memory,
+valid-object and immediate-call contracts. Its timestamp/duration/Rc interval
+partitions and 35,912 scalar comparison checks pass, as do nine instruction/data
+mutation controls. The interpreter is trusted analysis code, not a theorem prover,
+and does not settle stack order, recursive callees or whole-program semantics.
+All 69 retained runtime comparisons and 168 signatures verify, with ten genuine
+Pump-CPI creation successes and equal non-compute logs. No body match or selected
+promotion follows; O0193 remains open.
+
 ## Reviewed PR #266: independent Metaplex exact-artifact evidence
 
 The [Utilize recovery](../research/metaplex-utilize-exact-recovery/README.md)

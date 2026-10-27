@@ -1,5 +1,7 @@
 """Independent scalar enumeration and actual ELF mutations for the certificate."""
 import copy
+import os
+import tempfile
 import gzip
 import json
 from pathlib import Path
@@ -14,6 +16,21 @@ import verify
 
 
 def run():
+    if hasattr(os, 'mkfifo'):
+        original_packet = verify.P
+        with tempfile.TemporaryDirectory(prefix='initializer-manifest-') as temp:
+            verify.P = Path(temp)
+            (verify.P / 'manifest.json').write_text('{}')
+            os.mkfifo(verify.P / 'unlisted-fifo')
+            try:
+                try:
+                    verify.manifest()
+                except AssertionError as error:
+                    assert 'special file' in str(error)
+                else:
+                    raise AssertionError('unlisted special file accepted')
+            finally:
+                verify.P = original_packet
     wm = verify.module('test_windows', P / 'window_map.py')
     machine = verify.module('test_machine', P / 'machine.py')
     rng = random.Random(534840)

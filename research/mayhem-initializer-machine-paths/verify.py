@@ -29,8 +29,10 @@ def module(name, path):
 
 
 def manifest():
-    assert not any(p.is_symlink() for p in P.rglob('*'))
-    actual = {p.relative_to(P).as_posix(): sha(p.read_bytes()) for p in P.rglob('*')
+    paths = list(P.rglob('*'))
+    assert not any(p.is_symlink() for p in paths)
+    assert all(p.is_file() or p.is_dir() for p in paths), 'packet special file'
+    actual = {p.relative_to(P).as_posix(): sha(p.read_bytes()) for p in paths
               if p.is_file() and p != P / 'manifest.json'}
     assert actual == load(P / 'manifest.json'), 'packet seal'
 

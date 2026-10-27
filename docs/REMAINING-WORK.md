@@ -43,6 +43,12 @@ equal at their original offsets, but cap selection differs. Nine further cap and
 initializer ownership controls add no complete match; the equal-size AMM handler
 also remains unmatched.
 
+The [conditional initializer machine-path evidence](../research/mayhem-initializer-machine-paths/README.md)
+constrains state updates and panic outcomes over its stated valid, disjoint
+objects and immediate-call ABI. It does not determine the missing stack or
+copy order and adds no byte match. Current private snapshot work is still being
+validated separately; its results are not included in the established counts.
+
 The [allocator-context experiment](../research/mayhem-allocator-context/README.md)
 produces the missing 328-byte reserve child by adding a diagnostic zeroed-vector
 allocation to the earlier qualified source. A nonzero-vector control leaves the
