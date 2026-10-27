@@ -432,3 +432,10 @@ four-window lists are historical evidence. Next compare the 18,623 meaningful-EL
 byte differences, keeping address/call relocation changes distinct from source
 semantics. Do not pad the candidate with the captured allocation tail or treat
 492/492 normalized coverage as byte-identical completion.
+
+
+The [independent Mayhem history re-decode](../research/mayhem-globalparams-field-history/REDECODE.md)
+now corroborates all 13 retained transactions and the raw old/new version chain.
+The follow-up fixes package-relative paths and includes negative decoder tests.
+This closes the request for another decoder implementation, while RPC provenance
+and semantic field-role attribution remain separate open requirements.
