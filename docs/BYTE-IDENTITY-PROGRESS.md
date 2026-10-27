@@ -640,3 +640,25 @@ Twenty-five literal ranges, the earlier context/panic-location contracts and
 fresh full/focused regressions pass. Nested panic/format metadata, transitive
 identity and exhaustive behavior remain outside this result. The study does
 not promote selected artifacts or establish whole-file equality.
+
+
+## Relay: source-only shared-worker recovery proposal — 27 October 2026
+
+The [ordinary Rust worker proposal](../repro/donation-relay/shared-worker-source-proposal/README.md)
+recovers complete original window 112 (10,248 bytes), advancing its isolated
+482-window baseline to **483/492 normalized windows and 130 raw local matches**,
+with no losses. Cloning the mint account inside a borrowed admission helper,
+direct context access and a checked increment helper recover the strict worker
+shape; no register/stack masking or output patching is used.
+
+The packet publishes only readable source, exact 56-input maps, a materializer,
+static verifier/tests and a portable build recipe. Optional comparison of local
+compiler outputs recomputes the complete inventory and all 51 worker direct
+callee bindings. Local source builds and offline replay were performed, but the
+archived replay receipt's publication is blocked: this is not downloadable or
+self-contained replay proof. Default verification checks source only.
+
+The research ELF remains unequal: 414,655 common byte positions differ and the
+original has a further 12,432-byte tail. Windows 92–100 remain unmatched in this
+isolated recipe. Normalized coverage is 98.17%, not overall byte identity;
+complete data/indirect semantics and selected-checkpoint promotion remain open.
