@@ -451,3 +451,13 @@ reach complete raw-equal callee bodies. Ten helper negatives remain. These are
 static observations of existing artifacts, not a new compiler build or evidence
 of complete program identity; component causality and historical host remain
 unproved. No selected artifact or stopped execution lane changes.
+
+
+The [Relay raw-layout audit](../repro/donation-relay/raw-layout-audit/README.md)
+narrows ordinary-source ordering work to 15 permutation regions. Prioritize the
+Anchor account specializations at 7984–13984, drop functions at 33384–34400,
+program/entrypoint emission at 566024–582808, and library helpers at
+703520–705720. These are closed normalized-body multisets with equal extents;
+they are not permission to reorder or patch captured machine instructions.
+Program-module, library and package/version name controls are now recorded and
+should not be repeated as though untested.

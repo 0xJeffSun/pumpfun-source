@@ -1021,3 +1021,14 @@ positions. The current inventory is advanced to the artifact-backed result,
 without changing selected checkpoints or claiming whole-binary identity.
 The fixed-order interleaving search was stopped after 29 completed negative
 trials because #189 supplied the broader declaration/construction fix.
+
+
+## Relay raw-layout audit — 27 October 2026
+
+Complete byte accounting attributes the 18,453 text differences to 15 normalized
+body-permutation regions (17,991 bytes) and otherwise aligned direct-call operands
+(462 bytes). Fourteen data pointers, two symbol values, 81 relocation-site values
+and the entry address account for the other 170 differing bytes. Six compiled
+source-identity controls preserve 492 normalized windows but do not reduce the
+whole output difference; raw gains and losses are retained. The accepted artifact
+and its 18,623-position residual remain unchanged.

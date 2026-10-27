@@ -1,0 +1,11 @@
+--- a/Cargo.toml
++++ b/Cargo.toml
+@@ -5,7 +5,7 @@
+ publish = false
+ 
+ [lib]
+-name = "donation_relay_source_proposal"
++name = "donation_relay"
+ crate-type = ["cdylib", "lib"]
+ 
+ [dependencies]

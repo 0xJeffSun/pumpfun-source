@@ -605,3 +605,15 @@ positional data graph pass; fresh signed replay passes 536 records. No whole-ELF
 protected-settlement-success or exhaustive semantic identity is claimed. Earlier
 four-window lists below describe preceding checkpoints and are superseded for
 current body coverage by this artifact.
+
+
+## Relay raw-layout accounting
+
+The [raw-layout audit](../repro/donation-relay/raw-layout-audit/README.md) verifies
+that original and candidate have the same multiset of 492 normalized bodies.
+Fifteen permutation regions contain 17,991 positionally differing text bytes;
+outside them, all 462 differing text bytes are direct-call operands. The remaining
+170 differences are pointer, symbol-value, relocation-site and entry-address
+fields. This is complete positional accounting, not proof of unique correspondence
+or semantic pointer identity. Six compiled source-identity controls do not reduce
+the whole-file residual, and none replaces the accepted artifact.

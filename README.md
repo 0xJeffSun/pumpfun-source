@@ -11,7 +11,7 @@ that run the captured original and the rebuilt candidate side by side in a local
 For subsequent gains and the latest research frontier, see the
 [byte-identity progress log](docs/BYTE-IDENTITY-PROGRESS.md).
 The [27 October queue review](docs/PR-QUEUE-REVIEW-2026-10-27.md) covers PRs
-#170–#191, including separately verified 399- and 401-pair Fees context candidates and
+#170–#192, including separately verified 399- and 401-pair Fees context candidates and
 source-only proposals. Those independent branches are not silently combined
 into the inventory below.
 
@@ -24,7 +24,9 @@ also matches.
 **Whole-file identity is still unresolved:** 18,623 positions differ within the
 818,280-byte meaningful ELF. The capture has another 12,168 allocation bytes.
 Raw call/address values, relocations, indirect/data semantics and broader runtime
-coverage remain to be established. Earlier rejected controls and source-only
+coverage remain to be established. The [raw-layout audit](repro/donation-relay/raw-layout-audit/README.md)
+accounts for the text differences in 15 reordered regions and 462 call-operand
+bytes; tested package/module identities do not improve the whole output. Earlier rejected controls and source-only
 proposals retain their historical evidence; selected checkpoints are unchanged.
 
 The pinned Fees inventory has **404 unique structural pairs, 34 unmatched windows**
