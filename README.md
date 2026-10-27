@@ -13,7 +13,8 @@ ELF and, through a separate loader deployment, its captured payload.**
 
 **Main Pump: 70.8% of function windows matched; 50.0% of original text covered. Complete reconstruction remains unfinished.**
 
-Reproduce the selected Pump ELF with its [archived Rust/linker recipe](repro/pump/main-contract-round33-20261027/reproduce.py).
+Reproduce the selected Pump ELF with its [archived Rust/linker recipe](repro/pump/main-contract-round34-20261027/reproduce.py).
+
 
 
 
@@ -29,7 +30,7 @@ all remaining code, calls, data, relocations and build provenance.
 
 | Latest verified checkpoint | Matched windows | Matched % | Raw-equal bodies | Normalized only | Unmatched | Whole ELF equal |
 | --- | ---: | ---: | ---: | ---: | ---: | --- |
-| [Pump Round33](repro/pump/main-contract-round33-20261027/README.md) | 733 / 1,035 | 70.8% | 137 | 596 | 302 | No |
+| [Pump Round34](repro/pump/main-contract-round34-20261027/README.md) | 733 / 1,035 | 70.8% | 137 | 596 | 302 | No |
 | [PumpSwap / AMM](repro/pump_amm/quote-guard-recovery-20261027/README.md) | 643 / 785 | 81.9% | 148 | 495 | 142 | No |
 | [Fees research](research/fees-extend-integration/README.md) | 582 / 585 | 99.5% | 200 | 382 | 3 | No |
 | [Mayhem research](research/mayhem-sell-current-recovery-20261027/README.md) | 431 / 441 | 97.7% | 100 | 331 | 10 | No |
@@ -44,7 +45,7 @@ the whole program is identical.
 
 | Checkpoint | Text bytes in matched windows | Text covered | Unmatched text |
 | --- | ---: | ---: | ---: |
-| Pump Round33 | 895,416 / 1,792,208 | 50.0% | 896,792 |
+| Pump Round34 | 895,416 / 1,792,208 | 50.0% | 896,792 |
 | PumpSwap / AMM | 804,704 / 1,162,040 | 69.2% | 357,336 |
 | Fees research | 762,912 / 799,648 | 95.4% | 36,736 |
 | Mayhem research | 597,536 / 706,744 | 84.5% | 109,208 |
@@ -92,7 +93,7 @@ pass. Its 641-window research artifact remains separate from the selected
 640-window source/ABI checkpoint; the parent's other supplemental matrices
 were not rerun on this artifact.
 
-Pump Round33 passes 10,468 full cases plus 7,283 focused executions, with 17,747
+Pump Round34 passes 10,468 full cases plus 7,536 focused executions, with 18,000
 paired diagnostic-log cases. AMM passes 17,462 full cases plus the separate
 account, fee, CPI, boundary and error-order matrices recorded in its checkpoint.
 These corpora overlap and must not be summed as unique scenarios. Tests use
