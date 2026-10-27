@@ -38,7 +38,29 @@ selected builds from newer research and lists [all 150 handlers](repro/reconstru
 [every exact local body-byte match](repro/reconstruction-audit-2026-10-26/raw-body-matches.md)
 and [all selected/research function windows](repro/reconstruction-audit-2026-10-26/functions.tsv).
 
-## Status
+## Current review
+
+The [comprehensive review](repro/reconstruction-status-2026-10-26/review.md)
+classifies **all 150 public handlers and all 4,415 selected/research window rows**.
+No handler is certified perfectly recreated. The selected core builds contain
+140 bounded implementations, five partial handlers and five unaccepted handlers;
+“unaccepted” can include existing overlay or static-only source.
+
+| Current build | Exact local bodies | Normalized only | Unmatched | Opaque |
+| --- | ---: | ---: | ---: | ---: |
+| Pump selected | 98 | 430 | 507 | 0 |
+| PumpSwap selected | 93 | 395 | 297 | 0 |
+| Fees research | 116 | 401 | 68 | 0 |
+| Mayhem selected | 58 | 131 | 7 | 245 |
+| Relay research | 130 | 352 | 10 | 0 |
+
+Fees' unresolved bodies span **320,304 / 799,648 original text bytes (40.1%)**;
+Relay's span **52,616 / 752,488 (7.0%)**. These are sizes of whole unmatched
+windows, not differing-byte counts or estimates of effort. Calls, data, layout,
+relocations, build provenance and broader behavior remain to be verified even
+where a local body matches. Research rows do not replace selected checkpoints.
+
+## Selected checkpoint and historical audit
 
 Handler counts are bounded reconstructions with saved differential comparisons;
 they are not counts of exhaustively perfect functions. The unaccepted
@@ -59,7 +81,7 @@ complete body match**, and **245 remaining opaque windows**. These partition
 3,338 original windows; matching bytes or normalized instructions does not prove
 call/data identity or all behavior. Original boundaries remain inferred.
 
-At the audit snapshot, research was separate: Fees had 340 unique structural pairs, 53 additional
+At the earlier immutable audit snapshot (not the current research frontier), research was separate: Fees had 340 unique structural pairs, 53 additional
 call-attributed duplicate pairs, 94 still-unattributed duplicate windows and 98
 unmatched windows. Relay's distribution-worker research reached 465/492 normalized
 windows (86 raw local matches), leaving 27 unmatched; selected Relay remains at

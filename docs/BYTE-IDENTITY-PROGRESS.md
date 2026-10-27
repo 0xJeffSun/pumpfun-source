@@ -463,3 +463,15 @@ PR #148's Mayhem history package was merged and its offline checker passed. That
 checker verifies hashes, account captures and a derived version chain, not an
 independent raw transaction re-decode. The five field roles remain open and the
 new history is linked as evidence for further checking.
+
+
+## Post-PR #149 comprehensive review — 26 October 2026
+
+Recomputed the [4,415-window inventory](../repro/reconstruction-status-2026-10-26/README.md)
+and reconciled [all 150 handlers](../repro/reconstruction-status-2026-10-26/review.md)
+against the immutable selected audit. No new body or behavior recovery is claimed.
+The report separates selected/research builds, exact local bytes, normalized-only
+matches, unmatched bodies, opaque windows and bounded/partial/unaccepted handlers.
+It records unresolved text size per build and the largest remaining windows.
+The current Fees call ledger has 2,625 bound-target edges and 20 different-body
+frontier edges; the old overview's 24-edge value has been corrected.

@@ -1,6 +1,6 @@
 # Current function-window inventory
 
-Evidence snapshot: `623fe02a3cd2129f3ef43ca998f393cd2f9605e5`. Selected inputs retain their verified `1463bd22fb7811825c5e7acf1cb963eb39ab68d9` checkpoint bindings. Research rows replace the older Fees/Relay research inventory; they do not replace selections.
+Evidence snapshot: `84031d3ca58684a510a3b1a12e44c01337fb2bad`. Selected inputs retain their verified `1463bd22fb7811825c5e7acf1cb963eb39ab68d9` checkpoint bindings. Research rows replace the older Fees/Relay research inventory; they do not replace selections.
 
 | Program / build | Windows | Exact local bytes | Normalized only | No complete match | Opaque |
 | --- | ---: | ---: | ---: | ---: | ---: |
@@ -14,6 +14,7 @@ Evidence snapshot: `623fe02a3cd2129f3ef43ca998f393cd2f9605e5`. Selected inputs r
 
 Fees has 368 body-unique pairs plus 63 additional call-attributed duplicate pairs (431 correspondences); 86 duplicate windows remain unattributed. These are not 63 additional body matches. Rows count inferred original windows, not unique source functions or effort. Raw matches may be duplicate/ambiguous and do not establish referenced data or transitive callees. The Fees matcher and Relay matcher use separately documented masks; do not add their counts into a source-completion score.
 
+- [Comprehensive review: all handlers, unresolved text size and closure criteria](review.md)
 - [Every window, symbol candidate, match address and evidence path](functions.tsv)
 - [Every exact local body match](raw-body-matches.md)
 - [Every unmatched or opaque window](remaining-windows.md)
