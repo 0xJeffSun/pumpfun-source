@@ -7,6 +7,7 @@ Raw-byte matches and the path to whole-ELF identity for PumpSwap (`pump_amm`). S
 | --- | --- | --- | --- | --- |
 | [g01-text-data-order-647](g01-text-data-order-647/README.md) | event-decoder-recovery `0881a95d…` 647/148/138 | 647 / **168** / 138 (Linux ×2 `b05f7268…`) | 20 (placement-only) | [#316](https://github.com/lalalune/pumpfun-source/pull/316) |
 | [g02-text-data-order-651](g02-text-data-order-651/README.md) | optional-context-recovery `97bd5553…` 651/148/134 (main since 5f295723a) | 651 / **168** / 134 (Linux ×2 `ef65f2fe…`) | same 20 (placement-only) | [#316](https://github.com/lalalune/pumpfun-source/pull/316) |
+| [g03-text-data-order-u2b](g03-text-data-order-u2b/README.md) | integrate g01-c680 (= u2b, PR #319) `0fb1f886…` 680/148/105 (647 + amm-lo + amm-hi; not a checkpoint) | 680 / **169** / 105 (Linux ×2 `ec076bf0…`) | the 20 + `0xf4180`; deficit gone | [#316](https://github.com/lalalune/pumpfun-source/pull/316) |
 
 Every layout packet is checked by its own `verify.py` (strict selector grammar, regeneration, byte-level
 translation proof, two Linux builds, receipts, runtime digests) and `test_scope.py` (9 mutation controls).

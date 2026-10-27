@@ -3,7 +3,12 @@
 Lane `layout`, branch `claude/amm2-layout-20261027`. Job: raw-byte matches and the path to whole-ELF identity
 for `pump_amm` (link order of `.text` / `.rodata` / `.data.rel.ro`, dependency-owned bytes, ELF scoreboard).
 
-## State (2026-10-27 11:58 PDT, round 0 restart)
+## Round 0 summary (2026-10-27 13:00 PDT)
+
+Banked (PR #316): g01 647/148→647/168, g02 651/148→651/168 (main), g03 integrate g01-c680 680/148→680/169.
+All source-unchanged link-order layers; Linux ×2 identical; runtime 25/17,462/0; verify.py + 9 mutation controls each.
+
+## State at the round-0 restart (11:58)
 
 - Base: origin/main 0cc61d636, frontier `repro/pump_amm/event-decoder-recovery-20261027`
   (candidate `0881a95d…`, Linux 647 normalized / 148 raw / 138 unmatched; re-measured here: same).
@@ -50,15 +55,27 @@ then {0x73ef0 0x74128 0x74648 0x74900 0x74e30} → +5; the remaining 71 call-onl
 The ordered raw set is the same 168 windows on 623, 647 and 651: source gains since 623 added no raw window because
 every new match sits behind these blockers.
 
-## In flight (12:50)
+## g03 on integrate u2b (12:45)
 
-- `out/builds/u2b-default`: default build with link capture of the integrate lane's u2b workspace
-  (`SP/lanes/integrate/out/linux-u2b-a/ws`, their Linux 0fb1f886 = 680/148/105, includes amm-hi's harvest change),
-  to measure order + harvest (deficit should vanish). Composed-base helpers ready: `out/verify-composed.py`
-  (`baseline_artifacts` in claims), `out/mkclaims.py` (env BASE_C/BASE_S).
+- Default capture build of integrate's u2b workspace reproduces their Linux `0fb1f886…`/`d691156e…` (680/148/105).
+- Ordered: 680/169/105 (+21: the 20 + `0xf4180`), multiplicity deficit gone (harvest change). Two Linux builds
+  identical = relink `ec076bf0…`/`6605794c…`; runtime 25/17,462/35,074/0. Packet `g03-text-data-order-u2b/`
+  (base artifacts held in the packet, `verify.py` = composed variant with `baseline_artifacts`); verify passes.
+  Integrate published the same tree as `g01-c680` (PR #319, `SP/shared/frontier/current.json`) at ~12:40.
 
-## Next
+## Helper-crate evidence (12:50, findings.md)
 
+The four bodies 0xf28b8/0xf2d60/0xf2ed0/0xf31d8 are byte-identical and in the same order in the original **Pump**
+program at 0x17bc48 (Codex `work/amm-decoder-boundary-review-20261027`). In both originals they directly follow the
+root crate's 16-byte allocator-shim thunk, so they come from one upstream crate shared by both programs. Closing them
+is worth +59 raw after re-ordering.
+
+## Next (round 1 onward)
+
+0. Integrate published `g01-c680` (= u2b, PR #319) in `SP/shared/frontier/current.json`; g03 is its order layer.
+   Integrate's next step is a 651-based composition (its g02). When `current.json` moves, run the pipeline above on
+   `source_root` (stage with the recipe named in its note), then make packet g04 the same way as g03
+   (`BASE_C`/`BASE_S` = this lane's default capture build of it, `out/verify-composed.py` as `verify.py`).
 1. Re-run the generator on the integrate lane's composition when `SP/shared/frontier/current.json` appears
    (amm-hi's harvest change should remove the 0xf4030/0xf4180 multiplicity deficit; check `multiplicity_deficit`;
    expect more raw in the dependency region, where only 0xf28b8 0xf2d60 0xf2ed0 0xf31d8 0xf6eb0 are unmatched).

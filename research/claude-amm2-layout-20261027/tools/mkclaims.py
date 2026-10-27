@@ -3,7 +3,7 @@
 
 usage: mkclaims.py <packet dir> <frontier name> <frontier packet rel path> <layout name> <linux build dirs (rel)...>
 """
-import gzip, hashlib, importlib.util, json, sys, tempfile
+import gzip, hashlib, importlib.util, json, os, sys, tempfile
 from pathlib import Path
 
 G = Path(sys.argv[1]).resolve()
@@ -18,6 +18,8 @@ sha = lambda b: hashlib.sha256(b).hexdigest()
 root = v.ROOT
 base = root / FRPACKET / 'results/build'
 base_c, base_s = base / 'candidate.so', base / 'unstripped.so'
+if os.environ.get('BASE_C'):
+    base_c, base_s = Path(os.environ['BASE_C']), Path(os.environ['BASE_S'])
 with tempfile.TemporaryDirectory() as tmp:
     tmp = Path(tmp)
     dmap = tmp / 'default.map'
@@ -44,6 +46,7 @@ with tempfile.TemporaryDirectory() as tmp:
             'packet': FRPACKET, 'sdk_script': 'layout/sdk-default.ld', 'default_map': 'builds/default/link.map.gz',
             'default_map_sha256': sha(dmap.read_bytes()), 'kit': f'kits/{FR}', 'default_receipt': f'receipts/{FR}-default.json',
             'multiplicity_deficit': deficit,
+            **({'baseline_artifacts': {'candidate': 'artifacts/base-candidate.so.gz', 'symbols': 'artifacts/base-unstripped.so.gz'}} if os.environ.get('BASE_C') else {}),
             'baseline': {'candidate_sha256': sha(base_c.read_bytes()), 'symbols_sha256': sha(base_s.read_bytes()),
                          'counts': v.counts(brows), 'measurement': f'measurement/{FR}-baseline-measure.json.gz',
                          'data_references': v.data_reference_offsets(pl0, base_s, dmap)},
