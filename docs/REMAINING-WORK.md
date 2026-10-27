@@ -11,6 +11,15 @@ candidate paths and “current” prose must not override newer evidence.
 
 Current Mayhem research is the [initializer Source-origin successor](../research/mayhem-initializer-source-origins/README.md): 100 raw-local, 328 normalized-only and thirteen unmatched windows / 112,584 original text bytes. A whitespace-only source correction repairs two panic descriptors and changes exactly three ELF data bytes. Fresh replay passes 69 initializer comparisons; the qualified parent's trade and ExtendAccount receipts retain their original bindings. Complete data/call identity, original sharing/specialization and full ELF equality remain unresolved. This does not update the selected baseline or prove arbitrary behavior.
 
+Current [Fees Sharing research](../research/fees-sharing-handler-recovery/README.md)
+has 198 raw-local, 380 normalized-only and seven unmatched windows, covering
+731,856 of 799,648 original text bytes. The 12,384-byte Sharing handler now
+matches under the existing normalizer with all 64 immediate callees checked.
+Six inspected call-target differences, 73 readonly bytes, an extra event helper,
+absolute layout and original build provenance remain unresolved. The 46-file
+source successor has two matching builds and 17,331 fresh runtime comparisons;
+it remains separate from the selected Fees baseline.
+
 The [native Windows reproduction](../research/mayhem-native-reference-identity/README.md)
 reproduces the earlier 426-window source/data candidate's complete raw and
 stripped ELFs in three fresh builds. Replayed target-crate metadata from retained compiler logs,

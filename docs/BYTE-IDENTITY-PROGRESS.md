@@ -4,6 +4,24 @@ The [full audit](RECONSTRUCTION-AUDIT.md) and its generated tables retain their
 explicit `1463bd22` snapshot. This log records later research without silently
 changing that baseline or promoting new selected artifacts.
 
+## Fees: recover the complete Sharing handler
+
+Reviewed and merged PR #249 adds the [Sharing source successor](../research/fees-sharing-handler-recovery/README.md).
+All 1,510 normalized instruction rows of the 12,384-byte handler now match,
+including 64 direct targets and one external symbol. One of the 46 source
+inputs changes; the other 585 compiled function bodies and their 4,523 direct
+calls retain their prior shapes and bindings. Coverage reaches 578/585
+normalized windows, with 198 raw-local matches and seven unmatched windows.
+
+Two native builds agree. The verifier rechecks 431 unique pairs, 182 matching
+Source observations, 3,935/3,941 matching direct-call observations, all 105 global
+Source records and 379 data-pointer targets. Fresh runtime evidence contains
+17,331 cases across 18 suites and 6,413 matching application-log cases. Ten
+tests pass, including redirected-call, source-substitution and nested-manifest
+controls. Seventy-three readonly bytes, an extra event helper, the remaining
+calls and full ELF identity are still unresolved. This updates the research
+frontier while preserving the selected Fees artifact.
+
 ## Mayhem: recover the initializer's two Source locations
 
 The [initializer Source-origin successor](../research/mayhem-initializer-source-origins/README.md)

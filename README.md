@@ -11,9 +11,9 @@ ELF and, through a separate loader deployment, its captured payload.**
 
 **Main Pump: 63.1% of function windows matched; 41.2% of original text covered. Complete reconstruction remains unfinished.**
 
-Across the latest verified checkpoints, **2,736 / 3,338 inferred function windows
-match (82.0%)**. Their matched windows cover **3,449,376 / 5,213,128 original text
-bytes (66.2%)**. **One of five programs has complete meaningful-ELF identity**;
+Across the latest verified checkpoints, **2,737 / 3,338 inferred function windows
+match (82.0%)**. Their matched windows cover **3,461,760 / 5,213,128 original text
+bytes (66.4%)**. **One of five programs has complete meaningful-ELF identity**;
 all four core contracts still differ from their captured binaries.
 
 These percentages measure bounded binary-recovery progress, not a claim that
@@ -24,10 +24,10 @@ all remaining code, calls, data, relocations and build provenance.
 | --- | ---: | ---: | ---: | ---: | ---: | --- |
 | [Pump Round13](repro/pump/main-contract-round13-20261027/README.md) | 653 / 1,035 | 63.1% | 113 | 540 | 382 | No |
 | [PumpSwap / AMM](repro/pump_amm/dependency-liquidity-recovery-20261027/README.md) | 586 / 785 | 74.6% | 123 | 463 | 199 | No |
-| [Fees research](research/fees-common-quote-data-order/README.md) | 577 / 585 | 98.6% | 198 | 379 | 8 | No |
+| [Fees research](research/fees-sharing-handler-recovery/README.md) | 578 / 585 | 98.8% | 198 | 380 | 7 | No |
 | [Mayhem research](research/mayhem-initializer-source-origins/README.md) | 428 / 441 | 97.1% | 100 | 328 | 13 | No |
 | [Donation Relay](repro/donation-relay/canonical-exact-selection/README.md) | 492 / 492 | 100.0% | 492 | 0 | 0 | **Yes** |
-| **Total** | **2,736 / 3,338** | **82.0%** | **1,026** | **1,710** | **602** | **1 / 5** |
+| **Total** | **2,737 / 3,338** | **82.0%** | **1,026** | **1,711** | **601** | **1 / 5** |
 
 “Windows” are inferred original machine-function ranges, including framework and
 runtime helpers. Complete normalized matches mask specified call/address
@@ -39,10 +39,10 @@ the whole program is identical.
 | --- | ---: | ---: | ---: |
 | Pump Round13 | 738,800 / 1,792,208 | 41.2% | 1,053,408 |
 | PumpSwap / AMM | 644,456 / 1,162,040 | 55.5% | 517,584 |
-| Fees research | 719,472 / 799,648 | 90.0% | 80,176 |
+| Fees research | 731,856 / 799,648 | 91.5% | 67,792 |
 | Mayhem research | 594,160 / 706,744 | 84.1% | 112,584 |
 | Donation Relay | 752,488 / 752,488 | 100.0% | 0 |
-| **Total** | **3,449,376 / 5,213,128** | **66.2%** | **1,763,752** |
+| **Total** | **3,461,760 / 5,213,128** | **66.4%** | **1,751,368** |
 
 Pump and AMM rows describe the verified maintained sources. Fees and Mayhem rows
 are the latest upstream research frontiers, distinct from their maintained
@@ -70,13 +70,15 @@ matches. Only three data bytes change; no instruction bytes change. Two builds
 agree and 69 fresh comparisons verify 168 signed executions. The initializer
 still has 920 bytes versus the original 960 and remains unmatched.
 
-The latest [Fees source and data-order recovery](research/fees-common-quote-data-order/README.md)
-restores all 105 original Source records and the relative layout of 265 data
-objects. It preserves 577 normalized and 198 raw matches; 17,331 fresh
-comparisons pass. Absolute pointers, literal data-section equality and complete
-ELF identity remain unresolved.
+The latest [Fees Sharing recovery](research/fees-sharing-handler-recovery/README.md)
+adds the complete 12,384-byte Sharing handler under the existing normalizer,
+with all 64 immediate callees checked. It reaches 578 normalized and 198 raw
+matches while retaining all 105 original Source records and 379 checked data
+pointer targets. Two builds agree and 17,331 fresh comparisons pass. Seven
+functions, 73 readonly bytes, absolute layout and complete ELF identity remain
+unresolved.
 
-Remaining priorities are the 382 Pump, 199 AMM, 8 Fees and 13 Mayhem unmatched
+Remaining priorities are the 382 Pump, 199 AMM, 7 Fees and 13 Mayhem unmatched
 windows; deeper call/data/relocation identity; original build provenance; and
 uncovered behavior such as authentic fixed-admin AMM `create_config` success.
 The historical [150-handler audit](repro/reconstruction-audit-2026-10-26/handlers.md)

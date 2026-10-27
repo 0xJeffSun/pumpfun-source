@@ -6,7 +6,7 @@ This review updates the research frontier while preserving the selected-checkpoi
 contains every one of the **4,415 selected/research function-window rows**.
 
 The generated inventory is a dated snapshot. Later maintained selections now
-include Pump Round9 and the AMM error-order recovery; their current counts and
+include Pump Round13 and the AMM liquidity recovery; their current counts and
 evidence are in the [repository overview](../README.md). The current rows below
 are separate from the historical rows, and do not rewrite that snapshot.
 
@@ -51,13 +51,13 @@ analysis. Candidate symbol names are hypotheses about original identity.
 | Fees selected | 585 | 102 | 363 | 120 | 0 |
 | Mayhem historical selected | 441 | 58 | 131 | 7 | 245 |
 | Relay historical source 15 | 492 | 33 | 89 | 370 | 0 |
-| **Pump current Round9** | **1,035** | **111** | **488** | **436** | **0** |
-| **PumpSwap current** | **785** | **124** | **460** | **201** | **0** |
-| **Fees latest research** | **585** | **198** | **379** | **8** | **0** |
+| **Pump current Round13** | **1,035** | **113** | **540** | **382** | **0** |
+| **PumpSwap current** | **785** | **123** | **463** | **199** | **0** |
+| **Fees latest research** | **585** | **198** | **380** | **7** | **0** |
 | **Mayhem latest research** | **441** | **100** | **328** | **13** | **0** |
 | **Relay canonical selection** | **492** | **492** | **0** | **0** | **0** |
 
-The current research rows are bound to the [Fees source/data-order recovery](../research/fees-common-quote-data-order/README.md) and [Mayhem initializer Source recovery](../research/mayhem-initializer-source-origins/README.md); they extend the dated generated inventory below. Each row is a partition, not a score of semantic correctness. The historical selected Mayhem source
+The current rows are bound to [Pump Round13](../repro/pump/main-contract-round13-20261027/README.md), [AMM liquidity recovery](../repro/pump_amm/dependency-liquidity-recovery-20261027/README.md), [Fees Sharing recovery](../research/fees-sharing-handler-recovery/README.md) and [Mayhem initializer Source recovery](../research/mayhem-initializer-source-origins/README.md); they extend the dated generated inventory below. Each row is a partition, not a score of semantic correctness. The historical selected Mayhem source
 ledger has 257 opaque windows, 12 of which happen to match local raw bytes.
 Selected Fees retains two call-conflicting rows; body existence does not resolve
 those conflicts. Different programs and studies use different matching rules.
@@ -85,7 +85,7 @@ payload**, with 12,168 zero bytes allocated by the loader. Compiler output is
 not padded. ProgramData metadata/history and broader runtime acceptance remain separate
 requirements. The source and exact artifact are now canonically selected.
 
-The latest [Fees linker composition](../research/fees-qualified-linker-layout/README.md) has **577/585 normalized counterparts**, including 198 raw-local matches. The qualified input-section ordering adds 55 raw-local matches without changing the 46-file Rust source or losing previous body/call evidence. Eight unmatched windows span **80,176 of 799,648 original text bytes (10.0%)**. It retains 430 unique structural pairs, 181 equal Location observations and 3,870 equal direct-callee observations out of 3,877 inspected. The seven remaining unequal direct-callee observations and whole-program data/layout are unresolved. Two native Rust builds agree. Fresh execution passes 17,331 cases across 18 suites, with equal application logs in all 6,413 cases that carry them. These are bounded observations, not whole-ELF identity.
+The latest [Fees Sharing recovery](../research/fees-sharing-handler-recovery/README.md) has **578/585 normalized counterparts**, including 198 raw-local matches. It recovers all 1,510 normalized instruction rows of the 12,384-byte Sharing handler, including its 64 direct targets and one external symbol. Seven unmatched windows span **67,792 of 799,648 original text bytes (8.5%)**. It retains 431 unique structural pairs, 182 matching Source observations and 3,935 equal direct-callee observations out of 3,941 inspected. All 105 global Source records and 379 checked data-pointer targets survive. Six unequal direct-callee observations, 73 readonly bytes, the extra event helper and whole-program layout remain unresolved. Two native Rust builds agree. Fresh execution passes 17,331 cases across 18 suites, with equal application logs in all 6,413 cases that carry them. These are bounded observations, not whole-ELF identity.
 
 The separately pinned, dated Fees inventory has **558/585 windows with a normalized counterpart**: 411 unique
 structural pairs and 147 original windows in ambiguous duplicate groups. Its 27
