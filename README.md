@@ -11,25 +11,28 @@ that run the captured original and the rebuilt candidate side by side in a local
 For subsequent gains and the latest research frontier, see the
 [byte-identity progress log](docs/BYTE-IDENTITY-PROGRESS.md).
 
-Latest Relay research: **482/492 normalized windows, 10 unmatched**, including
+Latest artifact-backed Relay research: **482/492 normalized windows, 10 unmatched**, including
 [the Jupiter optional-seed builder](repro/donation-relay/jupiter-option-source-recovery/README.md)
 and [the complete burn/close helper](repro/donation-relay/burn-mint-ownership-recovery/README.md).
 Both compiler recipes retain **130 raw local body matches**, agree on all 348
 recognized source-location pairs, and each pass 536 fresh replay records.
-Follow-up [reconstruction studies](docs/BYTE-IDENTITY-PROGRESS.md)
+Artifact-backed follow-up [reconstruction studies](docs/BYTE-IDENTITY-PROGRESS.md)
 have not added whole-body matches. Conditional value-flow agreement and locally
 matching helpers do not establish full function or program identity.
 The [Relay security-metadata recovery](repro/donation-relay/security-metadata-source-recovery/README.md)
 now reproduces the complete 510-byte security declaration and 247-byte dynamic
 string table from ordinary Rust source. Its Linux candidate retains the same
 482-window frontier and 348 source-location matches; whole-file equality remains
-unachieved. The function inventory keeps its explicitly hashed burn/close inputs.
+unachieved. The function inventory keeps its explicitly hashed burn/close inputs. The
+[source-only shared-worker proposal](repro/donation-relay/shared-worker-source-proposal/README.md)
+reports 483/492 in local builds. Its source checks pass, but it publishes no
+compiled artifact or replay receipt; that result is separate from this inventory.
 
-Latest Fees research: **388 unique structural pairs, 50 unmatched windows**.
+Latest Fees research: **394 unique structural pairs, 44 unmatched windows**.
 The [configuration-event recovery](research/fees-config-event-recovery/README.md)
 adds four complete caller-body matches; the two upsert bodies share a structural
 shape and are distinguished by their callees. The [current call ledger](repro/reconstruction-status-2026-10-26/fees-call-attribution.json)
-also attributes 64 duplicate-body pairs, giving 452 correspondences.
+also attributes 65 duplicate-body pairs, giving 459 correspondences.
 Whole-file identity remains unachieved. The [exotic-fee growth study](research/fees-exotic-growth-precedence/README.md)
 corrects rejection precedence and the realloc flag in new boundary cases;
 that caller still has no complete body match. The [optional-account ownership recovery](research/fees-optional-account-ownership/README.md)
@@ -56,7 +59,9 @@ add no matches and are retained as rejected experiments. The
 adds its complete account parser, exit and dispatch wrapper; the sweep business
 body remains unmatched. The [buyback-update context recovery](research/fees-buyback-update-ownership/README.md)
 now closes the shared update parser and both update dispatch wrappers, with
-all 61 direct callee bodies matching.
+all 61 direct callee bodies matching. The [event-context integration](research/fees-event-context-ownership/README.md)
+adds six parser/dispatch bodies across social claim, social-PDA creation and
+withdrawal; their three business bodies remain unmatched.
 
 The [current reconstruction review](docs/RECONSTRUCTION-STATUS.md) lists exact,
 normalized, unmatched and opaque function status, all 10 remaining Relay bodies,
@@ -80,7 +85,7 @@ No handler is certified perfectly recreated. The selected core builds contain
 | --- | ---: | ---: | ---: | ---: | ---: |
 | Pump selected | 98 | 430 | 507 | 0 | 1,391,456 / 1,792,208 bytes (77.6%) |
 | PumpSwap selected | 93 | 395 | 297 | 0 | 734,392 / 1,162,040 bytes (63.2%) |
-| Fees research | 118 | 417 | 50 | 0 | 276,000 / 799,648 bytes (34.5%) |
+| Fees research | 118 | 423 | 44 | 0 | 250,048 / 799,648 bytes (31.3%) |
 | Mayhem selected | 58 | 131 | 7 | 245 | 636,128 / 706,744 bytes (90.0%) |
 | Relay research | 130 | 352 | 10 | 0 | 52,616 / 752,488 bytes (7.0%) |
 

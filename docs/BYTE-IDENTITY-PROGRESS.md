@@ -662,3 +662,23 @@ The research ELF remains unequal: 414,655 common byte positions differ and the
 original has a further 12,432-byte tail. Windows 92–100 remain unmatched in this
 isolated recipe. Normalized coverage is 98.17%, not overall byte identity;
 complete data/indirect semantics and selected-checkpoint promotion remain open.
+
+## Fees: three event contexts recover six complete bodies
+
+The [event-context integration](../research/fees-event-context-ownership/README.md)
+retains separate trials for six contexts. Social claim, withdrawal and social-PDA
+creation each gain a complete parser and dispatch wrapper. Their combined build
+preserves all six gains and every prior match. All 168 parser callees match;
+each dispatch wrapper still has one unmatched business-body target.
+
+The V2 sharing-update event conversion loses original 44,632 and 641,744, and
+is rejected. Admin-reset and fee-sharing-creation conversions add no complete
+body and are not integrated. The final candidate changes three source files.
+
+Fees reaches **394 unique structural pairs, 147 ambiguous original windows,
+and 44 unmatched windows**: 118 raw-local plus 423 normalized-only. Remaining
+bodies span 250,048 bytes (31.3% of original text). Call refinement gives 459
+correspondences (65 additional duplicates), 82 unattributed duplicate windows,
+3,133 bound-target edges and 19 different-body frontier edges. Fresh full and
+focused regressions, preserved data contracts and instruction-message checks
+pass. This is a research result, not selected promotion or whole-file equality.

@@ -64,24 +64,24 @@
     "pump_fees_research": {
       "body_bytes": 799648,
       "dispositions": {
-        "no_complete_body_match": 50,
-        "normalized_body_only": 417,
+        "no_complete_body_match": 44,
+        "normalized_body_only": 423,
         "raw_body_equal": 118
       },
-      "unmatched_body_bytes": 276000,
+      "unmatched_body_bytes": 250048,
       "windows": 585
     }
   },
   "fees": {
-    "additional_call_attributed_pairs": 64,
+    "additional_call_attributed_pairs": 65,
     "ambiguous_original_windows": 147,
-    "candidate_bytes": 863728,
-    "candidate_sha256": "f5d786a94c1469a498006934a7e124dd9291a7d91f62c653938800dc847c2795",
+    "candidate_bytes": 868000,
+    "candidate_sha256": "d56316613f653ccb02b299bfed0ecfbea732dcca49758141f4750a793871acc7",
     "candidate_windows": 588,
     "raw_file_equals_original_elf_extent": false,
-    "remaining_unattributed_duplicate_windows": 83,
-    "total_attributed_pairs": 452,
-    "unique_structural_pairs": 388,
+    "remaining_unattributed_duplicate_windows": 82,
+    "total_attributed_pairs": 459,
+    "unique_structural_pairs": 394,
     "whole_capture_equal": false
   },
   "input_sha256": {
@@ -96,13 +96,13 @@
     "repro/donation-relay/swap-receipt-coordinate-recovery/original-windows.json": "c002df05d4489259f1cfd2b2391220cae38f6ffb0055f35f659e68a4935fd7bd",
     "repro/reconstruction-audit-2026-10-26/audit.json": "7301fb2a784c56501fc85eb3272fc8dc111744b2464335edd3051ed1cc65fc7a",
     "repro/reconstruction-audit-2026-10-26/functions.tsv": "c56843dfdfbe1086fa7764e29e1f0a83aef47832e3f4c0d4fdfe5de01b75a93d",
-    "repro/reconstruction-status-2026-10-26/refresh.py": "77de5d3a17f9b7ecfed015791ee0fbcc44461ce7c4df51e13d65b258bb4c1c8c",
-    "research/fees-buyback-update-ownership/analysis.json.gz": "893f2b8415727e386f5f75cd3b6d05853a94ce5e6c3ecaf0e070a30ade832f61",
-    "research/fees-buyback-update-ownership/artifacts/origins-candidate.so.gz": "7ca6cdb69219c4eca6f221cbb1bc602f166cc2198aa0c6d256c4c7daf3f363fc",
-    "research/fees-buyback-update-ownership/artifacts/origins-symbols.so.gz": "070f132bad7ec514ba633b7b105d4132fdeb922e1041b49b122b35fcd4c7785b",
-    "research/fees-buyback-update-ownership/elf_helpers.py": "ca2791ec19de711032d60f489afdc7e36a27081d9e16e67f2cfa91170d64ee4c",
-    "research/fees-buyback-update-ownership/experiment.json": "215b4a56f56778a2c8f2e966c9c107f3a9d47578d534df0c9ce7162c974c6205",
-    "research/fees-buyback-update-ownership/window_map.py": "5269d40aab42ebc170b03747dcc031563722f1347677e225f8c6a0737fe7128e",
+    "repro/reconstruction-status-2026-10-26/refresh.py": "876e89ae454d77e0eec6be1e21ef0935006ff6e3494020a39f45d93e6747e34e",
+    "research/fees-event-context-ownership/analysis.json.gz": "52ac23955f316f3e593377338712c482316a0394473d1df0057a0213451a4111",
+    "research/fees-event-context-ownership/artifacts/origins-candidate.so.gz": "33fe374f00e0ba09e7af44559305c7e57e0ec8f5ea98c74ee40be602168e9574",
+    "research/fees-event-context-ownership/artifacts/origins-symbols.so.gz": "90e696864578e8107e17d94cfaac2f16a38aab1911ac3d79a58cdd59bd480c45",
+    "research/fees-event-context-ownership/elf_helpers.py": "ca2791ec19de711032d60f489afdc7e36a27081d9e16e67f2cfa91170d64ee4c",
+    "research/fees-event-context-ownership/experiment.json": "8173c123f8ce64e44baec6db9105f6fe92b7bba8e793e617dfacfda38e074b73",
+    "research/fees-event-context-ownership/window_map.py": "5269d40aab42ebc170b03747dcc031563722f1347677e225f8c6a0737fe7128e",
     "research/fees-refreshed-call-attribution/attribute.py": "b3425eb9c1fba9b09e2c3e7bd01ab0f6d50ef0cfb5500320ff34db96de819c17",
     "research/fees-refreshed-call-attribution/elf_helpers.py": "ca2791ec19de711032d60f489afdc7e36a27081d9e16e67f2cfa91170d64ee4c",
     "research/fees-refreshed-call-attribution/input-provenance.json": "7c546529d694d7fa6d29d0829ad09bb811703581f92b0508a8484633e0a1b69f",
@@ -138,5 +138,5 @@
     "unrecovered": 5
   },
   "selected_snapshot": "1463bd22fb7811825c5e7acf1cb963eb39ab68d9",
-  "snapshot": "21ef56a9f9dd43e7b56e3c6ddefaf2ff931a4944"
+  "snapshot": "c238f955099e7e3f66f2f694270a26819d703590"
 }
