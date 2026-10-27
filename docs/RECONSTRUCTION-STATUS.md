@@ -1,6 +1,6 @@
-# Reconstruction status after artifact-backed Relay settlement recovery — 26 October 2026
+# Reconstruction status after exact Relay ELF reproduction
 
-Reviewed evidence revision: `2abbcc0a7730e19c7033fc2282459a01c1451f4b`.
+Reviewed evidence revision: `5c1f717918495b8508ff5aefedc6d3219abb3439`.
 This review updates the research frontier while preserving the selected-checkpoint
 [baseline audit](RECONSTRUCTION-AUDIT.md). The [recomputed inventory](../repro/reconstruction-status-2026-10-26/README.md)
 contains every one of the **4,415 selected/research function-window rows**.
@@ -10,12 +10,14 @@ reconciles all 150 named handlers and all 4,415 window rows, gives unresolved
 text size for every build and lists the largest remaining bodies. Its
 [machine-readable summary](../repro/reconstruction-status-2026-10-26/review.json)
 is regenerated from the verified inventory. No new runtime coverage is claimed
-by this documentation review.
+by this documentation review itself. Later sections preserve historical measurements;
+the opening tables and final integration section give the current frontier.
 
 ## What is actually byte-identical?
 
-**None of Pump, PumpSwap, Fees, Mayhem or Relay has a whole-file byte-identical
-reconstruction. No public handler has an exhaustive semantic-equivalence proof.**
+**The four core selected programs remain byte-unequal. Relay research now has an
+exact meaningful ELF and a separately loader-reproduced captured payload. Its
+linker recipe is reconstructed; no public handler has an exhaustive semantic proof.**
 
 | Dependency | Exact result | Remaining qualification |
 | --- | --- | --- |
@@ -44,8 +46,8 @@ analysis. Candidate symbol names are hypotheses about original identity.
 | Fees selected | 585 | 102 | 363 | 120 | 0 |
 | Mayhem selected | 441 | 58 | 131 | 7 | 245 |
 | Relay selected source 15 | 492 | 33 | 89 | 370 | 0 |
-| **Fees latest research** | **585** | **118** | **433** | **34** | **0** |
-| **Relay latest research** | **492** | **376** | **116** | **0** | **0** |
+| **Fees latest research** | **585** | **118** | **434** | **33** | **0** |
+| **Relay latest research** | **492** | **492** | **0** | **0** | **0** |
 
 Each row is a partition, not a score of semantic correctness. Mayhem's source
 ledger has 257 opaque windows, 12 of which happen to match local raw bytes.
@@ -64,22 +66,24 @@ calling whole trade or donation handlers perfect.
 
 ## How much remains?
 
-The strongest artifact-backed Relay research candidate matches **492/492 normalized
-windows**, including **376 raw-local bodies**. All four donation wrappers now
-match raw instruction bytes. This closes the missing normalized-body inventory,
-not complete binary identity: **9,398 positions still differ in the 818,280-byte
-meaningful ELF**, and the capture contains another 12,168 allocation bytes.
-Remaining work includes raw call/address values, relocations, data/indirect
-semantics and broader runtime coverage. There is no missing-window byte count
-to substitute for those requirements.
+The [exact Relay reproduction](../repro/donation-relay/linked-elf-reproduction/README.md)
+matches **all 818,280 meaningful ELF bytes**, including **492/492 raw bodies**,
+every call target, data pointer and relocation. Two Rust builds agree, including
+a fresh isolated dependency build with no original binary mounted. The explicit
+linker layout is inferred from the capture, not established as historical.
+Fresh bounded replay passes 536 signed records / 534 fixtures. A separate fresh
+912-transaction loader deployment reproduces the entire **830,448-byte captured
+payload**, with 12,168 zero bytes allocated by the loader. Compiler output is
+not padded. ProgramData metadata/history, selected-source promotion and broader
+runtime acceptance remain separate requirements.
 
-Fees research has **551/585 windows with a normalized counterpart**: 404 unique
-structural pairs and 147 original windows in ambiguous duplicate groups. Its 34
-unmatched windows span **206,360 of 799,648 original text bytes (25.8%)**, although
-they are only 5.8% of the window count. Many remaining bodies are large. The
+Fees research has **552/585 windows with a normalized counterpart**: 405 unique
+structural pairs and 147 original windows in ambiguous duplicate groups. Its 33
+unmatched windows span **205,216 of 799,648 original text bytes (25.7%)**, although
+they are only 5.6% of the window count. Many remaining bodies are large. The
 [current call ledger](../repro/reconstruction-status-2026-10-26/fees-call-attribution.json)
 recomputes 69 additional duplicate-body correspondences on this candidate, for
-473 attributed pairs. There are 78 still-unattributed duplicate windows and 17
+474 attributed pairs. There are 78 still-unattributed duplicate windows and 16
 call edges to different-body frontiers. This refinement adds no body coverage.
 
 There is no defensible single source-completion percentage or ETA. Whole-program
@@ -534,14 +538,14 @@ it does not independently re-decode the transaction instruction/event payloads.
 Those payloads need a separate cross-check before the history is used to close
 field-role claims. The five semantic roles remain unresolved; no field is renamed.
 
-1. **Continue Relay raw identity recovery:** explain the 9,398 differing
-   meaningful-ELF positions, starting with raw call/address values and relocations.
-   Preserve all 492 normalized matches and require fresh replay for a proposed
-   candidate. Account for the captured allocation tail without output padding.
+1. **Integrate the exact Relay recipe:** preserve the fresh-build and loader
+   evidence, decide selected-source promotion through the existing guard process,
+   and investigate authentic source/build provenance. The reconstructed layout
+   closes byte identity, not historical provenance or all runtime coverage.
 2. **Close known behavior defects:** Pump `sell_v2` and the ten partial/unaccepted
    selected dispositions above, with bound success/rejection tests. Cover genuine
    CPI callers, ownership and extension/mode combinations before acceptance.
-3. **Continue Fees business/source recovery:** work from all 34 residual addresses,
+3. **Continue Fees business/source recovery:** work from all 33 residual addresses,
    preserve the refreshed duplicate-call attribution, and validate paths not
    exercised by the existing corpus. Normalize only declared relocations/calls.
 4. **Recover Pump/AMM/Mayhem residuals:** preserve opaque and ambiguous states.
@@ -619,3 +623,18 @@ outside them, all 462 differing text bytes are direct-call operands. The remaini
 fields. This is complete positional accounting, not proof of unique correspondence
 or semantic pointer identity. Six compiled source-identity controls do not reduce
 the whole-file residual, and none replaces the accepted artifact.
+
+## Exact Relay ELF and current Fees prefix integration
+
+The [linked ELF packet](../repro/donation-relay/linked-elf-reproduction/README.md)
+supersedes the earlier raw-layout residuals: zero differing meaningful-ELF bytes,
+492 raw windows and an exact loader-created captured payload. Earlier sections
+retain their historical measurements. The default-linker access-control source
+variant remains a distinct 376-window result.
+
+The [Fees prefix integration](../research/fees-frontier-prefix-integration/README.md)
+restores the complete unchecked initializer helper without losing the composed
+frontier. Independent compilation matches both published hashes; a fresh full
+suite passes all 17,331 comparisons. Current attribution is 405 unique plus 69
+call-attributed pairs (474 total); 78 duplicate windows remain unattributed and
+16 call edges reach different-body frontiers. No Fees whole-file identity is claimed.

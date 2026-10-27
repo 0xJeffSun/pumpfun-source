@@ -13,8 +13,7 @@
     "donation_relay_research": {
       "body_bytes": 752488,
       "dispositions": {
-        "normalized_body_only": 116,
-        "raw_body_equal": 376
+        "raw_body_equal": 492
       },
       "unmatched_body_bytes": 0,
       "windows": 492
@@ -63,45 +62,47 @@
     "pump_fees_research": {
       "body_bytes": 799648,
       "dispositions": {
-        "no_complete_body_match": 34,
-        "normalized_body_only": 433,
+        "no_complete_body_match": 33,
+        "normalized_body_only": 434,
         "raw_body_equal": 118
       },
-      "unmatched_body_bytes": 206360,
+      "unmatched_body_bytes": 205216,
       "windows": 585
     }
   },
   "fees": {
     "additional_call_attributed_pairs": 69,
     "ambiguous_original_windows": 147,
-    "candidate_bytes": 872080,
-    "candidate_sha256": "4b487083016620adcdd36cbde8088c7d8bfbf6263199e6a223a332eda402a3e3",
+    "candidate_bytes": 872200,
+    "candidate_sha256": "e20e13b9151d4db7aa033c0dccf88fb437f42ea7552b3fff21ed1f0c2b9eb659",
     "candidate_windows": 591,
     "raw_file_equals_original_elf_extent": false,
     "remaining_unattributed_duplicate_windows": 78,
-    "total_attributed_pairs": 473,
-    "unique_structural_pairs": 404,
+    "total_attributed_pairs": 474,
+    "unique_structural_pairs": 405,
     "whole_capture_equal": false
   },
   "input_sha256": {
     "evidence/dependencies/donation_relay/deployed.so": "367f07a62e3f74d358187d175cf3228848e81a56c781a9a75b9df7fed1268563",
     "evidence/original/pump_fees/deployed.so": "4f2955d0f6b40cc9ff7daa18ccad7d19119ba1249759f4e7e3bb691beee6b35e",
-    "repro/donation-relay/access-control-layout-artifact/analysis/recovered/comparison-summary.json": "62a1ad40525217e044674577584762b0cbc91a7d7c75ab68e9b196649e11ba4f",
-    "repro/donation-relay/access-control-layout-artifact/analysis/recovered/match-ledger.json": "7e755b76615f862fdc7218a2af3078b9e85bf9ccf326ea66b1fe6a0755f9e910",
-    "repro/donation-relay/access-control-layout-artifact/artifacts/06e7f3e0c42f243d8d1c7a3550520b3efdbfe28a2f721870ff98c6038bad1dfd.so.gz": "270ca8233e9485a7e9f75f0101ec9a4ab92274b604cb1b405886d75f4af4f663",
-    "repro/donation-relay/access-control-layout-artifact/artifacts/8267d231c008e1a064ad9aee27145d078edb6e782b224cec5f75eb705dcb12b6.so.gz": "44eeb2360501fbfb3cb77b74d0d3cf29b5f12652755d9fcc95766047716d288d",
-    "repro/donation-relay/access-control-layout-artifact/metadata.json": "8722500248f23cab92ea4ac5c9e67e4ee0723545b73cf17d9f7beda03ec9b498",
+    "repro/donation-relay/linked-elf-reproduction/analysis/recovered/comparison-summary.json": "0488796726641d630ffdd70c069954aec8b4d8bc3518dd2725428c723cff6402",
+    "repro/donation-relay/linked-elf-reproduction/analysis/recovered/match-ledger.json": "7aa8a2853cb3d8effb9b243fc33d98393a63f798c45147d80a7fc0635be9192f",
+    "repro/donation-relay/linked-elf-reproduction/artifacts/candidate.so.gz": "2849fc9e70a33d9af29883a6e2f410799bb01c653afec3ded9ecbfb470dac5bb",
+    "repro/donation-relay/linked-elf-reproduction/artifacts/symbols.so.gz": "434c1508e094ab68d5dede00bcc6341f23999e22599e6873701819edb85b8538",
+    "repro/donation-relay/linked-elf-reproduction/loader-receipt.json": "65a8fc4ed35a051e9d5301d4eab51f99fbe34984ff7c438801eee0afdeca0e7e",
+    "repro/donation-relay/linked-elf-reproduction/metadata.json": "bec12bf85cd0f148e749a3d9b886dbb771cb2aa31d256b3844b942b573dfd54f",
+    "repro/donation-relay/linked-elf-reproduction/runtime.json.gz": "edca1c56dd9599cd57f02d229fa109b4aaa131f856a474001d11768bcaa6c9b1",
     "repro/donation-relay/swap-receipt-coordinate-recovery/analyze.py": "095fc2d63be0fe4233bdf4e5946cac8d03d9b1747fd39147eea9a98c12dda175",
     "repro/donation-relay/swap-receipt-coordinate-recovery/original-windows.json": "c002df05d4489259f1cfd2b2391220cae38f6ffb0055f35f659e68a4935fd7bd",
     "repro/reconstruction-audit-2026-10-26/audit.json": "7301fb2a784c56501fc85eb3272fc8dc111744b2464335edd3051ed1cc65fc7a",
     "repro/reconstruction-audit-2026-10-26/functions.tsv": "c56843dfdfbe1086fa7764e29e1f0a83aef47832e3f4c0d4fdfe5de01b75a93d",
-    "repro/reconstruction-status-2026-10-26/refresh.py": "2b1237df951e5cc0e242bf50a5b9c0dc31441cbcd9f8bcacb48c4332ee0f89e5",
-    "research/fees-composed-frontier188/analysis.json.gz": "ba0cb691685b34b6dd851e618ae71ac900452d59ed135b70051119e59cf5fd6b",
-    "research/fees-composed-frontier188/artifacts/origins-candidate.so.gz": "b8d557928950a3bf2ee09bef46b514fdcc5df16bc97b355f36b8bbb734ce3af5",
-    "research/fees-composed-frontier188/artifacts/origins-symbols.so.gz": "22d75a8713841da6f2334048c1409ff86e4b26ea12cf0faf9d2eaea67919785e",
-    "research/fees-composed-frontier188/elf_helpers.py": "92d28a886a6e5787c03572e5db380711ab11b64de4491414e9ae9b0d08858cfc",
-    "research/fees-composed-frontier188/experiment.json": "bd9e6be08e1739966262407cace60f02bfdd9e84b948f72edf69aec7b4c77cd7",
-    "research/fees-composed-frontier188/window_map.py": "eeec82f751ea38827c5149f28590f19a3ff516c7eee57b6aa48949cbaac4a7e5",
+    "repro/reconstruction-status-2026-10-26/refresh.py": "81d2dad3505f425826e5a38781c2bb9609a9d0a17104ab3d2cff61288417a8fb",
+    "research/fees-frontier-prefix-integration/analysis.json.gz": "63983d4b9ba1e4e539609e4689998ebe0f3658e6a033b48b5ee10001d4b5dff2",
+    "research/fees-frontier-prefix-integration/artifacts/origins-candidate.so.gz": "bcc787315b89cfcecfad6a073e62d91eedc9a6b5a059c5714204381bb03f0110",
+    "research/fees-frontier-prefix-integration/artifacts/origins-symbols.so.gz": "2ba287e80ac52592e7eba089fe5ab8421039e287faef8b39935eafce8cba1a86",
+    "research/fees-frontier-prefix-integration/elf_helpers.py": "92d28a886a6e5787c03572e5db380711ab11b64de4491414e9ae9b0d08858cfc",
+    "research/fees-frontier-prefix-integration/experiment.json": "15901a0d25a1e7fa379c25dd461f1bea2be140719a70e915e9c8a23e75b1b022",
+    "research/fees-frontier-prefix-integration/window_map.py": "eeec82f751ea38827c5149f28590f19a3ff516c7eee57b6aa48949cbaac4a7e5",
     "research/fees-refreshed-call-attribution/attribute.py": "b3425eb9c1fba9b09e2c3e7bd01ab0f6d50ef0cfb5500320ff34db96de819c17",
     "research/fees-refreshed-call-attribution/elf_helpers.py": "ca2791ec19de711032d60f489afdc7e36a27081d9e16e67f2cfa91170d64ee4c",
     "research/fees-refreshed-call-attribution/input-provenance.json": "7c546529d694d7fa6d29d0829ad09bb811703581f92b0508a8484633e0a1b69f",
@@ -109,25 +110,34 @@
     "scripts/analyze.py": "dd7fb38d795d4dd72a25aab0d65c2223d9f6f75d8b3ecb0de1d87d6e102910ac"
   },
   "relay": {
+    "allocation_tail_bytes": 12168,
     "candidate_bytes": 818280,
     "candidate_only_tail": 0,
-    "candidate_sha256": "06e7f3e0c42f243d8d1c7a3550520b3efdbfe28a2f721870ff98c6038bad1dfd",
+    "candidate_sha256": "56d81ec64a0ba070d3d23f3c1547b31d659e85716dfa2198ec4b0ce6cd355333",
     "candidate_symbol_windows": 492,
-    "common_position_different_bytes": 9398,
+    "common_position_different_bytes": 0,
     "execution_suitable": false,
+    "historical_recipe_verified": false,
+    "loader_payload_equal": true,
+    "loader_transactions": 912,
     "matched_pairs": 856,
+    "meaningful_elf_bytes": 818280,
+    "meaningful_elf_equal": true,
     "original_bytes": 830448,
     "original_inferred_windows": 492,
     "original_normalized_match_windows": 492,
     "original_only_tail": 12168,
-    "original_raw_match_windows": 376,
+    "original_raw_match_windows": 492,
     "original_sha256": "367f07a62e3f74d358187d175cf3228848e81a56c781a9a75b9df7fed1268563",
-    "positional_residual_ranges": 3122,
+    "positional_residual_ranges": 1,
+    "reconstructed_linker_layout": true,
     "recursive_call_shape_closed_pairs": 674,
     "runtime_cases": 0,
+    "static_parser_runtime_fields_are_not_execution_results": true,
     "unmatched_original_windows": 0,
     "unstripped_bytes": 929536,
-    "unstripped_sha256": "8267d231c008e1a064ad9aee27145d078edb6e782b224cec5f75eb705dcb12b6",
+    "unstripped_sha256": "07ab4ac487727385a3b5ec0d4bc1139e10f701c3fac2f95b88d89701a38ab9e1",
+    "verified_replay_records": 536,
     "whole_file_equal": false
   },
   "scope": "Local body equality and separately scoped normalized windows; no semantic-perfection, transitive identity, selection promotion or effort-percentage claim.",
@@ -137,5 +147,5 @@
     "unrecovered": 5
   },
   "selected_snapshot": "1463bd22fb7811825c5e7acf1cb963eb39ab68d9",
-  "snapshot": "2abbcc0a7730e19c7033fc2282459a01c1451f4b"
+  "snapshot": "5c1f717918495b8508ff5aefedc6d3219abb3439"
 }

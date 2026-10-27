@@ -11,36 +11,34 @@ that run the captured original and the rebuilt candidate side by side in a local
 For subsequent gains and the latest research frontier, see the
 [byte-identity progress log](docs/BYTE-IDENTITY-PROGRESS.md).
 The [27 October queue review](docs/PR-QUEUE-REVIEW-2026-10-27.md) covers PRs
-#170–#192, including separately verified 399- and 401-pair Fees context candidates and
+#170–#196, including separately verified 399- and 401-pair Fees context candidates and
 source-only proposals. Those independent branches are not silently combined
 into the inventory below.
 
-Latest artifact-backed Relay research: **492/492 normalized windows, no unmatched
-normalized bodies, and 376 raw-local matches**. The [access-control layout recovery](repro/donation-relay/access-control-layout-artifact/README.md)
-reproduces all four donation wrapper bodies byte for byte and passes 536 signed
-replay records / 534 fixtures. The complete 19,863-byte read-only data section
-also matches. The runtime block and all ELF headers now match exactly;
-[deployment history](repro/donation-relay/allocation-provenance/README.md) explains
-the captured allocation capacity.
+Latest Relay research reproduces **all 818,280 meaningful ELF bytes exactly**,
+including **492/492 raw function windows**, headers, calls, data and relocations.
+Two Rust builds, including a fresh isolated build, produce the same artifact.
+The [exact ELF recipe](repro/donation-relay/linked-elf-reproduction/README.md)
+uses ordinary reconstructed Rust and an explicit linker layout; the historical
+source/build recipe remains unproved. Fresh bounded replay passes 536 records.
 
-**Whole-file identity is still unresolved:** 9,398 positions differ within the
-818,280-byte meaningful ELF. The capture has another 12,168 allocation bytes.
-Raw call/address values, relocations, indirect/data semantics and broader runtime
-coverage remain to be established. The [raw-layout audit](repro/donation-relay/raw-layout-audit/README.md)
-accounts for the text differences in 15 reordered regions and 462 call-operand
-bytes; tested package/module identities do not improve the whole output. Earlier rejected controls and source-only
-proposals retain their historical evidence; selected checkpoints are unchanged.
+The captured file also has **12,168 loader-allocated zero bytes**. A fresh local
+912-transaction loader deployment reproduces **all 830,448 captured payload bytes**
+without padding the compiler output. ProgramData metadata and historical deployment
+sequence are outside that equality claim. The [natural source layout recovery](repro/donation-relay/access-control-layout-artifact/README.md)
+separately reaches 376 raw-local windows using the default linker layout.
+Selected checkpoints remain unchanged; all four core programs remain byte-unequal.
 
-The pinned Fees inventory has **404 unique structural pairs, 34 unmatched windows**
-(**551/585 normalized counterparts**, including 118 raw-local matches).
-The [verified composition](research/fees-composed-frontier188/README.md) combines
+The pinned Fees inventory has **405 unique structural pairs, 33 unmatched windows**
+(**552/585 normalized counterparts**, including 118 raw-local matches).
+The [verified prefix integration](research/fees-frontier-prefix-integration/README.md) combines
 the reviewed math/SyncNative, sharing-context and social-PDA creation recoveries.
-It adds six windows over its independently reproduced 545-window baseline and
+It preserves the six composition gains and restores the 1,144-byte unchecked decoder helper; it
 passes 17,331 suite comparisons plus 157 strict signed social-creation cases.
 The [configuration-event recovery](research/fees-config-event-recovery/README.md)
 adds four complete caller-body matches; the two upsert bodies share a structural
 shape and are distinguished by their callees. The [current call ledger](repro/reconstruction-status-2026-10-26/fees-call-attribution.json)
-also attributes 69 duplicate-body pairs, giving 473 correspondences.
+also attributes 69 duplicate-body pairs, giving 474 correspondences.
 Whole-file identity remains unachieved. The [exotic-fee growth study](research/fees-exotic-growth-precedence/README.md)
 corrects rejection precedence and the realloc flag in new boundary cases;
 that caller still has no complete body match. The [optional-account ownership recovery](research/fees-optional-account-ownership/README.md)
@@ -75,7 +73,7 @@ restores the full-account input convention and closes the 1,144-byte initializer
 helper. Its host contract tests and SBF regression evidence have separate scopes.
 
 The [current reconstruction review](docs/RECONSTRUCTION-STATUS.md) lists exact,
-normalized, unmatched and opaque function status, Relay raw-linking gaps,
+normalized, unmatched and opaque function status, Relay provenance limits,
 and prioritized behavior/build work. The [refreshed 4,415-row inventory](repro/reconstruction-status-2026-10-26/README.md)
 includes every exact local body match and every unresolved window.
 
@@ -96,14 +94,14 @@ No handler is certified perfectly recreated. The selected core builds contain
 | --- | ---: | ---: | ---: | ---: | ---: |
 | Pump selected | 98 | 430 | 507 | 0 | 1,391,456 / 1,792,208 bytes (77.6%) |
 | PumpSwap selected | 93 | 395 | 297 | 0 | 734,392 / 1,162,040 bytes (63.2%) |
-| Fees research | 118 | 433 | 34 | 0 | 206,360 / 799,648 bytes (25.8%) |
+| Fees research | 118 | 434 | 33 | 0 | 205,216 / 799,648 bytes (25.7%) |
 | Mayhem selected | 58 | 131 | 7 | 245 | 636,128 / 706,744 bytes (90.0%) |
-| Relay research | 376 | 116 | 0 | 0 | 0 unmatched-window bytes; raw linking still differs |
+| Relay research | 492 | 0 | 0 | 0 | 0; complete meaningful ELF byte-equal |
 
 Unresolved text includes whole unmatched and opaque windows. These are not
-differing-byte counts or estimates of effort. Calls, data, layout,
-relocations, build provenance and broader behavior remain to be verified even
-where a local body matches. Research rows do not replace selected checkpoints.
+differing-byte counts or estimates of effort. For builds without full ELF equality, calls, data, layout and relocations
+remain to be verified even where a local body matches. Historical build provenance
+and broader behavior remain separate requirements for every build. Research rows do not replace selected checkpoints.
 
 The public-handler gaps are concrete:
 
