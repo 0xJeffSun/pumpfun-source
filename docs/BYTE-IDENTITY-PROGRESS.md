@@ -702,3 +702,21 @@ host contract cases. Fresh full and focused SBF regressions also pass, but their
 17,331-case suite does not invoke the fixed-admin FeeConfig initializer. This
 is not a claim of authorized initializer execution. Selected sources and
 artifacts remain unchanged, and whole-file equality is still unachieved.
+
+
+## Relay: source-only just-swap recovery — 27 October 2026
+
+The [just-swap source proposal](../repro/donation-relay/just-swap-source-proposal/README.md)
+recovers original window 99 (4,448 bytes): **485/492 normalized windows (98.58%)**,
+130 raw local matches, one gained window and no losses. The existing wire-argument
+wrapper, early total binding and nested scalar-bump signer construction reproduce
+the strict window; all 26 direct-callee sites bind complete normalized bodies.
+The prior worker and epoch source recoveries are preserved unchanged.
+
+This is a source-only proposal with full 56-input maps, static verifier/eight tests,
+materializer and build recipe. Optional local baseline/candidate comparison
+recomputes the inventory and raw differences. Local builds/replay were performed,
+but blocked receipt publication means this is not downloadable replay evidence.
+Protected relayer success and complete data/indirect equivalence remain unproved.
+The candidate is not byte-identical: 415,532 common positions differ and the
+original has a further 12,448-byte tail. No selected checkpoint is promoted.
