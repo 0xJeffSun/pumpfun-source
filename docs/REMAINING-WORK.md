@@ -765,3 +765,14 @@ frontier. Both variants retain the existing recovered Program ID check. Exact
 149/150-file upstream snapshots, five changed framework files, the root adaptation,
 identical metadata outputs and all 441 window comparisons are retained. This is
 a source-generation mechanism control, not original framework/date attribution.
+
+The next adjacent revision restores Borsh's original derives. A separate
+dependency-only control preserves all 420 normalized matches and accounts for
+five raw-local gains. Changing only the two upstream Rust files under the same
+resolved graph then restores O0141 and O0142, yielding 422 normalized, 74
+raw-local and 421 injective matches, with no losses. Four fresh builds retain
+615 actual compiler commands and identical final raw/stripped repetitions.
+The six remaining differences against the older current-runtime control are
+O0106, O0116, O0124, O0127, O0145 and O0199; only O0199 lacks a raw-local match
+that control has. No match exceeds the current-runtime control or advances the
+newer project checkpoint. Source attribution and runtime qualification stay open.

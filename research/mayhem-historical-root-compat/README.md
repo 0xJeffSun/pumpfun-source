@@ -19,6 +19,13 @@ losses, seven raw-local gains and identical complete outputs from fresh after
 repeats. Eight differences remain against the older current-runtime control.
 This further explains the historical gap without improving the current frontier.
 
+The following upstream Borsh derive revision restores **O0141 and O0142**,
+reaching **422 normalized matches** with six differences against the older
+current-runtime control. A separate dependency-only control preserves the 420
+normalized matches and accounts for five raw-local gains. Repeated final
+compiler outputs are identical; this remains provenance evidence, not a new
+current reconstruction checkpoint.
+
 ## Source and build boundary
 
 The parent is pinned at `0a881f726f8dae34a2f53f2438cdb271ab830e41`, including
@@ -187,6 +194,60 @@ differences remain in `report.json` rather than being inferred from equal ELFs.
 This is evidence for a source-generation mechanism under the recorded recipe;
 it is not original framework attribution, a historical date constraint, current
 checkpoint promotion or runtime qualification.
+
+## Original Borsh derive and dependency controls
+
+The immediate child of the duplicate-mutable revision,
+[`2dd5c2473f7964e080f5fa3bc06aa445c07396db`](https://github.com/otter-sec/anchor/commit/2dd5c2473f7964e080f5fa3bc06aa445c07396db),
+replaces Anchor's handwritten serialization derives with Borsh's original derives.
+It changes two Rust files, the derive package manifest and the workspace lock.
+The two selected upstream snapshots each contain 150 authenticated Git blobs.
+
+Four fresh builds separate the source and dependency changes at one fixed source
+path. All retain the recovered Program ID check, historical CreateEvent and
+four-lifetime Context signatures. The baseline relocates the previous d790f27f
+recipe and preserves exactly its normalized and raw-local match sets; its whole
+bytes change, so it is not presented as a raw repetition of that earlier path.
+The synthetic graph control then adopts only the successor manifest and lock,
+leaving every framework Rust file unchanged. Finally, the after variant replaces
+exactly the two upstream Rust files; root sources, pruned lock and raw Cargo
+metadata are identical to the graph control.
+
+| Fresh build | Functions | Text bytes | Normalized | Raw-local | Injective |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Relocated d790f27f baseline | 451 | 663160 | 420 | 69 | 418 |
+| New dependency graph, old Rust | 449 | 662440 | 420 | 74 | 418 |
+| Original Borsh derives | 449 | 662328 | 422 | 74 | 421 |
+| Fresh derive repeat | 449 | 662328 | 422 | 74 | 421 |
+
+The dependency-only control adds raw-local O0255, O0256, O0258, O0265 and
+O0271, with no normalized change or loss. Those functions already matched after
+normalization. The two Rust changes add normalized O0141 (MayhemStatus
+deserialization) and O0142 (MayhemState serialization), with no lost normalized
+or raw-local matches and no additional raw-local gain. This measures the two
+upstream Rust files together, not individual generated statements or runtime
+equivalence. It isolates their effect from the separately measured graph change
+under this recorded recipe.
+
+The lock-resolved registry cohort changes from 187 to 188 packages: five versions
+are replaced and toml_parser is added. The six new archives (memchr,
+proc-macro-crate, toml_datetime, toml_edit, toml_parser and winnow), their source
+files and licenses are retained and authenticated against the upstream lock.
+The initial build records 153 actual compiler commands; the next three record
+154 each, **615 total**. All input and tool observations pass.
+
+After and repeat produce the same **864360-byte raw ELF**
+(`f7aa2b51ccb1d90ea608e73686d8654f9022aa9b5c0c560ce721add235641688`)
+and separately stripped **730992-byte ELF**
+(`e2dde5a7815cd60ecd8c2b87a7a00f4fabf676424cdd0dcbbe8340181a508ad3`).
+Neither equals the captured original. Full dependency archive identity differences
+between repeated builds remain explicit in `report.json`.
+
+Six normalized differences remain against the older current-runtime control:
+O0106, O0116, O0124, O0127, O0145 and O0199. Its only missing raw-local match
+is O0199. No new normalized or raw-local match exceeds that control. This does
+not identify the original framework, constrain the original build date, advance
+the newer current-source checkpoint or supply runtime/security qualification.
 
 ## Offline replay and retained limits
 
