@@ -83,6 +83,12 @@ full `just_swap` body. Retain the corrected source as a partial experiment while
 resolving the remaining argument/Vec handling and instruction differences;
 compiler layout of reconstructed types is not original debug information.
 
+The [settlement call ledger](../repro/donation-relay/settlement-call-audit/README.md)
+finds matching direct callee-body multiplicities for windows 97, 98 and 100,
+and for 99 after the constructor-order correction. Their caller bodies still
+differ. Prioritize argument/value flow, inline checks, data references and CFG
+comparison rather than assuming absent out-of-line helper calls.
+
 ## Audit baseline
 
 - **Whole captured-file identity:** 0/4 selected core programs; selected Relay also differs.
@@ -118,7 +124,7 @@ for function-level details. “No complete match” does not prove source absenc
 | Pump `multi_hop_curve_swap` | Finite one/two/three-hop ordinary coverage | Arbitrary supported depth, quote currencies, lifecycle, resizing and mode combinations |
 | AMM `create_config` | Compiled/static structural evidence | Authentic successful fixed-admin initialization and rejection validation |
 | Mayhem `initialize_mayhem_state` | Corrected overlay: 53 rejection cases ([initializer correction](../research/mayhem-initializer-validation/README.md)) and 20 real Pump-CPI cases ([retained recheck](../research/mayhem-overlay-cpi-recheck/README.md)) | Select intended source/build and cover broader initializer behavior |
-| Pump `sell_v2` | Bounded accepted handler with a known quote transfer-fee minimum-output/event discrepancy | Correct the discrepancy and retain regression evidence |
+| Pump `sell_v2` | Bounded accepted handler with a known quote transfer-fee minimum-output/event discrepancy | Correct and validate after explicit resumption; the corrective runtime probe remains stopped ([retained scope](COMPLETION.md)) |
 | Mayhem non-initializer ABI/state | Bounded handlers, known diagnostic/error differences, five unknown GlobalParams field roles | Resolve fields and full error/data contracts |
 
 The selected 140 count includes finite, imperfect reconstructions. It must not be

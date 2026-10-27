@@ -353,3 +353,12 @@ and passes fresh original/candidate replay of 536 records / 534 unique fixtures.
 Its 4,408-byte body still differs from the original's 4,448 bytes. Four wire-arg
 variants also remain unmatched. No matched window is gained or lost, and no
 candidate is promoted. The original field-name mapping remains an inference.
+
+## Settlement direct-call inventory
+
+A [read-only ledger](../repro/donation-relay/settlement-call-audit/README.md)
+checks all direct local calls in original windows 97–100 against both published
+candidate forms. All callees have normalized-body counterparts; three baseline
+caller multisets agree, and the constructor-order candidate agrees for all four.
+No linear sequence or full caller body matches. The result narrows investigation
+without asserting control-flow or semantic equivalence. Counts remain 482/492.
