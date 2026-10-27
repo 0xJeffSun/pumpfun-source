@@ -17,7 +17,7 @@ source and compiler investigations proceed.
 | --- | --- |
 | AMM trade and quote bodies | O0077 and O0079; cap/min selection, retained-reserve arithmetic, ownership and error flow |
 | Legacy and V2 trade bodies | O0081–O0084; source ownership, fallible arithmetic and CPI error lifetime |
-| Runtime and layout | Recursive call/data closure, allocation-provider provenance, genuine section layout and ELF equality |
+| Runtime and layout | O0210 → O0209 allocator-provider mismatch and seven transitive callers; remaining data/indirect-call closure, section layout and ELF equality |
 | Integration | Preserve the 432-window parent, qualify combinations with fresh builds and signed local replays, synchronize documentation and PRs |
 
 Sweep/burn work is outside the active scope. O0073 and O0076 are connected to the

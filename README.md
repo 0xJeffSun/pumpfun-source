@@ -87,6 +87,14 @@ ordered immediate callees and twenty typed references checked in total.
 [Nine bodies remain](research/mayhem-quotes-current-recovery-20261027/remaining.md),
 with every function classified in the [441-row inventory](research/mayhem-quotes-current-recovery-20261027/inventory.tsv).
 
+The [recursive direct-call audit](research/mayhem-direct-call-closure-20261027/README.md)
+retains compatible counterparts for 414 of those 432 matched bodies. Eighteen
+lack direct-call closure: ten depend on missing business handlers, while eight
+trace to an allocator specialization mismatch. Data and indirect-call identity
+remain separate obligations. The formerly unnamed O0075 is now [statically
+attributed to SweepFeesAdmin](research/mayhem-sweep-admin-attribution-20261027/README.md);
+its body remains unmatched and sweep execution remains outside the active scope.
+
 The [native historical-macro composition](research/mayhem-native-current432-composition/README.md)
 also reproduces 432 normalized windows and 85 raw-local matches in its own
 recipe. Its earlier Legacy Buy source does not replace the qualified 432/100

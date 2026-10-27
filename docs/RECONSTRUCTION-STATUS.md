@@ -68,6 +68,14 @@ There are **456 unmatched windows**. Only Relay has complete meaningful-ELF
 identity; the four core programs remain byte-unequal. These are structural
 coverage measures, not a percentage of engineering work completed.
 
+The [current Mayhem direct-call audit](../research/mayhem-direct-call-closure-20261027/README.md)
+refines its 432 normalized body matches: 722 candidate pairs reduce to 594
+pairs covering 414 original windows under recursive ordered direct calls.
+Eighteen matched windows have no surviving counterpart in that relation.
+Ten depend on unmatched business handlers; eight expose an allocator-provider
+mismatch. This relation does not prove data, indirect-call, external implementation,
+injective assignment or semantic identity, and does not change the body totals.
+
 Current AMM matched windows cover **804,704 of 1,162,040 original text bytes
 (69.2%)**. Its 643 normalized matches include the 148 raw-local matches; complete
 ELF identity remains false.

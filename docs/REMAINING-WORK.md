@@ -29,6 +29,14 @@ all twenty immediate callees and twenty ordered typed references agree. The
 is preserved. Two builds, 6,636 fresh trade pairs and 69 initializer pairs pass.
 Large trade handlers, data/call closure and whole-ELF identity remain unresolved.
 
+The [direct-call closure audit](../research/mayhem-direct-call-closure-20261027/README.md)
+adds a specific allocator task: every current O0210 counterpart calls a
+`finish_grow` specialization that differs from original O0209, even though a
+matching O0209 body exists elsewhere. Repair the actual call destination and
+its seven transitive callers while preserving the qualified source's matches.
+The [O0075 wrapper attribution](../research/mayhem-sweep-admin-attribution-20261027/README.md)
+identifies SweepFeesAdmin without closing its body; that lane remains paused.
+
 The [current Legacy Buy ownership composition](../research/mayhem-current-ownership-composition-20261027/README.md)
 preserves the 430/100 frontier and its complete initializer. Its partial handler
 is 13,784 bytes versus 13,848 original bytes, with fifty immediate callee shapes

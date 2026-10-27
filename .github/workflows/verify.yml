@@ -20,6 +20,12 @@ jobs:
             commands: |
               python -B research/mayhem-amm-handler-shape-controls-20261027/verify.py
               python -B research/mayhem-amm-handler-shape-controls-20261027/test_verify.py
+              python -B research/mayhem-direct-call-closure-20261027/verify.py
+              python -B research/mayhem-direct-call-closure-20261027/test_verify.py
+              python -O -B research/mayhem-direct-call-closure-20261027/test_verify.py
+              python -B research/mayhem-sweep-admin-attribution-20261027/verify.py
+              python -B research/mayhem-sweep-admin-attribution-20261027/test_verify.py
+              python -O -B research/mayhem-sweep-admin-attribution-20261027/test_verify.py
           - suite: mayhem-current-quotes
             commands: |
               python -B research/mayhem-quotes-current-recovery-20261027/verify.py
