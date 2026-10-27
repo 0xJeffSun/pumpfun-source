@@ -1,12 +1,5 @@
 name: Fees renderer remote research
 on:
-  push:
-    branches: [research/fees-renderer-remote]
-    paths: [research/fees-renderer-remote/run.py]
-  pull_request:
-    paths:
-      - research/fees-renderer-remote/**
-      - .github/workflows/fees-renderer-remote.yml
   workflow_dispatch:
 permissions:
   contents: read
