@@ -1838,3 +1838,22 @@ Two ordinary source overrides on the exact 43-input public PR222 source restore 
 All 43 public compressed source blobs and expanded hashes were authenticated; exact materialization, default verification and 15 tests pass. Two exact-public source builds repeat both full ELF hashes and match the separately executed source-order control byte-for-byte. The finite 640-case current-parent comparison repairs three outcomes and 283 application-log mismatches; 17,331 regression cases pass their defined predicates. This is explicitly full-byte-linked execution evidence, not a new source-path replay. Eight executable-recipient snapshots omit executable-account bytes, and 78 known sharing application-log mismatches remain. All receipts/case data stay local.
 
 Fresh static checks bind the real wrapper, three early callees, four diagnostics/four Source records, plus 729 decoded deadline and 343 saturation combinations—not whole CFG/behavior closure. Raw differing positions worsen 462,922 → 470,275. The nine-file source-only packet has no binary/archive or build/runtime receipt derivative; default native/runtime/whole identity claims remain false. See `research/fees-social-v2-current-source-proposal/README.md`.
+
+## Mayhem: shared post-buy accounting calls — 27 October 2026
+
+The [shared accounting packet](../research/mayhem-buy-accounting-calls/README.md)
+restores the original O0081/O0083 calls to O0090 in Legacy Buy and BuyV2. Only
+the two duplicated handler blocks change; the existing AMM accounting source
+is credited unchanged. Matched wrappers attribute the calls, and all twelve
+ordered immediate helper callees match. No new complete body is claimed.
+
+The pinned native Program/BuyV2 composition is rebuilt locally on Linux. All
+343 control matches and 63 raw-local windows survive. Across 2,325 cases per
+build, strict non-compute log differences fall from 148 to 32 (116 corrected,
+none introduced). A further 1,257 AMM comparisons retain exact non-compute logs.
+Independent checks verify 11,814 signature entries across 5,907 fresh comparisons,
+including complete successful account/event outcomes and failed-transaction
+rollback. Fresh dependency-clean and portable builds reproduce both artifacts.
+The later full-curve source delta is independent and not claimed composed here.
+Original captures and selected checkpoints remain unchanged; complete handlers,
+O0090, transitive/data closure and whole-file identity remain unresolved.
