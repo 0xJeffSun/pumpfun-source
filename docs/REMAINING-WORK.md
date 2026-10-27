@@ -10,7 +10,7 @@ candidate paths and “current” prose must not override newer evidence.
 
 Subsequent gains are in the [byte-identity progress log](BYTE-IDENTITY-PROGRESS.md):
 Relay research now has **492/492 normalized counterparts and no unmatched windows**; current Fees research
-has **32 unmatched windows and 406 unique structural pairs**. The [Relay framework study](../repro/donation-relay/framework-sysroot-recovery/README.md)
+has **31 unmatched windows and 407 unique structural pairs**. The [Relay framework study](../repro/donation-relay/framework-sysroot-recovery/README.md)
 recovers the three repeated type-ID bodies with official Linux target libraries,
 adds the Anchor 0.32 framework matches and restores share-total compared values.
 The subsequent [mint-predicate study](../repro/donation-relay/mint-fee-pair-recovery/README.md)
@@ -96,7 +96,7 @@ adds the optional account parser and raw-equal cleanup without lost matches.
 Keep their real caller wired to owned `AccountInfo`; the larger account parser
 still needs full reconstruction. The subsequent [seed-vector recovery](../research/fees-social-seed-vector/README.md)
 recovers a 296-byte clone helper; its V2 claim caller remains unmatched. Current
-Fees attribution totals 475 pairs. The [extension-size log recovery](../research/fees-extend-size-logs/README.md)
+Fees attribution totals 476 pairs. The [extension-size log recovery](../research/fees-extend-size-logs/README.md)
 restores the no-resize messages and formatting helper; the larger resize handler
 remains unmatched.
 
@@ -235,7 +235,7 @@ The following are independent requirements; completing one does not close the ot
 
 | Priority | Remaining work | Evidence required to close it |
 | --- | --- | --- |
-| Current research bodies | Relay selected integration and historical provenance; Fees' 32 windows, including the exotic-growth caller | Full original-window comparison with no lost matches, source/build hashes and relevant fresh differential coverage |
+| Current research bodies | Relay selected integration and historical provenance; Fees' 31 windows, including the exotic-growth caller | Full original-window comparison with no lost matches, source/build hashes and relevant fresh differential coverage |
 | Core source/behavior | Pump's five partial and three unaccepted handlers; AMM initializer; Mayhem initializer and opaque attribution | Concrete source, genuine successful and rejected paths, bound receipts and per-handler limitations |
 | Known mismatches | Pump sell_v2 transfer-fee behavior; Mayhem diagnostics and field contracts | Authorized resumed correction where required, then targeted regressions and broader validation |
 | Transitive binary identity | Calls, duplicate attribution, data, relocations, indirect calls and final ELF layout | Exact artifact comparison and explicit explanation of any allocation padding |
@@ -293,7 +293,7 @@ and signing/ownership restrictions are unchanged by this documentation audit.
 | --- | --- |
 | Selected Pump | 507 windows without full normalized matches; calls/data and ambiguous matches also remain. The separate workspace-member build has 538 normalized windows and 497 residuals: 233 different-body, 192 no-same-size, 72 store-immediate-only heuristic rows. One of those 72 changes an error code; only 71 are reported origin-only. |
 | Selected AMM | 297 unmatched original windows, 160 ambiguous normalized rows, original diagnostics, data and full call contracts |
-| Fees current research | 32 unmatched windows (204,008 original body bytes), 69 additional call-attributed pairs and 78 duplicate windows still unattributed; close shareholder validators, transitive calls/data and full ELF/relocation layout |
+| Fees current research | 31 unmatched windows (199,040 original body bytes), 69 additional call-attributed pairs and 78 duplicate windows still unattributed; close shareholder validators, transitive calls/data and full ELF/relocation layout |
 | Selected Mayhem | Seven admitted unmatched windows and 257 source-ledger opaque windows; 12 of the opaque windows have local raw matches without semantic attribution |
 | Relay current research | all 492 raw windows and the full meaningful ELF match via a reconstructed linker layout; the loader reproduces the full captured payload. Resolve selected integration, historical provenance, privileged successes and broader allocator/borrow coverage |
 | Metaplex | Utilize's 1,477 text differences, 30 source-coordinate differences, two relocation differences; authentic source/compiler layout |
@@ -487,3 +487,19 @@ relocations. Eighteen tests include real operand mutations that preserve normali
 body multisets but fail the graph check. This adds correspondence verification;
 the later exact ELF/payload evidence remains the current frontier. Historical
 source names, natural compiler ordering and indirect behavior remain unproved.
+
+## Current Fees business integration and next adapter step
+
+The [AdminCto integration](../research/fees-admin-cto-current-integration/README.md)
+closes original 127776 on the current source. Preserve the included source span,
+zero-admin guard, event ordering and two-build/runtime evidence. There are now
+31 unmatched windows (199,040 original text bytes).
+
+For adapters 235304 and 236240, the [ownership study](../research/fees-cpi-adapter-ownership-controls/README.md)
+retains the observed individual account arguments, corrected program clone
+destination, and V2 parameter order. Four copy-scheduling bytes still differ in
+each closest body. Their local copy effect is equal, but exact body recovery
+requires resolving that emitted order without broadening masks. Constructor,
+visibility, field-order, `mem::take` and typed-return controls are already tested.
+Do not repeat them as new gains or silently combine this older experimental
+source with the AdminCto artifact.

@@ -1,6 +1,6 @@
 # Reconstruction status after exact Relay ELF reproduction
 
-Reviewed parent revision: `6b61b33735106c78f9099743ea405fd293abee10`; new measurements are bound to the packets below.
+Reviewed parent revision: `45f79b7edd4af70e0933183b09287736eb5c340b`; new measurements are bound to the packets below.
 This review updates the research frontier while preserving the selected-checkpoint
 [baseline audit](RECONSTRUCTION-AUDIT.md). The [recomputed inventory](../repro/reconstruction-status-2026-10-26/README.md)
 contains every one of the **4,415 selected/research function-window rows**.
@@ -46,7 +46,7 @@ analysis. Candidate symbol names are hypotheses about original identity.
 | Fees selected | 585 | 102 | 363 | 120 | 0 |
 | Mayhem selected | 441 | 58 | 131 | 7 | 245 |
 | Relay selected source 15 | 492 | 33 | 89 | 370 | 0 |
-| **Fees latest research** | **585** | **118** | **435** | **32** | **0** |
+| **Fees latest research** | **585** | **118** | **436** | **31** | **0** |
 | **Relay latest research** | **492** | **492** | **0** | **0** | **0** |
 
 Each row is a partition, not a score of semantic correctness. Mayhem's source
@@ -77,13 +77,13 @@ payload**, with 12,168 zero bytes allocated by the loader. Compiler output is
 not padded. ProgramData metadata/history, selected-source promotion and broader
 runtime acceptance remain separate requirements.
 
-Fees research has **553/585 windows with a normalized counterpart**: 406 unique
-structural pairs and 147 original windows in ambiguous duplicate groups. Its 32
-unmatched windows span **204,008 of 799,648 original text bytes (25.5%)**, although
-they are only 5.5% of the window count. Many remaining bodies are large. The
+Fees research has **554/585 windows with a normalized counterpart**: 407 unique
+structural pairs and 147 original windows in ambiguous duplicate groups. Its 31
+unmatched windows span **199,040 of 799,648 original text bytes (24.9%)**, although
+they are only 5.3% of the window count. Many remaining bodies are large. The
 [current call ledger](../repro/reconstruction-status-2026-10-26/fees-call-attribution.json)
 recomputes 69 additional duplicate-body correspondences on this candidate, for
-475 attributed pairs. There are 78 still-unattributed duplicate windows and 15
+476 attributed pairs. There are 78 still-unattributed duplicate windows and 14
 call edges to different-body frontiers. This refinement adds no body coverage.
 
 There is no defensible single source-completion percentage or ETA. Whole-program
@@ -545,7 +545,7 @@ field-role claims. The five semantic roles remain unresolved; no field is rename
 2. **Close known behavior defects:** Pump `sell_v2` and the ten partial/unaccepted
    selected dispositions above, with bound success/rejection tests. Cover genuine
    CPI callers, ownership and extension/mode combinations before acceptance.
-3. **Continue Fees business/source recovery:** work from all 32 residual addresses,
+3. **Continue Fees business/source recovery:** work from all 31 residual addresses,
    preserve the refreshed duplicate-call attribution, and validate paths not
    exercised by the existing corpus. Normalize only declared relocations/calls.
 4. **Recover Pump/AMM/Mayhem residuals:** preserve opaque and ambiguous states.
@@ -653,3 +653,19 @@ Current Fees coverage is 553/585, with 406 unique structural pairs and 32 unmatc
 windows. The authorization-helper source variants remain rejected controls; they
 do not close original 234096. Their source-path and signer-load observations
 guide further work without promoting those variants.
+
+## AdminCto integration and residual CPI adapters
+
+The [current AdminCto composition](../research/fees-admin-cto-current-integration/README.md)
+independently integrates PR #200 into the 553-window source and recovers original
+127776 in full. Two root builds agree, all 20 direct callee bodies match, and
+17,331 fresh regression cases pass. No existing normalized or raw match is lost.
+Current coverage is 554/585 with 407 unique pairs and 31 unmatched windows.
+
+The separate [CPI ownership controls](../research/fees-cpi-adapter-ownership-controls/README.md)
+recover the observed argument/construction boundaries for 235304 and 236240.
+Each closest body still differs at four unmasked copy displacement bytes. The
+local three-word copy has equal effects and dead temporary-register differences,
+but neither full body is byte-identical. All 13 controls retain their 553-window
+base; 417 bounded sharing-update cases pass on the ordered prototype. These
+controls are not promoted into the current AdminCto artifact.

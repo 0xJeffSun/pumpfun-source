@@ -1268,3 +1268,18 @@ excerpts/derivatives are published. Default tools report native_build_verified,
 runtime_verified and whole_binary_identity_verified all false. Indirect behavior,
 transitive data and full raw ELF/capture identity remain unresolved. No selected
 checkpoint or previous evidence is replaced.
+
+## Current AdminCto integration: 554/585
+
+[Independent integration of PR #200](../research/fees-admin-cto-current-integration/README.md)
+recovers original 127776/4,968 bytes while preserving all prior current-source
+matches. Two builds produce candidate
+`ce8e040056b0645e59473306ad6b9fc8f1428461695d7fece8d0b276fc3f10d8`;
+all 20 direct callee bodies and 17,331 fresh runtime cases pass. Current Fees
+coverage is 554 normalized, 407 unique, 118 raw-local and 31 unmatched.
+
+[CPI ownership controls](../research/fees-cpi-adapter-ownership-controls/README.md)
+separately isolate four copy displacement bytes per legacy/V2 adapter. Thirteen
+real controls add no complete matches; a local symbolic copy proof and 417
+sharing-update cases support the limited observations. These artifacts remain
+experimental and do not replace the current candidate.
