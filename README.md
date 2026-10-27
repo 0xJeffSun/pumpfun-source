@@ -118,6 +118,18 @@ order. Nine source/compiler controls preserve their 432-window search baseline;
 one separately compiled variant also preserves all 100 qualified raw matches.
 They add no complete function match and have no fresh runtime qualification.
 
+The later [AMM Sell CFG packet](research/mayhem-amm-sell-cfg-recovery-20261027/README.md)
+preserves two closer partial bodies, including an equal-length 17,312-byte
+control. Both retain 249 corresponding control-flow blocks and all 47 ordered
+callee shapes, but still differ in event construction. Each has its own 18-pair
+signed replay. These remain partial 432/89 search artifacts and add no match to
+the qualified 432/141 checkpoint.
+
+The [Legacy/V2 ownership packet](research/mayhem-trade-ownership-current-20261027/README.md)
+preserves the larger BuyV2/SellV2 source reconstruction and two distinct Legacy
+Sell controls. Its V2 composition passes 48 signed pairs; the late-bump and
+event-order controls have static evidence only. All handlers remain partial.
+
 The [current-parent AMM event composition](research/amm-current-event-capture-20261027/README.md)
 adds the complete 1,784-byte normalized sell-event body, retaining all prior
 matches. Two builds agree; all 17,462 maintained cases and 26 focused event pairs

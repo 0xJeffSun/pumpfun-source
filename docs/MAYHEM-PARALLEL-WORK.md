@@ -76,6 +76,29 @@ arithmetic recover the Sell immediate-callee multiset; evaluation-order changes
 improve partial instruction alignment. The full body and ordered callees still
 differ. These controls add no accepted match or runtime qualification.
 
+The [later AMM Sell controls](../research/mayhem-amm-sell-cfg-recovery-20261027/README.md)
+preserve an equal-length 17,312-byte direct-signer body and a 17,320-byte
+conditional-event body. Both retain all 47 ordered immediate-callee shapes;
+the corrected relocation-aware CFG maps all 249 blocks without topology
+conflicts. Four event-region opcode differences remain. Each exact candidate
+passes its own 18-pair / 36-signature replay. These are 432/89 search contexts,
+not replacements for the qualified 432/141 artifact.
+
+The [Legacy/V2 ownership packet](../research/mayhem-trade-ownership-current-20261027/README.md)
+preserves separate partial controls with full source maps and artifacts:
+
+| Partial body | Original bytes | Retained candidate bytes | Evidence scope |
+| --- | ---: | ---: | --- |
+| Legacy Sell, Q18 | 12,992 | 12,992 | Static evidence on Q18's artifact; its replay covers V2 only |
+| Legacy Sell, Q22 | 12,992 | 12,928 | Static late-bump placement; no transferred runtime claim |
+| Legacy Sell, Q28 | 12,992 | 12,912 | Static pre-Clock field-read sequence; no transferred runtime claim |
+| BuyV2, Q18 | 18,648 | 18,328 | Eight native/token/token22 cases each, with signed receipts |
+| SellV2, Q18 | 18,096 | 17,992 | Eight native/token/token22 cases each, with signed receipts |
+
+These are separate 432/89 search contexts. Equal length, callee profiles and
+partial opcode sequences do not close a full window. Q18's 48 total V2 pairs
+and 96 signatures do not qualify the Legacy Sell control or other artifacts.
+
 The [native historical-macro quote composition](../research/mayhem-native-current432-composition/README.md)
 repeats 432 normalized / 85 native raw-local windows with its own 2,496 signed
 trade pairs and 69 initializer pairs. It retains the earlier 13,680-byte Legacy

@@ -1,4 +1,4 @@
-# Remaining work — artifact-backed Relay worker review, 26 October 2026
+# Remaining reconstruction work — 27 October 2026
 
 This is the action list for the [current reconstruction audit](RECONSTRUCTION-AUDIT.md),
 with current research based on reviewed parent revision `6b61b337` and the linked visibility-recovery measurements. The [current review](RECONSTRUCTION-STATUS.md)
