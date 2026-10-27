@@ -1,22 +1,26 @@
 # PumpSwap source reconstruction
 
-The maintained source is the [error-order checkpoint](../../repro/pump_amm/error-order-recovery-20261027/README.md).
-It restores legacy exact-buy, withdrawal and sweep failure precedence, retaining
-separate V2 buy flows, checked arithmetic, and exact Pool decoder frontends.
+The maintained source is the [native-fee and CPI checkpoint](../../repro/pump_amm/native-fee-cpi-recovery-20261027/README.md),
+candidate `a4b978ee1ab15dd822a31bc42e85d55e409f4e777f7af671a3197ea175891101`.
+It recovers native transfer-fee handling, buyback diagnostics, multihop real-reserve
+protection and generated account/CPI interfaces while preserving earlier recovery.
 
-The candidate has **584/785 normalized original window matches**, **124 raw
-matches**, and **201 unmatched windows**. All prior normalized matches remain.
-Matched original text is **642,616/1,162,040 bytes (55.3%)**; whole-ELF equality
-remains false. Two strict builds reproduce the same artifact.
+The candidate has **599/785 normalized original window matches (76.3%)**, including
+**125 raw matches**, and **186 unmatched windows**. It gains 13 normalized matches
+without losing any from the preceding checkpoint. Matched original text is
+**663,840/1,162,040 bytes (57.1%)**; whole-ELF equality remains false. Two strict
+offline Linux v1.44 builds reproduce the same artifact.
 
-All 17,462 corpus cases and prior account, fee, trade, buyback, CPI and liquidity
-matrices pass. Another 1,485 signed error-order cases close 67 prior mismatches.
-Recorded-log comparison excludes only compute lines and exact source coordinates;
-synthetic states and absent older logs retain their documented limits.
+All 17,462 corpus cases pass, with 35,074 executions and 35,418 verified signature
+fields. Retained supplemental suites were rerun, including 934 decoder/TLV cases,
+91 CPI probes and expanded fee, cap, buyback, account and legacy-preview cases.
+These counts overlap. Recorded-log comparisons exclude source coordinates and
+consumed compute where documented; the local synthetic fixtures do not establish
+current-chain acceptance or exhaustive behavior.
 
-Full code/data/indirect-call identity and historical provenance remain unfinished.
-The next private investigations recover token-burn and Pool sweep helper structure
-and evaluate authentic older Solana dependencies. None is promoted by this checkpoint.
+Full code/data/call identity, historical build provenance and authentic fixed-admin
+`create_config` success remain unfinished. The checkpoint binds 45 canonical source
+inputs to 46 workspace inputs and 169 authenticated registry inputs.
 
 The paragraphs below describe historical checkpoints.
 
