@@ -702,3 +702,21 @@ host contract cases. Fresh full and focused SBF regressions also pass, but their
 17,331-case suite does not invoke the fixed-admin FeeConfig initializer. This
 is not a claim of authorized initializer execution. Selected sources and
 artifacts remain unchanged, and whole-file equality is still unachieved.
+
+
+## Relay: source-only close-epoch recovery — 27 October 2026
+
+The [close-epoch source proposal](../repro/donation-relay/epoch-close-source-proposal/README.md)
+recovers original window 96 (4,000 bytes): **484/492 normalized windows (98.37%)**,
+130 raw local matches, one gained window and no losses. Early epoch binding,
+nested signer construction and a checked inherent increment method recover the
+complete strict instruction window. All 11 direct-callee sites bind complete
+normalized-matched bodies; whole-file/data/indirect equivalence remains open.
+
+Only readable source, hashes, a materializer, eight source-only tests and a build
+recipe are published. Both source states derive independently from the merged
+public 482-window loader. Optional local ELF comparison recomputes the gain and
+raw differences. Local builds/replay were performed, but blocked archive
+publication means no downloadable replay proof is included. Protected relayer
+success remains dynamically uncovered. The candidate remains unequal: 406,587
+common positions differ plus a 12,440-byte original tail; no checkpoint promoted.
