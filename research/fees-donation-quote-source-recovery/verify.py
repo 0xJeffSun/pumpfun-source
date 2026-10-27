@@ -92,11 +92,14 @@ def check_build(label,inputs,candidate_hash,symbols_hash):
   assert read(folder/'sdk-default.ld.gz')==(HERE/'layout/default.ld').read_bytes()
   args=read(folder/'effective-link-args.txt.gz').decode().splitlines();assert '/config/ordered.ld'in args
  return launch
-def verify(skip_runtime=False,materialize=None):
- manifest=load(HERE/'manifest.json')
- actual={p.relative_to(HERE).as_posix()for p in HERE.rglob('*')if p.is_file()and p.name!='manifest.json'and '__pycache__'not in p.parts}
+def check_manifest(folder):
+ manifest=load(folder/'manifest.json')
+ actual={p.relative_to(folder).as_posix()for p in folder.rglob('*')if p.is_file()and p!=folder/'manifest.json'and '__pycache__'not in p.parts}
  assert actual==set(manifest)
- for name,digest in manifest.items():assert not(HERE/name).is_symlink()and sha((HERE/name).read_bytes())==digest,name
+ for name,digest in manifest.items():assert not(folder/name).is_symlink()and sha((folder/name).read_bytes())==digest,name
+ return manifest
+def verify(skip_runtime=False,materialize=None):
+ check_manifest(HERE)
  for name,digest in load(HERE/'external-inputs.json').items():assert sha((ROOT/name).read_bytes())==digest,name
  scope=load(HERE/'scope.json');parent=ROOT/scope['source_parent'];layout_parent=ROOT/scope['layout_parent']
  sources={p.relative_to(parent/'sources').as_posix().removesuffix('.gz'):read(p)for p in(parent/'sources').rglob('*.gz')}

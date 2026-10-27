@@ -51,7 +51,7 @@
   "scope.json": "7fbc1d950d56b7be7712b002cbcbb066f3ef7e66986166dcaa84dcc8ea944dab",
   "source-inputs.json": "d204da559595d88520b3ff046ee6a6288257bb3da019e0b3eb1d7d9458ce6a50",
   "source.patch": "27db5c87fd19f034d6ef82f100f3930c24e2681c284f48876642d195246f76ad",
-  "test_scope.py": "7dd746ba6d12117a86c2dab183f29cf1b30e45ec0a7bd35d334c25c0e0b272ee",
+  "test_scope.py": "e2ade5a4063ed2a26759ac0bf51d750831da038d8d3276f8ffec1298579883ec",
   "validation/control-curve-cases.json.gz": "226cdc59f214433b6b49b049f8261c6697544a1245ac5294b6c36918b24a4473",
   "validation/donation-common-quote-curve-cases.json.gz": "1c73ff05c843fd1200dc16b98254f65526a8ec2d52fbaef2526f34a0f49123f6",
   "validation/donation-common-quote-runtime-execution.json.gz": "7f046d322c06cdd1ba37eeebf4cec947997c6110ef9ed88641be7689a8765cd9",
@@ -59,5 +59,5 @@
   "validation/layout-quote-curve-cases.json.gz": "ded8ee34aaa2c1ac9b3cb8119916f4bcf62c22847767d4dbf44af387dfe244fe",
   "validation/layout-quote-runtime-execution.json.gz": "b535d3c905012c5b86e35303da68545088164bb5b5d3b7a682987fbf5940839e",
   "validation/layout-quote-runtime.json.gz": "6f47df71e32d1aa449cd2d9be637a9187c41409c3c1cf4fc119db24d43d445ba",
-  "verify.py": "1a185b899394bd903964cbb4538dd81b8271f8cabd8a9304d1e2ff23683dbe12"
+  "verify.py": "45634751b02cba8cb60a163aaad9f2aa967b65e203dfa29414f82fd676ab5668"
 }
