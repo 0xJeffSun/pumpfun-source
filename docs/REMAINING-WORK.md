@@ -421,3 +421,17 @@ creation and two sharing dispatches. Both dispatches retain unmatched business
 callees. Continue from the now-pinned 551/585 normalized candidate; do not assume
 older query/log matrices were rerun against it. Whole-file and runtime acceptance
 remain distinct from normalized body recovery.
+
+
+## Mayhem retained Linux helper comparison
+
+The [Linux/Darwin helper comparison](../research/mayhem-linux-helper-comparison/README.md)
+applies the same 118-helper method to both retained v1.54 outputs. Linux resolves
+two type-ID negatives, increasing normalized matches from 106 to 108 and raw
+matches from 18 to 23 with no lost raw range. Both type-ID symbols match both
+40-byte capture ranges; the unique-match count remains 66. Three intrinsic
+bodies gain raw equality solely through call layout, and all 13 direct edges
+reach complete raw-equal callee bodies. Ten helper negatives remain. These are
+static observations of existing artifacts, not a new compiler build or evidence
+of complete program identity; component causality and historical host remain
+unproved. No selected artifact or stopped execution lane changes.
