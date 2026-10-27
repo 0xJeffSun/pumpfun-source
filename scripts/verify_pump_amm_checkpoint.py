@@ -9,10 +9,10 @@ import subprocess
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
-CHECKPOINT = 'repro/pump_amm/structural-tlv-recovery-20261027'
+CHECKPOINT = 'repro/pump_amm/native-fee-cpi-recovery-20261027'
 ARTIFACT = CHECKPOINT + '/results/build/candidate.so'
-CANDIDATE = '5c1e8b18ead27d0b3c1840f37b24ef5044adb65e2a3a566d5be7694ff8737c05'
-MANIFEST = 'e2c125883a298ce9219dd83c5dbdf89a1b585e805b193d2acabdb149ef71d269'
+CANDIDATE = 'a4b978ee1ab15dd822a31bc42e85d55e409f4e777f7af671a3197ea175891101'
+MANIFEST = '636dd30710af283405175d6d0662cdb44cbbe3ca5b3c81426f685f5641778cdd'
 
 
 def sha(path):
@@ -59,7 +59,7 @@ def verify(root=ROOT, runtime=None):
                                results / 'build/unstripped.so', results / 'dependency-proof', root)
     finally:
         sys.path.pop(0)
-    assert bound['total_compiled_inputs_verified'] == 214 and bound['current_source_verified']
+    assert bound['total_compiled_inputs_verified'] == 215 and bound['current_source_verified']
     dependencies = module('selected_amm_dependencies', results / 'dependency-proof/verify.py')
     assert dependencies.verify(results / 'canonical-source', results / 'build/build-comparison.json')['packages'] == 8
     runtime = Path(runtime).resolve()

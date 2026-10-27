@@ -171,7 +171,6 @@ pub fn execute<'info>(
         .checked_sub(creator_fee)
         .and_then(|n| n.checked_sub(protocol_fee))
         .ok_or_else(|| error!(PumpAmmError::Overflow))?;
-    require_gte!(total, limit, PumpAmmError::ExceededSlippage);
     let quote_transfer_fee = quote_transfer_fee(&a.quote_mint.to_account_info(), total, false)?;
     require_gte!(
         total.checked_sub(quote_transfer_fee).ok_or(PumpAmmError::Overflow)?,

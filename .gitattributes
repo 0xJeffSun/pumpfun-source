@@ -1360,3 +1360,4 @@ repro/donation-relay/canonical-exact-selection/build/link.map -whitespace
 # Preserve exact frozen PumpSwap source, patch and compiler receipts.
 repro/pump_amm/structural-tlv-recovery-20261027/results/** -whitespace
 research/amm-parallel-work-20261027/root-and-events/** -whitespace
+repro/pump_amm/native-fee-cpi-recovery-20261027/results/** -whitespace

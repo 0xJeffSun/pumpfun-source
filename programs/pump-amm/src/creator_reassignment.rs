@@ -2,52 +2,9 @@ use crate::*;
 use anchor_lang::Discriminator;
 use anchor_spl::metadata::MetadataAccount;
 pub const FEES_PROGRAM: Pubkey = anchor_lang::solana_program::pubkey!("pfeeUxB6jkeY1Hxd7CsFCAjcbHA9rWtchMGdZ6VojVZ");
-#[derive(AnchorSerialize,AnchorDeserialize,Clone)]pub enum ConfigStatus{Paused,Active}
-#[derive(AnchorSerialize,AnchorDeserialize,Clone)]pub struct Shareholder{pub address:Pubkey,pub share_bps:u16}
-#[derive(AnchorSerialize,AnchorDeserialize,Clone)]pub struct SharingConfig{pub bump:u8,pub version:u8,pub status:ConfigStatus,pub mint:Pubkey,pub admin:Pubkey,pub admin_revoked:bool,pub shareholders:Vec<Shareholder>}
-impl Owner for SharingConfig{fn owner()->Pubkey{FEES_PROGRAM}}
-impl Discriminator for SharingConfig{const DISCRIMINATOR:&'static[u8]=&[216,74,9,0,56,140,93,75];}
-impl AccountSerialize for SharingConfig{}
-impl AccountDeserialize for SharingConfig {
-    fn try_deserialize(buf: &mut &[u8]) -> Result<Self> {
-        if buf.len() < Self::DISCRIMINATOR.len() {
-            return Err(anchor_lang::error::ErrorCode::AccountDiscriminatorNotFound.into());
-        }
-        let given_disc = &buf[..Self::DISCRIMINATOR.len()];
-        if Self::DISCRIMINATOR != given_disc {
-            return Err(error!(anchor_lang::error::ErrorCode::AccountDiscriminatorMismatch)
-                .with_account_name(stringify!(SharingConfig)));
-        }
-        Self::try_deserialize_unchecked(buf)
-    }
-    fn try_deserialize_unchecked(buf: &mut &[u8]) -> Result<Self> {
-        let mut data: &[u8] = &buf[Self::DISCRIMINATOR.len()..];
-        AnchorDeserialize::deserialize(&mut data)
-            .map_err(|_| anchor_lang::error::ErrorCode::AccountDidNotDeserialize.into())
-    }
-}
-#[derive(AnchorSerialize,AnchorDeserialize,Clone)]pub struct BondingCurve{pub virtual_token_reserves:u64,pub virtual_sol_reserves:u64,pub real_token_reserves:u64,pub real_sol_reserves:u64,pub token_total_supply:u64,pub complete:bool,pub creator:Pubkey,pub is_mayhem_mode:bool,pub is_cashback_coin:bool}
-impl Owner for BondingCurve{fn owner()->Pubkey{trade::PUMP}}
-impl Discriminator for BondingCurve{const DISCRIMINATOR:&'static[u8]=&[23,183,248,55,96,216,172,96];}
-impl AccountSerialize for BondingCurve{}
-impl AccountDeserialize for BondingCurve {
-    fn try_deserialize(buf: &mut &[u8]) -> Result<Self> {
-        if buf.len() < Self::DISCRIMINATOR.len() {
-            return Err(anchor_lang::error::ErrorCode::AccountDiscriminatorNotFound.into());
-        }
-        let given_disc = &buf[..Self::DISCRIMINATOR.len()];
-        if Self::DISCRIMINATOR != given_disc {
-            return Err(error!(anchor_lang::error::ErrorCode::AccountDiscriminatorMismatch)
-                .with_account_name(stringify!(BondingCurve)));
-        }
-        Self::try_deserialize_unchecked(buf)
-    }
-    fn try_deserialize_unchecked(buf: &mut &[u8]) -> Result<Self> {
-        let mut data: &[u8] = &buf[Self::DISCRIMINATOR.len()..];
-        AnchorDeserialize::deserialize(&mut data)
-            .map_err(|_| anchor_lang::error::ErrorCode::AccountDidNotDeserialize.into())
-    }
-}
+pub use crate::pump_fees::types::{ConfigStatus, Shareholder};
+pub use crate::pump_fees::accounts::SharingConfig;
+pub use crate::pump::accounts::BondingCurve;
 #[event_cpi]
 #[derive(Accounts)]
 pub struct MigratePoolCoinCreator<'info>{

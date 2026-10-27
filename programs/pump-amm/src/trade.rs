@@ -90,34 +90,10 @@ pub struct SellEvent {
     pub quote_transfer_fee: u64,
 }
 
-#[derive(AnchorSerialize, AnchorDeserialize, Clone)]
-pub struct TradeFees { pub lp_fee_bps: u64, pub protocol_fee_bps: u64, pub creator_fee_bps: u64 }
-#[derive(AnchorSerialize, AnchorDeserialize, Clone)]
-pub struct TradeFeeTier { pub market_cap_lamports_threshold: u128, pub fees: TradeFees }
-#[derive(AnchorSerialize, AnchorDeserialize, Clone)]
-pub struct TradeFeeConfig { pub bump: u8, pub admin: Pubkey, pub flat_fees: TradeFees,
-    pub fee_tiers: Vec<TradeFeeTier>, pub stable_fee_tiers: Vec<TradeFeeTier>, pub exotic_flat_fees: TradeFees }
+pub use crate::pump_fees::types::{Fees as TradeFees, FeeTier as TradeFeeTier};
+pub use crate::pump_fees::accounts::FeeConfig as TradeFeeConfig;
 pub const FEE_OWNER: Pubkey = anchor_lang::solana_program::pubkey!("pfeeUxB6jkeY1Hxd7CsFCAjcbHA9rWtchMGdZ6VojVZ");
 pub const PUMP: Pubkey = anchor_lang::solana_program::pubkey!("6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P");
-impl Owner for TradeFeeConfig { fn owner() -> Pubkey { FEE_OWNER } }
-impl Discriminator for TradeFeeConfig { const DISCRIMINATOR: &'static [u8] = &[143,52,146,187,219,123,76,155]; }
-impl AccountSerialize for TradeFeeConfig {}
-impl AccountDeserialize for TradeFeeConfig {
-    fn try_deserialize(buf: &mut &[u8]) -> Result<Self> {
-        if buf.len() < 8 {
-            return Err(anchor_lang::error::ErrorCode::AccountDiscriminatorNotFound.into());
-        }
-        if &buf[..8] != Self::DISCRIMINATOR {
-            return Err(error!(anchor_lang::error::ErrorCode::AccountDiscriminatorMismatch)
-                .with_account_name("FeeConfig"));
-        }
-        Self::try_deserialize_unchecked(buf)
-    }
-    fn try_deserialize_unchecked(buf: &mut &[u8]) -> Result<Self> {
-        Self::deserialize(&mut &buf[8..])
-            .map_err(|_| anchor_lang::error::ErrorCode::AccountDidNotDeserialize.into())
-    }
-}
 #[derive(Accounts)]
 pub struct TradeV2<'info> {
     #[account(mut, has_one = base_mint @ PumpAmmError::InvalidBaseMint, has_one = quote_mint @ PumpAmmError::InvalidQuoteMint, has_one = pool_base_token_account @ PumpAmmError::InvalidPoolBaseTokenAccount, has_one = pool_quote_token_account @ PumpAmmError::InvalidPoolQuoteTokenAccount)]
