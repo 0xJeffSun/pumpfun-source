@@ -4,6 +4,22 @@ The [full audit](RECONSTRUCTION-AUDIT.md) and its generated tables retain their
 explicit `1463bd22` snapshot. This log records later research without silently
 changing that baseline or promoting new selected artifacts.
 
+## Relay: original security metadata recovered from source
+
+The [security declaration recovery](../repro/donation-relay/security-metadata-source-recovery/README.md)
+adds the ordinary, checksum-pinned `solana-security-txt` macro and the saved
+semantic fields. It recovers the original **510-byte payload**, the missing
+`SECURITY_TXT` export/relocation, and the entire **247-byte `.dynstr` section**
+byte-for-byte. It retains **482/492 normalized windows, 130 raw local matches,
+and all 348 equal source-location pairs**, with no loss. Fresh offline replay
+passes 536 records / 534 unique fixtures under the existing bounded comparator.
+
+The independent native Linux control reproduces the previous candidate exactly.
+The recovered compiler ELF is 818,664 bytes versus the original ELF extent of
+818,280; the full captured allocation is 830,448 bytes including 12,168 trailing
+zero bytes. No allocation padding or binary patch is added. Ten original bodies,
+other section contents and whole-file identity remain unresolved.
+
 ## Relay: donation controls retain the 482-window frontier
 
 The [donation source controls](../repro/donation-relay/donation-source-controls/README.md)
