@@ -230,7 +230,7 @@ See [remaining work](docs/REMAINING-WORK.md),
 | SPL Token | 108,600 / 108,600 captured bytes reproduced (100%) |
 | Token-2022 | 611,056 / 611,056 meaningful ELF bytes reproduced (100%); full 1,382,016-byte allocation requires 770,960 separately added zero bytes |
 | Associated Token Account | 105,032 / 105,032 bytes reproduced (100%) by two non-historical research recipes; authentic recipe and selected promotion unresolved |
-| Metaplex Token Metadata | Latest reviewed inventory: 1,509 differing positions—1,477 text, 30 source-coordinate and 2 relocation bytes; allocation padding assessed separately |
+| Metaplex Token Metadata | Research reproduces all 707,448 meaningful compiler-ELF bytes; an independent local loader replay reproduces the 793,991-byte payload. Maintained selection and historical provenance remain separate. |
 
 [Dependency evidence and selection status](repro/dependency-status.json).
 Allocation-image equality is separate from unchanged compiler-output equality.
