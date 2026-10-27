@@ -19,3 +19,5 @@ python research/main-pump-parallel-checkpoint-20261027/verify.py --extract /tmp/
 ```
 
 Extraction does not execute any included source. `MANIFEST.json` records all 5,201 files and their hashes, plus omitted active/generated files and the snapshot timestamp. Ongoing work after that timestamp remains separate until the next checkpoint.
+
+`REMAINING-WORK.json` assigns all 365 unmatched Round16 windows to three parallel lanes, with initial source attribution and cross-cutting completion requirements. The later update receipts record completed Round16 and creation validation; the original snapshot retains its exact capture-time state.

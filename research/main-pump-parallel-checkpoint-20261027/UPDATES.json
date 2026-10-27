@@ -2,7 +2,7 @@
   "scope": "Latest frozen source updates received while the main snapshot was being verified; not promoted to maintained source.",
   "v3_fee_waiver": "714 cases passed; supersedes earlier686-case control in snapshot.",
   "legacy_v2_fee_waiver": "1151 cases passed including crossing supplement.",
-  "creation": "Final517-case aggregate running at capture; source/build record retained, not claimed as fully validated.",
+  "creation": "Final517-case and515-diagnostic validation passed; REVIEW.json added.",
   "files": {
     "updates/work/parallel-main-v3-fee-waiver/final-source/src/trade_v3.rs": {
       "sha256": "bb19b1b33ceb02dfab605d1475bb2776010a1a0be8b5fde34218d766a5cda945",
@@ -171,6 +171,27 @@
     "updates/work/parallel-main-create-context/build-metadata-program/source/programs/pump/src/create_v2.rs": {
       "sha256": "d6c0e1ea24374f0a098c27370025eb4981cf2137863f5e86c19ac5f3c3098652",
       "bytes": 12300
+    },
+    "updates/work/parallel-main-integration/ROUND16-VERIFIED.json": {
+      "sha256": "4b0d304df15f8d2397e6aa00fade23e583347fa13f78d1230277ef85f80b7dba",
+      "bytes": 559
+    },
+    "updates/work/parallel-main-integration/round16-captured-full.json.gz": {
+      "sha256": "0544734f743e131d788b0d7eff267861b113a8e8deb35b0f6ede23d4231dcb26",
+      "bytes": 13009293
+    },
+    "updates/work/parallel-main-integration/round16-captured-additional.json.gz": {
+      "sha256": "b1daa65e9c931fb07149bb7cb3166fc3a304fe59d22f6ea59a07997439254414",
+      "bytes": 14423305
+    },
+    "updates/work/parallel-main-create-context/REVIEW.json": {
+      "sha256": "3ca15b5a25fe75b93882b3c120b7faec513f45800f079d294565301bff3ffae4",
+      "bytes": 21226
+    },
+    "REMAINING-WORK.json": {
+      "sha256": "1c9aba7668dc2dcaecd61dd1eccf41d1146d60738595822755691914f9ce2dcc",
+      "bytes": 141454
     }
-  }
+  },
+  "round16": "Full44/10468 +78/4584 focus suites passed, clean/cache identical; still research rather than maintained selection."
 }
