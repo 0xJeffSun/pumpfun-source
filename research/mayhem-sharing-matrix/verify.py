@@ -197,7 +197,14 @@ def verify(write=False):
     require(failed['returncode'] == 0 and not any(failed['equals_cargo'].values()), 'failed baseline evidence differs')
     report['failed_replay'] = dict(reason='Wrong working directory; completed compilation failed exact Cargo baseline gate.',
                                    accepted_as_control=False)
-    report['total_rustc_invocations'] = 8 * 163 + 4 + 1
+    wrapper_check = module('sharing_wrapper_check', HERE / 'wrapper_check.py')
+    # Pass this module's helpers without depending on import registration by callers.
+    from types import SimpleNamespace
+    report['wrapper_control'] = wrapper_check.measure(SimpleNamespace(
+        HERE=HERE, raw=raw, read=read, digest=digest, identity=identity,
+        archive_members=previous.archive_members, actual_invocations=actual_invocations))
+    report['retained_primary_compilations'] = 13 * 163 + 4 + 1 + 3
+    report['compilation_count_scope'] = 'Cargo-reported crate compilations plus direct and host-wrapper compilations; auxiliary compiler probes and queries counted separately where wrapper observations exist.'
     if write:
         (HERE / 'findings.json').write_text(json.dumps(report, indent=2) + '\n', encoding='utf8', newline='\n')
         pins = [dict(path=p.relative_to(HERE).as_posix(), **identity(p.read_bytes())) for p in sorted(HERE.rglob('*'))
@@ -213,4 +220,4 @@ if __name__ == '__main__':
     parser.add_argument('--write', action='store_true', help='Regenerate reviewed findings and packet pins')
     report = verify(parser.parse_args().write)
     print(json.dumps(dict(verified=True, builds=len(report['builds']), direct_controls=len(report['direct']),
-                         rustc_invocations=report['total_rustc_invocations'], target_executions=0)))
+                         primary_compilations=report['retained_primary_compilations'], target_executions=0)))

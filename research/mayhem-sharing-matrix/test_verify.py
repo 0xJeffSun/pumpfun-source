@@ -8,6 +8,7 @@ HERE = Path(__file__).resolve().parent
 spec = importlib.util.spec_from_file_location('matrix_verify', HERE / 'verify.py')
 v = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(v)
+w = v.module('wrapper_scope_tests', HERE / 'wrapper_check.py')
 
 
 class ControlScope(unittest.TestCase):
@@ -72,6 +73,51 @@ class ControlScope(unittest.TestCase):
         toggle['command'].append('-Copt-level=0')
         with self.assertRaisesRegex(ValueError, 'other arguments'):
             v.direct_pair(replay, toggle, 'baseline')
+
+    def wrapper_records(self, label='portable-fixed'):
+        return v.read(HERE / 'wrapper-control/builds' / label / 'records.json.gz')
+
+    def test_complete_wrapper_traces(self):
+        for label in ('passthrough', 'omit-repeat', 'portable-fixed'):
+            mode = 'passthrough' if label == 'passthrough' else 'omit-sysvar-no'
+            self.assertEqual(len(w.compile_rows(self.wrapper_records(label), mode)), 163)
+
+    def test_incomplete_wrapper_traces_rejected(self):
+        for label in ('omit', 'portable-omit'):
+            with self.assertRaisesRegex(ValueError, 'compilation cohort'):
+                w.compile_rows(self.wrapper_records(label), 'omit-sysvar-no')
+
+    def test_wrapper_second_argument_change_rejected(self):
+        rows = self.wrapper_records()
+        changed = next(r for r in rows if r['removed'])
+        changed['after'].append('-Copt-level=0')
+        with self.assertRaisesRegex(ValueError, 'additional arguments'):
+            w.compile_rows(rows, 'omit-sysvar-no')
+
+    def test_wrapper_wrong_crate_rejected(self):
+        rows = self.wrapper_records()
+        changed = next(r for r in rows if r['removed'])
+        for key in ('before', 'after'):
+            args = changed[key]; args[args.index('--crate-name') + 1] = 'curve_accounts'
+        with self.assertRaisesRegex(ValueError, 'wrong crate'):
+            w.compile_rows(rows, 'omit-sysvar-no')
+
+    def test_wrapper_duplicate_receipt_rejected(self):
+        rows = self.wrapper_records(); rows.append(rows[0])
+        with self.assertRaisesRegex(ValueError, 'duplicate wrapper record'):
+            w.compile_rows(rows, 'omit-sysvar-no')
+
+    def test_reused_pid_with_distinct_record_id_allowed(self):
+        rows = self.wrapper_records(); rows[1]['pid'] = rows[0]['pid']
+        self.assertNotEqual(rows[1]['record_id'], rows[0]['record_id'])
+        self.assertEqual(len(w.compile_rows(rows, 'omit-sysvar-no')), 163)
+
+    def test_missing_wrapper_compile_rejected(self):
+        rows = self.wrapper_records()
+        row = next(r for r in rows if '--emit=dep-info,metadata,link' in r['before'] and not r['removed'])
+        rows.remove(row)
+        with self.assertRaisesRegex(ValueError, 'compilation cohort'):
+            w.compile_rows(rows, 'omit-sysvar-no')
 
 
 if __name__ == '__main__':

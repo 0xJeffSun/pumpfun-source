@@ -7,8 +7,8 @@
     },
     {
       "path": "build.py",
-      "bytes": 10415,
-      "sha256": "76509e1c6ca6823d4685e0207ff48930e67e7043225243b3ccb001b73e2062e4"
+      "bytes": 12453,
+      "sha256": "6d6416c81cc2e6003a6c3eeced88a024caec7e69f1fefd4331b9e196840665aa"
     },
     {
       "path": "builds/alloc-provider/candidate-v154-strip.so.gz",
@@ -582,8 +582,8 @@
     },
     {
       "path": "findings.json",
-      "bytes": 151516,
-      "sha256": "5eedb6bbcd1ded09fbbe408f39e89418e9854548007f88c4a2e29c0c06be2754"
+      "bytes": 157954,
+      "sha256": "1cb7cc883e6d12e7157e1da855a6332490b0e69371fbae535e592493da2dfcca"
     },
     {
       "path": "inputs.json",
@@ -612,8 +612,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 7226,
-      "sha256": "296a65070cbd261428dd361535b12f5e185c66d0fb9e8a152d57d722544495ce"
+      "bytes": 9720,
+      "sha256": "91f079941753804a2faa066ae72beaa6d84bcbceecee2b009f6aa7351dd7cbef"
     },
     {
       "path": "sdk-components.json.gz",
@@ -957,8 +957,8 @@
     },
     {
       "path": "test_verify.py",
-      "bytes": 3639,
-      "sha256": "0d00643f6160473f8d8c3d86d4faf6a98ca2d5e45914aeac77ee751f9470b886"
+      "bytes": 5973,
+      "sha256": "ada2309fd3e96e884d90c26b39126fb141e95451f49c9f9a4949f04c94f1aa7e"
     },
     {
       "path": "vendor-inputs.json",
@@ -967,8 +967,358 @@
     },
     {
       "path": "verify.py",
-      "bytes": 14541,
-      "sha256": "6cd176cbba658556a1854f7d90620f57b4181b9a16e4c8bc7379b2ea729ce779"
+      "bytes": 15208,
+      "sha256": "3a0b0ef0be5ebefe0a531225e023e7233f237e964fd8531c1194f8f86dd862ab"
+    },
+    {
+      "path": "wrapper-control/builds/omit/candidate-v154-strip.so.gz",
+      "bytes": 158595,
+      "sha256": "e5c2af7fa16637e2d5940c6528f0f657f75f3b4bfef0d9123c4c3bece500930b"
+    },
+    {
+      "path": "wrapper-control/builds/omit/launch.json.gz",
+      "bytes": 4701,
+      "sha256": "43300402edfddc65b8b6951f916a24883ccb751b0746af58cf84db830d285c1e"
+    },
+    {
+      "path": "wrapper-control/builds/omit/libsolana_instructions_sysvar-8ed2238e6ba68942.rlib.gz",
+      "bytes": 12643,
+      "sha256": "4428fd27186c6abdcf09dd1833660fec1474e8464c5341c2c708677580bcfcb9"
+    },
+    {
+      "path": "wrapper-control/builds/omit/records.json.gz",
+      "bytes": 37909,
+      "sha256": "69a949b805994a70a5817b7e0ddd2e9cd2feb2173b7f870381d9fa51d6977327"
+    },
+    {
+      "path": "wrapper-control/builds/omit/result.json.gz",
+      "bytes": 699,
+      "sha256": "b40160e7382c6b2679be3b3cd4fcf04c431cdb81f7c6b18885da29c876877d80"
+    },
+    {
+      "path": "wrapper-control/builds/omit/stderr.log.gz",
+      "bytes": 24954,
+      "sha256": "d5f07cc8e3c74cd45df8bd54c4dae2fb4e58f02bc06dff6f9ff752cbff08c985"
+    },
+    {
+      "path": "wrapper-control/builds/omit/stdout.log.gz",
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    {
+      "path": "wrapper-control/builds/omit/strip.stderr.log.gz",
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    {
+      "path": "wrapper-control/builds/omit/strip.stdout.log.gz",
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    {
+      "path": "wrapper-control/builds/omit/symbols.so.gz",
+      "bytes": 186315,
+      "sha256": "78ca8cc8f99a0b9cb5fd5146a080d60105d93012ac72cdd0a465b75afe7bd8d3"
+    },
+    {
+      "path": "wrapper-control/builds/omit-repeat/candidate-v154-strip.so.gz",
+      "bytes": 158595,
+      "sha256": "e5c2af7fa16637e2d5940c6528f0f657f75f3b4bfef0d9123c4c3bece500930b"
+    },
+    {
+      "path": "wrapper-control/builds/omit-repeat/launch.json.gz",
+      "bytes": 4706,
+      "sha256": "d165d74c16b90d8870d30e539311644df07a72ccd013f87305e98f0b167173d8"
+    },
+    {
+      "path": "wrapper-control/builds/omit-repeat/libsolana_instructions_sysvar-8ed2238e6ba68942.rlib.gz",
+      "bytes": 12634,
+      "sha256": "adc28f73d4cd5af62502531c01222a8e7fba140e59ba1d2af532bd3fd1cfea67"
+    },
+    {
+      "path": "wrapper-control/builds/omit-repeat/records.json.gz",
+      "bytes": 37539,
+      "sha256": "156937eba6ec8397fef22e62a6d2fef895e37c59711600e74faf9905849cde42"
+    },
+    {
+      "path": "wrapper-control/builds/omit-repeat/result.json.gz",
+      "bytes": 706,
+      "sha256": "8be322ac06351fb7d04323eef0d3de3ded15609d1d5f0e272a7fd90f216f80df"
+    },
+    {
+      "path": "wrapper-control/builds/omit-repeat/stderr.log.gz",
+      "bytes": 25390,
+      "sha256": "fbef94ce29505426bec4beabf544fad064085520e9cabcde5be3ea2c40f646ba"
+    },
+    {
+      "path": "wrapper-control/builds/omit-repeat/stdout.log.gz",
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    {
+      "path": "wrapper-control/builds/omit-repeat/strip.stderr.log.gz",
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    {
+      "path": "wrapper-control/builds/omit-repeat/strip.stdout.log.gz",
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    {
+      "path": "wrapper-control/builds/omit-repeat/symbols.so.gz",
+      "bytes": 186315,
+      "sha256": "78ca8cc8f99a0b9cb5fd5146a080d60105d93012ac72cdd0a465b75afe7bd8d3"
+    },
+    {
+      "path": "wrapper-control/builds/passthrough/candidate-v154-strip.so.gz",
+      "bytes": 158595,
+      "sha256": "e5c2af7fa16637e2d5940c6528f0f657f75f3b4bfef0d9123c4c3bece500930b"
+    },
+    {
+      "path": "wrapper-control/builds/passthrough/launch.json.gz",
+      "bytes": 4700,
+      "sha256": "3dffd0dfe1114494f7546be2a31aec730e4e896a3e534e1d8b1325ab007d2d36"
+    },
+    {
+      "path": "wrapper-control/builds/passthrough/libsolana_instructions_sysvar-8ed2238e6ba68942.rlib.gz",
+      "bytes": 12638,
+      "sha256": "aa75e329b431d3528bcddf05c6931c9fe75f8ad409c32a5cc8248ef827a323c8"
+    },
+    {
+      "path": "wrapper-control/builds/passthrough/records.json.gz",
+      "bytes": 38367,
+      "sha256": "0bf8d21838e1bd38c6d18044293a35996079066f012b86285493eae54f106b0b"
+    },
+    {
+      "path": "wrapper-control/builds/passthrough/result.json.gz",
+      "bytes": 706,
+      "sha256": "296317070d261a3bbcdca3971d75787a2e6c7fd01db6dd27ab52aa33047440d7"
+    },
+    {
+      "path": "wrapper-control/builds/passthrough/stderr.log.gz",
+      "bytes": 24734,
+      "sha256": "448aa31bec573ab7dc1337d2a4ae0707d9a0e7d906b8ee6e6b596601992f5893"
+    },
+    {
+      "path": "wrapper-control/builds/passthrough/stdout.log.gz",
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    {
+      "path": "wrapper-control/builds/passthrough/strip.stderr.log.gz",
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    {
+      "path": "wrapper-control/builds/passthrough/strip.stdout.log.gz",
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    {
+      "path": "wrapper-control/builds/passthrough/symbols.so.gz",
+      "bytes": 186315,
+      "sha256": "78ca8cc8f99a0b9cb5fd5146a080d60105d93012ac72cdd0a465b75afe7bd8d3"
+    },
+    {
+      "path": "wrapper-control/builds/portable-fixed/candidate-v154-strip.so.gz",
+      "bytes": 158595,
+      "sha256": "e5c2af7fa16637e2d5940c6528f0f657f75f3b4bfef0d9123c4c3bece500930b"
+    },
+    {
+      "path": "wrapper-control/builds/portable-fixed/launch.json.gz",
+      "bytes": 4946,
+      "sha256": "854d5f43077b8ca0217296fc39c6669bdaa460c4ce6efd48c068bd68c2ab8ea7"
+    },
+    {
+      "path": "wrapper-control/builds/portable-fixed/libsolana_instructions_sysvar-8ed2238e6ba68942.rlib.gz",
+      "bytes": 12633,
+      "sha256": "2d3b283ce6b14e4479dba20c47b088ed3ede0818d73ff02e29fe4cc1ed543928"
+    },
+    {
+      "path": "wrapper-control/builds/portable-fixed/records.json.gz",
+      "bytes": 39447,
+      "sha256": "f928f9498d65c3049ca75dbe24033a1accdfd90b5eadfd35fb35572a53266108"
+    },
+    {
+      "path": "wrapper-control/builds/portable-fixed/result.json.gz",
+      "bytes": 719,
+      "sha256": "9b3d9eaa0a4e0caeecc31fc37ab8fa22238fd0a50f2f839b53f4dadaf84e1940"
+    },
+    {
+      "path": "wrapper-control/builds/portable-fixed/stderr.log.gz",
+      "bytes": 25134,
+      "sha256": "0a43786613f2adde6d6ff77648b7eb04b3c4b572a34f375176b10720e3b092d2"
+    },
+    {
+      "path": "wrapper-control/builds/portable-fixed/stdout.log.gz",
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    {
+      "path": "wrapper-control/builds/portable-fixed/strip.stderr.log.gz",
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    {
+      "path": "wrapper-control/builds/portable-fixed/strip.stdout.log.gz",
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    {
+      "path": "wrapper-control/builds/portable-fixed/symbols.so.gz",
+      "bytes": 186315,
+      "sha256": "78ca8cc8f99a0b9cb5fd5146a080d60105d93012ac72cdd0a465b75afe7bd8d3"
+    },
+    {
+      "path": "wrapper-control/builds/portable-fixed/wrapper-compile-launch.json.gz",
+      "bytes": 417,
+      "sha256": "30bc36e67cde14a6a2723089c7778f04f0caad1ed19923a8bad62046b62cd7f0"
+    },
+    {
+      "path": "wrapper-control/builds/portable-fixed/wrapper-compile-result.json.gz",
+      "bytes": 473,
+      "sha256": "f27552063b554ff97a09e287195be18457ce77bd742d53566db8c21492fe0122"
+    },
+    {
+      "path": "wrapper-control/builds/portable-fixed/wrapper-compile.stderr.log.gz",
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    {
+      "path": "wrapper-control/builds/portable-fixed/wrapper-compile.stdout.log.gz",
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    {
+      "path": "wrapper-control/builds/portable-fixed/wrapper.exe.gz",
+      "bytes": 120245,
+      "sha256": "d3a607c43f851e618dea6a14a3e2c7382fe6c392fd4a67ac1e52f1ece6912c7f"
+    },
+    {
+      "path": "wrapper-control/builds/portable-omit/candidate-v154-strip.so.gz",
+      "bytes": 158595,
+      "sha256": "e5c2af7fa16637e2d5940c6528f0f657f75f3b4bfef0d9123c4c3bece500930b"
+    },
+    {
+      "path": "wrapper-control/builds/portable-omit/launch.json.gz",
+      "bytes": 4947,
+      "sha256": "eed6ed7e7b235d30cb7a23a0ba1d5c07c3938b03c91278194b3e3ba6f11aa6c4"
+    },
+    {
+      "path": "wrapper-control/builds/portable-omit/libsolana_instructions_sysvar-8ed2238e6ba68942.rlib.gz",
+      "bytes": 12638,
+      "sha256": "0d8f6bbae10623271b6b1f1893d939a5d8a45039cb8c9bc660408a5a36ce91c6"
+    },
+    {
+      "path": "wrapper-control/builds/portable-omit/records.json.gz",
+      "bytes": 36964,
+      "sha256": "bf29ae8647c669ae217ec36e2c07f2b7af9c1af45b843a65d42fe95ba319ca0a"
+    },
+    {
+      "path": "wrapper-control/builds/portable-omit/result.json.gz",
+      "bytes": 718,
+      "sha256": "78fda46a971336e2a3006ed66363d886dd43275026d18b2ec33cacbab912da03"
+    },
+    {
+      "path": "wrapper-control/builds/portable-omit/stderr.log.gz",
+      "bytes": 25171,
+      "sha256": "14664005024575579bb333f4e6bf05e4cdf501f1e092dbcf94316d318e8b5292"
+    },
+    {
+      "path": "wrapper-control/builds/portable-omit/stdout.log.gz",
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    {
+      "path": "wrapper-control/builds/portable-omit/strip.stderr.log.gz",
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    {
+      "path": "wrapper-control/builds/portable-omit/strip.stdout.log.gz",
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    {
+      "path": "wrapper-control/builds/portable-omit/symbols.so.gz",
+      "bytes": 186315,
+      "sha256": "78ca8cc8f99a0b9cb5fd5146a080d60105d93012ac72cdd0a465b75afe7bd8d3"
+    },
+    {
+      "path": "wrapper-control/builds/portable-omit/wrapper-compile-launch.json.gz",
+      "bytes": 417,
+      "sha256": "3d666d71e4fbf5b8038e6de5ac4e165d45101e20f15466f134bfe36ae62fc5f2"
+    },
+    {
+      "path": "wrapper-control/builds/portable-omit/wrapper-compile-result.json.gz",
+      "bytes": 473,
+      "sha256": "b8d88a4d5a7ca04b6f36529fe75e9ea5ab8708905507efa701c00f123f93a954"
+    },
+    {
+      "path": "wrapper-control/builds/portable-omit/wrapper-compile.stderr.log.gz",
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    {
+      "path": "wrapper-control/builds/portable-omit/wrapper-compile.stdout.log.gz",
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    {
+      "path": "wrapper-control/builds/portable-omit/wrapper.exe.gz",
+      "bytes": 119751,
+      "sha256": "74aa5adb960a7f3f7374c7d77efd7e9458f25f9f3efe7810d9ae5e015afe62be"
+    },
+    {
+      "path": "wrapper-control/compile-launch.json.gz",
+      "bytes": 931,
+      "sha256": "1480b8a900c4c1f1f8cdec1882bbe50f450b39bfaad58ff46025485257163ade"
+    },
+    {
+      "path": "wrapper-control/compile-result.json.gz",
+      "bytes": 114,
+      "sha256": "258132700712a64deda37525016539fdc138eed36758cb2a1862435ec9833962"
+    },
+    {
+      "path": "wrapper-control/compile.stderr.log.gz",
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    {
+      "path": "wrapper-control/compile.stdout.log.gz",
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    {
+      "path": "wrapper-control/prepare_historical.py",
+      "bytes": 2351,
+      "sha256": "ad2dae6257848b5b73709280286f6eaaaa6c80d2c352d424a934edafbd5aac5e"
+    },
+    {
+      "path": "wrapper-control/validation-notes.json",
+      "bytes": 1441,
+      "sha256": "5118f7d62398463348c7df665c174e3f09b7210cf2dd5a6a78dd89c1b642f120"
+    },
+    {
+      "path": "wrapper-control/wrapper-v1.rs",
+      "bytes": 2112,
+      "sha256": "df6918ed7e873e7714bad80e6f467b3d19c56d90fe56c2ee603d867802807055"
+    },
+    {
+      "path": "wrapper-control/wrapper.exe.gz",
+      "bytes": 119759,
+      "sha256": "90abfe386d38837e49bc4ff7f48b8a8a5332610e46d6339e6eff350b83e5b5db"
+    },
+    {
+      "path": "wrapper-control/wrapper.rs",
+      "bytes": 2594,
+      "sha256": "d176da767077da586138123b34cad79cdf9d03a3bfa769844f07ff5a26200ef4"
+    },
+    {
+      "path": "wrapper_check.py",
+      "bytes": 8950,
+      "sha256": "26fead29cc9a3af7ee165f57f6356fa2166f1f557f1ac6075fc943a7ea02b07c"
     }
   ]
 }
