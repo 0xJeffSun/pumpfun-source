@@ -1,6 +1,6 @@
 # Reconstruction status after exact Relay ELF reproduction
 
-Reviewed evidence revision: `5c1f717918495b8508ff5aefedc6d3219abb3439`.
+Reviewed parent revision: `45f79b7edd4af70e0933183b09287736eb5c340b`; new measurements are bound to the packets below.
 This review updates the research frontier while preserving the selected-checkpoint
 [baseline audit](RECONSTRUCTION-AUDIT.md). The [recomputed inventory](../repro/reconstruction-status-2026-10-26/README.md)
 contains every one of the **4,415 selected/research function-window rows**.
@@ -15,7 +15,7 @@ the opening tables and final integration section give the current frontier.
 
 ## What is actually byte-identical?
 
-**The four core selected programs remain byte-unequal. Relay research now has an
+**The four core selected programs remain byte-unequal. Canonical Relay now has an
 exact meaningful ELF and a separately loader-reproduced captured payload. Its
 linker recipe is reconstructed; no public handler has an exhaustive semantic proof.**
 
@@ -45,11 +45,12 @@ analysis. Candidate symbol names are hypotheses about original identity.
 | PumpSwap selected | 785 | 93 | 395 | 297 | 0 |
 | Fees selected | 585 | 102 | 363 | 120 | 0 |
 | Mayhem selected | 441 | 58 | 131 | 7 | 245 |
-| Relay selected source 15 | 492 | 33 | 89 | 370 | 0 |
-| **Fees latest research** | **585** | **118** | **434** | **33** | **0** |
-| **Relay latest research** | **492** | **492** | **0** | **0** | **0** |
+| Relay historical source 15 | 492 | 33 | 89 | 370 | 0 |
+| **Fees latest research** | **585** | **198** | **379** | **8** | **0** |
+| **Mayhem latest research** | **441** | **70** | **358** | **13** | **0** |
+| **Relay canonical selection** | **492** | **492** | **0** | **0** | **0** |
 
-Each row is a partition, not a score of semantic correctness. Mayhem's source
+The current research rows are bound to the [Fees qualified linker layout](../research/fees-qualified-linker-layout/README.md) and [Mayhem trade-source composition](../research/mayhem-trade-source-origins/README.md); they extend the dated generated inventory below. Each row is a partition, not a score of semantic correctness. The selected Mayhem source
 ledger has 257 opaque windows, 12 of which happen to match local raw bytes.
 Selected Fees retains two call-conflicting rows; body existence does not resolve
 those conflicts. Different programs and studies use different matching rules.
@@ -74,16 +75,18 @@ linker layout is inferred from the capture, not established as historical.
 Fresh bounded replay passes 536 signed records / 534 fixtures. A separate fresh
 912-transaction loader deployment reproduces the entire **830,448-byte captured
 payload**, with 12,168 zero bytes allocated by the loader. Compiler output is
-not padded. ProgramData metadata/history, selected-source promotion and broader
-runtime acceptance remain separate requirements.
+not padded. ProgramData metadata/history and broader runtime acceptance remain separate
+requirements. The source and exact artifact are now canonically selected.
 
-Fees research has **552/585 windows with a normalized counterpart**: 405 unique
-structural pairs and 147 original windows in ambiguous duplicate groups. Its 33
-unmatched windows span **205,216 of 799,648 original text bytes (25.7%)**, although
-they are only 5.6% of the window count. Many remaining bodies are large. The
+The latest [Fees linker composition](../research/fees-qualified-linker-layout/README.md) has **577/585 normalized counterparts**, including 198 raw-local matches. The qualified input-section ordering adds 55 raw-local matches without changing the 46-file Rust source or losing previous body/call evidence. Eight unmatched windows span **80,176 of 799,648 original text bytes (10.0%)**. It retains 430 unique structural pairs, 181 equal Location observations and 3,870 equal direct-callee observations out of 3,877 inspected. The seven remaining unequal direct-callee observations and whole-program data/layout are unresolved. Two native Rust builds agree. Fresh execution passes 17,331 cases across 18 suites, with equal application logs in all 6,413 cases that carry them. These are bounded observations, not whole-ELF identity.
+
+The separately pinned, dated Fees inventory has **558/585 windows with a normalized counterpart**: 411 unique
+structural pairs and 147 original windows in ambiguous duplicate groups. Its 27
+unmatched windows span **189,248 of 799,648 original text bytes (23.7%)**, although
+they are only 4.6% of the window count. Many remaining bodies are large. The
 [current call ledger](../repro/reconstruction-status-2026-10-26/fees-call-attribution.json)
 recomputes 69 additional duplicate-body correspondences on this candidate, for
-474 attributed pairs. There are 78 still-unattributed duplicate windows and 16
+480 attributed pairs. There are 78 still-unattributed duplicate windows and 13
 call edges to different-body frontiers. This refinement adds no body coverage.
 
 There is no defensible single source-completion percentage or ETA. Whole-program
@@ -538,14 +541,13 @@ it does not independently re-decode the transaction instruction/event payloads.
 Those payloads need a separate cross-check before the history is used to close
 field-role claims. The five semantic roles remain unresolved; no field is renamed.
 
-1. **Integrate the exact Relay recipe:** preserve the fresh-build and loader
-   evidence, decide selected-source promotion through the existing guard process,
-   and investigate authentic source/build provenance. The reconstructed layout
+1. **Preserve the canonical exact Relay recipe:** retain the fresh-build and loader
+   evidence and successor guard; investigate authentic source/build provenance. The reconstructed layout
    closes byte identity, not historical provenance or all runtime coverage.
 2. **Close known behavior defects:** Pump `sell_v2` and the ten partial/unaccepted
    selected dispositions above, with bound success/rejection tests. Cover genuine
    CPI callers, ownership and extension/mode combinations before acceptance.
-3. **Continue Fees business/source recovery:** work from all 33 residual addresses,
+3. **Continue Fees business/source recovery:** work from all 31 residual addresses,
    preserve the refreshed duplicate-call attribution, and validate paths not
    exercised by the existing corpus. Normalize only declared relocations/calls.
 4. **Recover Pump/AMM/Mayhem residuals:** preserve opaque and ambiguous states.
@@ -638,3 +640,321 @@ frontier. Independent compilation matches both published hashes; a fresh full
 suite passes all 17,331 comparisons. Current attribution is 405 unique plus 69
 call-attributed pairs (474 total); 78 duplicate windows remain unattributed and
 16 call edges reach different-body frontiers. No Fees whole-file identity is claimed.
+
+## Public instruction module restores the complete buyback wrapper
+
+The [visibility recovery](../research/fees-instruction-visibility/README.md) changes
+only `mod instructions;` to `pub mod instructions;` on the PR #195 source. This
+restores the missing default-bump store and completes the 1,208-byte initializer
+wrapper, original address 650064. All six direct callee bodies match, including
+the parser, business handler and exit. Both root builds are identical; a fresh
+17,331-case suite passes. The source visibility is a sufficient tested cause,
+not proof of historical visibility or a traced compiler-pass explanation.
+
+Current Fees coverage is 553/585, with 406 unique structural pairs and 32 unmatched
+windows. The authorization-helper source variants remain rejected controls; they
+do not close original 234096. Their source-path and signer-load observations
+guide further work without promoting those variants.
+
+## AdminCto integration and residual CPI adapters
+
+The [current AdminCto composition](../research/fees-admin-cto-current-integration/README.md)
+independently integrates PR #200 into the 553-window source and recovers original
+127776 in full. Two root builds agree, all 20 direct callee bodies match, and
+17,331 fresh regression cases pass. No existing normalized or raw match is lost.
+That historical composition reaches 554/585 with 407 unique pairs and 31 unmatched windows.
+
+The separate [CPI ownership controls](../research/fees-cpi-adapter-ownership-controls/README.md)
+recover the observed argument/construction boundaries for 235304 and 236240.
+Each closest body still differs at four unmasked copy displacement bytes. The
+local three-word copy has equal effects and dead temporary-register differences,
+but neither full body is byte-identical. All 13 controls retain their 553-window
+base; 417 bounded sharing-update cases pass on the ordered prototype. These
+controls are not promoted into the current AdminCto artifact.
+
+## Canonical exact Relay selection
+
+[PR #203](../repro/donation-relay/canonical-exact-selection/README.md) installs the
+60-input Rust reconstruction at `programs/donation-relay` and selects the exact
+818,280-byte ELF plus the real-loader 830,448-byte payload. The prior 23-input
+source and selected metadata remain archived and checked as historical evidence.
+The four core source maps and their 107 input pins remain unchanged. The current
+4,415-row inventory now reflects this Relay selection rather than labeling the
+old source-15 artifact current. Historical provenance and exhaustive behavior
+remain unproved.
+
+## Reviewed PR204–206 research additions
+
+The [distribution helpers](../repro/pump_fees/distribution-helper-recovery/README.md)
+close the historical copy residuals for both adapters on the 554-window AdminCto
+baseline: 556 normalized, 409 unique pairs, 118 raw-local, 29 unmatched. All 23
+helper callees and 165 Locations check; a fresh 417-case replay equals the retained
+receipt. The generated inventory now uses this 556 candidate; all 17,331 fresh suite comparisons pass.
+The earlier ownership-control results above are preserved as historical experiments.
+
+The [constant-admin parser proposal](../research/fees-initialize-config-const-admin-source-proposal/README.md)
+passes its source verifier and 13 tests; its older 550-to-551 source-only claim is
+not added to the newer candidate. The [Crank checked-credit packet](../research/fees-crank-lamport-overflow/README.md)
+passes evidence checks and a fresh 76-case differential, reproducing 15 control
+failures and zero proposal failures. Its source must be composed with PR201's flow
+before a current combined runtime or byte claim is made.
+
+## Current 558-window composition
+
+[Independent current-source integration](../research/fees-current-558-integration/README.md)
+adds original encoder 270136 and initializer parser 295800 to the 556 baseline,
+while composing PR201's native-only Crank and PR205's checked credit. Two builds
+agree; the fresh all-dependency baseline matches the preceding published artifact.
+All prior raw/normalized matches,165 Location uses and positive direct-call
+observations survive. All 17,331 regression and 76 boundary cases pass. The304
+strict Crank cases have identical retained non-log fields and application logs;
+all 304 raw logs differ in explicit compute-consumption lines. Whole identity
+and authentic fixed-admin success remain unproved. The inventory is now 558
+normalized,142 raw-local,411 unique pairs,27 unmatched, with 480 attributed pairs.
+
+## Active Mayhem priority
+
+[AMM shared state and source origins](../research/mayhem-amm-source-origins/README.md) is the current research baseline: 198 examined, 188 matched, ten unmatched and 243 opaque windows. The preceding [GlobalParams layout](../repro/mayhem/global-params-layout-recovery/README.md) used a narrower 196-window scope. The [active work plan](MAYHEM-RECONSTRUCTION-PLAN.md) includes the opaque inventory, initializer and whole ELF obligations. [Seven quote-validator controls](../research/mayhem-quote-validator-controls/README.md) preserve every existing match but do not close O0095. This research does not change the canonical selected artifact or certify complete handlers.
+
+## Earlier Mayhem interval correction
+
+The [interval-location packet](../research/mayhem-interval-location-recovery/README.md) changes exactly one compiled data byte, reproducing original state.rs 562:32 while retaining every instruction byte and all body matches. Two root builds agree; 396 fresh Sell cases and 792 independently verified signatures pass. Three non-compute log differences remain. The [follow-up controls](../research/mayhem-quote-validator-followups/README.md) add no complete O0095 match; the eight-body and opaque remainders remain.
+
+## Mayhem Sell baseline validation
+
+[Sell source-origin recovery](../research/mayhem-sell-origin-recovery/README.md) builds twice to the same artifact. It passes 396 fresh Sell cases with equality of every non-compute log line, 1,032 admin cases, and three sequential Burn families. All 2,868 signatures and 624 successful admin account-byte outcomes verify independently. The [441-window inventory](../research/mayhem-sell-origin-recovery/functions.tsv) retains 188 matching examined bodies, eight unmatched bodies and 245 opaque windows. The new source fixes the earlier diagnostic differences, not full body or whole-file identity.
+
+## Mayhem trade attribution and AMM controls
+
+The [wrapper audit](../research/mayhem-trade-wrapper-attribution/README.md)
+verifies the six trade handler names from deployed instruction log literals and
+direct calls. O0077/O0079 are PumpSwap Buy/Sell; O0081/O0082 are legacy Buy/Sell;
+O0083/O0084 are V2 Buy/Sell. Two source controls retain the 188 known normalized
+and 58 all-inventory raw-local matches. The refined AMM Buy control passes 1,257
+fresh comparisons and 2,514 signatures, including rejection-only Token-2022
+coverage. Neither it nor its 1,104-byte helper matches the complete original body.
+At that checkpoint these controls did not replace the Sell-origin baseline or
+change its eight admitted gaps and 245 opaque windows. The expanded current
+research scope is recorded below; ELF identity is still unresolved.
+
+## Mayhem current research: shared AMM state and source origins
+
+The [latest packet](../research/mayhem-amm-source-origins/README.md) preserves
+188 normalized matches and admits two previously opaque helpers for explicit
+comparison: 198 examined, ten unmatched and 243 opaque. Its complete ledger has
+46 examined raw-local matches, 142 normalized-only matches and twelve additional
+opaque raw-local matches. This scope expansion adds no complete-body gain or loss.
+
+Two 16-input root builds agree. Fresh 1,257 AMM Buy and 396 legacy Sell comparisons
+have equal non-compute logs; 1,032 admin cases and three Burn families also pass.
+All 5,382 signatures verify, and 624 admin account results are reconstructed.
+Token-2022 AMM cases cover rejection paths only. Whole Mayhem identity remains
+false, and this research packet does not change canonical source/checkpoints.
+
+## Complete Mayhem static scan
+
+The [full-window audit](../research/mayhem-full-window-audit/README.md) removes
+the prior scope limit for mechanical byte comparison: all 441 windows and
+706,744 text bytes are covered. It finds 58 raw-local matches, 269 normalized-only
+matches and 114 unmatched extents totaling 495,936 bytes. There is no new compiled
+recovery in this count: the 243 rows outside the prior interpreted cohort already
+contain 139 structural matches and 104 unmatched windows.
+
+234 matched windows have a unique candidate; 93 have ambiguous counterparts.
+Among unique pairs, 27 have at least one different direct-callee shape and 138
+have unresolved referenced-data extents. Source attribution, interface semantics
+and transitive call/data closure remain separate obligations. The earlier
+198-window/188-match cohort is retained, not relabelled as semantic completion.
+Root-only MIR levels 0, 1 and 3 do not recover the missing accounting/quote bodies
+and are not promoted. The current candidate and runtime claims are unchanged.
+
+## Current Mayhem source: native Program parser recovery
+
+The [new packet](../research/mayhem-native-program-recovery/README.md) restores
+the captured unconditional program-ID check through a checksum-bound Anchor
+source variant and standard Program account fields. It adds fourteen complete
+normalized bodies (145,720 original text bytes), including all six trade account
+parsers and Burn's parser, with no loss of earlier matches. The complete scan is
+now 58 raw-local / 283 normalized-only / 100 unmatched windows, with 350,216
+unmatched text bytes. The explicit source cohort is 212 windows: 202 matching,
+ten unmatched and 229 without complete source attribution.
+
+Two root builds agree. All 6,636 trade comparisons, 1,032 admin cases and three
+Burn families pass; 15,348 signatures and 624 complete admin account results
+verify independently. Five newly matched bodies retain an unmatched direct
+callee, and data/transitive closure is unproved. Initializer runtime is excluded.
+The canonical selected checkpoint is unchanged; whole Mayhem equality is false.
+
+## BuyV2 validator composition on the parser-recovery source
+
+The [follow-up packet](../research/mayhem-native-buy-v2-validation/README.md)
+keeps all 54 source/vendor inputs except BuyV2's duplicated trade-validation
+block. The restored call targets the complete O0094 counterpart and its nine
+ordered callees. All 341 window matches remain; no new complete body match is
+claimed. Two builds agree and 1,839 fresh comparisons pass. The checker verifies
+7,356 before/after signature entries, including 3,678 fresh candidate entries.
+Non-compute log differences remain in 118 cases, reduced from 130. Other runtime
+lanes retain the parser-recovery parent hash and were not rerun for this change.
+
+## Current Mayhem source: complete external curve and boxed helpers
+
+The [full curve recovery](../research/mayhem-full-curve-recovery/README.md)
+replaces the abbreviated four-reserve representation with the complete external
+curve. Four more complete normalized windows match: the two 424-byte boxed
+account helpers, a 136-byte account parser and a 656-byte allocation helper.
+All previous matches remain. The full scan is 59 raw-local / 286 normalized-only /
+96 unmatched windows, totaling 348,576 unmatched text bytes. The extra raw-local
+match is a previously normalized string helper whose call displacement now agrees.
+
+All four immediate callees in each boxed helper match. Their account parser still
+reaches an unmatched decoder at 26272; checked/unchecked decoding and padding
+bodies remain unequal. Two builds explicitly recompile vendored Anchor and agree.
+Fresh runtime passes all 6,636 trade comparisons, 1,032 admin cases and 12 Burn
+transactions; 15,348 signatures verify. No initializer, whole-ELF or exhaustive
+semantic completion is claimed. The interpreted source cohort is 216 windows,
+with 206 matched, ten unmatched and 225 remaining without full source attribution.
+
+## Parallel Mayhem source checkpoint
+
+The [parallel recovery](../research/mayhem-parallel-recovery/README.md) composes
+30 additional normalized windows: serializers and decoders, account parsers,
+withdraw/pause methods, post-sell accounting, initialization closures, the Burn
+body, CPI error adapters and used Pump V2 interface builders. It retains all
+previous matches and reaches 375/441 (59 raw-local, 316 normalized-only), leaving
+66 windows and 268,000 text bytes unmatched. All immediate callee shapes match
+for 28 of the new windows; two account conversion helpers retain unmatched
+decoder callees. Data and transitive closure remain separate obligations.
+
+Two builds agree. Fresh standard regression passes 6,636 trade comparisons,
+1,032 admin cases, 1,601 extra fee/sweep/withdrawal cases and 12 Burn transactions.
+The expanded targeted sweep-rate matrix has 34 known differences in 150 cases;
+the earlier zero-rate fixtures did not establish that missing behavior. Its
+signed evidence is retained and a separate corrective candidate is being
+validated. Do not call the current checkpoint semantically complete.
+
+All remaining windows and the whole-ELF/data/toolchain tasks are assigned in the
+[parallel work map](MAYHEM-PARALLEL-WORK.md). The active lanes continue after this
+checkpoint; their subsequent uncomposed candidates are not silently added here.
+
+
+## Historical Mayhem composition: 411 matching windows
+
+The [composed packet](../research/mayhem-composed-recovery/README.md) adds 36
+complete normalized windows to the published 375-window checkpoint, preserving
+all prior raw matches and positive direct-call observations. It has 59 raw-local,
+352 normalized-only and 30 unmatched windows. The remaining windows span
+155,520 / 706,744 original text bytes (22.0%). No whole-file equality is claimed.
+
+The gains cover external account codecs/owners, global-update arguments and
+helper, fee-recipient parser and ATA closure, six trade exits, the complete
+SellEvent routine, five initializer-related bodies, both AMM interfaces and the
+used BuyV2 serializer. Of the 36 gains, 34 have all immediate callee shapes equal;
+the initializer drop/dispatch still call three unmatched destinations. The 301
+unique counterparts contain 13 differing direct-callee observations overall.
+
+Fresh original/candidate execution passes all 6,636 trade comparisons, 1,032 admin
+cases, 1,601 extra fee/sweep/withdrawal cases, three two-step Burn families and a
+150-case sweep-rate matrix. The latter retains 34 parent failures and zero on
+the composition. Initializer coverage adds 53 signed rejection cases and 16
+real captured-Pump CPI cases with ten successes; this is bounded research
+coverage, not promotion of the selected checkpoint or exhaustive acceptance.
+
+Data work remains substantial. The 26 account gains have 156 reference
+observations: 34 typed-equal, 63 typed-different and 59 unresolved. Seven interface
+bodies retain two differing SDK Source paths out of 48 records. Formatter vtables
+select two nonmatching String implementations even though matching alternatives
+exist elsewhere in the candidate. These failures are part of the verified report.
+The [parallel work map](MAYHEM-PARALLEL-WORK.md) assigns all 30 remaining windows.
+
+
+## Earlier Mayhem source/data recovery: 426 matching windows
+
+The [successor packet](../research/mayhem-source-data-recovery/README.md) has
+70 raw-local matches, 356 normalized-only matches and 15 unmatched windows.
+The remaining bodies span 119,400 / 706,744 original text bytes (16.9%); whole
+ELF and capture equality remain false. Fifteen new complete counterparts cover
+36,120 bytes and preserve all earlier bodies and positive direct-call observations.
+The new bodies cover typed Buy/BuyV2 interfaces, initialization, native token
+helpers and two TypeId thunks. This does not certify whole public handlers.
+
+A mixed recipe using the unchanged macOS compiler and Linux SBF libraries
+repairs platform Source paths and metadata. All 26 target files were checked
+against their members of the pinned official archive. Two builds agree; no
+output is patched or padded. The actual V2 interface shares a crate with the
+external account types, so both formatting vtables select the matching methods.
+The earlier account cohort now has 97 typed-equal references, 0 typed-different,
+and 59 unresolved. Fifty interface Source records and nineteen Buy/global-init
+references agree. Other unexamined data extents and indirect paths remain work.
+
+Fresh signed execution covers the standard 6,636 trade / 1,032 admin / 1,601 extra
+suites and three Burn families. The 150-case rate matrix retains 34 failures on
+the old 375 candidate and none on the successor. The 48-case counter matrix
+retains 10 failures on 411 and none on the successor; its independent per-recipient
+oracle and exact non-compute logs pass. Initializer coverage adds 53 rejections,
+16 real Pump CPI cases (10 successes), 2 token-program negatives, and 6 global-init
+cases (2 successes). The 692-case ordinary sweep corpus still has 58 non-compute log
+differences. Full records and the diagnostic ledger preserve these distinctions.
+
+The [AMM sell-call successor](../research/mayhem-sell-quote-call-recovery/README.md)
+retains the same inventory and restores the actual shared quote call. Two
+builds agree; all fourteen trade suites (6,636 cases) were freshly rerun. All
+1,239 AMM sell cases now agree on non-compute logs, repairing eight differences.
+The O0093 helper's ten callee and ten typed-data observations agree as multisets,
+but its body remains 1,096 versus 1,120 bytes. This is partial recovery, not a
+perfect function or a new normalized match. Parent admin/Burn/initializer/sweep
+receipts are not rebound to the new candidate.
+
+The [account-data refinement](../research/mayhem-account-data-extents/README.md)
+then bounds 56 of the 59 unknown references on that unchanged candidate. The
+156-reference cohort now has 153 typed-equal, zero typed-different and three
+unresolved references. These comparisons use explicit read lengths, slice
+fields, consumer loads and vtable/code targets. They preserve the initializer's
+known nonmatching callee and do not claim raw relocated addresses or all-program
+data equality. No new compilation or target execution is needed for this audit.
+
+The [final account-cohort refinement](../research/mayhem-account-cohort-complete/README.md)
+subsequently resolves those three references. A repeated SBF-target ABI probe
+identifies the 24-byte tagged I/O error and the 32-byte empty hash-table header
+used in a 48-byte set. All 156 cohort observations are typed-equal. The former
+formatting-prefix interpretation of the header is corrected. The program
+artifact, the known nonmatching initializer callee and broader data/ELF scope
+are unchanged.
+
+The separate [O0073 layout control](../research/mayhem-sweep-branch-layout/README.md)
+reproduces all 22 blocks, eleven typed data references and the branch-free tail
+to the `abort` import. Directed-edge correspondence uses that stated terminal
+ABI. The body still differs in 19 instruction slots from block placement;
+whole-window equality is false. Two builds agree and 150 fresh sweep cases
+retain equal checked fields and non-compute logs. This earlier-checkpoint
+experiment is not promoted over the subsequent source/data packets.
+
+## Latest Mayhem accounting and ExtendAccount recovery: 428 matching windows
+
+The [combined source and evidence](../research/mayhem-accounting-extend-recovery/README.md)
+adds full normalized O0072 ExtendAccount and O0090 shared buy-accounting bodies,
+with 6,816 original text bytes newly covered. All 70 raw-local and 426 earlier
+normalized matches survive, as do prior positive direct-call and Source profiles.
+The partition is 70 raw-local, 358 normalized-only and 13 unmatched windows.
+The unmatched windows contain 112,584 of 706,744 original text bytes (15.9%).
+
+Two clean root compilations agree. The exact artifact passes 6,636 fresh trade
+comparisons and 301 ExtendAccount cases; all 13,874 signed transaction records
+are verified. The 21 earlier trade diagnostic differences remain and no new
+ones appear. There are bounded proofs for all immediate callees/data operands
+of the two newly matched bodies and the restored AMM native transfer helper.
+This remains a mixed-SDK research artifact with unequal complete ELF bytes.
+The separately reviewed native retained-reserve artifact has 426 normalized
+matches, 71 raw-local bodies and seven trade diagnostic differences; those
+results are not added to or relabeled as this combined artifact's results.
+
+## Current Mayhem trade-source composition
+
+The [six-file successor](../research/mayhem-trade-source-origins/README.md)
+keeps the same 428/441 normalized matches, 70 raw-local bodies and thirteen
+unmatched windows. It composes the retained-reserve repair into this source and
+restores two AMM Sell Source origins. Fresh replay passes 6,636 comparisons and
+13,272 signed transaction records; fourteen diagnostic cases are repaired and
+seven remain. Two builds agree. The five restored Source observations are
+bounded through actual handlers; the AMM Sell subtraction-panic branches remain
+unexecuted by the current corpus. Earlier ExtendAccount, initializer and other
+non-trade receipts retain their parent-artifact bindings.

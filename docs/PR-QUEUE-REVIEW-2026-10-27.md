@@ -1,6 +1,6 @@
 # PR queue review — 27 October 2026
 
-Reviewed PRs #170–#196 as a combined merge tree based on `ba7883511942965c5c9def03971bdaff84963d6b`. Selected program sources, captures, scripts and workflows are unchanged. Overlapping append-only progress-log additions were preserved during local conflict resolution.
+Reviewed PRs #170–#203 as a combined merge tree based on `ba7883511942965c5c9def03971bdaff84963d6b`. Through #202, selected program sources and workflows were unchanged. #203 explicitly promotes Relay and changes its guard entrypoints; the four core source maps, captures and scripts remain preserved. Overlapping append-only progress-log additions were preserved during local conflict resolution.
 
 | PR | Reviewed change | Verification and scope |
 | --- | --- | --- |
@@ -33,6 +33,18 @@ Reviewed PRs #170–#196 as a combined merge tree based on `ba7883511942965c5c9d
 | [#195](https://github.com/lalalune/pumpfun-source/pull/195) | Fees full-account prefix integration | Verifier and five mutation tests pass; independent native build matches both hashes. Fresh 17,331-case suite passes. Current frontier: 552 normalized, 118 raw-local, 405 unique, 33 unmatched. |
 | [#196](https://github.com/lalalune/pumpfun-source/pull/196) | Relay access-control layout and allocation provenance | All nine evidence verifiers and five negative tests pass; 536 signed records revalidated, all 13 retained loader transactions decoded, and 912 local signed loader transactions freshly replayed. Default-link variant reaches 376 raw-local windows; selected sources remain unchanged. |
 
+| [#197](https://github.com/lalalune/pumpfun-source/pull/197) | Source-only Fees union and Crank diagnostic correction | Source integrity/materialization and all nine tests pass. The safe-materialization test requires a non-symlink temporary directory. Three source stages and reported 545/550/550 measurements remain separate from the later artifact-backed frontier; no optional compiler or runtime verification is claimed in this review. |
+
+| [#198](https://github.com/lalalune/pumpfun-source/pull/198) | Source-only exact Relay ELF/linker recipe | Default verifier, all 12 tests and 60-input materialization pass. Optional literal comparison against the retained fresh exact build passes. All 492 selectors resolve uniquely to the same ordered object sections as that build; the allocator selector is safely generalized. No new compilation or VM run was needed in this review. Its allocation helper constructs a separate zero-filled image; the earlier artifact packet supplies the distinct real-loader execution evidence. |
+
+| [#199](https://github.com/lalalune/pumpfun-source/pull/199) | Unique Relay reference correspondence | Regenerated graph/certificate and all 18 tests pass. The declared positional graph forces 492 singleton pairs matching the retained linker solution. This is graph-scoped uniqueness, not historical source or indirect-behavior proof. |
+| [#200](https://github.com/lalalune/pumpfun-source/pull/200) | Included AdminCto business source | Source verifier and 13 tests pass. Subsequent independent composition onto the actual current source reaches 554 windows with two identical builds and 17,331 passing cases; the PR's original source-only 547→548 result retains its own scope. |
+
+| [#201](https://github.com/lalalune/pumpfun-source/pull/201) | Crank native-only flow and strict observations | Verifier, six mutation tests and saved-signature checker pass. Fresh 304-case replay exactly reproduces the retained receipt: 292 raw-equal cases, 12 failures limited to compute-log lines; every application/nonlog field agrees. Separate 552-window candidate; not promoted into the current 554-window composition. |
+| [#202](https://github.com/lalalune/pumpfun-source/pull/202) | Public instruction-module source proposal | Source verifier and all 13 tests pass. Its 545→546 parent-specific claim is separate from the independently artifact-backed 553-window visibility recovery already integrated here; no additional current-window gain is counted. |
+
+| [#203](https://github.com/lalalune/pumpfun-source/pull/203) | Canonical exact Relay source and successor guard | Replaces the canonical Relay source with the 60-input exact recipe and archives the prior 23-input source. Review fixes author-checkout-dependent mount validation, adds portable-locator/read-only/critical-code controls, and updates the current inventory to the canonical selection. Current/historical guards, saved signatures, fresh loader and independent native build are verified in the review evidence. |
+
 The checked PR head SHAs are listed in the Git merge parents. No complete-program identity or exhaustive semantic correctness follows from merging these research packets. The generated inventory remains pinned to its declared Fees and artifact-backed Relay candidates; alternative source proposals are not silently combined.
 
 ## Review checks
@@ -52,3 +64,350 @@ loader-created capture payload. Two real builds, a fresh isolated dependency
 build, 536 bounded signed records and 912 fresh loader transactions support this
 result. This is an explicitly reconstructed layout, not historical build proof.
 The four core selected programs remain byte-unequal.
+
+## Additional PR204–206 review
+
+| PR | Scope | Review result |
+| --- | --- | --- |
+| [#204](https://github.com/lalalune/pumpfun-source/pull/204) | Constant Pubkey initializer boundary | Source verifier and all 13 tests pass; exact one-file source delta reviewed. The 550→551 observation is source-only and not composed onto later frontiers. |
+| [#205](https://github.com/lalalune/pumpfun-source/pull/205) | Checked Crank destination credit | Saved-evidence verifier passes. Fresh 76-case replay equals the saved JSON exactly: 15 control errors, zero proposal errors. PR201 follow-up preserves the native-only flow; no combined candidate claimed. |
+| [#206](https://github.com/lalalune/pumpfun-source/pull/206) | Complete legacy/V2 distribution helpers | Full verifier and five negative controls pass. All three source maps differ only in sharing_update.rs. Fresh 417-case replay equals the saved JSON exactly; 556 normalized, 118 raw-local, 409 unique pairs, 29 unmatched. |
+
+These additions retain their own immutable baselines. README and remaining-work
+notes distinguish the newest 556-window research candidate from the generated
+554-window pinned inventory. Additive progress-log conflicts were resolved by
+retaining both entries. PR203's rebased head adds no source changes to the tested
+canonical Relay; the reviewed portable guard is retained.
+
+## PR207: typed Relay donation encoder
+
+The full verifier and all five negative controls pass. Fresh execution of all
+357 donation-Crank cases matches the retained JSON exactly, including the 159
+cases reaching the real captured Relay CPI. Ordinary public module visibility
+retains the borrowed typed encoder and its real caller; nine direct callee
+bodies and all 165 Locations match. The new candidate reaches 557 normalized
+windows, 118 raw-local, and 410 unique pairs without losses. The Crank caller
+and whole ELF remain unmatched. The current 556 inventory is not silently
+changed by this additive packet. Progress-log conflicts retain both entries.
+
+## PR208–210 review
+
+| PR | Evidence reviewed | Result |
+| --- | --- | --- |
+| #208 | Mayhem alloc type-ID provenance | Verifier and all 16 tests pass; two existing ranges traced to retained library objects. Full publisher archive membership was not rerun during this review. No new body coverage or execution claimed. |
+| #209 | Source-only six-body Fees union | Source verifier and all 13 tests pass; 42→43 input map and seven overrides. Added three exact package-local whitespace rules with literal verification; compiler input bytes unchanged. The reported 558 count is an independent older-baseline source proposal. |
+| #210 | AMM buyback helper | Full artifact/source/window/location/saved-signature verifier and all five resealed negative controls pass. 489 normalized windows, 93 raw, 296 unmatched; 53 Locations and 3,172 signed submissions per retained build. No fresh compiler or VM execution claimed by this review. |
+
+The #209 proposal does not contain #201's native lifetimes or #206's helper
+recoveries. Its count is not added to the current independently compiled union.
+#210 retains explicit synthetic source-line layout and root path mappings,
+not a historical recipe claim. Its publication wording was corrected;
+artifact and source bytes are unchanged.
+
+## PR211–213 review
+
+- PR211: full verifier and ten mutation tests pass; 804 saved signatures verify.
+  Six Mayhem helper gains are distinguished from one newly admitted existing
+  match. Full handlers and four Sell log discrepancies remain unresolved.
+- PR212: source verifier and thirteen tests pass on its exact 43-input parent.
+  Two literal package-local whitespace rules preserve the source and patch.
+  Its exotic-body gain is not added to the independent current558 composition.
+- PR213: full body/callee/data verifier and five mutation checks pass. Retained
+  417 plus24 cases remain bound to its independent557 parent; the22 completed-
+  curve cases exercise the new branch, while two incomplete-curve controls
+  retain downstream log differences. No fresh VM run is claimed in this review.
+
+The remaining-account helper's public ownership/borrow reconstruction is
+recorded separately; all three source counts retain their declared baselines.
+
+## PR214: Mayhem GlobalParams layout
+
+The full verifier and fourteen mutation tests pass, including independent
+verification of 2,868 saved signatures and complete expected account bytes for
+624 successful transport/update/reset cases. Four complete helper matches are
+added; the quote-aware validator remains explicitly unmatched. The latest
+research scope is196 admitted /188 matched /8 unmatched and245 opaque windows;
+twelve raw-equal opaque windows remain semantically opaque. Four Sell log
+differences and all full trade-handler gaps remain. No canonical promotion or
+fresh VM execution is claimed by this review.
+
+## PR215: legacy Social claim source semantics
+
+The source verifier and all thirteen tests pass. Review preserves two exact
+package-local whitespace rules without changing compiler inputs. The claimed
+348-case correction and 559-window parent remain explicitly unpublished
+execution observations, not newly verified runtime evidence. This source-only
+proposal does not alter the current 558-window artifact-backed Fees inventory.
+Mayhem remains the active reconstruction priority.
+
+## PR216–217 review
+
+- PR216: full verifier and three resealed negative controls pass. The 563-window Fees composition preserves both declared parents and adds a complete 1,688-byte caller; its preparation callee remains unequal. Saved 17,331 plus 24-case receipts are checked, with no new compiler/VM execution claimed in this review. It remains separate from the currently pinned research inventory.
+- PR217: the controlled Mayhem sysroot verifier and all 21 tests pass. The saved experiment holds the Windows compiler fixed while replacing the complete target library set. It adds provenance evidence, not new body ranges. Full publisher archives were not rechecked in this review, and no fresh compilation is claimed.
+
+## PR216 updated head: shared authorization
+
+The updated head also retains a complete 1,208-byte authorization helper, with
+nine direct callee bodies and eleven directly referenced objects checked. Both
+packet verifiers and the new three negative controls pass. The independent
+Fees composition reaches 564 normalized windows, 143 raw-local matches and
+168 Location observations. These counts belong to that packet; the pinned
+research inventory is unchanged while Mayhem remains the active priority.
+
+## PR218: sharing-parser source integration
+
+The source verifier and all thirteen tests pass. Review preserves patch context
+with a single literal package-local whitespace rule. The two parser gains and
+attributed distribution-helper composition remain an independent 563-window
+source proposal; no new compiler or runtime execution is claimed by this review.
+It is not combined with the other 563/564-window branch or the pinned inventory.
+
+## PR219: native payout arithmetic
+
+Merged as `427ddc0783ff306ee26eb66f2586ed637379b00c`. Review checked the three
+source changes and saved build/regression evidence, then independently reran
+all 119 focused cases: 38 baseline mismatches, zero proposal mismatches. Overflow
+rollback and V2 native no-op diagnostics are covered. The packet reports 17,331
+saved regression comparisons and preserves 559 normalized / 143 raw-local
+counterparts; no new complete body is claimed. This review did not rerun that
+full suite or compile the candidate. The separate Fees proposal does not replace
+the pinned inventory. GitHub confirms the PR is merged.
+
+## PR220: composed Fees transfer frontier
+
+Reviewed head `944e06e79e0d3018a1003b27ddb9119a7462ce95`. The verifier recomputes
+569 normalized matches, 143 raw-local matches, 168 Location observations and all
+33 direct callee shapes for the three new transfer bodies. It checks the native
+payout and parser composition plus saved 17,331 + 119 + 8 + 24 comparisons. All
+four negative controls pass, and eight fresh quote-owner replays pass. No fresh
+compiler or full 17,331-case execution is claimed by this review.
+
+Another process merged the same reviewed head as
+`3dc06e669571ed12290339df96f08866fca43eb0` while review was running. The published
+tree was verified identical to the local reviewed merge. This independent Fees
+frontier does not silently replace the pinned inventory or change the Mayhem
+priority.
+
+## PR221: history-independent Relay source authentication
+
+The source loader verifies the unchanged historical manifest, complete package
+membership, all three 60-input source maps and both patches without Git or
+network access. Review found macOS temporary fixtures traversed the `/var`
+symlink; the tests now resolve their temporary roots, while the loader's strict
+symlink checks remain intact. All ten tests pass, including an actual shallow
+fixture and a no-subprocess export. The archived linked-ELF verifier also passes
+locally; this is saved-evidence verification, not a new build or target run.
+
+The merge preserves the current Mayhem documentation and governance hashes,
+regenerates dependency seals, and leaves historical sources, artifacts and
+runtime receipts unchanged. Hosted CI remains a separate check.
+
+## PR222: complete Fees V2 transfer adapter
+
+Reviewed head `0e8fa80aa560862bb8d2ed1df6e48add8271959b` and merged as
+`350db1c8`. The verifier checks the full 3,096-byte body, thirteen direct callee
+shapes and the complete System ID, preserving the parent frontier and all saved
+17,331 + 119 + 8 + 24 comparisons. All three negative controls pass. No fresh
+compiler or target execution is claimed by this review. The separate Fees
+candidate reaches 570 normalized windows and retains 143 raw-local matches;
+Mayhem remains the active reconstruction priority.
+
+## PR223: native Windows baseline provenance
+
+Merged as `5905229cd0859e8a423eae39ea8867242382a98b`. Review passed the source/
+artifact verifier and all seventeen tests. All 215 publisher crate archives were
+also independently rehashed, with their complete vendor checksum maps regenerated;
+local Windows SDK files and the provisioned vendor tree were not rechecked.
+No fresh Windows compiler or target execution was performed during review.
+
+This is an independent control of the old fifteen-input PR214 source, preserving
+188 examined and 327 all-window matches. It does not replace the new 341-window
+native Program source or add recoveries. Its 720-byte text-size difference is
+explained by two duplicate function-shape counts, not proved to be a historical
+linker decision. Whole original identity remains unproved.
+
+## PR224: SweepBuyback source-only proposal
+
+Merged as `aafcc037`. The source verifier, all fourteen source tests (including
+an added narrow-whitespace check), and exact 43-input materialization pass.
+Review preserves the literal reversible patch with a package-local attribute;
+no source input or source patch bytes were changed. The proposal retains its
+explicit false native-build/runtime/whole-identity claims. Unpublished local
+execution claims are not acceptance evidence for this review, and PR219's
+independently published destination arithmetic fix keeps its prior credit.
+
+## PR225: legacy update caller and finishing helper
+
+Merged as `ed5ac169e01c2542a4c1305f7e3a9ba160b54ed5` after marking the reviewed
+draft ready. The complete verifier and all three negative controls pass. The
+packet binds two complete normalized bodies (5,672 and 5,640 bytes), 59 direct
+callee shapes and all 40 direct data references; the independent Fees frontier
+reaches 572/585 with 143 raw-local matches. This review does not rerun the full
+saved 17,331-case suite or compile a new artifact.
+
+Sixteen fresh legacy-update comparisons match errors, accounts, CPI, return
+values and events. Fourteen also have identical application logs. Two retain
+the parent's existing remaining-account source-location difference (original
+update_fee_shares.rs:186 versus candidate sharing_update.rs:230); neither is a
+new regression. The merged packet's files were verified identical to the
+reviewed head. Canonical selected checkpoints remain unchanged.
+
+## PR226: BuyV2 shared trade validation
+
+Reviewed head `8a6c43c0f15544a9a610ef13d1bcd0f64eae120b` and merged as `c8db7e2b`
+after marking the draft ready. The packet verifier confirms the original wrapper,
+restored call, matched 1,192-byte validator and its nine ordered callees. It
+independently verifies 7,356 signature entries and the 24-case diagnostic probe.
+The Linux fifteen-input candidate retains its separate hashes and raw count;
+its measurements are not treated as a tested composition with the newer source.
+
+A separate follow-up now builds and tests the change on the native Program
+source, preserving the existing fourteen parser gains. Its bounded result and
+remaining 118 diagnostic differences are recorded in that follow-up packet.
+
+## PR227: V2 update finishing helper
+
+Reviewed head `c5fb4efd18521f4c6aa6d5db3479e9d7b1b67ac2` and merged as
+`4379cc8a02d853cf9195e9710a71e1b1f496bd24` after marking the draft ready.
+The parent-chain verifier and all three negative controls pass. Review recomputed
+the full 5,656-byte body, its 36 direct callees and all 27 referenced data objects.
+It also independently compared every saved non-log result in the 17,331-case
+regression and verified 18,520 transaction signatures. No compiler or target VM
+was run during this review. Recorded repeated builds and the bounded runtime
+receipts retain their source/artifact hashes. All 66 merged packet files match
+the reviewed head. Fees reaches 573/585 normalized windows, 143 raw-local matches
+and 171 equal Location observations; the V2 caller and whole ELF remain unequal.
+
+## PR228: independent portable native reproduction
+
+Reviewed head `a5d0226868cdc1f78ee946f85b3050224ed9aa34` and merged as
+`483dbfbd8e4f05e16f268425679b4ffec84323a1`. The offline verifier, seven actual
+mutation controls and 1,668 saved transaction-signature checks pass. All 113
+merged files match the reviewed head. This independently reproduces PR222's
+570-window candidate and symbol artifacts using a portable SDK controller;
+it adds no body coverage beyond PR222. Five recorded compilations are retained,
+with cached dependencies. Review did not rerun the compiler or target VM.
+The newer 573-window source and this reproduction remain separately identified.
+Hosted checks were still running when these research-only PRs were merged.
+
+## PR230: root source-path and additive metadata controls
+
+Reviewed head `7f41142713752081d9a2894a59c38cf8a5e2c917` and merged as
+`61c172c05801648c42dd8217f21f8d2c7499924d`. The standalone verifier and all
+18 mutation tests pass; all 73 merged files match the reviewed head. The eight
+retained root builds and four tiny object controls distinguish additive metadata
+flags from replacement. Path remapping changes exactly 1,415 data-section bytes;
+all instruction bytes are unchanged in that control. This uses the historical
+15-input source and adds no original-window match. The 720-byte text gap remains.
+No Windows compiler, full SDK or runtime was freshly executed during review.
+
+## PR229: current Fees573 with SweepBuyback corrections
+
+Reviewed head `4818eada2cf0a5f81e52e529110ac8602e182e5b` and merged as
+`c41d6da175b5b22d4dd83be703cdc810debbee60`. Complete parent-chain verification
+and all three negative controls pass. Review independently checks all 17,331
+non-log comparison results and 18,520 signature entries. All 1,249 Buyback
+application logs now agree, repairing the parent's 275 differences. The exact
+three-file PR224 source composition is checked; 573 normalized / 143 raw / 171
+Location counts remain unchanged. No compiler or target VM was freshly run in
+review. All merged packet files match the reviewed head.
+
+## PR231: source-only Social V2 admission and coordinates
+
+Reviewed head `03d57b94b0f0ded21a3da4f793e0fd2f4dfe0a60` and merged as
+`3528998688b74c9c58c7618098f6fab9fde3fb16`. The source verifier and all 15 tests
+pass; materialization checks all 43 exact public parent inputs and applies two
+overrides. Native-build, runtime and whole-identity verification flags remain
+false. Author-local execution observations have no downloadable receipts in
+this packet and are not adopted as independently verified facts. Its PR222
+570-window source is separate from the later 573-window composition. Merged
+packet files match the reviewed head. Both drafts were marked ready after the
+GitHub API quota reset; selected checkpoints remain unchanged.
+
+## PR232: complete legacy Social branch layout
+
+Reviewed head `c5e0c53e5b9f6395aa61aae93e831d3933a02b7f`, merged as
+`baef79f07fe862ab930155ca2c6e66834b0bf510`. Full parent-chain verification and
+three negative controls pass. Independent review recomputed 17,331 non-log
+comparisons and 18,520 signature entries. The complete 4,536-byte Social claim
+body, 26 callees and eight data references match; Fees advances to 574/585
+normalized windows with eleven unmatched. The nightly branch-likelihood hint
+is a sufficient reconstruction, not authenticated historical source syntax.
+
+## PR233: shared post-buy accounting calls
+
+Reviewed head `01905802324a9fd48c15bf4f97520c2b78b0b61a`, merged as
+`44bd439cc529f39f16819b81eb92e33788b4d9e6`. The packet verifier passed all
+5,907 saved comparisons and 11,814 signed-transaction checks, and rederived
+quote/CPI, successful account/event and rollback predicates. Diagnostic differences
+fall from 148 to 32 with no new differing case. It restores two real calls but
+adds no complete body match. The Linux control's 343 normalized/63 raw matches
+remain separate from the published Darwin source. This review did not execute
+a compiler or target, and did not assert composition with the newer parallel
+checkpoint's source. Original and selected checkpoints remain preserved.
+
+## PR234: current Fees574 with Social V2 admission
+
+Reviewed head `730c6cd6427c0fcd84fc9bff06f7391eb6f36352`, merged as
+`935f331d1200959e2026516c18fce8d698421ab8`. All 69 merged files equal the reviewed head. The full
+parent-chain verifier and three negative controls pass. Independent review
+rechecked 17,331 non-log comparisons and 18,520 signature entries, plus 249
+additional arithmetic, quote-owner, preprocessing and admission cases with
+1,124 signature entries. The saved 627-case Social V2 suite repairs 277
+application-log differences; the 98-case admission matrix repairs ten behavioral
+and 36 log differences. Fees retains 574/585 normalized windows, 143 raw-local
+matches and eleven unmatched windows (99,696 original text bytes). No complete
+body gain, fresh compiler/VM execution or whole-ELF equality is claimed by this
+review. The PR was conflict-free. At merge, 22 of 24 hosted checks passed and
+two Mayhem checks remained in progress; no failed checks were reported.
+
+
+## PR235: independently built external unchecked curve decoder
+
+Reviewed head `9d4953fe855226f2843466a2a4361aa3cf58e8db` passes its offline
+verifier and materializes all 56 source inputs. All 75 reviewed files match that
+head. The packet retains three agreeing builds and independently rechecks 4,140
+saved comparisons / 8,280 signature entries, with 182 non-compute diagnostic
+differences preserved. O0213 is the only gain over its Linux control (347→348);
+it is already matched in the separately validated 411-window composition.
+The packet's differently named dependency must not replace the composed source.
+No fresh compiler or VM execution was performed in this PR review.
+
+The reviewed head was merged locally as `4b7cc26a`; a concurrent README
+simplification was then merged without overwriting it. Git publication and
+GitHub's final PR state are checked after the push. GraphQL quota blocked the
+draft-to-ready endpoint; direct Git merge uses the user's existing authorization.
+
+
+## PR236: pause/resume direct-data audit
+
+Reviewed head `e8fd1f65a5c88588a5e1408fe946ccbeff30183c`, merged as
+`ff44b0afcb4b08e698941d1eaa138b3007b6bd18`. All eight files match the reviewed
+head. The standalone standard-library verifier and all six actual mutation
+controls pass. Its pinned375 candidate has 14 equal and2 unequal data uses across
+eight objects and20 matching immediate calls; it claims no new instruction or
+runtime coverage. The two SDK path differences remain explicit. Later426
+source/data recovery has its own independent binding and is not substituted
+for this historical packet. Hosted checks were still in progress at merge.
+
+## PR237: allocator sharing and native compiler provenance
+
+Reviewed head `ae2b9c990522793c59a41a94bc222ef225e557e3`, merged as
+`aa63cc825b120fe727c3573bff604db2db2a0f1c`. All 141 packet files match the
+reviewed head. The standalone verifier and all ten evidence-scope tests pass.
+The verifier checks five retained native Windows builds (815 rustc invocations),
+two map relinks, six archive members, symbol definitions, burn relocations and
+the linked helper routes. Review reran those saved-evidence checks; it did not
+execute a fresh native compiler or target VM.
+
+The instructions-sysvar dependency sharing control restores the missing 312-byte
+and 408-byte allocator copies. Its 428-function normalized multiset and
+602,936-byte instruction-section size equal the pinned Darwin reference, and
+three provider builds retain identical raw and stripped ELF hashes. The
+original-window result remains 375 normalized / 59 raw-local, with zero new
+matches. Ordered instructions, data, relocations and whole ELF remain unequal;
+the raw instruction comparison still has 7,811 differing byte positions. This
+historical-source experiment does not replace or raise the published 426-window
+checkpoint, nor prove the historical compiler flags. Hosted checks were still
+in progress with no reported failures when the merge was confirmed. The open
+PR queue was empty after the merge.

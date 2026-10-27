@@ -72,7 +72,7 @@ def verify():
  for name,h in read(HERE/'parents.json').items():assert sha((ROOT/name).read_bytes())==h,name
  module('linked_loader_receipt',HERE/'verify_loader.py').verify()
  mapping=validate_layout();assert mapping==module('linked_layout_derivation',HERE/'derive.py').derive();analysis=analyze();summary=analysis['comparison-summary.json'];assert summary['original_raw_match_windows']==summary['original_normalized_match_windows']==492 and summary['common_position_different_bytes']==0
- source=module('linked_source_parent',ROOT/'repro/donation-relay/donation-wrapper-source-proposal/verify.py');source.manifest();inputs={n:sha(b)for n,b in source.sources()['complete492'].items()}
+ source=module('linked_checked_in_source',HERE/'source_checkout.py');source_inputs=source.reconstruct(ROOT)['complete492'];inputs={n:sha(b)for n,b in source_inputs.items()}
  launch=read(HERE/'builds/fresh/launch.json');result=read(HERE/'builds/fresh/result.json');log=(HERE/'builds/fresh/build.log').read_bytes()
  assert launch['source_inputs']==inputs and launch['fresh_target']and result['source_unchanged']and result['registry_unchanged']
  assert result['exit_code']==0 and result['root_invocations']==1 and log.count(b'--crate-name donation_relay_source_proposal ')==1 and sha(log)==result['build_log_sha256']
@@ -83,7 +83,7 @@ def verify():
  sdk=read(HERE/'builds/fresh/sdk-check.json');assert sdk['all_match'] and sdk['files_checked']==2873
  registry=read(HERE/'builds/fresh/registry-check.json');assert registry['packages']==253 and registry['files']==7968 and registry['all_match']
  import tomllib
- locked={p['name']+'-'+p['version']:p['checksum']for p in tomllib.loads(source.sources()['complete492']['Cargo.lock'].decode())['package']if p.get('source','').startswith('registry+')}
+ locked={p['name']+'-'+p['version']:p['checksum']for p in tomllib.loads(source_inputs['Cargo.lock'].decode())['package']if p.get('source','').startswith('registry+')}
  assert {r['name']:r['checksum']for r in registry['rows']}==locked
  first=read(HERE/'builds/first/result.json');assert first['exit_code']==0 and first['root_invocations']==1 and first['source_unchanged']
  for kind in ['candidate','symbols']:assert first[kind+'_sha256']==result['artifacts'][kind+'.so']['sha256']

@@ -1,16 +1,57 @@
 # Remaining work — artifact-backed Relay worker review, 26 October 2026
 
 This is the action list for the [current reconstruction audit](RECONSTRUCTION-AUDIT.md),
-with current research reviewed through evidence revision `ba788351`. The [current review](RECONSTRUCTION-STATUS.md)
+with current research based on reviewed parent revision `6b61b337` and the linked visibility-recovery measurements. The [current review](RECONSTRUCTION-STATUS.md)
 and [complete refreshed inventory](../repro/reconstruction-status-2026-10-26/README.md)
-list every raw match and unresolved window; selected artifacts retain the
-`1463bd22` audit bindings. The historical
+list every raw match and unresolved window; the four core selected artifacts retain
+`1463bd22` audit bindings, while Relay now has its canonical exact selection. The historical
 [completion ledger](COMPLETION.md) remains a selected-checkpoint record; its old
 candidate paths and “current” prose must not override newer evidence.
 
+Current Mayhem's largest normalized frontier is the [428-window trade-source composition](../research/mayhem-trade-source-origins/README.md): 13 unmatched windows / 112,584 original text bytes remain, plus data, call, indirect-target and complete ELF identity. All 70 parent raw-local bodies survive. The 34 recorded rate failures and ten earlier counter failures were repaired in the parent; the accounting parent has fresh trade and ExtendAccount replay, and this successor has fresh trade replay. This does not update the selected baseline or prove arbitrary behavior.
+
+The [native Windows reproduction](../research/mayhem-native-reference-identity/README.md)
+reproduces the earlier 426-window source/data candidate's complete raw and
+stripped ELFs in three fresh builds. Replayed target-crate metadata from retained compiler logs,
+full-file path remaps and relative registry inputs close the cross-host artifact
+gap without source edits. This supplies a byte-identical experimental baseline;
+the candidate still has 426 normalized / 70 raw-local original counterparts,
+and remains unequal to deployed Mayhem. The sell-call and 428-window successors
+retain their separate artifact bindings.
+
+The [AMM sell-call successor](../research/mayhem-sell-quote-call-recovery/README.md)
+preserves those 426 windows and restores the shared O0093 quote call. Its ten
+callee and typed-data multisets match, and all 1,239 AMM sell cases have equal
+non-compute logs. O0093 still has 1,096 candidate bytes versus 1,120 original
+bytes; complete instruction order and correspondence remain work. The other
+parent runtime suites retain their original artifact bindings.
+
+The [retained-reserve recovery](../research/mayhem-retained-bps-recovery/README.md)
+repairs fourteen overflow diagnostics in three actual trade handlers, using the
+existing shared arithmetic. All 6,636 new trade comparisons pass, with seven
+`quote_extreme_1_0_1` division-by-zero diagnostic differences still visible.
+Its native clean-build control preserves all 426 normalized windows; the source
+change adds no complete body match. The native artifact retains 15 unmatched bodies; the mixed-SDK
+428-window successor has 13 and now includes this fix plus two corrected AMM Sell
+Source records. Its fresh replay retains seven trade diagnostic differences.
+The 58 sweep diagnostic cases remain separate work.
+
+The [completed account-data cohort](../research/mayhem-account-cohort-complete/README.md)
+has 156 typed-equal references and none unresolved within its declared scope.
+The final records are the tagged I/O error at `0xb1220` and the empty hash-table
+header at `0xb1340`; the latter was previously mislabelled a formatting prefix.
+Unexamined program data, transitive/indirect calls and the known initializer
+callee mismatch remain open.
+
+For O0073, the [sweep-rate layout study](../research/mayhem-sweep-branch-layout/README.md)
+maps all 22 blocks, directed edges under the stated abort ABI, and eleven data
+references. The 912-byte body still has 19 differing instruction slots from
+block placement. Its whole-window match remains open; the block graph does not
+relax the normal byte matcher.
+
 Subsequent gains are in the [byte-identity progress log](BYTE-IDENTITY-PROGRESS.md):
-Relay research now has **492/492 normalized counterparts and no unmatched windows**; current Fees research
-has **33 unmatched windows and 405 unique structural pairs**. The [Relay framework study](../repro/donation-relay/framework-sysroot-recovery/README.md)
+Canonical Relay now has **492/492 raw-equal windows and no unmatched windows**; current Fees research
+has **eight unmatched windows and 430 unique structural pairs** in the [qualified linker layout](../research/fees-qualified-linker-layout/README.md), with 198 raw-local matches and the same 577 normalized matches. The 46-file Rust source is unchanged from the sharing slice composition. Those unmatched windows total 80,176 original text bytes; whole-ELF identity, seven inspected direct-callee differences and exhaustive semantics remain open. The older 558-window generated inventory below retains its original binding. The [Relay framework study](../repro/donation-relay/framework-sysroot-recovery/README.md)
 recovers the three repeated type-ID bodies with official Linux target libraries,
 adds the Anchor 0.32 framework matches and restores share-total compared values.
 The subsequent [mint-predicate study](../repro/donation-relay/mint-fee-pair-recovery/README.md)
@@ -96,7 +137,7 @@ adds the optional account parser and raw-equal cleanup without lost matches.
 Keep their real caller wired to owned `AccountInfo`; the larger account parser
 still needs full reconstruction. The subsequent [seed-vector recovery](../research/fees-social-seed-vector/README.md)
 recovers a 296-byte clone helper; its V2 claim caller remains unmatched. Current
-Fees attribution totals 474 pairs. The [extension-size log recovery](../research/fees-extend-size-logs/README.md)
+Fees attribution totals 480 pairs. The [extension-size log recovery](../research/fees-extend-size-logs/README.md)
 restores the no-resize messages and formatting helper; the larger resize handler
 remains unmatched.
 
@@ -191,8 +232,8 @@ The worker packet established the 483-window checkpoint. The later
 [settlement artifact recovery](../repro/donation-relay/settlement-artifact-recovery/README.md)
 independently validates the combined 488-window source and exact read-only data.
 The later wrapper artifact recovers original ordinals 92–95. The linked-ELF
-recipe now closes raw calls, data and relocations. Selected-source promotion,
-historical provenance and broader runtime evidence remain open.
+recipe now closes raw calls, data and relocations. The canonical source/artifact are now selected. Historical provenance and
+broader runtime evidence remain open.
 
 ## Event contexts after isolated ownership trials
 
@@ -235,7 +276,7 @@ The following are independent requirements; completing one does not close the ot
 
 | Priority | Remaining work | Evidence required to close it |
 | --- | --- | --- |
-| Current research bodies | Relay selected integration and historical provenance; Fees' 33 windows, including the exotic-growth caller | Full original-window comparison with no lost matches, source/build hashes and relevant fresh differential coverage |
+| Current research bodies | Relay historical provenance and broader coverage; Fees' 31 windows, including the exotic-growth caller | Full original-window comparison with no lost matches, source/build hashes and relevant fresh differential coverage |
 | Core source/behavior | Pump's five partial and three unaccepted handlers; AMM initializer; Mayhem initializer and opaque attribution | Concrete source, genuine successful and rejected paths, bound receipts and per-handler limitations |
 | Known mismatches | Pump sell_v2 transfer-fee behavior; Mayhem diagnostics and field contracts | Authorized resumed correction where required, then targeted regressions and broader validation |
 | Transitive binary identity | Calls, duplicate attribution, data, relocations, indirect calls and final ELF layout | Exact artifact comparison and explicit explanation of any allocation padding |
@@ -293,15 +334,15 @@ and signing/ownership restrictions are unchanged by this documentation audit.
 | --- | --- |
 | Selected Pump | 507 windows without full normalized matches; calls/data and ambiguous matches also remain. The separate workspace-member build has 538 normalized windows and 497 residuals: 233 different-body, 192 no-same-size, 72 store-immediate-only heuristic rows. One of those 72 changes an error code; only 71 are reported origin-only. |
 | Selected AMM | 297 unmatched original windows, 160 ambiguous normalized rows, original diagnostics, data and full call contracts |
-| Fees current research | 33 unmatched windows (205,216 original body bytes), 69 additional call-attributed pairs and 78 duplicate windows still unattributed; close shareholder validators, transitive calls/data and full ELF/relocation layout |
+| Fees current research | 27 unmatched windows (189,248 original body bytes), 69 additional call-attributed pairs and 78 duplicate windows still unattributed; close shareholder validators, transitive calls/data and full ELF/relocation layout |
 | Selected Mayhem | Seven admitted unmatched windows and 257 source-ledger opaque windows; 12 of the opaque windows have local raw matches without semantic attribution |
-| Relay current research | all 492 raw windows and the full meaningful ELF match via a reconstructed linker layout; the loader reproduces the full captured payload. Resolve selected integration, historical provenance, privileged successes and broader allocator/borrow coverage |
+| Relay current research | all 492 raw windows and the full meaningful ELF match via a reconstructed linker layout; the loader reproduces the full captured payload. Resolve historical provenance, privileged successes and broader allocator/borrow coverage |
 | Metaplex | Utilize's 1,477 text differences, 30 source-coordinate differences, two relocation differences; authentic source/compiler layout |
 | ATA | Historical recipe remains unknown despite exact output from explicit symbol ordering and an empty feature. Decide selection independently of historical authenticity. |
 | All programs | Exact historical tool/dependency inputs, complete sections/relocations, data and indirect-call meaning; complete security and lifecycle acceptance |
 
 The historical counts in the audit-baseline section are not the current research frontier.
-The Fees and Relay research outputs are not selected production/source checkpoints.
+Fees research outputs remain separate from its selected checkpoint. Relay now has a canonical exact selection; older Relay research states remain historical.
 The [audit](RECONSTRUCTION-AUDIT.md) records their full hashes, scope and exact
 function-level evidence. Do not combine counts from different builds or matcher
 rules into a single recovery percentage.
@@ -430,7 +471,7 @@ The [exact linked recipe](../repro/donation-relay/linked-elf-reproduction/README
 reproduces all 818,280 meaningful ELF bytes from ordinary Rust and an explicit
 input-section order. A fresh loader execution also reproduces all 830,448 captured
 payload bytes. Keep compiler output and loader allocation as separate artifacts.
-The historical recipe is unproved, selected checkpoints are unchanged, and bounded
+The historical recipe is unproved, the Relay canonical selection is now updated, and bounded
 runtime tests do not establish every privileged or allocator/borrow behavior.
 Earlier body lists and raw-layout residuals are historical measurements.
 
@@ -464,3 +505,80 @@ program/entrypoint emission at 566024–582808, and library helpers at
 they are not permission to reorder or patch captured machine instructions.
 Program-module, library and package/version name controls are now recorded and
 should not be repeated as though untested.
+
+## Fees initializer wrapper closed; shared authorization remains
+
+The [public instruction-module recovery](../research/fees-instruction-visibility/README.md)
+closes original 650064 with no lost match, bringing the current frontier to
+553 normalized windows and 32 unmatched. Preserve the visibility declaration,
+all 42 source inputs and the repeat-build/runtime evidence. Earlier unit-count
+controls remain rejected. The shared authorization helper at 234096 still needs
+its exact signer-input and branch layout recovered; source-path/line corrections
+and signer-reference variants alone did not close it.
+
+
+## Relay correspondence verification
+
+The [independent reference-graph check](../research/relay-reference-bijection/README.md)
+finds a unique 492-window bijection for the historical complete492 baseline under
+explicit instruction, relocation and positional data constraints. It agrees with
+every pair used by the later exact linker recipe, without a name/address tie-break.
+It checks 4,320 calls, 54 relocated code references, 77 fixed roots and all 2,327
+relocations. Eighteen tests include real operand mutations that preserve normalized
+body multisets but fail the graph check. This adds correspondence verification;
+the later exact ELF/payload evidence remains the current frontier. Historical
+source names, natural compiler ordering and indirect behavior remain unproved.
+
+## Current Fees business integration and next adapter step
+
+The [AdminCto integration](../research/fees-admin-cto-current-integration/README.md)
+closes original 127776 on the current source. Preserve the included source span,
+zero-admin guard, event ordering and two-build/runtime evidence. There are now
+31 unmatched windows (199,040 original text bytes) at that historical step.
+
+The [distribution-helper recovery](../repro/pump_fees/distribution-helper-recovery/README.md)
+now closes both adapters, 235304 and 236240, on this same AdminCto baseline.
+It reaches 556 normalized windows, 409 unique pairs, 118 raw-local matches and
+29 unmatched windows, preserving all prior matches and 165 Location uses.
+Fresh review repeats all 417 cases exactly. This verified research
+candidate is now the generated inventory, with all 17,331 fresh suite comparisons
+passing. Preserve its 29-window remainder and recomputed call attribution.
+The earlier ownership controls retain their historical four-byte residuals.
+
+## Crank native-only flow: reviewed, still awaiting current-source integration
+
+[PR #201's artifact-backed study](../research/fees-crank-native-order/README.md)
+moves donation-account cloning and Rent work into the native branch, preserves
+zero-exit lifetimes and carries the corrected application messages/overflow
+conversion. Fresh review reproduces all 304 retained cases exactly: 292 raw
+equalities, 12 compute-log differences, and no application/nonlog differences.
+Its 552-window base is separate from the current 554-window AdminCto source.
+Integrate the ordinary Crank changes into that source, remeasure every window
+and call edge, and retain the unresolved compute/whole-body gaps. Also apply the reviewed
+[checked-credit correction](../research/fees-crank-lamport-overflow/README.md)
+using its PR201 follow-up patch, preserving the native-only flow. Fresh review
+repeats all 76 overflow-boundary cases exactly, including 15 corrected errors.
+
+## Relay canonical promotion completed
+
+The [canonical exact-selection packet](../repro/donation-relay/canonical-exact-selection/README.md)
+replaces the old selected Relay source with the verified 60-input reconstruction.
+Preserve its exact compiler ELF, loader-created payload and archived historical
+source under the successor checks. Selection itself is no longer a Relay task;
+historical provenance, ProgramData metadata/history and broader execution coverage
+remain separate from byte identity.
+
+## Current-source composition completed
+
+The [558 integration](../research/fees-current-558-integration/README.md) composes
+the reviewed native Crank lifetimes, checked credit, constant initializer and
+borrowed Relay encoder onto the artifact-backed556 source. Earlier instructions
+to perform that combination are now satisfied. Remaining work includes the
+Crank body and compute consumption, authentic fixed-admin success, the 27
+unmatched windows and whole-ELF/data/relocation identity. The separate 43-input
+source-only union and its later exotic-body proposal still need independent
+composition and compilation; their gains are not added to this count.
+
+## Active priority: Mayhem
+
+The [Mayhem work plan](MAYHEM-RECONSTRUCTION-PLAN.md) supersedes earlier cross-program prioritization. Its current research has eight unmatched admitted bodies and 245 opaque windows. Complete the quote-aware validator, trade bodies, unexamined code and full ELF/data/layout proof before claiming Mayhem finished.

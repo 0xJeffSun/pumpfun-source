@@ -1,0 +1,12 @@
+{
+  "overrides": [
+    "src/instructions/buy_pump_swap.rs",
+    "src/instructions/mod.rs",
+    "src/lib.rs",
+    "src/state.rs"
+  ],
+  "added": [
+    "src/instructions/extend_account.rs"
+  ],
+  "removed": []
+}

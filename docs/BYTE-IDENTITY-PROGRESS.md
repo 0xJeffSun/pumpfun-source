@@ -4,6 +4,269 @@ The [full audit](RECONSTRUCTION-AUDIT.md) and its generated tables retain their
 explicit `1463bd22` snapshot. This log records later research without silently
 changing that baseline or promoting new selected artifacts.
 
+## Mayhem: compose retained-reserve and AMM Sell source origins
+
+The [six-file successor](../research/mayhem-trade-source-origins/README.md)
+retains 428 normalized windows and all 70 raw-local bodies. The retained-reserve
+repair now runs in the combined source; fourteen executed overflow diagnostics
+are corrected. All 6,636 fresh trade comparisons and 13,272 signed transaction
+records pass, leaving seven diagnostic differences and no new ones.
+
+Five bounded Source observations in four live handlers are restored, including
+the two AMM Sell post-CPI subtractions. Those two panic branches are not exercised
+by the corpus; their evidence is static. Two clean-root builds agree, all prior
+positive calls/Source profiles survive, and six mutation checks reject altered
+source, source locations and test coverage. No additional complete body is counted;
+thirteen windows and whole-ELF identity remain unresolved.
+
+## Mayhem: complete ExtendAccount and shared buy accounting
+
+The [combined recovery](../research/mayhem-accounting-extend-recovery/README.md)
+reaches **428/441** normalized windows, preserving all 70 raw-local matches.
+O0072 ExtendAccount (4,272 bytes) and O0090 shared buy accounting (2,544 bytes)
+now match completely under the unchanged normalizer. The remaining thirteen
+windows total 112,584 original text bytes. Whole ELF equality remains false.
+
+All prior positive call and Source observations survive. The two new bodies
+have explicit immediate-callee and bounded-data proofs: 33/19 for ExtendAccount
+and 12/12 for accounting. The same source restores the real native AMM Buy
+system-transfer helper, without claiming a complete AMM Buy body match.
+
+Two original-controller root builds agree. Fresh execution passes 6,636 trade
+comparisons plus 301 ExtendAccount cases, with 13,874 signed transaction records
+checked. The 21 prior trade diagnostic differences remain; none is added. The
+separate native retained-reserve fix below is not composed into this candidate.
+Twenty-four mutation controls reject corrupted evidence and unsupported claims.
+
+## Mayhem: restore retained-bps arithmetic in three trade handlers
+
+The [four-line recovery](../research/mayhem-retained-bps-recovery/README.md)
+uses the existing retained-bps subtraction in Legacy Buy, BuyV2 and SellV2.
+Fourteen executed overflow cases now report the original `state.rs:321:26`
+origin; three bounded Source descriptors in the live handlers also agree.
+All 6,636 fresh trade comparisons and five independent receipt checkers pass.
+Trade diagnostic differences fall from 21 to seven, with no new complete body
+match. Three fresh proposal builds agree.
+
+The accompanying [native control](../research/mayhem-native-clean-reproduction/README.md)
+independently compiles the unchanged 65-input source from empty target directories,
+authenticates both complete official Linux SDK installations, and preserves all
+426 normalized matches, 4,234 supported calls, 441 Source records and 153 typed
+account references. Its 9,586 comparisons are bound to that control artifact.
+O0297 adds one placement-dependent raw-local observation (71 total), not a new
+function recovery. Whole ELF equality, fifteen unmatched bodies and the remaining
+diagnostic/data/transitive gaps remain open.
+
+## Mayhem: complete the 156-reference account-data cohort
+
+The [final refinement](../research/mayhem-account-cohort-complete/README.md)
+closes the three remaining records in this cohort: the two tagged I/O-error
+references and the empty hash-table header. All 156 observations are now
+typed-equal, with zero differences or unresolved records in the cohort. A
+separate SBF-target ABI probe and its independent repeat produce identical IR;
+the actual consumer instructions confirm widths, offsets and pointer uses.
+
+Twelve in-memory mutation controls pass. The accepted program is unchanged,
+and no function-window gain is counted. The earlier formatting-prefix label
+for the hash-table header is corrected. Other data, transitive/indirect closure,
+the fifteen ordered bodies and whole ELF remain work.
+
+## Mayhem: isolate O0073's block-placement remainder
+
+The [sweep-rate layout study](../research/mayhem-sweep-branch-layout/README.md)
+recreates all 22 register-preserving blocks and their directed edges under the
+declared SBF abort contract. Eleven data references and the terminal panic
+message agree. Two builds reproduce the control artifact; 150 fresh signed
+sweep cases have no checked-field or non-compute log differences.
+
+The complete 912-byte window remains unequal in 19 instruction slots. The
+control preserves all 426 original matches and all 455 other candidate function
+shapes. Graph-only branch normalization is not used by the inventory. The source
+control is pinned to the earlier 426 checkpoint and does not replace the later
+shared-sell or account-data work.
+
+## Mayhem: bound 56 more account-data references
+
+The [account-data refinement](../research/mayhem-account-data-extents/README.md)
+rechecks the unchanged compiled sell-quote successor. Explicit caller lengths,
+stack slice descriptors, consumer load widths, vtable targets and constant seed
+graphs resolve 56 of the cohort's 59 unknown references. Across its 156
+references, 153 are now typed-equal, none typed-different and three unresolved.
+The new proofs cover 29 distinct original objects; duplicate references retain
+their individual counterpart checks.
+
+Nine in-memory mutation controls pass. No compiler or VM runs, no output changes,
+and no new complete function match is counted. Tagged I/O error and empty
+formatting data remain explicit gaps, as does the known initializer callee
+mismatch. Other data and transitive/indirect coverage are not inferred from this
+bounded cohort.
+
+## Mayhem: shared AMM sell quote call and diagnostics
+
+The [two-file successor](../research/mayhem-sell-quote-call-recovery/README.md)
+restores the real shared quote call in AMM Sell and the original checked reserve
+subtraction. Two builds agree. All 6,636 trade comparisons pass, with 13,272
+signed transaction records independently checked. The 1,239 AMM sell cases now
+have exact non-compute logs, repairing eight parent diagnostic differences.
+
+All 426 matching bodies, 70 raw-local windows, 4,234 positive direct-call
+observations and 441 matching Source observations survive. The shared quote
+helper has ten matching direct-callee shapes and ten matching typed-data
+observations as multisets; its 1,096-byte body still differs from the 1,120-byte
+original. No new complete body is counted. Fifteen windows / 119,400 original
+text bytes, transitive/indirect/data closure and whole-ELF identity remain open.
+
+## Mayhem: source and data recovery reaches 426 windows
+
+The [successor packet](../research/mayhem-source-data-recovery/README.md) adds 15
+complete windows/36,120 original bytes to 411. It reaches 426/441 (70 raw-local,
+356 normalized-only), with 15 windows / 119,400 text bytes still unmatched. All prior
+body/raw matches and positive immediate-call observations survive. Two builds
+agree using the documented macOS-compiler/Linux-target-library recipe.
+
+Typed initialization, Buy/BuyV2 and native token interfaces recover the new
+bodies. The actual shared crate also repairs both formatter vtables. In the
+older account cohort 97 references are typed-equal, none typed-different, and 59
+remain unresolved. This is not all-data or whole-ELF equality.
+
+Fresh signed suites pass; the new 48-case counter oracle repairs 10 parent
+failures, in addition to the 34 earlier rate failures. Remaining diagnostic
+mismatches are retained separately, including 58 ordinary sweep cases. Source
+and SDK file hashes, exact archive-member checks, raw receipts and negative
+controls are included. Canonical selected checkpoints remain unchanged.
+
+## Mayhem: composed recovery reaches 411 windows
+
+The [composed packet](../research/mayhem-composed-recovery/README.md) adds 36
+complete normalized windows / 112,480 original text bytes without losing prior
+raw/body matches or positive direct-call observations. It reaches **411/441**:
+59 raw-local, 352 normalized-only and 30 unmatched windows / 155,520 text bytes.
+Two source-unchanged builds agree. Whole ELF remains unequal.
+
+Fresh replay passes 6,636 trade comparisons, 1,032 admin cases, 1,601 extra cases,
+three Burn families and the 150-case sweep-rate matrix. All 34 parent sweep
+failures are repaired. Initialization adds 53 rejection and 16 genuine Pump CPI
+cases with ten successes. Saved predicates and signatures are independently
+recomputed; three negative controls pass.
+
+Portable data audits retain 63 typed differences and 59 unresolved references
+among the account gains, two SDK Source differences in the interface gains,
+and nonmatching indirect formatting targets. These are not concealed by the
+body count. The selected checkpoint is unchanged; newer private experiments
+remain outside this published candidate.
+
+## Fees: current 574-window source with Social V2 admission corrections
+
+[PR234's composition](../research/fees-current-574-social-v2-union/README.md) combines the public Social V2 correction with the full Fees574 source. It preserves 574/585 normalized windows, 143 raw-local matches, 171 equal Location observations and 3,792 equal direct-callee observations; it adds no complete body match. Eleven unmatched windows cover 99,696 original text bytes. Whole ELF and capture equality remain false.
+
+Two retained native build records agree. Review rechecked the full verifier, three negative controls, all 17,331 saved non-log comparisons / 18,520 signature entries, and the additional 249 boundary/preprocessing/owner/admission cases / 1,124 signature entries. Social V2's 277 application-log differences and ten admission mismatches are repaired. No compiler or target VM was freshly executed during this review.
+
+## Mayhem: thirty windows recovered by composed parallel work
+
+The [parallel checkpoint](../research/mayhem-parallel-recovery/README.md) adds
+30 complete normalized windows and preserves every prior normalized/raw match.
+It reaches **375/441**, with **59 raw-local matches** and **66 unmatched windows**
+covering 268,000 original text bytes. The two-build, 60-input source includes real
+account/data layouts and source locations, Burn evaluation order, shared state
+methods, and a separate dependency for the used Pump V2 CPI interface.
+
+Fresh regressions pass, but a new 150-case rate-limit matrix reveals 34 known
+sweep differences. These are recorded as remaining behavior, not hidden by the
+passing legacy suite. The parallel lanes are continuing the correction and the
+remaining function/data/ELF work; whole Mayhem identity is still false.
+
+## Mayhem: complete curve representation recovers four more windows
+
+The [full curve recovery](../research/mayhem-full-curve-recovery/README.md)
+reaches **345/441 normalized matches, including 59 raw-local matches**, preserving
+all earlier bodies. Four newly matched windows total 1,640 original bytes;
+96 windows / 348,576 text bytes remain unmatched. The boxed helpers now agree
+with their immediate callees, but the lower account decoder remains unequal.
+Two builds with explicit Anchor recompilation agree; all 6,636 trade comparisons,
+1,032 admin cases and 12 Burn transactions pass, with 15,348 signatures verified.
+Whole-file identity, remaining decoder bodies and transitive closure are open.
+
+## Fees: V2 finishing helper advances the composed source to 573 matches
+
+The [V2 finishing-helper recovery](../research/fees-v2-finish-source-recovery/README.md)
+adds the complete 5,656-byte body at 225920 to the PR225 source. All 36 direct
+callees and 27 direct data references match. Coverage reaches **573/585 normalized
+windows, 143 raw-local matches, 171 equal Location observations and 12 unmatched
+windows**, preserving every previous match and positive call observation. The
+V2 caller remains unmatched and whole-ELF equality remains false.
+
+Two recorded root builds agree. Review recomputed the body/call/data evidence,
+checked all 17,331 saved non-log comparison results, and independently verified
+18,520 transaction signatures. This review did not rerun the compiler or VM.
+The packet separately retains the 119 arithmetic, eight quote-owner and 24
+preprocessing cases; finite observations do not establish exhaustive semantics.
+
+The [portable native reproduction](../research/fees-v2-transfer-ownership/README.md)
+of PR222 independently reproduces its 570-window candidate and symbol artifacts.
+Its five recorded compilations, source maps, SDK hashes and saved runtime
+receipts are checked; seven mutation controls and 1,668 signature checks pass.
+It adds no matches beyond PR222 and is not substituted for the newer 573-window
+source. Neither packet promotes a canonical selected checkpoint.
+
+## Fees: V2 transfer adapter recovered at 570 matches
+
+The [V2 transfer recovery](../research/fees-v2-transfer-source-recovery/README.md)
+adds the complete 3,096-byte adapter at 240088. The borrowed payer, owned program
+account and account-initialization order reproduce the original calling
+convention and cleanup. All thirteen direct callees and the System program ID
+match. The result is **570/585 normalized original functions, 143 raw local
+matches, 168 equal Location observations and 15 unmatched functions**, with no
+prior match lost.
+
+Repeated native Rust builds agree. Fresh execution passes 17,331 regression
+cases, 119 native arithmetic cases, eight quote-owner cases and 24 preprocessing
+cases. Whole-ELF/capture equality remains false; selected checkpoints are unchanged.
+
+## Fees: current source recoveries composed at 569 matches
+
+The [current-source union](../research/fees-current-569-union/README.md) preserves
+the merged authorization, sharing-parser and native-payout recoveries, then adds
+the full legacy transfer adapter and both generated transfer CPI bodies. The
+result is **569/585 normalized original functions, 143 raw local matches, 168
+equal Location observations and 16 unmatched functions**. All earlier matches
+and positive direct-callee observations remain; the V2 outer transfer adapter
+is still unmatched.
+
+Two native Rust builds are byte-identical to each other. Fresh execution passes
+17,331 regression cases, 119 arithmetic-boundary cases, eight quote-owner cases
+and 24 preprocessing-boundary cases. The 119-case matrix preserves the merged
+38 behavioral corrections. Whole-ELF/capture equality remains false and no
+canonical selected checkpoint changes.
+
+## Fees: shared authorization body recovered
+
+The [authorization recovery](../research/fees-authorization-source-recovery/README.md)
+adds the complete 1,208-byte function at 234096 on top of the composed563 source.
+The signer-reference ABI, shared-module origin and explicit inequality guard
+reproduce its full normalized body; all nine direct callees and eleven direct
+data objects match. All prior matches remain. Fees now has **564/585 normalized
+original functions, 143 raw local matches, 168 equal Location observations and
+21 unmatched functions**. Repeated native Rust builds are identical and fresh
+regression passes 17,331 cases in 18 suites. Whole-ELF/capture equality remains
+false; the other incomplete helpers and selected-checkpoint boundary remain open.
+
+## Fees: source frontiers composed, legacy payout adapter recovered
+
+The [payout-context recovery](../research/fees-payout-context-recovery/README.md)
+combines the latest 43-input Social/Crank/exotic source line with the independent
+Fees558 preprocessing and distribution recoveries. It retains both sets of
+normalized/raw matches, decoded source locations and positive direct-callee
+observations, then adds the complete 1,688-byte adapter at 204080. The result is
+**563/585 normalized original functions, 143 raw local matches, 167 equal
+Location observations and 22 unmatched functions**. Its preparation callee at
+199072 remains unequal; the caller match does not close that dependency.
+
+Two native Rust builds reproduce identical outputs. Fresh regression passes
+17,331 cases across 18 suites plus 24 preprocessing boundary cases. The packet
+retains the two independently reproduced baselines, full source maps and scoped
+checks. Whole-ELF/capture equality remains false; selected checkpoints are not
+changed, and these counts are not completion percentages.
+
 ## Fees: social-PDA creation body recovered
 
 The [creation-body recovery](../research/fees-social-creation-body/README.md)
@@ -1204,3 +1467,632 @@ source files before/after. A fresh912-transaction loader run using that newly
 compiled ELF reproduced the entire830,448-byte captured payload. This confirms
 the explicit-layout research recipe; canonical selected source and the four core
 programs remain separate unfinished work.
+
+## Fees: pinned upstream union and Crank diagnostic source — 27 October 2026
+
+The [source-only integration/diagnostic packet](../research/fees-upstream-crank-source-proposal/README.md)
+preserves three exact 42-input stages: public PR188 math+pack 545, an independently
+validated composition of PR169/172/176 at 550, and a three-expression Crank
+correction retaining 550. All five integration gains belong to upstream authors;
+this is not the latest frontier or a new discovery of those windows. Later
+PR185/190/195 compositions, including the 552-window dataset, remain separate.
+
+Fresh static remeasurement retains 118 raw counterparts throughout, preserves
+all previously equal actual direct-callee shapes, and checks 161→163 equal
+Location uses. The diagnostic adds the disabled/zero-amount messages and ordinary
+overflow error conversion without changing dependencies. Its positional byte
+distance regresses 456,100→466,083; whole identity remains false. Nine tests,
+all exact materializations and independent three-output static comparisons pass.
+Local two-build repetitions and finite runtime/application-log observations are
+explicitly unpublished, not downloadable replay evidence. No artifacts, logs,
+replay cases or archived receipt excerpts/derivatives are included; default
+verification neither compiles nor executes and reports runtime_verified=false.
+No selected checkpoint is replaced, and complete Crank semantics remain open.
+
+## Fees public module visibility: 553 normalized windows
+
+The [visibility packet](../research/fees-instruction-visibility/README.md) changes
+a single declaration on the current 42-input source: `mod instructions;` becomes
+`pub mod instructions;`. It restores original 650064's default-bump store and
+complete 1,208-byte initialization wrapper, with all six callee bodies matching.
+Two root builds reproduce candidate
+`d85fe4eb037cd91b982eea55169faac1b342e6841ce440bee26c28b5f5617e36`.
+The fresh 17,331-case suite passes. Coverage advances 552→553 normalized,
+405→406 unique, 33→32 unmatched; raw-local remains 118, with no lost matches.
+The visibility/source/branch controls for authorization at 234096 remain incomplete.
+Whole-program equality and historical source visibility remain unproved.
+
+## Relay: exact meaningful ELF from source plus inferred linker ordering — 27 October 2026
+
+The [raw-ELF reconstruction](../repro/donation-relay/raw-elf-reconstruction/README.md)
+compiles the exact public PR189 ordinary source with an explicitly nonhistorical,
+object-qualified LLD input-section order. The unmodified stripped compiler ELF
+has 818,280 bytes and SHA-256
+`56d81ec64a0ba070d3d23f3c1547b31d659e85716dfa2198ec4b0ce6cd355333`:
+**every byte equals the captured original's meaningful ELF extent**. Comparison
+uses no address masks, normalization or binary patching. The ordering script
+selects compiler-produced sections; it emits no machine bytes or integer addresses.
+This is a reproducible reconstruction recipe, not the historical build recipe.
+
+The full capture is 830,448 bytes with an additional 12,168 zero allocation bytes.
+The compiler file is not claimed to equal that longer capture. A separate,
+explicitly sized allocation-container helper leaves the ELF unchanged and can
+reproduce the full captured image, checked independently by exact comparison.
+Default verification checks only source packet integrity; explicit local inputs
+are required to verify raw equality. No compiler, target or live service executes
+in the verifier, and no binary/build/runtime receipt is published.
+
+Local clean repeats, including an original-absent allowlisted filesystem build,
+and finite offline replay are reported as unpublished observations. Source-only
+negative tests cover metadata/mutation/symlink boundaries. All four core-program
+identities remain unresolved (0/4); Relay is a separate dependency, not completion
+of the entire repository. Prior evidence and selected checkpoints stay unchanged.
+
+
+## Fees: included AdminCto business source recovery — 27 October 2026
+
+The [included-handler source proposal](../research/fees-admin-cto-included-handler-source-proposal/README.md)
+adds one complete normalized business body, original 127776 / 4,968 bytes, on the
+exact public PR194 context-only source: pinned 547→548, no losses, raw 118.
+Earlier boxed-account/typed-program gains belong to PR185/194 and are not claimed
+again. Later public PR195's 552-window source is a separate baseline; this packet
+does not claim a measured composition onto it.
+
+Four ordinary source edits add the observed zero-admin guard, mutation/event
+ordering and a real included block with authentic file/line spans. The local
+event/include organization is inferred, not historical-source proof. Exact public
+42-input provenance, reversible patch, full materialization and thirteen tests
+pass independently. Local native audits report 20/20 business callees and eleven
+complete direct objects; two root-clean outputs and finite offline regression
+were verified locally, but their receipts are not included or downloadable proof.
+
+No binaries, archives, runtime cases, logs or archived build/replay receipt
+excerpts/derivatives are published. Default tools report native_build_verified,
+runtime_verified and whole_binary_identity_verified all false. Indirect behavior,
+transitive data and full raw ELF/capture identity remain unresolved. No selected
+checkpoint or previous evidence is replaced.
+
+## Current AdminCto integration: 554/585
+
+[Independent integration of PR #200](../research/fees-admin-cto-current-integration/README.md)
+recovers original 127776/4,968 bytes while preserving all prior current-source
+matches. Two builds produce candidate
+`ce8e040056b0645e59473306ad6b9fc8f1428461695d7fece8d0b276fc3f10d8`;
+all 20 direct callee bodies and 17,331 fresh runtime cases pass. Current Fees
+coverage is 554 normalized, 407 unique, 118 raw-local and 31 unmatched.
+
+[CPI ownership controls](../research/fees-cpi-adapter-ownership-controls/README.md)
+separately isolate four copy displacement bytes per legacy/V2 adapter. Thirteen
+real controls add no complete matches; a local symbolic copy proof and 417
+sharing-update cases support the limited observations. These artifacts remain
+experimental and do not replace the current candidate.
+
+## Fees: public module boundary restores the Buyback wrapper — 27 October 2026
+
+The [one-line source proposal](../research/fees-buyback-module-source-proposal/README.md)
+changes only `mod instructions;` to `pub mod instructions;` on public PR188's
+exact 42-input math+pack source. This naturally retains the default bump store
+at wrapper offset 104 and recovers original 650064 / 1,208 bytes: pinned
+545→546 normalized windows, no losses, raw 118 unchanged. The later public552
+source still leaves this wrapper unmatched; a combined frontier is not claimed.
+
+Independent source checks preserve all other bytes and inputs, with thirteen
+passing tests and exact full materialization. Local native audit binds six real
+callee bodies and both complete direct objects. Two equal native builds and the
+finite 17,331-case regression passed locally; their evidence remains unpublished.
+The public source boundary is an inferred explanation, not historical provenance.
+
+Only ordinary source, a reversible patch, public input hashes and source-only
+tools are included. No binary, archive, log, runtime case or build/replay receipt
+excerpt/derivative is published. Default native_build_verified, runtime_verified
+and whole_binary_identity_verified remain false. Full raw ELF/capture identity,
+indirect behavior and unrestricted transitive data remain open. No selected
+checkpoint changes.
+
+## Canonical exact Relay selected
+
+The 60-input reconstructed Rust source is now installed at `programs/donation-relay`.
+Independent review compiled it from that canonical path with a completely empty
+target and no network: candidate and symbols match the exact ELF hashes. A fresh
+real-loader run reproduces all captured payload bytes. The current 4,415-row
+inventory now reflects this Relay selection, while the previous 23-input source
+and metadata remain explicitly historical.
+
+The successor guard preserves core107 and historical signature checks. Review
+fixed a checkout-specific absolute-path check by validating one recorded source/
+configuration root, read-only mounts and the same actual source hashes. Twelve
+selection, portability and critical-code controls pass; the preserved signature
+routes and exact Relay 536-record check pass. Historical source provenance,
+ProgramData metadata/history and broader behavior remain outside byte equality.
+
+## Fees: constant Pubkey boundary recovers the initializer parser — 27 October 2026
+
+The [constant-admin source proposal](../research/fees-initialize-config-const-admin-source-proposal/README.md)
+moves the unchanged admin Pubkey expression into a named constant, preserving
+account types, error code, literal value, source line count and dependencies.
+On exact public PR197's integrated550 source, this recovers original 295800 /
+6,232 bytes: isolated 550→551 normalized, raw 118→142, no losses. The ordinary
+constant boundary eliminates an unintended runtime base58-decoder call; its name
+is not claimed historical. Newer combined frontiers remain separate experiments.
+
+All 42 public input mappings and materialized bytes are independently verified;
+thirteen source-only tests pass. Local static audit binds 42 actual callees,
+14 complete direct objects and 163 decoded Location uses. Native outputs repeat
+and finite 17,331-case regression passes locally, but authentic fixed-admin
+initializer success is NOT exercised. These execution observations remain
+unpublished, not evidence supplied by default source verification.
+
+Positional byte differences worsen 456,100→466,938 despite raw-body gains; full
+ELF/capture identity is false. No binary, archive, log, runtime case or archived
+build/replay receipt derivative is included. Default native_build_verified,
+runtime_verified and whole_binary_identity_verified are false. No selected
+checkpoint or prior evidence changes.
+## Fees: checked native Crank credit — 27 October 2026
+
+The [Crank lamport-overflow proposal](../research/fees-crank-lamport-overflow/README.md)
+replaces one native destination `+=` with Anchor's checked `add_lamports`.
+Synthetic destination balances with insufficient `u64` headroom return the
+original's `ArithmeticOverflow` instead of the reconstruction's panic and
+`ProgramFailedToComplete`. This is an error-contract correction, not evidence
+of economically reachable live balances, an exploit or fund loss.
+
+The control preserves the current 553-window source, including the public
+instruction-module recovery, and imports PR197's three diagnostic expressions
+unchanged. Those prior recoveries are separately attributed. Fresh signed local
+replay corrects 15 control mismatches across 76 cases, with matching donation
+PDA/ATA rollback. The 17,331 existing suite comparisons and ten persistent
+create/deposit/crank steps pass. A clean dependency rebuild repeats both output
+hashes. Actual commands, source maps, compiler logs and runtime records are retained.
+
+All 553 normalized/118 raw-local counterparts, 406 unique pairs, 163 equal
+Location uses and 3,255 direct-edge observations remain. No new complete body
+match is claimed; Crank and 31 other original windows remain unmatched.
+Positional differing bytes increase 456,375→456,603 for the one-line fix, so
+the observed behavior improvement is not a whole-binary-distance gain. Selected
+checkpoints, original evidence, dependencies and existing harnesses are unchanged.
+## Fees: complete legacy and V2 distribution helpers
+
+The [distribution helper recovery](../repro/pump_fees/distribution-helper-recovery/README.md)
+composes two reconstructed Rust helpers with the AdminCto-integrated source at
+`3aa90d02`. The measured research candidate reaches **556/585 normalized windows,
+409 unique structural pairs and 118 raw-local matches**, with 29 unmatched
+windows. The selected checkpoint and pinned research inventory remain unchanged.
+
+The complete 936-byte legacy and 1,224-byte V2 bodies match under the existing
+call/relocation normalization. All 23 outgoing callee observations match, all
+165 checked source locations remain equal, and no prior positive match is lost.
+The changes follow original argument order and Rust ownership/evaluation order;
+no emitted bytes are patched. Both original/candidate pairs pass all 417 fresh
+sharing-update cases, exercising the legacy CPI in 90 cases and V2 CPI in 120.
+Raw logs and compute are not fully equal, and whole-file identity remains open.
+The packet retains all three builds, source snapshots, complete comparisons,
+compressed receipts, and a verifier with mutation tests.
+
+## Fees 556 inventory integration
+
+The verified PR206 candidate is now the current Fees research inventory: 556/585
+normalized windows, 409 unique structural pairs, 118 raw-local, and 29 unmatched
+windows spanning 196,880 original instruction bytes. Fresh execution of all
+17,331 suite comparisons passes. Call-graph refinement recomputes 69 additional
+pairs for 478 attributed correspondences, leaving 78 duplicate windows unassigned.
+The core selected checkpoint remains unchanged; this is a research inventory
+update, not whole-program identity or historical-source proof.
+## Fees: typed Relay donation encoder
+
+The [Relay encoder recovery](../repro/pump_fees/relay-donation-encoder/README.md)
+adds the complete 1,400-byte original function at 270136 through an ordinary
+borrowed Anchor-serializable argument type and a public encoder. It has a real
+incoming call from the reconstructed Crank handler. The measured research
+candidate advances from 556 to **557/585 normalized windows**, 410 unique
+structural pairs and 118 raw matches, with all prior matches and all 165 checked
+source locations preserved. The original calling handler remains unmatched.
+
+Both candidates pass 357 fresh donation-Crank cases, including 159 cases that
+reach the captured Relay program. The verifier checks the retained 556 parent
+source/artifact hashes directly, without requiring its Git object in a shallow
+checkout. Whole-ELF equality, full raw logs/compute and the selected checkpoint
+remain unchanged; this is an additional bounded research result.
+
+
+## Fees: six-window source integration on pinned public552 — 27 October 2026
+
+The [source-only integration](../research/fees-six-window-source-integration/README.md)
+composes seven ordinary source changes on exact public PR195 `origins`, with 43
+inputs and unchanged packages/lock/features. It retains all 552 normalized and
+118 raw matches, reaching **558 normalized / 143 raw / 411 unique pairs**.
+Six complete gains are 127776, 270136, 271536, 276672, 295800 and 650064. Attribution
+is explicit: PR200 Admin body, SDK's three typed Relay CPI helpers, PR204
+constant-admin parser and PR202 Buyback wrapper. PR197 diagnostics, independently
+measured native privileges and checked lamport methods also compose here.
+The typed and native-privilege controls were parallel, not a sequential chain;
+the checked arithmetic correction fixes an independently discovered overflow
+boundary also published by PR205, which is explicitly credited.
+
+All 42 public parent input bytes were independently checked, exact 43-input
+materialization and thirteen tests pass, and a fresh opt-in static reader checks
+83 actual new direct callees plus all 3,233 previously equal obligations and 165
+value-equal Location uses. Thirteen actual callee edges remain unequal. Raw
+section inventories and all full output hashes are bound; 446,635 common bytes
+still differ and the candidate meaningful ELF is 784 bytes too long. Whole
+binary identity remains false.
+
+Repeated native builds and finite runtime/application-log/boundary observations
+passed locally but their receipts are not included. Authentic fixed-admin success,
+exhaustive semantics and full runtime log/CU equality are not claimed. Later
+PR201 native-only lifetime work and PR206 distribution-helper recovery are
+explicitly not in this pinned source. Only
+ordinary source, public provenance, readable patches and freshly remeasured
+static metadata are published; no binary/archive, log, runtime fixture or
+archived build/replay receipt derivative. Default native/runtime/whole identity
+verification stays false. No selected checkpoint changes.
+
+## Pump AMM: buyback split helper and recorded source locations
+
+The [buyback helper recovery](../repro/pump_amm/buyback-helper-recovery/README.md)
+extracts the complete 328-byte original function at 412888 through ordinary
+Rust method ownership, public visibility and an early return. The measured
+candidate reaches **489 complete normalized windows**, including 93 raw matches,
+with 296 unmatched windows and no previous match lost. Both referenced panic
+messages and source-location triples match; all 51 prior location positives
+remain, giving 53. Raw pointer-bearing records and the full ELF still differ.
+
+Baseline and final candidate each pass 1,011 legacy-buy cases and 575 legacy-sell
+cases, with 3,172 signed transactions per build. The source layout and root-only
+path remap are documented reconstructed build inputs, not historical provenance.
+The retained materializer restores its builder's transitive Python imports, and
+the verifier checks ordered complete callees, source, artifacts and signatures.
+The selected checkpoint remains unchanged.
+
+## Independently compiled current558 source
+
+The [558 integration](../research/fees-current-558-integration/README.md) closes
+encoder 270136 and parser 295800 on the 556 base and preserves every previous
+match. It adds 24 raw-local counterparts:558 normalized,142 raw-local,411 unique,
+27 unmatched;189,248 original instruction bytes remain unmatched. Two builds
+agree. All 165 Locations and 3,284 prior positive direct-call observations survive,
+with 3,336 equal observations in the new build. All 17,331 suite and 76 boundary
+cases pass. Strict304-case Crank observations agree except explicit compute
+lines in every case; raw runtime equivalence is not claimed.
+## Mayhem: shared error namespace and typed Sell CPI
+
+The [shared-error and typed-CPI recovery](../repro/mayhem/shared-errors-typed-cpi/README.md)
+reconstructs six complete normalized helpers from Rust: three error helpers and
+three generated Sell CPI helpers. A fourth newly examined dependency already
+matched the baseline and is recorded as an admission result, not a source gain.
+All 177 prior admitted matches are retained. The expanded examined scope is
+191 admitted functions, 184 matching and seven still unmatched, with 250
+semantically opaque windows. All 58 literal raw windows remain equal; that
+includes 46 admitted and 12 still-opaque windows.
+
+Original data tables and bounded dispatch prove the twenty error names, numbers
+and messages. The typed CPI retains fourteen core accounts and two remaining
+accounts, with independently checked ordering and flags. Legacy Sell passes
+396 cases / 792 signed transactions, and the Burn regression adds 12 signed
+transactions. Four panic/overflow log differences remain. Full handlers and the
+whole ELF are still unequal, and no canonical source is promoted by this packet.
+
+## Fees: complete exotic-fee body on the pinned 558 union — 27 October 2026
+
+The [source-only exotic integration](../research/fees-exotic-body-source-integration/README.md)
+changes only `lib.rs` on exact PR209: borrowed resize-helper inputs and ordinary
+non-cloned event emission recover the complete 5,520-byte body at original 88552.
+The frozen result reaches **559 normalized / 143 raw / 412 unique pairs**, with
+no prior loss; 26 original windows remain unmatched. All 43 input hashes and the
+reversible one-file source patch are checked, with unchanged dependencies/features.
+
+Fresh optional static remeasurement checks all 21 actual direct callees, abort,
+incoming wrapper binding and all four complete direct object values. It preserves
+3,319 earlier equal callee obligations and 165 Locations, reaching 166 matched
+Location uses; 12 actual edges remain unequal. No transitive/indirect/runtime
+closure is inferred. Raw positional differences worsen 446,635 to 448,155,
+despite the complete-window gain; meaningful ELF size remains 640 bytes too long.
+
+Default verification, thirteen source tests and full materialization pass. Two
+exact native builds and finite 17,331-case/18-suite plus boundary checks passed
+locally, but no build/replay receipts, fixtures, logs, binaries or derivatives are
+published. Source/static verification alone reports runtime/build/whole identity
+false. Authentic fixed-admin success and exhaustive runtime log/CU identity remain
+unproven. All four core whole identities remain unresolved; no checkpoint changes.
+## Fees: complete remaining-account preprocessing
+
+The [preprocessing recovery](../repro/pump_fees/remaining-preprocess-recovery/README.md)
+reconstructs the complete 2,520-byte original function at 231576 using the
+observed public module, owned key value and borrowed-result lifetime. The
+cumulative research candidate reaches **558/585 normalized windows**, 411
+unique pairs and 118 raw matches. Every previous match is retained; 166 checked
+source locations agree, with 17 additional matching callee observations.
+
+The ordinary 417-case regression passes. Another 24 cases explicitly exercise
+the completed-curve branch with boundary account lengths and ownership/key
+variants. All compared outcomes and state pass; two incomplete-curve controls
+retain old downstream diagnostic differences. Whole-ELF equality remains open.
+No selected checkpoint is changed.
+
+## Mayhem: typed GlobalParams layout and complete codecs
+
+The [GlobalParams recovery](../repro/mayhem/global-params-layout-recovery/README.md)
+replaces opaque byte groups with transport-proven fields. The original serializer
+independently maps all 254 serialized bytes and 26 native fields. The shared
+trade-validation method and all three GlobalParams codecs now have complete
+normalized matches, preserving the six preceding helper gains and all 58 raw
+windows. Including the explicitly examined but unmatched quote-aware validator,
+the admitted scope is 196 functions, 188 matching and eight unmatched, with
+245 still semantically opaque. This does not turn opaque raw equality into a
+claim of analyzed behavior.
+
+The candidate passes 2,868 independently verified signed transactions: 1,032
+admin transport/update/reset cases (initializers excluded), 396 Sell cases and
+the three-family Burn regression. Independent checks reconstruct complete
+expected account bytes for 624 successful admin cases. Four Sell log differences
+remain, and no full-handler or whole-ELF equality is claimed.
+
+## Mayhem priority and quote-validator controls
+
+A private source build independently reproduces the latest GlobalParams artifact and symbols. Seven ordinary Rust variants preserve 188 examined matches and 58 raw-local windows, but the 1,296-byte O0095 body remains unmatched. Loading expiry before Clock recovers the original register/spill prefix; threshold and error block order remain open. These negative controls and their complete source/build evidence are retained in [the control packet](../research/mayhem-quote-validator-controls/README.md). The [Mayhem plan](MAYHEM-RECONSTRUCTION-PLAN.md) is now the active reconstruction priority.
+
+## Fees: legacy social-claim semantics on the pinned 559 source — 27 October 2026
+
+The [source-only Social proposal](../research/fees-social-claim-semantics-source-proposal/README.md)
+changes only the legacy `social.rs` body and its root module visibility on exact
+PR212's 43-input source. It restores saturated-deadline admission, four complete
+diagnostics, ordinary error conversion, saturating transfers and observed borrow/
+event ownership. The V2 handler, account declarations and other 41 inputs stay
+unchanged. Historical source topology is inferred, not proven.
+
+This is semantic progress, **not a complete-window gain**: all 559 normalized /
+143 raw counterparts and 166 Location uses remain, but original 132744's
+4,536-byte body is still unequal because of diagnostic block/branch placement.
+All 26 ordered actual callees and eight complete direct objects were checked
+locally without masking differing offsets. Positional differences worsen from
+448,155 to 453,541; the candidate is 80 bytes shorter than the meaningful original.
+
+Fresh local comparison on BOTH actual559 control and proposal covers 348 cases,
+fixing one state/event mismatch and 144 application-log mismatches. Two exact
+native builds, 17,331-case/18-suite regression and existing arithmetic boundaries
+also pass locally. No execution receipts, fixture/log data or derivatives are
+published; these observations are not downloadable runtime proof. Finite coverage
+is not exhaustive semantics, full log/CU equality or authentic fixed-admin success.
+
+Default source verification, thirteen tests and exact 43-input materialization
+pass. The nine plain-text files contain only ordinary source, reversible patch,
+public provenance and source-only tools; runtime/native/whole identity flags stay
+false. All four core whole identities remain unresolved; no checkpoint changes.
+
+## Mayhem interval-overflow location recovered
+
+[Compiled source-location recovery](../research/mayhem-interval-location-recovery/README.md) corrects exactly one ELF data byte: candidate offset 578012 changes from 27 to 32, matching original state.rs 562:32. All code bytes remain identical. Two clean root builds agree; all 396 Sell comparisons and 792 signed transactions verify. Known non-compute log differences decrease from four to three. Five [further validator controls](../research/mayhem-quote-validator-followups/README.md) preserve all 188 matches but do not close O0095.
+
+## Mayhem Sell arithmetic and source-origin recovery
+
+The [new source composition](../research/mayhem-sell-origin-recovery/README.md) restores the Result-based arithmetic failure and original state.rs locations. Two root builds agree. All 396 Sell cases match on the checked fields and every log line except explicit compute consumption; all 1,032 admin cases and three sequential Burn families pass. Independent verification covers 2,868 signatures and complete expected account bytes for 624 admin successes. No complete-function gain is counted: the current research remains 188/196 examined matches, eight admitted gaps and 245 opaque windows.
+
+
+## Fees: two sharing parsers and attributed CPI helper integration — 27 October 2026
+
+The [source-only sharing integration](../research/fees-sharing-parser-source-integration/README.md)
+changes one ordinary file on exact PR215's 43-input Social-corrected source.
+It recovers complete legacy/V2 account parsers at 484816 / 16,112 bytes and
+502096 / 16,880 bytes through the native ATA constants and explicit quote-mint
+owner constraint. Upstream PR206 owns the composed 235304 / 936-byte and
+236240 / 1,224-byte distribution helpers; they are not claimed as new discoveries.
+Later PR213 preprocessing is explicitly not included in this frozen source.
+Concurrent PR216 reaches the same 563 total with different coverage (preprocessing
+and new adapter204080 rather than these parsers); its overlapping PR206 helpers
+are credited, not claimed as fresh discoveries. Its new adapter is not included.
+
+Fresh measurement reaches **563 normalized / 143 raw / 416 unique pairs**, with
+no loss from actual559. All 252 actual direct callees from the four bodies match;
+all 3,341 prior equal obligations and 166 Location uses survive. Ten actual edges
+still target unequal complete bodies. Local semantic-extent audits also confirm
+47 and 45 parser objects plus the helpers' no-direct-object boundary, without
+claiming transitive data or exhaustive behavior.
+
+Raw positional differences worsen 453,541 to 464,073; the meaningful ELF remains
+1,432 bytes too long. Default verification, thirteen tests, exact materialization
+and fresh opt-in static comparison pass. Two exact root-clean builds and fresh local 17,331-case/18-suite regression pass,
+as do 348 Social checks, 357 covered Crank log cases and both native boundaries.
+Eight quote-owner matrix cases repair four failures in the actual parent. No runtime/build receipts,
+fixtures, logs, binaries or derivatives are included; default execution/identity
+flags remain false. All four core whole identities remain unresolved and no
+selected checkpoint changes.
+
+## Fees: V2 native social and buyback payout arithmetic — 27 October 2026
+
+The [native payout correction](../research/fees-native-payout-arithmetic/README.md)
+changes three expressions on exact PR215's 43-input source. Legacy social claim
+stays byte-identical to that merged work. V2 native credit now saturates like the
+original; overflowing transactions still fail `UnbalancedInstruction` and roll
+back, retaining the original clamped event/return value. Buyback returns
+`ArithmeticOverflow` instead of panicking. V2's executable-before-zero no-op
+order and both diagnostics are restored.
+
+Fresh normally signed comparison corrects 38 mismatches in 119 focused cases:
+30 overflow and eight native no-op cases. Legacy cases are preservation controls.
+The fresh proposal passes 17,331 existing comparisons across 18 suites. The
+all-dependency-clean baseline reproduces both published PR215 hashes, and a
+separate all-dependency-clean proposal rebuild reproduces both new hashes.
+Commands, logs, artifacts and full comparisons are retained in the packet.
+
+All 559 normalized/143 raw-local counterparts, 412 unique pairs, 166 equal
+Location uses and 3,353 direct-edge observations remain. No complete original
+body is newly matched; 26 windows remain unmatched. Positional differences
+worsen 453,541→466,189 and whole-binary equality remains false. Synthetic extreme
+balances do not establish mainnet reachability or an exploit; failed events are
+not successful payments. Originals, prior evidence and selected sources remain
+unchanged. Earlier 554-based experiments were superseded after PR215 merged and
+are excluded from these acceptance counts.
+
+## Mayhem deployed trade-wrapper attribution
+
+The [new audit and source controls](../research/mayhem-trade-wrapper-attribution/README.md)
+map all six trade bodies from actual wrapper log literals and direct calls.
+O0092/O0093 belong to PumpSwap Buy/Sell rather than legacy Buy/Sell. Two actual
+15-input builds preserve all 188 examined normalized matches and 58 raw-local
+matches; neither quote helper is a full counterpart. The branch/error control
+passes 1,257 fresh BuyPumpSwap comparisons across three quote families with
+2,514 verified signatures. Token-2022 fixtures all reject. Full handlers, eight
+admitted body gaps, opaque scope and whole-file equality remain unresolved.
+
+## Mayhem AMM source origins and expanded audit scope
+
+[Shared state/origin recovery](../research/mayhem-amm-source-origins/README.md)
+restores AMM validation/risk diagnostics and the balance-delta adapter's original
+source sites. All 1,653 fresh trade comparisons have exact logs after removing
+only compute-consumption lines. The full packet verifies 5,382 signatures,
+1,032 admin cases with 624 independently reconstructed account results, and three
+Burn families. Two root builds reproduce the 625,488-byte candidate.
+
+No new whole-body match is claimed. Explicitly admitting O0090 and O0092 expands
+the ledger to 198 examined / 188 matched / ten unmatched / 243 opaque, retaining
+all 58 all-inventory raw-local counterparts. The ten examined extents total
+101,480 bytes; opaque code and whole-ELF obligations are additional work.
+
+## Full Mayhem window accounting
+
+The [complete static scan](../research/mayhem-full-window-audit/README.md) now
+reports every original window rather than restricting its headline to the
+source-interpreted subset. Existing artifacts have 58 raw-local matches,
+269 normalized-only matches and 114 unmatched windows (495,936 bytes). The
+139 additional structural matches were previously classified as opaque, not
+newly reconstructed. All 441 windows cover text without gaps; 93 counterpart
+mappings remain ambiguous. Three retained root MIR controls fail to improve the
+accounting or quote helper and do not replace the existing candidate.
+
+## Shallow-checkout Relay source verification repair
+
+The linked-ELF verifier now reconstructs the same three exact 60-input maps from checked-in public source files authenticated by the unchanged historical source manifest. It no longer requires old Git commit objects merely to read those files. A tiny local depth-one clone reproduces the missing-history failure; ten source-only regression tests pass, including changed/missing input, immutable manifest, unsafe path and symlink rejection. No Git/network fallback is permitted.
+
+The historical wrapper package, compiler source hashes, original and reconstructed ELF bytes, linker recipe, archived builds and runtime evidence remain unchanged. Only the linked verifier and its explicit canonical/status dependency pins change. This fixes CI source retrieval, not a new binary or runtime claim; the complete archived-ELF/portable CI route is checked separately. See `repro/donation-relay/linked-elf-reproduction/SOURCE-CHECKOUT.md`.
+
+## Mayhem native Program parser recovery: fourteen full bodies
+
+[Native Program recovery](../research/mayhem-native-program-recovery/README.md)
+adds 14 strict normalized matches and preserves the preceding 327. Restoring the
+unconditional program-ID check in an authenticated Anchor source copy permits
+standard Program account syntax and reproduces the original generated parser
+layout. All six trade account parsers and Burn's parser now match; their business
+handlers remain separate work. Five new bodies retain a differing direct-callee
+shape. No raw-local gain or whole-ELF equality is claimed.
+
+The two builds reproduce the same 625,904-byte candidate. All 6,636 trade cases,
+1,032 admin cases and three Burn families pass; the verifier checks 15,348
+signatures and 624 complete admin account results. The full static remainder is
+100 windows / 350,216 bytes, versus 114 / 495,936 before this source recovery.
+
+## SweepBuyback source-coordinate and arithmetic-order proposal
+
+A separately measured three-file Rust delta on the exact PR212 559-window source restores original admission diagnostics, a real state claim method/source locations, borrowed balance access, transfer-before-counter ordering and source-free counter errors. PR219 independently published the same destination `add_lamports` correction and is explicitly credited; the other changes and all reported comparisons remain scoped to the pinned PR212 parent, not incremental claims over current upstream.
+
+The default source-only verifier and 13 tests pass; all 43 materialized input hashes match the frozen native-tested source. Independent local static remeasurement retains 559/585 normalized windows, 143 raw local counterparts and 166 equal Locations. The actual unmatched body is 6,984 versus original 6,960 bytes; its matched-wrapper binding, multiset of 37 actual callee shapes and 17 direct used operands/descriptors were checked, not a whole-body/CFG proof. Common-position differences worsen 448,155 → 455,540.
+
+Two identical local native builds and the finite 17,331-case regression passed; the exact candidate repairs 275 prior application-log mismatches among 1,249 Buyback cases plus separately checked arithmetic boundaries. These are explicitly unpublished local observations, not downloadable execution proof. The packet contains only ordinary source, reversible patch, full provenance/maps and static source tools; no artifact or build/runtime receipt. See `research/fees-sweep-buyback-source-proposal/README.md`. Whole core identity remains unresolved and no selected checkpoint changes.
+## Mayhem: restore BuyV2's shared trade-validator call — 27 October 2026
+
+The [BuyV2 shared-validation proposal](../research/mayhem-buy-v2-shared-validation/README.md)
+replaces one duplicated pause/Clock/rate block with the existing O0094 validator.
+Only BuyV2 source changes on the pinned 15-input Sell-origin baseline. The fully
+matched O0189 wrapper binds original O0083 to the actual candidate handler. The
+original calls O0094 once, the control does not, and the proposal restores that
+edge. The validator's complete 1,192-byte body and nine ordered immediate callee
+bodies match under unchanged normalization. No new complete body match is claimed.
+
+Fresh focused replay corrects 12 non-compute log differences in 24 signed cases.
+Both actual Linux control and proposal also pass 613 existing BuyV2 cases for
+each of native, legacy-token and Token-2022 quotes: 1,839 comparisons per build.
+Independent verification checks 7,356 signature entries, successful state/event/CPI
+results and failed-transaction rollback. The broader non-compute log differences
+decrease 130→118; raw compute differences and all remaining diagnostics stay explicit.
+
+All 188 prior examined matches and the Linux control's 63 raw-local windows remain.
+The latter already includes five platform-related raw matches beyond the Darwin
+parent and is not credited to this source delta. Linux does not reproduce the
+Darwin parent's whole hash. A separate all-dependency-clean build and the portable
+builder reproduce both proposal ELF hashes. BuyV2's complete body, full call/data
+closure, whole-ELF identity and later 16-input AMM composition remain unresolved.
+Originals, existing evidence and selected sources/checkpoints remain unchanged.
+
+## Native Program + BuyV2 shared-validator composition
+
+The [new composition](../research/mayhem-native-buy-v2-validation/README.md)
+verifies PR226's call restoration on the newer native Program source. Its two
+root builds are identical and preserve all 341 full-window matches. All 1,839
+fresh BuyV2 comparisons pass; 3,678 new signatures and 3,678 parent signature
+entries verify. Non-compute log differences decrease from 130 to 118. This is a
+restored call edge and diagnostic improvement, not a new complete body or ELF
+match; other parent runtime observations are not rebound to the new artifact.
+
+
+## Current-public Social V2 admission and Source-coordinate proposal
+
+Two ordinary source overrides on the exact 43-input public PR222 source restore V2 feature/deadline/executable admission, zero-amount diagnostics, saturating operators and four actual associated-token helper Source coordinates. PR219's native saturation/messages and PR220/222's existing recoveries are preserved and credited. Legacy Social code and prior helper bodies/physical ranges are unchanged. This isolated source retains 570 normalized / 143 raw local counterparts and 168 equal Locations; both V2 business and ATA helper bodies remain unmatched. Later finish-helper/Sweep integrations are not composed here.
+
+All 43 public compressed source blobs and expanded hashes were authenticated; exact materialization, default verification and 15 tests pass. Two exact-public source builds repeat both full ELF hashes and match the separately executed source-order control byte-for-byte. The finite 640-case current-parent comparison repairs three outcomes and 283 application-log mismatches; 17,331 regression cases pass their defined predicates. This is explicitly full-byte-linked execution evidence, not a new source-path replay. Eight executable-recipient snapshots omit executable-account bytes, and 78 known sharing application-log mismatches remain. All receipts/case data stay local.
+
+Fresh static checks bind the real wrapper, three early callees, four diagnostics/four Source records, plus 729 decoded deadline and 343 saturation combinations—not whole CFG/behavior closure. Raw differing positions worsen 462,922 → 470,275. The nine-file source-only packet has no binary/archive or build/runtime receipt derivative; default native/runtime/whole identity claims remain false. See `research/fees-social-v2-current-source-proposal/README.md`.
+
+## Mayhem: shared post-buy accounting calls — 27 October 2026
+
+The [shared accounting packet](../research/mayhem-buy-accounting-calls/README.md)
+restores the original O0081/O0083 calls to O0090 in Legacy Buy and BuyV2. Only
+the two duplicated handler blocks change; the existing AMM accounting source
+is credited unchanged. Matched wrappers attribute the calls, and all twelve
+ordered immediate helper callees match. No new complete body is claimed.
+
+The pinned native Program/BuyV2 composition is rebuilt locally on Linux. All
+343 control matches and 63 raw-local windows survive. Across 2,325 cases per
+build, strict non-compute log differences fall from 148 to 32 (116 corrected,
+none introduced). A further 1,257 AMM comparisons retain exact non-compute logs.
+Independent checks verify 11,814 signature entries across 5,907 fresh comparisons,
+including complete successful account/event outcomes and failed-transaction
+rollback. Fresh dependency-clean and portable builds reproduce both artifacts.
+The later full-curve source delta is independent and not claimed composed here.
+Original captures and selected checkpoints remain unchanged; complete handlers,
+O0090, transitive/data closure and whole-file identity remain unresolved.
+
+
+## Mayhem: external unchecked curve decoder — 27 October 2026
+
+The [external decoder packet](../research/mayhem-external-curve-decoder/README.md)
+recovers complete O0213 (2,272 bytes) by moving the full external curve into an
+ordinary dependency crate with the pinned Anchor account macro. All 15 immediate
+direct-callee bodies match. The exact Linux full-curve control's 347 matches and
+64 raw-local windows survive, reaching 348 matches. Platform differences from
+the 345-match Darwin parent are not credited to the source change.
+
+Three builds, including a fresh dependency build and portable materialization,
+reproduce both artifacts. All 4,140 local Legacy Buy/Sell and BuyV2/SellV2 cases
+pass independent functional checks with 8,280 verified signature entries.
+The 182 non-compute diagnostic differences, one indirect call and six unresolved
+referenced extents remain explicit. Checked decoding and whole ELF still differ.
+The later 375-match parallel composition still lists O0213 as unmatched, but its
+integration and the separate shared-accounting delta are not claimed tested here.
+Original captures and selected checkpoints remain unchanged.
+
+## Fees sharing slice recovery
+
+The [combined Rust reconstruction](../research/fees-sharing-slice-recovery/README.md)
+adds exact normalized windows for legacy preparation (199072, 5,008 bytes), quote
+preparation (219376, 6,544 bytes), and the V2 caller (211408, 7,968 bytes). The
+frontier is 577/585 normalized windows, 143 raw local matches, 430 unique pairs,
+181 equal Locations and 3,870 equal direct-callee observations. No prior positive
+match is lost. Eight functions and complete ELF/data/relocation layout remain open.
+
+Two native builds agree; fresh execution passes 17,331 cases across 18 suites.
+All 6,413 comparable application-log cases agree. The new parallel test runner
+uses the canonical suite plan, with a separate process per suite; a same-binary
+control reproduces the complete sequential report. This is a test-speed change,
+not a relaxation of the acceptance criteria. Whole-ELF identity remains false.
+
+
+## Fees qualified linker layout
+
+The [qualified object/archive-section recipe](../research/fees-qualified-linker-layout/README.md)
+uses the unchanged 46-file Fees577 Rust source. It increases complete raw-local
+function matches from 143 to 198, retaining all 577 normalized matches, 430 unique
+structural pairs, 181 equal Source observations and 3,870 equal direct-callee
+observations. No previous positive observation is lost. Two native builds agree.
+Fresh execution passes 17,331 cases across 18 suites, including equal application
+logs in 6,413 cases. The order includes 499 exact graph bindings, 78 ambiguous equal
+function assignments and 8 unequal semantic-handler assignments; those limitations
+remain explicit. Eight original bodies and complete ELF/data/relocation identity
+remain open.
