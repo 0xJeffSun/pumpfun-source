@@ -29,9 +29,20 @@ Base: origin/main 0cc61d636, AMM frontier repro/pump_amm/event-decoder-recovery-
 - fnllc.py: fixed unnamed-global extraction bug; validate on amm-mid cum3.ll + its linked .so: 460/460 root-crate functions equal.
 - Lock contention dominates: x3 waited 636 s for an sbf slot (6 slots, ~12 waiters, load ~80) before a 1m49s cargo build.
 
+- x4 (12:19) EXACT: shim v2 + Linux rlibs on the 647 source -> candidate 0881a95d…, unstripped 16ddd88d… == authenticated Linux
+  (elfdiff IDENTICAL), 647/148/138; cargo 2m02s natively (deps+root). lin1 (patched linux_build.py, priming 30 added/0 changed)
+  reproduced 0881a95d…/16ddd88d… too.
+- Published (12:20-12:25): SP/shared/toolchain/v144x (shim v2 + hostdeps), SP/shared/caches/xnative-v144 (primed deps),
+  shared tools native_build.sh v2 (cache, EXACT=1, timing.txt), native_exact_build.sh, buildcache.py, rustc_replay.py (build-plan
+  based), variants.py, fnllc.py (vs-orig/validate/check), sync_registry.py; README READY-v1; findings note. Plain-native 647 cache
+  entry seeded from multihop's build (== v2's).
+- Packet g01-exact-native-loop committed.
+
 ## In progress
-- x4: exact native build with shim v2 (fresh target xnative2). Expect 0881a95d…/16ddd88d….
-- lin1: Linux build of the 647 source via the patched linux_build.py (priming check).
+- x5: exact build of the 651 frontier (optional-context-recovery) through the SHARED tools/toolchain (expect 97bd5553…/0142baee…);
+  seeds the exact cache for every lane's 651 baseline.
+- exp2: one slot, x4 workspace: direct rustc replay (identical bytes?), --emit=llvm-ir only, -Ztime-passes, -Zthreads=4.
 
 ## Next
-- publish native_build.sh v2 (+EXACT) + shared primed xnative cache; rustc_replay timing; variants.py; README + READY-v1.
+- fnllc vs-orig on the exact IR (rp-d); variants.py smoke test (comment-only patch twice: build + cache hit);
+  update g01 evidence + PR.
