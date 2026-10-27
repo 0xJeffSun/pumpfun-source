@@ -2,13 +2,13 @@
 
 The execution workspace went offline during the final build request. This note preserves observations from completed builds and the next investigation step. **No new accepted match, runtime validation, full data binding, or ELF identity is claimed.** The qualified frontier remains [583/585 normalized and 200 raw-local matches in PR #301](https://github.com/lalalune/pumpfun-source/pull/301).
 
-The native artifacts and complete new source workspaces were not exported before the outage. Hashes below identify observed local outputs; they are not a substitute for retained, independently verified artifacts. The existing [residual packet](../fees-residual-current583-20261027/README.md), published in [PR #304](https://github.com/lalalune/pumpfun-source/pull/304), remains the reproducible starting point.
+The native artifacts and complete new source workspaces were not exported before the outage. Hashes below identify observed local outputs; they are not a substitute for retained, independently verified artifacts. The existing [residual packet](https://github.com/shawkkkkk/pumpfun-source/blob/aafecfeda4408193048bbd7df16afd6e95c493fc/research/fees-residual-current583-20261027/README.md), published in [PR #304](https://github.com/lalalune/pumpfun-source/pull/304), remains the reproducible starting point.
 
 ## Completed observations
 
 | Local build label | Reported original signature matches | Compiled windows | Create bytes | Result |
 | --- | ---: | ---: | ---: | --- |
-| `create583-mir-inline` | 390 | 588 | 15,120 | Global MIR inlining rejected: 193 earlier matches lost |
+| `create583-mir-inline` | 390 | 588 | 15,120 | Global MIR inlining rejected: 193 fewer matches |
 | `create583-isolated-renderer-retry` | 582 | 594 | 13,880 | Formatting improved; error-name implementation regressed |
 | `create583-renderer-bridge` | 583 | 594 | 13,880 | Root error-name callback restored the original 8,904-byte name body |
 | `create583-renderer-root-constructors` | 583 | 585 | 13,880 | Root error construction removed nine duplicate helper windows |
