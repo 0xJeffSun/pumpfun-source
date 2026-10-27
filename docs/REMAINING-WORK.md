@@ -17,6 +17,14 @@ non-compute logs. O0093 still has 1,096 candidate bytes versus 1,120 original
 bytes; complete instruction order and correspondence remain work. The other
 parent runtime suites retain their original artifact bindings.
 
+The [retained-reserve recovery](../research/mayhem-retained-bps-recovery/README.md)
+repairs fourteen overflow diagnostics in three actual trade handlers, using the
+existing shared arithmetic. All 6,636 new trade comparisons pass, with seven
+`quote_extreme_1_0_1` division-by-zero diagnostic differences still visible.
+Its native clean-build control preserves all 426 normalized windows; the source
+change adds no complete body match. The 58 sweep diagnostics and fifteen
+unmatched bodies remain separate work.
+
 The [completed account-data cohort](../research/mayhem-account-cohort-complete/README.md)
 has 156 typed-equal references and none unresolved within its declared scope.
 The final records are the tagged I/O error at `0xb1220` and the empty hash-table

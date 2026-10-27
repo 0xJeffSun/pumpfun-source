@@ -4,6 +4,25 @@ The [full audit](RECONSTRUCTION-AUDIT.md) and its generated tables retain their
 explicit `1463bd22` snapshot. This log records later research without silently
 changing that baseline or promoting new selected artifacts.
 
+## Mayhem: restore retained-bps arithmetic in three trade handlers
+
+The [four-line recovery](../research/mayhem-retained-bps-recovery/README.md)
+uses the existing retained-bps subtraction in Legacy Buy, BuyV2 and SellV2.
+Fourteen executed overflow cases now report the original `state.rs:321:26`
+origin; three bounded Source descriptors in the live handlers also agree.
+All 6,636 fresh trade comparisons and five independent receipt checkers pass.
+Trade diagnostic differences fall from 21 to seven, with no new complete body
+match. Three fresh proposal builds agree.
+
+The accompanying [native control](../research/mayhem-native-clean-reproduction/README.md)
+independently compiles the unchanged 65-input source from empty target directories,
+authenticates both complete official Linux SDK installations, and preserves all
+426 normalized matches, 4,234 supported calls, 441 Source records and 153 typed
+account references. Its 9,586 comparisons are bound to that control artifact.
+O0297 adds one placement-dependent raw-local observation (71 total), not a new
+function recovery. Whole ELF equality, fifteen unmatched bodies and the remaining
+diagnostic/data/transitive gaps remain open.
+
 ## Mayhem: complete the 156-reference account-data cohort
 
 The [final refinement](../research/mayhem-account-cohort-complete/README.md)
