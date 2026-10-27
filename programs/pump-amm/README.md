@@ -1,25 +1,29 @@
 # PumpSwap source reconstruction
 
-The maintained source is the [account-context and ordering checkpoint](../../repro/pump_amm/account-context-recovery-20261027/README.md),
-candidate `badc94982f2ae20adc2a6be7fd22bba9d900c289de7c3b9e7475847af960ca7d`. It restores native account layouts, helper boundaries
-and fee, mint-mode, incentive and creator-reassignment ordering.
+The maintained source is the [guard, route and data checkpoint](../../repro/pump_amm/guard-data-recovery-20261027/README.md),
+candidate `e97b3900800d4378486d9b1f7df040e6b7a57d34b31a9470a5f5eb3a9d2fb24b`. It closes the canonical-pool constraint and route
+lookahead ordering gaps, recovers helper code/calls, and restores accumulator
+source descriptor paths.
 
-It matches **623/785 normalized original windows (79.4%)**, including **128 raw
-bodies**, and covers **727,352/1,162,040 text bytes (62.6%)**. It gains 24 windows
-without losing any from the prior checkpoint; **162 windows remain** and whole
+It matches **638/785 normalized original windows (81.3%)**, including **128 raw
+bodies**, and covers **782,776/1,162,040 text bytes (67.4%)**. It gains 15 windows
+without losing any from the prior checkpoint; **147 windows remain** and whole
 ELF identity is false. Two strict offline builds reproduce the same artifact.
 
-All 17,462 full cases pass with 35,074 executions and 35,418 verified signatures.
-Retained supplemental and expanded continuation probes also pass. Counts overlap.
-A separate follow-up probe still differs in 12 of 24 creator-migration constraint
-cases; the missing canonical-pool guard remains open in this checkpoint.
-Eight creator-order cases use an explicitly synthetic Pump CPI caller; the other
-named continuation groups use captured dependencies. Source-coordinate and
-compute log normalization is documented in each packet.
+All 17,462 corpus cases pass with 35,074 executions and 35,418 verified signature
+fields. Expanded current-candidate tests include 24 migration, 56 route-guard,
+80 vault and 1,805 accumulator/incentive cases. The 328 deeper-route cases use
+ordinary signed ComputeBudget instructions and finish three-hop buy and sell.
+Counts overlap. Normalization and substituted-dependency exceptions are
+explicitly documented in the linked packets.
 
-The recipe binds 47 canonical inputs to 48 workspace and 169 authenticated registry
-inputs. Full code/data/call identity, historical toolchain provenance, exhaustive
-behavior and authentic fixed-admin create_config success remain open.
+A separate malformed-recipient follow-up still differs in six of nine cases;
+its scope and evidence are documented in the checkpoint.
+
+The recipe binds 48 canonical inputs to 49 workspace and 169 authenticated registry
+inputs. Complete code/data/call identity, remaining source coordinates,
+historical toolchain provenance, exhaustive behavior and authentic fixed-admin
+create_config success remain open.
 
 The paragraphs below describe historical checkpoints.
 

@@ -89,7 +89,7 @@ pub fn execute(ctx: Context<BoostBuyAndBurn>, requested: u64, minimum: u64) -> R
     emit!(event.clone()); emit_cpi!(event);
     let a = &mut *ctx.accounts;
     let event = BoostBuyAndBurnEvent {
-        timestamp, mint: a.base_mint.key(), bonding_curve: Pubkey::find_program_address(&[b"bonding-curve", a.base_mint.key().as_ref()], &crate::trade::PUMP).0,
+        timestamp, mint: a.base_mint.key(), bonding_curve: crate::utils::bonding_curve(&a.base_mint.key()),
         pool: pool_key, authority: a.authority.key(), quote_amount_in_requested: requested, quote_amount_in_used: used,
         base_amount_burned: burned, virtual_quote_reserves: a.pool.virtual_quote_reserves,
         real_quote_reserves_after: a.pool_quote_token_account.amount, base_reserves_after: a.pool_base_token_account.amount, boost_vault_remaining: a.boost_vault.amount,

@@ -1,4 +1,3 @@
-//! Static-only reconstruction; fixed-admin positive execution is unvalidated.
 use crate::*;
 
 const FIXED_ADMIN: Pubkey = anchor_lang::solana_program::pubkey!("8LWu7QM2dGR1G8nKDHthckea57bkCzXyBTAKPJUBDHo8");
@@ -6,6 +5,7 @@ const FIXED_ADMIN: Pubkey = anchor_lang::solana_program::pubkey!("8LWu7QM2dGR1G8
 #[event_cpi]
 #[derive(Accounts)]
 pub struct CreateConfig<'info> {
+    /// Static-only reconstruction; fixed-admin positive execution is unvalidated.
     #[account(mut, address = FIXED_ADMIN @ PumpAmmError::InvalidAdmin)]
     pub admin: Signer<'info>,
     #[account(init, payer = admin, space = 949, seeds = [b"global_config"], bump)]

@@ -1383,3 +1383,5 @@ research/recovery-findings-20261027/submitted/** -whitespace
 research/claude-amm-hi-20261027/source.patch -whitespace
 research/claude-amm-lo-20261027/source.patch -whitespace
 research/claude-pump-hi-20261027/source.patch -whitespace
+repro/pump_amm/guard-data-recovery-20261027/results/** -whitespace
+repro/pump_amm/guard-data-recovery-20261027/followup/** -whitespace
