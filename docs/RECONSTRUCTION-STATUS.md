@@ -6,7 +6,7 @@ This review updates the research frontier while preserving the selected-checkpoi
 contains every one of the **4,415 selected/research function-window rows**.
 
 The generated inventory is a dated snapshot. Later maintained selections now
-include Pump Round23 and the AMM account-context recovery; their current counts and
+include Pump Round24 and the AMM account-context recovery; their current counts and
 evidence are in the [repository overview](../README.md). The current rows below
 are separate from the historical rows, and do not rewrite that snapshot.
 
@@ -51,13 +51,13 @@ analysis. Candidate symbol names are hypotheses about original identity.
 | Fees selected | 585 | 102 | 363 | 120 | 0 |
 | Mayhem historical selected | 441 | 58 | 131 | 7 | 245 |
 | Relay historical source 15 | 492 | 33 | 89 | 370 | 0 |
-| **Pump current Round23** | **1,035** | **123** | **589** | **323** | **0** |
+| **Pump current Round24** | **1,035** | **123** | **597** | **315** | **0** |
 | **PumpSwap current** | **785** | **128** | **495** | **162** | **0** |
 | **Fees latest research** | **585** | **198** | **381** | **6** | **0** |
 | **Mayhem latest research** | **441** | **100** | **329** | **12** | **0** |
 | **Relay canonical selection** | **492** | **492** | **0** | **0** | **0** |
 
-The current rows are bound to [Pump Round23](../repro/pump/main-contract-round23-20261027/README.md), [AMM account-context recovery](../repro/pump_amm/account-context-recovery-20261027/README.md), [Fees Social claim-v2 recovery](../research/fees-social-claim-v2-recovery/README.md) and [Mayhem BuyV2 sizing recovery](../research/mayhem-sizing-panic-recovery/README.md); they extend the dated generated inventory below. Each row is a partition, not a score of semantic correctness. The historical selected Mayhem source
+The current rows are bound to [Pump Round24](../repro/pump/main-contract-round24-20261027/README.md), [AMM account-context recovery](../repro/pump_amm/account-context-recovery-20261027/README.md), [Fees Social claim-v2 recovery](../research/fees-social-claim-v2-recovery/README.md) and [Mayhem BuyV2 sizing recovery](../research/mayhem-sizing-panic-recovery/README.md); they extend the dated generated inventory below. Each row is a partition, not a score of semantic correctness. The historical selected Mayhem source
 ledger has 257 opaque windows, 12 of which happen to match local raw bytes.
 Selected Fees retains two call-conflicting rows; body existence does not resolve
 those conflicts. Different programs and studies use different matching rules.

@@ -38,7 +38,7 @@ pub fn execute(ctx:Context<SweepFees>,creator:bool)->Result<()>{
    let d=account.try_borrow_data()?;let token=anchor_spl::token_interface::TokenAccount::try_deserialize(&mut &d[..])?;require_keys_eq!(token.mint,a.quote_mint.key(),PumpError::MintDoesNotMatchBondingCurve);
   }
   let mint=a.base_mint.key();let bump=[ctx.bumps.bonding_curve];let seeds:&[&[u8]]=&[b"bonding-curve",mint.as_ref(),&bump];
-  anchor_spl::token_interface::transfer_checked(CpiContext::new_with_signer(a.quote_token_program.to_account_info(),anchor_spl::token_interface::TransferChecked{from:a.associated_quote_bonding_curve.to_account_info(),mint:a.quote_mint.to_account_info(),to:a.associated_quote_recipient.to_account_info(),authority:info},&[seeds]),amount,a.quote_mint.decimals)?;
+  crate::sell_v2::quote_token_transfers::transfer_quote_tokens(&a.quote_token_program,a.associated_quote_bonding_curve.as_ref(),a.associated_quote_recipient.as_ref(),info,a.quote_mint.decimals,a.quote_mint.as_ref().as_ref(),amount,&[seeds])?;
  }
  if creator{a.bonding_curve.creator_fee=0;}else{a.bonding_curve.protocol_fees=0;}
  let event=SweepBondingCurveFeeEvent{timestamp:Clock::get()?.unix_timestamp,mint:a.base_mint.key(),bonding_curve:a.bonding_curve.key(),quote_mint:a.bonding_curve.quote_mint,recipient:a.recipient.key(),amount,bucket:if creator{1}else{0}};emit!(event.clone());emit_cpi!(event);Ok(())

@@ -64,6 +64,7 @@ let c=&a.bonding_curve;
  let v2=rem.get(index).ok_or_else(||error!(PumpError::InvalidBondingCurveV2))?;require!(v2.key()==Pubkey::find_program_address(&[b"bonding-curve-v2",a.mint.key().as_ref()],&crate::ID).0,PumpError::InvalidBondingCurveV2);
  let bbps=if c.is_mayhem_mode{0}else{a.global.buyback_basis_points};
  let cashback_coin=c.is_cashback_coin;
+ if cf!=0 && !cashback_coin {crate::legacy_buy::native_payments::ensure_rent_exempt(&a.system_program,&a.user,&a.creator_vault)?;}
  if cf!=0 {a.bonding_curve.sub_lamports(cf)?;if cashback_coin{rem[0].add_lamports(cf)?;let mut d=rem[0].try_borrow_mut_data()?;let n=u64::from_le_bytes(d[74..82].try_into().unwrap());d[74..82].copy_from_slice(&add(n,cf)?.to_le_bytes());}else{a.creator_vault.add_lamports(cf)?;}}
  let bb=rem.get(index+1).ok_or_else(||error!(PumpError::BuybackFeeRecipientMissing))?;require!(a.global.buyback_fee_recipients.contains(bb.key),PumpError::BuybackFeeRecipientNotAuthorized);
  if output!=0 {a.bonding_curve.sub_lamports(output)?;a.user.add_lamports(output)?;}

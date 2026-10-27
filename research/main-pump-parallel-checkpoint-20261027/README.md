@@ -20,10 +20,12 @@ python research/main-pump-parallel-checkpoint-20261027/verify.py --extract /tmp/
 
 Extraction does not execute any included source. `MANIFEST.json` records all 5,201 files and their hashes, plus omitted active/generated files and the snapshot timestamp. Ongoing work after that timestamp remains separate until the next checkpoint.
 
-`REMAINING-WORK.json` assigns all 323 unmatched Round23 windows to three parallel lanes, with initial source attribution and cross-cutting completion requirements. The later update receipts record completed Round16 and creation validation; the original snapshot retains its exact capture-time state.
+`REMAINING-WORK.json` assigns all 315 unmatched Round24 windows to three parallel lanes, with initial source attribution and cross-cutting completion requirements. The later update receipts record completed Round16 and creation validation; the original snapshot retains its exact capture-time state.
 
-The maintained source has since advanced to [Round23](../../repro/pump/main-contract-round23-20261027/README.md), with 712/1,035 matched windows and the complete validation recorded there. This archive retains its original capture-time contents.
+The maintained source has since advanced to [Round24](../../repro/pump/main-contract-round24-20261027/README.md), with 720/1,035 matched windows and the complete validation recorded there. This archive retains its original capture-time contents.
 
 [Later main-Pump follow-up research](follow-up-round18/README.md) preserves additional creation, V2-transfer and V3-fee work, including negative and pending variants. Its separate manifest and verifier retain the captured state without promoting those variants.
 
 [Round22 follow-up research](follow-up-round22/README.md) preserves 8,939 additional main-contract research files, including validated, negative and unfinished controls. Its manifest and verifier bind four archive parts; inclusion does not promote a variant or establish full reconstruction.
+
+[Round24 follow-up research](follow-up-round24/README.md) preserves 2,276 main-contract experiment files, including unpromoted controls and the funding counterexamples. Its archive manifest and verifier are separate from the maintained source selection.

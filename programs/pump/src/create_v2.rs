@@ -110,11 +110,7 @@ pub fn execute<'info>(ctx:Context<'_,'_,'_,'info,CreateV2<'info>>,name:String,sy
  // initialize_mayhem_state (disc 0x2dcc4555485ebd9d, no args). Mayhem derives the
  // mint from account #4, derives/inits mayhem_state["mayhem-state",mint] and the
  // sol-vault token vault, and sets end_timestamp=now+reset_middle[0]*3600.
- if is_mayhem_mode {
-  let mdata=vec![157u8,189,94,72,85,69,204,45];
-  let mix=Instruction{program_id:MAYHEM_ID,accounts:vec![AccountMeta::new(a.user.key(),true),AccountMeta::new_readonly(a.global_params.key(),false),AccountMeta::new_readonly(a.mint_authority.key(),true),AccountMeta::new(a.sol_vault.key(),false),AccountMeta::new_readonly(a.mint.key(),false),AccountMeta::new(a.mayhem_token_vault.key(),false),AccountMeta::new(a.mayhem_state.key(),false),AccountMeta::new_readonly(a.system_program.key(),false),AccountMeta::new_readonly(a.token_program.key(),false),AccountMeta::new_readonly(a.associated_token_program.key(),false)],data:mdata};
-  invoke_signed(&mix,&[a.user.to_account_info(),a.global_params.to_account_info(),a.mint_authority.to_account_info(),a.sol_vault.to_account_info(),a.mint.to_account_info(),a.mayhem_token_vault.to_account_info(),a.mayhem_state.to_account_info(),a.system_program.to_account_info(),a.token_program.to_account_info(),a.associated_token_program.to_account_info()],&[seeds])?;
- }
+ if is_mayhem_mode { initialize_mayhem(&ctx)?; }
  token_interface::mint_to(CpiContext::new_with_signer(a.token_program.to_account_info(),token_interface::MintTo{mint:a.mint.to_account_info(),to:a.associated_bonding_curve.to_account_info(),authority:a.mint_authority.to_account_info()},&[seeds]),a.global.token_total_supply)?;
  if is_mayhem_mode {
   // Mayhem mints the full supply to the sol-vault token vault as well.
@@ -142,3 +138,97 @@ fn quote_extensions_supported(data:&[u8])->bool {
  true
 }
 
+
+// Main-owned CPI caller for the observed zero-argument instruction.
+#[inline(never)]
+pub fn initialize_mayhem<'info>(ctx:&Context<'_, '_, '_, 'info, CreateV2<'info>>)->Result<()>{
+ let a=&ctx.accounts;
+ mayhem_interface::cpi::initialize_mayhem_state(CpiContext::new_with_signer(
+  a.mayhem_program_id.to_account_info(),mayhem_interface::cpi::accounts::InitializeMayhemState{
+   payer:a.user.to_account_info(),
+   mint_authority:a.mint_authority.to_account_info(),
+   sol_vault:a.sol_vault.to_account_info(),
+   mint:a.mint.to_account_info(),
+   token_vault:a.mayhem_token_vault.to_account_info(),
+   global_params:a.global_params.to_account_info(),
+   mayhem_state:a.mayhem_state.to_account_info(),
+   system_program:a.system_program.to_account_info(),
+   token_program:a.token_program.to_account_info(),
+   associated_token_program:a.associated_token_program.to_account_info(),
+  },&[&[b"mint-authority",&[ctx.bumps.mint_authority]]],
+ ))
+}
+
+// Client-side instruction/account binding only; no companion implementation.
+pub mod mayhem_interface {
+ use super::*;
+ pub mod instruction {
+  use super::*;
+  #[derive(AnchorSerialize,AnchorDeserialize)]
+  pub struct InitializeMayhemState;
+  impl Discriminator for InitializeMayhemState {const DISCRIMINATOR:&'static[u8]=&[157,189,94,72,85,69,204,45];}
+  impl anchor_lang::InstructionData for InitializeMayhemState {}
+ }
+ pub mod cpi {
+  use super::*;
+  pub fn initialize_mayhem_state<'a,'b,'c,'info>(ctx:anchor_lang::context::CpiContext<'a,'b,'c,'info,accounts::InitializeMayhemState<'info>>)->anchor_lang::Result<()>{
+   let ix={
+    let ix=instruction::InitializeMayhemState;
+    let mut data=Vec::with_capacity(256);
+    data.extend_from_slice(<instruction::InitializeMayhemState as anchor_lang::Discriminator>::DISCRIMINATOR);
+    AnchorSerialize::serialize(&ix,&mut data).map_err(|_|anchor_lang::error::ErrorCode::InstructionDidNotSerialize)?;
+    let accounts=ctx.to_account_metas(None);
+    anchor_lang::solana_program::instruction::Instruction{program_id:ctx.program.key(),accounts,data}
+   };
+   let mut acc_infos=ctx.to_account_infos();
+   anchor_lang::solana_program::program::invoke_signed(&ix,&acc_infos,ctx.signer_seeds).map_or_else(|e|Err(Into::into(e)),|_|Ok(()))
+  }
+  pub mod accounts {
+   use super::*;
+   pub struct InitializeMayhemState<'info>{
+    pub payer:anchor_lang::solana_program::account_info::AccountInfo<'info>,
+    pub global_params:anchor_lang::solana_program::account_info::AccountInfo<'info>,
+    pub mint_authority:anchor_lang::solana_program::account_info::AccountInfo<'info>,
+    pub sol_vault:anchor_lang::solana_program::account_info::AccountInfo<'info>,
+    pub mint:anchor_lang::solana_program::account_info::AccountInfo<'info>,
+    pub token_vault:anchor_lang::solana_program::account_info::AccountInfo<'info>,
+    pub mayhem_state:anchor_lang::solana_program::account_info::AccountInfo<'info>,
+    pub system_program:anchor_lang::solana_program::account_info::AccountInfo<'info>,
+    pub token_program:anchor_lang::solana_program::account_info::AccountInfo<'info>,
+    pub associated_token_program:anchor_lang::solana_program::account_info::AccountInfo<'info>,
+   }
+   impl<'info> anchor_lang::ToAccountMetas for InitializeMayhemState<'info>{
+    fn to_account_metas(&self,_is_signer:Option<bool>)->Vec<anchor_lang::solana_program::instruction::AccountMeta>{
+     let mut account_metas=vec![];
+     account_metas.push(anchor_lang::solana_program::instruction::AccountMeta::new(anchor_lang::Key::key(&self.payer),true));
+     account_metas.push(anchor_lang::solana_program::instruction::AccountMeta::new_readonly(anchor_lang::Key::key(&self.global_params),false));
+     account_metas.push(anchor_lang::solana_program::instruction::AccountMeta::new_readonly(anchor_lang::Key::key(&self.mint_authority),true));
+     account_metas.push(anchor_lang::solana_program::instruction::AccountMeta::new(anchor_lang::Key::key(&self.sol_vault),false));
+     account_metas.push(anchor_lang::solana_program::instruction::AccountMeta::new_readonly(anchor_lang::Key::key(&self.mint),false));
+     account_metas.push(anchor_lang::solana_program::instruction::AccountMeta::new(anchor_lang::Key::key(&self.token_vault),false));
+     account_metas.push(anchor_lang::solana_program::instruction::AccountMeta::new(anchor_lang::Key::key(&self.mayhem_state),false));
+     account_metas.push(anchor_lang::solana_program::instruction::AccountMeta::new_readonly(anchor_lang::Key::key(&self.system_program),false));
+     account_metas.push(anchor_lang::solana_program::instruction::AccountMeta::new_readonly(anchor_lang::Key::key(&self.token_program),false));
+     account_metas.push(anchor_lang::solana_program::instruction::AccountMeta::new_readonly(anchor_lang::Key::key(&self.associated_token_program),false));
+     account_metas
+    }
+   }
+   impl<'info> anchor_lang::ToAccountInfos<'info> for InitializeMayhemState<'info>{
+    fn to_account_infos(&self)->Vec<anchor_lang::solana_program::account_info::AccountInfo<'info>>{
+     let mut account_infos=vec![];
+     account_infos.extend(anchor_lang::ToAccountInfos::to_account_infos(&self.payer));
+     account_infos.extend(anchor_lang::ToAccountInfos::to_account_infos(&self.global_params));
+     account_infos.extend(anchor_lang::ToAccountInfos::to_account_infos(&self.mint_authority));
+     account_infos.extend(anchor_lang::ToAccountInfos::to_account_infos(&self.sol_vault));
+     account_infos.extend(anchor_lang::ToAccountInfos::to_account_infos(&self.mint));
+     account_infos.extend(anchor_lang::ToAccountInfos::to_account_infos(&self.token_vault));
+     account_infos.extend(anchor_lang::ToAccountInfos::to_account_infos(&self.mayhem_state));
+     account_infos.extend(anchor_lang::ToAccountInfos::to_account_infos(&self.system_program));
+     account_infos.extend(anchor_lang::ToAccountInfos::to_account_infos(&self.token_program));
+     account_infos.extend(anchor_lang::ToAccountInfos::to_account_infos(&self.associated_token_program));
+     account_infos
+    }
+   }
+  }
+ }
+}

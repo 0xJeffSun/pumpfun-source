@@ -63,6 +63,7 @@ pub fn execute<'info>(ctx:Context<'_,'_,'_,'info,LegacyBuy<'info>>,input:u64,lim
  let v2=rem.get(0).ok_or_else(||error!(PumpError::InvalidBondingCurveV2))?;require!(v2.key()==Pubkey::find_program_address(&[b"bonding-curve-v2",a.mint.key().as_ref()],&crate::ID).0,PumpError::InvalidBondingCurveV2);
  let bbps=if c.is_mayhem_mode{0}else{a.global.buyback_basis_points};
  let cashback_coin=c.is_cashback_coin;
+ if cf!=0 && !cashback_coin {crate::legacy_buy::native_payments::ensure_rent_exempt(&a.system_program,&a.user,&a.creator_vault)?;}
  let creator_destination=if cashback_coin{a.user_volume_accumulator.to_account_info()}else{a.creator_vault.to_account_info()};
  if cf>0{anchor_lang::system_program::transfer(CpiContext::new(a.system_program.to_account_info(),anchor_lang::system_program::Transfer{from:a.user.to_account_info(),to:creator_destination}),cf)?;}
  if cashback_coin{a.user_volume_accumulator.cashback_earned=add(a.user_volume_accumulator.cashback_earned,cf)?;}
@@ -75,3 +76,6 @@ pub fn execute<'info>(ctx:Context<'_,'_,'_,'info,LegacyBuy<'info>>,input:u64,lim
  emit!(ev.clone());emit_cpi!(ev);if let Some(event)=complete{emit!(event.clone());emit_cpi!(event);}Ok(())
 }
 use crate::legacy_sell::fee_cpi::fee as ceil_fee;
+
+#[path="legacy_native_payments.rs"]
+pub(crate) mod native_payments;
