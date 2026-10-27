@@ -5,8 +5,8 @@ the PR #71–#94 review batch. This report separates selected artifacts from new
 research. It does not promote a source tree or change an acceptance decision.
 
 The [current review](RECONSTRUCTION-STATUS.md) and [refreshed full inventory](../repro/reconstruction-status-2026-10-26/README.md)
-supersede the research frontier below: **Relay 482/492, 10 unmatched; Fees 353
-unique pairs, 85 unmatched**. Selected checkpoint tables below retain their dated
+supersede the research frontier below: **Relay 482/492, 10 unmatched; Fees 354
+unique pairs, 84 unmatched**. Selected checkpoint tables below retain their dated
 snapshot. Subsequent gains are tracked in the [progress log](BYTE-IDENTITY-PROGRESS.md).
 
 **No core program, and no selected Relay program, is a complete byte-identical
@@ -252,8 +252,8 @@ roles. “Bounded implementation” must never be displayed as “no known defec
 2. **Close named behavior gaps.** Address the ten dispositions above and the known
    sell_v2 discrepancy; retain successful and rejected fixtures with exact
    transaction inputs. Existing stopped-lane rules are not changed by this report.
-3. **Finish the strongest source-recovery paths.** Current Fees: 85 unmatched
-   windows; rederive duplicate attributions on the current build, close calls/data
+3. **Finish the strongest source-recovery paths.** Current Fees: 84 unmatched
+   windows; retain the refreshed 61 duplicate attributions, close calls/data
    and shareholder bodies. Current Relay: its [10 explicit residuals](RECONSTRUCTION-STATUS.md#relay-the-complete-remaining-body-list)
    and successful privileged settlement.
    These are bounded frontiers, not estimates of days or percent effort remaining.

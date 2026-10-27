@@ -4,6 +4,32 @@ The [full audit](RECONSTRUCTION-AUDIT.md) and its generated tables retain their
 explicit `1463bd22` snapshot. This log records later research without silently
 changing that baseline or promoting new selected artifacts.
 
+## Relay: donation controls retain the 482-window frontier
+
+The [donation source controls](../repro/donation-relay/donation-source-controls/README.md)
+retain 59 builds and 173 targeted comparisons for the four donation wrappers
+and shared worker. Construction order, argument handling, ownership timing,
+CPI moves and result tuple layouts recover no new complete window. Some
+ownership variants lose the matched context-drop helper and are rejected.
+The unmodified control reproduces each compiler recipe's exact parent binary.
+No new VM execution or source promotion is claimed; Relay remains 482/492 with
+10 unmatched. These negative results are separate from the Fees gains below.
+
+## Fees: authority body and refreshed duplicate attribution
+
+The [authority-update study](../research/fees-authority-body-origin/README.md)
+recovers the full 3,320-byte original body at 103,408 by preserving its tokens
+and reproducing its diagnostic source location. It raises the frontier to
+**354 unique structural pairs and 84 unmatched windows**, with no loss. Its
+unpadded source-location control loses two later windows and is rejected.
+
+The [fresh call-context analysis](../research/fees-refreshed-call-attribution/README.md)
+then rederives 61 additional duplicate-body correspondences on that exact
+candidate, for **415 attributed pairs**. Eight attributions are new, with no
+previous one lost. It retains 86 unresolved duplicate windows, 2,485 consistent
+bound call edges and 22 different-body frontier edges. No additional machine
+body coverage or exhaustive semantic identity follows from the attribution.
+
 ## Relay: 11 → 10 unmatched normalized windows
 
 The [burn/close ownership recovery](../repro/donation-relay/burn-mint-ownership-recovery/README.md)

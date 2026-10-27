@@ -1,7 +1,7 @@
 # Remaining work — burn/close recovery, 26 October 2026
 
 This is the action list for the [current reconstruction audit](RECONSTRUCTION-AUDIT.md),
-with current research reviewed through evidence revision `17e7a7ab`. The [current review](RECONSTRUCTION-STATUS.md)
+with current research reviewed through evidence revision `725fb7e7`. The [current review](RECONSTRUCTION-STATUS.md)
 and [complete refreshed inventory](../repro/reconstruction-status-2026-10-26/README.md)
 list every raw match and unresolved window; selected artifacts retain the
 `1463bd22` audit bindings. The historical
@@ -9,8 +9,8 @@ list every raw match and unresolved window; selected artifacts retain the
 candidate paths and “current” prose must not override newer evidence.
 
 Subsequent gains are in the [byte-identity progress log](BYTE-IDENTITY-PROGRESS.md):
-Relay research now has **10 unmatched windows**; Fees buyback-origin research
-has **85 unmatched windows and 353 unique structural pairs**. The [Relay framework study](../repro/donation-relay/framework-sysroot-recovery/README.md)
+Relay research now has **10 unmatched windows**; current Fees research
+has **84 unmatched windows and 354 unique structural pairs**. The [Relay framework study](../repro/donation-relay/framework-sysroot-recovery/README.md)
 recovers the three repeated type-ID bodies with official Linux target libraries,
 adds the Anchor 0.32 framework matches and restores share-total compared values.
 The subsequent [mint-predicate study](../repro/donation-relay/mint-fee-pair-recovery/README.md)
@@ -19,7 +19,8 @@ recovers window 106; the current remaining windows are 92–100 and 112 after th
 [burn/close ownership](../repro/donation-relay/burn-mint-ownership-recovery/README.md) recoveries. A
 [fully Linux reproduction](../repro/donation-relay/linux-canonical-reproduction/README.md)
 previously confirmed the 480-window frontier; the optional-seed study independently
-confirms 481 with the full Linux compiler. The baseline counts below remain those
+confirms 481 with the full Linux compiler, and the burn/close recovery confirms
+482 on both compiler recipes. The baseline counts below remain those
 of the dated audit.
 
 The earlier [compiled location recovery](../repro/donation-relay/source-location-recovery/README.md)
@@ -37,6 +38,12 @@ The subsequent [burn/close ownership recovery](../repro/donation-relay/burn-mint
 closes window 109 on both compiler recipes, advancing to 482/492. All 348 location
 pairs remain equal. Thirty-six epoch-close variants remain negative; the ten
 remaining windows are donation/settlement business bodies and the shared worker.
+
+The [donation source controls](../repro/donation-relay/donation-source-controls/README.md)
+retain 59 unsuccessful builds covering 173 targeted window comparisons. Some
+ownership changes remove the already-matched context-drop helper; preserve that
+path while investigating later partial moves and the remaining worker logic.
+No experimental candidate from this study is promoted.
 
 ## Audit baseline
 
@@ -86,7 +93,7 @@ and signing/ownership restrictions are unchanged by this documentation audit.
 | --- | --- |
 | Selected Pump | 507 windows without full normalized matches; calls/data and ambiguous matches also remain. The separate workspace-member build has 538 normalized windows and 497 residuals: 233 different-body, 192 no-same-size, 72 store-immediate-only heuristic rows. One of those 72 changes an error code; only 71 are reported origin-only. |
 | Selected AMM | 297 unmatched original windows, 160 ambiguous normalized rows, original diagnostics, data and full call contracts |
-| Fees current research | 85 unmatched windows (348,264 original body bytes), 147 original windows in duplicate groups; rederive call attribution for this candidate, then close shareholder validators, transitive calls/data and full ELF/relocation layout |
+| Fees current research | 84 unmatched windows (344,944 original body bytes), 61 additional call-attributed pairs and 86 duplicate windows still unattributed; close shareholder validators, transitive calls/data and full ELF/relocation layout |
 | Selected Mayhem | Seven admitted unmatched windows and 257 source-ledger opaque windows; 12 of the opaque windows have local raw matches without semantic attribution |
 | Relay current research | [10 explicit residual windows](RECONSTRUCTION-STATUS.md#relay-the-complete-remaining-body-list), spanning 52,616 original body bytes: donation/settlement bodies and shared donation worker; privileged successes, transitive callees/data and allocator/borrow behavior |
 | Metaplex | Utilize's 1,477 text differences, 30 source-coordinate differences, two relocation differences; authentic source/compiler layout |

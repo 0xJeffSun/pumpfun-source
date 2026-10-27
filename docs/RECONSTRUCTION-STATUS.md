@@ -1,6 +1,6 @@
 # Reconstruction status after burn/close recovery — 26 October 2026
 
-Reviewed evidence revision: `17e7a7abf9c4263f0dd1c35282729e8f8a8725ec`.
+Reviewed evidence revision: `725fb7e7ec7eb6442fd4062fb04b5cbe5b9dcb68`.
 This review updates the research frontier while preserving the selected-checkpoint
 [baseline audit](RECONSTRUCTION-AUDIT.md). The [recomputed inventory](../repro/reconstruction-status-2026-10-26/README.md)
 contains every one of the **4,415 selected/research function-window rows**.
@@ -37,7 +37,7 @@ analysis. Candidate symbol names are hypotheses about original identity.
 | Fees selected | 585 | 102 | 363 | 120 | 0 |
 | Mayhem selected | 441 | 58 | 131 | 7 | 245 |
 | Relay selected source 15 | 492 | 33 | 89 | 370 | 0 |
-| **Fees latest research** | **585** | **107** | **393** | **85** | **0** |
+| **Fees latest research** | **585** | **107** | **394** | **84** | **0** |
 | **Relay latest research** | **492** | **130** | **352** | **10** | **0** |
 
 Each row is a partition, not a score of semantic correctness. Mayhem's source
@@ -63,12 +63,15 @@ bytes (7.0%)**. Those bytes describe the sizes of unmatched original windows,
 not the number of absent or incorrect bytes. The residual includes large business
 functions; matching the other 482 still leaves their call/data identity to prove.
 
-Fees research has **500/585 windows with a normalized counterpart**: 353 unique
-structural pairs and 147 original windows in ambiguous duplicate groups. Its 85
-unmatched windows span **348,264 of 799,648 original text bytes (43.6%)**, although
-they are only 14.5% of the window count. Many remaining bodies are large. The
-older 53 duplicate-call attributions are historical evidence and have not been
-recomputed for this candidate; do not add them to 353 as a new verified total.
+Fees research has **501/585 windows with a normalized counterpart**: 354 unique
+structural pairs and 147 original windows in ambiguous duplicate groups. Its 84
+unmatched windows span **344,944 of 799,648 original text bytes (43.1%)**, although
+they are only 14.4% of the window count. Many remaining bodies are large. The
+[refreshed call analysis](../research/fees-refreshed-call-attribution/README.md)
+recomputes 61 additional duplicate-body correspondences on this candidate, for
+415 attributed pairs. Eight are new relative to the historical study; no prior
+attribution is lost. There are 86 still-unattributed duplicate windows and 22
+call edges to different-body frontiers. This refinement adds no body coverage.
 
 There is no defensible single source-completion percentage or ETA. Whole-program
 identity additionally requires data, layout, relocations, indirect calls and
@@ -139,10 +142,20 @@ and return layout. All 24 direct-call sites bind to matched callees; the same
 semantic identity is claimed. Thirty-six epoch-close trials remain negative;
 epoch-close window 96 is still in the ten-row residual list.
 
+### Donation controls: no new complete body match
+
+The [59 source builds](../repro/donation-relay/donation-source-controls/README.md)
+cover construction/argument variants in donation wrappers and ownership/result
+variants in the shared worker. All 173 targeted window comparisons remain
+unmatched. Some ownership variants also lose the previously matched context-drop
+window 51. The control builds reproduce their respective 482-window parent
+binaries exactly; experimental candidates are not promoted. This rules out the
+tested source forms without claiming that all donation logic is understood.
+
 ## Fees: new complete bodies, substantial residual business logic
 
-The latest 851,424-byte candidate is SHA-256
-`638eec2f01e3ad6412e0f61b0e0ac0836bbc4e61dcbde615b4e1d6cfec758a40`.
+The latest 851,488-byte candidate is SHA-256
+`be1c57fd096e5e4e98ff5fc898f31c1558158edeb9eed523ca420f7dada72e85`.
 The newly merged studies recover:
 
 | Complete original window | Evidence |
@@ -151,6 +164,7 @@ The newly merged studies recover:
 | 640-byte `update_buyback_claim_rate_limit` body at 97,592 | Same study; helper inlines into the public body |
 | 336-byte Shareholder-vector clone at 58,520 | [`Copy` specialization](../research/fees-shareholder-copy-clone/README.md); both encoded callees independently bound to raw-equal helpers |
 | 600-byte buyback initializer at 120,216 | [Unchanged helper relocated to its diagnostic source path](../research/fees-buyback-initializer-origin/README.md) |
+| 3,320-byte authority-update body at 103,408 | [Preserved body tokens and diagnostic source coordinates](../research/fees-authority-body-origin/README.md) |
 
 These are complete normalized windows, not merely matching diagnostic fragments.
 There are 57 unique raw-equal structural pairs; counting all original windows
@@ -158,9 +172,9 @@ with any raw counterpart, including ambiguous duplicates, gives 107. Those
 numbers answer different questions and must not be interchanged.
 
 The candidate retains passing **17,331 cases across 18 suites** and **1,542 exact
-outcome/log/compute comparisons**. The initializer proposal was replayed afresh;
+outcome/log/compute comparisons**. The authority-update proposal was replayed afresh;
 its identical control receipts were reused explicitly. Existing unchecked-input
-and finite-coverage limits remain. The 85 unresolved bodies, ambiguous attribution,
+and finite-coverage limits remain. The 84 unresolved bodies, ambiguous attribution,
 shareholder validation, transitive calls/data and final ELF layout remain open.
 
 ## Public behavior: reconstructed is not perfect
@@ -189,8 +203,8 @@ receipts, acceptance decisions and explicit guard changes are still required.
 2. **Close known behavior defects:** Pump `sell_v2` and the ten partial/unaccepted
    selected dispositions above, with bound success/rejection tests. Cover genuine
    CPI callers, ownership and extension/mode combinations before acceptance.
-3. **Continue Fees business/source recovery:** work from all 85 residual addresses,
-   rerun duplicate-call attribution on the current binary, and validate paths not
+3. **Continue Fees business/source recovery:** work from all 84 residual addresses,
+   preserve the refreshed duplicate-call attribution, and validate paths not
    exercised by the existing corpus. Normalize only declared relocations/calls.
 4. **Recover Pump/AMM/Mayhem residuals:** preserve opaque and ambiguous states.
    Pump's separate workspace-member experiment reaches 538 normalized windows
@@ -211,7 +225,8 @@ here are local; no live network action is part of this review.
 ```sh
 python3 -B repro/reconstruction-audit-2026-10-26/audit.py --check
 python3 -B research/fees-shareholder-copy-clone/verify.py
-python3 -B research/fees-buyback-initializer-origin/verify.py
+python3 -B research/fees-authority-body-origin/verify.py
+python3 -B research/fees-refreshed-call-attribution/verify.py
 python3 -B repro/donation-relay/burn-mint-ownership-recovery/verify.py
 python3 -B repro/reconstruction-status-2026-10-26/refresh.py --check
 ```
