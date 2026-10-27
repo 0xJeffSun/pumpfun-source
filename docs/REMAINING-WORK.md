@@ -10,7 +10,7 @@ candidate paths and “current” prose must not override newer evidence.
 
 Subsequent gains are in the [byte-identity progress log](BYTE-IDENTITY-PROGRESS.md):
 Relay research now has **10 unmatched windows**; current Fees research
-has **81 unmatched windows and 357 unique structural pairs**. The [Relay framework study](../repro/donation-relay/framework-sysroot-recovery/README.md)
+has **76 unmatched windows and 362 unique structural pairs**. The [Relay framework study](../repro/donation-relay/framework-sysroot-recovery/README.md)
 recovers the three repeated type-ID bodies with official Linux target libraries,
 adds the Anchor 0.32 framework matches and restores share-total compared values.
 The subsequent [mint-predicate study](../repro/donation-relay/mint-fee-pair-recovery/README.md)
@@ -137,7 +137,7 @@ and signing/ownership restrictions are unchanged by this documentation audit.
 | --- | --- |
 | Selected Pump | 507 windows without full normalized matches; calls/data and ambiguous matches also remain. The separate workspace-member build has 538 normalized windows and 497 residuals: 233 different-body, 192 no-same-size, 72 store-immediate-only heuristic rows. One of those 72 changes an error code; only 71 are reported origin-only. |
 | Selected AMM | 297 unmatched original windows, 160 ambiguous normalized rows, original diagnostics, data and full call contracts |
-| Fees current research | 81 unmatched windows (342,904 original body bytes), 61 additional call-attributed pairs and 86 duplicate windows still unattributed; close shareholder validators, transitive calls/data and full ELF/relocation layout |
+| Fees current research | 76 unmatched windows (339,424 original body bytes), 61 additional call-attributed pairs and 86 duplicate windows still unattributed; close shareholder validators, transitive calls/data and full ELF/relocation layout |
 | Selected Mayhem | Seven admitted unmatched windows and 257 source-ledger opaque windows; 12 of the opaque windows have local raw matches without semantic attribution |
 | Relay current research | [10 explicit residual windows](RECONSTRUCTION-STATUS.md#relay-the-complete-remaining-body-list), spanning 52,616 original body bytes: donation/settlement bodies and shared donation worker; privileged successes, transitive callees/data and allocator/borrow behavior |
 | Metaplex | Utilize's 1,477 text differences, 30 source-coordinate differences, two relocation differences; authentic source/compiler layout |
@@ -195,16 +195,18 @@ There is no defensible single overall percent complete or completion date.
 | Scratch worktrees `fees-edit`, `restruct-wt` | Removed after a byte-for-byte match against the banked restructure trees |
 | Codex worktree `main-reconciliation` (`codex/layered-pass-36`) | Clean and contained in main; left for its owner |
 
-## Fees fee-total predicate follow-up
+## Fees configuration follow-up
 
-The [full Linux integration](../research/fees-total-predicate-integration/README.md)
-recovers the 192-byte total-check helper at original address 700568 with no lost
-matches. Its overflow source location and message now agree with the original;
-17,331 suite comparisons, 1,542 exact focused comparisons and all 15 applicable
-overflow-diagnostic cases pass. The original has four callers, while this
-candidate reaches the helper through one `validate_fees` caller. Continue with
-original callers 260568, 261192, 261816 and 265976. The first two are 624-byte
-setters whose error origins name `programs/pump-fees/src/state.rs` lines 365 and
-372; their field writes target offsets 80/88/96 and 104/112/120. Their complete
-bodies remain unmatched. Preserve the existing helper match while recovering
-their source and ordering.
+The [combined setter and V2 recovery](../research/fees-config-setter-recovery/README.md)
+preserves the fee-total predicate and recovers both 624-byte flat-fee setters,
+at original addresses 260568 and 261192. It also integrates the three V2 account
+ownership bodies from PR #143. Five original bodies are gained with none lost;
+17,331 suite comparisons and the 1,542-case exact matrix pass for the combined
+candidate. The first setter attempt lost two unrelated bodies through a source
+line shift; the accepted version preserves the line and restores both.
+
+Next inspect the 4,160-byte tier-setting bodies at 261816 and 265976. Recover
+validation/error precedence, state assignment and old-vector ownership, keeping
+the existing helper and setter matches. Direct callee-body matches do not
+establish their data or all transitive behavior. The public handlers still need
+complete caller recovery and full program identity remains open.
