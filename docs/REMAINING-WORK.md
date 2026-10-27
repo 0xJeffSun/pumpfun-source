@@ -42,7 +42,11 @@ remaining windows are donation/settlement business bodies and the shared worker.
 The [donation source controls](../repro/donation-relay/donation-source-controls/README.md)
 retain 59 unsuccessful builds covering 173 targeted window comparisons. Some
 ownership changes remove the already-matched context-drop helper; preserve that
-path while investigating later partial moves and the remaining worker logic.
+path while investigating the remaining worker logic. The subsequent
+[worker-flow audit](../repro/donation-relay/shared-worker-flow-audit/README.md)
+confirms that every explicit-return path in both decoded graphs crosses that
+helper, including paths after transfer. Linear code offsets do not establish
+different ownership boundaries. Five mint-key/whitelist trials add no matches.
 No experimental candidate from this study is promoted.
 
 ## Audit baseline
