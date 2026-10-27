@@ -1058,3 +1058,28 @@ preserved. This is a reproducible naming/layout hypothesis, not proof of the
 historical identifier, full data/indirect semantics or byte-identical completion.
 Protected relayer settlement success remains untested. Prior evidence and selected
 checkpoints are unchanged.
+
+## Fees: boxed AdminCto ownership and typed self-program source — 27 October 2026
+
+The [AdminCto source proposal](../research/fees-admin-cto-boxed-context-source-proposal/README.md)
+changes exactly three declarations in one file on the pinned PR188 math+pack
+combined source: box Global and SharingConfig and use a typed self-program field.
+The handler and all other source inputs remain unchanged. Independent public
+source hash checks, full 42-input materialization and thirteen source-only tests
+pass; the readable patch reverses exactly to the pinned public parent.
+
+Local development observed 545→547 normalized original windows with no losses:
+parser 381352 (6,152 bytes) and generated wrapper 642848 (1,416 bytes), preserving
+118 raw local matches. Local static audit checked 51/51 parser callees and 19
+complete direct data objects; wrapper 8/9 callees and six direct data objects
+hold, while the business callee remains unmatched. These native/static/runtime
+observations are explicitly unpublished evidence, not claims established by the
+packet's default source checks. The local root-clean repeat reused a verified
+dependency/math cache, not a fresh all-dependency rebuild.
+
+No binaries, logs, runtime cases, archived build/replay receipts or encoded
+derivatives are included. Source tools report runtime_verified=false,
+native_build_verified=false and whole_binary_identity_verified=false. The
+business body and whole ELF/capture remain unequal; indirect/transitive data
+and historical source provenance remain unproved. Prior checkpoints and sealed
+evidence are not replaced.
