@@ -7,8 +7,8 @@
     {
       "path": "README.md",
       "before_sha256": "cae913d4d3f2066403162f653a0cf35b39620fb08877b1b308c08ccce4a53678",
-      "after_sha256": "7dbd07b24d76a24377c7f7a60f4859f5a3b8d8f0dbd371114b08e91c456f4c1b",
-      "reason": "Summarize the verified full reconstruction inventory, unresolved text size for all five programs, and the exact partial/unaccepted handler list; retain selected checkpoints and current research bindings."
+      "after_sha256": "043dd82c8cc8c47d3b19d1948dd8caa32c783c04c77991020fc763d018795dfa",
+      "reason": "Record the crank event-account exit and dispatch recovery, updated full inventory, and rejected root compiler controls while preserving selected checkpoints."
     },
     {
       "path": ".github/workflows/verify.yml",

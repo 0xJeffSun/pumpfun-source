@@ -1,6 +1,6 @@
-# Reconstruction status after buyback source-origin recovery — 26 October 2026
+# Reconstruction status after crank event-account recovery — 26 October 2026
 
-Reviewed evidence revision: `87f85e2e5351e0cbac13338f2f7a5bc256906325`.
+Reviewed evidence revision: `dcb34a1a89bd11e454daee2ab862d929c5ed50ed`.
 This review updates the research frontier while preserving the selected-checkpoint
 [baseline audit](RECONSTRUCTION-AUDIT.md). The [recomputed inventory](../repro/reconstruction-status-2026-10-26/README.md)
 contains every one of the **4,415 selected/research function-window rows**.
@@ -44,7 +44,7 @@ analysis. Candidate symbol names are hypotheses about original identity.
 | Fees selected | 585 | 102 | 363 | 120 | 0 |
 | Mayhem selected | 441 | 58 | 131 | 7 | 245 |
 | Relay selected source 15 | 492 | 33 | 89 | 370 | 0 |
-| **Fees latest research** | **585** | **118** | **409** | **58** | **0** |
+| **Fees latest research** | **585** | **118** | **411** | **56** | **0** |
 | **Relay latest research** | **492** | **130** | **352** | **10** | **0** |
 
 Each row is a partition, not a score of semantic correctness. Mayhem's source
@@ -70,13 +70,13 @@ bytes (7.0%)**. Those bytes describe the sizes of unmatched original windows,
 not the number of absent or incorrect bytes. The residual includes large business
 functions; matching the other 482 still leaves their call/data identity to prove.
 
-Fees research has **527/585 windows with a normalized counterpart**: 380 unique
-structural pairs and 147 original windows in ambiguous duplicate groups. Its 58
-unmatched windows span **298,504 of 799,648 original text bytes (37.3%)**, although
-they are only 9.9% of the window count. Many remaining bodies are large. The
+Fees research has **529/585 windows with a normalized counterpart**: 382 unique
+structural pairs and 147 original windows in ambiguous duplicate groups. Its 56
+unmatched windows span **296,712 of 799,648 original text bytes (37.1%)**, although
+they are only 9.6% of the window count. Many remaining bodies are large. The
 [current call ledger](../repro/reconstruction-status-2026-10-26/fees-call-attribution.json)
 recomputes 62 additional duplicate-body correspondences on this candidate, for
-442 attributed pairs. There are 85 still-unattributed duplicate windows and 20
+444 attributed pairs. There are 85 still-unattributed duplicate windows and 21
 call edges to different-body frontiers. This refinement adds no body coverage.
 
 There is no defensible single source-completion percentage or ETA. Whole-program
@@ -408,6 +408,23 @@ This adds one body plus one duplicate call attribution; no previous match is
 lost. Previous panic-location contracts and fresh regression suites pass.
 Full data/indirect-call and whole-file identity remain open.
 
+### Crank event-account layout and remaining caller gaps
+
+The [owned event-account recovery](../research/fees-crank-event-ownership/README.md)
+changes one context field from `UncheckedAccount` to `AccountInfo`, retaining its
+seed constraint. This recovers the complete 952-byte crank exit and 840-byte
+dispatch wrapper, without losing any match. Both original exit field offsets,
+the owner bytes and three error labels agree; all 12 direct exit callees match.
+The wrapper still calls the unmatched parser at 408,640 and business handler at
+147,944. These two local gains do not close the public handler's full call tree.
+
+The [root codegen controls](../research/fees-wrapper-codegen-controls/README.md)
+reproduce the prior candidate exactly at one unit. Two, four, eight and sixteen
+units recover no new bodies and lose 127, 133, 163 and 163 covered windows,
+respectively. They retain a bump default store but do not recover the buyback
+wrapper. Keep the one-unit recipe; the wrapper's original extra initialization
+instruction still needs a source/build explanation.
+
 ## Public behavior: reconstructed is not perfect
 
 Across the four core selected programs, **140/150 handlers have bounded
@@ -442,7 +459,7 @@ field-role claims. The five semantic roles remain unresolved; no field is rename
 2. **Close known behavior defects:** Pump `sell_v2` and the ten partial/unaccepted
    selected dispositions above, with bound success/rejection tests. Cover genuine
    CPI callers, ownership and extension/mode combinations before acceptance.
-3. **Continue Fees business/source recovery:** work from all 68 residual addresses,
+3. **Continue Fees business/source recovery:** work from all 56 residual addresses,
    preserve the refreshed duplicate-call attribution, and validate paths not
    exercised by the existing corpus. Normalize only declared relocations/calls.
 4. **Recover Pump/AMM/Mayhem residuals:** preserve opaque and ambiguous states.
@@ -467,6 +484,8 @@ python3 -B research/fees-shareholder-copy-clone/verify.py
 python3 -B research/fees-authority-body-origin/verify.py
 python3 -B research/fees-refreshed-call-attribution/verify.py
 python3 -B repro/donation-relay/burn-mint-ownership-recovery/verify.py
+python3 -B research/fees-crank-event-ownership/verify.py
+python3 -B research/fees-wrapper-codegen-controls/verify.py
 python3 -B repro/reconstruction-status-2026-10-26/refresh.py --check
 ```
 
