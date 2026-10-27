@@ -4,6 +4,20 @@ The [full audit](RECONSTRUCTION-AUDIT.md) and its generated tables retain their
 explicit `1463bd22` snapshot. This log records later research without silently
 changing that baseline or promoting new selected artifacts.
 
+## Fees: V2 transfer adapter recovered at 570 matches
+
+The [V2 transfer recovery](../research/fees-v2-transfer-source-recovery/README.md)
+adds the complete 3,096-byte adapter at 240088. The borrowed payer, owned program
+account and account-initialization order reproduce the original calling
+convention and cleanup. All thirteen direct callees and the System program ID
+match. The result is **570/585 normalized original functions, 143 raw local
+matches, 168 equal Location observations and 15 unmatched functions**, with no
+prior match lost.
+
+Repeated native Rust builds agree. Fresh execution passes 17,331 regression
+cases, 119 native arithmetic cases, eight quote-owner cases and 24 preprocessing
+cases. Whole-ELF/capture equality remains false; selected checkpoints are unchanged.
+
 ## Fees: current source recoveries composed at 569 matches
 
 The [current-source union](../research/fees-current-569-union/README.md) preserves
