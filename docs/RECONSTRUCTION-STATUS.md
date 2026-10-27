@@ -1,6 +1,6 @@
-# Reconstruction status after common quote-predicate recovery — 26 October 2026
+# Reconstruction status after slice-location integration — 26 October 2026
 
-Reviewed evidence revision: `152af337446e05a7fdd48fe470b23066c02e1706`.
+Reviewed evidence revision: `24dc2f9bca64aeb94144b3fc392f8ca9932259c5`.
 This review updates the research frontier while preserving the selected-checkpoint
 [baseline audit](RECONSTRUCTION-AUDIT.md). The [recomputed inventory](../repro/reconstruction-status-2026-10-26/README.md)
 contains every one of the **4,415 selected/research function-window rows**.
@@ -268,7 +268,7 @@ additional function is considered recovered.
 ## Fees: new complete bodies, substantial residual business logic
 
 The latest 860,008-byte candidate is SHA-256
-`e35c745fe8238ef4199a6e23cf449b3c42767bf7db9df26ded77b8339275479a`.
+`c888a57d7270cd9d33af57695a4b1a735a5730941a5369101ab6dbb1f96c0a1a`.
 The newly merged studies recover:
 
 | Complete original window | Evidence |
@@ -291,8 +291,8 @@ with any raw counterpart, including ambiguous duplicates, gives 118. Those
 numbers answer different questions and must not be interchanged.
 
 The candidate retains passing **17,331 cases across 18 suites** and **1,542 exact
-outcome/log/compute comparisons**. The current common-helper candidate was replayed afresh;
-its control reuses the verified crank interface-mint artifact. Existing unchecked-input
+outcome/log/compute comparisons**. The current slice-location candidate was replayed afresh;
+its control reuses the verified common-helper artifact. Existing unchecked-input
 and finite-coverage limits remain. The 62 unresolved bodies, ambiguous attribution,
 shareholder validation, transitive calls/data and final ELF layout remain open.
 
@@ -377,8 +377,11 @@ ELF bytes change and the full instruction section remains raw-equal. It also
 binds the real caller edges, three message pieces and numeric/panic callees,
 identifying original 784,168 as a source/destination slice-length-mismatch
 panic, rather than an ordinary index-bounds panic. It adds no body matches.
-Those four location corrections still need to be carried into the latest
-research source; its earlier 368-pair counts do not replace the current frontier.
+The [integration](../research/fees-slice-origin-integration/README.md) now carries
+those four records into the latest research source. Its entire instruction
+section remains raw-byte equal to the 376-pair parent, and exactly eight data
+bytes change. All intervening gains and fresh regression suites are retained.
+The older study's 368-pair counts do not replace the current frontier.
 
 ## Public behavior: reconstructed is not perfect
 

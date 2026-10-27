@@ -1,7 +1,7 @@
-# Remaining work — common quote-predicate review, 26 October 2026
+# Remaining work — slice-location integration review, 26 October 2026
 
 This is the action list for the [current reconstruction audit](RECONSTRUCTION-AUDIT.md),
-with current research reviewed through evidence revision `152af337`. The [current review](RECONSTRUCTION-STATUS.md)
+with current research reviewed through evidence revision `24dc2f9b`. The [current review](RECONSTRUCTION-STATUS.md)
 and [complete refreshed inventory](../repro/reconstruction-status-2026-10-26/README.md)
 list every raw match and unresolved window; selected artifacts retain the
 `1463bd22` audit bindings. The historical
@@ -117,10 +117,11 @@ fee-sharing callers still need full recovery. Preserve the Borsh-expression
 result; the tested array and `TryFrom` expressions are retained negative controls.
 
 The [slice-origin contract study](../research/fees-slice-origin-contract/README.md)
-provides four verified tier-copy panic location corrections on the older PR #149
-candidate, plus explicit panic-message/callee bindings. Carry its whitespace
-transform into the latest research source and recheck complete text equality,
-location values and all intervening gains before changing the current binding.
+provided four tier-copy panic location corrections on the older PR #149
+candidate. The [current integration](../research/fees-slice-origin-integration/README.md)
+now applies them with all intervening gains retained, identical instruction
+bytes and exactly eight corrected data bytes. Other data and transitive identity
+remain open; these four records no longer need a separate integration step.
 
 ## Current priorities and closure criteria
 

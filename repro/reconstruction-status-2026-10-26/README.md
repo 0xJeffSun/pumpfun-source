@@ -1,6 +1,6 @@
 # Current function-window inventory
 
-Evidence snapshot: `152af337446e05a7fdd48fe470b23066c02e1706`. Selected inputs retain their verified `1463bd22fb7811825c5e7acf1cb963eb39ab68d9` checkpoint bindings. Research rows replace the older Fees/Relay research inventory; they do not replace selections.
+Evidence snapshot: `24dc2f9bca64aeb94144b3fc392f8ca9932259c5`. Selected inputs retain their verified `1463bd22fb7811825c5e7acf1cb963eb39ab68d9` checkpoint bindings. Research rows replace the older Fees/Relay research inventory; they do not replace selections.
 
 | Program / build | Windows | Exact local bytes | Normalized only | No complete match | Opaque |
 | --- | ---: | ---: | ---: | ---: | ---: |

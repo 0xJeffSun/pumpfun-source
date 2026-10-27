@@ -7,8 +7,8 @@
     {
       "path": "README.md",
       "before_sha256": "cae913d4d3f2066403162f653a0cf35b39620fb08877b1b308c08ccce4a53678",
-      "after_sha256": "e28660befc67c586b74b9816f6f4f78b0de311cd9a6b25235dc072c581a2900e",
-      "reason": "Link verified tier-copy panic data and accurately retain its older-candidate scope and pending integration into the latest research frontier."
+      "after_sha256": "ebd35960c6c410f6c9209ee502602f4f407847676442d9ea0e3eeae53a4a8a2f",
+      "reason": "Record integration of four exact slice-panic locations into the current Fees research source, preserving all instruction bytes and selected checkpoints."
     },
     {
       "path": ".github/workflows/verify.yml",
