@@ -524,3 +524,14 @@ Eight signed cases have matching program logs after differing in all eight on
 the parent. The enclosing resize body remains unmatched. A 24-byte previously
 normalized body becomes raw-equal under the changed layout without new coverage.
 All broad and focused regression suites pass; no selected checkpoint is promoted.
+
+
+## Crank boxed interface-mint parser — 26 October 2026
+
+[Changing the quote-mint context type](../research/fees-crank-interface-mint/README.md)
+recovers original 9,880 (352 bytes), with all three callee bodies matched.
+Two previously ambiguous originals become unique, giving 375 structural pairs,
+147 ambiguous original windows and 63 unmatched. Only one new original body is
+covered. Thirty owner/length cases correct ten parent/control discrepancies;
+all broad and retained focused regressions pass. The enclosing crank parser,
+whole ELF and selected-source promotion remain open.

@@ -1,6 +1,6 @@
-# Reconstruction status after extension logs and Relay metadata recovery — 26 October 2026
+# Reconstruction status after crank mint-interface recovery — 26 October 2026
 
-Reviewed evidence revision: `333602dfc035668a34e3d9053bfcd5dd56cc8dba`.
+Reviewed evidence revision: `19bf93d4b9c1b0bc49797b2ba008f57ec4ecdd0c`.
 This review updates the research frontier while preserving the selected-checkpoint
 [baseline audit](RECONSTRUCTION-AUDIT.md). The [recomputed inventory](../repro/reconstruction-status-2026-10-26/README.md)
 contains every one of the **4,415 selected/research function-window rows**.
@@ -44,7 +44,7 @@ analysis. Candidate symbol names are hypotheses about original identity.
 | Fees selected | 585 | 102 | 363 | 120 | 0 |
 | Mayhem selected | 441 | 58 | 131 | 7 | 245 |
 | Relay selected source 15 | 492 | 33 | 89 | 370 | 0 |
-| **Fees latest research** | **585** | **118** | **403** | **64** | **0** |
+| **Fees latest research** | **585** | **118** | **404** | **63** | **0** |
 | **Relay latest research** | **492** | **130** | **352** | **10** | **0** |
 
 Each row is a partition, not a score of semantic correctness. Mayhem's source
@@ -70,13 +70,13 @@ bytes (7.0%)**. Those bytes describe the sizes of unmatched original windows,
 not the number of absent or incorrect bytes. The residual includes large business
 functions; matching the other 482 still leaves their call/data identity to prove.
 
-Fees research has **521/585 windows with a normalized counterpart**: 372 unique
-structural pairs and 149 original windows in ambiguous duplicate groups. Its 64
-unmatched windows span **318,872 of 799,648 original text bytes (39.9%)**, although
-they are only 10.9% of the window count. Many remaining bodies are large. The
+Fees research has **522/585 windows with a normalized counterpart**: 375 unique
+structural pairs and 147 original windows in ambiguous duplicate groups. Its 63
+unmatched windows span **318,520 of 799,648 original text bytes (39.8%)**, although
+they are only 10.8% of the window count. Many remaining bodies are large. The
 [current call ledger](../repro/reconstruction-status-2026-10-26/fees-call-attribution.json)
-recomputes 63 additional duplicate-body correspondences on this candidate, for
-435 attributed pairs. There are 86 still-unattributed duplicate windows and 20
+recomputes 61 additional duplicate-body correspondences on this candidate, for
+436 attributed pairs. There are 86 still-unattributed duplicate windows and 20
 call edges to different-body frontiers. This refinement adds no body coverage.
 
 There is no defensible single source-completion percentage or ETA. Whole-program
@@ -267,8 +267,8 @@ additional function is considered recovered.
 
 ## Fees: new complete bodies, substantial residual business logic
 
-The latest 862,664-byte candidate is SHA-256
-`4617fa1c6200daab0516a9a652716c32cf9868f24d47bcada61b6c716e461637`.
+The latest 859,904-byte candidate is SHA-256
+`16b13f46151ce47360f4d25eca740fe89a000b6ab83e9cdd2e2c3c12e87e400c`.
 The newly merged studies recover:
 
 | Complete original window | Evidence |
@@ -291,9 +291,9 @@ with any raw counterpart, including ambiguous duplicates, gives 118. Those
 numbers answer different questions and must not be interchanged.
 
 The candidate retains passing **17,331 cases across 18 suites** and **1,542 exact
-outcome/log/compute comparisons**. The current extension-log candidate was replayed afresh;
-its control reuses the verified seed-vector artifact. Existing unchecked-input
-and finite-coverage limits remain. The 64 unresolved bodies, ambiguous attribution,
+outcome/log/compute comparisons**. The current boxed-interface candidate was replayed afresh;
+its control reuses the verified extension-log artifact. Existing unchecked-input
+and finite-coverage limits remain. The 63 unresolved bodies, ambiguous attribution,
 shareholder validation, transitive calls/data and final ELF layout remain open.
 
 The fee-total helper, flat-fee setters, tier helpers and four configuration/upsert
@@ -346,6 +346,18 @@ with other observed results unchanged. The change also recovers the complete
 and matched callees. The larger resize handler remains unmatched. One previously
 normalized 24-byte window also becomes raw-equal due to the new layout; that
 adds no new body coverage. Fresh regression and all retained focused matrices pass.
+
+### Crank boxed interface mint
+
+The [crank mint recovery](../research/fees-crank-interface-mint/README.md) replaces
+the research legacy mint account with a boxed interface mint. Original window
+9,880 now matches completely; existing windows 640 and 693,080 become unique as
+redundant candidate specializations disappear. That is one new body match and
+two fewer structural ambiguities. All three parser callees match, and the
+larger account parser remains unmatched. Thirty new signed owner/length cases
+correct ten observed discrepancies in both the parent and boxed-legacy control.
+All retained broad/focused regressions pass. This does not claim successful
+Token-2022 transfers through the crank's downstream legacy token program.
 
 ## Public behavior: reconstructed is not perfect
 
