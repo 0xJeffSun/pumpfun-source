@@ -1487,3 +1487,26 @@ accounts, with independently checked ordering and flags. Legacy Sell passes
 396 cases / 792 signed transactions, and the Burn regression adds 12 signed
 transactions. Four panic/overflow log differences remain. Full handlers and the
 whole ELF are still unequal, and no canonical source is promoted by this packet.
+
+## Fees: complete exotic-fee body on the pinned 558 union — 27 October 2026
+
+The [source-only exotic integration](../research/fees-exotic-body-source-integration/README.md)
+changes only `lib.rs` on exact PR209: borrowed resize-helper inputs and ordinary
+non-cloned event emission recover the complete 5,520-byte body at original 88552.
+The frozen result reaches **559 normalized / 143 raw / 412 unique pairs**, with
+no prior loss; 26 original windows remain unmatched. All 43 input hashes and the
+reversible one-file source patch are checked, with unchanged dependencies/features.
+
+Fresh optional static remeasurement checks all 21 actual direct callees, abort,
+incoming wrapper binding and all four complete direct object values. It preserves
+3,319 earlier equal callee obligations and 165 Locations, reaching 166 matched
+Location uses; 12 actual edges remain unequal. No transitive/indirect/runtime
+closure is inferred. Raw positional differences worsen 446,635 to 448,155,
+despite the complete-window gain; meaningful ELF size remains 640 bytes too long.
+
+Default verification, thirteen source tests and full materialization pass. Two
+exact native builds and finite 17,331-case/18-suite plus boundary checks passed
+locally, but no build/replay receipts, fixtures, logs, binaries or derivatives are
+published. Source/static verification alone reports runtime/build/whole identity
+false. Authentic fixed-admin success and exhaustive runtime log/CU identity remain
+unproven. All four core whole identities remain unresolved; no checkpoint changes.
