@@ -793,3 +793,14 @@ The six remaining differences against the older current-runtime control are
 O0106, O0116, O0124, O0127, O0145 and O0199; only O0199 lacks a raw-local match
 that control has. No match exceeds the current-runtime control or advances the
 newer project checkpoint. Source attribution and runtime qualification stay open.
+
+The adjacent `init_if_needed` duplicate-mutable change restores all five predicted
+account-parser windows under an unchanged lock and byte-identical metadata graph.
+Three fresh builds record 462 actual compiler commands; the after outputs repeat
+exactly at 427 normalized, 74 raw-local and 426 injective matches, with no losses.
+Only O0199 (`custom_panic`) remains different from the older current-runtime
+control. Its 200-byte historical body has a 192-byte prefix equal to the complete
+original function, followed by an extra `exit`; the full body remains unmatched.
+The retained syscall declarations differ by unit versus never return type. That
+source explanation is untested and adds no accepted match. No result here
+advances the current 432-window checkpoint or proves original source identity.

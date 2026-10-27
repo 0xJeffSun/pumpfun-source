@@ -26,6 +26,13 @@ normalized matches and accounts for five raw-local gains. Repeated final
 compiler outputs are identical; this remains provenance evidence, not a new
 current reconstruction checkpoint.
 
+An adjacent `init_if_needed` validation control restores the five remaining
+account-parser matches, reaching **427 normalized / 74 raw-local / 426 injective**
+with unchanged dependency metadata and no lost matches. Only O0199
+(`custom_panic`) differs from the older current-runtime control. Its extra return
+instruction and a syscall declaration difference are retained as an untested
+source hypothesis; the full body remains unmatched.
+
 ## Source and build boundary
 
 The parent is pinned at `0a881f726f8dae34a2f53f2438cdb271ab830e41`, including
@@ -248,6 +255,57 @@ O0106, O0116, O0124, O0127, O0145 and O0199. Its only missing raw-local match
 is O0199. No new normalized or raw-local match exceeds that control. This does
 not identify the original framework, constrain the original build date, advance
 the newer current-source checkpoint or supply runtime/security qualification.
+
+## Include init_if_needed in duplicate-mutable checks
+
+The next source control compares
+`a95c356415c203ea61bb3574765a7f60a542c640` with its immediate child
+[`7dba2009682143bca9452d987d191a8c1b74843d`](https://github.com/otter-sec/anchor/commit/7dba2009682143bca9452d987d191a8c1b74843d).
+The selected 150 framework files at that parent are byte-identical to the
+previously measured Borsh revision. Both upstream trees are retained, and their
+Git blobs are checked independently. Exactly three Rust files change: two
+account generators include `init_if_needed` accounts in duplicate-mutable checks,
+and the syntax crate adds the `is_pure_init` predicate they use.
+
+Three fresh complete builds keep source paths, root source, lock, registry graph,
+compiler, target libraries and linker recipe fixed. Both variants preserve the
+common Program ID recovery, restricted framework workspace, historical event and
+Context compatibility signatures. Locked/offline Cargo metadata outputs are
+byte-identical. The relocated before build preserves the preceding Borsh
+variant's full match sets while its whole ELF bytes differ.
+
+| Fresh build | Functions | Text bytes | Normalized | Raw-local | Injective |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Before inclusion | 449 | 662328 | 422 | 74 | 421 |
+| Include init_if_needed | 449 | 663384 | 427 | 74 | 426 |
+| Fresh after repeat | 449 | 663384 | 427 | 74 | 426 |
+
+The five normalized gains are O0106, O0116, O0124, O0127 and O0145. All five
+reconstructed account structs contain `init_if_needed`. No normalized or
+raw-local match is lost, and no raw-local match is added. Each build records
+154 actual Cargo compiler commands, **462 total**. After/repeat outputs are the
+same **865496-byte raw ELF**
+(`a1df5e2b9a49b358191f2d22c868cbdcee76d792ed08960e6f6317ee0582ae17`)
+and separately stripped **732128-byte ELF**
+(`42837666a0782dd13671207cd8502df4f4243557eb351316835ca3ac5d8bfe55`).
+All whole-original equality checks remain false. As with the earlier controls,
+complete dependency archive identity differences between fresh repeats are
+retained separately from final ELF equality.
+
+Only O0199 (`custom_panic`) remains missing from both the normalized and
+raw-local sets of the older current-runtime control. Its historical function is
+200 bytes: the first 192 bytes equal the entire captured original function and
+current-runtime body, followed by one eight-byte `exit` instruction. The complete
+historical function remains unmatched; no shortened window is accepted.
+Checksum-bound source shows `sol_panic_` returning unit in
+solana-define-syscall 3.0.0 and `!` in 4.0.1. The packet retains both declarations
+and exact function comparisons. This is a static candidate explanation only:
+no changed-source build or runtime execution has isolated that return-type effect.
+
+This closes the five predicted account-parser differences under the measured
+recipe, not the remaining panic function or whole-ELF gap. It does not exceed
+the older current-runtime control or the newer 432-window checkpoint, identify
+the original framework, or supply runtime/security qualification.
 
 ## Offline replay and retained limits
 
