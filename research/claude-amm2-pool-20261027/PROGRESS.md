@@ -21,7 +21,17 @@ lane scratch = SP/lanes/pool/out (variant trees in out/src/<v>, native builds ou
 - **g01 banked**: Linux ×2 identical (`1d0c282f…`) 647/148/138 → 666/148/119, 0 lost; runtime 25 suites / 17,462 / 0 mismatches.
   Source tree for further work: SP/lanes/pool/out/src/w3 (== g01 source).
 
-## Work in flight / next (all on top of w3 unless noted)
+- main moved to `optional-context-recovery-20261027` (651/148/134): g01 rebased cleanly (one lib.rs line), Linux ×2 `214f22b5…` 651 → 670.
+- **g02 banked** (base 651): g01 + collect 0x22e88 (signer seeds as statement temporaries + `instructions/coin_creator/collect_coin_creator_fee.rs`:68)
+  + withdraw 0x32750 (e1 recipe + one-statement `ceil_div(u128::try_from(liquidity_effective_virtual(&a.pool)?)…?, d)?`).
+  Linux ×2 identical `eb7cf18a…` 651/148/134 → 672/148/113, 0 lost; runtime 25 / 17,462 / 0. Working tree: SP/lanes/pool/out/src/g2.
+- deposit 0x2fb38 — IR experiment (out/ir, `--emit=llvm-ir` + llc -march=sbf -mattr=+store-imm,+jmp-ext -O3 -relocation-model=pic
+  -function-sections): moving `%_246 = load ptr, ptr %a` (the `a.pool` Box pointer) from the checked_add block into the udiv block
+  (either before or after the `udiv i128`) reproduces the ORIGINAL deposit byte-for-byte (tools/ocmp.py posdiff 0). So the original
+  loads the pool pointer before the `i128::try_from(change)` sign branch and InstCombine must not sink it. d8 (`let reserves = &mut
+  a.pool.virtual_quote_reserves;` at line 157) and d9 (`let pool = &mut *a.pool;`) queued.
+
+## Earlier notes (647 base)
 - deposit 0x2fb38: e1 (= w2 + withdraw recipe) has deposit 7,128 B with ONE swapped load pair (orig loads `a.pool` Box ptr `[r8+0]`
   before the `__udivti3` quotient low word `[r10-832]`). MachineSink argument: the original's box-ptr load must sit in the udiv block
   BEFORE the lo load (sunk order is preserved). Variants: d5 (receiver-first: try_from inside checked_add arg), d7 (`let pool: &mut Pool
