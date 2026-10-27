@@ -4,6 +4,32 @@ The [full audit](RECONSTRUCTION-AUDIT.md) and its generated tables retain their
 explicit `1463bd22` snapshot. This log records later research without silently
 changing that baseline or promoting new selected artifacts.
 
+## Post-PR123 cross-program review
+
+The [current reconstruction review](RECONSTRUCTION-STATUS.md) refreshes the full
+4,415-row inventory and separates selected artifacts, current research, raw body
+matches, normalized matches, opaque windows and behavior gaps. Relay's 12
+unmatched windows span 57,968 original body bytes; Fees' 85 span 348,264. These
+are whole-window extents, not counts of missing bytes or effort estimates.
+
+## Fees: 87 → 85 unmatched normalized windows
+
+The [Shareholder Copy study](../research/fees-shareholder-copy-clone/README.md)
+recovers the complete 336-byte vector-clone window at 58,520 and independently
+binds both encoded calls to raw-equal helpers. Its FeeTier-only negative control
+adds no match. The [buyback initializer study](../research/fees-buyback-initializer-origin/README.md)
+then recovers the complete 600-byte body at 120,216 by moving the unchanged
+helper to the original diagnostic path/line. These studies add one unique pair
+each with no losses: **353 unique structural pairs, 85 unmatched windows**.
+
+The current candidate has 107 original windows with any raw-equal counterpart,
+including ambiguous duplicates; 57 unique structural pairs are raw-equal. It
+retains 17,331 suite cases and 1,542 exact outcome/log/compute comparisons. The
+proposal replays are fresh; identical control receipts are explicitly reused.
+Neither full capture nor meaningful ELF equality is achieved. Historical
+duplicate-call attribution counts must be rederived before claiming them for
+this candidate.
+
 ## Relay: 43 audited location differences → 0
 
 The [compiled source-location study](../repro/donation-relay/source-location-recovery/README.md)
