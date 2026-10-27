@@ -1,5 +1,5 @@
 {
-  "README.md": "6c59ec4758c2cccf8ef64b9e6e9708fdfdf661173b107ff62a9508a7cd91d657",
+  "README.md": "d432a2c0554bf20f21fcf83d7ba29c1d801fc130d236c6e5ac2879777648c695",
   "account-name-closure.json": "dcf3079bef9b00abc7329e39a43350cdc18b59601d989410428957d8583d3b95",
   "account-name-measure.json": "4bbd1f9ae5c8eaa128e82cc85ebb0241345ec7ce1b816062a2ebf723e54ecbcd",
   "account-name-only.patch": "6c22bbc0e97c4c640519dea50d0fc8ded7e20c4bd19248339c329ade45e71c9b",
@@ -45,9 +45,13 @@
   "runtime/configuration-loader.json": "d83add748f3b2a2b4e74e463a2e1ff38b0071cab6305c44dc0749fbf142eae9a",
   "runtime/configuration.json.gz": "a61091b5feb08fe6a8e83f91c71d6a6fd6b17420adddd698b77f9369232c8728",
   "runtime/configuration.log": "da60d75cc7d03a4b251d5b834e2d661bf783ec5333f7513ad0cbb913d21e43c8",
+  "runtime/corpus.json": "b64760672272bf07c5b6a61ab873b2214f9ab5be440eb3f9ddc4b569e870f507",
+  "runtime/full-loader-receipts.json.gz": "502d1c90cceaa7cd68de4cc046d1eafa0b7a122e01927717384861835384721d",
+  "runtime/full-run.log": "b886c26b962a18a3b98b11716941edf071a5ecd8afb4ee420a0bfa4768e12e9f",
+  "runtime/full.json.gz": "177b1649f9f4300099a3b19f3c08d130c54afb03267b903ee18dda84e9c5bd74",
   "support/analyze.py": "dd7fb38d795d4dd72a25aab0d65c2223d9f6f75d8b3ecb0de1d87d6e102910ac",
   "support/diagnostic_audit.py": "0343c70e4f9c7860ad392f0a8bd10d90ac94fe17bb2ba5bfd49a45683edbe343",
   "support/elf_helpers.py": "fbf808210b28698a65ca385220c48396fe9ab650284dc446a6b9d9194a250777",
   "support/window_map.py": "eeec82f751ea38827c5149f28590f19a3ff516c7eee57b6aa48949cbaac4a7e5",
-  "verify.py": "df7fc67a0e519d05878b6e4d0e74d3e0b3b5dcca04e001f725d0a25e76afb87a"
+  "verify.py": "7990620dbfe3a9b57e6cee0a8e9f9ab09cd6f3aa6878ed2dda33fc458b37f30c"
 }
