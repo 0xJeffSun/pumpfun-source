@@ -1394,3 +1394,20 @@ windows spanning 196,880 original instruction bytes. Fresh execution of all
 pairs for 478 attributed correspondences, leaving 78 duplicate windows unassigned.
 The core selected checkpoint remains unchanged; this is a research inventory
 update, not whole-program identity or historical-source proof.
+
+## Pump AMM: buyback split helper and recorded source locations
+
+The [buyback helper recovery](../repro/pump_amm/buyback-helper-recovery/README.md)
+extracts the complete 328-byte original function at 412888 through ordinary
+Rust method ownership, public visibility and an early return. The measured
+candidate reaches **489 complete normalized windows**, including 93 raw matches,
+with 296 unmatched windows and no previous match lost. Both referenced panic
+messages and source-location triples match; all 51 prior location positives
+remain, giving 53. Raw pointer-bearing records and the full ELF still differ.
+
+Baseline and final candidate each pass 1,011 legacy-buy cases and 575 legacy-sell
+cases, with 3,172 signed transactions per build. The source layout and root-only
+path remap are documented reconstructed build inputs, not historical provenance.
+The retained materializer restores its builder's transitive Python imports, and
+the verifier checks ordered complete callees, source, artifacts and signatures.
+The selected checkpoint remains unchanged.
