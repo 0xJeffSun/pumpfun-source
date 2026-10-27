@@ -24,7 +24,7 @@ all remaining code, calls, data, relocations and build provenance.
 
 | Latest verified checkpoint | Matched windows | Matched % | Raw-equal bodies | Normalized only | Unmatched | Whole ELF equal |
 | --- | ---: | ---: | ---: | ---: | ---: | --- |
-| [Pump Round27](repro/pump/main-contract-round27-20261027/README.md) | 723 / 1,035 | 69.9% | 123 | 600 | 312 | No |
+| [Pump Round28](repro/pump/main-contract-round28-20261027/README.md) | 723 / 1,035 | 69.9% | 123 | 600 | 312 | No |
 | [PumpSwap / AMM](repro/pump_amm/guard-data-recovery-20261027/README.md) | 638 / 785 | 81.3% | 128 | 510 | 147 | No |
 | [Fees research](research/fees-withdraw-tuple-integration/README.md) | 580 / 585 | 99.1% | 198 | 382 | 5 | No |
 | [Mayhem research](research/mayhem-sizing-panic-recovery/README.md) | 429 / 441 | 97.3% | 100 | 329 | 12 | No |
@@ -39,7 +39,7 @@ the whole program is identical.
 
 | Checkpoint | Text bytes in matched windows | Text covered | Unmatched text |
 | --- | ---: | ---: | ---: |
-| Pump Round27 | 886,312 / 1,792,208 | 49.5% | 905,896 |
+| Pump Round28 | 886,312 / 1,792,208 | 49.5% | 905,896 |
 | PumpSwap / AMM | 782,776 / 1,162,040 | 67.4% | 379,264 |
 | Fees research | 750,520 / 799,648 | 93.9% | 49,128 |
 | Mayhem research | 595,456 / 706,744 | 84.3% | 111,288 |
@@ -72,7 +72,7 @@ alternative source is an unpromoted compiler-context diagnostic.
 
 ## Behavior and remaining work
 
-Pump Round27 passes 10,468 full cases plus 6,502 focused executions, with 16,966
+Pump Round28 passes 10,468 full cases plus 6,522 focused executions, with 16,986
 paired diagnostic-log cases. AMM passes 17,462 full cases plus the separate
 account, fee, CPI, boundary and error-order matrices recorded in its checkpoint.
 These corpora overlap and must not be summed as unique scenarios. Tests use
@@ -119,11 +119,19 @@ runtime is still current Anchor, and no new original matches or target execution
 are claimed.
 
 The latest [Fees Withdraw integration](research/fees-withdraw-tuple-integration/README.md)
-composes the published tuple-ownership source with the current Social recovery
-and linker layout. The recovered 967-instruction handler raises Fees to 580
-normalized / 198 raw-local matches. All 21,079 readonly bytes and the program-ID
-fixes are preserved. Two native builds agree and all 17,331 fresh comparisons
-pass. Five functions, absolute layout and complete ELF identity remain unresolved.
+composes the published tuple-ownership source with the accepted Social recovery
+and linker layout. Its 967-instruction / 8,000-byte normalized body raises Fees
+to 580 matched windows while retaining all 198 raw-local matches and all 21,079
+readonly bytes. Two native builds agree; the retained runtime evidence passes
+17,331 comparisons across 18 suites. Five windows and whole-ELF identity remain
+unresolved.
+
+The [safe Crank source proposal](research/fees-crank-safe-context-source/README.md)
+preserves a separate 579-window / 143-raw local composition and adds no matched
+window. Its exact parent and native/runtime receipts are not published. The
+28 source/path tests pass, including canonical temporary-path handling on macOS;
+these tests do not establish a reproduced build or justify adding its counts
+to the qualified frontier.
 
 The [Fees continuation archive](research/fees-work-continuation-20261027/README.md)
 preserves 12,520 new or updated research files beyond the earlier work checkpoint.
