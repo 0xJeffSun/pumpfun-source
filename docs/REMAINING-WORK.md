@@ -1,7 +1,7 @@
-# Remaining work — Jupiter recovery, 26 October 2026
+# Remaining work — burn/close recovery, 26 October 2026
 
 This is the action list for the [current reconstruction audit](RECONSTRUCTION-AUDIT.md),
-with current research reviewed through evidence revision `c7d35041`. The [current review](RECONSTRUCTION-STATUS.md)
+with current research reviewed through evidence revision `17e7a7ab`. The [current review](RECONSTRUCTION-STATUS.md)
 and [complete refreshed inventory](../repro/reconstruction-status-2026-10-26/README.md)
 list every raw match and unresolved window; selected artifacts retain the
 `1463bd22` audit bindings. The historical
@@ -9,13 +9,14 @@ list every raw match and unresolved window; selected artifacts retain the
 candidate paths and “current” prose must not override newer evidence.
 
 Subsequent gains are in the [byte-identity progress log](BYTE-IDENTITY-PROGRESS.md):
-Relay research now has **11 unmatched windows**; Fees buyback-origin research
+Relay research now has **10 unmatched windows**; Fees buyback-origin research
 has **85 unmatched windows and 353 unique structural pairs**. The [Relay framework study](../repro/donation-relay/framework-sysroot-recovery/README.md)
 recovers the three repeated type-ID bodies with official Linux target libraries,
 adds the Anchor 0.32 framework matches and restores share-total compared values.
 The subsequent [mint-predicate study](../repro/donation-relay/mint-fee-pair-recovery/README.md)
-recovers window 106; the current remaining windows are 92–100, 109 and 112 after the
-[Jupiter optional-seed recovery](../repro/donation-relay/jupiter-option-source-recovery/README.md). A
+recovers window 106; the current remaining windows are 92–100 and 112 after the
+[Jupiter](../repro/donation-relay/jupiter-option-source-recovery/README.md) and
+[burn/close ownership](../repro/donation-relay/burn-mint-ownership-recovery/README.md) recoveries. A
 [fully Linux reproduction](../repro/donation-relay/linux-canonical-reproduction/README.md)
 previously confirmed the 480-window frontier; the optional-seed study independently
 confirms 481 with the full Linux compiler. The baseline counts below remain those
@@ -32,8 +33,10 @@ closes Jupiter window 90 on both compiler recipes, taking the current frontier
 to 481/492 without losing matches. The prior four instruction differences were
 resolved by the optional-slice pointer test and Rust `match` structure. The
 original location cohort remains equal and expands from 346 to 348 pairs.
-Thirty-two earlier burn/close source variants remain negative; window 109 and
-the other ten business/helper windows still require work.
+The subsequent [burn/close ownership recovery](../repro/donation-relay/burn-mint-ownership-recovery/README.md)
+closes window 109 on both compiler recipes, advancing to 482/492. All 348 location
+pairs remain equal. Thirty-six epoch-close variants remain negative; the ten
+remaining windows are donation/settlement business bodies and the shared worker.
 
 ## Audit baseline
 
@@ -85,7 +88,7 @@ and signing/ownership restrictions are unchanged by this documentation audit.
 | Selected AMM | 297 unmatched original windows, 160 ambiguous normalized rows, original diagnostics, data and full call contracts |
 | Fees current research | 85 unmatched windows (348,264 original body bytes), 147 original windows in duplicate groups; rederive call attribution for this candidate, then close shareholder validators, transitive calls/data and full ELF/relocation layout |
 | Selected Mayhem | Seven admitted unmatched windows and 257 source-ledger opaque windows; 12 of the opaque windows have local raw matches without semantic attribution |
-| Relay current research | [11 explicit residual windows](RECONSTRUCTION-STATUS.md#relay-the-complete-remaining-body-list), spanning 55,472 original body bytes: donation/settlement bodies, burn/close and shared donation worker; privileged successes, transitive callees/data and allocator/borrow behavior |
+| Relay current research | [10 explicit residual windows](RECONSTRUCTION-STATUS.md#relay-the-complete-remaining-body-list), spanning 52,616 original body bytes: donation/settlement bodies and shared donation worker; privileged successes, transitive callees/data and allocator/borrow behavior |
 | Metaplex | Utilize's 1,477 text differences, 30 source-coordinate differences, two relocation differences; authentic source/compiler layout |
 | ATA | Historical recipe remains unknown despite exact output from explicit symbol ordering and an empty feature. Decide selection independently of historical authenticity. |
 | All programs | Exact historical tool/dependency inputs, complete sections/relocations, data and indirect-call meaning; complete security and lifecycle acceptance |

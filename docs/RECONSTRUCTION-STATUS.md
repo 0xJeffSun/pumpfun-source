@@ -1,6 +1,6 @@
-# Reconstruction status after Jupiter recovery — 26 October 2026
+# Reconstruction status after burn/close recovery — 26 October 2026
 
-Reviewed evidence revision: `c7d35041ff6a3cefe0129d33a4707f9b010f67ec`.
+Reviewed evidence revision: `17e7a7abf9c4263f0dd1c35282729e8f8a8725ec`.
 This review updates the research frontier while preserving the selected-checkpoint
 [baseline audit](RECONSTRUCTION-AUDIT.md). The [recomputed inventory](../repro/reconstruction-status-2026-10-26/README.md)
 contains every one of the **4,415 selected/research function-window rows**.
@@ -38,7 +38,7 @@ analysis. Candidate symbol names are hypotheses about original identity.
 | Mayhem selected | 441 | 58 | 131 | 7 | 245 |
 | Relay selected source 15 | 492 | 33 | 89 | 370 | 0 |
 | **Fees latest research** | **585** | **107** | **393** | **85** | **0** |
-| **Relay latest research** | **492** | **130** | **351** | **11** | **0** |
+| **Relay latest research** | **492** | **130** | **352** | **10** | **0** |
 
 Each row is a partition, not a score of semantic correctness. Mayhem's source
 ledger has 257 opaque windows, 12 of which happen to match local raw bytes.
@@ -57,11 +57,11 @@ calling whole trade or donation handlers perfect.
 
 ## How much remains?
 
-The strongest Relay research candidate matches **481/492 windows (97.8% by
-window count)**. Its 11 unmatched windows span **55,472 of 752,488 original text
-bytes (7.4%)**. Those bytes describe the sizes of unmatched original windows,
+The strongest Relay research candidate matches **482/492 windows (98.0% by
+window count)**. Its 10 unmatched windows span **52,616 of 752,488 original text
+bytes (7.0%)**. Those bytes describe the sizes of unmatched original windows,
 not the number of absent or incorrect bytes. The residual includes large business
-functions; matching the other 481 still leaves their call/data identity to prove.
+functions; matching the other 482 still leaves their call/data identity to prove.
 
 Fees research has **500/585 windows with a normalized counterpart**: 353 unique
 structural pairs and 147 original windows in ambiguous duplicate groups. Its 85
@@ -78,7 +78,7 @@ build-input recovery, and behavior needs broader successful/rejected execution.
 
 The labels below are working source attributions from the recovery studies,
 not symbols authenticated from the stripped original. Every row remains
-unmatched in the current Jupiter-recovery candidate on both tested build recipes.
+unmatched in the current burn/close-recovery candidate on both tested build recipes.
 
 | Original ordinal | Address | Bytes | Working attribution / next comparison |
 | --- | ---: | ---: | --- |
@@ -91,23 +91,22 @@ unmatched in the current Jupiter-recovery candidate on both tested build recipes
 | 98 | 97,096 | 5,696 | Distribution without swap |
 | 99 | 102,792 | 4,448 | Swap-only body |
 | 100 | 107,240 | 5,328 | Swap then distribute |
-| 109 | 127,704 | 2,856 | Burn/close helper: ownership, drops and CPI construction |
 | 112 | 131,136 | 10,248 | Shared donation worker and its error/data paths |
 
 The former 27-window frontier is obsolete. Subsequent studies recovered receipt
 coordinates (one), Token-2022/framework versions (four), framework/sysroot and
-share-error behavior (nine), the mint-fee predicate (one), and the Jupiter optional-seed builder (one),
+share-error behavior (nine), the mint-fee predicate (one), the Jupiter optional-seed builder (one), and burn/close ownership (one),
 without losing previous normalized matches. Source-location recovery separately resolves all
 43 differences in a fixed audited cohort of 346 location references; it does not
 add another matched function or establish all-data identity.
 
-Both current Jupiter-recovery candidates pass fresh **536 replay records / 534 unique fixtures**.
-The Darwin-compiler/Linux-library candidate is 818,176 bytes, SHA-256
-`ad97298ee51c3f585f6cc4012826be33a8d6fa835d9483aa8f67ce041382b6e2`.
-The full Linux candidate is also 818,176 bytes, SHA-256
-`1bef9843beac4c9c8dd2158d014840a1b65a4fdd1d726ac7ee1f1e975a9b6587`.
+Both current burn/close-recovery candidates pass fresh **536 replay records / 534 unique fixtures**.
+The Darwin-compiler/Linux-library candidate is 818,096 bytes, SHA-256
+`1eaf3af16fdafdfa9d2ca47e88c07a7f15f13b88aa57df1f63c655c10a1616e2`.
+The full Linux candidate is also 818,096 bytes, SHA-256
+`c6ae09b906b3c6a88042e40b02e0a2f6598268061d7527b667c0e631655a3921`.
 Their equal frontier does not imply equal ELF files or recovered historical tools.
-The 104-byte length difference from the original's meaningful ELF is not an
+The 184-byte length difference from the original's meaningful ELF is not an
 estimate of remaining code. Privileged successes and allocation-failure paths
 remain outside the claimed fresh replay coverage.
 
@@ -127,7 +126,18 @@ retains its original 346 equal pairs and adds two, for 348/348 equal pairs.
 This is normalized body recovery, not raw whole-file or exhaustive semantic
 identity. Nineteen further metadata-construction trials and an `if let` variant
 are retained as negative controls. The earlier 32 burn/close trials remain
-negative; window 109 is still in the eleven-row residual list.
+negative; the subsequent ownership recovery below resolves window 109.
+
+### Burn/close is now a complete normalized match
+
+The [mint-ownership recovery](../repro/donation-relay/burn-mint-ownership-recovery/README.md)
+resolves window 109 by consuming the mint in the nonzero burn and fully
+destructuring the input context. This recovers the original conditional cleanup
+and return layout. All 24 direct-call sites bind to matched callees; the same
+348 source-location pairs remain equal. Both compiler recipes match the complete
+2,856-byte body and pass fresh bounded replay. No whole-file or exhaustive
+semantic identity is claimed. Thirty-six epoch-close trials remain negative;
+epoch-close window 96 is still in the ten-row residual list.
 
 ## Fees: new complete bodies, substantial residual business logic
 
@@ -173,7 +183,7 @@ receipts, acceptance decisions and explicit guard changes are still required.
 ## Recommended execution order and completion criteria
 
 1. **Continue Relay body recovery:** isolate one ordinary Rust change per trial,
-   starting with epoch close / burn-close and the shared donation worker. Keep
+   starting with epoch close and the shared donation worker. Keep
    negative trials; require no lost normalized matches and fresh replay of any
    proposed candidate. Do not infer a match from equal sizes or fuzzy similarity.
 2. **Close known behavior defects:** Pump `sell_v2` and the ten partial/unaccepted
@@ -202,7 +212,7 @@ here are local; no live network action is part of this review.
 python3 -B repro/reconstruction-audit-2026-10-26/audit.py --check
 python3 -B research/fees-shareholder-copy-clone/verify.py
 python3 -B research/fees-buyback-initializer-origin/verify.py
-python3 -B repro/donation-relay/jupiter-option-source-recovery/verify.py
+python3 -B repro/donation-relay/burn-mint-ownership-recovery/verify.py
 python3 -B repro/reconstruction-status-2026-10-26/refresh.py --check
 ```
 

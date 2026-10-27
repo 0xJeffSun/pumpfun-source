@@ -4,6 +4,22 @@ The [full audit](RECONSTRUCTION-AUDIT.md) and its generated tables retain their
 explicit `1463bd22` snapshot. This log records later research without silently
 changing that baseline or promoting new selected artifacts.
 
+## Relay: 11 → 10 unmatched normalized windows
+
+The [burn/close ownership recovery](../repro/donation-relay/burn-mint-ownership-recovery/README.md)
+recovers the complete 2,856-byte original window 109. The nonzero branch consumes
+the mint instead of cloning it, and full context destructuring recovers the
+conditional cleanup/return layout. All 24 direct-call sites bind to matched
+callees. Both compiler recipes reach **482/492 normalized windows**, **130 raw
+local matches**, and **10 unmatched**, with no losses. Each recovered binary
+passes fresh 536-record / 534-unique-fixture replay; privileged-success coverage
+limits remain. The same 348 source-location pairs remain equal.
+
+The packet retains 36 negative epoch-close builds and eight negative ownership
+variants alongside the recovered Darwin/Linux builds. These control results do
+not constitute accepted epoch-close reconstruction. Whole-file identity remains
+false; the full inventory and remaining-work report are updated.
+
 ## Relay: 12 → 11 unmatched normalized windows
 
 The [Jupiter optional-seed recovery](../repro/donation-relay/jupiter-option-source-recovery/README.md)

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Recompute the post-Jupiter-recovery inventory; never changes selected checkpoints."""
+"""Recompute the post-burn-recovery inventory; never changes selected checkpoints."""
 import argparse
 import collections
 import csv
@@ -14,9 +14,9 @@ import tempfile
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 INPUTS = {}
-REVISION = 'c7d35041ff6a3cefe0129d33a4707f9b010f67ec'
+REVISION = '17e7a7abf9c4263f0dd1c35282729e8f8a8725ec'
 FEES = 'research/fees-buyback-initializer-origin'
-RELAY = 'repro/donation-relay/jupiter-option-source-recovery'
+RELAY = 'repro/donation-relay/burn-mint-ownership-recovery'
 
 
 def read(name):
@@ -115,7 +115,7 @@ def generate():
                      candidate_windows=len(cw))
 
     parser = module('status_relay_windows', 'repro/donation-relay/swap-receipt-coordinate-recovery/analyze.py')
-    relay_artifacts = load(RELAY + '/metadata.json')['variants']['option-match']['artifacts']
+    relay_artifacts = load(RELAY + '/metadata.json')['variants']['recovered']['artifacts']
     with tempfile.TemporaryDirectory() as temp:
         d = Path(temp)
         for output, path, compressed in [
@@ -127,15 +127,15 @@ def generate():
             raw = read(path)
             (d / output).write_bytes(gzip.decompress(raw) if compressed else raw)
         analysis = parser.analyze(d)
-    assert analysis['comparison-summary.json'] == load(RELAY + '/builds/option-match/comparison-summary.json')
-    assert analysis['match-ledger.json'] == load(RELAY + '/builds/option-match/match-ledger.json')
+    assert analysis['comparison-summary.json'] == load(RELAY + '/builds/recovered/comparison-summary.json')
+    assert analysis['match-ledger.json'] == load(RELAY + '/builds/recovered/match-ledger.json')
     multiplicity = collections.Counter(o['normalized_sha256'] for o in analysis['original-function-ledger.json'])
     for o, r in zip(analysis['original-function-ledger.json'], analysis['match-ledger.json']):
         c = analysis['candidate-function-ledger.json']
         convert = lambda indices: [dict(address=c[i]['start'], name=n) for i in indices for n in (c[i]['names'] or [''])]
         rows.append(row('donation_relay_research', dict(address=o['start'], bytes=o['bytes'], unique=multiplicity[o['normalized_sha256']] == 1 and len(r['normalized_candidate_indices']) == 1),
                         convert(r['raw_candidate_indices']),
-                        convert(r['normalized_candidate_indices']), RELAY + '/builds/option-match/match-ledger.json'))
+                        convert(r['normalized_candidate_indices']), RELAY + '/builds/recovered/match-ledger.json'))
     counts = {}
     for program in dict.fromkeys(r['program'] for r in rows):
         group = [r for r in rows if r['program'] == program]
@@ -155,7 +155,7 @@ def generate():
     for r in rows:
         writer.writerow({k: json.dumps(v) if isinstance(v, list) else v for k, v in r.items()})
     generated = {'functions.tsv': output.getvalue(), 'status.json': json.dumps(report, indent=2, sort_keys=True) + '\n'}
-    overview = ['# Function inventory after Jupiter optional-seed recovery', '', f'Evidence snapshot: `{REVISION}`. Selected inputs retain their verified `{baseline["audited_revision"]}` checkpoint bindings. Research rows replace the older Fees/Relay research inventory; they do not replace selections.', '',
+    overview = ['# Function inventory after burn/close ownership recovery', '', f'Evidence snapshot: `{REVISION}`. Selected inputs retain their verified `{baseline["audited_revision"]}` checkpoint bindings. Research rows replace the older Fees/Relay research inventory; they do not replace selections.', '',
                 '| Program / build | Windows | Exact local bytes | Normalized only | No complete match | Opaque |',
                 '| --- | ---: | ---: | ---: | ---: | ---: |']
     for program, c in counts.items():

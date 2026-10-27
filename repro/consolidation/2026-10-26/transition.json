@@ -7,8 +7,8 @@
     {
       "path": "README.md",
       "before_sha256": "cae913d4d3f2066403162f653a0cf35b39620fb08877b1b308c08ccce4a53678",
-      "after_sha256": "20be62bcd08d8ca2eb2d99261f76f74b351185e378808179aa5607bbaeaa0af6",
-      "reason": "Record complete Jupiter optional-seed recovery on both build recipes: Relay 481/492 with 11 unmatched, 348 equal location pairs and fresh bounded replay; keep selected checkpoints unchanged."
+      "after_sha256": "f9a8a3a6dcc571b2694f17f7624b9a31426b62857accdf434981d881ff26f0b1",
+      "reason": "Record complete burn/close mint ownership recovery: Relay 482/492 with 10 unmatched on both compiler recipes, 348 equal location pairs and fresh bounded replay; preserve selected checkpoints."
     },
     {
       "path": ".github/workflows/verify.yml",
