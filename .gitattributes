@@ -1424,6 +1424,7 @@ research/mayhem-sell-current-recovery-20261027/source.patch -whitespace
 research/fees-extend-integration/overrides/** -whitespace
 research/fees-extend-integration/source.patch -whitespace
 research/amm-pool-preparation-boundaries/** -text
+research/pump-amm-migration-composition/** -text
 research/mayhem-quotes-current-recovery-20261027/overrides/** -whitespace
 research/mayhem-quotes-current-recovery-20261027/source.patch -whitespace
 research/mayhem-amm-handler-shape-controls-20261027/controls/**/overrides/** -whitespace
