@@ -430,3 +430,20 @@ unmatched original windows. Call refinement gives 427 correspondences, 2,572
 bound-target edges and 24 different-body edges; 86 duplicates remain unattributed.
 All 57 direct calls in the four new bodies reach matching local callee bodies.
 Fresh 17,331-case and 1,542-case exact replays pass. Whole-file identity still fails.
+
+## Configuration-event borrowing and stored admin
+
+The [two-build recovery](../research/fees-config-event-recovery/README.md) removes
+four unnecessary event clones, then uses the configuration's stored admin value.
+The unchanged `has_one = admin` constraints guard the instruction path. All four
+caller bodies now match, with no existing match lost. Two callers add unique
+pairs; the upserts form a duplicate-body group. Outgoing-callee checks identify
+both upserts uniquely and agree with incoming-call attribution.
+
+The final candidate has 368 unique structural pairs, 149 original windows in
+ambiguous body groups and 68 unmatched windows. The full partition is 116 raw,
+401 normalized-only and 68 unmatched. Call refinement gives 431 correspondences
+(63 additional duplicate pairs), 2,625 bound-target edges and 20 different-body
+edges; 86 duplicates remain unattributed. All 49 local calls in the four recovered
+callers have matching callee bodies. Fresh 17,331-case and 1,542-case exact
+replays pass. Whole-file identity still fails.

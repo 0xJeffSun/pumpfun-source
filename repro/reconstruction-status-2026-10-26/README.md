@@ -1,6 +1,6 @@
 # Current function-window inventory
 
-Evidence snapshot: `2a8fef2393085cdf9fa18d35c1b1df2e0f1acf20`. Selected inputs retain their verified `1463bd22fb7811825c5e7acf1cb963eb39ab68d9` checkpoint bindings. Research rows replace the older Fees/Relay research inventory; they do not replace selections.
+Evidence snapshot: `155203f30b9c69e4c57a4dd51e0665a33cb06e12`. Selected inputs retain their verified `1463bd22fb7811825c5e7acf1cb963eb39ab68d9` checkpoint bindings. Research rows replace the older Fees/Relay research inventory; they do not replace selections.
 
 | Program / build | Windows | Exact local bytes | Normalized only | No complete match | Opaque |
 | --- | ---: | ---: | ---: | ---: | ---: |
@@ -9,10 +9,10 @@ Evidence snapshot: `2a8fef2393085cdf9fa18d35c1b1df2e0f1acf20`. Selected inputs r
 | pump_fees | 585 | 102 | 363 | 120 | 0 |
 | mayhem | 441 | 58 | 131 | 7 | 245 |
 | donation_relay | 492 | 33 | 89 | 370 | 0 |
-| pump_fees_research | 585 | 116 | 397 | 72 | 0 |
+| pump_fees_research | 585 | 116 | 401 | 68 | 0 |
 | donation_relay_research | 492 | 130 | 352 | 10 | 0 |
 
-Fees has 366 body-unique pairs plus 61 additional call-attributed duplicate pairs (427 correspondences); 86 duplicate windows remain unattributed. These are not 61 additional body matches. Rows count inferred original windows, not unique source functions or effort. Raw matches may be duplicate/ambiguous and do not establish referenced data or transitive callees. The Fees matcher and Relay matcher use separately documented masks; do not add their counts into a source-completion score.
+Fees has 368 body-unique pairs plus 63 additional call-attributed duplicate pairs (431 correspondences); 86 duplicate windows remain unattributed. These are not 63 additional body matches. Rows count inferred original windows, not unique source functions or effort. Raw matches may be duplicate/ambiguous and do not establish referenced data or transitive callees. The Fees matcher and Relay matcher use separately documented masks; do not add their counts into a source-completion score.
 
 - [Every window, symbol candidate, match address and evidence path](functions.tsv)
 - [Every exact local body match](raw-body-matches.md)

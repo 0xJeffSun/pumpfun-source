@@ -37,7 +37,7 @@ analysis. Candidate symbol names are hypotheses about original identity.
 | Fees selected | 585 | 102 | 363 | 120 | 0 |
 | Mayhem selected | 441 | 58 | 131 | 7 | 245 |
 | Relay selected source 15 | 492 | 33 | 89 | 370 | 0 |
-| **Fees latest research** | **585** | **116** | **397** | **72** | **0** |
+| **Fees latest research** | **585** | **116** | **401** | **68** | **0** |
 | **Relay latest research** | **492** | **130** | **352** | **10** | **0** |
 
 Each row is a partition, not a score of semantic correctness. Mayhem's source
@@ -63,13 +63,13 @@ bytes (7.0%)**. Those bytes describe the sizes of unmatched original windows,
 not the number of absent or incorrect bytes. The residual includes large business
 functions; matching the other 482 still leaves their call/data identity to prove.
 
-Fees research has **513/585 windows with a normalized counterpart**: 366 unique
-structural pairs and 147 original windows in ambiguous duplicate groups. Its 72
-unmatched windows span **330,536 of 799,648 original text bytes (41.3%)**, although
-they are only 12.3% of the window count. Many remaining bodies are large. The
+Fees research has **517/585 windows with a normalized counterpart**: 368 unique
+structural pairs and 149 original windows in ambiguous duplicate groups. Its 68
+unmatched windows span **320,304 of 799,648 original text bytes (40.1%)**, although
+they are only 11.6% of the window count. Many remaining bodies are large. The
 [current call ledger](../repro/reconstruction-status-2026-10-26/fees-call-attribution.json)
-recomputes 61 additional duplicate-body correspondences on this candidate, for
-427 attributed pairs. There are 86 still-unattributed duplicate windows and 24
+recomputes 63 additional duplicate-body correspondences on this candidate, for
+431 attributed pairs. There are 86 still-unattributed duplicate windows and 24
 call edges to different-body frontiers. This refinement adds no body coverage.
 
 There is no defensible single source-completion percentage or ETA. Whole-program
@@ -241,8 +241,8 @@ additional function is considered recovered.
 
 ## Fees: new complete bodies, substantial residual business logic
 
-The latest 863,168-byte candidate is SHA-256
-`27806e4888d4f18059ac172698c91e3ea9ba7baaaa9a89f2a2afa5e29675f087`.
+The latest 860,512-byte candidate is SHA-256
+`d5b45304cc75fb883cefd606c9ba7866f8c976f3163ba70312d96e391a985c56`.
 The newly merged studies recover:
 
 | Complete original window | Evidence |
@@ -257,6 +257,7 @@ The newly merged studies recover:
 | Two 624-byte setters at 260568 and 261192 | [Setter recovery](../research/fees-config-setter-recovery/README.md); error origins, field stores and ten direct callee bindings checked |
 | V2 parser (352 bytes), cleanup (776 bytes), dispatcher (1,104 bytes) | [V2 ownership](../research/fees-sharing-owned-v2/README.md), integrated with the setters; cleanup raw bytes equal |
 | Two 4,160-byte tier bodies, 368-byte reserve and 200-byte bounds-panic bodies | [Tier replacement/upsert recovery](../research/fees-tier-splice-recovery/README.md); 57 direct callee-body bindings checked |
+| Configuration/stable updates (2,608 / 2,568 bytes), normal/stable upserts (2,528 bytes each) | [Event and admin-source recovery](../research/fees-config-event-recovery/README.md); duplicate upserts distinguished by outgoing calls |
 
 These are complete normalized windows, not merely matching diagnostic fragments.
 There are 63 unique raw-equal structural pairs; counting all original windows
@@ -264,17 +265,17 @@ with any raw counterpart, including ambiguous duplicates, gives 116. Those
 numbers answer different questions and must not be interchanged.
 
 The candidate retains passing **17,331 cases across 18 suites** and **1,542 exact
-outcome/log/compute comparisons**. The final tier-recovery candidate was replayed afresh;
-the control is explicitly reused from the verified setter/V2 packet. Existing unchecked-input
-and finite-coverage limits remain. The 72 unresolved bodies, ambiguous attribution,
+outcome/log/compute comparisons**. The final event-recovery candidate was replayed afresh;
+the control is explicitly reused from the verified tier-recovery packet. Existing unchecked-input
+and finite-coverage limits remain. The 68 unresolved bodies, ambiguous attribution,
 shareholder validation, transitive calls/data and final ELF layout remain open.
 
-The fee-total helper, flat-fee setters and both tier replacement/upsert bodies
-now have complete normalized counterparts. The newest recovery preserves the
-observed error order, source lines and vector-field offsets, and separately
-checks every direct local callee body. Public callers, data identity and complete
-transitive behavior remain open; local body recovery is not a whole-program or
-exhaustive semantic-equivalence proof.
+The fee-total helper, flat-fee setters, tier helpers and four configuration/upsert
+public callers now have complete normalized counterparts. The upserts share a
+body shape but are distinguished by their callee targets; both local outgoing
+checks and the global incoming-call refinement agree. Other callers, referenced
+data and full transitive behavior remain open. These matches do not establish
+whole-program or exhaustive semantic equivalence.
 
 ## Public behavior: reconstructed is not perfect
 
@@ -302,7 +303,7 @@ receipts, acceptance decisions and explicit guard changes are still required.
 2. **Close known behavior defects:** Pump `sell_v2` and the ten partial/unaccepted
    selected dispositions above, with bound success/rejection tests. Cover genuine
    CPI callers, ownership and extension/mode combinations before acceptance.
-3. **Continue Fees business/source recovery:** work from all 72 residual addresses,
+3. **Continue Fees business/source recovery:** work from all 68 residual addresses,
    preserve the refreshed duplicate-call attribution, and validate paths not
    exercised by the existing corpus. Normalize only declared relocations/calls.
 4. **Recover Pump/AMM/Mayhem residuals:** preserve opaque and ambiguous states.
