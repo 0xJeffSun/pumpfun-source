@@ -69,7 +69,7 @@ _ZN19pump_fees_candidate24recovered_fee_error_name17hd3fad0b07befc218E
 _ZN19pump_fees_candidate30recovered_fee_error_into_error17h85b7e0d2ff622284E
 ```
 
-The interrupted command requested replacement of the two helper `link_name` values with those exact symbols, followed by a normal Cargo build using the default SDK linker, labeled `create583-renderer-direct-symbols`. **No execution receipt was returned. Neither the source edit nor the build's completion is established.** These names depend on the recorded package/toolchain configuration and must be rediscovered if that configuration changes.
+The interrupted command requested replacement of the two helper `link_name` values with those exact symbols, followed by a normal Cargo build using the default SDK linker, labeled `create583-renderer-direct-symbols`. **The exec service subsequently rejected the request with HTTP 409 `environment_offline` before creating a process. The source edit, final snapshot, and direct-symbol build were not executed.** These names depend on the recorded package/toolchain configuration and must be rediscovered if that configuration changes.
 
 After workspace recovery, inspect existing files and receipts before rerunning anything. In particular:
 
@@ -77,7 +77,6 @@ After workspace recovery, inspect existing files and receipts before rerunning a
 /workspace/fees-recovery/create583-renderer-direct-symbols/
 /workspace/fees-recovery/renderer-direct-symbols.log
 /workspace/fees-recovery/source-renderer/
-/workspace/fees-recovery/renderer-merged-source.tar.gz
 /workspace/fees-recovery/renderer-event-fields.log
 /workspace/fees-recovery/build_renderer.py
 /workspace/fees-recovery/build_renderer_bridge.py
@@ -86,6 +85,6 @@ After workspace recovery, inspect existing files and receipts before rerunning a
 /workspace/fees-recovery/measure_create.py
 ```
 
-Other snapshots retain earlier arrangements: `renderer-initial-source.tar.gz`, `renderer-bridge-source.tar.gz`, and `renderer-constructors-source.tar.gz`. The event-field runner restores its baseline library source on normal completion.
+The requested final `renderer-merged-source.tar.gz` snapshot was part of the rejected command and was not created. Recreate it from the live source before making the next edits, after checking the filesystem. Other snapshots retain earlier arrangements: `renderer-initial-source.tar.gz`, `renderer-bridge-source.tar.gz`, and `renderer-constructors-source.tar.gz`. The event-field runner restores its baseline library source on normal completion.
 
 Recover and export the actual source archives, compiler/linker receipts and native artifacts before treating this investigation as a reproducible result. Any winning body still needs stable repeat Cargo builds, preservation of prior matches, complete reference/data/Source checks, and fresh canonical runtime execution.
