@@ -1384,3 +1384,19 @@ sharing-update cases, exercising the legacy CPI in 90 cases and V2 CPI in 120.
 Raw logs and compute are not fully equal, and whole-file identity remains open.
 The packet retains all three builds, source snapshots, complete comparisons,
 compressed receipts, and a verifier with mutation tests.
+
+## Fees: typed Relay donation encoder
+
+The [Relay encoder recovery](../repro/pump_fees/relay-donation-encoder/README.md)
+adds the complete 1,400-byte original function at 270136 through an ordinary
+borrowed Anchor-serializable argument type and a public encoder. It has a real
+incoming call from the reconstructed Crank handler. The measured research
+candidate advances from 556 to **557/585 normalized windows**, 410 unique
+structural pairs and 118 raw matches, with all prior matches and all 165 checked
+source locations preserved. The original calling handler remains unmatched.
+
+Both candidates pass 357 fresh donation-Crank cases, including 159 cases that
+reach the captured Relay program. The verifier checks the retained 556 parent
+source/artifact hashes directly, without requiring its Git object in a shallow
+checkout. Whole-ELF equality, full raw logs/compute and the selected checkpoint
+remain unchanged; this is an additional bounded research result.
