@@ -17,6 +17,8 @@ all 43 location-value differences in the audited subset, and each pass 536
 replay records. This includes a fresh build with the full Linux SDK.
 Latest Fees research: **353 unique structural pairs, 85 unmatched windows**.
 Whole-file identity remains unachieved.
+[Residual CPI trials](repro/donation-relay/residual-cpi-source-trials/README.md)
+narrow Jupiter to four differing instruction slots; it remains unmatched.
 
 The [current reconstruction review](docs/RECONSTRUCTION-STATUS.md) lists exact,
 normalized, unmatched and opaque function status, all 12 remaining Relay bodies,

@@ -4,6 +4,18 @@ The [full audit](RECONSTRUCTION-AUDIT.md) and its generated tables retain their
 explicit `1463bd22` snapshot. This log records later research without silently
 changing that baseline or promoting new selected artifacts.
 
+## Relay: narrowed Jupiter CPI residual, no match-count change
+
+The [residual CPI source trials](../repro/donation-relay/residual-cpi-source-trials/README.md)
+bank 53 builds. Iterator-based cloning reproduces 308/312 normalized instruction
+slots of the 2,496-byte Jupiter builder; four stack load/store slots remain
+unequal and are explicitly retained by the strict matcher. This is **not** a new
+complete match: the candidate retains 480/492 windows, 130 raw local matches and
+12 unmatched, with fresh 536-record replay. A separate source-only build confirms
+the same artifact. The 32 burn/close trials recover no complete body; their
+ownership, field-order and return-form variants are preserved as negative evidence.
+No selected source or research checkpoint is promoted.
+
 ## Post-PR123 cross-program review
 
 The [current reconstruction review](RECONSTRUCTION-STATUS.md) refreshes the full
