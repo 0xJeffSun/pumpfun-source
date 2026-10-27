@@ -1205,3 +1205,30 @@ explicitly unpublished, not downloadable replay evidence. No artifacts, logs,
 replay cases or archived receipt excerpts/derivatives are included; default
 verification neither compiles nor executes and reports runtime_verified=false.
 No selected checkpoint is replaced, and complete Crank semantics remain open.
+
+
+## Relay: exact meaningful ELF from source plus inferred linker ordering — 27 October 2026
+
+The [raw-ELF reconstruction](../repro/donation-relay/raw-elf-reconstruction/README.md)
+compiles the exact public PR189 ordinary source with an explicitly nonhistorical,
+object-qualified LLD input-section order. The unmodified stripped compiler ELF
+has 818,280 bytes and SHA-256
+`56d81ec64a0ba070d3d23f3c1547b31d659e85716dfa2198ec4b0ce6cd355333`:
+**every byte equals the captured original's meaningful ELF extent**. Comparison
+uses no address masks, normalization or binary patching. The ordering script
+selects compiler-produced sections; it emits no machine bytes or integer addresses.
+This is a reproducible reconstruction recipe, not the historical build recipe.
+
+The full capture is 830,448 bytes with an additional 12,168 zero allocation bytes.
+The compiler file is not claimed to equal that longer capture. A separate,
+explicitly sized allocation-container helper leaves the ELF unchanged and can
+reproduce the full captured image, checked independently by exact comparison.
+Default verification checks only source packet integrity; explicit local inputs
+are required to verify raw equality. No compiler, target or live service executes
+in the verifier, and no binary/build/runtime receipt is published.
+
+Local clean repeats, including an original-absent allowlisted filesystem build,
+and finite offline replay are reported as unpublished observations. Source-only
+negative tests cover metadata/mutation/symlink boundaries. All four core-program
+identities remain unresolved (0/4); Relay is a separate dependency, not completion
+of the entire repository. Prior evidence and selected checkpoints stay unchanged.
