@@ -1754,3 +1754,11 @@ The two builds reproduce the same 625,904-byte candidate. All 6,636 trade cases,
 1,032 admin cases and three Burn families pass; the verifier checks 15,348
 signatures and 624 complete admin account results. The full static remainder is
 100 windows / 350,216 bytes, versus 114 / 495,936 before this source recovery.
+
+## SweepBuyback source-coordinate and arithmetic-order proposal
+
+A separately measured three-file Rust delta on the exact PR212 559-window source restores original admission diagnostics, a real state claim method/source locations, borrowed balance access, transfer-before-counter ordering and source-free counter errors. PR219 independently published the same destination `add_lamports` correction and is explicitly credited; the other changes and all reported comparisons remain scoped to the pinned PR212 parent, not incremental claims over current upstream.
+
+The default source-only verifier and 13 tests pass; all 43 materialized input hashes match the frozen native-tested source. Independent local static remeasurement retains 559/585 normalized windows, 143 raw local counterparts and 166 equal Locations. The actual unmatched body is 6,984 versus original 6,960 bytes; its matched-wrapper binding, multiset of 37 actual callee shapes and 17 direct used operands/descriptors were checked, not a whole-body/CFG proof. Common-position differences worsen 448,155 → 455,540.
+
+Two identical local native builds and the finite 17,331-case regression passed; the exact candidate repairs 275 prior application-log mismatches among 1,249 Buyback cases plus separately checked arithmetic boundaries. These are explicitly unpublished local observations, not downloadable execution proof. The packet contains only ordinary source, reversible patch, full provenance/maps and static source tools; no artifact or build/runtime receipt. See `research/fees-sweep-buyback-source-proposal/README.md`. Whole core identity remains unresolved and no selected checkpoint changes.
