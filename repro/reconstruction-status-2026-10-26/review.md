@@ -1,6 +1,6 @@
 # Comprehensive reconstruction review
 
-Reviewed merged evidence: `e2d7855848a3411d665deb915077ef20672e7cdd`. Selected builds remain bound to `1463bd22fb7811825c5e7acf1cb963eb39ab68d9`.
+Reviewed merged evidence: `ba7883511942965c5c9def03971bdaff84963d6b`. Selected builds remain bound to `1463bd22fb7811825c5e7acf1cb963eb39ab68d9`.
 
 **No core program or Relay is whole-file byte-identical. No public handler is proved exhaustively perfect.**
 
@@ -17,7 +17,7 @@ Reviewed merged evidence: `e2d7855848a3411d665deb915077ef20672e7cdd`. Selected b
 | Build | Exact local windows | Normalized only | Unmatched | Opaque | Unmatched + opaque bytes / original text |
 | --- | ---: | ---: | ---: | ---: | ---: |
 | donation_relay | 33 | 89 | 370 | 0 | 735,984 / 752,488 (97.8%) |
-| donation_relay_research | 130 | 352 | 10 | 0 | 52,616 / 752,488 (7.0%) |
+| donation_relay_research | 130 | 353 | 9 | 0 | 42,368 / 752,488 (5.6%) |
 | mayhem | 58 | 131 | 7 | 245 | 636,128 / 706,744 (90.0%) |
 | pump | 98 | 430 | 507 | 0 | 1,391,456 / 1,792,208 (77.6%) |
 | pump_amm | 93 | 395 | 297 | 0 | 734,392 / 1,162,040 (63.2%) |
@@ -26,7 +26,7 @@ Reviewed merged evidence: `e2d7855848a3411d665deb915077ef20672e7cdd`. Selected b
 
 These byte totals count entire unresolved original windows, not differing bytes or development effort. Raw and normalized matches can still contain unresolved references. Do not add selected and research rows: they represent alternative builds of the same programs. Mayhem has 257 source-ledger opaque windows; 12 have raw counterparts and therefore appear in the exact column.
 
-Fees research has 395 unique structural pairs, 65 additional call-attributed pairs and 85 unattributed duplicate windows. Its encoded-call ledger has 3,145 bound-target edges and 18 different-body frontier edges. A bound edge is not a full semantic proof. Selected Fees retains two call-conflicting rows.
+Fees research has 395 unique structural pairs, 65 additional call-attributed pairs and 82 unattributed duplicate windows. Its encoded-call ledger has 3,145 bound-target edges and 18 different-body frontier edges. A bound edge is not a full semantic proof. Selected Fees retains two call-conflicting rows.
 
 ## Every public handler: source/behavior status
 
@@ -56,11 +56,11 @@ The five largest unresolved windows per build focus the next investigation. Empt
 | donation_relay | 402,000 | 15,496 | no_complete_body_match |
 | donation_relay | 372,816 | 15,464 | no_complete_body_match |
 | donation_relay | 204,856 | 14,824 | no_complete_body_match |
-| donation_relay_research | 131,136 | 10,248 | no_complete_body_match |
 | donation_relay_research | 70,200 | 6,272 | no_complete_body_match |
 | donation_relay_research | 76,472 | 6,272 | no_complete_body_match |
 | donation_relay_research | 97,096 | 5,696 | no_complete_body_match |
 | donation_relay_research | 107,240 | 5,328 | no_complete_body_match |
+| donation_relay_research | 91,880 | 5,216 | no_complete_body_match |
 | mayhem | 287,608 | 19,256 | opaque_unassessed |
 | mayhem | 314,520 | 18,656 | opaque_unassessed |
 | mayhem | 140,512 | 18,648 | no_complete_body_match |
@@ -90,7 +90,7 @@ The five largest unresolved windows per build focus the next investigation. Empt
 ## Remaining acceptance gates
 
 1. **Behavior:** finish partial/unaccepted public handlers and known discrepancies. Pump `sell_v2` remains a bounded implementation with a known transfer-fee discrepancy. Mayhem field roles, initialization and diagnostic contracts remain unresolved. Existing stopped lanes remain stopped.
-2. **Complete bodies:** recover the ten Relay donation/settlement/worker windows and 58 Fees residuals; complete Pump/AMM reconstruction and attribute Mayhem opaque windows. Small helper matches alone do not close callers.
+2. **Complete bodies:** recover the 9 Relay donation/settlement windows and 43 Fees residuals; complete Pump/AMM reconstruction and attribute Mayhem opaque windows. Small helper matches alone do not close callers.
 3. **Identity:** establish referenced data, call targets, duplicate attribution, indirect calls, layout, relocations, full ELF equality and allocation-padding accounting for each exact proposed build.
 4. **Build provenance:** retain source hashes, dependency/toolchain inputs and reproducible recipes. A synthetic exact recipe does not establish the historical recipe.
 5. **Selection:** research candidates require explicit selected-source integration, rebuilt artifacts, bound validation and guard transitions. Current research gains do not update selected checkpoints.

@@ -11,22 +11,20 @@ that run the captured original and the rebuilt candidate side by side in a local
 For subsequent gains and the latest research frontier, see the
 [byte-identity progress log](docs/BYTE-IDENTITY-PROGRESS.md).
 
-Latest artifact-backed Relay research: **482/492 normalized windows, 10 unmatched**, including
-[the Jupiter optional-seed builder](repro/donation-relay/jupiter-option-source-recovery/README.md)
-and [the complete burn/close helper](repro/donation-relay/burn-mint-ownership-recovery/README.md).
-Both compiler recipes retain **130 raw local body matches**, agree on all 348
-recognized source-location pairs, and each pass 536 fresh replay records.
-Artifact-backed follow-up [reconstruction studies](docs/BYTE-IDENTITY-PROGRESS.md)
-have not added whole-body matches. Conditional value-flow agreement and locally
-matching helpers do not establish full function or program identity.
-The [Relay security-metadata recovery](repro/donation-relay/security-metadata-source-recovery/README.md)
-now reproduces the complete 510-byte security declaration and 247-byte dynamic
-string table from ordinary Rust source. Its Linux candidate retains the same
-482-window frontier and 348 source-location matches; whole-file equality remains
-unachieved. The function inventory keeps its explicitly hashed burn/close inputs. The
-[source-only shared-worker proposal](repro/donation-relay/shared-worker-source-proposal/README.md)
-reports 483/492 in local builds. Its source checks pass, but it publishes no
-compiled artifact or replay receipt; that result is separate from this inventory.
+Latest artifact-backed Relay research: **483/492 normalized windows, 9 unmatched**.
+The [Jupiter optional-seed builder](repro/donation-relay/jupiter-option-source-recovery/README.md)
+and [complete burn/close helper](repro/donation-relay/burn-mint-ownership-recovery/README.md)
+reach 482 windows on both compiler recipes. The subsequent
+[shared-worker artifact recovery](repro/donation-relay/shared-worker-artifact-recovery/README.md)
+adds the 10,248-byte worker with no loss, binds all 51 direct callees and passes
+536 fresh replay records / 534 unique fixtures. It retains **130 raw local body
+matches**; whole-file identity remains unachieved.
+
+The separate [Relay security-metadata recovery](repro/donation-relay/security-metadata-source-recovery/README.md)
+reproduces the complete 510-byte security declaration and 247-byte dynamic
+string table from ordinary Rust source while retaining the 482-window baseline
+and 348 source-location matches. The worker artifact uses that packet's
+pre-metadata source state, so the two data/body gains are not yet composed.
 
 Latest Fees research: **395 unique structural pairs, 43 unmatched windows**.
 The [configuration-event recovery](research/fees-config-event-recovery/README.md)
@@ -90,7 +88,7 @@ No handler is certified perfectly recreated. The selected core builds contain
 | PumpSwap selected | 93 | 395 | 297 | 0 | 734,392 / 1,162,040 bytes (63.2%) |
 | Fees research | 118 | 424 | 43 | 0 | 248,904 / 799,648 bytes (31.1%) |
 | Mayhem selected | 58 | 131 | 7 | 245 | 636,128 / 706,744 bytes (90.0%) |
-| Relay research | 130 | 352 | 10 | 0 | 52,616 / 752,488 bytes (7.0%) |
+| Relay research | 130 | 353 | 9 | 0 | 42,368 / 752,488 bytes (5.6%) |
 
 Unresolved text includes whole unmatched and opaque windows. These are not
 differing-byte counts or estimates of effort. Calls, data, layout,

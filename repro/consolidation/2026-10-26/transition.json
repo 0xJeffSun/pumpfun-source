@@ -7,8 +7,8 @@
     {
       "path": "README.md",
       "before_sha256": "cae913d4d3f2066403162f653a0cf35b39620fb08877b1b308c08ccce4a53678",
-      "after_sha256": "f775d625698f65f954f9a703346492723e4bda75e07e11093cff6a979a92d913",
-      "reason": "Record unchecked FeeConfig full-buffer recovery, original helper match, scoped host tests and SBF coverage limits, preserving selected checkpoints."
+      "after_sha256": "74651516fce70c8417865364462647aac228aaaa2ce54ebc6d0e75ed93155223",
+      "reason": "Record artifact-backed Relay worker recovery, the 483/492 frontier, 51-callee closure and 536-record replay while preserving selected checkpoints."
     },
     {
       "path": ".github/workflows/verify.yml",

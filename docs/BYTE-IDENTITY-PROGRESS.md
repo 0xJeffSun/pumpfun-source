@@ -702,3 +702,19 @@ host contract cases. Fresh full and focused SBF regressions also pass, but their
 17,331-case suite does not invoke the fixed-admin FeeConfig initializer. This
 is not a claim of authorized initializer execution. Selected sources and
 artifacts remain unchanged, and whole-file equality is still unachieved.
+
+## Relay shared worker: source-only result becomes artifact-backed — 26 October 2026
+
+The [artifact-backed worker packet](../repro/donation-relay/shared-worker-artifact-recovery/README.md)
+independently reproduces PR #167's source-only hashes with the official Linux
+x86_64 v1.48 SDK. A fresh baseline matches the previous full-Linux artifact;
+the recovered candidate gains only original worker window 112, loses no
+normalized or raw match, and reaches **483/492 normalized / 130 raw-local**.
+All **51/51** worker direct-call targets have complete normalized counterparts.
+
+A fresh replay passes **536/536 signed records / 534 unique fixtures** with the
+existing bounded comparator. The nine remaining windows are ordinals 92–100 and
+span 42,368 original text bytes. The worker candidate remains whole-file unequal
+and uses the source proposal's pre-security-metadata state; composition with the
+separate security payload/dynamic-string-table gain and selected promotion stay
+open.

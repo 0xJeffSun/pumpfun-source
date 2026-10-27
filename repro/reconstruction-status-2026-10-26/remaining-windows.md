@@ -1602,4 +1602,3 @@ Snapshot and limitations: [inventory](README.md). Addresses are decimal virtual 
 | donation_relay_research | 97096 | 5696 | no_complete_body_match |  |
 | donation_relay_research | 102792 | 4448 | no_complete_body_match |  |
 | donation_relay_research | 107240 | 5328 | no_complete_body_match |  |
-| donation_relay_research | 131136 | 10248 | no_complete_body_match |  |
