@@ -218,6 +218,8 @@ def verify(parent=None,check_manifest=True):
     report.update(fresh_historical_reproduces_incremental=True,normalized_gained=[],normalized_lost=LOST)
     spec=importlib.util.spec_from_file_location('program_id_control',HERE/'program_id_control.py');control=importlib.util.module_from_spec(spec);spec.loader.exec_module(control)
     report['program_id_control']=control.verify(SimpleNamespace(**globals()),pv,parent,report,original_data)
+    spec=importlib.util.spec_from_file_location('duplicate_control',HERE/'duplicate_control.py');control=importlib.util.module_from_spec(spec);spec.loader.exec_module(control)
+    report['duplicate_control']=control.verify(SimpleNamespace(**globals()),pv,parent,report,original_data)
     if check_manifest:require(report==read(HERE/'report.json'),'derived report differs')
     return report
 
