@@ -16,16 +16,13 @@ data, relocations, uncovered behavior and original build provenance remain open.
 
 Current [PumpSwap guard/data recovery](../repro/pump_amm/guard-data-recovery-20261027/README.md) has 128 raw-local, 510 normalized-only and 147 unmatched windows, with 379,264 original text bytes still in unmatched windows. Its 15 additional complete normalized matches are distinct from local raw-byte gains; the malformed-recipient follow-up remains open.
 
-Current Mayhem research is the [BuyV2 sizing successor](../research/mayhem-sizing-panic-recovery/README.md):
-100 raw-local, 329 normalized-only and twelve unmatched windows / 111,288 original
-text bytes. It preserves the parent's complete quote-validator reference checks
-and three partial trade handlers' 21 Source records and three CPI error origins.
-Its one-file change restores BuyV2's typed sizing error in all three quote
-families. Two proposal builds agree; all 6,636 fresh trade comparisons have equal
-functional results and non-compute logs. Complete trade bodies, the sysvar
-allocation provider, the missing 328-byte reserve child and whole-ELF identity
-remain unresolved. Other earlier receipts keep their original artifact bindings,
-and the selected baseline is unchanged.
+Current Mayhem research is the [current-framework initializer composition](../research/mayhem-initializer-current-recovery-20261027/README.md):
+100 raw-local, 330 normalized-only and eleven unmatched windows / 110,328 original
+text bytes. The complete 960-byte initializer now matches with five immediate
+callee shapes and four typed data references checked. Two native builds agree;
+6,636 trade pairs and 69 initializer pairs pass. The full per-window inventory
+records every remaining body. Large trade handlers, both AMM quote helpers,
+allocation-provider provenance and whole-ELF identity remain unresolved.
 
 The [current parser-context composition](../research/mayhem-control-work-20261027/README.md)
 retains those 429 matches while reaching 139 raw-local bodies and restoring one
@@ -35,9 +32,8 @@ the parent, and 6,636 trade plus 69 initializer comparisons pass. The
 now reproduces that exact artifact from the current source set; the upstream-gated
 control reproduces its parent. The target runtime still uses current Anchor,
 and original historical framework/toolchain attribution remains open. This
-diagnostic is not promoted into the established checkpoint. The initializer
-still has 19 differing instruction slots at its best 960-byte control. The
-separate AMM quote helper has an equal-size 1,120-byte control with 124/140 slots
+diagnostic is not promoted into the established checkpoint. That earlier initializer gap is closed by the current staged-snapshot recovery
+above. The separate AMM quote helper has an equal-size 1,120-byte control with 124/140 slots
 equal at their original offsets, but cap selection differs. Nine further cap and
 initializer ownership controls add no complete match; the equal-size AMM handler
 also remains unmatched.
@@ -45,8 +41,8 @@ also remains unmatched.
 The [conditional initializer machine-path evidence](../research/mayhem-initializer-machine-paths/README.md)
 constrains state updates and panic outcomes over its stated valid, disjoint
 objects and immediate-call ABI. It does not determine the missing stack or
-copy order and adds no byte match. Current private snapshot work is still being
-validated separately; its results are not included in the established counts.
+copy order and adds no byte match. The later staged snapshot resolves the copy-order gap and is included in the
+current row; this earlier conditional study does not itself add a body match.
 
 The [allocator-context experiment](../research/mayhem-allocator-context/README.md)
 produces the missing 328-byte reserve child by adding a diagnostic zeroed-vector

@@ -4,6 +4,33 @@ The [full audit](RECONSTRUCTION-AUDIT.md) and its generated tables retain their
 explicit `1463bd22` snapshot. This log records later research without silently
 changing that baseline or promoting new selected artifacts.
 
+## Mayhem: complete normalized initializer on current source
+
+The [current initializer composition](../research/mayhem-initializer-current-recovery-20261027/README.md)
+reaches **430/441 normalized, 100 raw-local**, preserving every prior match,
+positive direct-call observation and Source profile. O0193 matches all 120
+instruction slots with all five immediate callee shapes and four typed data
+references checked. Eleven windows / 110,328 original text bytes remain.
+
+The owned-snapshot control first reached 104/120 slots. Two-phase initialization
+of the real AccountInfo/key snapshot then recovered the remaining copy order;
+its MaybeUninit key is written before the only assumed-initialized reference.
+The source adds no dummy writes, padding or output patches. Current-framework
+and historical-macro compositions both repeat exactly. The latter has 141 raw
+matches but remains separately qualified; those raw gains are not added to the
+current table. Whole-ELF and original toolchain identity remain open.
+
+Fresh current-artifact evidence covers 6,636 trade pairs / 13,272 signed records
+and 69 initializer pairs / 168 signed records, including ten successful Pump CPI
+creations. All checked effects and non-compute logs agree; initializer raw logs
+also agree. These reuse existing case definitions, not new unique coverage.
+
+The [Legacy Buy ownership control](../research/mayhem-legacy-buy-cpi-ownership/README.md)
+recovers error conversion before the old CPI error is dropped. Two ordinary
+builds and 486 pairs / 972 signed records pass. The body remains 13,784 bytes
+against the original 13,848, so it contributes no complete match. Quote and
+other trade-handler work likewise remains incomplete.
+
 ## Reviewed PRs #271–272: qualified Withdraw gain and separate Crank proposal
 
 The [Withdraw integration](../research/fees-withdraw-tuple-integration/README.md)

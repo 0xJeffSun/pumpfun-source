@@ -51,20 +51,20 @@ analysis. Candidate symbol names are hypotheses about original identity.
 | Fees selected | 585 | 102 | 363 | 120 | 0 |
 | Mayhem historical selected | 441 | 58 | 131 | 7 | 245 |
 | Relay historical source 15 | 492 | 33 | 89 | 370 | 0 |
-| **Pump current Round27** | **1,035** | **123** | **600** | **312** | **0** |
+| **Pump current Round28** | **1,035** | **123** | **600** | **312** | **0** |
 | **PumpSwap current** | **785** | **128** | **510** | **147** | **0** |
 | **Fees latest research** | **585** | **198** | **382** | **5** | **0** |
-| **Mayhem latest research** | **441** | **100** | **329** | **12** | **0** |
+| **Mayhem latest research** | **441** | **100** | **330** | **11** | **0** |
 | **Relay canonical selection** | **492** | **492** | **0** | **0** | **0** |
 
-The current rows are bound to [Pump Round27](../repro/pump/main-contract-round27-20261027/README.md), [AMM guard/data recovery](../repro/pump_amm/guard-data-recovery-20261027/README.md), [Fees Withdraw integration](../research/fees-withdraw-tuple-integration/README.md) and [Mayhem BuyV2 sizing recovery](../research/mayhem-sizing-panic-recovery/README.md); they extend the dated generated inventory below. Each row is a partition, not a score of semantic correctness. The historical selected Mayhem source
+The current rows are bound to [Pump Round28](../repro/pump/main-contract-round28-20261027/README.md), [AMM guard/data recovery](../repro/pump_amm/guard-data-recovery-20261027/README.md), [Fees Withdraw integration](../research/fees-withdraw-tuple-integration/README.md) and [Mayhem current initializer recovery](../research/mayhem-initializer-current-recovery-20261027/README.md); they extend the dated generated inventory below. Each row is a partition, not a score of semantic correctness. The historical selected Mayhem source
 ledger has 257 opaque windows, 12 of which happen to match local raw bytes.
 Selected Fees retains two call-conflicting rows; body existence does not resolve
 those conflicts. Different programs and studies use different matching rules.
 
-Across these five frontier rows, **2,862/3,338 windows (85.7%)** match and
-**3,767,552/5,213,128 original text bytes (72.3%)** lie in matched windows.
-There are **476 unmatched windows**. Only Relay has complete meaningful-ELF
+Across these five frontier rows, **2,863/3,338 windows (85.8%)** match and
+**3,768,512/5,213,128 original text bytes (72.3%)** lie in matched windows.
+There are **475 unmatched windows**. Only Relay has complete meaningful-ELF
 identity; the four core programs remain byte-unequal. These are structural
 coverage measures, not a percentage of engineering work completed.
 
@@ -1089,3 +1089,9 @@ Two qualified Rust builds agree, and 65 fresh paired cases verify 130 signed
 execution records with matching non-compute logs. Parent runtime results retain
 their earlier hashes. The selected maintained source remains unchanged; full
 ELF/capture identity, the allocator relationship and broader behavior are open.
+
+The [current Mayhem inventory](../research/mayhem-initializer-current-recovery-20261027/inventory.json)
+recomputes all 441 windows: 100 raw-equal, 330 normalized-only and eleven unmatched.
+O0193 now has a complete normalized body and checked immediate call/data references;
+its runtime evidence covers 69 initializer pairs and the composed source passes
+6,636 trade pairs. This does not establish whole-ELF or exhaustive semantic identity.
