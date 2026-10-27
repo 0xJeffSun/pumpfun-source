@@ -903,3 +903,11 @@ The O0093 helper's ten callee and ten typed-data observations agree as multisets
 but its body remains 1,096 versus 1,120 bytes. This is partial recovery, not a
 perfect function or a new normalized match. Parent admin/Burn/initializer/sweep
 receipts are not rebound to the new candidate.
+
+The [account-data refinement](../research/mayhem-account-data-extents/README.md)
+then bounds 56 of the 59 unknown references on that unchanged candidate. The
+156-reference cohort now has 153 typed-equal, zero typed-different and three
+unresolved references. These comparisons use explicit read lengths, slice
+fields, consumer loads and vtable/code targets. They preserve the initializer's
+known nonmatching callee and do not claim raw relocated addresses or all-program
+data equality. No new compilation or target execution is needed for this audit.

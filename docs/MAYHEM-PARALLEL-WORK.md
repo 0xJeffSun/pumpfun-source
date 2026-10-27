@@ -26,6 +26,12 @@ The three agents' last runs stopped at account usage limits; the main agent is
 continuing from their frozen source/evidence rather than claiming live parallel
 execution.
 
+The [latest account-data audit](../research/mayhem-account-data-extents/README.md)
+leaves three unresolved references in its 156-reference cohort: the tagged I/O
+error at `0xb1220` (two callers) and empty formatting prefix at `0xb1340`.
+Fifty-six formerly unknown references are now bounded and typed-equal. Other
+unexamined data and transitive/indirect edges remain in the account/layout lanes.
+
 The following table assigns every remaining original window exactly once.
 Account-data extents, ambiguous counterparts, function placement, absolute
 addresses, full section contents and relocations remain cross-cutting work.

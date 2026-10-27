@@ -17,6 +17,12 @@ non-compute logs. O0093 still has 1,096 candidate bytes versus 1,120 original
 bytes; complete instruction order and correspondence remain work. The other
 parent runtime suites retain their original artifact bindings.
 
+The [account-data refinement](../research/mayhem-account-data-extents/README.md)
+reduces that cohort's unresolved references from 59 to three: two uses of the
+tagged I/O error at original `0xb1220` and the empty formatting prefix at
+`0xb1340`. Its 153 typed-equal references do not close unexamined program data,
+transitive/indirect calls, or the known initializer callee mismatch.
+
 Subsequent gains are in the [byte-identity progress log](BYTE-IDENTITY-PROGRESS.md):
 Canonical Relay now has **492/492 raw-equal windows and no unmatched windows**; current Fees research
 has **11 unmatched windows and 427 unique structural pairs** in the [current Social V2 composition](../research/fees-current-574-social-v2-union/README.md). Those unmatched windows total 99,696 original text bytes; whole-ELF identity, nine inspected direct-callee differences and exhaustive semantics remain open. The older 558-window generated inventory below retains its original binding. The [Relay framework study](../repro/donation-relay/framework-sysroot-recovery/README.md)

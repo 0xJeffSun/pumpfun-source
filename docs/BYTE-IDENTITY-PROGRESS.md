@@ -4,6 +4,22 @@ The [full audit](RECONSTRUCTION-AUDIT.md) and its generated tables retain their
 explicit `1463bd22` snapshot. This log records later research without silently
 changing that baseline or promoting new selected artifacts.
 
+## Mayhem: bound 56 more account-data references
+
+The [account-data refinement](../research/mayhem-account-data-extents/README.md)
+rechecks the unchanged compiled sell-quote successor. Explicit caller lengths,
+stack slice descriptors, consumer load widths, vtable targets and constant seed
+graphs resolve 56 of the cohort's 59 unknown references. Across its 156
+references, 153 are now typed-equal, none typed-different and three unresolved.
+The new proofs cover 29 distinct original objects; duplicate references retain
+their individual counterpart checks.
+
+Nine in-memory mutation controls pass. No compiler or VM runs, no output changes,
+and no new complete function match is counted. Tagged I/O error and empty
+formatting data remain explicit gaps, as does the known initializer callee
+mismatch. Other data and transitive/indirect coverage are not inferred from this
+bounded cohort.
+
 ## Mayhem: shared AMM sell quote call and diagnostics
 
 The [two-file successor](../research/mayhem-sell-quote-call-recovery/README.md)

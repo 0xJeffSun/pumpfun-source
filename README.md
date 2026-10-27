@@ -100,6 +100,11 @@ Two builds agree and all 6,636 trade cases pass again. The helper's ten callees
 and typed-data multisets agree, but its full body remains unmatched; the window
 count does not increase.
 
+The [account-data refinement](research/mayhem-account-data-extents/README.md)
+resolves 56 previously unknown references using caller-supplied lengths and
+typed layouts. That cohort now has 153 typed-equal references, no differences
+and three unresolved references. This does not establish all-data or whole-ELF identity.
+
 Remaining priorities:
 
 - **Pump:** finish V3 trading, creation and multi-hop paths; close incentive,
