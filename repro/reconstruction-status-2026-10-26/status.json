@@ -64,24 +64,24 @@
     "pump_fees_research": {
       "body_bytes": 799648,
       "dispositions": {
-        "no_complete_body_match": 53,
-        "normalized_body_only": 414,
+        "no_complete_body_match": 50,
+        "normalized_body_only": 417,
         "raw_body_equal": 118
       },
-      "unmatched_body_bytes": 285168,
+      "unmatched_body_bytes": 276000,
       "windows": 585
     }
   },
   "fees": {
     "additional_call_attributed_pairs": 64,
     "ambiguous_original_windows": 147,
-    "candidate_bytes": 861544,
-    "candidate_sha256": "658a81d0aa4210e0c4879280c5e970e26a6e97749145433d9e66fb6756747fc6",
+    "candidate_bytes": 863728,
+    "candidate_sha256": "f5d786a94c1469a498006934a7e124dd9291a7d91f62c653938800dc847c2795",
     "candidate_windows": 588,
     "raw_file_equals_original_elf_extent": false,
     "remaining_unattributed_duplicate_windows": 83,
-    "total_attributed_pairs": 449,
-    "unique_structural_pairs": 385,
+    "total_attributed_pairs": 452,
+    "unique_structural_pairs": 388,
     "whole_capture_equal": false
   },
   "input_sha256": {
@@ -96,17 +96,17 @@
     "repro/donation-relay/swap-receipt-coordinate-recovery/original-windows.json": "c002df05d4489259f1cfd2b2391220cae38f6ffb0055f35f659e68a4935fd7bd",
     "repro/reconstruction-audit-2026-10-26/audit.json": "7301fb2a784c56501fc85eb3272fc8dc111744b2464335edd3051ed1cc65fc7a",
     "repro/reconstruction-audit-2026-10-26/functions.tsv": "c56843dfdfbe1086fa7764e29e1f0a83aef47832e3f4c0d4fdfe5de01b75a93d",
-    "repro/reconstruction-status-2026-10-26/refresh.py": "a1c8099314a77c3d67ca8fc4ac07a67a49f231ba991f4c471747e2535f12f7fc",
+    "repro/reconstruction-status-2026-10-26/refresh.py": "77de5d3a17f9b7ecfed015791ee0fbcc44461ce7c4df51e13d65b258bb4c1c8c",
+    "research/fees-buyback-update-ownership/analysis.json.gz": "893f2b8415727e386f5f75cd3b6d05853a94ce5e6c3ecaf0e070a30ade832f61",
+    "research/fees-buyback-update-ownership/artifacts/origins-candidate.so.gz": "7ca6cdb69219c4eca6f221cbb1bc602f166cc2198aa0c6d256c4c7daf3f363fc",
+    "research/fees-buyback-update-ownership/artifacts/origins-symbols.so.gz": "070f132bad7ec514ba633b7b105d4132fdeb922e1041b49b122b35fcd4c7785b",
+    "research/fees-buyback-update-ownership/elf_helpers.py": "ca2791ec19de711032d60f489afdc7e36a27081d9e16e67f2cfa91170d64ee4c",
+    "research/fees-buyback-update-ownership/experiment.json": "215b4a56f56778a2c8f2e966c9c107f3a9d47578d534df0c9ce7162c974c6205",
+    "research/fees-buyback-update-ownership/window_map.py": "5269d40aab42ebc170b03747dcc031563722f1347677e225f8c6a0737fe7128e",
     "research/fees-refreshed-call-attribution/attribute.py": "b3425eb9c1fba9b09e2c3e7bd01ab0f6d50ef0cfb5500320ff34db96de819c17",
     "research/fees-refreshed-call-attribution/elf_helpers.py": "ca2791ec19de711032d60f489afdc7e36a27081d9e16e67f2cfa91170d64ee4c",
     "research/fees-refreshed-call-attribution/input-provenance.json": "7c546529d694d7fa6d29d0829ad09bb811703581f92b0508a8484633e0a1b69f",
     "research/fees-refreshed-call-attribution/window_map.py": "5269d40aab42ebc170b03747dcc031563722f1347677e225f8c6a0737fe7128e",
-    "research/fees-sweep-context-ownership/analysis.json.gz": "8f295804a5e59ed35a59069c3cee14d073e51c64d09c739446737f0ea9348593",
-    "research/fees-sweep-context-ownership/artifacts/origins-candidate.so.gz": "d0482a0e32e3053ac59dc46bb44b15f9a37e346a49b1ae43a6ae3044ac2366e8",
-    "research/fees-sweep-context-ownership/artifacts/origins-symbols.so.gz": "29e6dc8fc4e9f45de3c3340913dea3d1bdc2c4f58258fafa20ccdf76b0725383",
-    "research/fees-sweep-context-ownership/elf_helpers.py": "ca2791ec19de711032d60f489afdc7e36a27081d9e16e67f2cfa91170d64ee4c",
-    "research/fees-sweep-context-ownership/experiment.json": "8a7db7bd702ecc891170a192af9c2b8a84257af96d874ee4ff2c69a6f5c8612c",
-    "research/fees-sweep-context-ownership/window_map.py": "5269d40aab42ebc170b03747dcc031563722f1347677e225f8c6a0737fe7128e",
     "scripts/analyze.py": "dd7fb38d795d4dd72a25aab0d65c2223d9f6f75d8b3ecb0de1d87d6e102910ac"
   },
   "relay": {
@@ -138,5 +138,5 @@
     "unrecovered": 5
   },
   "selected_snapshot": "1463bd22fb7811825c5e7acf1cb963eb39ab68d9",
-  "snapshot": "19a3362592c2ae9efe93662ec1eaf5b560a20d61"
+  "snapshot": "21ef56a9f9dd43e7b56e3c6ddefaf2ff931a4944"
 }
