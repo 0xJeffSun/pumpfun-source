@@ -51,7 +51,7 @@ def main():
     ap.add_argument('--output', required=True, type=Path)
     ap.add_argument('--only-files', default='')
     ap.add_argument('--exclude-files', default='')
-    ap.add_argument('--levels', default='hard')
+    ap.add_argument('--levels', default='hard,loc', help='placer levels; loc = also place core::panic::Location lines')
     ap.add_argument('--no-reorder', action='store_true')
     a = ap.parse_args()
     out = a.output.resolve()
@@ -111,6 +111,34 @@ def main():
     for x in ('a', 'b'):
         (tmp / x).unlink()
     tmp.rmdir()
+    # Location records after placement: token streams of reordered-input and output are identical, so every
+    # candidate L site (line, col) maps to its new (line, col) exactly (reordered files: via remapped pairs)
+    WP = json.load(open(work_pairs))
+    loc = {'exact': 0, 'line_only_diff': 0, 'col_only_diff': 0, 'line_and_col_diff': 0, 'other_file': 0, 'sites': []}
+    tokcache = {}
+    def toks(path):
+        if path not in tokcache:
+            tokcache[path] = rlex.tokens(Path(path).read_text())
+        return tokcache[path]
+    for p in WP['pairs']:
+        if p['kind'] != 'L' or not (p.get('cfile') or '').startswith(PFX):
+            continue
+        f = p['cfile']
+        nl, nc = p['cline'], p['ccol']
+        if f in rep['changed_files']:
+            t0, t1 = toks(work_tree / f), toks(out / 'placed' / f)
+            idx = [k for k, t in enumerate(t0) if t.line == p['cline'] and t.col == p['ccol']]
+            if idx and len(t0) == len(t1):
+                nl, nc = t1[idx[0]].line, t1[idx[0]].col
+        if p['ofile'] != f:
+            k = 'other_file'
+        else:
+            k = {(True, True): 'exact', (False, True): 'line_only_diff', (True, False): 'col_only_diff',
+                 (False, False): 'line_and_col_diff'}[(nl == p['oline'], nc == p['ocol'])]
+        loc[k] += 1
+        if k != 'exact':
+            loc['sites'].append({'owin': hex(p['owin']), 'file': f.replace(PFX, ''), 'new': [nl, nc],
+                                 'original': [p['ofile'].replace(PFX, ''), p['oline'], p['ocol']], 'status': k})
     residual = {}
     for f, r in rep['files'].items():
         if r.get('dropped') or r.get('conflicts'):
@@ -119,12 +147,14 @@ def main():
                'reordered_files': sorted(reordered), 'moves': {f: r.get('moved') for f, r in
                                                                (reorder_rep or {'files': {}})['files'].items() if r.get('moved')},
                'changed_files': files, 'predicted_gained': rep['predicted_gained'],
-               'predicted_lost': rep['predicted_lost'], 'proofs': proofs, 'residual': residual}
+               'predicted_lost': rep['predicted_lost'], 'proofs': proofs, 'residual': residual,
+               'location_records': loc}
     (out / 'solve-report.json').write_text(json.dumps(summary, indent=1) + '\n')
     bad = [f for f, p in proofs.items() if not all(v for k, v in p.items() if k != 'kind')]
     print(f"changed {len(files)} files ({len(reordered)} reordered); predicted gained {len(rep['predicted_gained'])}, "
           f"lost {len(rep['predicted_lost'])}; proofs {'OK' if not bad else 'FAILED: ' + ','.join(bad)}")
     print('  gained:', ' '.join(rep['predicted_gained']))
+    print('  program-crate Location records:', {k: v for k, v in loc.items() if k != 'sites'})
     if bad:
         raise SystemExit(1)
 

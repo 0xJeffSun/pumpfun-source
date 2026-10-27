@@ -7,13 +7,15 @@ Base: main checkpoint `repro/pump_amm/event-decoder-recovery-20261027`, candidat
 | --- | --- | --- | --- | --- |
 | base, Linux (checkpoint) | 647 | 148 | 138 | 0881a95d… |
 | base, native (`SP/lanes/multihop/out/nb-base647`, inputs = canonical source) | 642 | 139 | 143 | c4ab6fdd… |
-| **g01, native** | **679** | 139 | 106 | (see build-records) |
-| **g01, Linux ×2** | LINUX_COUNTS | | | LINUX_SHA |
+| g01, native (`SP/lanes/placement/out/nb-g05` + Location lines) | 679 | 139 | 106 | — |
+| **g01, Linux ×2** | **684** | **148** | **101** | `418c2ea31b4ac8e53f7bb4e565b6397dacb2793be3b5a6a808d65f26ccbc1149` |
 
-No normalized or raw window is lost (cmpm against the base measurement: `cmpm.txt`).
+No normalized or raw window is lost (`cmpm.txt`: checkpoint measurement → g01 Linux). Matched text bytes 810,544 → 854,472
+(+43,928). Unstripped sha256 `3d6b9eddd359dc6edc8a8596c6b3fafb601ca44fb9665b6efaa2aa1ada6a4ed4`.
+Runtime: full 25-suite replay (`replay_parallel.py`), 17,462 cases / 35,074 transactions, 0 mismatches (`runtime-summary.json`).
 
 ## Newly matched windows (37)
-NEW_WINDOWS
+0x11e70 0x123a0 0x12840 0x12b08 0x13190 0x13d30 0x2e468 0x3d8d0 0x446a0 0x448a8 0x44cc8 0x44ed0 0x450d8 0x4ea90 0x4efb8 0x4f1d8 0x4ff18 0x50ca8 0x516e0 0x52070 0x61630 0x61898 0x61b00 0x61d68 0x62688 0x62c40 0x62e68 0x63778 0x6b780 0x6ba68 0x6bcd0 0x6bf50 0x6c328 0x6c768 0x6d128 0xd44e0 0xd4f90
 
 By file (original path = candidate path for all of them):
 - `state/global_config.rs` (8): 0x61630 :220, 0x61898 :230, 0x61b00 :243, 0x61d68 :256/:263, 0x62688 :292/:297,
@@ -41,7 +43,15 @@ By file (original path = candidate path for all of them):
    separate copy (same arithmetic, arguments named for the buy direction). Native 674+0 → 675, 0 lost.
 4. Location records (raw/whole-ELF only): the solver also places `core::panic::Location` lines where order allows
    (`split_buyback` expects at :388/:391, `uint::construct_uint!` at utils/math.rs:14). Program-crate Location records
-   exact: 24 → 31 of 38 (predicted from the token mapping; see `solve-report.json` `location_records`).
+   exact: 20 → 31 of 38 (predicted by the token mapping in `solve-report.json` `location_records`; confirmed by pair.py on
+   the Linux unstripped build).
+
+## Build records
+- `build-a/` (target cache `target/linux`) and `build-b/` (independent clone `target/linux2`): authenticated Linux v1.44
+  podman builds of the same staged tree; both produce candidate `418c2ea3…` and unstripped `3d6b9edd…`, identical
+  `measure.json` (`sha256.txt`). `dependencies_unchanged: false` in both records only means the lane caches were warmed
+  for the 647 dependency pins during the build (compiled dependency artifacts added; none changed or removed).
+- `candidate.so.gz`, `unstripped.so.gz`, `measure.json.gz` are from build B (byte-identical to A).
 
 ## Rebuild
 ```

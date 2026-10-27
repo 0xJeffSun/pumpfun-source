@@ -231,7 +231,7 @@ def main():
                 if not (wo <= at < O.win[wo][1]):
                     continue
                 tr = rows.get(t)
-                if not tr or tr['pair'] is None or tr['how'] not in ('unique', 'equal', 'zip', 'caller') \
+                if not tr or tr['pair'] is None or tr['how'] not in ('unique', 'equal', 'zip', 'caller', 'caller-subset') \
                         or tr['status'] not in ('exact', 'coord'):
                     continue
                 fs = {C.st.window_of(cat)[0] for cat in C.callers.get(tr['pair'], []) if C.st.window_of(cat)}
@@ -239,16 +239,48 @@ def main():
                     votes[f] += 1.0 / len(fs)      # specific callees weigh more than shared helpers
             if not votes:
                 continue
-            (F, nv), *more = votes.most_common(2) + [(None, 0)]
-            if nv < 2 or more[0][1] * 1.5 > nv:
+            ofiles = {O.s_by_win[r['start']][0]['file'] for r in ors if O.s_by_win[r['start']]}
+            def same_file(F):
+                return [c for c in c_by_caller.get(F, []) if c in free and C.s_by_win[c]
+                        and C.s_by_win[c][0]['file'] in ofiles]
+            # prefer callers whose free members already sit in the original file (strong evidence)
+            filt = collections.Counter({F: v for F, v in votes.items() if len(ofiles) == 1 and same_file(F)})
+            ranked = (filt or votes).most_common(2) + [(None, 0)]
+            (F, nv), more = ranked[0], ranked[1:]
+            if nv < (1 if filt else 2) or more[0][1] * 1.5 > nv:
                 continue
-            cc = [c for c in c_by_caller.get(F, []) if c in free]
-            if len(cc) != len(ors) or not cc:
+            cc = same_file(F) if filt else [c for c in c_by_caller.get(F, []) if c in free]
+            if len(cc) < len(ors) or not cc:
                 continue
             ors.sort(key=lambda r: O.s_by_win[r['start']][0]['line'] if O.s_by_win[r['start']] else 0)
             cc.sort(key=lambda c: C.s_by_win[c][0]['line'] if C.s_by_win[c] else 0)
+            if len(cc) > len(ors):
+                # members are byte-interchangeable: choose the order-preserving subset whose line gaps best
+                # match the original gaps (DP over subsets; cost = sum |d_orig - d_cand| of consecutive pairs)
+                ol = [O.s_by_win[r['start']][0]['line'] for r in ors]
+                cl = [C.s_by_win[c][0]['line'] for c in cc]
+                n, m = len(ol), len(cl)
+                INF = float('inf')
+                D = {(0, j): (0, None) for j in range(m)}
+                for i in range(1, n):
+                    for j in range(i, m):
+                        best = (INF, None)
+                        for k in range(i - 1, j):
+                            if (i - 1, k) in D and D[(i - 1, k)][0] < INF:
+                                v = D[(i - 1, k)][0] + abs((ol[i] - ol[i - 1]) - (cl[j] - cl[k]))
+                                if v < best[0]:
+                                    best = (v, k)
+                        D[(i, j)] = best
+                j = min((jj for jj in range(n - 1, m) if (n - 1, jj) in D), key=lambda jj: D[(n - 1, jj)][0])
+                pick = [j]
+                for i in range(n - 1, 0, -1):
+                    j = D[(i, j)][1]; pick.append(j)
+                cc = [cc[k] for k in reversed(pick)]
+                how = 'caller-subset'
+            else:
+                how = 'caller'
             for r, c in zip(ors, cc):
-                r['pair'] = c; r['how'] = 'caller'; r['caller_pair'] = [wo, F, round(nv, 2)]; free.discard(c)
+                r['pair'] = c; r['how'] = how; r['caller_pair'] = [wo, F, round(nv, 2)]; free.discard(c)
         rest = [r for r in rs if r['pair'] is None]
         if not rest:
             continue
@@ -321,7 +353,7 @@ def main():
             r.pop('_ofile', None)
       # anchors learned in this pass feed the next one
       for r in rows.values():
-          if r['how'] in ('zip', 'dp', 'equal', 'caller'):
+          if r['how'] in ('zip', 'dp', 'equal', 'caller', 'caller-subset'):
               add_anchors(r)
       for f in smap:
           smap[f].sort()

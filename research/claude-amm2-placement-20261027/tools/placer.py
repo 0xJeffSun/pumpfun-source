@@ -28,8 +28,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import rlex  # noqa: E402
 
 PFX = 'programs/pump-amm/src/'
-LEVEL = {'unique': 'hard', 'equal': 'hard', 'zip': 'hard', 'caller': 'hard', 'dp': 'medium', 'near': 'soft'}
-PRIO = {'keep': 4, 'hard': 3, 'medium': 2, 'soft': 1}
+LEVEL = {'unique': 'hard', 'equal': 'hard', 'zip': 'hard', 'caller': 'hard', 'caller-subset': 'hard', 'dp': 'medium', 'near': 'soft'}
+PRIO = {'keep': 4, 'hard': 3, 'medium': 2, 'soft': 1, 'loc': 0}
 
 
 class FileModel:
@@ -259,7 +259,7 @@ def main():
     ap.add_argument('--tree', required=True)
     ap.add_argument('--pairs', required=True)
     ap.add_argument('--output', required=True)
-    ap.add_argument('--levels', default='hard', help='comma list of hard,medium,soft (keep is always on)')
+    ap.add_argument('--levels', default='hard', help='comma list of hard,medium,soft,loc (keep is always on; loc = Location-record lines)')
     ap.add_argument('--only-files', default='')
     ap.add_argument('--exclude-files', default='')
     ap.add_argument('--max-blank', type=int, default=10 ** 6)
@@ -278,6 +278,13 @@ def main():
     # constraints per candidate file: (cline) -> list of (ofile, oline, level, owin, w)
     byfile = collections.defaultdict(lambda: collections.defaultdict(list))
     for p in P['pairs']:
+        if p['kind'] == 'L':
+            # core::panic::Location records (raw/whole-ELF only): lowest-priority line constraints, never part of
+            # a window's atomic site set; only same-file pairs of the program crate
+            if 'loc' in levels and p.get('cfile') == p.get('ofile') and (p.get('cfile') or '').startswith(PFX):
+                byfile[p['cfile']][p['cline']].append({'ofile': p['ofile'], 'oline': p['oline'], 'level': 'loc',
+                                                       'owin': None, 'w': 0})
+            continue
         if p['kind'] != 'S':
             continue
         lvl = 'keep' if p['status'] == 'exact' else LEVEL.get(p['how'], 'soft')
@@ -320,9 +327,9 @@ def main():
                                          'reason': 'one candidate site serves several original sites (needs a code duplicate)'})
             # weight: sum of window sizes of the windows wanting this target, keep >> others
             best_t = max(tl, key=lambda t: (sum(x['w'] for x in same if x['oline'] == t), -t))
-            wins = sorted({x['owin'] for x in same if x['oline'] == best_t})
+            wins = sorted({x['owin'] for x in same if x['oline'] == best_t and x['owin'] is not None})
             nsites = lambda ow: sum(1 for cl2, l2 in byfile[cfile].items() for y in l2 if y['owin'] == ow) or 1
-            w = sum(10 ** 6 // nsites(x['owin']) + x['w'] for x in same if x['oline'] == best_t) * (1000 if top == PRIO['keep'] else (100 if top == 3 else (10 if top == 2 else 1)))
+            w = sum(10 ** 6 // nsites(x['owin']) + x['w'] for x in same if x['oline'] == best_t) * (1000 if top == PRIO['keep'] else (100 if top == 3 else (10 if top == 2 else 1))) if top > 0 else 1
             anc = fm.anchor(cline)
             if anc is None:
                 rep['conflicts'].append({'cline': cline, 'reason': 'no token on that line in the tree (stale pairs?)'})

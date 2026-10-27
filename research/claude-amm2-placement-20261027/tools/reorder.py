@@ -35,7 +35,7 @@ import rlex  # noqa: E402
 import cxxfilt_lite  # noqa: E402
 
 PFX = 'programs/pump-amm/src/'
-LEVEL = {'unique': 'hard', 'equal': 'hard', 'zip': 'hard', 'caller': 'hard', 'dp': 'medium', 'near': 'soft'}
+LEVEL = {'unique': 'hard', 'equal': 'hard', 'zip': 'hard', 'caller': 'hard', 'caller-subset': 'hard', 'dp': 'medium', 'near': 'soft'}
 OPEN, CLOSE = '([{', ')]}'
 
 
