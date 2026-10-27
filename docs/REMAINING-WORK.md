@@ -677,3 +677,18 @@ with twelve unmatched bodies. This mixes an old
 parser template with current event types, establishes no historical Mayhem
 source/IDL identity, executes no target and has not been composed with provider
 sharing. A fully version-consistent macro/IDL experiment remains the next step.
+
+### Complete historical macro allocator control
+
+[The historical macro packet](../research/mayhem-historical-macro-context/README.md)
+replaces the manually rendered event template with the complete historical Anchor
+program macro and its historical syn/IDL sources. Eight curve controls reproduce
+the 328-byte allocator with the official November 2025 event definition; the actual
+upstream Solana gate restores 312 bytes. Two host macro builds and three successful
+incremental root builds are retained, along with five failed attempts. Enabled
+root repetitions are raw-identical; separate stripped output equals the earlier
+zeroed diagnostic. Gated stripped output equals the qualified parent. Runtime
+Anchor remains 1.0.0, parent target libraries are reused, and the counts bind the
+older qualified diagnostic. This is neither a complete historical-framework
+reproduction nor a composition with the current trade/validator successor. Original
+source provenance, current-source composition and runtime qualification remain open.

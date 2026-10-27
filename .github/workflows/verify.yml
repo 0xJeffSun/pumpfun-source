@@ -112,6 +112,8 @@ jobs:
               python -I -B research/mayhem-allocator-parser-provenance/test_verify.py
               python -B research/mayhem-native-quote-controls/verify.py
               python -B research/mayhem-native-quote-controls/test_verify.py
+              python -I -B research/mayhem-historical-macro-context/verify.py
+              python -I -B research/mayhem-historical-macro-context/test_verify.py
               python -I -B research/mayhem-allocator-context/verify.py
               python -I -B research/mayhem-allocator-context/test_verify.py
               python -B research/mayhem-provider-sharing/verify.py --repository-root .
