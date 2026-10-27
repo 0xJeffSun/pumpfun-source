@@ -11,6 +11,10 @@
    "unmatched": 186,
    "raw_matched_original_bytes": 21880,
    "normalized_matched_original_bytes": 663840
+  },
+  "data_references": {
+   "data_references": 1800,
+   "at_original_section_offset": 374
   }
  },
  "layouts": {
@@ -73,7 +77,77 @@
     "0x119b28",
     "0x11a338"
    ],
-   "runtime": "runtime/text-order-v1/summary.json"
+   "runtime": "runtime/text-order-v1/summary.json",
+   "data_references": {
+    "data_references": 1800,
+    "at_original_section_offset": 374
+   }
+  },
+  "text-data-order-v2": {
+   "script": "layout/text-data-order-v2.ld",
+   "plan": "layout/text-data-order-v2-plan.json.gz",
+   "map": "builds/text-data-order-v2/link.map.gz",
+   "candidate": "artifacts/text-data-order-v2-candidate.so.gz",
+   "symbols": "artifacts/text-data-order-v2-unstripped.so.gz",
+   "data_order": true,
+   "candidate_sha256": "c2a23b0a2f69a972c5d8cb48310eafcbff38b2202015ac7bf6e43c2d3523e5d5",
+   "symbols_sha256": "98836fb7958ee55262f111ec75205d4dcb54b6ebf06203af7dff9aa34fe415eb",
+   "counts": {
+    "windows": 785,
+    "normalized_matches": 599,
+    "raw_matches": 166,
+    "unmatched": 186,
+    "raw_matched_original_bytes": 41136,
+    "normalized_matched_original_bytes": 663840
+   },
+   "gained_raw_windows": [
+    "0xf7918",
+    "0xf8758",
+    "0xf8d08",
+    "0xf8fb8",
+    "0xf91b0",
+    "0xf92f8",
+    "0xf9458",
+    "0xfccb0",
+    "0xfcdf8",
+    "0xfcf58",
+    "0xfd098",
+    "0x100958",
+    "0x1011c8",
+    "0x101238",
+    "0x101268",
+    "0x101290",
+    "0x1012e8",
+    "0x1017d0",
+    "0x101a80",
+    "0x101c60",
+    "0x101da8",
+    "0x101ee8",
+    "0x102480",
+    "0x106ab8",
+    "0x107458",
+    "0x108810",
+    "0x108820",
+    "0x108838",
+    "0x1088a0",
+    "0x1094b8",
+    "0x1094e8",
+    "0x10c850",
+    "0x10c948",
+    "0x10c9b8",
+    "0x10c9e8",
+    "0x10cb00",
+    "0x10ce20",
+    "0x10dcb0",
+    "0x10ddc8",
+    "0x119b28",
+    "0x11a338"
+   ],
+   "data_references": {
+    "data_references": 1800,
+    "at_original_section_offset": 419
+   },
+   "runtime": "runtime/text-data-order-v2/summary.json"
   }
  }
 }

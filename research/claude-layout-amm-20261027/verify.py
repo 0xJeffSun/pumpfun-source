@@ -36,6 +36,7 @@ sys.path.insert(0, str(ROOT / 'repro/pump_amm/claim-self-transfer-v144/static-to
 sys.path.insert(0, str(P / 'tools'))
 from elf_reader import Elf  # noqa: E402
 import plan as planmod  # noqa: E402
+import dataplan  # noqa: E402
 
 sha = lambda b: hashlib.sha256(b).hexdigest()
 FRONTIER = ROOT / 'repro/pump_amm/native-fee-cpi-recovery-20261027/results/build'
@@ -79,6 +80,64 @@ def text_sections(path):
     return [(r['section'], planmod.selector_owner(r['owner']), r['size']) for r in planmod.parse_map(path)]
 
 
+def data_reference_offsets(pl, symbols, mapfile):
+    """lddw immediates into .rodata/.data.rel.ro inside normalized-equal placed pairs:
+    how many land at the original section-relative offset in this artifact."""
+    e = Elf(symbols)
+    placed = {(planmod.selector_owner(r['owner']), r['section']): r['vma'] for r in planmod.parse_map(mapfile)}
+    ob = {n: dataplan.bounds(pl.o, n) for n in dataplan.DATA}
+    cb = {n: dataplan.bounds(e, n) for n in dataplan.DATA}
+    total = equal = 0
+    for w, c in pl.A.items():
+        if pl.wkey[w] != pl.ckey[c]:
+            continue
+        r = pl.sections[c]
+        at = placed[(planmod.selector_owner(r['owner']), r['section'])]
+        st, en = pl.W[w]
+        wo, wc = dataplan.lddw_values(pl.o, st, en - st), dataplan.lddw_values(e, at, r['size'])
+        for off, vo in wo.items():
+            so = next((n for n, (lo, hi) in ob.items() if lo <= vo < hi), None)
+            if so is None:
+                continue
+            total += 1
+            vc = wc.get(off)
+            equal += vc is not None and cb[so][0] <= vc < cb[so][1] and vo - ob[so][0] == vc - cb[so][0]
+    return {'data_references': total, 'at_original_section_offset': equal}
+
+
+def data_sections(path):
+    return [(r['out'], r['section'], planmod.selector_owner(r['owner']) if r['owner'] != '<internal>' else r['owner'], r['size'])
+            for r in dataplan.parse_data_map(path)]
+
+
+BLOCKS = [('  .text : { *(.text*) } :text', '  .text : {\n', '\n    *(.text*)\n  } :text'),
+          ('  .rodata : { *(.rodata*) } :rodata', '  .rodata : {\n', '\n    *(.rodata*)\n  } :rodata'),
+          ('  .data.rel.ro : { *(.data.rel.ro*) } :rodata', '  .data.rel.ro : {\n', '\n    *(.data.rel.ro*)\n  } :rodata')]
+
+
+def check_script(default, script, data_order):
+    rest = script
+    for i, (line, start, end) in enumerate(BLOCKS):
+        head, tail = default.split(line)
+        if i == 0:
+            assert rest.startswith(head)
+            rest = rest[len(head):]
+        if i > 0 and not data_order:
+            assert rest.startswith(line)
+            rest = rest[len(line):]
+        else:
+            assert rest.startswith(start)
+            stop = rest.index(end) + len(end)
+            for sel in rest[len(start):stop - len(end)].split('\n'):
+                assert sel.startswith('    *') and sel.endswith('")') and '("' in sel, sel
+            rest = rest[stop:]
+        nxt = BLOCKS[i + 1][0] if i + 1 < len(BLOCKS) else None
+        between = default.split(line)[1].split(nxt)[0] if nxt else default.split(line)[1]
+        assert rest.startswith(between)
+        rest = rest[len(between):]
+    assert rest == ''
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument('--skip-regenerate', action='store_true', help='skip regenerating ordered.ld with tools/plan.py')
@@ -96,6 +155,7 @@ def main():
         default_map = Path(tmp) / 'default.map'
         default_map.write_bytes(gzip.decompress((P / 'builds/default/link.map.gz').read_bytes()))
         default_text = text_sections(default_map)
+        default_data = data_sections(default_map)
         for name, rec in claims['layouts'].items():
             c = unpack(P / rec['candidate'], rec['candidate_sha256'], tmp)
             s = unpack(P / rec['symbols'], rec['symbols_sha256'], tmp)
@@ -107,19 +167,16 @@ def main():
             gained_raw = [hex(x['start']) for x, y in zip(base_rows, rows) if y['raw'] and not x['raw']]
             assert not lost_norm and not lost_raw, (name, lost_norm, lost_raw)
             assert gained_raw == rec['gained_raw_windows'], name
-            # linker script: only the .text selector list differs from the SDK script
+            # linker script: only the selector lists of .text (and, for data layouts,
+            # .rodata / .data.rel.ro) differ from the SDK script
             script = (P / rec['script']).read_text()
-            head, tail = default_script.split('  .text : { *(.text*) } :text')
-            assert script.startswith(head) and script.endswith(tail)
-            body = script[len(head):len(script) - len(tail)]
-            assert body.startswith('  .text : {\n') and body.endswith('\n    *(.text*)\n  } :text'), name
-            for line in body.split('\n')[1:-2]:
-                assert line.startswith('    *') and line.endswith('")') and '("' in line, line
-            # text permutation check against the default map
+            check_script(default_script, script, rec.get('data_order', False))
+            # text/data permutation check against the default map
             omap = Path(tmp) / (name + '.map')
             omap.write_bytes(gzip.decompress((P / rec['map']).read_bytes()))
             ordered_text = text_sections(omap)
             assert sorted(ordered_text) == sorted(default_text), name
+            assert sorted(data_sections(omap)) == sorted(default_data), name
             lo = Elf(s)
             assert lo.hi - lo.lo == sum(x[2] for x in default_text)
             if not a.skip_regenerate:
@@ -127,7 +184,16 @@ def main():
                 pl.assign()
                 seq, tl = pl.order()
                 regen = pl.script(default_script, seq, tl)
+                if rec.get('data_order'):
+                    dp = dataplan.DataPlan(pl, default_map)
+                    dp.place()
+                    regen = dp.script(regen)
                 assert regen == script, name + ': regenerated script differs'
+            if 'data_references' in rec:
+                pl0 = planmod.Plan(ROOT / 'evidence/original/pump_amm/deployed.so', base_s, default_map)
+                pl0.assign()
+                got_d = data_reference_offsets(pl0, s, omap)
+                assert got_d == rec['data_references'], (name, got_d)
             rt = rec.get('runtime')
             if rt:
                 summ = json.loads((P / rt).read_text())

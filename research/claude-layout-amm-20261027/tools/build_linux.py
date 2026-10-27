@@ -41,6 +41,8 @@ def main():
     p.add_argument('--ordered', type=Path, help='linker script replacing the SDK script')
     p.add_argument('--lock', type=Path, help='sbf_lock.py (shared slot lock)')
     p.add_argument('--name', default='claude-layout-amm-build')
+    p.add_argument('--allow-new-deps', action='store_true',
+                   help='dependency-lock experiments: new dependency artifacts may be added; existing ones must stay unchanged')
     a = p.parse_args()
     source, out, sdk = a.source.resolve(), a.output.resolve(), a.sdk.resolve()
     cache, target = a.cargo_home.resolve(), a.target_cache.resolve()
@@ -110,10 +112,13 @@ def main():
     after_dep = dep()
     record.update(returncode=result.returncode, seconds=time.monotonic() - start,
                   source_unchanged=inputs() == before_src, dependency_artifacts_unchanged=after_dep == before_dep,
+                  existing_dependency_artifacts_unchanged=all(after_dep.get(k) == v for k, v in before_dep.items()),
+                  new_dependency_artifacts=sorted(set(after_dep) - set(before_dep)),
                   build_log_sha256=sha(out / 'build.log'))
     (out / 'build-attempt.json').write_text(json.dumps(record, indent=2) + '\n')
     assert result.returncode == 0, 'build failed'
-    assert record['source_unchanged'] and record['dependency_artifacts_unchanged']
+    assert record['source_unchanged'] and record['existing_dependency_artifacts_unchanged']
+    assert record['dependency_artifacts_unchanged'] or a.allow_new_deps
     assert 'Compiling pump-amm-recovered' in (out / 'build.log').read_text(), 'root crate did not rebuild'
     unstripped = target / 'sbpf-solana-solana/release/pump_amm_recovered.so'
     art = out / 'artifacts'
