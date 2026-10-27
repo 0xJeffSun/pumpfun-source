@@ -345,3 +345,18 @@ adds no complete body match. The Linux control's 343 normalized/63 raw matches
 remain separate from the published Darwin source. This review did not execute
 a compiler or target, and did not assert composition with the newer parallel
 checkpoint's source. Original and selected checkpoints remain preserved.
+
+## PR234: current Fees574 with Social V2 admission
+
+Reviewed head `730c6cd6427c0fcd84fc9bff06f7391eb6f36352`, merged as
+`935f331d1200959e2026516c18fce8d698421ab8`. All 69 merged files equal the reviewed head. The full
+parent-chain verifier and three negative controls pass. Independent review
+rechecked 17,331 non-log comparisons and 18,520 signature entries, plus 249
+additional arithmetic, quote-owner, preprocessing and admission cases with
+1,124 signature entries. The saved 627-case Social V2 suite repairs 277
+application-log differences; the 98-case admission matrix repairs ten behavioral
+and 36 log differences. Fees retains 574/585 normalized windows, 143 raw-local
+matches and eleven unmatched windows (99,696 original text bytes). No complete
+body gain, fresh compiler/VM execution or whole-ELF equality is claimed by this
+review. The PR was conflict-free. At merge, 22 of 24 hosted checks passed and
+two Mayhem checks remained in progress; no failed checks were reported.

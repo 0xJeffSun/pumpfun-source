@@ -4,6 +4,12 @@ The [full audit](RECONSTRUCTION-AUDIT.md) and its generated tables retain their
 explicit `1463bd22` snapshot. This log records later research without silently
 changing that baseline or promoting new selected artifacts.
 
+## Fees: current 574-window source with Social V2 admission corrections
+
+[PR234's composition](../research/fees-current-574-social-v2-union/README.md) combines the public Social V2 correction with the full Fees574 source. It preserves 574/585 normalized windows, 143 raw-local matches, 171 equal Location observations and 3,792 equal direct-callee observations; it adds no complete body match. Eleven unmatched windows cover 99,696 original text bytes. Whole ELF and capture equality remain false.
+
+Two retained native build records agree. Review rechecked the full verifier, three negative controls, all 17,331 saved non-log comparisons / 18,520 signature entries, and the additional 249 boundary/preprocessing/owner/admission cases / 1,124 signature entries. Social V2's 277 application-log differences and ten admission mismatches are repaired. No compiler or target VM was freshly executed during this review.
+
 ## Mayhem: thirty windows recovered by composed parallel work
 
 The [parallel checkpoint](../research/mayhem-parallel-recovery/README.md) adds

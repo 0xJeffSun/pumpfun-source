@@ -11,10 +11,12 @@ that run the captured original and the rebuilt candidate side by side in a local
 Mayhem is the active reconstruction priority. The [parallel recovery checkpoint](research/mayhem-parallel-recovery/README.md) adds 30 complete normalized windows without losing earlier matches. The full 441-window scan now has **59 raw-local matches, 316 normalized-only matches and 66 unmatched windows** spanning 268,000 text bytes. Whole-file identity and complete semantic/call/data closure remain unresolved.
 Two builds agree. Fresh regression covers 6,636 trade comparisons, 1,032 admin cases, 1,601 fee-recipient/sweep/withdrawal cases and three Burn families. A separate targeted sweep-rate matrix exposes 34 differences in 150 cases; that known gap and its follow-up are tracked explicitly. The [parallel work map](docs/MAYHEM-PARALLEL-WORK.md) assigns all remaining windows, and the [work plan](docs/MAYHEM-RECONSTRUCTION-PLAN.md) records the broader completion gates.
 
+Fees' [current Social V2 composition](research/fees-current-574-social-v2-union/README.md) retains **574/585 normalized windows** (143 raw-local, 431 normalized-only), leaving **11 unmatched windows / 99,696 original text bytes**. Its saved runtime evidence repairs 277 Social V2 application-log differences and ten admission mismatches. The review rechecked those receipts and signatures; it did not rerun the compiler or target VM. Whole-file identity remains false.
+
 For subsequent gains and the latest research frontier, see the
 [byte-identity progress log](docs/BYTE-IDENTITY-PROGRESS.md).
 The [27 October queue review](docs/PR-QUEUE-REVIEW-2026-10-27.md) covers PRs
-#170–#233, including separately verified 399- and 401-pair Fees context candidates and
+#170–#234, including separately verified 399- and 401-pair Fees context candidates and
 source-only proposals. Those independent branches are not silently combined
 into the inventory below.
 
@@ -118,7 +120,9 @@ No handler is certified perfectly recreated. The selected core builds contain
 | --- | ---: | ---: | ---: | ---: | ---: |
 | Pump selected | 98 | 430 | 507 | 0 | 1,391,456 / 1,792,208 bytes (77.6%) |
 | PumpSwap selected | 93 | 395 | 297 | 0 | 734,392 / 1,162,040 bytes (63.2%) |
-| Fees research | 142 | 416 | 27 | 0 | 189,248 / 799,648 bytes (23.7%) |
+| Fees pinned research inventory | 142 | 416 | 27 | 0 | 189,248 / 799,648 bytes (23.7%) |
+| Fees latest research (PR234) | 143 | 431 | 11 | 0 | 99,696 / 799,648 bytes (12.5%) |
+| Mayhem latest research | 59 | 316 | 66 | 0 | 268,000 / 706,744 bytes (37.9%) |
 | Mayhem selected | 58 | 131 | 7 | 245 | 636,128 / 706,744 bytes (90.0%) |
 | Relay selected | 492 | 0 | 0 | 0 | 0; complete meaningful ELF byte-equal |
 

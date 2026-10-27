@@ -10,7 +10,7 @@ candidate paths and “current” prose must not override newer evidence.
 
 Subsequent gains are in the [byte-identity progress log](BYTE-IDENTITY-PROGRESS.md):
 Canonical Relay now has **492/492 raw-equal windows and no unmatched windows**; current Fees research
-has **27 unmatched windows and 411 unique structural pairs**. The [Relay framework study](../repro/donation-relay/framework-sysroot-recovery/README.md)
+has **11 unmatched windows and 427 unique structural pairs** in the [current Social V2 composition](../research/fees-current-574-social-v2-union/README.md). Those unmatched windows total 99,696 original text bytes; whole-ELF identity, nine inspected direct-callee differences and exhaustive semantics remain open. The older 558-window generated inventory below retains its original binding. The [Relay framework study](../repro/donation-relay/framework-sysroot-recovery/README.md)
 recovers the three repeated type-ID bodies with official Linux target libraries,
 adds the Anchor 0.32 framework matches and restores share-total compared values.
 The subsequent [mint-predicate study](../repro/donation-relay/mint-fee-pair-recovery/README.md)
