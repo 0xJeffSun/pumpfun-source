@@ -116,6 +116,12 @@ adds the complete 504-byte helper and its two panic-location records. Its two
 fee-sharing callers still need full recovery. Preserve the Borsh-expression
 result; the tested array and `TryFrom` expressions are retained negative controls.
 
+The [slice-origin contract study](../research/fees-slice-origin-contract/README.md)
+provides four verified tier-copy panic location corrections on the older PR #149
+candidate, plus explicit panic-message/callee bindings. Carry its whitespace
+transform into the latest research source and recheck complete text equality,
+location values and all intervening gains before changing the current binding.
+
 ## Current priorities and closure criteria
 
 The [complete review](../repro/reconstruction-status-2026-10-26/review.md)

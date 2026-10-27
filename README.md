@@ -42,6 +42,9 @@ The [crank interface-mint recovery](research/fees-crank-interface-mint/README.md
 adds one boxed parser match, removes two structural ambiguities, and corrects
 the tested mint owner/length validation. The [shared zero-quote predicate](research/fees-curve-zero-helper/README.md)
 now has a complete 504-byte match, including both referenced panic locations.
+The [slice-panic data study](research/fees-slice-origin-contract/README.md) separately
+corrects four tier-copy location records on its earlier candidate; integration
+into the latest research candidate remains open.
 
 The [current reconstruction review](docs/RECONSTRUCTION-STATUS.md) lists exact,
 normalized, unmatched and opaque function status, all 10 remaining Relay bodies,
