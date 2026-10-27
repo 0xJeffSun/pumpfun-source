@@ -1,7 +1,7 @@
 """Optional, main-only .text input ordering and complete lld input receipts."""
 import hashlib
 import json
-import platform
+import subprocess
 import re
 import sys
 from pathlib import Path
@@ -42,7 +42,10 @@ def configure(order, out, sdk, crate_name, physical_wrapper, data_certificate=No
         certificate_copy.write_bytes(Path(data_certificate).read_bytes())
     dest = Path(out) / 'ordered.ld'
     dest.write_text(script)
-    host = {'arm64': 'aarch64-apple-darwin', 'x86_64': 'x86_64-apple-darwin'}[platform.machine()]
+    rustc_version = subprocess.check_output([str(Path(sdk) / 'rust/bin/rustc'), '-vV'], text=True)
+    hosts = re.findall(r'^host: ([A-Za-z0-9_-]+)$', rustc_version, re.M)
+    assert len(hosts) == 1, 'SDK rustc must report exactly one host triple'
+    host = hosts[0]
     linker = Path(sdk) / f'rust/lib/rustlib/{host}/bin/rust-lld'
     assert linker.is_file()
     files = [HERE / name for name in ['pump_text_layout.py', 'pump_text_layout_rustc.py',
@@ -53,6 +56,7 @@ def configure(order, out, sdk, crate_name, physical_wrapper, data_certificate=No
               'selectors': count, 'script': str(dest), 'script_sha256': sha(dest),
               'helper_sha256': {str(p): sha(p) for p in files},
               'real_linker': str(linker), 'real_linker_sha256': sha(linker),
+              'rustc_host': host, 'rustc_verbose_version': rustc_version,
               'external_wrapper': str(physical_wrapper), 'external_wrapper_sha256': sha(physical_wrapper),
               'link_receipt': str(Path(out) / 'link/linker-invocation.json')}
     env = {'RUSTC_WRAPPER': str(HERE / 'pump_text_layout_rustc.py'),
