@@ -28,6 +28,10 @@ builds reproduce the corrected raw and stripped artifacts; all 428 normalized / 
 raw-local matches and the five prior trade Source improvements survive. Eleven
 failed source controls are retained. The initializer body remains unmatched
 (920 candidate bytes versus 960 original); no new runtime replay is claimed.
+The separate [qualified successor](../research/mayhem-initializer-source-origins/README.md)
+already composes the correction with the 100-raw-local layout and supplies
+69 fresh initializer comparisons. These two evidence sets are not added
+together as extra recovered functions or unique scenarios.
 
 The [AMM sell-call successor](../research/mayhem-sell-quote-call-recovery/README.md)
 preserves those 426 windows and restores the shared O0093 quote call. Its ten

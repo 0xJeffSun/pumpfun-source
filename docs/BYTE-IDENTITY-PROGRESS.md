@@ -19,6 +19,14 @@ program-account hashes checked. Thirteen mutation tests reject source-data,
 build-recipe, case-inventory and signed-execution corruption. Earlier unqualified
 receipts remain explicitly bound to their different artifact.
 
+The independent [native Windows reproduction](../research/mayhem-initializer-origins/README.md)
+reaches the same corrected unqualified ELF in three builds. It retains 19 full
+builds and 3,097 recorded Cargo compilations across the earlier and later
+source baselines, plus eleven unsuccessful initializer controls. Its 21 tests
+pass. That packet adds native build and typed-data evidence, with no new target
+execution or function match; the separate qualified successor above supplies
+the 100-raw layout and fresh initializer replay.
+
 ## Fees: recover shared quote locations and relative data order
 
 Reviewed and merged PRs #245 and #246 preserve the 577 normalized and 198 raw
