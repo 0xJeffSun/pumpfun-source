@@ -4,8 +4,8 @@ import hashlib,json,re,sys
 if not __debug__:raise RuntimeError('Use ordinary Python, not -O')
 sys.dont_write_bytecode=True
 HUNK=re.compile(r'^@@ -(\d+)(?:,(\d+))? \+(\d+)(?:,(\d+))? @@')
-TOP={'README.md','source-stages.json','direct_outer.patch','explicit_branches.patch','source_tools.py','test_source.py','manifest.json'}
-METADATA='0765712d667624f50ca4ddc26adb621f8807dfd0c1534b6dd39df0c4c3d870c8'
+TOP={'README.md','source-stages.json','direct_outer.patch','explicit_branches.patch','pool_first.patch','source_tools.py','test_source.py','manifest.json'}
+METADATA='12666618434f6d355546697f90841f38b2b4b0173fc134be6cc85f0f7407710f'
 def sha(data):
     return hashlib.sha256(data).hexdigest()
 
@@ -110,7 +110,7 @@ def canonical(mapping):
 
 def packet(package):
     names=inventory(package)
-    if set(names)!=TOP:raise ValueError('Packet must contain exactly the seven reviewed text files')
+    if set(names)!=TOP:raise ValueError('Packet must contain exactly the eight reviewed text files')
     man=json.loads(read_under(package,'manifest.json'))
     if man['files']!={n:h for n,h in names.items()if n!='manifest.json'}:raise ValueError('Packet hashes differ')
     for n in names:
@@ -142,7 +142,7 @@ def stages(package,parent):
     return out
 
 def materialize(package,parent,output,stage):
-    if stage not in {'direct_outer','explicit_branches'}:raise ValueError('Unknown stage')
+    if stage not in {'direct_outer','explicit_branches','pool_first'}:raise ValueError('Unknown stage')
     data=stages(package,parent)[stage];output=Path(output)
     if output.exists()or output.is_symlink():raise ValueError('Output must not exist')
     if any(p.is_symlink()for p in output.absolute().parents):raise ValueError('Symlink output ancestor')
@@ -156,7 +156,7 @@ def materialize(package,parent,output,stage):
 
 if __name__=='__main__':
     import argparse
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--parent',type=Path,required=True);p.add_argument('--output',type=Path);p.add_argument('--stage',choices=['direct_outer','explicit_branches'],default='explicit_branches');a=p.parse_args();here=Path(__file__).resolve().parent
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--parent',type=Path,required=True);p.add_argument('--output',type=Path);p.add_argument('--stage',choices=['direct_outer','explicit_branches','pool_first'],default='explicit_branches');a=p.parse_args();here=Path(__file__).resolve().parent
     result={'source_stages_verified':list(stages(here,a.parent)),'native_build_verified':False,'runtime_verified':False,'whole_binary_identity_verified':False}
     if a.output:result.update(materialize(here,a.parent,a.output,a.stage))
     print(json.dumps(result,indent=2))
