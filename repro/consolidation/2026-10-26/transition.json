@@ -7,8 +7,8 @@
     {
       "path": "README.md",
       "before_sha256": "cae913d4d3f2066403162f653a0cf35b39620fb08877b1b308c08ccce4a53678",
-      "after_sha256": "ebd35960c6c410f6c9209ee502602f4f407847676442d9ea0e3eeae53a4a8a2f",
-      "reason": "Record integration of four exact slice-panic locations into the current Fees research source, preserving all instruction bytes and selected checkpoints."
+      "after_sha256": "ecb78f581bcc94ab4dfc0549b7693afcf52468f498694b8e74cca8a393de1cbb",
+      "reason": "Record recovered buyback initializer context bodies, precise unresolved closure scope and the 379/59 frontier while preserving selected checkpoints."
     },
     {
       "path": ".github/workflows/verify.yml",

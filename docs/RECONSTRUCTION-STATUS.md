@@ -1,6 +1,6 @@
-# Reconstruction status after slice-location integration — 26 October 2026
+# Reconstruction status after buyback context recovery — 26 October 2026
 
-Reviewed evidence revision: `24dc2f9bca64aeb94144b3fc392f8ca9932259c5`.
+Reviewed evidence revision: `2966c18690b1dc3c435509f1a190e13174297084`.
 This review updates the research frontier while preserving the selected-checkpoint
 [baseline audit](RECONSTRUCTION-AUDIT.md). The [recomputed inventory](../repro/reconstruction-status-2026-10-26/README.md)
 contains every one of the **4,415 selected/research function-window rows**.
@@ -44,7 +44,7 @@ analysis. Candidate symbol names are hypotheses about original identity.
 | Fees selected | 585 | 102 | 363 | 120 | 0 |
 | Mayhem selected | 441 | 58 | 131 | 7 | 245 |
 | Relay selected source 15 | 492 | 33 | 89 | 370 | 0 |
-| **Fees latest research** | **585** | **118** | **405** | **62** | **0** |
+| **Fees latest research** | **585** | **118** | **408** | **59** | **0** |
 | **Relay latest research** | **492** | **130** | **352** | **10** | **0** |
 
 Each row is a partition, not a score of semantic correctness. Mayhem's source
@@ -70,13 +70,13 @@ bytes (7.0%)**. Those bytes describe the sizes of unmatched original windows,
 not the number of absent or incorrect bytes. The residual includes large business
 functions; matching the other 482 still leaves their call/data identity to prove.
 
-Fees research has **523/585 windows with a normalized counterpart**: 376 unique
-structural pairs and 147 original windows in ambiguous duplicate groups. Its 62
-unmatched windows span **318,016 of 799,648 original text bytes (39.8%)**, although
-they are only 10.6% of the window count. Many remaining bodies are large. The
+Fees research has **526/585 windows with a normalized counterpart**: 379 unique
+structural pairs and 147 original windows in ambiguous duplicate groups. Its 59
+unmatched windows span **304,760 of 799,648 original text bytes (38.1%)**, although
+they are only 10.1% of the window count. Many remaining bodies are large. The
 [current call ledger](../repro/reconstruction-status-2026-10-26/fees-call-attribution.json)
 recomputes 61 additional duplicate-body correspondences on this candidate, for
-437 attributed pairs. There are 86 still-unattributed duplicate windows and 20
+440 attributed pairs. There are 86 still-unattributed duplicate windows and 21
 call edges to different-body frontiers. This refinement adds no body coverage.
 
 There is no defensible single source-completion percentage or ETA. Whole-program
@@ -267,8 +267,8 @@ additional function is considered recovered.
 
 ## Fees: new complete bodies, substantial residual business logic
 
-The latest 860,008-byte candidate is SHA-256
-`c888a57d7270cd9d33af57695a4b1a735a5730941a5369101ab6dbb1f96c0a1a`.
+The latest 861,000-byte candidate is SHA-256
+`b3951968d3c2f4a1ba8adb9a09e620d657e61e136f928ae68974fcfc08c2b533`.
 The newly merged studies recover:
 
 | Complete original window | Evidence |
@@ -291,9 +291,9 @@ with any raw counterpart, including ambiguous duplicates, gives 118. Those
 numbers answer different questions and must not be interchanged.
 
 The candidate retains passing **17,331 cases across 18 suites** and **1,542 exact
-outcome/log/compute comparisons**. The current slice-location candidate was replayed afresh;
-its control reuses the verified common-helper artifact. Existing unchecked-input
-and finite-coverage limits remain. The 62 unresolved bodies, ambiguous attribution,
+outcome/log/compute comparisons**. The current buyback-context candidate was replayed afresh;
+its control reuses the verified slice-location artifact. Existing unchecked-input
+and finite-coverage limits remain. The 59 unresolved bodies, ambiguous attribution,
 shareholder validation, transitive calls/data and final ELF layout remain open.
 
 The fee-total helper, flat-fee setters, tier helpers and four configuration/upsert
@@ -382,6 +382,19 @@ those four records into the latest research source. Its entire instruction
 section remains raw-byte equal to the 376-pair parent, and exactly eight data
 bytes change. All intervening gains and fresh regression suites are retained.
 The older study's 368-pair counts do not replace the current frontier.
+
+### Buyback initializer context
+
+The [buyback context recovery](../research/fees-buyback-context-ownership/README.md)
+boxes the vault and token account and owns the event/program account infos.
+It recovers original windows 351,128 (7,184-byte parser), 364,568 (5,512-byte
+initialization closure) and 370,080 (560-byte exit) without losing matches.
+86 of 87 direct callee bodies match. The parser's edge at offset 2,992 still
+calls unmatched closure 358,312 (6,256 bytes); that adjoining body is excluded
+from the recovered parser size. The exit owner and error-field strings match,
+and previous slice/common location contracts remain equal. Fresh broad and
+focused regression suites pass. This is body/context recovery, not exhaustive
+initializer semantics or a new selected-handler acceptance.
 
 ## Public behavior: reconstructed is not perfect
 

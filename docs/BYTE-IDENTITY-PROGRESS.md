@@ -556,3 +556,13 @@ section. Actual location records, panic message pieces, formatter, callers and
 panic target are checked. Counts remain 376 unique pairs / 62 unmatched; all
 intervening body/runtime gains are preserved. Fresh broad/focused regressions
 and three mutation tests pass. Whole-file identity remains open.
+
+
+## Buyback initializer context ownership — 26 October 2026
+
+[Boxed vault/token accounts and owned event/program infos](../research/fees-buyback-context-ownership/README.md)
+recover the 7,184-byte parser, 5,512-byte initialization closure and 560-byte exit.
+No normalized or raw coverage is lost: 379 unique pairs / 59 unmatched. The
+adjoining 6,256-byte closure remains unresolved (the parser span is not 13,440
+matched bytes). All 29 closure/exit callees and 57/58 parser callees match.
+Previous location fixes survive; fresh broad and focused regressions pass.
