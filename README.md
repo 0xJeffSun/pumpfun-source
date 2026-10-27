@@ -87,6 +87,12 @@ windows. The [complete per-window inventory](research/mayhem-initializer-current
 separates raw-equal, normalized-only and unmatched bodies. A separate historical
 macro composition reaches 430/141, kept outside the current row.
 
+The [current-source Legacy Buy ownership composition](research/mayhem-current-ownership-composition-20261027/README.md)
+preserves that 430/100 frontier and improves the partial handler to 13,784 bytes
+against 13,848 original bytes. Its 50 immediate callee shapes and seven Source
+records agree; two builds and 486 signed replay pairs pass. The full body remains
+unmatched, so this adds no window to the table.
+
 The earlier [Mayhem trade-origin and validator recovery](research/mayhem-trade-origins-validator/README.md)
 adds the complete 1,296-byte normalized quote validator with its eight immediate
 callees and fourteen typed data references checked. It reaches 429 normalized

@@ -4,6 +4,21 @@ The [full audit](RECONSTRUCTION-AUDIT.md) and its generated tables retain their
 explicit `1463bd22` snapshot. This log records later research without silently
 changing that baseline or promoting new selected artifacts.
 
+## Mayhem: compose price and CPI ownership on the current source
+
+The [current Legacy Buy control](../research/mayhem-current-ownership-composition-20261027/README.md)
+now combines the private price-value scoping and consuming-error path with the
+current 67-file initializer source. The exact qualified artifact repeats and
+preserves 430 normalized / 100 raw windows. Its Legacy Buy body is 13,784 bytes
+versus 13,848 original bytes; all fifty immediate callee shapes and seven Source
+records match. Fresh 486-case replay passes with 187 successes and 972 verified
+signed records. No additional complete window or full-trade-corpus claim follows.
+
+Four source controls separate the effects: current 13,680 bytes; ownership-only
+13,704; price-scope-only 13,760; combined 13,784. The retained current-source
+helper context matters. The remaining branch/register/copy layout requires
+further recovery; byte-length proximity is not an equivalence proof.
+
 ## Mayhem: complete normalized initializer on current source
 
 The [current initializer composition](../research/mayhem-initializer-current-recovery-20261027/README.md)

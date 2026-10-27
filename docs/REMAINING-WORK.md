@@ -24,6 +24,13 @@ callee shapes and four typed data references checked. Two native builds agree;
 records every remaining body. Large trade handlers, both AMM quote helpers,
 allocation-provider provenance and whole-ELF identity remain unresolved.
 
+The [current Legacy Buy ownership composition](../research/mayhem-current-ownership-composition-20261027/README.md)
+preserves the 430/100 frontier and its complete initializer. Its partial handler
+is 13,784 bytes versus 13,848 original bytes, with fifty immediate callee shapes
+and seven Source records retained; 486 fresh signed pairs pass. Branch, register
+and copy ordering still prevent complete equality. No window is closed by this
+follow-up.
+
 The [current parser-context composition](../research/mayhem-control-work-20261027/README.md)
 retains those 429 matches while reaching 139 raw-local bodies and restoring one
 allocator call. Two native builds agree, the gated stripped control reproduces
