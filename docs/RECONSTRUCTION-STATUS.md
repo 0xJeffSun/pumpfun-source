@@ -1,9 +1,16 @@
-# Reconstruction status after burn/close recovery — 26 October 2026
+# Reconstruction status after PR #149 — 26 October 2026
 
-Reviewed evidence revision: `725fb7e7ec7eb6442fd4062fb04b5cbe5b9dcb68`.
+Reviewed evidence revision: `84031d3ca58684a510a3b1a12e44c01337fb2bad`.
 This review updates the research frontier while preserving the selected-checkpoint
 [baseline audit](RECONSTRUCTION-AUDIT.md). The [recomputed inventory](../repro/reconstruction-status-2026-10-26/README.md)
 contains every one of the **4,415 selected/research function-window rows**.
+
+The [comprehensive review](../repro/reconstruction-status-2026-10-26/review.md)
+reconciles all 150 named handlers and all 4,415 window rows, gives unresolved
+text size for every build and lists the largest remaining bodies. Its
+[machine-readable summary](../repro/reconstruction-status-2026-10-26/review.json)
+is regenerated from the verified inventory. No new runtime coverage is claimed
+by this documentation review.
 
 ## What is actually byte-identical?
 
@@ -69,7 +76,7 @@ unmatched windows span **320,304 of 799,648 original text bytes (40.1%)**, altho
 they are only 11.6% of the window count. Many remaining bodies are large. The
 [current call ledger](../repro/reconstruction-status-2026-10-26/fees-call-attribution.json)
 recomputes 63 additional duplicate-body correspondences on this candidate, for
-431 attributed pairs. There are 86 still-unattributed duplicate windows and 24
+431 attributed pairs. There are 86 still-unattributed duplicate windows and 20
 call edges to different-body frontiers. This refinement adds no body coverage.
 
 There is no defensible single source-completion percentage or ETA. Whole-program

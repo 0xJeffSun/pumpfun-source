@@ -14,7 +14,7 @@ import tempfile
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 INPUTS = {}
-REVISION = '623fe02a3cd2129f3ef43ca998f393cd2f9605e5'
+REVISION = '84031d3ca58684a510a3b1a12e44c01337fb2bad'
 FEES = 'research/fees-exotic-growth-precedence'
 RELAY = 'repro/donation-relay/burn-mint-ownership-recovery'
 
@@ -185,6 +185,7 @@ def generate():
         d = c['dispositions']
         overview.append(f'| {program} | {c["windows"]} | {d.get("raw_body_equal", 0)} | {d.get("normalized_body_only", 0)} | {d.get("no_complete_body_match", 0)} | {d.get("opaque_unassessed", 0)} |')
     overview += ['', 'Fees has 368 body-unique pairs plus 63 additional call-attributed duplicate pairs (431 correspondences); 86 duplicate windows remain unattributed. These are not 63 additional body matches. Rows count inferred original windows, not unique source functions or effort. Raw matches may be duplicate/ambiguous and do not establish referenced data or transitive callees. The Fees matcher and Relay matcher use separately documented masks; do not add their counts into a source-completion score.', '',
+                 '- [Comprehensive review: all handlers, unresolved text size and closure criteria](review.md)',
                  '- [Every window, symbol candidate, match address and evidence path](functions.tsv)',
                  '- [Every exact local body match](raw-body-matches.md)',
                  '- [Every unmatched or opaque window](remaining-windows.md)',

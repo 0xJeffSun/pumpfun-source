@@ -1,5 +1,10 @@
 # Reconstruction audit — 26 October 2026
 
+For the post-PR #149 frontier and all current handler/window classifications, see the
+[comprehensive review](../repro/reconstruction-status-2026-10-26/review.md).
+This page retains the immutable selected-checkpoint audit; its older research
+counts are historical.
+
 Audited repository snapshot: `1463bd22fb7811825c5e7acf1cb963eb39ab68d9`, including
 the PR #71–#94 review batch. This report separates selected artifacts from newer
 research. It does not promote a source tree or change an acceptance decision.

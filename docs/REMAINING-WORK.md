@@ -1,7 +1,7 @@
-# Remaining work — burn/close recovery, 26 October 2026
+# Remaining work — post-PR #149 review, 26 October 2026
 
 This is the action list for the [current reconstruction audit](RECONSTRUCTION-AUDIT.md),
-with current research reviewed through evidence revision `725fb7e7`. The [current review](RECONSTRUCTION-STATUS.md)
+with current research reviewed through evidence revision `84031d3c`. The [current review](RECONSTRUCTION-STATUS.md)
 and [complete refreshed inventory](../repro/reconstruction-status-2026-10-26/README.md)
 list every raw match and unresolved window; selected artifacts retain the
 `1463bd22` audit bindings. The historical
@@ -89,7 +89,25 @@ and for 99 after the constructor-order correction. Their caller bodies still
 differ. Prioritize argument/value flow, inline checks, data references and CFG
 comparison rather than assuming absent out-of-line helper calls.
 
-## Audit baseline
+## Current priorities and closure criteria
+
+The [complete review](../repro/reconstruction-status-2026-10-26/review.md)
+classifies every named handler and reports unresolved text size for every build.
+The following are independent requirements; completing one does not close the others.
+
+| Priority | Remaining work | Evidence required to close it |
+| --- | --- | --- |
+| Current research bodies | Relay's 10 donation/settlement/worker windows; Fees' 68 windows, including the exotic-growth caller | Full original-window comparison with no lost matches, source/build hashes and relevant fresh differential coverage |
+| Core source/behavior | Pump's five partial and three unaccepted handlers; AMM initializer; Mayhem initializer and opaque attribution | Concrete source, genuine successful and rejected paths, bound receipts and per-handler limitations |
+| Known mismatches | Pump sell_v2 transfer-fee behavior; Mayhem diagnostics and field contracts | Authorized resumed correction where required, then targeted regressions and broader validation |
+| Transitive binary identity | Calls, duplicate attribution, data, relocations, indirect calls and final ELF layout | Exact artifact comparison and explicit explanation of any allocation padding |
+| Provenance and integration | Historical tools/dependencies, ATA recipe, selected-source promotion of research | Reproducible source/tool manifests, new selected artifacts and guard-approved bindings |
+
+Body-count percentages understate large unresolved functions: Fees' residual
+is 40.1% of original text; Relay's is 7.0%. Neither value measures remaining
+engineering time. Preserve the documented negative experiments and stopped lanes.
+
+## Historical immutable audit baseline
 
 - **Whole captured-file identity:** 0/4 selected core programs; selected Relay also differs.
 - **Selected public handlers:** 140/150 bounded implementations, five partial,

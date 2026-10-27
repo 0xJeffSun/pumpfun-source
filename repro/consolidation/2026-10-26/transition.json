@@ -7,8 +7,8 @@
     {
       "path": "README.md",
       "before_sha256": "cae913d4d3f2066403162f653a0cf35b39620fb08877b1b308c08ccce4a53678",
-      "after_sha256": "51e26898823e2a88b2097f13434df452bed44de1748fb110ddd5b94e2ad0827a",
-      "reason": "Link the verified exotic-growth behavior correction while preserving 368 unique pairs, 68 residuals and full-identity limitations."
+      "after_sha256": "25396d989c5e1ee43ae7892d455e41f99bfe6bd92f3dc1b16bd9568c64d8b7c4",
+      "reason": "Publish the comprehensive post-PR149 review, with all handler classifications, current body frontier and unresolved-byte scope; retain selected checkpoint distinctions."
     },
     {
       "path": ".github/workflows/verify.yml",
