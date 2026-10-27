@@ -81,6 +81,11 @@ repeats 432 normalized / 85 native raw-local windows with its own 2,496 signed
 trade pairs and 69 initializer pairs. It retains the earlier 13,680-byte Legacy
 Buy body; it is not promoted over the qualified 432/100 source.
 
+The [fresh Linux closure follow-up](../research/mayhem-direct-call-closure-20261027/README.md#fresh-linux-follow-up)
+repeats the same 414-window relation and the same 18 unclosed windows on two
+fresh-dependency artifacts. The allocator task remains an actual call-target
+problem; merely rebuilding the previous source with a fresh cache did not fix it.
+
 ## Integration requirements
 
 Preserve every prior normalized/raw match, immediate call shape and Source

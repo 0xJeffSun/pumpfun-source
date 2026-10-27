@@ -51,3 +51,23 @@ recovered. Indirect calls, data/vtable references, external implementations,
 relocation values, injective assignment, original provenance and whole-ELF
 identity remain unresolved. A surviving relation is **not semantic equivalence**.
 Calls to interior addresses or missing symbol starts fail this bounded check.
+
+## Fresh Linux follow-up
+
+The [portable Linux builds](../mayhem-clean-linux-build-20261027/README.md) use
+fresh dependency graphs and default section order. Applying the same relation
+to their baseline and Legacy Buy control gives 730 body pairs and 602 retained
+pairs, but still **414 original windows** with direct-call support. The same
+18 windows remain unclosed. Extra counterpart alternatives do not repair the
+actual allocator call targets or the missing business handlers.
+
+The input bindings and complete reports are in [portable-followup.json](portable-followup.json).
+`portable_followup.py` verifies every external input, re-derives the candidate
+inventory, then uses the unchanged hash-bound pruning algorithm with those
+new input bindings. No normalization mask or pruning rule changes. This is
+additional static evidence, not fresh runtime or whole-ELF qualification.
+
+```sh
+python3 -B research/mayhem-direct-call-closure-20261027/portable_followup.py
+python3 -O -B research/mayhem-direct-call-closure-20261027/portable_followup.py
+```

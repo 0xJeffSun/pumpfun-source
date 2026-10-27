@@ -100,6 +100,12 @@ also reproduces 432 normalized windows and 85 raw-local matches in its own
 recipe. Its earlier Legacy Buy source does not replace the qualified 432/100
 checkpoint or add to that checkpoint's raw count.
 
+The [portable Linux recipe](research/mayhem-clean-linux-build-20261027/README.md)
+reproduces both full artifacts across two fresh dependency builds. It preserves
+432 normalized / 84 raw-local bodies with default section order. Rechecking
+both fresh outputs retains the [same 414-window direct-call relation](research/mayhem-direct-call-closure-20261027/README.md#fresh-linux-follow-up);
+a fresh cache alone does not repair the remaining call targets.
+
 The [AMM handler shape controls](research/mayhem-amm-handler-shape-controls-20261027/README.md)
 isolate account-copy expansion, arithmetic error flow and native-key evaluation
 order. Nine source/compiler controls preserve their 432-window search baseline;
@@ -116,6 +122,9 @@ The parent's other supplemental matrices were not rerun on this artifact.
 Pump Round34 passes 10,468 full cases plus 7,536 focused executions, with 18,000
 paired diagnostic-log cases. AMM passes 17,462 full cases plus the separate
 account, fee, CPI, boundary and error-order matrices recorded in its checkpoint.
+The [independent Pump/AMM migration-pair replay](research/pump-amm-migration-composition/README.md)
+checks 65 signed inputs in four program combinations: 260 executions and 195
+comparisons, with no differences. This remains bounded composition evidence.
 These corpora overlap and must not be summed as unique scenarios. Tests use
 captured programs in local VMs; they do not establish current-chain acceptance.
 
