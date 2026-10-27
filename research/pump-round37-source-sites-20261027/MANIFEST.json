@@ -1,5 +1,5 @@
 {
-  "README.md": "703a322f01e7cb179abb42f66a571cf10c51c707ed8a230e2893517a8cb416ed",
+  "README.md": "3f8a1c87bf5c0e263b5ec3f0c16fdf6d7dc76de5a565d47aa85d38c19814546d",
   "builds/candidate/build-attempt.json.gz": "c6c69d9cd9ac808b76f405142b68a4dd721638b86094b763d7759e452386996f",
   "builds/candidate/build-comparison.json": "e807729106bac7cb179b22532fc99cdd3d2404084a551ecb85b5b34970863e6b",
   "builds/candidate/build-plan.json.gz": "35a330af58d0762c5bdcc8788450e1cde1e034eee24b3f6597768cb7459a176d",
@@ -39,6 +39,9 @@
   "recovered-windows.json": "c0a7da0b10ddc5875f79b613121e81cfc8dd9e2910a48092f10eb357970d1a41",
   "root-site-plan.json": "2bded776f0d170d327ade1c9e10a9828ba582f74cdf31be71757a8f9cecef105",
   "root-sites-measure.json": "ffbef98a5ca5d2d90bc2c6e285f8b79aa67de2a0c7aea1cd4f2b064bce011729",
+  "runtime/corpus.json": "b64760672272bf07c5b6a61ab873b2214f9ab5be440eb3f9ddc4b569e870f507",
+  "runtime/full-loader-receipts.json.gz": "24c12b634dae863ca1a7ee48ef6d0888812396edae2e27b814c49d7fd1175158",
+  "runtime/full.json.gz": "7597f0f94229660ead7b4f21125b2b8fd0a39a33cd97a6a6dc76cd913bba69fb",
   "site-plan.json": "0f2c16f1231cd173fd6db9f8e0b32baf65398f1afc00c4d759f06aa71f4e02c0",
   "sites-measure.json": "9950040f3afd5eeda67dbf33452a0229d2d3c5a8935fce72af924a087390af11",
   "source-sites-only.patch": "0f7d34cdf591ae99034409dd09e48eec4cede10c09799972e6a0f4e25c44bced",
@@ -46,5 +49,5 @@
   "support/diagnostic_audit.py": "0343c70e4f9c7860ad392f0a8bd10d90ac94fe17bb2ba5bfd49a45683edbe343",
   "support/elf_helpers.py": "fbf808210b28698a65ca385220c48396fe9ab650284dc446a6b9d9194a250777",
   "support/window_map.py": "eeec82f751ea38827c5149f28590f19a3ff516c7eee57b6aa48949cbaac4a7e5",
-  "verify.py": "868f9a08b01f6da56889ce6cb5d15f413a3c311723408c72633f0d7deb1e1937"
+  "verify.py": "104f4a154396a3d28d2dc0f40dbf3a587431276e09221f03c161bc2d5043b727"
 }
