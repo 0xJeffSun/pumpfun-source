@@ -1,6 +1,6 @@
-# Reconstruction status after extension-size log recovery — 26 October 2026
+# Reconstruction status after extension logs and Relay metadata recovery — 26 October 2026
 
-Reviewed evidence revision: `8a87b1e6a4d25c67e84ec8786df624c5a64a52ba`.
+Reviewed evidence revision: `333602dfc035668a34e3d9053bfcd5dd56cc8dba`.
 This review updates the research frontier while preserving the selected-checkpoint
 [baseline audit](RECONSTRUCTION-AUDIT.md). The [recomputed inventory](../repro/reconstruction-status-2026-10-26/README.md)
 contains every one of the **4,415 selected/research function-window rows**.
@@ -122,6 +122,25 @@ remain outside the claimed fresh replay coverage.
 Evidence: [source-location recovery](../repro/donation-relay/source-location-recovery/README.md),
 [Linux reproduction](../repro/donation-relay/linux-canonical-reproduction/README.md),
 [framework recovery](../repro/donation-relay/framework-sysroot-recovery/README.md).
+
+### Relay metadata now reproduced from source
+
+The [security-metadata recovery](../repro/donation-relay/security-metadata-source-recovery/README.md)
+uses ordinary `solana-security-txt` 1.1.3 source to reproduce the full 510-byte
+payload and all 247 bytes of `.dynstr`, including the `SECURITY_TXT` export.
+Its 818,664-byte Linux candidate is SHA-256
+`af837c4491a267e144cfb0cb7e1fc6772f22ddd353ada93de2b1286489d4beea`.
+The packet rederives 482/492 normalized matches, 130 raw-local matches, the same
+348 equal source-location pairs and 536 fresh replay records / 534 unique
+fixtures. There are no new or lost instruction-window matches. The complete
+function inventory above remains pinned to its separately named burn/close
+candidate; this metadata candidate is a further research variant.
+
+The original meaningful ELF is 818,280 bytes; its captured allocation also has
+12,168 trailing zero bytes. This candidate contains no added allocation padding
+and still differs as a whole file. The string object and relocation are present,
+but their addresses and other section contents still require recovery. These
+results do not establish historical source authenticity or broader semantics.
 
 ### Jupiter is now a complete normalized match
 

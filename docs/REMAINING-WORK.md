@@ -1,7 +1,7 @@
 # Remaining work — extension-size log review, 26 October 2026
 
 This is the action list for the [current reconstruction audit](RECONSTRUCTION-AUDIT.md),
-with current research reviewed through evidence revision `8a87b1e6`. The [current review](RECONSTRUCTION-STATUS.md)
+with current research reviewed through evidence revision `333602df`. The [current review](RECONSTRUCTION-STATUS.md)
 and [complete refreshed inventory](../repro/reconstruction-status-2026-10-26/README.md)
 list every raw match and unresolved window; selected artifacts retain the
 `1463bd22` audit bindings. The historical
@@ -97,6 +97,13 @@ recovers a 296-byte clone helper; its V2 claim caller remains unmatched. Current
 Fees attribution totals 435 pairs. The [extension-size log recovery](../research/fees-extend-size-logs/README.md)
 restores the no-resize messages and formatting helper; the larger resize handler
 remains unmatched.
+
+The [Relay metadata study](../repro/donation-relay/security-metadata-source-recovery/README.md)
+recovers the complete security payload and dynamic string table from ordinary
+source. Preserve these results while solving the ten residual instruction
+windows and remaining data/layout/relocation differences. The 482-window body
+inventory retains its own artifact binding; the new Linux metadata variant is
+separately identified in the current analysis.
 
 ## Current priorities and closure criteria
 
