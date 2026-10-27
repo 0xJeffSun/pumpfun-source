@@ -51,3 +51,5 @@ account updates are bounded evidence. Initializers remain untested there, four
 Sell log differences remain, and no full trade handler or whole ELF is equal.
 
 The [quote-validator controls](../research/mayhem-quote-validator-controls/README.md) independently reproduce the baseline and preserve all 188 matches across seven source controls. They recover the expiry-before-Clock register/spill prefix, but threshold branching and error layout still differ. None is promoted as a complete O0095 recovery.
+
+The [interval-location recovery](../research/mayhem-interval-location-recovery/README.md) corrects the overflow location with exactly one changed data byte and identical instructions. Its fresh 396-case/792-signature Sell run passes, reducing known non-compute log differences from four to three. O0095 is still unmatched after five further [source controls](../research/mayhem-quote-validator-followups/README.md). The remaining subtraction and division panic evidence points to state.rs 321 and state.rs 398; O0092/O0093 are additional arithmetic-body leads, not yet admitted as recovered.

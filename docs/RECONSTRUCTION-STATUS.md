@@ -712,3 +712,7 @@ normalized,142 raw-local,411 unique pairs,27 unmatched, with 480 attributed pair
 ## Active Mayhem priority
 
 [GlobalParams layout](../repro/mayhem/global-params-layout-recovery/README.md) is the latest research baseline: 196 examined, 188 matched, eight unmatched and 245 opaque windows. The [active work plan](MAYHEM-RECONSTRUCTION-PLAN.md) includes the opaque inventory, initializer and whole ELF obligations. [Seven quote-validator controls](../research/mayhem-quote-validator-controls/README.md) preserve every existing match but do not close O0095. This research does not change the canonical selected artifact or certify complete handlers.
+
+## Latest Mayhem data correction
+
+The [interval-location packet](../research/mayhem-interval-location-recovery/README.md) changes exactly one compiled data byte, reproducing original state.rs 562:32 while retaining every instruction byte and all body matches. Two root builds agree; 396 fresh Sell cases and 792 independently verified signatures pass. Three non-compute log differences remain. The [follow-up controls](../research/mayhem-quote-validator-followups/README.md) add no complete O0095 match; the eight-body and opaque remainders remain.

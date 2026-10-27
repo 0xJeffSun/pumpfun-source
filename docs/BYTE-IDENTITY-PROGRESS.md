@@ -1574,3 +1574,7 @@ Default source verification, thirteen tests and exact 43-input materialization
 pass. The nine plain-text files contain only ordinary source, reversible patch,
 public provenance and source-only tools; runtime/native/whole identity flags stay
 false. All four core whole identities remain unresolved; no checkpoint changes.
+
+## Mayhem interval-overflow location recovered
+
+[Compiled source-location recovery](../research/mayhem-interval-location-recovery/README.md) corrects exactly one ELF data byte: candidate offset 578012 changes from 27 to 32, matching original state.rs 562:32. All code bytes remain identical. Two clean root builds agree; all 396 Sell comparisons and 792 signed transactions verify. Known non-compute log differences decrease from four to three. Five [further validator controls](../research/mayhem-quote-validator-followups/README.md) preserve all 188 matches but do not close O0095.
