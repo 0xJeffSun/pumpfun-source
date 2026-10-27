@@ -1067,3 +1067,23 @@ positions. The current inventory is advanced to the artifact-backed result,
 without changing selected checkpoints or claiming whole-binary identity.
 The fixed-order interleaving search was stopped after 29 completed negative
 trials because #189 supplied the broader declaration/construction fix.
+
+## Relay access-control layout recovery — 26 October 2026
+
+The [ordinary-source access-control change](../repro/donation-relay/access-control-layout-source/README.md)
+replaces six explicit first-body relayer checks with the equivalent upstream
+Anchor attribute. It restores original windows194–204, including entrypoint,
+allocator/panic routines and the five settlement entry functions, at their exact
+addresses with full raw bodies equal. Their103 direct calls bind closed full
+callee shapes. The full inventory stays492 normalized while raw-local matches
+increase317→376 with59 gains and no losses. ELF/program/section headers and the
+complete dynsym now match. Residual common-position bytes decrease18,623→9,398
+(text9,324,data.rel.ro25,rel.dyn49); allocation-tail handling remains separate.
+
+The [artifact packet](../repro/donation-relay/access-control-layout-artifact/README.md)
+retains a reproduced492 baseline, two identical recovery builds from separate
+source materializations and536 fresh signed offline replay records with no
+mismatch. All359 positional data pointers and507 nonpointer qwords retain their
+prior validation; five text targets containing indirect calls remain outside
+semantic proof. This is a raw-layout gain, not whole-byte identity or selected
+checkpoint promotion. Full captured-file equality remains false.
