@@ -1,6 +1,6 @@
 # Comprehensive reconstruction review
 
-Reviewed merged evidence: `d00aef4b4c90a5bd6394c1f2a64639e14ed90edc`. Selected builds remain bound to `1463bd22fb7811825c5e7acf1cb963eb39ab68d9`.
+Reviewed merged evidence: `90b81af4258304398f40b9bb4a9b22bf98a14a91`. Selected builds remain bound to `1463bd22fb7811825c5e7acf1cb963eb39ab68d9`.
 
 **No core program or Relay is whole-file byte-identical. No public handler is proved exhaustively perfect.**
 
@@ -17,7 +17,7 @@ Reviewed merged evidence: `d00aef4b4c90a5bd6394c1f2a64639e14ed90edc`. Selected b
 | Build | Exact local windows | Normalized only | Unmatched | Opaque | Unmatched + opaque bytes / original text |
 | --- | ---: | ---: | ---: | ---: | ---: |
 | donation_relay | 33 | 89 | 370 | 0 | 735,984 / 752,488 (97.8%) |
-| donation_relay_research | 142 | 346 | 4 | 0 | 17,680 / 752,488 (2.3%) |
+| donation_relay_research | 317 | 175 | 0 | 0 | 0 / 752,488 (0.0%) |
 | mayhem | 58 | 131 | 7 | 245 | 636,128 / 706,744 (90.0%) |
 | pump | 98 | 430 | 507 | 0 | 1,391,456 / 1,792,208 (77.6%) |
 | pump_amm | 93 | 395 | 297 | 0 | 734,392 / 1,162,040 (63.2%) |
@@ -56,10 +56,6 @@ The five largest unresolved windows per build focus the next investigation. Empt
 | donation_relay | 402,000 | 15,496 | no_complete_body_match |
 | donation_relay | 372,816 | 15,464 | no_complete_body_match |
 | donation_relay | 204,856 | 14,824 | no_complete_body_match |
-| donation_relay_research | 70,200 | 6,272 | no_complete_body_match |
-| donation_relay_research | 76,472 | 6,272 | no_complete_body_match |
-| donation_relay_research | 82,744 | 2,568 | no_complete_body_match |
-| donation_relay_research | 85,312 | 2,568 | no_complete_body_match |
 | mayhem | 287,608 | 19,256 | opaque_unassessed |
 | mayhem | 314,520 | 18,656 | opaque_unassessed |
 | mayhem | 140,512 | 18,648 | no_complete_body_match |
@@ -89,12 +85,12 @@ The five largest unresolved windows per build focus the next investigation. Empt
 ## Remaining acceptance gates
 
 1. **Behavior:** finish partial/unaccepted public handlers and known discrepancies. Pump `sell_v2` remains a bounded implementation with a known transfer-fee discrepancy. Mayhem field roles, initialization and diagnostic contracts remain unresolved. Existing stopped lanes remain stopped.
-2. **Complete bodies:** recover the 4 Relay donation/settlement windows and 34 Fees residuals; complete Pump/AMM reconstruction and attribute Mayhem opaque windows. Small helper matches alone do not close callers.
+2. **Complete bodies:** the current inventory has 0 unmatched Relay normalized windows and 34 Fees residuals; recover those bodies, complete Pump/AMM reconstruction and attribute Mayhem opaque windows. Small helper matches alone do not close callers.
 3. **Identity:** establish referenced data, call targets, duplicate attribution, indirect calls, layout, relocations, full ELF equality and allocation-padding accounting for each exact proposed build.
 4. **Build provenance:** retain source hashes, dependency/toolchain inputs and reproducible recipes. A synthetic exact recipe does not establish the historical recipe.
 5. **Selection:** research candidates require explicit selected-source integration, rebuilt artifacts, bound validation and guard transitions. Current research gains do not update selected checkpoints.
 
-The next practical work is targeted Relay value/lifetime recovery and Fees caller/ownership recovery, with regression checks against the retained frontier. Avoid repeating the documented rejected source/compiler variants. Pump/AMM and Mayhem remain substantial independent workstreams. See [the prioritized work list](../../docs/REMAINING-WORK.md). No reliable total effort percentage or ETA follows from these counts.
+The next practical work is Relay raw call/address and relocation recovery, and Fees caller/ownership recovery, with regression checks against the retained frontier. Avoid repeating the documented rejected source/compiler variants. Pump/AMM and Mayhem remain substantial independent workstreams. See [the prioritized work list](../../docs/REMAINING-WORK.md). No reliable total effort percentage or ETA follows from these counts.
 
 ## Evidence and validation
 

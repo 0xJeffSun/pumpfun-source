@@ -1008,3 +1008,16 @@ finite signed replay are observations, not downloadable runtime proof. Default
 compiler_executed=false and runtime_verified=false; protected relayer success
 remains untested. Raw data semantics, addresses/order, indirect behavior and
 whole-file identity remain open. Full identity of the four core programs is 0/4.
+
+
+## Relay 492-window independent artifact verification — 27 October 2026
+
+The [wrapper artifact](../repro/donation-relay/donation-wrapper-artifact-recovery/README.md)
+independently reproduces #189's intermediate and final outputs. All 492 normalized
+windows now match, including 317 raw-local bodies and all four donation wrappers.
+The 18 actual wrapper callees, exact read-only data and positional data graph pass;
+536 fresh signed replay records pass. The meaningful ELF still differs at 18,623
+positions. The current inventory is advanced to the artifact-backed result,
+without changing selected checkpoints or claiming whole-binary identity.
+The fixed-order interleaving search was stopped after 29 completed negative
+trials because #189 supplied the broader declaration/construction fix.

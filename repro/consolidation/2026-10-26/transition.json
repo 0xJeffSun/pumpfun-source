@@ -7,8 +7,8 @@
     {
       "path": "README.md",
       "before_sha256": "cae913d4d3f2066403162f653a0cf35b39620fb08877b1b308c08ccce4a53678",
-      "after_sha256": "7410307b92f2508bd76c65fffdb09544f3d189a2534de33d6de5c793e3915c8e",
-      "reason": "Advance the Fees research inventory to the independently built 551-window composition with fresh differential coverage; preserve selected checkpoints and remaining identity gaps."
+      "after_sha256": "262087ea575e45cf7eb69729b3b1b8fbfbff7db63f8483a0d8da510b661ef3f3",
+      "reason": "Advance the research inventory to independently built/replayed Relay 492 and Fees 551 normalized windows; preserve selected checkpoints and explicit raw-identity gaps."
     },
     {
       "path": ".github/workflows/verify.yml",

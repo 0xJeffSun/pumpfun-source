@@ -14,9 +14,9 @@ import tempfile
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 INPUTS = {}
-REVISION = 'd00aef4b4c90a5bd6394c1f2a64639e14ed90edc'
+REVISION = '90b81af4258304398f40b9bb4a9b22bf98a14a91'
 FEES = 'research/fees-composed-frontier188'
-RELAY = 'repro/donation-relay/settlement-artifact-recovery'
+RELAY = 'repro/donation-relay/donation-wrapper-artifact-recovery'
 
 
 def read(name):
