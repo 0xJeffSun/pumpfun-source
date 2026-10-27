@@ -158,4 +158,5 @@ jobs:
             work/*.json
             work/*.json.gz
             work/mayhem-burn-replay/**
+            work/pump-amm-current-replay/**
           if-no-files-found: ignore

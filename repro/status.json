@@ -172,7 +172,7 @@
     "compiler_family_evidence": "repro/pump_fees/compiler-family/HEADER-AND-BUILD-REPORT.md",
     "candidate_toolchain": "v1.44",
     "candidate_cargo_lock_sha256": "0face002fa196e0aaf862bfd20f107c01aecfb4eb941bbb82ba410104e994da5",
-    "candidate_build_identity_report": "repro/pump_amm/owner6048-v144/main/identity.json",
+    "candidate_build_identity_report": "repro/pump_amm/error-order-recovery-20261027/results/build-repeat.json",
     "prior_checkpoint": "repro/pump_amm/init-logical-module-main-v144",
     "compiler_compatibility_report": "repro/pump_amm/compiler-v144/README.md",
     "legacy_sell_recovery_report": "audit/pump_amm/LEGACY_SELL_RECOVERY.md",
@@ -182,7 +182,7 @@
     "multi_hop_recovery_report": "audit/pump_amm/MULTI_HOP_RECOVERY.md",
     "pool_serialization_recovery_report": "audit/pump_amm/POOL_SERIALIZATION_RECOVERY.md",
     "scalar_existing_cases_with_stricter_assertions": 191,
-    "signature_evidence_report": "repro/pump_amm/owner6048-v144/runtime/receipt-bindings.json",
+    "signature_evidence_report": "repro/pump_amm/error-order-recovery-20261027/verification-current.json",
     "verified_transaction_signatures": 35418,
     "existing_fixture_setup_transactions": 150,
     "handler_codegen_match": true,
@@ -200,7 +200,7 @@
     "update_fee_config_immediate_targets_total": 16,
     "update_fee_config_recursive_data_complete": false,
     "destination_rent_report": "repro/pump_amm/destination-rent-v144/REPORT.md",
-    "main_acceptance_report": "repro/pump_amm/owner6048-v144/README.md",
+    "main_acceptance_report": "repro/pump_amm/error-order-recovery-20261027/README.md",
     "main_acceptance_verifier": "repro/pump_amm/error-order-recovery-20261027/verify_saved.py",
     "prior_candidate_evidence": {
       "global_config_serialization_report": {
@@ -280,7 +280,7 @@
       }
     },
     "formatter_restoration_report": "repro/pump_amm/init-logical-module-v144/README.md",
-    "remaining_unmatched_original_windows": 297,
+    "remaining_unmatched_original_windows": 201,
     "claim_context_report": "repro/pump_amm/claim-context-v144/README.md",
     "claim_overflow_order_report": "repro/pump_amm/claim-overflow-order-v144/README.md",
     "candidate_sha256": "8e69bb1b3d95dab5fb398f7842efbb9d2234075ec206fa447060bdd92714f328",
@@ -297,7 +297,7 @@
       "repro/pump_fees/compiler-family/HEADER-AND-BUILD-REPORT.md",
       "repro/pump_fees/compiler-family/CONTROLLED-HELPER-REPORT.md"
     ],
-    "current_full_function_inventory": "repro/pump_amm/owner6048-v144/emitted/collection/inventories/after/analysis/residual-ledger.json.gz",
+    "current_full_function_inventory": "repro/pump_amm/error-order-recovery-20261027/results/measurement.json.gz",
     "owner6048_emitted_report": "repro/pump_amm/owner6048-v144/emitted/REVIEW.md",
     "owner6048_known_frame_report": "repro/pump_amm/owner6048-v144/spill/REVIEW.md",
     "owner6048_compared_values": "None",
