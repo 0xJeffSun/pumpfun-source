@@ -599,3 +599,25 @@ The separate [root compiler controls](../research/fees-wrapper-codegen-controls/
 retain a fresh byte-equal one-unit control and four rejected unit-count variants.
 None recovers the buyback wrapper or gains any body; all four lose prior matches.
 They are static evidence only and are not promoted or replayed as candidates.
+
+## Fees: sweep context recovery closes three bodies
+
+The [sweep context study](../research/fees-sweep-context-ownership/README.md)
+recovers the complete account parser (370,640; 9,280 bytes), exit (379,920;
+944 bytes) and dispatch wrapper (651,272; 1,320 bytes). The source boxes three
+accounts and owns the event/program account infos. Boxes alone, owned unchecked
+accounts alone, and their broader combination each add no complete matches.
+The final variant preserves every previous normalized and raw match.
+
+All 77 parser and 12 exit callees match. The wrapper still calls the unmatched
+sweep business body at 120,816. The prior crank wrapper retains its two explicit
+frontiers. Exit owner/label data and prior panic-location contracts are checked
+separately from instruction equality.
+
+Fees now has **385 unique structural pairs, 147 ambiguous original windows,
+and 53 unmatched windows**, partitioned as 118 raw-local and 414 normalized-only
+matches. Call refinement gives 449 correspondences (64 additional duplicates),
+83 unattributed duplicate windows, 2,875 bound-target and 21 different-body
+frontier edges. Residual windows total 285,168 bytes (35.7% of original text).
+Fresh full and focused regressions pass. No whole-file identity, exhaustive
+behavior or selected-checkpoint promotion is claimed.

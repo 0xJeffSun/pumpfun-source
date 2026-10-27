@@ -64,24 +64,24 @@
     "pump_fees_research": {
       "body_bytes": 799648,
       "dispositions": {
-        "no_complete_body_match": 56,
-        "normalized_body_only": 411,
+        "no_complete_body_match": 53,
+        "normalized_body_only": 414,
         "raw_body_equal": 118
       },
-      "unmatched_body_bytes": 296712,
+      "unmatched_body_bytes": 285168,
       "windows": 585
     }
   },
   "fees": {
-    "additional_call_attributed_pairs": 62,
+    "additional_call_attributed_pairs": 64,
     "ambiguous_original_windows": 147,
-    "candidate_bytes": 861752,
-    "candidate_sha256": "7a0a6a0030050f6230e33d9fa2cf5f8e32bf6d43c2144145437047dd90c9c81f",
+    "candidate_bytes": 861544,
+    "candidate_sha256": "658a81d0aa4210e0c4879280c5e970e26a6e97749145433d9e66fb6756747fc6",
     "candidate_windows": 588,
     "raw_file_equals_original_elf_extent": false,
-    "remaining_unattributed_duplicate_windows": 85,
-    "total_attributed_pairs": 444,
-    "unique_structural_pairs": 382,
+    "remaining_unattributed_duplicate_windows": 83,
+    "total_attributed_pairs": 449,
+    "unique_structural_pairs": 385,
     "whole_capture_equal": false
   },
   "input_sha256": {
@@ -96,17 +96,17 @@
     "repro/donation-relay/swap-receipt-coordinate-recovery/original-windows.json": "c002df05d4489259f1cfd2b2391220cae38f6ffb0055f35f659e68a4935fd7bd",
     "repro/reconstruction-audit-2026-10-26/audit.json": "7301fb2a784c56501fc85eb3272fc8dc111744b2464335edd3051ed1cc65fc7a",
     "repro/reconstruction-audit-2026-10-26/functions.tsv": "c56843dfdfbe1086fa7764e29e1f0a83aef47832e3f4c0d4fdfe5de01b75a93d",
-    "repro/reconstruction-status-2026-10-26/refresh.py": "ee6ce7bd20a550b22b1df86cdd6ba124949c2ae2e9806b387b8e582ea582af1c",
-    "research/fees-crank-event-ownership/analysis.json.gz": "34d5f8a2c0c6bbea6cb88546b3c9ba998e701f65930497546ebd5cfdcf18ae03",
-    "research/fees-crank-event-ownership/artifacts/origins-candidate.so.gz": "2b54f81133a9ba1efe841088ed39cad2845ef5a6e540579e0015dc3a9636ea5a",
-    "research/fees-crank-event-ownership/artifacts/origins-symbols.so.gz": "4c1e9966466568f41ac1188e4cc04e6dc2cc6d5c72f5ff0a52e07e80af30cdea",
-    "research/fees-crank-event-ownership/elf_helpers.py": "ca2791ec19de711032d60f489afdc7e36a27081d9e16e67f2cfa91170d64ee4c",
-    "research/fees-crank-event-ownership/experiment.json": "1a82ba852710fdd18fe44a9ceb640a788f60421a1c7434b95e36bdf0223ff26f",
-    "research/fees-crank-event-ownership/window_map.py": "5269d40aab42ebc170b03747dcc031563722f1347677e225f8c6a0737fe7128e",
+    "repro/reconstruction-status-2026-10-26/refresh.py": "a1c8099314a77c3d67ca8fc4ac07a67a49f231ba991f4c471747e2535f12f7fc",
     "research/fees-refreshed-call-attribution/attribute.py": "b3425eb9c1fba9b09e2c3e7bd01ab0f6d50ef0cfb5500320ff34db96de819c17",
     "research/fees-refreshed-call-attribution/elf_helpers.py": "ca2791ec19de711032d60f489afdc7e36a27081d9e16e67f2cfa91170d64ee4c",
     "research/fees-refreshed-call-attribution/input-provenance.json": "7c546529d694d7fa6d29d0829ad09bb811703581f92b0508a8484633e0a1b69f",
     "research/fees-refreshed-call-attribution/window_map.py": "5269d40aab42ebc170b03747dcc031563722f1347677e225f8c6a0737fe7128e",
+    "research/fees-sweep-context-ownership/analysis.json.gz": "8f295804a5e59ed35a59069c3cee14d073e51c64d09c739446737f0ea9348593",
+    "research/fees-sweep-context-ownership/artifacts/origins-candidate.so.gz": "d0482a0e32e3053ac59dc46bb44b15f9a37e346a49b1ae43a6ae3044ac2366e8",
+    "research/fees-sweep-context-ownership/artifacts/origins-symbols.so.gz": "29e6dc8fc4e9f45de3c3340913dea3d1bdc2c4f58258fafa20ccdf76b0725383",
+    "research/fees-sweep-context-ownership/elf_helpers.py": "ca2791ec19de711032d60f489afdc7e36a27081d9e16e67f2cfa91170d64ee4c",
+    "research/fees-sweep-context-ownership/experiment.json": "8a7db7bd702ecc891170a192af9c2b8a84257af96d874ee4ff2c69a6f5c8612c",
+    "research/fees-sweep-context-ownership/window_map.py": "5269d40aab42ebc170b03747dcc031563722f1347677e225f8c6a0737fe7128e",
     "scripts/analyze.py": "dd7fb38d795d4dd72a25aab0d65c2223d9f6f75d8b3ecb0de1d87d6e102910ac"
   },
   "relay": {
@@ -138,5 +138,5 @@
     "unrecovered": 5
   },
   "selected_snapshot": "1463bd22fb7811825c5e7acf1cb963eb39ab68d9",
-  "snapshot": "dcb34a1a89bd11e454daee2ab862d929c5ed50ed"
+  "snapshot": "19a3362592c2ae9efe93662ec1eaf5b560a20d61"
 }
