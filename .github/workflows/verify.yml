@@ -158,6 +158,8 @@ jobs:
               python scripts/verify_current_bindings.py fees
           - suite: pump-1
             commands: |
+              python -B research/pump-typeid-reference-proof/verify.py
+              python -B research/pump-typeid-reference-proof/test_verify.py
               python -B scripts/pump_replay_main_checkpoint.py --shard 1 --shards 4 --workers 2 --output work/pump-main-shard-1.json.gz
           - suite: pump-2
             commands: |
