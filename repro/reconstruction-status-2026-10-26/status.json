@@ -64,24 +64,24 @@
     "pump_fees_research": {
       "body_bytes": 799648,
       "dispositions": {
-        "no_complete_body_match": 59,
-        "normalized_body_only": 408,
+        "no_complete_body_match": 58,
+        "normalized_body_only": 409,
         "raw_body_equal": 118
       },
-      "unmatched_body_bytes": 304760,
+      "unmatched_body_bytes": 298504,
       "windows": 585
     }
   },
   "fees": {
-    "additional_call_attributed_pairs": 61,
+    "additional_call_attributed_pairs": 62,
     "ambiguous_original_windows": 147,
     "candidate_bytes": 861000,
-    "candidate_sha256": "b3951968d3c2f4a1ba8adb9a09e620d657e61e136f928ae68974fcfc08c2b533",
+    "candidate_sha256": "fe11df62162e27700890e5dcd07d5760a66f5528fd89de4b523975dbfc38f112",
     "candidate_windows": 588,
     "raw_file_equals_original_elf_extent": false,
-    "remaining_unattributed_duplicate_windows": 86,
-    "total_attributed_pairs": 440,
-    "unique_structural_pairs": 379,
+    "remaining_unattributed_duplicate_windows": 85,
+    "total_attributed_pairs": 442,
+    "unique_structural_pairs": 380,
     "whole_capture_equal": false
   },
   "input_sha256": {
@@ -96,13 +96,13 @@
     "repro/donation-relay/swap-receipt-coordinate-recovery/original-windows.json": "c002df05d4489259f1cfd2b2391220cae38f6ffb0055f35f659e68a4935fd7bd",
     "repro/reconstruction-audit-2026-10-26/audit.json": "7301fb2a784c56501fc85eb3272fc8dc111744b2464335edd3051ed1cc65fc7a",
     "repro/reconstruction-audit-2026-10-26/functions.tsv": "c56843dfdfbe1086fa7764e29e1f0a83aef47832e3f4c0d4fdfe5de01b75a93d",
-    "repro/reconstruction-status-2026-10-26/refresh.py": "6fae321980c5aeb3b7a79d262096167555d5ce12637e1ee03367637ed15604ac",
-    "research/fees-buyback-context-ownership/analysis.json.gz": "d5e679b9c0496f7b7373bb6218bdb725bc28c6553d2c2871186496dc121aaf43",
-    "research/fees-buyback-context-ownership/artifacts/origins-candidate.so.gz": "9cf3a39f75cdb58c234d4b1bb9b632087231c6be3af57f52bd815ffdd3841848",
-    "research/fees-buyback-context-ownership/artifacts/origins-symbols.so.gz": "a605652b7ffca2d692be40ebd089fe476fe5fee6d748b530d75456ea8c2cac90",
-    "research/fees-buyback-context-ownership/elf_helpers.py": "ca2791ec19de711032d60f489afdc7e36a27081d9e16e67f2cfa91170d64ee4c",
-    "research/fees-buyback-context-ownership/experiment.json": "bdfb3a507266b1b835f7fa44b067dc5e4d54a310babcac5cf3f276d9c5042b40",
-    "research/fees-buyback-context-ownership/window_map.py": "5269d40aab42ebc170b03747dcc031563722f1347677e225f8c6a0737fe7128e",
+    "repro/reconstruction-status-2026-10-26/refresh.py": "64cc5fbbaf787fda966de2cc52755d704fd385d3aefb9f849cb1fd466f018a0d",
+    "research/fees-buyback-context-origin/analysis.json.gz": "1e4caec8b28cd536f7bf969ed7bc24cf77e2772b8376225bc14ca4906d1e15cb",
+    "research/fees-buyback-context-origin/artifacts/origins-candidate.so.gz": "29095412f7178727befaf98e618bed8aa6cd64a83f98665ef428ef6360db1dce",
+    "research/fees-buyback-context-origin/artifacts/origins-symbols.so.gz": "b2d9501b13d307780bfecfed734b28fd9fedc862ad98040bc8b22268e73c1b14",
+    "research/fees-buyback-context-origin/elf_helpers.py": "ca2791ec19de711032d60f489afdc7e36a27081d9e16e67f2cfa91170d64ee4c",
+    "research/fees-buyback-context-origin/experiment.json": "cddcae1fbbc8b35241bcbbfb1ff3834055d050a93b9713e8f98da2810e407040",
+    "research/fees-buyback-context-origin/window_map.py": "5269d40aab42ebc170b03747dcc031563722f1347677e225f8c6a0737fe7128e",
     "research/fees-refreshed-call-attribution/attribute.py": "b3425eb9c1fba9b09e2c3e7bd01ab0f6d50ef0cfb5500320ff34db96de819c17",
     "research/fees-refreshed-call-attribution/elf_helpers.py": "ca2791ec19de711032d60f489afdc7e36a27081d9e16e67f2cfa91170d64ee4c",
     "research/fees-refreshed-call-attribution/input-provenance.json": "7c546529d694d7fa6d29d0829ad09bb811703581f92b0508a8484633e0a1b69f",
@@ -138,5 +138,5 @@
     "unrecovered": 5
   },
   "selected_snapshot": "1463bd22fb7811825c5e7acf1cb963eb39ab68d9",
-  "snapshot": "2966c18690b1dc3c435509f1a190e13174297084"
+  "snapshot": "87f85e2e5351e0cbac13338f2f7a5bc256906325"
 }

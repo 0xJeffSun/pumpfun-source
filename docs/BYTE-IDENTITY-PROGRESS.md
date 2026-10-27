@@ -566,3 +566,14 @@ No normalized or raw coverage is lost: 379 unique pairs / 59 unmatched. The
 adjoining 6,256-byte closure remains unresolved (the parser span is not 13,440
 matched bytes). All 29 closure/exit callees and 57/58 parser callees match.
 Previous location fixes survive; fresh broad and focused regressions pass.
+
+
+## Buyback context source-origin closure — 26 October 2026
+
+[Relocating the unchanged context declaration](../research/fees-buyback-context-origin/README.md)
+to `instructions/buyback/mod.rs:12` recovers original closure 358,312 (6,256 bytes),
+closing the parser's remaining direct-call mismatch. The four buyback context
+components now bind 104/104 direct callee bodies. Counts reach 380 unique pairs
+and 58 unmatched; one further duplicate attribution gives 442 total pairs.
+The initializer function stays on line 94, previous location fixes survive,
+and fresh broad/focused regressions pass. Whole-file identity remains open.
