@@ -70,7 +70,7 @@ pub fn execute<'info>(ctx:Context<'_,'_,'_,'info,CreateV2<'info>>,name:String,sy
    }
   };
   require_keys_eq!(*mint.owner,program.key(),PumpError::UnsupportedQuoteMint);
-  if program.key()==anchor_spl::token_2022::ID {require!(quote_extensions_supported(&mint.try_borrow_data()?),PumpError::UnsupportedQuoteMint);}
+  if program.key()==anchor_spl::token_2022::ID {require!(quote_extensions_supported(&mint.try_borrow_data()?,true),PumpError::UnsupportedQuoteMint);}
 
   let expected=anchor_spl::associated_token::get_associated_token_address_with_program_id(&a.bonding_curve.key(),mint.key,program.key);
   require_keys_eq!(ata.key(),expected,PumpError::InvalidAssociatedQuoteBondingCurve);
@@ -124,16 +124,36 @@ pub fn execute<'info>(ctx:Context<'_,'_,'_,'info,CreateV2<'info>>,name:String,sy
 
 // The captured program accepts transfer-fee config as well as the operable
 // metadata/delegate extensions; official IDL prose omits that observed case.
-fn quote_extensions_supported(data:&[u8])->bool {
+#[inline(never)]
+pub fn quote_extensions_supported(data:&[u8],allow_token_extensions:bool)->bool {
  if data.len()==82{return true;}
- if data.len()<166 || data.len()==355 || data[165]!=1{return false;}
- let mut at=166;
+ if data.len()<167 || data[82..165].iter().any(|&b|b!=0) || data[165]!=1{return false;}
+ let mut seen=0u64;
+ let mut at=166usize;
  while at<data.len(){
-  if at+2>data.len(){return false;}let kind=u16::from_le_bytes([data[at],data[at+1]]);
-  if kind==0{return true;}if at+4>data.len(){return false;}let size=u16::from_le_bytes([data[at+2],data[at+3]]) as usize;at+=4;
-  if at+size>data.len(){return false;}let bytes=&data[at..at+size];
-  match kind{4|12|16|18|19|25|26=>{},1=>if bytes.len()<108{return false;},6=>if bytes.is_empty() || bytes[0]!=1{return false;},14=>if bytes.len()<64 || bytes[32..64]!=[0;32]{return false;},_=>return false}
-  at+=size;
+  let remaining=data.len()-at;
+  if remaining<2{return true;}
+  let kind=u16::from_le_bytes([data[at],data[at+1]]);
+  if kind==0{return true;}
+  if remaining<4{return false;}
+  let size=u16::from_le_bytes([data[at+2],data[at+3]]) as usize;
+  let next=match at.checked_add(4+size){Some(next) if next<=data.len()=>next,_=>return false};
+  match kind{
+   18|19=>{},
+   1|4|6|12|14|16|25|26=>if !allow_token_extensions{return false;},
+   _=>return false,
+  }
+  let bit=1u64<<kind;
+  if seen&bit!=0{return false;}
+  let bytes=&data[at+4..next];
+  match kind{
+   1=>if bytes.len()<108{return false;},
+   6=>if bytes.is_empty() || bytes[0]!=1{return false;},
+   14=>if bytes.len()<64 || bytes[32..64]!=[0;32]{return false;},
+   _=>{},
+  }
+  seen|=bit;
+  at=next;
  }
  true
 }

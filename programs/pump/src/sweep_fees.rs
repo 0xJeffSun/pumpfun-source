@@ -28,7 +28,10 @@ pub fn execute(ctx:Context<SweepFees>,creator:bool)->Result<()>{
  if creator{let expected=Pubkey::find_program_address(&[b"creator-vault",a.bonding_curve.creator.as_ref()],&crate::ID).0;require_keys_eq!(a.recipient.key(),expected,anchor_lang::error::ErrorCode::ConstraintSeeds);}
  else{crate::legacy_sell::fee_recipient::validate_fee_recipient(&a.recipient,&a.global,&a.bonding_curve)?;}
  let amount=if creator{cf}else{pf};if amount==0{return Ok(());}
- if native{a.bonding_curve.sub_lamports(amount)?;a.recipient.add_lamports(amount)?;}
+ if native{
+  if creator{crate::legacy_buy::native_payments::ensure_rent_exempt(&a.system_program,&a.payer,a.recipient.as_ref())?;}
+  a.bonding_curve.sub_lamports(amount)?;a.recipient.add_lamports(amount)?;
+ }
  else{
 
   for (index,account) in [a.associated_quote_bonding_curve.to_account_info(),a.associated_quote_recipient.to_account_info()].into_iter().enumerate(){
