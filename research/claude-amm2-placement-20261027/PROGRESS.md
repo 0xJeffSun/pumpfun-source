@@ -15,13 +15,18 @@ reorder.py (whole-fn moves among same-type impl blocks for order-impossible site
 text order as keys) → placer.py (whitespace-only) → proofs (rlex token stream, whitespace-squeezed text,
 item-permutation) → `placed/`, `source.patch`, `solve-report.json`. Prediction was exact on 647 (26/26, 32/32).
 
-## Status (12:10)
-- g01 candidate (whitespace only, 9 files): native 642 → 668 (+26), raw 139 = 139, 0 lost. `out/nb-g01`.
-- + reorder of global_config.rs / pool.rs: native 674 (+32) but raw LOST 0x6c248 (`Pool::can_boost`: its
-  call distance to total_virtual_quote_reserves changed). Not adoptable. `out/nb-g02`.
-- Fix: unconstrained items follow the ORIGINAL TEXT ORDER (original functions of a file are laid out in source
-  order: pool.rs 0x6b780..0x6d128 ascend with lines 386..484; can_boost 0x6c248 sits between 426 and 439).
-  g03 = g02 with can_boost after total_virtual_quote_reserves: native build running (`out/nb-g03`).
+## Status (12:25)
+- Native ladder (base 642/139/143): g01 whitespace only 668/139 (+26, exact prediction) → g02 + impl-fn reorder
+  674/138 (raw LOST 0x6c248 can_boost: negative control) → g04 = reorder with original-text-order keys + `base_for_buy`
+  copy 675/139 → g05 = g04 + call-graph closure pairing in multi_hop_swap.rs 679/139/106 (+37, 0 lost).
+- g06 = g05 + Location-line placement (`--levels hard,loc`: split_buyback expects at :388/:391, utils/math.rs
+  construct_uint! at :14; L records only). Linux A/B builds running: `out/lx-g06-{a,b}` (target/linux, target/linux2).
+  Packet `g01-line-placement/` drafted from g06 (source/, source.patch verified with patch -p1, solve-report.json,
+  base-for-buy-copy.patch); counts/sha/runtime placeholders to fill after Linux + replay.
+- Experiment s1 (next gain): legacy_sell.rs merged into instructions/swap/sell.rs (lib.rs `use instructions::swap::sell
+  as legacy_sell;` keeps every path), native build `out/nb-s1` running. Pairing caveat: original handler 0x49b50 calls 4
+  family closures (:167/:179/:183/:196) but candidate `execute` has 5 (:107/:131/:136/:141/:150) → zip refused;
+  the closures are byte-interchangeable, so any 4 placed on those lines suffice (manual assignment or DP).
 
 ## File selection for the first packet
 Included: state/{global_config,pool,volume_accumulator}.rs, instructions/create_pool.rs, curve/{constant_product,fees}.rs,
