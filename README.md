@@ -35,11 +35,16 @@ worker, epoch-close, swap-only and module-layout recoveries. The
 retains its own 483-window evidence. Source-only reports remain distinguished
 from compiled and replayed results; selected checkpoints are unchanged.
 
-The pinned Fees inventory has **395 unique structural pairs, 43 unmatched windows**.
+The pinned Fees inventory has **404 unique structural pairs, 34 unmatched windows**
+(**551/585 normalized counterparts**, including 118 raw-local matches).
+The [verified composition](research/fees-composed-frontier188/README.md) combines
+the reviewed math/SyncNative, sharing-context and social-PDA creation recoveries.
+It adds six windows over its independently reproduced 545-window baseline and
+passes 17,331 suite comparisons plus 157 strict signed social-creation cases.
 The [configuration-event recovery](research/fees-config-event-recovery/README.md)
 adds four complete caller-body matches; the two upsert bodies share a structural
 shape and are distinguished by their callees. The [current call ledger](repro/reconstruction-status-2026-10-26/fees-call-attribution.json)
-also attributes 65 duplicate-body pairs, giving 460 correspondences.
+also attributes 69 duplicate-body pairs, giving 473 correspondences.
 Whole-file identity remains unachieved. The [exotic-fee growth study](research/fees-exotic-growth-precedence/README.md)
 corrects rejection precedence and the realloc flag in new boundary cases;
 that caller still has no complete body match. The [optional-account ownership recovery](research/fees-optional-account-ownership/README.md)
@@ -59,8 +64,8 @@ adds the initializer parser, one initialization closure and the exit routine.
 The [context-origin recovery](research/fees-buyback-context-origin/README.md)
 now closes the second closure and its direct-call mismatch as well. The
 [crank event-account recovery](research/fees-crank-event-ownership/README.md)
-adds the complete exit routine and dispatch wrapper; the account parser and
-business handler remain unmatched. Four [root codegen controls](research/fees-wrapper-codegen-controls/README.md)
+adds the complete exit routine and dispatch wrapper; later reviewed work also
+recovers the account parser, while the business handler remains unmatched. Four [root codegen controls](research/fees-wrapper-codegen-controls/README.md)
 add no matches and are retained as rejected experiments. The
 [sweep context recovery](research/fees-sweep-context-ownership/README.md)
 adds its complete account parser, exit and dispatch wrapper; the sweep business
@@ -68,7 +73,7 @@ body remains unmatched. The [buyback-update context recovery](research/fees-buyb
 now closes the shared update parser and both update dispatch wrappers, with
 all 61 direct callee bodies matching. The [event-context integration](research/fees-event-context-ownership/README.md)
 adds six parser/dispatch bodies across social claim, social-PDA creation and
-withdrawal; their three business bodies remain unmatched. The
+withdrawal; the new composition also recovers the social-PDA creation body. The
 [unchecked-prefix recovery](research/fees-unchecked-prefix-recovery/README.md)
 restores the full-account input convention and closes the 1,144-byte initializer
 helper. Its host contract tests and SBF regression evidence have separate scopes.
@@ -95,7 +100,7 @@ No handler is certified perfectly recreated. The selected core builds contain
 | --- | ---: | ---: | ---: | ---: | ---: |
 | Pump selected | 98 | 430 | 507 | 0 | 1,391,456 / 1,792,208 bytes (77.6%) |
 | PumpSwap selected | 93 | 395 | 297 | 0 | 734,392 / 1,162,040 bytes (63.2%) |
-| Fees research | 118 | 424 | 43 | 0 | 248,904 / 799,648 bytes (31.1%) |
+| Fees research | 118 | 433 | 34 | 0 | 206,360 / 799,648 bytes (25.8%) |
 | Mayhem selected | 58 | 131 | 7 | 245 | 636,128 / 706,744 bytes (90.0%) |
 | Relay research | 142 | 346 | 4 | 0 | 17,680 / 752,488 bytes (2.3%) |
 

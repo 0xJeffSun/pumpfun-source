@@ -5,10 +5,10 @@
     "unrecovered": 5
   },
   "input_sha256": {
-    "fees-call-attribution.json": "ca6dc5d510911b3c834aca24cb4361180be329f64620775e7dfc1c7bc96493a6",
-    "functions.tsv": "0486005c6f2dca44555f495d946f83d97c264b2033f87b9687cf025182fd2c79",
+    "fees-call-attribution.json": "a9e7f75dd52b0d99c89108489c1996ce5987082e130de2cc667a6bdc7d8dea5e",
+    "functions.tsv": "5bb8a0ce757f0e5317ca7ef8e85d6c19d9fae4571f93fbb7a42e398dd8525316",
     "repro/reconstruction-audit-2026-10-26/audit.json": "7301fb2a784c56501fc85eb3272fc8dc111744b2464335edd3051ed1cc65fc7a",
-    "status.json": "1f83f77eb8fbb35038490f6637fa4fad921f81a7307077e7fcf66828c10331e5"
+    "status.json": "2bc74d31637b42571c71f94142a38332f4daacadc80ddda97171c1e9f59c8852"
   },
   "programs": {
     "donation_relay": {
@@ -100,18 +100,18 @@
     "pump_fees_research": {
       "body_bytes": 799648,
       "bytes_by_disposition": {
-        "no_complete_body_match": 248904,
-        "normalized_body_only": 527224,
+        "no_complete_body_match": 206360,
+        "normalized_body_only": 569768,
         "raw_body_equal": 23520
       },
       "counts": {
-        "no_complete_body_match": 43,
-        "normalized_body_only": 424,
+        "no_complete_body_match": 34,
+        "normalized_body_only": 433,
         "raw_body_equal": 118
       },
       "windows": 585
     }
   },
-  "reviewed_revision": "849d8140cf897c48d4d1fb2414ec8068079fead7",
+  "reviewed_revision": "d00aef4b4c90a5bd6394c1f2a64639e14ed90edc",
   "selected_revision": "1463bd22fb7811825c5e7acf1cb963eb39ab68d9"
 }

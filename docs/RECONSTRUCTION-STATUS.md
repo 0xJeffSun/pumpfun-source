@@ -44,7 +44,7 @@ analysis. Candidate symbol names are hypotheses about original identity.
 | Fees selected | 585 | 102 | 363 | 120 | 0 |
 | Mayhem selected | 441 | 58 | 131 | 7 | 245 |
 | Relay selected source 15 | 492 | 33 | 89 | 370 | 0 |
-| **Fees latest research** | **585** | **118** | **424** | **43** | **0** |
+| **Fees latest research** | **585** | **118** | **433** | **34** | **0** |
 | **Relay latest research** | **492** | **142** | **346** | **4** | **0** |
 
 Each row is a partition, not a score of semantic correctness. Mayhem's source
@@ -70,13 +70,13 @@ original text bytes (2.3%)**. These are full unresolved window sizes, not differ
 byte counts or estimates of remaining effort. The remaining bodies are donation
 wrappers; matched bodies still require complete transitive and data identity.
 
-Fees research has **542/585 windows with a normalized counterpart**: 395 unique
-structural pairs and 147 original windows in ambiguous duplicate groups. Its 43
-unmatched windows span **248,904 of 799,648 original text bytes (31.1%)**, although
-they are only 7.4% of the window count. Many remaining bodies are large. The
+Fees research has **551/585 windows with a normalized counterpart**: 404 unique
+structural pairs and 147 original windows in ambiguous duplicate groups. Its 34
+unmatched windows span **206,360 of 799,648 original text bytes (25.8%)**, although
+they are only 5.8% of the window count. Many remaining bodies are large. The
 [current call ledger](../repro/reconstruction-status-2026-10-26/fees-call-attribution.json)
-recomputes 65 additional duplicate-body correspondences on this candidate, for
-460 attributed pairs. There are 82 still-unattributed duplicate windows and 18
+recomputes 69 additional duplicate-body correspondences on this candidate, for
+473 attributed pairs. There are 78 still-unattributed duplicate windows and 17
 call edges to different-body frontiers. This refinement adds no body coverage.
 
 There is no defensible single source-completion percentage or ETA. Whole-program
@@ -537,7 +537,7 @@ field-role claims. The five semantic roles remain unresolved; no field is rename
 2. **Close known behavior defects:** Pump `sell_v2` and the ten partial/unaccepted
    selected dispositions above, with bound success/rejection tests. Cover genuine
    CPI callers, ownership and extension/mode combinations before acceptance.
-3. **Continue Fees business/source recovery:** work from all 43 residual addresses,
+3. **Continue Fees business/source recovery:** work from all 34 residual addresses,
    preserve the refreshed duplicate-call attribution, and validate paths not
    exercised by the existing corpus. Normalize only declared relocations/calls.
 4. **Recover Pump/AMM/Mayhem residuals:** preserve opaque and ambiguous states.
@@ -576,3 +576,16 @@ These verify retained evidence and rederive byte/window inventories; they are no
 new compiler builds or fresh VM executions. The owning packages record those
 builds and replays. The new inventory preserves the old selected 3,338 rows and
 recomputes the 1,077 current research rows directly from their artifacts.
+
+
+## Verified Fees composition after PR #188
+
+The [composed artifact](../research/fees-composed-frontier188/README.md) independently
+reproduces the pinned math/SyncNative baseline and adds sharing creation parser,
+exit and dispatch, admin-sharing parser and dispatch, and social-PDA creation.
+All 163 decoded Location-shaped uses agree; the program reader and selected
+literal contracts are rechecked. Dispatches still reach unmatched business code.
+The current 551-window candidate freshly passes 17,331 suite comparisons and
+157 strict signed social-creation cases. Earlier matrices retain their own
+artifact bindings. Full data, indirect behavior and whole-file identity remain
+open; these are normalized body gains, not six fully proven public handlers.

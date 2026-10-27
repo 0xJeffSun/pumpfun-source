@@ -7,8 +7,8 @@
     {
       "path": "README.md",
       "before_sha256": "cae913d4d3f2066403162f653a0cf35b39620fb08877b1b308c08ccce4a53678",
-      "after_sha256": "de98b6578b4bc513c58c0da1a90e2b577eb239e1c317da00cc132f0ba40648d3",
-      "reason": "Preserve the accepted 488-window Relay checkpoint while documenting rejected Result/event controls and the reviewed queue through PR #188."
+      "after_sha256": "7410307b92f2508bd76c65fffdb09544f3d189a2534de33d6de5c793e3915c8e",
+      "reason": "Advance the Fees research inventory to the independently built 551-window composition with fresh differential coverage; preserve selected checkpoints and remaining identity gaps."
     },
     {
       "path": ".github/workflows/verify.yml",

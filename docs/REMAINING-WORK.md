@@ -10,7 +10,7 @@ candidate paths and “current” prose must not override newer evidence.
 
 Subsequent gains are in the [byte-identity progress log](BYTE-IDENTITY-PROGRESS.md):
 Relay research now has **four unmatched windows**; current Fees research
-has **43 unmatched windows and 395 unique structural pairs**. The [Relay framework study](../repro/donation-relay/framework-sysroot-recovery/README.md)
+has **34 unmatched windows and 404 unique structural pairs**. The [Relay framework study](../repro/donation-relay/framework-sysroot-recovery/README.md)
 recovers the three repeated type-ID bodies with official Linux target libraries,
 adds the Anchor 0.32 framework matches and restores share-total compared values.
 The subsequent [mint-predicate study](../repro/donation-relay/mint-fee-pair-recovery/README.md)
@@ -96,7 +96,7 @@ adds the optional account parser and raw-equal cleanup without lost matches.
 Keep their real caller wired to owned `AccountInfo`; the larger account parser
 still needs full reconstruction. The subsequent [seed-vector recovery](../research/fees-social-seed-vector/README.md)
 recovers a 296-byte clone helper; its V2 claim caller remains unmatched. Current
-Fees attribution totals 460 pairs. The [extension-size log recovery](../research/fees-extend-size-logs/README.md)
+Fees attribution totals 473 pairs. The [extension-size log recovery](../research/fees-extend-size-logs/README.md)
 restores the no-resize messages and formatting helper; the larger resize handler
 remains unmatched.
 
@@ -234,7 +234,7 @@ The following are independent requirements; completing one does not close the ot
 
 | Priority | Remaining work | Evidence required to close it |
 | --- | --- | --- |
-| Current research bodies | Relay's four donation windows; Fees' 43 windows, including the exotic-growth caller | Full original-window comparison with no lost matches, source/build hashes and relevant fresh differential coverage |
+| Current research bodies | Relay's four donation windows; Fees' 34 windows, including the exotic-growth caller | Full original-window comparison with no lost matches, source/build hashes and relevant fresh differential coverage |
 | Core source/behavior | Pump's five partial and three unaccepted handlers; AMM initializer; Mayhem initializer and opaque attribution | Concrete source, genuine successful and rejected paths, bound receipts and per-handler limitations |
 | Known mismatches | Pump sell_v2 transfer-fee behavior; Mayhem diagnostics and field contracts | Authorized resumed correction where required, then targeted regressions and broader validation |
 | Transitive binary identity | Calls, duplicate attribution, data, relocations, indirect calls and final ELF layout | Exact artifact comparison and explicit explanation of any allocation padding |
@@ -292,7 +292,7 @@ and signing/ownership restrictions are unchanged by this documentation audit.
 | --- | --- |
 | Selected Pump | 507 windows without full normalized matches; calls/data and ambiguous matches also remain. The separate workspace-member build has 538 normalized windows and 497 residuals: 233 different-body, 192 no-same-size, 72 store-immediate-only heuristic rows. One of those 72 changes an error code; only 71 are reported origin-only. |
 | Selected AMM | 297 unmatched original windows, 160 ambiguous normalized rows, original diagnostics, data and full call contracts |
-| Fees current research | 43 unmatched windows (248,904 original body bytes), 65 additional call-attributed pairs and 82 duplicate windows still unattributed; close shareholder validators, transitive calls/data and full ELF/relocation layout |
+| Fees current research | 34 unmatched windows (206,360 original body bytes), 69 additional call-attributed pairs and 78 duplicate windows still unattributed; close shareholder validators, transitive calls/data and full ELF/relocation layout |
 | Selected Mayhem | Seven admitted unmatched windows and 257 source-ledger opaque windows; 12 of the opaque windows have local raw matches without semantic attribution |
 | Relay current research | [four explicit residual windows](RECONSTRUCTION-STATUS.md#relay-the-complete-remaining-body-list), spanning 17,680 original body bytes: donation wrappers; privileged successes, transitive callees/data and allocator/borrow behavior |
 | Metaplex | Utilize's 1,477 text differences, 30 source-coordinate differences, two relocation differences; authentic source/compiler layout |
@@ -413,3 +413,11 @@ regular wrapper does not establish that only one instruction needs changing;
 registers, stack slots and ordering still differ throughout the body. Further
 work must explain those source/code-generation differences, preserving full
 window comparison and testing runtime behavior before promotion.
+
+
+The [verified Fees composition](../research/fees-composed-frontier188/README.md)
+closes six more complete windows over the #188 baseline, including social-PDA
+creation and two sharing dispatches. Both dispatches retain unmatched business
+callees. Continue from the now-pinned 551/585 normalized candidate; do not assume
+older query/log matrices were rerun against it. Whole-file and runtime acceptance
+remain distinct from normalized body recovery.

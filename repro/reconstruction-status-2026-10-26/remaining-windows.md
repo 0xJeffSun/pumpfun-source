@@ -1550,6 +1550,7 @@ Snapshot and limitations: [inventory](README.md). Addresses are decimal virtual 
 | donation_relay | 752416 | 200 | no_complete_body_match |  |
 | donation_relay | 752616 | 72 | no_complete_body_match |  |
 | donation_relay | 752688 | 72 | no_complete_body_match |  |
+| pump_fees_research | 18384 | 1144 | no_complete_body_match |  |
 | pump_fees_research | 76384 | 6312 | no_complete_body_match |  |
 | pump_fees_research | 88552 | 5520 | no_complete_body_match |  |
 | pump_fees_research | 120816 | 6960 | no_complete_body_match |  |
@@ -1559,7 +1560,6 @@ Snapshot and limitations: [inventory](README.md). Addresses are decimal virtual 
 | pump_fees_research | 147944 | 15976 | no_complete_body_match |  |
 | pump_fees_research | 163920 | 13800 | no_complete_body_match |  |
 | pump_fees_research | 177720 | 12384 | no_complete_body_match |  |
-| pump_fees_research | 190104 | 3296 | no_complete_body_match |  |
 | pump_fees_research | 193400 | 5672 | no_complete_body_match |  |
 | pump_fees_research | 199072 | 5008 | no_complete_body_match |  |
 | pump_fees_research | 204080 | 1688 | no_complete_body_match |  |
@@ -1578,21 +1578,12 @@ Snapshot and limitations: [inventory](README.md). Addresses are decimal virtual 
 | pump_fees_research | 270136 | 1400 | no_complete_body_match |  |
 | pump_fees_research | 271536 | 5136 | no_complete_body_match |  |
 | pump_fees_research | 276672 | 4304 | no_complete_body_match |  |
-| pump_fees_research | 291864 | 3512 | no_complete_body_match |  |
 | pump_fees_research | 295800 | 6232 | no_complete_body_match |  |
-| pump_fees_research | 381352 | 6152 | no_complete_body_match |  |
-| pump_fees_research | 408640 | 10872 | no_complete_body_match |  |
-| pump_fees_research | 445160 | 11016 | no_complete_body_match |  |
-| pump_fees_research | 464168 | 3000 | no_complete_body_match |  |
 | pump_fees_research | 484816 | 16112 | no_complete_body_match |  |
 | pump_fees_research | 502096 | 16880 | no_complete_body_match |  |
 | pump_fees_research | 582624 | 4352 | no_complete_body_match |  |
 | pump_fees_research | 586976 | 4608 | no_complete_body_match |  |
-| pump_fees_research | 632080 | 1272 | no_complete_body_match |  |
-| pump_fees_research | 639104 | 1360 | no_complete_body_match |  |
-| pump_fees_research | 642848 | 1416 | no_complete_body_match |  |
 | pump_fees_research | 650064 | 1208 | no_complete_body_match |  |
-| pump_fees_research | 695672 | 1792 | no_complete_body_match |  |
 | donation_relay_research | 70200 | 6272 | no_complete_body_match |  |
 | donation_relay_research | 76472 | 6272 | no_complete_body_match |  |
 | donation_relay_research | 82744 | 2568 | no_complete_body_match |  |

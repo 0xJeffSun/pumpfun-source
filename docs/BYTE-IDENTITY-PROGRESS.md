@@ -970,3 +970,15 @@ windows and loses two raw-local matches. No trial is promoted; the accepted
 inventory remains 488 normalized / 142 raw-local. One control has a fresh
 all-dependency v1.48 rebuild; other retained controls contain actual root builds
 with dependency-cache reuse. There is no new target execution claim.
+
+
+## Fees verified branch composition — 27 October 2026
+
+The [new artifact-backed composition](../research/fees-composed-frontier188/README.md)
+reproduces #188's exact binary hashes, then combines #176/#185 sharing contexts
+and #172 social-PDA creation in four ordinary-source files. The result is
+551/585 normalized counterparts, 404 unique pairs, 118 raw-local matches and
+34 unmatched windows, with no lost matches. Six windows are gained over #188;
+all 163 decoded Location-shaped uses agree. Fresh execution passes 17,331 suite
+comparisons and 157 strict signed social-creation cases. The current inventory
+is advanced to this composed artifact; selected checkpoints remain unchanged.
