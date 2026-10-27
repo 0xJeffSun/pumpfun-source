@@ -1409,3 +1409,21 @@ reach the captured Relay program. The verifier checks the retained 556 parent
 source/artifact hashes directly, without requiring its Git object in a shallow
 checkout. Whole-ELF equality, full raw logs/compute and the selected checkpoint
 remain unchanged; this is an additional bounded research result.
+
+## Mayhem: shared error namespace and typed Sell CPI
+
+The [shared-error and typed-CPI recovery](../repro/mayhem/shared-errors-typed-cpi/README.md)
+reconstructs six complete normalized helpers from Rust: three error helpers and
+three generated Sell CPI helpers. A fourth newly examined dependency already
+matched the baseline and is recorded as an admission result, not a source gain.
+All 177 prior admitted matches are retained. The expanded examined scope is
+191 admitted functions, 184 matching and seven still unmatched, with 250
+semantically opaque windows. All 58 literal raw windows remain equal; that
+includes 46 admitted and 12 still-opaque windows.
+
+Original data tables and bounded dispatch prove the twenty error names, numbers
+and messages. The typed CPI retains fourteen core accounts and two remaining
+accounts, with independently checked ordering and flags. Legacy Sell passes
+396 cases / 792 signed transactions, and the Burn regression adds 12 signed
+transactions. Four panic/overflow log differences remain. Full handlers and the
+whole ELF are still unequal, and no canonical source is promoted by this packet.
