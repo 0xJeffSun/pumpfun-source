@@ -106,12 +106,14 @@ fn execute_inner<'info,const EXACT:bool>(ctx:Context<'_,'_,'_,'info,BuyV2<'info>
  let bbps=if c.is_mayhem_mode{0}else{a.global.buyback_basis_points};
  let cashback_coin=c.is_cashback_coin;
  if cf>0 && !cashback_coin{native_payments::ensure_rent_exempt(0,&a.system_program,&a.user,&a.creator_vault)?;}
- if native{
-  let to=if cashback_coin{a.user_volume_accumulator.to_account_info()}else{a.creator_vault.to_account_info()};
-  if cf>0{anchor_lang::system_program::transfer(CpiContext::new(a.system_program.to_account_info(),anchor_lang::system_program::Transfer{from:a.user.to_account_info(),to}),cf)?;}
- }else{
-  let to=if cashback_coin{a.associated_user_volume_accumulator.to_account_info()}else{a.associated_creator_vault.to_account_info()};
-  if cf>0{token_interface::transfer_checked(CpiContext::new(a.quote_token_program.to_account_info(),TransferChecked{from:a.associated_quote_user.to_account_info(),mint:a.quote_mint.to_account_info(),to,authority:a.user.to_account_info()}),cf,a.quote_mint.decimals)?;}
+ if cf>0 {
+  let creator_destination=if cashback_coin{a.user_volume_accumulator.to_account_info()}else{a.creator_vault.to_account_info()};
+  let creator_quote_destination=if native{None}else if cashback_coin{Some(a.associated_user_volume_accumulator.as_ref())}else{Some(a.associated_creator_vault.as_ref())};
+  crate::user_quote_payments::transfer_from_user_owned(
+   native,a.system_program.as_ref(),&a.user,creator_destination,cf,&a.quote_token_program,
+   a.quote_mint.decimals,a.quote_mint.as_ref().as_ref(),
+   if native{None}else{Some(a.associated_quote_user.as_ref())},creator_quote_destination,
+  )?;
  }
  if cashback_coin{crate::token_incentives::volume_accumulator::record_cashback_earned(&mut a.user_volume_accumulator,cf,native)?;}
  crate::trade::user_quote_payments::transfer_from_user(
@@ -123,12 +125,13 @@ fn execute_inner<'info,const EXACT:bool>(ctx:Context<'_,'_,'_,'info,BuyV2<'info>
  )?;
  let (bf,protocol_fee)=recipient_payments::split_protocol_fee(&a.global,pf,c.is_mayhem_mode);
  let buyback_received=if native{bf}else{sub(bf,crate::trade::quote_transfer_fee(&a.quote_mint.to_account_info(),bf,false)?)?};
- if native{
-  recipient_payments::transfer_native(a.system_program.as_ref(),&a.fee_recipient,a.user.as_ref(),protocol_fee)?;
-  recipient_payments::transfer_native(a.system_program.as_ref(),bb,a.user.as_ref(),bf)?;
- }else{
-  if protocol_fee>0{token_interface::transfer_checked(CpiContext::new(a.quote_token_program.to_account_info(),TransferChecked{from:a.associated_quote_user.to_account_info(),mint:a.quote_mint.to_account_info(),to:a.associated_quote_fee_recipient.to_account_info(),authority:a.user.to_account_info()}),protocol_fee,a.quote_mint.decimals)?;}
-  if bf>0{token_interface::transfer_checked(CpiContext::new(a.quote_token_program.to_account_info(),TransferChecked{from:a.associated_quote_user.to_account_info(),mint:a.quote_mint.to_account_info(),to:a.associated_quote_buyback_fee_recipient.to_account_info(),authority:a.user.to_account_info()}),bf,a.quote_mint.decimals)?;}
+ for (recipient,quote_recipient,amount) in [(&a.fee_recipient,&a.associated_quote_fee_recipient,protocol_fee),(bb,&a.associated_quote_buyback_fee_recipient,bf)].iter() {
+  crate::user_quote_payments::transfer_from_user_recipient(
+   native,a.system_program.as_ref(),&a.user,recipient,*amount,&a.quote_token_program,
+   a.quote_mint.decimals,a.quote_mint.as_ref().as_ref(),
+   if native{None}else{Some(a.associated_quote_user.as_ref())},
+   if native{None}else{Some(quote_recipient.as_ref())},
+  )?;
  }
  let shareholders={let d=a.sharing_config.try_borrow_data()?;crate::SharingConfig::try_deserialize(&mut &d[..]).map(|s|s.shareholders).unwrap_or_default()};
  let ev=TradeEvent{mint:a.base_mint.key(),sol_amount:if native{quote}else{0},token_amount:amount,is_buy:true,user:a.user.key(),timestamp:Clock::get()?.unix_timestamp,virtual_sol_reserves:if native{vq}else{0},virtual_token_reserves:vb,real_sol_reserves:if native{rq}else{0},real_token_reserves:rb,fee_recipient:a.fee_recipient.key(),fee_basis_points:protocol_fee_bps,fee:pf,creator:c.creator,creator_fee_basis_points:if c.is_cashback_coin{0}else{creator_fee_bps},creator_fee:if c.is_cashback_coin{0}else{cf},track_volume:false,total_unclaimed_tokens:a.user_volume_accumulator.total_unclaimed_tokens,total_claimed_tokens:a.user_volume_accumulator.total_claimed_tokens,current_sol_volume:a.user_volume_accumulator.current_sol_volume,last_update_timestamp:a.user_volume_accumulator.last_update_timestamp,ix_name:if exact{"buy_exact_quote_in".into()}else{"buy".into()},mayhem_mode:c.is_mayhem_mode,cashback_fee_basis_points:if c.is_cashback_coin{creator_fee_bps}else{0},cashback:if c.is_cashback_coin{cf}else{0},buyback_fee_basis_points:bbps,buyback_fee:buyback_received,shareholders,quote_mint:c.quote_mint,quote_amount:quote,virtual_quote_reserves:vq,real_quote_reserves:rq,holder_rewards_bps:if c.is_holder_reward{cb}else{0},holder_rewards:if c.is_holder_reward{cf}else{0},creator_fee_unclaimed:c.creator_fee,unparsed_trailing_field:quote_transfer_fee};
