@@ -280,7 +280,7 @@ jobs:
     runs-on: ubuntu-22.04
     timeout-minutes: 40
     env:
-      FEES_REMOTE_ROOT: ${{ runner.temp }}/fees-renderer-remote
+      FEES_REMOTE_ROOT: /tmp/fees-renderer-remote
     steps:
       - uses: actions/checkout@v4
         with:
@@ -310,6 +310,6 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: fees-renderer-research
-          path: ${{ runner.temp }}/fees-renderer-remote/evidence/
+          path: ${{ env.FEES_REMOTE_ROOT }}/evidence/
           if-no-files-found: error
           retention-days: 30
