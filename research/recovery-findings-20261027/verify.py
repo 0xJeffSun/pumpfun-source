@@ -27,6 +27,16 @@ def verify():
         assert manifest['files'][name] == {
             'bytes': len(data), 'sha256': hashlib.sha256(data).hexdigest(),
             'git_blob': hashlib.sha1(b'blob ' + str(len(data)).encode() + b'\0' + data).hexdigest()}
+    followups = json.loads((HERE / 'followups.json').read_bytes())
+    assert set(followups) == {'265'}
+    assert followups['265']['source_commit'] == 'b31f1225db96aae131ab52efba738f50bd9ad9ee'
+    assert followups['265']['path'] == 'submitted-followups/pr265.md'
+    for row in followups.values():
+        path = HERE / row['path']
+        assert path.is_file() and not path.is_symlink()
+        data = path.read_bytes()
+        assert len(data) == row['bytes'] and hashlib.sha256(data).hexdigest() == row['sha256']
+        assert hashlib.sha1(b'blob ' + str(len(data)).encode() + b'\0' + data).hexdigest() == row['git_blob']
     receipt = json.loads((HERE / 'review-evidence.json').read_bytes())
     assert receipt['submission_commit'] == manifest['source_commit']
     assert len(receipt['sources']) == 2 and len(receipt['observations']) == 6
@@ -48,7 +58,7 @@ def verify():
         assert 'InstructionErrorCustom(6012)' in row['original_error']
     results = [json.loads(line) for line in files['sweep/compiler-sweep-results.jsonl'].read_text().splitlines()]
     assert len(results) == 12 and sum(row['ok'] is True for row in results) == 5
-    return {'archived_files': 12, 'paired_6012_observations': 6,
+    return {'archived_files': 12, 'archived_followups': 1, 'paired_6012_observations': 6,
             'successful_compiler_rows': 5, 'failed_compiler_rows': 7,
             'source_changes_applied': False, 'new_runtime_execution': False}
 

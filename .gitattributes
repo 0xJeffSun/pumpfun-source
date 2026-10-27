@@ -1378,6 +1378,7 @@ research/mayhem-historical-macro-context/supplements/*.log -whitespace
 
 # Original submitted research is archived byte-for-byte, including whitespace.
 research/recovery-findings-20261027/submitted/** -whitespace
+research/recovery-findings-20261027/submitted-followups/** -whitespace
 
 # Preserve the exact source patches in reviewed, unpromoted research packets.
 research/claude-amm-hi-20261027/source.patch -whitespace
