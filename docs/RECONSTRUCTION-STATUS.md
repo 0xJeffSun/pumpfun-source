@@ -6,7 +6,7 @@ This review updates the research frontier while preserving the selected-checkpoi
 contains every one of the **4,415 selected/research function-window rows**.
 
 The generated inventory is a dated snapshot. Later maintained selections now
-include Pump Round26 and the AMM guard/data recovery; their current counts and
+include Pump Round27 and the AMM guard/data recovery; their current counts and
 evidence are in the [repository overview](../README.md). The current rows below
 are separate from the historical rows, and do not rewrite that snapshot.
 
@@ -51,16 +51,22 @@ analysis. Candidate symbol names are hypotheses about original identity.
 | Fees selected | 585 | 102 | 363 | 120 | 0 |
 | Mayhem historical selected | 441 | 58 | 131 | 7 | 245 |
 | Relay historical source 15 | 492 | 33 | 89 | 370 | 0 |
-| **Pump current Round26** | **1,035** | **123** | **598** | **314** | **0** |
+| **Pump current Round27** | **1,035** | **123** | **600** | **312** | **0** |
 | **PumpSwap current** | **785** | **128** | **510** | **147** | **0** |
-| **Fees latest research** | **585** | **198** | **381** | **6** | **0** |
+| **Fees latest research** | **585** | **198** | **382** | **5** | **0** |
 | **Mayhem latest research** | **441** | **100** | **329** | **12** | **0** |
 | **Relay canonical selection** | **492** | **492** | **0** | **0** | **0** |
 
-The current rows are bound to [Pump Round26](../repro/pump/main-contract-round26-20261027/README.md), [AMM guard/data recovery](../repro/pump_amm/guard-data-recovery-20261027/README.md), [Fees Social claim-v2 recovery](../research/fees-social-claim-v2-recovery/README.md) and [Mayhem BuyV2 sizing recovery](../research/mayhem-sizing-panic-recovery/README.md); they extend the dated generated inventory below. Each row is a partition, not a score of semantic correctness. The historical selected Mayhem source
+The current rows are bound to [Pump Round27](../repro/pump/main-contract-round27-20261027/README.md), [AMM guard/data recovery](../repro/pump_amm/guard-data-recovery-20261027/README.md), [Fees Withdraw integration](../research/fees-withdraw-tuple-integration/README.md) and [Mayhem BuyV2 sizing recovery](../research/mayhem-sizing-panic-recovery/README.md); they extend the dated generated inventory below. Each row is a partition, not a score of semantic correctness. The historical selected Mayhem source
 ledger has 257 opaque windows, 12 of which happen to match local raw bytes.
 Selected Fees retains two call-conflicting rows; body existence does not resolve
 those conflicts. Different programs and studies use different matching rules.
+
+Across these five frontier rows, **2,862/3,338 windows (85.7%)** match and
+**3,767,552/5,213,128 original text bytes (72.3%)** lie in matched windows.
+There are **476 unmatched windows**. Only Relay has complete meaningful-ELF
+identity; the four core programs remain byte-unequal. These are structural
+coverage measures, not a percentage of engineering work completed.
 
 Current AMM matched windows cover **782,776 of 1,162,040 original text bytes
 (67.4%)**. Its 638 normalized matches include the 128 raw-local matches; complete
@@ -89,17 +95,23 @@ payload**, with 12,168 zero bytes allocated by the loader. Compiler output is
 not padded. ProgramData metadata/history and broader runtime acceptance remain separate
 requirements. The source and exact artifact are now canonically selected.
 
-The latest [Fees Social claim-v2 recovery](../research/fees-social-claim-v2-recovery/README.md)
-reaches **579/585 normalized counterparts**, including 198 raw-local matches,
-and preserves all 21,079 readonly bytes and the earlier program-ID corrections.
-The recovered 10,664-byte Social handler has 1,303 matching normalized instructions;
-its associated-token validator still has an unmatched body. Six unmatched windows
-span **57,128 of 799,648 original text bytes (7.1%)**. The extra event helper,
-recursive callee identity, whole-program layout and original build provenance
-remain unresolved. Two native Rust builds agree. The packet retains 17,331
-passing cases across 18 suites, including application-log checks; review reruns
-of both Social claim suites pass 974 cases. These are bounded observations,
-not whole-ELF identity.
+The latest [Fees Withdraw integration](../research/fees-withdraw-tuple-integration/README.md)
+reaches **580/585 normalized counterparts (99.1%)**, retaining 198 raw-local
+matches and all 21,079 readonly bytes. The new complete normalized Withdraw
+body covers 967 instructions / 8,000 original bytes. Five unmatched windows
+span **49,128 of 799,648 original text bytes (6.1%)**. The verifier checks 4,358
+direct calls, 62 code pointers, 2,026 data pointers and 379 relocated fields;
+it does not establish full recursive semantic or whole-ELF identity. Two native
+builds agree and the retained 18-suite runtime corpus passes 17,331 cases.
+Independent review passes the verifier, all twelve mutation tests and exact
+46-input source materialization. Extend, Sweep, Crank, CreateDonation and the
+associated-token validator remain unmatched.
+
+The [safe Crank proposal](../research/fees-crank-safe-context-source/README.md)
+is separate source-only research. Its local 579/143 composition is not composed
+with the qualified 580/198 frontier. All 28 source/path tests pass; the absent
+47-input parent and unpublished native/runtime receipts prevent independent
+build reproduction from that packet. It adds no accepted window or text coverage.
 
 The [Mayhem BuyV2 sizing successor](../research/mayhem-sizing-panic-recovery/README.md)
 retains 429 normalized / 100 raw-local matches and the trade-origin/validator

@@ -82,8 +82,8 @@ fn pool_record(mint: &Pubkey, quote: &Pubkey, pool: &AccountInfo<'_>,
     let pool_data = pool.try_borrow_data()?;
     let base_data = base.try_borrow_data()?;
     let quote_data = quote_vault.try_borrow_data()?;
-    require!(pool.key == &expected, PumpError::InvalidQuotePool);
-    require!(pool.owner == &AMM, PumpError::QuotePoolNotFound);
+    require_keys_eq!(pool.key(), expected, PumpError::InvalidQuotePool);
+    require_keys_eq!(*pool.owner, AMM, PumpError::QuotePoolNotFound);
     require!(pool_data.len() >= 211, PumpError::InvalidQuotePool);
     require!(pool_data[..8] == POOL_DISC, PumpError::InvalidQuotePool);
     let base_key = key_at(&pool_data, 139);

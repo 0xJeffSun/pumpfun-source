@@ -4,6 +4,29 @@ The [full audit](RECONSTRUCTION-AUDIT.md) and its generated tables retain their
 explicit `1463bd22` snapshot. This log records later research without silently
 changing that baseline or promoting new selected artifacts.
 
+## Reviewed PRs #271–272: qualified Withdraw gain and separate Crank proposal
+
+The [Withdraw integration](../research/fees-withdraw-tuple-integration/README.md)
+adds one complete normalized 967-instruction / 8,000-byte body to the qualified
+Social/layout frontier. Fees moves from 579 to **580/585 matched windows
+(99.1%)**, retains all 198 raw-local matches and all 21,079 readonly bytes, and
+covers **750,520/799,648 original text bytes (93.9%)**. Independent review passes
+the full verifier, twelve mutation tests and 46-input materialization. The packet
+retains two equal native builds and 17,331 passing cases across eighteen suites.
+Five functions and whole-program identity remain unresolved.
+
+The [safe Crank source proposal](../research/fees-crank-safe-context-source/README.md)
+is accepted as source/static research only. It adds no matched window; its exact
+external parent and native/runtime receipts are not published. All 28 tests pass,
+including the corrected macOS temporary-path handling, and CI now runs them.
+Its separate local 579/143 composition is not added to the qualified 580/198 row.
+
+With the already maintained Pump Round27, totals are **2,862/3,338 matched
+windows (85.7%)** and **3,767,552/5,213,128 original text bytes (72.3%)**.
+There are 476 unmatched windows. Relay remains the only one of five complete
+meaningful-ELF matches. These figures measure structural coverage, not overall
+engineering completion. The dated audit tables below keep their own snapshots.
+
 ## Reviewed PR #266: independent Metaplex exact-artifact evidence
 
 The [Utilize recovery](../research/metaplex-utilize-exact-recovery/README.md)

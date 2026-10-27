@@ -3,10 +3,10 @@
   "programs": [
     {
       "name": "pump",
-      "matched_windows": 721,
+      "matched_windows": 723,
       "windows": 1035,
       "raw_bodies": 123,
-      "matched_text_bytes": 874352,
+      "matched_text_bytes": 886312,
       "text_bytes": 1792208
     },
     {
@@ -19,10 +19,10 @@
     },
     {
       "name": "fees_research",
-      "matched_windows": 579,
+      "matched_windows": 580,
       "windows": 585,
       "raw_bodies": 198,
-      "matched_text_bytes": 742520,
+      "matched_text_bytes": 750520,
       "text_bytes": 799648
     },
     {
@@ -43,10 +43,10 @@
     }
   ],
   "totals": {
-    "matched_windows": 2859,
+    "matched_windows": 2862,
     "windows": 3338,
     "raw_bodies": 1041,
-    "matched_text_bytes": 3747592,
+    "matched_text_bytes": 3767552,
     "text_bytes": 5213128,
     "complete_elf_programs": 1,
     "programs": 5
