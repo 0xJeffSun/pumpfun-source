@@ -370,9 +370,11 @@ identity remain unproven even where caller and direct callee bodies match.
 ## Mayhem history follow-up
 
 [PR #148's captured history](../research/mayhem-globalparams-field-history/README.md)
-provides new value trajectories for the five unnamed fields. Offline manifest,
-account and derived-version-chain checks pass. Independently re-decode the raw
-transaction arguments and event payloads before relying on the reported history
-to close role attribution; the current checker does not perform that step. Field
-names and consumer semantics remain open. This does not resume any stopped
-Mayhem initializer or other execution lane.
+provides new value trajectories for the five unnamed fields. The independent
+[wire verification](../research/mayhem-history-wire/README.md) now reproduces the
+retained table from 13 raw transaction captures, including ten paired update/event
+payloads and both current accounts. The original checker invokes that decoder.
+This closes the retained-cohort decoding gap, not RPC authentication or complete
+lifetime history. The unrelated fee-recipient log remains explicitly truncated.
+Field names, units and consumer semantics still need independent attribution.
+This does not resume any stopped Mayhem initializer or other execution lane.

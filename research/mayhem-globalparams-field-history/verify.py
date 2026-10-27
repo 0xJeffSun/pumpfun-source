@@ -18,7 +18,7 @@ Online check (--live):
 Usage: python3 verify.py [--live] [--evidence DIR]
 Exit code 0 = all executed checks pass.
 """
-import argparse, base64, hashlib, json, os, struct, subprocess, sys
+import argparse, base64, hashlib, importlib.util, json, os, struct, subprocess, sys
 
 GP = "13ec7XdrjF3h3YcqBTFDSReRcUFwbCnJaAQspM4j6DDJ"
 EP = "https://api.mainnet-beta.solana.com"
@@ -92,22 +92,24 @@ def main():
               + " ".join(f"{k}={vals[k]}" for k in STUDIED))
     print(f"[2] account captures re-decoded: {n_caps}")
 
-    # [3] transaction time series + version chain
-    ts = json.load(open(os.path.join(ev, "analysis_timeseries.json")))
-    prev = None
-    n_upd = 0
-    for row in ts["transactions"]:
-        capfile = os.path.join(ev, row["capture_file"])
-        if not os.path.exists(capfile):
-            failures.append(f"timeseries references missing capture {row['capture_file']}")
-            continue
-        for evnt in row["update_events"]:
-            n_upd += 1
-            if prev is not None and evnt["old_version"] != prev:
-                failures.append(f"version chain break at {row['signature']}: "
-                                f"old_version {evnt['old_version']} != previous new_version {prev}")
-            prev = evnt["new_version"]
-    print(f"[3] update events checked: {n_upd}, final version in series: {prev}")
+    # [3] Independently decode the raw compiled instructions, event carriers,
+    # scoped log payloads and accounts. Do not trust the derived event table.
+    wire_path = os.path.join(os.path.dirname(root), "mayhem-history-wire", "decode.py")
+    spec = importlib.util.spec_from_file_location("mayhem_history_wire", wire_path)
+    wire = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(wire)
+    try:
+        ts = json.load(open(os.path.join(ev, "analysis_timeseries.json")))
+        captures = {fn: json.load(open(os.path.join(ev, fn))) for fn in os.listdir(ev)
+                    if fn.startswith("tx_") and fn.endswith(".json")}
+        accounts = {fn: json.load(open(os.path.join(ev, fn))) for fn in os.listdir(ev)
+                    if fn.startswith("capture_globalparams") and fn.endswith(".json")}
+        result = wire.derive(captures, accounts, ts)
+        print(f"[3] raw transactions decoded: {result['transaction_count']}, "
+              f"paired updates: {result['update_count']}, "
+              f"versions: {result['version_range']}")
+    except (ValueError, KeyError, TypeError, OSError) as error:
+        failures.append(f"raw transaction decode: {error}")
 
     # [4] live re-fetch
     if args.live:
