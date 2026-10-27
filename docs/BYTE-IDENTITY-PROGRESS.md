@@ -4,6 +4,21 @@ The [full audit](RECONSTRUCTION-AUDIT.md) and its generated tables retain their
 explicit `1463bd22` snapshot. This log records later research without silently
 changing that baseline or promoting new selected artifacts.
 
+## Mayhem: shared AMM sell quote call and diagnostics
+
+The [two-file successor](../research/mayhem-sell-quote-call-recovery/README.md)
+restores the real shared quote call in AMM Sell and the original checked reserve
+subtraction. Two builds agree. All 6,636 trade comparisons pass, with 13,272
+signed transaction records independently checked. The 1,239 AMM sell cases now
+have exact non-compute logs, repairing eight parent diagnostic differences.
+
+All 426 matching bodies, 70 raw-local windows, 4,234 positive direct-call
+observations and 441 matching Source observations survive. The shared quote
+helper has ten matching direct-callee shapes and ten matching typed-data
+observations as multisets; its 1,096-byte body still differs from the 1,120-byte
+original. No new complete body is counted. Fifteen windows / 119,400 original
+text bytes, transitive/indirect/data closure and whole-ELF identity remain open.
+
 ## Mayhem: source and data recovery reaches 426 windows
 
 The [successor packet](../research/mayhem-source-data-recovery/README.md) adds 15

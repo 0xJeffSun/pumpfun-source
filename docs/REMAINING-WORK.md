@@ -10,6 +10,13 @@ candidate paths and “current” prose must not override newer evidence.
 
 Current Mayhem research is the [426-window source/data recovery](../research/mayhem-source-data-recovery/README.md): 15 unmatched windows / 119,400 original text bytes remain, plus data, call, indirect-target and complete ELF identity. The 34 recorded rate failures and ten newly found counter failures are repaired. The mixed SDK recipe repairs Source paths and TypeId metadata; matching formatter vtables, typed Buy/BuyV2 CPIs and bounded initializer success are verified. This does not update the selected baseline or prove arbitrary behavior.
 
+The [AMM sell-call successor](../research/mayhem-sell-quote-call-recovery/README.md)
+preserves those 426 windows and restores the shared O0093 quote call. Its ten
+callee and typed-data multisets match, and all 1,239 AMM sell cases have equal
+non-compute logs. O0093 still has 1,096 candidate bytes versus 1,120 original
+bytes; complete instruction order and correspondence remain work. The other
+parent runtime suites retain their original artifact bindings.
+
 Subsequent gains are in the [byte-identity progress log](BYTE-IDENTITY-PROGRESS.md):
 Canonical Relay now has **492/492 raw-equal windows and no unmatched windows**; current Fees research
 has **11 unmatched windows and 427 unique structural pairs** in the [current Social V2 composition](../research/fees-current-574-social-v2-union/README.md). Those unmatched windows total 99,696 original text bytes; whole-ELF identity, nine inspected direct-callee differences and exhaustive semantics remain open. The older 558-window generated inventory below retains its original binding. The [Relay framework study](../repro/donation-relay/framework-sysroot-recovery/README.md)

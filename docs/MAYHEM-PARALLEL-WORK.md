@@ -18,6 +18,14 @@ gains. The 34 rate failures and 10 counter failures are repaired. The ordinary 6
 sweep cases retain 58 diagnostic differences. The explicit mixed SDK recipe is
 not a fully native Linux clean-build or historical-source claim.
 
+The [AMM sell-call successor](../research/mayhem-sell-quote-call-recovery/README.md)
+adds the real O0093 call and closes its eight recorded trade diagnostic gaps.
+Its full body remains unmatched (1,096 versus 1,120 bytes), despite matching
+callee and typed-data multisets. All fifteen rows below therefore remain open.
+The three agents' last runs stopped at account usage limits; the main agent is
+continuing from their frozen source/evidence rather than claiming live parallel
+execution.
+
 The following table assigns every remaining original window exactly once.
 Account-data extents, ambiguous counterparts, function placement, absolute
 addresses, full section contents and relocations remain cross-cutting work.

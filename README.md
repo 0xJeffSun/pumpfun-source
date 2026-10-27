@@ -18,7 +18,7 @@ are distinct from [selected artifacts](repro/status.json).
 | [Pump selected](programs/pump/README.md) | 528 / 1,035 | 51.0% | 98 (9.5%) | 430 | 507 | 0 | No |
 | [PumpSwap / AMM selected](programs/pump-amm/README.md) | 488 / 785 | 62.2% | 93 (11.8%) | 395 | 297 | 0 | No |
 | [Fees research](research/fees-current-574-social-v2-union/README.md) | 574 / 585 | 98.1% | 143 (24.4%) | 431 | 11 | 0 | No |
-| [Mayhem research](research/mayhem-source-data-recovery/README.md) | 426 / 441 | 96.6% | 70 (15.9%) | 356 | 15 | 0 | No |
+| [Mayhem research](research/mayhem-sell-quote-call-recovery/README.md) | 426 / 441 | 96.6% | 70 (15.9%) | 356 | 15 | 0 | No |
 | [Donation Relay selected](repro/donation-relay/canonical-exact-selection/README.md) | 492 / 492 | 100.0% | 492 (100.0%) | 0 | 0 | 0 | **Yes** |
 
 Newer **local, unpublished** Pump/PumpSwap evidence was also verified on 27 October.
@@ -93,6 +93,12 @@ checkpoint. Two mixed-SDK builds agree. Fresh replay covers 6,636 trade comparis
 48 counter cases, and initializer/program boundaries. It repairs ten newly found
 counter failures and the prior 34 rate failures. Diagnostics, indirect/data closure
 and full ELF identity retain explicit limits in the packet.
+
+The [subsequent AMM sell recovery](research/mayhem-sell-quote-call-recovery/README.md)
+restores the shared quote call and repairs eight non-compute diagnostic differences.
+Two builds agree and all 6,636 trade cases pass again. The helper's ten callees
+and typed-data multisets agree, but its full body remains unmatched; the window
+count does not increase.
 
 Remaining priorities:
 

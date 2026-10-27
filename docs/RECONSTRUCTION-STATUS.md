@@ -894,3 +894,12 @@ oracle and exact non-compute logs pass. Initializer coverage adds 53 rejections,
 16 real Pump CPI cases (10 successes), 2 token-program negatives, and 6 global-init
 cases (2 successes). The 692-case ordinary sweep corpus still has 58 non-compute log
 differences. Full records and the diagnostic ledger preserve these distinctions.
+
+The [AMM sell-call successor](../research/mayhem-sell-quote-call-recovery/README.md)
+retains the same inventory and restores the actual shared quote call. Two
+builds agree; all fourteen trade suites (6,636 cases) were freshly rerun. All
+1,239 AMM sell cases now agree on non-compute logs, repairing eight differences.
+The O0093 helper's ten callee and ten typed-data observations agree as multisets,
+but its body remains 1,096 versus 1,120 bytes. This is partial recovery, not a
+perfect function or a new normalized match. Parent admin/Burn/initializer/sweep
+receipts are not rebound to the new candidate.
