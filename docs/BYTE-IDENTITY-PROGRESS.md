@@ -1183,3 +1183,25 @@ PR #195 also independently reproduces the current Fees prefix correction:
 552/585 normalized windows, 118 raw-local, 405 unique, 33 unmatched (205,216 bytes).
 A fresh 17,331-case suite has zero mismatches. PR #196 preserves the separate
 376-raw default-linker source result and supplies verified allocation history.
+
+
+## Fees: pinned upstream union and Crank diagnostic source — 27 October 2026
+
+The [source-only integration/diagnostic packet](../research/fees-upstream-crank-source-proposal/README.md)
+preserves three exact 42-input stages: public PR188 math+pack 545, an independently
+validated composition of PR169/172/176 at 550, and a three-expression Crank
+correction retaining 550. All five integration gains belong to upstream authors;
+this is not the latest frontier or a new discovery of those windows. Later
+PR185/190/195 compositions, including the 552-window dataset, remain separate.
+
+Fresh static remeasurement retains 118 raw counterparts throughout, preserves
+all previously equal actual direct-callee shapes, and checks 161→163 equal
+Location uses. The diagnostic adds the disabled/zero-amount messages and ordinary
+overflow error conversion without changing dependencies. Its positional byte
+distance regresses 456,100→466,083; whole identity remains false. Nine tests,
+all exact materializations and independent three-output static comparisons pass.
+Local two-build repetitions and finite runtime/application-log observations are
+explicitly unpublished, not downloadable replay evidence. No artifacts, logs,
+replay cases or archived receipt excerpts/derivatives are included; default
+verification neither compiles nor executes and reports runtime_verified=false.
+No selected checkpoint is replaced, and complete Crank semantics remain open.
