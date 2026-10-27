@@ -9,13 +9,14 @@ snapshot retains `1463bd22` audit bindings; current selections are recorded in
 [completion ledger](COMPLETION.md) remains a selected-checkpoint record; its old
 candidate paths and “current” prose must not override newer evidence.
 
-Current [Pump Round26](../repro/pump/main-contract-round26-20261027/README.md)
-has 123 raw-local matches, 598 normalized-only matches and 314 unmatched windows.
-The unmatched windows cover 917,856 original text bytes. The checkpoint retains
-bounded runtime evidence; the remaining bodies, data, relocations, uncovered
-behavior and original build provenance still require recovery.
+Current [Pump Round27](../repro/pump/main-contract-round27-20261027/README.md)
+has 123 raw-local matches, 600 normalized-only matches and 312 unmatched windows.
+The unmatched windows cover 905,896 original text bytes. Remaining bodies,
+data, relocations, uncovered behavior and original build provenance remain open.
 
-Current [PumpSwap account-context recovery](../repro/pump_amm/account-context-recovery-20261027/README.md) has 128 raw-local, 495 normalized-only and 162 unmatched windows, with 434,688 original text bytes still in unmatched windows.
+Current [PumpSwap guard/data recovery](../repro/pump_amm/guard-data-recovery-20261027/README.md)
+has 128 raw-local, 510 normalized-only and 147 unmatched windows, with 379,264
+original text bytes still in unmatched windows.
 
 Current Mayhem research is the [BuyV2 sizing successor](../research/mayhem-sizing-panic-recovery/README.md):
 100 raw-local, 329 normalized-only and twelve unmatched windows / 111,288 original
@@ -59,15 +60,21 @@ is eliminated; it does not establish full toolchain equivalence or recover the
 initializer. Further work must still resolve source/IR shape and original
 compilation settings.
 
-Current [Fees Social claim-v2 research](../research/fees-social-claim-v2-recovery/README.md)
-has 198 raw-local, 381 normalized-only and six unmatched windows, covering
-742,520 of 799,648 original text bytes. It recovers the complete normalized
-Social claim-v2 handler while preserving the program-ID corrections and full
-21,079-byte readonly section. The associated-token validator's body, an extra
-event helper, absolute layout and original build provenance remain unresolved.
-The 46-file Rust successor has two matching builds and 17,331 retained passing
-runtime comparisons; review reruns of both Social claim suites pass 974 cases.
-It remains separate from the selected Fees baseline.
+Current [Fees Withdraw integration](../research/fees-withdraw-tuple-integration/README.md)
+has 198 raw-local, 382 normalized-only and five unmatched windows, covering
+750,520 of 799,648 original text bytes. Extend, Sweep, Crank, CreateDonation and
+the associated-token validator remain unmatched; their windows total 49,128
+original bytes. Absolute layout, recursive callee/data closure and original
+build provenance remain unresolved. Two native builds agree, and 17,331 retained
+comparisons across 18 suites pass. This is a research frontier, separate from
+the selected Fees baseline.
+
+The [safe Crank source proposal](../research/fees-crank-safe-context-source/README.md)
+adds no accepted coverage. To advance it, publish or independently recover its
+exact external 47-input parent, reproduce the native artifacts and runtime
+receipts, and compose it with the qualified Withdraw/Social frontier. Its current
+579/143 local composition is not that frontier. Recover the remaining allocator
+callee and complete Crank body before counting another matched window.
 
 The [native Windows reproduction](../research/mayhem-native-reference-identity/README.md)
 reproduces the earlier 426-window source/data candidate's complete raw and
@@ -663,7 +670,7 @@ composition and compilation; their gains are not added to this count.
 
 ## Active priority: Mayhem
 
-The [Mayhem work plan](MAYHEM-RECONSTRUCTION-PLAN.md) supersedes earlier cross-program prioritization. Its current research has eight unmatched admitted bodies and 245 opaque windows. Complete the quote-aware validator, trade bodies, unexamined code and full ELF/data/layout proof before claiming Mayhem finished.
+The [Mayhem work plan](MAYHEM-RECONSTRUCTION-PLAN.md) supersedes earlier cross-program prioritization. Its current normalized research frontier has 429 of 441 matched windows, with twelve unmatched bodies. The quote-aware validator is recovered; remaining trade/initializer bodies, recursive data/call closure, full ELF layout and historical provenance are still open. The separate parser-context composition and historical-framework controls do not establish complete Mayhem identity.
 
 
 ### Mayhem historical event-parser allocator context

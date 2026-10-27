@@ -1386,3 +1386,7 @@ research/claude-amm-lo-20261027/source.patch -whitespace
 research/claude-pump-hi-20261027/source.patch -whitespace
 repro/pump_amm/guard-data-recovery-20261027/results/** -whitespace
 repro/pump_amm/guard-data-recovery-20261027/followup/** -whitespace
+
+# Preserve exact integrated Withdraw source and patch bytes.
+research/fees-withdraw-tuple-integration/overrides/** -whitespace
+research/fees-withdraw-tuple-integration/source.patch -whitespace
