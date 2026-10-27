@@ -96,3 +96,14 @@ preserves the native Program source's 341 matches and restores O0083's call to
 O0094. Both root builds agree; 1,839 fresh BuyV2 cases pass. Non-compute log
 differences decrease from 130 to 118, so full diagnostics remain incomplete.
 The parent's other runtime lanes keep their original candidate binding.
+
+## Full external curve follow-up
+
+The [curve packet](../research/mayhem-full-curve-recovery/README.md) advances the
+current full-window count to 345 matches (59 raw-local) and 96 unmatched windows.
+O0018/O0020 boxed helpers and O0059 account parsing now match; O0047 allocator
+growth also matches. All earlier parser/BuyV2 work survives. The next curve
+bodies remain O0003 (2752, padding), O0027 (26272, account decoding), O0212
+(540936, checked decoding) and O0213 (541576, unchecked decoding). Recover their
+field layout, consumption and error construction without weakening the matcher.
+The four core whole-file comparisons still require completion.

@@ -289,3 +289,14 @@ it adds no body coverage beyond PR222. Five recorded compilations are retained,
 with cached dependencies. Review did not rerun the compiler or target VM.
 The newer 573-window source and this reproduction remain separately identified.
 Hosted checks were still running when these research-only PRs were merged.
+
+## PR230: root source-path and additive metadata controls
+
+Reviewed head `7f41142713752081d9a2894a59c38cf8a5e2c917` and merged as
+`61c172c05801648c42dd8217f21f8d2c7499924d`. The standalone verifier and all
+18 mutation tests pass; all 73 merged files match the reviewed head. The eight
+retained root builds and four tiny object controls distinguish additive metadata
+flags from replacement. Path remapping changes exactly 1,415 data-section bytes;
+all instruction bytes are unchanged in that control. This uses the historical
+15-input source and adds no original-window match. The 720-byte text gap remains.
+No Windows compiler, full SDK or runtime was freshly executed during review.

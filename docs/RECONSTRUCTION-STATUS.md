@@ -47,10 +47,10 @@ analysis. Candidate symbol names are hypotheses about original identity.
 | Mayhem selected | 441 | 58 | 131 | 7 | 245 |
 | Relay historical source 15 | 492 | 33 | 89 | 370 | 0 |
 | **Fees latest research (PR227)** | **585** | **143** | **430** | **12** | **0** |
-| **Mayhem latest research** | **441** | **58** | **283** | **100** | **0** |
+| **Mayhem latest research** | **441** | **59** | **286** | **96** | **0** |
 | **Relay canonical selection** | **492** | **492** | **0** | **0** | **0** |
 
-The current research rows are bound to the [Fees V2 finisher](../research/fees-v2-finish-source-recovery/README.md) and [Mayhem native Program follow-up](../research/mayhem-native-buy-v2-validation/README.md); they extend the dated generated inventory below. Each row is a partition, not a score of semantic correctness. Mayhem's source
+The current research rows are bound to the [Fees V2 finisher](../research/fees-v2-finish-source-recovery/README.md) and [Mayhem full curve recovery](../research/mayhem-full-curve-recovery/README.md); they extend the dated generated inventory below. Each row is a partition, not a score of semantic correctness. Mayhem's source
 ledger has 257 opaque windows, 12 of which happen to match local raw bytes.
 Selected Fees retains two call-conflicting rows; body existence does not resolve
 those conflicts. Different programs and studies use different matching rules.
@@ -793,3 +793,21 @@ claimed. Two builds agree and 1,839 fresh comparisons pass. The checker verifies
 7,356 before/after signature entries, including 3,678 fresh candidate entries.
 Non-compute log differences remain in 118 cases, reduced from 130. Other runtime
 lanes retain the parser-recovery parent hash and were not rerun for this change.
+
+## Current Mayhem source: complete external curve and boxed helpers
+
+The [full curve recovery](../research/mayhem-full-curve-recovery/README.md)
+replaces the abbreviated four-reserve representation with the complete external
+curve. Four more complete normalized windows match: the two 424-byte boxed
+account helpers, a 136-byte account parser and a 656-byte allocation helper.
+All previous matches remain. The full scan is 59 raw-local / 286 normalized-only /
+96 unmatched windows, totaling 348,576 unmatched text bytes. The extra raw-local
+match is a previously normalized string helper whose call displacement now agrees.
+
+All four immediate callees in each boxed helper match. Their account parser still
+reaches an unmatched decoder at 26272; checked/unchecked decoding and padding
+bodies remain unequal. Two builds explicitly recompile vendored Anchor and agree.
+Fresh runtime passes all 6,636 trade comparisons, 1,032 admin cases and 12 Burn
+transactions; 15,348 signatures verify. No initializer, whole-ELF or exhaustive
+semantic completion is claimed. The interpreted source cohort is 216 windows,
+with 206 matched, ten unmatched and 225 remaining without full source attribution.

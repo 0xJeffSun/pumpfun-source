@@ -4,6 +4,17 @@ The [full audit](RECONSTRUCTION-AUDIT.md) and its generated tables retain their
 explicit `1463bd22` snapshot. This log records later research without silently
 changing that baseline or promoting new selected artifacts.
 
+## Mayhem: complete curve representation recovers four more windows
+
+The [full curve recovery](../research/mayhem-full-curve-recovery/README.md)
+reaches **345/441 normalized matches, including 59 raw-local matches**, preserving
+all earlier bodies. Four newly matched windows total 1,640 original bytes;
+96 windows / 348,576 text bytes remain unmatched. The boxed helpers now agree
+with their immediate callees, but the lower account decoder remains unequal.
+Two builds with explicit Anchor recompilation agree; all 6,636 trade comparisons,
+1,032 admin cases and 12 Burn transactions pass, with 15,348 signatures verified.
+Whole-file identity, remaining decoder bodies and transitive closure are open.
+
 ## Fees: V2 finishing helper advances the composed source to 573 matches
 
 The [V2 finishing-helper recovery](../research/fees-v2-finish-source-recovery/README.md)
