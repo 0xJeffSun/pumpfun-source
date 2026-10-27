@@ -76,6 +76,11 @@ arithmetic recover the Sell immediate-callee multiset; evaluation-order changes
 improve partial instruction alignment. The full body and ordered callees still
 differ. These controls add no accepted match or runtime qualification.
 
+The [native historical-macro quote composition](../research/mayhem-native-current432-composition/README.md)
+repeats 432 normalized / 85 native raw-local windows with its own 2,496 signed
+trade pairs and 69 initializer pairs. It retains the earlier 13,680-byte Legacy
+Buy body; it is not promoted over the qualified 432/100 source.
+
 ## Integration requirements
 
 Preserve every prior normalized/raw match, immediate call shape and Source

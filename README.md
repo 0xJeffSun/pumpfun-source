@@ -87,6 +87,11 @@ ordered immediate callees and twenty typed references checked in total.
 [Nine bodies remain](research/mayhem-quotes-current-recovery-20261027/remaining.md),
 with every function classified in the [441-row inventory](research/mayhem-quotes-current-recovery-20261027/inventory.tsv).
 
+The [native historical-macro composition](research/mayhem-native-current432-composition/README.md)
+also reproduces 432 normalized windows and 85 raw-local matches in its own
+recipe. Its earlier Legacy Buy source does not replace the qualified 432/100
+checkpoint or add to that checkpoint's raw count.
+
 The [AMM handler shape controls](research/mayhem-amm-handler-shape-controls-20261027/README.md)
 isolate account-copy expansion, arithmetic error flow and native-key evaluation
 order. Nine source/compiler controls preserve their 432-window search baseline;

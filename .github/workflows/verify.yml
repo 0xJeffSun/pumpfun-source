@@ -12,6 +12,10 @@ jobs:
       max-parallel: 12
       matrix:
         include:
+          - suite: mayhem-native-current432
+            commands: |
+              python -I -B research/mayhem-native-current432-composition/verify.py
+              python -I -B research/mayhem-native-current432-composition/test_verify.py
           - suite: mayhem-amm-shape-controls
             commands: |
               python -B research/mayhem-amm-handler-shape-controls-20261027/verify.py
