@@ -1402,3 +1402,5 @@ programs/pump-amm/src/instructions/swap/multi_hop_swap.rs whitespace=-blank-at-e
 # Preserve recovered associated-token source and patch bytes.
 research/fees-ata-prefix-integration/overrides/** -whitespace
 research/fees-ata-prefix-integration/source.patch -whitespace
+repro/pump_amm/transfer-abi-recovery-20261027/results/** -whitespace
+repro/pump_amm/transfer-abi-recovery-20261027/followup/** -whitespace

@@ -11,18 +11,18 @@
     },
     {
       "name": "pump_amm",
-      "matched_windows": 640,
+      "matched_windows": 642,
       "windows": 785,
-      "raw_bodies": 128,
-      "matched_text_bytes": 799032,
+      "raw_bodies": 129,
+      "matched_text_bytes": 804472,
       "text_bytes": 1162040
     },
     {
       "name": "fees_research",
-      "matched_windows": 580,
+      "matched_windows": 581,
       "windows": 585,
-      "raw_bodies": 198,
-      "matched_text_bytes": 750520,
+      "raw_bodies": 200,
+      "matched_text_bytes": 756600,
       "text_bytes": 799648
     },
     {
@@ -43,10 +43,10 @@
     }
   ],
   "totals": {
-    "matched_windows": 2868,
+    "matched_windows": 2871,
     "windows": 3338,
-    "raw_bodies": 1055,
-    "matched_text_bytes": 3786688,
+    "raw_bodies": 1058,
+    "matched_text_bytes": 3798208,
     "text_bytes": 5213128,
     "complete_elf_programs": 1,
     "programs": 5

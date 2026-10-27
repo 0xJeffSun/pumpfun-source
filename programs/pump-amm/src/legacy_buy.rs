@@ -78,50 +78,33 @@ fn transfer<'info>(
         mint.decimals,
     )
 }
-pub fn execute<'info>(
+pub fn execute<'info, const EXACT: bool>(
     ctx: Context<'_, '_, '_, 'info, LegacyBuy<'info>>,
     amount: u64,
     limit: u64,
     track: bool,
-    exact: bool,
 ) -> Result<()> {
     let a = &mut *ctx.accounts;
     require!(
         a.global_config.disable_flags & 8 == 0,
         PumpAmmError::DisabledBuy
     );
-    let pool_info = a.pool.to_account_info();
-    if pool_info.data_len() < 287 {
-        let rent = Rent::get()?
-            .minimum_balance(287)
-            .saturating_sub(pool_info.lamports());
-        if rent > 0 {
-            anchor_lang::system_program::transfer(
-                CpiContext::new(
-                    a.system_program.to_account_info(),
-                    anchor_lang::system_program::Transfer {
-                        from: a.user.to_account_info(),
-                        to: pool_info.clone(),
-                    },
-                ),
-                rent,
-            )?;
-        }
-        pool_info.realloc(287, false)?;
-    }
+    crate::instructions::swap::prepare_pool(
+        &a.pool, a.system_program.as_ref(), a.user.as_ref(),
+    )?;
     crate::instructions::swap::validate_protocol_fee_recipient(
         &a.global_config,
         &a.protocol_fee_recipient,
         a.pool.is_mayhem_mode,
     )?;
-    if exact {
+    if EXACT {
         require_gt!(limit, 0, PumpAmmError::ZeroBaseAmount);
         require_gt!(amount, 0, PumpAmmError::ZeroQuoteAmount);
     } else {
         require_gt!(amount, 0, PumpAmmError::ZeroBaseAmount);
         require_gt!(limit, 0, PumpAmmError::ZeroQuoteAmount);
     }
-    let (available, quote_fee_data) = if exact {
+    let (available, quote_fee_data) = if EXACT {
         let fee_data = crate::utils::transfer_fee::from_mint(&a.quote_mint.to_account_info())?;
         let net = crate::utils::transfer_fee::amount_after_fee(&fee_data, amount)?;
         require_gt!(net, 0, PumpAmmError::BuyNotEnoughQuoteTokensToCoverFees);
@@ -129,31 +112,14 @@ pub fn execute<'info>(
     } else {
         (amount, None)
     };
-    let old_virtual = a.pool.virtual_quote_reserves;
-    let old_accrued = a
-        .pool
-        .protocol_fees
-        .checked_add(a.pool.creator_fees)
-        .ok_or_else(|| error!(PumpAmmError::Overflow))?;
-    let can_boost = old_virtual
-        .checked_add(old_accrued as i128)
-        .ok_or_else(|| error!(PumpAmmError::Overflow))?
-        != 0;
-    a.pool_quote_token_account
-        .amount
-        .checked_sub(old_accrued)
-        .ok_or_else(|| error!(PumpAmmError::Overflow))?;
-    let q = u64::try_from(
-        (a.pool_quote_token_account.amount as i128)
-            .checked_add(old_virtual)
-            .ok_or(PumpAmmError::Overflow)?,
-    )
-    .map_err(|_| error!(PumpAmmError::Overflow))?;
+    let raw_quote_reserves = a.pool_quote_token_account.amount;
+    a.pool.available_quote_reserves(raw_quote_reserves)?;
+    let q = a.pool.effective_quote_reserves(raw_quote_reserves)?;
     let b = a.pool_base_token_account.amount;
-    let curve_initial = if exact { 0 } else {
+    let curve_initial = if EXACT { 0 } else {
         crate::curve::constant_product::quote_for_base(amount, b, q)?
     };
-    let fee_quote = if exact { available } else { curve_initial };
+    let fee_quote = if EXACT { available } else { curve_initial };
     let supply = if a.pool.is_mayhem_mode { 1_000_000_000_000_000 } else { a.base_mint.supply };
     let mut selected = crate::curve::fees::select_and_apply(
         &a.pool, &a.global_config, &a.fee_config, &a.fee_program, &a.program,
@@ -172,7 +138,7 @@ pub fn execute<'info>(
         initial_protocol_fee = 0;
         initial_creator_fee = 0;
     }
-    let (curve, lp_fee, protocol_fee, creator_fee, total, quote_transfer_fee) = if exact {
+    let (curve, lp_fee, protocol_fee, creator_fee, total, quote_transfer_fee) = if EXACT {
         let total_fee_bps = selected.lp_fee_bps
             .saturating_add(selected.protocol_fee_bps)
             .saturating_add(creator_bps);
@@ -234,12 +200,12 @@ pub fn execute<'info>(
         (curve_initial, l, p, c, total, transfer_fee)
     };
     let pool_quote = curve.checked_add(lp_fee).ok_or(PumpAmmError::Overflow)?;
-    let base_out = if exact {
+    let base_out = if EXACT {
         crate::curve::constant_product::base_for_quote(curve, b, q)?
     } else {
         amount
     };
-    if exact {
+    if EXACT {
         require_gte!(base_out, limit, PumpAmmError::BuySlippageBelowMinBaseAmountOut);
     } else {
         require_gte!(
@@ -297,27 +263,28 @@ pub fn execute<'info>(
         ctx.remaining_accounts, &a.global_config, next, &a.quote_mint.key(), &a.quote_token_program.key(),
     )?;
     if buyback_fee > 0 {
-        if dest.data_is_empty() {
-            create_ata(a, dest, owner, true)?;
-        }
-        transfer_fee(a, dest, buyback_fee)?;
+        crate::utils::token::transfer_checked_with_ata(
+            a.quote_token_program.as_ref(), &a.quote_mint, &a.user_quote_token_account,
+            owner, dest, a.user.as_ref(), &a.system_program, &a.associated_token_program,
+            buyback_fee, &[],
+        )?;
     }
     a.user_volume_accumulator.user = a.user.key();
     let event = trade::BuyEvent {
         timestamp: Clock::get()?.unix_timestamp,
         base_amount_out: base_out,
-        max_quote_amount_in: if exact { amount } else { limit },
+        max_quote_amount_in: if EXACT { amount } else { limit },
         user_base_token_reserves: a.user_base_token_account.amount,
         user_quote_token_reserves: a.user_quote_token_account.amount,
         pool_base_token_reserves: a.pool_base_token_account.amount,
         pool_quote_token_reserves: a.pool_quote_token_account.amount,
-        quote_amount_in: if exact { amount } else { curve },
+        quote_amount_in: if EXACT { amount } else { curve },
         lp_fee_basis_points: selected.lp_fee_bps,
         lp_fee,
         protocol_fee_basis_points: selected.protocol_fee_bps,
         protocol_fee,
         quote_amount_in_with_lp_fee: pool_quote,
-        user_quote_amount_in: if exact { curve } else { total },
+        user_quote_amount_in: if EXACT { curve } else { total },
         pool: a.pool.key(),
         user: a.user.key(),
         user_base_token_account: a.user_base_token_account.key(),
@@ -340,8 +307,8 @@ pub fn execute<'info>(
         total_claimed_tokens: a.user_volume_accumulator.total_claimed_tokens,
         current_sol_volume: a.user_volume_accumulator.current_sol_volume,
         last_update_timestamp: a.user_volume_accumulator.last_update_timestamp,
-        min_base_amount_out: if exact { limit } else { amount },
-        ix_name: if exact {
+        min_base_amount_out: if EXACT { limit } else { amount },
+        ix_name: if EXACT {
             "buy_exact_quote_in".to_string()
         } else {
             "buy".to_string()
@@ -364,8 +331,8 @@ pub fn execute<'info>(
                 false,
             )?)
             .ok_or(PumpAmmError::Overflow)?,
-        virtual_quote_reserves: old_virtual,
-        can_boost,
+        virtual_quote_reserves: a.pool.virtual_quote_reserves,
+        can_boost: a.pool.can_boost(),
         base_supply: supply,
         holder_rewards_bps: if a.pool.is_holder_reward {
             selected.creator_fee_bps

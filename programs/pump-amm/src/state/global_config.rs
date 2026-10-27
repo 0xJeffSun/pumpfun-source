@@ -84,3 +84,12 @@ impl GlobalConfig {
         Ok(())
     }
 }
+
+
+impl GlobalConfig {
+    pub fn validate_boost_authority(&self, authority: &Pubkey) -> Result<()> {
+        require_keys_neq!(self.boost_authority, Pubkey::default(), PumpAmmError::InvalidAdmin);
+        require_keys_eq!(self.boost_authority, *authority, PumpAmmError::InvalidAdmin);
+        Ok(())
+    }
+}

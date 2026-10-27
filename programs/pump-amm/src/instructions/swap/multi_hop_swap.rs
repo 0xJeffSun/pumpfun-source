@@ -502,25 +502,9 @@ fn amm_hop<'info>(
         PumpAmmError::CashbackCoinNotSupported
     );
     require!(!h.pool.is_mayhem_mode, PumpAmmError::MayhemPoolNotSupported);
-    let pool_info = h.pool.to_account_info();
-    if pool_info.data_len() < 287 {
-        let top = Rent::get()?
-            .minimum_balance(287)
-            .saturating_sub(pool_info.lamports());
-        if top > 0 {
-            anchor_lang::system_program::transfer(
-                CpiContext::new(
-                    a.system_program.to_account_info(),
-                    anchor_lang::system_program::Transfer {
-                        from: a.user.to_account_info(),
-                        to: pool_info.clone(),
-                    },
-                ),
-                top,
-            )?;
-        }
-        pool_info.realloc(287, false)?;
-    }
+    crate::instructions::swap::prepare_pool(
+        &h.pool, a.system_program.as_ref(), a.user.as_ref(),
+    )?;
     let base_program = program_for(a, &h.base_mint)?;
     let quote_program = program_for(a, &h.quote_mint)?;
     let gates = HopFeeGates {

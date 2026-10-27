@@ -1,28 +1,19 @@
 # PumpSwap source reconstruction
 
-The maintained source is the [source ABI and return checkpoint](../../repro/pump_amm/source-abi-recovery-20261027/README.md),
-candidate `e995d6a8211dcd3d05c07cdcb1a7147ec4f4e2b2a81b56c268fd1a3d76a01ce1`. It recovers the TradeV2 and MultiHop initializer helpers,
-fixes shared protocol-recipient validation, and restores generated CPI return
-handling and the BuyEvent source module.
+The maintained source is the [transfer ABI and entrypoint checkpoint](../../repro/pump_amm/transfer-abi-recovery-20261027/README.md),
+candidate `3fcae02128464717b29a0b3842fbba993d5d0befb4362c4094c8af8e32a8589d`. It matches **642/785 normalized windows (81.8%)**,
+including **129 raw bodies**, and covers **804,472/1,162,040 text bytes (69.2%)**.
+Whole ELF identity is false; **143 windows remain**.
 
-It matches **640/785 normalized original windows (81.5%)**, including **128 raw
-bodies**, and covers **799,032/1,162,040 text bytes (68.8%)**. It gains two windows
-without losing any from the prior checkpoint; **145 windows remain** and whole
-ELF identity is false. Two strict offline builds reproduce the same artifact.
+Two strict offline builds agree. All17,462 corpus cases and retained supplemental
+suites pass. The160-case resize matrix closes the eight prior sweep-order
+differences. Shared ATA/payout bodies and actual callees match;17 entrypoint
+source descriptors are restored. The recipe binds50 canonical,51 workspace
+and175 registry inputs,226 total, with762 cached dependency artifacts unchanged.
+Counts overlap. Full code/data/call identity, original provenance and exhaustive
+behavior remain open; the linked checkpoint records the exact proof limits.
 
-All 17,462 corpus cases pass with 35,074 executions and 35,418 verified signature
-fields. Expanded current-candidate tests include 24 migration, 56 route-guard,
-80 vault and 1,805 accumulator/incentive cases. The 328 deeper-route cases use
-ordinary signed ComputeBudget instructions and finish three-hop buy and sell.
-Counts overlap. Normalization and substituted-dependency exceptions are
-explicitly documented in the linked packets.
-
-The recipe binds 50 canonical inputs to 51 workspace and 169 authenticated registry
-inputs. Complete code/data/call identity, remaining source coordinates,
-historical toolchain provenance, exhaustive behavior and authentic fixed-admin
-create_config success remain open.
-
-A separate 160-case resize-order follow-up retains eight sweep differences: pool funding precedes recipient validation in the captured AMM. The signed failing cases and proposed next fix are preserved in [resize-order evidence](../../repro/pump_amm/source-abi-recovery-20261027/followup/resize-order/README.md).
+The [reserved-account follow-up](../../repro/pump_amm/transfer-abi-recovery-20261027/followup/reserved-accounts/REPORT.md) preserves 11 differences in 21 signed cases. The next private build corrects them; this selected checkpoint retains that known gap.
 
 The paragraphs below describe historical checkpoints.
 
