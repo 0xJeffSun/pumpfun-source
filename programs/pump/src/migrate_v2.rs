@@ -74,7 +74,7 @@ pub fn execute<'info>(ctx:Context<'_, '_, '_, 'info,MigrateV2<'info>>)->Result<(
  call(&tok,&[(&tmpb,false,true),(&wa,false,true),(&pa,true,false)],vec![9],&[pas])?;
  if !quote_preexisting{if quote_extensions(&wsol)?.contains(&anchor_spl::token_2022::spl_token_2022::extension::ExtensionType::TransferFeeConfig){if !wsol.is_writable{return err!(MigrateV2Error::QuoteMintNotWritable)}call(&qt,&[(&wsol,false,true),(&tmpq,false,true)],vec![26,4],&[])?;}
  call(&qt,&[(&tmpq,false,true),(&wa,false,true),(&pa,true,false)],vec![9],&[pas])?;}
- let mut burn=vec![8];burn.extend_from_slice(&amount(&ulp)?.to_le_bytes());call(&t22,&[(&ulp,false,true),(&lp,false,true),(&pa,true,false)],burn,&[pas])?;call(&t22,&[(&ulp,false,true),(&wa,false,true),(&pa,true,false)],vec![9],&[pas])?;
+ let burn_amount=amount(&ulp)?;anchor_spl::token_2022::burn(CpiContext::new_with_signer(t22.clone(),anchor_spl::token_2022::Burn{mint:lp.clone(),from:ulp.clone(),authority:pa.clone()},&[pas]),burn_amount)?;call(&t22,&[(&ulp,false,true),(&wa,false,true),(&pa,true,false)],vec![9],&[pas])?;
  call(&sys,&[(&pa,true,true),(&wa,false,true)],{let mut v=2u32.to_le_bytes().to_vec();v.extend_from_slice(&pa.lamports().to_le_bytes());v},&[pas])?;
 
  {let c=&mut ctx.accounts.bonding_curve;c.real_quote_reserves=0;c.real_token_reserves=0;c.virtual_quote_reserves=0;c.virtual_token_reserves=0;}
