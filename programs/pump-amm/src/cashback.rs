@@ -34,7 +34,7 @@ pub fn claim(ctx:Context<ClaimCashback>)->Result<()> {
     )?;
     let u=&mut ctx.accounts.user_volume_accumulator;
     u.total_cashback_claimed=u.total_cashback_claimed.checked_add(amount).ok_or(error!(PumpAmmError::Overflow))?;
-    let event=ClaimCashbackEvent{user,amount,timestamp,total_claimed:u.total_cashback_claimed,total_cashback_earned:u.cashback_earned};emit!(event);emit_cpi!(event);Ok(())
+    let event=ClaimCashbackEvent{user:ctx.accounts.user.key(),amount,timestamp,total_claimed:u.total_cashback_claimed,total_cashback_earned:u.cashback_earned};emit!(event);emit_cpi!(event);Ok(())
 }
 #[event]
 #[derive(Clone)]

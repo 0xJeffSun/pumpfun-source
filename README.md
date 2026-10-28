@@ -17,9 +17,9 @@ distinction between 141 raw-equal and 297 normalized-only matches.
 
 **PumpSwap: 660/785 function windows matched (84.1%); 125 remain (15.9%). Matched windows cover 71.5% of original executable text, leaving 330,664 bytes (28.5%).**
 
-These are binary-coverage measurements. Full call/data/relocation identity, original build provenance and uncovered behavior remain open. The [remaining-work review](repro/pump_amm/create-pool-fields-recovery-20261028/remaining-audit/README.md) lists all 125 unmatched AMM windows. The current checkpoint records source composition, reproducible builds and signed verification results.
+These are binary-coverage measurements. Full call/data/relocation identity, original build provenance and uncovered behavior remain open. The [remaining-work review](repro/pump_amm/boost-buyback-cashback-recovery-20261028/remaining-audit/README.md) lists all 125 unmatched AMM windows. The current checkpoint records source composition, reproducible builds and signed verification results.
 
-**Open compute-budget boundary:** four of 24 signed synthetic canonical Token-2022 CreatePool cases exceed the original program's default 200,000-unit budget while the current reconstruction succeeds. The [same baseline mismatch and higher-budget controls](repro/pump_amm/create-pool-fields-recovery-20261028/README.md#observed-resource-boundary) preserve this difference; these local synthetic calls do not establish network reachability.
+**Observed fixture compute difference:** four raw synthetic CreatePool failures are explained by different legacy-loader executable-account allocations. The [signed allocation controls](repro/pump_amm/boost-buyback-cashback-recovery-20261028/followup/loader-allocation/README.md) agree in all 48 paired cases. The remaining 14-unit AMM execution difference, faithful upgradeable-loader replay and broad compute parity remain open.
 
 [Current main-Pump parallel research snapshot](research/main-pump-parallel-checkpoint-20261027/README.md) preserves the verified intermediates and in-progress source beyond the maintained checkpoint.
 
@@ -68,7 +68,7 @@ all remaining code, calls, data, relocations and build provenance.
 | Latest verified checkpoint | Matched windows | Matched % | Raw-equal bodies | Normalized only | Unmatched | Whole ELF equal |
 | --- | ---: | ---: | ---: | ---: | ---: | --- |
 | [Pump Round47](repro/pump/main-contract-round47-20261027/README.md) | 823 / 1,035 | 79.5% | 203 | 620 | 212 | No |
-| [PumpSwap / AMM](repro/pump_amm/create-pool-fields-recovery-20261028/README.md) | 660 / 785 | 84.1% | 159 | 501 | 125 | No |
+| [PumpSwap / AMM](repro/pump_amm/boost-buyback-cashback-recovery-20261028/README.md) | 660 / 785 | 84.1% | 159 | 501 | 125 | No |
 | [Fees research](research/claude-fees100-crank-donation-20261027/README.md) | 585 / 585 | 100.0% | 585 | 0 | 0 | **Yes** |
 | [Mayhem qualified research](research/mayhem-current438-composition-20261028/README.md) | 438 / 441 | 99.3% | 141 | 297 | 3 | No |
 | [Donation Relay](repro/donation-relay/canonical-exact-selection/README.md) | 492 / 492 | 100.0% | 492 | 0 | 0 | **Yes** |
@@ -303,7 +303,7 @@ improvements, and Create call-graph recovery. The full recovery chain contains
 88,263 current files. These experiments retain their individual status and add
 no accepted matches.
 
-The latest [PumpSwap staged CreatePool initialization recovery](repro/pump_amm/create-pool-fields-recovery-20261028/README.md) matches 660 windows and 159 raw bodies. CreatePool now uses staged initialization and separate canonical quote-mint policy branches. The 660-window count and 159 raw matches are retained with no losses. The repeated build and all 13 standard groups pass; 125 AMM windows remain. Fourteen native-fee cases still differ in raw source-line diagnostics.
+The latest [PumpSwap boost, buyback and cashback recovery](repro/pump_amm/boost-buyback-cashback-recovery-20261028/README.md) matches 660 windows and 159 raw bodies. Boost helper calls, the cashback event key and the buyback source module follow the original evidence. The 660-window count and 159 raw matches are retained with no losses. The repeated build and all 13 standard groups pass; 125 AMM windows remain. Fourteen native-fee cases still differ in raw source-line diagnostics.
 
 Remaining priorities are the 212 Pump, 125 AMM and 3 Mayhem unmatched
 windows; deeper call/data/relocation identity; original build provenance; and

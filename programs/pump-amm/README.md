@@ -1,22 +1,22 @@
 # PumpSwap source reconstruction
 
-The maintained source is the [staged CreatePool initialization checkpoint](../../repro/pump_amm/create-pool-fields-recovery-20261028/README.md),
-candidate `4fb73d3c0303e1f065e6356d32e86ba7341f75b27b861571cd8b8c586e46af98`.
+The maintained source is the [boost, buyback and cashback checkpoint](../../repro/pump_amm/boost-buyback-cashback-recovery-20261028/README.md),
+candidate `01a038ead3614b09af8d9431d3253be2db9efc142ac17ced923d12ab6afe2609`.
 It matches **660/785 normalized windows (84.1%)**, including **159 raw bodies**,
 and covers **831,376/1,162,040 text bytes (71.5%)**. **125 windows remain**;
 whole ELF identity is false. These percentages measure binary coverage, not
 engineering effort completed.
 
-The window count is unchanged. CreatePool field stores and canonical quote-mint policy branches follow the observed original flow; the complete body still differs. The source also preserves the tested incentive and CTO error-order
+The window count is unchanged. Boost helper calls, the cashback event key and the buyback source module now follow the original evidence; complete handler identity remains open. The source also preserves the tested incentive and CTO error-order
 fixes, private-event storage, creator source ownership and borrowed account
 boundaries. All 17,462 core cases and 13 current acceptance groups pass; suite
 counts overlap. The native 216-case replay retains 14 raw source-coordinate log
 differences, with no differences after the declared diagnostic normalization.
 
-Four synthetic canonical Token-2022 CreatePool cases still differ at the default compute budget; the captured original exhausts compute while this checkpoint succeeds. See the [preserved resource-boundary proof](../../repro/pump_amm/create-pool-fields-recovery-20261028/README.md#observed-resource-boundary). Higher-budget agreement does not close default-budget parity.
+Four raw synthetic CreatePool failures arise from different legacy-loader executable-account allocations. The [signed allocation diagnostic](../../repro/pump_amm/boost-buyback-cashback-recovery-20261028/followup/loader-allocation/README.md) records 48 matching paired controls and preserves the raw differences. The 14-unit AMM execution difference, faithful upgradeable-loader replay and broad compute parity remain open.
 
 Two strict offline Linux builds agree. The version 3 source recipe binds
-**56 canonical, 57 workspace and 175 registry inputs**, 232 total. It includes
+**57 canonical, 58 workspace and 175 registry inputs**, 233 total. It includes
 `crates/native-transfer-fee`, a local path dependency. The 762 framework artifacts
 and three native artifacts remain unchanged during both contract builds.
 Historical package provenance, complete code/data/call identity and exhaustive
@@ -27,16 +27,16 @@ Independent analysis recognizes 595 windows within its bounded call/data closure
 From the repository root, verify the saved checkpoint and current source:
 
 ```sh
-python -B repro/pump_amm/create-pool-fields-recovery-20261028/verify_saved.py --current-source
+python -B repro/pump_amm/boost-buyback-cashback-recovery-20261028/verify_saved.py --current-source
 ```
 
 To stage and check a new workspace without changing Rust source, use the current
 version 3 recipe; version 2 predates the native path dependency:
 
 ```sh
-python -B repro/pump_amm/create-pool-fields-recovery-20261028/workspace_recipe_v3.py stage \
+python -B repro/pump_amm/boost-buyback-cashback-recovery-20261028/workspace_recipe_v3.py stage \
   --source-root "$PWD" --output "$PWD/work/amm-current-workspace"
-python -B repro/pump_amm/create-pool-fields-recovery-20261028/workspace_recipe_v3.py verify \
+python -B repro/pump_amm/boost-buyback-cashback-recovery-20261028/workspace_recipe_v3.py verify \
   --source-root "$PWD" --workspace "$PWD/work/amm-current-workspace"
 ```
 

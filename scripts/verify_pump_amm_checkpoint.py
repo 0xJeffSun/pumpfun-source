@@ -9,10 +9,10 @@ import subprocess
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
-CHECKPOINT = 'repro/pump_amm/create-pool-fields-recovery-20261028'
+CHECKPOINT = 'repro/pump_amm/boost-buyback-cashback-recovery-20261028'
 ARTIFACT = CHECKPOINT + '/results/build/candidate.so'
-CANDIDATE = '4fb73d3c0303e1f065e6356d32e86ba7341f75b27b861571cd8b8c586e46af98'
-MANIFEST = 'f837e4d8fbe5e359e9f2df2ae6c0d59abc9c0cf7ca0903aabbafdf15835258c0'
+CANDIDATE = '01a038ead3614b09af8d9431d3253be2db9efc142ac17ced923d12ab6afe2609'
+MANIFEST = '0273de36b4d9386cf015cda32e9d045a10befa451083608a67adc6c2055641c4'
 
 
 def sha(path):
@@ -35,6 +35,13 @@ def verify(root=ROOT, runtime=None):
     results = checkpoint / 'results'
     candidate = root / ARTIFACT
     assert sha(candidate) == CANDIDATE and sha(results / 'manifest.json') == MANIFEST
+    allocation = selected['loader_allocation_control']
+    allocation_root = root / allocation['proof_path']
+    assert sha(allocation_root / 'manifest.json') == allocation['manifest_sha256']
+    allocation_report = module('current_amm_loader_allocation', allocation_root / 'verify.py').verify(allocation_root)
+    assert allocation_report['candidate_sha256'] == CANDIDATE
+    assert allocation_report['equal_allocation_control_cases'] == 48
+    assert allocation_report['equal_allocation_control_mismatches'] == 0
     if runtime is None:
         result = subprocess.run(
             [sys.executable, '-B', str(checkpoint / 'verify_saved.py'), '--current-source'],
@@ -42,7 +49,7 @@ def verify(root=ROOT, runtime=None):
         )
         report = json.loads(result.stdout.strip().splitlines()[-1])
         assert report['current_source_checked'] and report['candidate_sha256'] == CANDIDATE
-        return {'status': 'PASS', 'program': 'pump_amm', **report}
+        return {'status': 'PASS', 'program': 'pump_amm', 'loader_allocation_control': allocation_report, **report}
     entries = json.loads((results / 'manifest.json').read_text())
     assert set(entries) | {'manifest.json'} == {
         str(path.relative_to(results)) for path in results.rglob('*') if path.is_file()
@@ -59,7 +66,7 @@ def verify(root=ROOT, runtime=None):
                                results / 'build/unstripped.so', results / 'dependency-proof', root)
     finally:
         sys.path.pop(0)
-    assert bound['total_compiled_inputs_verified'] == 232 and bound['current_source_verified']
+    assert bound['total_compiled_inputs_verified'] == 233 and bound['current_source_verified']
     dependencies = module('selected_amm_dependencies', results / 'dependency-proof/verify.py')
     assert dependencies.verify(results / 'canonical-source', results / 'build/build-comparison.json')['packages'] == 9
     runtime = Path(runtime).resolve()
@@ -71,7 +78,7 @@ def verify(root=ROOT, runtime=None):
     audit = module('selected_amm_audit', checkpoint / 'compare_direct_cached.py')
     report = audit.audit(runtime, CANDIDATE)
     assert report['cases'] == 17462 and not report['mismatches']
-    return {'status': 'PASS', 'program': 'pump_amm', 'candidate_sha256': CANDIDATE, **report}
+    return {'status': 'PASS', 'program': 'pump_amm', 'candidate_sha256': CANDIDATE, 'loader_allocation_control': allocation_report, **report}
 
 
 if __name__ == '__main__':
