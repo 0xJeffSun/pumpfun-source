@@ -2919,3 +2919,15 @@ The new packet independently passes its verifier and ten tests, including
 interior pointer, a Source-coordinate corruption and filesystem controls. It
 adds no function match, build or runtime execution. Its manifest is
 `f6c21d4d597cd088f115f47c2f394518c31f852df12960d6288f1b71b9773483`.
+
+## PR406: historical overflow-profile provenance
+
+Reviewed exact head `dd8f5ac5d7967d2ea88d7072203fdd37761d3da3`. The full
+parent replay and all 34 tests pass independently. Five actual compiler runs
+retain complete old parent outputs and bind the helper/closure distinction to
+specific LLVM pass dumps. The closure loses a redundant profiled branch in its
+second SimplifyCFG pass; the helper carries its profile through AlwaysInliner.
+This is a bounded explanation of earlier 432-window controls, not a general
+compiler defect, a new complete-function match, or a change to qualified436.
+No new VM execution occurs. The recorded source ambiguity and CRLF parser
+correction remain explicit.
