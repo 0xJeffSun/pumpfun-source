@@ -1543,6 +1543,7 @@ repro/pump_amm/boost-buyback-cashback-recovery-20261028/results/** -whitespace
 repro/pump_amm/boost-buyback-cashback-recovery-20261028/followup/** -whitespace
 
 research/amm-hop-gate-recovery/** -text -whitespace
+research/amm-v2-fee-selector-recovery/** -text -whitespace
 repro/pump_amm/v2-mint-clone-recovery-20261028/results/** -whitespace
 
 repro/pump_amm/v2-mint-clone-recovery-20261028/followup/** -whitespace
