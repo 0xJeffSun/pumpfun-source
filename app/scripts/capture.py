@@ -14,7 +14,7 @@ def capture(url):
         try: r = urllib.request.urlopen(urllib.request.Request(url, headers={'User-Agent': UA}), timeout=35)
         except urllib.error.HTTPError as e: r = e
         body = r.read(); target.parent.mkdir(parents=True, exist_ok=True); target.write_bytes(body)
-        return {'url':url,'final_url':r.url,'status':r.status,'path':str(target.relative_to(ROOT)), 'bytes':len(body),'sha256':hashlib.sha256(body).hexdigest(),'headers':{k.lower():v for k,v in r.headers.items() if k.lower() in HEADERS}}, body
+        return {'url':url,'final_url':r.url,'status':r.status,'path':target.relative_to(ROOT).as_posix(), 'bytes':len(body),'sha256':hashlib.sha256(body).hexdigest(),'headers':{k.lower():v for k,v in r.headers.items() if k.lower() in HEADERS}}, body
     except Exception as e: return {'url':url,'error':str(e)}, b''
 REUSE={}
 def pool(urls):
