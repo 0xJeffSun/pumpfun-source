@@ -51,7 +51,7 @@
     "path": "/holder-rewards",
     "feature": "Holder rewards",
     "scope": "included",
-    "status": "scaffolded",
+    "status": "offline-inspector",
     "behaviorQualified": false,
     "visualQualified": false
   },
