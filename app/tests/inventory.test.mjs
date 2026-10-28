@@ -47,7 +47,7 @@ async function makeWorkspace(t, sources) {
       url: source.url ?? `https://example.invalid/${name}`,
       path: relative,
       status: source.status ?? 200,
-      sha256: source.sha256 ?? `synthetic-${index}`,
+      sha256: source.sha256 ?? digest(source.contents ?? ""),
     });
   }
   await writeFile(
@@ -60,6 +60,42 @@ async function makeWorkspace(t, sources) {
 async function readJson(root, relative) {
   return JSON.parse(await readFile(path.join(root, relative), "utf8"));
 }
+
+async function refreshSourceDigest(root, relative) {
+  const manifest = await readJson(root, "evidence/web/manifest.json");
+  manifest.records.find((record) => record.path === relative).sha256 = digest(
+    await readFile(path.join(root, relative)),
+  );
+  await writeFile(
+    path.join(root, "evidence/web/manifest.json"),
+    JSON.stringify(manifest),
+  );
+}
+
+test("changed captured bytes cannot replace a verified inventory", async (t) => {
+  const root = await makeWorkspace(t, [
+    {
+      contents: bundle([
+        { id: 77, code: 'function value() { return "before"; }' },
+      ]),
+    },
+  ]);
+  await runInventory(root);
+  const before = await snapshot(root);
+  await writeFile(
+    path.join(root, "evidence/web/objects/source-0.js"),
+    bundle([{ id: 77, code: 'function value() { return "after!"; }' }]),
+  );
+  const result = runInventoryCli(root);
+  assert.notEqual(
+    result.status,
+    0,
+    "Accepted changed bytes under the retained capture digest",
+  );
+  assert.match(result.stderr, /SHA-256 mismatch/);
+  assert.deepEqual(await snapshot(root), before);
+  await assertNoStagingDirectories(root);
+});
 
 async function runInventory(root, options = {}) {
   return inventory(root, { log: () => {}, ...options });
@@ -214,6 +250,7 @@ test("failed parsing preserves previous reports and factory files", async (t) =>
   await runInventory(root);
   const before = await snapshot(root);
   await writeFile(path.join(root, relative), "globalThis.TURBOPACK.push([");
+  await refreshSourceDigest(root, relative);
   await assert.rejects(runInventory(root), /Inventory extraction failed/);
   assert.deepEqual(await snapshot(root), before);
   await assertNoStagingDirectories(root);
@@ -228,6 +265,7 @@ test("removes obsolete generator-owned factories after source removal", async (t
   const initial = await factoryFiles(root);
   assert.equal(initial.length, 2);
   await writeFile(path.join(root, relative), bundle([first]));
+  await refreshSourceDigest(root, relative);
   await runInventory(root);
   const current = await factoryFiles(root);
   assert.equal(current.length, 1);
@@ -253,6 +291,7 @@ test("replaces the obsolete hashed file when factory source changes", async (t) 
     path.join(root, relative),
     bundle([{ id: 801, code: 'function changed() { return "v2"; }' }]),
   );
+  await refreshSourceDigest(root, relative);
   await runInventory(root);
   const [newName] = await factoryFiles(root);
   assert.notEqual(newName, oldName);
@@ -370,6 +409,7 @@ test("a formatting failure preserves every previous output", async (t) => {
     path.join(root, relative),
     bundle([{ id: 1401, code: 'function format() { return "after"; }' }]),
   );
+  await refreshSourceDigest(root, relative);
   await assert.rejects(
     runInventory(root, {
       formatFactory: async () => {
@@ -397,6 +437,7 @@ test("a publication failure rolls back every replaced output", async (t) => {
     path.join(root, relative),
     bundle([{ id: 1501, code: 'function publish() { return "after"; }' }]),
   );
+  await refreshSourceDigest(root, relative);
   await assert.rejects(
     runInventory(root, {
       beforePublish: ({ relative: target }) => {

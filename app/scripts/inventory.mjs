@@ -75,7 +75,11 @@ export async function buildInventory(
   for (const record of records) {
     let source;
     try {
-      source = await fs.readFile(containedPath(root, record.path), "utf8");
+      const bytes = await fs.readFile(containedPath(root, record.path));
+      if (createHash("sha256").update(bytes).digest("hex") !== record.sha256) {
+        throw new Error("Captured source SHA-256 mismatch");
+      }
+      source = bytes.toString("utf8");
     } catch (error) {
       throw new Error(
         `Unable to read inventory source ${record.path ?? "<invalid path>"}: ${errorSummary(error)}`,
