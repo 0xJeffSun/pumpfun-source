@@ -54,7 +54,12 @@ for package in lock['package']:
     records.append({'package': name, 'version': version,
                     'archive_sha256': package['checksum'],
                     'index_sha256': sha(indexes[0])})
-config = source / 'index/index.crates.io-1949cf8c6b5b557f/config.json'
+configs = [source / 'index' / namespace / 'config.json'
+           for namespace in reversed(namespaces)
+           if (source / 'index' / namespace / 'config.json').is_file()]
+if not configs:
+    raise RuntimeError('No local crates.io registry configuration')
+config = configs[0]
 for namespace in namespaces:
     shutil.copyfile(config, args.output / 'registry/index' / namespace / 'config.json')
 manifest = {'scope': 'Existing local archives verified against a fixed Cargo.lock; no network download.',
