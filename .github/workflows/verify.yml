@@ -221,6 +221,10 @@ jobs:
             commands: |
               python -B research/claude-mayhem-437-20261028/verify.py
               python -B research/claude-mayhem-437-20261028/test_elf_check.py
+          - suite: mayhem-439-o0077
+            commands: |
+              python -B research/claude-mayhem-439-20261028/verify.py
+              python -B research/claude-mayhem-439-20261028/test_verify.py
           - suite: mayhem-sweep-failures
             commands: |
               python -B research/mayhem-sweep-failure-recovery/verify.py
