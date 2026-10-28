@@ -4,11 +4,242 @@
     "repository": "lalalune/pumpfun-source",
     "base": "2fc654a20e9c7be2b9529f585942bb82c4c83ab2",
     "manifestSha256": "9e0fc00719eb8c919dd4205d3c118eb48c4927e056c77e8343e26d6f7189bbb5",
-    "inventorySha256": "9631271006faa37ea6055a11be4ec1faf971b45e2c7cdb78fc08a6530e777a50"
+    "inventorySelectionSha256": "f0419ffb3774d2c096ccf9eec10d3eb841e11e23d9b8c43ae2c24ea8c8a80910"
   },
   "inventory": {
-    "variants": 4915,
-    "origins": 6108,
+    "selectedEntries": [
+      {
+        "ids": [
+          544865
+        ],
+        "sha256": "1c841d2e784cb6993f5cd95b5971ff4e69f41712fbe9440e88634bd92a09f7e7",
+        "origins": [
+          {
+            "source": "evidence/web/objects/e02656dccdb8d127.js",
+            "url": "https://pump.fun/_next/static/immutable/chunks/3cgqltdrvghmb.js",
+            "start": 15488,
+            "end": 16152
+          }
+        ],
+        "path": "recovered/modules/544865-1c841d2e784c.js"
+      },
+      {
+        "ids": [
+          402030
+        ],
+        "sha256": "26d7d7ced2e06fee3c9354e5ffd9626bcf4f953c8927d3a5ea43d5a45e7064c2",
+        "origins": [
+          {
+            "source": "evidence/web/objects/2b47dd0b38a1608f.js",
+            "url": "https://pump.fun/_next/static/immutable/chunks/2cr_aqnw2j4n5.js",
+            "start": 30128,
+            "end": 36035
+          }
+        ],
+        "path": "recovered/modules/402030-26d7d7ced2e0.js"
+      },
+      {
+        "ids": [
+          379705,
+          998515
+        ],
+        "sha256": "350da5b767415ae168c12050d3627d71039bcc2c0a097572b5319ddbad04d8fe",
+        "origins": [
+          {
+            "source": "evidence/web/objects/767cc801e3f88f8b.js",
+            "url": "https://pump.fun/_next/static/immutable/chunks/3_ebsevlxes66.js",
+            "start": 13313,
+            "end": 21347
+          }
+        ],
+        "path": "recovered/modules/379705-350da5b76741.js"
+      },
+      {
+        "ids": [
+          599565
+        ],
+        "sha256": "375bf1a7298ca40a088210d7036d5422547ed59153f205de430426824b85caaf",
+        "origins": [
+          {
+            "source": "evidence/web/objects/06e532443c8db686.js",
+            "url": "https://pump.fun/_next/static/immutable/chunks/1ez4nhskej4e_.js",
+            "start": 119,
+            "end": 340866
+          }
+        ],
+        "path": "recovered/modules/599565-375bf1a7298c.js"
+      },
+      {
+        "ids": [
+          876543
+        ],
+        "sha256": "4f5e713c7118058961d6d194625b7849fab8bd8cc447f079874947b4559367cc",
+        "origins": [
+          {
+            "source": "evidence/web/objects/2b47dd0b38a1608f.js",
+            "url": "https://pump.fun/_next/static/immutable/chunks/2cr_aqnw2j4n5.js",
+            "start": 493856,
+            "end": 507354
+          }
+        ],
+        "path": "recovered/modules/876543-4f5e713c7118.js"
+      },
+      {
+        "ids": [
+          379705,
+          998515
+        ],
+        "sha256": "642cafc9d2b3c27f2d2d35ea8699a509ded856839fb3d33a8a132333d85c82d6",
+        "origins": [
+          {
+            "source": "evidence/web/objects/dba17a249156c6ff.js",
+            "url": "https://pump.fun/_next/static/immutable/chunks/0uor00k-r5e-k.js",
+            "start": 4547,
+            "end": 12581
+          }
+        ],
+        "path": "recovered/modules/379705-642cafc9d2b3.js"
+      },
+      {
+        "ids": [
+          402734
+        ],
+        "sha256": "7679a980be1346c6fa329dd2104fa9302efe1a9bc7593b15d4d9b3dca049a85f",
+        "origins": [
+          {
+            "source": "evidence/web/objects/2b47dd0b38a1608f.js",
+            "url": "https://pump.fun/_next/static/immutable/chunks/2cr_aqnw2j4n5.js",
+            "start": 358943,
+            "end": 362451
+          }
+        ],
+        "path": "recovered/modules/402734-7679a980be13.js"
+      },
+      {
+        "ids": [
+          898661
+        ],
+        "sha256": "9015e4bad4b1f0bb4b245e446689d9b7e939b3ba922044c82dcd9e8d5f3d9ed5",
+        "origins": [
+          {
+            "source": "evidence/web/objects/2b47dd0b38a1608f.js",
+            "url": "https://pump.fun/_next/static/immutable/chunks/2cr_aqnw2j4n5.js",
+            "start": 393,
+            "end": 3119
+          }
+        ],
+        "path": "recovered/modules/898661-9015e4bad4b1.js"
+      },
+      {
+        "ids": [
+          238128
+        ],
+        "sha256": "9e5affafd605f47d6c9466659c4bc0a654fae027f4beff481337a1cdf1263828",
+        "origins": [
+          {
+            "source": "evidence/web/objects/ccb10fa3de5597c4.js",
+            "url": "https://pump.fun/_next/static/immutable/chunks/1d97gye5pf9_i.js",
+            "start": 119,
+            "end": 52138
+          }
+        ],
+        "path": "recovered/modules/238128-9e5affafd605.js"
+      },
+      {
+        "ids": [
+          400466
+        ],
+        "sha256": "b55e1d78341162edfc6c5ff1ba32c4b4faa3d0ade6de3a39f440fe39f2e9e5dd",
+        "origins": [
+          {
+            "source": "evidence/web/objects/13c13db9eb86191b.js",
+            "url": "https://pump.fun/_next/static/immutable/chunks/1ggmlsuhd8iw1.js",
+            "start": 92522,
+            "end": 190511
+          }
+        ],
+        "path": "recovered/modules/400466-b55e1d783411.js"
+      },
+      {
+        "ids": [
+          598854,
+          408162
+        ],
+        "sha256": "d27320343f07efeb58d5c33b728f3fdb687f68cfdaf361cbb07d80bb4800d1f2",
+        "origins": [
+          {
+            "source": "evidence/web/objects/d50c5c8832449b79.js",
+            "url": "https://pump.fun/_next/static/immutable/chunks/1xcocimg2nwu6.js",
+            "start": 14488,
+            "end": 29370
+          }
+        ],
+        "path": "recovered/modules/598854-d27320343f07.js"
+      },
+      {
+        "ids": [
+          985722
+        ],
+        "sha256": "db8a6d669d7c3a8dedf92a8c926999dd0f530ff88ba2ba6926b7b41b0967d635",
+        "origins": [
+          {
+            "source": "evidence/web/objects/2b47dd0b38a1608f.js",
+            "url": "https://pump.fun/_next/static/immutable/chunks/2cr_aqnw2j4n5.js",
+            "start": 100948,
+            "end": 124759
+          }
+        ],
+        "path": "recovered/modules/985722-db8a6d669d7c.js"
+      },
+      {
+        "ids": [
+          503630
+        ],
+        "sha256": "df5a12d4b76158889dd38a02d0d9afc0d0405065772b589c9cadf9806422d0e7",
+        "origins": [
+          {
+            "source": "evidence/web/objects/1e479323ffe53c14.js",
+            "url": "https://pump.fun/_next/static/immutable/chunks/1iz1f978wp41x.js",
+            "start": 654,
+            "end": 1035
+          }
+        ],
+        "path": "recovered/modules/503630-df5a12d4b761.js"
+      },
+      {
+        "ids": [
+          759257,
+          67734
+        ],
+        "sha256": "e1c207697339004b48f6baa9f81f34e7644686ee424616b553e55b23c659b855",
+        "origins": [
+          {
+            "source": "evidence/web/objects/1e479323ffe53c14.js",
+            "url": "https://pump.fun/_next/static/immutable/chunks/1iz1f978wp41x.js",
+            "start": 144,
+            "end": 646
+          }
+        ],
+        "path": "recovered/modules/759257-e1c207697339.js"
+      },
+      {
+        "ids": [
+          30181,
+          812768,
+          46353
+        ],
+        "sha256": "fbae4e508e6c986c68209d975d3eea247718d478272089a60504b776074e2413",
+        "origins": [
+          {
+            "source": "evidence/web/objects/01ad4f413e529b60.js",
+            "url": "https://pump.fun/_next/static/immutable/chunks/0oz8z5zyovele.js",
+            "start": 11992,
+            "end": 26655
+          }
+        ],
+        "path": "recovered/modules/30181-fbae4e508e6c.js"
+      }
+    ],
     "completeness": "Not claimed. The inventory supplies bounded source references; initial and lazy physical chunks are independently parsed, including leading nested registrations."
   },
   "scope": "Captured shared search loader, client request contract, resolver handling and declared query schemas; original TypeScript and backend implementation remain unknown",
@@ -1162,12 +1393,7 @@
         21351
       ],
       "sha256": "350da5b767415ae168c12050d3627d71039bcc2c0a097572b5319ddbad04d8fe"
-    },
-    "otherIndexedCoinHookVariants": [
-      "3c58de415e19118992ecc37931a72eaf74272cfab0b7c7dc68fd9f4f402abd4d",
-      "629ccc425314ef1e01dd2476266052df9bcb407199598ebba7f8ce9f52adc2d6",
-      "642cafc9d2b3c27f2d2d35ea8699a509ded856839fb3d33a8a132333d85c82d6"
-    ]
+    }
   },
   "factories": [
     {

@@ -9,6 +9,10 @@ The inputs are the preserved public capture introduced on upstream
 `2fc654a20e9c7be2b9529f585942bb82c4c83ab2`. The inventory supplies bounded source
 references; inventory completeness is not claimed. The physical script objects
 are independently parsed, including the runtime's leading nested arrays.
+The contract binds all fifteen complete selected index entries instead of an
+unrelated whole-index hash. [INDEX-COMPATIBILITY.json](INDEX-COMPATIBILITY.json)
+records their exact equality under the maintained 4,915-variant and corrected
+5,947-variant catalogs; the large inventory expansion is a separate contribution.
 Original shipped JavaScript retains
 its original authorship. The descriptive names here are analyst names;
 original TypeScript, source filenames and backend source have not been recovered.
@@ -110,6 +114,10 @@ node --test tests/original_source.test.mjs tests/original_schema.test.mjs tests/
 ```
 
 `--write` regenerates only this contract after an intentional source review.
+`--compare-index /path/to/modules.json` checks all complete selected entries
+against another locally supplied inventory and emits the compact compatibility
+witness. The checked-in witness compared the maintained index with the separate
+nested-recovery contribution at `7b52e2cfb780e246fe98c656122d95be769e17a3`.
 `--check` reauthenticates captures, reparses actual registrations and loader
 structure, reextracts query declarations and compares the complete generated
 document. Formatted `recovered/modules/*.js` files are not read. Retained object

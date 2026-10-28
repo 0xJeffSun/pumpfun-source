@@ -1,7 +1,7 @@
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { openCorpus, findNodes, exactlyOne, member, propertyName, objectProperty, literal } from './original-contracts/source.mjs';
+import { openCorpus, findNodes, exactlyOne, member, propertyName, objectProperty, literal, sha256 } from './original-contracts/source.mjs';
 import { createSchemaExtractor } from './original-contracts/schema.mjs';
 
 export const DEFAULT_APP_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -330,21 +330,25 @@ export async function buildSearchContract(appRoot = DEFAULT_APP_ROOT) {
       } : { input: 'JSON response', furtherHookBehavior: 'coin normalization, chain filtering, stale-response guards and pagination remain outside the small adapter' },
       qualification: 'static captured client contract; no upstream behavior qualification' };
   }
+  const allFactories = [...factories.values(), ...[...physicalHookVariants.values()].filter((candidate) => candidate !== coinHook)];
+  const selectedHashes = new Set([...allFactories.map((factory) => factory.provenance.sha256),
+    ...schemas.witnesses().filter((record) => /^factory \d+$/.test(record.label)).map((record) => record.sha256)]);
+  const selectedEntries = corpus.index.modules.filter((entry) => selectedHashes.has(entry.sha256))
+    .sort((left, right) => left.sha256.localeCompare(right.sha256));
+  expect(selectedEntries.length === selectedHashes.size, 'one complete index entry per selected factory hash');
   return { schemaVersion: 1,
-    source: { repository: 'lalalune/pumpfun-source', base: '2fc654a20e9c7be2b9529f585942bb82c4c83ab2', ...corpus.anchors },
-    inventory: { variants: corpus.index.modules.length,
-      origins: corpus.index.modules.reduce((total, entry) => total + entry.origins.length, 0),
+    source: { repository: 'lalalune/pumpfun-source', base: '2fc654a20e9c7be2b9529f585942bb82c4c83ab2',
+      manifestSha256: corpus.anchors.manifestSha256,
+      inventorySelectionSha256: sha256(JSON.stringify(selectedEntries)) },
+    inventory: { selectedEntries,
       completeness: 'Not claimed. The inventory supplies bounded source references; initial and lazy physical chunks are independently parsed, including leading nested registrations.' },
     scope: 'Captured shared search loader, client request contract, resolver handling and declared query schemas; original TypeScript and backend implementation remain unknown',
     routes,
     loader: { id: loader.id, targetId: decoded.targetId, chunks,
       registrationPolicy: 'The captured global factory map preserves existing IDs and module caches can predate lazy loading. No active registration/cache state is captured.',
       chunkUrlResolution: 'Literal _next-relative chunk names matched to retained authenticated pump.fun asset URLs; runtime global base-path overrides are not executed or qualified',
-      lazyCoinHookCandidate: coinHook.provenance,
-      otherIndexedCoinHookVariants: corpus.index.modules.filter((entry) => entry.ids.includes(379705) &&
-        entry.sha256 !== coinHook.provenance.sha256).map((entry) => entry.sha256).sort() },
-    factories: [...factories.values(), ...[...physicalHookVariants.values()].filter((candidate) => candidate !== coinHook)]
-      .map((factory) => factory.provenance).sort((a, b) => a.id - b.id),
+      lazyCoinHookCandidate: coinHook.provenance },
+    factories: allFactories.map((factory) => factory.provenance).sort((a, b) => a.id - b.id),
     coinRequestContexts,
     operations,
     querySchemas: schemas.document({ type: 'object', properties: querySchemas }),
@@ -362,15 +366,37 @@ export async function verifySearchContract(appRoot = DEFAULT_APP_ROOT) {
   return JSON.parse(actual);
 }
 
+export async function compareSearchInventory(otherPath, appRoot = DEFAULT_APP_ROOT) {
+  const contract = await buildSearchContract(appRoot);
+  const corpus = await openCorpus(appRoot);
+  const otherBytes = await readFile(otherPath);
+  const other = JSON.parse(otherBytes);
+  expect(other.rangeEncoding === corpus.index.rangeEncoding && Array.isArray(other.modules), 'comparable inventory format');
+  const hashes = new Set(contract.inventory.selectedEntries.map((entry) => entry.sha256));
+  const selection = other.modules.filter((entry) => hashes.has(entry.sha256)).sort((a, b) => a.sha256.localeCompare(b.sha256));
+  expect(JSON.stringify(selection) === JSON.stringify(contract.inventory.selectedEntries), 'complete selected index entries differ');
+  return { schemaVersion: 1, equalCompleteSelectedEntries: true, selectedEntries: selection.length,
+    selectionSha256: contract.source.inventorySelectionSha256,
+    maintainedIndex: { sha256: corpus.anchors.inventorySha256, variants: corpus.index.modules.length,
+      origins: corpus.index.modules.reduce((total, entry) => total + entry.origins.length, 0) },
+    comparedIndex: { sha256: sha256(otherBytes), variants: other.modules.length,
+      origins: other.modules.reduce((total, entry) => total + entry.origins.length, 0) },
+    scope: 'Exact complete-entry equality for this bounded selection only; no inventory completeness or runtime selection claim' };
+}
+
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   try {
     const [mode, ...rest] = process.argv.slice(2);
-    if (!['--write', '--check'].includes(mode) || rest.length) throw new Error('usage: node scripts/original-search-contract.mjs --write|--check');
-    if (mode === '--write') {
-      const contract = await buildSearchContract();
-      await mkdir(path.dirname(path.join(DEFAULT_APP_ROOT, CONTRACT_PATH)), { recursive: true });
-      await writeFile(path.join(DEFAULT_APP_ROOT, CONTRACT_PATH), JSON.stringify(contract, null, 2) + '\n');
-    } else await verifySearchContract();
-    console.log(`Original search contract ${mode === '--write' ? 'written' : 'verified'}: 3 GET operations; captured JavaScript was not executed.`);
+    if (mode === '--compare-index' && rest.length === 1) {
+      console.log(JSON.stringify(await compareSearchInventory(rest[0]), null, 2));
+    } else {
+      if (!['--write', '--check'].includes(mode) || rest.length) throw new Error('usage: node scripts/original-search-contract.mjs --write|--check|--compare-index <index.json>');
+      if (mode === '--write') {
+        const contract = await buildSearchContract();
+        await mkdir(path.dirname(path.join(DEFAULT_APP_ROOT, CONTRACT_PATH)), { recursive: true });
+        await writeFile(path.join(DEFAULT_APP_ROOT, CONTRACT_PATH), JSON.stringify(contract, null, 2) + '\n');
+      } else await verifySearchContract();
+      console.log(`Original search contract ${mode === '--write' ? 'written' : 'verified'}: 3 GET operations; captured JavaScript was not executed.`);
+    }
   } catch (error) { console.error(error.message); process.exitCode = 1; }
 }

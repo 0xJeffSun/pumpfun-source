@@ -34,7 +34,7 @@ test('complete bounded search artifact reproduces from original captures without
   assert.equal(contract.loader.chunks.length, 14);
   assert.equal(contract.loader.targetId, 238128);
   assert.equal(contract.loader.lazyCoinHookCandidate.sha256, '350da5b767415ae168c12050d3627d71039bcc2c0a097572b5319ddbad04d8fe');
-  assert.ok(contract.loader.otherIndexedCoinHookVariants.length >= 3);
+  assert.equal(contract.inventory.selectedEntries.length, 15);
   assert.match(contract.inventory.completeness, /Not claimed/);
   const explore = contract.routes.find((route) => route.route === '/explore');
   assert.deepEqual(explore.coinHookCandidates.map((candidate) => candidate.sha256),
@@ -61,6 +61,15 @@ test('capture mutation fails authentication rather than keeping a stale search r
   const file = path.join(root, contract.loader.chunks[0].path);
   await writeFile(file, Buffer.concat([await readFile(file), Buffer.from(' ')]));
   await assert.rejects(verifySearchContract(root), /authentication failed/);
+});
+
+test('unrelated inventory growth does not stale the bounded selected-source contract', async (t) => {
+  const root = await isolatedCorpus(t);
+  const file = path.join(root, 'recovered/modules.json');
+  const index = JSON.parse(await readFile(file, 'utf8'));
+  index.modules.push({ ids: [999999999], sha256: 'f'.repeat(64), path: 'unused-synthetic.js', origins: [] });
+  await writeFile(file, JSON.stringify(index));
+  assert.deepEqual(await verifySearchContract(root), contract);
 });
 
 test('conflicting variants in the explicit loader context are not arbitrarily selected', async (t) => {
