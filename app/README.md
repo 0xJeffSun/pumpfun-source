@@ -71,6 +71,21 @@ says nothing about the current Pump market. See
 [`packages/frontend/EXPLORE-EVIDENCE.md`](packages/frontend/EXPLORE-EVIDENCE.md)
 for the exact provenance and unknowns.
 
+## Offline profiles
+
+`/profile/[id]` resolves the hash-bound synthetic backend users by exact user id
+or wallet address and renders their visible authored root posts. The route keeps
+the synthetic classification visible, uses local avatar/media fallbacks, excludes
+deleted and hidden posts, distinguishes group and banned examples, and leaves
+follow/authenticated actions disabled. Unknown, username-only, and malformed
+identifiers return the application's 404 boundary.
+
+This is not live profile compatibility or proof of wallet ownership. No native
+profile API, follow graph, authenticated viewer state, remote image, or social
+mutation is used. See
+[`packages/frontend/PROFILE-EVIDENCE.md`](packages/frontend/PROFILE-EVIDENCE.md)
+for source provenance and the local-data contract.
+
 ## Refresh / inspect
 
 ```sh
