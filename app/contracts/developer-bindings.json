@@ -1,0 +1,491 @@
+{
+  "schemaVersion": 1,
+  "asOf": "2026-10-28",
+  "notice": "Offline contract bindings for documented developer API operations. Contract-bound means the OpenAPI operation, its scope and keyed error codes agree with a captured publicRead route-contract literal. It is not native implementation, compatibility qualification, origin binding of website calls, or feature-milestone credit. No network request was made.",
+  "offsetUnit": "UTF-16 code units in UTF-8-decoded source, matching internal-operations.json; ranges cover the quoted operation literal through the quoted scope argument",
+  "specVersion": "0.294.0",
+  "boundScopes": [
+    "leaderboards.read"
+  ],
+  "bindings": [
+    {
+      "operation": "GET /competitions",
+      "operationId": "get_competitions",
+      "scope": "leaderboards.read",
+      "origin": {
+        "declared": "https://api.pump.fun/v1",
+        "declaredBy": "contracts/developer.openapi.json#/servers/0",
+        "websiteCallOrigin": "unresolved"
+      },
+      "auth": {
+        "declared": "bearer",
+        "declaredBy": "contracts/developer.openapi.json#/components/securitySchemes/bearer",
+        "keyedErrorCodesMatchCapturedContract": true
+      },
+      "feature": "leaderboard",
+      "productScope": "included",
+      "evidence": {
+        "spec": "contracts/developer.openapi.json#/paths/~1competitions/get",
+        "contract": {
+          "source": "evidence/web/objects/2b47dd0b38a1608f.js",
+          "sha256": "e78d2f38b06f971847c18dd05457c75afc85208135f50d6e4022a5f197e8839d",
+          "start": 135999,
+          "end": 136055
+        },
+        "clientCallSites": [
+          {
+            "source": "evidence/web/objects/13c13db9eb86191b.js",
+            "start": 40747,
+            "end": 40766
+          },
+          {
+            "source": "evidence/web/objects/c3601a995a6b7f37.js",
+            "start": 22447,
+            "end": 22466
+          }
+        ]
+      },
+      "status": "contract-bound",
+      "implemented": false,
+      "qualified": false
+    },
+    {
+      "operation": "GET /competitions/{idOrSlug}",
+      "operationId": "get_competitions_by_idOrSlug",
+      "scope": "leaderboards.read",
+      "origin": {
+        "declared": "https://api.pump.fun/v1",
+        "declaredBy": "contracts/developer.openapi.json#/servers/0",
+        "websiteCallOrigin": "unresolved"
+      },
+      "auth": {
+        "declared": "bearer",
+        "declaredBy": "contracts/developer.openapi.json#/components/securitySchemes/bearer",
+        "keyedErrorCodesMatchCapturedContract": true
+      },
+      "feature": "leaderboard",
+      "productScope": "included",
+      "evidence": {
+        "spec": "contracts/developer.openapi.json#/paths/~1competitions~1{idOrSlug}/get",
+        "contract": {
+          "source": "evidence/web/objects/2b47dd0b38a1608f.js",
+          "sha256": "e78d2f38b06f971847c18dd05457c75afc85208135f50d6e4022a5f197e8839d",
+          "start": 137186,
+          "end": 137253
+        },
+        "clientCallSites": [
+          {
+            "source": "evidence/web/objects/13c13db9eb86191b.js",
+            "start": 41187,
+            "end": 41217
+          },
+          {
+            "source": "evidence/web/objects/c3601a995a6b7f37.js",
+            "start": 19742,
+            "end": 19772
+          }
+        ]
+      },
+      "status": "contract-bound",
+      "implemented": false,
+      "qualified": false
+    },
+    {
+      "operation": "GET /competitions/{id}/entries/{entryId}",
+      "operationId": "get_competitions_by_id_entries_by_entryId",
+      "scope": "leaderboards.read",
+      "origin": {
+        "declared": "https://api.pump.fun/v1",
+        "declaredBy": "contracts/developer.openapi.json#/servers/0",
+        "websiteCallOrigin": "unresolved"
+      },
+      "auth": {
+        "declared": "bearer",
+        "declaredBy": "contracts/developer.openapi.json#/components/securitySchemes/bearer",
+        "keyedErrorCodesMatchCapturedContract": true
+      },
+      "feature": "leaderboard",
+      "productScope": "included",
+      "evidence": {
+        "spec": "contracts/developer.openapi.json#/paths/~1competitions~1{id}~1entries~1{entryId}/get",
+        "contract": {
+          "source": "evidence/web/objects/2b47dd0b38a1608f.js",
+          "sha256": "e78d2f38b06f971847c18dd05457c75afc85208135f50d6e4022a5f197e8839d",
+          "start": 140320,
+          "end": 140399
+        },
+        "clientCallSites": [
+          {
+            "source": "evidence/web/objects/2fe17dced92b840b.js",
+            "start": 40099,
+            "end": 40141
+          }
+        ]
+      },
+      "status": "contract-bound",
+      "implemented": false,
+      "qualified": false
+    },
+    {
+      "operation": "GET /competitions/{id}/entries/{entryId}/highlights",
+      "operationId": "get_competitions_by_id_entries_by_entryId_highlights",
+      "scope": "leaderboards.read",
+      "origin": {
+        "declared": "https://api.pump.fun/v1",
+        "declaredBy": "contracts/developer.openapi.json#/servers/0",
+        "websiteCallOrigin": "unresolved"
+      },
+      "auth": {
+        "declared": "bearer",
+        "declaredBy": "contracts/developer.openapi.json#/components/securitySchemes/bearer",
+        "keyedErrorCodesMatchCapturedContract": true
+      },
+      "feature": "leaderboard",
+      "productScope": "included",
+      "evidence": {
+        "spec": "contracts/developer.openapi.json#/paths/~1competitions~1{id}~1entries~1{entryId}~1highlights/get",
+        "contract": {
+          "source": "evidence/web/objects/2b47dd0b38a1608f.js",
+          "sha256": "e78d2f38b06f971847c18dd05457c75afc85208135f50d6e4022a5f197e8839d",
+          "start": 140774,
+          "end": 140864
+        },
+        "clientCallSites": [
+          {
+            "source": "evidence/web/objects/2fe17dced92b840b.js",
+            "start": 35255,
+            "end": 35308
+          }
+        ]
+      },
+      "status": "contract-bound",
+      "implemented": false,
+      "qualified": false
+    },
+    {
+      "operation": "GET /competitions/{id}/highlights",
+      "operationId": "get_competitions_by_id_highlights",
+      "scope": "leaderboards.read",
+      "origin": {
+        "declared": "https://api.pump.fun/v1",
+        "declaredBy": "contracts/developer.openapi.json#/servers/0",
+        "websiteCallOrigin": "unresolved"
+      },
+      "auth": {
+        "declared": "bearer",
+        "declaredBy": "contracts/developer.openapi.json#/components/securitySchemes/bearer",
+        "keyedErrorCodesMatchCapturedContract": true
+      },
+      "feature": "leaderboard",
+      "productScope": "included",
+      "evidence": {
+        "spec": "contracts/developer.openapi.json#/paths/~1competitions~1{id}~1highlights/get",
+        "contract": {
+          "source": "evidence/web/objects/2b47dd0b38a1608f.js",
+          "sha256": "e78d2f38b06f971847c18dd05457c75afc85208135f50d6e4022a5f197e8839d",
+          "start": 143302,
+          "end": 143374
+        },
+        "clientCallSites": []
+      },
+      "status": "contract-bound",
+      "implemented": false,
+      "qualified": false
+    },
+    {
+      "operation": "GET /mayhem/{mint}/top-traders",
+      "operationId": "get_mayhem_by_mint_top_traders",
+      "scope": "leaderboards.read",
+      "origin": {
+        "declared": "https://api.pump.fun/v1",
+        "declaredBy": "contracts/developer.openapi.json#/servers/0",
+        "websiteCallOrigin": "unresolved"
+      },
+      "auth": {
+        "declared": "bearer",
+        "declaredBy": "contracts/developer.openapi.json#/components/securitySchemes/bearer",
+        "keyedErrorCodesMatchCapturedContract": true
+      },
+      "feature": "leaderboard",
+      "productScope": "included",
+      "evidence": {
+        "spec": "contracts/developer.openapi.json#/paths/~1mayhem~1{mint}~1top-traders/get",
+        "contract": {
+          "source": "evidence/web/objects/2b47dd0b38a1608f.js",
+          "sha256": "e78d2f38b06f971847c18dd05457c75afc85208135f50d6e4022a5f197e8839d",
+          "start": 266655,
+          "end": 266724
+        },
+        "clientCallSites": []
+      },
+      "status": "contract-bound",
+      "implemented": false,
+      "qualified": false
+    },
+    {
+      "operation": "GET /payouts/leaderboard",
+      "operationId": "get_payouts_leaderboard",
+      "scope": "leaderboards.read",
+      "origin": {
+        "declared": "https://api.pump.fun/v1",
+        "declaredBy": "contracts/developer.openapi.json#/servers/0",
+        "websiteCallOrigin": "unresolved"
+      },
+      "auth": {
+        "declared": "bearer",
+        "declaredBy": "contracts/developer.openapi.json#/components/securitySchemes/bearer",
+        "keyedErrorCodesMatchCapturedContract": true
+      },
+      "feature": "leaderboard",
+      "productScope": "included",
+      "evidence": {
+        "spec": "contracts/developer.openapi.json#/paths/~1payouts~1leaderboard/get",
+        "contract": {
+          "source": "evidence/web/objects/2b47dd0b38a1608f.js",
+          "sha256": "e78d2f38b06f971847c18dd05457c75afc85208135f50d6e4022a5f197e8839d",
+          "start": 299228,
+          "end": 299291
+        },
+        "clientCallSites": [
+          {
+            "source": "evidence/web/objects/57cc59637a8b8f78.js",
+            "start": 32999,
+            "end": 33025
+          },
+          {
+            "source": "evidence/web/objects/bbad3cca63bc2aa5.js",
+            "start": 25641,
+            "end": 25667
+          },
+          {
+            "source": "evidence/web/objects/dd1b7e2a0ecbaed0.js",
+            "start": 32989,
+            "end": 33015
+          }
+        ]
+      },
+      "status": "contract-bound",
+      "implemented": false,
+      "qualified": false
+    },
+    {
+      "operation": "GET /pnl-leaderboard",
+      "operationId": "get_pnl_leaderboard",
+      "scope": "leaderboards.read",
+      "origin": {
+        "declared": "https://api.pump.fun/v1",
+        "declaredBy": "contracts/developer.openapi.json#/servers/0",
+        "websiteCallOrigin": "unresolved"
+      },
+      "auth": {
+        "declared": "bearer",
+        "declaredBy": "contracts/developer.openapi.json#/components/securitySchemes/bearer",
+        "keyedErrorCodesMatchCapturedContract": true
+      },
+      "feature": "leaderboard",
+      "productScope": "included",
+      "evidence": {
+        "spec": "contracts/developer.openapi.json#/paths/~1pnl-leaderboard/get",
+        "contract": {
+          "source": "evidence/web/objects/2b47dd0b38a1608f.js",
+          "sha256": "e78d2f38b06f971847c18dd05457c75afc85208135f50d6e4022a5f197e8839d",
+          "start": 308670,
+          "end": 308729
+        },
+        "clientCallSites": [
+          {
+            "source": "evidence/web/objects/4fd6e792e7a336d9.js",
+            "start": 15969,
+            "end": 15991
+          },
+          {
+            "source": "evidence/web/objects/ccb10fa3de5597c4.js",
+            "start": 15659,
+            "end": 15681
+          }
+        ]
+      },
+      "status": "contract-bound",
+      "implemented": false,
+      "qualified": false
+    },
+    {
+      "operation": "GET /pnl-leaderboard/groups",
+      "operationId": "get_pnl_leaderboard_groups",
+      "scope": "leaderboards.read",
+      "origin": {
+        "declared": "https://api.pump.fun/v1",
+        "declaredBy": "contracts/developer.openapi.json#/servers/0",
+        "websiteCallOrigin": "unresolved"
+      },
+      "auth": {
+        "declared": "bearer",
+        "declaredBy": "contracts/developer.openapi.json#/components/securitySchemes/bearer",
+        "keyedErrorCodesMatchCapturedContract": true
+      },
+      "feature": "leaderboard",
+      "productScope": "included",
+      "evidence": {
+        "spec": "contracts/developer.openapi.json#/paths/~1pnl-leaderboard~1groups/get",
+        "contract": {
+          "source": "evidence/web/objects/2b47dd0b38a1608f.js",
+          "sha256": "e78d2f38b06f971847c18dd05457c75afc85208135f50d6e4022a5f197e8839d",
+          "start": 309590,
+          "end": 309656
+        },
+        "clientCallSites": [
+          {
+            "source": "evidence/web/objects/767cc801e3f88f8b.js",
+            "start": 30252,
+            "end": 30281
+          },
+          {
+            "source": "evidence/web/objects/767cc801e3f88f8b.js",
+            "start": 31239,
+            "end": 31268
+          },
+          {
+            "source": "evidence/web/objects/9535b69d76e2a69b.js",
+            "start": 59533,
+            "end": 59562
+          },
+          {
+            "source": "evidence/web/objects/9535b69d76e2a69b.js",
+            "start": 60520,
+            "end": 60549
+          },
+          {
+            "source": "evidence/web/objects/c3601a995a6b7f37.js",
+            "start": 35423,
+            "end": 35452
+          },
+          {
+            "source": "evidence/web/objects/c3601a995a6b7f37.js",
+            "start": 36410,
+            "end": 36439
+          },
+          {
+            "source": "evidence/web/objects/ea5d7a76f15713d7.js",
+            "start": 3704,
+            "end": 3733
+          },
+          {
+            "source": "evidence/web/objects/ea5d7a76f15713d7.js",
+            "start": 4691,
+            "end": 4720
+          },
+          {
+            "source": "evidence/web/objects/ecf7ec803bfb3020.js",
+            "start": 39661,
+            "end": 39690
+          },
+          {
+            "source": "evidence/web/objects/ecf7ec803bfb3020.js",
+            "start": 40648,
+            "end": 40677
+          }
+        ]
+      },
+      "status": "contract-bound",
+      "implemented": false,
+      "qualified": false
+    },
+    {
+      "operation": "GET /pnl-leaderboard/positions",
+      "operationId": "get_pnl_leaderboard_positions",
+      "scope": "leaderboards.read",
+      "origin": {
+        "declared": "https://api.pump.fun/v1",
+        "declaredBy": "contracts/developer.openapi.json#/servers/0",
+        "websiteCallOrigin": "unresolved"
+      },
+      "auth": {
+        "declared": "bearer",
+        "declaredBy": "contracts/developer.openapi.json#/components/securitySchemes/bearer",
+        "keyedErrorCodesMatchCapturedContract": true
+      },
+      "feature": "leaderboard",
+      "productScope": "included",
+      "evidence": {
+        "spec": "contracts/developer.openapi.json#/paths/~1pnl-leaderboard~1positions/get",
+        "contract": {
+          "source": "evidence/web/objects/2b47dd0b38a1608f.js",
+          "sha256": "e78d2f38b06f971847c18dd05457c75afc85208135f50d6e4022a5f197e8839d",
+          "start": 311462,
+          "end": 311531
+        },
+        "clientCallSites": [
+          {
+            "source": "evidence/web/objects/3740fc4e7a24596d.js",
+            "start": 8429,
+            "end": 8461
+          },
+          {
+            "source": "evidence/web/objects/cf2bb278631744da.js",
+            "start": 8429,
+            "end": 8461
+          }
+        ]
+      },
+      "status": "contract-bound",
+      "implemented": false,
+      "qualified": false
+    },
+    {
+      "operation": "GET /pnl-leaderboard/top-trader-trades/{mint}",
+      "operationId": "get_pnl_leaderboard_top_trader_trades_by_mint",
+      "scope": "leaderboards.read",
+      "origin": {
+        "declared": "https://api.pump.fun/v1",
+        "declaredBy": "contracts/developer.openapi.json#/servers/0",
+        "websiteCallOrigin": "unresolved"
+      },
+      "auth": {
+        "declared": "bearer",
+        "declaredBy": "contracts/developer.openapi.json#/components/securitySchemes/bearer",
+        "keyedErrorCodesMatchCapturedContract": true
+      },
+      "feature": "leaderboard",
+      "productScope": "included",
+      "evidence": {
+        "spec": "contracts/developer.openapi.json#/paths/~1pnl-leaderboard~1top-trader-trades~1{mint}/get",
+        "contract": {
+          "source": "evidence/web/objects/2b47dd0b38a1608f.js",
+          "sha256": "e78d2f38b06f971847c18dd05457c75afc85208135f50d6e4022a5f197e8839d",
+          "start": 312224,
+          "end": 312308
+        },
+        "clientCallSites": [
+          {
+            "source": "evidence/web/objects/020facfab961bf67.js",
+            "start": 18907,
+            "end": 18954
+          }
+        ]
+      },
+      "status": "contract-bound",
+      "implemented": false,
+      "qualified": false
+    }
+  ],
+  "observedNotDeclared": [
+    {
+      "operation": "GET /competitions/{id}/entries/{entryId}/positions",
+      "scope": "leaderboards.read",
+      "declaredInSpec": false,
+      "evidence": {
+        "contract": {
+          "source": "evidence/web/objects/2b47dd0b38a1608f.js",
+          "sha256": "e78d2f38b06f971847c18dd05457c75afc85208135f50d6e4022a5f197e8839d",
+          "start": 141640,
+          "end": 141729
+        },
+        "clientCallSites": []
+      },
+      "status": "observed-not-declared",
+      "countedInDeveloperDenominator": false,
+      "implemented": false,
+      "qualified": false
+    }
+  ]
+}

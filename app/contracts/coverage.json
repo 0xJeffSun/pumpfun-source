@@ -4,7 +4,9 @@
   "developerApi": {
     "documentedOperations": 67,
     "implementedNatively": 0,
-    "qualified": 0
+    "qualified": 0,
+    "contractBound": 11,
+    "bindings": "developer-bindings.json"
   },
   "internalApi": {
     "staticCandidateOperations": 330,
