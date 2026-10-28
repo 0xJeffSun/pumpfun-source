@@ -9,6 +9,14 @@ directly (others run as libraries of those steps or by hand). The non-Python fil
 
 ## Conventions
 
+The main Pump builder also accepts `--target sbpf-solana-solana` for an uncached
+build with an installed native SDK. The default remains `sbf-solana-solana`.
+An explicit target must agree with a selected target-library profile. Native
+SBPF builds without a profile cannot use the dependency cache. Build receipts
+record the selected target and its library hashes, and verify those libraries
+remain unchanged through compilation.
+
+
 - Run from the repository root with Python 3.12. Differential and Surfpool scripts
   need the pinned packages in `requirements.txt` (`solders==0.27.1`).
 - Differentials take `--candidate <program.so>` and `--output <file.json[.gz]>`, load
