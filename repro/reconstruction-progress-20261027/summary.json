@@ -11,18 +11,18 @@
     },
     {
       "name": "pump_amm",
-      "matched_windows": 651,
+      "matched_windows": 653,
       "windows": 785,
       "raw_bodies": 148,
-      "matched_text_bytes": 816800,
+      "matched_text_bytes": 818944,
       "text_bytes": 1162040
     },
     {
       "name": "fees_research",
-      "matched_windows": 582,
+      "matched_windows": 585,
       "windows": 585,
-      "raw_bodies": 200,
-      "matched_text_bytes": 762912,
+      "raw_bodies": 585,
+      "matched_text_bytes": 799648,
       "text_bytes": 799648
     },
     {
@@ -43,18 +43,18 @@
     }
   ],
   "totals": {
-    "matched_windows": 2901,
+    "matched_windows": 2906,
     "windows": 3338,
-    "raw_bodies": 1115,
-    "matched_text_bytes": 3855184,
+    "raw_bodies": 1500,
+    "matched_text_bytes": 3894064,
     "text_bytes": 5213128,
-    "complete_elf_programs": 1,
+    "complete_elf_programs": 2,
     "programs": 5
   },
   "snapshot_date": "2026-10-27",
   "limitations": [
     "Structural window coverage is not overall engineering task completion.",
     "Fees and Mayhem are research frontiers; Pump and AMM are current-source checkpoints.",
-    "One of five complete meaningful ELFs matches; source/build provenance remains partial."
+    "2 of five complete meaningful ELFs match; source/build provenance remains partial."
   ]
 }

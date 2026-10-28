@@ -25,7 +25,7 @@ mod trade;
 mod create;
 pub use instructions::{boost, swap::trade_v2};
 mod boost_burn;
-mod sweep;
+pub use instructions::sweep_fees as sweep;
 mod extend;
 mod collect;
 mod transfer_creator;

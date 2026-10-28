@@ -85,7 +85,7 @@ pub fn execute(ctx: Context<BoostBuyAndBurn>, requested: u64, minimum: u64) -> R
         base_supply: if a.pool.is_mayhem_mode {1_000_000_000_000_000} else {a.base_mint.supply},
         holder_rewards_bps: 0, holder_rewards: 0, creator_fee_unclaimed: a.pool.creator_fees, quote_transfer_fee: transfer_fee,
     };
-    emit!(event.clone()); emit_cpi!(event);
+    emit!(event); emit_cpi!(event);
     let a = &mut *ctx.accounts;
     let event = BoostBuyAndBurnEvent {
         timestamp, mint: a.base_mint.key(), bonding_curve: crate::utils::bonding_curve(&a.base_mint.key()),
@@ -93,7 +93,7 @@ pub fn execute(ctx: Context<BoostBuyAndBurn>, requested: u64, minimum: u64) -> R
         base_amount_burned: burned, virtual_quote_reserves: a.pool.virtual_quote_reserves,
         real_quote_reserves_after: a.pool_quote_token_account.amount, base_reserves_after: a.pool_base_token_account.amount, boost_vault_remaining: a.boost_vault.amount,
     };
-    emit!(event.clone()); emit_cpi!(event);
+    emit!(event); emit_cpi!(event);
     let a = &mut *ctx.accounts;
     if a.boost_vault.amount == 0 {
         if has_fee {

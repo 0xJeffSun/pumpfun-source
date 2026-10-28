@@ -73,6 +73,6 @@ pub fn admin_cto(ctx:Context<AdminCtoPool>,coin_creator:Pubkey,is_holder_reward:
  let old_coin_creator=pool.coin_creator;let old_creator_fee_bps=pool.creator_fee_bps;
  pool.coin_creator=coin_creator;pool.is_holder_reward=is_holder_reward;pool.is_cashback_coin=is_cashback_coin;pool.can_edit_creator_fee=false;
  if let Some(fee)=creator_fee_bps{pool.creator_fee_bps=fee;}
- let event=AdminCtoPoolEvent{timestamp:Clock::get()?.unix_timestamp,base_mint:pool.base_mint,pool:pool.key(),old_coin_creator,new_coin_creator:coin_creator,is_holder_reward,is_cashback_coin:pool.is_cashback_coin,old_creator_fee_bps,new_creator_fee_bps:pool.creator_fee_bps};emit!(event.clone());emit_cpi!(event);Ok(())
+ let event=AdminCtoPoolEvent{timestamp:Clock::get()?.unix_timestamp,base_mint:pool.base_mint,pool:pool.key(),old_coin_creator,new_coin_creator:coin_creator,is_holder_reward,is_cashback_coin:pool.is_cashback_coin,old_creator_fee_bps,new_creator_fee_bps:pool.creator_fee_bps};emit!(event);emit_cpi!(event);Ok(())
 }
 #[event]#[derive(Clone)]pub struct AdminCtoPoolEvent{pub timestamp:i64,pub base_mint:Pubkey,pub pool:Pubkey,pub old_coin_creator:Pubkey,pub new_coin_creator:Pubkey,pub is_holder_reward:bool,pub is_cashback_coin:bool,pub old_creator_fee_bps:u64,pub new_creator_fee_bps:u64}

@@ -175,7 +175,7 @@ pub fn execute(
         can_edit_creator_fee: can_edit,
         is_holder_reward: a.pool.is_holder_reward,
     };
-    emit!(event.clone());
+    emit!(event);
     emit_cpi!(event);
     Ok(())
 }

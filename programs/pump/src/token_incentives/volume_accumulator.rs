@@ -173,10 +173,6 @@ pub fn update_schedule(
         }
     }
     if token_supply_per_day > 0 {
-        require!(
-            timestamp <= accumulator.end_time,
-            PumpError::SupplyUpdateForFinishedRange
-        );
         // The capture has separate supply paths before and after start_time.
         // Keep the zero-day path explicit: each path calls the shared end-day
         // worker and owns its own range-validation/assignment blocks.
@@ -191,6 +187,10 @@ pub fn update_schedule(
                 }
             }
         } else {
+            require!(
+                timestamp <= accumulator.end_time,
+                PumpError::SupplyUpdateForFinishedRange
+            );
             let current = current_day(accumulator, timestamp);
             let end = end_day(accumulator);
             if day_number < 30 {

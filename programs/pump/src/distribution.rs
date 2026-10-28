@@ -15,8 +15,7 @@ impl AccountDeserialize for DistributionCurve{
   let quote_mint=if buf.len()>=115{Pubkey::new_from_array(buf[83..115].try_into().unwrap())}else{Pubkey::default()};Ok(Self{creator,quote_mint})
  }
 }
-#[event]
-#[derive(Clone)]pub struct DistributeCreatorFeesEvent{pub timestamp:i64,pub mint:Pubkey,pub bonding_curve:Pubkey,pub sharing_config:Pubkey,pub admin:Pubkey,pub shareholders:Vec<Shareholder>,pub distributed:u64,pub quote_mint:Pubkey}
+pub use native_distribution::DistributeCreatorFeesEvent;
 #[derive(Accounts)]
 pub struct DistributeCreatorFees<'info>{
  pub mint:InterfaceAccount<'info,anchor_spl::token_interface::Mint>,
@@ -35,8 +34,7 @@ pub fn execute<'info>(ctx:Context<'_, '_, '_, 'info,DistributeCreatorFees<'info>
  let rent=Rent::get()?;
  let (transfers,minimum_distributable,_,available)=get_distribution_amounts(&rent,&a.sharing_config.shareholders,ctx.remaining_accounts,&a.creator_vault)?;
  let eligible=available>=minimum_distributable;let mut distributed=0u64;
- let bump=[ctx.bumps.creator_vault];let seeds:&[&[u8]]=&[b"creator-vault",a.bonding_curve.creator.as_ref(),&bump];
- if eligible{distributed=crate::distribution::execute_native_distribution(transfers,ctx.remaining_accounts,&a.creator_vault,&a.system_program,seeds)?;}
+ if eligible{distributed=crate::distribution::execute_native_distribution(&a.sharing_config,&a.creator_vault,&a.system_program,ctx.remaining_accounts,&transfers,ctx.bumps.creator_vault)?;}
  let event=DistributeCreatorFeesEvent{timestamp:Clock::get()?.unix_timestamp,mint:a.mint.key(),bonding_curve:a.bonding_curve.key(),sharing_config:a.sharing_config.key(),admin:a.sharing_config.admin,shareholders:a.sharing_config.shareholders.clone(),distributed,quote_mint:Pubkey::default()};if eligible{emit!(event.clone());emit_cpi!(event.clone());}Ok(event)
 }
 
@@ -61,17 +59,9 @@ pub struct DistributeCreatorFeesV2<'info>{
 }
 
 
-fn execute_native_distribution<'info>(
- transfers:Vec<(u64,u64)>,recipients:&[AccountInfo<'info>],creator_vault:&AccountInfo<'info>,
- system_program:&Program<'info,System>,seeds:&[&[u8]],
-)->Result<u64>{
- let mut distributed=0u64;
- for ((amount,_),recipient) in transfers.into_iter().zip(recipients){
-  crate::collect_v2::transfer_native(system_program.as_ref(),creator_vault,recipient,amount,&[seeds])?;
-  distributed=distributed.checked_add(amount).ok_or(error!(PumpError::Overflow))?;
- }
- Ok(distributed)
-}
+#[path="creator/distribute_creator_fees.rs"]
+mod native_distribution;
+pub(crate) use native_distribution::execute_native_distribution;
 
 pub(crate) fn get_distribution_amounts<'info>(rent:&Rent,shares:&[Shareholder],recipients:&[AccountInfo<'info>],creator_vault:&AccountInfo<'info>)->Result<(Vec<(u64,u64)>,u64,u64,u64)>{
  let reserve=rent.minimum_balance(0);

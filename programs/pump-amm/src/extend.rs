@@ -48,7 +48,7 @@ pub fn execute(ctx: Context<ExtendAccount>) -> Result<()> {
         current_size: current as u64,
         new_size: size as u64,
     };
-    emit!(event.clone());
+    emit!(event);
     emit_cpi!(event);
     Ok(())
 }

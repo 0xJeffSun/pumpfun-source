@@ -52,20 +52,20 @@ analysis. Candidate symbol names are hypotheses about original identity.
 | Mayhem historical selected | 441 | 58 | 131 | 7 | 245 |
 | Relay historical source 15 | 492 | 33 | 89 | 370 | 0 |
 | **Pump current Round37** | **1,035** | **175** | **569** | **291** | **0** |
-| **PumpSwap current** | **785** | **148** | **503** | **134** | **0** |
+| **PumpSwap current** | **785** | **148** | **505** | **132** | **0** |
 | **Fees latest research** | **585** | **585** | **0** | **0** | **0** |
 | **Mayhem latest research** | **441** | **141** | **291** | **9** | **0** |
 | **Relay canonical selection** | **492** | **492** | **0** | **0** | **0** |
 
-The current rows are bound to [Pump Round37](../repro/pump/main-contract-round37-20261027/README.md), [AMM optional-context recovery](../repro/pump_amm/optional-context-recovery-20261027/README.md), [exact Fees research](../research/claude-fees100-crank-donation-20261027/README.md) and [Mayhem source-origin composition](../research/mayhem-source-origin-recovery-20261027/README.md); they extend the dated generated inventory below. Each row is a partition, not a score of semantic correctness. The historical selected Mayhem source
+The current rows are bound to [Pump Round38](../repro/pump/main-contract-round38-20261027/README.md), [AMM event-ownership recovery](../repro/pump_amm/event-ownership-recovery-20261027/README.md), [exact Fees research](../research/claude-fees100-crank-donation-20261027/README.md) and [Mayhem source-origin composition](../research/mayhem-source-origin-recovery-20261027/README.md); they extend the dated generated inventory below. Each row is a partition, not a score of semantic correctness. The historical selected Mayhem source
 ledger has 257 opaque windows, 12 of which happen to match local raw bytes.
 Selected Fees retains two call-conflicting rows; body existence does not resolve
 those conflicts. Different programs and studies use different matching rules.
 
-Across these five frontier rows, **2,904/3,338 windows (87.0%)** match and
-**3,891,920/5,213,128 original text bytes (74.7%)** lie in matched windows.
-There are **434 unmatched windows**. Fees and Relay have complete meaningful-ELF
-identity; three core programs remain byte-unequal. These are structural
+Across these five frontier rows, **2,906/3,338 windows (87.1%)** match and
+**3,894,064/5,213,128 original text bytes (74.7%)** lie in matched windows.
+There are **432 unmatched windows**. Fees research and Relay have complete meaningful-ELF
+identity; Pump, AMM and Mayhem remain byte-unequal. These are structural
 coverage measures, not a percentage of engineering work completed.
 
 The [current Mayhem macro composition](../research/mayhem-current-macro-call-closure-20261027/README.md)
@@ -85,8 +85,8 @@ shapes and direct-call targets. Matching Source observations rise from 456 to
 pairs pass; all 14,042 signed records are independently checked. No additional
 complete function or whole-ELF identity is claimed.
 
-Current AMM matched windows cover **816,800 of 1,162,040 original text bytes
-(70.3%)**. Its 651 normalized matches include the 148 raw-local matches; complete
+Current AMM matched windows cover **818,944 of 1,162,040 original text bytes
+(70.5%)**. Its 653 normalized matches include the 148 raw-local matches; complete
 ELF identity remains false.
 
 Mayhem also has a newer 434/441 structural source recovery with only 100 raw
