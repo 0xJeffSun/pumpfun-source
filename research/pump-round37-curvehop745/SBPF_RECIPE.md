@@ -43,3 +43,7 @@ Select `--stage nextfronts804`; retain the ordinary SBPF environment, SDK, depen
 ## Optional chain805 source
 
 Select `--stage chain805`; keep the existing ordinary SBPF SDK, dependencies, flags and library pins. Post-build comparison hashes are candidate SHA256 `c2bf96ee097a3ea69a90fedfc3ac43be095939161846731f1fc834020a28094a` and symbols SHA256 `c3288264bfda5db1a01947cc4e48246e7e9ba98e302b08214787827e5d5b8eeb`. A separate same-source root compilation reproduced both complete generated files. These hashes are comparison-only, never compiler inputs or output-repair instructions. Preserve prior source stages and explicitly verify historical caches as archived. See [CHAIN805.md](CHAIN805.md) for the inferred source ownership and bounded caller proof. No runtime or held fixture execution is included.
+
+## Optional feeconfig806 source
+
+Select `--stage feeconfig806`; retain the same ordinary SBPF SDK, dependencies, flags and library pins. Post-build comparison hashes are candidate SHA256 `42b2047e882b699c99fa3ff9c9967fe99c9d4714deedcecc1c0721908d61cb55` and symbols SHA256 `d27325855179ad3f744f72ecc3024af905028b2b8a6efa1a449d7c8f6f0c90f2`. A separate same-source root compilation reproduced both complete generated files. Hashes are comparison-only, never compiler inputs or output-repair instructions. Preserve all prior stages and explicitly verify retired caches as archived. See [FEECONFIG806.md](FEECONFIG806.md) for nominal type separation and bounded decoder/consumer evidence. No runtime or held fixture execution is included.

@@ -388,4 +388,35 @@ class SourceTests(unittest.TestCase):
     def test_chain_missing_parent_rejected(self):
         data = self.chain_parent(); data.pop('programs/pump/src/create_v2.rs')
         with self.assertRaises(ValueError): m.chain_apply(data)
+    def feeconfig_parent(self):
+        out = self.root / 'feeconfig-parent'
+        m.materialize(PARENT, out, 'chain805')
+        return {str(p.relative_to(out)): p.read_bytes() for p in out.rglob('*') if p.is_file()}
+    def test_exact_feeconfig_stage(self):
+        got = m.materialize(PARENT, self.root / 'source', 'feeconfig806')
+        self.assertEqual(got, json.loads((m.HERE / 'feeconfig-pins.json').read_text())['source_sha256'])
+        self.assertEqual(len(got), 60)
+    def test_feeconfig_only_local_route_type(self):
+        old = self.feeconfig_parent(); new = m.feeconfig_apply(old)
+        self.assertEqual({n for n in old if old[n] != new[n]}, {'programs/pump/src/trade_types.rs'})
+        self.assertEqual(len(new['programs/pump/src/trade_types.rs'].splitlines()), len(old['programs/pump/src/trade_types.rs'].splitlines()) + 11)
+        self.assertIn(b'accounts::FeeConfig as LegacyFeeConfig', new['programs/pump/src/sell.rs'])
+    def test_feeconfig_fields_and_derive(self):
+        data = m.feeconfig_apply(self.feeconfig_parent()); src = data['programs/pump/src/trade_types.rs']
+        self.assertIn(b'#[derive(AnchorSerialize, AnchorDeserialize, Clone)]\npub struct FeeConfig {', src)
+        fields = [b'pub bump: u8', b'pub admin: Pubkey', b'pub flat_fees: Fees', b'pub fee_tiers: Vec<FeeTier>', b'pub stable_fee_tiers: Vec<FeeTier>', b'pub exotic_flat_fees: Fees']
+        offsets = [src.index(field) for field in fields]
+        self.assertEqual(offsets, sorted(offsets))
+        self.assertNotIn(b'    accounts::FeeConfig,', src)
+    def test_feeconfig_already_applied_rejected(self):
+        with self.assertRaises(ValueError): m.feeconfig_apply(m.feeconfig_apply(self.feeconfig_parent()))
+    def test_feeconfig_wrong_parent_rejected(self):
+        data = self.feeconfig_parent(); data['programs/pump/src/trade_types.rs'] += b'\n'
+        with self.assertRaises(ValueError): m.feeconfig_apply(data)
+    def test_feeconfig_extra_parent_rejected(self):
+        data = self.feeconfig_parent(); data['extra.rs'] = b''
+        with self.assertRaises(ValueError): m.feeconfig_apply(data)
+    def test_feeconfig_missing_parent_rejected(self):
+        data = self.feeconfig_parent(); data.pop('programs/pump/src/trade_types.rs')
+        with self.assertRaises(ValueError): m.feeconfig_apply(data)
 if __name__ == '__main__': unittest.main(argv=['test_materialize.py', *remaining])

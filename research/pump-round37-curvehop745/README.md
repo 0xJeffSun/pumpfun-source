@@ -125,3 +125,11 @@ Select `--stage chain805` after `nextfronts804` using the same ordinary SBPF pro
 The accepted checkpoint is **805 / 1,035 injective normalized windows and 133 raw windows**, retaining all 804 / 133 preceding matches. The new constructor has four matched immediate callees, seven bounded data uses and three matched records. Both complete generated ELFs repeat byte-for-byte from the exact source; 81 pure source tests pass across eleven stages. The unsuccessful decoder-expression alternative is not included.
 
 The broader original walk and ancestor remain unmatched, and all prior decoder, handler, panic-origin, PDA, TypeId and split-consumer limitations remain. See [CHAIN805.md](CHAIN805.md) for exact scope. Runtime remains **NOT RUN** and full original byte identity remains **false**.
+
+## Optional feeconfig806 stage
+
+Select `--stage feeconfig806` after `chain805` using the unchanged ordinary SBPF profile. All eleven prior stages and the default remain selectable. This one-file source change credits [#362](https://github.com/lalalune/pumpfun-source/pull/362): a six-field route-local derived FeeConfig type separates its reader from the unchanged generated legacy/CPI account. No registry, SDK, macro or IDL change is used.
+
+The accepted checkpoint is **806 / 1,035 injective normalized windows and 133 raw windows**, retaining all preceding matches. The original 1,176-byte generated unchecked decoder now matches, closing the earlier immediate FeeConfig decoder gap; the local 1,352-byte reader and both route/trade consumers preserve their complete normalized bodies. Both complete generated ELFs repeat byte-for-byte from the exact source, and 88 pure source tests pass across twelve stages.
+
+This is not universal nominal Rust type/API equivalence or a recursive dynamic-destructor proof. BondingCurve's 624-versus-600 dispatcher and prior handler, metadata, PDA, duplicate-identity and split-consumer limits remain. See [FEECONFIG806.md](FEECONFIG806.md). Runtime remains **NOT RUN** and full original identity remains **false**.
