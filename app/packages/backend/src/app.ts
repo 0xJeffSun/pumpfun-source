@@ -9,6 +9,26 @@ import { registerUserRoutes } from "./users-routes.js";
 import { UserStore, defaultStore } from "./users-store.js";
 import { registerCompetitionRoutes } from "./competitions-routes.js";
 import { CompetitionStore, defaultCompetitionStore } from "./competitions-store.js";
+import { registerCoinRoutes, registerSolPriceRoute } from "./coins-routes.js";
+import { CoinStore, defaultCoinStore } from "./coins-store.js";
+import { registerPortfolioRoutes } from "./portfolio-routes.js";
+import { PortfolioStore, defaultPortfolioStore } from "./portfolio-store.js";
+import { registerGraphRoutes } from "./graph-routes.js";
+import { GraphStore, defaultGraphStore } from "./graph-store.js";
+import { registerFeedRoutes } from "./feed-routes.js";
+import { FeedStore, defaultFeedStore } from "./feed-store.js";
+import { registerRewardRoutes } from "./rewards-routes.js";
+import { RewardStore, defaultRewardStore } from "./rewards-store.js";
+import { registerSettingsRoutes } from "./settings-routes.js";
+import { SettingsStore, defaultSettingsStore } from "./settings-store.js";
+import { registerNotificationRoutes } from "./notifications-routes.js";
+import { NotificationStore, defaultNotificationStore } from "./notifications-store.js";
+import { registerAuthRoutes } from "./auth-routes.js";
+import { AuthStore, defaultAuthStore } from "./auth-store.js";
+import { registerLivestreamRoutes } from "./livestream-routes.js";
+import { LivestreamStore, defaultLivestreamStore } from "./livestream-store.js";
+import { registerCoinCreationRoutes } from "./coin-creation-routes.js";
+import { CoinCreationStore, defaultCoinCreationStore } from "./coin-creation-store.js";
 
 export type Fixture = {
   method: string;
@@ -254,6 +274,7 @@ async function apiKeyGate(
  * Key: `METHOD /openapi-path` (the OpenAPI template path, not the Fastify param path).
  */
 const NATIVE_ROUTES = new Set<string>([
+  // Users / Profiles
   "GET /users",
   "GET /users/{id}",
   "POST /users/batch",
@@ -261,17 +282,80 @@ const NATIVE_ROUTES = new Set<string>([
   "GET /users/search-v2",
   "GET /users/{id}/overview",
   "POST /profiles/verified",
+  // Posts
   "GET /posts",
   "GET /posts/{postId}",
   "GET /posts/{postId}/replies",
   "GET /posts/{postId}/likers",
   "GET /posts/{postId}/quotes",
   "GET /posts/{postId}/reposters",
+  // Competitions / Leaderboards
   "GET /competitions",
   "GET /competitions/{idOrSlug}",
   "GET /competitions/{id}/entries/{entryId}",
   "GET /competitions/{id}/entries/{entryId}/highlights",
   "GET /competitions/{id}/highlights",
+  // Coins / Market Discovery
+  "GET /coins",
+  "GET /coins/trending",
+  "GET /coins/new",
+  "GET /coins/top",
+  "GET /coins/search",
+  "GET /coins/{mint}",
+  "POST /coins/batch",
+  "GET /coins/{mint}/trades",
+  "GET /coins/{mint}/holders",
+  // Portfolio / Positions / Trades
+  "GET /positions/{wallet}",
+  "GET /positions/{wallet}/{mint}",
+  "GET /positions/{wallet}/pnl",
+  "GET /trades/{wallet}",
+  "GET /trades/coin/{mint}",
+  // Follow Graph
+  "GET /users/{id}/followers",
+  "GET /users/{id}/following",
+  "POST /graph/is-following",
+  "POST /graph/batch-is-following",
+  "GET /users/{id}/mutual-followers/{otherId}",
+  "GET /groups/{groupId}/members",
+  // Feed / Callouts
+  "GET /feed/home",
+  "GET /feed/coin/{mint}",
+  "GET /feed/user/{userId}",
+  "GET /callout/coin/{coin}",
+  "GET /callouts",
+  // Rewards / Fees
+  "GET /rewards/{wallet}",
+  "GET /rewards/{wallet}/summary",
+  "GET /rewards/{wallet}/holder",
+  "GET /rewards/{wallet}/creator-payouts",
+  "GET /rewards/{wallet}/referral",
+  "GET /fees/schedule",
+  // Settings
+  "GET /settings/{wallet}",
+  "GET /settings/{wallet}/notifications",
+  "GET /settings/{wallet}/privacy",
+  // Notifications
+  "GET /notifications/{wallet}",
+  "GET /notifications/{wallet}/unread-count",
+  // Auth / Identity
+  "GET /auth/session/{sessionId}",
+  "GET /auth/sessions/{wallet}",
+  "POST /auth/validate-key",
+  "GET /auth/account/{wallet}",
+  "GET /auth/linked-accounts/{wallet}",
+  "GET /auth/api-keys/{wallet}",
+  // Livestream
+  "GET /livestreams",
+  "GET /livestreams/scheduled",
+  "GET /livestreams/{streamId}",
+  "GET /livestreams/host/{wallet}",
+  "GET /livestreams/coin/{mint}",
+  // Coin Creation
+  "GET /coin-creation/drafts/{wallet}",
+  "GET /coin-creation/draft/{draftId}",
+  "GET /coin-creation/record/{mint}",
+  "POST /coin-creation/validate",
 ]);
 
 export interface BuildAppOptions {
@@ -281,6 +365,26 @@ export interface BuildAppOptions {
   postStore?: PostStore;
   /** Override the competition store (for tests). */
   competitionStore?: CompetitionStore;
+  /** Override the coin store (for tests). */
+  coinStore?: CoinStore;
+  /** Override the portfolio store (for tests). */
+  portfolioStore?: PortfolioStore;
+  /** Override the graph store (for tests). */
+  graphStore?: GraphStore;
+  /** Override the feed store (for tests). */
+  feedStore?: FeedStore;
+  /** Override the reward store (for tests). */
+  rewardStore?: RewardStore;
+  /** Override the settings store (for tests). */
+  settingsStore?: SettingsStore;
+  /** Override the notification store (for tests). */
+  notificationStore?: NotificationStore;
+  /** Override the auth store (for tests). */
+  authStore?: AuthStore;
+  /** Override the livestream store (for tests). */
+  livestreamStore?: LivestreamStore;
+  /** Override the coin creation store (for tests). */
+  coinCreationStore?: CoinCreationStore;
 }
 
 export function buildApp(fixtures: Fixture[] = [], opts: BuildAppOptions = {}) {
@@ -317,11 +421,39 @@ export function buildApp(fixtures: Fixture[] = [], opts: BuildAppOptions = {}) {
   const compStore =
     opts.competitionStore ??
     (opts.userStore ? new CompetitionStore(undefined, store) : defaultCompetitionStore);
+  const coinStore = opts.coinStore ?? defaultCoinStore;
+  const portfolioStore =
+    opts.portfolioStore ?? (opts.coinStore ? new PortfolioStore(undefined, coinStore) : defaultPortfolioStore);
+  const graphStore =
+    opts.graphStore ?? (opts.userStore ? new GraphStore(undefined, store) : defaultGraphStore);
+  const feedStore =
+    opts.feedStore ?? (opts.userStore ? new FeedStore(undefined, store) : defaultFeedStore);
+  const rewardStore = opts.rewardStore ?? defaultRewardStore;
+  const settingsStore = opts.settingsStore ?? defaultSettingsStore;
+  const notificationStore =
+    opts.notificationStore ?? (opts.userStore ? new NotificationStore(undefined, store) : defaultNotificationStore);
+  const authStore = opts.authStore ?? defaultAuthStore;
+  const livestreamStore = opts.livestreamStore ?? defaultLivestreamStore;
+  const coinCreationStore = opts.coinCreationStore ?? defaultCoinCreationStore;
+
+  // Register the sol-price route outside the API-key gate.
+  registerSolPriceRoute(app, coinStore);
+
   app.register(async (native) => {
     native.addHook("preHandler", apiKeyGate);
     registerUserRoutes(native, store);
     registerPostRoutes(native, postStore);
     registerCompetitionRoutes(native, compStore);
+    registerCoinRoutes(native, coinStore);
+    registerPortfolioRoutes(native, portfolioStore);
+    registerGraphRoutes(native, graphStore);
+    registerFeedRoutes(native, feedStore);
+    registerRewardRoutes(native, rewardStore);
+    registerSettingsRoutes(native, settingsStore);
+    registerNotificationRoutes(native, notificationStore);
+    registerAuthRoutes(native, authStore);
+    registerLivestreamRoutes(native, livestreamStore);
+    registerCoinCreationRoutes(native, coinCreationStore);
   });
 
   // Routing recognizes documented paths; no fabricated domain responses or live proxy fallback.
