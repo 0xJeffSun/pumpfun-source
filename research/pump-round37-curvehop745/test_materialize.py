@@ -358,4 +358,34 @@ class SourceTests(unittest.TestCase):
     def test_nextfronts_missing_parent_rejected(self):
         data = self.nextfronts_parent(); data.pop('programs/pump/src/lib.rs')
         with self.assertRaises(ValueError): m.nextfronts_apply(data)
+    def chain_parent(self):
+        out = self.root / 'chain-parent'
+        m.materialize(PARENT, out, 'nextfronts804')
+        return {str(p.relative_to(out)): p.read_bytes() for p in out.rglob('*') if p.is_file()}
+    def test_exact_chain_stage(self):
+        got = m.materialize(PARENT, self.root / 'source', 'chain805')
+        self.assertEqual(got, json.loads((m.HERE / 'chain-pins.json').read_text())['source_sha256'])
+        self.assertEqual(len(got), 60)
+    def test_chain_exact_two_files_and_coordinates(self):
+        old = self.chain_parent(); new = m.chain_apply(old)
+        self.assertEqual({n for n in old if old[n] != new[n]}, {'programs/pump/src/create_v2.rs', 'programs/pump/src/nested_create.rs'})
+        self.assertTrue(new['programs/pump/src/create_v2.rs'].startswith(old['programs/pump/src/create_v2.rs']))
+        self.assertEqual(new['programs/pump/src/create_v2.rs'].decode().splitlines()[411].strip(), 'error!(PumpError::QuoteChainAccountsRequired)')
+        self.assertEqual(len(new['programs/pump/src/nested_create.rs'].splitlines()), len(old['programs/pump/src/nested_create.rs'].splitlines()))
+    def test_chain_lazy_owned_error_and_prior_decoder(self):
+        old = self.chain_parent(); new = m.chain_apply(old)
+        self.assertIn(b'tail.first().ok_or_else(super::quote_chain_accounts_required)?', new['programs/pump/src/nested_create.rs'])
+        self.assertIn(b'fn quote_chain_accounts_required() -> anchor_lang::error::Error', new['programs/pump/src/create_v2.rs'])
+        self.assertEqual(old['programs/pump/src/trade_types.rs'], new['programs/pump/src/trade_types.rs'])
+    def test_chain_already_applied_rejected(self):
+        with self.assertRaises(ValueError): m.chain_apply(m.chain_apply(self.chain_parent()))
+    def test_chain_wrong_parent_rejected(self):
+        data = self.chain_parent(); data['programs/pump/src/create_v2.rs'] += b'\n'
+        with self.assertRaises(ValueError): m.chain_apply(data)
+    def test_chain_extra_parent_rejected(self):
+        data = self.chain_parent(); data['extra.rs'] = b''
+        with self.assertRaises(ValueError): m.chain_apply(data)
+    def test_chain_missing_parent_rejected(self):
+        data = self.chain_parent(); data.pop('programs/pump/src/create_v2.rs')
+        with self.assertRaises(ValueError): m.chain_apply(data)
 if __name__ == '__main__': unittest.main(argv=['test_materialize.py', *remaining])

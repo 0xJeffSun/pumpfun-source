@@ -318,8 +318,56 @@ def nextfronts_apply(staged):
         raise ValueError('nextfronts output map changed')
     return changed
 
+def chain_apply(staged):
+    pins = json.loads((HERE / 'chain-pins.json').read_text())
+    if {n: digest(v) for n, v in staged.items()} != pins['parent_source_sha256']:
+        raise ValueError('exact chain parent inventory required')
+    patch = (HERE / 'chain.patch').read_bytes()
+    if digest(patch) != pins['patch_sha256']:
+        raise ValueError('chain patch changed')
+    lines = patch.decode().splitlines(True)
+    changed = dict(staged)
+    i = 0
+    while i < len(lines):
+        if not lines[i].startswith('--- ') or not lines[i+1].startswith('+++ b/'):
+            raise ValueError('invalid source patch header')
+        old = lines[i][4:].strip()
+        name = str(safe_relative(lines[i+1][6:].strip()))
+        if old not in ('a/' + name, '/dev/null') or (old == '/dev/null') != (name not in changed):
+            raise ValueError('invalid source patch parent')
+        before = changed.get(name, b'').decode().splitlines(True)
+        result, cursor = [], 0
+        i += 2
+        while i < len(lines) and lines[i].startswith('@@'):
+            match = re.fullmatch(r'@@ -(\d+)(?:,(\d+))? \+(\d+)(?:,(\d+))? @@\n', lines[i])
+            if not match:
+                raise ValueError('invalid source hunk')
+            start = max(0, int(match[1]) - 1)
+            oldlen, newlen = int(match[2] or 1), int(match[4] or 1)
+            if start < cursor:
+                raise ValueError('overlapping source hunks')
+            result += before[cursor:start]
+            oldh, newh = [], []
+            i += 1
+            while i < len(lines) and not lines[i].startswith(('@@', '--- ')):
+                line = lines[i]
+                if line[0] not in ' +-':
+                    raise ValueError('invalid source hunk line')
+                if line[0] in ' -': oldh.append(line[1:])
+                if line[0] in ' +': newh.append(line[1:])
+                i += 1
+            if len(oldh) != oldlen or len(newh) != newlen or before[start:start+oldlen] != oldh:
+                raise ValueError('source hunk context changed')
+            result += newh
+            cursor = start + oldlen
+        result += before[cursor:]
+        changed[name] = ''.join(result).encode()
+    if {n: digest(v) for n, v in changed.items()} != pins['source_sha256']:
+        raise ValueError('chain output map changed')
+    return changed
+
 def materialize(parent, output, stage='curvehop745'):
-    if stage not in ('curvehop745', 'reserve746', 'arithmetic749', 'sourcefronts780', 'clamp786', 'visibility788', 'v2rent789', 'fourfronts795', 'harvest799', 'nextfronts804'):
+    if stage not in ('curvehop745', 'reserve746', 'arithmetic749', 'sourcefronts780', 'clamp786', 'visibility788', 'v2rent789', 'fourfronts795', 'harvest799', 'nextfronts804', 'chain805'):
         raise ValueError('unknown source stage')
     parent, output = Path(parent).absolute(), Path(output).absolute()
     if any(p.is_symlink() for p in [parent, *parent.parents, output, *output.parents]):
@@ -345,27 +393,29 @@ def materialize(parent, output, stage='curvehop745'):
         if digest(data) != expected:
             raise ValueError('source mismatch: ' + name)
         staged[name] = swap(data) if name == PINS['changed_path'] else data
-    if stage in ('reserve746', 'arithmetic749', 'sourcefronts780', 'clamp786', 'visibility788', 'v2rent789', 'fourfronts795', 'harvest799', 'nextfronts804'):
+    if stage in ('reserve746', 'arithmetic749', 'sourcefronts780', 'clamp786', 'visibility788', 'v2rent789', 'fourfronts795', 'harvest799', 'nextfronts804', 'chain805'):
         reserve = json.loads((HERE / 'reserve-pins.json').read_text())
         name = str(safe_relative(reserve['changed_path']))
         staged[name] = reserve_swap(staged[name])
-    if stage in ('arithmetic749', 'sourcefronts780', 'clamp786', 'visibility788', 'v2rent789', 'fourfronts795', 'harvest799', 'nextfronts804'):
+    if stage in ('arithmetic749', 'sourcefronts780', 'clamp786', 'visibility788', 'v2rent789', 'fourfronts795', 'harvest799', 'nextfronts804', 'chain805'):
         staged = arithmetic_apply(staged)
-    if stage in ('sourcefronts780', 'clamp786', 'visibility788', 'v2rent789', 'fourfronts795', 'harvest799', 'nextfronts804'):
+    if stage in ('sourcefronts780', 'clamp786', 'visibility788', 'v2rent789', 'fourfronts795', 'harvest799', 'nextfronts804', 'chain805'):
         staged = sourcefronts_apply(staged)
-    if stage in ('clamp786', 'visibility788', 'v2rent789', 'fourfronts795', 'harvest799', 'nextfronts804'):
+    if stage in ('clamp786', 'visibility788', 'v2rent789', 'fourfronts795', 'harvest799', 'nextfronts804', 'chain805'):
         staged = clamp_apply(staged)
-    if stage in ('visibility788', 'v2rent789', 'fourfronts795', 'harvest799', 'nextfronts804'):
+    if stage in ('visibility788', 'v2rent789', 'fourfronts795', 'harvest799', 'nextfronts804', 'chain805'):
         staged = visibility_apply(staged)
-    if stage in ('v2rent789', 'fourfronts795', 'harvest799', 'nextfronts804'):
+    if stage in ('v2rent789', 'fourfronts795', 'harvest799', 'nextfronts804', 'chain805'):
         staged = v2rent_apply(staged)
-    if stage in ('fourfronts795', 'harvest799', 'nextfronts804'):
+    if stage in ('fourfronts795', 'harvest799', 'nextfronts804', 'chain805'):
         staged = fourfronts_apply(staged)
-    if stage in ('harvest799', 'nextfronts804'):
+    if stage in ('harvest799', 'nextfronts804', 'chain805'):
         staged = harvest_apply(staged)
-    if stage == 'nextfronts804':
+    if stage in ('nextfronts804', 'chain805'):
         staged = nextfronts_apply(staged)
-    if len(staged) != (60 if stage in ('sourcefronts780', 'clamp786', 'visibility788', 'v2rent789', 'fourfronts795', 'harvest799', 'nextfronts804') else 58 if stage == 'arithmetic749' else 57):
+    if stage == 'chain805':
+        staged = chain_apply(staged)
+    if len(staged) != (60 if stage in ('sourcefronts780', 'clamp786', 'visibility788', 'v2rent789', 'fourfronts795', 'harvest799', 'nextfronts804', 'chain805') else 58 if stage == 'arithmetic749' else 57):
         raise ValueError('unexpected source inventory')
     output.mkdir(parents=True)
     for name, data in staged.items():
@@ -379,7 +429,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--parent', required=True, type=Path)
     parser.add_argument('--output', required=True, type=Path)
-    parser.add_argument('--stage', choices=['curvehop745', 'reserve746', 'arithmetic749', 'sourcefronts780', 'clamp786', 'visibility788', 'v2rent789', 'fourfronts795', 'harvest799', 'nextfronts804'], default='curvehop745')
+    parser.add_argument('--stage', choices=['curvehop745', 'reserve746', 'arithmetic749', 'sourcefronts780', 'clamp786', 'visibility788', 'v2rent789', 'fourfronts795', 'harvest799', 'nextfronts804', 'chain805'], default='curvehop745')
     args = parser.parse_args()
     result = materialize(args.parent, args.output, args.stage)
     print(json.dumps({'stage': args.stage, 'source_files': len(result), 'source_sha256': result}, indent=2, sort_keys=True))
