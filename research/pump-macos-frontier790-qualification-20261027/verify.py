@@ -51,3 +51,24 @@ for label in images:
  with tarfile.open(D/label/'compiled-source.tar.gz')as archive:files={m.name:sha(archive.extractfile(m).read())for m in archive.getmembers()if m.isfile()}
  assert all('/source/'in key and files[key.split('/source/',1)[1]]==digest for key,digest in record['source_sha256'].items())
 print('Verified actual compiled-source archives for all five native builds; full runtime qualification remains separate.')
+
+T=P/'runtime'
+m=json.loads((T/'MANIFEST.json').read_text());assert all(sha((T/k).read_bytes())==v for k,v in m.items())
+full=json.loads(gzip.decompress((T/'full.json.gz').read_bytes()));rec=json.loads((T/'recipients.json').read_text());binding=json.loads((T/'native-input-binding.json').read_text())
+h=sha(images['candidate']['candidate.so'])
+assert full['candidate_sha256']==rec['candidate_sha256']==binding['candidate_sha256']==h
+assert binding['native_artifact_manifest_sha256']==sha((D/'MANIFEST.json').read_bytes())
+assert binding['native_build_record_sha256']==sha(gzip.decompress((D/'candidate/build-comparison.json.gz').read_bytes()))
+assert binding['compiled_source_sha256']==full['compiled_source_sha256']
+assert len(full['suites'])==44 and full['case_count']==10468 and not full['mismatches']
+assert full['diagnostics']['log_bearing_cases']==10464 and not full['diagnostics']['mismatches']
+assert rec['case_count']==42 and not rec['mismatches']
+assert len(full['loader_receipts'])==44
+for name,receipt in full['loader_receipts'].items():
+ p=T/'full.json.gz.suites'/(name+'.loader.json');assert sha(p.read_bytes())==receipt['sha256']
+ doc=json.loads(p.read_text())
+ loads=doc['loads'];assert len(loads)==receipt['load_count']
+ for load in loads:
+  assert load['elf_sha256'] in [h,sha(original)] and load['elf_prefix_unchanged'] and load['zero_allocation_tail']
+  assert load['program_bytes']==36 and load['programdata_bytes']==10485760
+print('Verified native-bound 44-suite runtime corpus (10,468 cases, zero diagnostic mismatches) and separate 42 recipient cases.')
