@@ -116,8 +116,6 @@ pub fn execute(
         (creator_fee == 0 && !can_edit) || canonical,
         PumpAmmError::OnlyCanonicalPumpPoolsCanHaveCoinCreator
     );
-    require!(liquidity >= 100, PumpAmmError::TooLittlePoolTokenLiquidity);
-    let output = liquidity - 100;
     let creator = a.creator.key();
     let base = a.base_mint.key();
     let quote = a.quote_mint.key();
@@ -146,6 +144,8 @@ pub fn execute(
         protocol_fees: 0,
         creator_fees: 0,
     });
+    let output = liquidity.checked_sub(100)
+        .ok_or_else(|| error!(PumpAmmError::TooLittlePoolTokenLiquidity))?;
     crate::utils::token::mint_to_pool(
         &a.token_2022_program, &a.lp_mint, &a.user_pool_token_account, output, &a.pool,
     )?;

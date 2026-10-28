@@ -1,9 +1,9 @@
 # PumpSwap source reconstruction
 
-The maintained source is the [event ownership and sweep Context checkpoint](../../repro/pump_amm/event-ownership-recovery-20261027/README.md),
-candidate `4e6a5617a7a8c3474ed7662f0188df4b1824c08253ebfb08212351ca5249da12`. It matches **653/785 normalized windows (83.2%)**,
-including **148 raw bodies**, and covers **818,944/1,162,040 text bytes (70.5%)**.
-Whole ELF identity is false; **132 windows remain**.
+The maintained source is the [admin and withheld-fee harvest checkpoint](../../repro/pump_amm/admin-harvest-recovery-20261027/README.md),
+candidate `58478a978292ea6bc4e6a9776a536f91a9384da7f1f82a2e1f9743659a34b58b`. It matches **656/785 normalized windows (83.6%)**,
+including **148 raw bodies**, and covers **826,112/1,162,040 text bytes (71.1%)**.
+Whole ELF identity is false; **129 windows remain**.
 
 Two strict offline builds agree. All17,462 corpus cases and retained supplemental
 suites pass. The21-case reserved-recipient matrix closes all11 prior differences, and

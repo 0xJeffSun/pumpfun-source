@@ -51,22 +51,25 @@ pub fn execute<'info>(ctx:Context<'_, '_, '_, 'info,Migrate<'info>>)->Result<()>
  // Original transfers migration liquidity to its signer PDA before paying CPI rents.
  move_lamports(&curve,&pa,fee)?;
  for (dest,wallet,m,token) in [(&pb,&pool,&mint,&base_tok),(&pq,&pool,&wsol,&tok),(&tmpb,&pa,&mint,&base_tok),(&tmpq,&pa,&wsol,&tok)]{call(&ata,&[(&pa,true,true),(dest,false,true),(wallet,false,false),(m,false,false),(&sys,false,false),(token,false,false),(&curve,false,false)],vec![1],&[pas])?;}
- if base>0{let mut transfer=vec![12];transfer.extend_from_slice(&base.to_le_bytes());transfer.push(a.mint.decimals);call(&base_tok,&[(&cb,false,true),(&mint,false,false),(&tmpb,false,true),(&curve,true,false)],transfer,&[cs])?;}
- let quote=real_quote.checked_sub(fee).ok_or_else(||error!(PumpError::Overflow))?;
+ if base>0{let mut transfer=vec![12];transfer.extend_from_slice(&base.to_le_bytes());transfer.push(a.mint.decimals);call(&base_tok,&[(&cb,false,true),(&mint,false,false),(&tmpb,false,true),(&curve,true,false)],transfer,&[cs])?;}let base=pool_authority_mint_token_account(a)?.amount;
+ let quote=real_quote.checked_add(a.bonding_curve.post_complete_quote_in)
+  .ok_or_else(||error!(PumpError::Overflow))?
+  .checked_sub(fee)
+  .ok_or_else(||error!(PumpError::Overflow))?;
  // Allocate quote funding from signer PDA into native token account.
  move_lamports(&curve,&tmpq,quote)?;
  call(&tok,&[(&tmpq,false,true),(&a.rent.to_account_info(),false,false),(&curve,false,false)],vec![17],&[])?;
- let creator=a.bonding_curve.creator;let mut data=vec![233,146,209,142,207,104,64,188];data.extend_from_slice(&0u16.to_le_bytes());data.extend_from_slice(&base.to_le_bytes());data.extend_from_slice(&quote.to_le_bytes());data.extend_from_slice(creator.as_ref());data.push(mayhem as u8);data.push(a.bonding_curve.is_cashback_coin as u8);data.extend_from_slice(&a.bonding_curve.creator_fee_bps.to_le_bytes());data.push(a.bonding_curve.can_edit_creator_fee as u8);data.push(a.bonding_curve.is_holder_reward as u8);
- call(&am,&[(&pool,false,true),(&cfg,false,false),(&pa,true,true),(&mint,false,false),(&wsol,false,false),(&lp,false,true),(&tmpb,false,true),(&tmpq,false,true),(&ulp,false,true),(&pb,false,true),(&pq,false,true),(&sys,false,false),(&t22,false,false),(&base_tok,false,false),(&tok,false,false),(&ata,false,false),(&ev,false,false),(&am,false,false)],data,&[pas])?;
+ let creator=a.bonding_curve.creator;let cpi_accounts=pump_amm::cpi::accounts::CreatePool{pool:pool.clone(),global_config:cfg.clone(),creator:pa.clone(),base_mint:mint.clone(),quote_mint:wsol.clone(),lp_mint:lp.clone(),user_base_token_account:tmpb.clone(),user_quote_token_account:tmpq.clone(),user_pool_token_account:ulp.clone(),pool_base_token_account:pb.clone(),pool_quote_token_account:pq.clone(),system_program:sys.clone(),token_2022_program:t22.clone(),base_token_program:base_tok.clone(),quote_token_program:tok.clone(),associated_token_program:ata.clone(),event_authority:ev.clone(),program:am.clone()};
+ pump_amm::cpi::create_pool(CpiContext::new_with_signer(am.clone(),cpi_accounts,&[pas]),0,base,quote,creator,mayhem,pump_amm::types::OptionBool(a.bonding_curve.is_cashback_coin),pump_amm::types::OptionU64(a.bonding_curve.creator_fee_bps),pump_amm::types::OptionBool(a.bonding_curve.can_edit_creator_fee),pump_amm::types::OptionBool(a.bonding_curve.is_holder_reward))?;
  if !mayhem && (ctx.remaining_accounts.len()==2 || native_payments::boost_enabled(&cfg)) {
   require!(ctx.remaining_accounts.len()==2,PumpError::NotEnoughRemainingAccounts);
   let boost=&ctx.remaining_accounts[0];let vault=&ctx.remaining_accounts[1];
   let funding=Rent::get()?.minimum_balance(165);
   native_payments::transfer_native(a.system_program.as_ref(),&a.user,&a.pool_authority,funding)?;
-  call(&am,&[(&pool,false,true),(&cfg,false,false),(&pa,true,true),(&mint,false,false),(&wsol,false,false),(&pb,false,true),(&pq,false,true),(boost,false,false),(vault,false,true),(&tok,false,false),(&sys,false,false),(&ata,false,false),(&ev,false,false),(&am,false,false)],vec![140,233,33,94,132,90,194,143],&[pas])?;
+  pump_amm::cpi::init_boost(CpiContext::new_with_signer(am.clone(),pump_amm::cpi::accounts::InitBoost{pool:pool.clone(),global_config:cfg.clone(),creator:pa.clone(),base_mint:mint.clone(),quote_mint:wsol.clone(),pool_base_token_account:pb.clone(),pool_quote_token_account:pq.clone(),boost_vault_authority:boost.clone(),boost_vault:vault.clone(),quote_token_program:tok.clone(),system_program:sys.clone(),associated_token_program:ata.clone(),event_authority:ev.clone(),program:am.clone()},&[pas]))?;
  }
  for (temp,token) in [(&tmpb,&base_tok),(&tmpq,&tok)]{call(token,&[(temp,false,true),(&wa,false,true),(&pa,true,false)],vec![9],&[pas])?;}
- let burn_amount=amount(&ulp)?;anchor_spl::token_2022::burn(CpiContext::new_with_signer(t22.clone(),anchor_spl::token_2022::Burn{mint:lp.clone(),from:ulp.clone(),authority:pa.clone()},&[pas]),burn_amount)?;call(&t22,&[(&ulp,false,true),(&wa,false,true),(&pa,true,false)],vec![9],&[pas])?;
+ let burn_amount=amount(&ulp)?;anchor_spl::token_2022::burn(CpiContext::new_with_signer(t22.clone(),anchor_spl::token_2022::Burn{mint:lp.clone(),from:ulp.clone(),authority:pa.clone()},&[pas]),burn_amount)?;close_pool_authority_account(a,ctx.bumps.pool_authority,&a.user_pool_token_account)?;
  refund_pool_authority(a,ctx.bumps.pool_authority,&wa,pa.lamports())?;
 
  {let c=&mut ctx.accounts.bonding_curve;c.real_quote_reserves=0;c.real_token_reserves=0;c.virtual_quote_reserves=0;c.virtual_token_reserves=0;}
@@ -91,3 +94,17 @@ pub fn transfer_native<'info>(system_program:&AccountInfo<'info>,source:&Uncheck
 
 #[path="migration_native_payments.rs"]
 pub mod native_payments;
+
+pub fn close_pool_authority_account<'info>(a:&Migrate<'info>,bump:u8,account:&AccountInfo<'info>)->Result<()>{
+ close_token_account(a,account,&[&[b"pool-authority",a.mint.key().as_ref(),&[bump]]])
+}
+
+fn close_token_account<'info>(a:&Migrate<'info>,account:&AccountInfo<'info>,signer_seeds:&[&[&[u8]]])->Result<()>{
+ anchor_spl::token_2022::close_account(CpiContext::new_with_signer(a.token_2022_program.to_account_info(),anchor_spl::token_2022::CloseAccount{account:account.clone(),destination:a.withdraw_authority.to_account_info(),authority:a.pool_authority.to_account_info()},signer_seeds))
+}
+
+#[inline(never)]
+pub fn pool_authority_mint_token_account(a:&Migrate)->Result<TokenAccount>{
+ let data=a.pool_authority_mint_account.try_borrow_data()?;
+ TokenAccount::try_deserialize_unchecked(&mut &data[..])
+}

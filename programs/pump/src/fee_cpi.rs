@@ -3,15 +3,8 @@ use anchor_lang::prelude::*;
 use crate::trade_types::{BondingCurve, Fees};
 use anchor_spl::token_interface::Mint;
 
-/// Checked normal-buy quote calculation precedes the fee CPI.
-pub fn buy_quote(curve: &BondingCurve, amount: u64) -> Result<u64> {
-    let denominator = curve.virtual_token_reserves.checked_sub(amount)
-        .ok_or_else(|| error!(crate::PumpError::Overflow))?;
-    require!(denominator != 0, crate::PumpError::DivisionByZero);
-    let quote = u128::from(amount) * u128::from(curve.virtual_quote_reserves)
-        / u128::from(denominator) + 1;
-    u64::try_from(quote).map_err(|_| error!(crate::PumpError::Truncation))
-}
+// buy_quote lives in lib.rs (the original's bonding-curve math region); re-exported for the legacy callers.
+pub use crate::buy_quote;
 
 /// Shared fee query and accounting. Account clones are created here before
 /// the fallible market-cap calculation, as in the original outer helper.

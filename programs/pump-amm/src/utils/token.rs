@@ -321,3 +321,18 @@ pub fn transfer_checked_with_ata<'info>(
         signer_seeds,
     ), amount, mint.decimals)
 }
+
+pub fn harvest_withheld_tokens_to_mint<'info>(
+    token_program: &AccountInfo<'info>,
+    mint: &AccountInfo<'info>,
+    source: &AccountInfo<'info>,
+) -> Result<()> {
+    use anchor_spl::token_2022_extensions::transfer_fee::{self, HarvestWithheldTokensToMint};
+    transfer_fee::harvest_withheld_tokens_to_mint(
+        CpiContext::new(token_program.clone(), HarvestWithheldTokensToMint {
+            token_program_id: token_program.clone(),
+            mint: mint.clone(),
+        }),
+        vec![source.clone()],
+    )
+}

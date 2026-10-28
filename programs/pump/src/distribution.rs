@@ -87,3 +87,11 @@ pub(crate) fn get_distribution_amounts<'info>(rent:&Rent,shares:&[Shareholder],r
 #[path = "creator/distribute_creator_fee_v2.rs"]
 mod v2;
 pub use self::v2::{execute_v2, get_token_distribution_amounts};
+
+/// Shareholders of an optional fee-sharing config; empty or undecodable data reads as none.
+#[inline(never)]
+pub fn sharing_config_shareholders(account:&AccountInfo)->Result<Option<Vec<Shareholder>>>{
+ if account.data_is_empty(){return Ok(None);}
+ let data=account.try_borrow_data()?;
+ match SharingConfig::try_deserialize(&mut &data[..]){Ok(config)=>Ok(Some(config.shareholders)),Err(_)=>Ok(None)}
+}
