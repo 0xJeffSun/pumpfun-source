@@ -502,7 +502,7 @@ test("malformed HTTP status codes are rejected", () => {
   for (const status of [undefined, null, "200", Number.NaN, 99, 600, 200.5]) {
     assert.throws(
       () => buildApp([malformedFixture({ status })]),
-      /status must be an integer from 100 through 599/,
+      /status must be an integer from 200 through 599/,
     );
   }
 });
