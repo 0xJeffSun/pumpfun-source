@@ -46,6 +46,11 @@ test("included routes load with one accurate active navigation item", async ({
         page.locator('[data-product-state="unavailable"]'),
       ).toHaveCount(0);
       await expect(page.getByRole("form")).toBeVisible();
+    } else if (path === "/holder-rewards") {
+      await expect(
+        page.locator('[data-product-state="unavailable"]'),
+      ).toHaveCount(0);
+      await expect(page.getByTestId("holder-rewards-inspector")).toBeVisible();
     } else {
       await expect(
         page.locator('[data-product-state="unavailable"]'),
@@ -295,10 +300,13 @@ test("normal navigation emits no console errors or production mutations", async 
     .getByRole("searchbox", { name: "Search for coins and users" })
     .fill("safe query");
   await page.getByRole("button", { name: "Search", exact: true }).click();
+  await expect(page).toHaveURL(/\/explore\?q=safe\+query$/);
   await expect(
-    page.locator('[data-product-state="unavailable"]'),
+    page.getByRole("heading", { name: "0 local matches" }),
   ).toBeVisible();
-  await expect(page.getByText(/No fabricated live data/)).toBeVisible();
+  await expect(
+    page.getByText(/not a statement about live Pump market results/),
+  ).toBeVisible();
   expect(consoleErrors).toEqual([]);
   expect(unexpectedRequests).toEqual([]);
 });
