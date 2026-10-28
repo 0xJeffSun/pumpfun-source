@@ -33,11 +33,11 @@ test("renders the authenticated archived discovery snapshot without fake current
     page.getByText("No current live status", { exact: true }),
   ).toBeVisible();
   await expect(
-    page.getByText("5 exact archived cards", { exact: true }),
+    page.getByText("42 exact archived cards", { exact: true }),
   ).toBeVisible();
-  await expect(page.getByTestId("archived-stream-card")).toHaveCount(5);
+  await expect(page.getByTestId("archived-stream-card")).toHaveCount(12);
   await expect(page.getByText("Captured snapshot — not current")).toHaveCount(
-    5,
+    12,
   );
   await expect(page.getByText("42", { exact: true })).toBeVisible();
   await expect(page.getByText(/No archived stream selected/)).toBeVisible();
@@ -64,11 +64,11 @@ test("search and sorting are URL-backed, empty-safe and history-aware", async ({
 
   await page.getByRole("button", { name: "Clear", exact: true }).click();
   await expect(page).toHaveURL(/\/live$/);
-  await expect(page.getByTestId("archived-stream-card")).toHaveCount(5);
+  await expect(page.getByTestId("archived-stream-card")).toHaveCount(12);
   await page.getByLabel("Sort captured cards").selectOption("title");
   await expect(page).toHaveURL(/sort=title/);
   await expect(page.getByTestId("archived-stream-card").first()).toContainText(
-    "$mAjor",
+    "$RAT - Exfil Rat",
   );
 
   await page.goBack();
@@ -80,7 +80,7 @@ test("search and sorting are URL-backed, empty-safe and history-aware", async ({
   await expect(search).toHaveValue("$mAjor");
   await expect(page.getByTestId("archived-stream-card")).toHaveCount(1);
   await page.goForward();
-  await expect(page.getByTestId("archived-stream-card")).toHaveCount(5);
+  await expect(page.getByTestId("archived-stream-card")).toHaveCount(12);
 
   await search.fill("nothing in archive");
   await search.press("Enter");
@@ -130,10 +130,10 @@ test("invalid selections and unsupported captured sections fail honestly", async
   await other.click();
   await expect(page).toHaveURL(/section=other-sections/);
   await expect(page.getByTestId("other-sections-unavailable")).toContainText(
-    "does not have a separately authenticated dataset",
+    "Other section payloads are not mapped",
   );
   await page.getByRole("button", { name: "Return to captured cards" }).click();
-  await expect(page.getByTestId("archived-stream-card")).toHaveCount(5);
+  await expect(page.getByTestId("archived-stream-card")).toHaveCount(12);
 });
 
 test("section navigation is keyboard operable", async ({ page }) => {
@@ -208,4 +208,185 @@ test("interaction remains local and adjacent routes retain their boundaries", as
     const response = await page.goto(path);
     expect(response?.status(), path).toBe(404);
   }
+});
+
+test("all four local pages are reachable with stable history, reload and no duplicate records", async ({
+  page,
+}) => {
+  const safety = monitorSafety(page);
+  await page.goto("/live");
+  const names: string[] = [];
+  await expect(
+    page.getByRole("button", { name: "Previous page" }),
+  ).toBeDisabled();
+  for (let current = 1; current <= 4; current += 1) {
+    await expect(
+      page.getByText(`Page ${current} of 4`, { exact: true }),
+    ).toBeVisible();
+    await expect(page.getByTestId("archived-stream-card")).toHaveCount(
+      current === 4 ? 6 : 12,
+    );
+    names.push(
+      ...(await page
+        .getByTestId("archived-stream-card")
+        .locator("h3")
+        .allTextContents()),
+    );
+    if (current < 4) {
+      await page.getByRole("button", { name: "Next page" }).click();
+      await expect(page).toHaveURL(new RegExp(`page=${current + 1}$`));
+    }
+  }
+  expect(names).toHaveLength(42);
+  expect(new Set(names).size).toBe(42);
+  expect(names[12]).toBe("CryptoCasinoWEB3");
+  expect(names[41]).toBe("Be a U$Dolly visionary!");
+  await expect(page.getByRole("button", { name: "Next page" })).toBeDisabled();
+  await expect(
+    page.getByText("Showing 37–42 of 42 captured records", { exact: true }),
+  ).toBeVisible();
+  await page.getByRole("button", { name: "Previous page" }).click();
+  await expect(page).toHaveURL(/page=3$/);
+  await page.goBack();
+  await expect(page).toHaveURL(/page=4$/);
+  await page.reload();
+  await expect(page.getByTestId("archived-stream-card")).toHaveCount(6);
+  expect(safety.unexpectedRequests).toEqual([]);
+  expect(safety.consoleErrors).toEqual([]);
+});
+
+test("search, sort and section changes reset pagination and dismiss selected metadata", async ({
+  page,
+}) => {
+  await page.goto("/live?page=2");
+  const search = page.getByRole("searchbox", {
+    name: "Search captured streams",
+  });
+  await page
+    .getByRole("button", {
+      name: "Inspect archived stream CryptoCasinoWEB3 CHERRY",
+    })
+    .click();
+  await expect(page.getByTestId("playback-unavailable")).toBeVisible();
+  await search.fill("CryptoCasinoWEB3");
+  await search.press("Enter");
+  await expect(page).toHaveURL(/\/live\?q=CryptoCasinoWEB3$/);
+  await expect(page.getByTestId("archived-stream-card")).toHaveCount(1);
+  await expect(
+    page.getByText("No archived stream selected", { exact: true }),
+  ).toBeVisible();
+  await page.getByRole("button", { name: "Clear", exact: true }).click();
+  await page.getByRole("button", { name: "Next page" }).click();
+  await expect(page).toHaveURL(/page=2$/);
+  await page.getByLabel("Sort captured cards").selectOption("viewers");
+  await expect(page).toHaveURL(/\/live\?sort=viewers$/);
+  await expect(page.getByTestId("archived-stream-card").nth(1)).toContainText(
+    "CryptoCasinoWEB3",
+  );
+  await page.getByRole("button", { name: "Next page" }).click();
+  await expect(page).toHaveURL(/page=2$/);
+  await page.getByRole("tab", { name: "Other sections" }).click();
+  await expect(page).not.toHaveURL(/page=/);
+  await page.getByRole("button", { name: "Return to captured cards" }).click();
+  await expect(page.getByText("Page 1 of 4", { exact: true })).toBeVisible();
+});
+
+test("malformed, duplicate and out-of-range pages fail closed without changing the URL", async ({
+  page,
+}) => {
+  const safety = monitorSafety(page);
+  for (const query of [
+    "page=0",
+    "page=5",
+    "page=01",
+    "page=1.5",
+    "page=1&page=2",
+    "page=1&page=1",
+    "page=",
+    "q=%24major&page=2",
+    "q=absent-record&page=2",
+  ]) {
+    await page.goto(`/live?${query}`);
+    await expect(page.getByTestId("live-invalid-page")).toBeVisible();
+    await expect(page.getByTestId("archived-stream-card")).toHaveCount(0);
+    expect(new URL(page.url()).search).toBe(`?${query}`);
+    await page.getByRole("button", { name: "Return to first page" }).click();
+    await expect(page).not.toHaveURL(/page=/);
+    await expect(page.getByTestId("live-invalid-page")).toHaveCount(0);
+  }
+  await expect(page.getByTestId("live-empty-results")).toContainText(
+    "42-record archive",
+  );
+  expect(safety.unexpectedRequests).toEqual([]);
+  expect(safety.consoleErrors).toEqual([]);
+});
+
+test("selection dismisses on page changes and Escape has a visible fallback for off-page or blank selections", async ({
+  page,
+}) => {
+  await page.goto("/live");
+  await page
+    .getByRole("button", { name: "Inspect archived stream M $M" })
+    .click();
+  await expect(page.getByTestId("playback-unavailable")).toBeVisible();
+  await page.getByRole("button", { name: "Next page" }).click();
+  await expect(page).toHaveURL(/\/live\?page=2$/);
+  await expect(
+    page.getByText("No archived stream selected", { exact: true }),
+  ).toBeVisible();
+  await page.goto(`/live?page=4&stream=${FIRST_MINT}`);
+  await expect(page.getByTestId("playback-unavailable")).toBeVisible();
+  await page.keyboard.press("Escape");
+  await expect(page).toHaveURL(/\/live\?page=4$/);
+  await expect(
+    page.getByRole("searchbox", { name: "Search captured streams" }),
+  ).toBeFocused();
+  await page.goto("/live?stream=");
+  await expect(page.getByTestId("invalid-stream-selection")).toBeVisible();
+  await page.keyboard.press("Escape");
+  await expect(page).toHaveURL(/\/live$/);
+  await expect(
+    page.getByRole("searchbox", { name: "Search captured streams" }),
+  ).toBeFocused();
+});
+
+test("Escape belongs to an open modal before the underlying nonmodal stream detail", async ({
+  page,
+}) => {
+  await page.goto(`/live?stream=${FIRST_MINT}`);
+  await expect(page.getByTestId("playback-unavailable")).toBeVisible();
+  // An isolated local dialog exercises ownership without requiring another
+  // feature branch, external service or a captured runtime.
+  await page.evaluate(() => {
+    const dialog = document.createElement("dialog");
+    dialog.id = "local-escape-owner";
+    const button = document.createElement("button");
+    button.textContent = "Local modal control";
+    dialog.append(button);
+    document.body.append(dialog);
+    dialog.showModal();
+    button.focus();
+  });
+  await page.keyboard.press("Escape");
+  await expect(page.locator("#local-escape-owner")).not.toBeVisible();
+  await expect(page).toHaveURL(new RegExp(`stream=${FIRST_MINT}$`));
+  await expect(page.getByTestId("playback-unavailable")).toBeVisible();
+  await page.keyboard.press("Escape");
+  await expect(page).toHaveURL(/\/live$/);
+});
+
+test("a prevented Escape does not dismiss stream detail", async ({ page }) => {
+  await page.goto(`/live?stream=${FIRST_MINT}`);
+  await expect(page.getByTestId("playback-unavailable")).toBeVisible();
+  await page.evaluate(() => {
+    window.addEventListener("keydown", (event) => event.preventDefault(), {
+      capture: true,
+      once: true,
+    });
+  });
+  await page.keyboard.press("Escape");
+  await expect(page).toHaveURL(new RegExp(`stream=${FIRST_MINT}$`));
+  await expect(page.getByTestId("playback-unavailable")).toBeVisible();
+  await page.keyboard.press("Escape");
+  await expect(page).toHaveURL(/\/live$/);
 });

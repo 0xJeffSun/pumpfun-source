@@ -6,13 +6,8 @@ export const LIVE_CAPTURE_SHA256 =
   "aeff704c15d99482fe6e6347a92db0170dffeceb940a70e61dcc10002b006355";
 export const LIVE_CAPTURE_BYTES = 785_309;
 
-const archivedMints = [
-  "7bS1mH6MXbw1GnEkKTU6w5YLTywPkQ1w3YVZXWFupump",
-  "5so4kmqqUvgtJdedUueDz64p4nEhJeCmodKbQqeppump",
-  "Fn5ikZ1VagQTt1B94zBeLP1Gixp2BCxtXVspUk9Vpump",
-  "25eDKrPdeZWbSVhYjzcpdcuEtBT2RbgsqEyDnRoMpump",
-  "DN19UoW5dbaN2PM7FPxz66zj7LVLjYFeKXKBFuq4pump",
-] as const;
+export const LIVE_CAPTURED_AT = "2026-10-28T10:48:45.546100+00:00";
+export const LIVE_ARCHIVED_STREAM_COUNT = 42;
 
 const allowedCardFields = new Set([
   "id",
@@ -77,40 +72,90 @@ function safeString(
   return value;
 }
 
-function decodeEscapedObject(source: string, start: number): unknown {
+// Read the single retained Flight push as JSON, never as executable script.
+// The first initialSectionData array is the captured Most viewers section;
+// hero records and the second section must not be mixed into that inventory.
+function decodeArchivedSection(source: string): unknown[] {
+  const pushes = [
+    ...source.matchAll(
+      /<script>self\.__next_f\.push\(([\s\S]*?)\)<\/script>/gu,
+    ),
+  ];
+  if (pushes.length !== 1) {
+    throw new LiveEvidenceError("Captured Live Flight payload is not unique");
+  }
+  let push: unknown;
+  try {
+    push = JSON.parse(pushes[0][1]);
+  } catch {
+    throw new LiveEvidenceError("Captured Live Flight payload is invalid JSON");
+  }
+  if (
+    !Array.isArray(push) ||
+    push.length !== 2 ||
+    push[0] !== 1 ||
+    typeof push[1] !== "string"
+  ) {
+    throw new LiveEvidenceError(
+      "Captured Live Flight payload shape is invalid",
+    );
+  }
+  const payload = push[1];
+  const marker = '"initialSectionData":[';
+  const markerStart = payload.indexOf(marker);
+  if (
+    markerStart < 0 ||
+    payload.indexOf(marker, markerStart + marker.length) !== -1
+  ) {
+    throw new LiveEvidenceError(
+      "Captured Live section is missing or ambiguous",
+    );
+  }
+  const start = markerStart + marker.length;
+  if (payload[start] !== "[") {
+    throw new LiveEvidenceError("Captured Live section is not an array");
+  }
   let depth = 0;
   let inString = false;
+  let escaped = false;
   let end = -1;
-
-  for (let index = start; index < source.length; index += 1) {
-    if (source[index] === "\\" && source[index + 1] === '"') {
-      inString = !inString;
-      index += 1;
+  for (
+    let index = start;
+    index < Math.min(payload.length, start + 250_000);
+    index += 1
+  ) {
+    const char = payload[index];
+    if (inString) {
+      if (escaped) escaped = false;
+      else if (char === "\\") escaped = true;
+      else if (char === '"') inString = false;
       continue;
     }
-    if (inString) continue;
-    if (source[index] === "{") depth += 1;
-    if (source[index] === "}" && --depth === 0) {
+    if (char === '"') inString = true;
+    else if (char === "[") depth += 1;
+    else if (char === "]" && --depth === 0) {
       end = index + 1;
       break;
     }
   }
-
-  if (end < 0 || end - start > 16_384) {
-    throw new LiveEvidenceError("Archived stream object boundary is invalid");
+  if (end < 0) {
+    throw new LiveEvidenceError("Captured Live section boundary is invalid");
   }
-
-  let parsed: unknown;
+  let section: unknown;
   try {
-    parsed = JSON.parse(
-      source.slice(start, end).replaceAll('\\"', '"').replaceAll("\\\\", "\\"),
-    );
-  } catch (error) {
+    section = JSON.parse(payload.slice(start, end));
+  } catch {
+    throw new LiveEvidenceError("Captured Live section is invalid JSON");
+  }
+  if (
+    !Array.isArray(section) ||
+    section.length !== LIVE_ARCHIVED_STREAM_COUNT
+  ) {
     throw new LiveEvidenceError(
-      `Archived stream object is invalid JSON: ${error instanceof Error ? error.message : "unknown parse failure"}`,
+      "Captured Live section record count does not match",
     );
   }
-  return unescapeFlightStrings(parsed);
+  return section;
 }
 
 // React Flight stores a string that starts with "$" as "$$"; any other
@@ -119,14 +164,19 @@ function unescapeFlightStrings(value: unknown): unknown {
   if (typeof value === "string") {
     if (value.startsWith("$$")) return value.slice(1);
     if (value.startsWith("$")) {
-      throw new LiveEvidenceError("Archived stream contains an unresolved Flight reference");
+      throw new LiveEvidenceError(
+        "Archived stream contains an unresolved Flight reference",
+      );
     }
     return value;
   }
   if (Array.isArray(value)) return value.map(unescapeFlightStrings);
   if (isRecord(value)) {
     return Object.fromEntries(
-      Object.entries(value).map(([key, item]) => [key, unescapeFlightStrings(item)]),
+      Object.entries(value).map(([key, item]) => [
+        key,
+        unescapeFlightStrings(item),
+      ]),
     );
   }
   return value;
@@ -219,22 +269,16 @@ export function parseLiveCapture(
     throw new LiveEvidenceError("Captured Live page is not valid UTF-8");
   }
 
-  const streams = archivedMints.map((mint) => {
-    const marker = `{\\"id\\":\\"${mint}\\",\\"mint\\":\\"${mint}\\"`;
-    const start = source.indexOf(marker);
-    if (start < 0) {
-      throw new LiveEvidenceError(
-        `Captured Live page is missing the archived record for ${mint}`,
-      );
-    }
-    return validateArchivedStream(decodeEscapedObject(source, start), mint);
-  });
-
-  return streams.sort(
-    (left, right) =>
-      right.viewerCountAtCapture - left.viewerCountAtCapture ||
-      left.mint.localeCompare(right.mint, "en-US"),
+  const streams = decodeArchivedSection(source).map((record) =>
+    validateArchivedStream(unescapeFlightStrings(record)),
   );
+  if (new Set(streams.map((stream) => stream.id)).size !== streams.length) {
+    throw new LiveEvidenceError(
+      "Captured Live section contains duplicate identities",
+    );
+  }
+  // Preserve the authenticated section order. This is not a ranking formula.
+  return streams;
 }
 
 export function verifyLiveEvidence(
@@ -268,12 +312,8 @@ export function verifyLiveEvidence(
       "Captured Live page byte length does not match",
     );
   }
-  if (typeof manifest.captured_at !== "string") {
-    throw new LiveEvidenceError("Capture manifest timestamp is missing");
-  }
-  const capturedAt = new Date(manifest.captured_at);
-  if (!Number.isFinite(capturedAt.getTime())) {
-    throw new LiveEvidenceError("Capture manifest timestamp is invalid");
+  if (manifest.captured_at !== LIVE_CAPTURED_AT) {
+    throw new LiveEvidenceError("Capture manifest timestamp does not match");
   }
 
   return {

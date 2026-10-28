@@ -20,13 +20,19 @@ the reconstruction.
 | Manifest               | `evidence/web/manifest.json`                                       |
 
 The adapter requires the manifest URL, final URL, status, object path, byte
-count and hash to match before parsing. It then extracts the first five of the 42
-card objects in the captured `Most viewers` payload, in captured order (not the five
-highest viewer counts), undoes React Flight string escaping (`$$` → `$`; any other
+count, hash and exact capture timestamp to match before parsing. It reads the
+single retained Flight push as inert JSON, then extracts all **42 unique card
+objects** from the first `initialSectionData` array, in captured order. It does
+not mix in hero records or the second (24-record) section. It undoes React Flight
+string escaping (`$$` → `$`; any other
 `$`-prefixed value fails closed) and validates their
 identity, creator address, symbol, title, historical viewer count and captured
-`isLive` flag. Playlist and thumbnail fields are deliberately discarded before
-data crosses the Server/Client Component boundary.
+`isLive` flag. Playlist, thumbnail, nested coin data and other unexposed fields are deliberately
+discarded before data crosses the Server/Client Component boundary. A duplicate
+identity, missing/extra record, invalid required field, ambiguous push or section
+marker fails the whole snapshot; records are not silently dropped. The decoder
+accepts at most 1,000,000 source bytes and bounds the decoded section scan to
+250,000 UTF-16 code units (the retained first array occupies 162,528).
 
 The separate `https://livestream-api.pump.fun/health` observation is object
 `evidence/web/objects/2f97956d4bb68473`, 191 bytes, SHA-256
@@ -41,6 +47,7 @@ Hashes identify recovered factory text, not original source files.
 
 | Module ID                      | Factory SHA-256                                                    | Source bundle                              |     UTF-16 range | Classification and finding                                                                                                                                                    |
 | ------------------------------ | ------------------------------------------------------------------ | ------------------------------------------ | ---------------: | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `31113`                        | `aa72011769a3b4ed93846aa469860c5b661aafea0e98fbf5da8432305f2348c5` | `evidence/web/objects/8cb897425bbbb845.js` |      `118..3161` | OBSERVED: `LiveHomepage` maps section registry index `s` to `initialSectionData[s]`; capture Flight reference `$L116` identifies this factory.                                |
 | `369731`                       | `fc87a2c85f17569e3f50a0b0bd960e814109550629c9baef4200792008e6d9b3` | `evidence/web/objects/44a65b4313e51497.js` |    `8997..20378` | OBSERVED: six-slot hero carousel, selection, pagination and viewer-count rendering.                                                                                           |
 | `763145`                       | `d6c5fb78571198cbdce125397e28ac5a9cda6f2fa2b71dca1836de1e13821064` | `evidence/web/objects/0ba78d0f42544445.js` |    `2766..11008` | OBSERVED: stream card title, ticker and creator identity presentation. Its default coin-detail link remains outside this route's allowed scope.                               |
 | `944001` / `310766`            | `1c56dd013720ae62a9c8ec316ebf1921d9fb13dc436bd75f7eefacdaad40aecb` | `evidence/web/objects/0ba78d0f42544445.js` |   `13588..21847` | OBSERVED: discovery section registry and `Most viewers` section assembly.                                                                                                     |
@@ -57,8 +64,10 @@ Hashes identify recovered factory text, not original source files.
   accessible `Live streams` heading.
 - Captured structure includes a hero carousel and a `Most viewers` section.
 - Cards expose coin title/ticker, creator identity and a viewer indicator.
-- The five locally used card objects were marked live and reported historical
-  participant counts of 42, 34, 26, 24 and 20 in the captured response.
+- All 42 first-section records are unique and were marked live at capture.
+  The first five historical counts are 42, 34, 26, 24 and 20. Record 13
+  (`CryptoCasinoWEB3`) reports 40 and record 42 (`Be a U$Dolly visionary!`)
+  reports zero. This is not evidence of current broadcasts or presence.
 - The captured response contains remote image and playlist URLs. Local code
   validates but never sends those fields to the browser.
 
@@ -73,19 +82,31 @@ Hashes identify recovered factory text, not original source files.
 
 - Viewer numbers are interpreted only as values at capture time because the
   response and page were captured together.
-- The captured array order of these five cards is retained for the default
+- The captured array order of all 42 cards is retained for the default
   local order. The captured section is not strictly ordered by viewer count (a
   later card reports 40 viewers), so no ranking formula is inferred.
 
 ## LOCAL DESIGN
 
 - Search covers captured title, ticker, creator address and mint locally.
-- Sort controls offer captured viewer count and title. Query, sort, section and
-  selected record are URL-backed for reload and browser history behavior.
-- `Other sections` exposes an honest unavailable state instead of inventing
-  unauthenticated card data.
+- Sort controls offer captured order (default), historical viewer count and
+  title. Viewers/title sorts use mint as a deterministic tie-breaker. Filtering
+  occurs before pagination, without mutating the authenticated order.
+- Local pages contain 12 records (12/12/12/6 for the whole archive). Query, sort,
+  section, selected record and page are URL-backed. These page numbers are not
+  upstream cursors or a reconstruction of production pagination.
+- Search, clear, sort and section actions reset the page; page changes clear
+  selection. A duplicate, noncanonical, empty or out-of-range page parameter
+  produces an explicit unavailable view and a first-page recovery action. Empty
+  searches have one empty page rather than a negative or phantom page.
+- `Other sections` remains unavailable. The second retained array exists but is
+  deliberately not mapped/validated/exposed by this adapter; no missing-data
+  claim is made for that array.
 - Selection opens a metadata panel whose only playable outcome is `Playback
-unavailable`. Escape closes the detail and restores focus to its card.
+unavailable`. Escape closes the detail and restores focus to its card, or
+  the visible search control/section tab when that card is off-page. Escape
+  events already prevented or owned by an open/modal dialog do not dismiss
+  this nonmodal metadata panel.
 - Remote thumbnails are replaced with text placeholders; coin-detail links are
   not exposed because `/coin/:mint` remains excluded.
 
@@ -101,13 +122,26 @@ unavailable`. Escape closes the detail and restores focus to its card.
 
 ## Verification
 
-- `pnpm test:live` authenticates the capture, validates the five records and
-  exercises mutation and invalid-schema controls.
+- `node --experimental-strip-types --test tests/live_snapshot.test.ts`: **15/15
+  passed** for this expansion. Checks include all 42 records against an independent
+  whole-Flight-row JSON oracle, three hash-bound source-factory ranges linking
+  the first section to `most-viewers`, timestamp/hash/schema controls, duplicate
+  and last-record corruptions, escaped strings, stable sorting and all four
+  page partitions, invalid/duplicate page inputs, filtered and empty pages.
+- Focused pure TypeScript check and Babel TSX/test syntax parsing: **passed**.
 - `pnpm --filter @pump-reconstruction/frontend test:browser -- live.spec.ts`
-  exercises search, sort, empty and unavailable states, URL history, selection,
-  Escape/focus restoration, keyboard tabs, safety boundaries and target
-  viewport overflow.
+  has expanded cases for all-page navigation, reload/history, query/sort reset,
+  invalid pages, off-page/blank-selection Escape recovery and modal/prevented
+  Escape ownership. These new browser
+  cases and refreshed screenshots are **not yet run**: the full pinned frontend
+  install is held by the environment's dependency minimum-release-age gate.
+  No gate override, substitute dependency or proxy was used.
+- Pinned Next 16.4.1 `use-search-params` and `use-router` guides were read from
+  an integrity-verified official npm archive, extracting documentation only.
+  No Next runtime or dependency was installed through that documentation path.
 - The complete app build, test, typecheck, evidence and progress checks remain
-  the release gates. Local screenshots are structural qualification only;
+  pending release gates for this patch. Historical local screenshots in the
+  repository do not validate this expanded view. Local screenshots are structural
+  qualification only;
   equivalent original interaction screenshots were not captured, so visual
   parity is not claimed.
