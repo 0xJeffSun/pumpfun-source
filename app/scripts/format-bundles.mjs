@@ -14,5 +14,7 @@ for(const record of manifest.records.filter(x=>x.status===200&&x.url.endsWith('.
 }
 await fs.writeFile(path.join(output,'manifest.json'),JSON.stringify({notice:'Formatting only; not original sources and not runtime-equivalence proof.',records},null,2)+'\n');
 console.log(`Formatted ${records.filter(r=>r.status==='formatted').length}/${records.length} scripts`);
+const failures=records.filter(r=>r.status==='failed').length;
+if(failures)throw new Error(`Bundle formatting failed for ${failures} source(s); see recovered/pretty/manifest.json`);
 }
 if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.url))await formatBundles();

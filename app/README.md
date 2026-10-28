@@ -52,6 +52,8 @@ pnpm contracts
 pnpm recover
 ```
 
+`pnpm recover` exits nonzero when any selected bundle cannot be read or formatted. It still attempts the remaining bundles and writes per-source diagnostics to `recovered/pretty/manifest.json`; successful outputs from an incomplete run remain available. This optional formatter does not publish an atomic snapshot or establish runtime equivalence.
+
 `capture.py` acquires only public read-only URLs with a recorded user agent. It crawls the listed in-scope pages and their static asset graph, with explicit wave limits and a remaining-URL report. It is not an authenticated crawl. No source map was declared in captured JS; three explicit `.map` probes returned 404. Original frontend TypeScript, source filenames, server actions and backend source remain unavailable.
 
 Resume accepts retained object paths only as canonical repository-relative POSIX paths below `evidence/web/objects/`. Real nested directories are allowed; absolute or drive-qualified paths, backslashes, empty/`.`/`..` segments, symlink components, missing targets and non-regular files fail before network workers start. Reused bytes must still match the recorded length and SHA-256.

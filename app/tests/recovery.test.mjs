@@ -6,7 +6,29 @@ import { mkdtemp, mkdir, writeFile, readFile, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { formatBundles } from '../scripts/format-bundles.mjs';
+import { spawnSync } from 'node:child_process';
 const root=new URL('../',import.meta.url);
+
+test('bundle formatting signals incomplete recovery while retaining per-source diagnostics',async()=>{
+ for(const failure of ['malformed','missing']){
+  const directory=await mkdtemp(path.join(tmpdir(),'pump-format-failure-'));
+  try {
+   await mkdir(path.join(directory,'evidence/web'),{recursive:true});
+   await writeFile(path.join(directory,'evidence/web/good.js'),'const good = 1;');
+   if(failure==='malformed')await writeFile(path.join(directory,'evidence/web/bad.js'),'const broken = ;');
+   const records=['bad','good'].map(name=>({url:`https://example.invalid/${name}.js`,path:`evidence/web/${name}.js`,status:200,sha256:'fixture'}));
+   await writeFile(path.join(directory,'evidence/web/manifest.json'),JSON.stringify({records}));
+   const entry=new URL('../scripts/format-bundles.mjs',import.meta.url).href;
+   const result=spawnSync(process.execPath,['--input-type=module','-e',`import {formatBundles} from ${JSON.stringify(entry)}; await formatBundles(process.argv[1]);`,directory],{encoding:'utf8'});
+   assert.ifError(result.error);
+   assert.notEqual(result.status,0,`${failure} source incorrectly reported successful recovery`);
+   const report=JSON.parse(await readFile(path.join(directory,'recovered/pretty/manifest.json'),'utf8'));
+   assert.deepEqual(report.records.map(record=>record.status),['failed','formatted']);
+   assert.ok(report.records[0].error);
+   assert.match(await readFile(path.join(directory,report.records[1].output),'utf8'),/const good = 1;/);
+  }finally{await rm(directory,{recursive:true,force:true});}
+ }
+});
 
 test('formatting retains distinct bundles with the same basename',async()=>{
  const directory=await mkdtemp(path.join(tmpdir(),'pump-format-'));
