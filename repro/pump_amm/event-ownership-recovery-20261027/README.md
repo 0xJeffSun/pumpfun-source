@@ -47,4 +47,4 @@ python -B repro/pump_amm/event-ownership-recovery-20261027/verify_saved.py
 ```
 
 Use `--current-source` to bind maintained AMM files. Result manifest:
-`3f831ded38f23229ecec64c20f5d47d2f2622d5bf89b163fac0d74b3cbe5f76a`.
+`6f87f7c0ace29a7eb4a87772dd6d552398bec12b1d468fa69803cfd1f4e209f4`.

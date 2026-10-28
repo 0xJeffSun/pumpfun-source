@@ -4,6 +4,17 @@ The [full audit](RECONSTRUCTION-AUDIT.md) and its generated tables retain their
 explicit `1463bd22` snapshot. This log records later research without silently
 changing that baseline or promoting new selected artifacts.
 
+## AMM653 manifest repair after a fresh-checkout review
+
+The [event-ownership checkpoint](../repro/pump_amm/event-ownership-recovery-20261027/README.md)
+had two uncommitted Python cache files listed in nested manifests. Removing
+only those unavailable entries and updating the dependent seals repairs fresh
+verification without changing any source, binary or runtime record. All 13,120
+unaffected entry digests are preserved. Fifteen membership/content controls
+confirm that missing, changed and extra files still fail verification. The full
+saved verifier with current-source binding passes 17,462 cases and 35,418
+signature fields; the 653 normalized / 148 raw result is unchanged.
+
 ## Qualified Mayhem434 composition without prior losses
 
 The [current composition](../research/mayhem-current434-composition-20261027/README.md)
