@@ -2679,5 +2679,69 @@
         "scope": "Partial source proposal; source composition separately qualified before maintained promotion."
       }
     }
+  ],
+  "seventh_review_batch": [
+    {
+      "number": 676,
+      "head": "7a0c0ea4382602fcfb992f9d295b62d7467e3bbc",
+      "merge": {
+        "sha": "91c8f7dbed5b3150839cf362b35ebbf94313f772",
+        "merged": true,
+        "message": "Pull Request successfully merged"
+      },
+      "fresh_replay": {
+        "number": 676,
+        "head": "7a0c0ea4382602fcfb992f9d295b62d7467e3bbc",
+        "producer_sha256": "910875cbc76d05b939eeb7bd4f30a7ad3d7e759f0f3564d08a461f4b0f75e813",
+        "adapted_sha256": "9ac3c4ff2c0af68d9b2b31e35d9f9e066628400cae9a2f4185ad4379c7f0c685",
+        "path_only_changes": [
+          {
+            "kind": "host-path",
+            "before": "Path.home() / 'workspace/pumpfun-sparse/scripts'",
+            "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/scripts"
+          },
+          {
+            "kind": "host-path",
+            "before": "Path.home() / 'workspace/pumpfun-sparse'",
+            "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source"
+          },
+          {
+            "kind": "ROOT",
+            "before": "Path.home() / 'workspace/pumpfun-sparse'",
+            "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source"
+          },
+          {
+            "kind": "OUT",
+            "before": "ROOT / 'research/amm-liquidity-dual-transfer-fee-20261029'",
+            "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/work/contract-pr-review-20261028/replays/pr-676"
+          },
+          {
+            "kind": "WS",
+            "before": "Path.home() / 'workspace/slop-verify'",
+            "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/work/contract-pr-review-20261028/images"
+          }
+        ],
+        "actual_image_sha256": {
+          "original": "6a7ad34596d83b4c435b32f458a56e718e9f82eb4ad38e4316616d15d24d8ff7",
+          "control": "7a300434dced61413bde10788594b427d5649563e0223efcf09e6b214aff7ad3",
+          "candidate": "d17a657baf5cc19736a924c41e75424604411ddbe9f6e72cddf41ab72a695007"
+        },
+        "case_count": 23,
+        "returncode": 0,
+        "passed": true,
+        "fresh_report_sha256": "be801b638ddcb708f4187419a5339d70c70243db215109fb2d9a0bcfbceeea33",
+        "executions": 69
+      },
+      "portability_fix": {
+        "number": 676,
+        "prior_head": "010945e598bd7f4480fe5db25c4dd7bfc9a15cfc",
+        "new_head": "7a0c0ea4382602fcfb992f9d295b62d7467e3bbc",
+        "changed_paths": [
+          "research/amm-liquidity-dual-transfer-fee-20261029/verify.py",
+          "research/amm-liquidity-dual-transfer-fee-20261029/MANIFEST.json"
+        ]
+      },
+      "hosted_ci": "Not established by local checks"
+    }
   ]
 }
