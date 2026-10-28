@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import AppShell from "./app-shell";
+import { AppShell } from "@/components/shell/AppShell";
 import "./globals.css";
+import "./captured-shell.css";
 
 export const metadata: Metadata = {
   title: {
@@ -13,7 +14,7 @@ export const metadata: Metadata = {
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" data-pf-auth="out">
       <body>
         <AppShell>{children}</AppShell>
       </body>

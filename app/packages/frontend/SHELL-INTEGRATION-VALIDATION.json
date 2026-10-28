@@ -1,0 +1,127 @@
+{
+  "schema": 1,
+  "publication_main": "f77117ea8827f2ff4a497a2a5360deba8608aeca",
+  "control_source": "6aa66f03c6e83e23f546be406b1eed158e15a507",
+  "dependency": {
+    "pr": 663,
+    "source_commit": "502033a57a38135753f55022c42380dd46ffa0ac",
+    "local_cherry_pick": "1652d4c32"
+  },
+  "checks": {
+    "source_bindings_and_import_closure": "pass: 3 tests",
+    "frontend_typecheck": "pass",
+    "theme_and_icon_regeneration": "pass: both --check",
+    "evidence": "pass: 698 captured objects, npm integrity, unchanged SDK",
+    "progress": "pass: 8 tests; no milestone changes",
+    "full_app_build": "pending",
+    "full_app_test_and_91_browser": "pending",
+    "root_common": "pending"
+  },
+  "discarded_run": {
+    "reason": "Alternate-port browser run stopped: existing request guards and clipboard permissions explicitly require 3010; local GETs on 3018 were incorrectly classified external. No checks weakened. Standard-port full rerun pending."
+  },
+  "visual": {
+    "reference_state": "unknown visitor state; explicit display emulation and unclosed SSR overlay recorded separately",
+    "page_bodies": "masked identically",
+    "prior_blank_reference": "rejected, not published",
+    "control": {
+      "harness_sha256": "c02a91ebfaf675c65956053a5e91547562374db286740de97d9c76c9b0aaf1ef",
+      "cases": [
+        {
+          "state": "overlay-closed-emulation",
+          "route": "/",
+          "viewport": "desktop",
+          "differing_pixels": 33618,
+          "differing_ratio": 0.025939814814814815
+        },
+        {
+          "state": "overlay-closed-emulation",
+          "route": "/",
+          "viewport": "mobile",
+          "differing_pixels": 8545,
+          "differing_ratio": 0.025960019443431764
+        },
+        {
+          "state": "overlay-closed-emulation",
+          "route": "/explore",
+          "viewport": "desktop",
+          "differing_pixels": 33566,
+          "differing_ratio": 0.025899691358024692
+        },
+        {
+          "state": "overlay-closed-emulation",
+          "route": "/explore",
+          "viewport": "mobile",
+          "differing_pixels": 8596,
+          "differing_ratio": 0.02611495929031474
+        },
+        {
+          "state": "ssr-overlay-present",
+          "route": "/",
+          "viewport": "desktop",
+          "differing_pixels": 68216,
+          "differing_ratio": 0.0526358024691358
+        },
+        {
+          "state": "ssr-overlay-present",
+          "route": "/",
+          "viewport": "mobile",
+          "differing_pixels": 32416,
+          "differing_ratio": 0.09848098189330416
+        }
+      ]
+    },
+    "candidate": {
+      "harness_sha256": "c02a91ebfaf675c65956053a5e91547562374db286740de97d9c76c9b0aaf1ef",
+      "cases": [
+        {
+          "state": "overlay-closed-emulation",
+          "route": "/",
+          "viewport": "desktop",
+          "differing_pixels": 9216,
+          "differing_ratio": 0.0071111111111111115
+        },
+        {
+          "state": "overlay-closed-emulation",
+          "route": "/",
+          "viewport": "mobile",
+          "differing_pixels": 261,
+          "differing_ratio": 0.0007929274516952242
+        },
+        {
+          "state": "overlay-closed-emulation",
+          "route": "/explore",
+          "viewport": "desktop",
+          "differing_pixels": 2594,
+          "differing_ratio": 0.0020015432098765434
+        },
+        {
+          "state": "overlay-closed-emulation",
+          "route": "/explore",
+          "viewport": "mobile",
+          "differing_pixels": 560,
+          "differing_ratio": 0.0017013002794993317
+        },
+        {
+          "state": "ssr-overlay-present",
+          "route": "/",
+          "viewport": "desktop",
+          "differing_pixels": 62815,
+          "differing_ratio": 0.04846836419753087
+        },
+        {
+          "state": "ssr-overlay-present",
+          "route": "/",
+          "viewport": "mobile",
+          "differing_pixels": 32096,
+          "differing_ratio": 0.09750881030501883
+        }
+      ]
+    }
+  },
+  "limits": [
+    "First-visit consent flow remains unfinished.",
+    "Masked shell-only screenshots do not establish route-wide or 100% visual equivalence.",
+    "Search results and sign-in remain unavailable; excluded/deferred products stay excluded."
+  ]
+}
