@@ -110,9 +110,12 @@ actual referents and signed receipts using the repository Python requirements:
 
 ```sh
 python -I -B research/amm-fee-value-call-recovery/verify.py
+python -I -B research/amm-fee-value-call-recovery/test_inventory.py
 ```
 
-The audit does not rebuild or execute the program. Materialize the complete
+The audit requires exact packet membership, rejects symlinks and special files,
+and includes Python cache files in the inventory. Eight filesystem corruption
+controls exercise the actual inventory guard. The audit does not rebuild or execute the program. Materialize the complete
 candidate into a new directory (`--baseline` selects the retained parent):
 
 ```sh

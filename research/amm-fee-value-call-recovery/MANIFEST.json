@@ -43,7 +43,7 @@
     "research/amm-native-transfer-fee-recovery/sources/candidate.tar.gz": "10aee69d35360c2c0eea9cd54a8e08aa3c66811cbd9f7766216c9b9d07377365"
   },
   "files": {
-    "README.md": "86e7c2767b62ddc9db59873286ff0debe29eb062ca124a70c17da540f01c6dd2",
+    "README.md": "7a6afe44061eb002930102bf8753e509e79db7abdda12e8609fb48e19a02d49b",
     "analyze.py": "38c763d6415b5a6460290c84b58ade74a36d4e7c862f9a77b23047debfd62544",
     "builds/baseline/build.log.gz": "c956afc4cdb9213aea0e1a4a0f15029941fdc471442818cff580b96548879713",
     "builds/baseline/candidate.so.gz": "85812f06ef0cdb81c55bb538a337fd376c9e550e68dee9738adb30d74e4a3c86",
@@ -112,6 +112,7 @@
     "sources/baseline.tar.gz": "10aee69d35360c2c0eea9cd54a8e08aa3c66811cbd9f7766216c9b9d07377365",
     "sources/candidate.tar.gz": "879f13e3b69918c2033531cb3467e87181365fa2886808d3ad3c8b24c5a91adf",
     "static.json": "840f287186af33e7a344e0a29ba2cc1a87a9a411eba689ecb1ed677dd17907c4",
-    "verify.py": "60cf7680d54c491eee1bb4af7508423d6470cef28921d6efba85e42ee201b24c"
+    "test_inventory.py": "62b23df619bdec4d65878422edb8074f25bacfe03e2ae50fd185423102890767",
+    "verify.py": "d6db022ef47d357826b019e302a8e9dcd2520de7b78ab3d6c8dc1319ea50e07c"
   }
 }
