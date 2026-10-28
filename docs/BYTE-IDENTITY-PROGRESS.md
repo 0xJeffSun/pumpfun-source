@@ -2822,3 +2822,100 @@ No fresh compiler build or runtime replay was performed for this archival merge.
 These historical packet counts do not alter the maintained frontier totals.
 The newest upstream follow-up records incentive-range counterexamples and also
 does not change current counts.
+
+## Qualified Mayhem436: both complete Legacy trade bodies
+
+PR #404 supplies the complete Legacy Buy and Legacy Sell source. Independent
+ELF measurement confirms both original body lengths, all 50 ordered immediate
+callees each, and their full 216/201-block CFGs. Its original 436/100 artifact
+uses a weaker parent and is not substituted for the stronger source-origin
+checkpoint. The six changed files are exactly equal between those two parents,
+so their source changes compose without conflict.
+
+The [new qualified436 packet](../research/mayhem-current436-composition-20261027/README.md)
+contains the actual combination: 436/441 normalized, 141 raw-local, 295 normalized-only
+and five unmatched windows. Every previous raw body, observed direct edge,
+Source observation and Source profile survives. Recursive direct-call closure
+rises 425→429, positive immediate edges 4,371→4,473, and matching Sources 472→486.
+The two added bodies cover 26,840 original bytes; 72,192 bytes remain unmatched.
+Two root compilations agree on both complete outputs. Fresh 14-family trade,
+initializer, sweep and rate replays pass with all records retained; overlapping
+scopes do not become distinct transaction counts. The candidate hash is
+`cac32dadb032cc80366124ab3ceb430fdc5bfae23ab9cec1b5d18bb9e0f55e5b`.
+
+The [conditional formatting proof](../research/mayhem-current434-format-route-20261027/README.md)
+remains explicitly bound to the previous 434 image. Independent verification and
+all 13 tests pass. It follows three actual indirect sites across 25 tag inputs,
+under allocation/prefix-writer contracts, stopping before the final write.
+It adds no function match or general indirect-call claim. The attempted panic
+route reaches external custom_panic/abort and is not claimed closed.
+
+SweepFees source controls have not closed O0076. Borrowed native-key access
+restores the 51 callee positions but loses the original comparison structure.
+An integer-valued validator yields the original 8,400-byte outer-body size but
+loses the already recovered O0073 body, so it is rejected. Boxing GlobalParams
+also loses three parser/wrapper matches; the apparent load offsets resolve to
+the same actual fields and do not establish a state-layout defect. Ordinary
+source-only controls and their exact artifacts are retained in the work ledger.
+
+The Custom/tag-zero formatting follow-up adds three conditional tuple dispatch
+sites, verifies a 32-byte vtable prefix and follows the payload pointer to the
+numeric formatter without reading or claiming its value. Its bounded contracts
+are the same as the unit-tag route; independent verification and 11 mutation/model
+tests pass. These proofs are bound to the old 434-window image and add no count
+to the qualified436 body frontier.
+
+## Follow-up review: Pump Round40 and PR405
+
+The current maintained Pump Round40 verifier passes independently: 816/1,035
+normalized windows, 202 raw bodies and 1,085,008 matched text bytes. Its saved
+corpus checks 10,468 full cases, 7,641 additional executions, 18,105 structured
+paired-diagnostic cases and 3,771 distinct signed transactions. Ordinary success
+messages are outside that diagnostic policy. Its README retains the separately
+identified ClaimCashbackV2 error-precedence/log limitation.
+
+With qualified Mayhem436, the maintained/research overview is now 2,985/3,338
+matched windows, 1,568 raw, 1,417 normalized-only and 353 unmatched. Matched
+original text is 4,097,808/5,213,128 bytes. Only Fees and Relay have complete
+meaningful-ELF equality.
+
+PR405's original 368-byte native AMM transfer-fee helper independently passes
+its full saved verifier: the separate research baseline advances 731→732 with
+148 raw matches retained. Its 2,266 case triples and 216 fresh-VM triples retain
+signed receipts and existing log limitations. This research tree is distinct
+from the maintained 656-window AMM selection and does not change its row.
+
+The PR405 inventory now rejects every unlisted file, symlink and special file;
+eight actual filesystem regressions pass. Its four-file seal update changes no
+source, binary or runtime evidence. The maintained incentive-order archive also
+inherited the two unavailable Python-cache entries: seven metadata/seal files
+remove them, with 19,459 unaffected entry hashes preserved. The original saved
+evidence remains unchanged in both repairs.
+
+The repaired current AMM incentive-order packet passes the independent full
+`--current-source` verifier, including all 17,462 core cases and its retained
+supplemental matrices. All 19,463 result-file hashes pass the post-run inventory
+check. This metadata repair changes no source, binary or runtime record.
+
+A concurrent upstream publication fix then restored the two originally recorded
+cache files at their exact hashes. The integration retains that fix and restores
+the original incentive-order manifests rather than carrying the alternative
+cache-entry removal. All 19,465 recorded result files hash-verify, including the
+two restored files; compiled source, candidate and runtime records are unchanged.
+The canonical result-manifest seal is
+`6c06d070fe0d68ae3df5d48637c0cd28a314d2f134107ec56cafa9ba812fde35`.
+
+## Mayhem436 selected data checks
+
+The current artifact now has a stronger bounded correspondence: 486 Source
+coordinates, 48 relocated code-address sites and 119 references to 30 selected
+32-byte data prefixes are checked with their mapped callback targets. The
+recursive relation retains all 429 previously closed windows while reducing
+601 candidate pairs to 579, rejecting 22 ambiguous pairings. Whole data objects,
+generic indirect dispatch and whole-ELF identity remain outside this result.
+
+The new packet independently passes its verifier and ten tests, including
+90 actual scalar/target corruption subcases, a missing relocation, a function-
+interior pointer, a Source-coordinate corruption and filesystem controls. It
+adds no function match, build or runtime execution. Its manifest is
+`f6c21d4d597cd088f115f47c2f394518c31f852df12960d6288f1b71b9773483`.

@@ -1,7 +1,7 @@
 # Remaining reconstruction work — 27 October 2026
 
 This is the action list for the [reconstruction audit](RECONSTRUCTION-AUDIT.md),
-updated through upstream revision `9a77d1211`. The historical audit retains its
+updated through upstream revision `55eb899b4`. The historical audit retains its
 `6b61b337` parent and linked visibility-recovery measurements. The [current review](RECONSTRUCTION-STATUS.md)
 and [complete refreshed inventory](../repro/reconstruction-status-2026-10-26/README.md)
 list every raw match and unresolved window in their dated snapshot. That core
@@ -10,9 +10,9 @@ snapshot retains `1463bd22` audit bindings; current selections are recorded in
 [completion ledger](COMPLETION.md) remains a selected-checkpoint record; its old
 candidate paths and “current” prose must not override newer evidence.
 
-Current [Pump Round39](../repro/pump/main-contract-round39-20261027/README.md)
-has 197 raw-local matches, 609 normalized-only matches and 229 unmatched windows.
-The unmatched windows cover 721,896 original text bytes. Remaining bodies,
+Current [Pump Round40](../repro/pump/main-contract-round40-20261027/README.md)
+has 202 raw-local matches, 614 normalized-only matches and 219 unmatched windows.
+The unmatched windows cover 707,200 original text bytes. Remaining bodies,
 data, relocations, uncovered behavior and original build provenance remain open.
 
 Current [Fees research](../research/claude-fees100-crank-donation-20261027/README.md)
@@ -20,27 +20,27 @@ reproduces all 585 bodies and the complete 873,256-byte meaningful ELF. The
 75,688-byte remaining capture tail is zero loader allocation. This does not
 establish the original historical source or deployment recipe.
 
-Current [AMM checkpoint](../repro/pump_amm/admin-harvest-recovery-20261027/README.md)
+Current [AMM checkpoint](../repro/pump_amm/incentive-order-recovery-20261027/README.md)
 has 148 raw-local, 508 normalized-only and 129 unmatched windows, with 335,928
 original text bytes unmatched. Older event and optional-decoder experiments
 retain their original artifact bindings.
 
-Current Mayhem research is the [qualified434 composition](../research/mayhem-current434-composition-20261027/README.md):
-141 raw-local, 293 normalized-only and seven unmatched windows / 99,032 original
-text bytes. O0092 and O0093 match their complete 1,256-byte and 1,120-byte bodies;
-all twenty immediate callees and twenty ordered typed references agree. The
-960-byte initializer remains complete and the previous partial Legacy Buy body
-is preserved. Two builds, 6,636 fresh trade pairs and 69 initializer pairs pass.
-Large trade handlers, remaining data/call closure and whole-ELF identity remain unresolved.
+Current Mayhem research is the [qualified436 composition](../research/mayhem-current436-composition-20261027/README.md):
+141 raw-local, 295 normalized-only and five unmatched windows / 72,192 original
+text bytes. It adds the full 13,848-byte Legacy Buy and 12,992-byte Legacy Sell
+bodies to the preceding qualified434 source. Both quotes, the 960-byte
+initializer, O0073 and O0075 remain complete normalized matches.
 
-The current composition preserves the repaired allocator and both source-origin
-fixes while adding O0073 and O0075. Ordered direct-call closure now covers
-425/434 matched bodies. Full signed trade, initializer, sweep and rate
-verification passes with 18,534 records across overlapping scopes. Global data,
-indirect calls, layout and historical source/toolchain provenance remain work.
-The [441-row inventory](../research/mayhem-current434-composition-20261027/inventory.tsv)
-and [completion review](MAYHEM-COMPLETION.md) list the exact remaining seven
-functions and the distinction between local raw equality and whole-ELF identity.
+The current composition preserves every prior raw body, allocator edge,
+Source profile and observed direct-call relationship. Ordered direct-call
+closure covers 429/436 matched bodies; 4,473 positive immediate edges and 486
+matching Source observations are retained. Two builds and fresh signed trade,
+initializer, sweep and rate verification pass. Inputs overlap and their 18,534
+signed records are not unique scenarios. Four large trade bodies, SweepFees,
+global data, indirect calls, layout and historical source/toolchain provenance
+remain work. The [441-row inventory](../research/mayhem-current436-composition-20261027/inventory.tsv)
+and [completion review](MAYHEM-COMPLETION.md) list the five functions and the
+limits of the 1.13% unmatched-window / 10.21% unmatched-text figures.
 
 The [current Legacy Buy ownership composition](../research/mayhem-current-ownership-composition-20261027/README.md)
 preserves the 430/100 frontier and its complete initializer. Its partial handler
@@ -700,7 +700,7 @@ composition and compilation; their gains are not added to this count.
 
 ## Active priority: Mayhem
 
-The [Mayhem work plan](MAYHEM-RECONSTRUCTION-PLAN.md) supersedes earlier cross-program prioritization. Its current qualified research frontier has 434 of 441 matched windows, including 141 raw-equal bodies, with seven unmatched bodies. The quote-aware validator, initializer and SweepFeesAdmin are recovered; six trade bodies, SweepFees, recursive data/call closure, full ELF layout and historical provenance remain open. The [completion review](MAYHEM-COMPLETION.md) records 1.59% of windows and 14.01% of original executable text still unmatched. These are coverage measures, not estimates of engineering time.
+The [Mayhem work plan](MAYHEM-RECONSTRUCTION-PLAN.md) supersedes earlier cross-program prioritization. Its current qualified research frontier has 436 of 441 matched windows, including 141 raw-equal bodies, with five unmatched bodies. The quote-aware validator, initializer, SweepFeesAdmin, Legacy Buy and Legacy Sell are recovered; four trade bodies, SweepFees, recursive data/call closure, full ELF layout and historical provenance remain open. The [completion review](MAYHEM-COMPLETION.md) records 1.13% of windows and 10.21% of original executable text still unmatched. These are coverage measures, not estimates of engineering time.
 
 
 ### Mayhem historical event-parser allocator context
