@@ -37,7 +37,7 @@ Source acquisition/extraction is separate from editable feature reconstruction a
 
 | Feature family | Reconstructed source readiness | Feature completion | Reviewed state |
 | --- | ---: | ---: | --- |
-| Shared layout / navigation | 0/3 (0%) | 0/4 (0%) | Local shell exists; original layout and responsive states unqualified. |
+| Shared layout / navigation | 3/3 (100%) | 3/4 (75%) | Evidence-mapped responsive shell, active navigation, search URL state and failure boundaries pass browser tests. Pixel-level reference parity remains unqualified. |
 | Home / feed | 0/3 (0%) | 0/4 (0%) | Feed placeholder; captured content is not a local feed implementation. |
 | Explore / search | 0/3 (0%) | 0/4 (0%) | Search page scaffold; filters, pagination and results unimplemented. |
 | Leaderboards / competitions | 0/3 (0%) | 0/4 (0%) | Route scaffold only. |
