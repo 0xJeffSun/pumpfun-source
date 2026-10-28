@@ -2,69 +2,59 @@
 
 Rust reconstruction of Pump.fun's Solana programs from captured binaries.
 
-**Current binary coverage — 28 October 2026:** 3,271 / 3,338 function
-windows match (98.0%); 67 remain unmatched. Three of five programs reproduce
+**Current binary coverage — 28 October 2026:** 3,277 / 3,338 function
+windows match (98.2%); 61 remain unmatched. Three of five programs reproduce
 their complete meaningful ELF.
 
 | Program | Matched windows | Matched % | Raw-equal bodies | Normalized only | Unmatched | Whole ELF equal |
 | --- | ---: | ---: | ---: | ---: | ---: | --- |
-| [Pump Main](research/claude-pump-integration-20261027/r37-layout-31/README.md) | 990 / 1,035 | 95.7% | 166 | 824 | 45 | No |
-| [PumpSwap / AMM](research/claude-amm-union3-20261028/README.md) | 763 / 785 | 97.2% | 160 | 603 | 22 | No |
+| [Pump Main](research/claude-pump-integration-20261027/r37-layout-32/README.md) | 990 / 1,035 | 95.7% | 166 | 824 | 45 | No |
+| [PumpSwap / AMM](research/claude-amm-union4-20261028/README.md) | 769 / 785 | 98.0% | 160 | 609 | 16 | No |
 | [Fees](research/claude-fees100-crank-donation-20261027/README.md) | 585 / 585 | 100.0% | 585 | 0 | 0 | **Yes** |
 | [Mayhem](research/mayhem-meaningful-elf-20261028/README.md) | 441 / 441 | 100.0% | 441 | 0 | 0 | **Yes** |
 | [Donation Relay](repro/donation-relay/canonical-exact-selection/README.md) | 492 / 492 | 100.0% | 492 | 0 | 0 | **Yes** |
-| **Total** | **3,271 / 3,338** | **98.0%** | **1,844** | **1,427** | **67** | **3 / 5** |
+| **Total** | **3,277 / 3,338** | **98.2%** | **1,844** | **1,433** | **61** | **3 / 5** |
 
-Matched windows cover **4,722,600 / 5,213,128 code bytes (90.6%)**;
-**490,528 bytes (9.4%)** remain outside matched windows.
+Matched windows cover **4,751,024 / 5,213,128 code bytes (91.1%)**;
+**462,104 bytes (8.9%)** remain outside matched windows.
 
 These figures measure the latest published artifacts, including research not
 integrated into the maintained source tree. Raw-equal bodies match byte for byte;
 normalized matches mask specified call/address operands. Window coverage is not
 a percentage of engineering work completed or proof of whole-program identity.
 The Pump Main and AMM rows use source-only builds. Separate original-derived
-linker layouts report 204 and 172 raw matches, respectively, without increasing
+linker layouts report 204 and 175 raw matches, respectively, without increasing
 normalized coverage.
 
 ## Remaining work
 
-- Recover the **45 Pump Main and 22 PumpSwap / AMM** unmatched windows.
+- Recover the **45 Pump Main and 16 PumpSwap / AMM** unmatched windows.
 - Close remaining call, data and relocation differences, integrate qualified
   source changes, and verify reproducible whole-program builds and uncovered behavior.
-- Pump Main's 990-window build (L31) uses synthetic source-line positioning. Its
-  44-suite captured-loader corpus passes against the exact candidate (10,468 cases,
-  0 mismatches). On L30, 138 ordinary-log differences and 52 source-filename
-  differences were recorded. Two follow-up packets port known Round47 notices with
-  no window change:
-  [empty-fee-sweep](research/pump-l30-fee-sweep-log-parity-20261028/README.md)
-  (84/84 notices restored, 138 → 54 on L30) and
-  [zero-cashback](research/pump-l24-cashback-log-parity-20261028/README.md)
-  (34/34 notices on L24). Neither is composed into L31 yet.
-- PumpSwap's 763-window research has **two reproduced incentive error-order
-  differences in five signed synthetic pairs for each build**. Its full runtime receipts are not
-  included, so the claimed 17,462-case summaries are not independently verified
-  passes. The [maintained AMM checkpoint](repro/pump_amm/v2-mint-clone-recovery-20261028/README.md)
-  remains at 660 windows; this research candidate is not approved for promotion.
-  A separate [760-window integration](research/amm-v2-selector-union-recovery/README.md)
-  resolves the tested incentive failures; it is not composed with the 763-window
-  artifact. Its [signed-outcome witness](research/amm-h11-signed-outcome-witness-20261028/README.md)
-  binds 1,805 accumulator/incentive cases to serialized signed transactions with
-  zero error, state, rollback, CPI or event mismatches; its 327 remaining log
-  differences are all source filename/line/column coordinates.
+- Pump Main's 990-window build ([L32](research/claude-pump-integration-20261027/r37-layout-32/README.md))
+  uses synthetic source-line positioning. It folds in the
+  [empty-fee-sweep](research/pump-l30-fee-sweep-log-parity-20261028/README.md) and
+  [zero-cashback](research/pump-l24-cashback-log-parity-20261028/README.md) notice
+  fixes; its 44-suite captured-loader corpus passes (10,468 cases, 0 mismatches) and
+  ordered-log differences fall from 138 to 23, with no window change.
+- PumpSwap's [769-window union](research/claude-amm-union4-20261028/README.md) removes the
+  incentive error-order regression of the 763-window research (0 mismatches in its
+  signed negative controls). The [maintained AMM checkpoint](repro/pump_amm/v2-mint-clone-recovery-20261028/README.md)
+  remains at 660 windows; the research candidate is not promoted. A contributor packet
+  [recovers the mint scanner](research/amm-mint-scanner-raw-20261028/README.md)
+  (`0xf28b8`, all 1,192 bytes raw-equal); it is not yet composed into the union.
 - Mayhem now [reproduces its complete meaningful ELF](research/mayhem-meaningful-elf-20261028/README.md):
   ordinary stripping of two fresh builds equals all 775,416 meaningful original bytes.
   The closing change moves one vendored-Anchor module declaration and rebinds the data layout.
   A [follow-up](research/mayhem-fresh-host-20261028/README.md) rebuilds the host macro from
   source, with no cached host artifacts, across three fresh chains. The recipe still uses
   a target-derived linker layout, so historical source/compiler provenance remains open.
-- A newer unverified PumpSwap composite is archived and not counted above:
-  [union-760](research/claude-mega-run-archive-20261028/amm/union-758-to-760.patch)
-  (765 / 785 Linux source-only). The
-  [mega-run archive](research/claude-mega-run-archive-20261028/README.md) holds
-  its lane notes, deliveries and partial work.
-- PumpSwap transfer-fee diagnostics now include a runtime trigger for line 57 with
-  basis points above 10,000 ([bps overflow](research/amm-transfer-fee-bps-overflow-20261028/README.md));
-  line 49 is still untriggered.
+- PumpSwap transfer-fee diagnostics with basis points above 10,000 now trigger all
+  three overflow sites at runtime: lines 57/67 for
+  [deposit/withdraw](research/amm-transfer-fee-bps-overflow-20261028/README.md) and
+  [v2 trades](research/amm-trade-v2-bps-overflow-20261028/README.md), and
+  [line 49](research/amm-withdraw-bps-overflow-line49-20261028/README.md). Deployed and
+  rebuilt programs agree in each case.
 
 The linked program reports contain source, build and validation evidence.
 [Build and verification guide](docs/TOOLING.md) ·
