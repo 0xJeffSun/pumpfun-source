@@ -719,37 +719,51 @@
       "candidatePrefixes": [],
       "source": {
         "contract": {
-          "status": "pending",
-          "evidence": []
+          "status": "accepted",
+          "evidence": [
+            "packages/frontend/REFERENCE-PAGES-EVIDENCE.md#observed-capture-authority"
+          ]
         },
         "logic": {
-          "status": "pending",
-          "evidence": []
+          "status": "accepted",
+          "evidence": [
+            "packages/frontend/src/app/docs/reference-page.tsx"
+          ]
         },
         "adapters": {
-          "status": "pending",
-          "evidence": []
+          "status": "accepted",
+          "evidence": [
+            "scripts/extract-reference-pages.py",
+            "packages/frontend/src/app/docs/reference-loader.ts"
+          ]
         }
       },
       "completion": {
         "source": {
-          "status": "pending",
-          "evidence": []
+          "status": "accepted",
+          "evidence": [
+            "packages/frontend/REFERENCE-PAGES-EVIDENCE.md#extraction-and-confidence"
+          ]
         },
         "success": {
-          "status": "pending",
-          "evidence": []
+          "status": "accepted",
+          "evidence": [
+            "packages/frontend/tests/reference-pages.spec.ts"
+          ]
         },
         "failure": {
-          "status": "pending",
-          "evidence": []
+          "status": "accepted",
+          "evidence": [
+            "tests/reference_pages.test.ts",
+            "tests/test_reference_pages.py"
+          ]
         },
         "consistency": {
           "status": "pending",
           "evidence": []
         }
       },
-      "note": "Placeholders, not reconstructed document content."
+      "note": "Authenticated archived fee, privacy and terms documents now render through a fail-closed offline adapter with responsive navigation and corruption tests. Current legal authority and original visual parity remain unqualified."
     }
   ],
   "backend": [

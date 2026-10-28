@@ -75,7 +75,7 @@
     "path": "/docs/fees",
     "feature": "Fees",
     "scope": "included",
-    "status": "scaffolded",
+    "status": "offline-reference",
     "behaviorQualified": false,
     "visualQualified": false
   },
@@ -83,7 +83,7 @@
     "path": "/docs/privacy-policy",
     "feature": "Privacy notice",
     "scope": "included",
-    "status": "scaffolded",
+    "status": "offline-reference",
     "behaviorQualified": false,
     "visualQualified": false
   },
@@ -91,7 +91,7 @@
     "path": "/docs/terms-and-conditions",
     "feature": "Terms",
     "scope": "included",
-    "status": "scaffolded",
+    "status": "offline-reference",
     "behaviorQualified": false,
     "visualQualified": false
   },
