@@ -2957,3 +2957,9 @@ tests cover inventory rejection, source-diff integrity and actual allocated
 candidate/symbol divergence: 17 tests pass and one inapplicable source-patch test
 is explicitly skipped for the archive-only AMM source. Exact linker maps and
 source-patch whitespace are preserved without changing their contents.
+
+## 28 October integration review
+
+[Independent review records](../research/pr-review-20261028/README.md) cover PRs407–410, Pump Round42 and the maintained AMM private-sweep source. Pump remains817/1035with203raw; AMM remains656/785with148raw. Strict inventory and evidence-scope repairs preserve useful incoming work without promoting unqualified source or unarchived builds.
+
+The [SweepFees Rent control](../research/mayhem-current436-sweep-rent-lifetime-20261028/README.md) repeats an8,392-byte candidate versus8,400original, with189bijectively mapped CFGblocks,51ordered callee shapes,13Source values and one opcode-differing block. It preserves436normalized/141raw/429closed,4473positive direct edges and486Source observations. Eight verifier corruption tests pass. No fresh runtime or whole-body equality is claimed, and all five Mayhem gaps remain.
