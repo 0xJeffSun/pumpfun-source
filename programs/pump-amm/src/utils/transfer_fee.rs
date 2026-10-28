@@ -1,23 +1,5 @@
 use crate::*;
-use anchor_spl::token_2022::spl_token_2022::{
-    extension::transfer_fee::TransferFee,
-};
-
 pub use native_transfer_fee::DecodedTransferFee;
-
-trait SplFee {
-    fn spl_fee(&self) -> TransferFee;
-}
-
-impl SplFee for DecodedTransferFee {
-    fn spl_fee(&self) -> TransferFee {
-        TransferFee {
-            epoch: self.epoch.into(),
-            maximum_fee: self.maximum_fee.into(),
-            transfer_fee_basis_points: self.transfer_fee_basis_points.into(),
-        }
-    }
-}
 
 pub type TransferFeeData = Option<DecodedTransferFee>;
 
@@ -46,9 +28,9 @@ pub fn amount_after_fee(data: &TransferFeeData, amount: u64) -> Result<u64> {
 }
 
 pub fn amount_before_fee(data: &TransferFeeData, amount: u64) -> Result<u64> {
-    match data {
+    match *data {
         None => Ok(amount),
-        Some(fee) => fee.spl_fee().calculate_pre_fee_amount(amount)
+        Some(fee) => fee.calculate_pre_fee_amount(amount)
             .ok_or_else(|| error!(PumpAmmError::Overflow)),
     }
 }

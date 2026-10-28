@@ -9,10 +9,10 @@ import subprocess
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
-CHECKPOINT = 'repro/pump_amm/native-ownership-recovery-20261028'
+CHECKPOINT = 'repro/pump_amm/inverse-route-recovery-20261028'
 ARTIFACT = CHECKPOINT + '/results/build/candidate.so'
-CANDIDATE = 'ea14ee8e5ea9a9b6695110fa141af77f378a21dcd36e159ae92279c9c6d6b593'
-MANIFEST = '5cc10d03fec88d0d06c84775bbc6c508b8142e7251cd5cad9ed0a19c56dbc511'
+CANDIDATE = '98ed250d3999e79b55683daa574b984fb7f650dc9eef0e3256671d0612b49fc3'
+MANIFEST = '617b08b3a86165ef3f7144f7cd7bf646112b3333c56161a61c93da985018e955'
 
 
 def sha(path):

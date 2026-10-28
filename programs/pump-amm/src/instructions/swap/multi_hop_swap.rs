@@ -296,7 +296,7 @@ pub fn execute<'info>(
         a.user_out_token_account.mint,
         PumpAmmError::MultiHopDiscontinuousPath
     );
-    let sell = sell.unwrap();
+    let sell = sell.ok_or_else(|| error!(PumpAmmError::NotEnoughRemainingAccounts))?;
     let mut i = 0;
     let mut current = amount;
     let mut source = a.user_in_token_account.to_account_info();

@@ -1,7 +1,7 @@
 # Remaining reconstruction work — 28 October 2026
 
 This is the action list for the [reconstruction audit](RECONSTRUCTION-AUDIT.md),
-updated through upstream revision `43e8bf674`. The historical audit retains its
+updated through upstream revision `fbe3c3585`. The historical audit retains its
 `6b61b337` parent and linked visibility-recovery measurements. The [current review](RECONSTRUCTION-STATUS.md)
 and [complete refreshed inventory](../repro/reconstruction-status-2026-10-26/README.md)
 list every raw match and unresolved window in their dated snapshot. That core
@@ -20,8 +20,8 @@ reproduces all 585 bodies and the complete 873,256-byte meaningful ELF. The
 75,688-byte remaining capture tail is zero loader allocation. This does not
 establish the original historical source or deployment recipe.
 
-Current [AMM checkpoint](../repro/pump_amm/native-ownership-recovery-20261028/README.md)
-has 148 raw-local, 510 normalized-only and 127 unmatched windows, with 332,008
+Current [AMM checkpoint](../repro/pump_amm/inverse-route-recovery-20261028/README.md)
+has 159 raw-local, 500 normalized-only and 126 unmatched windows, with 331,232
 original text bytes unmatched. Older event and optional-decoder experiments
 retain their original artifact bindings.
 

@@ -1520,3 +1520,7 @@ research/mayhem-current437-composition-20261028/source.patch -whitespace
 research/mayhem-current437-composition-20261028/builds/**/link.map -whitespace
 
 research/mayhem-current437-composition-20261028/inventory.tsv -whitespace
+repro/pump_amm/inverse-route-recovery-20261028/results/** -whitespace
+
+repro/pump_amm/inverse-route-recovery-20261028/followup/** -whitespace
+
