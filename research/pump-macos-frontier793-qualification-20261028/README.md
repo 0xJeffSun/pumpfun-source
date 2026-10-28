@@ -5,3 +5,5 @@ Workflow rebuilds the archived 793-window source with the actual Apple Silicon m
 Status is pending execution. The primary source archive and toolchain hashes are pinned in inputs.json. GitHub-hosted jobs can continue without a local computer connection; that does not guarantee continued autonomous source-recovery work after an agent session ends.
 
 Run: https://github.com/shawkkkkk/pumpfun-source/actions/runs/40619682069 ; frozen revision `5adb09b3ecb94682d89b15e5bff5064dd0761d8b`. Native and dependent runtime jobs are in progress; no result has yet been admitted.
+
+Native macOS qualification passed: repeated 793-window artifacts are identical, all 744 baseline matches retained, and both canonical Round37 hashes reproduced. The downloaded artifact ZIP digest and all 57 payload hashes were independently checked. Runtime qualification is still in progress.
