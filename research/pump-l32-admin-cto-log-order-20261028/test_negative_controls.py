@@ -28,7 +28,9 @@ class T(unittest.TestCase):
  def test_09_event(self):d=load();d['cases'][IDX]['candidate']['events'].append('changed');self.bad(d)
  def test_10_balance(self):d=load();d['cases'][IDX]['candidate']['after']['transaction_payer']['lamports']+=1;self.bad(d)
  def test_11_source_patch(self):
-  expected=hashlib.sha256((P/'source.patch').read_bytes()).hexdigest();self.assertNotEqual(hashlib.sha256((P/'source.patch').read_bytes()+b'x').hexdigest(),expected)
+  source=(P/'source.patch').read_bytes();expected=hashlib.sha256(source).hexdigest()
+  def check(blob):req(hashlib.sha256(blob).hexdigest()==expected,'source patch')
+  with self.assertRaises(RuntimeError):check(source+b'x')
  def test_12_extra_and_symlink(self):
   with tempfile.TemporaryDirectory()as q:
    r=Path(q);(r/'a').write_text('a');m={'a':hashlib.sha256(b'a').hexdigest()};(r/'x').write_text('x')

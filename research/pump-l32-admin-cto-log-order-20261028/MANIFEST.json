@@ -68,6 +68,6 @@
   "runtime/full.json.gz": "cd9861ad2e1e0afd381217935388ecb91dc6bb445cba55b6e94914d131042976",
   "runtime/ordered-log-mismatches.json.gz": "c3b830ab951811622dacc0ec7ac64c54c94eddafd19c52db0c8e21ea2abcdee6",
   "source.patch": "34edb0d6c6e0572cf9d27fef3c956e7b2779a9f1bc0470a084494b47fb5ce9a4",
-  "test_negative_controls.py": "92aaa813584c3966639ebdf66e7e9b0b37c919d704427b2681f1154f1442038e",
+  "test_negative_controls.py": "477e3b9b9fb1970bc984ca50edbdea5eeeaeb3780eecbb909b41cb20f082ac3e",
   "verify.py": "14fcd58667ad96c1a4eb4ecde7160ba97928e3962accae0967093f75bd83fd99"
 }
