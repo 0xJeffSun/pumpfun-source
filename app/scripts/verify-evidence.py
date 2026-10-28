@@ -1,9 +1,9 @@
 import pathlib,json,hashlib,base64,tarfile
 root=pathlib.Path(__file__).resolve().parents[1]
-m=json.loads((root/'evidence/web/manifest.json').read_text())
+m=json.loads((root/'evidence/web/manifest.json').read_text(encoding='utf-8'))
 records=m['records']
 for name in ['api-probes.json','source-map-probes.json']:
- records += json.loads((root/'evidence'/name).read_text())
+ records += json.loads((root/'evidence'/name).read_text(encoding='utf-8'))
 objects_root=root/'evidence/web/objects'
 actual_objects={p.relative_to(root).as_posix() for p in objects_root.rglob('*') if p.is_file()} if objects_root.exists() else set()
 referenced_objects={r['path'] for r in records if 'path' in r and r['path'].startswith('evidence/web/objects/')}
@@ -12,7 +12,7 @@ if actual_objects!=referenced_objects:
 for r in records:
  if 'path' in r and hashlib.sha256((root/r['path']).read_bytes()).hexdigest()!=r['sha256']:
   raise ValueError(f"Captured object SHA-256 mismatch: {r['path']}")
-meta=json.loads((root/'evidence/sdk/registry.json').read_text())
+meta=json.loads((root/'evidence/sdk/registry.json').read_text(encoding='utf-8'))
 archive=root/'evidence/sdk/pump-sdk-4.3.1.tgz'
 if 'sha512-'+base64.b64encode(hashlib.sha512(archive.read_bytes()).digest()).decode()!=meta['dist']['integrity']:
  raise ValueError('SDK archive npm integrity mismatch')
