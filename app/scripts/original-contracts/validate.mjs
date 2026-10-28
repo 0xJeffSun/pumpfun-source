@@ -29,9 +29,9 @@ export function validateDeclared(document, schema, value) {
     if (rule.type === 'string') {
       if (typeof input !== 'string') fail('expected string');
       else {
-        const bounds = rule['x-js-utf16-length'];
-        if (bounds?.minimum !== undefined && input.length < bounds.minimum) fail('below declared UTF-16 string length');
-        if (bounds?.maximum !== undefined && input.length > bounds.maximum) fail('above declared UTF-16 string length');
+        const length = Array.from(input).length;
+        if (rule.minLength !== undefined && length < rule.minLength) fail('below declared code-point string length');
+        if (rule.maxLength !== undefined && length > rule.maxLength) fail('above declared code-point string length');
       }
     }
     if (rule.type === 'number' || rule.type === 'integer') {
