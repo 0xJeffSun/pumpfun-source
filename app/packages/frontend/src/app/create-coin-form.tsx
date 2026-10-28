@@ -1,11 +1,20 @@
 "use client";
 
-import { type ChangeEvent, type FormEvent, useRef, useState } from "react";
 import {
+  type ChangeEvent,
+  type FormEvent,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+import {
+  ACCEPTED_IMAGE_TYPES,
   CREATE_LIMITS,
   type DraftErrors,
   type DraftValues,
+  validateDraft,
   validateDraftField,
+  validateImage,
 } from "./create-coin-validation";
 
 const EMPTY_DRAFT: DraftValues = {
@@ -75,7 +84,18 @@ export default function CreateCoinForm() {
   const [draft, setDraft] = useState<DraftValues>(EMPTY_DRAFT);
   const [errors, setErrors] = useState<DraftErrors>({});
   const [status, setStatus] = useState("");
+  const [selectedImage, setSelectedImage] = useState<{
+    file: File;
+    url: string;
+  } | null>(null);
   const formRef = useRef<HTMLFormElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (!selectedImage) return;
+    const objectUrl = selectedImage.url;
+    return () => URL.revokeObjectURL(objectUrl);
+  }, [selectedImage]);
 
   function updateField(
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -94,19 +114,17 @@ export default function CreateCoinForm() {
 
   function previewDraft(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const nextErrors: DraftErrors = {};
-    for (const field of Object.keys(draft) as (keyof DraftValues)[]) {
-      const error = validateDraftField(field, draft[field]);
-      if (error) nextErrors[field] = error;
-    }
+    const nextErrors = validateDraft(draft, selectedImage?.file ?? null);
     setErrors(nextErrors);
     const firstError = Object.keys(nextErrors)[0];
     if (firstError) {
       setStatus("Correct the highlighted fields to preview this draft.");
       requestAnimationFrame(() => {
-        formRef.current
-          ?.querySelector<HTMLElement>(`[name="${firstError}"]`)
-          ?.focus();
+        if (firstError === "image") fileInputRef.current?.focus();
+        else
+          formRef.current
+            ?.querySelector<HTMLElement>(`[name="${firstError}"]`)
+            ?.focus();
       });
       return;
     }
@@ -116,13 +134,44 @@ export default function CreateCoinForm() {
   function resetDraft() {
     setDraft(EMPTY_DRAFT);
     setErrors({});
+    setSelectedImage(null);
+    if (fileInputRef.current) fileInputRef.current.value = "";
     setStatus("Draft cleared.");
+  }
+
+  function chooseImage(event: ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0] ?? null;
+    if (!file) return;
+    const error = validateImage(file);
+    if (error) {
+      setErrors((current) => ({ ...current, image: error }));
+      event.target.value = "";
+      return;
+    }
+    setSelectedImage({ file, url: URL.createObjectURL(file) });
+    setErrors((current) => ({ ...current, image: undefined }));
+    setStatus("");
+  }
+
+  function removeImage(error?: string) {
+    setSelectedImage(null);
+    if (fileInputRef.current) fileInputRef.current.value = "";
+    setErrors((current) => ({ ...current, image: error }));
+    setStatus("");
   }
 
   const metadataPreview = {
     name: draft.name,
     symbol: draft.ticker,
     description: draft.description,
+    image: selectedImage
+      ? {
+          localFileName: selectedImage.file.name,
+          mediaType: selectedImage.file.type,
+          bytes: selectedImage.file.size,
+          uploadStatus: "not uploaded",
+        }
+      : null,
     ...(draft.twitter && { twitter: draft.twitter }),
     ...(draft.telegram && { telegram: draft.telegram }),
     ...(draft.website && { website: draft.website }),
@@ -206,6 +255,44 @@ export default function CreateCoinForm() {
           <FieldError field="description" error={errors.description} />
         </div>
 
+        <div className="create-field media-field">
+          <label htmlFor="create-image">
+            Coin image <span aria-hidden="true">*</span>
+          </label>
+          <p className="create-field-hint" id="image-hint">
+            Select one local JPEG, PNG, GIF or WebP under 4.5 MB. It stays in
+            this browser tab and is never uploaded.
+          </p>
+          <input
+            id="create-image"
+            name="image"
+            ref={fileInputRef}
+            type="file"
+            accept={ACCEPTED_IMAGE_TYPES.join(",")}
+            aria-invalid={Boolean(errors.image)}
+            aria-describedby={`image-hint${errors.image ? " image-error" : ""}`}
+            onChange={chooseImage}
+          />
+          {selectedImage ? (
+            <div className="selected-file" data-testid="selected-image">
+              <div>
+                <strong>{selectedImage.file.name}</strong>
+                <span>
+                  {selectedImage.file.type} ·{" "}
+                  {(selectedImage.file.size / 1_000).toLocaleString(undefined, {
+                    maximumFractionDigits: 1,
+                  })}{" "}
+                  KB
+                </span>
+              </div>
+              <button type="button" onClick={() => removeImage()}>
+                Remove image
+              </button>
+            </div>
+          ) : null}
+          <FieldError field="image" error={errors.image} />
+        </div>
+
         <fieldset className="create-fieldset">
           <legend>
             Social links <span>Optional</span>
@@ -274,13 +361,27 @@ export default function CreateCoinForm() {
           </div>
           <span className="ticker-preview">{draft.ticker || "TICKER"}</span>
         </div>
-        <div
-          className="preview-media-placeholder"
-          aria-label="No local image selected"
-        >
-          <span aria-hidden="true">P</span>
-          <p>Local image preview will appear here.</p>
-        </div>
+        {selectedImage ? (
+          // Captured media is local-only, so image optimization must not turn
+          // the object URL into a network request.
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            className="preview-image"
+            src={selectedImage.url}
+            alt={`Local preview of ${draft.name || selectedImage.file.name}`}
+            onError={() =>
+              removeImage("The browser could not decode this image file.")
+            }
+          />
+        ) : (
+          <div
+            className="preview-media-placeholder"
+            aria-label="No local image selected"
+          >
+            <span aria-hidden="true">P</span>
+            <p>Local image preview will appear here.</p>
+          </div>
+        )}
         <p className="preview-description">
           {draft.description ||
             "Your optional coin description will appear here."}
