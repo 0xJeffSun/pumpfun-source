@@ -10,6 +10,13 @@ import {
   type KeyboardEvent,
 } from "react";
 import { createPortal } from "react-dom";
+import type { NotificationAdapter } from "../../lib/notification-controller";
+import {
+  NotificationSettingsProvider,
+  NotificationSettingsModeLabel,
+  NotificationSettingsStatus,
+  NotificationSettingControl,
+} from "./notification-settings";
 import {
   SETTINGS_DEFINITIONS,
   SETTINGS_SECTIONS,
@@ -20,6 +27,13 @@ import {
   type SettingsSection,
 } from "./settings-model";
 import styles from "./settings.module.css";
+
+export type SettingsControlProps = {
+  /** Explicit client-side local/test injection only; no runtime adapter is supplied. */
+  notificationAdapter?: NotificationAdapter;
+  /** Local ownership token, not authentication or account discovery. */
+  notificationSessionKey?: string;
+};
 
 function SettingsIcon() {
   return (
@@ -48,7 +62,11 @@ function SettingRow({ setting }: { setting: SettingDefinition }) {
         <h4>{setting.label}</h4>
         <p>{setting.description}</p>
       </div>
-      <span className={styles.unavailable}>Unavailable</span>
+      <NotificationSettingControl
+        settingId={setting.id}
+        label={setting.label}
+        fallback={<span className={styles.unavailable}>Unavailable</span>}
+      />
     </div>
   );
 }
@@ -80,7 +98,10 @@ function SettingGroups({
   ));
 }
 
-function SettingsControlContent() {
+function SettingsControlContent({
+  notificationAdapter,
+  notificationSessionKey,
+}: SettingsControlProps) {
   const pathname = usePathname();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -220,7 +241,11 @@ function SettingsControlContent() {
   }
 
   return (
-    <>
+    <NotificationSettingsProvider
+      adapter={notificationAdapter}
+      open={open}
+      sessionKey={notificationSessionKey}
+    >
       <button
         className={styles.launcher}
         type="button"
@@ -257,7 +282,7 @@ function SettingsControlContent() {
                     <div>
                       <h2 id={`${id}-title`}>Settings</h2>
                       <span className={styles.badge}>
-                        Read-only reconstruction
+                        <NotificationSettingsModeLabel fallback="Read-only reconstruction" />
                       </span>
                     </div>
                     <button
@@ -321,12 +346,17 @@ function SettingsControlContent() {
                   </div>
                 </header>
                 <div ref={scrollArea} className={styles.content}>
-                  <p className={styles.notice} id={`${id}-description`}>
-                    These settings are mapped from captured client code. Account
-                    values are unavailable, not off. Nothing here changes
-                    preferences, subscribes to notifications or requests browser
-                    permission.
-                  </p>
+                  <NotificationSettingsStatus
+                    descriptionId={`${id}-description`}
+                    fallback={
+                      <p className={styles.notice} id={`${id}-description`}>
+                        These settings are mapped from captured client code.
+                        Account values are unavailable, not off. Nothing here
+                        changes preferences, subscribes to notifications or
+                        requests browser permission.
+                      </p>
+                    }
+                  />
                   <div
                     role="tabpanel"
                     id={`${id}-panel`}
@@ -383,12 +413,12 @@ function SettingsControlContent() {
             document.body,
           )
         : null}
-    </>
+    </NotificationSettingsProvider>
   );
 }
 
 /** Mount once in the shared shell. Its own Suspense boundary contains URL hooks. */
-export default function SettingsControl() {
+export default function SettingsControl(props: SettingsControlProps = {}) {
   return (
     <Suspense
       fallback={
@@ -403,7 +433,7 @@ export default function SettingsControl() {
         </button>
       }
     >
-      <SettingsControlContent />
+      <SettingsControlContent {...props} />
     </Suspense>
   );
 }

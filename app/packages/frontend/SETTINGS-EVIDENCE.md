@@ -72,12 +72,24 @@ translation text.
 Search includes these mapped notification definitions as a local convenience;
 full upstream settings-search coverage is not claimed.
 
-Every preference or subscription value is **unavailable**, not unchecked/off.
-The UI does not render an enabled/disabled switch that could be mistaken for
-actual account state. It never reads or writes local/session storage, fetches
-preferences, subscribes, calls Notification/Push/ServiceWorker permission APIs,
-changes cookies, sends messages, connects a wallet or signs anything. Reset and
-Save actions are omitted because no corresponding local state is implemented.
+The default shared-shell entrypoint keeps every preference or subscription
+value **unavailable**, not unchecked/off. It does not render a switch that could
+be mistaken for actual account state. No account or browser adapter is supplied.
+It never reads or writes local/session storage, fetches account preferences,
+subscribes, calls Notification/Push/ServiceWorker permission APIs, changes cookies,
+sends messages, connects a wallet or signs anything.
+
+An optional client-to-client `notificationAdapter` prop enables explicitly
+injected `synthetic-test` adapters only. A stable provider above the search and
+section branches presents known local boolean values, pending/error states and
+explicit retry. Its persistent **Synthetic local data — not account settings**
+label distinguishes these values from production. Unknown or stale values and
+browser-push controls remain unavailable. Close and changes to the adapter or
+explicit `notificationSessionKey` ownership token invalidate pending state;
+effect cleanup uses reset rather than terminal disposal for StrictMode replay.
+The shell supplies neither prop, no URL/storage flag enables them, and test
+fixtures are outside product imports. These local state mechanics and their
+limitations are documented in [`NOTIFICATION-STATE.md`](NOTIFICATION-STATE.md).
 
 ## Backend contract boundary
 
@@ -105,6 +117,9 @@ compatibility harness's unknown-operation 501 behavior is unchanged.
 - Passed: three source-binding/contract tests via
   `node --test tests/settings-contract.test.mjs`, including hashes of all ten
   captured factory ranges.
+- Passed: 27 local notification state/action tests, independently rerun through
+  the existing backend's Node/tsx loader. `test:notifications` invokes this suite
+  from the aggregate test command. These prove local mechanics, not API parity.
 - Passed: Prettier 3.6.2 formatting for new TypeScript, TSX, CSS and JSON.
 - Authored, **not run**: `tests/settings.spec.ts` (frontend Playwright suite).
   It covers malformed queries, deep links, close/history, search/empty states,
