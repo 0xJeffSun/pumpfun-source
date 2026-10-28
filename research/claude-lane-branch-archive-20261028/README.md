@@ -23,7 +23,7 @@ The archive is research only. Lane edits to `programs/` are left out. Main's cur
 | claude/amm-mid-20261027 | b49edd851 | 20 | 16 |
 | claude/amm-lo-20261027 | dda784ddc | 14 | 6 |
 
-Before archiving, these verifiers were run on a materialized tree with the lane files in place, using `python -I -B` and an empty HOME. All passed except mayhem-a's seal check, which is why this archive uses a separate root:
+Before archiving, these verifiers were run on a materialized tree with the lane files in place, using `python -I -B` and an empty HOME. Only mayhem-a failed: its `verify.py` seal check and its `test_verify.py` ("unmodified copy must verify"). Both failures had the same cause, the lane files added inside its sealed packet, and that is why this archive uses a separate root. The checks that passed:
 - `claude-amm-mid-20261027/verify.py`: OK (600 normalized, +0x52c58, 0 lost)
 - `claude-mayhem-b-20261027/verify.py`: 0 normalized log differences over 6636 trade cases
 - `claude-pump-lo-20261027/verify.py` passed
@@ -31,3 +31,7 @@ Before archiving, these verifiers were run on a materialized tree with the lane 
 - `claude-pump-mid-mayhem-o0084/verify.py`: verified (434 matched)
 
 These verifiers expect to run from their original directory, so run them from a copy restored to `research/<path>`.
+
+## deleted-branch-residue/
+
+`deleted-branch-residue/` holds every file version that no part of main's history contains, taken from the other branches deleted in the 2026-10-28 cleanup. Those files are listed in `deleted-branch-residue/inventory.json`. Apart from these, every file on every deleted branch is a blob that already appears in main's history.
