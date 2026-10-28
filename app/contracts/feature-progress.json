@@ -187,37 +187,54 @@
       ],
       "source": {
         "contract": {
-          "status": "pending",
-          "evidence": []
+          "status": "accepted",
+          "evidence": [
+            "packages/frontend/LEADERBOARD-EVIDENCE.md#observed"
+          ]
         },
         "logic": {
-          "status": "pending",
-          "evidence": []
+          "status": "accepted",
+          "evidence": [
+            "packages/frontend/src/app/leaderboard/leaderboard-client.tsx"
+          ]
         },
         "adapters": {
-          "status": "pending",
-          "evidence": []
+          "status": "accepted",
+          "evidence": [
+            "packages/frontend/src/app/api/leaderboard/route.ts",
+            "packages/frontend/src/app/api/leaderboard/upstream.ts"
+          ]
         }
       },
       "completion": {
         "source": {
-          "status": "pending",
-          "evidence": []
+          "status": "accepted",
+          "evidence": [
+            "packages/frontend/LEADERBOARD-EVIDENCE.md#local-design"
+          ]
         },
         "success": {
           "status": "pending",
-          "evidence": []
+          "evidence": [
+            "packages/frontend/tests/leaderboard.spec.ts"
+          ]
         },
         "failure": {
-          "status": "pending",
-          "evidence": []
+          "status": "accepted",
+          "evidence": [
+            "packages/frontend/tests/leaderboard.spec.ts",
+            "tests/leaderboard-contract.test.mjs"
+          ]
         },
         "consistency": {
           "status": "pending",
-          "evidence": []
+          "evidence": [
+            "packages/frontend/tests/leaderboard.spec.ts",
+            "packages/frontend/visual/leaderboard-20261028/README.md"
+          ]
         }
       },
-      "note": "Route scaffold only."
+      "note": "Contract-driven read-only interface and failure paths verified. Live API success and original visual parity remain unqualified."
     },
     {
       "id": "live",
