@@ -6,7 +6,7 @@ The public entry is `packages/frontend/src/original-contracts/auth/index.ts`. A 
 
 ## Original evidence and scope
 
-`PROVENANCE.json` binds each factory, every retained origin, each original declaration/export expression and the AuthProviders consumer witnesses to immutable captured URLs, complete-object SHA256, UTF-16 ranges, corresponding UTF-8 byte ranges and raw-slice SHA256. Current inventory and capture-manifest SHA256 are pinned separately. Inputs are the successful responses in `evidence/web/manifest.json` and actual registration ASTs in their original objects, not formatted `recovered/modules/*.js`.
+`PROVENANCE.json` binds each factory, every retained origin, each original declaration/export expression and the AuthProviders consumer witnesses to immutable captured URLs, complete-object SHA256, UTF-16 ranges, corresponding UTF-8 byte ranges and raw-slice SHA256. Current inventory and capture-manifest SHA256 are pinned separately. `INDEX-COMPATIBILITY.json` also records exact equality of the seven complete selected entries under the separately recovered expanded inventory7b52e2cfb; that inventory change is not included here. Regenerate provenance after reviewing any future inventory update. Inputs are the successful responses in `evidence/web/manifest.json` and actual registration ASTs in their original objects, not formatted `recovered/modules/*.js`.
 
 | Capture source basename | Reader350741 SHA256 prefix | Decoder683023 SHA256 prefix |
 | --- | --- | --- |
@@ -47,3 +47,7 @@ corepack pnpm verify:evidence
 ```
 
 The focused run has24 auth tests plus10 shared source-authentication tests. Browser capabilities contain synthetic in-memory cookie/storage/event state only; test tokens carry synthetic unsigned claims. No user profiles, browser credentials, production cookies, network auth, captured bundle execution or wallet signatures are used. This is no UI change, so no visual parity or browser screenshot claim is made. Root integration owns the complete required application build/test/typecheck/evidence gates.
+
+## Shared prerequisite attribution
+
+`source.mjs` and its10 tests are unchanged shared source-authentication work by the search/contracts lane, original commitsf6e469c3b and124f1194c. They are included as a necessary two-file prerequisite while absent from maintained main, not claimed as new auth work. The inventory expansion7b52e2cfb is separately attributed and omitted from this PR.
