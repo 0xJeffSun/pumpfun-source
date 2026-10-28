@@ -174,7 +174,9 @@ def verify(root=HERE,check_manifest=True):
     for n,pin in rebuilt['logs'].items():require(identity(raw(rv/(n+'.gz')))==pin,'rebuild log differs')
     rc=[json.loads(b) for b in unpack((rv/'wrapper-records.tar.gz').read_bytes()).values()];rc=[c for c in rc if '--crate-name' in c['after'] and any(a in c['after'] for a in ('--emit=dep-info,link','--emit=dep-info,metadata,link'))]
     require(len(rc)==163,'rebuild compiler cohort differs')
-    return dict(original=original_observation,qualified=dict(normalized=432,raw_local=100,injective=431),builds=result,full_build_compiler_commands=len(compiles),target_compiler_commands=len(targets),rebuild_validation=dict(fresh=True,complete_outputs_equal=True,compiler_commands=len(rc)),complete_windows_gained=0,target_executions=0,whole_original_equal=False)
+    child_spec=importlib.util.spec_from_file_location('retained_composition_check',root/'composition/verify.py');child=importlib.util.module_from_spec(child_spec);child_spec.loader.exec_module(child)
+    composition=child.verify(root/'composition',False);require(composition==read(root/'composition/report.json.gz'),'composition saved report differs')
+    return dict(original=original_observation,qualified=dict(normalized=432,raw_local=100,injective=431),builds=result,full_build_compiler_commands=len(compiles),target_compiler_commands=len(targets),rebuild_validation=dict(fresh=True,complete_outputs_equal=True,compiler_commands=len(rc)),composition=dict(compiler_builds=composition['compiler_builds'],complete_windows_gained=0,target_executions=0),complete_windows_gained=0,target_executions=0,whole_original_equal=False)
 
 if __name__=='__main__':
-    r=verify();require(r==read(HERE/'report.json'),'saved report differs');print('Verified seven builds: all432/77 native matches retained; Legacy Sell remains unmatched; no target execution.')
+    r=verify();require(r==read(HERE/'report.json'),'saved report differs');print('Verified seven parent builds, eight composition root builds and a fresh composition rebuild: native matches retained; Legacy Sell remains unmatched; no target execution.')

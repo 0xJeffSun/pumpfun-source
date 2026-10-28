@@ -12660,6 +12660,11 @@
     "complete_outputs_equal": true,
     "compiler_commands": 163
   },
+  "composition": {
+    "compiler_builds": 9,
+    "complete_windows_gained": 0,
+    "target_executions": 0
+  },
   "complete_windows_gained": 0,
   "target_executions": 0,
   "whole_original_equal": false

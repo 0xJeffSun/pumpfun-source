@@ -48,4 +48,28 @@ class Checks(unittest.TestCase):
             m=tarfile.TarInfo('../outside');m.size=1;t.addfile(m,io.BytesIO(b'x'))
         with self.assertRaisesRegex(ValueError,'unsafe archive'):v.unpack(buf.getvalue())
 
+    def composition(self):
+        spec=importlib.util.spec_from_file_location('test_composition',self.root/'composition/verify.py');c=importlib.util.module_from_spec(spec);spec.loader.exec_module(c);return c
+    def test_composition_source_transform(self):
+        p=self.root/'composition/sources/price-eager-inline.rs';p.write_bytes(p.read_bytes().replace(b'let delta=scaled/10_000;',b'let delta=scaled/9_999;',1))
+        c=self.composition();base=c.sources(self.root/'composition',v)
+        with self.assertRaisesRegex(ValueError,'source transform'):c.variant(self.root/'composition',v,base,'price-eager-inline')
+    def test_composition_masked_call_permutation(self):
+        c=self.composition();spec=importlib.util.spec_from_file_location('composition_test_reader',HERE/'reader.py');reader=importlib.util.module_from_spec(spec);spec.loader.exec_module(reader)
+        p=Path(self.tmp.name)/'composition.so';p.write_bytes(v.raw(self.root/'composition/builds/baseline/symbols.so.gz'));e=reader.Elf(p)
+        p=Path(self.tmp.name)/'original.so';p.write_bytes(v.raw(self.root/'reference/original.so.gz'));original=reader.Elf(p);originals={r['id']:original.window(r['start'],r['end']) for r in v.read(self.root/'reference/original-windows.json')}
+        w,_=c.body(v,e,originals,'sell','O0082');before=c.measure(v,e,original,originals)['handlers']['O0082'];a,b=w['direct'][4:6];self.assertNotEqual(a['target'],b['target'])
+        raw=bytearray(e.b)
+        for call,target in [(a,b['target']),(b,a['target'])]:struct.pack_into('<i',raw,call['pc']+4,(target-call['pc']-8)//8)
+        e.b=bytes(raw);after=c.measure(v,e,original,originals)['handlers']['O0082']
+        self.assertEqual(v.shape(w),v.shape(e.window(w['start'],w['end'])))
+        self.assertTrue(before['callee_multiset_equal'] and after['callee_multiset_equal'])
+        self.assertNotEqual(before['ordered_matches'],after['ordered_matches'])
+    def test_composition_missing_repeat(self):
+        (self.root/'composition/builds/late-inline-repeat/symbols.so.gz').unlink()
+        with self.assertRaisesRegex(ValueError,'manifest'):v.manifest_check(self.root)
+    def test_composition_fresh_source_binding(self):
+        p=self.root/'composition/rebuild-validation/launch.json.gz';r=v.read(p);r['source_inputs']['src/state.rs']='0'*64;self.save(p,r)
+        with self.assertRaisesRegex(ValueError,'fresh composition source binding'):self.composition().verify(self.root/'composition',False)
+
 if __name__=='__main__':unittest.main()
