@@ -119,6 +119,15 @@ O0210. O0209 has a matching body elsewhere, but O0210 calls a different
 not a new body match or semantic-equivalence claim. Indirect/data closure and
 whole-ELF identity remain open.
 
+The [Legacy Sell signer-seed controls](../research/mayhem-signer-seed-order/README.md)
+trace a current-source evaluation-order difference: moving the signer-bump read
+after CPI account construction moves its instruction offset from 1,968 to
+6,144, versus 6,296 in the original. The repeated inline control remains an
+unmatched 12,952-byte body versus 12,992 original bytes. All 432/77 native
+matches and 4,314 positive immediate-call observations remain; the qualified
+432/100 artifact is separate. This is source-order research with no new complete
+match, runtime qualification or checkpoint promotion.
+
 ## Current-source allocator-provider composition
 
 The [current 432-window provider composition](../research/mayhem-current-provider-closure-20261027/README.md)
