@@ -57,6 +57,10 @@ jobs:
             commands: |
               python -B research/mayhem-sweep-failure-recovery/verify.py
               python -B research/mayhem-sweep-failure-recovery/test_scope.py
+          - suite: mayhem-sweep-rate-current
+            commands: |
+              python -B research/mayhem-sweep-rate-current-recovery/verify.py
+              python -B research/mayhem-sweep-rate-current-recovery/test_scope.py
           - suite: mayhem-initializer-current
             commands: |
               python -B research/mayhem-initializer-current-recovery-20261027/verify.py
