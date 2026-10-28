@@ -30,6 +30,27 @@ test('bundle formatting signals incomplete recovery while retaining per-source d
  }
 });
 
+test('formatting selects script paths and retains distinct query versions',async()=>{
+ const directory=await mkdtemp(path.join(tmpdir(),'pump-format-query-'));
+ try {
+  await mkdir(path.join(directory,'evidence/web'),{recursive:true});
+  const urls=['https://example.invalid/shared.js?v=1','https://example.invalid/shared.js?v=2#fragment','https://example.invalid/shared.js#fragment','https://example.invalid/page?next=shared.js'];
+  const records=[];
+  for(const [index,url] of urls.entries()){
+   const source=index===3?'<!doctype html>':`const version = ${index};`;
+   const sourcePath=`evidence/web/source-${index}`;
+   await writeFile(path.join(directory,sourcePath),source);
+   records.push({url,path:sourcePath,status:200,sha256:createHash('sha256').update(source).digest('hex')});
+  }
+  await writeFile(path.join(directory,'evidence/web/manifest.json'),JSON.stringify({records}));
+  await formatBundles(directory);
+  const report=JSON.parse(await readFile(path.join(directory,'recovered/pretty/manifest.json'),'utf8'));
+  assert.deepEqual(report.records.map(record=>record.url),urls.slice(0,3));
+  assert.equal(new Set(report.records.map(record=>record.output)).size,3);
+  for(const [index,record] of report.records.entries())assert.match(await readFile(path.join(directory,record.output),'utf8'),new RegExp(`const version = ${index};`));
+ }finally{await rm(directory,{recursive:true,force:true});}
+});
+
 test('formatting retains distinct bundles with the same basename',async()=>{
  const directory=await mkdtemp(path.join(tmpdir(),'pump-format-'));
  try {

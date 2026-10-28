@@ -69,7 +69,7 @@ export async function buildInventory(
   const routes = [];
   const dependencies = [];
   const records = manifest.records.filter(
-    (record) => record.status === 200 && record.url.endsWith(".js"),
+    (record) => record.status === 200 && new URL(record.url).pathname.endsWith(".js"),
   );
 
   for (const record of records) {
