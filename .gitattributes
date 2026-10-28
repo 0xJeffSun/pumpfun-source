@@ -1491,3 +1491,4 @@ research/mayhem-current434-custom-format-route-20261027/reader.py whitespace=-bl
 research/mayhem-current434-custom-format-route-20261027/unit_trace.py whitespace=-blank-at-eof
 repro/pump_amm/incentive-order-recovery-20261027/results/** -whitespace
 repro/pump_amm/incentive-order-recovery-20261027/followup/** -whitespace
+research/amm-native-transfer-fee-recovery/** -text -whitespace
