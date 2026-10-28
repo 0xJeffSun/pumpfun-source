@@ -4,11 +4,11 @@
     "repository": "lalalune/pumpfun-source",
     "base": "2fc654a20e9c7be2b9529f585942bb82c4c83ab2",
     "manifestSha256": "9e0fc00719eb8c919dd4205d3c118eb48c4927e056c77e8343e26d6f7189bbb5",
-    "inventorySha256": "1d268ae7f2eb0f61eaaffd222269bf29d9ce06e9946372861721b2f159d868e2"
+    "inventorySha256": "9631271006faa37ea6055a11be4ec1faf971b45e2c7cdb78fc08a6530e777a50"
   },
   "inventory": {
-    "variants": 5947,
-    "origins": 7337,
+    "variants": 4915,
+    "origins": 6108,
     "completeness": "Not claimed. The inventory supplies bounded source references; initial and lazy physical chunks are independently parsed, including leading nested registrations."
   },
   "scope": "Captured shared search loader, client request contract, resolver handling and declared query schemas; original TypeScript and backend implementation remain unknown",
