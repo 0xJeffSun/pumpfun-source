@@ -12,7 +12,8 @@
       "ceil_div_overflow": 19,
       "ceil_div_division_by_zero": 21,
       "fee_truncation": 32
-    }
+    },
+    "proposal_path": "repro/pump_amm/fee-helper-source-coordinates-20261028/proposed/fees.rs"
   },
   "maintained_checkpoint": {
     "path": "repro/pump_amm/private-sweep-recovery-20261027",
@@ -31,8 +32,20 @@
         "candidate_start": "0x226a0",
         "bytes": 1672,
         "differences": [
-          {"offset": "0x278", "original_hex": "620a00ff13000000", "candidate_hex": "620a00ff12000000", "original_line": 19, "candidate_line": 18},
-          {"offset": "0x630", "original_hex": "620a00ff15000000", "candidate_hex": "620a00ff13000000", "original_line": 21, "candidate_line": 19}
+          {
+            "offset": "0x278",
+            "original_hex": "620a00ff13000000",
+            "candidate_hex": "620a00ff12000000",
+            "original_line": 19,
+            "candidate_line": 18
+          },
+          {
+            "offset": "0x630",
+            "original_hex": "620a00ff15000000",
+            "candidate_hex": "620a00ff13000000",
+            "original_line": 21,
+            "candidate_line": 19
+          }
         ]
       },
       {
@@ -40,14 +53,34 @@
         "candidate_start": "0x22d28",
         "bytes": 712,
         "differences": [
-          {"offset": "0x248", "original_hex": "620a08ff20000000", "candidate_hex": "620a08ff19000000", "original_line": 32, "candidate_line": 25}
+          {
+            "offset": "0x248",
+            "original_hex": "620a08ff20000000",
+            "candidate_hex": "620a08ff19000000",
+            "original_line": 32,
+            "candidate_line": 25
+          }
         ]
       }
     ],
     "direct_calls": {
-      "ceil_div": {"original_start": "0x12b08", "candidate_start": "0x226a0", "corresponding_targets": 11, "total": 11},
-      "fee": {"original_start": "0x13190", "candidate_start": "0x22d28", "corresponding_targets": 6, "total": 6},
-      "fee_to_ceil_div": {"offset": "0x70", "original_target": "0x12b08", "candidate_target": "0x226a0"}
+      "ceil_div": {
+        "original_start": "0x12b08",
+        "candidate_start": "0x226a0",
+        "corresponding_targets": 11,
+        "total": 11
+      },
+      "fee": {
+        "original_start": "0x13190",
+        "candidate_start": "0x22d28",
+        "corresponding_targets": 6,
+        "total": 6
+      },
+      "fee_to_ceil_div": {
+        "offset": "0x70",
+        "original_target": "0x12b08",
+        "candidate_target": "0x226a0"
+      }
     }
   },
   "same_host_demonstration": {
@@ -63,15 +96,32 @@
       "candidate_normalized_matches": 653,
       "baseline_raw_matches": 139,
       "candidate_raw_matches": 139,
-      "new_normalized_windows": ["0x12b08", "0x13190"],
+      "new_normalized_windows": [
+        "0x12b08",
+        "0x13190"
+      ],
       "lost_normalized_windows": [],
       "new_raw_windows": [],
       "lost_raw_windows": [],
       "new_matched_text_bytes": 2384
     },
     "recovered_windows": [
-      {"original_start": "0x12b08", "candidate_start": "0x226a0", "bytes": 1672, "normalized_instruction_differences": 0, "direct_calls_corresponding": 11, "direct_calls_total": 11},
-      {"original_start": "0x13190", "candidate_start": "0x22d28", "bytes": 712, "normalized_instruction_differences": 0, "direct_calls_corresponding": 6, "direct_calls_total": 6}
+      {
+        "original_start": "0x12b08",
+        "candidate_start": "0x226a0",
+        "bytes": 1672,
+        "normalized_instruction_differences": 0,
+        "direct_calls_corresponding": 11,
+        "direct_calls_total": 11
+      },
+      {
+        "original_start": "0x13190",
+        "candidate_start": "0x22d28",
+        "bytes": 712,
+        "normalized_instruction_differences": 0,
+        "direct_calls_corresponding": 6,
+        "direct_calls_total": 6
+      }
     ],
     "raw_equal": false,
     "whole_elf_equal": false,

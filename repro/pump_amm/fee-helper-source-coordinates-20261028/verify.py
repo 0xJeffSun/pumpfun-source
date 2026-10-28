@@ -3,6 +3,7 @@
 import argparse
 import collections
 import hashlib
+import difflib
 import importlib.util
 import json
 import re
@@ -70,13 +71,16 @@ def main():
     args = parser.parse_args()
 
     saved = json.loads((HERE / "result.json").read_text())
-    source = ROOT / saved["source"]["path"]
+    source = ROOT / saved["source"]["proposal_path"]
     source_bytes = source.read_bytes()
     parent_bytes = subprocess.check_output(
         ["git", "show", f'{saved["base_commit"]}:{saved["source"]["path"]}'], cwd=ROOT
     )
     assert SHA(parent_bytes) == saved["source"]["parent_sha256"]
+    assert (ROOT / saved["source"]["path"]).read_bytes() == parent_bytes, "Maintained source changed without qualification"
     assert SHA(source_bytes) == saved["source"]["proposal_sha256"]
+    patch = "".join(difflib.unified_diff(parent_bytes.decode().splitlines(True), source_bytes.decode().splitlines(True), fromfile="a/" + saved["source"]["path"], tofile="b/" + saved["source"]["path"]))
+    assert (HERE / "source.patch").read_text() == patch
     assert SHA(re.sub(rb"\s+", b"", source_bytes)) == saved["source"]["whitespace_stripped_sha256"]
     assert SHA(re.sub(rb"\s+", b"", parent_bytes)) == saved["source"]["whitespace_stripped_sha256"]
     lines = source.read_text().splitlines()

@@ -1,8 +1,10 @@
 # PumpSwap fee-helper source-coordinate recovery
 
-This is a research-only source proposal. It changes whitespace in
-`programs/pump-amm/src/curve/fees.rs` so the compiler assigns the original
-source lines to `ceil_div` and `fee`. The whitespace-stripped file is identical
+This is an unqualified research-only source proposal, retained in
+[`proposed/fees.rs`](proposed/fees.rs) and [`source.patch`](source.patch).
+The maintained `programs/pump-amm/src/curve/fees.rs` remains at the authenticated
+checkpoint. The proposal changes whitespace so the compiler assigns the original
+source lines to `ceil_div` and `fee`; the whitespace-stripped file is identical
 to the parent source.
 
 The selected maintained checkpoint remains
@@ -22,9 +24,10 @@ instruction differences in the two proposed windows:
 The proposed layout puts those operations on lines 19, 21, and 32. A separate
 same-host v1.44 experiment produced zero normalized instruction differences in
 both complete windows and moved a 785-window cohort from 651 to 653 normalized
-matches with no normalized or raw loss. That experiment is retained exactly in
-`result.json`, including hashes and limitations. Its artifacts are not promoted
-because the authenticated Linux checkpoint build could not be run here.
+matches with no normalized or raw loss. `result.json` records its asserted hashes and results. The experiment's binaries
+and build receipts are not archived here, so those proposed-body results cannot
+be independently recomputed unless the exact external artifacts are supplied.
+The authenticated Linux checkpoint build could not be run here.
 
 The authenticated driver requires Podman, the pinned Linux/amd64 v1.44 SDK and
 authenticated archive, and the retained logical dependency caches. This host is
@@ -40,8 +43,10 @@ From a full checkout:
 python3 -B repro/pump_amm/fee-helper-source-coordinates-20261028/verify.py
 ```
 
-The verifier checks source identity, all 785 selected-checkpoint windows, the
-three retained diagnostic differences, and direct-call closure. In a sparse
+The verifier checks proposal source identity, the archived patch, unchanged
+maintained source, all 785 selected-checkpoint windows, the three retained
+diagnostic differences, and the 17 immediate call targets. It does not prove
+recursive call/data closure for the proposed bodies. In a sparse
 checkout, pass the selected checkpoint artifacts explicitly:
 
 ```sh
