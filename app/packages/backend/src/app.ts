@@ -1,4 +1,6 @@
 import Fastify from "fastify";
+import { PositionsStore } from "./positions-store.js";
+import { registerPositionsRoutes, POSITIONS_NATIVE_ROUTES } from "./positions-routes.js";
 import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 import { validateHeaderName, validateHeaderValue } from "node:http";
@@ -311,6 +313,8 @@ const NATIVE_ROUTES = new Set<string>([
 ]);
 
 export interface BuildAppOptions {
+  /** Explicit local materialization; absent preserves the fixture/501 harness. */
+  positionsStore?: PositionsStore;
   /** Override the user store (for tests). */
   userStore?: UserStore;
   /** Override the post store (for tests). */
@@ -364,6 +368,7 @@ export function buildApp(fixtures: Fixture[] = [], opts: BuildAppOptions = {}) {
     registerPostRoutes(native, postStore);
     registerCompetitionRoutes(native, compStore);
     registerFollowingRoutes(native, followStore);
+    if (opts.positionsStore) registerPositionsRoutes(native, opts.positionsStore);
   });
 
   // Routing recognizes documented paths; no fabricated domain responses or live proxy fallback.
@@ -374,7 +379,8 @@ export function buildApp(fixtures: Fixture[] = [], opts: BuildAppOptions = {}) {
       ),
     )) {
       // Skip operations that a native handler already serves.
-      if (NATIVE_ROUTES.has(`${method.toUpperCase()} ${path}`)) continue;
+      if (NATIVE_ROUTES.has(`${method.toUpperCase()} ${path}`) ||
+        (opts.positionsStore && POSITIONS_NATIVE_ROUTES.has(`${method.toUpperCase()} ${path}`))) continue;
       app.route({
         method: method.toUpperCase() as "GET",
         url: "/v1" + path.replace(/\{([^}]+)\}/g, ":$1"),
