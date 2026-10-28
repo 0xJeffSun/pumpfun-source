@@ -51,3 +51,7 @@ The same ordinary SBF environment applies after selecting `--stage arithmetic749
 ## Optional Source/declaration composition
 
 Select `--stage sourcefronts780` when materializing the 60-input composition described in the README. The same ordinary Linux SBF profile, lockfile, package set, wrapper, SDK and target libraries apply; only the attributed Rust source transformations differ. This stage does not establish the historical recipe. Do not substitute a public SBPF-profile count or runtime claim. Runtime remains NOT RUN; the known decoder and data-consumer qualification limits remain explicit in the README.
+
+## Separate ordinary SBPF profile
+
+The SBF recipe and stage results above remain unchanged. For the independently built and repeated 785-window SBPF profile on the same `sourcefronts780` source, use only the coordinated changes in [SBPF_RECIPE.md](SBPF_RECIPE.md) and verify [sbpf-target-libs.sha256](sbpf-target-libs.sha256). Do not mix target libraries or reinterpret SBF artifacts as SBPF dependencies.
