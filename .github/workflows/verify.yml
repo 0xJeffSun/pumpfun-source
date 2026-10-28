@@ -16,6 +16,12 @@ jobs:
       max-parallel: 12
       matrix:
         include:
+          - suite: fees-canonical-exact
+            commands: |
+              python -B scripts/verify_current_checkpoint.py pump_fees
+              python -O -B research/all-contract-completion-20261028/test_current_fees.py
+              python -O -B research/contract-completion-20261028/test_fees_runtime.py
+              python scripts/fees_validate_all.py --candidate research/all-contract-completion-20261028/fees-built/canonical-01/candidate.so --output work/fees-canonical-fresh.json
           - suite: pump-v3-buy-cost-overflow
             commands: |
               python -I -B research/pump-v3-buy-cost-overflow/verify.py
@@ -292,7 +298,8 @@ jobs:
               python repro/pump_fees/initializer-inline-runtime/verify.py
               python scripts/verify_recovered_builds.py
               python -B scripts/verify_current_reconstruction.py --repo .
-              python -I -B repro/donation-relay/canonical-exact-selection/test_selection.py
+              python -B research/all-contract-completion-20261028/relay/verify_current_bridge.py --repo .
+              python -B research/all-contract-completion-20261028/relay/test_current_bridge.py
               # The sealed Pump-only P27 transition assumes the old global workflow.
               # verify_current_reconstruction checks the current multi-contract selections.
               python -B repro/layered-passes/pass-19/ci-followup/verify.py --repo .

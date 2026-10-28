@@ -78,7 +78,9 @@ def verify(root):
         selection = module('current_publication_relay_selection',
                            relay_directory / 'verify_selection.py')
         selection.authenticate()
-        relay = selection.verify(root)
+        bridge = module('current_relay_scanner_bridge', root / 'research/all-contract-completion-20261028/relay/verify_current_bridge.py')
+        relay_transition = bridge.verify(root)
+        relay = relay_transition['current_selection']
         assert relay['verified'] and relay['canonical_source60_verified']
         assert relay['all492_raw'] and relay['meaningful_elf_literal_equal']
         assert relay['selected_payload_literal_checked']
@@ -90,15 +92,16 @@ def verify(root):
         context.unchanged(root / P27)
         assert len(catalogue) == 53
 
-        # Fees still selects the same artifact/source as the P27 publication.
-        # Check its exact input set in addition to the live source verifier.
-        fees = context.F['compiled']['pump_fees']
-        layout = context.R['source_layout']['pump_fees']
-        names = historical.source_names(
-            root / layout['crate'], root / layout['workspace'], root,
-            [root / name for name in layout.get('extra_inputs', [])])
-        assert names == set(fees['source']), 'Fees source inventory changed'
-        assert initial_status['pump_fees'] == context.F['status']['pump_fees']
+        # Preserve the old Fees source map only while that historical selection
+        # is current. Exact canonical promotion has its own complete source gate.
+        if initial_status['pump_fees']['candidate_artifact'] != 'research/all-contract-completion-20261028/fees-built/canonical-01/candidate.so':
+            fees = context.F['compiled']['pump_fees']
+            layout = context.R['source_layout']['pump_fees']
+            names = historical.source_names(
+                root / layout['crate'], root / layout['workspace'], root,
+                [root / name for name in layout.get('extra_inputs', [])])
+            assert names == set(fees['source']), 'Fees source inventory changed'
+            assert initial_status['pump_fees'] == context.F['status']['pump_fees']
     finally:
         sys.path.pop(0)
 
@@ -142,6 +145,7 @@ def verify(root):
         'status': 'PASS_CURRENT_RECONSTRUCTION',
         'current_source_and_artifact_reports': verified,
         'relay': relay,
+        'relay_scanner_transition': relay_transition,
         'relay_saved_replay': relay_replay,
         'historical_p27': {
             'metadata_manifest_sha256': P27_SEAL,
