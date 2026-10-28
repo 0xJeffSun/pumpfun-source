@@ -34,7 +34,8 @@ if not __debug__:
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
-WS = Path.home() / "workspace/slop-verify"
+CONTROL = ROOT / "research/amm-multi-hop-group-slice-recovery/artifacts/candidate.so.gz"
+CANDIDATE = ROOT / "research/amm-transfer-fee-diagnostic-recovery/artifacts/candidate.so.gz"
 IMAGES = ("original", "control", "candidate")
 
 
@@ -80,8 +81,8 @@ def main():
     assert report["mismatches"] == []
     assert report["image_sha256"] == {
         "original": sha((ROOT / "evidence/original/pump_amm/deployed.so").read_bytes()),
-        "control": sha((WS / "control.so").read_bytes()),
-        "candidate": sha((WS / "candidate.so").read_bytes()),
+        "control": sha(gzip.decompress(CONTROL.read_bytes())),
+        "candidate": sha(gzip.decompress(CANDIDATE.read_bytes())),
     }
     for name, digest in report["input_sha256"].items():
         assert sha((ROOT / name).read_bytes()) == digest, name
