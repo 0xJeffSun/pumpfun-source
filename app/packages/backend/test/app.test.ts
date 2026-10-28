@@ -1,5 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
+import { request } from 'node:http';
 import { buildApp } from '../src/app.js';
 test('unimplemented domain routes cannot pass as working APIs', async () => {
  const app=buildApp();
@@ -14,3 +15,19 @@ test('fixture replay matches method, path, normalized query, status and headers'
   assert.equal((await app.inject('/coins?limit=1&limit=2')).statusCode,501);
  } finally { await app.close(); }
 });
+
+test('fixture paths retain dot segments from the request target', async () => {
+ const app=buildApp([{method:'GET',path:'/coins',status:200,body:{ok:true},source:'synthetic-test'}]);
+ try {
+  assert.equal((await app.inject('/coins')).statusCode,200);
+  const origin=await app.listen({host:'127.0.0.1',port:0});
+  for (const path of ['/missing/../coins','/missing/%2e%2e/coins']) {
+   const status=await new Promise<number|undefined>((resolve,reject)=>{
+    const req=request(origin,{path},res=>{ res.resume(); resolve(res.statusCode); });
+    req.on('error',reject); req.end();
+   });
+   assert.equal(status,501,path);
+  }
+ } finally { await app.close(); }
+});
+
