@@ -7,7 +7,7 @@ export async function formatBundles(root=fileURLToPath(new URL('..',import.meta.
 const manifest=JSON.parse(await fs.readFile(path.join(root,'evidence/web/manifest.json'),'utf8'));
 const output=path.join(root,'recovered/pretty');await fs.mkdir(output,{recursive:true});
 const records=[];
-for(const record of manifest.records.filter(x=>x.status===200&&x.url.endsWith('.js'))){
+for(const record of manifest.records.filter(x=>x.status===200&&new URL(x.url).pathname.endsWith('.js'))){
  const file=createHash('sha256').update(record.url).digest('hex')+'-'+path.basename(new URL(record.url).pathname);
  try { const source=await fs.readFile(path.join(root,record.path),'utf8');const formatted=await prettier.format(source,{parser:'babel'}); await fs.writeFile(path.join(output,file),formatted);records.push({url:record.url,source:record.path,output:`recovered/pretty/${file}`,sha256:record.sha256,status:'formatted'}); }
  catch(error){records.push({url:record.url,status:'failed',error:String(error)});}

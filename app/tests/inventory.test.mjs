@@ -101,6 +101,48 @@ async function runInventory(root, options = {}) {
   return inventory(root, { log: () => {}, ...options });
 }
 
+test("query-bearing script URLs retain factories and full provenance", async (t) => {
+  const root = await makeWorkspace(t, [{
+    contents: bundle([{ id: 77, code: 'function value() { return "retained"; }' }]),
+  }]);
+  assert.equal(runInventoryCli(root).status, 0);
+  const before = await factoryFiles(root);
+  for (const suffix of ["?v=2", "#fragment", "?v=2#fragment"]) {
+    const manifest = await readJson(root, "evidence/web/manifest.json");
+    const url = `https://example.invalid/source-0.js${suffix}`;
+    manifest.records[0].url = url;
+    await writeFile(path.join(root, "evidence/web/manifest.json"), JSON.stringify(manifest));
+    const result = runInventoryCli(root);
+    assert.equal(result.status, 0, result.stderr);
+    assert.deepEqual(await factoryFiles(root), before, `Dropped factories for ${url}`);
+    const report = await readJson(root, "recovered/modules.json");
+    assert.equal(report.modules[0].origins[0].url, url);
+  }
+});
+
+test("a non-script path with a .js query value is not parsed as JavaScript", async (t) => {
+  const root = await makeWorkspace(t, [{ url: "https://example.invalid/page?next=chunk.js", contents: "<!doctype html>" }]);
+  const result = runInventoryCli(root);
+  assert.equal(result.status, 0, result.stderr);
+  assert.deepEqual(await factoryFiles(root), []);
+});
+
+test("invalid query-bearing scripts fail without replacing the inventory", async (t) => {
+  const root = await makeWorkspace(t, [{ contents: bundle([{ id: 77, code: "() => 1" }]) }]);
+  await runInventory(root);
+  const before = await snapshot(root);
+  const manifest = await readJson(root, "evidence/web/manifest.json");
+  manifest.records[0].url += "?v=2";
+  const invalid = "const broken = ;";
+  await writeFile(path.join(root, manifest.records[0].path), invalid);
+  manifest.records[0].sha256 = digest(invalid);
+  await writeFile(path.join(root, "evidence/web/manifest.json"), JSON.stringify(manifest));
+  const result = runInventoryCli(root);
+  assert.notEqual(result.status, 0, "Invalid script was silently skipped");
+  assert.match(result.stderr, /Inventory extraction failed/);
+  assert.deepEqual(await snapshot(root), before);
+});
+
 function runInventoryCli(root) {
   return spawnSync(process.execPath, [inventoryScript, "--root", root], {
     encoding: "utf8",
