@@ -1,39 +1,30 @@
-type RewardCard = {
+export type RewardSummaryItem = {
   label: string;
-  amount: string;
-  denomination: string;
-  icon: string;
+  amount: string | null;
+  denomination?: string;
+  explanation: string;
 };
 
-const cards: RewardCard[] = [
-  { label: "Total Earned", amount: "12,450.82", denomination: "SOL", icon: "💰" },
-  { label: "Claimed", amount: "8,230.50", denomination: "SOL", icon: "✅" },
-  { label: "Unclaimed", amount: "4,220.32", denomination: "SOL", icon: "⏳" },
-];
-
-/** Three summary cards for reward totals. */
-export function RewardSummary() {
+/** Render only caller-supplied reward observations; null values stay unknown. */
+export function RewardSummary({ items }: { items: readonly RewardSummaryItem[] }) {
   return (
-    <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-      {cards.map((card) => (
+    <div className="grid grid-cols-1 gap-3 sm:grid-cols-3" data-testid="reward-summary">
+      {items.map((item) => (
         <div
-          key={card.label}
+          key={item.label}
           className="rounded-xl border border-border-secondary bg-bg-secondary p-4"
         >
-          <div className="flex items-center gap-2">
-            <span aria-hidden="true" className="text-lg">
-              {card.icon}
-            </span>
-            <span className="text-[11px] font-semibold uppercase tracking-wide text-text-muted">
-              {card.label}
-            </span>
-          </div>
-          <p className="mt-2 text-xl font-bold tracking-tight text-text-primary">
-            {card.amount}
+          <p className="text-[11px] font-semibold uppercase tracking-wide text-text-muted">
+            {item.label}
           </p>
-          <p className="text-xs text-text-tertiary">{card.denomination}</p>
-          <p className="mt-2 text-[10px] text-text-muted">
-            Reconstruction data
+          <p className="mt-2 text-lg font-semibold tracking-tight text-text-primary">
+            {item.amount ?? "Unavailable"}
+          </p>
+          {item.amount && item.denomination ? (
+            <p className="text-xs text-text-tertiary">{item.denomination}</p>
+          ) : null}
+          <p className="mt-2 text-xs leading-5 text-text-muted">
+            {item.explanation}
           </p>
         </div>
       ))}
