@@ -20,6 +20,10 @@ jobs:
             commands: |
               python -I -B research/mayhem-native-current432-composition/verify.py
               python -I -B research/mayhem-native-current432-composition/test_verify.py
+          - suite: mayhem-signer-seed-order
+            commands: |
+              python -I -B research/mayhem-signer-seed-order/verify.py
+              python -I -B research/mayhem-signer-seed-order/test_verify.py
           - suite: mayhem-amm-shape-controls
             commands: |
               python -B research/mayhem-amm-handler-shape-controls-20261027/verify.py
