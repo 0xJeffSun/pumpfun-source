@@ -2891,3 +2891,8 @@ source, binary or runtime evidence. The maintained incentive-order archive also
 inherited the two unavailable Python-cache entries: seven metadata/seal files
 remove them, with 19,459 unaffected entry hashes preserved. The original saved
 evidence remains unchanged in both repairs.
+
+The repaired current AMM incentive-order packet passes the independent full
+`--current-source` verifier, including all 17,462 core cases and its retained
+supplemental matrices. All 19,463 result-file hashes pass the post-run inventory
+check. This metadata repair changes no source, binary or runtime record.

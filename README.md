@@ -10,6 +10,11 @@ ELF and, through a separate loader deployment, its captured payload.**
 
 ## Current progress
 
+**Mayhem: 436/441 function windows matched (98.87%), including both Legacy trade
+bodies; five remain (1.13%). Unmatched code is 72,192 bytes (10.21%).**
+See the [completion review](docs/MAYHEM-COMPLETION.md) for all five bodies and the
+distinction between 141 raw-equal and 295 normalized-only matches.
+
 **PumpSwap: 656/785 function windows matched (83.6%); 129 remain (16.4%). Matched windows cover 71.1% of original executable text, leaving 335,928 bytes (28.9%).**
 
 These are binary-coverage measurements. Full call/data/relocation identity, original build provenance and uncovered behavior remain open. The [remaining-work review](repro/pump_amm/incentive-order-recovery-20261027/remaining-audit/README.md) lists all 129 unmatched windows. The latest checkpoint also resolves all 128 incentive error-order counterexamples in the new 1,730-case matrix.
