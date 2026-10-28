@@ -10,12 +10,11 @@ mismatches.
 """
 from pathlib import Path
 import csv, gzip, hashlib, json, sys
+if not __debug__:
+    raise SystemExit('Run without -O')
 sys.dont_write_bytecode = True
 P = Path(__file__).resolve().parent
 ROOT = next(p for p in P.parents if (p / 'evidence/original/pump/deployed.so').is_file())
-sys.path.insert(0, str(ROOT / 'scripts'))
-from pump_compare_function_bytes import normalize, body  # noqa
-from pump_quote_control_function_match import sections  # noqa
 import difflib
 
 
@@ -66,12 +65,44 @@ def elf_functions(blob):
     return out
 
 
-def main():
-    manifest = json.loads((P / 'MANIFEST.json').read_text())
-    actual = {str(f.relative_to(P)) for f in P.rglob('*') if f.is_file() and '__pycache__' not in f.parts}
-    assert actual == set(manifest) | {'MANIFEST.json'}, sorted(actual ^ (set(manifest) | {'MANIFEST.json'}))
+def verify_inputs():
+    paths = list(P.rglob('*'))
+    assert all(not f.is_symlink() and (f.is_file() or f.is_dir()) for f in paths), 'packet path type'
+    manifest_path = P / 'MANIFEST.json'
+    assert manifest_path.is_file(), 'root manifest must be a regular file'
+    manifest = json.loads(manifest_path.read_text())
+    actual = {str(f.relative_to(P)) for f in paths if f.is_file()}
+    assert actual == set(manifest) | {'MANIFEST.json'}, 'packet inventory'
     for name, digest in manifest.items():
-        assert not (P / name).is_symlink() and sha(P / name) == digest, name
+        assert sha(P / name) == digest, name
+    inputs = json.loads((P / 'VERIFIER-INPUTS.json').read_text())
+    base = ROOT / 'repro/pump/main-contract-round37-20261027'
+    primary = list((base / 'primary').rglob('*'))
+    assert all(not f.is_symlink() and (f.is_file() or f.is_dir()) for f in primary)
+    required = {
+        'scripts/pump_compare_function_bytes.py',
+        'scripts/pump_quote_control_function_match.py',
+        'scripts/pump_diagnostic_audit.py',
+        'scripts/pump_validate_all.py',
+        'evidence/original/pump/deployed.so',
+        'repro/reconstruction-status-2026-10-26/functions.tsv',
+        'repro/pump/main-contract-round37-20261027/CHECKPOINT.json',
+        'repro/pump/main-contract-round37-20261027/inventory.json.gz',
+    } | {str(f.relative_to(ROOT)) for f in primary if f.is_file()}
+    assert set(inputs) == required, 'verifier input inventory'
+    for name, digest in inputs.items():
+        path = ROOT / name
+        assert path.is_file() and not path.is_symlink(), name
+        assert all(not parent.is_symlink() for parent in path.parents if parent != ROOT and ROOT in parent.parents), name
+        assert sha(path) == digest, name
+
+
+def main():
+    verify_inputs()
+    sys.path.insert(0, str(ROOT / 'scripts'))
+    global normalize, body, sections
+    from pump_compare_function_bytes import normalize, body
+    from pump_quote_control_function_match import sections
     res = json.loads((P / 'RESULT.json').read_text())
     base = ROOT / res['base_round_package']
     bcp = json.loads((base / 'CHECKPOINT.json').read_text())
@@ -158,6 +189,13 @@ def main():
         from pump_diagnostic_audit import audit
         a = audit(rep['suites']); assert not a['mismatches']
         reg = {'suites': len(rep['suites']), 'cases': rep['case_count'], 'paired_log_cases': a['log_bearing_cases']}
+    review = read(P / 'RUNTIME-REVIEW.json')
+    assert review['candidate_sha256'] == res['candidate_sha256'] and review['original_sha256'] == sha(ROOT / 'evidence/original/pump/deployed.so')
+    assert review['full_receipt_sha256'] == sha(P / 'full.json.gz')
+    assert review['counts']['pairs'] == 10468 and review['counts']['signed_transaction_occurrences_reverified'] == 18284
+    assert review['distinct_signed_transactions'] == 2409 and review['non_filename_log_differences'] == 138
+    assert sum(review['ordered_main_log_difference_families'].values()) == 190
+    assert review['loader_receipts']['descriptor_count'] == 44 and review['loader_receipts']['actual_receipt_payloads_available'] == 0
     print(json.dumps({'verified': True, 'counts': counts, 'normalized_gains': res['normalized_gains'], 'raw_gains': res['raw_gains'],
                       'losses': res['normalized_losses'] + res['raw_losses'], 'regression': reg, 'whole_elf_equal': False}, indent=1))
 
