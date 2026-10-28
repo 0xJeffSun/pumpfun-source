@@ -21,19 +21,20 @@ pub struct DistributeFeeToHolders<'info>{
 pub fn execute<'info>(ctx:Context<'_, '_, '_, 'info,DistributeFeeToHolders<'info>>,amounts:Vec<u64>)->Result<()>{
  let a=&ctx.accounts;let mint=a.mint.key();let bump=[ctx.bumps.holder_rewards];let seeds:&[&[u8]]=&[b"holder-rewards",mint.as_ref(),&bump];let signer=&[seeds];
  let native=a.quote_mint.key()==anchor_spl::token::spl_token::native_mint::ID;
- require!(ctx.remaining_accounts.len()==amounts.len()*2,PumpError::HolderRewardRecipientsMismatch);
+ require!(ctx.remaining_accounts.len()==amounts.len().saturating_mul(2),PumpError::HolderRewardRecipientsMismatch);
  if let Some(source)=&a.holder_rewards_token_account {
   if native {anchor_spl::token_interface::close_account(CpiContext::new_with_signer(a.quote_token_program.to_account_info(),anchor_spl::token_interface::CloseAccount{account:source.to_account_info(),destination:a.holder_rewards.to_account_info(),authority:a.holder_rewards.to_account_info()},signer))?;}
  }
  let mut total=0u64;
  for (amount,pair) in amounts.iter().zip(ctx.remaining_accounts.chunks_exact(2)){
   if native {
-   if *amount!=0 {invoke_signed(&system_instruction::transfer(&a.holder_rewards.key(),pair[0].key,*amount),&[a.holder_rewards.to_account_info(),pair[0].clone(),a.system_program.to_account_info()],signer)?;}
+   crate::migrate::transfer_native(a.system_program.as_ref(),&a.holder_rewards,&pair[0],*amount,signer)?;
   }else{
    let source=a.holder_rewards_token_account.as_ref().ok_or_else(||error!(PumpError::HolderRewardTokenAccountMissing))?;
    require_keys_eq!(*pair[1].key,anchor_spl::associated_token::get_associated_token_address_with_program_id(pair[0].key,&a.quote_mint.key(),&a.quote_token_program.key()),PumpError::HolderRewardRecipientsMismatch);
-   if pair[1].data_is_empty(){let ix=Instruction{program_id:a.associated_token_program.key(),accounts:vec![AccountMeta::new(a.holder_reward_claim_authority.key(),true),AccountMeta::new(*pair[1].key,false),AccountMeta::new_readonly(*pair[0].key,false),AccountMeta::new_readonly(a.quote_mint.key(),false),AccountMeta::new_readonly(a.system_program.key(),false),AccountMeta::new_readonly(a.quote_token_program.key(),false)],data:vec![0]};invoke_signed(&ix,&[a.holder_reward_claim_authority.to_account_info(),pair[1].clone(),pair[0].clone(),a.quote_mint.to_account_info(),a.system_program.to_account_info(),a.quote_token_program.to_account_info(),a.associated_token_program.to_account_info()],&[])?;}
-   if *amount!=0 {anchor_spl::token_interface::transfer_checked(CpiContext::new_with_signer(a.quote_token_program.to_account_info(),anchor_spl::token_interface::TransferChecked{from:source.to_account_info(),mint:a.quote_mint.to_account_info(),to:pair[1].clone(),authority:a.holder_rewards.to_account_info()},signer),*amount,a.quote_mint.decimals)?;}
+   if pair[1].data_is_empty(){anchor_spl::associated_token::create(CpiContext::new(a.associated_token_program.to_account_info(),anchor_spl::associated_token::Create{payer:a.holder_reward_claim_authority.to_account_info(),associated_token:pair[1].clone(),authority:pair[0].clone(),mint:a.quote_mint.to_account_info(),system_program:a.system_program.to_account_info(),token_program:a.quote_token_program.to_account_info()}))?;}
+   let source_info=source.to_account_info();
+   if *amount!=0 {anchor_spl::token_interface::transfer_checked(CpiContext::new_with_signer(a.quote_token_program.to_account_info(),anchor_spl::token_interface::TransferChecked{from:source_info.clone(),to:pair[1].clone(),authority:a.holder_rewards.to_account_info(),mint:a.quote_mint.to_account_info()},signer),*amount,a.quote_mint.decimals)?;}
   }
   total=total.checked_add(*amount).ok_or_else(||error!(PumpError::Overflow))?;
  }

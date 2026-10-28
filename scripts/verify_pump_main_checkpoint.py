@@ -9,8 +9,8 @@ import subprocess
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
-PACKAGE = 'repro/pump/main-contract-round37-20261027'
-MANIFEST_SHA256 = 'a31ef1d56e35e90a5823b65e4b8b7afafa5eda07e7d8371fdb21f9b49c198f10'
+PACKAGE = 'repro/pump/main-contract-round38-20261027'
+MANIFEST_SHA256 = 'c1e9de2cf63a7b037b2d6f6af836c167b1503f64f8f794308e08d46bb22440ea'
 
 
 def sha(path):

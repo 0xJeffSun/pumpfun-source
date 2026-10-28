@@ -18,7 +18,8 @@ These are binary-coverage measurements. Full call/data/relocation identity, orig
 
 **Main Pump: 71.9% of function windows matched; 51.6% of original text covered. Complete reconstruction remains unfinished.**
 
-Reproduce the selected Pump ELF with its [archived Rust/linker recipe](repro/pump/main-contract-round37-20261027/reproduce.py).
+Reproduce the selected Pump ELF with its [archived Rust/linker recipe](repro/pump/main-contract-round38-20261027/reproduce.py).
+
 
 <!-- MAIN-PUMP-REMAINING:BEGIN -->
 ### Main Pump remaining work
@@ -56,7 +57,7 @@ all remaining code, calls, data, relocations and build provenance.
 
 | Latest verified checkpoint | Matched windows | Matched % | Raw-equal bodies | Normalized only | Unmatched | Whole ELF equal |
 | --- | ---: | ---: | ---: | ---: | ---: | --- |
-| [Pump Round37](repro/pump/main-contract-round37-20261027/README.md) | 744 / 1,035 | 71.9% | 175 | 569 | 291 | No |
+| [Pump Round38](repro/pump/main-contract-round38-20261027/README.md) | 744 / 1,035 | 71.9% | 175 | 569 | 291 | No |
 | [PumpSwap / AMM](repro/pump_amm/event-ownership-recovery-20261027/README.md) | 653 / 785 | 83.2% | 148 | 505 | 132 | No |
 | [Fees research](research/claude-fees100-crank-donation-20261027/README.md) | 585 / 585 | 100.0% | 585 | 0 | 0 | **Yes** |
 | [Mayhem research](research/mayhem-quotes-current-recovery-20261027/README.md) | 432 / 441 | 98.0% | 100 | 332 | 9 | No |
@@ -71,7 +72,7 @@ the whole program is identical.
 
 | Checkpoint | Text bytes in matched windows | Text covered | Unmatched text |
 | --- | ---: | ---: | ---: |
-| Pump Round37 | 924,192 / 1,792,208 | 51.6% | 868,016 |
+| Pump Round38 | 924,192 / 1,792,208 | 51.6% | 868,016 |
 | PumpSwap / AMM | 818,944 / 1,162,040 | 70.5% | 343,096 |
 | Fees research | 799,648 / 799,648 | 100.0% | 0 |
 | Mayhem research | 598,792 / 706,744 | 84.7% | 107,952 |
@@ -145,7 +146,7 @@ pass. Its 641-window research artifact remains bound to its former
 640-window parent; the maintained 647-window checkpoint is reported above.
 The parent's other supplemental matrices were not rerun on this artifact.
 
-Pump Round37 passes 10,468 full cases plus 7,636 focused executions, with 18,100
+Pump Round38 passes 10,468 full cases plus 7,640 focused executions, with 18,104
 paired diagnostic-log cases. AMM passes 17,462 full cases plus the separate
 account, fee, CPI, boundary and error-order matrices recorded in its checkpoint.
 The [independent Pump/AMM migration-pair replay](research/pump-amm-migration-composition/README.md)
