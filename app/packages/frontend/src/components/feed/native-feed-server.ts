@@ -68,6 +68,19 @@ async function readLocalJson(path: string): Promise<unknown> {
       "The local backend did not provide the required reconstruction provenance",
     );
   }
+  const cacheControl = response.headers.get("cache-control") ?? "";
+  if (
+    !cacheControl
+      .split(",")
+      .some(
+        (directive) =>
+          directive.trim().toLocaleLowerCase("en-US") === "no-store",
+      )
+  ) {
+    throw new NativeFeedDataError(
+      "The local backend did not preserve the required no-store boundary",
+    );
+  }
   const contentType = response.headers.get("content-type") ?? "";
   if (!/^application\/json(?:\s*;|$)/iu.test(contentType)) {
     throw new NativeFeedDataError(

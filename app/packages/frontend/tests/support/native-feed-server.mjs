@@ -160,6 +160,7 @@ const server = createServer((request, response) => {
     headers["x-reconstruction-data-source"] = "unknown";
   if (mode === "wrong-compatibility")
     headers["x-reconstruction-compatibility"] = "production";
+  if (mode === "wrong-cache") headers["cache-control"] = "public, max-age=60";
 
   if (requestUrl.pathname === "/services/frontend/home-feed/new/count") {
     if (requestUrl.searchParams.get("since") !== HEAD_CURSOR) {

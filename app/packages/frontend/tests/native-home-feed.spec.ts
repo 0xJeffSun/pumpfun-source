@@ -131,6 +131,7 @@ test("fails closed for unavailable, unproven and malformed local responses", asy
     "unavailable",
     "wrong-source",
     "wrong-compatibility",
+    "wrong-cache",
     "wrong-content-type",
     "malformed",
     "duplicate",
