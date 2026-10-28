@@ -1,0 +1,62 @@
+[
+  {
+    "wallet": "7xKXtg2CW87d97TXJSDpbD5jBkheTqA83TZRuJosgAsU",
+    "displayCurrency": "USD",
+    "language": "en",
+    "theme": "dark",
+    "slippageBps": 100,
+    "priorityFee": 50000,
+    "notifications": { "trades": true, "follows": true, "mentions": true, "rewards": true },
+    "privacy": { "showPortfolio": true, "showActivity": true }
+  },
+  {
+    "wallet": "DfMxre4cKmvogbLrPigxmibVTTQDuzjdXojWzjCXXhzj",
+    "displayCurrency": "SOL",
+    "language": "en",
+    "theme": "dark",
+    "slippageBps": 200,
+    "priorityFee": 100000,
+    "notifications": { "trades": true, "follows": false, "mentions": true, "rewards": true },
+    "privacy": { "showPortfolio": false, "showActivity": true }
+  },
+  {
+    "wallet": "9WzDXwBbmkg8ZTbNMqUxvQRAyrZzDsGYdLVL9zYtAWWM",
+    "displayCurrency": "USD",
+    "language": "en",
+    "theme": "light",
+    "slippageBps": 50,
+    "priorityFee": 25000,
+    "notifications": { "trades": false, "follows": false, "mentions": false, "rewards": true },
+    "privacy": { "showPortfolio": false, "showActivity": false }
+  },
+  {
+    "wallet": "HN7cABqLq46Es1jh92dQQisAq662SmxELLLsHHe4YWrH",
+    "displayCurrency": "EUR",
+    "language": "de",
+    "theme": "dark",
+    "slippageBps": 150,
+    "priorityFee": 75000,
+    "notifications": { "trades": true, "follows": true, "mentions": true, "rewards": true },
+    "privacy": { "showPortfolio": true, "showActivity": true }
+  },
+  {
+    "wallet": "2n3fS1TX1Cy6dqLKMmMwBjVYMQH3WHGX4HGEvHureXkf",
+    "displayCurrency": "USD",
+    "language": "en",
+    "theme": "dark",
+    "slippageBps": 300,
+    "priorityFee": 200000,
+    "notifications": { "trades": false, "follows": false, "mentions": false, "rewards": false },
+    "privacy": { "showPortfolio": false, "showActivity": false }
+  },
+  {
+    "wallet": "5aYsVQiU8QmRb9sPwPPxYqRN6YxWGMDK9JFcZ4Wn8NQh",
+    "displayCurrency": "GBP",
+    "language": "en",
+    "theme": "system",
+    "slippageBps": 75,
+    "priorityFee": 30000,
+    "notifications": { "trades": true, "follows": true, "mentions": false, "rewards": true },
+    "privacy": { "showPortfolio": true, "showActivity": false }
+  }
+]
