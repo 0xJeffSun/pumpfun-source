@@ -1,17 +1,22 @@
 # PumpSwap source reconstruction
 
-The maintained source is the [incentive ordering and liquidity checkpoint](../../repro/pump_amm/incentive-order-recovery-20261027/README.md),
-candidate `c20007e860f47db1cc443344605afafe505d61bb4de6d61306fa164db3482544`. It matches **656/785 normalized windows (83.6%)**,
+The maintained source is the [private-event and sweep checkpoint](../../repro/pump_amm/private-sweep-recovery-20261027/README.md),
+candidate `9278a52ae4fd93bb6159a72fa625f121394902a93f701d86931a7ec3778055fb`. It matches **656/785 normalized windows (83.6%)**,
 including **148 raw bodies**, and covers **826,112/1,162,040 text bytes (71.1%)**.
 Whole ELF identity is false; **129 windows remain**.
 
-Two strict offline builds agree. All17,462 corpus cases and retained supplemental
-suites pass. The21-case reserved-recipient matrix closes all11 prior differences, and
-160 resize cases remain matched. Claim/InitBoost and legacy operation boundaries
-are restored;17 entrypoint source descriptors remain matched. The recipe binds51 canonical,52 workspace
-and175 registry inputs,227 total, with762 cached dependency artifacts unchanged.
-Counts overlap. Full code/data/call identity, original provenance and exhaustive
-behavior remain open; the linked checkpoint records the exact proof limits.
+Four private events reuse the observed first-Pubkey storage across emissions.
+SetCoinCreator re-evaluates the PDA for its error RHS, and sweep snapshots the
+recipient key and Pool quote mint. These are source/local-instruction recoveries;
+no complete private-body or full-callee match is claimed. The H11 incentive guard
+remains byte-identical, and all 1,730 fresh signed boundary cases pass with its 128
+historical differences resolved.
+
+Two strict offline builds agree. All 17,462 core cases and current private,
+sweep and retained supplemental suites pass; counts overlap. The recipe binds
+51 canonical, 52 workspace and 175 registry inputs, 227 total, with 762 cached
+dependency artifacts unchanged. Complete code/data/call identity, original
+provenance and exhaustive behavior remain open.
 
 The paragraphs below describe historical checkpoints.
 
