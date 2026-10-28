@@ -4,6 +4,11 @@ m=json.loads((root/'evidence/web/manifest.json').read_text())
 records=m['records']
 for name in ['api-probes.json','source-map-probes.json']:
  records += json.loads((root/'evidence'/name).read_text())
+objects_root=root/'evidence/web/objects'
+actual_objects={p.relative_to(root).as_posix() for p in objects_root.rglob('*') if p.is_file()} if objects_root.exists() else set()
+referenced_objects={r['path'] for r in records if 'path' in r and r['path'].startswith('evidence/web/objects/')}
+if actual_objects!=referenced_objects:
+ raise ValueError(f"Captured object inventory differs from records: unreferenced={sorted(actual_objects-referenced_objects)}, missing={sorted(referenced_objects-actual_objects)}")
 for r in records:
  if 'path' in r and hashlib.sha256((root/r['path']).read_bytes()).hexdigest()!=r['sha256']:
   raise ValueError(f"Captured object SHA-256 mismatch: {r['path']}")

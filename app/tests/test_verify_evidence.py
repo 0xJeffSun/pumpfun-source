@@ -55,6 +55,14 @@ class EvidenceVerificationTests(unittest.TestCase):
                         invalid = run(*flags)
                         self.assertNotEqual(invalid.returncode, 0, f'Accepted extra SDK source {name}')
                 extra.unlink()
+            stray = root / 'evidence/web/objects/stray.bin'
+            stray.parent.mkdir(parents=True, exist_ok=True)
+            stray.write_bytes(b'stray')
+            for flags in ((), ('-O',)):
+                with self.subTest(stray=stray.name, flags=flags):
+                    invalid = run(*flags)
+                    self.assertNotEqual(invalid.returncode, 0, 'Accepted unreferenced captured object')
+            stray.unlink()
 
 
 if __name__ == '__main__':
