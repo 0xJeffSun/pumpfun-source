@@ -304,7 +304,7 @@ pub fn execute<'info>(
     let mut source_seeds: Vec<Vec<u8>> = vec![];
     let mut prepaid = false;
     while i < count {
-        let group = &remaining[i * 5..(i + 1) * 5];
+        let group = remaining.get(i * 5..(i + 1) * 5).ok_or_else(|| error!(PumpAmmError::NotEnoughRemainingAccounts))?;
         if is_curve_hop(group)? {
             let start = i;
             i += 1;
