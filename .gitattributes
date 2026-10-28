@@ -1,6 +1,11 @@
 *.so binary
 *.bin binary
 
+# Preserve the source recovery's exact retained input and receipt bytes.
+research/pump-feeconfig-decoder-recovery/** -text
+research/pump-feeconfig-decoder-recovery/local-feeconfig.patch -whitespace
+research/pump-feeconfig-decoder-recovery/proposed/** -whitespace
+
 # Preserve the independent AMM replay's exact retained bytes on every checkout.
 research/amm-event-capture-independent-replay/** -text
 research/amm-event-capture-independent-replay/source.patch -whitespace

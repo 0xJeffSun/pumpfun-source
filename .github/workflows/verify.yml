@@ -23,6 +23,9 @@ jobs:
           - suite: amm-recipient-mode-recovery
             commands: |
               python -I -B research/amm-recipient-mode-recovery/verify.py
+          - suite: pump-feeconfig-decoder
+            commands: |
+              python -I -B research/pump-feeconfig-decoder-recovery/verify.py
           - suite: mayhem-clean-linux-evidence
             commands: |
               python -B research/mayhem-clean-linux-build-20261027/verify.py
