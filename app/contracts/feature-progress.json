@@ -417,37 +417,56 @@
       ],
       "source": {
         "contract": {
-          "status": "pending",
-          "evidence": []
+          "status": "accepted",
+          "evidence": [
+            "packages/frontend/HOLDER-REWARDS-EVIDENCE.md#captured-factories",
+            "packages/frontend/HOLDER-REWARDS-EVIDENCE.md#published-sdk-contract"
+          ]
         },
         "logic": {
-          "status": "pending",
-          "evidence": []
+          "status": "accepted",
+          "evidence": [
+            "packages/frontend/src/app/holder-rewards-inspector.tsx",
+            "packages/frontend/src/app/holder-rewards-derivation.ts"
+          ]
         },
         "adapters": {
-          "status": "pending",
-          "evidence": []
+          "status": "accepted",
+          "evidence": [
+            "packages/frontend/src/app/holder-rewards-derivation.ts",
+            "packages/frontend/src/components/rewards/RewardSummary.tsx"
+          ]
         }
       },
       "completion": {
         "source": {
-          "status": "pending",
-          "evidence": []
+          "status": "accepted",
+          "evidence": [
+            "packages/frontend/HOLDER-REWARDS-EVIDENCE.md#local-design"
+          ]
         },
         "success": {
-          "status": "pending",
-          "evidence": []
+          "status": "accepted",
+          "evidence": [
+            "tests/holder-rewards.test.mjs",
+            "packages/frontend/tests/holder-rewards.spec.ts"
+          ]
         },
         "failure": {
-          "status": "pending",
-          "evidence": []
+          "status": "accepted",
+          "evidence": [
+            "tests/holder-rewards.test.mjs",
+            "packages/frontend/tests/holder-rewards.spec.ts"
+          ]
         },
         "consistency": {
           "status": "pending",
-          "evidence": []
+          "evidence": [
+            "packages/frontend/visual/holder-rewards-20261028/README.md"
+          ]
         }
       },
-      "note": "Route scaffold; reward state and claims unimplemented."
+      "note": "Published-SDK offline PDA derivation, validation and unavailable states pass unit and browser tests. Live account existence, balances, eligibility, claims and original visual parity remain unqualified."
     },
     {
       "id": "create",

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import CreateCoinForm from "../create-coin-form";
+import HolderRewardsInspector from "../holder-rewards-inspector";
 
 const routes: Record<string, [string, string]> = {
   explore: ["Explore", "Search, filters, coin rankings and discovery."],
@@ -9,7 +10,7 @@ const routes: Record<string, [string, string]> = {
   mayhem: ["Mayhem", "Mayhem overview, coin lists and traders."],
   "holder-rewards": [
     "Holder rewards",
-    "Reward discovery and claim integration.",
+    "Derive a holder-rewards PDA locally without querying balances, eligibility or claims.",
   ],
   create: [
     "Create a coin",
@@ -69,6 +70,8 @@ export default async function Page({ params, searchParams }: RoutePageProps) {
       ) : null}
       {path === "create" ? (
         <CreateCoinForm />
+      ) : path === "holder-rewards" ? (
+        <HolderRewardsInspector />
       ) : (
         <section className="empty-state" data-product-state="unavailable">
           <div className="empty-state-content">
