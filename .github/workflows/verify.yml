@@ -20,6 +20,10 @@ jobs:
             commands: |
               python -O -B scripts/verify_current_checkpoint.py mayhem
               python -O -B research/mayhem-canonical-promotion-20261028/test_verify.py
+          - suite: pump-multi-hop-quote-admission
+            commands: |
+              python -I -B research/pump-multi-hop-quote-admission/verify.py
+              python -I -B research/pump-multi-hop-quote-admission/test_controls.py
           - suite: pump-canonical-frontier
             commands: |
               python -B scripts/verify_current_checkpoint.py pump
