@@ -93,3 +93,11 @@ Select `--stage visibility788` for the exact three attributed #323 visibility ch
 ## Optional SBPF v2 rent stage: 789
 
 Select `--stage v2rent789` for the isolated attributed #323 v2 helper hunk on `visibility788`. See [V2RENT789.md](V2RENT789.md) for the independently repeated 789 / 1,035 injective and 131 raw result, three actual zero-size callers, preserved contract routes and explicit nonzero-input exclusion. All prior stages/default remain selectable. Runtime is **NOT RUN**; whole-original identity remains false.
+
+## Optional fourfronts795 stage
+
+Select `--stage fourfronts795` on the ordinary SBPF profile. The default and all seven preceding source stages remain selectable. This strictly composed three-file source delta credits [#352](https://github.com/lalalune/pumpfun-source/pull/352), [#353](https://github.com/lalalune/pumpfun-source/pull/353), [#354](https://github.com/lalalune/pumpfun-source/pull/354) and [#355](https://github.com/lalalune/pumpfun-source/pull/355). It preserves the prior clamp, public payment helpers and v2 zero-domain correction.
+
+The independently qualified result is **795 / 1,035 injective normalized windows and 131 raw windows**, retaining all 789 prior matches and all raw matches. Both complete generated ELFs repeat byte-for-byte after a separate same-source root compilation. Six new normalized bodies cover two scalar arithmetic helpers, two singleton whitelist methods and two instruction wrappers; no new raw match is claimed. The pure source suite has 59 passing tests.
+
+**Two typed business-handler edges remain unequal, and two changed panic-location identities have unresolved original owner/consumer mappings.** Dispatcher route membership and selectors are preserved; blanket relocated-data literal identity is not claimed. See [FOURFRONTS795.md](FOURFRONTS795.md) for the exact bounded proof, scoped original-record scan and all prior limits. Runtime remains **NOT RUN**, whole-original binary identity remains **false**, and no upstream counts/runtime results are inherited.

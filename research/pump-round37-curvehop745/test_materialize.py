@@ -248,4 +248,41 @@ class SourceTests(unittest.TestCase):
         data = m.v2rent_apply(self.v2rent_parent())
         self.assertIn('native_payments::ensure_rent_exempt(0,', data['programs/pump/src/buy_v2.rs'].decode().splitlines()[228])
         self.assertIn('native_payments::ensure_rent_exempt(0,', data['programs/pump/src/sell_v2.rs'].decode().splitlines()[104])
+    def fourfronts_parent(self):
+        out = self.root / 'fourfronts-parent'
+        m.materialize(PARENT, out, 'v2rent789')
+        return {str(p.relative_to(out)): p.read_bytes() for p in out.rglob('*') if p.is_file()}
+    def test_exact_fourfronts_stage(self):
+        got = m.materialize(PARENT, self.root / 'source', 'fourfronts795')
+        self.assertEqual(got, json.loads((m.HERE / 'fourfronts-pins.json').read_text())['source_sha256'])
+        self.assertEqual(len(got), 60)
+    def test_fourfronts_three_files_and_prior_fixes(self):
+        data = self.fourfronts_parent(); changed = m.fourfronts_apply(data)
+        self.assertEqual({n for n in data if data[n] != changed[n]}, {'programs/pump/src/lib.rs', 'programs/pump/src/buy.rs', 'programs/pump/src/trade_v3.rs'})
+        for n in data: self.assertEqual(len(data[n].splitlines()), len(changed[n].splitlines()))
+        self.assertEqual(data['programs/pump/src/buy.rs'].splitlines()[2910], changed['programs/pump/src/buy.rs'].splitlines()[2910])
+        self.assertEqual(data['programs/pump/src/buy.rs'].splitlines()[2944], changed['programs/pump/src/buy.rs'].splitlines()[2944])
+        self.assertEqual(data['programs/pump/src/v2_native_payments.rs'], changed['programs/pump/src/v2_native_payments.rs'])
+    def test_fourfronts_already_applied_rejected(self):
+        with self.assertRaises(ValueError): m.fourfronts_apply(m.fourfronts_apply(self.fourfronts_parent()))
+    def test_fourfronts_wrong_parent_rejected(self):
+        data = self.fourfronts_parent(); data['programs/pump/src/trade_v3.rs'] += b'\n'
+        with self.assertRaises(ValueError): m.fourfronts_apply(data)
+    def test_fourfronts_extra_parent_rejected(self):
+        data = self.fourfronts_parent(); data['extra.rs'] = b''
+        with self.assertRaises(ValueError): m.fourfronts_apply(data)
+    def test_fourfronts_missing_parent_rejected(self):
+        data = self.fourfronts_parent(); data.pop('programs/pump/src/lib.rs')
+        with self.assertRaises(ValueError): m.fourfronts_apply(data)
+    def test_fourfronts_source_origins_and_singleton(self):
+        data = m.fourfronts_apply(self.fourfronts_parent())
+        trade = data['programs/pump/src/trade_v3.rs'].decode().splitlines()
+        self.assertIn('error!(PumpError::Overflow)', trade[284])
+        self.assertIn('error!(PumpError::Overflow)', trade[293])
+        lib = data['programs/pump/src/lib.rs'].decode()
+        self.assertIn('whitelisted_quote_mints: [Pubkey; 1]', lib)
+        self.assertIn('legacy_buy::execute::<false>', lib)
+        self.assertIn('legacy_buy::execute::<true>', lib)
+        for line, error in [(1950, 'QuoteMintNotEligibleForWhitelist'), (1955, 'QuoteMintNotEligibleForWhitelist'), (1960, 'QuoteMintAlreadyWhitelisted'), (1971, 'QuoteMintWhitelistFull'), (1975, 'QuoteMintNotEligibleForWhitelist'), (1986, 'QuoteMintNotWhitelisted')]:
+            self.assertIn(error, lib.splitlines()[line-1])
 if __name__ == '__main__': unittest.main(argv=['test_materialize.py', *remaining])
