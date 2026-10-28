@@ -38,6 +38,8 @@ def render():
                 require(all(g['status'] in {'accepted','not-applicable'} for g in row['source'].values()), 'Source completion requires all source gates')
     scripts=[r for r in manifest['records'] if r['url'].endswith('.js')]
     verified=sum(r.get('status')==200 and hashlib.sha256((ROOT/r['path']).read_bytes()).hexdigest()==r['sha256'] for r in scripts)
+    script_progress=f'{100*verified/len(scripts):.0f}%' if scripts else 'N/A'
+    factory_progress='100%' if recovered['modules'] else 'N/A'
     source_count=source_equal=0
     with tarfile.open(ROOT/'evidence/sdk/pump-sdk-4.3.1.tgz') as archive:
         for m in archive:
@@ -49,8 +51,8 @@ def render():
     'Source acquisition/extraction is separate from editable feature reconstruction and working behavior. Percentages below use explicit counts or accepted milestones; they are not estimates of engineering effort. The original backend source is unavailable.','',
     '| Source / evidence measure | Complete / inventoried | Progress | Meaning |','| --- | ---: | ---: | --- |',
     f'| Published SDK source | {source_equal} / {source_count} files | {100*source_equal/source_count:.0f}% | Exact npm 4.3.1 source bytes; full behavior parity still unqualified |',
-    f'| Frontend JavaScript capture | {verified} / {len(scripts)} scripts | {100*verified/len(scripts):.0f}% | Known scripts in the captured route/asset graph only |',
-    f'| Frontend factory extraction | {len(recovered["modules"])} / {len(recovered["modules"])} inventoried variants | 100% | Extracted factories, not original source files; authenticated/unseen modules unknown |',
+    f'| Frontend JavaScript capture | {verified} / {len(scripts)} scripts | {script_progress} | Known scripts in the captured route/asset graph only |',
+    f'| Frontend factory extraction | {len(recovered["modules"])} / {len(recovered["modules"])} inventoried variants | {factory_progress} | Extracted factories, not original source files; authenticated/unseen modules unknown |',
     f'| Public developer API contract | {len(operations)} / {len(operations)} documented operations | 100% | Specification captured; native compatibility 0 / {len(operations)} (0%) |',
     '| Original backend source | Not observable | N/A | Implement replacement behavior from API evidence |','',
     '**Feature scoring:** source = contract/dependency mapping, editable logic, and required adapters (3 milestones). Completion = source accepted, successful behavior, failure/auth states, and UI or data consistency checks (4 milestones). A milestone needs evidence to count. Stubs, 501 responses and historical fixture replay earn no feature credit. N/A needs an explicit applicability decision.','',

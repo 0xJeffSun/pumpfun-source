@@ -1,5 +1,9 @@
 import importlib.util
+import json
 import pathlib
+import shutil
+import subprocess
+import sys
 import unittest
 import tempfile
 from unittest.mock import patch
@@ -7,6 +11,30 @@ spec=importlib.util.spec_from_file_location('progress',pathlib.Path(__file__).re
 progress=importlib.util.module_from_spec(spec)
 spec.loader.exec_module(progress)
 class ProgressTests(unittest.TestCase):
+    def test_empty_frontend_inventory_generates_an_unqualified_report(self):
+        app=pathlib.Path(__file__).resolve().parents[1]
+        with tempfile.TemporaryDirectory() as tmp:
+            root=pathlib.Path(tmp)/'app'
+            for directory in ['scripts','contracts','evidence/web','evidence/sdk','recovered','packages/sdk']:
+                (root/directory).mkdir(parents=True)
+            shutil.copyfile(app/'scripts/progress.py',root/'scripts/progress.py')
+            shutil.copyfile(app/'evidence/sdk/pump-sdk-4.3.1.tgz',root/'evidence/sdk/pump-sdk-4.3.1.tgz')
+            shutil.copytree(app/'packages/sdk/src',root/'packages/sdk/src')
+            for name in ['developer.openapi.json','internal-operations.json']:
+                shutil.copyfile(app/'contracts'/name,root/'contracts'/name)
+            ledger=progress.read('contracts/feature-progress.json')
+            ledger.update(frontend=[],backend=[])
+            for path,value in [('contracts/feature-progress.json',ledger),('evidence/web/manifest.json',{'records':[]}),('recovered/modules.json',{'modules':[],'failures':[]})]:
+                (root/path).write_text(json.dumps(value),encoding='utf-8')
+            (root.parent/'README.md').write_text('## License\n',encoding='utf-8')
+            for flags in [[],['-O']]:
+                result=subprocess.run([sys.executable,*flags,str(root/'scripts/progress.py')],capture_output=True,text=True)
+                self.assertEqual(result.returncode,0,result.stderr)
+                report=(root/'PROGRESS.md').read_text(encoding='utf-8')
+                self.assertIn('| Frontend JavaScript capture | 0 / 0 scripts | N/A |',report)
+                self.assertIn('| Frontend factory extraction | 0 / 0 inventoried variants | N/A |',report)
+                checked=subprocess.run([sys.executable,*flags,str(root/'scripts/progress.py'),'--check'],capture_output=True,text=True)
+                self.assertEqual(checked.returncode,0,checked.stderr)
     def test_generated_reports_use_canonical_lf_bytes(self):
         with tempfile.TemporaryDirectory() as tmp:
             root=pathlib.Path(tmp)/'app';root.mkdir()
