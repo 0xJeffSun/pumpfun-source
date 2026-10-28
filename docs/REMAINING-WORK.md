@@ -1,7 +1,7 @@
 # Remaining reconstruction work — 28 October 2026
 
 This is the action list for the [reconstruction audit](RECONSTRUCTION-AUDIT.md),
-updated through upstream revision `fbe3c3585`. The historical audit retains its
+updated through upstream revision `25b3f6168`. The historical audit retains its
 `6b61b337` parent and linked visibility-recovery measurements. The [current review](RECONSTRUCTION-STATUS.md)
 and [complete refreshed inventory](../repro/reconstruction-status-2026-10-26/README.md)
 list every raw match and unresolved window in their dated snapshot. That core
@@ -10,9 +10,9 @@ snapshot retains `1463bd22` audit bindings; current selections are recorded in
 [completion ledger](COMPLETION.md) remains a selected-checkpoint record; its old
 candidate paths and “current” prose must not override newer evidence.
 
-Current [Pump Round45](../repro/pump/main-contract-round45-20261027/README.md)
-has 203 raw-local matches, 617 normalized-only matches and 215 unmatched windows.
-The unmatched windows cover 702,056 original text bytes. Remaining bodies,
+Current [Pump Round46](../repro/pump/main-contract-round46-20261027/README.md)
+has 203 raw-local matches, 620 normalized-only matches and 212 unmatched windows.
+The unmatched windows cover 684,136 original text bytes. Remaining bodies,
 data, relocations, uncovered behavior and original build provenance remain open.
 
 Current [Fees research](../research/claude-fees100-crank-donation-20261027/README.md)

@@ -59,8 +59,8 @@ pub fn execute<'info>(ctx:Context<'_, '_, '_, 'info,Migrate<'info>>)->Result<()>
  // Allocate quote funding from signer PDA into native token account.
  move_lamports(&curve,&tmpq,quote)?;
  call(&tok,&[(&tmpq,false,true),(&a.rent.to_account_info(),false,false),(&curve,false,false)],vec![17],&[])?;
- let creator=a.bonding_curve.creator;let cpi_accounts=pump_amm::cpi::accounts::CreatePool{pool:pool.clone(),global_config:cfg.clone(),creator:pa.clone(),base_mint:mint.clone(),quote_mint:wsol.clone(),lp_mint:lp.clone(),user_base_token_account:tmpb.clone(),user_quote_token_account:tmpq.clone(),user_pool_token_account:ulp.clone(),pool_base_token_account:pb.clone(),pool_quote_token_account:pq.clone(),system_program:sys.clone(),token_2022_program:t22.clone(),base_token_program:base_tok.clone(),quote_token_program:tok.clone(),associated_token_program:ata.clone(),event_authority:ev.clone(),program:am.clone()};
- pump_amm::cpi::create_pool(CpiContext::new_with_signer(am.clone(),cpi_accounts,&[pas]),0,base,quote,creator,mayhem,pump_amm::types::OptionBool(a.bonding_curve.is_cashback_coin),pump_amm::types::OptionU64(a.bonding_curve.creator_fee_bps),pump_amm::types::OptionBool(a.bonding_curve.can_edit_creator_fee),pump_amm::types::OptionBool(a.bonding_curve.is_holder_reward))?;
+ create_pool(&ctx,base,
+  quote)?;
  if !mayhem && (ctx.remaining_accounts.len()==2 || native_payments::boost_enabled(&cfg)) {
   require!(ctx.remaining_accounts.len()==2,PumpError::NotEnoughRemainingAccounts);
   let boost=&ctx.remaining_accounts[0];let vault=&ctx.remaining_accounts[1];
@@ -107,4 +107,17 @@ fn close_token_account<'info>(a:&Migrate<'info>,account:&AccountInfo<'info>,sign
 pub fn pool_authority_mint_token_account(a:&Migrate)->Result<TokenAccount>{
  let data=a.pool_authority_mint_account.try_borrow_data()?;
  TokenAccount::try_deserialize_unchecked(&mut &data[..])
+}
+
+// Original: standalone pool-creation helper (window 0x43ea0) calling the generated pump_amm client.
+fn create_pool<'info>(ctx:&Context<'_,'_,'_,'info,Migrate<'info>>,base:u64,quote:u64)->Result<()>{
+ let bump=ctx.bumps.pool_authority;let a=&ctx.accounts;
+ let create=move |signer_seeds:&[&[&[u8]];1]|pump_amm::cpi::create_pool(CpiContext::new_with_signer(a.pump_amm.to_account_info(),pump_amm::cpi::accounts::CreatePool{pool:a.pool.to_account_info(),global_config:a.amm_global_config.to_account_info(),creator:a.pool_authority.to_account_info(),base_mint:a.mint.to_account_info(),quote_mint:a.wsol_mint.to_account_info(),lp_mint:a.lp_mint.to_account_info(),user_base_token_account:a.pool_authority_mint_account.to_account_info(),user_quote_token_account:a.pool_authority_wsol_account.to_account_info(),user_pool_token_account:a.user_pool_token_account.to_account_info(),pool_base_token_account:a.pool_base_token_account.to_account_info(),pool_quote_token_account:a.pool_quote_token_account.to_account_info(),system_program:a.system_program.to_account_info(),token_2022_program:a.token_2022_program.to_account_info(),base_token_program:base_token_program(a.mint.as_ref().as_ref(),&a.token_program,&a.token_2022_program),quote_token_program:a.token_program.to_account_info(),associated_token_program:a.associated_token_program.to_account_info(),event_authority:a.pump_amm_event_authority.to_account_info(),program:a.pump_amm.to_account_info()},signer_seeds),0,base,quote,a.bonding_curve.creator,a.bonding_curve.is_mayhem_mode,pump_amm::types::OptionBool(a.bonding_curve.is_cashback_coin),pump_amm::types::OptionU64(a.bonding_curve.creator_fee_bps),pump_amm::types::OptionBool(a.bonding_curve.can_edit_creator_fee),pump_amm::types::OptionBool(a.bonding_curve.is_holder_reward));
+ create(&[&[b"pool-authority",a.mint.key().as_ref(),&[bump]]])
+}
+
+// Original: the base mint's token program, chosen by the mint owner (window 0x47e28).
+#[inline(never)]
+fn base_token_program<'info>(mint:&AccountInfo<'info>,token_program:&AccountInfo<'info>,token_2022_program:&AccountInfo<'info>)->AccountInfo<'info>{
+ if *mint.to_account_info().owner==anchor_spl::token::ID{token_program.to_account_info()}else{token_2022_program.to_account_info()}
 }
