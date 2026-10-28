@@ -550,4 +550,38 @@ class SourceTests(unittest.TestCase):
     def test_buytruncation_missing_parent_rejected(self):
         data = self.buytruncation_parent(); data.pop('programs/pump/src/trade_v3.rs')
         with self.assertRaises(ValueError): m.buytruncation_apply(data)
+    def refund_parent(self):
+        out = self.root / 'refund-parent'
+        m.materialize(PARENT, out, 'buytruncation816')
+        return {str(p.relative_to(out)): p.read_bytes() for p in out.rglob('*') if p.is_file()}
+    def test_exact_refund_stage(self):
+        got = m.materialize(PARENT, self.root / 'source', 'refund817')
+        self.assertEqual(got, json.loads((m.HERE / 'refund-pins.json').read_text())['source_sha256'])
+        self.assertEqual(len(got), 61)
+    def test_refund_exact_scope(self):
+        old = self.refund_parent(); new = m.refund_apply(old)
+        self.assertEqual({n for n in old if old[n] != new[n]}, {'programs/pump/src/migrate_v2.rs'})
+        a = old['programs/pump/src/migrate_v2.rs'].splitlines(); b = new['programs/pump/src/migrate_v2.rs'].splitlines()
+        self.assertEqual(len(a), len(b))
+        self.assertEqual([i + 1 for i in range(len(a)) if a[i] != b[i]], [349, 350])
+    def test_refund_guard_seeds_and_prior_sources(self):
+        old = self.refund_parent(); new = m.refund_apply(old)
+        lines = new['programs/pump/src/migrate_v2.rs'].splitlines()
+        self.assertEqual(lines[345], b'#[inline(never)]')
+        self.assertEqual(lines[347], b' if amount==0{return Ok(());}')
+        self.assertIn(b'let transfer=|signer_seeds:', lines[348])
+        self.assertIn(b'b"pool-authority",a.base_mint.key().as_ref(),&[bump]', lines[349])
+        self.assertEqual(new['programs/pump/src/trade_v3.rs'], old['programs/pump/src/trade_v3.rs'])
+        self.assertEqual(lines[327], old['programs/pump/src/migrate_v2.rs'].splitlines()[327])
+    def test_refund_already_applied_rejected(self):
+        with self.assertRaises(ValueError): m.refund_apply(m.refund_apply(self.refund_parent()))
+    def test_refund_wrong_parent_rejected(self):
+        data = self.refund_parent(); data['programs/pump/src/migrate_v2.rs'] += b'\n'
+        with self.assertRaises(ValueError): m.refund_apply(data)
+    def test_refund_extra_parent_rejected(self):
+        data = self.refund_parent(); data['extra.rs'] = b''
+        with self.assertRaises(ValueError): m.refund_apply(data)
+    def test_refund_missing_parent_rejected(self):
+        data = self.refund_parent(); data.pop('programs/pump/src/migrate_v2.rs')
+        with self.assertRaises(ValueError): m.refund_apply(data)
 if __name__ == '__main__': unittest.main(argv=['test_materialize.py', *remaining])
