@@ -197,6 +197,52 @@ function registerFixtures(fixtures: Fixture[]) {
   return fixtureMap;
 }
 
+// Documented developer API key shape (contracts/developer.openapi.json,
+// components/securitySchemes/bearer): the prefix `pf_live_` followed by 43
+// base62 characters and a 6-character base62 checksum. The checksum algorithm
+// and the key store are not observable, so the gate validates the documented
+// shape only; a well-formed key is accepted as presented, never as a verified
+// credential. Scope, revocation and rate-limit outcomes need a key store and
+// stay unmodeled.
+const apiKeyPattern = /^pf_live_[0-9A-Za-z]{49}$/;
+
+async function apiKeyGate(
+  request: {
+    headers: Record<string, string | string[] | undefined>;
+    url: string;
+  },
+  reply: any,
+) {
+  const authorization = request.headers.authorization;
+  const alias = request.headers["x-api-key"];
+  let candidate: string | undefined;
+  if (typeof authorization === "string") {
+    const bearer = /^Bearer\s+(.+)$/i.exec(authorization.trim());
+    if (bearer) candidate = bearer[1];
+  }
+  if (candidate === undefined && typeof alias === "string") {
+    candidate = alias;
+  }
+  if (candidate !== undefined && apiKeyPattern.test(candidate)) return;
+  // The observed 401 envelope (evidence/api-probes.json, object
+  // 1837f7894abd389a) reports the path without the local /v1 prefix and names
+  // both key headers; the specification's examples diverge on both points, so
+  // the captured response wins. Only the timestamp is volatile.
+  const separator = request.url.indexOf("?");
+  const pathname =
+    separator < 0 ? request.url : request.url.slice(0, separator);
+  reply.code(401).send({
+    statusCode: 401,
+    timestamp: new Date().toISOString(),
+    path: pathname.startsWith("/v1/") ? pathname.slice(3) : pathname,
+    error: candidate === undefined ? "API_KEY_REQUIRED" : "API_KEY_INVALID",
+    message:
+      candidate === undefined
+        ? "Send Authorization: Bearer <key> or x-api-key: <key>"
+        : "The key is malformed (wrong prefix, length or checksum) or unknown.",
+  });
+}
+
 export function buildApp(fixtures: Fixture[] = []) {
   // Reject an invalid inventory before constructing an application that can listen.
   const fixtureMap = registerFixtures(fixtures);
@@ -233,6 +279,9 @@ export function buildApp(fixtures: Fixture[] = []) {
       app.route({
         method: method.toUpperCase() as "GET",
         url: "/v1" + path.replace(/\{([^}]+)\}/g, ":$1"),
+        // Every documented operation declares the global bearer requirement;
+        // the gate runs before replay so a fixture cannot bypass it.
+        preHandler: apiKeyGate,
         handler: replay,
       });
     }

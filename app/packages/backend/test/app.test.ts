@@ -369,16 +369,102 @@ test("validation fails before startup without exposing fixture sources", () => {
   );
 });
 
+const wellFormedKey = `pf_live_${"A".repeat(49)}`;
+
 test("unimplemented domain routes cannot pass as working APIs", async () => {
   const app = buildApp();
   try {
-    const response = await app.inject("/v1/users/test");
+    const response = await app.inject({
+      url: "/v1/users/test",
+      headers: { authorization: `Bearer ${wellFormedKey}` },
+    });
     assert.equal(response.statusCode, 501);
     assert.deepEqual(response.json(), {
       error: "COMPATIBILITY_NOT_IMPLEMENTED",
       method: "GET",
       path: "/v1/users/test",
     });
+  } finally {
+    await app.close();
+  }
+});
+
+test("documented routes reject requests without an API key", async () => {
+  const app = buildApp();
+  try {
+    for (const url of ["/v1/users/test", "/v1/users/test?limit=1"]) {
+      const response = await app.inject(url);
+      assert.equal(response.statusCode, 401);
+      const body = response.json();
+      assert.equal(body.statusCode, 401);
+      assert.equal(body.error, "API_KEY_REQUIRED");
+      assert.equal(
+        body.message,
+        "Send Authorization: Bearer <key> or x-api-key: <key>",
+      );
+      assert.equal(body.path, "/users/test");
+      assert.ok(Number.isFinite(Date.parse(body.timestamp)));
+    }
+    const head = await app.inject({ method: "HEAD", url: "/v1/users/test" });
+    assert.equal(head.statusCode, 401);
+  } finally {
+    await app.close();
+  }
+});
+
+test("documented routes reject malformed API keys", async () => {
+  const app = buildApp();
+  try {
+    const malformed = [
+      { authorization: "Bearer pf_live_short" },
+      { authorization: `Bearer pk_live_${"A".repeat(49)}` },
+      { authorization: `Bearer pf_live_${"A".repeat(48)}-` },
+      { "x-api-key": "not-a-key" },
+    ];
+    for (const headers of malformed) {
+      const response = await app.inject({ url: "/v1/users/test", headers });
+      assert.equal(response.statusCode, 401);
+      const body = response.json();
+      assert.equal(body.error, "API_KEY_INVALID");
+      assert.equal(
+        body.message,
+        "The key is malformed (wrong prefix, length or checksum) or unknown.",
+      );
+      assert.equal(body.path, "/users/test");
+    }
+  } finally {
+    await app.close();
+  }
+});
+
+test("a key in the query string does not satisfy the gate", async () => {
+  const app = buildApp();
+  try {
+    const response = await app.inject(
+      `/v1/users/test?api_key=${wellFormedKey}`,
+    );
+    assert.equal(response.statusCode, 401);
+    assert.equal(response.json().error, "API_KEY_REQUIRED");
+  } finally {
+    await app.close();
+  }
+});
+
+test("a well-formed key in either header reaches fixture replay", async () => {
+  const app = buildApp([
+    fixture({ path: "/v1/users/test", query: undefined, body: { id: "test" } }),
+  ]);
+  try {
+    for (const headers of [
+      { authorization: `Bearer ${wellFormedKey}` },
+      { "x-api-key": wellFormedKey },
+    ]) {
+      const response = await app.inject({ url: "/v1/users/test", headers });
+      assert.equal(response.statusCode, 200);
+      assert.deepEqual(response.json(), { id: "test" });
+    }
+    const rejected = await app.inject("/v1/users/test");
+    assert.equal(rejected.statusCode, 401);
   } finally {
     await app.close();
   }
