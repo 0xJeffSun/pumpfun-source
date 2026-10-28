@@ -351,12 +351,13 @@ test("validation fails before startup without exposing fixture sources", () => {
 test("unimplemented domain routes cannot pass as working APIs", async () => {
   const app = buildApp();
   try {
-    const response = await app.inject("/v1/users/test");
+    // /v1/users is native now; use a documented operation with no native handler.
+    const response = await app.inject("/v1/pnl-leaderboard");
     assert.equal(response.statusCode, 501);
     assert.deepEqual(response.json(), {
       error: "COMPATIBILITY_NOT_IMPLEMENTED",
       method: "GET",
-      path: "/v1/users/test",
+      path: "/v1/pnl-leaderboard",
     });
   } finally {
     await app.close();
