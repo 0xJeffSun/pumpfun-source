@@ -23,6 +23,9 @@ jobs:
           - suite: amm-recipient-mode-recovery
             commands: |
               python -I -B research/amm-recipient-mode-recovery/verify.py
+          - suite: amm-mint-fee-reader-recovery
+            commands: |
+              python -I -B research/amm-mint-fee-reader-recovery/verify.py
           - suite: pump-feeconfig-decoder
             commands: |
               python -I -B research/pump-feeconfig-decoder-recovery/verify.py
