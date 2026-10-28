@@ -144,6 +144,7 @@ function validateFixture(
         `Invalid fixture registration (${provenance}): headers must be a plain object`,
       );
     }
+    const headerNames = new Set<string>();
     for (const [name, value] of Object.entries(candidate.headers)) {
       try {
         validateHeaderName(name);
@@ -152,6 +153,13 @@ function validateFixture(
           `Invalid fixture registration (${provenance}): headers contain an invalid HTTP field name`,
         );
       }
+      const canonicalName = name.toLowerCase();
+      if (headerNames.has(canonicalName)) {
+        throw new Error(
+          `Invalid fixture registration (${provenance}): headers contain duplicate case-insensitive HTTP field names`,
+        );
+      }
+      headerNames.add(canonicalName);
       if (typeof value !== "string") {
         throw new Error(
           `Invalid fixture registration (${provenance}): header values must be strings`,
