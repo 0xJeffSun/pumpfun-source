@@ -20,7 +20,7 @@ mismatches.
 
 ## Bound artifacts
 
-- Upstream base: `4a6c726aafe5886d3100483e3c00b5e542af73bf`
+- Upstream base: `7cd896fc309e566d4617b679bde48375bdacc717`
 - Union12 stripped ELF: `97222480163636f6fc1470b71c516e89770eba0038e4e430eda30143b383abae`
 - Union12 unstripped ELF: `36a94b38f3c6fbc10a1f55c6526be07cd21356f1cc9da24ebaaa4bd28c79694e`
 - Original ELF: `6a7ad34596d83b4c435b32f458a56e718e9f82eb4ad38e4316616d15d24d8ff7`

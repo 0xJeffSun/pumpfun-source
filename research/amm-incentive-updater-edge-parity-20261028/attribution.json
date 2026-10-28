@@ -1,5 +1,5 @@
 {
-  "upstream_main": "4a6c726aafe5886d3100483e3c00b5e542af73bf",
+  "upstream_main": "7cd896fc309e566d4617b679bde48375bdacc717",
   "union12": {
     "packet": "research/claude-amm-union12-20261028",
     "head_commit": "66ded863a2d905acab721f1883af031e736f1c95",
