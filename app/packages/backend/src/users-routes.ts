@@ -6,7 +6,7 @@
  * in-memory UserStore.
  */
 import type { FastifyInstance, FastifyReply } from 'fastify';
-import { UserStore, defaultStore, DATA_SOURCE } from './users-store.js';
+import { UserStore, defaultStore, DATA_SOURCE, type User } from './users-store.js';
 
 /**
  * Response marker for hand-authored synthetic data.
@@ -30,6 +30,36 @@ export function errorBody(statusCode: number, error: string, extra: Record<strin
   return { statusCode, error, ...extra };
 }
 
+/**
+ * The shared profile schema permits last_active_at for signed-in website reads,
+ * but explicitly says it is absent on the developer API host. An API key is not
+ * a website viewer. Project without changing the underlying domain-store row.
+ */
+export function toDeveloperUser(user: User): Omit<User, 'last_active_at'> {
+  const { last_active_at: _activity, ...profile } = user;
+  return profile;
+}
+
+/**
+ * Keep the existing replay harness's fail-closed duplicate-query boundary on
+ * native reads too. The scalar OpenAPI parameters do not establish semantics
+ * for repeated keys; selecting a value or coercing an array would invent them.
+ * Decode key names so `searchTerm` and `%73earchTerm` cannot bypass the check.
+ */
+export function rejectDuplicateQueryKeys(request: { url: string }, reply: FastifyReply): boolean {
+  const separator = request.url.indexOf('?');
+  if (separator < 0) return false;
+  const keys = new Set<string>();
+  for (const key of new URLSearchParams(request.url.slice(separator + 1)).keys()) {
+    if (keys.has(key)) {
+      reply.code(501).send({ error: 'DUPLICATE_QUERY_KEYS_UNIMPLEMENTED' });
+      return true;
+    }
+    keys.add(key);
+  }
+  return false;
+}
+
 export function registerUserRoutes(app: FastifyInstance, store: UserStore = defaultStore): void {
   /**
    * GET /v1/users
@@ -37,6 +67,7 @@ export function registerUserRoutes(app: FastifyInstance, store: UserStore = defa
    * Returns: 200, JSON array of User.
    */
   app.get('/v1/users', async (request, reply) => {
+    if (rejectDuplicateQueryKeys(request, reply)) return reply;
     const qs = request.query as Record<string, string | undefined>;
     // Contract permits any integer for offset/limit (including negatives).
     // Documented assumption: negatives clamp to 0 rather than producing
@@ -54,7 +85,7 @@ export function registerUserRoutes(app: FastifyInstance, store: UserStore = defa
       offset: offset === undefined ? undefined : Math.max(0, offset),
       limit: limit === undefined ? undefined : Math.max(0, limit),
     });
-    return sendSynthetic(reply, 200, result);
+    return sendSynthetic(reply, 200, result.map(toDeveloperUser));
   });
 
   /**
@@ -66,6 +97,7 @@ export function registerUserRoutes(app: FastifyInstance, store: UserStore = defa
    * "search-v2" is not captured as `:id`.
    */
   app.get('/v1/users/search-v2', async (request, reply) => {
+    if (rejectDuplicateQueryKeys(request, reply)) return reply;
     const qs = request.query as Record<string, string | undefined>;
     const asInt = (v?: string) => {
       if (v === undefined) return undefined;
@@ -83,7 +115,7 @@ export function registerUserRoutes(app: FastifyInstance, store: UserStore = defa
       limit: limit === undefined ? undefined : Math.max(0, limit),
       includeLabelledWallets,
     });
-    return sendSynthetic(reply, 200, result);
+    return sendSynthetic(reply, 200, result.map(toDeveloperUser));
   });
 
   /**
@@ -95,6 +127,7 @@ export function registerUserRoutes(app: FastifyInstance, store: UserStore = defa
    * "username-exists" is not captured as `:id`.
    */
   app.get('/v1/users/username-exists/:username', async (request, reply) => {
+    if (rejectDuplicateQueryKeys(request, reply)) return reply;
     const { username } = request.params as { username: string };
     return sendSynthetic(reply, 200, { exists_flag: store.usernameExists(username) });
   });
@@ -108,6 +141,7 @@ export function registerUserRoutes(app: FastifyInstance, store: UserStore = defa
    * NOTE: This must be registered BEFORE /v1/users/:id.
    */
   app.post('/v1/users/batch', async (request, reply) => {
+    if (rejectDuplicateQueryKeys(request, reply)) return reply;
     const body = request.body as { addresses?: string[]; forceFetch?: boolean } | null;
     if (!body || !Array.isArray(body.addresses)) {
       return reply.code(400).send(errorBody(400, 'ADDRESSES_REQUIRED'));
@@ -117,7 +151,7 @@ export function registerUserRoutes(app: FastifyInstance, store: UserStore = defa
       return reply.code(400).send(errorBody(400, 'TOO_MANY_ADDRESSES', { maxItems: 100, received: body.addresses.length }));
     }
     const result = store.batch(body.addresses);
-    return sendSynthetic(reply, 201, result);
+    return sendSynthetic(reply, 201, result.map(toDeveloperUser));
   });
 
   /**
@@ -128,12 +162,13 @@ export function registerUserRoutes(app: FastifyInstance, store: UserStore = defa
    * NOTE: This must be registered BEFORE /v1/users/:id.
    */
   app.get('/v1/users/:id/overview', async (request, reply) => {
+    if (rejectDuplicateQueryKeys(request, reply)) return reply;
     const { id } = request.params as { id: string };
     const overview = store.getOverview(id);
     if (!overview) {
       return reply.code(404).send(errorBody(404, 'NOT_FOUND'));
     }
-    return sendSynthetic(reply, 200, overview);
+    return sendSynthetic(reply, 200, { ...overview, profile: toDeveloperUser(overview.profile) });
   });
 
   /**
@@ -145,12 +180,13 @@ export function registerUserRoutes(app: FastifyInstance, store: UserStore = defa
    * we return 404 with { error: "NOT_FOUND" } when no user matches.
    */
   app.get('/v1/users/:id', async (request, reply) => {
+    if (rejectDuplicateQueryKeys(request, reply)) return reply;
     const { id } = request.params as { id: string };
     const user = store.getById(id);
     if (!user) {
       return reply.code(404).send(errorBody(404, 'NOT_FOUND'));
     }
-    return sendSynthetic(reply, 200, user);
+    return sendSynthetic(reply, 200, toDeveloperUser(user));
   });
 
   /**
@@ -160,6 +196,7 @@ export function registerUserRoutes(app: FastifyInstance, store: UserStore = defa
    * Returns: 201, object mapping each requested id to boolean.
    */
   app.post('/v1/profiles/verified', async (request, reply) => {
+    if (rejectDuplicateQueryKeys(request, reply)) return reply;
     const body = request.body as { ids?: unknown } | null;
     if (!body || typeof body !== 'object' || !Array.isArray(body.ids)) {
       return reply.code(400).send(errorBody(400, 'IDS_REQUIRED'));

@@ -114,6 +114,47 @@ any of them is a contract decision, not a bug fix.
 - Any persistence. The store is immutable in memory.
 - The other 60 documented operations.
 
+## Developer-host profile boundaries
+
+The shared response schema permits `last_active_at` because it also describes
+signed-in website reads. Its description **explicitly requires absence on the API
+host**; an optional property is not permission to expose it in that context.
+The `/v1/users` list, single, search, batch and overview handlers project the field
+out, including when its value is `null`. Follow searches use the same projection.
+This is a transport boundary: the source user row, timestamps and all other
+profile fields are preserved. A developer API key never establishes a website
+viewer, and no last-seen value is inferred from follow edges.
+
+All seven native user/profile handlers reject decoded duplicate query keys with
+the replay harness's existing `501 {"error":"DUPLICATE_QUERY_KEYS_UNIMPLEMENTED"}`
+response. Repeated scalar parameter semantics are not established by the public
+contract, so they are not silently coerced to one value or allowed to crash the
+handler. This is an explicit local unsupported boundary, **not** an observed
+production error contract. The API-key gate still runs first.
+
+The verified batch map preserves each requested string id as an own data
+property, including `__proto__`, `constructor` and `toString`; ordinary object
+prototype behavior must not silently remove requested results. This does not
+change the synthetic verification dataset or qualify real identity formats.
+
+Authority is the declared developer API `https://api.pump.fun/v1`, OpenAPI
+`0.294.0` in `contracts/developer.openapi.json`, not the website profile-service
+origin. `contracts/developer-bindings.json` links these operations to captured
+contract factories in `recovered/modules.json`:
+
+- users: `941660-5672cd75c90c`;
+- overview: `463539-82e5f0bd54e4`;
+- verified profiles: `850620-9d34ea015ae0`;
+- following: `972407-a77710a323d3`.
+
+Those bindings are static provenance, not executed captured source or website
+compatibility evidence. `contracts/routes.json` associates the included profile
+surface with `/profile/:id`, but this change does not wire that page to `/v1`.
+`test/profile-graph-contract-boundaries.test.ts` exercises populated/null activity,
+immutable store rows, complete verified maps, valid requests after rejection and
+the existing fail-closed query convention using synthetic data. No native website
+operation or compatibility qualification count is added.
+
 ## Verification
 
 ```sh

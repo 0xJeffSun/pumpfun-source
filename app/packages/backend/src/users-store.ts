@@ -212,11 +212,9 @@ export class UserStore {
 
   /** Batch-check verified status for a list of ids. Returns record mapping id to boolean. */
   batchVerified(ids: string[]): Record<string, boolean> {
-    const result: Record<string, boolean> = {};
-    for (const id of ids) {
-      result[id] = this.isVerified(id);
-    }
-    return result;
+    // Define own data properties, including names such as "__proto__". Assignment
+    // to a plain object would silently omit that otherwise valid requested key.
+    return Object.fromEntries(ids.map(id => [id, this.isVerified(id)]));
   }
 
   /** Get overview for a user by address or userId. Returns undefined on miss. */
