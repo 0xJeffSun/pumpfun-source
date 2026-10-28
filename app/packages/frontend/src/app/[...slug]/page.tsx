@@ -17,7 +17,7 @@ const routes: Record<string, [string, string]> = {
   ],
   create: [
     "Create a coin",
-    "Metadata, media, quote asset and SDK transaction composition.",
+    "Draft metadata and preview a local image without uploads, signing or token creation.",
   ],
   "docs/fees": ["Fees", "Fee schedule and SDK integration."],
   "docs/privacy-policy": [
