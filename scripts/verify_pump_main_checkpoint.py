@@ -50,12 +50,20 @@ def verify(root):
         require(sha(captured_packet / 'MANIFEST.json') == selected['captured_create_packet_manifest_sha256'] == '34ee132b379303b05c0a49439319e59cd0212a76818a3d9b5fd36baa89b318a1', 'Pump captured creation supplement seal')
         captured = json.loads(subprocess.check_output([sys.executable, '-O', '-B', str(captured_packet / 'verify.py')], cwd=root, text=True))
         require(captured['candidate_sha256'] == report['candidate_sha256'] and captured['cases'] == selected['captured_create_cases'] == 14 and captured['normally_signed_executions'] == captured['captured_pump_loads'] == 42 and captured['signature_fields_verified'] == selected['captured_create_signature_fields'] == 84 and captured['candidate_structured_or_strict_source_differences'] == 0, 'Pump captured creation scope')
+        strict_checker = root / 'scripts/pump_strict_ordered_logs.py'
+        require(sha(strict_checker) == selected['strict_ordered_log_checker_sha256'] == '459b40e04a730f01f257005ed705a4f7d576c04f55acd4eca6a3d37c5326cf5e', 'Pump strict ordered-log checker')
+        from pump_strict_ordered_logs import audit as audit_strict_logs
+        raw_report = (root / selected['validation_report']).read_bytes()
+        strict = audit_strict_logs(json.loads(gzip.decompress(raw_report)), report['candidate_sha256'], 10468)
+        saved = json.loads((root / selected['strict_ordered_log_report']).read_text())
+        require(all(saved[key] == value for key, value in strict.items()) and saved['source_report_sha256'] == sha(root / selected['validation_report']) and saved['checker_sha256'] == sha(strict_checker), 'Pump saved strict ordered-log audit')
+        require(strict['strict_ordered_log_mismatch_cases'] == 0 and selected['strict_ordered_log_pairs'] == strict['case_pairs'] == 10468, 'Pump unmasked Source/ordered-log scope')
         prior = selected['prior_closure_selection']
         require(sha(root / prior['path']) == prior['sha256'], 'Pump prior selection history')
         for gap in selected['historical_behavior_gaps']:
             require(sha(root / gap['report']) == gap['sha256'] and gap['candidate_sha256'] == 'acc5e6eba8c9295386443542847404e55a27d8e837402fb98de8ccffb679125f', 'Pump historical failure evidence')
         require(selected['known_behavior_gaps'] == [] and selected['full_byte_equality'] is False and selected['meaningful_elf_equal'] is False and selected['portable_empty_target_build'] is True, 'Pump final qualification scope')
-        return {**report, 'status': 'PASS', 'current_source_verified': True, 'portable_empty_target_build': True, 'independent_builds': 3, 'captured_create': captured, 'known_behavior_gaps': [], 'goal_complete': False}
+        return {**report, 'status': 'PASS', 'current_source_verified': True, 'portable_empty_target_build': True, 'independent_builds': 3, 'captured_create': captured, 'strict_ordered_log_pairs': strict['case_pairs'], 'strict_ordered_log_mismatches': 0, 'known_behavior_gaps': [], 'goal_complete': False}
     successor = 'research/pump-create-used-boundaries-20261028'
     if selected['candidate_artifact'] == successor + '/artifacts/candidate.so':
         def require(value, message):

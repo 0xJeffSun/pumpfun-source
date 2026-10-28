@@ -73,6 +73,12 @@ historical evidence. Inherited blank-line alignment is a reconstructed source
 choice. Broad diagnostics retain Source/compute exclusions; diagnostic normalized
 CFG pairing awards no raw blocks or complete function matches.
 
+An additive current gate verifies all 10,468 saved pairs with complete ordered
+logs and unchanged Source/file/line text; only complete runtime compute-meter
+lines are excluded. The public controller also checks every fresh shard this
+way. This adds no executions, signatures or matched windows. The frozen broad
+diagnostic producer and its historical policy remain unchanged.
+
 AMM selects the checked-constructor source with an explicit target-derived section
 order. Two actual builds, including a cold host/dependency target, repeat 86dbc/7271.
 All 784 recovered physical windows are raw-identical. Every meaningful ELF byte

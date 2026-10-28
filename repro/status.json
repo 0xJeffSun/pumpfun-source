@@ -117,7 +117,8 @@
       "44 suites / 10,468 pairs retain 18,343 serialized transaction fields and 27,875 signature fields; broad diagnostics retain Source/compute exclusions.",
       "The historical acc5 eight-failure admin control remains unchanged; selected successor passes all eighteen cases. The selected image also passes the PR673 strict admission counterexamples.",
       "Inherited deliberate blank-line Source alignment is a reconstructed recipe choice. Diagnostic normalized CFG pairing does not award raw blocks or a complete matched function.",
-      "The same fourteen creation fixtures also pass a separate unchanged-adapter replay through the genuine captured Pump loader: 42 signed executions, 84 signature fields and 42 captured allocations. These overlap the 106 focused case records."
+      "The same fourteen creation fixtures also pass a separate unchanged-adapter replay through the genuine captured Pump loader: 42 signed executions, 84 signature fields and 42 captured allocations. These overlap the 106 focused case records.",
+      "An additive checker verifies all 10,468 saved pairs with every ordered log line retained except complete runtime compute-meter lines; Source/file/line text is unchanged. The frozen broad diagnostic policy remains unchanged. This adds no execution or signature coverage."
     ],
     "candidate_packet_manifest_sha256": "02646818f7a4d79b8c99daaa892a210f83f21e8995082f4082fa8cd9440404e4",
     "known_behavior_gaps": [],
@@ -140,7 +141,10 @@
     },
     "captured_create_packet_manifest_sha256": "34ee132b379303b05c0a49439319e59cd0212a76818a3d9b5fd36baa89b318a1",
     "captured_create_cases": 14,
-    "captured_create_signature_fields": 84
+    "captured_create_signature_fields": 84,
+    "strict_ordered_log_checker_sha256": "459b40e04a730f01f257005ed705a4f7d576c04f55acd4eca6a3d37c5326cf5e",
+    "strict_ordered_log_report": "research/contract-completion-20261028/pump-final-strict-ordered-logs.json",
+    "strict_ordered_log_pairs": 10468
   },
   "pump_amm": {
     "source_reconstruction": "maintained_partial_frontier",
