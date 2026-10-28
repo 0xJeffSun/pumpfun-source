@@ -1436,3 +1436,11 @@ repro/pump_amm/optional-context-recovery-20261027/followup/** -whitespace
 # Preserve exact compiled AMM source bytes in the optional-context checkpoint.
 programs/pump-amm/src/trade.rs whitespace=-blank-at-eof
 programs/pump-amm/src/transfer_creator.rs whitespace=-blank-at-eol
+
+# Preserve the compiled AMM quote-helper recovery and compiler receipts.
+research/amm-quote-base-recovery/** -text
+research/amm-quote-base-recovery/source.patch -whitespace
+research/amm-quote-base-recovery/proposed/** -whitespace
+research/amm-quote-base-recovery/compiler/** -whitespace
+research/amm-quote-base-recovery/controllers/** -whitespace
+research/amm-quote-base-recovery/overlap-review.json -whitespace
