@@ -1,12 +1,12 @@
 # Reconstruction status after exact Relay ELF reproduction
 
-Latest upstream review: `6d39c6993`; measurements are bound to the packets below.
+Latest upstream review: `4e378ab00`; measurements are bound to the packets below.
 This review updates the research frontier while preserving the selected-checkpoint
 [baseline audit](RECONSTRUCTION-AUDIT.md). The [recomputed inventory](../repro/reconstruction-status-2026-10-26/README.md)
 contains every one of the **4,415 selected/research function-window rows**.
 
 The generated inventory is a dated snapshot. Later maintained selections now
-include Pump Round43 and the current AMM recovery; their current counts and
+include Pump Round44 and the current AMM recovery; their current counts and
 evidence are in the [repository overview](../README.md). The current rows below
 are separate from the historical rows, and do not rewrite that snapshot.
 
@@ -51,20 +51,20 @@ analysis. Candidate symbol names are hypotheses about original identity.
 | Fees selected | 585 | 102 | 363 | 120 | 0 |
 | Mayhem historical selected | 441 | 58 | 131 | 7 | 245 |
 | Relay historical source 15 | 492 | 33 | 89 | 370 | 0 |
-| **Pump current Round43** | **1,035** | **203** | **614** | **218** | **0** |
+| **Pump current Round44** | **1,035** | **203** | **615** | **217** | **0** |
 | **PumpSwap current** | **785** | **148** | **510** | **127** | **0** |
 | **Fees latest research** | **585** | **585** | **0** | **0** | **0** |
 | **Mayhem latest research** | **441** | **141** | **295** | **5** | **0** |
 | **Relay canonical selection** | **492** | **492** | **0** | **0** | **0** |
 
-The current rows are bound to [Pump Round43](../repro/pump/main-contract-round43-20261027/README.md), [current AMM recovery](../repro/pump_amm/native-ownership-recovery-20261028/README.md), [exact Fees research](../research/claude-fees100-crank-donation-20261027/README.md) and [qualified Mayhem436 composition](../research/mayhem-current436-composition-20261027/README.md). They extend the dated inventory below. Each row is a partition, not a score of semantic correctness. The historical selected Mayhem source
+The current rows are bound to [Pump Round44](../repro/pump/main-contract-round44-20261027/README.md), [current AMM recovery](../repro/pump_amm/native-ownership-recovery-20261028/README.md), [exact Fees research](../research/claude-fees100-crank-donation-20261027/README.md) and [qualified Mayhem436 composition](../research/mayhem-current436-composition-20261027/README.md). They extend the dated inventory below. Each row is a partition, not a score of semantic correctness. The historical selected Mayhem source
 ledger has 257 opaque windows, 12 of which happen to match local raw bytes.
 Selected Fees retains two call-conflicting rows; body existence does not resolve
 those conflicts. Different programs and studies use different matching rules.
 
-Across these five frontier rows, **2,988/3,338 windows (89.5%)** match and
-**4,102,176/5,213,128 original text bytes (78.7%)** lie in matched windows.
-There are **350 unmatched windows**. Fees and Relay have complete meaningful-ELF
+Across these five frontier rows, **2,989/3,338 windows (89.5%)** match and
+**4,102,696/5,213,128 original text bytes (78.7%)** lie in matched windows.
+There are **349 unmatched windows**. Fees and Relay have complete meaningful-ELF
 identity; three core programs remain byte-unequal. These are structural
 coverage measures, not a percentage of engineering work completed.
 

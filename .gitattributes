@@ -1512,3 +1512,6 @@ repro/pump_amm/native-ownership-recovery-20261028/followup/** -whitespace
 
 # Preserve the exact source bytes bound by the AMM native-ownership checkpoint.
 programs/pump-amm/src/instructions/swap/mod.rs whitespace=-blank-at-eof
+research/mayhem-current436-linux-dependency-control-20261028/**/link.map -whitespace
+research/mayhem-current436-sweep-address-selection-20261028/sweep/source.patch -whitespace
+research/mayhem-current436-sweep-address-selection-20261028/sweep/**/link.map -whitespace

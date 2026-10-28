@@ -1,6 +1,6 @@
 # Mayhem completion review — 28 October 2026
 
-Reviewed upstream snapshot: `6d39c6993`, plus the
+Reviewed upstream snapshot: `4e378ab00`, plus the
 independently qualified composition below. **Whole-ELF identity is unfinished.**
 
 | Artifact | Complete normalized windows | Raw-equal bodies | Direct-call-closed windows | No complete body match |
@@ -111,3 +111,7 @@ part of the completion claim.
 ## 28 October SweepFees follow-up
 
 The [Rent lifetime control](../research/mayhem-current436-sweep-rent-lifetime-20261028/README.md) retains all 436/141/429 counts, 4,473 direct edges and 486 Source observations. Its 8,392-byte O0076 candidate maps all 189 CFG blocks bijectively and retains 51 ordered callees and 13 Source values; one initial opcode block and other operands remain unequal. Two root compilations agree. The exact artifact has no fresh runtime qualification. This improves the source diagnostic but leaves all five remaining windows and all completion percentages unchanged.
+
+The later [address-selection control](../research/mayhem-current436-sweep-address-selection-20261028/README.md) combines named Rent locals with three reused AccountInfo references. It has the exact 8,400-byte size and all 189 CFG blocks, opcodes, register fields, 51 callee positions and 13 Source values. Of 1,050 normalized instruction words, 1,047 match. Three differing address operands select the same field addresses, but this is not a byte match. Full 436/141/429 preservation and repeat images pass; no new runtime qualification or completion credit is claimed.
+
+The [writer-record extension](../research/mayhem-current436-writer-records-20261028/README.md) also checks 80 additional original data bytes as ten relocated method pointers in five 48-byte spans. It preserves the existing 429-window/579-pair relation and adds no matched body. Allocation extents, general indirect dispatch and full data identity remain unresolved.
