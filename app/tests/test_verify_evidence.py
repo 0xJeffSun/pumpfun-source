@@ -46,6 +46,15 @@ class EvidenceVerificationTests(unittest.TestCase):
                 invalid = run('-O')
                 self.assertNotEqual(invalid.returncode, 0, f'Accepted corrupt {target.name}')
                 target.write_bytes(original)
+            for name in ('extra.ts', 'nested/extra.json', '.extra.ts'):
+                extra = source.parent / name
+                extra.parent.mkdir(parents=True, exist_ok=True)
+                extra.write_bytes(b'{}')
+                for flags in ((), ('-O',)):
+                    with self.subTest(extra=name, flags=flags):
+                        invalid = run(*flags)
+                        self.assertNotEqual(invalid.returncode, 0, f'Accepted extra SDK source {name}')
+                extra.unlink()
 
 
 if __name__ == '__main__':

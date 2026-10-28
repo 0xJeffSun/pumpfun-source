@@ -9,7 +9,7 @@
   "scripts": {
     "build": "pnpm --filter @pump-fun/pump-sdk build && pnpm --filter @pump-reconstruction/backend build && pnpm --filter @pump-reconstruction/frontend build",
     "dev": "pnpm --parallel --filter @pump-reconstruction/backend --filter @pump-reconstruction/frontend dev",
-    "test": "pnpm --filter @pump-reconstruction/backend test && node --test tests/*.test.mjs && python3 -m unittest discover -s tests -p \"test_capture*.py\"",
+    "test": "pnpm --filter @pump-reconstruction/backend test && node --test tests/*.test.mjs && python3 -m unittest discover -s tests -p \"test_capture*.py\" && python3 -m unittest discover -s tests -p \"test_verify_evidence.py\"",
     "posttest": "pnpm --filter @pump-reconstruction/frontend test:browser",
     "typecheck": "pnpm -r typecheck",
     "capture": "python3 scripts/capture.py",
