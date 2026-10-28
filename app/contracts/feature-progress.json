@@ -141,37 +141,55 @@
       ],
       "source": {
         "contract": {
-          "status": "pending",
-          "evidence": []
+          "status": "accepted",
+          "evidence": [
+            "packages/frontend/EXPLORE-EVIDENCE.md#observed"
+          ]
         },
         "logic": {
-          "status": "pending",
-          "evidence": []
+          "status": "accepted",
+          "evidence": [
+            "packages/frontend/src/app/explore/page.tsx",
+            "packages/frontend/src/app/explore/explore-controls.tsx"
+          ]
         },
         "adapters": {
-          "status": "pending",
-          "evidence": []
+          "status": "accepted",
+          "evidence": [
+            "packages/frontend/src/app/explore/coin-data.ts",
+            "packages/frontend/src/app/explore/snapshot.ts"
+          ]
         }
       },
       "completion": {
         "source": {
-          "status": "pending",
-          "evidence": []
+          "status": "accepted",
+          "evidence": [
+            "packages/frontend/EXPLORE-EVIDENCE.md#local-design"
+          ]
         },
         "success": {
-          "status": "pending",
-          "evidence": []
+          "status": "accepted",
+          "evidence": [
+            "packages/frontend/tests/explore.spec.ts",
+            "tests/explore_snapshot.test.ts"
+          ]
         },
         "failure": {
-          "status": "pending",
-          "evidence": []
+          "status": "accepted",
+          "evidence": [
+            "packages/frontend/tests/explore.spec.ts",
+            "tests/explore_snapshot.test.ts"
+          ]
         },
         "consistency": {
           "status": "pending",
-          "evidence": []
+          "evidence": [
+            "packages/frontend/visual/explore-20261028/README.md"
+          ]
         }
       },
-      "note": "Search page scaffold; filters, pagination and results unimplemented."
+      "note": "Authenticated one-record historical snapshot, fail-closed adapter and offline name/symbol/mint search pass unit and browser tests. Native market discovery, production ranking and original visual parity remain unqualified."
     },
     {
       "id": "leaderboard",

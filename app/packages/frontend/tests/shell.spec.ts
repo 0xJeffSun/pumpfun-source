@@ -36,6 +36,11 @@ test("included routes load with one accurate active navigation item", async ({
     await expect(activeNavigation(page)).toContainText(navigationLabel);
     if (path === "/leaderboard") {
       await expect(page.getByTestId("leaderboard-error")).toBeVisible();
+    } else if (path === "/explore") {
+      await expect(
+        page.locator('[data-product-state="unavailable"]'),
+      ).toHaveCount(0);
+      await expect(page.getByTestId("historical-coin-card")).toBeVisible();
     } else if (path === "/create") {
       await expect(
         page.locator('[data-product-state="unavailable"]'),
@@ -168,7 +173,7 @@ test("search encodes queries, follows history and handles clearing and empties",
     page.getByText("alpha & beta=one", { exact: true }),
   ).toBeVisible();
   await expect(
-    page.getByRole("heading", { name: "Search results are unavailable" }),
+    page.getByRole("heading", { name: "No matching local record" }),
   ).toBeVisible();
 
   await page.goBack();
