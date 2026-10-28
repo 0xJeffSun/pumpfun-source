@@ -16,15 +16,6 @@ const routes: Record<string, [string, string]> = {
     "Create a coin",
     "Draft metadata and preview a local image without uploads, signing or token creation.",
   ],
-  "docs/fees": ["Fees", "Fee schedule and SDK integration."],
-  "docs/privacy-policy": [
-    "Privacy policy",
-    "Reference material captured for reconstruction.",
-  ],
-  "docs/terms-and-conditions": [
-    "Terms and conditions",
-    "Reference material captured for reconstruction.",
-  ],
 };
 
 function routeInfo(path: string) {

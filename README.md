@@ -142,7 +142,7 @@ Source acquisition/extraction is separate from editable feature reconstruction a
 | Authentication / wallets | 0/3 (0%) | 0/4 (0%) | No local authenticated UI or wallet workflow. |
 | Portfolio / positions | 0/3 (0%) | 0/4 (0%) | No local portfolio UI. |
 | Settings / notifications | 0/3 (0%) | 0/4 (0%) | No local settings or notification UI. |
-| Legal / fee information | 0/3 (0%) | 0/4 (0%) | Placeholders, not reconstructed document content. |
+| Legal / fee information | 3/3 (100%) | 3/4 (75%) | Authenticated archived fee, privacy and terms documents now render through a fail-closed offline adapter with responsive navigation and corruption tests. Current legal authority and original visual parity remain unqualified. |
 
 **Excluded (N/A, outside every feature denominator):** Support/Intercom; Terminal/Padre; Native/mobile app and app promotion; Individual coin/token detail pages; /pump-token ($PUMP).
 **Deferred (N/A):** Perps/Hyperliquid; Separate PumpSwap/revenue/GO microsites.
