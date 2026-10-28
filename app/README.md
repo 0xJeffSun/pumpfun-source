@@ -11,6 +11,8 @@ An evidence-backed starting point for reconstructing the Pump website and APIs. 
 
 The developer contract ledger binds all 67 documented operations to the checked-in first-party `publicRead` contract, including exact method/path, scope, bearer-auth declaration, error-code contract, captured UTF-16 range, and any independently inventoried client literal. One additional captured route is recorded separately because it is absent from OpenAPI 0.294.0. These are offline contract bindings only: native implementation and compatibility qualification remain 0/67, and website request origins remain unresolved.
 
+The factory inventory now contains 5,947 variants and 7,337 captured occurrences. The [nested-registration recovery](research/nested-registration-20261028/README.md) follows the captured Turbopack runtime's actual recursive registration rule, restoring 1,032 previously omitted factory hashes across 89 existing captures, including the achievements client. Every previously indexed factory file, canonical path, ID and origin is retained. This is static source recovery; it does not execute the captured application or establish API compatibility.
+
 Start with [PRD.md](PRD.md) and [AGENTS.md](AGENTS.md). Every coverage claim must distinguish captured, reconstructed, implemented and qualified.
 
 ## Run
