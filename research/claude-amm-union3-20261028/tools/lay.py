@@ -311,7 +311,7 @@ def main():
     if a.predict:
         mm = types.ModuleType('measure'); pm = T / 'measure.py'; mm.__file__ = str(pm)
         exec(compile(pm.read_text().split("if __name__ == '__main__':")[0], str(pm), 'exec'), mm.__dict__)
-        _, rows = mm.measure(a.cand)
+        rows = mm.measure(ORIG, Path(a.cand))
         pr = lay.predict(rows)
         tot = collections.Counter()
         for v in pr.values():

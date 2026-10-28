@@ -5,24 +5,24 @@ python3 -I -B research/<this packet>/verify.py
 Checks exact packet membership and hashes, the source archive against the recorded staged inputs, source.patch
 against the parent packet's archive, the two Linux builds (identical), the window measurement (recomputed from the
 saved symbols for this candidate and for the parent packet's candidate against evidence/original/pump_amm/deployed.so),
-and the bound 25-suite runtime summary."""
+and the bound reported runtime summaries. The current negative controls establish a known failure, not conformance."""
 import difflib, gzip, hashlib, io, json, os, subprocess, sys, tarfile, tempfile, types
 from pathlib import Path
 P = Path(__file__).resolve().parent; ROOT = P.parents[1]
 sha = lambda b: hashlib.sha256(b).hexdigest()
 def j(rel): return json.loads((P / rel).read_text())
-PINFO = j('measurement.json')['parent']; PARENT = ROOT / PINFO['packet']
 def fail(msg): raise SystemExit('FAIL: ' + msg)
 def check(cond, msg):
     if not cond: fail(msg)
 # 1. exact membership + hashes
-man = j('MANIFEST.json')['files']
 actual = set()
 for f in P.rglob('*'):
     if f.is_symlink() or not (f.is_file() or f.is_dir()): fail('special file ' + str(f))
     if f.is_file(): actual.add(f.relative_to(P).as_posix())
+man = j('MANIFEST.json')['files']
 check(actual == set(man) | {'MANIFEST.json'}, 'membership differs: %s' % sorted(actual ^ (set(man) | {'MANIFEST.json'})))
 for rel, h in man.items(): check(sha((P / rel).read_bytes()) == h, 'hash ' + rel)
+PINFO = j('measurement.json')['parent']; PARENT = ROOT / PINFO['packet']
 # 2. source archive == recorded staged inputs (the tree the builds mounted)
 recipe = j('builds/recipe.json'); staged = recipe['staged_inputs']
 def members(path):
@@ -110,8 +110,11 @@ if 'layout' in meas:
     check(s3['candidate_sha256'] == sha(lb['a'][1]) and s3['suites'] == len(rows3) == 25 and s3['cases'] == 17462 and s3['mismatches'] == [], 'layout runtime')
     check(all(x['returncode'] == 0 and not x['mismatches'] for x in rows3), 'layout runtime suites')
     for name, h in s3['harness_sha256'].items(): check(sha((ROOT / name).read_bytes()) == h, 'layout harness ' + name)
-    lay_out = {'layout_normalized': len(ln), 'layout_raw': len(lr), 'layout_candidate_sha256': sha(lb['a'][1]), 'layout_runtime_cases': s3['cases']}
-print(json.dumps({'status': 'PASS', 'packet': P.name, 'normalized': len(cn), 'raw': len(cr), 'windows': len(rc),
+    lay_out = {'layout_normalized': len(ln), 'layout_raw': len(lr), 'layout_candidate_sha256': sha(lb['a'][1]), 'layout_reported_runtime_cases': s3['cases']}
+negmod = types.ModuleType('negative_verify'); negpath = P / 'negative/verify.py'; negmod.__file__ = str(negpath); exec(compile(negpath.read_bytes(), str(negpath), 'exec'), negmod.__dict__)
+negative = negmod.verify(P,validate_packet=False)
+check(negative['cases'] == 10 and negative['mismatches'] == 4 and all(x['mismatches'] == 2 for x in negative['images'].values()), 'known failures for both current images')
+print(json.dumps({'status': 'PASS', 'qualification': 'static_research_with_known_runtime_regression', 'eligible_for_maintained_promotion': False, 'packet': P.name, 'normalized': len(cn), 'raw': len(cr), 'windows': len(rc),
                   'parent_normalized': len(pn), 'parent_raw': len(pr), 'gains': len(cn - pn), 'raw_gains': len(cr - pr), 'losses': 0,
                   'candidate_sha256': sha(blobs['a'][1]), 'symbols_sha256': sha(blobs['a'][0]),
-                  'runtime_cases': s['cases'], 'runtime_mismatches': 0, **lay_out}))
+                  'reported_runtime_cases': s['cases'], 'reported_runtime_mismatches': 0, 'independently_verified_reported_runtime': False, 'negative_controls': negative, **lay_out}))

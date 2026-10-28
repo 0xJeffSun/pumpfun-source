@@ -4,7 +4,7 @@ Follow-up to [`research/claude-amm-union2-20261028`](../claude-amm-union2-202610
 Linux 759/785, 159 raw). It composes four more mega-run lane windows. It also adds, as a **separately labeled
 layout layer**, a linker order that is **generated from the original program's layout**.
 
-This is a research packet: the maintained `programs/` tree and `repro/status.json` are untouched.
+This is a research packet: the maintained `programs/` tree and `repro/status.json` are untouched. **Both compiled variants retain a confirmed incentive error-order regression and are ineligible for maintained-source promotion.** The results below qualify a static research experiment, not strict conformance.
 
 | Linux v1.44 build (authenticated recipe) | normalized | raw |
 |---|---:|---:|
@@ -31,7 +31,7 @@ This is a research packet: the maintained `programs/` tree and `repro/status.jso
   `src/transfer_creator.rs` to `instructions/coin_creator/transfer_creator_fees_to_pump.rs` as external functions;
   `lib.rs` line 31 is changed in place.
 
-No reachable error, check, event, CPI or account constraint was added or removed.
+The four additional local-window gains do not establish full behavioral conformance. Both variants retain the inherited failure documented below.
 
 ## Layout layer (`layout/`, mega-run rule 4b)
 
@@ -74,15 +74,21 @@ Devices from earlier steps are listed in the parent packets. `source-changes.jso
   `solana-verifiable-build` image with the recorded mounts and cargo command. The two layout builds
   (`layout/builds/a`, `layout/builds/b`) use the same image, plus the linker wrapper and script. Each pair is
   byte-identical, and only the workspace crates recompile.
-- **Runtime:** the 25 maintained suites were run with the unchanged replay driver against **both** stripped
-  candidates. Each run gives **17,462 cases, 35,074 transactions, 35,418 signatures and 0 mismatches**
-  (`runtime/`, `layout/runtime/`).
+- **Reported runtime:** each retained 25-suite summary reports **17,462 cases, 35,074 transactions, 35,418 signatures and 0 mismatches** (`runtime/`, `layout/runtime/`). Neither directory includes the underlying per-case receipts or transaction sidecars. The saved verifier checks those reported totals and input hashes; it cannot independently recount or cryptographically verify those executions. These summaries are not a blanket runtime pass.
+
+### Confirmed error-order failure in both variants
+
+`negative/` retains five freshly executed original/candidate pairs for **each** current image: source-only `5a032d6d…` and layout `3c0357f9…`. Each has **2 mismatches in 5 pairs**; together these are **20 signed executions**, not a new full 1,730-case replay. For positive supply, disabled range updates, and `stored_end < now < stored_start`, the original returns `ProgramFailedToComplete` while either candidate returns 6035 (`SupplyUpdateForFinishedRange`). Three active/equality/zero-supply controls per variant agree. These are synthetic AMM-owned schedules, with no live-state reachability claim.
+
+Both variants retain the unconditional finished-range guard. The original first branches on `now < stored_start`; the maintained H11 lineage already gates its finished-range check with `now >= stored_start`. The parent PR430 records the same failure, but its receipts are not relabeled as evidence for these new images. Current signed transactions and per-execution executable-account hashes are retained here. No compiled source or ELF was altered for this disclosure.
 
 ```sh
 python3 -I -B research/claude-amm-union3-20261028/verify.py
+python3 -I -B research/claude-amm-union3-20261028/negative/verify.py --signatures
+python3 -I -B research/claude-amm-union3-20261028/test_verify.py
 ```
 
-`verify.py` uses the standard library only. It checks:
+`verify.py` uses the standard library only. Its PASS means the static record and admitted negative results verify, not that either candidate conforms. The separate signature command requires `solders`. It checks:
 
 - exact packet membership and hashes;
 - `source.patch`, rebuilt from the parent archive;
@@ -90,7 +96,11 @@ python3 -I -B research/claude-amm-union3-20261028/verify.py
 - the source-only and layout measurements, plus the parent's measurement, recomputed against
   `evidence/original/pump_amm/deployed.so`;
 - the regenerated `ordered.ld`;
-- both runtime summaries, against the repository harness hashes.
+- the documented `tools/lay.py --predict` path, repaired to use the shipped two-input measurement API and tested to preserve the generated order and data bindings;
+- both reported runtime summaries against the repository harness hashes;
+- the current five-pair negative record for each image.
+
+Both verifier entry points reject symlinks and special files before reading packet metadata and require exact packet membership and hashes. Tests cover root-manifest and measurement symlinks/FIFOs with all file-content reads forbidden.
 
 ## Limits
 
