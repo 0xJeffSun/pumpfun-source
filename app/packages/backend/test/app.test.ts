@@ -18,6 +18,178 @@ const fixture = (overrides: Partial<Fixture> = {}): Fixture => ({
 const malformedFixture = (overrides: Record<string, unknown>) =>
   ({ ...fixture(), ...overrides }) as Fixture;
 
+const reservedFixturePaths = [
+  "/health",
+  "/__reconstruction/status",
+  "/__reconstruction/openapi.json",
+];
+
+test("GET and HEAD fixtures cannot shadow reserved internal routes", () => {
+  for (const path of reservedFixturePaths) {
+    for (const method of ["GET", "HEAD"]) {
+      const source = `https://user:password@example.test/${method}?token=secret`;
+      const sourceDigest = createHash("sha256")
+        .update(source)
+        .digest("hex")
+        .slice(0, 12);
+      const pathDigest = createHash("sha256")
+        .update(path)
+        .digest("hex")
+        .slice(0, 12);
+      assert.throws(
+        () => buildApp([fixture({ method, path, query: undefined, source })]),
+        (error: unknown) => {
+          assert.ok(error instanceof Error);
+          assert.match(error.message, /Reserved fixture route/);
+          assert.match(error.message, new RegExp(pathDigest));
+          assert.match(error.message, new RegExp(sourceDigest));
+          assert.doesNotMatch(
+            error.message,
+            /password|token=|user:|example\.test/,
+          );
+          return true;
+        },
+      );
+    }
+  }
+});
+
+test("reserved routes reject mixed-case methods and every query variant", () => {
+  for (const path of reservedFixturePaths) {
+    for (const [method, query] of [
+      ["gEt", { first: "1", second: "2" }],
+      ["hEaD", { second: "2", first: "1" }],
+    ] as const) {
+      assert.throws(
+        () =>
+          buildApp([
+            fixture({
+              method,
+              path,
+              query,
+              source: `synthetic:${path}:${method}`,
+            }),
+          ]),
+        /Reserved fixture route/,
+      );
+    }
+  }
+});
+
+test("nearby nonreserved paths remain replayable and countable", async () => {
+  const fixtures = [
+    fixture({
+      path: "/health-check",
+      query: undefined,
+      body: { fixture: "health-neighbor" },
+      source: "synthetic:health-neighbor",
+    }),
+    fixture({
+      path: "/__reconstruction/status-extra",
+      query: { view: "fixture" },
+      body: { fixture: "status-neighbor" },
+      source: "synthetic:status-neighbor",
+    }),
+    fixture({
+      path: "/__reconstruction/openapi.json-copy",
+      query: undefined,
+      body: { fixture: "openapi-neighbor" },
+      source: "synthetic:openapi-neighbor",
+    }),
+  ];
+  const app = buildApp(fixtures);
+  try {
+    assert.deepEqual((await app.inject("/health-check")).json(), {
+      fixture: "health-neighbor",
+    });
+    assert.deepEqual(
+      (await app.inject("/__reconstruction/status-extra?view=fixture")).json(),
+      { fixture: "status-neighbor" },
+    );
+    assert.deepEqual(
+      (await app.inject("/__reconstruction/openapi.json-copy")).json(),
+      { fixture: "openapi-neighbor" },
+    );
+    assert.equal(
+      (await app.inject("/__reconstruction/status")).json().fixtureCount,
+      fixtures.length,
+    );
+  } finally {
+    await app.close();
+  }
+});
+
+test("built-in routes retain GET, automatic HEAD, query, and HTTP behavior", async () => {
+  const ordinary = fixture({
+    path: "/ordinary",
+    query: undefined,
+    status: 209,
+    body: { fixture: "ordinary" },
+  });
+  const app = buildApp([ordinary]);
+  try {
+    const health = await app.inject("/health?ignored=1");
+    assert.equal(health.statusCode, 200);
+    assert.deepEqual(health.json(), {
+      status: "ok",
+      mode: "reconstruction",
+      compatibility: "unqualified",
+    });
+
+    const status = await app.inject("/__reconstruction/status?ignored=1");
+    assert.equal(status.statusCode, 200);
+    assert.equal(status.json().fixtureCount, 1);
+    assert.equal(status.json().compatibility, "unqualified");
+    assert.match(status.json().specificationSha256, /^[0-9a-f]{64}$/);
+
+    const specification = readFileSync(
+      new URL("../../../contracts/developer.openapi.json", import.meta.url),
+      "utf8",
+    );
+    const openapi = await app.inject(
+      "/__reconstruction/openapi.json?ignored=1",
+    );
+    assert.equal(openapi.statusCode, 200);
+    assert.match(openapi.headers["content-type"] ?? "", /^application\/json/);
+    assert.equal(openapi.body, specification);
+
+    for (const path of reservedFixturePaths) {
+      const response = await app.inject({ method: "HEAD", url: path });
+      assert.equal(response.statusCode, 200, path);
+      assert.equal(response.body, "", path);
+    }
+
+    const origin = await app.listen({ host: "127.0.0.1", port: 0 });
+    const overHttp = (method: "GET" | "HEAD", path: string) =>
+      new Promise<{ status: number | undefined; body: string }>(
+        (resolve, reject) => {
+          const outgoing = request(origin, { method, path }, (response) => {
+            const chunks: Buffer[] = [];
+            response.on("data", (chunk) => chunks.push(Buffer.from(chunk)));
+            response.on("end", () =>
+              resolve({
+                status: response.statusCode,
+                body: Buffer.concat(chunks).toString("utf8"),
+              }),
+            );
+          });
+          outgoing.on("error", reject);
+          outgoing.end();
+        },
+      );
+    const liveHealth = await overHttp("GET", "/health?ignored=1");
+    assert.equal(liveHealth.status, 200);
+    assert.equal(JSON.parse(liveHealth.body).compatibility, "unqualified");
+    const liveHead = await overHttp("HEAD", "/health");
+    assert.deepEqual(liveHead, { status: 200, body: "" });
+    const liveFixture = await overHttp("GET", "/ordinary");
+    assert.equal(liveFixture.status, 209);
+    assert.deepEqual(JSON.parse(liveFixture.body), { fixture: "ordinary" });
+  } finally {
+    await app.close();
+  }
+});
+
 test("fixture bodies must be explicitly present; null remains valid", async () => {
   const missing = { ...fixture() } as Partial<Fixture>;
   delete missing.body;
@@ -29,7 +201,10 @@ test("fixture bodies must be explicitly present; null remains valid", async () =
   }
   const app = buildApp([fixture({ body: null })]);
   try {
-    assert.equal((await app.inject("/__reconstruction/status")).json().fixtureCount, 1);
+    assert.equal(
+      (await app.inject("/__reconstruction/status")).json().fixtureCount,
+      1,
+    );
   } finally {
     await app.close();
   }

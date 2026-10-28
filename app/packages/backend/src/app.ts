@@ -14,6 +14,12 @@ export type Fixture = {
   source: string;
 };
 
+const reservedFixturePaths = new Set([
+  "/health",
+  "/__reconstruction/status",
+  "/__reconstruction/openapi.json",
+]);
+
 function compareKeys([left]: [string, string], [right]: [string, string]) {
   return left === right ? 0 : left < right ? -1 : 1;
 }
@@ -155,8 +161,17 @@ function registerFixtures(fixtures: Fixture[]) {
   const provenanceByKey = new Map<string, string>();
   fixtures.forEach((fixture, index) => {
     validateFixture(fixture, index);
-    const key = fixtureKey(fixture.method, fixture.path, fixture.query);
     const provenance = fixtureProvenance(fixture, index);
+    if (reservedFixturePaths.has(fixture.path)) {
+      const pathDigest = createHash("sha256")
+        .update(fixture.path)
+        .digest("hex")
+        .slice(0, 12);
+      throw new Error(
+        `Reserved fixture route pathSha256=${pathDigest}: ${provenance}`,
+      );
+    }
+    const key = fixtureKey(fixture.method, fixture.path, fixture.query);
     const previous = provenanceByKey.get(key);
     if (previous) {
       const keyDigest = createHash("sha256")
