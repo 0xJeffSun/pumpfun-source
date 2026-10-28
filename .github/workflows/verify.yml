@@ -149,6 +149,8 @@ jobs:
               python -B research/mayhem-current438-composition-20261028/test_runtime.py
           - suite: mayhem-current437-buy-prefix
             commands: |
+              mkdir -p work/mayhem-priority-20261027/amm-body-audit
+              cp research/mayhem-amm-sell-cfg-recovery-20261027/runtime/frozen/work/mayhem-priority-20261027/amm-body-audit/revisit-cases.json work/mayhem-priority-20261027/amm-body-audit/revisit-cases.json
               python -B research/mayhem-current437-buy-prefix-20261028/verify.py
               python -B research/mayhem-current437-buy-prefix-20261028/test_verify.py
           - suite: mayhem-clean-rebuild-archive
@@ -183,6 +185,8 @@ jobs:
               python -B research/mayhem-current436-counted-literals-20261028/test_verify.py
           - suite: mayhem-current436-residual-controls
             commands: |
+              mkdir -p work/mayhem-priority-20261027/amm-body-audit
+              cp research/mayhem-amm-sell-cfg-recovery-20261027/runtime/frozen/work/mayhem-priority-20261027/amm-body-audit/revisit-cases.json work/mayhem-priority-20261027/amm-body-audit/revisit-cases.json
               python -B research/mayhem-current436-amm-event-controls-20261027/verify.py
               python -B research/mayhem-current436-amm-event-controls-20261027/test_verify.py
               python -B research/mayhem-current436-v2-controls-20261027/verify.py
