@@ -514,4 +514,40 @@ class SourceTests(unittest.TestCase):
     def test_truncation_missing_parent_rejected(self):
         data = self.truncation_parent(); data.pop('programs/pump/src/trade_v3.rs')
         with self.assertRaises(ValueError): m.truncation_apply(data)
+    def buytruncation_parent(self):
+        out = self.root / 'buytruncation-parent'
+        m.materialize(PARENT, out, 'truncation815')
+        return {str(p.relative_to(out)): p.read_bytes() for p in out.rglob('*') if p.is_file()}
+    def test_exact_buytruncation_stage(self):
+        got = m.materialize(PARENT, self.root / 'source', 'buytruncation816')
+        self.assertEqual(got, json.loads((m.HERE / 'buytruncation-pins.json').read_text())['source_sha256'])
+        self.assertEqual(len(got), 61)
+    def test_buytruncation_exact_scope(self):
+        old = self.buytruncation_parent(); new = m.buytruncation_apply(old)
+        self.assertEqual({n for n in old if old[n] != new[n]}, {'programs/pump/src/trade_v3.rs'})
+        a = old['programs/pump/src/trade_v3.rs'].splitlines(); b = new['programs/pump/src/trade_v3.rs'].splitlines()
+        self.assertEqual([i + 1 for i in range(len(a)) if a[i] != b[i]], [200, 811])
+        self.assertEqual(a[77], b[77])
+    def test_buytruncation_callback_and_parent_preserved(self):
+        old = self.buytruncation_parent(); new = m.buytruncation_apply(old)
+        lines = new['programs/pump/src/trade_v3.rs'].splitlines()
+        self.assertIn(b'map_err(buy_quote_truncation)?', lines[199])
+        self.assertIn(b'fn buy_quote_truncation(_:core::num::TryFromIntError)', lines[810])
+        self.assertIn(b'error!(PumpError::Truncation)', lines[810])
+        self.assertEqual(lines[809], b'')
+        self.assertEqual(lines[1139], old['programs/pump/src/trade_v3.rs'].splitlines()[1139])
+        self.assertEqual(len(lines), 1140)
+        self.assertEqual(new['programs/pump/src/lib.rs'], old['programs/pump/src/lib.rs'])
+        self.assertEqual(new['programs/pump/src/v3_native_transfer_fee.rs'], old['programs/pump/src/v3_native_transfer_fee.rs'])
+    def test_buytruncation_already_applied_rejected(self):
+        with self.assertRaises(ValueError): m.buytruncation_apply(m.buytruncation_apply(self.buytruncation_parent()))
+    def test_buytruncation_wrong_parent_rejected(self):
+        data = self.buytruncation_parent(); data['programs/pump/src/trade_v3.rs'] += b'\n'
+        with self.assertRaises(ValueError): m.buytruncation_apply(data)
+    def test_buytruncation_extra_parent_rejected(self):
+        data = self.buytruncation_parent(); data['extra.rs'] = b''
+        with self.assertRaises(ValueError): m.buytruncation_apply(data)
+    def test_buytruncation_missing_parent_rejected(self):
+        data = self.buytruncation_parent(); data.pop('programs/pump/src/trade_v3.rs')
+        with self.assertRaises(ValueError): m.buytruncation_apply(data)
 if __name__ == '__main__': unittest.main(argv=['test_materialize.py', *remaining])
