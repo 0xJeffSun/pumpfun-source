@@ -62,6 +62,8 @@ try {
     await capture(browser, device, width, height, "populated", populate);
     await capture(browser, device, width, height, "invalid", async (page) => {
       await page.getByRole("button", { name: "Preview draft" }).click();
+      await page.getByText("Enter a coin name.").waitFor();
+      await page.evaluate(() => window.scrollTo(0, 0));
     });
     await capture(browser, device, width, height, "preview", async (page) => {
       await populate(page);
