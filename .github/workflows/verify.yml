@@ -16,6 +16,10 @@ jobs:
       max-parallel: 12
       matrix:
         include:
+          - suite: pump-claim-v2-account-boundaries
+            commands: |
+              python -I -B research/pump-claim-v2-account-boundaries/verify.py
+              python -I -B research/pump-claim-v2-account-boundaries/mutation_controls.py
           - suite: mayhem-canonical-exact
             commands: |
               python -O -B scripts/verify_current_checkpoint.py mayhem
