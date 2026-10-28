@@ -1516,6 +1516,10 @@ research/mayhem-current436-linux-dependency-control-20261028/**/link.map -whites
 research/mayhem-current436-sweep-address-selection-20261028/sweep/source.patch -whitespace
 research/mayhem-current436-sweep-address-selection-20261028/sweep/**/link.map -whitespace
 
+research/mayhem-current437-composition-20261028/source.patch -whitespace
+research/mayhem-current437-composition-20261028/builds/**/link.map -whitespace
+
+research/mayhem-current437-composition-20261028/inventory.tsv -whitespace
 repro/pump_amm/inverse-route-recovery-20261028/results/** -whitespace
 
 repro/pump_amm/inverse-route-recovery-20261028/followup/** -whitespace
@@ -1523,3 +1527,5 @@ repro/pump_amm/inverse-route-recovery-20261028/followup/** -whitespace
 repro/pump_amm/native-scanners-recovery-20261028/results/** -whitespace
 
 repro/pump_amm/native-scanners-recovery-20261028/followup/** -whitespace
+# Preserve the byte-pinned Windows manifest line endings.
+research/mayhem-current436-native-20261028/manifest.json -whitespace

@@ -2975,3 +2975,25 @@ The [later full-size control](../research/mayhem-current436-sweep-address-select
 ## Writer-record data extension
 
 The [48-byte writer-record proof](../research/mayhem-current436-writer-records-20261028/README.md) extends five selected prefixes across 47 matched owner-reference sites. It checks ten additional relocated method pointers, covering 80 more original storage bytes. Each target remains in the same recursive normalized/Source/code-reference relation, which retains 429 windows and 579 pairs. The complete local census remains 436 normalized/141 raw. Candidate-side compiler-library source identifies the methods, without authenticating the original type or proving allocation extents or arbitrary indirect calls. Eight corruption tests include all ten actual pointer mutations and an actual relocation removal.
+
+## Qualified437 SweepFees completion
+
+The [new qualified composition](../research/mayhem-current437-composition-20261028/README.md) reproduces O0076's complete 8,400-byte normalized body, all 51 ordered callees and 13 Source observations. Passing the same existing GlobalParams account as a separate helper argument preserves the original base-plus-field address calculation; no explicit numeric address arithmetic or matcher change is used. It adds O0076 and closes O0169 transitively, reaching 437 normalized/141 raw/431 closed windows, 4,525 positive edges and 499 Source observations. All prior body, raw, edge and Source-profile obligations survive.
+
+Three root compilations agree. Fresh 6,636 trade pairs, 69 initializer pairs, 692 sweep triples, 150 rate triples and 856 targeted rate triples pass independent signature, program-hash, state, return and non-compute-log checks. Their 18,534 signed records overlap and are not unique scenarios. Four trade bodies and 63,792 original text bytes remain unmatched. Whole-ELF identity remains false.
+
+## Counted instruction-label literals on qualified436
+
+The [counted-literal extension](../research/mayhem-current436-counted-literals-20261028/README.md) proves 20 disjoint byte intervals totaling 553 original bytes, selected by explicit pointer/length arguments before relocation-confirmed `sol_log_` calls. All 20 literal mutations, a redirected pointer, source/archive changes and filesystem corruptions are exercised by nine tests. The proof preserves its parent436/141 local counts and429-window/579-pair data relation. It is historical evidence for that exact artifact; it does not infer allocation extents, logged runtime output or automatic transfer to qualified437.
+
+## O0095 analysis withdrawal
+
+PR412 removes the earlier static-analysis packet because it treated absolute addresses as `.text` offsets and decoded a range shifted by 288 bytes. The earlier integration review reproduced that output but did not detect the incorrect range. Independent decoding at absolute 188864–190160 confirms the eight already-known call targets and no internal entry. The validator's normalized match and the 437-window frontier remain unchanged. The corrected address evidence is retained in [the review record](../research/pr-review-20261028/pr412-correction.json).
+
+## Qualified437 selected-data recheck
+
+The [new exact-candidate recheck](../research/mayhem-current437-selected-data-20261028/README.md) retains 431 original windows and 581 counterpart pairs after checking Source data, relocated code references, selected 32-byte prefixes, five 48-byte writer spans and 21 counted instruction labels. It checks 499 Source sites, 48 code sites and 121 prefix references. The 21 label intervals total 575 bytes; lengths are explicit call arguments. All 13 corruption/portability tests pass. This strengthens bounded data evidence without changing function counts or claiming complete allocation extents, arbitrary dispatch or whole-ELF identity.
+
+## Qualified437 data coverage inventory
+
+The [interval-union ledger](../research/mayhem-current437-data-coverage-20261028/README.md) recomputes the precise footprint of current Source, code-reference, prefix, writer and literal obligations. It covers 6,100 of 26,180 payload-data bytes: 5,352 raw-equal bytes plus 748 bytes of pointer correspondence. Another 20,080 payload bytes remain unproved, led by a 12,406-byte rodata interval referenced by ErrorCode names and error formatters. Relocation metadata is accounted for separately and only checked fields receive credit. Two independent runs reproduce the report byte for byte. This adds a prioritized work inventory, not new byte-identity evidence.

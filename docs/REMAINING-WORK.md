@@ -1,7 +1,7 @@
 # Remaining reconstruction work — 28 October 2026
 
 This is the action list for the [reconstruction audit](RECONSTRUCTION-AUDIT.md),
-updated through upstream revision `4e378ab00`. The historical audit retains its
+updated through upstream revision `25b3f6168`. The historical audit retains its
 `6b61b337` parent and linked visibility-recovery measurements. The [current review](RECONSTRUCTION-STATUS.md)
 and [complete refreshed inventory](../repro/reconstruction-status-2026-10-26/README.md)
 list every raw match and unresolved window in their dated snapshot. That core
@@ -10,9 +10,9 @@ snapshot retains `1463bd22` audit bindings; current selections are recorded in
 [completion ledger](COMPLETION.md) remains a selected-checkpoint record; its old
 candidate paths and “current” prose must not override newer evidence.
 
-Current [Pump Round43](../repro/pump/main-contract-round43-20261027/README.md)
-has 203 raw-local matches, 614 normalized-only matches and 218 unmatched windows.
-The unmatched windows cover 706,752 original text bytes. Remaining bodies,
+Current [Pump Round46](../repro/pump/main-contract-round46-20261027/README.md)
+has 203 raw-local matches, 620 normalized-only matches and 212 unmatched windows.
+The unmatched windows cover 684,136 original text bytes. Remaining bodies,
 data, relocations, uncovered behavior and original build provenance remain open.
 
 Current [Fees research](../research/claude-fees100-crank-donation-20261027/README.md)
@@ -20,27 +20,34 @@ reproduces all 585 bodies and the complete 873,256-byte meaningful ELF. The
 75,688-byte remaining capture tail is zero loader allocation. This does not
 establish the original historical source or deployment recipe.
 
-Current [AMM checkpoint](../repro/pump_amm/private-sweep-recovery-20261027/README.md)
-has 148 raw-local, 508 normalized-only and 129 unmatched windows, with 335,928
+Current [AMM checkpoint](../repro/pump_amm/inverse-route-recovery-20261028/README.md)
+has 159 raw-local, 500 normalized-only and 126 unmatched windows, with 331,232
 original text bytes unmatched. Older event and optional-decoder experiments
 retain their original artifact bindings.
 
-Current Mayhem research is the [qualified436 composition](../research/mayhem-current436-composition-20261027/README.md):
-141 raw-local, 295 normalized-only and five unmatched windows / 72,192 original
-text bytes. It adds the full 13,848-byte Legacy Buy and 12,992-byte Legacy Sell
-bodies to the preceding qualified434 source. Both quotes, the 960-byte
-initializer, O0073 and O0075 remain complete normalized matches.
+Current Mayhem research is the [qualified437 composition](../research/mayhem-current437-composition-20261028/README.md):
+141 raw-local, 296 normalized-only and four unmatched windows / 63,792 original
+text bytes. It adds the complete 8,400-byte SweepFees body to the preceding
+qualified436 source. Both Legacy bodies, both quotes, the 960-byte initializer,
+O0073 and O0075 remain complete normalized matches.
 
 The current composition preserves every prior raw body, allocator edge,
 Source profile and observed direct-call relationship. Ordered direct-call
-closure covers 429/436 matched bodies; 4,473 positive immediate edges and 486
-matching Source observations are retained. Two builds and fresh signed trade,
+closure covers 431/437 matched bodies; 4,525 positive immediate edges and 499
+matching Source observations are retained. Three builds and fresh signed trade,
 initializer, sweep and rate verification pass. Inputs overlap and their 18,534
-signed records are not unique scenarios. Four large trade bodies, SweepFees,
-global data, indirect calls, layout and historical source/toolchain provenance
-remain work. The [441-row inventory](../research/mayhem-current436-composition-20261027/inventory.tsv)
-and [completion review](MAYHEM-COMPLETION.md) list the five functions and the
-limits of the 1.13% unmatched-window / 10.21% unmatched-text figures.
+signed records are not unique scenarios. Four large trade bodies, global data,
+indirect calls, layout and historical source/toolchain provenance remain work.
+The [441-row inventory](../research/mayhem-current437-composition-20261028/inventory.tsv)
+and [completion review](MAYHEM-COMPLETION.md) list the four functions and the limits
+of the 0.91% unmatched-window / 9.03% unmatched-text figures.
+
+The [data coverage ledger](../research/mayhem-current437-data-coverage-20261028/README.md)
+measures the existing proof footprint: 6,100 of 26,180 payload bytes are covered,
+including 5,352 raw-equal and 748 pointer-correspondence bytes; 20,080 are still
+unproved by those obligations. This is not a count of known mismatches. The
+largest next targets are counted ErrorCode names, formatter piece descriptors
+and account-name strings with explicit lengths.
 
 The [current Legacy Buy ownership composition](../research/mayhem-current-ownership-composition-20261027/README.md)
 preserves the 430/100 frontier and its complete initializer. Its partial handler
