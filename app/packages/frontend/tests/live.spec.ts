@@ -56,11 +56,11 @@ test("search and sorting are URL-backed, empty-safe and history-aware", async ({
   const search = page.getByRole("searchbox", {
     name: "Search captured streams",
   });
-  await search.fill("$$mAjor");
+  await search.fill("$mAjor");
   await search.press("Enter");
-  await expect(page).toHaveURL(/\/live\?q=%24%24mAjor$/);
+  await expect(page).toHaveURL(/\/live\?q=%24mAjor$/);
   await expect(page.getByTestId("archived-stream-card")).toHaveCount(1);
-  await expect(page.getByText("$$mAjor", { exact: true })).toBeVisible();
+  await expect(page.getByText("$mAjor", { exact: true })).toBeVisible();
 
   await page.getByRole("button", { name: "Clear", exact: true }).click();
   await expect(page).toHaveURL(/\/live$/);
@@ -68,16 +68,16 @@ test("search and sorting are URL-backed, empty-safe and history-aware", async ({
   await page.getByLabel("Sort captured cards").selectOption("title");
   await expect(page).toHaveURL(/sort=title/);
   await expect(page.getByTestId("archived-stream-card").first()).toContainText(
-    "$$mAjor",
+    "$mAjor",
   );
 
   await page.goBack();
   await expect(page).toHaveURL(/\/live$/);
   await expect(page.getByTestId("archived-stream-card").first()).toContainText(
-    "$$M",
+    "$M",
   );
   await page.goBack();
-  await expect(search).toHaveValue("$$mAjor");
+  await expect(search).toHaveValue("$mAjor");
   await expect(page.getByTestId("archived-stream-card")).toHaveCount(1);
   await page.goForward();
   await expect(page.getByTestId("archived-stream-card")).toHaveCount(5);
@@ -94,7 +94,7 @@ test("selection exposes only unavailable playback state and restores focus on Es
 }) => {
   await page.goto("/live");
   const inspect = page.getByRole("button", {
-    name: "Inspect archived stream M $$M",
+    name: "Inspect archived stream M $M",
   });
   await inspect.focus();
   await inspect.click();
@@ -191,7 +191,7 @@ test("interaction remains local and adjacent routes retain their boundaries", as
   const safety = monitorSafety(page);
   await page.goto("/live");
   await page
-    .getByRole("button", { name: "Inspect archived stream M $$M" })
+    .getByRole("button", { name: "Inspect archived stream M $M" })
     .click();
   await page.getByRole("button", { name: "Close stream detail" }).click();
   await page.getByRole("link", { name: "Explore", exact: true }).click();

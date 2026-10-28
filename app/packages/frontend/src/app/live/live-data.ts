@@ -100,8 +100,9 @@ function decodeEscapedObject(source: string, start: number): unknown {
     throw new LiveEvidenceError("Archived stream object boundary is invalid");
   }
 
+  let parsed: unknown;
   try {
-    return JSON.parse(
+    parsed = JSON.parse(
       source.slice(start, end).replaceAll('\\"', '"').replaceAll("\\\\", "\\"),
     );
   } catch (error) {
@@ -109,6 +110,26 @@ function decodeEscapedObject(source: string, start: number): unknown {
       `Archived stream object is invalid JSON: ${error instanceof Error ? error.message : "unknown parse failure"}`,
     );
   }
+  return unescapeFlightStrings(parsed);
+}
+
+// React Flight stores a string that starts with "$" as "$$"; any other
+// "$"-prefixed string is an unresolved Flight reference and is rejected.
+function unescapeFlightStrings(value: unknown): unknown {
+  if (typeof value === "string") {
+    if (value.startsWith("$$")) return value.slice(1);
+    if (value.startsWith("$")) {
+      throw new LiveEvidenceError("Archived stream contains an unresolved Flight reference");
+    }
+    return value;
+  }
+  if (Array.isArray(value)) return value.map(unescapeFlightStrings);
+  if (isRecord(value)) {
+    return Object.fromEntries(
+      Object.entries(value).map(([key, item]) => [key, unescapeFlightStrings(item)]),
+    );
+  }
+  return value;
 }
 
 export function validateArchivedStream(

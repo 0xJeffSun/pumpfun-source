@@ -29,7 +29,8 @@ export default async function LivePage() {
           <p className="eyebrow">Archived first-party evidence</p>
           <h1 id="live-title">Live discovery</h1>
           <p className="description">
-            Inspect a verified snapshot of the captured Most viewers section.
+            Inspect the first five cards of the captured Most viewers section,
+            in captured order.
             Records are historical, read-only and never refreshed from a
             production livestream service.
           </p>

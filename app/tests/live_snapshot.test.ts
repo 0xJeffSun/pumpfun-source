@@ -41,12 +41,36 @@ test("authenticates the exact captured Live HTML and extracts five bounded recor
     [42, 34, 26, 24, 20],
   );
   assert.equal(snapshot.streams[0]?.title, "M");
-  assert.equal(snapshot.streams[0]?.symbol, "$$M");
+  assert.equal(snapshot.streams[0]?.symbol, "$M");
   assert.equal(
     snapshot.streams[0]?.creatorAddress,
     "Aq7jiTAePZ1onBGDV6yUFNF6RnhYG8ALcwfdxBv7EGky",
   );
   assert.equal(snapshot.streams[0]?.wasLiveAtCapture, true);
+});
+
+test("rendered symbols and titles match the capture's server-rendered text", async () => {
+  const { bytes, manifestValue } = await realEvidence();
+  const html = new TextDecoder().decode(bytes);
+  for (const stream of verifyLiveEvidence(bytes, manifestValue).streams) {
+    assert.ok(!stream.symbol.startsWith("$$"), stream.symbol);
+    assert.ok(html.includes(`>${stream.symbol}<`), `symbol ${stream.symbol}`);
+    assert.ok(html.includes(`>${stream.title}<`), `title ${stream.title}`);
+  }
+});
+
+test("unresolved React Flight references fail closed", async () => {
+  const { bytes } = await realEvidence();
+  const source = new TextDecoder().decode(bytes);
+  const escaped = '\\"symbol\\":\\"$$M\\"';
+  assert.ok(source.includes(escaped));
+  const mutated = new TextEncoder().encode(
+    source.replace(escaped, '\\"symbol\\":\\"$@3\\"'),
+  );
+  assert.throws(
+    () => parseLiveCapture(mutated, sha256(mutated)),
+    /unresolved Flight reference/,
+  );
 });
 
 test("keeps external media fields out of the browser-facing data model", async () => {
@@ -111,7 +135,7 @@ test("rejects invalid stream identity, state, counts and unexpected fields", () 
 test("searches supported archived identity fields and sorts deterministically", async () => {
   const { bytes } = await realEvidence();
   const streams = parseLiveCapture(bytes);
-  assert.equal(filterArchivedStreams(streams, "$$major", "viewers").length, 1);
+  assert.equal(filterArchivedStreams(streams, "$major", "viewers").length, 1);
   assert.equal(
     filterArchivedStreams(streams, "EWa9rEDV", "viewers")[0]?.title,
     "A",
