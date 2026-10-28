@@ -669,7 +669,9 @@ export async function publishGraph(root, outputRelative, options = {}) {
     throw new Error("output path escapes root");
   const reports = await buildGraph(root, options);
   const temporary = `${output}.tmp-${process.pid}`;
+  const backup = `${output}.previous-${process.pid}`;
   await rm(temporary, { recursive: true, force: true });
+  await rm(backup, { recursive: true, force: true });
   await mkdir(temporary, { recursive: true });
   const manifestFiles = [];
   for (const name of Object.keys(reports).sort(lexical)) {
@@ -683,8 +685,24 @@ export async function publishGraph(root, outputRelative, options = {}) {
   }
   const manifest = { schemaVersion: GRAPH_VERSION, files: manifestFiles };
   await writeFile(join(temporary, "MANIFEST.json"), stable(manifest));
-  await rm(output, { recursive: true, force: true });
-  await rename(temporary, output);
+  let previous = false;
+  try {
+    try {
+      await lstat(output);
+      await rename(output, backup);
+      previous = true;
+    } catch (error) {
+      if (error.code !== "ENOENT") throw error;
+    }
+    await options.onPublishStage?.("backup-created");
+    await rename(temporary, output);
+    if (previous) await rm(backup, { recursive: true, force: true });
+  } catch (error) {
+    await rm(output, { recursive: true, force: true });
+    if (previous) await rename(backup, output);
+    await rm(temporary, { recursive: true, force: true });
+    throw error;
+  }
   return { output, summary: reports["GRAPH-SUMMARY.json"], manifest };
 }
 

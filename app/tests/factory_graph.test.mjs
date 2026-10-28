@@ -251,6 +251,35 @@ test("publication is deterministic and generated evidence rejects tampering", as
   );
 });
 
+test("an interrupted replacement restores the last complete graph", async () => {
+  const root = await fixture();
+  await publishGraph(root, "research/graph", {
+    routes: ["/"],
+    targetLines: 4,
+    maximumLines: 100,
+  });
+  const before = await readFile(
+    join(root, "research/graph/MANIFEST.json"),
+    "utf8",
+  );
+  await assert.rejects(
+    publishGraph(root, "research/graph", {
+      routes: ["/"],
+      targetLines: 4,
+      maximumLines: 100,
+      onPublishStage: () => {
+        throw new Error("simulated interruption");
+      },
+    }),
+    /simulated interruption/,
+  );
+  assert.equal(
+    await readFile(join(root, "research/graph/MANIFEST.json"), "utf8"),
+    before,
+  );
+  await verifyGraph(root, "research/graph");
+});
+
 test(
   "checked-in corpus rebuild stays within the authenticated 200K-300K range",
   { timeout: 30_000 },
