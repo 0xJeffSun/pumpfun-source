@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
 const checks=[];
-for(const route of ['/','/explore','/leaderboard','/live','/go','/mayhem','/holder-rewards','/create']){
+for(const route of ['/','/explore','/leaderboard','/live','/go','/mayhem','/holder-rewards','/portfolio','/create']){
  const r=await fetch(`http://127.0.0.1:3000${route}`);assert.equal(r.status,200,route);assert.match(await r.text(),/Pump reconstruction/);checks.push({route,status:r.status});
 }
 for(const route of ['/pump-token','/coin/example']){

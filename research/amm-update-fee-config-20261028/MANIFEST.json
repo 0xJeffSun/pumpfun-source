@@ -1,13 +1,13 @@
 {
   "schema": 1,
   "files": {
-    "README.md": "04a049190c82b310d28823e7d56163c805d420f713d07d754847cbbfbe70116b",
+    "README.md": "631712a93f123ca0084936c7768622d28654853bfafbc7b8c7c5e6bdca370f8a",
     "producer.py": "cd58a7e24551834a9fa7e181d0a6f1908dac4b2586795031bbe5d6c267c1cdac",
     "runtime/raw-transactions-part1.jsonl.gz": "d8f609ebfe6864ed898ec209063d2887602aa9fc494604293ef9f42b9049fa6d",
     "runtime/raw-transactions-part2.jsonl.gz": "59fb25d8fcf7f7b2a12dfbb1078f29aac8a3379c10e3f70c5cfb9275b0d319e7",
     "runtime/raw-transactions-part3.jsonl.gz": "4ad9ded32ecd6e64245c1c0a5544de1f290db32da6ccc9405ae8158c12df586d",
     "runtime/report.json.gz": "ab5bf9f7a80a168b1e3f1779bec28f3dd8818b383ec8d19e926e0afa4dc2f945",
-    "verify.py": "ab7379d4e31eeef65d9827b349e62f2905f53dfe43c895f18bb5264d77fe344b"
+    "verify.py": "339226058b3a1a993f8673035a93d66ec6316e748b93b93b1955f893b608d18f"
   },
   "repository_inputs": {
     "research/amm-multi-hop-group-slice-recovery/artifacts/candidate.so.gz": "1f25c51a89ed4c269dd7af1732c4a55dbc3fb908b6c9f5ecac69560cfe1026bd",

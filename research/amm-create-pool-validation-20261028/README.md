@@ -13,8 +13,9 @@ at a distinct layer.
 Seven fresh-VM triples (original / #424 control / #427
 candidate), 21 signed executions on the repository's own create
 harness (`scripts/pump_amm_create_differential.py`). The clock is
-slot 100, epoch 0. `producer.py` reproduces every receipt from the
-repository files. The duplicate case's recorded receipt is the
+slot 100, epoch 0. `producer.py` generated these receipts on the author's machine; as committed it expects a
+checkout at `~/workspace/pumpfun-sparse` and the #424/#427 `candidate.so.gz` images gunzipped
+into `~/workspace/slop-verify`, so it does not run from this packet unmodified. The duplicate case's recorded receipt is the
 second transaction, with the first creation applied as setup in
 the same VM.
 

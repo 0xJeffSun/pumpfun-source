@@ -28,6 +28,7 @@
         "/go",
         "/mayhem",
         "/holder-rewards",
+        "/portfolio",
         "/create",
         "/docs/fees",
         "/docs/privacy-policy",
@@ -373,37 +374,55 @@
       ],
       "source": {
         "contract": {
-          "status": "pending",
-          "evidence": []
+          "status": "accepted",
+          "evidence": [
+            "packages/frontend/MAYHEM-EVIDENCE.md#observed",
+            "packages/frontend/MAYHEM-EVIDENCE.md#declared"
+          ]
         },
         "logic": {
-          "status": "pending",
-          "evidence": []
+          "status": "accepted",
+          "evidence": [
+            "packages/frontend/src/app/mayhem/mayhem-screener.tsx"
+          ]
         },
         "adapters": {
-          "status": "pending",
-          "evidence": []
+          "status": "accepted",
+          "evidence": [
+            "packages/frontend/src/app/mayhem/mayhem-data.ts",
+            "packages/frontend/src/app/api/mayhem-screener/route.ts"
+          ]
         }
       },
       "completion": {
         "source": {
-          "status": "pending",
-          "evidence": []
+          "status": "accepted",
+          "evidence": [
+            "packages/frontend/MAYHEM-EVIDENCE.md#local-design"
+          ]
         },
         "success": {
           "status": "pending",
-          "evidence": []
+          "evidence": [
+            "packages/frontend/tests/mayhem.spec.ts",
+            "tests/mayhem_screener.test.ts"
+          ]
         },
         "failure": {
-          "status": "pending",
-          "evidence": []
+          "status": "accepted",
+          "evidence": [
+            "packages/frontend/tests/mayhem.spec.ts",
+            "tests/mayhem_screener.test.ts"
+          ]
         },
         "consistency": {
           "status": "pending",
-          "evidence": []
+          "evidence": [
+            "packages/frontend/visual/mayhem-20261028/README.md"
+          ]
         }
       },
-      "note": "Route scaffold only."
+      "note": "Evidence-mapped state filters, sorting, strict validation and fail-closed offline states pass unit and browser tests. No archived Mayhem response, qualified live API compatibility or original visual parity is claimed."
     },
     {
       "id": "rewards",
@@ -542,37 +561,55 @@
       ],
       "source": {
         "contract": {
-          "status": "pending",
-          "evidence": []
+          "status": "accepted",
+          "evidence": [
+            "packages/frontend/PROFILE-EVIDENCE.md#observed"
+          ]
         },
         "logic": {
-          "status": "pending",
-          "evidence": []
+          "status": "accepted",
+          "evidence": [
+            "packages/frontend/src/app/profile/[id]/page.tsx",
+            "packages/frontend/src/components/profile/ProfileHeader.tsx"
+          ]
         },
         "adapters": {
-          "status": "pending",
-          "evidence": []
+          "status": "accepted",
+          "evidence": [
+            "packages/frontend/src/components/profile/profile-data.ts",
+            "packages/frontend/src/components/profile/profile-snapshot.ts"
+          ]
         }
       },
       "completion": {
         "source": {
-          "status": "pending",
-          "evidence": []
+          "status": "accepted",
+          "evidence": [
+            "packages/frontend/PROFILE-EVIDENCE.md#local-design"
+          ]
         },
         "success": {
-          "status": "pending",
-          "evidence": []
+          "status": "accepted",
+          "evidence": [
+            "packages/frontend/tests/profile.spec.ts",
+            "tests/profile_data.test.ts"
+          ]
         },
         "failure": {
-          "status": "pending",
-          "evidence": []
+          "status": "accepted",
+          "evidence": [
+            "packages/frontend/tests/profile.spec.ts",
+            "tests/profile_data.test.ts"
+          ]
         },
         "consistency": {
           "status": "pending",
-          "evidence": []
+          "evidence": [
+            "packages/frontend/visual/profile-20261028/README.md"
+          ]
         }
       },
-      "note": "Planned route; identity, profile and social components unimplemented."
+      "note": "Evidence-mapped, hash-bound synthetic profiles resolve by exact user id or wallet and render filtered authored posts with responsive browser coverage. Native profile compatibility, follow graph, authenticated behavior and original visual parity remain unqualified."
     },
     {
       "id": "auth",
@@ -621,7 +658,9 @@
       "id": "portfolio",
       "label": "Portfolio / positions",
       "scope": "included",
-      "routes": [],
+      "routes": [
+        "/portfolio"
+      ],
       "candidatePrefixes": [
         "/portfolio-summary",
         "/user-portfolio",
@@ -629,37 +668,55 @@
       ],
       "source": {
         "contract": {
-          "status": "pending",
-          "evidence": []
+          "status": "accepted",
+          "evidence": [
+            "packages/frontend/PORTFOLIO-RPC.md#declared-solana-contract"
+          ]
         },
         "logic": {
-          "status": "pending",
-          "evidence": []
+          "status": "accepted",
+          "evidence": [
+            "packages/frontend/src/app/portfolio/page.tsx",
+            "packages/frontend/src/app/portfolio/portfolio-client.tsx"
+          ]
         },
         "adapters": {
-          "status": "pending",
-          "evidence": []
+          "status": "accepted",
+          "evidence": [
+            "packages/frontend/src/app/portfolio/rpc.ts",
+            "packages/frontend/src/app/api/portfolio/route.ts"
+          ]
         }
       },
       "completion": {
         "source": {
-          "status": "pending",
-          "evidence": []
+          "status": "accepted",
+          "evidence": [
+            "packages/frontend/PORTFOLIO-RPC.md#local-implementation"
+          ]
         },
         "success": {
-          "status": "pending",
-          "evidence": []
+          "status": "accepted",
+          "evidence": [
+            "packages/frontend/tests/live-portfolio.mjs",
+            "packages/frontend/visual/portfolio-live-20261028/live-verification.json"
+          ]
         },
         "failure": {
-          "status": "pending",
-          "evidence": []
+          "status": "accepted",
+          "evidence": [
+            "tests/portfolio_rpc.test.ts",
+            "packages/frontend/tests/portfolio.spec.ts"
+          ]
         },
         "consistency": {
           "status": "pending",
-          "evidence": []
+          "evidence": [
+            "packages/frontend/visual/portfolio-live-20261028/README.md"
+          ]
         }
       },
-      "note": "No local portfolio UI."
+      "note": "Live mainnet SOL, SPL Token and Token-2022 account reads pass unit, browser and actual-RPC checks. Pump positions/PnL compatibility and original visual parity remain unqualified."
     },
     {
       "id": "settings",

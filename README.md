@@ -2,21 +2,21 @@
 
 Rust reconstruction of Pump.fun's Solana programs from captured binaries.
 
-**Current binary coverage — 28 October 2026:** 3,320 / 3,338 function
-windows match (99.5%); 18 remain unmatched. Three of five programs reproduce
+**Current binary coverage — 28 October 2026:** 3,321 / 3,338 function
+windows match (99.5%); 17 remain unmatched. Three of five programs reproduce
 their complete meaningful ELF.
 
 | Program | Matched windows | Matched % | Raw-equal bodies | Normalized only | Unmatched | Whole ELF equal |
 | --- | ---: | ---: | ---: | ---: | ---: | --- |
 | [Pump Main](research/claude-pump-integration-20261027/r37-layout-41/README.md) | 1,019 / 1,035 | 98.5% | 168 | 851 | 16 | No |
-| [PumpSwap / AMM](research/claude-amm-union12-20261028/README.md) | 783 / 785 | 99.7% | 236 | 547 | 2 | No |
+| [PumpSwap / AMM](research/amm-cashback-buy-recovery-20261028/README.md) | 784 / 785 | 99.9% | 267 | 517 | 1 | No |
 | [Fees](research/claude-fees100-crank-donation-20261027/README.md) | 585 / 585 | 100.0% | 585 | 0 | 0 | **Yes** |
 | [Mayhem](research/mayhem-meaningful-elf-20261028/README.md) | 441 / 441 | 100.0% | 441 | 0 | 0 | **Yes** |
 | [Donation Relay](repro/donation-relay/canonical-exact-selection/README.md) | 492 / 492 | 100.0% | 492 | 0 | 0 | **Yes** |
-| **Total** | **3,320 / 3,338** | **99.5%** | **1,922** | **1,398** | **18** | **3 / 5** |
+| **Total** | **3,321 / 3,338** | **99.5%** | **1,953** | **1,368** | **17** | **3 / 5** |
 
-Matched windows cover **5,014,880 / 5,213,128 code bytes (96.2%)**;
-**198,248 bytes (3.8%)** remain outside matched windows.
+Matched windows cover **5,022,984 / 5,213,128 code bytes (96.4%)**;
+**190,144 bytes (3.6%)** remain outside matched windows.
 
 These figures measure the latest published artifacts, including research not
 integrated into the maintained source tree. Raw-equal bodies match byte for byte;
@@ -31,8 +31,8 @@ normalized coverage.
 
 ## Remaining work
 
-- Recover the **16 Pump Main and 2 PumpSwap / AMM** unmatched windows. The AMM
-  remainder is `0x351a8 0x4c750`.
+- Recover the **16 Pump Main and 1 PumpSwap / AMM** unmatched windows. The AMM
+  remainder is sell cashback `0x4c750`.
 - Close remaining call, data and relocation differences, integrate qualified
   source changes, and verify reproducible whole-program builds and uncovered behavior.
 - Pump Main reaches 1,019 windows with the
@@ -52,13 +52,18 @@ normalized coverage.
   [cashback-v2 quote-program guard](research/pump-l38-cashback-quote-program-20261028/README.md),
   [direct-route FeeConfig selection](research/pump-direct-route-fee-config-20261028/README.md) and the
   [checked cashback decoder](research/pump-checked-cashback-decoder-20261028/README.md).
-- PumpSwap's [783-window union11](research/claude-amm-union11-20261028/README.md) recovers
+- PumpSwap reaches **784/785** with the [buy cashback recovery](research/amm-cashback-buy-recovery-20261028/README.md):
+  all 8,104 helper bytes match after official normalization, with no lost windows
+  and 267 raw-equal bodies. Both complete ELFs reproduce independently; the
+  maintained legacy-buy suite passes 1,011 paired cases with 2,022 independently
+  verified transaction signatures and no non-meter log differences. Whole-ELF
+  equality remains unachieved. The earlier [783-window union11](research/claude-amm-union11-20261028/README.md) recovers
   the volume updater (`0x6db20`) over the 782-window union10, with 0 normalized or raw losses;
   [union12](research/claude-amm-union12-20261028/README.md) is a data-side step with the same
   window sets. All nine panic Location operands in `0x6db20` now match the original
   ([panic locations](research/amm-incentive-panic-locations-20261028/README.md); 17,462 cases),
   and a [signed cashback witness](research/amm-cashback-signed-verification-20261028/README.md)
-  covers the still-unmatched `distribute_cashback` helper (`0x351a8`; 146 cases, 0 mismatches).
+  covers the now-matched `distribute_cashback` helper (`0x351a8`; 146 cases, 0 mismatches).
   The [maintained AMM checkpoint](repro/pump_amm/v2-mint-clone-recovery-20261028/README.md)
   remains at 660 windows; research candidates are not promoted.
 - Mayhem now [reproduces its complete meaningful ELF](research/mayhem-meaningful-elf-20261028/README.md):
@@ -135,12 +140,12 @@ Source acquisition/extraction is separate from editable feature reconstruction a
 | Leaderboards / competitions | 3/3 (100%) | 2/4 (50%) | Contract-driven read-only interface and failure paths verified. Live API success and original visual parity remain unqualified. |
 | Live discovery / playback | 0/3 (0%) | 0/4 (0%) | Live route scaffold; media and realtime behavior not implemented. |
 | GO | 0/3 (0%) | 0/4 (0%) | Route scaffold; campaign behavior and API binding unknown. |
-| Mayhem | 0/3 (0%) | 0/4 (0%) | Route scaffold only. |
+| Mayhem | 3/3 (100%) | 2/4 (50%) | Evidence-mapped state filters, sorting, strict validation and fail-closed offline states pass unit and browser tests. No archived Mayhem response, qualified live API compatibility or original visual parity is claimed. |
 | Holder rewards | 3/3 (100%) | 3/4 (75%) | Published-SDK offline PDA derivation, validation and unavailable states pass unit and browser tests. Live account existence, balances, eligibility, claims and original visual parity remain unqualified. |
 | Create coin / upload | 3/3 (100%) | 3/4 (75%) | Evidence-mapped offline metadata drafting, validation, local image preview and failure states pass browser tests. Upload, wallet signing, transaction creation, token launch and original visual parity remain unqualified. |
-| Profiles / social graph | 0/3 (0%) | 0/4 (0%) | Planned route; identity, profile and social components unimplemented. |
+| Profiles / social graph | 3/3 (100%) | 3/4 (75%) | Evidence-mapped, hash-bound synthetic profiles resolve by exact user id or wallet and render filtered authored posts with responsive browser coverage. Native profile compatibility, follow graph, authenticated behavior and original visual parity remain unqualified. |
 | Authentication / wallets | 0/3 (0%) | 0/4 (0%) | No local authenticated UI or wallet workflow. |
-| Portfolio / positions | 0/3 (0%) | 0/4 (0%) | No local portfolio UI. |
+| Portfolio / positions | 3/3 (100%) | 3/4 (75%) | Live mainnet SOL, SPL Token and Token-2022 account reads pass unit, browser and actual-RPC checks. Pump positions/PnL compatibility and original visual parity remain unqualified. |
 | Settings / notifications | 0/3 (0%) | 0/4 (0%) | No local settings or notification UI. |
 | Legal / fee information | 3/3 (100%) | 3/4 (75%) | Authenticated archived fee, privacy and terms documents now render through a fail-closed offline adapter with responsive navigation and corruption tests. Current legal authority and original visual parity remain unqualified. |
 

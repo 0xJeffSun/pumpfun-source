@@ -3,7 +3,7 @@
 An evidence-backed starting point for reconstructing the Pump website and APIs. This is separate from the Rust/on-chain reconstruction at the repository root.
 
 - `packages/sdk`: unchanged TypeScript sources from the official `@pump-fun/pump-sdk@4.3.1` npm archive, with a reconstructed tsup build.
-- `packages/frontend`: Next.js **16.4.1**, React **19.2.3**, Turbopack; evidence-mapped responsive shell, a hash-bound offline example feed, an offline historical Explore search, and URL-backed navigation using captured color tokens and Geist fonts. Native feed and market-search compatibility remain unimplemented.
+- `packages/frontend`: Next.js **16.4.1**, React **19.2.3**, Turbopack; evidence-mapped responsive shell, a hash-bound offline example feed, an offline historical Explore search, a live read-only Solana portfolio, and URL-backed navigation using captured color tokens and Geist fonts. Native feed, market-search and proprietary portfolio compatibility remain unimplemented.
 - `packages/backend`: independent Fastify compatibility harness. Documents 67 developer API operations, supports explicit read-only fixture replay, and returns **501** for unimplemented behavior.
 - `evidence`: original public bundles, HTML, styles, fonts, HTTP/DNS evidence, SDK archive and provenance.
 - `recovered/modules`: readable Turbopack factories, with module IDs, content hashes and exact source ranges in `recovered/modules.json`. These are not standalone original source files.
@@ -70,6 +70,44 @@ does not establish production ranking or pagination, and a missing local result
 says nothing about the current Pump market. See
 [`packages/frontend/EXPLORE-EVIDENCE.md`](packages/frontend/EXPLORE-EVIDENCE.md)
 for the exact provenance and unknowns.
+
+## Offline profiles
+
+`/profile/[id]` resolves the hash-bound synthetic backend users by exact user id
+or wallet address and renders their visible authored root posts. The route keeps
+the synthetic classification visible, uses local avatar/media fallbacks, excludes
+deleted and hidden posts, distinguishes group and banned examples, and leaves
+follow/authenticated actions disabled. Unknown, username-only, and malformed
+identifiers return the application's 404 boundary.
+
+This is not live profile compatibility or proof of wallet ownership. No native
+profile API, follow graph, authenticated viewer state, remote image, or social
+mutation is used. See
+[`packages/frontend/PROFILE-EVIDENCE.md`](packages/frontend/PROFILE-EVIDENCE.md)
+for source provenance and the local-data contract.
+
+## Live Solana portfolio
+
+`/portfolio` accepts a public Solana address and reads current mainnet account
+data through a server-owned JSON-RPC endpoint. It reports SOL lamports, separate
+SPL Token and Token-2022 accounts, exact integer-derived quantities, independent
+context slots, confirmed commitment, observation time, and cluster identity. It
+does not request a private key, sign or submit transactions, infer prices, or
+fall back to snapshots or synthetic holdings.
+
+Live reads are disabled unless the server sets `SOLANA_RPC_URL` to a public HTTPS
+mainnet provider (for example `https://api.mainnet.solana.com`); without it the
+route returns 503 `RPC_CONFIGURATION_INVALID`. The value and any provider key are
+not shipped to the browser, and users cannot override it. The
+adapter rejects private/local destinations and verifies the mainnet genesis
+hash. Public endpoints may return rate limits, which the UI reports without
+inventing results.
+
+This is direct Solana account inventory, not native Pump portfolio compatibility:
+positions, PnL, cost basis, price/metadata enrichment, spam classification, and
+history are not implemented. See
+[`packages/frontend/PORTFOLIO-RPC.md`](packages/frontend/PORTFOLIO-RPC.md) for the
+contract, precision rules, live qualification, and limitations.
 
 ## Refresh / inspect
 

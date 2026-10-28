@@ -43,7 +43,7 @@
     "path": "/mayhem",
     "feature": "Mayhem",
     "scope": "included",
-    "status": "scaffolded",
+    "status": "offline-screener",
     "behaviorQualified": false,
     "visualQualified": false
   },
@@ -52,6 +52,14 @@
     "feature": "Holder rewards",
     "scope": "included",
     "status": "offline-inspector",
+    "behaviorQualified": false,
+    "visualQualified": false
+  },
+  {
+    "path": "/portfolio",
+    "feature": "Live Solana portfolio",
+    "scope": "included",
+    "status": "live-read",
     "behaviorQualified": false,
     "visualQualified": false
   },
@@ -67,7 +75,7 @@
     "path": "/profile/:id",
     "feature": "Profile/social graph",
     "scope": "included",
-    "status": "planned",
+    "status": "offline-profile",
     "behaviorQualified": false,
     "visualQualified": false
   },
