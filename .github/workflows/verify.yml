@@ -18,8 +18,10 @@ jobs:
             commands: |
               python -I -B research/amm-buy-reserve-order/verify.py
           - suite: amm-quote-base-recovery
+            commands: |
               python -I -B research/amm-quote-base-recovery/verify.py
           - suite: amm-recipient-mode-recovery
+            commands: |
               python -I -B research/amm-recipient-mode-recovery/verify.py
           - suite: mayhem-clean-linux-evidence
             commands: |
