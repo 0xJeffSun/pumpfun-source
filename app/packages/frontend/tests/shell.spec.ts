@@ -47,6 +47,13 @@ test("included routes load with one accurate active navigation item", async ({
         page.locator('[data-product-state="unavailable"]'),
       ).toHaveCount(0);
       await expect(page.getByTestId("historical-coin-card")).toBeVisible();
+    } else if (path === "/live") {
+      await expect(
+        page.locator('[data-product-state="unavailable"]'),
+      ).toHaveCount(0);
+      await expect(
+        page.getByTestId("archived-stream-card").first(),
+      ).toBeVisible();
     } else if (path === "/create") {
       await expect(
         page.locator('[data-product-state="unavailable"]'),
