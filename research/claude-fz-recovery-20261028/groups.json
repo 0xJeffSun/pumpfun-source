@@ -1,0 +1,783 @@
+[
+ {
+  "contract": "pump",
+  "group": "P-buyv2a",
+  "windows": [
+   "0x14910",
+   "0x173d8"
+  ],
+  "rows": [
+   "0x14910 6080 B body buy_v2.rs:55 buy_v2.rs:60 buy_v2.rs:81 buy_v2.rs:88",
+   "0x173d8 768 B equal-len buy_v2.rs:949"
+  ],
+  "notes": [
+   "[mg-P-z00] `/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/r5-z00/PROGRESS.md`",
+   "[mg-P-z00b] diff-based refinement of two partials from lane mg-P-z00 (`/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-z00/PROGRESS.md`, trees and tools `/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/mg-P-z00/`; read `/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/MECHANISMS.md`). 0x14910 admit at 0.69 (variant al1 on L28: `&payer.key()` and `&authority.key()` in the ATA create call with the original signature): only register allocation differs. 0x1ac28 initialize_metadata at ~0.15 (variant im2_p1 has the original call order): the frame layout differs; an IR test that moved the two Overflow error closures stack slots below the function locals cut the raw diff from 1564 to 1180 lines, so find a source form with that effect (closure placement, helper boundaries, let order). Work from the scorer, frame maps and short hunks"
+  ],
+  "progress_files": [
+   "/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/bodyloA/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/r5-z00/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/r5-z06/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/r5-z09/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-z00/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-z00b/PROGRESS.md"
+  ]
+ },
+ {
+  "contract": "pump",
+  "group": "P-buyv2b",
+  "windows": [
+   "0x13b9b8"
+  ],
+  "rows": [
+   "0x13b9b8 15480 B body buy_v2.rs:345 buy_v2.rs:354 buy_v2.rs:356 buy_v2.rs:369"
+  ],
+  "notes": [
+   "[mg-P-z08] `/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/r5-z08/PROGRESS.md` (its separate-helper-crate finding is in INSIGHTS-R5.md)",
+   "[mg-P-z08b] second pass on lane mg-P-z08 (`/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-z08/PROGRESS.md`, tree and tools `/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/mg-P-z08`; its struct-literal field-order search method is in INSIGHTS-R5.md; read `/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/MECHANISMS.md`). 0x138b20 create at 0.29: the call sequence already matches, the gap is stack-frame layout; the stack-offset map shows a small object the original keeps deep in the frame while ours puts it at the top, so find which inlined callee owns it and move that source into a helper so the inline order changes. 0x13b9b8 buy_v2 at 0.15: untouched so far; map its callees and checks first"
+  ],
+  "progress_files": [
+   "/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/r5-z08/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-z08/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-z08b/PROGRESS.md"
+  ]
+ },
+ {
+  "contract": "pump",
+  "group": "P-buyv2c",
+  "windows": [
+   "0x13f630"
+  ],
+  "rows": [
+   "0x13f630 20184 B body buy_v2.rs:767 buy_v2.rs:769 buy_v2.rs:780 buy_v2.rs:873"
+  ],
+  "notes": [
+   "[mg-P-z09] `/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/r5-z09/PROGRESS.md`; 0x857a8 (trade_v3.rs:997 Truncation closure, a round-5 coord gain lost in L13 composition) is called only from 0x1489f8 (v3 buy_exact_quote), see mg-P-int PROGRESS and `/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/mg-P-int/remaining-c12.json`. The v3 family 0x83088/0x837a8/0x83c00/0x859b0 came from lane mg-P-z07: it decoded the 9-argument ABI of 0x83088 and the callee list of 0x837a8 (INSIGHTS-R5.md, `/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-z07/PROGRESS.md`) and expects the two small equal-length ones to be writable as standalone `#[inline(never)]` fns on their trade_v3 lines once the buy_exact_quote decomposition exists; its IR loop `/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/mg-P-z07/tools/irbuild.py` + `llx.sh` compiles the crate .ll with llc in ~3 s without a build slot",
+   "[mg-P-big] two large handler bodies (read `/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/MECHANISMS.md`): 0x13f630 (20,184 B, .148 on L19) and 0x144508 (13,976 B, .153). Round-5 notes `/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/r5-z09/PROGRESS.md`; mg-P-z09 IR loop in `/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/mg-P-z09/tools`. Identify each handler from its Source records and callees first (coords.py window), then compare structure (call order, checks, events) before codegen polish",
+   "[fleet B] - mg-P-big (ended 03:45; agent a402246436c405e9c): 0 wins. 0x144508 sell_v2 rewritten in the original call order: .128 -> .4285 (13624 vs 13976 B; ~.70 frame-masked, ~.85 also reg-masked), clean, 986/166, no losses; tree WP/lanes/mg-P-big/v/s1 (gen/sell_v1.tpl + gen/place.py). 0x13f630 not started. Stopped after a safety check halted a binary-decoding step; not resumed (user decision).",
+   "[EVENTS] 03:45 NOTE pump fleet-B coordinator: mg-P-big ended with no win (0x144508 sell_v2 partial .128 -> .4285 at WP/lanes/mg-P-big/v/s1, 986/166 no losses; 0x13f630 not started); it stopped after a safety check halted a binary-decoding step, so fleet B is not resuming or reassigning it (user decision). Fleet B lanes stopped this way so far: mg-P-v3a, mg-P-cto2, mg-P-big."
+  ],
+  "progress_files": [
+   "/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/r5-z00/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/r5-z09/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-big/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-z09/PROGRESS.md"
+  ]
+ },
+ {
+  "contract": "pump",
+  "group": "P-crv2a",
+  "windows": [
+   "0x18678",
+   "0x1ac28"
+  ],
+  "rows": [
+   "0x18678 5704 B equal-len create_v2.rs:390 create_v2.rs:395 create_v2.rs:466 create_v2.rs:473",
+   "0x1ac28 7256 B equal-len create_v2.rs:586 create_v2.rs:588"
+  ],
+  "notes": [
+   "[mg-P-z00] `/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/r5-z00/PROGRESS.md`",
+   "[mg-P-z00b] diff-based refinement of two partials from lane mg-P-z00 (`/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-z00/PROGRESS.md`, trees and tools `/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/mg-P-z00/`; read `/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/MECHANISMS.md`). 0x14910 admit at 0.69 (variant al1 on L28: `&payer.key()` and `&authority.key()` in the ATA create call with the original signature): only register allocation differs. 0x1ac28 initialize_metadata at ~0.15 (variant im2_p1 has the original call order): the frame layout differs; an IR test that moved the two Overflow error closures stack slots below the function locals cut the raw diff from 1564 to 1180 lines, so find a source form with that effect (closure placement, helper boundaries, let order). Work from the scorer, frame maps and short hunks"
+  ],
+  "progress_files": [
+   "/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/bodyloA/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/r5-z00/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/r5-z05/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-z00/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-z00b/PROGRESS.md"
+  ]
+ },
+ {
+  "contract": "pump",
+  "group": "P-crv2b",
+  "windows": [
+   "0x1e7c0"
+  ],
+  "rows": [
+   "0x1e7c0 15576 B body create_v2.rs:198 create_v2.rs:205 create_v2.rs:210 create_v2.rs:220"
+  ],
+  "notes": [
+   "[mg-P-z00] `/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/r5-z00/PROGRESS.md`"
+  ],
+  "progress_files": [
+   "/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/bodyloA/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/r5-z00/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-z00/PROGRESS.md"
+  ]
+ },
+ {
+  "contract": "pump",
+  "group": "P-crv2c",
+  "windows": [
+   "0x138b20"
+  ],
+  "rows": [
+   "0x138b20 11928 B body lib.rs:334"
+  ],
+  "notes": [
+   "[mg-P-z08] `/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/r5-z08/PROGRESS.md` (its separate-helper-crate finding is in INSIGHTS-R5.md)",
+   "[mg-P-z08b] second pass on lane mg-P-z08 (`/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-z08/PROGRESS.md`, tree and tools `/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/mg-P-z08`; its struct-literal field-order search method is in INSIGHTS-R5.md; read `/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/MECHANISMS.md`). 0x138b20 create at 0.29: the call sequence already matches, the gap is stack-frame layout; the stack-offset map shows a small object the original keeps deep in the frame while ours puts it at the top, so find which inlined callee owns it and move that source into a helper so the inline order changes. 0x13b9b8 buy_v2 at 0.15: untouched so far; map its callees and checks first"
+  ],
+  "progress_files": [
+   "/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/r5-z08/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-z08/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-z08b/PROGRESS.md"
+  ]
+ },
+ {
+  "contract": "pump",
+  "group": "P-cto",
+  "windows": [
+   "0x22a10"
+  ],
+  "rows": [
+   "0x22a10 27400 B body admin_cto.rs:284 admin_cto.rs:289 admin_cto.rs:296 admin_cto.rs:298"
+  ],
+  "notes": [
+   "[mg-P-z01] `/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/r5-z01/PROGRESS.md`",
+   "[mg-P-cto] `/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-z01/PROGRESS.md` and `/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/r5-z01/PROGRESS.md`. Lane mg-P-z01 found (callee-count evidence) that the current admin_cto is a different, incomplete implementation: the original runs the create / invoke_signed / event sequence twice (coin side and quote side), with token_frozen x5, name x15 and memcmp x14 call sites, while the candidate does each about once. Rebuild admin_cto.rs (creator/admin_cto.rs in the original tree, see LANE-RULES.md) so its behavior and structure match the original: read the original window with win.py (short ranges at a time), list its calls, checks, error codes and Source lines in order, then write the handler. This is a behavior correction toward the original, so check it with the runtime corpus the integrator uses (harness/regress.sh) before delivering",
+   "[mg-P-cto2] from-scratch rebuild of admin_cto::execute (27,400 B) using lane mg-P-cto's full decode (`/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-cto/PROGRESS.md`, `/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/mg-P-cto/tools/orig_c.txt`, olist.py): the 48-byte by-value CtoParams snapshot at the frame top passed by value to an inlined validate(); shared/holder_pda computed before validation; the 4 msg! lines the original emits (three \"...fees left in the vaults\" and \"No canonical pump pool...\"); both create_idempotent + transfer sequences inlined (pay_token body inlined). The current handler passes the 363-case differential but omits the logs, so this is also a behavior correction; check with the runtime corpus. Get the gross structure right first, then iterate block placement with the IR loop",
+   "[fleet B] - mg-P-cto2 (pass 1 ~03:36, pass 2 ended 03:40; agent a9ca11e9a2e7db8e7): 0 wins on 0x22a10. Pass 2 was stopped twice by safety checks while it worked from the deployed-program listing; not resumed or reassigned (needs a user decision). Finding: the original calls create_idempotent too (CreateIdempotent ix; the \"create 2/0\" count was a naming artifact), so no behavior fix. Best partial = clean L27 (ratio .0870); src_v1 rewrite .0763. Tools sumcmp.py/ctargets.py in WP/lanes/mg-P-cto2/tools.",
+   "[EVENTS] 03:40 NOTE fleet-B coordinator: mg-P-cto2 ended with no win on Pump 0x22a10 (ratio .087); its pass 2 was stopped twice by safety checks while working from the deployed-program listing, so fleet B is not resuming or reassigning 0x22a10 (user decision). Finding: original uses create_idempotent (CreateIdempotent) like ours; no behavior fix needed. mg-P-v3a likewise stopped by a safety check (0x83c00 0x857a8 untouched)."
+  ],
+  "progress_files": [
+   "/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/bodyloA/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/r5-z01/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-cto/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-cto2/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-z01/PROGRESS.md"
+  ]
+ },
+ {
+  "contract": "pump",
+  "group": "P-cfee1",
+  "windows": [
+   "0x298b0",
+   "0x2bf18"
+  ],
+  "rows": [
+   "0x298b0 4152 B body collect_creator_fee.rs:103",
+   "0x2bf18 6664 B equal-len distribute_creator_fee_v2.rs:101 distribute_creator_fee_v2.rs:112 distribute_creator_fee_v2.rs:125 distribute_creator_fee_v2.rs:149"
+  ],
+  "notes": [
+   "[mg-P-z01] `/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/r5-z01/PROGRESS.md`",
+   "[mg-P-res1] near-miss windows left by finished lanes (read `/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/MECHANISMS.md` first): 0x857a8 at 0.948 differs only in Source line coordinates (trade_v3.rs:997 Truncation closure, see `/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-int/PROGRESS.md`); 0x298b0 collect_creator_fee 0.905 and 0x2bf18 get_token_distribution_amounts 0.89 (`/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-z01/PROGRESS.md`: branch polarity, rent-exemption scheduling, cold error-block placement); 0x76a28 claim_cashback 0.867 (`/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-z07/PROGRESS.md`: order of two bool loads, a reg/slot swap; best variant lanes/mg-P-z07/v/c1). The finished lanes called the last three scheduling-bound; earlier Mayhem and Fees windows with the same kind of residue closed through source form. Levers to test in IR first (llc on the full crate post-opt IR is byte-exact to the build: `/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/mg-P-lib/probe/`, `/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/mg-P-z07/tools/irbuild.py` + `llx.sh`), then map to source: block frequency and placement via which error paths go through cold or out-of-line helpers (`err!` vs `error!` vs `?` vs `return Err`, `#[cold]`/`#[inline(never)]` helpers), branch polarity (`if !x` vs `if x`, match arm order), alias metadata via reference types (`&AccountInfo` vs `&UncheckedAccount` vs `&Account<T>`; the Fees PR #392 close), let placement relative to calls",
+   "[mg-P-res2] second attempt at the near-miss walls lane mg-P-res1 diagnosed (`/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-res1/PROGRESS.md`, tools in `/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/mg-P-res1/`: irbuild.py, xfn.py/lle.py/llf.sh single-function IR loop, wd.py/odf.py diffs; read `/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/MECHANISMS.md`). Start from the root causes, not from scratch. 0x3cd50 prepare_bonding_curve (0.9937): the realloc-success path feeds `Ok(())` = undef into the payload phi, which blocks the InstCombine phi-of-extractvalue fold; llc matches once the payload extractvalue is deferred past the drop-load. Untried source levers: a different resize API or call shape whose Ok path defines the payload (e.g. `AccountInfo::resize` vs `realloc`, a helper returning `Result<(), ProgramError>` vs anchor `Result<()>`, `.map_err(Into::into)` at the call vs `?` conversion), or an explicit `match` that rebuilds the error. 0x298b0 collect_creator_fee (0.905): only the `if creator.executable` branch is misplaced by the zero-compare branch-probability heuristic (`icmp eq i8, 0`); test bool sources that change the compare (a `match` on the bool, comparing through a helper or a different field access, `== false`), and which arm holds the error path. 0x3fb70 migrate::execute (0.867): body identical, register allocation + shared-epilogue tail merge differ. 0x2bf18 (0.89): llc does not reproduce this loop function, so find out why first (codegen options, function attributes). Later, when their callee windows land: 0x152888 needs 0x6cd78 (lane mg-P-z06b), 0x14a8a8 needs 0x8bbd0 (lane mg-P-z08)"
+  ],
+  "progress_files": [
+   "/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/bodyloA/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/r5-z01/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-res1/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-res2/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-z01/PROGRESS.md"
+  ]
+ },
+ {
+  "contract": "pump",
+  "group": "P-cfee2",
+  "windows": [
+   "0x2fa60",
+   "0x34558"
+  ],
+  "rows": [
+   "0x2fa60 6040 B body distribute_creator_fee_v2.rs:340 distribute_creator_fee_v2.rs:346",
+   "0x34558 14512 B body distribute_fee_to_holders.rs:120 distribute_fee_to_holders.rs:122 distribute_fee_to_holders.rs:157 distribute_fee_to_holders.rs:164"
+  ],
+  "notes": [
+   "[mg-P-z02] `/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/r5-z02/PROGRESS.md`",
+   "[mg-P-sp1] second pass on partials left by finished lanes (read `/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/MECHANISMS.md` first). From mg-P-z02 (`/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-z02/PROGRESS.md`, tree `/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/mg-P-z02`): 0x34558 distribute_fee_to_holders 0.60 (early-return helper form 14496 B vs exact-length `if amount>0` form 0.505; find the extra load/clone the original keeps on the amount==0 edge), 0x2fa60 v2 distribute_tokens 0.38 (frame identical; prologue arg-spill order + create-block placement; now composable with execute_v2 from mg-P-z01). From mg-P-lib (`/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-lib/PROGRESS.md`, partials in `/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/mg-P-lib/partials`, probe loop `/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/mg-P-lib/probe/`): 0x80df8 v3_buy_costs 0.66 (structure right; the checked_sub Overflow closure is inlined, cost 260 < threshold 325, the original keeps it outlined: needs a cold edge), 0x17c850 TLV parser 0.55, 0x9b148 / 0x9b430 BondingCurve size-dispatch 0.56"
+  ],
+  "progress_files": [
+   "/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/bodyloA/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/r5-z02/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-sp1/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-z01/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-z02/PROGRESS.md"
+  ]
+ },
+ {
+  "contract": "pump",
+  "group": "P-mig1",
+  "windows": [
+   "0x3e550",
+   "0x3fb70"
+  ],
+  "rows": [
+   "0x3e550 5664 B body fee_recipient.rs:47 fee_recipient.rs:60 fee_recipient.rs:78",
+   "0x3fb70 5440 B equal-len migrate.rs:251"
+  ],
+  "notes": [
+   "[mg-P-z03] `/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/r5-z03/PROGRESS.md`",
+   "[mg-P-mig] migrate_v2 and fee-recipient validator (read `/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/MECHANISMS.md`). 0x49888 migrate_v2::execute: lane mg-P-z03 (`/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-z03/PROGRESS.md`) says the migrate v1 helper decomposition already in its migrate.rs (byte-identical body) should carry over once the migrate_v2 helper windows exist; mg-P-z04 delivered +0x4eb28 (migrate_v2 quote funding) into L27 and is still working that area, so read `/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-z04/PROGRESS.md` and coordinate through INSIGHTS-R5.md. 0x3e550 set_fee_recipients validator .39 (context in mg-P-z08, which closed 0x1367c0 set_params)",
+   "[mg-P-res2] second attempt at the near-miss walls lane mg-P-res1 diagnosed (`/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-res1/PROGRESS.md`, tools in `/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/mg-P-res1/`: irbuild.py, xfn.py/lle.py/llf.sh single-function IR loop, wd.py/odf.py diffs; read `/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/MECHANISMS.md`). Start from the root causes, not from scratch. 0x3cd50 prepare_bonding_curve (0.9937): the realloc-success path feeds `Ok(())` = undef into the payload phi, which blocks the InstCombine phi-of-extractvalue fold; llc matches once the payload extractvalue is deferred past the drop-load. Untried source levers: a different resize API or call shape whose Ok path defines the payload (e.g. `AccountInfo::resize` vs `realloc`, a helper returning `Result<(), ProgramError>` vs anchor `Result<()>`, `.map_err(Into::into)` at the call vs `?` conversion), or an explicit `match` that rebuilds the error. 0x298b0 collect_creator_fee (0.905): only the `if creator.executable` branch is misplaced by the zero-compare branch-probability heuristic (`icmp eq i8, 0`); test bool sources that change the compare (a `match` on the bool, comparing through a helper or a different field access, `== false`), and which arm holds the error path. 0x3fb70 migrate::execute (0.867): body identical, register allocation + shared-epilogue tail merge differ. 0x2bf18 (0.89): llc does not reproduce this loop function, so find out why first (codegen options, function attributes). Later, when their callee windows land: 0x152888 needs 0x6cd78 (lane mg-P-z06b), 0x14a8a8 needs 0x8bbd0 (lane mg-P-z08)",
+   "[fleet B] - mg-P-mig (ended 03:49; agent af0c12c34951c55be): no delivery; stopped after a safety check halted a step (not resumed). 0x49888: BEST-V1 986/167 (+raw 0x4d240 side effect, 0 losses), window .085 -> .758; IR-only v/V3 (pay_migration_fee helper taking &a.pool_authority) .947, not built. 0x3e550 not started. Next: build v/V3 (tools/bld.sh), then tools/mx.py variants.",
+   "[EVENTS] 03:49 NOTE pump fleet-B coordinator: mg-P-mig ended with no delivery after a safety check halted a step (not resumed). 0x49888 migrate_v2::execute rewritten like v1 migrate::execute on z04's helper signatures: WP/lanes/mg-P-mig/BEST-V1 builds 986/1035 raw=167 (+raw 0x4d240, apparently a side effect; 0 normalized/raw losses; runtime validity not re-checked), window .085 -> .758. IR-only form v/V3 (private helper pay_migration_fee(a, &a.pool_authority, native, fee): the original computes &a.pool_authority once before the native branch; a let binding is re-materialized by the optimizer, a helper argument is not) reaches .947, not built. mg-P-int may evaluate BEST-V1. 0x3e550 not started. Fleet-B lanes stopped by safety checks: v3a, cto2, big, v3b, mig."
+  ],
+  "progress_files": [
+   "/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/libnear3/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/r5-z03/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/r5-z08/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-mig/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-res1/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-res2/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-z03/PROGRESS.md"
+  ]
+ },
+ {
+  "contract": "pump",
+  "group": "P-mig2",
+  "windows": [
+   "0x49888",
+   "0x4c158",
+   "0x52660"
+  ],
+  "rows": [
+   "0x49888 8888 B body migrate_v2.rs:243 migrate_v2.rs:249 migrate_v2.rs:335",
+   "0x4c158 8368 B body",
+   "0x52660 9776 B body migrate_v2.rs:658 migrate_v2.rs:747"
+  ],
+  "notes": [
+   "[mg-P-z03] `/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/r5-z03/PROGRESS.md`",
+   "[mg-P-z04] `/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/r5-z04/PROGRESS.md`",
+   "[mg-P-mig] migrate_v2 and fee-recipient validator (read `/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/MECHANISMS.md`). 0x49888 migrate_v2::execute: lane mg-P-z03 (`/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-z03/PROGRESS.md`) says the migrate v1 helper decomposition already in its migrate.rs (byte-identical body) should carry over once the migrate_v2 helper windows exist; mg-P-z04 delivered +0x4eb28 (migrate_v2 quote funding) into L27 and is still working that area, so read `/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-z04/PROGRESS.md` and coordinate through INSIGHTS-R5.md. 0x3e550 set_fee_recipients validator .39 (context in mg-P-z08, which closed 0x1367c0 set_params)",
+   "[fleet B] - mg-P-mig (ended 03:49; agent af0c12c34951c55be): no delivery; stopped after a safety check halted a step (not resumed). 0x49888: BEST-V1 986/167 (+raw 0x4d240 side effect, 0 losses), window .085 -> .758; IR-only v/V3 (pay_migration_fee helper taking &a.pool_authority) .947, not built. 0x3e550 not started. Next: build v/V3 (tools/bld.sh), then tools/mx.py variants.",
+   "[fleet B] - 03:54: queue empty. The concrete next steps (0x2e720, 0x857a8 via best-h2, 0x49888 v/V3) belong to lanes that stopped after",
+   "[EVENTS] 03:49 NOTE pump fleet-B coordinator: mg-P-mig ended with no delivery after a safety check halted a step (not resumed). 0x49888 migrate_v2::execute rewritten like v1 migrate::execute on z04's helper signatures: WP/lanes/mg-P-mig/BEST-V1 builds 986/1035 raw=167 (+raw 0x4d240, apparently a side effect; 0 normalized/raw losses; runtime validity not re-checked), window .085 -> .758. IR-only form v/V3 (private helper pay_migration_fee(a, &a.pool_authority, native, fee): the original computes &a.pool_authority once before the native branch; a let binding is re-materialized by the optimizer, a helper argument is not) reaches .947, not built. mg-P-int may evaluate BEST-V1. 0x3e550 not started. Fleet-B lanes stopped by safety checks: v3a, cto2, big, v3b, mig.",
+   "[EVENTS] 03:54 NOTE fleet-B coordinator: fleet B DONE, 0 lanes running. Closed 3 windows: pump +0x76a28 (mg-P-cash, in L30), amm +0x26da8 +0x28dd0 (mg-A-sp4-01, in union-758). 6 of 7 lanes stopped after safety checks halted a step (v3a, cto2, big, v3b, mig, A-sp4); none resumed or reassigned; their untried next steps are held for a user decision (registry MR/LANES-B.md). Best near-misses: amm 0x2e720 masked diff 436 -> 6 (amm100-run/lanes/mg-A-sp4/best-partial-src; IR shows building the 2nd error name in place matches fully), pump 0x49888 .758 built / .947 IR (mg-P-mig BEST-V1, v/V3), pump 0x857a8 via mg-P-v3b best-h2 (net 0 until 0x163bf0 stays out of line)."
+  ],
+  "progress_files": [
+   "/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/bodyloA/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/r5-z03/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/r5-z04/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-mig/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-z03/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-z04/PROGRESS.md"
+  ]
+ },
+ {
+  "contract": "pump",
+  "group": "P-hop",
+  "windows": [
+   "0x567d8",
+   "0x57e40",
+   "0x5b3b0"
+  ],
+  "rows": [
+   "0x567d8 5216 B body multi_hop_curve_swap.rs:208 multi_hop_curve_swap.rs:214 multi_hop_curve_swap.rs:262",
+   "0x57e40 2088 B equal-len multi_hop_curve_swap.rs:295",
+   "0x5b3b0 18584 B body multi_hop_curve_swap.rs:484 multi_hop_curve_swap.rs:546 multi_hop_curve_swap.rs:590 multi_hop_curve_swap.rs:599"
+  ],
+  "notes": [
+   "[mg-P-z04] `/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/r5-z04/PROGRESS.md`",
+   "[mg-P-z05] `/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/r5-z05/PROGRESS.md`",
+   "[mg-P-hop] 0x5b3b0, the multi-hop hop body (18,584 B), from lane mg-P-z05 (`/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-z05/PROGRESS.md`; trees and tools `/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/mg-P-z05/`). Variant v/sp2 already moves the hop body into its own function with the original signature and return type (no losses) but scores 0.099 because the original body uses a different set of shared helpers; the original call list with argument sources is extracted in `/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/mg-P-z05/llx/hop_callargs.txt`, so rebuild the body around those helpers in that call order from the call list and the scorer, without re-reading long listings. Read `/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/MECHANISMS.md`. Coordinate with mg-P-z04 (still running) on shared multi-hop helpers via INSIGHTS-R5.md"
+  ],
+  "progress_files": [
+   "/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/integ-layout/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/r5-coord/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/r5-libinst/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/r5-z04/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/r5-z05/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/r5-z07/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/r5-z08/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/r5-z09/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-hop/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-z04/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-z05/PROGRESS.md"
+  ]
+ },
+ {
+  "contract": "pump",
+  "group": "P-sweep",
+  "windows": [
+   "0x6cd78",
+   "0x72810",
+   "0x6fef8",
+   "0x75308"
+  ],
+  "rows": [
+   "0x6cd78 8544 B body sell.rs:102 sell.rs:107 sell.rs:114 sell.rs:33",
+   "0x72810 7832 B body sweep_fees.rs:123 sweep_fees.rs:145",
+   "0x6fef8 9176 B body set_reserved_fee_recipients.rs:40 set_reserved_fee_recipients.rs:60",
+   "0x75308 5920 B equal-len"
+  ],
+  "notes": [
+   "[mg-P-z06] `/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/r5-z06/PROGRESS.md`",
+   "[mg-P-z06b] second pass on lane mg-P-z06 (`/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-z06/PROGRESS.md`, tree `/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/mg-P-z06` with var/, res/, tools/; read `/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/MECHANISMS.md`). 0x6cd78 and 0x72810 are the fee-sweep handlers and need structural rewrites: the original logs `msg!(\"Nothing to sweep for fee bucket {}\", bucket)` when the amount is zero, which the current source does not, so this is a behavior correction toward the original (confirm the log text and its placement from the original data/strings, then check with the runtime corpus, `harness/regress.sh`, before delivering). Partials: 0x6fef8 at .793 (`var/srfC`: the first key goes through `[Pubkey; 8]` via try_into but is split at payload offsets 3 and 7 unlike the original, which points to an 8-byte error type with a one-byte tag and a 4-byte field, not ProgramError), 0x75308 at .612 (`var/clh20`: a closure moves the transfer temp to the frame top but the build is ~400 B short; the IR frame fix reaches .668)"
+  ],
+  "progress_files": [
+   "/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/r5-z06/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/r5-z07/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-res2/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-z06/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-z06b/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-z10/PROGRESS.md"
+  ]
+ },
+ {
+  "contract": "pump",
+  "group": "P-inc",
+  "windows": [
+   "0x77940",
+   "0x7bfd8",
+   "0x7c720"
+  ],
+  "rows": [
+   "0x77940 8832 B body claim_token_incentives.rs:305 claim_token_incentives.rs:310 claim_token_incentives.rs:333 claim_token_incentives.rs:342",
+   "0x7bfd8 1864 B body volume_accumulator.rs:103",
+   "0x7c720 6312 B body volume_accumulator.rs:297 volume_accumulator.rs:309 volume_accumulator.rs:337 volume_accumulator.rs:338"
+  ],
+  "notes": [
+   "[mg-P-z07] `/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/r5-z07/PROGRESS.md`",
+   "[mg-P-z07b] second pass on lane mg-P-z07 (`/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-z07/PROGRESS.md` lines ~40-50, tree and tools in `/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/mg-P-z07/` incl. the IR loop tools/irbuild.py + llx.sh; read `/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/MECHANISMS.md`). 0x77940 claim_v2 at 0.27: about 1,200 B of logic beyond the current candidate (a data_is_empty path, a line-305 program require), so re-derive the handler from the original (behavior correction; check with the runtime corpus). 0x7c720 update_schedule at 0.36: needs the volume_accumulator.rs re-layout with the supply helper (original lines ~290-340) inlined into it. 0x7bfd8 at 0.628 (0.68 with time_index non-#[inline] and raw seconds==0): wall is reset-block store sinking",
+   "[fleet B] - mg-P-cash (ended 03:45; agent a7bee8073c5e9d9c8): **+0x76a28 claim_cashback** (normalized equal; raw differs only by whole-program layout). Deliveries WP/deliveries/mg-P-cash-01 (L27, 987) and -02 (L29, 989); composed into L30. Fixes: &mut account local before Clock::get, cashback_earned local before let event. Next idea (fleet A window 0x77940, lane mg-P-z07b) relayed via EVENTS NOTE 03:45.",
+   "[EVENTS] 03:45 NOTE pump fleet-B coordinator -> mg-P-z07b (0x77940 claim_cashback_v2, sibling of 0x76a28): mg-P-cash closed 0x76a28 with two line-neutral fixes in claim_token_incentives.rs: (1) bind 'let user_volume_accumulator = &mut ctx.accounts.user_volume_accumulator;' before Clock::get (original reloads the info ptr before each lamports call; .8666 -> .9679); (2) read cashback_earned into a local before 'let event' (event store order; llc sweep of all 24 orders). Details: INSIGHTS-R5.md + MR/lanes/mg-P-cash/PROGRESS.md."
+  ],
+  "progress_files": [
+   "/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/r5-z06/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/r5-z07/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-cash/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-z07/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-z07b/PROGRESS.md"
+  ]
+ },
+ {
+  "contract": "pump",
+  "group": "P-v3a",
+  "windows": [
+   "0x80df8",
+   "0x83088",
+   "0x837a8"
+  ],
+  "rows": [
+   "0x80df8 2120 B equal-len trade_v3.rs:371 trade_v3.rs:375",
+   "0x83088 1088 B equal-len",
+   "0x837a8 1112 B equal-len"
+  ],
+  "notes": [
+   "[mg-P-lib] `/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/r5-libinst/PROGRESS.md` (library instantiations: borsh Vec deserializers, ErrorKind Debug, exit_with_expected_owner, Sysvar try_accounts)",
+   "[mg-P-z07] `/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/r5-z07/PROGRESS.md`",
+   "[mg-P-z09] `/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/r5-z09/PROGRESS.md`; 0x857a8 (trade_v3.rs:997 Truncation closure, a round-5 coord gain lost in L13 composition) is called only from 0x1489f8 (v3 buy_exact_quote), see mg-P-int PROGRESS and `/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/mg-P-int/remaining-c12.json`. The v3 family 0x83088/0x837a8/0x83c00/0x859b0 came from lane mg-P-z07: it decoded the 9-argument ABI of 0x83088 and the callee list of 0x837a8 (INSIGHTS-R5.md, `/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-z07/PROGRESS.md`) and expects the two small equal-length ones to be writable as standalone `#[inline(never)]` fns on their trade_v3 lines once the buy_exact_quote decomposition exists; its IR loop `/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/mg-P-z07/tools/irbuild.py` + `llx.sh` compiles the crate .ll with llc in ~3 s without a build slot",
+   "[mg-P-sp1] second pass on partials left by finished lanes (read `/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/MECHANISMS.md` first). From mg-P-z02 (`/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-z02/PROGRESS.md`, tree `/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/mg-P-z02`): 0x34558 distribute_fee_to_holders 0.60 (early-return helper form 14496 B vs exact-length `if amount>0` form 0.505; find the extra load/clone the original keeps on the amount==0 edge), 0x2fa60 v2 distribute_tokens 0.38 (frame identical; prologue arg-spill order + create-block placement; now composable with execute_v2 from mg-P-z01). From mg-P-lib (`/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-lib/PROGRESS.md`, partials in `/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/mg-P-lib/partials`, probe loop `/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/mg-P-lib/probe/`): 0x80df8 v3_buy_costs 0.66 (structure right; the checked_sub Overflow closure is inlined, cost 260 < threshold 325, the original keeps it outlined: needs a cold edge), 0x17c850 TLV parser 0.55, 0x9b148 / 0x9b430 BondingCurve size-dispatch 0.56",
+   "[mg-P-v3a] v3 helper windows (read `/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/MECHANISMS.md`). Lane mg-P-z07 decoded the 9-argument ABI of 0x83088 and the callee list of 0x837a8 (INSIGHTS-R5.md) and expects the two small equal-length ones to be writable as standalone `#[inline(never)]` fns on their trade_v3 lines. Lane mg-P-z09 (`/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-z09/PROGRESS.md`) set up an IR loop in `/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/mg-P-z09/tools` (irbuild.py, llx.sh) and measured starting points on L19: 0x83c00 .273, 0x83088 .228 (same length), 0x837a8 .094, 0x857a8 .948. mg-P-int (EVENTS 03:18): 0x857a8 is the line-997 Truncation closure; the genuine fix is the original third tokens_for_quote at line 997 (rem = X - Y guarded by BuyNotEnoughSolToCoverFees; if rem != 0, try_from(tokens_for_quote(curve, rem)?)) together with the 0x83088 prep helper that calls exact_input_tokens. Coordinate with mg-P-v3b, which owns the v3 handlers",
+   "[fleet B] - mg-P-v3a (ended ~03:38; its own notes say 03:55, a wrong clock; agent a356b6e330425b064): 0 wins. Stopped early after a safety check halted one analysis step (not resumed). Best IR partials (unwired draft helpers): 0x83088 .642 (epc_d, 1080 vs 1088 B), 0x837a8 .740 (fit_b) / .676 equal length (fit_c); 0x83c00 and 0x857a8 untouched. Tree WP/lanes/mg-P-v3a/src (+exp/v1.rs); wiring relayed to mg-P-v3b at 03:38.",
+   "[fleet B] - mg-P-v3b (ended 03:48; agent aa207cbfc0361f1dc): 0 wins; stopped after a safety check halted an analysis step (not resumed). Best tree best-h2 (gen/gen.py): 986/166 net 0 (+0x857a8, -0x163bf0 serializer inlined; needs a cold emit block so its inline threshold drops 250 -> 45). Ratios 0x1489f8 .313, 0x859b0 .335, 0x83c00 .440, 0x147ba0 .645, 0x837a8 .615, 0x83088 .457. (mg-P-int 03:53: the 0x80df8 gross-up formulas are provably equal, so no behavior difference.) Concrete next step (IR-only, our own build): make the post-complete emit block cold; check with clang -O3 inline remarks.",
+   "[EVENTS] 03:18 NOTE pump mg-P-int re 0x857a8 (coordinator relay): not foldable without a loss on L27. Line 997 itself needs no layout pass (a nested #[inline(always)] narrow fn can sit after the ')?;' on line 997, as r5-coord-03 did), but it needs an op: buy_exact_quote's Truncation closures 904/911/930/970 are ALL matched (clos.py), the narrow() calls are proven in range (no closure), and the only u128 narrowing near the original op is exact_input_tokens (0x834c8), whose single caller is line 943 -> inlining it there drops 0x834c8 (net 0). Genuine fix = the original's 3rd tokens_for_quote at 997 (rem=X-Y guarded by BuyNotEnoughSolToCoverFees, if rem!=0 try_from(tokens_for_quote(curve,rem)?)) together with the 0x83088 prep helper that calls exact_input_tokens -> belongs with mg-P-z09 (0x1489f8).",
+   "[EVENTS] 03:30 NOTE pump mg-P-int re 0x80df8 (mg-P-sp1 relay): no composition regression. v3_buy_costs is 0.1568/1416 B identically in the source delivery r5-z07-03 and in L13, L24, L29; mg-P-lib's c80 shape (0.66) exists only in its partials dir (lanes/mg-P-lib/partials/0x80df8-c80-0.66), never in a delivery, so it was never composed. If mg-P-lib wants it carried as a no-loss structural step, deliver it as mg-P-lib-NN and I will fold it.",
+   "[EVENTS] 03:48 NOTE pump fleet-B coordinator: mg-P-v3b ended with no win after a safety check halted an analysis step (not resumed). Best tree WP/lanes/mg-P-v3b/best-h2 = 986/166 net 0 (+0x857a8 line-997 closure, -0x163bf0 post-complete event serializer now inlined: cost 145 vs threshold 250; original keeps it out of line in a cold emit block, threshold 45). Ratios: 0x1489f8 .128->.313, 0x859b0 .258->.335, 0x83c00 .273->.440, 0x147ba0 .645. For mg-P-int/mg-P-sp1: h2 switches the shared cost helper 0x80df8 to the original's pre-fee formula; L27's formula can differ by 1 unit of rounding for transfer-fee quote mints (check in the runtime corpus)."
+  ],
+  "progress_files": [
+   "/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/r5-libinst/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/r5-z04/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/r5-z07/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/r5-z09/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-int/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-lib/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-sp1/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-v3a/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-v3b/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-z07/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-z09/PROGRESS.md"
+  ]
+ },
+ {
+  "contract": "pump",
+  "group": "P-v3b",
+  "windows": [
+   "0x83c00",
+   "0x857a8",
+   "0x859b0"
+  ],
+  "rows": [
+   "0x83c00 3440 B body trade_v3.rs:691",
+   "0x857a8 520 B coord trade_v3.rs:997",
+   "0x859b0 8944 B body"
+  ],
+  "notes": [
+   "[mg-P-z07] `/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/r5-z07/PROGRESS.md`",
+   "[mg-P-z09] `/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/r5-z09/PROGRESS.md`; 0x857a8 (trade_v3.rs:997 Truncation closure, a round-5 coord gain lost in L13 composition) is called only from 0x1489f8 (v3 buy_exact_quote), see mg-P-int PROGRESS and `/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/mg-P-int/remaining-c12.json`. The v3 family 0x83088/0x837a8/0x83c00/0x859b0 came from lane mg-P-z07: it decoded the 9-argument ABI of 0x83088 and the callee list of 0x837a8 (INSIGHTS-R5.md, `/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-z07/PROGRESS.md`) and expects the two small equal-length ones to be writable as standalone `#[inline(never)]` fns on their trade_v3 lines once the buy_exact_quote decomposition exists; its IR loop `/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/mg-P-z07/tools/irbuild.py` + `llx.sh` compiles the crate .ll with llc in ~3 s without a build slot",
+   "[mg-P-res1] near-miss windows left by finished lanes (read `/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/MECHANISMS.md` first): 0x857a8 at 0.948 differs only in Source line coordinates (trade_v3.rs:997 Truncation closure, see `/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-int/PROGRESS.md`); 0x298b0 collect_creator_fee 0.905 and 0x2bf18 get_token_distribution_amounts 0.89 (`/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-z01/PROGRESS.md`: branch polarity, rent-exemption scheduling, cold error-block placement); 0x76a28 claim_cashback 0.867 (`/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-z07/PROGRESS.md`: order of two bool loads, a reg/slot swap; best variant lanes/mg-P-z07/v/c1). The finished lanes called the last three scheduling-bound; earlier Mayhem and Fees windows with the same kind of residue closed through source form. Levers to test in IR first (llc on the full crate post-opt IR is byte-exact to the build: `/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/mg-P-lib/probe/`, `/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/mg-P-z07/tools/irbuild.py` + `llx.sh`), then map to source: block frequency and placement via which error paths go through cold or out-of-line helpers (`err!` vs `error!` vs `?` vs `return Err`, `#[cold]`/`#[inline(never)]` helpers), branch polarity (`if !x` vs `if x`, match arm order), alias metadata via reference types (`&AccountInfo` vs `&UncheckedAccount` vs `&Account<T>`; the Fees PR #392 close), let placement relative to calls",
+   "[mg-P-v3a] v3 helper windows (read `/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/MECHANISMS.md`). Lane mg-P-z07 decoded the 9-argument ABI of 0x83088 and the callee list of 0x837a8 (INSIGHTS-R5.md) and expects the two small equal-length ones to be writable as standalone `#[inline(never)]` fns on their trade_v3 lines. Lane mg-P-z09 (`/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-z09/PROGRESS.md`) set up an IR loop in `/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/mg-P-z09/tools` (irbuild.py, llx.sh) and measured starting points on L19: 0x83c00 .273, 0x83088 .228 (same length), 0x837a8 .094, 0x857a8 .948. mg-P-int (EVENTS 03:18): 0x857a8 is the line-997 Truncation closure; the genuine fix is the original third tokens_for_quote at line 997 (rem = X - Y guarded by BuyNotEnoughSolToCoverFees; if rem != 0, try_from(tokens_for_quote(curve, rem)?)) together with the 0x83088 prep helper that calls exact_input_tokens. Coordinate with mg-P-v3b, which owns the v3 handlers",
+   "[mg-P-v3b] v3 buy / buy_exact_quote handlers (read `/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/MECHANISMS.md`). Starting points on L19 from mg-P-z09 (`/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-z09/PROGRESS.md`, IR loop `/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/mg-P-z09/tools`): 0x147ba0 buy .623, 0x859b0 .258, 0x1489f8 buy_exact_quote .128 (its decomposition also unblocks 0x857a8/0x83088 in lane mg-P-v3a; coordinate via INSIGHTS-R5.md). Round-5 notes: `/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/r5-z09/PROGRESS.md`",
+   "[fleet B] - mg-P-v3a (ended ~03:38; its own notes say 03:55, a wrong clock; agent a356b6e330425b064): 0 wins. Stopped early after a safety check halted one analysis step (not resumed). Best IR partials (unwired draft helpers): 0x83088 .642 (epc_d, 1080 vs 1088 B), 0x837a8 .740 (fit_b) / .676 equal length (fit_c); 0x83c00 and 0x857a8 untouched. Tree WP/lanes/mg-P-v3a/src (+exp/v1.rs); wiring relayed to mg-P-v3b at 03:38.",
+   "[fleet B] - mg-P-v3b (ended 03:48; agent aa207cbfc0361f1dc): 0 wins; stopped after a safety check halted an analysis step (not resumed). Best tree best-h2 (gen/gen.py): 986/166 net 0 (+0x857a8, -0x163bf0 serializer inlined; needs a cold emit block so its inline threshold drops 250 -> 45). Ratios 0x1489f8 .313, 0x859b0 .335, 0x83c00 .440, 0x147ba0 .645, 0x837a8 .615, 0x83088 .457. (mg-P-int 03:53: the 0x80df8 gross-up formulas are provably equal, so no behavior difference.) Concrete next step (IR-only, our own build): make the post-complete emit block cold; check with clang -O3 inline remarks.",
+   "[fleet B] - 03:54: queue empty. The concrete next steps (0x2e720, 0x857a8 via best-h2, 0x49888 v/V3) belong to lanes that stopped after",
+   "[EVENTS] 02:23 NOTE pump mg-P-int: 0x857a8 (r5 gain dropped in L13; trade_v3.rs:997 Truncation closure) is called only from 0x1489f8 (v3 buy_exact_quote, mg-P-z09 target) -> suggest adding it to mg-P-z09's list. Current unmatched list for the pending L16 composite (974): /Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/mg-P-int/remaining-c12.json",
+   "[EVENTS] 03:18 NOTE pump mg-P-int re 0x857a8 (coordinator relay): not foldable without a loss on L27. Line 997 itself needs no layout pass (a nested #[inline(always)] narrow fn can sit after the ')?;' on line 997, as r5-coord-03 did), but it needs an op: buy_exact_quote's Truncation closures 904/911/930/970 are ALL matched (clos.py), the narrow() calls are proven in range (no closure), and the only u128 narrowing near the original op is exact_input_tokens (0x834c8), whose single caller is line 943 -> inlining it there drops 0x834c8 (net 0). Genuine fix = the original's 3rd tokens_for_quote at 997 (rem=X-Y guarded by BuyNotEnoughSolToCoverFees, if rem!=0 try_from(tokens_for_quote(curve,rem)?)) together with the 0x83088 prep helper that calls exact_input_tokens -> belongs with mg-P-z09 (0x1489f8).",
+   "[EVENTS] 03:40 NOTE fleet-B coordinator: mg-P-cto2 ended with no win on Pump 0x22a10 (ratio .087); its pass 2 was stopped twice by safety checks while working from the deployed-program listing, so fleet B is not resuming or reassigning 0x22a10 (user decision). Finding: original uses create_idempotent (CreateIdempotent) like ours; no behavior fix needed. mg-P-v3a likewise stopped by a safety check (0x83c00 0x857a8 untouched).",
+   "[EVENTS] 03:48 NOTE pump fleet-B coordinator: mg-P-v3b ended with no win after a safety check halted an analysis step (not resumed). Best tree WP/lanes/mg-P-v3b/best-h2 = 986/166 net 0 (+0x857a8 line-997 closure, -0x163bf0 post-complete event serializer now inlined: cost 145 vs threshold 250; original keeps it out of line in a cold emit block, threshold 45). Ratios: 0x1489f8 .128->.313, 0x859b0 .258->.335, 0x83c00 .273->.440, 0x147ba0 .645. For mg-P-int/mg-P-sp1: h2 switches the shared cost helper 0x80df8 to the original's pre-fee formula; L27's formula can differ by 1 unit of rounding for transfer-fee quote mints (check in the runtime corpus).",
+   "[EVENTS] 03:53 NOTE pump mg-P-int re v3_buy_costs gross-up (mg-P-v3b relay): no behavior difference. Ours gross = net + calculate_fee(pre_fee_amount(net)), original gross = pre_fee_amount(net); with Token-2022 math (ceil fee capped at max, ceil pre-fee, bps=10000 and cap branches) fee(pre_fee(net)) == pre_fee(net) - net for EVERY input (proof: pre-post is the only integer in [pre*b/1e4, pre*b/1e4 + d/1e4); capped branch needs d>10000 to differ) and the only failing op in both is pre_fee_amount (same Overflow site). Brute force 3,350,135 cases (all bps 0..10000 x 9 max_fee x 15 nets + 2M random): 0 differences (lanes/mg-P-int/check/grossup.py). So best-h2's formula change is a code-shape change only (net 0 windows: +0x857a8 -0x163bf0); nothing to correct.",
+   "[EVENTS] 03:54 NOTE fleet-B coordinator: fleet B DONE, 0 lanes running. Closed 3 windows: pump +0x76a28 (mg-P-cash, in L30), amm +0x26da8 +0x28dd0 (mg-A-sp4-01, in union-758). 6 of 7 lanes stopped after safety checks halted a step (v3a, cto2, big, v3b, mig, A-sp4); none resumed or reassigned; their untried next steps are held for a user decision (registry MR/LANES-B.md). Best near-misses: amm 0x2e720 masked diff 436 -> 6 (amm100-run/lanes/mg-A-sp4/best-partial-src; IR shows building the 2nd error name in place matches fully), pump 0x49888 .758 built / .947 IR (mg-P-mig BEST-V1, v/V3), pump 0x857a8 via mg-P-v3b best-h2 (net 0 until 0x163bf0 stays out of line)."
+  ],
+  "progress_files": [
+   "/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/coordbodyB/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/integ-layout/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/r5-coord/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/r5-z07/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/r5-z09/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-int/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-res1/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-v3a/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-v3b/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-z07/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-z09/PROGRESS.md"
+  ]
+ },
+ {
+  "contract": "pump",
+  "group": "P-misc",
+  "windows": [
+   "0x9b148",
+   "0x9b430",
+   "0xcd3d8",
+   "0x17c850"
+  ],
+  "rows": [
+   "0x9b148 744 B equal-len",
+   "0x9b430 624 B equal-len",
+   "0xcd3d8 8504 B body",
+   "0x17c850 664 B equal-len"
+  ],
+  "notes": [
+   "[mg-P-lib] `/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/r5-libinst/PROGRESS.md` (library instantiations: borsh Vec deserializers, ErrorKind Debug, exit_with_expected_owner, Sysvar try_accounts)",
+   "[mg-P-z08] `/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/r5-z08/PROGRESS.md` (its separate-helper-crate finding is in INSIGHTS-R5.md)",
+   "[mg-P-sp1] second pass on partials left by finished lanes (read `/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/MECHANISMS.md` first). From mg-P-z02 (`/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-z02/PROGRESS.md`, tree `/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/mg-P-z02`): 0x34558 distribute_fee_to_holders 0.60 (early-return helper form 14496 B vs exact-length `if amount>0` form 0.505; find the extra load/clone the original keeps on the amount==0 edge), 0x2fa60 v2 distribute_tokens 0.38 (frame identical; prologue arg-spill order + create-block placement; now composable with execute_v2 from mg-P-z01). From mg-P-lib (`/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-lib/PROGRESS.md`, partials in `/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/mg-P-lib/partials`, probe loop `/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/mg-P-lib/probe/`): 0x80df8 v3_buy_costs 0.66 (structure right; the checked_sub Overflow closure is inlined, cost 260 < threshold 325, the original keeps it outlined: needs a cold edge), 0x17c850 TLV parser 0.55, 0x9b148 / 0x9b430 BondingCurve size-dispatch 0.56"
+  ],
+  "progress_files": [
+   "/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/bodyloB/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/r5-libinst/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/r5-z08/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-lib/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-sp1/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-z08/PROGRESS.md"
+  ]
+ },
+ {
+  "contract": "pump",
+  "group": "P-sellv2",
+  "windows": [
+   "0x144508"
+  ],
+  "rows": [
+   "0x144508 13976 B body sell_v2.rs:243 sell_v2.rs:245 sell_v2.rs:247 sell_v2.rs:260"
+  ],
+  "notes": [
+   "[mg-P-z09] `/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/r5-z09/PROGRESS.md`; 0x857a8 (trade_v3.rs:997 Truncation closure, a round-5 coord gain lost in L13 composition) is called only from 0x1489f8 (v3 buy_exact_quote), see mg-P-int PROGRESS and `/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/mg-P-int/remaining-c12.json`. The v3 family 0x83088/0x837a8/0x83c00/0x859b0 came from lane mg-P-z07: it decoded the 9-argument ABI of 0x83088 and the callee list of 0x837a8 (INSIGHTS-R5.md, `/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-z07/PROGRESS.md`) and expects the two small equal-length ones to be writable as standalone `#[inline(never)]` fns on their trade_v3 lines once the buy_exact_quote decomposition exists; its IR loop `/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/mg-P-z07/tools/irbuild.py` + `llx.sh` compiles the crate .ll with llc in ~3 s without a build slot",
+   "[mg-P-big] two large handler bodies (read `/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/MECHANISMS.md`): 0x13f630 (20,184 B, .148 on L19) and 0x144508 (13,976 B, .153). Round-5 notes `/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/r5-z09/PROGRESS.md`; mg-P-z09 IR loop in `/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/mg-P-z09/tools`. Identify each handler from its Source records and callees first (coords.py window), then compare structure (call order, checks, events) before codegen polish",
+   "[fleet B] - mg-P-big (ended 03:45; agent a402246436c405e9c): 0 wins. 0x144508 sell_v2 rewritten in the original call order: .128 -> .4285 (13624 vs 13976 B; ~.70 frame-masked, ~.85 also reg-masked), clean, 986/166, no losses; tree WP/lanes/mg-P-big/v/s1 (gen/sell_v1.tpl + gen/place.py). 0x13f630 not started. Stopped after a safety check halted a binary-decoding step; not resumed (user decision).",
+   "[EVENTS] 03:45 NOTE pump fleet-B coordinator: mg-P-big ended with no win (0x144508 sell_v2 partial .128 -> .4285 at WP/lanes/mg-P-big/v/s1, 986/166 no losses; 0x13f630 not started); it stopped after a safety check halted a binary-decoding step, so fleet B is not resuming or reassigning it (user decision). Fleet B lanes stopped this way so far: mg-P-v3a, mg-P-cto2, mg-P-big."
+  ],
+  "progress_files": [
+   "/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/r5-z09/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-big/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-z09/PROGRESS.md"
+  ]
+ },
+ {
+  "contract": "pump",
+  "group": "P-v3c",
+  "windows": [
+   "0x147ba0",
+   "0x1489f8",
+   "0x14a8a8"
+  ],
+  "rows": [
+   "0x147ba0 3672 B equal-len trade_v3.rs:801 trade_v3.rs:802 trade_v3.rs:842",
+   "0x1489f8 7856 B body trade_v3.rs:1001 trade_v3.rs:881 trade_v3.rs:882 trade_v3.rs:891",
+   "0x14a8a8 6032 B body trade_v3.rs:1126 trade_v3.rs:1127 trade_v3.rs:1148"
+  ],
+  "notes": [
+   "[mg-P-z09] `/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/r5-z09/PROGRESS.md`; 0x857a8 (trade_v3.rs:997 Truncation closure, a round-5 coord gain lost in L13 composition) is called only from 0x1489f8 (v3 buy_exact_quote), see mg-P-int PROGRESS and `/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/mg-P-int/remaining-c12.json`. The v3 family 0x83088/0x837a8/0x83c00/0x859b0 came from lane mg-P-z07: it decoded the 9-argument ABI of 0x83088 and the callee list of 0x837a8 (INSIGHTS-R5.md, `/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-z07/PROGRESS.md`) and expects the two small equal-length ones to be writable as standalone `#[inline(never)]` fns on their trade_v3 lines once the buy_exact_quote decomposition exists; its IR loop `/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/mg-P-z07/tools/irbuild.py` + `llx.sh` compiles the crate .ll with llc in ~3 s without a build slot",
+   "[mg-P-v3b] v3 buy / buy_exact_quote handlers (read `/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/MECHANISMS.md`). Starting points on L19 from mg-P-z09 (`/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-z09/PROGRESS.md`, IR loop `/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/mg-P-z09/tools`): 0x147ba0 buy .623, 0x859b0 .258, 0x1489f8 buy_exact_quote .128 (its decomposition also unblocks 0x857a8/0x83088 in lane mg-P-v3a; coordinate via INSIGHTS-R5.md). Round-5 notes: `/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/r5-z09/PROGRESS.md`",
+   "[mg-P-res2] second attempt at the near-miss walls lane mg-P-res1 diagnosed (`/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-res1/PROGRESS.md`, tools in `/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/mg-P-res1/`: irbuild.py, xfn.py/lle.py/llf.sh single-function IR loop, wd.py/odf.py diffs; read `/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/MECHANISMS.md`). Start from the root causes, not from scratch. 0x3cd50 prepare_bonding_curve (0.9937): the realloc-success path feeds `Ok(())` = undef into the payload phi, which blocks the InstCombine phi-of-extractvalue fold; llc matches once the payload extractvalue is deferred past the drop-load. Untried source levers: a different resize API or call shape whose Ok path defines the payload (e.g. `AccountInfo::resize` vs `realloc`, a helper returning `Result<(), ProgramError>` vs anchor `Result<()>`, `.map_err(Into::into)` at the call vs `?` conversion), or an explicit `match` that rebuilds the error. 0x298b0 collect_creator_fee (0.905): only the `if creator.executable` branch is misplaced by the zero-compare branch-probability heuristic (`icmp eq i8, 0`); test bool sources that change the compare (a `match` on the bool, comparing through a helper or a different field access, `== false`), and which arm holds the error path. 0x3fb70 migrate::execute (0.867): body identical, register allocation + shared-epilogue tail merge differ. 0x2bf18 (0.89): llc does not reproduce this loop function, so find out why first (codegen options, function attributes). Later, when their callee windows land: 0x152888 needs 0x6cd78 (lane mg-P-z06b), 0x14a8a8 needs 0x8bbd0 (lane mg-P-z08)",
+   "[mg-P-z10] `/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/r5-z10/PROGRESS.md` (round 5 delivered nothing here; read why)",
+   "[fleet B] - mg-P-v3b (ended 03:48; agent aa207cbfc0361f1dc): 0 wins; stopped after a safety check halted an analysis step (not resumed). Best tree best-h2 (gen/gen.py): 986/166 net 0 (+0x857a8, -0x163bf0 serializer inlined; needs a cold emit block so its inline threshold drops 250 -> 45). Ratios 0x1489f8 .313, 0x859b0 .335, 0x83c00 .440, 0x147ba0 .645, 0x837a8 .615, 0x83088 .457. (mg-P-int 03:53: the 0x80df8 gross-up formulas are provably equal, so no behavior difference.) Concrete next step (IR-only, our own build): make the post-complete emit block cold; check with clang -O3 inline remarks.",
+   "[EVENTS] 02:23 NOTE pump mg-P-int: 0x857a8 (r5 gain dropped in L13; trade_v3.rs:997 Truncation closure) is called only from 0x1489f8 (v3 buy_exact_quote, mg-P-z09 target) -> suggest adding it to mg-P-z09's list. Current unmatched list for the pending L16 composite (974): /Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/mg-P-int/remaining-c12.json",
+   "[EVENTS] 03:18 NOTE pump mg-P-int re 0x857a8 (coordinator relay): not foldable without a loss on L27. Line 997 itself needs no layout pass (a nested #[inline(always)] narrow fn can sit after the ')?;' on line 997, as r5-coord-03 did), but it needs an op: buy_exact_quote's Truncation closures 904/911/930/970 are ALL matched (clos.py), the narrow() calls are proven in range (no closure), and the only u128 narrowing near the original op is exact_input_tokens (0x834c8), whose single caller is line 943 -> inlining it there drops 0x834c8 (net 0). Genuine fix = the original's 3rd tokens_for_quote at 997 (rem=X-Y guarded by BuyNotEnoughSolToCoverFees, if rem!=0 try_from(tokens_for_quote(curve,rem)?)) together with the 0x83088 prep helper that calls exact_input_tokens -> belongs with mg-P-z09 (0x1489f8).",
+   "[EVENTS] 03:48 NOTE pump fleet-B coordinator: mg-P-v3b ended with no win after a safety check halted an analysis step (not resumed). Best tree WP/lanes/mg-P-v3b/best-h2 = 986/166 net 0 (+0x857a8 line-997 closure, -0x163bf0 post-complete event serializer now inlined: cost 145 vs threshold 250; original keeps it out of line in a cold emit block, threshold 45). Ratios: 0x1489f8 .128->.313, 0x859b0 .258->.335, 0x83c00 .273->.440, 0x147ba0 .645. For mg-P-int/mg-P-sp1: h2 switches the shared cost helper 0x80df8 to the original's pre-fee formula; L27's formula can differ by 1 unit of rounding for transfer-fee quote mints (check in the runtime corpus)."
+  ],
+  "progress_files": [
+   "/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/r5-libinst/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/r5-z07/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/r5-z08/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/r5-z09/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/r5-z10/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-int/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-res1/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-res2/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-v3a/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-v3b/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-z07/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-z09/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-z10/PROGRESS.md"
+  ]
+ },
+ {
+  "contract": "pump",
+  "group": "P-legacy",
+  "windows": [
+   "0x14c038",
+   "0x14f4e0",
+   "0x152888"
+  ],
+  "rows": [
+   "0x14c038 10880 B body lib.rs:608 lib.rs:619 lib.rs:654 lib.rs:747",
+   "0x14f4e0 13224 B body buy.rs:110 buy.rs:133 buy.rs:143 buy.rs:151",
+   "0x152888 8488 B body lib.rs:1012 lib.rs:968 lib.rs:970 lib.rs:972"
+  ],
+  "notes": [
+   "[mg-P-z10b] second pass on lane mg-P-z10 (`/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-z10/PROGRESS.md` has the original control flow of 0x14c038 decoded; tools in `/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/mg-P-z10/tools/`; read `/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/MECHANISMS.md`). 0x14c038 legacy buy: rewrite the handler; all callees exist and the matched ones keep their signatures; notable original features: reserve updates written straight into the curve, the creator-fee branch, the eager error at line 747, one `Clock::get` shared by both events. 0x14f4e0 has the same payment tail, so do it second. Both are at 0.21-0.30 now, so this is structural work first, codegen polish after",
+   "[mg-P-res2] second attempt at the near-miss walls lane mg-P-res1 diagnosed (`/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-res1/PROGRESS.md`, tools in `/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/mg-P-res1/`: irbuild.py, xfn.py/lle.py/llf.sh single-function IR loop, wd.py/odf.py diffs; read `/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/MECHANISMS.md`). Start from the root causes, not from scratch. 0x3cd50 prepare_bonding_curve (0.9937): the realloc-success path feeds `Ok(())` = undef into the payload phi, which blocks the InstCombine phi-of-extractvalue fold; llc matches once the payload extractvalue is deferred past the drop-load. Untried source levers: a different resize API or call shape whose Ok path defines the payload (e.g. `AccountInfo::resize` vs `realloc`, a helper returning `Result<(), ProgramError>` vs anchor `Result<()>`, `.map_err(Into::into)` at the call vs `?` conversion), or an explicit `match` that rebuilds the error. 0x298b0 collect_creator_fee (0.905): only the `if creator.executable` branch is misplaced by the zero-compare branch-probability heuristic (`icmp eq i8, 0`); test bool sources that change the compare (a `match` on the bool, comparing through a helper or a different field access, `== false`), and which arm holds the error path. 0x3fb70 migrate::execute (0.867): body identical, register allocation + shared-epilogue tail merge differ. 0x2bf18 (0.89): llc does not reproduce this loop function, so find out why first (codegen options, function attributes). Later, when their callee windows land: 0x152888 needs 0x6cd78 (lane mg-P-z06b), 0x14a8a8 needs 0x8bbd0 (lane mg-P-z08)",
+   "[mg-P-z10] `/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/r5-z10/PROGRESS.md` (round 5 delivered nothing here; read why)"
+  ],
+  "progress_files": [
+   "/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/mg-P-z10b/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/r5-z10/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-res2/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-z06b/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-z10/PROGRESS.md"
+  ]
+ },
+ {
+  "contract": "pump",
+  "group": "P-raw",
+  "windows": [],
+  "rows": [],
+  "notes": [],
+  "progress_files": []
+ },
+ {
+  "contract": "amm",
+  "group": "A-srf",
+  "windows": [
+   "0x19138",
+   "0xc5d0",
+   "0x2288",
+   "0x14088"
+  ],
+  "rows": [
+   "0x19138 9176 B",
+   "0xc5d0 1240 B",
+   "0x2288 232 B",
+   "0x14088 1656 B"
+  ],
+  "notes": [
+   "[mg-A-sp3] second pass on lane mg-A-1 (`/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-A-1/PROGRESS.md`, `/Users/shawwalters/amm100-run/lanes/mg-A-1/{gen,tools,snap/s3-partial}`; tools remarks.sh + rem.py = per-call-site inline cost/threshold; ir.sh + llcfn.sh + ofn.py = 3 s IR loop; read `/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/MECHANISMS.md`). The three srf windows are linked: 0x19138 (9176 B) matches only when borsh `[Pubkey;7]::serialize` stays out of line as its own function (0xc5d0) and `with_account_name<String>` (0x2288) is a direct out-of-line call; a `#[cold]` error helper proved the coldness lever (9672 vs 9176 B) but adds a wrapper; find the idiomatic construct that makes the per-recipient constraint-error path cold without a wrapper (validate candidates with remarks.sh before full builds). 0x14088 v2 at 66/71: the IR proof says the original has ONE merged error-return block",
+   "[mg-A-1] math-r1, bigunknown-r1, layout-r1"
+  ],
+  "progress_files": [
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-A-1/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-A-sp3/PROGRESS.md",
+   "/Users/shawwalters/amm100-run/lanes/bigunknown-r1/PROGRESS.md",
+   "/Users/shawwalters/amm100-run/lanes/layout-r1/PROGRESS.md",
+   "/Users/shawwalters/amm100-run/lanes/math-r1/PROGRESS.md"
+  ]
+ },
+ {
+  "contract": "amm",
+  "group": "A-small",
+  "windows": [
+   "0xfb08",
+   "0x50f00"
+  ],
+  "rows": [
+   "0xfb08 704 B",
+   "0x50f00 2016 B"
+  ],
+  "notes": [
+   "[mg-A-res1] near-miss partials left by finished lanes (read `/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/MECHANISMS.md` first). mg-A-2 (`/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-A-2/PROGRESS.md`, best-partial.patch in `/Users/shawwalters/amm100-run/lanes/mg-A-2/`, IR loop tools/ir.sh + llc.sh): 0x23e40 migrate_pool_coin_creator is ONE instruction off (530/531; orig `add64 r3,-0x38` vs ours `-0x190` for the ZST unwrap_failed formatter slot); its IR proof: removing the `lifetime.start` of the old_coin_creator alloca gives diff 0. Cross-contract hint: the Mayhem lanes found that a plain `let k = acct.key();` (or `let old = pool.coin_creator;`) Pubkey local loses its StorageLive/StorageDead markers through MIR copy propagation, while the same value as an inline temp keeps them (`/Users/shawwalters/Documents/Codex/2026-10-24/claude-mayhem-work/r436/FINDINGS.md`, 01:3x o0079-port-r1 and 00:43 o0077-brute-r1 lines), so the removal is probably a let-binding form. 0x24fd8 set_coin_creator: 19 masked (stack-slot permutation + one early account-flag load). 0x2ba60 create_pool: 53 masked; an IR recipe reaches 5 (liquidity `ult,100` error-first, Clock error-first, quote supported_mint split into two arms). mg-A-6 (`/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-A-6/PROGRESS.md`, `/Users/shawwalters/amm100-run/lanes/mg-A-6/best-u751-src`): 0x50f00 estimate at 141 diff after the executor/estimate restructure",
+   "[mg-A-1] math-r1, bigunknown-r1, layout-r1",
+   "[mg-A-6] tradev2-r1 (trade_v2.rs original line map in findings.md), sell-r1"
+  ],
+  "progress_files": [
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-A-1/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-A-4/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-A-6/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-A-res1/PROGRESS.md",
+   "/Users/shawwalters/amm100-run/lanes/math-r1/PROGRESS.md",
+   "/Users/shawwalters/amm100-run/lanes/mg-A-mh2/PROGRESS.md",
+   "/Users/shawwalters/amm100-run/lanes/tradev2-r1/PROGRESS.md"
+  ]
+ },
+ {
+  "contract": "amm",
+  "group": "A-buy",
+  "windows": [
+   "0x3a5a0",
+   "0x351a8",
+   "0x14920"
+  ],
+  "rows": [
+   "0x3a5a0 12936 B",
+   "0x351a8 8104 B",
+   "0x14920 6152 B"
+  ],
+  "notes": [
+   "[mg-A-sp2] second pass (read `/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/MECHANISMS.md` first). From mg-A-3 (`/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-A-3/PROGRESS.md`, `/Users/shawwalters/amm100-run/lanes/mg-A-3/{partials,gen}`, IR loop tools/ir.sh + llc.sh + irreorder.py ~12 s/variant): 0x3a5a0 exact-in buy handler, gen/ex1.rs is a faithful `execute::<true>` specialization with all 9 error lines matched; it needs its OWN single-use cashback wrapper or it de-inlines and regresses 0x376b0 (the closed buy handler used a dedicated non-generic `#[inline(never)] pub fn buy` + a single-use `pay_cashback` wrapper); residual is fee/estimate/min()/gross_pool_quote-closure scheduling. 0x351a8 cashback, gen/cb_v6.rs: AccountInfo-clone order for the inlined Create CpiContext + stack-slot layout. From mg-A-1 (`/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-A-1/PROGRESS.md`, `/Users/shawwalters/amm100-run/lanes/mg-A-1/{gen,tools,snap/s3-partial}`, IR loop ir.sh + llcfn.sh + ofn.py ~3 s): 0x16128 at 23/24 (gen/inc/I3.rs; shared exit block placed mid-function vs at the end), 0x14920 cto at 25/25 same size 6152 (pure RA: pool ptr r2 vs r3 from the holder-rewards PDA call on)",
+   "[mg-A-1] math-r1, bigunknown-r1, layout-r1",
+   "[mg-A-3] liquidity-r1, liquidity-r1b (0x351a8 = distribute_cashback, orig buy.rs 44/54/57/98, calls anchor_spl create_idempotent; groundwork gen/cashback_fn2.rs), buy-r1, layout-r1"
+  ],
+  "progress_files": [
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-A-1/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-A-sp2/PROGRESS.md",
+   "/Users/shawwalters/amm100-run/lanes/bigunknown-r1/PROGRESS.md",
+   "/Users/shawwalters/amm100-run/lanes/buy-r1/PROGRESS.md",
+   "/Users/shawwalters/amm100-run/lanes/layout-r1/PROGRESS.md",
+   "/Users/shawwalters/amm100-run/lanes/liquidity-r1/PROGRESS.md",
+   "/Users/shawwalters/amm100-run/lanes/mg-A-3/PROGRESS.md"
+  ]
+ },
+ {
+  "contract": "amm",
+  "group": "A-pool",
+  "windows": [
+   "0x2ba60",
+   "0x2e720"
+  ],
+  "rows": [
+   "0x2ba60 10240 B",
+   "0x2e720 5144 B"
+  ],
+  "notes": [
+   "[mg-A-res1] near-miss partials left by finished lanes (read `/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/MECHANISMS.md` first). mg-A-2 (`/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-A-2/PROGRESS.md`, best-partial.patch in `/Users/shawwalters/amm100-run/lanes/mg-A-2/`, IR loop tools/ir.sh + llc.sh): 0x23e40 migrate_pool_coin_creator is ONE instruction off (530/531; orig `add64 r3,-0x38` vs ours `-0x190` for the ZST unwrap_failed formatter slot); its IR proof: removing the `lifetime.start` of the old_coin_creator alloca gives diff 0. Cross-contract hint: the Mayhem lanes found that a plain `let k = acct.key();` (or `let old = pool.coin_creator;`) Pubkey local loses its StorageLive/StorageDead markers through MIR copy propagation, while the same value as an inline temp keeps them (`/Users/shawwalters/Documents/Codex/2026-10-24/claude-mayhem-work/r436/FINDINGS.md`, 01:3x o0079-port-r1 and 00:43 o0077-brute-r1 lines), so the removal is probably a let-binding form. 0x24fd8 set_coin_creator: 19 masked (stack-slot permutation + one early account-flag load). 0x2ba60 create_pool: 53 masked; an IR recipe reaches 5 (liquidity `ult,100` error-first, Clock error-first, quote supported_mint split into two arms). mg-A-6 (`/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-A-6/PROGRESS.md`, `/Users/shawwalters/amm100-run/lanes/mg-A-6/best-u751-src`): 0x50f00 estimate at 141 diff after the executor/estimate restructure",
+   "[mg-A-sp4] second pass on mg-A-2 leftovers (read `/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/MECHANISMS.md`; `/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-A-2/PROGRESS.md`, `/Users/shawwalters/amm100-run/lanes/mg-A-2/` best-partial.patch, IR loop tools/ir.sh + llc.sh, variant multiplexer mux.py): creator-fee transfer legacy 0x26da8 (203 masked) and v2 0x28dd0 (432), extend 0x2e720 (436). Moving the coin_creator handlers into instructions/coin_creator/*.rs cut migrate 59 -> 1 and set 273 -> 19 masked, so check file placement and the original line map first",
+   "[mg-A-2] creatorfees-r1, createpool-r1 (+ -v1..-v3), layout-r1; Codex recovered CreatePool pieces at 01:10-01:23 (origin/main repro/pump_amm/create-pool-fields-recovery-20261028, create-incentive-recovery-20261028): start by diffing those",
+   "[fleet B] - mg-A-sp4 (ended 03:54; agent ac34d94a9729af885): **+0x26da8 +0x28dd0** (wins/mg-A-sp4-01.patch/.json, native 756/150, in union-758). 0x2e720 extend_account partial: masked diff 436 -> 6 (623 vs 617 insns), 756/150 no losses, lanes/mg-A-sp4/best-partial-src (+best-partial.patch, includes win 01). Stopped after a safety check halted a step (not resumed). Next: build the second error name string in place instead of copying a temporary (IR shows a full match).",
+   "[fleet B] - 03:54: queue empty. The concrete next steps (0x2e720, 0x857a8 via best-h2, 0x49888 v/V3) belong to lanes that stopped after",
+   "[EVENTS] 03:54 NOTE fleet-B coordinator: fleet B DONE, 0 lanes running. Closed 3 windows: pump +0x76a28 (mg-P-cash, in L30), amm +0x26da8 +0x28dd0 (mg-A-sp4-01, in union-758). 6 of 7 lanes stopped after safety checks halted a step (v3a, cto2, big, v3b, mig, A-sp4); none resumed or reassigned; their untried next steps are held for a user decision (registry MR/LANES-B.md). Best near-misses: amm 0x2e720 masked diff 436 -> 6 (amm100-run/lanes/mg-A-sp4/best-partial-src; IR shows building the 2nd error name in place matches fully), pump 0x49888 .758 built / .947 IR (mg-P-mig BEST-V1, v/V3), pump 0x857a8 via mg-P-v3b best-h2 (net 0 until 0x163bf0 stays out of line)."
+  ],
+  "progress_files": [
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-A-2/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-A-res1/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-A-sp4/PROGRESS.md",
+   "/Users/shawwalters/amm100-run/lanes/createpool-r1/PROGRESS.md"
+  ]
+ },
+ {
+  "contract": "amm",
+  "group": "A-mh1",
+  "windows": [
+   "0x3dbc0"
+  ],
+  "rows": [
+   "0x3dbc0 9536 B"
+  ],
+  "notes": [
+   "[mg-A-mh2] lane mg-A-4 (`/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-A-4/PROGRESS.md` has the full decode of all three windows and step-by-step next actions). Start from its continuation base `/Users/shawwalters/amm100-run/lanes/mg-A-4/best-v1x/` (multi_hop_swap.rs rewritten in the original shape: `HopSource{User,Pool(Box<AmmHop>,bool),Curve}` caller-frame state enum, `amm_hop -> (u64,bool)`, `curve_run`, `execute` re-exported from lib.rs line 26 so it stays standalone, `chunks_exact(5)` keeping the line-307 closure out of line; 750 native, zero losses vs u750; regenerate via gen/apply_v1.sh). execute 0x3dbc0 is at 0.57 normalized similarity; remaining hot-path gaps: the fee-flag byte built from a packed 0x10100 constant rather than shifts (also governs 0xfb08), the reallocs BTreeSet drop_in_place placement, a few state-enum stack-slot orders. Tools: lanes/mg-A-4/tools/{ev.py,hunks.py,seg.py,coldcheck.sh,nbuild-diag.sh}",
+   "[mg-A-4] multihop-r1, multihop-r1b, closures520-r1 (amm_hop closure order notes in findings.md), layout-r1"
+  ],
+  "progress_files": [
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-A-1/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-A-4/PROGRESS.md",
+   "/Users/shawwalters/amm100-run/lanes/layout-r1/PROGRESS.md",
+   "/Users/shawwalters/amm100-run/lanes/mg-A-mh2/PROGRESS.md",
+   "/Users/shawwalters/amm100-run/lanes/multihop-r1/PROGRESS.md"
+  ]
+ },
+ {
+  "contract": "amm",
+  "group": "A-mh2",
+  "windows": [
+   "0x40a08"
+  ],
+  "rows": [
+   "0x40a08 15512 B"
+  ],
+  "notes": [
+   "[mg-A-mh2] lane mg-A-4 (`/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-A-4/PROGRESS.md` has the full decode of all three windows and step-by-step next actions). Start from its continuation base `/Users/shawwalters/amm100-run/lanes/mg-A-4/best-v1x/` (multi_hop_swap.rs rewritten in the original shape: `HopSource{User,Pool(Box<AmmHop>,bool),Curve}` caller-frame state enum, `amm_hop -> (u64,bool)`, `curve_run`, `execute` re-exported from lib.rs line 26 so it stays standalone, `chunks_exact(5)` keeping the line-307 closure out of line; 750 native, zero losses vs u750; regenerate via gen/apply_v1.sh). execute 0x3dbc0 is at 0.57 normalized similarity; remaining hot-path gaps: the fee-flag byte built from a packed 0x10100 constant rather than shifts (also governs 0xfb08), the reallocs BTreeSet drop_in_place placement, a few state-enum stack-slot orders. Tools: lanes/mg-A-4/tools/{ev.py,hunks.py,seg.py,coldcheck.sh,nbuild-diag.sh}",
+   "[mg-A-4] multihop-r1, multihop-r1b, closures520-r1 (amm_hop closure order notes in findings.md), layout-r1"
+  ],
+  "progress_files": [
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-A-4/PROGRESS.md",
+   "/Users/shawwalters/amm100-run/lanes/mg-A-mh2/PROGRESS.md",
+   "/Users/shawwalters/amm100-run/lanes/multihop-r1/PROGRESS.md"
+  ]
+ },
+ {
+  "contract": "amm",
+  "group": "A-mh3",
+  "windows": [
+   "0x45940"
+  ],
+  "rows": [
+   "0x45940 16912 B"
+  ],
+  "notes": [
+   "[mg-A-mh2] lane mg-A-4 (`/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-A-4/PROGRESS.md` has the full decode of all three windows and step-by-step next actions). Start from its continuation base `/Users/shawwalters/amm100-run/lanes/mg-A-4/best-v1x/` (multi_hop_swap.rs rewritten in the original shape: `HopSource{User,Pool(Box<AmmHop>,bool),Curve}` caller-frame state enum, `amm_hop -> (u64,bool)`, `curve_run`, `execute` re-exported from lib.rs line 26 so it stays standalone, `chunks_exact(5)` keeping the line-307 closure out of line; 750 native, zero losses vs u750; regenerate via gen/apply_v1.sh). execute 0x3dbc0 is at 0.57 normalized similarity; remaining hot-path gaps: the fee-flag byte built from a packed 0x10100 constant rather than shifts (also governs 0xfb08), the reallocs BTreeSet drop_in_place placement, a few state-enum stack-slot orders. Tools: lanes/mg-A-4/tools/{ev.py,hunks.py,seg.py,coldcheck.sh,nbuild-diag.sh}",
+   "[mg-A-4] multihop-r1, multihop-r1b, closures520-r1 (amm_hop closure order notes in findings.md), layout-r1"
+  ],
+  "progress_files": [
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-A-4/PROGRESS.md",
+   "/Users/shawwalters/amm100-run/lanes/mg-A-mh2/PROGRESS.md",
+   "/Users/shawwalters/amm100-run/lanes/multihop-r1/PROGRESS.md"
+  ]
+ },
+ {
+  "contract": "amm",
+  "group": "A-trade",
+  "windows": [
+   "0x4c750",
+   "0x54a20",
+   "0x53350"
+  ],
+  "rows": [
+   "0x4c750 9024 B",
+   "0x54a20 7112 B",
+   "0x53350 5840 B"
+  ],
+  "notes": [
+   "[mg-A-sp1] second pass on sell / trade_v2 near-misses (read `/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/MECHANISMS.md` first). From mg-A-5 (`/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-A-5/PROGRESS.md`, `/Users/shawwalters/amm100-run/lanes/mg-A-5/gen/best_cb_partial.rs`, `tools/odiff.py`): 0x4c750 cashback helper is exact length with IR diff -189 and correct `associated_token::create` semantics; the residual is entry register coloring (the original keeps the remaining_accounts slice ptr in r6, ours in r7): perturb the first bindings (order of the two `remaining.get()` vs `let user_key`, how ata/info are taken) and watch the entry `mov64 rN, r1`. From mg-A-6 (`/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-A-6/PROGRESS.md`, tree `/Users/shawwalters/amm100-run/lanes/mg-A-6/best-u751-src`, IR loop tools/ir.sh + llc.sh + ostat.py): after the executor/estimate restructure sizes are near-identical: sell 0x56710 diff 464, buy 0x53350 5840==5840 diff 656, exact 0x54a20 diff 743; first sell divergence is the transfer Result tag in r9 (orig) vs r8 plus larger error-cleanup paths (branch +0x76 vs +0xab): equalize error-block size first, then find the value the original pins in a callee-saved register across the four transfers",
+   "[mg-A-5] sell-r1 (0x4c750 = sell cashback helper, orig sell.rs:378-502; lead lanes/sell-r1/gen/cashback_v8.rs at ~200/1128 instructions diff), layout-r1",
+   "[mg-A-6] tradev2-r1 (trade_v2.rs original line map in findings.md), sell-r1"
+  ],
+  "progress_files": [
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-A-5/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-A-6/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-A-sp1/PROGRESS.md",
+   "/Users/shawwalters/amm100-run/lanes/sell-r1/PROGRESS.md",
+   "/Users/shawwalters/amm100-run/lanes/tradev2-r1/PROGRESS.md"
+  ]
+ },
+ {
+  "contract": "amm",
+  "group": "A-vol",
+  "windows": [
+   "0x6d408",
+   "0x6db20",
+   "0xf28b8"
+  ],
+  "rows": [
+   "0x6d408 1816 B",
+   "0x6db20 6312 B",
+   "0xf28b8 1192 B"
+  ],
+  "notes": [
+   "[mg-A-sp5] diff-based refinement of mg-A-7 partials (`/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-A-7/PROGRESS.md`, `/Users/shawwalters/amm100-run/lanes/mg-A-7/` partials, tools and its rustc test harness at ~0.2 s per variant; read `/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/MECHANISMS.md`). 0xf28b8: 167 diff lines; hand-reordering the generated blocks reaches 86, so most of the gap is block order: use the method that closed the transfer-fee decoder 0xf31d8 (variant harness, compiler-IR block-move search, then source sweeps). 0x6db20: 6320 B vs 6312 with all 9 error lines matched. 0x6d408 volume updater: same size (1816 B), 80 diff lines, register allocation only (partials/va-u11.patch)",
+   "[mg-A-7] incentives-r1, poolstate-r1 (0x6d408 = GlobalVolumeAccumulator::update_user_volume_accumulator; 0x6db20 = update_token_incentives; volume_accumulator.rs line map in findings.md), utilmath-r1. Codex-only 0x73ef0 is ported by mg-A-int"
+  ],
+  "progress_files": [
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-A-7/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-A-sp5/PROGRESS.md",
+   "/Users/shawwalters/Documents/Codex/2026-10-24/mega-run/lanes/mg-P-z07b/PROGRESS.md",
+   "/Users/shawwalters/amm100-run/lanes/incentives-r1/PROGRESS.md",
+   "/Users/shawwalters/amm100-run/lanes/poolstate-r1/PROGRESS.md",
+   "/Users/shawwalters/amm100-run/lanes/utilmath-r1/PROGRESS.md"
+  ]
+ },
+ {
+  "contract": "amm",
+  "group": "A-raw",
+  "windows": [],
+  "rows": [],
+  "notes": [],
+  "progress_files": []
+ },
+ {
+  "contract": "mayhem",
+  "group": "M-dyn",
+  "windows": [],
+  "rows": [],
+  "notes": [],
+  "progress_files": []
+ }
+]
