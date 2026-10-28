@@ -5,7 +5,7 @@ Thirteen parallel lanes attacked every one of the 128 main-Pump windows left on 
 ## Status: unverified research, not a promoted package
 
 - Every delivery here was rebuilt with the identity recipe: macOS v1.44 rustc with the official Linux v1.44 `sbpf-solana-solana` target libraries.
-- I re-scored each one independently against `L12-inventory` with `harness/score.py`. The results are in `deliveries/*/score-verified.json`. Every delivery has `losses == []` and `raw_losses == []`, and is runtime-valid (no SBF stack-offset warnings).
+- I re-scored each one independently against `L12-inventory` with `harness/score.py`. The results are in `deliveries/*/score-verified.json`. Every delivery has `losses == []` and `raw_losses == []`, and has no SBF stack-offset warnings. Runtime behavior is not qualified by that compiler check.
 - **Not done yet:**
   - The deliveries have not been composed into one crate. Their gains cover **53 distinct windows**, so if they compose without conflicts the target is 907 → **960/1035**.
   - The 44-suite captured-loader regression.

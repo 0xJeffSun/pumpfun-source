@@ -2,7 +2,7 @@
 
 This packet provides a source materializer and build driver for the historical
 432-window quote-pair source. The current qualified checkpoint is
-[current436](../mayhem-current436-composition-20261027/README.md), whose source,
+[current437](../mayhem-current437-composition-20261028/README.md), whose source,
 build records, artifacts and validation are archived separately. This experiment
 does not replace that checkpoint or change its metrics.
 
@@ -34,20 +34,22 @@ and the default linker, with these identical outputs:
 | Stripped | `6fa1945d4041587226c5091258b61ad7e1d86590024c962228820d63d1485944` |
 
 Reported coverage was **83 raw / 327 normalized-only / 31 unmatched**,
-covering **557,664 / 706,744** bytes. The clean-build binaries, logs, full SDK
-inventory and execution receipts are not retained in this packet. These results
-therefore cannot be independently re-audited from its files alone.
+covering **557,664 / 706,744** bytes. The final-run binaries, build logs and full
+function inventories are archived
+below and can be re-audited offline. A complete SDK inventory and execution
+receipts authenticating all reported clean builds are not retained; the clean
+build provenance remains author-reported.
 
 The reported difference is 22 fewer normalized windows than the older 432-window
 artifact. On its own it does not isolate a cause: compiler, target libraries,
 dependency builds and linker recipe must be controlled separately before
 attributing a window difference to layout. This packet does not prove that the
-historical recipe is unreproducible. Later archived recipes and the current436
+historical recipe is unreproducible. Later archived recipes and the current437
 evidence have their own explicit reproduction and qualification scopes.
 
 ## Source-path remap control: one flag accounts for 20 of the 22 windows
 
-A single-variable control isolates one cause. The first lost window, `O0095`
+The archive includes a paired source-path remap comparison. The first lost window, `O0095`
 (`MayhemState::validate_quote`, 1,296 bytes), differs from the default-linker
 build in **exactly one slot of 162**: `stdw [r10-224], imm` stores `36` in the
 original and `12` in the clean build. Those are string lengths:
@@ -56,8 +58,11 @@ original and `12` in the clean build. Those are string lengths:
 the historical crate directory `programs/mayhem-program/`; a bare build embeds
 `src/…`. The archived quote-pair and current436 recipes already carry
 `--remap-path-prefix=src/=programs/mayhem-program/src/` in their rustc commands;
-this control measures that flag's effect in isolation, with everything else
-(toolchain installation, dependency builds, default linker) held fixed.
+the paired archived artifacts measure the observed effect of this flag under
+the author's reported common installation and linker recipe. The build driver
+passes the flag to all target compilations through Cargo target rustflags;
+complete compiler-command and dependency-artifact receipts are not retained
+here, so the packet does not independently prove a root-crate-only change.
 
 | Recipe (same source, same installation) | raw-equal | normalized-only | unmatched | matched text |
 | --- | ---: | ---: | ---: | ---: |
@@ -89,9 +94,9 @@ What the remap does **not** explain, and why:
   linker places functions differently from `ordered.ld`. Raw-equal counts, not
   normalized counts, are the layout-sensitive measure.
 
-Both recipes were built four times from scratch (fresh materialized source,
-fresh target directory) with identical outputs each time. The artifacts of the
-final run are archived under `builds/<recipe>/` so the claims above can be
+The author reports four builds per recipe from fresh materialized source and
+fresh target directories, with identical outputs. The artifacts of the final
+run are archived under `builds/<recipe>/` so the claims above can be
 re-audited from this packet's files alone:
 
 | Recipe | Unstripped SHA-256 | Stripped SHA-256 |
@@ -144,8 +149,10 @@ recursive call/data or whole-ELF identity.
 
 The offline check asserts the archived `symbols.so.gz` / `candidate.so.gz`
 hashes, re-runs the 441-window inventory on the archived symbol artifact and
-compares it with the recorded counts and the archived `inventory.json.gz`.
+compares every recomputed field and all 441 rows with the archived
+`inventory.json.gz`.
 `--rebuild` also rebuilds each recipe into a fresh directory with the installed
-tools and asserts the fresh artifacts equal the archive. A zero exit means every
-recorded value reproduced; it does not authenticate the local tool installation.
+tools and asserts the fresh artifacts equal the archive. A zero exit means the
+selected artifact hashes and complete inventories agree; it does not authenticate the build logs, all
+reported runs, or the local tool installation.
 Use `--only <recipe>` for one recipe or `--keep <dir>` to retain rebuild outputs.

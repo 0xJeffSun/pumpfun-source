@@ -76,7 +76,7 @@ def check_archived(name, spec, tool, reader):
         got["matched_text_bytes"] = result["matched_text_bytes"]
         failures += [k for k in ("counts", "matched_text_bytes") if got[k] != spec[k]]
         recorded = json.loads(gzip.decompress((archive / "inventory.json.gz").read_bytes()))
-        if recorded["counts"] != result["counts"] or recorded["candidate_sha256"] != result["candidate_sha256"]:
+        if recorded != result:
             failures.append("archived inventory.json.gz disagrees with recomputed inventory")
     return got, failures
 

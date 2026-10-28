@@ -3004,3 +3004,8 @@ The [interval-union ledger](../research/mayhem-current437-data-coverage-20261028
 The [strict source-tag proof](../research/mayhem-current437-error-names-20261028/README.md) decodes the matched ErrorCode::name body for all 77 explicit enum tags and checks the bytes and lengths passed to its matched vector helper. It verifies 77 previously uncovered strings totaling 2,010 bytes, while retaining 437 normalized / 141 raw bodies and 431 closed windows / 581 pairs. Independent full verification and 13 tests cover real string, pointer and length corruptions, dependency pruning, unsupported instructions and resealed report/coverage tampering.
 
 Combined with the preceding ledger, payload coverage is now 8,110/26,180 bytes (30.98%); 18,070 bytes (69.02%) remain unproved. The counted strings reduce the largest residual interval to 8,971 bytes. These are explicit byte spans; allocation extents, returned String behavior, arbitrary dispatch and whole-ELF equality remain unproved.
+
+
+## Qualified437 AMM Buy prefix
+
+The [ordinary-Rust field-order control](../research/mayhem-current437-buy-prefix-20261028/README.md) extends the exact normalized AMM Buy prefix to 7,200 of 9,736 bytes. Only one existing pure field expression moves; strict source-prefix/suffix checks reject unrelated source changes. The candidate preserves 437 normalized, 141 raw and 431 closed windows. Two recorded builds plus an independent root rebuild agree, and 36 fresh signed AMM pairs pass, including seven original successes. Eight corruption/portability tests pass. The full body and ELF still differ; current whole-body completion is unchanged.
