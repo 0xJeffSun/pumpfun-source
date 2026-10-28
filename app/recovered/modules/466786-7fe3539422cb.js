@@ -1,0 +1,8 @@
+// Recovered Turbopack factory. Requires original runtime/import IDs; not a standalone source module.
+(e) => {
+  e.s([
+    "f",
+    0,
+    (e, t) => (void 0 !== t && e?.address === t ? e.userId : void 0),
+  ]);
+};
