@@ -8,6 +8,13 @@ Legacy Sell's ordered callee correspondence from **50/51 to 45/51**, despite
 retaining its complete callee multiset. These are negative source controls;
 the higher instruction overlap is not an overall recovery.
 
+The [compiler-pass follow-up](placement/README.md) now locates this divergence
+in LLVM's block-placement pass. Both variants have the same 51-callee sequence
+before the pass and different sequences after it; each after-sequence matches
+its final ELF. The score is about file layout, not dynamic execution order or
+a behavioral regression. Four actual diagnostic builds retain both optimized
+IR and before/after machine traces, with complete output bindings.
+
 | Form | Handler bytes | Context bump-load offset | Diagnostic aligned slots | Ordered callee correspondence |
 | --- | ---: | ---: | ---: | ---: |
 | Original | 12,992 | 6,296 | — | 51/51 |

@@ -71,5 +71,20 @@ class Checks(unittest.TestCase):
     def test_composition_fresh_source_binding(self):
         p=self.root/'composition/rebuild-validation/launch.json.gz';r=v.read(p);r['source_inputs']['src/state.rs']='0'*64;self.save(p,r)
         with self.assertRaisesRegex(ValueError,'fresh composition source binding'):self.composition().verify(self.root/'composition',False)
+    def placement(self):
+        spec=importlib.util.spec_from_file_location('test_placement',self.root/'composition/placement/verify.py');p=importlib.util.module_from_spec(spec);spec.loader.exec_module(p);return p
+    def test_placement_changed_trace_call(self):
+        p=self.placement();c=self.composition();spec=importlib.util.spec_from_file_location('placement_test_reader',HERE/'reader.py');reader=importlib.util.module_from_spec(spec);spec.loader.exec_module(reader)
+        folder=self.root/'composition/placement/builds/baseline-placement';f=Path(self.tmp.name)/'placement.so';f.write_bytes(v.raw(folder/'symbols.so.gz'));e=reader.Elf(f)
+        f=Path(self.tmp.name)/'original.so';f.write_bytes(v.raw(self.root/'reference/original.so.gz'));o=reader.Elf(f);originals={r['id']:o.window(r['start'],r['end']) for r in v.read(self.root/'reference/original-windows.json')}
+        log=v.raw(folder/'stderr.log.gz').decode();marker='# *** IR Dump After';a=log.index(marker);changed=log[:a]+log[a:].replace('JAL &__multi3,','JAL &__udivti3,',1);self.assertNotEqual(log,changed)
+        with self.assertRaisesRegex(ValueError,'post-placement callees'):p.trace_analysis(v,c,e,originals,changed)
+    def test_placement_prefix_only_allows_return_rename(self):
+        p=self.placement();folder=self.root/'composition/placement/builds';a=p.handler_ir(v,v.raw(folder/'baseline-ir/module.ll.gz'))[0];b=p.handler_ir(v,v.raw(folder/'late-inline-ir/module.ll.gz'))[0]
+        changed=b.replace('ptr %_189, i64 72','ptr %_189, i64 80',1);self.assertNotEqual(b,changed)
+        with self.assertRaisesRegex(ValueError,'prefix differs beyond return labels'):p.compare_prefix(v,a,changed)
+    def test_placement_rejects_false_unstripped_identity(self):
+        f=self.root/'composition/placement/builds/baseline-ir/result.json.gz';r=v.read(f);r['complete_outputs_equal_parent']=True;self.save(f,r)
+        with self.assertRaisesRegex(ValueError,'unstripped identity claim'):self.placement().verify(self.root/'composition/placement',False)
 
 if __name__=='__main__':unittest.main()

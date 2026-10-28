@@ -984,9 +984,245 @@
       "bytes": 63109,
       "sha256": "9f2c663bfee1a0840774ae40fa13cc7f953d05eaf082f5ce5ae8efaadc0a1092"
     },
+    "composition/placement/builds/baseline-ir/candidate-v154-strip.so.gz": {
+      "bytes": 168363,
+      "sha256": "93b86f85d1eeaf9776a7c427aace356a13f645936f36614c2811b6a861b7ad31"
+    },
+    "composition/placement/builds/baseline-ir/exit-code.txt.gz": {
+      "bytes": 22,
+      "sha256": "89ed3b723e0e40d8957a2df55fcb04d57b6d95fa665c5fe67b098df7f29694ae"
+    },
+    "composition/placement/builds/baseline-ir/forwarded.rsp.gz": {
+      "bytes": 2277,
+      "sha256": "139a3c39271190d3bf1292e28970ae78aa556ed74223dcfa81ab40b382612658"
+    },
+    "composition/placement/builds/baseline-ir/invocation.json.gz": {
+      "bytes": 3637,
+      "sha256": "8cffd6168df4205f58ff4ab477199fccf231a6bddb2fffbe0f2cf80bc37e0296"
+    },
+    "composition/placement/builds/baseline-ir/launch.json.gz": {
+      "bytes": 12227,
+      "sha256": "ccfe75f0bc6287b007a7d390812ea3640110caec6137a060982f004f28be6a41"
+    },
+    "composition/placement/builds/baseline-ir/link.map.gz": {
+      "bytes": 48868,
+      "sha256": "ab8d2353eb6008ecdf7cb0476f5ca0dae13778448d9241cb41a7d66459480dc1"
+    },
+    "composition/placement/builds/baseline-ir/module.ll.gz": {
+      "bytes": 1439661,
+      "sha256": "53f819295e394e2bc9f38c4000e01ee657f1b81e36cbae437a1dff68949f5cde"
+    },
+    "composition/placement/builds/baseline-ir/os-arguments.json.gz": {
+      "bytes": 185,
+      "sha256": "dd1930351bf57fd1abfdba0ac2e681e6f83014f79e3cbff5c00a25e90aaaca8f"
+    },
+    "composition/placement/builds/baseline-ir/result.json.gz": {
+      "bytes": 593,
+      "sha256": "3187933b8cfdb7a4b11ec0eb4daae9c059ce455ca2d350f6a77e6c7f14204ac0"
+    },
+    "composition/placement/builds/baseline-ir/stderr.log.gz": {
+      "bytes": 7413,
+      "sha256": "f0b2e06ddb5ddb3fd4053e1d5c941c0a64c09d0905205dc3b1e30e39a1f4202e"
+    },
+    "composition/placement/builds/baseline-ir/stdout.log.gz": {
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    "composition/placement/builds/baseline-ir/strip.stderr.log.gz": {
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    "composition/placement/builds/baseline-ir/strip.stdout.log.gz": {
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    "composition/placement/builds/baseline-ir/symbols.so.gz": {
+      "bytes": 201098,
+      "sha256": "7cd4834060d871dfc385d5053c0a21584ffd94d27bb0ad5f76f8fa5bac76a331"
+    },
+    "composition/placement/builds/baseline-placement/candidate-v154-strip.so.gz": {
+      "bytes": 168363,
+      "sha256": "93b86f85d1eeaf9776a7c427aace356a13f645936f36614c2811b6a861b7ad31"
+    },
+    "composition/placement/builds/baseline-placement/exit-code.txt.gz": {
+      "bytes": 22,
+      "sha256": "89ed3b723e0e40d8957a2df55fcb04d57b6d95fa665c5fe67b098df7f29694ae"
+    },
+    "composition/placement/builds/baseline-placement/forwarded.rsp.gz": {
+      "bytes": 2281,
+      "sha256": "0db247d5eb8a779051b85a3899edefcddf7bf0f052ecb37e9678b495711be9bc"
+    },
+    "composition/placement/builds/baseline-placement/invocation.json.gz": {
+      "bytes": 3641,
+      "sha256": "e1b64a4e684024c56baf19559d3767b3602937f4ee6d734624a59b612f912620"
+    },
+    "composition/placement/builds/baseline-placement/launch.json.gz": {
+      "bytes": 12394,
+      "sha256": "0aaf44ecd3ad90999c5da25375a887013a360c7dc02802c8652850de90a5bb49"
+    },
+    "composition/placement/builds/baseline-placement/link.map.gz": {
+      "bytes": 44009,
+      "sha256": "7d0d5a976610df4e912c007d043bb0965d7ce134aed9f6be1eba58f54634d4e1"
+    },
+    "composition/placement/builds/baseline-placement/os-arguments.json.gz": {
+      "bytes": 188,
+      "sha256": "bd781b03bad64ffd7981be57d23b431cb905a9ecd055c75c8a1bc3a4bf9342d4"
+    },
+    "composition/placement/builds/baseline-placement/result.json.gz": {
+      "bytes": 524,
+      "sha256": "3910081ff4d141a4bbca5e3bdbc7432a7ab8b425a46b90e97e2f28fb6b9ba457"
+    },
+    "composition/placement/builds/baseline-placement/stderr.log.gz": {
+      "bytes": 37721,
+      "sha256": "0f6fb5623b8f879a7c8060c6eab7ebc0bdad6ba9a541d5b6df2fd2f42ac77adf"
+    },
+    "composition/placement/builds/baseline-placement/stdout.log.gz": {
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    "composition/placement/builds/baseline-placement/strip.stderr.log.gz": {
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    "composition/placement/builds/baseline-placement/strip.stdout.log.gz": {
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    "composition/placement/builds/baseline-placement/symbols.so.gz": {
+      "bytes": 196321,
+      "sha256": "ff582512ebc7ddd0df1a7512bceffe0041ba563b38ce8d5a7c9c478a4bf19f96"
+    },
+    "composition/placement/builds/late-inline-ir/candidate-v154-strip.so.gz": {
+      "bytes": 168278,
+      "sha256": "cdb383bed8229f47342753ed3306d31fc8936312662ca867d6270ede0c09a5e6"
+    },
+    "composition/placement/builds/late-inline-ir/exit-code.txt.gz": {
+      "bytes": 22,
+      "sha256": "89ed3b723e0e40d8957a2df55fcb04d57b6d95fa665c5fe67b098df7f29694ae"
+    },
+    "composition/placement/builds/late-inline-ir/forwarded.rsp.gz": {
+      "bytes": 2277,
+      "sha256": "9f259fddcb1628bdaab7aa5be10462ccb5d4fc6b731689207a11ffe922d9e281"
+    },
+    "composition/placement/builds/late-inline-ir/invocation.json.gz": {
+      "bytes": 3636,
+      "sha256": "41c072fbb448bb9b03507d5c8cd2016a1b8389c89521fe3b423e9f4511652f42"
+    },
+    "composition/placement/builds/late-inline-ir/launch.json.gz": {
+      "bytes": 12231,
+      "sha256": "adef8427a5e8bf914c8e3de4fa95501e86549a83ff3311482aaaebae8aa2f994"
+    },
+    "composition/placement/builds/late-inline-ir/link.map.gz": {
+      "bytes": 48891,
+      "sha256": "6b115c877bc5a0f58d49d4600ef743a7c930834716eb38dd629b368d895deb9c"
+    },
+    "composition/placement/builds/late-inline-ir/module.ll.gz": {
+      "bytes": 1439637,
+      "sha256": "a23b39d209ab7a77d24fa11efa1a24dc32446781422e712073685041d4ce0202"
+    },
+    "composition/placement/builds/late-inline-ir/os-arguments.json.gz": {
+      "bytes": 184,
+      "sha256": "ef22cb360db3d2e564def6d1a142b99b099c9a5e1d6126ca9d5102c600cbb3e6"
+    },
+    "composition/placement/builds/late-inline-ir/result.json.gz": {
+      "bytes": 594,
+      "sha256": "027855d79b4ee87610b55882e8bd3d7050e0ab21bbb4db2016b547a5d9f9ca51"
+    },
+    "composition/placement/builds/late-inline-ir/stderr.log.gz": {
+      "bytes": 7415,
+      "sha256": "99fa5d74c74b4cc61cc6bbe25e938f1b9b44081bbc7172dd1c55a6a731decde6"
+    },
+    "composition/placement/builds/late-inline-ir/stdout.log.gz": {
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    "composition/placement/builds/late-inline-ir/strip.stderr.log.gz": {
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    "composition/placement/builds/late-inline-ir/strip.stdout.log.gz": {
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    "composition/placement/builds/late-inline-ir/symbols.so.gz": {
+      "bytes": 201025,
+      "sha256": "2ca2cfff8c021752b554ec0d171f52c8467bafaa867935f2086d5c06b5684dfb"
+    },
+    "composition/placement/builds/late-inline-placement/candidate-v154-strip.so.gz": {
+      "bytes": 168278,
+      "sha256": "cdb383bed8229f47342753ed3306d31fc8936312662ca867d6270ede0c09a5e6"
+    },
+    "composition/placement/builds/late-inline-placement/exit-code.txt.gz": {
+      "bytes": 22,
+      "sha256": "89ed3b723e0e40d8957a2df55fcb04d57b6d95fa665c5fe67b098df7f29694ae"
+    },
+    "composition/placement/builds/late-inline-placement/forwarded.rsp.gz": {
+      "bytes": 2284,
+      "sha256": "4c1b940763d713064d84e82d3ce56c37b2c10ea85af8c40c99ad1f3fbe410f85"
+    },
+    "composition/placement/builds/late-inline-placement/invocation.json.gz": {
+      "bytes": 3645,
+      "sha256": "0d24ce5a5f173f7bdbdb44cb61d0cb34788c1038bd3d7bfb9dbe1cad6d52b6c0"
+    },
+    "composition/placement/builds/late-inline-placement/launch.json.gz": {
+      "bytes": 12399,
+      "sha256": "7b7a53a8db1b256051f5eee625421d5081a0e5d5eaab1bf4e1af06d165d6b3f4"
+    },
+    "composition/placement/builds/late-inline-placement/link.map.gz": {
+      "bytes": 44046,
+      "sha256": "c8dc881ab2061a286bd737401b9eb70a604f51413713a9a19588cc5ceac8cc41"
+    },
+    "composition/placement/builds/late-inline-placement/os-arguments.json.gz": {
+      "bytes": 193,
+      "sha256": "a44dda6a620a48d6520eec52a69a216b34529f5de344520729d697b2c226fb52"
+    },
+    "composition/placement/builds/late-inline-placement/result.json.gz": {
+      "bytes": 526,
+      "sha256": "d82ab39b3df1d692f272c238955220f3c9cbd579cfefb2a99db07ce4f49188f9"
+    },
+    "composition/placement/builds/late-inline-placement/stderr.log.gz": {
+      "bytes": 37641,
+      "sha256": "d86c5934209eccc3ccc05ceeee2034f84194d11a2b26b0ae0c48c65b12bed5c4"
+    },
+    "composition/placement/builds/late-inline-placement/stdout.log.gz": {
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    "composition/placement/builds/late-inline-placement/strip.stderr.log.gz": {
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    "composition/placement/builds/late-inline-placement/strip.stdout.log.gz": {
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    "composition/placement/builds/late-inline-placement/symbols.so.gz": {
+      "bytes": 196254,
+      "sha256": "c34919f2524a2cbaafabd2d16d2ec76f8ce62a32d1909b90534f49b9a6baa84a"
+    },
+    "composition/placement/README.md": {
+      "bytes": 4119,
+      "sha256": "0f4cee620acb8bd2f62012904e8b33555d98b7f5e4670abd2b0d3c0cb5f103f2"
+    },
+    "composition/placement/recorded-dump_trade_block_placement.py": {
+      "bytes": 3659,
+      "sha256": "2484b838231c6f48b281901e84fa1841c0e6c2494775f7ea209680f0a5c36e58"
+    },
+    "composition/placement/recorded-emit_trade_placement_ir.py": {
+      "bytes": 3550,
+      "sha256": "e69a6b21bfde046bfc9c3915f834dbc3f9788a7bb254ffd49d78a3de35897d05"
+    },
+    "composition/placement/report.json.gz": {
+      "bytes": 6212,
+      "sha256": "a6ed593b001711da02da369f893637a3c9dc58ee8f9cde68caee86dc4cd25d61"
+    },
+    "composition/placement/verify.py": {
+      "bytes": 10137,
+      "sha256": "fdd8eeda0c943e67d4c7eec2f83c499a4c43ce0dc2df6c2032a39329b4a173e5"
+    },
     "composition/README.md": {
-      "bytes": 5302,
-      "sha256": "b5fab7ed12712a24c6867ef19d8e96d40c5794483ac184b70cf7b7e06425bc24"
+      "bytes": 5761,
+      "sha256": "dee51eae524794351642f7a8c2db3ea1c96fd15d5a1ea78dfcb44d1a7e597143"
     },
     "composition/rebuild-validation/comparison.json.gz": {
       "bytes": 311,
@@ -1057,8 +1293,8 @@
       "sha256": "1fd6fcb472c0f636219ada2ae19dd596221bb92535df712042d93c94dd663a7a"
     },
     "composition/report.json.gz": {
-      "bytes": 185695,
-      "sha256": "6a85f98c57f619e46065be2ef9584eb02a2c52f19d4513a6431b66473d9fa153"
+      "bytes": 184892,
+      "sha256": "f79218366d107164ea4611c5e2eda7dc03dda10e04265152e431361d03b76449"
     },
     "composition/sources/late-inline-repeat.rs": {
       "bytes": 13240,
@@ -1149,8 +1385,8 @@
       "sha256": "eeec82f751ea38827c5149f28590f19a3ff516c7eee57b6aa48949cbaac4a7e5"
     },
     "composition/verify.py": {
-      "bytes": 14725,
-      "sha256": "37c6d80038915969f0c791f82c9079f855d82eb0ade77faeac6b77488dc5ac37"
+      "bytes": 15130,
+      "sha256": "2b48bdea557b685d8e66fa5c26b83ad3f86ac82bb1a873866d1adf52e7670f64"
     },
     "controller/build.py": {
       "bytes": 13539,
@@ -1281,8 +1517,8 @@
       "sha256": "7be3a56418587fdc05178529428ab18df40a252fbd46431ceb98e9107fe414b1"
     },
     "README.md": {
-      "bytes": 7653,
-      "sha256": "8ae27e2730afa3fcc532c0e3a2d80aee39e0f576cb53a19c7d34b9c2610eb0f8"
+      "bytes": 8011,
+      "sha256": "9ffc810e2efa0a12672c453d0dc5360bae9d9f4c5cf9efa033be97d779653a43"
     },
     "rebuild-validation/comparison.json.gz": {
       "bytes": 310,
@@ -1425,8 +1661,8 @@
       "sha256": "af17af1ba2cd128555bda8acf132fdb4ebc85ba5c1b24cc32a2b8a94e36a59a1"
     },
     "test_verify.py": {
-      "bytes": 6590,
-      "sha256": "ddb6f873913675aa5a9a6e85eb190a076f0d6695e8eb0dacb43d2882c52c56a4"
+      "bytes": 8617,
+      "sha256": "7af98a9e5f6b949982089abcd60178508360cb4f40e6615a2d53aaf4e45355db"
     },
     "verify.py": {
       "bytes": 17111,

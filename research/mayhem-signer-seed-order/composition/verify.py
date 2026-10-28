@@ -120,7 +120,9 @@ def verify(root=HERE,check_manifest=True):
     for command in targets:
         before=[a[9:] for a in command['before'] if a.startswith('metadata=')];after=[a[9:] for a in command['after'] if a.startswith('metadata=')];name=command['after'][command['after'].index('--crate-name')+1]
         v.require(len(before)==len(after)==1 and [before[0],after[0],name] in metadata,'fresh composition metadata binding differs')
-    return json.loads(json.dumps(dict(upstream=up,builds=results,compiler_builds=9,incremental_root_builds=8,fresh_dependency_builds=1,rebuild_compiler_commands=163,complete_windows_gained=0,target_executions=0,whole_original_equal=False,scope='Negative source controls. Internal observations exclude imported calls. Alignment and call-order correspondence are diagnostics, not recovery or runtime qualification.')))
+    placement=module('composition_placement_reader',root/'placement/verify.py').verify(root/'placement',False)
+    v.require(placement==v.read(root/'placement/report.json.gz'),'placement saved report differs')
+    return json.loads(json.dumps(dict(upstream=up,builds=results,compiler_builds=9,incremental_root_builds=8,fresh_dependency_builds=1,rebuild_compiler_commands=163,placement_diagnostics=dict(compiler_builds=4,pre_placement_callees_equal=True,post_placement_callees_equal=False,post_placement_matches_both_final_artifacts=True),complete_windows_gained=0,target_executions=0,whole_original_equal=False,scope='Negative source controls. Internal observations exclude imported calls. Alignment and call-order correspondence are file-layout diagnostics, not recovery, dynamic call order or runtime qualification.')))
 
 if __name__=='__main__':
     r=verify();v=module('composition_report_reader',HERE.parent/'verify.py');v.require(r==v.read(HERE/'report.json.gz'),'composition saved report differs');print('Verified eight root builds and one fresh full rebuild: all late-seed forms regress ordered callees; all original handler bodies remain unmatched.')

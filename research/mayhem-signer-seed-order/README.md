@@ -39,6 +39,12 @@ parent outputs. These negative results inherit none of the upstream runtime
 evidence and add no complete window. All 14 acquired qualified inputs/artifacts/readers remain unchanged
 on reviewed main `cbcdfc9f16500674bdf35e1d8d43ed4e2b9c9672`.
 
+A subsequent [LLVM trace](composition/placement/README.md) locates that
+composition's callee-layout divergence in machine block placement. Both
+variants have identical ordered callees before the pass and different
+sequences afterward, each matching its final executable. This is a layout
+diagnostic, not a behavioral regression or complete source recovery.
+
 | Source form | Complete handler bytes | Bump-load offset | Diagnostic aligned slots |
 | --- | ---: | ---: | ---: |
 | Original | 12,992 | 6,296 | — |
