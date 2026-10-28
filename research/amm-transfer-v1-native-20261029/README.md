@@ -88,3 +88,9 @@ associated-token program constraint) and carries no
 `caused by account` site in its log. All lamport figures are
 exact values for these fixtures, not claims about other
 states.
+
+## Retained receipt qualifications
+
+The final validation sentence in the retained raw report scope says `2009`; the actual case, signed receipts and verifier show `2023 ConstraintAssociatedTokenTokenProgram`. The raw report and producer are preserved.
+
+The retained `counts.vms` value and per-receipt `vm` field are execution/receipt ordinals. This packet has 57 fixture/image VM scenarios and 60 executions: the repeat-call scenario submits two transactions in the same VM for each image. The 60 signed receipt/signature-field count remains correct.
