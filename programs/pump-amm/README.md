@@ -1,13 +1,13 @@
 # PumpSwap source reconstruction
 
-The maintained source is the [native scanner boundary checkpoint](../../repro/pump_amm/native-scanners-recovery-20261028/README.md),
-candidate `e33e6aace7d53008b3300364c07540f0cd7d1764196cd601554b08838b06e615`.
+The maintained source is the [CreatePool and incentive ownership checkpoint](../../repro/pump_amm/create-incentive-recovery-20261028/README.md),
+candidate `9e4891b1a25fc8f7413e1e9f2ed8e5730a1c39301e306ab68fc4e82acfd952c3`.
 It matches **660/785 normalized windows (84.1%)**, including **159 raw bodies**,
 and covers **831,376/1,162,040 text bytes (71.5%)**. **125 windows remain**;
 whole ELF identity is false. These percentages measure binary coverage, not
 engineering effort completed.
 
-The new complete body match is the 568-byte supported-mint wrapper. Its called scanner and the native fee decoder retain code differences. The source also preserves the tested incentive and CTO error-order
+The window count is unchanged. CreatePool and incentive mint argument storage now follow the observed original ownership. Their complete bodies still differ. The source also preserves the tested incentive and CTO error-order
 fixes, private-event storage, creator source ownership and borrowed account
 boundaries. All 17,462 core cases and 13 current acceptance groups pass; suite
 counts overlap. The native 216-case replay retains 14 raw source-coordinate log
@@ -20,19 +20,21 @@ and three native artifacts remain unchanged during both contract builds.
 Historical package provenance, complete code/data/call identity and exhaustive
 behavior remain open.
 
+Independent analysis recognizes 595 windows within its bounded call/data closure, or 588 when Source coordinates must also agree. These checks do not prove general indirect-call closure, complete referenced data, or whole-ELF identity.
+
 From the repository root, verify the saved checkpoint and current source:
 
 ```sh
-python -B repro/pump_amm/native-scanners-recovery-20261028/verify_saved.py --current-source
+python -B repro/pump_amm/create-incentive-recovery-20261028/verify_saved.py --current-source
 ```
 
 To stage and check a new workspace without changing Rust source, use the current
 version 3 recipe; version 2 predates the native path dependency:
 
 ```sh
-python -B repro/pump_amm/native-scanners-recovery-20261028/workspace_recipe_v3.py stage \
+python -B repro/pump_amm/create-incentive-recovery-20261028/workspace_recipe_v3.py stage \
   --source-root "$PWD" --output "$PWD/work/amm-current-workspace"
-python -B repro/pump_amm/native-scanners-recovery-20261028/workspace_recipe_v3.py verify \
+python -B repro/pump_amm/create-incentive-recovery-20261028/workspace_recipe_v3.py verify \
   --source-root "$PWD" --workspace "$PWD/work/amm-current-workspace"
 ```
 

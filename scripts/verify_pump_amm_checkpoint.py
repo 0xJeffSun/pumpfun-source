@@ -9,10 +9,10 @@ import subprocess
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
-CHECKPOINT = 'repro/pump_amm/native-scanners-recovery-20261028'
+CHECKPOINT = 'repro/pump_amm/create-incentive-recovery-20261028'
 ARTIFACT = CHECKPOINT + '/results/build/candidate.so'
-CANDIDATE = 'e33e6aace7d53008b3300364c07540f0cd7d1764196cd601554b08838b06e615'
-MANIFEST = '35c6a14026e52314058aed7627ccc895b9de8295cb7e658f36188c11a2eb0922'
+CANDIDATE = '9e4891b1a25fc8f7413e1e9f2ed8e5730a1c39301e306ab68fc4e82acfd952c3'
+MANIFEST = 'ffede26ff0512cd703b2b6ea72b64b4b0da4c949e76e5c08594e11cd28b83c26'
 
 
 def sha(path):
