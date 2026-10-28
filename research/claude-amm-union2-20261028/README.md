@@ -1,9 +1,9 @@
-# PumpSwap AMM union composite 2: 755 -> 759/785 normalized (159 raw)
+# PumpSwap AMM union composite 2: static experiment, 759/785 normalized (159 raw)
 
 Follow-up to [`research/claude-amm-union-20261028`](../claude-amm-union-20261028/README.md) (merged as #426, Linux
 755/785, 159 raw). It composes four more windows from the mega-run AMM lanes and fixes two behavior differences
-that the full runtime replay found in those lanes' code. This is a research packet: the maintained `programs/` tree
-and `repro/status.json` are untouched.
+that the reported runtime replay found in those lanes' code. This is a research packet: the maintained `programs/` tree
+and `repro/status.json` are untouched. This candidate is **not eligible for maintained-source promotion**: the signed negative controls below confirm an inherited incentive error-order regression.
 
 | Linux v1.44 build (authenticated recipe) | normalized | raw |
 |---|---:|---:|
@@ -28,7 +28,7 @@ same tree measures 754/150.
 - **s09 `0x23e40`** `migrate_pool_coin_creator` (lane mg-A-res1): moved to
   `instructions/coin_creator/migrate_pool_coin_creator.rs` as an external, non-inlined function.
 
-No reachable error, check, event, CPI or account constraint was added or removed.
+The four additional local-window gains do not establish full behavioral conformance; the inherited error-order failure below remains.
 
 ### Behavior fixes found by the runtime replay
 
@@ -65,24 +65,34 @@ The builds use the same recipe as the parent (`tools/lbuild.sh`, `builds/recipe.
 `solana-verifiable-build` image with the recorded mounts and cargo command. Two builds are byte-identical, and only
 the two workspace crates recompiled. No new stack-frame diagnostics appeared.
 
-Runtime: the 25 maintained suites, run with the unchanged replay driver against `builds/a/candidate.so`, give
-**17,462 cases, 35,074 transactions, 35,418 signatures and 0 mismatches**.
+The retained summary of the 25 maintained suites reports **17,462 cases, 35,074 transactions, 35,418 signatures and 0 mismatches** against `builds/a/candidate.so`. The underlying per-case receipts and transaction sidecars are not included in this packet. Its verifier checks the summary, receipt-hash declarations and repository harness bindings; it cannot independently recount those executions, verify their signatures, or establish a complete runtime pass.
+
+### Confirmed incentive error-order regression
+
+`negative/receipts.json.gz` contains five newly replayed signed original/candidate pairs on this exact candidate, with executable-account hashes recorded per execution. Two synthetic malformed schedules produce `ProgramFailedToComplete` in the original and error 6035 (`SupplyUpdateForFinishedRange`) in the candidate. Both have positive supply, disabled range updates, and `stored_end < now < stored_start`. The other three controls cover a valid schedule, equality at the stored start, and zero supply; they agree. All five pairs have equal committed account states.
+
+The candidate retains the unconditional finished-range guard. The original first checks whether `now < stored_start`; the maintained H11 fix conditionally checks the finished range only when `now >= stored_start`. The historic 128-case regression is background evidence, not a count re-executed here: this packet establishes **2 mismatches in 5 pairs, 10 signed executions**. These fixtures use synthetic AMM-owned state and do not establish live-chain reachability. No contract source or compiled artifact was changed for this disclosure.
 
 ```sh
 python3 -I -B research/claude-amm-union2-20261028/verify.py
+python3 -I -B research/claude-amm-union2-20261028/negative/verify.py --signatures
+python3 -I -B research/claude-amm-union2-20261028/test_verify.py
 ```
 
-`verify.py` uses the standard library only. It checks:
+`verify.py` uses the standard library only and verifies a static research record with a known runtime failure; `PASS` is not a promotion or whole-program-equivalence verdict. The separate `--signatures` command requires `solders`. It checks:
 
 - exact packet membership and file hashes;
 - `source.patch`, rebuilt from the parent packet's source archive;
 - both builds;
 - the measurements of this candidate and of the parent's candidate, recomputed against
   `evidence/original/pump_amm/deployed.so`;
-- the runtime summary against the repository's harness, observer and driver hashes.
+- the reported runtime summary against the repository's harness, observer and driver hashes;
+- the five retained negative-control pairs and their exact error/state/artifact bindings.
 
 ## Limits
 
 Whole-ELF identity and 26 unmatched windows remain open, including the cashback helpers, `amm_hop`, `curve_run`,
 `execute`, the trade_v2 handlers, create_pool and `buy_exact_quote_in`. The positioning devices reproduce original
 line numbers; they are not claims about the original file layout.
+
+Both verifier entry points reject symlinks and special files before reading packet metadata. The standalone negative verifier also checks exact packet membership and hashes before reading its receipts; the main verifier calls it only after the same complete check. Guarded controls cover root-manifest and measurement-file symlinks/FIFOs without reading their contents.

@@ -5,24 +5,24 @@ python3 -I -B research/<this packet>/verify.py
 Checks exact packet membership and hashes, the source archive against the recorded staged inputs, source.patch
 against the parent packet's archive, the two Linux builds (identical), the window measurement (recomputed from the
 saved symbols for this candidate and for the parent packet's candidate against evidence/original/pump_amm/deployed.so),
-and the bound 25-suite runtime summary."""
+and the bound 25-suite runtime summary plus five retained negative-control pairs. It does not certify runtime equivalence."""
 import difflib, gzip, hashlib, io, json, os, tarfile, tempfile, types
 from pathlib import Path
 P = Path(__file__).resolve().parent; ROOT = P.parents[1]
 sha = lambda b: hashlib.sha256(b).hexdigest()
 def j(rel): return json.loads((P / rel).read_text())
-PINFO = j('measurement.json')['parent']; PARENT = ROOT / PINFO['packet']
 def fail(msg): raise SystemExit('FAIL: ' + msg)
 def check(cond, msg):
     if not cond: fail(msg)
 # 1. exact membership + hashes
-man = j('MANIFEST.json')['files']
 actual = set()
 for f in P.rglob('*'):
     if f.is_symlink() or not (f.is_file() or f.is_dir()): fail('special file ' + str(f))
     if f.is_file(): actual.add(f.relative_to(P).as_posix())
+man = j('MANIFEST.json')['files']
 check(actual == set(man) | {'MANIFEST.json'}, 'membership differs: %s' % sorted(actual ^ (set(man) | {'MANIFEST.json'})))
 for rel, h in man.items(): check(sha((P / rel).read_bytes()) == h, 'hash ' + rel)
+PINFO = j('measurement.json')['parent']; PARENT = ROOT / PINFO['packet']
 # 2. source archive == recorded staged inputs (the tree the builds mounted)
 recipe = j('builds/recipe.json'); staged = recipe['staged_inputs']
 def members(path):
@@ -83,7 +83,10 @@ check(s['transactions'] == sum(r['transactions'] for r in rows) and s['signature
 check(s['replay_driver_sha256'] == sha((P / 'runtime/replay_parallel.py').read_bytes()), 'replay driver hash')
 check(s['observer_sha256'] == sha((ROOT / 'repro/pump_amm/owner6048-v144/runtime/observe_suite.py').read_bytes()), 'observer hash')
 for name, h in s['harness_sha256'].items(): check(sha((ROOT / name).read_bytes()) == h, 'harness ' + name)
-print(json.dumps({'status': 'PASS', 'packet': P.name, 'normalized': len(cn), 'raw': len(cr), 'windows': len(rc),
+negmod = types.ModuleType('negative_verify'); negpath = P / 'negative/verify.py'; negmod.__file__ = str(negpath); exec(compile(negpath.read_bytes(), str(negpath), 'exec'), negmod.__dict__)
+negative = negmod.verify(P,validate_packet=False)
+check(negative['mismatches'] == 2 and negative['cases'] == 5, 'known negative controls')
+print(json.dumps({'status': 'PASS', 'qualification': 'static_research_with_known_runtime_regression', 'eligible_for_maintained_promotion': False, 'packet': P.name, 'normalized': len(cn), 'raw': len(cr), 'windows': len(rc),
                   'parent_normalized': len(pn), 'parent_raw': len(pr), 'gains': len(cn - pn), 'raw_gains': len(cr - pr), 'losses': 0,
                   'candidate_sha256': sha(blobs['a'][1]), 'symbols_sha256': sha(blobs['a'][0]),
-                  'runtime_cases': s['cases'], 'runtime_mismatches': 0}))
+                  'reported_runtime_cases': s['cases'], 'reported_runtime_mismatches': 0, 'independently_verified_reported_runtime': False, 'negative_controls': negative}))
