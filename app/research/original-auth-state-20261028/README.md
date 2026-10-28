@@ -42,4 +42,8 @@ python3 scripts/verify_evidence.py
 python3 scripts/test_tooling.py
 ```
 
-Focused tests are10 original predicate cases plus11 shared source cases. They use injected synthetic claims, decoder and clock only. No actual user profile, cookie, credentials, wallet signing or production request is used. Full gate results will be recorded in VALIDATION.json; no visual parity claim is made for this logic-only unit.
+Focused tests are10 original predicate cases plus11 shared source cases. They use injected synthetic claims, decoder and clock only. No actual user profile, cookie, credentials, wallet signing or production request is used. Full gate results are recorded in VALIDATION.json; no visual parity claim is made for this logic-only unit.
+
+## Gate results
+
+The focused21/21 tests, full app build, aggregate typecheck,698-object app verification,9 root capture checks and6 tooling checks pass. The full app test command passes230 backend tests,59 app Node tests and all focused/Python suites; Playwright finishes89/91. Failures are the unchanged leaderboard weekly/realized URL-state race tracked in PR663 and the Explore shell-search URL assertion. The latter passes1/1 when run in isolation; the failed full run is preserved. Relevant implementation/test bytes equal maintained main, with hashes in VALIDATION.json. No completely green aggregate test result is claimed.
