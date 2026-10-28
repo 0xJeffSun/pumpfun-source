@@ -17,7 +17,13 @@ verified against its source-inputs.json).
 
 ## Checkpoints committed
 
-- `checkpoints/cp3-q03-sweep-columns/` (current, self-verifying: `verify.py`).
+- `checkpoints/cp4-q04-o0075/` (current): **O0075 gained, 433/441 normalized, 100 raw-local, no losses.**
+  - Edges 4,314 to 4,363; Source records 456 to 467.
+  - Sweep differential: 692 cases, 0 mismatches, 0 non-compute log differences.
+  - 14 trade suites: 6,636 cases, 0 mismatches, 0 normalized log differences.
+  - Stripped `c1f25d01...`, symbols `73c28d5e...`. No Stack offset warnings. A repeat build is identical.
+  - Source edit: `edits/q04_o0075.py`, described in the O0075 section below.
+- `checkpoints/cp3-q03-sweep-columns/`.
   - **Diagnostic gain:** the sweep differential's non-compute log differences go from 58 (parent) to **0**. Every sweep panic now reports the original `line:column`.
   - **Change:** whitespace and line placement only (`edits/q03_columns.py` applied to the cp2 source). The sites are 276:84, 296:86, 353:84, 358:37 and 368:86.
   - **Counts:** 432/441 normalized, 100 raw-local, no losses of any kind.
@@ -80,22 +86,25 @@ W = /Users/shawwalters/Documents/Codex/2026-10-24/claude-mayhem-work
 - Indentation of the Source columns (17 for the lamport moves and field updates, 22 for
   a continued `.unwrap()`) implies the loops are methods (8-space bodies).
 
-## O0075 residual (8 instructions, frame layout already exact)
+## O0075: closed in cp4
 
-Original preheader: `ldxdw r2,[r10-608]; ldxdw r3,[r2+616]; stx; ldxdw r8,[r2+160];
-ldxdw r2,[r2+600]; stx; ldxdw r1,[r1+16]; stx` (token_program, quote_ata, admin, then
-remaining.ptr). Candidate: remaining.ptr first, then admin, quote_ata, token_program.
-Established with llc on edited IR:
-- the SelectionDAG ILP scheduler (default `list-ilp`; source/burr/hybrid/fast are far
-  worse) emits these loop-exported loads in **reverse IR order**; explicit pre-loop
-  `as_ref()` bindings in the order admin, ata, program give the original order of the
-  three (e33), but are not natural source.
-- remaining.ptr is scheduled first in every variant tried: its IR position (top, end,
-  separate block), ctx `readonly`/`noalias`, alias-scope metadata, an extra later use of
-  ctx, `&&[AccountInfo]` / `#[inline(always)]` (no ArgumentPromotion), index / step_by /
-  len-based loops, `chunks(2)`, ctx-taking associated fns - none change it. The cause is
-  in the DAG's register-pressure ordering (picking the ctx-based load bottom-up is
-  never cheaper than the account loads); the original's DAG must differ elsewhere.
+**Original preheader:** token_program, quote_ata and admin field loads, then `remaining.ptr` last. Before cp4 the candidate loaded `remaining.ptr` first, then the three fields in the opposite order. The cause was proven on rustc's IR with `llc` (`tools/prehdr.py`, specs in `tools/irexp/`).
+
+**Fix 1: load `ctx.accounts` in the entry block.**
+- The pre-RA list-ilp scheduler ranks a load whose base operand is already live and defined in the same block (LiveUses) ahead of a load from the `ctx` argument. While the accounts pointer was loaded inside the preheader block, `remaining.ptr` always went first.
+- With the accounts pointer loaded in the entry block, it becomes a cross-block value: a CopyFromReg, which MachineSink later sinks after the length check. The tie disappears and `remaining.ptr` is scheduled last.
+- Source: `let accounts = &*ctx.accounts;` before `require!(ctx.remaining_accounts.len() == 16, ..)`.
+- Control: `let accounts = &ctx.accounts;` emits no load and leaves the result unchanged.
+
+**Fix 2: hoisted loads in the order admin, admin_quote_ata, token_program.**
+- The scheduler emits these hoisted loads in reverse IR order, so the IR needs admin first.
+- Source: bind the three before the loop on the `let mut total` line, as `let x: &AccountInfo<'info> = self.x.as_ref();`, in the order admin, admin_quote_ata, token_program.
+- Loop uses: `token_program.key()`, `admin_quote_ata.to_account_info()` and `admin.to_account_info()`.
+- Of all 24 IR orders, only rem, 600, 160, 616 with the accounts pointer in the entry block gives 0 differences. The other source orders tried (program/ata/admin, ata/admin/program) leave 4 differences.
+
+**Trader, with the same two changes** (`t2-*` variants):
+- Binding orders trader/ata/program and program/ata/trader keep O0075 and give O0076 ratios of 0.281 and 0.282. No change.
+- O0076's residual is elsewhere (see below).
 
 ## O0076 residual
 
@@ -105,6 +114,12 @@ end (original: inline after the first native-compare segment), and the limit sel
 surgery) does not fix the placement. The trader loop's frequency structure (validate_sweep,
 sweepable) drives MachineBlockPlacement differently; the seed form that fixed O0075's
 frame (`let index = &[..]`) lowers O0076's alignment (0.53 -> 0.28 normalized ratio).
+
+**2026-10-27 recheck on cp4** (`tools/irexp/lim.py`, trader IR with the accounts reference and bindings):
+- The rustc IR keeps `select(native, 520, 576)` with a single load: 8,496 bytes, 990 differing slots.
+- Branch plus phi of the offsets 176/232 on `accounts+344` gives 8,392 bytes and 841 slots. Without the separate 344 base it gives 842 slots.
+- A phi of the two loaded values gives 8,464 bytes and 949 slots.
+- So the branch form helps, but it is not sufficient.
 
 ## Findings reused upstream / for other lanes
 
