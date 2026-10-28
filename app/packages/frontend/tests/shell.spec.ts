@@ -36,6 +36,11 @@ test("included routes load with one accurate active navigation item", async ({
     await expect(activeNavigation(page)).toContainText(navigationLabel);
     if (path === "/leaderboard") {
       await expect(page.getByTestId("leaderboard-error")).toBeVisible();
+    } else if (path === "/create") {
+      await expect(
+        page.locator('[data-product-state="unavailable"]'),
+      ).toHaveCount(0);
+      await expect(page.getByRole("form")).toBeVisible();
     } else {
       await expect(
         page.locator('[data-product-state="unavailable"]'),
