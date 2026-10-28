@@ -3,10 +3,6 @@ import { notFound } from "next/navigation";
 
 const routes: Record<string, [string, string]> = {
   explore: ["Explore", "Search, filters, coin rankings and discovery."],
-  leaderboard: [
-    "Leaderboard",
-    "Trader PnL, groups, competitions and creator payouts.",
-  ],
   live: ["Live", "Livestream discovery and viewing."],
   go: ["GO", "Campaign discovery and participation."],
   mayhem: ["Mayhem", "Mayhem overview, coin lists and traders."],

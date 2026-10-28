@@ -20,7 +20,7 @@ const viewports = [
 ] as const;
 
 function activeNavigation(page: Page) {
-  return page.locator('[aria-current="page"]');
+  return page.locator('.sidebar [aria-current="page"]');
 }
 
 test("included routes load with one accurate active navigation item", async ({
@@ -34,9 +34,13 @@ test("included routes load with one accurate active navigation item", async ({
     ).toBeVisible();
     await expect(activeNavigation(page)).toHaveCount(1);
     await expect(activeNavigation(page)).toContainText(navigationLabel);
-    await expect(
-      page.locator('[data-product-state="unavailable"]'),
-    ).toBeVisible();
+    if (path === "/leaderboard") {
+      await expect(page.getByTestId("leaderboard-error")).toBeVisible();
+    } else {
+      await expect(
+        page.locator('[data-product-state="unavailable"]'),
+      ).toBeVisible();
+    }
   }
 });
 
