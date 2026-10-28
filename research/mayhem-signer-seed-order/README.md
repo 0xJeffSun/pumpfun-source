@@ -30,9 +30,20 @@ five PR #327 source forms at `a600dd2617cf9d062b0a602204fb8419e9e8c108` and
 PR #330 at `ea2b4e13db1c4e3d81836a4bdacbf312697d74d1` retain the exact parent's
 Legacy Sell CPI region, including its early seed declaration. The six exact
 Git blobs are retained and this comparison is replayed. These signer controls
-have not been composed with those proposals and inherit none of their runtime
-evidence. All 14 acquired qualified inputs/artifacts/readers remain unchanged
+were initially separate from those proposals. A subsequent
+[composition experiment](composition/README.md) retains eight new root builds
+from merged PR #330: all three late-seed forms reduce ordered Legacy Sell
+callee correspondence from 50/51 to 45/51, despite higher instruction overlap
+in the inline case. Paired eager-price controls reproduce their complete
+parent outputs. These negative results inherit none of the upstream runtime
+evidence and add no complete window. All 14 acquired qualified inputs/artifacts/readers remain unchanged
 on reviewed main `cbcdfc9f16500674bdf35e1d8d43ed4e2b9c9672`.
+
+A subsequent [LLVM trace](composition/placement/README.md) locates that
+composition's callee-layout divergence in machine block placement. Both
+variants have identical ordered callees before the pass and different
+sequences afterward, each matching its final executable. This is a layout
+diagnostic, not a behavioral regression or complete source recovery.
 
 | Source form | Complete handler bytes | Bump-load offset | Diagnostic aligned slots |
 | --- | ---: | ---: | ---: |
