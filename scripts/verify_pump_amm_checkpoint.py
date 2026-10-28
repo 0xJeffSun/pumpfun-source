@@ -9,10 +9,10 @@ import subprocess
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
-CHECKPOINT = 'repro/pump_amm/create-incentive-recovery-20261028'
+CHECKPOINT = 'repro/pump_amm/create-pool-fields-recovery-20261028'
 ARTIFACT = CHECKPOINT + '/results/build/candidate.so'
-CANDIDATE = '9e4891b1a25fc8f7413e1e9f2ed8e5730a1c39301e306ab68fc4e82acfd952c3'
-MANIFEST = 'ffede26ff0512cd703b2b6ea72b64b4b0da4c949e76e5c08594e11cd28b83c26'
+CANDIDATE = '4fb73d3c0303e1f065e6356d32e86ba7341f75b27b861571cd8b8c586e46af98'
+MANIFEST = 'f837e4d8fbe5e359e9f2df2ae6c0d59abc9c0cf7ca0903aabbafdf15835258c0'
 
 
 def sha(path):

@@ -1533,3 +1533,7 @@ research/mayhem-current436-native-20261028/manifest.json -whitespace
 repro/pump_amm/create-incentive-recovery-20261028/results/** -whitespace
 
 repro/pump_amm/create-incentive-recovery-20261028/followup/** -whitespace
+
+repro/pump_amm/create-pool-fields-recovery-20261028/results/** -whitespace
+
+repro/pump_amm/create-pool-fields-recovery-20261028/followup/** -whitespace

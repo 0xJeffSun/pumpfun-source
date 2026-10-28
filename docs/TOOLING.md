@@ -134,7 +134,7 @@ its bytes. The supported-target adapter instead rejects unrecorded local path
 dependencies. These input inventories do not by themselves authenticate registry
 sources, tools or runtime behavior.
 
-Use the [current AMM version 3 workspace recipe](../repro/pump_amm/create-incentive-recovery-20261028/workspace_recipe_v3.py)
+Use the [current AMM version 3 workspace recipe](../repro/pump_amm/create-pool-fields-recovery-20261028/workspace_recipe_v3.py)
 when staging the standalone AMM and native crate as a workspace. Version 3 binds
 56 canonical and 57 workspace inputs without changing Rust. Its `stage` and
 `verify` commands are shown in the [AMM README](../programs/pump-amm/README.md).
