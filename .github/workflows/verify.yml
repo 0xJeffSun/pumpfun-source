@@ -16,6 +16,10 @@ jobs:
       max-parallel: 12
       matrix:
         include:
+          - suite: pump-multi-hop-quote-admission
+            commands: |
+              python -I -B research/pump-multi-hop-quote-admission/verify.py
+              python -I -B research/pump-multi-hop-quote-admission/test_controls.py
           - suite: pump-canonical-frontier
             commands: |
               python -B scripts/verify_current_checkpoint.py pump
