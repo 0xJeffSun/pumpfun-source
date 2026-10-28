@@ -1440,3 +1440,6 @@ programs/pump-amm/src/transfer_creator.rs whitespace=-blank-at-eol
 # Preserve reconstructed Sweep source and patch bytes.
 research/fees-sweep-integration/overrides/** -whitespace
 research/fees-sweep-integration/source.patch -whitespace
+
+# Retain exact source, controller and evidence bytes for prepare_pool recovery.
+research/amm-prepare-pool-recovery/** -text -whitespace

@@ -12,6 +12,9 @@ jobs:
       max-parallel: 12
       matrix:
         include:
+          - suite: amm-prepare-pool-recovery
+            commands: |
+              python -I -B research/amm-prepare-pool-recovery/verify.py
           - suite: mayhem-clean-linux-evidence
             commands: |
               python -B research/mayhem-clean-linux-build-20261027/verify.py
