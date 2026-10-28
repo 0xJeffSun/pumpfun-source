@@ -20,8 +20,7 @@ def stage(td):
         (t / rel).parent.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(ROOT / rel, t / rel)
     pkt = t / 'research/claude-mayhem-a-20261027'
-    shutil.copytree(HERE / 'layers/initializer-safe-form', pkt / 'layers/initializer-safe-form')
-    shutil.copyfile(HERE / 'verify.py', pkt / 'verify.py')
+    shutil.copytree(HERE, pkt)
     return t, pkt
 
 
@@ -56,18 +55,22 @@ def add_unsafe(pkt, root):
                                                '+pub fn initialize(ctx:Context<crate::InitializeMayhemState>)->Result<()> { unsafe{} initialize_state('))
 
 
+def extra_file(pkt, root):
+    (pkt / 'unexpected.json').write_text('{}')
+
+
 def main():
     with tempfile.TemporaryDirectory() as td:
         root, pkt = stage(td)
         assert run(pkt, root) == 0, 'unmodified copy must verify'
     for name, fn in [('tampered source', mutate_state), ('tampered ELF', mutate_elf),
-                     ('tampered parent state', mutate_parent_state), ('patch adds unsafe', add_unsafe)]:
+                     ('tampered parent state', mutate_parent_state), ('patch adds unsafe', add_unsafe), ('extra packet file', extra_file)]:
         with tempfile.TemporaryDirectory() as td:
             root, pkt = stage(td)
             fn(pkt, root)
             assert run(pkt, root) != 0, f'{name} was not rejected'
             print(f'rejected: {name}')
-    print('OK: 4 negative cases rejected, unmodified copy verifies')
+    print('OK: 5 negative cases rejected, unmodified copy verifies')
 
 
 if __name__ == '__main__':

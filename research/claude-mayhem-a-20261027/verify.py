@@ -108,6 +108,23 @@ def main():
     assert text[530] == ptext[530] and text[531] == ptext[531], 'Location lines 531/532 changed'
     assert 'let mut mint_key=Pubkey::default();' in text[527] and 'mint_key=mint.key();' in text[527]
     checks['source']['initializer_region_safe'] = True
+    # 5. the recorded build used exactly these safe-form inputs and produced the shipped ELFs
+    rec = layer / 'builds/recovered'
+    launch = json.loads((rec / 'launch.json').read_text())
+    result = json.loads((rec / 'result.json').read_text())
+    assert launch['source_inputs'] == mine_inputs, 'build launch inputs differ from the safe-form inputs'
+    assert result['returncode'] == 0 and result['source_unchanged'], 'build record is not a clean build'
+    assert result['candidate_sha256'] == STRIPPED and result['symbols_sha256'] == SYMBOLS, 'build outputs differ'
+    checks['build_record'] = dict(inputs=len(launch['source_inputs']), state_rs=launch['source_inputs']['src/state.rs'],
+                                  candidate_sha256=result['candidate_sha256'], symbols_sha256=result['symbols_sha256'])
+    # 6. packet inventory equals manifest.json
+    manifest = json.loads((HERE / 'manifest.json').read_text())
+    files = {f.relative_to(HERE).as_posix() for f in HERE.rglob('*') if f.is_file()}
+    assert not any(f.is_symlink() for f in HERE.rglob('*')), 'packet includes a symlink'
+    assert files == set(manifest) | {'manifest.json'}, 'packet file inventory differs from manifest.json'
+    for name, digest in manifest.items():
+        assert sha((HERE / name).read_bytes()) == digest, ('manifest digest', name)
+    checks['manifest'] = dict(files=len(manifest))
 
     print(json.dumps(checks, indent=1))
     print('OK: Layer A ELFs equal the parent; safe-Rust source materializes exactly.')

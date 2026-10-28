@@ -73,14 +73,18 @@ parent).
 
 ```sh
 python3 -I -B research/claude-mayhem-a-20261027/verify.py
-python3 -I -B research/claude-mayhem-a-20261027/test_verify.py   # 4 tamper cases must fail
+python3 -I -B research/claude-mayhem-a-20261027/test_verify.py   # 5 tamper cases must fail
 ```
 
 It checks that the shipped `layers/initializer-safe-form/artifacts/*.so.gz` equal the
 parent's `builds/current/*.so.gz` byte for byte, that applying `source.patch` to the
 parent's `src/state.rs` reproduces the shipped `source/src/state.rs` exactly (and its
 recorded hash), that the other 66 inputs are unchanged, and that the initializer region
-contains no `unsafe`/`MaybeUninit`/`repr(C)`. It passes under `env -i HOME=<empty dir>`.
+contains no `unsafe`/`MaybeUninit`/`repr(C)`. It also checks that the recorded build
+(`builds/recovered/launch.json`) used exactly these 67 safe-form inputs (`src/state.rs`
+`26f586df…`). It checks that `result.json` records a clean build producing the stripped and
+symbol hashes above, and that the packet's file inventory equals `manifest.json`. It
+passes under `env -i HOME=<empty dir>`.
 Build record: `layers/initializer-safe-form/builds/recovered/` (command, environment,
 link map, compiler log; `tools/mbuild.py` qualified mixed-SDK recipe).
 
@@ -93,141 +97,15 @@ frame, copy-out/overflow differ; C1 (non-SSA key inside the parent control's
 `AccountInfo`-taking helper) only the frame differs; C2 (key passed by value) reverts to
 the control; C4 = this form (first measured on the sizing-panic parent at 430/441).
 
-## Secondary: Layer B allocator context on the 432 parent (CONDITIONAL independent reproduction — not a gain)
+## Not included: allocator-context reproduction (Layer B)
 
-> **Evidence location.** To keep the repository lean, this PR ships only Layer A
-> (`layers/initializer-safe-form/`, checked by `verify.py`). Layer B is an independent
-> reproduction, not a gain; its build and runtime evidence (≈74 MB:
-> `layers/allocator-context*/`, the 14-suite replays with 6,636 comparisons and 0
-> mismatches) is preserved on branch
-> [`claude/mayhem-a-20261027`](https://github.com/lalalune/pumpfun-source/tree/claude/mayhem-a-20261027)
-> at commit `3b84764ed`. The `measure.py` / `progress_check.py` commands below refer to
-> that evidence.
-
-Main already composes the allocator context with the **complete historical
-`declare_program!` macro**: [`mayhem-historical-macro-current-20261027`](../mayhem-historical-macro-current-20261027/README.md)
-(78dfdbca8; 429-window parent, stripped `ed5b4020…`), the historical composition in
-[`mayhem-initializer-current-recovery-20261027`](../mayhem-initializer-current-recovery-20261027/README.md)
-(430/441, 141 raw-local; stripped `9e0e32a9…`, symbols `a6a4e593…`) and
-[`mayhem-native-current432-composition`](../mayhem-native-current432-composition/README.md)
-(13c846906, shayanel; native Linux, 432/441, 85 native raw-local; stripped `9d6b9032…`).
-This layer is only an independent re-derivation in the hand-rendered, Anchor 1.0.0
-mixed-source form on the qualified 432 parent. **Its 141-raw artifact is not byte-equal
-to any of those** (`2ef6328d…`/`c9abef93…` vs `9e0e32a9…`/`a6a4e593…` and
-`9d6b9032…`/`9874fa10…`): the parents differ (430 vs 432 sources; PR #282 vs qualified
-Legacy Buy), the toolchain differs for the native packet, and the macro form differs
-(rendered parser vs complete historical macro). Its raw-local count must not be added to
-any row.
-
-The same two-file curve-crate change (appended rendered `legacy_event_utils` module +
-`CreateEvent` IDL entry) composed onto the 432 parent (`layers/allocator-context-432/`):
-432/441 normalized (no gain, no loss), **raw-local 100 → 141** (the 39 bodies below plus
-O0166 and O0194, which now align because the parent's initializer already has the
-original 960-byte size), positive direct edges 4,314 → 4,315, Source records 456 → 456,
-no losses (parent `progress.compare()`). Stripped `2ef6328d429dfe2cc99fec477398db59f386d81cd379584d4a41e151b65d90a5`
-(755,392 B), symbols `c9abef9305d27417d566e8d5cae323d921275c01c518b1362c937b9bf044aab9`
-(gzipped in `layers/allocator-context-432/artifacts/`). Full unchanged 14-suite replay on
-this exact stripped ELF: **6,636 comparisons, 13,272 signed records, 0 mismatches, 0
-normalized-log differences** (`layers/allocator-context-432/runtime-summary.json`).
-This exact qualified-432 composition is not on main (the native Linux composition
-`mayhem-native-current432-composition` reports 432/85 native and keeps the historical
-430/141 separate). Everything said below about the mechanism, its dead-code nature and
-its CONDITIONAL status applies unchanged.
-
-## Layer B — allocator compilation context (CONDITIONAL; first measured on the 429 parent)
-
-**This layer is not claimed as recovered source.** It composes, onto the parent,
-the mixed-source diagnostic of
-[`research/mayhem-allocator-parser-provenance`](../mayhem-allocator-parser-provenance/README.md)
-(startrack3r): the historical Anchor `declare_program!` event-parser template
-(the `utils` module emitted on all targets before Anchor commit `624f3ae`),
-rendered for the public Pump `CreateEvent` type, plus that event/type in the
-curve crate's IDL. That packet's caveat applies unchanged: it is a mixed-source
-diagnostic combining an older event-parser template with Anchor 1.0.0-generated
-event types from the current published Pump IDL; it does not establish the
-original IDL, Anchor revision or source.
-
-What the change does:
-
-- `curve-accounts/src/lib.rs`: the rendered `legacy_event_utils` module (copied
-  byte-for-byte from that packet's enabled controller) is **appended at the end of
-  the file**, after `pub use anchor_spl::token_interface;`, so no existing line or
-  Location record moves.
-- `curve-accounts/idls/pump.json`: `events` + `types` entries for `CreateEvent`
-  (instructions, address and metadata unchanged).
-
-Mechanism: the parser's `CreateEvent::try_from_slice` instantiates borsh `String`
-deserialization (`vec![0u8; n]`) in the curve crate's single codegen unit. That
-zeroed allocation keeps `Global::alloc_impl`'s `zeroed` parameter non-constant
-for IPSCCP, which changes the curve crate's `alloc::raw_vec::finish_grow` from
-312 to 328 bytes — the shape of both original windows O0209 and O0237. **The
-parser code itself is dead code: it is absent from the linked output.** Text grows
-by exactly 16 bytes and `finish_grow` is the only changed function body. Whether
-the original program really contained such a context (historical Anchor
-`declare_program!` with an events-bearing Pump IDL) is unproven; the
-admissibility of this layer as recovered source is therefore **unproven**.
-
-Measured with the parent's own `progress.compare()` (unchanged code, via
-`progress_check.py`) and this packet's `measure.py`:
-
-- normalized 429 → 429 (no gains, no losses);
-- raw-local **100 → 139** (+39: O0197 O0198 O0200 O0207 O0208 O0209 O0217 O0219
-  O0225 O0227 O0228 O0229 O0233 O0237 O0245 O0259 O0263 O0268 O0272 O0273 O0275
-  O0278 O0279 O0280 O0281 O0282 O0287 O0300 O0301 O0312 O0315 O0316 O0322 O0333
-  O0334 O0341 O0354 O0358 O0360), no raw loss;
-- positive direct edges 4,288 → 4,289 (O0210's reserve now calls a 328-byte
-  `finish_grow`, as in the original), positive Source records 446 → 446, no
-  observed Source-profile loss.
-
-Artifacts (gzipped, mtime 0) in `layers/allocator-context/artifacts/`:
-
-| File | Bytes | SHA-256 |
-| --- | ---: | --- |
-| candidate.so (stripped) | 755,104 | `ed5b4020ca2659b427739a384bc7c014e2b192f81cce60d7d9b770d4978f0232` |
-| symbols.so | — | `90b64207d062d0a6e4d38d83129bd69a47ae1fa478367f3e13efb53f7da4af8f` |
-
-Runtime: the unchanged 14-suite trade replay of the parent
-(`research/mayhem-sizing-panic-recovery/replay.py`) ran on this exact stripped
-candidate: **14/14 suites, 6,636 comparisons, 13,272 signed transaction records,
-0 checked-field mismatches, 0 normalized-log differences**
-(`layers/allocator-context/runtime-summary.json`; per-suite receipts and logs in
-`layers/allocator-context/runtime/`). Finite local LiteSVM corpus only.
-
-### How this relates to the other allocator packets on main
-
-| Packet | What it shows | Whole-program ELF? |
-| --- | --- | --- |
-| [mayhem-allocator-context](../mayhem-allocator-context/README.md) (startrack3r) | a zeroed `vec!` in the curve crate is a sufficient context for the 328-byte body | older qualified parent only |
-| [mayhem-allocator-parser-provenance](../mayhem-allocator-parser-provenance/README.md) (startrack3r) | the historical event-parser template (rendered, with Anchor 1.0.0 event types) is such a context; the Solana gate reverses it | older parent (428 windows) |
-| [mayhem-historical-framework](../mayhem-historical-framework/README.md) (startrack3r, 0a881f726) | with **consistent historical Anchor c0077c2** runtime/derive/macro/registry versions and the unmodified `declare_program!(pump)`, the curve object's helper is 328 B; the historical gate and a no-event control give 312 B | **no** — the historical-runtime roots fail to compile |
-| [mayhem-control-work-20261027](../mayhem-control-work-20261027/README.md) (Codex, 2ae5b07af) | composes the rendered parser onto the sizing-panic parent: stripped `ed5b4020…`, 429/139, full replay | yes |
-| [mayhem-historical-macro-current-20261027](../mayhem-historical-macro-current-20261027/README.md) | the **complete historical macro** (no hand-rendered parser) on current source reproduces stripped `ed5b4020…` exactly | yes |
-| **this layer** | independent whole-program build and measurement of the same composition | yes |
-
-This layer's stripped ELF is byte-identical to the artifact already published by
-mayhem-control-work-20261027 and reproduced by mayhem-historical-macro-current-20261027
-(`ed5b4020…`); its symbol ELF (`90b64207…`) differs from the latter's (`281c2f67…`) only
-where symbol/string tables name the parser's module. It is therefore an
-**independent reproduction, not a new gain**: the 39 raw-local bodies must not be
-counted twice. Its context is the **Anchor 1.0.0-generated, hand-rendered
-mixed-source form** of the parser-provenance packet (rendered `legacy_event_utils`
-module + `CreateEvent` IDL entry, current Anchor 1.0.0 runtime). It does **not**
-use the historical framework's consistent c0077c2 Anchor inputs, and it does not
-use the complete historical macro. The historical-framework packet strengthens
-the plausibility of the mechanism (the 328-byte body arises under a consistent
-historical Anchor stack) but provides no linked program; this layer and the two
-whole-program packets above provide the linked measurement (raw-local 100 → 139,
-no losses). The label stays **CONDITIONAL / not recovered source**.
-
-Re-measure without rebuilding (from the repository root):
-
-```sh
-python3 -B research/claude-mayhem-a-20261027/measure.py \
-  research/claude-mayhem-a-20261027/layers/allocator-context/artifacts/symbols.so.gz \
-  --base research/mayhem-sizing-panic-recovery/artifacts/recovered/symbols.so.gz
-python3 -B research/claude-mayhem-a-20261027/progress_check.py \
-  research/claude-mayhem-a-20261027/layers/allocator-context/artifacts/symbols.so.gz
-```
+The lane also measured a CONDITIONAL allocator compilation context on the 432 parent
+(raw-local 100 -> 141, no losses). That context is a dead-code event parser that the
+linker discards. Its 14-suite replay covered 6,636 comparisons with 0 mismatches. It is
+an independent re-derivation of compositions already on main (78dfdbca8, 13c846906):
+not recovered source and not a gain. It is not part of this packet. Its ~74 MB of
+evidence and measurement tools stay on branch `claude/mayhem-a-20261027` at
+`3b84764ed`.
 
 ## Build recipe
 
@@ -238,11 +116,5 @@ rlibs (each verified against the official archive `fcc41631…` hashes recorded 
 parent's unchanged qualified `ordered.ld` (rustc's default script is checked
 byte-equal to the parent's `default.ld` before substitution), v1.52 `llvm-objcopy
 --strip-all`. `tools/mbuild.py` is the driver; `builds/recovered/launch.json`
-records the exact command and environment. Source = parent `source.tar.gz` +
-`layers/allocator-context/source.patch` (`source-inputs.json` lists all 67 file
-hashes).
-
-## Other windows (work in progress; no claim)
-
-See PROGRESS.md for the per-window residual diagnosis (initializer O0193, AMM buy
-quote O0092, legacy Buy O0081, BuyV2 O0083, BuyPumpSwap O0077).
+records the exact command and environment. Source = the parent's 67 inputs with `layers/initializer-safe-form/source.patch` applied
+(`layers/initializer-safe-form/source-inputs.json` lists all 67 file hashes).
