@@ -10,6 +10,8 @@ mismatches.
 """
 from pathlib import Path
 import csv, gzip, hashlib, json, sys
+if not __debug__:
+    raise SystemExit('optimized Python disables this verifier\'s assertion gates; rerun without -O')
 sys.dont_write_bytecode = True
 P = Path(__file__).resolve().parent
 ROOT = next(p for p in P.parents if (p / 'evidence/original/pump/deployed.so').is_file())

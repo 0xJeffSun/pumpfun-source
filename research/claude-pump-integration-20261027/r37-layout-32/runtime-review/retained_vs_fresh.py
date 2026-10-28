@@ -1,8 +1,11 @@
-"""Compare candidate log sequences of the L31 packet corpus (r37-layout-31/full.json.gz) with L32's fresh run; compute lines excluded,
-source coordinates kept verbatim. Expect only insertions of the two notices."""
+"""Compare retained L31 logs with L32 without checkout-specific paths."""
 import gzip, json, sys, collections, difflib
 from pathlib import Path
-R = Path('/Users/shawwalters/Documents/Codex/2026-10-24/claude-pump-work/lanes/fz-int-pump/wt32/research/claude-pump-integration-20261027')
+if not __debug__:
+    raise SystemExit('optimized Python disables assertion gates; rerun without -O')
+sys.dont_write_bytecode = True
+HERE = Path(__file__).resolve().parent
+R = HERE.parent.parent
 ld = lambda p: json.loads(gzip.decompress((R / p / 'full.json.gz').read_bytes()))
 a, b = ld('r37-layout-31'), ld('r37-layout-32')
 def pairs(v, path, out):
