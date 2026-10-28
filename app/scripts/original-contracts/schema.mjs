@@ -1,4 +1,4 @@
-import { walk, member, propertyName, literal } from './source.mjs';
+import { walk, member, propertyName, literal, findNodes, exactlyOne } from './source.mjs';
 
 // This reads a bounded declaration language. It never invokes a captured
 // function, getter, module or Zod implementation. Unsupported syntax fails.
@@ -7,6 +7,7 @@ export function createSchemaExtractor(corpus, { sources = {} } = {}) {
   const definitions = {};
   const witnesses = new Map();
   const pending = new Set();
+  let primitiveWitnesses;
   const key = (id, name) => `${id}.${name}`;
   function importedId(node, ctx) {
     if (node?.type === 'Identifier') return ctx.imports.get(node.name);
@@ -56,6 +57,32 @@ export function createSchemaExtractor(corpus, { sources = {} } = {}) {
     if (!node) throw new Error(`missing declaration: ${id}.${name}`);
     remember(ctx.factory, node, `declaration ${id}.${name}`);
     return { node, factory: ctx.factory };
+  }
+  async function primitives() {
+    if (!primitiveWitnesses) primitiveWitnesses = (async () => {
+      const hashes = {
+        876543: '4f5e713c7118058961d6d194625b7849fab8bd8cc447f079874947b4559367cc',
+        599565: '375bf1a7298ca40a088210d7036d5422547ed59153f205de430426824b85caaf',
+        408162: 'd27320343f07efeb58d5c33b728f3fdb687f68cfdaf361cbb07d80bb4800d1f2',
+      };
+      const contexts = {};
+      for (const [id, hash] of Object.entries(hashes)) {
+        const ctx = await context(Number(id));
+        if (ctx.factory.provenance.sha256 !== hash) throw new Error(`unreviewed primitive implementation ${id}`);
+        contexts[id] = ctx;
+      }
+      const vendor = contexts[599565].factory;
+      for (const name of ['$ZodNumber', '$ZodCheckNumberFormat', '$ZodCheckMaxLength', '$ZodCheckMinLength', 'ZodNumber']) {
+        const node = exactlyOne(findNodes(vendor.node, (node) => node.type === 'CallExpression' &&
+          node.callee.type === 'MemberExpression' && propertyName(node.callee.property) === '$constructor' && node.arguments[0]?.value === name), name);
+        remember(vendor, node, `primitive ${name}`);
+      }
+      for (const name of ['nb', 'u1']) remember(vendor, exactlyOne(findNodes(vendor.node,
+        (node) => node.type === 'FunctionDeclaration' && node.id.name === name), name), `primitive safe integer ${name}`);
+      const utility = contexts[408162].factory;
+      remember(utility, exactlyOne(findNodes(utility.node, (node) => node.type === 'FunctionDeclaration' && node.id.name === 'ei'), 'codePointLength'), 'primitive codePointLength');
+    })();
+    await primitiveWitnesses;
   }
   async function ref(ctx, name, node, isExport = false) {
     const label = key(ctx.id, isExport ? name : `local:${name}`);
@@ -182,7 +209,7 @@ export function createSchemaExtractor(corpus, { sources = {} } = {}) {
     const target = callee.object;
     const isZod = target.type === 'MemberExpression' && !target.computed && propertyName(target.property) === 'z' && importedId(target.object, ctx) === 876543;
     if (isZod) {
-      await context(876543);
+      await primitives();
       if (['string', 'number', 'boolean', 'null'].includes(method) && node.arguments.length === 0) return { type: method };
       if (method === 'object' && node.arguments.length === 1) return { type: 'object', properties: await shape(node.arguments[0], ctx) };
       if (method === 'array' && node.arguments.length === 1) return { type: 'array', items: await compileWith(node.arguments[0], ctx) };
@@ -197,16 +224,20 @@ export function createSchemaExtractor(corpus, { sources = {} } = {}) {
     if (method === 'nullable') return { anyOf: [base, { type: 'null' }] };
     if (method === 'describe' && node.arguments.length === 1) return { ...base, description: await constant(node.arguments[0], ctx) };
     const expanded = deref(base);
-    if (method === 'int' && expanded.type === 'number') return { ...expanded, type: 'integer' };
-    if (method === 'nonnegative' && ['number', 'integer'].includes(expanded.type)) return { ...expanded, minimum: 0 };
+    if (method === 'int' && expanded.type === 'number') return { ...expanded, type: 'integer',
+      minimum: Math.max(expanded.minimum ?? -Infinity, Number.MIN_SAFE_INTEGER),
+      maximum: Math.min(expanded.maximum ?? Infinity, Number.MAX_SAFE_INTEGER) };
+    if (method === 'nonnegative' && ['number', 'integer'].includes(expanded.type)) return { ...expanded, minimum: Math.max(expanded.minimum ?? -Infinity, 0) };
     if (['min', 'max'].includes(method) && node.arguments.length === 1) {
       const value = await constant(node.arguments[0], ctx);
       if (typeof value !== 'number' || !Number.isFinite(value)) throw new Error('invalid bound');
-      if (expanded.type === 'string') return { ...expanded,
-        'x-js-utf16-length': { ...expanded['x-js-utf16-length'], [method === 'min' ? 'minimum' : 'maximum']: value } };
-      const suffix = { array: 'Items' }[expanded.type];
-      if (suffix) return { ...expanded, [`${method}${suffix}`]: value };
-      if (['number', 'integer'].includes(expanded.type)) return { ...expanded, [method === 'min' ? 'minimum' : 'maximum']: value };
+      const suffix = { string: 'Length', array: 'Items' }[expanded.type];
+      const combine = method === 'min' ? Math.max : Math.min;
+      if (suffix) return { ...expanded, [`${method}${suffix}`]: combine(expanded[`${method}${suffix}`] ?? (method === 'min' ? -Infinity : Infinity), value) };
+      if (['number', 'integer'].includes(expanded.type)) {
+        const keyword = method === 'min' ? 'minimum' : 'maximum';
+        return { ...expanded, [keyword]: combine(expanded[keyword] ?? (method === 'min' ? -Infinity : Infinity), value) };
+      }
     }
     if (method === 'extend' && expanded.type === 'object' && node.arguments.length === 1) return { ...expanded, properties: { ...expanded.properties, ...await shape(node.arguments[0], ctx) } };
     if (method === 'pick' && expanded.type === 'object' && node.arguments[0]?.type === 'ObjectExpression' && node.arguments.length === 1) {
