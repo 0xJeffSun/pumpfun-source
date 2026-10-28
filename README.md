@@ -150,8 +150,9 @@ separates raw-equal and mapped bytes and prioritizes the remaining unproved rang
 The [counted ErrorCode-name proof](research/mayhem-current437-error-names-20261028/README.md)
 the [ErrorCode-message proof](research/mayhem-current437-error-messages-20261028/README.md)
 and [static ProgramError messages](research/mayhem-current437-program-error-messages-20261028/README.md)
-add 179 exact strings plus 77 descriptors. Together the current proofs cover
-14,015 of 26,180 payload-data bytes (53.53%); 12,165 bytes remain unproved.
+are extended by [42 selected ErrorKind table entries](research/mayhem-current437-error-kind-tables-20261028/README.md).
+Together the current proofs cover 15,229 of 26,180 payload-data bytes (58.17%);
+10,951 bytes remain unproved.
 This is a proof footprint, not a measure of engineering effort or whole-ELF completion.
 
 The [remaining-body review](docs/MAYHEM-COMPLETION.md#retained-partial-source-controls)

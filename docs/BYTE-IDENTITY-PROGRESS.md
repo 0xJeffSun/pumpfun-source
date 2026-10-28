@@ -3023,3 +3023,10 @@ Aggregate payload coverage is 12,910/26,180 bytes (49.31%); 13,270 bytes (50.69%
 The [static ProgramError reader](../research/mayhem-current437-program-error-messages-20261028/README.md) verifies 25 exact strings totaling 1,105 bytes, while excluding the dynamic Custom branch. Each selected path preserves its formatter argument and passes the explicit pointer/count through the matched writer wrapper. Source-arm names and messages are checked against the Cargo-authenticated solana-program-error 3.0.1 archive. Compiler enum tags are described as observed layout, not a stable source ABI. All 431 closed windows and 581 pairs remain.
 
 Payload coverage reaches 14,015/26,180 bytes (53.53%); 12,165 bytes remain unproved. No allocation, callback-output, runtime or whole-ELF claim is added.
+
+
+## Qualified437 selected ErrorKind tables
+
+The [42-entry table proof](../research/mayhem-current437-error-kind-tables-20261028/README.md) validates the complete 112-byte index/count-loading body and its writer forwarding. It adds 542 counted name bytes, 336 exact length bytes, 168 exact pointer-zero bytes and 168 mapped pointer bytes. The domain comes from the archived installed sysroot source, explicitly treated as context rather than proof of the original build. No larger table extent or arbitrary-byte-tag behavior is claimed. Independent full verification and 14 corruption tests pass.
+
+The chained payload footprint reaches 15,229/26,180 bytes (58.17%), leaving 10,951 bytes unproved. No complete function or whole-ELF claim changes.
