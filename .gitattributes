@@ -1505,3 +1505,10 @@ research/amm-fee-value-call-recovery/** -text -whitespace
 repro/pump_amm/fee-helper-source-coordinates-20261028/source.patch -whitespace
 research/mayhem-current436-sweep-rent-lifetime-20261028/sweep/source.patch -whitespace
 research/mayhem-current436-sweep-rent-lifetime-20261028/sweep/**/link.map -whitespace
+
+repro/pump_amm/native-ownership-recovery-20261028/results/** -whitespace
+
+repro/pump_amm/native-ownership-recovery-20261028/followup/** -whitespace
+
+# Preserve the exact source bytes bound by the AMM native-ownership checkpoint.
+programs/pump-amm/src/instructions/swap/mod.rs whitespace=-blank-at-eof

@@ -1,4 +1,5 @@
 pub mod admin;
+pub mod coin_creator;
 pub mod token_incentives;
 
 pub mod swap;

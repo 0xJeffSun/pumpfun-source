@@ -6,7 +6,7 @@ This review updates the research frontier while preserving the selected-checkpoi
 contains every one of the **4,415 selected/research function-window rows**.
 
 The generated inventory is a dated snapshot. Later maintained selections now
-include Pump Round42 and the AMM private-event and sweep recovery; their current counts and
+include Pump Round43 and the current AMM recovery; their current counts and
 evidence are in the [repository overview](../README.md). The current rows below
 are separate from the historical rows, and do not rewrite that snapshot.
 
@@ -51,20 +51,20 @@ analysis. Candidate symbol names are hypotheses about original identity.
 | Fees selected | 585 | 102 | 363 | 120 | 0 |
 | Mayhem historical selected | 441 | 58 | 131 | 7 | 245 |
 | Relay historical source 15 | 492 | 33 | 89 | 370 | 0 |
-| **Pump current Round42** | **1,035** | **203** | **614** | **218** | **0** |
-| **PumpSwap current** | **785** | **148** | **508** | **129** | **0** |
+| **Pump current Round43** | **1,035** | **203** | **614** | **218** | **0** |
+| **PumpSwap current** | **785** | **148** | **510** | **127** | **0** |
 | **Fees latest research** | **585** | **585** | **0** | **0** | **0** |
 | **Mayhem latest research** | **441** | **141** | **295** | **5** | **0** |
 | **Relay canonical selection** | **492** | **492** | **0** | **0** | **0** |
 
-The current rows are bound to [Pump Round42](../repro/pump/main-contract-round42-20261027/README.md), [AMM private-event and sweep recovery](../repro/pump_amm/private-sweep-recovery-20261027/README.md), [exact Fees research](../research/claude-fees100-crank-donation-20261027/README.md) and [qualified Mayhem436 composition](../research/mayhem-current436-composition-20261027/README.md). They extend the dated inventory below. Each row is a partition, not a score of semantic correctness. The historical selected Mayhem source
+The current rows are bound to [Pump Round43](../repro/pump/main-contract-round43-20261027/README.md), [current AMM recovery](../repro/pump_amm/native-ownership-recovery-20261028/README.md), [exact Fees research](../research/claude-fees100-crank-donation-20261027/README.md) and [qualified Mayhem436 composition](../research/mayhem-current436-composition-20261027/README.md). They extend the dated inventory below. Each row is a partition, not a score of semantic correctness. The historical selected Mayhem source
 ledger has 257 opaque windows, 12 of which happen to match local raw bytes.
 Selected Fees retains two call-conflicting rows; body existence does not resolve
 those conflicts. Different programs and studies use different matching rules.
 
-Across these five frontier rows, **2,986/3,338 windows (89.5%)** match and
-**4,098,256/5,213,128 original text bytes (78.6%)** lie in matched windows.
-There are **352 unmatched windows**. Fees and Relay have complete meaningful-ELF
+Across these five frontier rows, **2,988/3,338 windows (89.5%)** match and
+**4,102,176/5,213,128 original text bytes (78.7%)** lie in matched windows.
+There are **350 unmatched windows**. Fees and Relay have complete meaningful-ELF
 identity; three core programs remain byte-unequal. These are structural
 coverage measures, not a percentage of engineering work completed.
 
@@ -78,8 +78,8 @@ separates local equality and direct-call closure. This does not establish genera
 data, indirect-call or semantic identity. Five bodies remain; see the
 [completion review](MAYHEM-COMPLETION.md) for exact percentages and names.
 
-Current AMM matched windows cover **826,112 of 1,162,040 original text bytes
-(71.1%)**. Its 656 normalized matches include the 148 raw-local matches; complete
+Current AMM matched windows cover **830,032 of 1,162,040 original text bytes
+(71.4%)**. Its 658 normalized matches include the 148 raw-local matches; complete
 ELF identity remains false.
 
 
@@ -589,7 +589,7 @@ count excludes the separately tracked Relay. In particular:
 | Program | Partial / unaccepted selected handlers | Other known gaps |
 | --- | --- | --- |
 | Pump | Partial: `buy_v3`, `sell_v3`, `buy_exact_quote_in_v3`, `create_v2`, `multi_hop_curve_swap`. Unaccepted: `admin_update_token_incentives`, `claim_token_incentives`, `set_mayhem_virtual_params` | `sell_v2` quote transfer-fee minimum-output/event discrepancy; full extension, account, error precedence and event coverage |
-| PumpSwap | `create_config` successful fixed-admin initialization lacks accepted runtime validation | 143 unmatched windows; full code/data/call identity, diagnostics and historical provenance remain open |
+| PumpSwap | `create_config` successful fixed-admin initialization lacks accepted runtime validation | 127 unmatched windows; full code/data/call identity, diagnostics and historical provenance remain open |
 | Fees | All 31 selected handlers have bounded coverage | Does not make remaining business bodies exact or establish all-state equivalence |
 | Mayhem | `initialize_mayhem_state` unaccepted in selected build; corrected overlay has rejection and real Pump-CPI evidence | Seven admitted unmatched bodies, 257 opaque rows, diagnostic/error differences and five unknown GlobalParams field roles |
 

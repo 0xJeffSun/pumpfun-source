@@ -95,7 +95,7 @@ pub fn execute<'info>(
     crate::instructions::swap::validate_protocol_fee_recipient(
         &a.global_config,
         &a.protocol_fee_recipient,
-        a.pool.is_mayhem_mode,
+        u8::from(a.pool.is_mayhem_mode),
     )?;
     require_gt!(amount, 0, PumpAmmError::ZeroBaseAmount);
     let old_virtual = a.pool.virtual_quote_reserves;
