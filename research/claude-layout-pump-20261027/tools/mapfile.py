@@ -1,4 +1,6 @@
 """Parse an lld -Map file into output sections, input sections and symbols."""
+import sys
+sys.dont_write_bytecode = True  # keep the packet free of __pycache__
 import re
 from pathlib import Path
 

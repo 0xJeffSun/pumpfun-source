@@ -9,6 +9,8 @@ cdylib link the linker.py hook. With --linker-script omitted the hook passes
 the SDK default script through unchanged (baseline). Run under the lane build
 lock: python3 SP/sbf_lock.py --slots 6 --name sbf -- python3 build.py ...
 """
+import sys
+sys.dont_write_bytecode = True  # keep the packet free of __pycache__
 import argparse
 import hashlib
 import json
@@ -39,10 +41,14 @@ def main():
     ap.add_argument('--output', type=Path, required=True)
     ap.add_argument('--target-dir', type=Path, help='CARGO_TARGET_DIR (default: <output>/target)')
     ap.add_argument('--linker-script', type=Path, help='ordered script; omit for the SDK default')
+    ap.add_argument('--persistent', type=Path,
+                    help='stable workspace/cargo-home/target directory: dependencies compile once; the root package '
+                         'is cleaned and recompiled on every build (outputs equal a fresh build)')
     a = ap.parse_args()
     crate_in, sdk, out = a.source_directory.resolve(), a.sdk.resolve(), a.output.resolve()
     out.mkdir(parents=True, exist_ok=False)
-    target = (a.target_dir or out / 'target').resolve()
+    persist = a.persistent.resolve() if a.persistent else None
+    target = (a.target_dir or (persist / 'target' if persist else out / 'target')).resolve()
     script = a.linker_script.resolve() if a.linker_script else None
     if script:
         shutil.copy2(script, out / 'ordered.ld')
@@ -56,27 +62,34 @@ def main():
     profile_start, workspace_start = text.index('[profile.release]'), text.index('[workspace]')
     assert profile_start < workspace_start and not text[workspace_start + len('[workspace]'):].strip()
     profile = text[profile_start:workspace_start].strip() + '\n'
-    workspace = out / 'source'
+    workspace = (persist / 'source') if persist else out / 'source'
     crate = workspace / 'programs/pump'
+    wanted = {}
     for rel in primary_before:
-        if not (rel.endswith('.rs') or rel in ('Cargo.toml', 'Cargo.lock')):
-            continue
-        dest = crate / rel
-        dest.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copy2(crate_in / rel, dest)
-    (crate / 'Cargo.toml').write_text(text[:profile_start].rstrip() + '\n')
-    shutil.move(crate / 'Cargo.lock', workspace / 'Cargo.lock')
-    (workspace / 'Cargo.toml').write_text('[workspace]\nmembers = ["programs/pump"]\nresolver = "2"\n\n' + profile)
+        if rel.endswith('.rs'):
+            wanted[crate / rel] = (crate_in / rel).read_bytes()
+    wanted[crate / 'Cargo.toml'] = (text[:profile_start].rstrip() + '\n').encode()
+    wanted[workspace / 'Cargo.lock'] = (crate_in / 'Cargo.lock').read_bytes()
+    wanted[workspace / 'Cargo.toml'] = ('[workspace]\nmembers = ["programs/pump"]\nresolver = "2"\n\n' + profile).encode()
+    if crate.exists():  # persistent workspace: drop files the new source no longer has
+        for f in list(crate.rglob('*')):
+            if f.is_file() and f not in wanted and 'target' not in f.relative_to(crate).parts:
+                f.unlink()
+    for dest, data in wanted.items():  # write only changed files so unchanged sources keep their mtimes
+        if not dest.exists() or dest.read_bytes() != data:
+            dest.parent.mkdir(parents=True, exist_ok=True)
+            dest.write_bytes(data)
 
     host = {'arm64': 'aarch64-apple-darwin', 'x86_64': 'x86_64-apple-darwin'}[platform.machine()]
     tools = {'rustc': sdk / 'rust/bin/rustc', 'cargo': sdk / 'rust/bin/cargo',
              'objcopy': sdk / 'llvm/bin/llvm-objcopy',
              'rust-lld': sdk / f'rust/lib/rustlib/{host}/bin/rust-lld'}
-    cargo_home = out / 'cargo-home'
-    (cargo_home / 'registry').mkdir(parents=True)
+    cargo_home = (persist / 'cargo-home') if persist else out / 'cargo-home'
+    (cargo_home / 'registry').mkdir(parents=True, exist_ok=True)
     for name in ['src', 'cache', 'index']:
-        if (a.registry_home / 'registry' / name).exists():
-            (cargo_home / 'registry' / name).symlink_to(a.registry_home.resolve() / 'registry' / name, target_is_directory=True)
+        link = cargo_home / 'registry' / name
+        if (a.registry_home / 'registry' / name).exists() and not link.is_symlink():
+            link.symlink_to(a.registry_home.resolve() / 'registry' / name, target_is_directory=True)
     physical = ROOT / 'scripts/pump_physical_source_wrapper.py'
     lib_name = tomllib.loads((crate / 'Cargo.toml').read_text()).get('lib', {}).get('name', parsed['package']['name'].replace('-', '_'))
     env = os.environ.copy()
@@ -114,11 +127,18 @@ def main():
         'primary_source_directory': str(crate_in),
         'primary_source_sha256': primary_before,
         'staged_source_sha256': tree(workspace),
+        'persistent': str(persist) if persist else None,
         'linker_script_sha256': sha(script) if script else None,
     }
     (out / 'build-attempt.json').write_text(json.dumps(record, indent=2) + '\n')
     start = time.monotonic()
     with (out / 'build.log').open('w') as log:
+        if persist:  # always recompile and relink the root package; dependencies stay compiled
+            package = parsed['package']['name']
+            clean = [str(tools['cargo']), 'clean', '--manifest-path', str(crate / 'Cargo.toml'), '--release',
+                     '--target', 'sbf-solana-solana', '--offline', '-p', package]
+            record['root_clean_command'] = clean
+            subprocess.run(clean, cwd=workspace, env=env, stdout=log, stderr=subprocess.STDOUT, check=True)
         result = subprocess.run(command, cwd=workspace, env=env, stdout=log, stderr=subprocess.STDOUT)
     record.update(returncode=result.returncode, seconds=round(time.monotonic() - start, 1),
                   source_unchanged=tree(crate_in) == primary_before and tree(workspace) == record['staged_source_sha256'])

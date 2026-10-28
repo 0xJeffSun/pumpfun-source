@@ -1,0 +1,4 @@
+* -text
+public/** whitespace=-blank-at-eof,-blank-at-eol
+observer.py whitespace=cr-at-eol
+builds.json whitespace=cr-at-eol

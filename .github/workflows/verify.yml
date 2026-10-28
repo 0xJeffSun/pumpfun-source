@@ -2,7 +2,9 @@ name: Verify captured evidence
 on: [push, pull_request, workflow_dispatch]
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  # Superseded runs are cancelled on every ref except main, so each published
+  # main revision keeps one complete hosted verification.
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 jobs:
   verify:
     name: ${{ matrix.suite }}
@@ -12,12 +14,21 @@ jobs:
       max-parallel: 12
       matrix:
         include:
+          - suite: amm-buy-reserve-order
+            commands: |
+              python -I -B research/amm-buy-reserve-order/verify.py
+          - suite: amm-quote-base-recovery
+              python -I -B research/amm-quote-base-recovery/verify.py
+          - suite: amm-recipient-mode-recovery
+              python -I -B research/amm-recipient-mode-recovery/verify.py
           - suite: mayhem-clean-linux-evidence
             commands: |
               python -B research/mayhem-clean-linux-build-20261027/verify.py
               python -O -B research/mayhem-clean-linux-build-20261027/verify.py
           - suite: mayhem-native-current432
             commands: |
+              python -B research/mayhem-cpi-abort-proof/verify.py
+              python -B research/mayhem-cpi-abort-proof/test_verify.py
               python -B research/mayhem-fee-net-accounting/verify.py
               python -B research/mayhem-fee-net-accounting/test_verify.py
               python -I -B research/mayhem-native-current432-composition/verify.py
@@ -122,6 +133,8 @@ jobs:
               python scripts/pump_validate_sell_accounting.py --host work/pump-sell-accounting-host --output work/pump-sell-accounting.json
           - suite: fees
             commands: |
+              python -B research/fees-causal-independent/verify.py
+              python -B research/fees-causal-independent/test_verify.py
               python -B research/fees-sharing-handler-recovery/verify.py
               python -B research/fees-sharing-handler-recovery/test_verify.py
               python -B research/fees-work-checkpoint-20261027/test_restore.py
@@ -134,6 +147,9 @@ jobs:
               python -B research/fees-withdraw-tuple-integration/test_verify.py
               python -B research/fees-ata-prefix-integration/test_verify.py
               python -B research/fees-extend-integration/test_verify.py
+              python -B research/fees-sweep-integration/test_verify.py
+              python -B research/fees-donation-lifecycle/test_verify.py
+              python -B research/fees-donation-lifecycle/replay.py
 
               python -B research/fees-work-continuation-20261027/test_restore.py
               python -B research/fees-residual-parallel-checkpoint-20261027/test_restore.py
@@ -172,6 +188,10 @@ jobs:
               python -B scripts/pump_replay_main_checkpoint.py --shard 4 --shards 4 --workers 2 --output work/pump-main-shard-4.json.gz
           - suite: pump-amm
             commands: |
+              python -B research/amm-math-error-reference/verify.py
+              python -B research/amm-math-error-reference/test_verify.py
+              python -B research/amm-transfer-fee-epoch/verify.py
+              python -B research/amm-transfer-fee-epoch/test_verify.py
               python -B scripts/verify_pump_amm_checkpoint.py
               python -B repro/pump_amm/optional-context-recovery-20261027/replay_parallel.py --candidate repro/pump_amm/optional-context-recovery-20261027/results/build/candidate.so --output work/pump-amm-current-replay
               python -B scripts/verify_pump_amm_checkpoint.py --runtime work/pump-amm-current-replay
@@ -274,3 +294,44 @@ jobs:
             work/mayhem-burn-replay/**
             work/pump-amm-current-replay/**
           if-no-files-found: ignore
+
+  fees-renderer-research:
+    if: github.head_ref == 'research/fees-renderer-remote' || github.ref_name == 'research/fees-renderer-remote'
+    permissions:
+      contents: read
+    runs-on: ubuntu-22.04
+    timeout-minutes: 40
+    env:
+      FEES_REMOTE_ROOT: /tmp/fees-renderer-remote
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /research/fees-renderer-remote/
+            /research/fees-composed-frontier188/
+            /scripts/
+            /evidence/original/pump_fees/
+            /evidence/original/pump/
+            /evidence/original/pump_amm/
+            /evidence/dependencies/
+            /evidence/upstream/pump_fees.json
+            /research/imported-lab/analysis/pump_fun/config-snapshot.json
+            /research/imported-lab/analysis/pump_fun/amm-v2-trade-fixture.json
+            /repro/experiments/quote-selector-differential.json.gz
+            /repro/experiments/fee-selector-differential.json
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install pyelftools==0.32 solders==0.27.1
+      - name: Reconstruct and compare using the pinned SDK
+        run: python -B research/fees-renderer-remote/run.py
+      - name: Preserve native evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: fees-renderer-research
+          path: ${{ env.FEES_REMOTE_ROOT }}/evidence/
+          if-no-files-found: error
+          retention-days: 30

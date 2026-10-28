@@ -63,7 +63,7 @@ def main():
     inputs = lambda: {str(f.relative_to(source)): sha(f) for f in sorted(source.rglob('*')) if f.is_file()}
     before = inputs()
     record = {'scope': __doc__, 'driver_sha256': sha(__file__), 'command': cmd, 'environment': over,
-              'sysroot': sysroot, 'rustc_sha256': sha(rustc), 'target_libs': {f.name: sha(f) for f in sorted((tc / 'lib/rustlib/sbpf-solana-solana/lib').iterdir())},
+              'sysroot': sysroot, 'rustc_sha256': sha(rustc), 'target_libs': {str(f.relative_to(tc)): sha(f) for f in sorted((tc / 'lib/rustlib/sbpf-solana-solana').rglob('*')) if f.is_file()},
               'source_sha256': before}
     start = time.monotonic()
     with (out / 'build.log').open('w') as log:

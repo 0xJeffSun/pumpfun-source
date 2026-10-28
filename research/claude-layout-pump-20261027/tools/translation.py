@@ -14,6 +14,8 @@ the reordered ELF from the baseline ELF:
   * section and program headers are equal; the entry point is translated.
 No ELF is written. Exit status 0 means every byte is accounted for.
 """
+import sys
+sys.dont_write_bytecode = True  # keep the packet free of __pycache__
 import argparse
 import bisect
 import collections
