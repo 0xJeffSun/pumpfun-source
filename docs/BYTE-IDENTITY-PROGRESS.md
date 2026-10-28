@@ -2988,7 +2988,7 @@ The [counted-literal extension](../research/mayhem-current436-counted-literals-2
 
 ## O0095 analysis withdrawal
 
-PR412 removes the earlier static-analysis packet because it treated absolute addresses as `.text` offsets and decoded a range shifted by 288 bytes. The earlier integration review reproduced that output but did not detect the incorrect range. Independent decoding at absolute188864–190160 confirms the eight already-known call targets and no internal entry. The validator's normalized match and the437-window frontier remain unchanged. The corrected address evidence is retained in [the review record](../research/pr-review-20261028/pr412-correction.json).
+PR412 removes the earlier static-analysis packet because it treated absolute addresses as `.text` offsets and decoded a range shifted by 288 bytes. The earlier integration review reproduced that output but did not detect the incorrect range. Independent decoding at absolute 188864–190160 confirms the eight already-known call targets and no internal entry. The validator's normalized match and the 437-window frontier remain unchanged. The corrected address evidence is retained in [the review record](../research/pr-review-20261028/pr412-correction.json).
 
 ## Qualified437 selected-data recheck
 
