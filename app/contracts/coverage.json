@@ -5,7 +5,7 @@
     "documentedOperations": 67,
     "implementedNatively": 0,
     "qualified": 0,
-    "contractBound": 11,
+    "contractBound": 67,
     "bindings": "developer-bindings.json"
   },
   "internalApi": {
