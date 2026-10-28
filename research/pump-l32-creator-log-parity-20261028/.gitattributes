@@ -1,0 +1,3 @@
+*.so binary
+*.json.gz binary
+source.patch -whitespace
