@@ -1,0 +1,45 @@
+# Offline Create Coin visual review
+
+These screenshots compare the `/create` scaffold at upstream
+`3719d910d297ad62497e2ef1b12e263d2059f2ae` with the local offline drafting
+form. They are local reconstruction screenshots, not retained original-site
+references, and do not establish pixel parity.
+
+The desktop viewport is 1440×900 and the mobile viewport is 390×844. The eight
+acceptance images use viewport screenshots at those exact dimensions. The two
+baseline images were captured before source changes and show the unavailable
+placeholder. All screenshots were created by Chromium with
+`tests/capture-create-visuals.mjs`; its console-error guard passed.
+
+| Image                            | SHA-256                                                            | Review                                                                                                     |
+| -------------------------------- | ------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------- |
+| `baseline-desktop-1440x900.png`  | `900ec48a16833e2c791e926997d6867fd23eef6bfe7f4d2b3abea8fb7f638b31` | Existing shell and unavailable Create scaffold.                                                            |
+| `baseline-mobile-390x844.png`    | `f77bb6ee55a21c4a4b100657d3750274af2be627f84a974afe930ae96ff3d56c` | Existing mobile shell and unavailable Create scaffold.                                                     |
+| `default-desktop-1440x900.png`   | `6866d62868f108da6626bbb060e5f5e71d9f24dac084de9e6c764540c7abcaa9` | Form and preview use a readable two-column layout; shell remains intact.                                   |
+| `populated-desktop-1440x900.png` | `efe1dbb8a742c738440963c55e0b4931e27630ed357833939ce349aaa50dcd90` | Populated fields, file identity and preview links remain visible without overlap.                          |
+| `invalid-desktop-1440x900.png`   | `db32704b490c1bc3662a3ae1d907691d96587b015f842935a9b5ab5c0e355326` | Focus moves to the first invalid control; red borders and inline messages remain associated and unclipped. |
+| `preview-desktop-1440x900.png`   | `f3041450774dc74024ce2676b787f1cd6fbb4df93c8afb6a325e4bf849290aca` | Expanded local JSON stays contained in the preview panel and discloses the not-uploaded image state.       |
+| `default-mobile-390x844.png`     | `ae4574377c35cf8b5f60c23f4fb212185250ae700c8b19b8c03d275c734267f3` | Form stacks below the existing mobile header with 44px controls and no horizontal clipping.                |
+| `populated-mobile-390x844.png`   | `8644859d454885531013ab28885bda1f0c195a3f1b633b2232707e6c35e8d11f` | Edited fields retain their values in the single-column flow.                                               |
+| `invalid-mobile-390x844.png`     | `acde301a0bbce0ddb70d8773922d8865ff978284e14cab484423c24b63dda325` | Required errors are readable at narrow width and the first error receives visible focus.                   |
+| `preview-mobile-390x844.png`     | `259922468f864277ac88c36cd0c291c2be88b50fd3a4db9297b6f8d3a714f9df` | Preview and JSON fit the mobile viewport without horizontal scrolling.                                     |
+
+## Review result
+
+- Labels, required/optional states, filename, size and error messages remain
+  readable at both viewports.
+- Form controls and actions do not overlap; the preview stacks after the form on
+  mobile and remains sticky in a desktop second column.
+- The disabled launch control is visibly separate from the usable local preview
+  action. No loading or successful-launch state is shown.
+- Focus rings use the existing shell accent. The invalid screenshots show
+  programmatic focus on the first invalid control rather than focus loss.
+- The image fixture is intentionally minimal and local. Its black rendered pixel
+  is not product artwork and makes no claim about an original coin.
+- Browser tests separately cover 320×640, 375×812, 768×1024 and 1280×800. No
+  requested viewport had horizontal overflow.
+
+The exact original Create page under a matching deployment, authentication and
+feature-flag state was not captured as a visual reference. Iconography, spacing,
+conditional advanced controls, wallet state and production media behavior remain
+visually unknown.
