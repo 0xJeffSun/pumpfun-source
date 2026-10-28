@@ -52,8 +52,6 @@ match (89.4%)**. Their matched windows cover **4,070,968 / 5,213,128 original te
 bytes (78.1%)**. **Two of five programs have complete meaningful-ELF identity**;
 three of the four core contracts still differ from their captured binaries.
 
-**365/3,338 function windows (10.9%) remain unmatched** across the five programs.
-
 These percentages measure bounded binary-recovery progress, not a claim that
 89.4% of the engineering work is finished. Complete reconstruction also requires
 all remaining code, calls, data, relocations and build provenance.
