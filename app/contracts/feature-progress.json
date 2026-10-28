@@ -1,0 +1,1110 @@
+{
+  "schemaVersion": 1,
+  "asOf": "2026-10-28",
+  "basis": "Reviewed baseline against packages/frontend and packages/backend; captured factories are evidence, not accepted feature implementations.",
+  "gates": {
+    "source": {
+      "contract": "Feature inputs/outputs and source dependencies mapped and reviewed.",
+      "logic": "Editable feature implementation replaces placeholders/501s.",
+      "adapters": "Required styles/state/data/provider/storage adapters implemented and reviewed."
+    },
+    "completion": {
+      "source": "All applicable source milestones accepted.",
+      "success": "Representative successful behavior verified against reference evidence.",
+      "failure": "Errors, auth/permissions and empty/loading states verified where applicable.",
+      "consistency": "Responsive/accessibility/visual behavior (frontend) or pagination/idempotency/realtime consistency (backend) verified where applicable."
+    }
+  },
+  "frontend": [
+    {
+      "id": "shell",
+      "label": "Shared layout / navigation",
+      "scope": "included",
+      "routes": [
+        "/"
+      ],
+      "candidatePrefixes": [],
+      "source": {
+        "contract": {
+          "status": "pending",
+          "evidence": []
+        },
+        "logic": {
+          "status": "pending",
+          "evidence": []
+        },
+        "adapters": {
+          "status": "pending",
+          "evidence": []
+        }
+      },
+      "completion": {
+        "source": {
+          "status": "pending",
+          "evidence": []
+        },
+        "success": {
+          "status": "pending",
+          "evidence": []
+        },
+        "failure": {
+          "status": "pending",
+          "evidence": []
+        },
+        "consistency": {
+          "status": "pending",
+          "evidence": []
+        }
+      },
+      "note": "Local shell exists; original layout and responsive states unqualified."
+    },
+    {
+      "id": "feed",
+      "label": "Home / feed",
+      "scope": "included",
+      "routes": [
+        "/"
+      ],
+      "candidatePrefixes": [
+        "/home-feed",
+        "/posts",
+        "/callout"
+      ],
+      "source": {
+        "contract": {
+          "status": "pending",
+          "evidence": []
+        },
+        "logic": {
+          "status": "pending",
+          "evidence": []
+        },
+        "adapters": {
+          "status": "pending",
+          "evidence": []
+        }
+      },
+      "completion": {
+        "source": {
+          "status": "pending",
+          "evidence": []
+        },
+        "success": {
+          "status": "pending",
+          "evidence": []
+        },
+        "failure": {
+          "status": "pending",
+          "evidence": []
+        },
+        "consistency": {
+          "status": "pending",
+          "evidence": []
+        }
+      },
+      "note": "Feed placeholder; captured content is not a local feed implementation."
+    },
+    {
+      "id": "explore",
+      "label": "Explore / search",
+      "scope": "included",
+      "routes": [
+        "/explore"
+      ],
+      "candidatePrefixes": [
+        "/coins",
+        "/search"
+      ],
+      "source": {
+        "contract": {
+          "status": "pending",
+          "evidence": []
+        },
+        "logic": {
+          "status": "pending",
+          "evidence": []
+        },
+        "adapters": {
+          "status": "pending",
+          "evidence": []
+        }
+      },
+      "completion": {
+        "source": {
+          "status": "pending",
+          "evidence": []
+        },
+        "success": {
+          "status": "pending",
+          "evidence": []
+        },
+        "failure": {
+          "status": "pending",
+          "evidence": []
+        },
+        "consistency": {
+          "status": "pending",
+          "evidence": []
+        }
+      },
+      "note": "Search page scaffold; filters, pagination and results unimplemented."
+    },
+    {
+      "id": "leaderboard",
+      "label": "Leaderboards / competitions",
+      "scope": "included",
+      "routes": [
+        "/leaderboard"
+      ],
+      "candidatePrefixes": [
+        "/pnl-leaderboard",
+        "/payouts",
+        "/competitions"
+      ],
+      "source": {
+        "contract": {
+          "status": "pending",
+          "evidence": []
+        },
+        "logic": {
+          "status": "pending",
+          "evidence": []
+        },
+        "adapters": {
+          "status": "pending",
+          "evidence": []
+        }
+      },
+      "completion": {
+        "source": {
+          "status": "pending",
+          "evidence": []
+        },
+        "success": {
+          "status": "pending",
+          "evidence": []
+        },
+        "failure": {
+          "status": "pending",
+          "evidence": []
+        },
+        "consistency": {
+          "status": "pending",
+          "evidence": []
+        }
+      },
+      "note": "Route scaffold only."
+    },
+    {
+      "id": "live",
+      "label": "Live discovery / playback",
+      "scope": "included",
+      "routes": [
+        "/live"
+      ],
+      "candidatePrefixes": [
+        "/feed/video-feed",
+        "/presence"
+      ],
+      "source": {
+        "contract": {
+          "status": "pending",
+          "evidence": []
+        },
+        "logic": {
+          "status": "pending",
+          "evidence": []
+        },
+        "adapters": {
+          "status": "pending",
+          "evidence": []
+        }
+      },
+      "completion": {
+        "source": {
+          "status": "pending",
+          "evidence": []
+        },
+        "success": {
+          "status": "pending",
+          "evidence": []
+        },
+        "failure": {
+          "status": "pending",
+          "evidence": []
+        },
+        "consistency": {
+          "status": "pending",
+          "evidence": []
+        }
+      },
+      "note": "Live route scaffold; media and realtime behavior not implemented."
+    },
+    {
+      "id": "go",
+      "label": "GO",
+      "scope": "included",
+      "routes": [
+        "/go"
+      ],
+      "candidatePrefixes": [],
+      "source": {
+        "contract": {
+          "status": "pending",
+          "evidence": []
+        },
+        "logic": {
+          "status": "pending",
+          "evidence": []
+        },
+        "adapters": {
+          "status": "pending",
+          "evidence": []
+        }
+      },
+      "completion": {
+        "source": {
+          "status": "pending",
+          "evidence": []
+        },
+        "success": {
+          "status": "pending",
+          "evidence": []
+        },
+        "failure": {
+          "status": "pending",
+          "evidence": []
+        },
+        "consistency": {
+          "status": "pending",
+          "evidence": []
+        }
+      },
+      "note": "Route scaffold; campaign behavior and API binding unknown."
+    },
+    {
+      "id": "mayhem",
+      "label": "Mayhem",
+      "scope": "included",
+      "routes": [
+        "/mayhem"
+      ],
+      "candidatePrefixes": [
+        "/mayhem",
+        "/coins/mayhem-mode"
+      ],
+      "source": {
+        "contract": {
+          "status": "pending",
+          "evidence": []
+        },
+        "logic": {
+          "status": "pending",
+          "evidence": []
+        },
+        "adapters": {
+          "status": "pending",
+          "evidence": []
+        }
+      },
+      "completion": {
+        "source": {
+          "status": "pending",
+          "evidence": []
+        },
+        "success": {
+          "status": "pending",
+          "evidence": []
+        },
+        "failure": {
+          "status": "pending",
+          "evidence": []
+        },
+        "consistency": {
+          "status": "pending",
+          "evidence": []
+        }
+      },
+      "note": "Route scaffold only."
+    },
+    {
+      "id": "rewards",
+      "label": "Holder rewards",
+      "scope": "included",
+      "routes": [
+        "/holder-rewards"
+      ],
+      "candidatePrefixes": [
+        "/fees/holder-rewards"
+      ],
+      "source": {
+        "contract": {
+          "status": "pending",
+          "evidence": []
+        },
+        "logic": {
+          "status": "pending",
+          "evidence": []
+        },
+        "adapters": {
+          "status": "pending",
+          "evidence": []
+        }
+      },
+      "completion": {
+        "source": {
+          "status": "pending",
+          "evidence": []
+        },
+        "success": {
+          "status": "pending",
+          "evidence": []
+        },
+        "failure": {
+          "status": "pending",
+          "evidence": []
+        },
+        "consistency": {
+          "status": "pending",
+          "evidence": []
+        }
+      },
+      "note": "Route scaffold; reward state and claims unimplemented."
+    },
+    {
+      "id": "create",
+      "label": "Create coin / upload",
+      "scope": "included",
+      "routes": [
+        "/create"
+      ],
+      "candidatePrefixes": [
+        "/ipfs",
+        "/coins/check-vanity-store"
+      ],
+      "source": {
+        "contract": {
+          "status": "pending",
+          "evidence": []
+        },
+        "logic": {
+          "status": "pending",
+          "evidence": []
+        },
+        "adapters": {
+          "status": "pending",
+          "evidence": []
+        }
+      },
+      "completion": {
+        "source": {
+          "status": "pending",
+          "evidence": []
+        },
+        "success": {
+          "status": "pending",
+          "evidence": []
+        },
+        "failure": {
+          "status": "pending",
+          "evidence": []
+        },
+        "consistency": {
+          "status": "pending",
+          "evidence": []
+        }
+      },
+      "note": "Route scaffold; no signing, upload or transaction flow."
+    },
+    {
+      "id": "profile",
+      "label": "Profiles / social graph",
+      "scope": "included",
+      "routes": [
+        "/profile/:id"
+      ],
+      "candidatePrefixes": [
+        "/users",
+        "/profiles",
+        "/following",
+        "/groups"
+      ],
+      "source": {
+        "contract": {
+          "status": "pending",
+          "evidence": []
+        },
+        "logic": {
+          "status": "pending",
+          "evidence": []
+        },
+        "adapters": {
+          "status": "pending",
+          "evidence": []
+        }
+      },
+      "completion": {
+        "source": {
+          "status": "pending",
+          "evidence": []
+        },
+        "success": {
+          "status": "pending",
+          "evidence": []
+        },
+        "failure": {
+          "status": "pending",
+          "evidence": []
+        },
+        "consistency": {
+          "status": "pending",
+          "evidence": []
+        }
+      },
+      "note": "Planned route; identity, profile and social components unimplemented."
+    },
+    {
+      "id": "auth",
+      "label": "Authentication / wallets",
+      "scope": "included",
+      "routes": [],
+      "candidatePrefixes": [
+        "/auth",
+        "/privy-link"
+      ],
+      "source": {
+        "contract": {
+          "status": "pending",
+          "evidence": []
+        },
+        "logic": {
+          "status": "pending",
+          "evidence": []
+        },
+        "adapters": {
+          "status": "pending",
+          "evidence": []
+        }
+      },
+      "completion": {
+        "source": {
+          "status": "pending",
+          "evidence": []
+        },
+        "success": {
+          "status": "pending",
+          "evidence": []
+        },
+        "failure": {
+          "status": "pending",
+          "evidence": []
+        },
+        "consistency": {
+          "status": "pending",
+          "evidence": []
+        }
+      },
+      "note": "No local authenticated UI or wallet workflow."
+    },
+    {
+      "id": "portfolio",
+      "label": "Portfolio / positions",
+      "scope": "included",
+      "routes": [],
+      "candidatePrefixes": [
+        "/portfolio-summary",
+        "/user-portfolio",
+        "/user-positions"
+      ],
+      "source": {
+        "contract": {
+          "status": "pending",
+          "evidence": []
+        },
+        "logic": {
+          "status": "pending",
+          "evidence": []
+        },
+        "adapters": {
+          "status": "pending",
+          "evidence": []
+        }
+      },
+      "completion": {
+        "source": {
+          "status": "pending",
+          "evidence": []
+        },
+        "success": {
+          "status": "pending",
+          "evidence": []
+        },
+        "failure": {
+          "status": "pending",
+          "evidence": []
+        },
+        "consistency": {
+          "status": "pending",
+          "evidence": []
+        }
+      },
+      "note": "No local portfolio UI."
+    },
+    {
+      "id": "settings",
+      "label": "Settings / notifications",
+      "scope": "included",
+      "routes": [],
+      "candidatePrefixes": [
+        "/mutes",
+        "/blocks",
+        "/bookmarks",
+        "/wallet-labels",
+        "/dms"
+      ],
+      "source": {
+        "contract": {
+          "status": "pending",
+          "evidence": []
+        },
+        "logic": {
+          "status": "pending",
+          "evidence": []
+        },
+        "adapters": {
+          "status": "pending",
+          "evidence": []
+        }
+      },
+      "completion": {
+        "source": {
+          "status": "pending",
+          "evidence": []
+        },
+        "success": {
+          "status": "pending",
+          "evidence": []
+        },
+        "failure": {
+          "status": "pending",
+          "evidence": []
+        },
+        "consistency": {
+          "status": "pending",
+          "evidence": []
+        }
+      },
+      "note": "No local settings or notification UI."
+    },
+    {
+      "id": "legal",
+      "label": "Legal / fee information",
+      "scope": "included",
+      "routes": [
+        "/docs/fees",
+        "/docs/privacy-policy",
+        "/docs/terms-and-conditions"
+      ],
+      "candidatePrefixes": [],
+      "source": {
+        "contract": {
+          "status": "pending",
+          "evidence": []
+        },
+        "logic": {
+          "status": "pending",
+          "evidence": []
+        },
+        "adapters": {
+          "status": "pending",
+          "evidence": []
+        }
+      },
+      "completion": {
+        "source": {
+          "status": "pending",
+          "evidence": []
+        },
+        "success": {
+          "status": "pending",
+          "evidence": []
+        },
+        "failure": {
+          "status": "pending",
+          "evidence": []
+        },
+        "consistency": {
+          "status": "pending",
+          "evidence": []
+        }
+      },
+      "note": "Placeholders, not reconstructed document content."
+    }
+  ],
+  "backend": [
+    {
+      "id": "auth",
+      "label": "Identity / authentication",
+      "scope": "included",
+      "routes": [],
+      "candidatePrefixes": [
+        "/auth",
+        "/privy-link",
+        "/developer"
+      ],
+      "source": {
+        "contract": {
+          "status": "pending",
+          "evidence": []
+        },
+        "logic": {
+          "status": "pending",
+          "evidence": []
+        },
+        "adapters": {
+          "status": "pending",
+          "evidence": []
+        }
+      },
+      "completion": {
+        "source": {
+          "status": "pending",
+          "evidence": []
+        },
+        "success": {
+          "status": "pending",
+          "evidence": []
+        },
+        "failure": {
+          "status": "pending",
+          "evidence": []
+        },
+        "consistency": {
+          "status": "pending",
+          "evidence": []
+        }
+      },
+      "note": "Original auth, sessions and authorization unavailable."
+    },
+    {
+      "id": "profile",
+      "label": "Profiles / follow graph",
+      "scope": "included",
+      "routes": [],
+      "candidatePrefixes": [
+        "/users",
+        "/profiles",
+        "/following",
+        "/groups",
+        "/achievements"
+      ],
+      "source": {
+        "contract": {
+          "status": "pending",
+          "evidence": []
+        },
+        "logic": {
+          "status": "pending",
+          "evidence": []
+        },
+        "adapters": {
+          "status": "pending",
+          "evidence": []
+        }
+      },
+      "completion": {
+        "source": {
+          "status": "pending",
+          "evidence": []
+        },
+        "success": {
+          "status": "pending",
+          "evidence": []
+        },
+        "failure": {
+          "status": "pending",
+          "evidence": []
+        },
+        "consistency": {
+          "status": "pending",
+          "evidence": []
+        }
+      },
+      "note": "No native profile or graph handlers."
+    },
+    {
+      "id": "content",
+      "label": "Feed / posts / callouts",
+      "scope": "included",
+      "routes": [],
+      "candidatePrefixes": [
+        "/home-feed",
+        "/posts",
+        "/callout",
+        "/callouts",
+        "/feed"
+      ],
+      "source": {
+        "contract": {
+          "status": "pending",
+          "evidence": []
+        },
+        "logic": {
+          "status": "pending",
+          "evidence": []
+        },
+        "adapters": {
+          "status": "pending",
+          "evidence": []
+        }
+      },
+      "completion": {
+        "source": {
+          "status": "pending",
+          "evidence": []
+        },
+        "success": {
+          "status": "pending",
+          "evidence": []
+        },
+        "failure": {
+          "status": "pending",
+          "evidence": []
+        },
+        "consistency": {
+          "status": "pending",
+          "evidence": []
+        }
+      },
+      "note": "No native content handlers or persistence."
+    },
+    {
+      "id": "market",
+      "label": "Market discovery / search",
+      "scope": "included",
+      "routes": [],
+      "candidatePrefixes": [
+        "/coins",
+        "/search",
+        "/sol-price",
+        "/candles",
+        "/market"
+      ],
+      "source": {
+        "contract": {
+          "status": "pending",
+          "evidence": []
+        },
+        "logic": {
+          "status": "pending",
+          "evidence": []
+        },
+        "adapters": {
+          "status": "pending",
+          "evidence": []
+        }
+      },
+      "completion": {
+        "source": {
+          "status": "pending",
+          "evidence": []
+        },
+        "success": {
+          "status": "pending",
+          "evidence": []
+        },
+        "failure": {
+          "status": "pending",
+          "evidence": []
+        },
+        "consistency": {
+          "status": "pending",
+          "evidence": []
+        }
+      },
+      "note": "One dated price fixture; no native discovery or price service."
+    },
+    {
+      "id": "leaderboard",
+      "label": "Leaderboards / competitions",
+      "scope": "included",
+      "routes": [],
+      "candidatePrefixes": [
+        "/pnl-leaderboard",
+        "/payouts",
+        "/competitions"
+      ],
+      "source": {
+        "contract": {
+          "status": "pending",
+          "evidence": []
+        },
+        "logic": {
+          "status": "pending",
+          "evidence": []
+        },
+        "adapters": {
+          "status": "pending",
+          "evidence": []
+        }
+      },
+      "completion": {
+        "source": {
+          "status": "pending",
+          "evidence": []
+        },
+        "success": {
+          "status": "pending",
+          "evidence": []
+        },
+        "failure": {
+          "status": "pending",
+          "evidence": []
+        },
+        "consistency": {
+          "status": "pending",
+          "evidence": []
+        }
+      },
+      "note": "No native ranking, PnL or competition logic."
+    },
+    {
+      "id": "live",
+      "label": "Livestream / presence",
+      "scope": "included",
+      "routes": [],
+      "candidatePrefixes": [
+        "/presence",
+        "/replay",
+        "/share-video"
+      ],
+      "source": {
+        "contract": {
+          "status": "pending",
+          "evidence": []
+        },
+        "logic": {
+          "status": "pending",
+          "evidence": []
+        },
+        "adapters": {
+          "status": "pending",
+          "evidence": []
+        }
+      },
+      "completion": {
+        "source": {
+          "status": "pending",
+          "evidence": []
+        },
+        "success": {
+          "status": "pending",
+          "evidence": []
+        },
+        "failure": {
+          "status": "pending",
+          "evidence": []
+        },
+        "consistency": {
+          "status": "pending",
+          "evidence": []
+        }
+      },
+      "note": "LiveKit configuration observed; no native orchestration."
+    },
+    {
+      "id": "create",
+      "label": "Coin creation / media",
+      "scope": "included",
+      "routes": [],
+      "candidatePrefixes": [
+        "/ipfs",
+        "/coins/check-vanity-store"
+      ],
+      "source": {
+        "contract": {
+          "status": "pending",
+          "evidence": []
+        },
+        "logic": {
+          "status": "pending",
+          "evidence": []
+        },
+        "adapters": {
+          "status": "pending",
+          "evidence": []
+        }
+      },
+      "completion": {
+        "source": {
+          "status": "pending",
+          "evidence": []
+        },
+        "success": {
+          "status": "pending",
+          "evidence": []
+        },
+        "failure": {
+          "status": "pending",
+          "evidence": []
+        },
+        "consistency": {
+          "status": "pending",
+          "evidence": []
+        }
+      },
+      "note": "No upload or metadata lifecycle; SDK source is tracked separately."
+    },
+    {
+      "id": "rewards",
+      "label": "Rewards / fees / referrals",
+      "scope": "included",
+      "routes": [],
+      "candidatePrefixes": [
+        "/fees",
+        "/creator-rewards",
+        "/referral"
+      ],
+      "source": {
+        "contract": {
+          "status": "pending",
+          "evidence": []
+        },
+        "logic": {
+          "status": "pending",
+          "evidence": []
+        },
+        "adapters": {
+          "status": "pending",
+          "evidence": []
+        }
+      },
+      "completion": {
+        "source": {
+          "status": "pending",
+          "evidence": []
+        },
+        "success": {
+          "status": "pending",
+          "evidence": []
+        },
+        "failure": {
+          "status": "pending",
+          "evidence": []
+        },
+        "consistency": {
+          "status": "pending",
+          "evidence": []
+        }
+      },
+      "note": "No native reward accounting or claims."
+    },
+    {
+      "id": "portfolio",
+      "label": "Portfolio / indexing",
+      "scope": "included",
+      "routes": [],
+      "candidatePrefixes": [
+        "/portfolio",
+        "/user-portfolio",
+        "/user-positions",
+        "/user-trades",
+        "/mint-positions",
+        "/trades",
+        "/global-params"
+      ],
+      "source": {
+        "contract": {
+          "status": "pending",
+          "evidence": []
+        },
+        "logic": {
+          "status": "pending",
+          "evidence": []
+        },
+        "adapters": {
+          "status": "pending",
+          "evidence": []
+        }
+      },
+      "completion": {
+        "source": {
+          "status": "pending",
+          "evidence": []
+        },
+        "success": {
+          "status": "pending",
+          "evidence": []
+        },
+        "failure": {
+          "status": "pending",
+          "evidence": []
+        },
+        "consistency": {
+          "status": "pending",
+          "evidence": []
+        }
+      },
+      "note": "No local indexer, portfolio read models or reorg handling."
+    },
+    {
+      "id": "settings",
+      "label": "Settings / notifications",
+      "scope": "included",
+      "routes": [],
+      "candidatePrefixes": [
+        "/mutes",
+        "/blocks",
+        "/bookmarks",
+        "/wallet-labels",
+        "/dms",
+        "/following-positions"
+      ],
+      "source": {
+        "contract": {
+          "status": "pending",
+          "evidence": []
+        },
+        "logic": {
+          "status": "pending",
+          "evidence": []
+        },
+        "adapters": {
+          "status": "pending",
+          "evidence": []
+        }
+      },
+      "completion": {
+        "source": {
+          "status": "pending",
+          "evidence": []
+        },
+        "success": {
+          "status": "pending",
+          "evidence": []
+        },
+        "failure": {
+          "status": "pending",
+          "evidence": []
+        },
+        "consistency": {
+          "status": "pending",
+          "evidence": []
+        }
+      },
+      "note": "No native preferences, notification or messaging handlers."
+    }
+  ],
+  "exclusions": [
+    "Support/Intercom",
+    "Terminal/Padre",
+    "Native/mobile app and app promotion",
+    "Individual coin/token detail pages",
+    "/pump-token ($PUMP)"
+  ],
+  "deferred": [
+    "Perps/Hyperliquid",
+    "Separate PumpSwap/revenue/GO microsites"
+  ],
+  "denominatorPolicy": "Fixed feature acceptance milestones, not an estimate of engineering effort. Full API denominator remains unreviewed; static candidate counts may overlap and include excluded or privileged operations."
+}

@@ -35,5 +35,7 @@
     "realtime events",
     "database/cache/queue/runtime deployment",
     "original frontend sources and exact full dependency tree"
-  ]
+  ],
+  "featureProgress": "feature-progress.json",
+  "progressReport": "../PROGRESS.md"
 }

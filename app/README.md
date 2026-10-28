@@ -53,3 +53,7 @@ pnpm recover
 `pnpm inventory` extracts literal Turbopack factory boundaries with Babel without executing the bundles. It emits all module variants, not just one arbitrary version of each module ID, and strict API-string candidates. A candidate can come from unused, privileged or excluded code; it is not proof of a reachable API.
 
 See `evidence/validation.json` for this checkpoint's actual results. Lockfile changes and source recaptures require renewed validation. Docker examples in `infra/` are development scaffolding, not a claim about upstream deployment.
+
+## Source and feature completion
+
+See [generated progress tables](PROGRESS.md) and the [feature ledger](contracts/feature-progress.json). From the repository root run `python3 app/scripts/progress.py` to refresh both the root README tables and the standalone report. Run `pnpm --dir app check:progress` to check freshness and scoring rules. Accepted milestones require checked-in evidence; excluded/deferred surfaces are N/A. Captured JavaScript and extracted factories are not counted as completed product features.

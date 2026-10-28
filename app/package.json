@@ -16,7 +16,9 @@
     "recover": "node scripts/format-bundles.mjs",
     "contracts": "openapi-typescript contracts/developer.openapi.json -o packages/backend/src/generated/developer-api.d.ts",
     "verify:evidence": "python3 scripts/verify-evidence.py",
-    "smoke": "node scripts/smoke.mjs"
+    "smoke": "node scripts/smoke.mjs",
+    "progress": "python3 scripts/progress.py",
+    "check:progress": "python3 scripts/progress.py --check && python3 -m unittest discover -s tests -p \"test_progress.py\""
   },
   "devDependencies": {
     "prettier": "3.6.2",

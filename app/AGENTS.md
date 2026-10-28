@@ -37,3 +37,7 @@ Use `501 COMPATIBILITY_NOT_IMPLEMENTED` for unknown local behavior. Keep fixture
 - `scripts/inventory.mjs`: reproducible extraction. A new build can reuse IDs for different code.
 
 Open uncertainties and acceptance gates are in the PRD. No percentage-complete claim is meaningful until the in-scope operation/state denominator is reviewed.
+
+## Maintaining completion tables
+
+Update `contracts/feature-progress.json` as feature source and behavior milestones pass. Every accepted or not-applicable milestone must cite checked-in evidence or an explicit applicability decision. Do not award credit for placeholders, fixtures, or captured code alone. Run `pnpm progress` and `pnpm check:progress`; commit both generated reports with the ledger. Preserve the binary-contract tables and unrelated README edits.
