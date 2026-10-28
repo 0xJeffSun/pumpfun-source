@@ -42,7 +42,7 @@
     "research/amm-mint-fee-reader-recovery/proposed/transfer_fee.rs": "84f41a85189866a4a0ab3a801a3cb1d6f189fe92899008e1a77683e3aa3d0b6c"
   },
   "files": {
-    "README.md": "dd383a1eaafa079ccb722167545870074dea2a02b9c540e3c4dd7cca8553d263",
+    "README.md": "785914d8ebf0194c9c51c0b5bc3620cb1351983d4749b5e1730f4af93a16ad3a",
     "analyze.py": "61cf5511b26cf8710cdefd9b040f07e561aefaab27e8f870af27bc89e82dcf2e",
     "builds/baseline/build.log.gz": "5a189831994894d57837b0be046ef95a5e9254035a468f9d0326c1d4d97ac99b",
     "builds/baseline/candidate.so.gz": "35fdfe7320cced6d24ee7de4116fa955b4ca24403dded2ede977e46e993af56c",
@@ -137,6 +137,7 @@
     "sources/baseline.tar.gz": "4e0d37b96874dee0ea5f922ffda41c71276efa4399a6594db8acda9c0d5fdd40",
     "sources/candidate.tar.gz": "10aee69d35360c2c0eea9cd54a8e08aa3c66811cbd9f7766216c9b9d07377365",
     "static.json": "5b45d538a6653be2d90a63d1b47e3687b28318943d85b17e3a37be09df6aa6ed",
-    "verify.py": "5b499e87b7ecd9e463ae8b19a4bcc0819f0adac320a4b00929810fd14a3c1341"
+    "verify.py": "279fa31ba7232df4904ab700103edb24ea9011f990aa4ff60bd79e098cf44005",
+    "test_inventory.py": "62b23df619bdec4d65878422edb8074f25bacfe03e2ae50fd185423102890767"
   }
 }

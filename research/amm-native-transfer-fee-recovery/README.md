@@ -105,6 +105,7 @@ With repository Python requirements installed, audit retained outputs locally:
 
 ```sh
 python -I -B research/amm-native-transfer-fee-recovery/verify.py
+python -I -B research/amm-native-transfer-fee-recovery/test_inventory.py
 python -B scripts/verify_evidence.py
 python -B scripts/test_tooling.py
 ```
@@ -112,6 +113,9 @@ python -B scripts/test_tooling.py
 The audit recomputes source composition, patch, lock graph, ELF hashes, injective
 window inventories, complete target and its real calls, and signed runtime
 receipts. It does not claim to rebuild or rerun execution.
+The packet inventory rejects all unlisted files, including Python caches,
+and rejects symlinks and special files. Temporary-file regressions exercise
+those checks without changing any retained evidence.
 
 To materialize and rebuild using an existing compatible SDK and populated Cargo
 cache, use a new output directory and explicit mounts (Docker network is off):

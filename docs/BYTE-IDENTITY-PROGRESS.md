@@ -2864,3 +2864,30 @@ numeric formatter without reading or claiming its value. Its bounded contracts
 are the same as the unit-tag route; independent verification and 11 mutation/model
 tests pass. These proofs are bound to the old 434-window image and add no count
 to the qualified436 body frontier.
+
+## Follow-up review: Pump Round40 and PR405
+
+The current maintained Pump Round40 verifier passes independently: 816/1,035
+normalized windows, 202 raw bodies and 1,085,008 matched text bytes. Its saved
+corpus checks 10,468 full cases, 7,641 additional executions, 18,105 structured
+paired-diagnostic cases and 3,771 distinct signed transactions. Ordinary success
+messages are outside that diagnostic policy. Its README retains the separately
+identified ClaimCashbackV2 error-precedence/log limitation.
+
+With qualified Mayhem436, the maintained/research overview is now 2,985/3,338
+matched windows, 1,568 raw, 1,417 normalized-only and 353 unmatched. Matched
+original text is 4,097,808/5,213,128 bytes. Only Fees and Relay have complete
+meaningful-ELF equality.
+
+PR405's original 368-byte native AMM transfer-fee helper independently passes
+its full saved verifier: the separate research baseline advances 731→732 with
+148 raw matches retained. Its 2,266 case triples and 216 fresh-VM triples retain
+signed receipts and existing log limitations. This research tree is distinct
+from the maintained 656-window AMM selection and does not change its row.
+
+The PR405 inventory now rejects every unlisted file, symlink and special file;
+eight actual filesystem regressions pass. Its four-file seal update changes no
+source, binary or runtime evidence. The maintained incentive-order archive also
+inherited the two unavailable Python-cache entries: seven metadata/seal files
+remove them, with 19,459 unaffected entry hashes preserved. The original saved
+evidence remains unchanged in both repairs.

@@ -62,6 +62,6 @@ python -B repro/pump_amm/incentive-order-recovery-20261027/verify_saved.py
 ```
 
 Use `--current-source` to bind maintained AMM files. Result manifest:
-`6c06d070fe0d68ae3df5d48637c0cd28a314d2f134107ec56cafa9ba812fde35`.
+`d0427fb3ca3e41403d0c14e7e1ce3d93e96a1110fa75f6345e879ce7d08689bf`.
 
 The [follow-up evidence](followup/README.md) records the remaining call-closure blockers and rejected ownership/conversion variants.

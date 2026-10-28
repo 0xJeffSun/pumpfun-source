@@ -15,8 +15,14 @@ def read(name):
     data = (HERE / name).read_bytes()
     return gzip.decompress(data) if name.endswith('.gz') else data
 def record(name): return json.loads(read(name))
+def verify_inventory(root, entries):
+    paths = list(root.rglob('*'))
+    assert not any(p.is_symlink() for p in paths), 'packet symlink'
+    assert all(p.is_file() or p.is_dir() for p in paths), 'packet special file'
+    assert set(entries) == {p.relative_to(root).as_posix() for p in paths
+                            if p.is_file() and p != root / 'MANIFEST.json'}, 'packet inventory differs'
 manifest = record('MANIFEST.json')
-assert set(manifest['files']) == {p.relative_to(HERE).as_posix() for p in HERE.rglob('*') if p.is_file() and p.name != 'MANIFEST.json' and '__pycache__' not in p.parts}
+verify_inventory(HERE, manifest['files'])
 for name, digest in manifest['files'].items(): assert sha((HERE / name).read_bytes()) == digest, name
 for name, digest in manifest['repository_inputs'].items(): assert sha((ROOT / name).read_bytes()) == digest, name
 assert all(manifest['repository_inputs'][name] == digest for name, digest in record('runtime/inputs.json').items())
