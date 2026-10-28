@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "captureObjectsVerified": 161,
+  "factoryRangesVerified": 1025,
+  "formattedFactoriesParsed": 909,
+  "selectionWithinRange": true,
+  "unsafePathsRejected": true,
+  "symlinksRejected": true,
+  "capturedCodeExecuted": false
+}

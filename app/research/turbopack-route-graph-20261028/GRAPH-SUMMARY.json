@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "analyzedLines": 250325,
+  "uniqueFactories": 909,
+  "identities": 1425,
+  "capturedObjects": 161,
+  "edges": 8276,
+  "directEdges": 8201,
+  "dynamicEdges": 75,
+  "crossChunkExactEdges": 2359,
+  "resolutions": {
+    "EXACT": 3132,
+    "AMBIGUOUS": 369,
+    "UNRESOLVED": 4775,
+    "EXTERNAL": 0
+  },
+  "authenticatedRoutes": 8,
+  "routeAttributedNodes": 1425,
+  "internalOperationsAttributed": 250,
+  "developerOperationsAttributed": 36
+}

@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "files": [
+    {
+      "path": "AMBIGUITIES.json",
+      "bytes": 321749,
+      "sha256": "ca3a854dc78c001945c89a41079f056d942a42f9667e22c57ba23a57f49f6e0b"
+    },
+    {
+      "path": "API-ATTRIBUTION.json",
+      "bytes": 175398,
+      "sha256": "efae0ac22ff6765855c2bcb3be712a17e081f916b5cfd08699d6d3304dc19bca"
+    },
+    {
+      "path": "GRAPH-SUMMARY.json",
+      "bytes": 465,
+      "sha256": "5f72f9e52bbc5d2af7381c48d7c2ed63ff1f015d5e85c7285b87d4feef69587c"
+    },
+    {
+      "path": "IMPORT-EDGES.json.gz",
+      "bytes": 324196,
+      "sha256": "d02a8406e09b4020c5ab79c7670a926a819ccc02d9ba55ba190e697c41f41852"
+    },
+    {
+      "path": "LINE-CENSUS.json",
+      "bytes": 200617,
+      "sha256": "eb418da237984e753920c4b5a79d1652b6749c0b0a20138a9ba9c44b03ee3574"
+    },
+    {
+      "path": "MODULE-IDENTITIES.json.gz",
+      "bytes": 136716,
+      "sha256": "3c1228e7d41362b95b7e8b0e1fcac91cd0a6f27959d15177781c2ba020fc1ed8"
+    },
+    {
+      "path": "README.md",
+      "bytes": 1734,
+      "sha256": "25a538ee4c19e0b8552a7a00748dfbf1dfbfc2a1c2be0e73f7f0be959e54a103"
+    },
+    {
+      "path": "ROUTE-ATTRIBUTION.json",
+      "bytes": 2066557,
+      "sha256": "689fa0da5b9c90339ef988e0f96f81d62af9bdc2164f31fda822cb1e5041fa2a"
+    },
+    {
+      "path": "SOURCE-MANIFEST.json",
+      "bytes": 55721,
+      "sha256": "d9132a331f9adadedb3747168294e39ae316d91b9a1bb04ae9634c0158de6687"
+    },
+    {
+      "path": "VERIFY-RESULTS.json",
+      "bytes": 250,
+      "sha256": "2640333e2259361b4ff24208721049af9f2b74764a1f8d10866b3b5b16df7619"
+    }
+  ]
+}
