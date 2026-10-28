@@ -10,11 +10,15 @@ import unittest
 
 
 class CargoHomeTests(unittest.TestCase):
-    def test_explicit_cargo_home_supplies_verified_archives_and_index(self):
+    def test_supported_cache_namespaces_supply_configuration(self):
+        for namespace in ('index.crates.io-1949cf8c6b5b557f', 'index.crates.io-6f17d22bba15001f'):
+            with self.subTest(namespace=namespace):
+                self.prepare_from_namespace(namespace)
+
+    def prepare_from_namespace(self, namespace):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             home = root / 'cargo-home'
-            namespace = 'index.crates.io-1949cf8c6b5b557f'
             archive = home / 'registry/cache' / namespace / 'cache-probe-1.0.0.crate'
             archive.parent.mkdir(parents=True)
             archive.write_bytes(b'isolated archive')
