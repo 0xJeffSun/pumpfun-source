@@ -1,19 +1,19 @@
 # PumpSwap source reconstruction
 
-The maintained source is the [boost, buyback and cashback checkpoint](../../repro/pump_amm/boost-buyback-cashback-recovery-20261028/README.md),
-candidate `01a038ead3614b09af8d9431d3253be2db9efc142ac17ced923d12ab6afe2609`.
+The maintained source is the [V2 mint AccountInfo checkpoint](../../repro/pump_amm/v2-mint-clone-recovery-20261028/README.md),
+candidate `dbb5dcfd1a1487e22d61ae68d22a9b74087b78a868a08ab974c7bdbb127f1500`.
 It matches **660/785 normalized windows (84.1%)**, including **159 raw bodies**,
 and covers **831,376/1,162,040 text bytes (71.5%)**. **125 windows remain**;
 whole ELF identity is false. These percentages measure binary coverage, not
 engineering effort completed.
 
-The window count is unchanged. Boost helper calls, the cashback event key and the buyback source module now follow the original evidence; complete handler identity remains open. The source also preserves the tested incentive and CTO error-order
+The window count is unchanged. The three V2 handlers now preserve the observed quote-mint AccountInfo temporary lifetime; complete handler identity remains open. The source also preserves the tested incentive and CTO error-order
 fixes, private-event storage, creator source ownership and borrowed account
 boundaries. All 17,462 core cases and 13 current acceptance groups pass; suite
 counts overlap. The native 216-case replay retains 14 raw source-coordinate log
 differences, with no differences after the declared diagnostic normalization.
 
-Four raw synthetic CreatePool failures arise from different legacy-loader executable-account allocations. The [signed allocation diagnostic](../../repro/pump_amm/boost-buyback-cashback-recovery-20261028/followup/loader-allocation/README.md) records 48 matching paired controls and preserves the raw differences. The 14-unit AMM execution difference, faithful upgradeable-loader replay and broad compute parity remain open.
+The [upgradeable-account controls](../../repro/pump_amm/v2-mint-clone-recovery-20261028/followup/upgradeable-loader/README.md) match all 24 current policy pairs. The raw legacy-loader allocation differences remain preserved. The 14-unit AMM execution difference, historical deployment/cache-slot semantics and broad compute parity remain open.
 
 Two strict offline Linux builds agree. The version 3 source recipe binds
 **57 canonical, 58 workspace and 175 registry inputs**, 233 total. It includes
@@ -27,16 +27,16 @@ Independent analysis recognizes 595 windows within its bounded call/data closure
 From the repository root, verify the saved checkpoint and current source:
 
 ```sh
-python -B repro/pump_amm/boost-buyback-cashback-recovery-20261028/verify_saved.py --current-source
+python -B repro/pump_amm/v2-mint-clone-recovery-20261028/verify_saved.py --current-source
 ```
 
 To stage and check a new workspace without changing Rust source, use the current
 version 3 recipe; version 2 predates the native path dependency:
 
 ```sh
-python -B repro/pump_amm/boost-buyback-cashback-recovery-20261028/workspace_recipe_v3.py stage \
+python -B repro/pump_amm/v2-mint-clone-recovery-20261028/workspace_recipe_v3.py stage \
   --source-root "$PWD" --output "$PWD/work/amm-current-workspace"
-python -B repro/pump_amm/boost-buyback-cashback-recovery-20261028/workspace_recipe_v3.py verify \
+python -B repro/pump_amm/v2-mint-clone-recovery-20261028/workspace_recipe_v3.py verify \
   --source-root "$PWD" --workspace "$PWD/work/amm-current-workspace"
 ```
 

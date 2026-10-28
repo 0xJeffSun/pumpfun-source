@@ -9,10 +9,10 @@ import subprocess
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
-CHECKPOINT = 'repro/pump_amm/boost-buyback-cashback-recovery-20261028'
+CHECKPOINT = 'repro/pump_amm/v2-mint-clone-recovery-20261028'
 ARTIFACT = CHECKPOINT + '/results/build/candidate.so'
-CANDIDATE = '01a038ead3614b09af8d9431d3253be2db9efc142ac17ced923d12ab6afe2609'
-MANIFEST = '0273de36b4d9386cf015cda32e9d045a10befa451083608a67adc6c2055641c4'
+CANDIDATE = 'dbb5dcfd1a1487e22d61ae68d22a9b74087b78a868a08ab974c7bdbb127f1500'
+MANIFEST = 'fd4ba56a458aca4090376d75a02f26e4a62153834208189fe82aa59931a9bd8d'
 
 
 def sha(path):
@@ -42,6 +42,12 @@ def verify(root=ROOT, runtime=None):
     assert allocation_report['candidate_sha256'] == CANDIDATE
     assert allocation_report['equal_allocation_control_cases'] == 48
     assert allocation_report['equal_allocation_control_mismatches'] == 0
+    upgradeable = selected['upgradeable_loader_control']
+    upgradeable_root = root / upgradeable['proof_path']
+    assert sha(upgradeable_root / 'manifest.json') == upgradeable['manifest_sha256']
+    upgradeable_report = module('current_amm_upgradeable', upgradeable_root / 'verify.py').verify(upgradeable_root)
+    assert upgradeable_report['candidate_sha256'] == CANDIDATE
+    assert upgradeable_report['policy_cases'] == 24 and upgradeable_report['policy_mismatches'] == 0
     if runtime is None:
         result = subprocess.run(
             [sys.executable, '-B', str(checkpoint / 'verify_saved.py'), '--current-source'],
@@ -49,7 +55,7 @@ def verify(root=ROOT, runtime=None):
         )
         report = json.loads(result.stdout.strip().splitlines()[-1])
         assert report['current_source_checked'] and report['candidate_sha256'] == CANDIDATE
-        return {'status': 'PASS', 'program': 'pump_amm', 'loader_allocation_control': allocation_report, **report}
+        return {'status': 'PASS', 'program': 'pump_amm', 'loader_allocation_control': allocation_report, 'upgradeable_loader_control': upgradeable_report, **report}
     entries = json.loads((results / 'manifest.json').read_text())
     assert set(entries) | {'manifest.json'} == {
         str(path.relative_to(results)) for path in results.rglob('*') if path.is_file()
@@ -78,7 +84,7 @@ def verify(root=ROOT, runtime=None):
     audit = module('selected_amm_audit', checkpoint / 'compare_direct_cached.py')
     report = audit.audit(runtime, CANDIDATE)
     assert report['cases'] == 17462 and not report['mismatches']
-    return {'status': 'PASS', 'program': 'pump_amm', 'candidate_sha256': CANDIDATE, 'loader_allocation_control': allocation_report, **report}
+    return {'status': 'PASS', 'program': 'pump_amm', 'candidate_sha256': CANDIDATE, 'loader_allocation_control': allocation_report, 'upgradeable_loader_control': upgradeable_report, **report}
 
 
 if __name__ == '__main__':
