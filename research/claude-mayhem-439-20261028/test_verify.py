@@ -98,6 +98,16 @@ class Evidence(unittest.TestCase):
         self.run_copy(lambda p: edit_json(p / 'runtime/summary.json', lambda v: v['totals'].__setitem__('trade_cases', 6637)),
                       'runtime summary.json == counts recomputed')
 
+    def test_initializer_output_difference_rejected(self):
+        self.run_copy(lambda p: edit_json(p / 'runtime/initializer/rejections.json.gz',
+                                         lambda v: v['cases'][0]['candidate'].__setitem__('error', 'tampered')),
+                      'initializer rejections:')
+
+    def test_target_rate_output_difference_rejected(self):
+        self.run_copy(lambda p: edit_json(p / 'runtime/target-rates/differential.json.gz',
+                                         lambda v: v['cases'][0]['candidate'].__setitem__('error', 'tampered')),
+                      'target rates:')
+
     def test_optimized_assertions_rejected(self):
         r = subprocess.run([sys.executable, '-O', '-I', '-B', str(P / 'verify.py')], capture_output=True, text=True)
         self.assertNotEqual(r.returncode, 0); self.assertIn('assertions enabled', r.stderr)

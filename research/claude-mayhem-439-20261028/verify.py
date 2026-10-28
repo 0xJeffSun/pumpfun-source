@@ -197,8 +197,15 @@ for suite, count in (('sweeps', 692), ('rates', 150)):
                                     signed_records=sum(len(r['receipts']) for r in d['cases']), binaries=d['binaries'])
 for k, count in (('rejections', 53), ('pump-cpi', 16)):
     d = load(R / 'initializer' / (k + '.json.gz'))
+    initializer_fields = ('before', 'after', 'error', 'events', 'inner', 'return')
+    if k == 'rejections':
+        initializer_fields += ('anchor_errors', 'signed_transaction_base64')
+    initializer_bad = [i for i, x in enumerate(d['cases']) if x['differences']
+                       or any(f not in x['original'] or f not in x['candidate']
+                              or x['original'][f] != x['candidate'][f] for f in initializer_fields)
+                       or slogs(x['original']) != slogs(x['candidate'])]
     check(d['candidate_sha256'] == CAND and d['original_sha256'] == ORIGINAL and d['case_count'] == len(d['cases']) == count and d['mismatches'] == []
-          and not any(x['differences'] for x in d['cases']), f'initializer {k}: {count} signed original/candidate pairs, no differences')
+          and not initializer_bad, f'initializer {k}: {count} signed original/candidate pairs, no differences')
     summary['initializer'][k] = dict(cases=d['case_count'], listed=len(d['cases']), mismatches=len(d['mismatches']),
                                      recomputed_bad=sum(bool(x['differences']) for x in d['cases']), candidate_sha256=d['candidate_sha256'],
                                      signed_records=sum(len(x['original_executions']) + len(x['candidate_executions']) for x in d['cases']))
@@ -208,7 +215,11 @@ check(il['candidate_sha256'] == CAND and ir['returncode'] == 0 and ir['inputs_un
 d = load(R / 'target-rates/differential.json.gz'); a = load(R / 'target-rates/attested.json.gz')
 check(d['candidate_sha256'] == a['candidate_sha256'] == CAND and d['parent_sha256'] == a['control_sha256'] == PARENT and d['original_sha256'] == a['original_sha256'] == ORIGINAL
       and d['case_count'] == len(d['cases']) == 856 and d['mismatches'] == [] and d['log_differences_modulo_cu'] == [] and d['candidate_vs_parent_differences'] == []
-      and all(x['equal'] and x['logs_equal_modulo_cu'] for x in d['cases']) and len(a['records']) == 3 and all(len(v) == 856 for v in a['records'].values()),
+      and all(x['equal'] and x['logs_equal_modulo_cu']
+              and all(f in x['original'] and f in x['candidate'] and x['original'][f] == x['candidate'][f]
+                      for f in ('error', 'accounts', 'events', 'inner', 'return_data'))
+              and slogs(x['original']) == slogs(x['candidate']) for x in d['cases'])
+      and len(a['records']) == 3 and all(len(v) == 856 for v in a['records'].values()),
       'target rates: 856 cases, equal to original and parent, 3 x 856 attested signed records')
 summary['target_rates'] = dict(cases=d['case_count'], listed=len(d['cases']), mismatches=len(d['mismatches']), log_diffs=len(d['log_differences_modulo_cu']),
                                candidate_vs_parent=len(d['candidate_vs_parent_differences']), recomputed_bad=sum(not (x['equal'] and x['logs_equal_modulo_cu']) for x in d['cases']),

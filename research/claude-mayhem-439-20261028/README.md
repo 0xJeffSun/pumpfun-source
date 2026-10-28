@@ -108,7 +108,7 @@ What the scripts cover:
   - It applies `source.patch`.
   - It checks the build records against the qualified438 recipe.
   - It recomputes the full 441-window census and the O0077 body, calls and Source profiles from the ELF bytes.
-  - It recomputes every runtime count from the saved per-case outputs.
+  - It recomputes every runtime count from the saved per-case outputs and directly compares initializer and target-rate state, errors, events, inner calls, return data and non-compute logs.
 - **`test_verify.py`** rejects corrupted instructions, call targets and Source records. It also rejects unlisted files, symlinks and FIFOs, and an edited source or census. Finally, it rejects tampered trade, sweep and summary records.
 
 What is not checked here:
