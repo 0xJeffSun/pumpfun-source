@@ -33,6 +33,8 @@ jobs:
               python -B research/mayhem-fee-net-accounting/test_verify.py
               python -I -B research/mayhem-native-current432-composition/verify.py
               python -I -B research/mayhem-native-current432-composition/test_verify.py
+              python -B research/mayhem-allocator-call-closure/verify.py
+              python -B research/mayhem-allocator-call-closure/test_verify.py
           - suite: mayhem-amm-shape-controls
             commands: |
               python -B research/mayhem-amm-handler-shape-controls-20261027/verify.py
