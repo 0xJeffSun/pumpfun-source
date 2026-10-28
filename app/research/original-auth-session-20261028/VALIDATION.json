@@ -56,5 +56,7 @@
     "Synthetic browser-state fixtures only; no original bundle execution or server-session verification.",
     "Full required application/root checks owned by integration; not claimed here."
   ],
-  "logNormalization": "Trailing empty lines removed from text logs; output otherwise unchanged."
+  "logNormalization": "Trailing empty lines removed from text logs; output otherwise unchanged.",
+  "logDirectory": "initial",
+  "immutableInitialReceipt": "initial/VALIDATION.json"
 }

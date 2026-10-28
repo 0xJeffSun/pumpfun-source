@@ -46,8 +46,16 @@ corepack pnpm --filter @pump-reconstruction/frontend typecheck
 corepack pnpm verify:evidence
 ```
 
-The focused run has24 auth tests plus10 shared source-authentication tests. Browser capabilities contain synthetic in-memory cookie/storage/event state only; test tokens carry synthetic unsigned claims. No user profiles, browser credentials, production cookies, network auth, captured bundle execution or wallet signatures are used. This is no UI change, so no visual parity or browser screenshot claim is made. Root integration owns the complete required application build/test/typecheck/evidence gates.
+The focused run has24 auth tests plus11 shared source-authentication tests. Browser capabilities contain synthetic in-memory cookie/storage/event state only; test tokens carry synthetic unsigned claims. No user profiles, browser credentials, production cookies, network auth, captured bundle execution or wallet signatures are used. This is no UI change, so no visual parity or browser screenshot claim is made. The complete required gates were also run for publication; see the results below.
 
 ## Shared prerequisite attribution
 
-`source.mjs` and its10 tests are unchanged shared source-authentication work by the search/contracts lane, original commitsf6e469c3b and124f1194c. They are included as a necessary two-file prerequisite while absent from maintained main, not claimed as new auth work. The inventory expansion7b52e2cfb is separately attributed and omitted from this PR.
+`source.mjs` and its11 tests are unchanged shared source-authentication work by the search/contracts lane, original commitsf6e469c3b,124f1194c and0a9a1f084. They are included as a necessary two-file prerequisite while absent from maintained main, not claimed as new auth work. The inventory expansion7b52e2cfb is separately attributed and omitted from this PR.
+
+## Publication gates
+
+`PUBLICATION-VALIDATION.json` records the exact tested source heads, command results, log hashes and unchanged baseline files. Full build, aggregate typecheck,698-object app evidence verification,9 root capture checks and6 tooling tests passed. The final focused run passes35/35 (24 auth plus11 shared helper tests).
+
+The full app test run passes230 backend tests,72 app Node tests, all focused/Python suites and90/91 Playwright tests. It exits1 because the unchanged leaderboard test selects weekly then realized but observes daily/realized. Both the implementation and test bytes equal maintained main; the independently reproduced existing fix is PR663. This unrelated fix is not included. Build/full-test inputs predate only the small static shared-helper outer-metadata correction; its final11-test suite passes separately, and no served route or auth adapter changed. No completely green aggregate test result is claimed.
+
+The earlier `VALIDATION.json` preserves the independent initial expanded-inventory qualification. The publication receipt and current `PROVENANCE.json` bind the maintained-index PR.
