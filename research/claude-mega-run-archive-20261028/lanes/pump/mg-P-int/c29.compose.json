@@ -1,0 +1,20 @@
+[
+ {
+  "label": "res2",
+  "applied": [
+   "src/trade_types.rs"
+  ],
+  "same": [],
+  "conflict": [],
+  "skipped": []
+ },
+ {
+  "label": "raw",
+  "applied": [
+   "src/lib.rs"
+  ],
+  "same": [],
+  "conflict": [],
+  "skipped": []
+ }
+]

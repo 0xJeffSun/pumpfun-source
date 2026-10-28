@@ -1,0 +1,11 @@
+[
+ {
+  "label": "z05",
+  "applied": [
+   "src/multi_hop_curve_swap.rs"
+  ],
+  "same": [],
+  "conflict": [],
+  "skipped": []
+ }
+]

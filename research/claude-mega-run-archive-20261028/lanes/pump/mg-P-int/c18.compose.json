@@ -1,0 +1,11 @@
+[
+ {
+  "label": "z10",
+  "applied": [
+   "src/admin_set_idl_authority.rs"
+  ],
+  "same": [],
+  "conflict": [],
+  "skipped": []
+ }
+]
