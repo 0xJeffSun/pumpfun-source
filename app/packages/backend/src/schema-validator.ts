@@ -188,11 +188,11 @@ export function validateAgainstSchema(
   if (value !== null && typeof value === 'object' && !Array.isArray(value)) {
     const obj = value as Record<string, unknown>;
     for (const key of schema.required ?? []) {
-      if (!(key in obj)) issues.push({ path: `${path}.${key}`, message: 'required property is missing' });
+      if (!Object.hasOwn(obj, key)) issues.push({ path: `${path}.${key}`, message: 'required property is missing' });
     }
     const props = schema.properties ?? {};
     for (const [key, v] of Object.entries(obj)) {
-      if (key in props) {
+      if (Object.hasOwn(props, key)) {
         issues.push(...validateAgainstSchema(v, props[key], `${path}.${key}`, root));
       } else if (schema.additionalProperties === false) {
         issues.push({ path: `${path}.${key}`, message: 'property is not allowed by additionalProperties: false' });
