@@ -148,9 +148,10 @@ Earlier 436-based data proofs remain preserved with their original bindings.
 The [data coverage ledger](research/mayhem-current437-data-coverage-20261028/README.md)
 separates raw-equal and mapped bytes and prioritizes the remaining unproved ranges.
 The [counted ErrorCode-name proof](research/mayhem-current437-error-names-20261028/README.md)
-and [ErrorCode-message proof](research/mayhem-current437-error-messages-20261028/README.md)
-add 154 exact strings plus 77 descriptors. Together the current proofs cover
-12,910 of 26,180 payload-data bytes (49.31%); 13,270 bytes remain unproved.
+the [ErrorCode-message proof](research/mayhem-current437-error-messages-20261028/README.md)
+and [static ProgramError messages](research/mayhem-current437-program-error-messages-20261028/README.md)
+add 179 exact strings plus 77 descriptors. Together the current proofs cover
+14,015 of 26,180 payload-data bytes (53.53%); 12,165 bytes remain unproved.
 This is a proof footprint, not a measure of engineering effort or whole-ELF completion.
 
 The [remaining-body review](docs/MAYHEM-COMPLETION.md#retained-partial-source-controls)

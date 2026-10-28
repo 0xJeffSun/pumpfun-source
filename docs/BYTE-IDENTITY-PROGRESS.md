@@ -3016,3 +3016,10 @@ The [ordinary-Rust field-order control](../research/mayhem-current437-buy-prefix
 The [message and descriptor proof](../research/mayhem-current437-error-messages-20261028/README.md) verifies all 77 source messages (3,568 bytes), plus 924 exact scalar/zero descriptor bytes and 308 bytes of pointer correspondence. It traces the selected descriptor into the matched formatter and verifies the known one-piece/zero-argument path reads its pointer and length before the unresolved writer callback. It does not claim callback identity, output behavior or complete allocation extents. All 431 closed windows and 581 pairs remain.
 
 Aggregate payload coverage is 12,910/26,180 bytes (49.31%); 13,270 bytes (50.69%) remain unproved. The largest residual rodata interval is now 5,499 bytes. Function counts and full-ELF status do not change.
+
+
+## Qualified437 static ProgramError messages
+
+The [static ProgramError reader](../research/mayhem-current437-program-error-messages-20261028/README.md) verifies 25 exact strings totaling 1,105 bytes, while excluding the dynamic Custom branch. Each selected path preserves its formatter argument and passes the explicit pointer/count through the matched writer wrapper. Source-arm names and messages are checked against the Cargo-authenticated solana-program-error 3.0.1 archive. Compiler enum tags are described as observed layout, not a stable source ABI. All 431 closed windows and 581 pairs remain.
+
+Payload coverage reaches 14,015/26,180 bytes (53.53%); 12,165 bytes remain unproved. No allocation, callback-output, runtime or whole-ELF claim is added.

@@ -45,13 +45,14 @@ of the 0.91% unmatched-window / 9.03% unmatched-text figures.
 The [data coverage ledger](../research/mayhem-current437-data-coverage-20261028/README.md)
 with [counted ErrorCode names](../research/mayhem-current437-error-names-20261028/README.md)
 and [messages/descriptors](../research/mayhem-current437-error-messages-20261028/README.md)
-cover 12,910 of 26,180 payload bytes (49.31%), leaving 13,270 unproved (50.69%).
+and [static ProgramError messages](../research/mayhem-current437-program-error-messages-20261028/README.md)
+cover 14,015 of 26,180 payload bytes (53.53%), leaving 12,165 unproved (46.47%).
 The new message proof adds 3,568 string bytes and 1,232 descriptor bytes and
 checks that the selected pointer/count reaches the unresolved writer callback.
 All 431 closed windows / 581 pairs are retained. This is not a count of known
 mismatches or a percentage of engineering effort. The largest residual rodata
-interval is 5,499 bytes at [719929,725428); next targets include ProgramError
-messages, remaining formatter pieces and counted account names.
+interval is 3,955 bytes at [721473,725428); next targets include error-kind
+name tables, remaining formatter pieces and counted account names.
 
 The [current Legacy Buy ownership composition](../research/mayhem-current-ownership-composition-20261027/README.md)
 preserves the 430/100 frontier and its complete initializer. Its partial handler

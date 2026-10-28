@@ -116,6 +116,10 @@ jobs:
             commands: |
               python -B research/mayhem-current437-error-messages-20261028/verify.py
               python -B research/mayhem-current437-error-messages-20261028/test_verify.py
+          - suite: mayhem-current437-program-error-messages
+            commands: |
+              python -B research/mayhem-current437-program-error-messages-20261028/verify.py
+              python -B research/mayhem-current437-program-error-messages-20261028/test_verify.py
           - suite: mayhem-current437-buy-prefix
             commands: |
               python -B research/mayhem-current437-buy-prefix-20261028/verify.py
