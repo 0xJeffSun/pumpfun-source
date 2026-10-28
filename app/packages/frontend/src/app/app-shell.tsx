@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { SignInControl } from "./auth/sign-in-control";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
   FormEvent,
@@ -439,6 +440,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
           <Suspense fallback={<SearchFallback />}>
             <SearchNavigation />
           </Suspense>
+          <SignInControl />
           <span className="local-status">
             <span aria-hidden="true" />
             Local reconstruction
