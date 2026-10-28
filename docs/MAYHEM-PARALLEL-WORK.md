@@ -168,6 +168,15 @@ compilations and a fresh 163-command rebuild repeat both complete checked
 outputs, but the shared error-block layout and full handler remain unmatched.
 The alternative Option conversion is retained as a negative control.
 
+The [price-profile pass traces](../research/mayhem-signer-seed-order/composition/price-profile/README.md)
+locate a compiler difference within those historical 432-window controls: an
+immediately invoked checked closure loses a redundant profiled overflow test
+during `SimplifyCFG`, before ordinary inlining. The inline helper retains its
+profiled test. Four trace builds reproduce both complete parent ELFs exactly.
+The closure also emits the distinct Option control's complete ELFs, despite
+different CodeGen Prepare IR. This records source/compiler evidence; it adds
+no match to the newer qualified436 checkpoint.
+
 ## Current-source allocator-provider composition
 
 The [current 432-window provider composition](../research/mayhem-current-provider-closure-20261027/README.md)
