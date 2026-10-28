@@ -210,6 +210,27 @@ test("fixture bodies must be explicitly present; null remains valid", async () =
   }
 });
 
+test("fixtures for statuses that cannot carry a body must use null", async () => {
+  for (const status of [101, 150, 199, 204, 304]) {
+    assert.throws(
+      () => buildApp([fixture({ status, body: { recorded: true } })]),
+      new RegExp(`status ${status} responses cannot carry a body`),
+    );
+    assert.throws(
+      () => buildApp([fixture({ status, body: "recorded" })]),
+      new RegExp(`status ${status} responses cannot carry a body`),
+    );
+  }
+  const app = buildApp([fixture({ status: 204, body: null })]);
+  try {
+    const response = await app.inject("/coins?limit=1&offset=0");
+    assert.equal(response.statusCode, 204);
+    assert.equal(response.body, "");
+  } finally {
+    await app.close();
+  }
+});
+
 test("JSON scalar fixtures retain their JSON representation", async () => {
   const cases = [
     {

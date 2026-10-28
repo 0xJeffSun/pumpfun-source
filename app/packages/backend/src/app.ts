@@ -118,6 +118,15 @@ function validateFixture(
       `Invalid fixture registration (${provenance}): status must be an integer from 100 through 599`,
     );
   }
+  const status = candidate.status as number;
+  if (
+    candidate.body !== null &&
+    ((status >= 100 && status <= 199) || status === 204 || status === 304)
+  ) {
+    throw new Error(
+      `Invalid fixture registration (${provenance}): status ${status} responses cannot carry a body; use null`,
+    );
+  }
   if (candidate.headers !== undefined) {
     if (
       candidate.headers === null ||
