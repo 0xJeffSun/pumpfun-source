@@ -26,4 +26,28 @@ class ProgressTests(unittest.TestCase):
         self.assertTrue(updated.startswith('Existing contract table\n\n'))
         self.assertTrue(updated.endswith('## Remaining work\n\nExisting tasks\n'))
         self.assertEqual(progress.replace_readme(updated,'App table'),updated)
+        refreshed=progress.replace_readme(updated,'Updated app table')
+        self.assertEqual(refreshed,updated.replace('App table','Updated app table'))
+    def test_malformed_regions_are_rejected_before_reports_are_written(self):
+        malformed={
+            'missing start':progress.END,
+            'missing end':progress.BEGIN,
+            'reversed':progress.END+'\nstale table\n'+progress.BEGIN,
+            'duplicate start':progress.BEGIN+'\n'+progress.BEGIN+'\n'+progress.END,
+            'duplicate end':progress.BEGIN+'\n'+progress.END+'\n'+progress.END,
+        }
+        with tempfile.TemporaryDirectory() as tmp:
+            root=pathlib.Path(tmp)/'app';root.mkdir()
+            report=root/'PROGRESS.md';readme=root.parent/'README.md'
+            for name,region in malformed.items():
+                for mode in [[],['--check']]:
+                    with self.subTest(region=name,mode=mode):
+                        original=('Contract table\n\n'+region+'\n\n## Remaining work\n\nExisting tasks\n').encode('utf-8')
+                        readme.write_bytes(original)
+                        # Keep the standalone report fresh, so --check must validate the README.
+                        report.write_bytes(b'# Application progress report\n\nCurrent report\n')
+                        with patch.object(progress,'ROOT',root),patch.object(progress,'render',return_value='Current report'),patch('sys.argv',['progress.py',*mode]):
+                            with self.assertRaisesRegex(ValueError,'marker'):progress.main()
+                        self.assertEqual(readme.read_bytes(),original)
+                        self.assertEqual(report.read_bytes(),b'# Application progress report\n\nCurrent report\n')
 if __name__=='__main__':unittest.main()

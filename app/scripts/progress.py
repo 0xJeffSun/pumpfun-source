@@ -19,8 +19,9 @@ def score(items):
     return 'N/A' if not applicable else f'{complete}/{len(applicable)} ({100*complete/len(applicable):.0f}%)'
 def replace_readme(text,block):
     section=f'{BEGIN}\n{block}\n{END}\n\n'
-    if BEGIN in text:
+    if BEGIN in text or END in text:
         require(text.count(BEGIN)==text.count(END)==1, 'Expected one progress marker pair')
+        require(text.index(BEGIN)<text.index(END), 'Progress start marker must precede end marker')
         return re.sub(re.escape(BEGIN)+r'.*?'+re.escape(END)+r'\n*',lambda _:section,text,flags=re.S)
     anchor='## Remaining work' if '## Remaining work' in text else '## License'
     require(anchor in text, 'README progress insertion anchor is missing')
