@@ -1485,3 +1485,7 @@ repro/pump_amm/admin-harvest-recovery-20261027/followup/** -whitespace
 research/mayhem-current436-composition-20261027/source.patch -whitespace
 research/mayhem-current436-composition-20261027/overrides/** -whitespace
 research/mayhem-current436-composition-20261027/inventory.tsv -whitespace
+# Retain the sealed readers byte for byte, including their final blank line.
+research/mayhem-current434-format-route-20261027/reader.py whitespace=-blank-at-eof
+research/mayhem-current434-custom-format-route-20261027/reader.py whitespace=-blank-at-eof
+research/mayhem-current434-custom-format-route-20261027/unit_trace.py whitespace=-blank-at-eof
