@@ -1,6 +1,9 @@
 {
-  "status": "prepared",
+  "status": "in_progress",
   "normalized_frontier": 795,
   "original_windows": 1035,
-  "whole_original_elf_equal": false
+  "whole_original_elf_equal": false,
+  "run_id": 40622104447,
+  "run_url": "https://github.com/shawkkkkk/pumpfun-source/actions/runs/40622104447",
+  "tested_revision": "ec657c8253d86a6c45e504ce7164642a1dd59074"
 }
