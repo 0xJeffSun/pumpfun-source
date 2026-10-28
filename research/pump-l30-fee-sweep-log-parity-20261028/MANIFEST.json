@@ -1,5 +1,8 @@
 {
   ".gitattributes": "a9c89a96e3b053b22fb19e880461fd799893689602e93c04723ad4ef7e1a8f73",
+  "FAILED-CONTROLS.md": "8abad6e1e031af8d352c05464485cf282228bedf6851d836dc2694ea3b359296",
+  "README.md": "b1b548156cb919e12bd483ca4517543b4676698e43e4a574d5b6421942c3ae00",
+  "REPRODUCE.md": "bc07bb2a8765224f17d359ceb4a0d3302b235510f505a870f5f9dc18548885fd",
   "builds/baseline/build-comparison.json": "eec8879e2b795ee4e6f68cf14dad810ce726ddcd127b6d3c9a77327f2591bbf0",
   "builds/baseline/build.log": "56711972d601506b5ba5dfb5b2ab599f2c5e07754b87c322c4666af5dd6d9b99",
   "builds/baseline/physical-source-calls.jsonl": "298d235d12a771de7d59226653e9353d402365d05dda144e9c2025ffd7756901",
@@ -78,6 +81,6 @@
   "source-correction.json": "cff74b1dad8fd892d572f6d90e77595af000ee70daa39a7cec8d5ba7398d7668",
   "source.patch": "b712dddb4303d7255aa2739e0c428e5cc70e255a26afad206e397ba761c4659b",
   "test_negative_controls.py": "05a31b19a36d53e46620ea98cb65a51e8bddb24288dbddb2c68ff2ccc4925aa6",
-  "verification-summary.json": "bb1ebd6ea5bd9bcbd4a7eae1e606b76775a4ccc70e7a925dcb8e04b154d6ced5",
+  "verification-summary.json": "ccb155cbec46decd383c816f8cd563fea5066136677e1dd8b21bd3778855df2f",
   "verify.py": "064e5416c775c1ee734bf27d33922b903e9033149830c62cccffc961422ba925"
 }
