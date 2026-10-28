@@ -1,94 +1,66 @@
-# Mayhem 432-window research source under a clean, reproducible pinned build (28 Oct 2026)
+# Historical Mayhem 432-source rebuild experiment
 
-**Question answered.** The published 432-window Mayhem frontier
-(`research/mayhem-quotes-current-recovery-20261027`) was produced by an
-incremental root compilation bound to one developer's scratch tree: a
-`layout-lane-linux-target2-sysroot` rustc, unpublished cached dependency
-archives under `work/…/parallel-targets/`, and a custom linker script
-(`ordered.ld`) whose section order is keyed to one codegen hash
-(`a46a1b6815b9c4-cgu.0`). None of that is reproducible from committed inputs.
-This packet measures what the **same 67 source files** recover under a recipe
-anyone can reproduce: the pinned official v1.54 toolchain, `cargo build
---locked --offline`, and the default linker.
+This packet provides a source materializer and build driver for the historical
+432-window quote-pair source. The current qualified checkpoint is
+[current436](../mayhem-current436-composition-20261027/README.md), whose source,
+build records, artifacts and validation are archived separately. This experiment
+does not replace that checkpoint or change its metrics.
 
-## Result
+## Retained and independently checkable evidence
 
-| Candidate | raw-equal | normalized-only | unmatched | matched text |
-| --- | ---: | ---: | ---: | ---: |
-| selected `programs/mayhem` (v1.54, [independent reproduction](../mayhem-v154-independent-reproduction-20261028/README.md)) | 58 | 255 | 128 | 187,016 B (26.5%) |
-| **frontier source, clean pinned rebuild (this packet)** | **83** | **327** | **31** | **557,664 B (78.9%)** |
-| frontier published artifact (layered toolchain + `ordered.ld`) | 100 | 332 | 9 | 598,792 B (84.7%) |
+The materializer composes 67 files from committed inputs and checks every output
+against the quote-pair packet's `source-inputs.json`. Its snapshot archive is
+hash-pinned. The accompanying inventory tool independently reproduces the old
+published artifact's **100 raw / 332 normalized-only / 9 unmatched** partition,
+covering **598,792 / 706,744** original text bytes.
 
-Two findings:
+The source layers are:
 
-1. **The research source is robustly ahead of the selected source**, not only
-   under its bespoke recipe. Rebuilt cleanly it still matches 410/441 windows
-   versus the selected source's 313/441, and 78.9% versus 26.5% of original
-   text. The six trade bodies, Burn and the large parsers that are unmatched in
-   the selected build are mostly matched here (only the trade bodies, Burn and
-   a few helpers remain).
-2. **22 windows depend on the non-reproducible layout recipe.** The clean build
-   loses 17 raw-equal and 22 normalized windows relative to the published
-   artifact: `O0094`, `O0095` (quote validation), `O0090` (shared buy
-   accounting), five 1,000-byte helpers `O0114/O0139/O0143/O0150/O0158`, the
-   short wrappers `O0085/O0086/O0088/O0089/O0078/O0080`, `O0073`, `O0074`,
-   `O0072`, `O0100`, `O0117`, `O0147`, and two 40-byte stubs. These are the
-   layout-sensitive bodies: their instruction bytes depend on where the linker
-   places them or their neighbours. They quantify the provenance cost that the
-   status documents flag as open ("selected-source promotion of research").
-
-Whole-file identity remains false in every row. No window match here is a
-source-identity, call/data-closure or semantic claim.
-
-## Determinism
-
-Two fully independent runs (fresh materialized source, fresh target directory)
-produced identical artifacts:
-
-| artifact | sha256 |
+| Layer | Files |
 | --- | --- |
-| `symbols.so` (unstripped) | `d6ea5caa34d876a29f790ef70690daeb7a5b41d7176c36412743b70d27b05440` |
-| `candidate.so` (stripped) | `6fa1945d4041587226c5091258b61ad7e1d86590024c962228820d63d1485944` |
-
-Both runs: raw 83 / normalized 327 / unmatched 31, 557,664 matched text bytes.
-
-## Reproduce
-
-```sh
-# 1. materialize the exact 67-file source from pinned, committed inputs (hash-verified 67/67)
-.venv/bin/python research/mayhem-frontier-clean-rebuild-20261028/materialize_frontier_source.py <src-dir>
-
-# 2. one-time crate fetch for the vendored-anchor lock (217 packages)
-(cd <src-dir> && ~/.cache/solana/v1.54/platform-tools/rust/bin/cargo fetch --locked)
-
-# 3. clean offline build + strip + 441-window inventory, in one step
-research/mayhem-frontier-clean-rebuild-20261028/build_and_measure.sh <new-output-dir>
-```
-
-Source composition (all hashes checked against the quote-pair packet's
-`source-inputs.json`):
-
-| layer | file(s) |
-| --- | --- |
-| `research/mayhem-initializer-current-recovery-20261027/source.tar.gz` (`0e0254f2…`) | 67-file base snapshot |
+| `research/mayhem-initializer-current-recovery-20261027/source.tar.gz` | 67-file base snapshot |
 | `research/mayhem-sell-current-recovery-20261027/overrides/` | `src/instructions/sell_pump_swap.rs` |
 | `research/mayhem-current-ownership-composition-20261027/sources/qualified.rs` | `src/instructions/pump_interface.rs` |
 | `research/mayhem-quotes-current-recovery-20261027/overrides/` | `src/instructions/buy_pump_swap.rs`, `src/state.rs` |
 
-The source differs structurally from `programs/mayhem`: it adds a
-`curve-accounts` path crate, patches `anchor-lang` from `vendor/anchor-lang`
-(`[patch.crates-io]`), and uses `cargo-features = ["profile-rustflags"]` for a
-per-package `--remap-path-prefix`. Promoting it into the CI-bound selected tree
-is a maintainer decision; this packet does not change `programs/mayhem`.
+## Author-reported clean-build result
 
-## Scope and limitations
+The author reported two fresh source/target builds using a v1.54 installation
+and the default linker, with these identical outputs:
 
-- Static window partition via the repository matcher
-  ([inventory tool](../mayhem-window-inventory-tool-20261028/README.md),
-  calibrated to the published 100/332/9).
-- Measures reproducibility of the *source's* recovery; it does not reproduce
-  the published artifact and does not claim the layered recipe is wrong.
-- No runtime replay was run here; the quote-pair packet's 6,636 trade pairs
-  bind to its own artifact, not to this one.
-- Build outputs live under git-ignored `work/`; only the scripts and this
-  note are committed.
+| Artifact | Reported SHA-256 |
+| --- | --- |
+| Unstripped | `d6ea5caa34d876a29f790ef70690daeb7a5b41d7176c36412743b70d27b05440` |
+| Stripped | `6fa1945d4041587226c5091258b61ad7e1d86590024c962228820d63d1485944` |
+
+Reported coverage was **83 raw / 327 normalized-only / 31 unmatched**,
+covering **557,664 / 706,744** bytes. The clean-build binaries, logs, full SDK
+inventory and execution receipts are not retained in this packet. These results
+therefore cannot be independently re-audited from its files alone.
+
+The reported difference is 22 fewer normalized windows than the older 432-window
+artifact. It does not isolate a cause: compiler, target libraries, dependency
+builds and linker recipe must be controlled separately before attributing a
+window difference to layout. This packet does not prove that the historical
+recipe is unreproducible. Later archived recipes and the current436 evidence
+have their own explicit reproduction and qualification scopes.
+
+## Run the historical experiment
+
+```sh
+python3 -B research/mayhem-frontier-clean-rebuild-20261028/materialize_frontier_source.py <new-source-dir>
+(cd <new-source-dir> && ~/.cache/solana/v1.54/platform-tools/rust/bin/cargo fetch --locked)
+research/mayhem-frontier-clean-rebuild-20261028/build_and_measure.sh <new-output-dir>
+```
+
+The driver expects a v1.54 installation and v1.52 strip tool under
+`~/.cache/solana/`, an offline Cargo cache and `.venv/bin/python`. It uses those
+paths without independently authenticating the SDK binaries. Check the intended
+tool installation against the repository's supported SDK policy before using
+its outputs as toolchain evidence. The driver builds fresh dependencies in a
+new target directory and uses the default linker.
+
+No runtime replay is retained or claimed for these reported clean-build
+artifacts. The older quote-pair packet's 6,636 trade pairs bind only to that
+packet's own artifact. Normalized matches do not establish raw whole-body,
+recursive call/data or whole-ELF identity.

@@ -30,9 +30,9 @@ number from it is trusted:
 
 Matched text 598,792 / 706,744 bytes, as published.
 
-## Measured: the selected `programs/mayhem` source on `main`
+## Historical selected-source comparison (reported)
 
-Applied to the independently reproduced selected candidate
+The author reported applying it to the older selected candidate
 (`research/mayhem-v154-independent-reproduction-20261028`, stripped sha
 `8dac1ff7…`; unstripped symbol build from the same run):
 
@@ -41,13 +41,14 @@ Applied to the independently reproduced selected candidate
 | research frontier (432-window packet) | 100 | 332 | 9 | 598,792 B (84.7%) |
 | **selected `programs/mayhem` (v1.54, this build)** | **58** | **255** | **128** | **187,016 B (26.5%)** |
 
-The selected source therefore sits far behind the research frontier. The
-research recoveries live in separate research source trees that were never
-integrated into `programs/mayhem`. The 128 unmatched windows include all six
+The table is historical; its selected-build outputs are not archived here. The
+current [qualified436 checkpoint](../mayhem-current436-composition-20261027/README.md)
+separately archives its source and validation. The older research recoveries
+were developed outside `programs/mayhem`. The 128 unmatched windows include all six
 trade bodies (Buy, Sell, BuyV2, SellV2, BuyPumpSwap, SellPumpSwap), Burn and the
 large parser windows (O0124, O0127, O0134, O0136, …).
 
-The 58 raw-equal count agrees with the selected-build figure in
+The reported 58 raw-equal count agreed with the older selected-build figure in
 `docs/RECONSTRUCTION-STATUS.md` ("Mayhem selected … 58 exact local bytes"), so
 the measurement is consistent with the existing status documents; the
 normalized/unmatched split differs from that table only because the status

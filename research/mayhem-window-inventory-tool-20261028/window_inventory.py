@@ -17,6 +17,7 @@ artifact and it must reproduce raw-equal 100 / normalized-only 332 / unmatched 9
 """
 import argparse
 import collections
+from contextlib import contextmanager
 import gzip
 import hashlib
 import importlib.util
@@ -106,14 +107,15 @@ def inventory(candidate_path, reader):
     }
 
 
+@contextmanager
 def resolve_candidate(path):
     data = Path(path).read_bytes()
     if path.endswith(".gz"):
         data = gzip.decompress(data)
-    tmp = tempfile.NamedTemporaryFile(suffix=".so", delete=False)
-    tmp.write(data)
-    tmp.close()
-    return Path(tmp.name)
+    with tempfile.TemporaryDirectory(prefix="mayhem-inventory-") as directory:
+        candidate = Path(directory) / "candidate.so"
+        candidate.write_bytes(data)
+        yield candidate
 
 
 def print_summary(result, label):
@@ -139,8 +141,8 @@ def main():
     reader = load_reader()
 
     if args.calibrate:
-        path = resolve_candidate(str(PUBLISHED))
-        result = inventory(path, reader)
+        with resolve_candidate(str(PUBLISHED)) as path:
+            result = inventory(path, reader)
         print_summary(result, "calibration against published 432-window artifact")
         if result["counts"] != PUBLISHED_COUNTS:
             print(f"CALIBRATION FAILED: {result['counts']} != {PUBLISHED_COUNTS}", file=sys.stderr)
@@ -151,8 +153,8 @@ def main():
 
     if not args.candidate:
         ap.error("candidate path required unless --calibrate")
-    path = resolve_candidate(args.candidate)
-    result = inventory(path, reader)
+    with resolve_candidate(args.candidate) as path:
+        result = inventory(path, reader)
     print_summary(result, f"inventory for {args.candidate}")
     if args.unmatched:
         print("  unmatched windows (largest first):")

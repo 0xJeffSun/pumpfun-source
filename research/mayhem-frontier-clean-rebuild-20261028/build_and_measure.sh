@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
-# Clean, reproducible rebuild of the 432-window Mayhem research source with the
-# pinned v1.54 recipe and the DEFAULT linker, then a 441-window inventory.
+# Historical rebuild experiment for the 432-window Mayhem source using installed
+# v1.54 tools and the DEFAULT linker, then a 441-window inventory.
 #
 # This is deliberately NOT the layered toolchain / ordered.ld recipe that produced
-# the published 432-window artifact; it measures what the source alone recovers
-# under a recipe anyone can reproduce from pinned inputs.
+# the published 432-window artifact. This script does not authenticate the SDK
+# paths; a controlled comparison also needs matching tool and dependency inputs.
 #
 # Prerequisites (see research/mayhem-v154-independent-reproduction-20261028):
 #   ~/.cache/solana/v1.54/platform-tools   (sha-pinned osx-aarch64 archive)
