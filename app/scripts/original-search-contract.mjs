@@ -232,6 +232,12 @@ export async function buildSearchContract(appRoot = DEFAULT_APP_ROOT) {
   const headersNode = declaration(http, '$');
   const headers = Object.fromEntries(headersNode.properties.map((entry) => [propertyName(entry.key), literal(entry.value)]));
   witness(http, headersNode, 'default WEB/web request headers');
+  const jsonAccept = literal(objectProperty(declaration(http, 'h'), 'json'));
+  const acceptSetter = exactlyOne(findNodes(http.node, (node) => node.type === 'CallExpression' &&
+    node.callee.type === 'MemberExpression' && propertyName(node.callee.property) === 'set' &&
+    node.arguments[0]?.type === 'StringLiteral' && node.arguments[0].value === 'accept'), 'JSON reader Accept header');
+  witness(http, acceptSetter, 'response reader defaults Accept to application/json');
+  headers.Accept = jsonAccept;
   witness(encoder, exactlyOne(findNodes(encoder.node, (node) => node.type === 'AssignmentExpression' &&
     node.left.type === 'MemberExpression' && propertyName(node.left.property) === 'createContractClient' &&
     functionType(node.right)), 'contract encoder definition'),
@@ -278,6 +284,9 @@ export async function buildSearchContract(appRoot = DEFAULT_APP_ROOT) {
   }
   return { schemaVersion: 1,
     source: { repository: 'lalalune/pumpfun-source', base: '2fc654a20e9c7be2b9529f585942bb82c4c83ab2', ...corpus.anchors },
+    inventory: { variants: corpus.index.modules.length,
+      origins: corpus.index.modules.reduce((total, entry) => total + entry.origins.length, 0),
+      recovery: 'leading nested registration arrays, dependency7b52e2cfb780e246fe98c656122d95be769e17a3' },
     scope: 'Captured shared search loader, client request contract, resolver handling and declared query schemas; original TypeScript and backend implementation remain unknown',
     routes: await Promise.all(['/', '/explore'].map((route) => routeHtml(corpus, route, shell, runtime))),
     loader: { id: loader.id, targetId: decoded.targetId, chunks,

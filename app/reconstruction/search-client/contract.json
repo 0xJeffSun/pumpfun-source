@@ -4,7 +4,12 @@
     "repository": "lalalune/pumpfun-source",
     "base": "2fc654a20e9c7be2b9529f585942bb82c4c83ab2",
     "manifestSha256": "9e0fc00719eb8c919dd4205d3c118eb48c4927e056c77e8343e26d6f7189bbb5",
-    "inventorySha256": "9631271006faa37ea6055a11be4ec1faf971b45e2c7cdb78fc08a6530e777a50"
+    "inventorySha256": "1d268ae7f2eb0f61eaaffd222269bf29d9ce06e9946372861721b2f159d868e2"
+  },
+  "inventory": {
+    "variants": 5947,
+    "origins": 7337,
+    "recovery": "leading nested registration arrays, dependency7b52e2cfb780e246fe98c656122d95be769e17a3"
   },
   "scope": "Captured shared search loader, client request contract, resolver handling and declared query schemas; original TypeScript and backend implementation remain unknown",
   "routes": [
@@ -382,7 +387,8 @@
       "credentials": "same-origin",
       "headers": {
         "x-pump-source": "WEB",
-        "x-pump-platform": "web"
+        "x-pump-platform": "web",
+        "Accept": "application/json"
       },
       "querySchemaPointer": "#/properties/GET ~1search~1resolve",
       "queryEncoding": {
@@ -418,7 +424,8 @@
       "credentials": "include",
       "headers": {
         "x-pump-source": "WEB",
-        "x-pump-platform": "web"
+        "x-pump-platform": "web",
+        "Accept": "application/json"
       },
       "querySchemaPointer": "#/properties/GET ~1coins~1search-v2",
       "queryEncoding": {
@@ -441,7 +448,8 @@
       "credentials": "include",
       "headers": {
         "x-pump-source": "WEB",
-        "x-pump-platform": "web"
+        "x-pump-platform": "web",
+        "Accept": "application/json"
       },
       "querySchemaPointer": "#/properties/GET ~1coins~1search-unrestricted",
       "queryEncoding": {
@@ -1155,6 +1163,22 @@
     ]
   },
   "witnesses": [
+    {
+      "label": "response reader defaults Accept to application/json",
+      "source": "evidence/web/objects/01ad4f413e529b60.js",
+      "url": "https://pump.fun/_next/static/immutable/chunks/0oz8z5zyovele.js",
+      "sourceSha256": "ea34452a4ff15befcc08451f7d2efdc28797dba71e6148db02311ced5c21d0f6",
+      "sourceBytes": 27872,
+      "utf16": [
+        18742,
+        18808
+      ],
+      "utf8": [
+        18742,
+        18808
+      ],
+      "sha256": "fbf0793d4f7ab693330103b789943c4930100373963a6a02e8d0e4f7d7a2901a"
+    },
     {
       "label": "default WEB/web request headers",
       "source": "evidence/web/objects/01ad4f413e529b60.js",

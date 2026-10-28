@@ -6,7 +6,9 @@ stops at its lazy loader. It adds usable query declarations, request encoding
 and resolver handling rather than another formatted copy of the bundles.
 
 The inputs are the preserved public capture on upstream
-`2fc654a20e9c7be2b9529f585942bb82c4c83ab2`. Original shipped JavaScript retains
+`2fc654a20e9c7be2b9529f585942bb82c4c83ab2`, with the corrected nested-registration
+index from dependency `7b52e2cfb780e246fe98c656122d95be769e17a3` (5,947 variants,
+7,337 occurrences). Original shipped JavaScript retains
 its original authorship. The descriptive names here are analyst names;
 original TypeScript, source filenames and backend source have not been recovered.
 
@@ -17,8 +19,10 @@ The runtime AST establishes `A(id)` calling the exported loader with an import
 function, `v` exporting its value, and `l` loading a parent chunk. The shell's
 factory400466 requests loader544865. Its literal fourteen-chunk list finishes
 by importing SearchDialogLazy238128. That list selects coin-hook379705 with
-factory hash `350da5b76741…`; three other retained variants are excluded from
-this loading context. Numeric IDs are not assumed to be globally unique.
+factory hash `350da5b76741…`; other indexed variants are retained outside this
+loading context. The complete fourteen physical chunks are independently parsed,
+so an unindexed nested contender also causes an ambiguity failure. Numeric IDs
+are not assumed to be globally unique.
 
 The request path then follows website transport759257 → client30181 → origin
 503630, and the `createContractClient` reexport402030 → encoder898661. This
@@ -84,7 +88,8 @@ after that helper returns, HTTP status handling and retries.
 
 The resolver's captured default credential mode is `same-origin`; the coin hook
 explicitly overrides it to `include`. Both use WEB/web source headers; coin
-requests also set JSON content type. These are observed browser RequestInit
+requests also set JSON content type, and the JSON reader sets Accept to
+`application/json`. These are observed browser RequestInit
 options, not proof that a Node fetch sends browser cookies, nor a server auth policy.
 
 ## Reproduce

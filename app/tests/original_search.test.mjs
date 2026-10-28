@@ -33,7 +33,9 @@ test('complete bounded search artifact reproduces from original captures without
   assert.equal(contract.loader.chunks.length, 14);
   assert.equal(contract.loader.targetId, 238128);
   assert.equal(contract.loader.contextualCoinHook.sha256, '350da5b767415ae168c12050d3627d71039bcc2c0a097572b5319ddbad04d8fe');
-  assert.equal(contract.loader.otherIndexedCoinHookVariants.length, 3);
+  assert.ok(contract.loader.otherIndexedCoinHookVariants.length >= 3);
+  assert.equal(contract.inventory.variants, 5947);
+  assert.equal(contract.inventory.origins, 7337);
   assert.equal(contract.operations[resolveOperation].websiteOrigin, 'https://frontend-api-v3.pump.fun');
   assert.equal(contract.operations[resolveOperation].credentials, 'same-origin');
   assert.equal(contract.operations[coinOperation].credentials, 'include');
@@ -129,7 +131,7 @@ test('request plans require an explicit destination and preserve observed reques
   assert.equal(new URL(resolver.url).searchParams.get('identifiers'), 'a +é😀');
   assert.equal(resolver.init.signal, controller.signal);
   assert.equal(resolver.init.credentials, 'same-origin');
-  assert.deepEqual(resolver.init.headers, { 'x-pump-source': 'WEB', 'x-pump-platform': 'web' });
+  assert.deepEqual(resolver.init.headers, { 'x-pump-source': 'WEB', 'x-pump-platform': 'web', Accept: 'application/json' });
   const coin = buildSearchRequest(coinOperation, { searchTerm: 'a' }, { baseUrl: 'http://127.0.0.1:1234' });
   assert.equal(coin.init.credentials, 'include');
   assert.equal(coin.init.headers['Content-Type'], 'application/json');
@@ -197,5 +199,6 @@ test('local HTTP server receives the encoded original read requests and resolver
   for (const request of requests) {
     assert.equal(request.headers['x-pump-source'], 'WEB');
     assert.equal(request.headers['x-pump-platform'], 'web');
+    assert.equal(request.headers.accept, 'application/json');
   }
 });
