@@ -59,12 +59,31 @@ the suite therefore validates the enclosing route but does not claim direct
 runtime reachability of the new closure. Compute consumption is outside this
 runner's equality fields.
 
+## Reachability of the recovered closure
+
+The instruction first requires a remaining-account length `n` with `n > 0` and
+`n % 5 == 0`, then sets `count = n / 5`. At every outer-loop entry,
+`0 <= i < count`. Therefore `5*i <= n-5` and `5*(i+1) <= n`, so the checked
+five-account range is valid. These products cannot overflow `usize`: even at
+the maximum representable accepted `n`, `count = n/5` and the largest endpoint
+is exactly `n`. The curve branch increments `i` before consuming a maximal run
+of curve hops; the AMM branch increments it once. Both preserve the invariant
+or terminate at `i == count`, and `remaining` is never mutated.
+
+Consequently empty and nonmultiple lengths reject before the loop, one-hop and
+multi-hop routes always present a full group, and all ordinary error exits occur
+without changing the invariant. The line-307 `ok_or_else` closure is defensive
+source structure but is unreachable through this validated instruction path.
+This is a source/control-flow conclusion, not authentic execution coverage of
+the deployed closure.
+
 ## Audit
 
 With repository requirements installed:
 
 ```sh
 python -I -B research/amm-multi-hop-group-slice-recovery/verify.py
+python -I -B research/amm-multi-hop-group-slice-recovery/test_reachability.py
 ```
 
 The verifier checks an exact packet inventory, artifact and source hashes, the
@@ -72,6 +91,13 @@ complete 785-window comparison, target relocations and referenced records, all
 four direct callees, and reruns the 735-case offline suite. It does not rebuild
 the program. Rebuild inputs and limitations are recorded rather than treating a
 saved artifact as historical build provenance.
+
+For a lightweight revalidation that does not replay the already-qualified
+735-case suite, pass `--skip-runtime`. The reachability tests inspect the exact
+source precondition, loop bounds, both index-advance paths and line 307; model
+32-bit and 64-bit maximum bounds; enumerate all curve/AMM shapes through eight
+hops; and reject five mutations of the proof obligations. They are source-level
+tests and do not execute the original program.
 
 The Token-2022 decoder, raw/whole-ELF equality, 124 other unmatched windows,
 full transitive data/call closure, uncovered behavior and original historical

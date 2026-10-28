@@ -37,6 +37,7 @@ def main():
         "analysis.py",
         "build-provenance.json",
         "decoder-controls.json",
+        "test_reachability.py",
         "verify.py",
         "artifacts/candidate-symbols.so.gz",
         "artifacts/candidate.so.gz",
@@ -101,7 +102,8 @@ def main():
             assert report["case_count"] == report["passed"] == 735
             assert report["mismatches"] == []
 
-    print("PASS: 661/785 normalized, 159 raw, one 520-byte gain, no losses; 735 offline cases")
+    runtime = "735 offline cases replayed" if not args.skip_runtime else "saved runtime evidence retained"
+    print(f"PASS: 661/785 normalized, 159 raw, one 520-byte gain, no losses; {runtime}")
 
 
 if __name__ == "__main__":
