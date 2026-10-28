@@ -55,3 +55,7 @@ Use `--current-source` to bind maintained AMM files. Result manifest:
 `a2f00d29efcb59a6dd3bcf27005d3311c93a1400fb5fe0fc769509ec01a88aa0`.
 
 The [unselected follow-up controls](followup/README.md) retain negative results for the flags iterator and InitBoost alias spelling. Neither increases the recovery count.
+
+## Open incentive boundary discrepancy
+
+The [new signed boundary counterexamples](followup/incentive-range-order/README.md) preserve 128 error/log differences in 1,730 synthetic state/clock cases on this selected candidate. Original aborts and candidate returns 6035; final states agree after rollback. The earlier passing corpora remain valid, but do not cover these cases. The correction is in progress; current-chain reachability is not asserted.

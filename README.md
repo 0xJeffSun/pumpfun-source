@@ -14,6 +14,8 @@ ELF and, through a separate loader deployment, its captured payload.**
 
 These are binary-coverage measurements. Full call/data/relocation identity, original build provenance and uncovered behavior remain open. The [remaining-work review](repro/pump_amm/admin-harvest-recovery-20261027/remaining-audit/README.md) lists all 129 unmatched windows.
 
+**Known incentive error-order gap:** [1,730 new synthetic state/clock cases](repro/pump_amm/admin-harvest-recovery-20261027/followup/incentive-range-order/README.md) include 128 cases where the original aborts while this candidate returns error 6035. Both executions roll back state. These cases are outside the previously passing corpus; the ordering fix is in progress.
+
 [Current main-Pump parallel research snapshot](research/main-pump-parallel-checkpoint-20261027/README.md) preserves the verified intermediates and in-progress source beyond the maintained checkpoint.
 
 **Main Pump: 77.9% of function windows matched; 59.7% of original text covered. Complete reconstruction remains unfinished.**
