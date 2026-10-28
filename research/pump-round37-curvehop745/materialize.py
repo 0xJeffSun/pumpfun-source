@@ -153,8 +153,29 @@ def visibility_apply(staged):
         raise ValueError('visibility output inventory changed')
     return result
 
+def v2rent_apply(staged):
+    pins = json.loads((HERE / 'v2rent-pins.json').read_text())
+    parent_map = json.loads((HERE / 'visibility-pins.json').read_text())['source_sha256']
+    if {n: digest(v) for n, v in staged.items()} != parent_map:
+        raise ValueError('exact v2 rent parent inventory required')
+    name = str(safe_relative(pins['changed_path']))
+    data = staged[name]
+    old, new = pins['old'].encode(), pins['new'].encode()
+    if digest(data) != pins['parent_sha256'] or not old or data.count(old) != 1:
+        raise ValueError('exact v2 rent source context required')
+    changed = data.replace(old, new, 1)
+    if digest(changed) != pins['changed_sha256']:
+        raise ValueError('v2 rent source, guards or coordinates changed')
+    result = dict(staged)
+    result[name] = changed
+    expected = dict(parent_map)
+    expected[name] = pins['changed_sha256']
+    if {n: digest(v) for n, v in result.items()} != expected:
+        raise ValueError('v2 rent output inventory changed')
+    return result
+
 def materialize(parent, output, stage='curvehop745'):
-    if stage not in ('curvehop745', 'reserve746', 'arithmetic749', 'sourcefronts780', 'clamp786', 'visibility788'):
+    if stage not in ('curvehop745', 'reserve746', 'arithmetic749', 'sourcefronts780', 'clamp786', 'visibility788', 'v2rent789'):
         raise ValueError('unknown source stage')
     parent, output = Path(parent).absolute(), Path(output).absolute()
     if any(p.is_symlink() for p in [parent, *parent.parents, output, *output.parents]):
@@ -180,19 +201,21 @@ def materialize(parent, output, stage='curvehop745'):
         if digest(data) != expected:
             raise ValueError('source mismatch: ' + name)
         staged[name] = swap(data) if name == PINS['changed_path'] else data
-    if stage in ('reserve746', 'arithmetic749', 'sourcefronts780', 'clamp786', 'visibility788'):
+    if stage in ('reserve746', 'arithmetic749', 'sourcefronts780', 'clamp786', 'visibility788', 'v2rent789'):
         reserve = json.loads((HERE / 'reserve-pins.json').read_text())
         name = str(safe_relative(reserve['changed_path']))
         staged[name] = reserve_swap(staged[name])
-    if stage in ('arithmetic749', 'sourcefronts780', 'clamp786', 'visibility788'):
+    if stage in ('arithmetic749', 'sourcefronts780', 'clamp786', 'visibility788', 'v2rent789'):
         staged = arithmetic_apply(staged)
-    if stage in ('sourcefronts780', 'clamp786', 'visibility788'):
+    if stage in ('sourcefronts780', 'clamp786', 'visibility788', 'v2rent789'):
         staged = sourcefronts_apply(staged)
-    if stage in ('clamp786', 'visibility788'):
+    if stage in ('clamp786', 'visibility788', 'v2rent789'):
         staged = clamp_apply(staged)
-    if stage == 'visibility788':
+    if stage in ('visibility788', 'v2rent789'):
         staged = visibility_apply(staged)
-    if len(staged) != (60 if stage in ('sourcefronts780', 'clamp786', 'visibility788') else 58 if stage == 'arithmetic749' else 57):
+    if stage == 'v2rent789':
+        staged = v2rent_apply(staged)
+    if len(staged) != (60 if stage in ('sourcefronts780', 'clamp786', 'visibility788', 'v2rent789') else 58 if stage == 'arithmetic749' else 57):
         raise ValueError('unexpected source inventory')
     output.mkdir(parents=True)
     for name, data in staged.items():
@@ -206,7 +229,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--parent', required=True, type=Path)
     parser.add_argument('--output', required=True, type=Path)
-    parser.add_argument('--stage', choices=['curvehop745', 'reserve746', 'arithmetic749', 'sourcefronts780', 'clamp786', 'visibility788'], default='curvehop745')
+    parser.add_argument('--stage', choices=['curvehop745', 'reserve746', 'arithmetic749', 'sourcefronts780', 'clamp786', 'visibility788', 'v2rent789'], default='curvehop745')
     args = parser.parse_args()
     result = materialize(args.parent, args.output, args.stage)
     print(json.dumps({'stage': args.stage, 'source_files': len(result), 'source_sha256': result}, indent=2, sort_keys=True))

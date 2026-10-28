@@ -214,4 +214,38 @@ class SourceTests(unittest.TestCase):
         for n in ['lib.rs', 'v2_native_payments.rs', 'buy_v2.rs', 'sell_v2.rs']:
             self.assertEqual(data['programs/pump/src/' + n], changed['programs/pump/src/' + n])
         self.assertEqual(data['programs/pump/src/buy.rs'].splitlines()[2910], changed['programs/pump/src/buy.rs'].splitlines()[2910])
+    def v2rent_parent(self):
+        out = self.root / 'v2rent-parent'
+        m.materialize(PARENT, out, 'visibility788')
+        return {str(p.relative_to(out)): p.read_bytes() for p in out.rglob('*') if p.is_file()}
+    def test_exact_v2rent_stage(self):
+        got = m.materialize(PARENT, self.root / 'source', 'v2rent789')
+        pins = json.loads((m.HERE / 'v2rent-pins.json').read_text())
+        expected = json.loads((m.HERE / 'visibility-pins.json').read_text())['source_sha256']
+        expected[pins['changed_path']] = pins['changed_sha256']
+        self.assertEqual(got, expected)
+        self.assertEqual(len(got), 60)
+    def test_v2rent_only_one_source(self):
+        data = self.v2rent_parent(); changed = m.v2rent_apply(data)
+        self.assertEqual([n for n in data if data[n] != changed[n]], ['programs/pump/src/v2_native_payments.rs'])
+        text = changed['programs/pump/src/v2_native_payments.rs'].decode()
+        self.assertIn('_size: usize', text)
+        self.assertIn('minimum_balance(0)', text)
+        self.assertIn('crate::legacy_buy::native_payments::transfer(', text)
+        self.assertNotIn('fn transfer', text)
+    def test_v2rent_already_applied_rejected(self):
+        with self.assertRaises(ValueError): m.v2rent_apply(m.v2rent_apply(self.v2rent_parent()))
+    def test_v2rent_wrong_parent_rejected(self):
+        data = self.v2rent_parent(); data['programs/pump/src/v2_native_payments.rs'] += b'\n'
+        with self.assertRaises(ValueError): m.v2rent_apply(data)
+    def test_v2rent_extra_parent_rejected(self):
+        data = self.v2rent_parent(); data['extra.rs'] = b''
+        with self.assertRaises(ValueError): m.v2rent_apply(data)
+    def test_v2rent_missing_parent_rejected(self):
+        data = self.v2rent_parent(); data.pop('programs/pump/src/lib.rs')
+        with self.assertRaises(ValueError): m.v2rent_apply(data)
+    def test_v2rent_preserves_typed_zero_source_calls(self):
+        data = m.v2rent_apply(self.v2rent_parent())
+        self.assertIn('native_payments::ensure_rent_exempt(0,', data['programs/pump/src/buy_v2.rs'].decode().splitlines()[228])
+        self.assertIn('native_payments::ensure_rent_exempt(0,', data['programs/pump/src/sell_v2.rs'].decode().splitlines()[104])
 if __name__ == '__main__': unittest.main(argv=['test_materialize.py', *remaining])

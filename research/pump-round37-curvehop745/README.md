@@ -89,3 +89,7 @@ The additional `--stage clamp786` preserves the default and all prior stages. Se
 ## Optional SBPF visibility stage: 788
 
 Select `--stage visibility788` for the exact three attributed #323 visibility changes on `clamp786`. See [VISIBILITY788.md](VISIBILITY788.md) for the independently repeated 788 / 1,035 injective and 131 raw checkpoint, typed helper boundaries, unchanged contract-route evidence and explicit v2 residual. All prior stages and default remain available. Runtime is **NOT RUN**; whole-original identity remains false.
+
+## Optional SBPF v2 rent stage: 789
+
+Select `--stage v2rent789` for the isolated attributed #323 v2 helper hunk on `visibility788`. See [V2RENT789.md](V2RENT789.md) for the independently repeated 789 / 1,035 injective and 131 raw result, three actual zero-size callers, preserved contract routes and explicit nonzero-input exclusion. All prior stages/default remain selectable. Runtime is **NOT RUN**; whole-original identity remains false.
