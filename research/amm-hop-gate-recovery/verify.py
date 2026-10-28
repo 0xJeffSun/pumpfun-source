@@ -7,9 +7,11 @@ sha=lambda b:hashlib.sha256(b).hexdigest()
 def read(name):
  b=(HERE/name).read_bytes();return gzip.decompress(b) if name.endswith('.gz') else b
 def record(name):return json.loads(read(name))
-manifest=record('MANIFEST.json');paths=list(HERE.rglob('*'))
-assert not any(p.is_symlink() for p in paths)
-assert set(manifest['files'])=={p.relative_to(HERE).as_posix() for p in paths if p.is_file() and p.name!='MANIFEST.json'}
+paths=list(HERE.rglob('*'))
+assert not any(p.is_symlink() for p in paths), 'packet symlink'
+assert all(p.is_file() or p.is_dir() for p in paths), 'packet special file'
+manifest=record('MANIFEST.json')
+assert set(manifest['files'])=={p.relative_to(HERE).as_posix() for p in paths if p.is_file() and p!=HERE/'MANIFEST.json'}, 'packet file inventory'
 for n,h in manifest['files'].items():assert sha((HERE/n).read_bytes())==h,n
 for n,h in manifest['repository_inputs'].items():assert sha((ROOT/n).read_bytes())==h,n
 with tarfile.open(HERE/'rejected.tar.gz') as archive:

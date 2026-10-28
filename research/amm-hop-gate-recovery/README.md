@@ -84,6 +84,13 @@ The observer independently binds each signed transaction, log/error and actual
 loaded ELF hash. Synthetic fixtures use local test identities. No live-chain
 transaction or deployment is performed.
 
+The inventory audit excludes only this packet's root `MANIFEST.json` and rejects
+symlinks and special files before reading even that manifest. Negative controls
+cover an extra nested manifest, external and root-manifest symlinks, and ordinary
+and root-manifest FIFOs. Symlink or FIFO controls report a skip on hosts that
+cannot create them. The manifest also pins the transitive ELF-layout reader,
+`scripts/analyze.py`.
+
 ## Reproduce
 
 Run the saved-evidence audit with Python plus `solders==0.27.1`:

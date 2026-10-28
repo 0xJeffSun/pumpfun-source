@@ -107,7 +107,7 @@
     "measurement.json": "0791e380a5169959a8671ad47e169938e35c77a456c5b9d27d33bdb008cb52ba",
     "overlap-review.json.gz": "ff7809991d47a0815b8d794b9a31acd12fb28ed750a294d9dfe5e7f533458337",
     "proposed/multi_hop_swap.rs": "f62aaf681dfc58efe4f55f99507568fa048d488654ead82facde6b463ce0698c",
-    "README.md": "3a112ed51f3d18556f6433e7e973a39f04b171f44271f443ad0436d4e120d1a7",
+    "README.md": "6d81e1676859d979ba7447b0584e678311c9ccd5d5b1b93d0b5f6c4264312b09",
     "rebuild.py": "97fdce682f425891e68192b869c01db48364478d814667fe788cf2555d1454a6",
     "rejected-index.json": "af62620503bdda5996823af1b28cf60a003bbcb65a73407c76b9921beb711029",
     "rejected.tar.gz": "2df139eae6c60c747fd9ee5dca510627cadcdf3b5120416ec5713233569476fd",
@@ -121,8 +121,8 @@
     "sources/baseline.tar.gz": "d6e490e2ccf7cd849e423e459cce11fbd24c927d91f72ead76d2b98554016263",
     "sources/candidate.tar.gz": "03a9bef728e2f80e432c635f5373d6d7b7bea4bb7c1fdd6dcbc26a9efa34d6e7",
     "static.json": "ec9da9f7badcc72734a4254d1e71196a4b5757f2fc5c75b379fabbbea0cf4f2a",
-    "test_runtime_controls.py": "af667c0a56f835bb8e281efb2992f589c86151624b5b6385e6f4415d8a4a8e85",
-    "verify.py": "e8ce208266dc4a4f82c4a20c60bd0f8c7554687767f79c33a368bb3fe5796e9b"
+    "test_runtime_controls.py": "db6cf69d88216e65a035dfc35ef9a1b162f6aaf2f44fcad528ddc720cbc878ef",
+    "verify.py": "419b0c76779cec3c00721a48a623ea697563f2b13ccfb1ef8094df7529895ac0"
   },
   "repository_inputs": {
     "evidence/dependencies/associated_token/deployed.so": "6804554e69fd3a58caa191dc4a58f4c67223d30ca28ab8987f39fc18d2f7374d",
@@ -142,6 +142,7 @@
     "scripts/pump_amm_trade_v2_differential.py": "a66c8bac5eb610392aef041f716428038b297e42e24af0a54a4a4715d9c5c6bb",
     "research/fees-composed-frontier188/window_map.py": "eeec82f751ea38827c5149f28590f19a3ff516c7eee57b6aa48949cbaac4a7e5",
     "research/fees-composed-frontier188/elf_helpers.py": "92d28a886a6e5787c03572e5db380711ab11b64de4491414e9ae9b0d08858cfc",
-    "research/amm-fee-value-call-recovery/rebuild.py": "634cd2b5f47399f30007dbd0101335d6d60a5acba5c4de94229a5111a85e2ff6"
+    "research/amm-fee-value-call-recovery/rebuild.py": "634cd2b5f47399f30007dbd0101335d6d60a5acba5c4de94229a5111a85e2ff6",
+    "scripts/analyze.py": "dd7fb38d795d4dd72a25aab0d65c2223d9f6f75d8b3ecb0de1d87d6e102910ac"
   }
 }
