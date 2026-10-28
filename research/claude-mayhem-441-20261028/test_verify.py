@@ -1,6 +1,7 @@
 """Counterexamples for the claude-mayhem-441-20261028 verifier: ELF recheck, strict inventory and saved runtime outputs."""
 from pathlib import Path
-import gzip, hashlib, importlib.util, json, lzma, os, shutil, struct, subprocess, sys, tempfile, unittest
+import gzip, hashlib, importlib.util, json, lzma, os, runpy, shutil, struct, subprocess, sys, tempfile, unittest
+from unittest.mock import patch
 P = Path(__file__).resolve().parent
 R = next(p for p in P.parents if (p / 'evidence/original/mayhem/deployed.so').is_file())
 s = importlib.util.spec_from_file_location('mg_tests', P / 'elf_check.py'); q = importlib.util.module_from_spec(s); s.loader.exec_module(q)
@@ -73,6 +74,30 @@ class Evidence(unittest.TestCase):
     def test_inventory_rejects_unlisted_fifo(self): self.run_copy(lambda p: os.mkfifo(p / 'unexpected.fifo'), 'manifest rejects special files', False)
 
     def test_inventory_rejects_symlink(self): self.run_copy(lambda p: (p / 'unexpected').symlink_to('source.patch'), 'manifest rejects symlinks', False)
+
+    def reject_root_manifest_before_reads(self, kind):
+        with tempfile.TemporaryDirectory(dir=P.parent) as d:
+            root=Path(d).resolve();p=root/'packet';shutil.copytree(P,p,ignore=shutil.ignore_patterns('__pycache__'))
+            manifest=p/'SHA256SUMS.txt';manifest.unlink()
+            try:
+                if kind=='symlink':
+                    outside=root/'external-manifest';outside.write_text('must not be read\n');manifest.symlink_to(outside)
+                else:
+                    if not hasattr(os,'mkfifo'):self.skipTest('FIFO unavailable')
+                    os.mkfifo(manifest)
+            except (OSError,NotImplementedError) as error:self.skipTest(str(error))
+            message='manifest rejects symlinks' if kind=='symlink' else 'manifest rejects special files'
+            attempted=[]
+            def no_read(path,*args,**kwargs):
+                attempted.append(str(path));raise AssertionError('unexpected file-content read')
+            with patch.object(Path,'read_text',no_read),patch.object(Path,'read_bytes',no_read):
+                with self.assertRaisesRegex(AssertionError,'FAIL: '+message):
+                    runpy.run_path(str(p/'verify.py'),run_name='__main__')
+            self.assertEqual(attempted,[])
+
+    def test_root_manifest_symlink_rejected_before_read(self): self.reject_root_manifest_before_reads('symlink')
+
+    def test_root_manifest_fifo_rejected_before_read(self): self.reject_root_manifest_before_reads('fifo')
 
     def test_unsealed_edit_rejected(self):
         self.run_copy(lambda p: (p / 'source.patch').write_text((p / 'source.patch').read_text() + '\n'), 'FAIL: sha256 source.patch', False)

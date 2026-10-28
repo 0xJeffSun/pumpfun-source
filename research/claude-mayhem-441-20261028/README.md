@@ -1,6 +1,6 @@
 # claude-mayhem-441-20261028
 
-This packet completes Mayhem at **441/441 normalized and 441/441 raw-local windows**. It closes **O0083**, the `BuyV2` handler (original start 140512, 18,648 bytes), and **O0084**, the `SellV2` handler (original start 159160, 18,096 bytes). A generated link script then puts every function and data object at its original address.
+This packet reaches **441/441 normalized and 441/441 raw-local windows** for the captured Mayhem image. It closes **O0083**, the `BuyV2` handler (original start 140512, 18,648 bytes), and **O0084**, the `SellV2` handler (original start 159160, 18,096 bytes). A target-derived generated link script then puts the matched functions and data objects at their original addresses. These are candidate code/window-coverage results, not proof of the historical source or build recipe.
 
 **The whole ELF is not yet identical.** The stripped candidate is 775,416 bytes; the deployed program image is 777,408 bytes, of which the last 1,992 are zero. The candidate matches those first 775,416 bytes except for **30 bytes**, which are all the dynamic-symbol order of `sol_log_data` and `sol_memcpy_`:
 - `.dynsym`: 1 byte;
@@ -29,7 +29,7 @@ Everything else is byte-identical:
 | Whole meaningful ELF (775,416 B) | – | equal except 30 B (dynamic-symbol order) |
 
 ## Source changes
-All changes are ordinary Rust in six files, plus a linker script. There is no asm, no padding, no patched bytes and no unused operations. Behavior is unchanged: every runtime matrix below matches the original.
+Changes are Rust source in six files, plus a target-derived linker script; executable bytes are not patched after linking. Existing inferred inline attributes and deliberate blank-line/source-coordinate budgets remain in the source. The finite runtime matrices below match the original under their stated comparisons. They do not establish exhaustive behavioral equivalence or authenticate the historical source layout.
 
 ### O0083 and O0084, the v2 trade handlers (lanes mg-M-o83b, mg-M-o84b, mg-M-o84c, mg-M-o83c)
 - **`state.rs`:** the trade-size cap moves behind a small `TradeCap` trait.
@@ -116,6 +116,7 @@ What the scripts cover:
   - It recomputes the full 441-window census, the O0083 and O0084 bodies, and the per-section whole-ELF comparison from ELF bytes.
   - It recomputes every runtime count from the saved per-case outputs.
 - **`test_verify.py`:** counterexample tests that must be rejected.
+- Inventory validation rejects symlinks and special files before reading even `SHA256SUMS.txt`; root-manifest symlink/FIFO controls assert that no file contents were read.
 
 What is not checked here:
 - whole-ELF identity, which is short by 30 bytes;

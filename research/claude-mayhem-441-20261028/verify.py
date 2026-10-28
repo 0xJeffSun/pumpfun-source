@@ -54,6 +54,9 @@ def tar_files(data):
 
 
 # 1. manifest
+paths = list(HERE.rglob('*'))
+check(not any(p.is_symlink() for p in paths), 'manifest rejects symlinks')
+check(all(p.is_file() or p.is_dir() for p in paths), 'manifest rejects special files')
 sums = {}
 for line in (HERE / 'SHA256SUMS.txt').read_text().splitlines():
     if line.strip():
@@ -62,9 +65,6 @@ for line in (HERE / 'SHA256SUMS.txt').read_text().splitlines():
         check(str(n) == name and not n.is_absolute() and '..' not in n.parts and name not in sums,
               'manifest path is canonical, relative and unique: ' + name)
         sums[name] = h
-paths = list(HERE.rglob('*'))
-check(not any(p.is_symlink() for p in paths), 'manifest rejects symlinks')
-check(all(p.is_file() or p.is_dir() for p in paths), 'manifest rejects special files')
 present = {p.relative_to(HERE).as_posix() for p in paths if p.is_file() and p != HERE / 'SHA256SUMS.txt'}
 check(present == set(sums), f'manifest lists exactly the files present ({len(present)})')
 for name, h in sorted(sums.items()):
