@@ -2,56 +2,62 @@
 
 Rust reconstruction of Pump.fun's Solana programs from captured binaries.
 
-**Current binary coverage — 28 October 2026:** 3,318 / 3,338 function
-windows match (99.4%); 20 remain unmatched. Three of five programs reproduce
+**Current binary coverage — 28 October 2026:** 3,320 / 3,338 function
+windows match (99.5%); 18 remain unmatched. Three of five programs reproduce
 their complete meaningful ELF.
 
 | Program | Matched windows | Matched % | Raw-equal bodies | Normalized only | Unmatched | Whole ELF equal |
 | --- | ---: | ---: | ---: | ---: | ---: | --- |
-| [Pump Main](research/claude-pump-integration-20261027/r37-layout-38/README.md) | 1,018 / 1,035 | 98.4% | 168 | 850 | 17 | No |
-| [PumpSwap / AMM](research/claude-amm-union10-20261028/README.md) | 782 / 785 | 99.6% | 236 | 546 | 3 | No |
+| [Pump Main](research/pump-legacy-sell-boundary-20261028/README.md) | 1,019 / 1,035 | 98.5% | 166 | 853 | 16 | No |
+| [PumpSwap / AMM](research/claude-amm-union12-20261028/README.md) | 783 / 785 | 99.7% | 236 | 547 | 2 | No |
 | [Fees](research/claude-fees100-crank-donation-20261027/README.md) | 585 / 585 | 100.0% | 585 | 0 | 0 | **Yes** |
 | [Mayhem](research/mayhem-meaningful-elf-20261028/README.md) | 441 / 441 | 100.0% | 441 | 0 | 0 | **Yes** |
 | [Donation Relay](repro/donation-relay/canonical-exact-selection/README.md) | 492 / 492 | 100.0% | 492 | 0 | 0 | **Yes** |
-| **Total** | **3,318 / 3,338** | **99.4%** | **1,922** | **1,396** | **20** | **3 / 5** |
+| **Total** | **3,320 / 3,338** | **99.5%** | **1,920** | **1,400** | **18** | **3 / 5** |
 
-Matched windows cover **5,000,080 / 5,213,128 code bytes (95.9%)**;
-**213,048 bytes (4.1%)** remain outside matched windows.
+Matched windows cover **5,014,880 / 5,213,128 code bytes (96.2%)**;
+**198,248 bytes (3.8%)** remain outside matched windows.
 
 These figures measure the latest published artifacts, including research not
 integrated into the maintained source tree. Raw-equal bodies match byte for byte;
 normalized matches mask specified call/address operands. Window coverage is not
 a percentage of engineering work completed or proof of whole-program identity.
-The Pump Main and AMM rows use source-only Linux v1.44 builds. Separately labeled
-linker layouts generated from the original program report 293 and 248 raw matches,
-respectively, without increasing normalized coverage.
+The Pump Main row is a native Linux v1.44 build of L38 plus the legacy-sell boundary;
+the composed [L40](research/claude-pump-integration-20261027/r37-layout-40/README.md) build
+(repository Linux profile) reports 1,018 normalized and 168 raw. The AMM row is a
+source-only Linux v1.44 build. Separately labeled linker layouts generated from the
+original program report 293 (L40) and 259 (AMM) raw matches without increasing
+normalized coverage.
 
 ## Remaining work
 
-- Recover the **17 Pump Main and 3 PumpSwap / AMM** unmatched windows. The AMM
-  remainder is `0x351a8 0x4c750 0x6db20`.
+- Recover the **16 Pump Main and 2 PumpSwap / AMM** unmatched windows. The AMM
+  remainder is `0x351a8 0x4c750`.
 - Close remaining call, data and relocation differences, integrate qualified
   source changes, and verify reproducible whole-program builds and uncovered behavior.
-- Pump Main's 1,018-window build ([L38](research/claude-pump-integration-20261027/r37-layout-38/README.md))
-  adds eight windows over L33 through L35-L38 (including `nested_create::walk`, v1
-  `create`, `migrate::execute`, `multi_hop_curve::execute` and
-  `set_reserved_fee_recipients`), with 0 normalized or raw losses, and keeps synthetic
-  source-line positioning. It folds in the
-  [creator diagnostics](research/pump-l32-creator-log-parity-20261028/README.md) (L35) and
-  [AdminCto collection order](research/pump-l32-admin-cto-log-order-20261028/README.md) (L37)
-  log-parity fixes; its 44-suite captured-loader corpus passes (10,468 cases, 0 mismatches).
-  Narrow behavior/source corrections not yet composed into a frontier build: the
-  [cashback-v2 quote-program guard](research/pump-l38-cashback-quote-program-20261028/README.md)
-  (on L38, 1,018 retained), the [checked cashback decoder](research/pump-checked-cashback-decoder-20261028/README.md)
-  and [legacy-sell cashback path](research/pump-legacy-sell-cashback-20261028/README.md).
-- PumpSwap's [782-window union](research/claude-amm-union10-20261028/README.md) adds
-  `0x2ba60` and the `set_reserved_fee_recipients` handler (`0x19138`) to the
-  [780-window union7](research/claude-amm-union7-20261028/README.md) (which added
-  `multi_hop_swap::amm_hop`, `0x40a08`), plus 16 raw matches by code motion, with 0 normalized
-  or raw losses. All 25 suites (17,462 cases) report 0 mismatches and the five incentive
-  error-order controls agree. A [fresh-dependency rebuild](research/amm-fresh-v144-20261028/README.md)
-  of the union6 workspace (all 257 locked packages, no cache) reproduces its 779 normalized
-  windows with the official Linux v1.44 target libraries; Windows target libraries give 774.
+- Pump Main reaches 1,019 windows with the
+  [legacy-sell cashback boundary](research/pump-legacy-sell-boundary-20261028/README.md)
+  (`0x152888`, all 8,488 bytes; 0 losses; 182 signed paired runtime cases) on L38. The
+  composed line continues through data-side steps
+  [L39](research/claude-pump-integration-20261027/r37-layout-39/README.md) and
+  [L40](research/claude-pump-integration-20261027/r37-layout-40/README.md) (1,018 windows,
+  raw-ready 1,005/1,018 with the layout layer, 44-suite corpus 10,468 cases, 0 mismatches),
+  which do not yet include the legacy-sell boundary. Behavior corrections qualified with signed
+  original/candidate replays and no window loss, not yet composed into one build:
+  [v2 whitelist reserve sync](research/pump-v2-whitelist-sync-20261028/README.md),
+  [v3 sell recovery](research/pump-l39-v3sell-recovery-20261028/README.md) (128 cases),
+  [sweep zero-recipient guard](research/pump-l38-sweep-zero-recipient-20261028/README.md) (error 6000),
+  [multi-hop crossing guard](research/pump-multi-hop-crossing-guard-20261028/README.md) (error 6021),
+  [cashback-v2 quote-program guard](research/pump-l38-cashback-quote-program-20261028/README.md),
+  [direct-route FeeConfig selection](research/pump-direct-route-fee-config-20261028/README.md) and the
+  [checked cashback decoder](research/pump-checked-cashback-decoder-20261028/README.md).
+- PumpSwap's [783-window union11](research/claude-amm-union11-20261028/README.md) recovers
+  the volume updater (`0x6db20`) over the 782-window union10, with 0 normalized or raw losses;
+  [union12](research/claude-amm-union12-20261028/README.md) is a data-side step with the same
+  window sets. All nine panic Location operands in `0x6db20` now match the original
+  ([panic locations](research/amm-incentive-panic-locations-20261028/README.md); 17,462 cases),
+  and a [signed cashback witness](research/amm-cashback-signed-verification-20261028/README.md)
+  covers the still-unmatched `distribute_cashback` helper (`0x351a8`; 146 cases, 0 mismatches).
   The [maintained AMM checkpoint](repro/pump_amm/v2-mint-clone-recovery-20261028/README.md)
   remains at 660 windows; research candidates are not promoted.
 - Mayhem now [reproduces its complete meaningful ELF](research/mayhem-meaningful-elf-20261028/README.md):
@@ -66,6 +72,12 @@ respectively, without increasing normalized coverage.
   (125 `with_account_name` sites) and
   [`MayhemError` Display messages](research/mayhem-current437-mayhem-error-display-20261028/README.md)
   (20 messages, 531 bytes).
+- Binary analysis packets ([window](research/pump-window-analysis-20261028/README.md),
+  [deep disassembly](research/pump-deep-disasm-20261028/README.md) and
+  [section](research/pump-section-analysis-20261028/README.md) analyses for each program, and a
+  [reconstruction roadmap](research/reconstruction-roadmap-20261028/README.md)) describe the
+  deployed binaries; the roadmap's open-window lists use the maintained checkpoints, not the
+  research frontier above.
 - PumpSwap transfer-fee diagnostics with basis points above 10,000 now trigger all
   three overflow sites at runtime: lines 57/67 for
   [deposit/withdraw](research/amm-transfer-fee-bps-overflow-20261028/README.md) and
