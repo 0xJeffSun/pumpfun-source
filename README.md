@@ -47,10 +47,12 @@ and AMM linker-layout experiments remain separate historical evidence; their
   the qualified behavior corrections with signed original/candidate replays and
   no normalized window loss:
   [v2 whitelist reserve sync](research/pump-v2-whitelist-sync-20261028/README.md),
+  [multi-hop crossing guard](research/pump-multi-hop-crossing-guard-20261028/README.md) (error 6021),
   [v3 sell recovery](research/pump-l39-v3sell-recovery-20261028/README.md) (128 cases),
   [sweep zero-recipient guard](research/pump-l38-sweep-zero-recipient-20261028/README.md) (error 6000),
-  [multi-hop crossing guard](research/pump-multi-hop-crossing-guard-20261028/README.md) (error 6021),
   [cashback-v2 quote-program guard](research/pump-l38-cashback-quote-program-20261028/README.md),
+  [cashback validation order](research/pump-cashback-validation-order-20261028/README.md) (6010 before 6076),
+  [shared buyback panic provenance](research/pump-shared-buyback-panic-20261028/README.md),
   [direct-route FeeConfig selection](research/pump-direct-route-fee-config-20261028/README.md) and the
   [checked cashback decoder](research/pump-checked-cashback-decoder-20261028/README.md).
 - The [maintained AMM frontier](repro/pump_amm/canonical-frontier-20261028/README.md)
@@ -133,7 +135,7 @@ Source acquisition/extraction is separate from editable feature reconstruction a
 | Home / feed | 3/3 (100%) | 3/4 (75%) | Evidence-mapped, hash-bound synthetic examples, strict local validation and honest For You/Following boundaries pass unit and browser tests. Native feed compatibility, authenticated personalization and original visual parity remain unqualified. |
 | Explore / search | 3/3 (100%) | 3/4 (75%) | Authenticated one-record historical snapshot, fail-closed adapter and offline name/symbol/mint search pass unit and browser tests. Native market discovery, production ranking and original visual parity remain unqualified. |
 | Leaderboards / competitions | 3/3 (100%) | 2/4 (50%) | Contract-driven read-only interface and failure paths verified. Live API success and original visual parity remain unqualified. |
-| Live discovery / playback | 0/3 (0%) | 0/4 (0%) | Live route scaffold; media and realtime behavior not implemented. |
+| Live discovery / playback | 3/3 (100%) | 3/4 (75%) | Authenticated five-record historical discovery snapshot, fail-closed evidence adapter and local search/selection states pass unit and browser tests. Current livestream state, native API compatibility, playback, presence and original visual parity remain unqualified. |
 | GO | 0/3 (0%) | 0/4 (0%) | Route scaffold; campaign behavior and API binding unknown. |
 | Mayhem | 3/3 (100%) | 2/4 (50%) | Evidence-mapped state filters, sorting, strict validation and fail-closed offline states pass unit and browser tests. No archived Mayhem response, qualified live API compatibility or original visual parity is claimed. |
 | Holder rewards | 3/3 (100%) | 3/4 (75%) | Published-SDK offline PDA derivation, validation and unavailable states pass unit and browser tests. Live account existence, balances, eligibility, claims and original visual parity remain unqualified. |

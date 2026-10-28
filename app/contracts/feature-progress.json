@@ -287,37 +287,57 @@
       ],
       "source": {
         "contract": {
-          "status": "pending",
-          "evidence": []
+          "status": "accepted",
+          "evidence": [
+            "packages/frontend/LIVE-EVIDENCE.md#observed"
+          ]
         },
         "logic": {
-          "status": "pending",
-          "evidence": []
+          "status": "accepted",
+          "evidence": [
+            "packages/frontend/src/app/live/page.tsx",
+            "packages/frontend/src/app/live/live-discovery.tsx"
+          ]
         },
         "adapters": {
-          "status": "pending",
-          "evidence": []
+          "status": "accepted",
+          "evidence": [
+            "packages/frontend/src/app/live/evidence.ts",
+            "packages/frontend/src/app/live/live-data.ts",
+            "packages/frontend/src/app/live/live-filter.ts"
+          ]
         }
       },
       "completion": {
         "source": {
-          "status": "pending",
-          "evidence": []
+          "status": "accepted",
+          "evidence": [
+            "packages/frontend/LIVE-EVIDENCE.md#local-design"
+          ]
         },
         "success": {
-          "status": "pending",
-          "evidence": []
+          "status": "accepted",
+          "evidence": [
+            "packages/frontend/tests/live.spec.ts",
+            "tests/live_snapshot.test.ts"
+          ]
         },
         "failure": {
-          "status": "pending",
-          "evidence": []
+          "status": "accepted",
+          "evidence": [
+            "packages/frontend/tests/live.spec.ts",
+            "tests/live_snapshot.test.ts"
+          ]
         },
         "consistency": {
           "status": "pending",
-          "evidence": []
+          "evidence": [
+            "packages/frontend/tests/live.spec.ts",
+            "packages/frontend/visual/live-20261028/README.md"
+          ]
         }
       },
-      "note": "Live route scaffold; media and realtime behavior not implemented."
+      "note": "Authenticated five-record historical discovery snapshot, fail-closed evidence adapter and local search/selection states pass unit and browser tests. Current livestream state, native API compatibility, playback, presence and original visual parity remain unqualified."
     },
     {
       "id": "go",
