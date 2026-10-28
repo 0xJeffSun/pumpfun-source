@@ -9,6 +9,8 @@ import { registerUserRoutes } from "./users-routes.js";
 import { UserStore, defaultStore } from "./users-store.js";
 import { registerCompetitionRoutes } from "./competitions-routes.js";
 import { CompetitionStore, defaultCompetitionStore } from "./competitions-store.js";
+import { registerFollowingRoutes } from "./following-routes.js";
+import { FollowingStore, defaultFollowingStore } from "./following-store.js";
 
 export type Fixture = {
   method: string;
@@ -299,6 +301,13 @@ const NATIVE_ROUTES = new Set<string>([
   "GET /competitions/{id}/entries/{entryId}",
   "GET /competitions/{id}/entries/{entryId}/highlights",
   "GET /competitions/{id}/highlights",
+  "GET /following/single/{id}",
+  "GET /following/v3/followers/count/{userId}",
+  "GET /following/v3/following/count/{userId}",
+  "GET /following/v3/followers/search/{userId}",
+  "GET /following/v3/following/search/{userId}",
+  "GET /following/v3/followers/{userId}",
+  "GET /following/v3/following/{userId}",
 ]);
 
 export interface BuildAppOptions {
@@ -308,6 +317,8 @@ export interface BuildAppOptions {
   postStore?: PostStore;
   /** Override the competition store (for tests). */
   competitionStore?: CompetitionStore;
+  /** Override the follow-graph store (for tests). */
+  followingStore?: FollowingStore;
 }
 
 export function buildApp(fixtures: Fixture[] = [], opts: BuildAppOptions = {}) {
@@ -344,11 +355,15 @@ export function buildApp(fixtures: Fixture[] = [], opts: BuildAppOptions = {}) {
   const compStore =
     opts.competitionStore ??
     (opts.userStore ? new CompetitionStore(undefined, store) : defaultCompetitionStore);
+  const followStore =
+    opts.followingStore ??
+    (opts.userStore ? new FollowingStore(store) : defaultFollowingStore);
   app.register(async (native) => {
     native.addHook("preHandler", apiKeyGate);
     registerUserRoutes(native, store);
     registerPostRoutes(native, postStore);
     registerCompetitionRoutes(native, compStore);
+    registerFollowingRoutes(native, followStore);
   });
 
   // Routing recognizes documented paths; no fabricated domain responses or live proxy fallback.
