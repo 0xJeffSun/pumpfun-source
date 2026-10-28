@@ -140,6 +140,8 @@ export function SidebarProvider({ children }: { children: ReactNode }) {
           } as CSSProperties
         }
         className="group/sidebar-wrapper flex min-h-svh w-full"
+        // The consent pre-paint helper may add inert before hydration.
+        suppressHydrationWarning
         data-app-shell=""
         data-mobile-navigation={mobileOpen ? "open" : "closed"}
       >

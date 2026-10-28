@@ -335,6 +335,8 @@ async function capture(
   try {
     await cdp.send("Page.enable", {}, sessionId);
     await cdp.send("Network.enable", {}, sessionId);
+    // Targets share a browser cookie jar: every declared display case starts fresh.
+    await cdp.send("Network.clearBrowserCookies", {}, sessionId);
     await cdp.send(
       "Emulation.setDeviceMetricsOverride",
       { ...viewport, deviceScaleFactor: 1 },
@@ -532,6 +534,8 @@ async function main() {
       segmentPlacement:
         "Babel parses literal top-level $RS/$RC calls and $RR stylesheet-gated boundaries, ignoring strings and function bodies. The local renderer awaits the recorded captured stylesheets, then moves only the named retained DOM segments after DOMContentLoaded.",
       local: values.local,
+      cookieIsolation:
+        "Network.clearBrowserCookies before each reference/local capture, followed only by the declared display-case cookies; the browser profile is newly created for this run.",
       declaredLocalSourceDirectory: sourceRoot,
       masksBothRenders: MASK_BOTH.trim().split("\n"),
       excludedFromReferenceOnly: MASK_REFERENCE.trim().split("\n"),
@@ -543,7 +547,7 @@ async function main() {
       "The reference is server-rendered HTML without client hydration, i.e. the first-paint state.",
       "Pixel equality is a visual check, not DOM, behavior or accessibility equivalence.",
       "The local placement helper waits for DOMContentLoaded so every named retained segment has been parsed; every reference capture requires a visible shell.",
-      "Captured browser consent/auth state is unknown. Overlay-closed emulation is separate from the unclosed SSR overlay case; current local first-visit consent remains unimplemented.",
+      "Captured browser consent/auth state is unknown. Overlay-closed emulation is separate from the unclosed SSR overlay case; local browser consent behavior is source-specific and does not establish current legal authority.",
     ],
     referenceInputs: Object.fromEntries(
       [...servedReferenceInputs].sort(([a], [b]) => a.localeCompare(b)),
