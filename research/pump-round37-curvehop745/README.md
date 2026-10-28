@@ -133,3 +133,11 @@ Select `--stage feeconfig806` after `chain805` using the unchanged ordinary SBPF
 The accepted checkpoint is **806 / 1,035 injective normalized windows and 133 raw windows**, retaining all preceding matches. The original 1,176-byte generated unchecked decoder now matches, closing the earlier immediate FeeConfig decoder gap; the local 1,352-byte reader and both route/trade consumers preserve their complete normalized bodies. Both complete generated ELFs repeat byte-for-byte from the exact source, and 88 pure source tests pass across twelve stages.
 
 This is not universal nominal Rust type/API equivalence or a recursive dynamic-destructor proof. BondingCurve's 624-versus-600 dispatcher and prior handler, metadata, PDA, duplicate-identity and split-consumer limits remain. See [FEECONFIG806.md](FEECONFIG806.md). Runtime remains **NOT RUN** and full original identity remains **false**.
+
+## Optional next369810 stage
+
+Select `--stage next369810` after `feeconfig806` with the same ordinary SBPF profile. All twelve prior stages and the default remain selectable. This stage credits [#369](https://github.com/lalalune/pumpfun-source/pull/369), with an explicitly local no-hint wrapper derivative: the upstream `inline(always)` attribute is omitted, not replaced by an optimization sweep. Three existing files change and one utility file is added, for 61 inputs.
+
+The accepted checkpoint is **810 / 1,035 injective normalized windows and 133 raw windows**, retaining all preceding matches. Four original bodies gain matches: buy/sell quote, post-fee amount and migration subtraction error. The already-matched addition error is not counted again. Both complete generated ELFs repeat byte-for-byte, and 95 pure source tests pass across thirteen stages.
+
+Migration intentionally repairs post-completion quote funding and changes nonzero/invalid-input behavior. The correctly typed calculator (696 versus 640 bytes), inverse wrapper (688 versus 632), two previously unresolved panic-coordinate identities and earlier limits remain explicit. No whole-handler or recursive closure is claimed. See [NEXT369810.md](NEXT369810.md). Runtime remains **NOT RUN** and full original identity remains **false**.

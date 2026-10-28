@@ -419,4 +419,33 @@ class SourceTests(unittest.TestCase):
     def test_feeconfig_missing_parent_rejected(self):
         data = self.feeconfig_parent(); data.pop('programs/pump/src/trade_types.rs')
         with self.assertRaises(ValueError): m.feeconfig_apply(data)
+    def next369_parent(self):
+        out = self.root / 'next369-parent'
+        m.materialize(PARENT, out, 'feeconfig806')
+        return {str(p.relative_to(out)): p.read_bytes() for p in out.rglob('*') if p.is_file()}
+    def test_exact_next369_stage(self):
+        got = m.materialize(PARENT, self.root / 'source', 'next369810')
+        self.assertEqual(got, json.loads((m.HERE / 'next369-pins.json').read_text())['source_sha256'])
+        self.assertEqual(len(got), 61)
+    def test_next369_exact_scope(self):
+        old = self.next369_parent(); new = m.next369_apply(old)
+        self.assertEqual({n for n in old if old[n] != new[n]}, {'programs/pump/src/lib.rs', 'programs/pump/src/trade_v3.rs', 'programs/pump/src/migrate.rs'})
+        self.assertEqual(set(new) - set(old), {'programs/pump/src/util/transfer_fee.rs'})
+        for n in old: self.assertEqual(len(new[n].splitlines()), len(old[n].splitlines()))
+    def test_next369_no_hint_and_prior_harvest(self):
+        data = m.next369_apply(self.next369_parent())
+        self.assertNotIn(b'#[inline(always)]', data['programs/pump/src/trade_v3.rs'])
+        self.assertIn(b'pub struct FeeConfig {', data['programs/pump/src/trade_types.rs'])
+        self.assertIn(b'harvest', data['programs/pump/src/migrate_v2.rs'])
+    def test_next369_already_applied_rejected(self):
+        with self.assertRaises(ValueError): m.next369_apply(m.next369_apply(self.next369_parent()))
+    def test_next369_wrong_parent_rejected(self):
+        data = self.next369_parent(); data['programs/pump/src/lib.rs'] += b'\n'
+        with self.assertRaises(ValueError): m.next369_apply(data)
+    def test_next369_extra_parent_rejected(self):
+        data = self.next369_parent(); data['extra.rs'] = b''
+        with self.assertRaises(ValueError): m.next369_apply(data)
+    def test_next369_missing_parent_rejected(self):
+        data = self.next369_parent(); data.pop('programs/pump/src/lib.rs')
+        with self.assertRaises(ValueError): m.next369_apply(data)
 if __name__ == '__main__': unittest.main(argv=['test_materialize.py', *remaining])
