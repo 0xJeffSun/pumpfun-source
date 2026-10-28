@@ -1,12 +1,21 @@
 # Mayhem window 188864–190160 — static structural inventory (28 Oct 2026)
 
+**Current status.** This is a historical original-only analysis. The later
+[current436 inventory](../mayhem-current436-composition-20261027/inventory.tsv)
+already matches O0095 (`MayhemState::validate_quote`) and O0096
+(`MayhemError::name`) with recursive direct-call closure. The `opaque_unassessed`
+labels below come from the older 26 October selected inventory and do not
+describe the current Mayhem frontier. An internal call target alone does not
+change the official 441-window denominator.
+
 **Scope.** Analyst evidence only. This packet decodes one sBPF text window from
 the *unmodified captured* Mayhem program and records its control flow, calls,
 loaded constants and memory accesses. It does **not** rebuild source, compare
 against any candidate, or claim byte or semantic identity. There is no SBF
 toolchain in the environment this was produced in, so no `cargo build-sbf`
-comparison was run. Treat every interpretation below as a hypothesis to be
-checked by a real rebuild-and-compare on the canonical Linux v1.54 recipe.
+comparison was run. Treat every interpretation below as a historical hypothesis. The current436
+packet separately records actual builds and comparisons; this note does not
+establish a new canonical platform recipe.
 
 ## Target
 
@@ -52,12 +61,12 @@ regardless of mnemonic naming.
 
 ## Findings (facts from the capture)
 
-1. **The inferred window groups two call-connected routines.** The call at
+1. **The inferred window contains an internal call-connected entry.** The call at
    `@189344` targets `189872`, which begins `mov64 r6, r1` (a fresh entry).
-   So `188864–190160` is a caller body `[188864, 189872)` plus an outlined
+   The bytes are consistent with a caller `[188864, 189872)` plus an outlined
    callee `[189872, 190160)` (288 bytes) that allocates a zeroed buffer and
-   panics. This is boundary evidence: a future per-function recovery should
-   split this window at **189872**.
+   panics. This is a boundary hypothesis, not proof that the authoritative
+   inventory should split this window at **189872**.
 
 2. **Serialization + allocation.** The caller calls `BpfWriter::write_all`
    (`@189168`) and the inner callee calls `__rust_alloc_zeroed` (`@189888`).
@@ -109,13 +118,14 @@ stand regardless.
 ## Limitations
 
 - Original-only. No candidate was built or compared; **no byte/normalized match
-  is claimed or implied.** Disposition stays `opaque_unassessed`.
+  is claimed or implied.** This packet does not change dispositions; the historical selected inventory
+  says `opaque_unassessed`, while current436 separately records a match.
 - The window boundary is inferred; this note adds evidence for an internal
   boundary at 189872 but does not re-cut the official inventory.
 - Constant and `Location` interpretations are leads from byte patterns, not
   proofs. Syscall/relocation semantics are not resolved here.
 
-## Suggested next steps (for a real recovery, on a Linux SBF host)
+## Historical suggested next steps (superseded by current436)
 
 1. Split the window at 189872 and treat `[189872, 190160)` as an allocation
    helper when attributing bodies.

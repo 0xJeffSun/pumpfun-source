@@ -1,7 +1,8 @@
 # Independent reproduction of the selected Mayhem v1.54 candidate (28 Oct 2026)
 
-**Result.** On a second, independent Darwin arm64 host, the pinned v1.54 recipe
-rebuilds the selected Mayhem candidate **byte-for-byte**:
+**Historical report; independent run not archived.** The author reported that
+a second Darwin arm64 host reproduced the older selected Mayhem candidate
+with the following hash:
 
 ```
 built stripped artifact : 8dac1ff7575e3aa74ffa1ab4c4db2152781f0c644665dbf1c278e284751b19cb
@@ -9,13 +10,14 @@ repro/status.json mayhem: 8dac1ff7575e3aa74ffa1ab4c4db2152781f0c644665dbf1c278e2
 ```
 
 The original selected build (`repro/mayhem/initializer-current-20261027/`) was
-produced by a different user/host. This packet records that an unrelated host
-reproduces the identical artifact sha from the same pinned inputs. This supports
-**build reproducibility of the selected candidate**; it does not establish the
-original historical compiler, nor change any function-window match, nor claim
-whole-file identity to the capture.
+produced by a different user/host. No run log, artifact, full source-input inventory or host attestation is
+retained in this packet, so its independent-build claim cannot be re-audited
+from these files. The hash identifies a historical selected candidate, not the
+[current436 candidate](../mayhem-current436-composition-20261027/README.md).
+The report does not establish the original historical compiler, change any
+function-window match, or claim whole-file identity to the capture.
 
-## Verified pinned inputs
+## Reported pinned inputs
 
 | Input | Value |
 | --- | --- |
@@ -64,7 +66,8 @@ committed (they live under the git-ignored `work/`).
 
 ## Scope and limitations
 
-- Confirms the selected candidate rebuilds reproducibly on an independent host.
+- Records the author's independent-host reproduction claim; retained receipts
+  are insufficient to independently verify that run.
 - Does **not** prove the original historical compiler, SDK or flags.
 - Does **not** add or change any matched function window, and makes no
   whole-file identity claim against the capture.
