@@ -120,6 +120,8 @@ jobs:
               python scripts/pump_validate_sell_accounting.py --host work/pump-sell-accounting-host --output work/pump-sell-accounting.json
           - suite: fees
             commands: |
+              python -B research/fees-causal-independent/verify.py
+              python -B research/fees-causal-independent/test_verify.py
               python -B research/fees-sharing-handler-recovery/verify.py
               python -B research/fees-sharing-handler-recovery/test_verify.py
               python -B research/fees-work-checkpoint-20261027/test_restore.py
