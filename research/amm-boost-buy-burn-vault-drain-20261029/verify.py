@@ -31,14 +31,14 @@ import struct
 import sys
 from pathlib import Path
 
-sys.path.insert(0, str(Path.home() / "workspace/pumpfun-sparse/scripts"))
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "scripts"))
 import os
-os.chdir(Path.home() / "workspace/pumpfun-sparse")
+os.chdir(Path(__file__).resolve().parents[2])
 from solders.transaction import Transaction
 from pump_amm_liquidity_differential import PAYER, vaultbase, vaultquote
 from pump_amm_boost_burn_differential import BOOST
 
-ROOT = Path.home() / "workspace/pumpfun-sparse"
+ROOT = Path(__file__).resolve().parents[2]
 PACKET = ROOT / "research/amm-boost-buy-burn-vault-drain-20261029"
 M = 2 ** 64 - 1
 
