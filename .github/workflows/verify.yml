@@ -106,6 +106,14 @@ jobs:
             commands: |
               python -B research/mayhem-current436-selected-prefixes-20261027/verify.py
               python -B research/mayhem-current436-selected-prefixes-20261027/test_verify.py
+          - suite: mayhem-current436-residual-controls
+            commands: |
+              python -B research/mayhem-current436-amm-event-controls-20261027/verify.py
+              python -B research/mayhem-current436-amm-event-controls-20261027/test_verify.py
+              python -B research/mayhem-current436-v2-controls-20261027/verify.py
+              python -B research/mayhem-current436-v2-controls-20261027/test_verify.py
+              python -B research/mayhem-current436-sweep-controls-20261027/verify.py
+              python -B research/mayhem-current436-sweep-controls-20261027/test_verify.py
           - suite: mayhem-current-native-ownership
             commands: |
               python -B research/mayhem-current-native-ownership-composition/verify.py

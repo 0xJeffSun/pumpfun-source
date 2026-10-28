@@ -3,7 +3,7 @@
 Reconstructed Rust source for Pump.fun's Solana programs, with captured binaries,
 reproducible builds and local differential tests.
 
-**Progress as of 27 October 2026: the Pump Fees research reconstruction reproduces its
+**Progress as of 28 October 2026: the Pump Fees research reconstruction reproduces its
 complete meaningful ELF byte for byte; the other three core programs still differ from their
 captured binaries. The selected Donation Relay reconstruction reproduces its complete meaningful
 ELF and, through a separate loader deployment, its captured payload.**
@@ -140,6 +140,10 @@ The [current selected-data checks](research/mayhem-current436-selected-prefixes-
 preserve all 429 closed windows while checking 486 Source coordinates, 48 code
 addresses and 119 references to 32-byte prefixes. They reject 22 ambiguous
 counterpart pairs without claiming complete data or indirect-call identity.
+
+The [remaining-body review](docs/MAYHEM-COMPLETION.md#retained-partial-source-controls)
+also preserves the latest partial AMM, V2 and SweepFees source controls. Their
+stronger local diagnostics do not add to the 436 matched-window count.
 
 The [native historical-macro composition](research/mayhem-native-current432-composition/README.md)
 also reproduces 432 normalized windows and 85 raw-local matches in its own

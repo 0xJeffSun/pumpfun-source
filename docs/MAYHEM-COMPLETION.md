@@ -1,6 +1,6 @@
-# Mayhem completion review — 27 October 2026
+# Mayhem completion review — 28 October 2026
 
-Reviewed upstream snapshot: `55eb899b4b5720be3072ddd8f7d8881a104d5de8`, plus the
+Reviewed upstream snapshot: `a19f73fbf52251292114a6744c4872b0ae22378f`, plus the
 independently qualified composition below. **Whole-ELF identity is unfinished.**
 
 | Artifact | Complete normalized windows | Raw-equal bodies | Direct-call-closed windows | No complete body match |
@@ -85,6 +85,17 @@ The [441-row inventory](../research/mayhem-current436-composition-20261027/inven
 lists every raw-equal, normalized-only and unmatched body with actual counterpart
 names and addresses. The [parallel work map](MAYHEM-PARALLEL-WORK.md) records
 the source investigations and their artifact bindings.
+
+## Retained partial source controls
+
+These separate artifacts preserve the current matched frontier. They do not
+replace the qualified build or add a recovered function.
+
+| Remaining body | Strongest retained evidence | Limit |
+| --- | --- | --- |
+| AMM Buy / Sell | [AMM event controls](../research/mayhem-current436-amm-event-controls-20261027/README.md): Buy's complete 7,144-byte normalized prefix; Sell's opcode, field-read and 39 event-store order; 36 signed pairs | Whole bodies still differ in event construction and stack/register allocation |
+| BuyV2 / SellV2 | [Four V2 controls](../research/mayhem-current436-v2-controls-20261027/README.md): alternative sizing and event-lifetime arrangements, with all prior 436/141 matches retained | No runtime qualification for these exact controls; no whole-body match |
+| SweepFees | [Sweep control](../research/mayhem-current436-sweep-controls-20261027/README.md): 8,384-byte body, all 51 ordered callee shapes and 13 Source values, two equal builds | Original is 8,400 bytes; no whole-body match or runtime qualification |
 
 ## Active work
 

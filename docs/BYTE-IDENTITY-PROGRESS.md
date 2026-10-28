@@ -2931,3 +2931,29 @@ This is a bounded explanation of earlier 432-window controls, not a general
 compiler defect, a new complete-function match, or a change to qualified436.
 No new VM execution occurs. The recorded source ambiguity and CRLF parser
 correction remain explicit.
+
+## Current436 residual source archives
+
+Three separate partial-control packets now retain the latest AMM, V2 and
+SweepFees source/artifact evidence. Each independently preserves 436 normalized,
+141 raw-local and 429 direct-closed windows, with 4,473 positive direct edges
+and 486 Source observations. None adds a complete match or replaces the
+qualified436 artifact.
+
+The AMM packet retains the true Event macro at its observed source origin,
+Buy's exact 7,144-byte normalized prefix, and Sell's opcode/field/event-store
+ordering with unresolved stack/register differences. Two full builds agree;
+its own 36 signed pairs, 72 transaction records and 144 signature fields pass.
+The separate alternative's Buy-only receipts are not treated as Sell coverage.
+
+Four V2 controls preserve complementary sizing, field-read, event-store and
+frame-placement results; neither complete V2 body matches. They have no runtime
+qualification. The SweepFees control moves native detection to the wrapper,
+retains all 51 ordered callee shapes and 13 Source values, and repeats an
+8,384-byte body versus the original 8,400 bytes. It too has no runtime claim.
+
+All three published verifiers pass independently. Portable-copy and corruption
+tests cover inventory rejection, source-diff integrity and actual allocated
+candidate/symbol divergence: 17 tests pass and one inapplicable source-patch test
+is explicitly skipped for the archive-only AMM source. Exact linker maps and
+source-patch whitespace are preserved without changing their contents.

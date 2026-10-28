@@ -1489,6 +1489,12 @@ research/mayhem-current436-composition-20261027/inventory.tsv -whitespace
 research/mayhem-current434-format-route-20261027/reader.py whitespace=-blank-at-eof
 research/mayhem-current434-custom-format-route-20261027/reader.py whitespace=-blank-at-eof
 research/mayhem-current434-custom-format-route-20261027/unit_trace.py whitespace=-blank-at-eof
+# Preserve exact source diffs and linker output in the partial-control archives.
+research/mayhem-current436-v2-controls-20261027/*/source.patch -whitespace
+research/mayhem-current436-v2-controls-20261027/*/build/link.map -whitespace
+research/mayhem-current436-sweep-controls-20261027/sweep/source.patch -whitespace
+research/mayhem-current436-sweep-controls-20261027/sweep/*/link.map -whitespace
+research/mayhem-current436-*-controls-20261027/**/*.so -text
 repro/pump_amm/incentive-order-recovery-20261027/results/** -whitespace
 repro/pump_amm/incentive-order-recovery-20261027/followup/** -whitespace
 research/amm-native-transfer-fee-recovery/** -text -whitespace
