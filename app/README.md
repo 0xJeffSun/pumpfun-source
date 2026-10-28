@@ -52,6 +52,8 @@ pnpm recover
 
 `pnpm inventory` extracts literal Turbopack factory boundaries with Babel without executing the bundles. It emits all module variants, not just one arbitrary version of each module ID, and strict API-string candidates. A candidate can come from unused, privileged or excluded code; it is not proof of a reachable API.
 
+Inventory regeneration is fail-closed: every eligible captured JavaScript input must exist and parse before any generated report is published. Factory files and the module, operation and dependency reports are staged first, then replaced with rollback on a caught publication error. Obsolete files carrying the generator's filename pattern and exact ownership banner are removed; unrelated files are preserved, and a destination collision with one is rejected. The replacement is atomic per output target, not across all four targets or across a process/host crash, so concurrent inventory runs are unsupported. Tests can use `node scripts/inventory.mjs --root <workspace>` with an isolated synthetic workspace; ordinary `pnpm inventory` retains the application root and output schemas.
+
 See `evidence/validation.json` for this checkpoint's actual results. Lockfile changes and source recaptures require renewed validation. Docker examples in `infra/` are development scaffolding, not a claim about upstream deployment.
 
 ## Source and feature completion
