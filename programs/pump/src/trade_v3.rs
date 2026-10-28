@@ -1,6 +1,7 @@
 use anchor_lang::prelude::*;
 use anchor_spl::token_interface::{self, Mint, TokenAccount, TokenInterface, TransferChecked};
 use crate::{Global, PumpError};
+use crate::legacy_sell::fee_math::{fee, selected, validate_config_length};
 #[path="v3_native_transfer_fee.rs"] pub mod native_transfer_fee;
 use crate::trade_types::{BondingCurve, FeeConfig, Fees, TradeEvent};
 const FEE_PROGRAM: Pubkey = anchor_lang::solana_program::pubkey!("pfeeUxB6jkeY1Hxd7CsFCAjcbHA9rWtchMGdZ6VojVZ");
@@ -45,7 +46,6 @@ pub struct SellV3<'info> {
 }
 fn sub(a:u64,b:u64)->Result<u64>{a.checked_sub(b).ok_or_else(||error!(PumpError::Overflow))}
 fn narrow(a:u128)->Result<u64>{u64::try_from(a).map_err(|_|error!(PumpError::Truncation))}
-fn fee(a:u64,b:u64)->Result<u64>{narrow((a as u128*b as u128+9999)/10000)}
 
 fn v3_buyback_split(protocol_fee:u64,buyback_bps:u64)->(u64,u64) {
     let buyback_fee=u64::try_from(protocol_fee as u128*buyback_bps as u128/10000)
@@ -53,21 +53,6 @@ fn v3_buyback_split(protocol_fee:u64,buyback_bps:u64)->(u64,u64) {
     let retained=protocol_fee.checked_sub(buyback_fee)
         .expect("buyback_fee never exceeds protocol_fee");
     (buyback_fee,retained)
-}
-fn selected(config:&FeeConfig,cap:u128,quote:Pubkey)->Result<Fees>{
-    let tiers=if quote==Pubkey::default() || quote==WSOL || quote==QUOTE_2 {
-        &config.fee_tiers
-    }else if quote==USDC {
-        &config.stable_fee_tiers
-    }else{
-        let fees=&config.exotic_flat_fees;
-        return Ok(if fees.lp_fee_bps!=0 || fees.protocol_fee_bps!=0 || fees.creator_fee_bps!=0 {
-            fees.clone()
-        }else{config.flat_fees.clone()});
-    };
-    let first=tiers.first().ok_or_else(||error!(PumpError::FeeTiersEmpty))?;
-    if cap<first.market_cap_lamports_threshold{return Ok(first.fees.clone())}
-    Ok(tiers.iter().rev().find(|t|t.market_cap_lamports_threshold<=cap).unwrap_or(first).fees.clone())
 }
 /// Validate the shared curve flags before quote or amount-specific checks.
 #[inline(never)]
@@ -217,7 +202,7 @@ pub fn buy_exact_quote(ctx:Context<SellV3>,spendable_quote_in:u64,min_tokens_out
         let mut config=FeeConfig::deserialize(&mut &config_data[8..]).map_err(|_|error!(anchor_lang::error::ErrorCode::AccountDidNotDeserialize))?;
         if config_data.len()<4073{config.stable_fee_tiers.clear();}
         if config_data.len()<4097{config.exotic_flat_fees=Fees{lp_fee_bps:0,protocol_fee_bps:0,creator_fee_bps:0};}
-        require!(config_data.len()>=2512,PumpError::FeeConfigTooShort);
+        validate_config_length(config_data.len())?;
         drop(config_data);
         let mut fees=selected(&config,cap,curve.quote_mint)?;
         if a.global.creator_fee_configurable && curve.creator_fee_bps>0{fees.creator_fee_bps=curve.creator_fee_bps;}
@@ -402,11 +387,9 @@ fn read_config(data:&[u8])->Result<FeeConfig>{
   let exotic_flat_fees=if data.len()>=4097{Fees::deserialize(&mut input)?}else{Fees{lp_fee_bps:0,protocol_fee_bps:0,creator_fee_bps:0}};
   Ok(FeeConfig{bump,admin,flat_fees,fee_tiers,stable_fee_tiers,exotic_flat_fees})
  })().map_err(|_|error!(ErrorCode::AccountDidNotDeserialize))?;
- require!(data.len()>=2512,PumpError::FeeConfigTooShort);Ok(decode)
+ validate_config_length(data.len())?;Ok(decode)
 }
 
-const QUOTE_2:Pubkey=Pubkey::new_from_array([131,13,252,159,222,95,230,184,170,124,4,164,118,233,30,138,198,187,38,74,173,144,250,25,201,223,73,216,92,62,91,94]);
-const USDC:Pubkey=anchor_lang::solana_program::pubkey!("EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v");
 fn check_quote(a:&SellV3)->Result<(Option<u8>,Option<(u64,u64,u64)>)>{
  if a.bonding_curve.quote_mint==Pubkey::default(){return Ok((None,None))}
  require!(*a.quote_mint.to_account_info().owner==a.quote_token_program.key(),anchor_lang::error::ErrorCode::AccountOwnedByWrongProgram);
