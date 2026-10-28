@@ -63,7 +63,7 @@ impl AccountDeserialize for RouteFeeConfig {
             .map_err(|_| error!(anchor_lang::error::ErrorCode::AccountDidNotDeserialize))
     }
 }
-fn add(a: u64, b: u64) -> Result<u64> { a.checked_add(b).ok_or(error!(PumpError::Overflow)) }
+pub(crate) fn add(a: u64, b: u64) -> Result<u64> { a.checked_add(b).ok_or(error!(PumpError::Overflow)) }
 pub(crate) fn sub(a: u64, b: u64) -> Result<u64> { a.checked_sub(b).ok_or(error!(PumpError::Overflow)) }
 pub(crate) fn n(a: u128) -> Result<u64> { u64::try_from(a).map_err(|_| error!(PumpError::Truncation)) }
 fn div(a: u128, b: u128) -> Result<u128> {
@@ -282,10 +282,9 @@ pub fn execute<'info>(ctx: Context<'_,'_,'info,'info,MultiHopCurve<'info>>,
                 let post_protocol = fee(post_estimate,p_rate)?;
                 let post_creator = if c.creator == Pubkey::default(){0}else{fee(post_estimate,c_rate)?};
                 let post_quote = sub(sub(remaining_budget,post_protocol)?,post_creator)?;
-                let pool_base = sub(h.associated_base_bonding_curve.amount,capped)?;
-                let pool_quote = sub(add(c.real_quote_reserves,first_quote)?,if native{a.global.pool_migration_fee}else{0})?;
-                require_gt!(pool_base,0,PumpError::NotEnoughTokensToBuy);
-                require_gt!(pool_quote,0,PumpError::Overflow);
+                let (pool_base,pool_quote) = crate::trade::route_buy_budget::completion_pool_balances(
+                    c.real_quote_reserves,a.global.pool_migration_fee,
+                    h.associated_base_bonding_curve.amount,native,capped,first_quote)?;
                 let post_base = if post_estimate > 1 && post_quote > 0 {
                     n(div(pool_base as u128 * (post_quote-1) as u128,
                         pool_quote as u128 + (post_quote-1) as u128)?)?

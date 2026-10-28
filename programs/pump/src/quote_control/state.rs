@@ -75,7 +75,7 @@ impl QuoteControl {
             PumpError::QuoteMintNotEligibleForWhitelist
         );
         require_eq!(
-            self.contains(mint),
+            self.mints.iter().position(|entry| entry.mint == *mint).is_some(),
             false,
             PumpError::QuoteMintAlreadyWhitelisted
         );
