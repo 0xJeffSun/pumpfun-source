@@ -1541,3 +1541,7 @@ repro/pump_amm/create-pool-fields-recovery-20261028/followup/** -whitespace
 repro/pump_amm/boost-buyback-cashback-recovery-20261028/results/** -whitespace
 
 repro/pump_amm/boost-buyback-cashback-recovery-20261028/followup/** -whitespace
+
+repro/pump_amm/v2-mint-clone-recovery-20261028/results/** -whitespace
+
+repro/pump_amm/v2-mint-clone-recovery-20261028/followup/** -whitespace
