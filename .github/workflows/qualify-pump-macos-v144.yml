@@ -1,7 +1,7 @@
 name: Qualify Pump frontier on pinned macOS profile
 on:
   push:
-    branches: [research/pump-macos-frontier790-qualification]
+    branches: [research/pump-macos-frontier793-qualification]
   workflow_dispatch:
 permissions:
   contents: read
@@ -24,8 +24,8 @@ jobs:
             evidence/original/pump
             repro/pump/main-contract-round37-20261027
             research/pump-round37-trade-add-site-20261027
-            research/pump-round37-buyback-values-20261027
-            research/pump-macos-frontier790-qualification-20261027
+            research/pump-round37-transfer-fees-20261028
+            research/pump-macos-frontier793-qualification-20261028
       - name: Install isolated comparison dependency
         run: |
           python3 -m venv "$RUNNER_TEMP/pump-qualification-python"
