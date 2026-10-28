@@ -2,9 +2,10 @@
   "scope": "Closed source milestone packet. No exact-window gain or whole-ELF completion.",
   "files": {
     "ADMIN-WALLET-VERIFIED.json": "f429256fdd3c2a8469a0a9c4d678eec193e41c742414ff6d1f467ff1302a6c59",
-    "CHECKPOINT.json": "c1a99bb10a0969db0e472cb6423da284cc05f6f81beef42ad65854a2ce651b87",
+    "CHECKPOINT.json": "924248a91455c4aa8d79ad9cf3478f9d5cf4c4fe759a0beee5beb8516584dacd",
+    "CORRECTION.md": "1e5013136e71ca5bcc91b55e013bb6cc8f6e0c623ad24340fa56f2e11f633315",
     "PUBLISH.json": "37097940bdd1701faa36fa5233a69d1e58361561e0a74b236383de1d589da303",
-    "README.md": "cad19ae866204d8a169c9e51defb42bd88c4f10605066ef812684b71f6e83522",
+    "README.md": "3732c9275cfe656713402dee7aa154b45862f1b00f8825caf2bdcaf2eb676499",
     "REPEAT.json": "888108e6e101f17aa9d2efc33658cbafec6a699f014369974a6b89c395da699f",
     "RUNTIME-VERIFIED.json": "72a171bbdd8f8d9d454e7e206da701afe6029b48d89cd5aff957a53d0a02f247",
     "SIBLING-FOCUSED-VERIFIED.json": "d16b8bacbbdd61c59b96d9b8efae03d24041267bb9b52dd07af5c622b989a675",
@@ -505,7 +506,7 @@
     "tools/pump_target_library_profile.py": "f997a891051ee84aec6f0bc22270425213880a4b1ef358774f015b08e0c9a605",
     "tools/source_sites.py": "56a93a3340e680de24a279f9bb4e533f182fca96e8a83bba68a3d6d1bde7ef65",
     "tools/tool-locator-reference.py": "cc0c76a59c8c8c3db5d1008c788dd14116fda44b87bef9dd7d355aab2c4f2c50",
-    "verify.py": "254c1044270267750ff2d5a1361c0dbb44d65cbca56c1da6c1c92a010deced96",
+    "verify.py": "e781b06dd72117577da518c9ac8b1cc6cea610d565cc5c9f8dde83f555e2b7d8",
     "verify_admin_wallet.py": "7f59d85eb3ce3614b7c6a27af38f687ac21825244b45a00a5657aadb251fb54e",
     "verify_runtime.py": "d545377ad668d3331a4425a10338ee48ec9296b464336ae6307d1a5dc5c8969c",
     "verify_sibling_focused.py": "4b061dd04e64e7f68cd893b0d0956875d5c2ef0bd116ec682529b6a1d48e0c20"

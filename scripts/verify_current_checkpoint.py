@@ -91,7 +91,7 @@ def _verify_amm_owner6048(root):
 
 def verify(program, root):
     status = read(root / 'repro/status.json')[program]
-    if program == 'pump' and status['candidate_artifact'] in ['repro/pump/canonical-frontier-20261028/candidate.so', 'research/pump-create-used-boundaries-20261028/artifacts/candidate.so']:
+    if program == 'pump' and status['candidate_artifact'] in ['repro/pump/canonical-frontier-20261028/candidate.so', 'research/pump-create-used-boundaries-20261028/artifacts/candidate.so', 'research/pump-final-composition-673-20261028/artifacts/candidate.so']:
         from verify_pump_main_checkpoint import verify as verify_pump
         return verify_pump(root)
     if program == 'pump_amm' and status['candidate_artifact'] in ['repro/pump_amm/canonical-frontier-20261028/results/build-a/candidate.so', 'research/amm-layout-closure-20261028/results/build-a/candidate.so']:

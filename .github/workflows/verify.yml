@@ -27,7 +27,8 @@ jobs:
           - suite: pump-canonical-frontier
             commands: |
               python -B scripts/verify_current_checkpoint.py pump
-              python -B research/pump-create-portable-repeat-20261028/run_focused.py --candidate research/pump-create-used-boundaries-20261028/artifacts/candidate.so --output work/pump-canonical-focused
+              python -B research/pump-final-composition-673-20261028/replay_focused.py --candidate research/pump-final-composition-673-20261028/artifacts/candidate.so --output work/pump-canonical-focused
+              python -B research/pump-final-composition-673-20261028/verify_focused.py --candidate research/pump-final-composition-673-20261028/artifacts/candidate.so --reports work/pump-canonical-focused
           - suite: relay-current-repeat
             commands: |
               python -O -B research/relay-current-repeat-20261028/verify.py --repo .

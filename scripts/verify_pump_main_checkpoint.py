@@ -20,6 +20,38 @@ def sha(path):
 def verify(root):
     root = Path(root).resolve()
     selected = json.loads((root / 'repro/status.json').read_text())['pump']
+    final = 'research/pump-final-composition-673-20261028'
+    if selected['candidate_artifact'] == final + '/artifacts/candidate.so':
+        def require(value, message):
+            if not value:
+                raise ValueError(message)
+        packet = root / final
+        cold = root / 'research/pump-final-composition-cold-20261028'
+        require(sha(packet / 'MANIFEST.json') == selected['candidate_packet_manifest_sha256'] == 'a957150c3ad59dd2754f07844b7fa39b3d91d99dc8698ef1cdb8c4ca20fd729c', 'Pump final composition seal')
+        require(sha(cold / 'manifest.json') == selected['checkpoint_manifest_sha256'] == 'df461b8b5fd3ca0be4c842de1e8ab84cbb150a7b5f5fd89de26056d7dd3ea1f1', 'Pump actual empty-target repeat seal')
+        # This sealed component explicitly rejects optimized Python. Its child
+        # always runs normally, including when this public entry point uses -O.
+        result = subprocess.run([sys.executable, '-B', str(packet / 'verify.py'), '--source-directory', str(root / 'programs/pump'), '--signatures'], cwd=root, capture_output=True, text=True, check=True)
+        report = json.loads(result.stdout)
+        require(report['candidate_sha256'] == selected['candidate_sha256'] == sha(root / selected['candidate_artifact']) == '199fd7379b6881adefd9e54803f75902176c17bded1718bfc1c59b1cf5bc8473', 'Pump final selected executable')
+        require(selected['candidate_symbols_artifact'] == final + '/artifacts/unstripped.so' and report['unstripped_sha256'] == selected['symbols_sha256'] == sha(root / selected['candidate_symbols_artifact']) == '49df399b8a36a0a60de03e8d55f1417261dc451e44845ca9d17a94040968c680', 'Pump final selected symbols')
+        import gzip
+        require(gzip.decompress((packet / 'historical/original.so.gz').read_bytes()) == (root / 'evidence/original/pump/deployed.so').read_bytes(), 'Pump unchanged captured original')
+        require(report['source_files'] == selected['canonical_source_inputs'] == 65 and selected['materialized_workspace_inputs'] == 66, 'Pump final compiler source scope')
+        require(report['normalized_windows'] == selected['normalized_function_matches'] == 1019 and report['raw_windows'] == selected['raw_function_matches'] == 188, 'Pump final complete window memberships')
+        require(report['broad_case_pairs'] == selected['validated_cases'] == 10468 and report['broad_signature_fields'] == selected['verified_transaction_signatures'] == 27875, 'Pump final broad runtime scope')
+        require(report['strict_focused_cases'] == selected['focused_runtime_cases'] == 106 and report['strict_focused_transactions'] == selected['focused_runtime_transactions'] == 318 and report['strict_focused_signature_fields'] == selected['focused_runtime_signature_fields'] == 465, 'Pump final strict focused scope')
+        require(report['legacy_cases'] == selected['legacy_runtime_cases'] == 284 and report['legacy_signature_fields'] == selected['legacy_runtime_signature_fields'] == 568, 'Pump final strict legacy scope')
+        focus = json.loads((packet / 'FOCUSED-VERIFIED.json').read_text())
+        require(focus['extension_case_pairs'] == selected['extension_runtime_cases'] == 126 and focus['extension_signature_fields_verified'] == selected['extension_runtime_signature_fields'] == 252, 'Pump final extension scope')
+        for key, path in [('source_recipe', final + '/build.py'), ('source_builder', final + '/build.py'), ('source_binding_verifier', final + '/verify.py'), ('comparison_report', 'research/pump-final-composition-cold-20261028/builds/cold-01/build-comparison.json'), ('build_log', 'research/pump-final-composition-cold-20261028/builds/cold-01/build.log'), ('validation_report', final + '/runtime/full44.json.gz')]:
+            require(selected[key] == path and (root / path).is_file(), 'Pump final selected ' + key)
+        prior = selected['prior_closure_selection']
+        require(sha(root / prior['path']) == prior['sha256'], 'Pump prior selection history')
+        for gap in selected['historical_behavior_gaps']:
+            require(sha(root / gap['report']) == gap['sha256'] and gap['candidate_sha256'] == 'acc5e6eba8c9295386443542847404e55a27d8e837402fb98de8ccffb679125f', 'Pump historical failure evidence')
+        require(selected['known_behavior_gaps'] == [] and selected['full_byte_equality'] is False and selected['meaningful_elf_equal'] is False and selected['portable_empty_target_build'] is True, 'Pump final qualification scope')
+        return {**report, 'status': 'PASS', 'current_source_verified': True, 'portable_empty_target_build': True, 'independent_builds': 3, 'known_behavior_gaps': [], 'goal_complete': False}
     successor = 'research/pump-create-used-boundaries-20261028'
     if selected['candidate_artifact'] == successor + '/artifacts/candidate.so':
         def require(value, message):

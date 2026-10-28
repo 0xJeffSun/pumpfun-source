@@ -20,7 +20,7 @@ def main():
     assert 1 <= args.shard <= args.shards
     verify(ROOT)
     selected = json.loads((ROOT / 'repro/status.json').read_text())['pump']
-    if selected['candidate_artifact'] in ['repro/pump/canonical-frontier-20261028/candidate.so', 'research/pump-create-used-boundaries-20261028/artifacts/candidate.so']:
+    if selected['candidate_artifact'] in ['repro/pump/canonical-frontier-20261028/candidate.so', 'research/pump-create-used-boundaries-20261028/artifacts/candidate.so', 'research/pump-final-composition-673-20261028/artifacts/candidate.so']:
         if not __debug__:
             raise SystemExit('Replay requires normal Python; do not use -O.')
         package = (ROOT / selected['candidate_artifact']).parent
@@ -39,6 +39,10 @@ def main():
                 if not item.isfile() or path.is_absolute() or '..' in path.parts:
                     raise ValueError('Unsafe compiled source archive member')
                 destination = workspace / path
+                if not destination.resolve().is_relative_to(workspace.resolve()):
+                    raise ValueError('Compiled source destination escapes workspace')
+                if any(parent.is_symlink() for parent in destination.parents if parent.is_relative_to(workspace)):
+                    raise ValueError('Compiled source parent symlink')
                 data = archive.extractfile(item).read()
                 import hashlib
                 if hashlib.sha256(data).hexdigest() != record['source_sha256'][str(destination.relative_to(ROOT))]:

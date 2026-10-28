@@ -1,7 +1,8 @@
 # Maintained contract integration — 28 October 2026
 
-The full objective in REQUIREMENTS.md remains active. Research window coverage
-and exact research images do not establish completion of maintained integration.
+The objective remains complete meaningful ELF reconstruction for all five contracts
+from maintained source. Research window coverage and exact precursor images alone
+do not establish completion of maintained integration.
 
 ## Fees
 
@@ -53,15 +54,22 @@ saved object. Independent cryptographic checks cover 20,056 retained transaction
 and 39,062 signature fields. Historical source/host provenance and the admitted
 catalog-encoding caveat remain disclosed in its current proof.
 
-Pump selects the used create-boundary successor. Its 65 standalone inputs map to
-66 compiler inputs. Ordinary builds and an actual portable empty-target build
-repeat acc5/f795. Coverage stays 1,019 normalized / 188 raw. The full corpus has
-10,468 paired cases; 75 focused cases include 14 strict creation cases with
-original Source 198/220 and no coordinate substitution. The source explicitly
-retargets inherited blank-line layout around real used helpers; that layout is a
-reconstruction choice, not historical source proof. Broad diagnostic policy
-retains its stated Source/compute exclusions. Repeated transaction/signature
-fields are observations rather than unique counts.
+Pump selects the composed creation, admin-wallet, legacy-payment and multi-hop
+admission successor. Its 65 standalone inputs map to 66 actual compiler inputs.
+Two ordinary builds and an independent portable empty-target build repeat both
+199fd/49df outputs. Coverage remains 1,019 normalized / 188 raw windows. All
+10,468 broad pairs, 106 strict focused case records, separate legacy284 pairs and
+extension126 pairs pass. Independent verification checks 27,875 broad signature
+fields and 465 strict focused signature fields, plus the separate overlapping
+legacy/extension records. These are observations, not unique transaction counts.
+
+The strict cases cover the original Source198/220 creation boundaries, eighteen
+admin witnesses, and thirteen multi-hop fee/admission cases through the captured
+AMM. The selected image fixes the old acc5 eight-failure admin control and the
+parent multi-hop admission priority errors. Their unchanged controls remain
+historical evidence. Inherited blank-line alignment is a reconstructed source
+choice. Broad diagnostics retain Source/compute exclusions; diagnostic normalized
+CFG pairing awards no raw blocks or complete function matches.
 
 AMM selects the checked-constructor source with an explicit target-derived section
 order. Two actual builds, including a cold host/dependency target, repeat 86dbc/7271.
@@ -82,11 +90,11 @@ reproduces its complete meaningful ELF from an empty target. Fresh real-loader
 execution uses 912 signed transactions and all 536 retained replay records agree.
 
 Sixteen Pump windows and the AMM sell window still prevent full reconstruction.
-Their whole meaningful ELFs remain unequal. The objective in REQUIREMENTS.md is
-still active. Hosted CI for the integration is not established by local checks.
+Their whole meaningful ELFs remain unequal. The full objective remains active.
+Hosted CI for the integration is not established by local checks.
 
-A fresh 18-case admin wallet control on selected acc5 exposes 8 Token/Token2022
-coin-validation/CPI-order or inner-observation differences. The control and its
-exact candidate identity are retained in known-admin-wallet-guard-acc5.json.gz.
-Those cases are outside the earlier 44-suite corpus; the mismatch is not hidden
-by the source/build qualification and remains an active source correction.
+The historical acc5 admin control is retained in
+known-admin-wallet-guard-acc5.json.gz, bound to its actual old image. Its eight
+failures are resolved on the selected 199fd image; all eighteen cases pass with
+strict state, CPI, event, return and ordered program-message comparison. The prior
+acc5 selection is retained in pump-status-before-final-composition.json.

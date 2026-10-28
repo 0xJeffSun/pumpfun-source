@@ -84,11 +84,12 @@
     "candidate_bytes": 13224,
     "matched_window": false,
     "injective_diagnostic_cfg_blocks": 162,
-    "raw_differing_blocks": 1,
-    "raw_difference": "Source133 final independent return-pair loads are reversed; physical block order also differs.",
     "normalized_aligned_slots": 1618,
     "original_slots": 1653,
-    "actual_direct_calls": 101
+    "actual_direct_calls": 101,
+    "diagnostic_normalized_differing_blocks": 1,
+    "diagnostic_difference": "Source133 final independent return-pair loads are reversed; physical block order also differs.",
+    "cfg_scope": "CALL/LDDW operands normalized by ELF reader; branch polarity, empty forwarders and single-successor joins canonicalized diagnostically. 161 of 162 resulting normalized bodies agree. Physical raw block equality is not claimed."
   },
   "base_candidate_sha256": "acc5e6eba8c9295386443542847404e55a27d8e837402fb98de8ccffb679125f",
   "changed_files_from_acc5": [
