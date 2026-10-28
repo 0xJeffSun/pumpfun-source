@@ -140,7 +140,7 @@ Source acquisition/extraction is separate from editable feature reconstruction a
 | Create coin / upload | 3/3 (100%) | 3/4 (75%) | Evidence-mapped offline metadata drafting, validation, local image preview and failure states pass browser tests. Upload, wallet signing, transaction creation, token launch and original visual parity remain unqualified. |
 | Profiles / social graph | 3/3 (100%) | 3/4 (75%) | Evidence-mapped, hash-bound synthetic profiles resolve by exact user id or wallet and render filtered authored posts with responsive browser coverage. Native profile compatibility, follow graph, authenticated behavior and original visual parity remain unqualified. |
 | Authentication / wallets | 0/3 (0%) | 0/4 (0%) | No local authenticated UI or wallet workflow. |
-| Portfolio / positions | 0/3 (0%) | 0/4 (0%) | No local portfolio UI. |
+| Portfolio / positions | 3/3 (100%) | 3/4 (75%) | Live mainnet SOL, SPL Token and Token-2022 account reads pass unit, browser and actual-RPC checks. Pump positions/PnL compatibility and original visual parity remain unqualified. |
 | Settings / notifications | 0/3 (0%) | 0/4 (0%) | No local settings or notification UI. |
 | Legal / fee information | 3/3 (100%) | 3/4 (75%) | Authenticated archived fee, privacy and terms documents now render through a fail-closed offline adapter with responsive navigation and corruption tests. Current legal authority and original visual parity remain unqualified. |
 

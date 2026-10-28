@@ -8,6 +8,7 @@ const includedRoutes = [
   ["/go", "GO", "GO"],
   ["/mayhem", "Mayhem", "Mayhem"],
   ["/holder-rewards", "Holder rewards", "Holder rewards"],
+  ["/portfolio", "Portfolio", "Solana portfolio"],
   ["/create", "Create a coin", "Create a coin"],
 ] as const;
 
@@ -56,6 +57,13 @@ test("included routes load with one accurate active navigation item", async ({
         page.locator('[data-product-state="unavailable"]'),
       ).toHaveCount(0);
       await expect(page.getByTestId("holder-rewards-inspector")).toBeVisible();
+    } else if (path === "/portfolio") {
+      await expect(
+        page.locator('[data-product-state="unavailable"]'),
+      ).toHaveCount(0);
+      await expect(
+        page.getByRole("form", { name: "Load public Solana wallet" }),
+      ).toBeVisible();
     } else {
       await expect(
         page.locator('[data-product-state="unavailable"]'),

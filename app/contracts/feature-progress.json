@@ -28,6 +28,7 @@
         "/go",
         "/mayhem",
         "/holder-rewards",
+        "/portfolio",
         "/create",
         "/docs/fees",
         "/docs/privacy-policy",
@@ -639,7 +640,9 @@
       "id": "portfolio",
       "label": "Portfolio / positions",
       "scope": "included",
-      "routes": [],
+      "routes": [
+        "/portfolio"
+      ],
       "candidatePrefixes": [
         "/portfolio-summary",
         "/user-portfolio",
@@ -647,37 +650,55 @@
       ],
       "source": {
         "contract": {
-          "status": "pending",
-          "evidence": []
+          "status": "accepted",
+          "evidence": [
+            "packages/frontend/PORTFOLIO-RPC.md#declared-solana-contract"
+          ]
         },
         "logic": {
-          "status": "pending",
-          "evidence": []
+          "status": "accepted",
+          "evidence": [
+            "packages/frontend/src/app/portfolio/page.tsx",
+            "packages/frontend/src/app/portfolio/portfolio-client.tsx"
+          ]
         },
         "adapters": {
-          "status": "pending",
-          "evidence": []
+          "status": "accepted",
+          "evidence": [
+            "packages/frontend/src/app/portfolio/rpc.ts",
+            "packages/frontend/src/app/api/portfolio/route.ts"
+          ]
         }
       },
       "completion": {
         "source": {
-          "status": "pending",
-          "evidence": []
+          "status": "accepted",
+          "evidence": [
+            "packages/frontend/PORTFOLIO-RPC.md#local-implementation"
+          ]
         },
         "success": {
-          "status": "pending",
-          "evidence": []
+          "status": "accepted",
+          "evidence": [
+            "packages/frontend/tests/live-portfolio.mjs",
+            "packages/frontend/visual/portfolio-live-20261028/live-verification.json"
+          ]
         },
         "failure": {
-          "status": "pending",
-          "evidence": []
+          "status": "accepted",
+          "evidence": [
+            "tests/portfolio_rpc.test.ts",
+            "packages/frontend/tests/portfolio.spec.ts"
+          ]
         },
         "consistency": {
           "status": "pending",
-          "evidence": []
+          "evidence": [
+            "packages/frontend/visual/portfolio-live-20261028/README.md"
+          ]
         }
       },
-      "note": "No local portfolio UI."
+      "note": "Live mainnet SOL, SPL Token and Token-2022 account reads pass unit, browser and actual-RPC checks. Pump positions/PnL compatibility and original visual parity remain unqualified."
     },
     {
       "id": "settings",

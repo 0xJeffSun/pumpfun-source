@@ -56,6 +56,14 @@
     "visualQualified": false
   },
   {
+    "path": "/portfolio",
+    "feature": "Live Solana portfolio",
+    "scope": "included",
+    "status": "live-read",
+    "behaviorQualified": false,
+    "visualQualified": false
+  },
+  {
     "path": "/create",
     "feature": "Create coin",
     "scope": "included",

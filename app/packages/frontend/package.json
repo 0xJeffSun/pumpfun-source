@@ -7,6 +7,7 @@
     "build": "next build --turbopack",
     "start": "next start -p 3000",
     "test:browser": "playwright test",
+    "test:portfolio:live": "node tests/live-portfolio.mjs",
     "test:browser:install": "playwright install chromium",
     "typecheck": "tsc --noEmit"
   },

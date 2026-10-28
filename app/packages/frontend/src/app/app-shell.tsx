@@ -20,6 +20,7 @@ type IconName =
   | "go"
   | "mayhem"
   | "rewards"
+  | "portfolio"
   | "create"
   | "search"
   | "menu"
@@ -35,6 +36,7 @@ const primaryNavigation: NavItem[] = [
 ];
 
 const discoverNavigation: NavItem[] = [
+  { href: "/portfolio", label: "Portfolio", icon: "portfolio" },
   { href: "/go", label: "GO", icon: "go" },
   { href: "/mayhem", label: "Mayhem", icon: "mayhem" },
   { href: "/holder-rewards", label: "Holder rewards", icon: "rewards" },
@@ -102,6 +104,14 @@ function Icon({ name }: { name: IconName }) {
     return (
       <svg {...common}>
         <path d="M4 9h16v11H4Zm8 0v11M3 9h18V6H3Zm9-3c-1-4-6-3-5 0m5 0c1-4 6-3 5 0" />
+      </svg>
+    );
+  }
+  if (name === "portfolio") {
+    return (
+      <svg {...common}>
+        <rect x="3" y="6" width="18" height="13" rx="3" />
+        <path d="M3 10h18m-5 4h2" />
       </svg>
     );
   }
