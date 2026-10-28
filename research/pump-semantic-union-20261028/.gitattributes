@@ -1,0 +1,4 @@
+source/** -whitespace
+runtime/producers/** -whitespace
+composition/patches/** -whitespace
+tools/** -whitespace
