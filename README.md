@@ -2,33 +2,33 @@
 
 Rust reconstruction of Pump.fun's Solana programs from captured binaries.
 
-**Current binary coverage — 28 October 2026:** 3,278 / 3,338 function
-windows match (98.2%); 60 remain unmatched. Three of five programs reproduce
+**Current binary coverage — 28 October 2026:** 3,277 / 3,338 function
+windows match (98.2%); 61 remain unmatched. Three of five programs reproduce
 their complete meaningful ELF.
 
 | Program | Matched windows | Matched % | Raw-equal bodies | Normalized only | Unmatched | Whole ELF equal |
 | --- | ---: | ---: | ---: | ---: | ---: | --- |
 | [Pump Main](research/claude-pump-integration-20261027/r37-layout-32/README.md) | 990 / 1,035 | 95.7% | 166 | 824 | 45 | No |
-| [PumpSwap / AMM](research/amm-union4-mint-scanner-integration-20261028/README.md) | 770 / 785 | 98.1% | 163 | 607 | 15 | No |
+| [PumpSwap / AMM](research/claude-amm-union4-20261028/README.md) | 769 / 785 | 98.0% | 160 | 609 | 16 | No |
 | [Fees](research/claude-fees100-crank-donation-20261027/README.md) | 585 / 585 | 100.0% | 585 | 0 | 0 | **Yes** |
 | [Mayhem](research/mayhem-meaningful-elf-20261028/README.md) | 441 / 441 | 100.0% | 441 | 0 | 0 | **Yes** |
 | [Donation Relay](repro/donation-relay/canonical-exact-selection/README.md) | 492 / 492 | 100.0% | 492 | 0 | 0 | **Yes** |
-| **Total** | **3,278 / 3,338** | **98.2%** | **1,847** | **1,431** | **60** | **3 / 5** |
+| **Total** | **3,277 / 3,338** | **98.2%** | **1,844** | **1,433** | **61** | **3 / 5** |
 
-Matched windows cover **4,752,216 / 5,213,128 code bytes (91.2%)**;
-**460,912 bytes (8.8%)** remain outside matched windows.
+Matched windows cover **4,751,024 / 5,213,128 code bytes (91.1%)**;
+**462,104 bytes (8.9%)** remain outside matched windows.
 
 These figures measure the latest published artifacts, including research not
 integrated into the maintained source tree. Raw-equal bodies match byte for byte;
 normalized matches mask specified call/address operands. Window coverage is not
 a percentage of engineering work completed or proof of whole-program identity.
 The Pump Main and AMM rows use source-only builds. Separate original-derived
-linker layouts for Pump L31 and the parent AMM union4 report 204 and 175 raw
-matches, respectively, without increasing normalized coverage.
+linker layouts report 204 and 175 raw matches, respectively, without increasing
+normalized coverage.
 
 ## Remaining work
 
-- Recover the **45 Pump Main and 15 PumpSwap / AMM** unmatched windows.
+- Recover the **45 Pump Main and 16 PumpSwap / AMM** unmatched windows.
 - Close remaining call, data and relocation differences, integrate qualified
   source changes, and verify reproducible whole-program builds and uncovered behavior.
 - Pump Main's 990-window build ([L32](research/claude-pump-integration-20261027/r37-layout-32/README.md))
@@ -40,10 +40,9 @@ matches, respectively, without increasing normalized coverage.
 - PumpSwap's [769-window union](research/claude-amm-union4-20261028/README.md) removes the
   incentive error-order regression of the 763-window research (0 mismatches in its
   signed negative controls). The [maintained AMM checkpoint](repro/pump_amm/v2-mint-clone-recovery-20261028/README.md)
-  remains at 660 windows; the research candidate is not promoted. The [mint-scanner integration](research/amm-union4-mint-scanner-integration-20261028/README.md)
-  reaches 770 windows with no losses: all 1,192 bytes of `0xf28b8` match raw.
-  Its repeat ELFs are identical and all 17,462 runtime cases pass their compared
-  fields; raw ordered logs still differ in 3,237 cases.
+  remains at 660 windows; the research candidate is not promoted. A contributor packet
+  [recovers the mint scanner](research/amm-mint-scanner-raw-20261028/README.md)
+  (`0xf28b8`, all 1,192 bytes raw-equal); it is not yet composed into the union.
 - Mayhem now [reproduces its complete meaningful ELF](research/mayhem-meaningful-elf-20261028/README.md):
   ordinary stripping of two fresh builds equals all 775,416 meaningful original bytes.
   The closing change moves one vendored-Anchor module declaration and rebinds the data layout.
