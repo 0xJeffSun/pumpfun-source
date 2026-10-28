@@ -22,6 +22,20 @@ for label,count,raw_count in [('baseline',744,121),('candidate',778,121),('repea
  assert sum((oc&cc).values())==count and sum((raw&Counter(x['raw_sha256']for x in rows)).values())==raw_count
  assert sha(images[label]['candidate.so'])==measurement['builds'][label]['candidate_sha256']
  assert sha(images[label]['unstripped.so'])==measurement['builds'][label]['unstripped_sha256']
+profile_spec=json.loads((R/'scripts/pump_linux_v144_sbf_libraries.json').read_text())
+checkpoint=json.loads((R/'repro/pump/main-contract-round37-20261027/CHECKPOINT.json').read_text())
+digest=lambda x:sha(json.dumps(x,sort_keys=True,separators=(',',':')).encode())
+for label in images:
+ record=json.loads(gzip.decompress((D/label/'build-comparison.json.gz').read_bytes()))
+ profile=record['target_library_profile'];assert profile['native_host_files_unchanged'] is True
+ assert profile['cache_context']==checkpoint['target_library_profile_context']
+ data=gzip.decompress((D/label/'target-library-profile-files.json.gz').read_bytes())
+ assert sha(data)==profile['file_manifest_sha256'];files=json.loads(data)
+ assert digest(files['native'])==profile['cache_context']['native_sdk_manifest_sha256']
+ assert digest(files['prepared'])==profile['cache_context']['prepared_sdk_manifest_sha256']
+ assert all(files['native'][name]['sha256']==h for name,h in profile_spec['native_tools'].items())
+ assert profile['cache_context']['target_libraries']==profile_spec['target_libraries']
+ if label!='baseline':assert record['dependency_cache']['main_freshly_compiled'] is True
 assert images['candidate']==images['repeat']
 assert sum(((oc&counters['baseline'])&counters['candidate']).values())==744
 assert sha(images['round37-canonical']['candidate.so'])==spec['round37_candidate_sha256']
