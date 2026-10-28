@@ -88,14 +88,12 @@ is eliminated; it does not establish full toolchain equivalence or recover the
 initializer. Further work must still resolve source/IR shape and original
 compilation settings.
 
-Current [Fees Extend integration](../research/fees-extend-integration/README.md)
-has 200 raw-local, 382 normalized-only and three unmatched windows, covering
-762,912 of 799,648 original text bytes. Sweep, Crank and CreateDonation remain
-unmatched; their windows total 36,736 bytes. Absolute layout, recursive
-callee/data closure and original build provenance remain unresolved. Two normal
-Cargo builds agree and 17,331 retained comparisons across 18 suites verify,
-along with 17 corruption tests. This research frontier remains separate from
-the selected Fees baseline.
+Current Fees research ([Crank recovery](../research/claude-fees100-crank-donation-20261027/README.md))
+matches all 585 original functions normalized and raw (799,648 / 799,648 original text bytes), and its
+stripped canonical Linux build equals the captured program's complete meaningful ELF. Two builds agree and
+17,331 comparisons across 18 suites pass. Remaining Fees work is provenance only: the historical source
+spelling, toolchain and build recipe are not proven, and this research frontier remains separate from the
+selected Fees baseline in `programs/pump-fees`.
 
 The [safe Crank source proposal](../research/fees-crank-safe-context-source/README.md)
 adds no accepted coverage. To advance it, publish or independently recover its
