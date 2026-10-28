@@ -21,42 +21,66 @@
       "label": "Shared layout / navigation",
       "scope": "included",
       "routes": [
-        "/"
+        "/",
+        "/explore",
+        "/leaderboard",
+        "/live",
+        "/go",
+        "/mayhem",
+        "/holder-rewards",
+        "/create",
+        "/docs/fees",
+        "/docs/privacy-policy",
+        "/docs/terms-and-conditions"
       ],
       "candidatePrefixes": [],
       "source": {
         "contract": {
-          "status": "pending",
-          "evidence": []
+          "status": "accepted",
+          "evidence": [
+            "packages/frontend/SHELL-EVIDENCE.md#observed"
+          ]
         },
         "logic": {
-          "status": "pending",
-          "evidence": []
+          "status": "accepted",
+          "evidence": [
+            "packages/frontend/src/app/app-shell.tsx"
+          ]
         },
         "adapters": {
-          "status": "pending",
-          "evidence": []
+          "status": "accepted",
+          "evidence": [
+            "packages/frontend/src/app/globals.css"
+          ]
         }
       },
       "completion": {
         "source": {
-          "status": "pending",
-          "evidence": []
+          "status": "accepted",
+          "evidence": [
+            "packages/frontend/SHELL-EVIDENCE.md#local-design"
+          ]
         },
         "success": {
-          "status": "pending",
-          "evidence": []
+          "status": "accepted",
+          "evidence": [
+            "packages/frontend/tests/shell.spec.ts"
+          ]
         },
         "failure": {
-          "status": "pending",
-          "evidence": []
+          "status": "accepted",
+          "evidence": [
+            "packages/frontend/tests/shell.spec.ts"
+          ]
         },
         "consistency": {
           "status": "pending",
-          "evidence": []
+          "evidence": [
+            "packages/frontend/visual/shell-20261028/README.md"
+          ]
         }
       },
-      "note": "Local shell exists; original layout and responsive states unqualified."
+      "note": "Evidence-mapped responsive shell, active navigation, search URL state and failure boundaries pass browser tests. Pixel-level reference parity remains unqualified."
     },
     {
       "id": "feed",
