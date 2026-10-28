@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Capture public artifacts only; never submits forms or uses credentials."""
-import concurrent.futures, sys, datetime, hashlib, html, json, pathlib, re, urllib.request, urllib.error, urllib.parse
+import concurrent.futures, sys, datetime, hashlib, html, json, os, pathlib, re, stat, urllib.request, urllib.error, urllib.parse
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 OUT = ROOT / 'evidence' / 'web'
+OBJECT_PATH = pathlib.PurePosixPath('evidence/web/objects')
 UA = 'Googlebot'
 PAGES = ['/', '/explore', '/leaderboard', '/live', '/go', '/mayhem', '/holder-rewards', '/create', '/perps', '/docs/fees', '/docs/privacy-policy', '/docs/terms-and-conditions']
 HEADERS = {'server','x-powered-by','x-vercel-id','x-vercel-cache','cf-ray','cf-cache-status','content-type','content-security-policy','location','via','x-cache','x-amz-cf-id','x-amz-cf-pop'}
@@ -16,20 +17,73 @@ def capture(url):
         body = r.read(); target.parent.mkdir(parents=True, exist_ok=True); target.write_bytes(body)
         return {'url':url,'final_url':r.url,'status':r.status,'path':target.relative_to(ROOT).as_posix(), 'bytes':len(body),'sha256':hashlib.sha256(body).hexdigest(),'headers':{k.lower():v for k,v in r.headers.items() if k.lower() in HEADERS}}, body
     except Exception as e: return {'url':url,'error':str(e)}, b''
+class RetainedCaptureError(ValueError): pass
+def retained_id(url): return hashlib.sha256(str(url).encode('utf-8',errors='backslashreplace')).hexdigest()[:12]
+def retained_body(record,url):
+    identity=retained_id(url)
+    if not isinstance(record,dict): raise RetainedCaptureError(f'Retained capture {identity} invalid record')
+    value=record.get('path')
+    if not isinstance(value,str) or not value or '\x00' in value or '\\' in value:
+        raise RetainedCaptureError(f'Retained capture {identity} invalid path')
+    parts=value.split('/')
+    pure=pathlib.PurePosixPath(value)
+    if pure.is_absolute() or pathlib.PureWindowsPath(value).drive or any(part in ('','.','..') for part in parts) or pure.as_posix()!=value:
+        raise RetainedCaptureError(f'Retained capture {identity} invalid path')
+    try: relative=pure.relative_to(OBJECT_PATH)
+    except ValueError: raise RetainedCaptureError(f'Retained capture {identity} path outside evidence objects') from None
+    if not relative.parts: raise RetainedCaptureError(f'Retained capture {identity} invalid path')
+    allowed=ROOT
+    for part in OBJECT_PATH.parts:
+        allowed/=part
+        if allowed.is_symlink(): raise RetainedCaptureError(f'Retained capture {identity} symlink path rejected')
+    try: allowed_resolved=allowed.resolve(strict=True)
+    except (OSError,RuntimeError) as error: raise RetainedCaptureError(f'Retained capture {identity} object directory unavailable') from error
+    if not allowed_resolved.is_dir(): raise RetainedCaptureError(f'Retained capture {identity} object directory unavailable')
+    candidate=allowed
+    for part in relative.parts:
+        candidate/=part
+        if candidate.is_symlink(): raise RetainedCaptureError(f'Retained capture {identity} symlink path rejected')
+    try: resolved=candidate.resolve(strict=True)
+    except FileNotFoundError as error: raise RetainedCaptureError(f'Retained capture {identity} object missing') from error
+    except (OSError,RuntimeError) as error: raise RetainedCaptureError(f'Retained capture {identity} path cannot be resolved') from error
+    try: resolved.relative_to(allowed_resolved)
+    except ValueError: raise RetainedCaptureError(f'Retained capture {identity} path escaped evidence objects') from None
+    flags=os.O_RDONLY|getattr(os,'O_BINARY',0)|getattr(os,'O_CLOEXEC',0)|getattr(os,'O_NOFOLLOW',0)
+    try: descriptor=os.open(resolved,flags)
+    except OSError as error: raise RetainedCaptureError(f'Retained capture {identity} object unavailable') from error
+    try:
+        if not stat.S_ISREG(os.fstat(descriptor).st_mode): raise RetainedCaptureError(f'Retained capture {identity} target is not a regular file')
+        with os.fdopen(descriptor,'rb') as handle:
+            descriptor=None
+            body=handle.read()
+    finally:
+        if descriptor is not None: os.close(descriptor)
+    expected_bytes=record.get('bytes');expected_sha=record.get('sha256')
+    if not isinstance(expected_bytes,int) or isinstance(expected_bytes,bool) or expected_bytes<0 or not isinstance(expected_sha,str):
+        raise RetainedCaptureError(f'Retained capture {identity} invalid integrity metadata')
+    if len(body)!=expected_bytes or hashlib.sha256(body).hexdigest()!=expected_sha:
+        raise RetainedCaptureError(f'Retained capture {identity} integrity mismatch')
+    return body
 REUSE={}
+def load_reuse(records):
+    validated={}
+    for index,record in enumerate(records):
+        url=record.get('url') if isinstance(record,dict) else None
+        if not isinstance(url,str): raise RetainedCaptureError(f'Retained capture {retained_id(f"index:{index}")} invalid record')
+        retained_body(record,url);validated[url]=record
+    REUSE.update(validated)
 def pool(urls):
+    ordered=sorted(urls);retained={}
+    for url in ordered:
+        if url in REUSE:
+            old=REUSE[url];retained[url]=(old,retained_body(old,url))
     def fetch(url):
-        old=REUSE.get(url)
-        if old and 'path' in old and (ROOT/old['path']).exists():
-            body=(ROOT/old['path']).read_bytes()
-            if len(body)!=old.get('bytes') or hashlib.sha256(body).hexdigest()!=old.get('sha256'):
-                raise ValueError(f"Retained capture integrity mismatch: {old['path']}")
-            return old,body
+        if url in retained: return retained[url]
         return capture(url)
-    with concurrent.futures.ThreadPoolExecutor(max_workers=6) as ex: return list(ex.map(fetch, sorted(urls)))
+    with concurrent.futures.ThreadPoolExecutor(max_workers=6) as ex: return list(ex.map(fetch, ordered))
 def main():
     if '--resume' in sys.argv and (OUT/'manifest.json').exists():
-        REUSE.update({r['url']:r for r in json.loads((OUT/'manifest.json').read_text())['records']})
+        load_reuse(json.loads((OUT/'manifest.json').read_text())['records'])
     records=[]; pages=pool({'https://pump.fun'+p for p in PAGES} | {'https://docs.pump.fun/openapi.public.json','https://docs.pump.fun/llms-full.txt'})
     records.extend(r for r,b in pages)
     assets=set()
