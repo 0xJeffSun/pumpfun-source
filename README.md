@@ -42,10 +42,21 @@ normalized coverage.
   remains at 660 windows; this research candidate is not approved for promotion.
   A separate [760-window integration](research/amm-v2-selector-union-recovery/README.md)
   resolves the tested incentive failures; it is not composed with the 763-window
-  artifact and still has recorded log differences.
+  artifact. Its [signed-outcome witness](research/amm-h11-signed-outcome-witness-20261028/README.md)
+  binds 1,805 accumulator/incentive cases to serialized signed transactions with
+  zero error, state, rollback, CPI or event mismatches; its 327 remaining log
+  differences are all source filename/line/column coordinates.
 - Mayhem matches all function bodies, but **30 bytes still differ** in dynamic-symbol
   ordering and relocation metadata. Whole-ELF identity and historical build
-  provenance remain open.
+  provenance remain open. The archived 441-window builds now also
+  [reproduce from fresh native dependencies](research/mayhem-current441-native-20261028/README.md).
+- Newer unverified composites are archived, not counted above:
+  [Pump Main L31](research/claude-mega-run-archive-20261028/pump/L30-to-L31.patch)
+  (990 / 1,035 source-only) and
+  [PumpSwap union-760](research/claude-mega-run-archive-20261028/amm/union-758-to-760.patch)
+  (765 / 785 Linux source-only). Neither has a verified packet yet; the
+  [mega-run archive](research/claude-mega-run-archive-20261028/README.md) holds
+  their lane notes, deliveries and partial work.
 
 The linked program reports contain source, build and validation evidence.
 [Build and verification guide](docs/TOOLING.md) ·
