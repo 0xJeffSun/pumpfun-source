@@ -1,24 +1,63 @@
 # PumpSwap source reconstruction
 
-The maintained source is the [private-event and sweep checkpoint](../../repro/pump_amm/private-sweep-recovery-20261027/README.md),
-candidate `9278a52ae4fd93bb6159a72fa625f121394902a93f701d86931a7ec3778055fb`. It matches **656/785 normalized windows (83.6%)**,
-including **148 raw bodies**, and covers **826,112/1,162,040 text bytes (71.1%)**.
-Whole ELF identity is false; **129 windows remain**.
+The maintained source is the [native fee and source ownership checkpoint](../../repro/pump_amm/native-ownership-recovery-20261028/README.md),
+candidate `ea14ee8e5ea9a9b6695110fa141af77f378a21dcd36e159ae92279c9c6d6b593`.
+It matches **658/785 normalized windows (83.8%)**, including **148 raw bodies**,
+and covers **830,032/1,162,040 text bytes (71.4%)**. **127 windows remain**;
+whole ELF identity is false. These percentages measure binary coverage, not
+engineering effort completed.
 
-Four private events reuse the observed first-Pubkey storage across emissions.
-SetCoinCreator re-evaluates the PDA for its error RHS, and sweep snapshots the
-recipient key and Pool quote mint. These are source/local-instruction recoveries;
-no complete private-body or full-callee match is claimed. The H11 incentive guard
-remains byte-identical, and all 1,730 fresh signed boundary cases pass with its 128
-historical differences resolved.
+The new complete body matches are `prepare_pool` and the native transfer-fee
+calculation. The source also preserves the tested incentive and CTO error-order
+fixes, private-event storage, creator source ownership and borrowed account
+boundaries. All 17,462 core cases and 13 current acceptance groups pass; suite
+counts overlap. The native 216-case replay retains 14 raw source-coordinate log
+differences, with no differences after the declared diagnostic normalization.
 
-Two strict offline builds agree. All 17,462 core cases and current private,
-sweep and retained supplemental suites pass; counts overlap. The recipe binds
-51 canonical, 52 workspace and 175 registry inputs, 227 total, with 762 cached
-dependency artifacts unchanged. Complete code/data/call identity, original
-provenance and exhaustive behavior remain open.
+Two strict offline Linux builds agree. The version 3 source recipe binds
+**56 canonical, 57 workspace and 175 registry inputs**, 232 total. It includes
+`crates/native-transfer-fee`, a local path dependency. The 762 framework artifacts
+and three native artifacts remain unchanged during both contract builds.
+Historical package provenance, complete code/data/call identity and exhaustive
+behavior remain open.
 
-The paragraphs below describe historical checkpoints.
+From the repository root, verify the saved checkpoint and current source:
+
+```sh
+python -B repro/pump_amm/native-ownership-recovery-20261028/verify_saved.py --current-source
+```
+
+To stage and check a new workspace without changing Rust source, use the current
+version 3 recipe; version 2 predates the native path dependency:
+
+```sh
+python -B repro/pump_amm/native-ownership-recovery-20261028/workspace_recipe_v3.py stage \
+  --source-root "$PWD" --output "$PWD/work/amm-current-workspace"
+python -B repro/pump_amm/native-ownership-recovery-20261028/workspace_recipe_v3.py verify \
+  --source-root "$PWD" --workspace "$PWD/work/amm-current-workspace"
+```
+
+Staging verifies the local input transformation; it does not compile or reproduce
+the accepted ELF. The checkpoint retains its authenticated Linux build records
+separately. For a new generic research build of this checkout, include both local
+input directories explicitly:
+
+```sh
+python scripts/build_reconstruction_candidate.py \
+  --manifest programs/pump-amm/Cargo.toml --program pump_amm \
+  --artifact-name pump_amm_recovered.so --tools-version v1.44 \
+  --extra-input programs/pump-amm/vendor/solana-pubkey \
+  --extra-input crates/native-transfer-fee --output work/amm-research-build
+```
+
+This requires the selected SDK and locked dependency archives to be available.
+Its local input inventory covers both native crate files as well as the AMM,
+manifest, lockfile and IDL inputs. It is not the complete historical toolchain or
+registry proof, and a new output does not inherit the checkpoint's runtime results.
+Add `--dry-run` to inspect the build route without invoking Cargo or rustc.
+
+The paragraphs and commands below describe historical checkpoints.
+
 
 The selected checkpoint is [collect owner6048](../../repro/pump_amm/owner6048-v144/README.md), executable `09bee0dfd751dc6ae0240bbac262933c6bda6e0c94aa643f82c57f2956c3a117`. A genuine managed-source build reproduced the independently tested executable and symbols. The plain require preserves the owner predicate and error6048 while removing unsupported compared-key decoration; the current source origin is truthful `src/collect.rs:20`.
 
