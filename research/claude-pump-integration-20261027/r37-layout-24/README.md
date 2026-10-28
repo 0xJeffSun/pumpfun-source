@@ -10,10 +10,11 @@ Research package composed on the maintained [Round37](../../../repro/pump/main-c
 
 Normalized gains vs the control build: `0x340`, `0x2bc0`, `0x7890`, `0xd300`, `0xea68`, `0xf130`, `0x160d0`, `0x16bb8`, `0x16dc0`, `0x16fc8`, `0x171d0`, `0x176d8`, `0x178e0`, `0x17ae8`, `0x17cf0`, `0x19cc0`, `0x19ec8`, `0x1a918`, `0x1db88`, `0x22498`, `0x2a8e8`, `0x2b490`, `0x2d920`, `0x311f8`, `0x32840`, `0x33c50`, `0x37e08`, `0x38fc0`, `0x3a7b8`, `0x3b598`, `0x3b738`, `0x3b8d8`, `0x3d250`, `0x3dd78`, `0x410b0`, `0x412b8`, `0x414c0`, `0x42618`, `0x43060`, `0x43ea0`, `0x45fa0`, `0x47d00`, `0x47e28`, `0x48128`, `0x48710`, `0x48e10`, `0x49708`, `0x4bb40`, `0x4bd48`, `0x4bf50`, `0x4e208`, `0x502f0`, `0x524f0`, `0x54c90`, `0x54f30`, `0x55630`, `0x55d30`, `0x56658`, `0x57c38`, `0x58668`, `0x58bf0`, `0x5fc48`, `0x5fe50`, `0x60058`, `0x60260`, `0x60468`, `0x60670`, `0x60878`, `0x60a80`, `0x60ee0`, `0x61348`, `0x617e8`, `0x62170`, `0x62aa0`, `0x63530`, `0x63738`, `0x63940`, `0x63cf0`, `0x64358`, `0x645f8`, `0x64888`, `0x65238`, `0x65eb0`, `0x68bd8`, `0x6a1e0`, `0x6a8a8`, `0x6eed8`, `0x6f3e8`, `0x6f6d8`, `0x6f8e0`, `0x6fae8`, `0x6fcf0`, `0x722d0`, `0x746a8`, `0x7b250`, `0x7e0b0`, `0x7e490`, `0x7f010`, `0x7fde8`, `0x801f8`, `0x80488`, `0x806c8`, `0x81640`, `0x81848`, `0x81aa0`, `0x82128`, `0x82af8`, `0x834c8`, `0x84970`, `0x84b78`, `0x84d80`, `0x84f88`, `0x85190`, `0x85398`, `0x855a0`, `0x87ca0`, `0x87ea8`, `0x880b0`, `0x88908`, `0x88f90`, `0x89b48`, `0x89ec8`, `0x8b970`, `0x8c2d8`, `0x8cc58`, `0x8e908`, `0x8eda0`, `0x90e60`, `0x91690`, `0x92820`, `0x93050`, `0x93898`, `0x940c0`, `0x94908`, `0x94e28`, `0x950e0`, `0x95360`, `0x95610`, `0x95f38`, `0x96280`, `0x96d48`, `0x970f8`, `0x97580`, `0x98210`, `0x98438`, `0x98af0`, `0x9a190`, `0x9ac28`, `0xa0070`, `0xa0538`, `0xa0838`, `0xa08f8`, `0xa0bf0`, `0xa13e0`, `0xa1bd8`, `0xa2188`, `0xa23f0`, `0xa9eb8`, `0xac2b8`, `0xac4c0`, `0xb0158`, `0xb3b90`, `0xc5650`, `0xca628`, `0xcf510`, `0xd5af0`, `0xdd700`, `0xdf2d8`, `0xebaa0`, `0xfdf20`, `0x101170`, `0x101c20`, `0x105b78`, `0x1091b0`, `0x109488`, `0x10a0e0`, `0x10b0b8`, `0x10c0b8`, `0x10d638`, `0x10e938`, `0x10fb38`, `0x1100f8`, `0x110d40`, `0x1113c8`, `0x112220`, `0x1133c8`, `0x113f00`, `0x114d48`, `0x1156f0`, `0x1159d8`, `0x115e70`, `0x116718`, `0x118360`, `0x119c50`, `0x120628`, `0x120c00`, `0x1255a8`, `0x12a4e0`, `0x12abc8`, `0x12ba48`, `0x135580`, `0x135820`, `0x135ac0`, `0x1367c0`, `0x137db8`, `0x137fc0`, `0x14eab8`, `0x14ecc0`, `0x14eec8`, `0x14f0d0`, `0x14f2d8`, `0x1549b0`, `0x154bb8`, `0x154dc0`, `0x154fc8`, `0x1551d0`, `0x1553d8`, `0x1555e0`, `0x1557e8`, `0x15fdd0`, `0x163ea8`, `0x164e40`, `0x16a3e0`, `0x16bdf0`, `0x172110`, `0x1774f8`, `0x177700`, `0x17b780`, `0x17bc48`, `0x17c0f0`, `0x184e38`, `0x18fc98`, `0x1905a8`. Raw gains: `0x17bc48`, `0x17c0f0`, `0x17ddb0`, `0x17df20`, `0x17f948`, `0x186760`, `0x18e878`, `0x194998`, `0x194ae0`, `0x197508`, `0x1991e0`, `0x199b70`, `0x19a758`, `0x19a8a0`, `0x19a9e0`, `0x19aff8`, `0x1a0f68`, `0x1a2330`, `0x1a2340`, `0x1a2fd8`, `0x1a6940`, `0x1a9150`, `0x1a9228`, `0x1a9250`, `0x1ab1f8`, `0x1ab220`, `0x1ab730`. Losses: **none**. Against the published Round37 inventory the package gains 233 normalized windows and loses 0. Raw counts depend on link order: the published round applies derived text/data-order linker scripts, while both builds here use the plain link.
 
-The candidate ELFs are included. `source/programs/pump` is the complete compiled crate and `source.patch` is its exact diff against the base round's archived `primary` source. Both ELFs come from the repository builder (`scripts/pump_build_verified.py --workspace-layout --target-library-profile linux-v1.44-sbf --target-library-directory /Users/shawwalters/.cache/solana/v1.44-linux-probe/platform-tools/rust/lib/rustlib/sbf-solana-solana/lib`, v1.44 SDK, fresh target), and `control/` holds the same builder applied to the unchanged base primary source. The build log has no stack-offset warnings. `inventory.json.gz` uses the same window rule as the round inventories. The 44-suite captured-loader corpus passes against this exact candidate: 10,468 cases, 10,464 paired diagnostic logs, 0 mismatches (`full.json.gz`).
+The candidate ELFs are included. `source/programs/pump` is the complete compiled crate and `source.patch` is its exact diff against the base round's archived `primary` source. Both ELFs come from the repository builder (`scripts/pump_build_verified.py --workspace-layout --target-library-profile linux-v1.44-sbf --target-library-directory /Users/shawwalters/.cache/solana/v1.44-linux-probe/platform-tools/rust/lib/rustlib/sbf-solana-solana/lib`, v1.44 SDK, fresh target), and `control/` holds the same builder applied to the unchanged base primary source. The build log has no stack-offset warnings. `inventory.json.gz` uses the same window rule as the round inventories. The saved 44-suite captured-loader report contains 10,468 paired cases and 10,464 paired diagnostic logs (`full.json.gz`). Its narrow diagnostic-payload audit reports zero mismatches; this is not complete-log equality. The independent saved-outcome review below retains the unresolved log differences.
 
 ```sh
 python research/claude-pump-integration-20261027/r37-layout-24/verify.py
+python -I -B research/claude-pump-integration-20261027/r37-layout-24/test_input_controls.py
 ```
 
 ## Lineage
@@ -55,7 +56,7 @@ Round-5 composition notes (unchanged since #425): `r5-z00-03` and `r5-z09-01` ar
 | mg-P-z05-01 | `0x62aa0` | yes | L21 + 0x62aa0 pump_quote::convert (if output > rt {..} else {Ok(output)}: Ok-return block created before the checked_sub targets -> jge fallthrough into the :199 error block) |
 | Codex Round46 port (integrator) | `0x43ea0` `0x502f0` `0x68bd8` | no | migrate::create_pool and migrate_v2::create_pool as private helpers calling the generated pump_amm client with the signer seeds passed to a closure (Round46 form; migrate_v2 previously hand-built the identical create_pool instruction: same 18 account metas and Borsh data), QuoteControl::validate_new_mint membership test written inline as `position(..).is_some()` (= the existing contains() body) |
 
-All changes keep the original's observable behaviour except where noted toward the original: `SetMayhemVirtualParams.token_program` is `Program<Token2022>` (the original's try_accounts calls `Program::try_accounts`; r5-z08-03), and `InterfaceAccount<TokenAccount>::reload` + `sync_virtual_quote_reserves` after the curve token transfer for the whitelist PDA (r5-libinst / r5-z09). migrate_v2 creates the pool through the generated `pump_amm::cpi::create_pool` client (identical account metas and Borsh data to the hand-built instruction it replaces).
+The composition includes the following intended semantic corrections toward the original; broad observable-behavior equality is not established: `SetMayhemVirtualParams.token_program` is `Program<Token2022>` (the original's try_accounts calls `Program::try_accounts`; r5-z08-03), and `InterfaceAccount<TokenAccount>::reload` + `sync_virtual_quote_reserves` after the curve token transfer for the whitelist PDA (r5-libinst / r5-z09). migrate_v2 creates the pool through the generated `pump_amm::cpi::create_pool` client (identical account metas and Borsh data to the hand-built instruction it replaces).
 
 ## SYNTHETIC LINE POSITIONING (read this first)
 
@@ -66,3 +67,40 @@ Like L12, this is a **layout composite**: `// layout-pad` blank-line blocks hold
 - `candidate.so` / `unstripped.so` and `control/` come from `scripts/pump_build_verified.py --workspace-layout` with the `linux-v1.44-sbf` target-library profile, from a fresh target (the repository dependency cache refuses the nested path crate). `verify.py` authenticates these.
 - `identity-run/` retains the lane harness identity-recipe build of the same source (official Linux x86_64 v1.44 `sbpf-solana-solana` target libraries, `tools/fastbuild_nested.py`) with its window score; `verify.py` does **not** rebuild or authenticate it. That build scores **982/1035 normalized, 166 raw** (unstripped `4c5c562d…`); the repository-builder ELF scores fewer because of the target-library `core::error::Error::type_id` / `<T as Any>::type_id` windows (`0xce50`, `0x188cc8`, `0x19a1a0`, `0x1a8e28`, `0x1ab9b8`), the same gap as #396/#401/#425.
 
+
+
+## Saved-outcome review and provenance limits
+
+The independent review in `RUNTIME-REVIEW.json` finds no differences in the
+recorded paired account state, errors, events, inner calls or return data after
+the stated compute-field exclusions. It rechecks 18,284 serialized signed
+transaction occurrences, including bootstrap transactions, representing 2,409
+distinct transactions. These counts are not new executions.
+
+Complete ordered main-invocation logs still differ in **193** cases: **52**
+source-filename differences and **141** other differences. The latter comprise
+84 missing empty-fee-bucket notices, 5 missing non-system creator notices,
+3 missing canonical-pool notices, 6 message-order differences, 9 missing
+frozen-creator-quote notices and 34 missing zero-cashback notices. The bundled
+diagnostic audit compares narrower error payloads; its zero-mismatch result
+does not close these message differences.
+
+The saved report references 44 per-suite loader receipts by path and hash;
+those standalone receipts are not retained in this packet. The generated
+compiled-workspace root manifests are also referenced by hash rather than
+included as that exact workspace. The packaged primary crate and build records
+remain available, but the saved pairs do not independently establish all
+loader or complete source-to-build provenance.
+
+`identity-run/` includes both ELF files, not just a claimed score. Manual
+read-only census checking confirms **982/1,035 normalized, 166 raw**, with
+1,416,576 matched text bytes, for that retained binary. This is static artifact
+evidence; it does not extend the 977-window build's saved runtime evidence to
+the identity ELF or prove its full build recipe. `verify.py` continues to use
+the 977-window repository build as its primary result.
+
+The verifier checks packet files and all imported analysis helpers, original
+ELF/census, and base-source inputs before loading the helper code. Its input
+controls reject an unlisted cache-directory file, a symlinked root manifest,
+and four altered analysis/census inputs. No compiler or VM is run by these
+input controls.

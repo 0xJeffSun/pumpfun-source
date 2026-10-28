@@ -10,12 +10,11 @@ mismatches.
 """
 from pathlib import Path
 import csv, gzip, hashlib, json, sys
+if not __debug__:
+    raise SystemExit('Run without -O')
 sys.dont_write_bytecode = True
 P = Path(__file__).resolve().parent
 ROOT = next(p for p in P.parents if (p / 'evidence/original/pump/deployed.so').is_file())
-sys.path.insert(0, str(ROOT / 'scripts'))
-from pump_compare_function_bytes import normalize, body  # noqa
-from pump_quote_control_function_match import sections  # noqa
 import difflib
 
 
@@ -66,12 +65,43 @@ def elf_functions(blob):
     return out
 
 
-def main():
-    manifest = json.loads((P / 'MANIFEST.json').read_text())
-    actual = {str(f.relative_to(P)) for f in P.rglob('*') if f.is_file() and '__pycache__' not in f.parts}
+def verify_inputs():
+    paths = list(P.rglob('*'))
+    assert all(not f.is_symlink() and (f.is_file() or f.is_dir()) for f in paths)
+    manifest_path = P / 'MANIFEST.json'
+    assert manifest_path.is_file()
+    manifest = json.loads(manifest_path.read_text())
+    actual = {str(f.relative_to(P)) for f in paths if f.is_file()}
     assert actual == set(manifest) | {'MANIFEST.json'}, sorted(actual ^ (set(manifest) | {'MANIFEST.json'}))
     for name, digest in manifest.items():
         assert not (P / name).is_symlink() and sha(P / name) == digest, name
+    inputs = json.loads((P / 'VERIFIER-INPUTS.json').read_text())
+    base = ROOT / 'repro/pump/main-contract-round37-20261027'
+    primary = list((base / 'primary').rglob('*'))
+    assert all(not f.is_symlink() and (f.is_file() or f.is_dir()) for f in primary)
+    required = {
+        'scripts/pump_compare_function_bytes.py',
+        'scripts/pump_quote_control_function_match.py',
+        'scripts/pump_diagnostic_audit.py',
+        'evidence/original/pump/deployed.so',
+        'repro/reconstruction-status-2026-10-26/functions.tsv',
+        'repro/pump/main-contract-round37-20261027/CHECKPOINT.json',
+        'repro/pump/main-contract-round37-20261027/inventory.json.gz',
+    } | {str(f.relative_to(ROOT)) for f in primary if f.is_file()}
+    assert set(inputs) == required, sorted(set(inputs) ^ required)
+    for name, digest in inputs.items():
+        path = ROOT / name
+        assert path.is_file() and not path.is_symlink(), name
+        assert all(not parent.is_symlink() for parent in path.parents if parent != ROOT and ROOT in parent.parents), name
+        assert sha(path) == digest, name
+
+
+def main():
+    verify_inputs()
+    sys.path.insert(0, str(ROOT / 'scripts'))
+    global normalize, body, sections
+    from pump_compare_function_bytes import normalize, body
+    from pump_quote_control_function_match import sections
     res = json.loads((P / 'RESULT.json').read_text())
     base = ROOT / res['base_round_package']
     bcp = json.loads((base / 'CHECKPOINT.json').read_text())
