@@ -1,0 +1,1886 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "repository": "lalalune/pumpfun-source",
+    "base": "2fc654a20e9c7be2b9529f585942bb82c4c83ab2",
+    "manifestSha256": "9e0fc00719eb8c919dd4205d3c118eb48c4927e056c77e8343e26d6f7189bbb5",
+    "inventorySha256": "9631271006faa37ea6055a11be4ec1faf971b45e2c7cdb78fc08a6530e777a50"
+  },
+  "scope": "Captured shared search loader, client request contract, resolver handling and declared query schemas; original TypeScript and backend implementation remain unknown",
+  "routes": [
+    {
+      "route": "/",
+      "html": {
+        "source": "evidence/web/objects/b713215f09b03c14",
+        "url": "https://pump.fun/",
+        "sha256": "5c54a668997394767a338ff5efe132ba3400bd5e1c4b6bb16c9c075b6a389409",
+        "bytes": 454082
+      },
+      "shellScript": "https://pump.fun/_next/static/immutable/chunks/1ggmlsuhd8iw1.js",
+      "runtimeScript": "https://pump.fun/_next/static/immutable/chunks/turbopack-1byz1flvc-bu1.js"
+    },
+    {
+      "route": "/explore",
+      "html": {
+        "source": "evidence/web/objects/501ddca30e455495",
+        "url": "https://pump.fun/explore",
+        "sha256": "bf808720f0cb4c1049588a1ebbf1840098eff80a7aecbf499f3815209e0ce119",
+        "bytes": 844336
+      },
+      "shellScript": "https://pump.fun/_next/static/immutable/chunks/1ggmlsuhd8iw1.js",
+      "runtimeScript": "https://pump.fun/_next/static/immutable/chunks/turbopack-1byz1flvc-bu1.js"
+    }
+  ],
+  "loader": {
+    "id": 544865,
+    "targetId": 238128,
+    "chunks": [
+      {
+        "path": "evidence/web/objects/2aff4edcd40d38f5.js",
+        "url": "https://pump.fun/_next/static/immutable/chunks/3qztai5g6b9cg.js",
+        "sha256": "7d7bd510a8875a550b8a05452904712cd2ad09e53ddd016ec3c2c34924de9431",
+        "bytes": 313
+      },
+      {
+        "path": "evidence/web/objects/7ac65fae62668991.js",
+        "url": "https://pump.fun/_next/static/immutable/chunks/3_my-guk--04i.js",
+        "sha256": "1748a6d5cddd67812f246a32e47e8f45a7fb7504cf1149d4cb9ed3879edb54e6",
+        "bytes": 22265
+      },
+      {
+        "path": "evidence/web/objects/7f29829a20549143.js",
+        "url": "https://pump.fun/_next/static/immutable/chunks/2c4k_7c02yg6e.js",
+        "sha256": "5b23da600328a2a3c412c40ceaab5d8c2fc9d2b380307e9d0f08d792658db1fd",
+        "bytes": 26865
+      },
+      {
+        "path": "evidence/web/objects/6258a95ddaaa943a.js",
+        "url": "https://pump.fun/_next/static/immutable/chunks/0b01knkhlpcwv.js",
+        "sha256": "a8c2940be34fff34b6f6f87a213fcbd8df7a2fac47d17b94580c2ce06848d7b0",
+        "bytes": 32161
+      },
+      {
+        "path": "evidence/web/objects/7398555ffe5cef82.js",
+        "url": "https://pump.fun/_next/static/immutable/chunks/15s-fp30zamdn.js",
+        "sha256": "e347fd2232ecb947927fd3f26a605f867ee1a143201d4060525dec4d4fa2dbdf",
+        "bytes": 35625
+      },
+      {
+        "path": "evidence/web/objects/04baf17809d3fd74.js",
+        "url": "https://pump.fun/_next/static/immutable/chunks/2id241otigi2z.js",
+        "sha256": "4be6d95feaff31aa27ed912ce34ce7efe845dea1cc11d5f1fddb161793fc7c1b",
+        "bytes": 18835
+      },
+      {
+        "path": "evidence/web/objects/43fc24878549d421.js",
+        "url": "https://pump.fun/_next/static/immutable/chunks/3x-9f-8l5wh8n.js",
+        "sha256": "7fb478c7b4ce8c3368859554b28a14ffb5652d261865aab199014c5d6f4705a2",
+        "bytes": 27696
+      },
+      {
+        "path": "evidence/web/objects/f2e5eac38c0cafe3.js",
+        "url": "https://pump.fun/_next/static/immutable/chunks/3nd5o23aufsyl.js",
+        "sha256": "506a2f859c0d39df9e9844ab98812aa24429fd0895413778c69b009044433cd6",
+        "bytes": 1240
+      },
+      {
+        "path": "evidence/web/objects/da58569257a3fbc5.js",
+        "url": "https://pump.fun/_next/static/immutable/chunks/1nib5d65u7tjx.js",
+        "sha256": "525c866b2e9beb87c98a160f51a805a4f593f74ae98330cf004a145633215ffc",
+        "bytes": 51286
+      },
+      {
+        "path": "evidence/web/objects/ccb10fa3de5597c4.js",
+        "url": "https://pump.fun/_next/static/immutable/chunks/1d97gye5pf9_i.js",
+        "sha256": "c6ad82d12ff13427a9d01acacd17a6bbb6ae7266625b328027c1ad4e31f93ddf",
+        "bytes": 52145
+      },
+      {
+        "path": "evidence/web/objects/eb0b23ee6feb7543.js",
+        "url": "https://pump.fun/_next/static/immutable/chunks/163nqh7l1hxim.js",
+        "sha256": "8ff9a060d8b1c540a04bb505094eb61ce0c2b2c5d83579af3e3976bf49a16d54",
+        "bytes": 31639
+      },
+      {
+        "path": "evidence/web/objects/fd689cb818e33ce9.js",
+        "url": "https://pump.fun/_next/static/immutable/chunks/0_txy12svyzek.js",
+        "sha256": "68d7bc57cd7c81a428bd23290bdd198b4f9f38535944c8e82bdc064e4ff91f0d",
+        "bytes": 248804
+      },
+      {
+        "path": "evidence/web/objects/767cc801e3f88f8b.js",
+        "url": "https://pump.fun/_next/static/immutable/chunks/3_ebsevlxes66.js",
+        "sha256": "8fd66b61a591235d4e3b0509b23d067bb76e0c4ec2e8a4d5d5ff738e29808e12",
+        "bytes": 41325
+      },
+      {
+        "path": "evidence/web/objects/ca512b0182a01486.js",
+        "url": "https://pump.fun/_next/static/immutable/chunks/275en2fgx10v6.js",
+        "sha256": "0c0db2bf8a519c002e53fceda0da87ccb9898d11905f06bf1d59ac39017beb30",
+        "bytes": 14065
+      }
+    ],
+    "chunkUrlResolution": "Literal _next-relative chunk names matched to retained authenticated pump.fun asset URLs; runtime global base-path overrides are not executed or qualified",
+    "contextualCoinHook": {
+      "id": 379705,
+      "ids": [
+        379705,
+        998515
+      ],
+      "label": "factory 379705",
+      "source": "evidence/web/objects/767cc801e3f88f8b.js",
+      "url": "https://pump.fun/_next/static/immutable/chunks/3_ebsevlxes66.js",
+      "sourceSha256": "8fd66b61a591235d4e3b0509b23d067bb76e0c4ec2e8a4d5d5ff738e29808e12",
+      "sourceBytes": 41325,
+      "utf16": [
+        13313,
+        21347
+      ],
+      "utf8": [
+        13317,
+        21351
+      ],
+      "sha256": "350da5b767415ae168c12050d3627d71039bcc2c0a097572b5319ddbad04d8fe"
+    },
+    "otherIndexedCoinHookVariants": [
+      "3c58de415e19118992ecc37931a72eaf74272cfab0b7c7dc68fd9f4f402abd4d",
+      "629ccc425314ef1e01dd2476266052df9bcb407199598ebba7f8ce9f52adc2d6",
+      "642cafc9d2b3c27f2d2d35ea8699a509ded856839fb3d33a8a132333d85c82d6"
+    ]
+  },
+  "factories": [
+    {
+      "id": 30181,
+      "ids": [
+        30181,
+        812768,
+        46353
+      ],
+      "label": "factory 30181",
+      "source": "evidence/web/objects/01ad4f413e529b60.js",
+      "url": "https://pump.fun/_next/static/immutable/chunks/0oz8z5zyovele.js",
+      "sourceSha256": "ea34452a4ff15befcc08451f7d2efdc28797dba71e6148db02311ced5c21d0f6",
+      "sourceBytes": 27872,
+      "utf16": [
+        11992,
+        26655
+      ],
+      "utf8": [
+        11992,
+        26655
+      ],
+      "sha256": "fbae4e508e6c986c68209d975d3eea247718d478272089a60504b776074e2413"
+    },
+    {
+      "id": 238128,
+      "ids": [
+        238128
+      ],
+      "label": "factory 238128",
+      "source": "evidence/web/objects/ccb10fa3de5597c4.js",
+      "url": "https://pump.fun/_next/static/immutable/chunks/1d97gye5pf9_i.js",
+      "sourceSha256": "c6ad82d12ff13427a9d01acacd17a6bbb6ae7266625b328027c1ad4e31f93ddf",
+      "sourceBytes": 52145,
+      "utf16": [
+        119,
+        52138
+      ],
+      "utf8": [
+        119,
+        52142
+      ],
+      "sha256": "9e5affafd605f47d6c9466659c4bc0a654fae027f4beff481337a1cdf1263828"
+    },
+    {
+      "id": 379705,
+      "ids": [
+        379705,
+        998515
+      ],
+      "label": "factory 379705",
+      "source": "evidence/web/objects/767cc801e3f88f8b.js",
+      "url": "https://pump.fun/_next/static/immutable/chunks/3_ebsevlxes66.js",
+      "sourceSha256": "8fd66b61a591235d4e3b0509b23d067bb76e0c4ec2e8a4d5d5ff738e29808e12",
+      "sourceBytes": 41325,
+      "utf16": [
+        13313,
+        21347
+      ],
+      "utf8": [
+        13317,
+        21351
+      ],
+      "sha256": "350da5b767415ae168c12050d3627d71039bcc2c0a097572b5319ddbad04d8fe"
+    },
+    {
+      "id": 400466,
+      "ids": [
+        400466
+      ],
+      "label": "factory 400466",
+      "source": "evidence/web/objects/13c13db9eb86191b.js",
+      "url": "https://pump.fun/_next/static/immutable/chunks/1ggmlsuhd8iw1.js",
+      "sourceSha256": "15e7cb5caef8d58d0d263486883e7aac6e39e9e2f7e037af29887849bd0cd6c6",
+      "sourceBytes": 215208,
+      "utf16": [
+        92522,
+        190511
+      ],
+      "utf8": [
+        92522,
+        190519
+      ],
+      "sha256": "b55e1d78341162edfc6c5ff1ba32c4b4faa3d0ade6de3a39f440fe39f2e9e5dd"
+    },
+    {
+      "id": 402030,
+      "ids": [
+        402030
+      ],
+      "label": "factory 402030",
+      "source": "evidence/web/objects/2b47dd0b38a1608f.js",
+      "url": "https://pump.fun/_next/static/immutable/chunks/2cr_aqnw2j4n5.js",
+      "sourceSha256": "e78d2f38b06f971847c18dd05457c75afc85208135f50d6e4022a5f197e8839d",
+      "sourceBytes": 507700,
+      "utf16": [
+        30128,
+        36035
+      ],
+      "utf8": [
+        30136,
+        36043
+      ],
+      "sha256": "26d7d7ced2e06fee3c9354e5ffd9626bcf4f953c8927d3a5ea43d5a45e7064c2"
+    },
+    {
+      "id": 402734,
+      "ids": [
+        402734
+      ],
+      "label": "factory 402734",
+      "source": "evidence/web/objects/2b47dd0b38a1608f.js",
+      "url": "https://pump.fun/_next/static/immutable/chunks/2cr_aqnw2j4n5.js",
+      "sourceSha256": "e78d2f38b06f971847c18dd05457c75afc85208135f50d6e4022a5f197e8839d",
+      "sourceBytes": 507700,
+      "utf16": [
+        358943,
+        362451
+      ],
+      "utf8": [
+        359192,
+        362704
+      ],
+      "sha256": "7679a980be1346c6fa329dd2104fa9302efe1a9bc7593b15d4d9b3dca049a85f"
+    },
+    {
+      "id": 503630,
+      "ids": [
+        503630
+      ],
+      "label": "factory 503630",
+      "source": "evidence/web/objects/1e479323ffe53c14.js",
+      "url": "https://pump.fun/_next/static/immutable/chunks/1iz1f978wp41x.js",
+      "sourceSha256": "a824dde2b35895b6e4a4c642e880e6cbaec976f58a6cde4efcf5887e44f09172",
+      "sourceBytes": 29288,
+      "utf16": [
+        654,
+        1035
+      ],
+      "utf8": [
+        654,
+        1035
+      ],
+      "sha256": "df5a12d4b76158889dd38a02d0d9afc0d0405065772b589c9cadf9806422d0e7"
+    },
+    {
+      "id": 544865,
+      "ids": [
+        544865
+      ],
+      "label": "factory 544865",
+      "source": "evidence/web/objects/e02656dccdb8d127.js",
+      "url": "https://pump.fun/_next/static/immutable/chunks/3cgqltdrvghmb.js",
+      "sourceSha256": "3876553b934075da6f668d5e56ecd17eb9b154da90736ec6270a8a08f814f2d0",
+      "sourceBytes": 21469,
+      "utf16": [
+        15488,
+        16152
+      ],
+      "utf8": [
+        15488,
+        16152
+      ],
+      "sha256": "1c841d2e784cb6993f5cd95b5971ff4e69f41712fbe9440e88634bd92a09f7e7"
+    },
+    {
+      "id": 759257,
+      "ids": [
+        759257,
+        67734
+      ],
+      "label": "factory 759257",
+      "source": "evidence/web/objects/1e479323ffe53c14.js",
+      "url": "https://pump.fun/_next/static/immutable/chunks/1iz1f978wp41x.js",
+      "sourceSha256": "a824dde2b35895b6e4a4c642e880e6cbaec976f58a6cde4efcf5887e44f09172",
+      "sourceBytes": 29288,
+      "utf16": [
+        144,
+        646
+      ],
+      "utf8": [
+        144,
+        646
+      ],
+      "sha256": "e1c207697339004b48f6baa9f81f34e7644686ee424616b553e55b23c659b855"
+    },
+    {
+      "id": 898661,
+      "ids": [
+        898661
+      ],
+      "label": "factory 898661",
+      "source": "evidence/web/objects/2b47dd0b38a1608f.js",
+      "url": "https://pump.fun/_next/static/immutable/chunks/2cr_aqnw2j4n5.js",
+      "sourceSha256": "e78d2f38b06f971847c18dd05457c75afc85208135f50d6e4022a5f197e8839d",
+      "sourceBytes": 507700,
+      "utf16": [
+        393,
+        3119
+      ],
+      "utf8": [
+        393,
+        3119
+      ],
+      "sha256": "9015e4bad4b1f0bb4b245e446689d9b7e939b3ba922044c82dcd9e8d5f3d9ed5"
+    },
+    {
+      "id": 985722,
+      "ids": [
+        985722
+      ],
+      "label": "factory 985722",
+      "source": "evidence/web/objects/2b47dd0b38a1608f.js",
+      "url": "https://pump.fun/_next/static/immutable/chunks/2cr_aqnw2j4n5.js",
+      "sourceSha256": "e78d2f38b06f971847c18dd05457c75afc85208135f50d6e4022a5f197e8839d",
+      "sourceBytes": 507700,
+      "utf16": [
+        100948,
+        124759
+      ],
+      "utf8": [
+        101003,
+        124816
+      ],
+      "sha256": "db8a6d669d7c3a8dedf92a8c926999dd0f530ff88ba2ba6926b7b41b0967d635"
+    }
+  ],
+  "operations": {
+    "GET /search/resolve": {
+      "method": "GET",
+      "path": "/search/resolve",
+      "websiteOrigin": "https://frontend-api-v3.pump.fun",
+      "credentials": "same-origin",
+      "headers": {
+        "x-pump-source": "WEB",
+        "x-pump-platform": "web"
+      },
+      "querySchemaPointer": "#/properties/GET ~1search~1resolve",
+      "queryEncoding": {
+        "undefined": "omitted",
+        "scalar": "String(value)",
+        "array": "String(item), reject commas, join with comma",
+        "emptyArray": "omit only when the named query field accepts undefined; otherwise throw TypeError",
+        "validation": "the client does not parse nonempty query values with the declared query schema"
+      },
+      "responseHandling": {
+        "input": "JSON results[0]",
+        "errorOrMissingOrNotDefinitive": {
+          "kind": "fallback"
+        },
+        "coin": "truthy coin.mint -> {kind:coin,mint,chain:chain ?? null}; otherwise fallback",
+        "user": {
+          "kind": "user"
+        },
+        "external_wallet": {
+          "kind": "external_wallet"
+        },
+        "squadAndUnknown": {
+          "kind": "fallback"
+        },
+        "degraded": "not consumed by this resolver helper"
+      },
+      "qualification": "static captured client contract; no upstream behavior qualification"
+    },
+    "GET /coins/search-v2": {
+      "method": "GET",
+      "path": "/coins/search-v2",
+      "websiteOrigin": "https://frontend-api-v3.pump.fun",
+      "credentials": "include",
+      "headers": {
+        "x-pump-source": "WEB",
+        "x-pump-platform": "web"
+      },
+      "querySchemaPointer": "#/properties/GET ~1coins~1search-v2",
+      "queryEncoding": {
+        "undefined": "omitted",
+        "scalar": "String(value)",
+        "array": "String(item), reject commas, join with comma",
+        "emptyArray": "omit only when the named query field accepts undefined; otherwise throw TypeError",
+        "validation": "the client does not parse nonempty query values with the declared query schema"
+      },
+      "responseHandling": {
+        "input": "JSON response",
+        "furtherHookBehavior": "coin normalization, chain filtering, stale-response guards and pagination remain outside the small adapter"
+      },
+      "qualification": "static captured client contract; no upstream behavior qualification"
+    },
+    "GET /coins/search-unrestricted": {
+      "method": "GET",
+      "path": "/coins/search-unrestricted",
+      "websiteOrigin": "https://frontend-api-v3.pump.fun",
+      "credentials": "include",
+      "headers": {
+        "x-pump-source": "WEB",
+        "x-pump-platform": "web"
+      },
+      "querySchemaPointer": "#/properties/GET ~1coins~1search-unrestricted",
+      "queryEncoding": {
+        "undefined": "omitted",
+        "scalar": "String(value)",
+        "array": "String(item), reject commas, join with comma",
+        "emptyArray": "omit only when the named query field accepts undefined; otherwise throw TypeError",
+        "validation": "the client does not parse nonempty query values with the declared query schema"
+      },
+      "responseHandling": {
+        "input": "JSON response",
+        "furtherHookBehavior": "coin normalization, chain filtering, stale-response guards and pagination remain outside the small adapter"
+      },
+      "qualification": "static captured client contract; no upstream behavior qualification"
+    }
+  },
+  "querySchemas": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "properties": {
+      "GET /search/resolve": {
+        "type": "object",
+        "properties": {
+          "identifiers": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 128
+            },
+            "minItems": 1,
+            "maxItems": 5,
+            "description": "Comma-separated identifiers (repeated and mixed forms parse identically): a coin address (mint, bonding curve or pool), a Solana wallet, an EVM address, a TON token address, a NEAR or Starknet token address (while coin cards for that chain are served; a 0x plus 40-hex address is always EVM), or a pump.fun user id"
+          }
+        },
+        "required": [
+          "identifiers"
+        ]
+      },
+      "GET /coins/search-v2": {
+        "type": "object",
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2147483647,
+            "x-zod-optional": true,
+            "description": "Default 0, max 2147483647 (int32); a deeper offset is refused with 400"
+          },
+          "includeNsfw": {
+            "type": "boolean",
+            "x-zod-optional": true,
+            "description": "Default false"
+          },
+          "sort": {
+            "type": "string",
+            "x-zod-optional": true
+          },
+          "searchTerm": {
+            "type": "string",
+            "maxLength": 66,
+            "x-zod-optional": true,
+            "description": "66 admits a whole Starknet address paste (0x + 64 hex) and 64 a whole NEAR account paste; a raw (untrimmed) term over 50 (search-service's own hard limit) is a 400 unless its trimmed value is a NEAR account paste (dotted or 64-hex) over 50 while NEAR cards are live, or a Starknet address paste while Starknet cards are live"
+          },
+          "order": {
+            "type": "string",
+            "x-zod-optional": true
+          },
+          "creator": {
+            "type": "string",
+            "x-zod-optional": true
+          },
+          "complete": {
+            "type": "boolean",
+            "x-zod-optional": true
+          },
+          "sessionId": {
+            "type": "string",
+            "x-zod-optional": true
+          },
+          "deviceId": {
+            "type": "string",
+            "maxLength": 128,
+            "x-zod-optional": true,
+            "description": "Persisted install/device id, forwarded verbatim to search-service, which buckets the device-grain search-ranking experiment on it"
+          },
+          "minAgeSeconds": {
+            "type": "integer",
+            "minimum": -9007199254740991,
+            "maximum": 9007199254740991,
+            "x-zod-optional": true
+          },
+          "maxAgeSeconds": {
+            "type": "integer",
+            "minimum": -9007199254740991,
+            "maximum": 9007199254740991,
+            "x-zod-optional": true
+          },
+          "minVolumeSol": {
+            "type": "number",
+            "x-zod-optional": true,
+            "description": "No-op: not forwarded to the search backend."
+          },
+          "maxVolumeSol": {
+            "type": "number",
+            "x-zod-optional": true,
+            "description": "No-op: not forwarded to the search backend."
+          },
+          "minMarketCapSol": {
+            "type": "integer",
+            "minimum": -9007199254740991,
+            "maximum": 9007199254740991,
+            "x-zod-optional": true
+          },
+          "maxMarketCapSol": {
+            "type": "integer",
+            "minimum": -9007199254740991,
+            "maximum": 9007199254740991,
+            "x-zod-optional": true
+          },
+          "minAthMarketCapSol": {
+            "type": "integer",
+            "minimum": -9007199254740991,
+            "maximum": 9007199254740991,
+            "x-zod-optional": true
+          },
+          "maxAthMarketCapSol": {
+            "type": "integer",
+            "minimum": -9007199254740991,
+            "maximum": 9007199254740991,
+            "x-zod-optional": true
+          },
+          "minMarketCapUsd": {
+            "type": "number",
+            "x-zod-optional": true,
+            "description": "Inclusive lower bound on usd_market_cap (USD)"
+          },
+          "maxMarketCapUsd": {
+            "type": "number",
+            "x-zod-optional": true,
+            "description": "Inclusive upper bound on usd_market_cap (USD)"
+          },
+          "maxLastTradeAgeSeconds": {
+            "type": "integer",
+            "minimum": -9007199254740991,
+            "maximum": 9007199254740991,
+            "x-zod-optional": true,
+            "description": "Upper bound on the age of the last trade in seconds; a never-traded coin never passes"
+          },
+          "currentlyLive": {
+            "type": "boolean",
+            "x-zod-optional": true
+          },
+          "mayhemState": {
+            "$ref": "#/$defs/985722.local:d",
+            "x-zod-optional": true
+          },
+          "program": {
+            "$ref": "#/$defs/985722.local:u",
+            "x-zod-optional": true
+          },
+          "boostModes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/985722.local:l"
+            },
+            "x-zod-optional": true
+          },
+          "quoteMints": {
+            "$ref": "#/$defs/985722.local:z",
+            "x-zod-optional": true,
+            "description": "Include filter on the coin launch quote mint, at most 32: base58 SVM mint or 0x EVM address; SOL is always spelled as wSOL So11111111111111111111111111111111111111112 on the index (other SOL spellings are folded to it)"
+          },
+          "excludeQuoteMints": {
+            "$ref": "#/$defs/985722.local:z",
+            "x-zod-optional": true,
+            "description": "Exclude filter on the coin launch quote mint, at most 32: base58 SVM mint or 0x EVM address; SOL is always spelled as wSOL So11111111111111111111111111111111111111112 on the index (other SOL spellings are folded to it)"
+          },
+          "platform": {
+            "$ref": "#/$defs/985722.local:h",
+            "x-zod-optional": true
+          },
+          "activeViewerCount": {
+            "type": "integer",
+            "minimum": -9007199254740991,
+            "maximum": 2147483647,
+            "x-zod-optional": true,
+            "description": "Max 2147483647 (int32); a larger value is refused with 400"
+          },
+          "isCashbackEnabled": {
+            "type": "boolean",
+            "x-zod-optional": true
+          },
+          "isHolderReward": {
+            "type": "boolean",
+            "x-zod-optional": true
+          },
+          "tokenizedAgent": {
+            "type": "boolean",
+            "x-zod-optional": true
+          },
+          "isCharity": {
+            "type": "boolean",
+            "x-zod-optional": true
+          },
+          "launchpadOnly": {
+            "type": "boolean",
+            "x-zod-optional": true,
+            "description": "Only launchpad-born coins: program in the registry launchpadPrograms set, applied by search-service; an absent program counts as pump on SVM only"
+          },
+          "maxDepth": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295,
+            "x-zod-optional": true,
+            "description": "Pump curve depth ceiling (inclusive), max 4294967295 (uint32); coins created before the depth rung count as 0. The coin-creation picker sends program=pump&pumpSwapGraduatedOnly=true&maxDepth=<max_curve_depth-1>."
+          },
+          "pumpSwapGraduatedOnly": {
+            "type": "boolean",
+            "x-zod-optional": true,
+            "description": "Only coins launched on Pump and migrated to PumpSwap (pump_swap_pool set, no raydium_pool)."
+          },
+          "includeFollowedHolders": {
+            "type": "boolean",
+            "x-zod-optional": true,
+            "description": "Opt-in: attach the followed-holders facepile per coin (needs a viewer JWT; anonymous opt-in gets followed_holders: null). Off by default."
+          },
+          "followedHoldersLimit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991,
+            "x-zod-optional": true,
+            "description": "Followed holders returned per coin (default 3; values above 10 clamp to 10)."
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991,
+            "x-zod-optional": true,
+            "description": "Rows per page, default 5. search-service caps the 7-day recency-filtered page at 50; larger values are accepted and clamped to 50, not rejected."
+          },
+          "experimentFlag": {
+            "type": "string",
+            "x-zod-optional": true
+          },
+          "includePerps": {
+            "type": "boolean",
+            "x-zod-optional": true,
+            "description": "true appends up to 5 HyperCore perp rows after the slate on offset 0; absent or false never appends. Default false."
+          }
+        },
+        "required": []
+      },
+      "GET /coins/search-unrestricted": {
+        "type": "object",
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2147483647,
+            "x-zod-optional": true,
+            "description": "Default 0, max 2147483647 (int32); a deeper offset is refused with 400"
+          },
+          "includeNsfw": {
+            "type": "boolean",
+            "x-zod-optional": true,
+            "description": "Default false"
+          },
+          "sort": {
+            "type": "string",
+            "x-zod-optional": true
+          },
+          "searchTerm": {
+            "type": "string",
+            "maxLength": 66,
+            "x-zod-optional": true,
+            "description": "66 admits a whole Starknet address paste (0x + 64 hex) and 64 a whole NEAR account paste; a raw (untrimmed) term over 50 (search-service's own hard limit) is a 400 unless its trimmed value is a NEAR account paste (dotted or 64-hex) over 50 while NEAR cards are live, or a Starknet address paste while Starknet cards are live"
+          },
+          "order": {
+            "type": "string",
+            "x-zod-optional": true
+          },
+          "creator": {
+            "type": "string",
+            "x-zod-optional": true
+          },
+          "complete": {
+            "type": "boolean",
+            "x-zod-optional": true
+          },
+          "sessionId": {
+            "type": "string",
+            "x-zod-optional": true
+          },
+          "deviceId": {
+            "type": "string",
+            "maxLength": 128,
+            "x-zod-optional": true,
+            "description": "Persisted install/device id, forwarded verbatim to search-service, which buckets the device-grain search-ranking experiment on it"
+          },
+          "minAgeSeconds": {
+            "type": "integer",
+            "minimum": -9007199254740991,
+            "maximum": 9007199254740991,
+            "x-zod-optional": true
+          },
+          "maxAgeSeconds": {
+            "type": "integer",
+            "minimum": -9007199254740991,
+            "maximum": 9007199254740991,
+            "x-zod-optional": true
+          },
+          "minVolumeSol": {
+            "type": "number",
+            "x-zod-optional": true,
+            "description": "No-op: not forwarded to the search backend."
+          },
+          "maxVolumeSol": {
+            "type": "number",
+            "x-zod-optional": true,
+            "description": "No-op: not forwarded to the search backend."
+          },
+          "minMarketCapSol": {
+            "type": "integer",
+            "minimum": -9007199254740991,
+            "maximum": 9007199254740991,
+            "x-zod-optional": true
+          },
+          "maxMarketCapSol": {
+            "type": "integer",
+            "minimum": -9007199254740991,
+            "maximum": 9007199254740991,
+            "x-zod-optional": true
+          },
+          "minAthMarketCapSol": {
+            "type": "integer",
+            "minimum": -9007199254740991,
+            "maximum": 9007199254740991,
+            "x-zod-optional": true
+          },
+          "maxAthMarketCapSol": {
+            "type": "integer",
+            "minimum": -9007199254740991,
+            "maximum": 9007199254740991,
+            "x-zod-optional": true
+          },
+          "minMarketCapUsd": {
+            "type": "number",
+            "x-zod-optional": true,
+            "description": "Inclusive lower bound on usd_market_cap (USD)"
+          },
+          "maxMarketCapUsd": {
+            "type": "number",
+            "x-zod-optional": true,
+            "description": "Inclusive upper bound on usd_market_cap (USD)"
+          },
+          "maxLastTradeAgeSeconds": {
+            "type": "integer",
+            "minimum": -9007199254740991,
+            "maximum": 9007199254740991,
+            "x-zod-optional": true,
+            "description": "Upper bound on the age of the last trade in seconds; a never-traded coin never passes"
+          },
+          "currentlyLive": {
+            "type": "boolean",
+            "x-zod-optional": true
+          },
+          "mayhemState": {
+            "$ref": "#/$defs/985722.local:d",
+            "x-zod-optional": true
+          },
+          "program": {
+            "$ref": "#/$defs/985722.local:u",
+            "x-zod-optional": true
+          },
+          "boostModes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/985722.local:l"
+            },
+            "x-zod-optional": true
+          },
+          "quoteMints": {
+            "$ref": "#/$defs/985722.local:z",
+            "x-zod-optional": true,
+            "description": "Include filter on the coin launch quote mint, at most 32: base58 SVM mint or 0x EVM address; SOL is always spelled as wSOL So11111111111111111111111111111111111111112 on the index (other SOL spellings are folded to it)"
+          },
+          "excludeQuoteMints": {
+            "$ref": "#/$defs/985722.local:z",
+            "x-zod-optional": true,
+            "description": "Exclude filter on the coin launch quote mint, at most 32: base58 SVM mint or 0x EVM address; SOL is always spelled as wSOL So11111111111111111111111111111111111111112 on the index (other SOL spellings are folded to it)"
+          },
+          "platform": {
+            "$ref": "#/$defs/985722.local:h",
+            "x-zod-optional": true
+          },
+          "activeViewerCount": {
+            "type": "integer",
+            "minimum": -9007199254740991,
+            "maximum": 2147483647,
+            "x-zod-optional": true,
+            "description": "Max 2147483647 (int32); a larger value is refused with 400"
+          },
+          "isCashbackEnabled": {
+            "type": "boolean",
+            "x-zod-optional": true
+          },
+          "isHolderReward": {
+            "type": "boolean",
+            "x-zod-optional": true
+          },
+          "tokenizedAgent": {
+            "type": "boolean",
+            "x-zod-optional": true
+          },
+          "isCharity": {
+            "type": "boolean",
+            "x-zod-optional": true
+          },
+          "launchpadOnly": {
+            "type": "boolean",
+            "x-zod-optional": true,
+            "description": "Only launchpad-born coins: program in the registry launchpadPrograms set, applied by search-service; an absent program counts as pump on SVM only"
+          },
+          "maxDepth": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295,
+            "x-zod-optional": true,
+            "description": "Pump curve depth ceiling (inclusive), max 4294967295 (uint32); coins created before the depth rung count as 0. The coin-creation picker sends program=pump&pumpSwapGraduatedOnly=true&maxDepth=<max_curve_depth-1>."
+          },
+          "pumpSwapGraduatedOnly": {
+            "type": "boolean",
+            "x-zod-optional": true,
+            "description": "Only coins launched on Pump and migrated to PumpSwap (pump_swap_pool set, no raydium_pool)."
+          },
+          "includeFollowedHolders": {
+            "type": "boolean",
+            "x-zod-optional": true,
+            "description": "Opt-in: attach the followed-holders facepile per coin (needs a viewer JWT; anonymous opt-in gets followed_holders: null). Off by default."
+          },
+          "followedHoldersLimit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991,
+            "x-zod-optional": true,
+            "description": "Followed holders returned per coin (default 3; values above 10 clamp to 10)."
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 200,
+            "x-zod-optional": true,
+            "description": "Default 48"
+          }
+        },
+        "required": []
+      }
+    },
+    "$defs": {
+      "985722.local:_": {
+        "type": "object",
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2147483647,
+            "x-zod-optional": true,
+            "description": "Default 0, max 2147483647 (int32); a deeper offset is refused with 400"
+          },
+          "includeNsfw": {
+            "type": "boolean",
+            "x-zod-optional": true,
+            "description": "Default false"
+          },
+          "sort": {
+            "type": "string",
+            "x-zod-optional": true
+          },
+          "searchTerm": {
+            "type": "string",
+            "maxLength": 66,
+            "x-zod-optional": true,
+            "description": "66 admits a whole Starknet address paste (0x + 64 hex) and 64 a whole NEAR account paste; a raw (untrimmed) term over 50 (search-service's own hard limit) is a 400 unless its trimmed value is a NEAR account paste (dotted or 64-hex) over 50 while NEAR cards are live, or a Starknet address paste while Starknet cards are live"
+          },
+          "order": {
+            "type": "string",
+            "x-zod-optional": true
+          },
+          "creator": {
+            "type": "string",
+            "x-zod-optional": true
+          },
+          "complete": {
+            "type": "boolean",
+            "x-zod-optional": true
+          },
+          "sessionId": {
+            "type": "string",
+            "x-zod-optional": true
+          },
+          "deviceId": {
+            "type": "string",
+            "maxLength": 128,
+            "x-zod-optional": true,
+            "description": "Persisted install/device id, forwarded verbatim to search-service, which buckets the device-grain search-ranking experiment on it"
+          },
+          "minAgeSeconds": {
+            "type": "integer",
+            "minimum": -9007199254740991,
+            "maximum": 9007199254740991,
+            "x-zod-optional": true
+          },
+          "maxAgeSeconds": {
+            "type": "integer",
+            "minimum": -9007199254740991,
+            "maximum": 9007199254740991,
+            "x-zod-optional": true
+          },
+          "minVolumeSol": {
+            "type": "number",
+            "x-zod-optional": true,
+            "description": "No-op: not forwarded to the search backend."
+          },
+          "maxVolumeSol": {
+            "type": "number",
+            "x-zod-optional": true,
+            "description": "No-op: not forwarded to the search backend."
+          },
+          "minMarketCapSol": {
+            "type": "integer",
+            "minimum": -9007199254740991,
+            "maximum": 9007199254740991,
+            "x-zod-optional": true
+          },
+          "maxMarketCapSol": {
+            "type": "integer",
+            "minimum": -9007199254740991,
+            "maximum": 9007199254740991,
+            "x-zod-optional": true
+          },
+          "minAthMarketCapSol": {
+            "type": "integer",
+            "minimum": -9007199254740991,
+            "maximum": 9007199254740991,
+            "x-zod-optional": true
+          },
+          "maxAthMarketCapSol": {
+            "type": "integer",
+            "minimum": -9007199254740991,
+            "maximum": 9007199254740991,
+            "x-zod-optional": true
+          },
+          "minMarketCapUsd": {
+            "type": "number",
+            "x-zod-optional": true,
+            "description": "Inclusive lower bound on usd_market_cap (USD)"
+          },
+          "maxMarketCapUsd": {
+            "type": "number",
+            "x-zod-optional": true,
+            "description": "Inclusive upper bound on usd_market_cap (USD)"
+          },
+          "maxLastTradeAgeSeconds": {
+            "type": "integer",
+            "minimum": -9007199254740991,
+            "maximum": 9007199254740991,
+            "x-zod-optional": true,
+            "description": "Upper bound on the age of the last trade in seconds; a never-traded coin never passes"
+          },
+          "currentlyLive": {
+            "type": "boolean",
+            "x-zod-optional": true
+          },
+          "mayhemState": {
+            "$ref": "#/$defs/985722.local:d",
+            "x-zod-optional": true
+          },
+          "program": {
+            "$ref": "#/$defs/985722.local:u",
+            "x-zod-optional": true
+          },
+          "boostModes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/985722.local:l"
+            },
+            "x-zod-optional": true
+          },
+          "quoteMints": {
+            "$ref": "#/$defs/985722.local:z",
+            "x-zod-optional": true,
+            "description": "Include filter on the coin launch quote mint, at most 32: base58 SVM mint or 0x EVM address; SOL is always spelled as wSOL So11111111111111111111111111111111111111112 on the index (other SOL spellings are folded to it)"
+          },
+          "excludeQuoteMints": {
+            "$ref": "#/$defs/985722.local:z",
+            "x-zod-optional": true,
+            "description": "Exclude filter on the coin launch quote mint, at most 32: base58 SVM mint or 0x EVM address; SOL is always spelled as wSOL So11111111111111111111111111111111111111112 on the index (other SOL spellings are folded to it)"
+          },
+          "platform": {
+            "$ref": "#/$defs/985722.local:h",
+            "x-zod-optional": true
+          },
+          "activeViewerCount": {
+            "type": "integer",
+            "minimum": -9007199254740991,
+            "maximum": 2147483647,
+            "x-zod-optional": true,
+            "description": "Max 2147483647 (int32); a larger value is refused with 400"
+          },
+          "isCashbackEnabled": {
+            "type": "boolean",
+            "x-zod-optional": true
+          },
+          "isHolderReward": {
+            "type": "boolean",
+            "x-zod-optional": true
+          },
+          "tokenizedAgent": {
+            "type": "boolean",
+            "x-zod-optional": true
+          },
+          "isCharity": {
+            "type": "boolean",
+            "x-zod-optional": true
+          },
+          "launchpadOnly": {
+            "type": "boolean",
+            "x-zod-optional": true,
+            "description": "Only launchpad-born coins: program in the registry launchpadPrograms set, applied by search-service; an absent program counts as pump on SVM only"
+          },
+          "maxDepth": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295,
+            "x-zod-optional": true,
+            "description": "Pump curve depth ceiling (inclusive), max 4294967295 (uint32); coins created before the depth rung count as 0. The coin-creation picker sends program=pump&pumpSwapGraduatedOnly=true&maxDepth=<max_curve_depth-1>."
+          },
+          "pumpSwapGraduatedOnly": {
+            "type": "boolean",
+            "x-zod-optional": true,
+            "description": "Only coins launched on Pump and migrated to PumpSwap (pump_swap_pool set, no raydium_pool)."
+          },
+          "includeFollowedHolders": {
+            "type": "boolean",
+            "x-zod-optional": true,
+            "description": "Opt-in: attach the followed-holders facepile per coin (needs a viewer JWT; anonymous opt-in gets followed_holders: null). Off by default."
+          },
+          "followedHoldersLimit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991,
+            "x-zod-optional": true,
+            "description": "Followed holders returned per coin (default 3; values above 10 clamp to 10)."
+          }
+        },
+        "required": []
+      },
+      "985722.local:d": {
+        "enum": [
+          "active",
+          "paused",
+          "completed"
+        ]
+      },
+      "985722.local:u": {
+        "enum": [
+          "pump",
+          "meteora_dbc",
+          "raydium_launchpad",
+          "raydium_launchpad_bonk",
+          "loadout",
+          "meme_fun",
+          "non_launchpad",
+          "stonkfun"
+        ]
+      },
+      "985722.local:l": {
+        "enum": [
+          "NONE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "985722.local:z": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "minLength": 32,
+          "maxLength": 66
+        },
+        "maxItems": 32
+      },
+      "985722.local:h": {
+        "enum": [
+          "bonk",
+          "bags",
+          "believe",
+          "moonshot",
+          "jup_studio",
+          "basedpad",
+          "hooked",
+          "dbc",
+          "raydium"
+        ]
+      }
+    },
+    "required": [
+      "GET /search/resolve",
+      "GET /coins/search-v2",
+      "GET /coins/search-unrestricted"
+    ]
+  },
+  "witnesses": [
+    {
+      "label": "default WEB/web request headers",
+      "source": "evidence/web/objects/01ad4f413e529b60.js",
+      "url": "https://pump.fun/_next/static/immutable/chunks/0oz8z5zyovele.js",
+      "sourceSha256": "ea34452a4ff15befcc08451f7d2efdc28797dba71e6148db02311ced5c21d0f6",
+      "sourceBytes": 27872,
+      "utf16": [
+        25878,
+        25925
+      ],
+      "utf8": [
+        25878,
+        25925
+      ],
+      "sha256": "bc2891687d1fb375679486e9e34d26c97b3a4052b97cffac671249f623e9174a"
+    },
+    {
+      "label": "HTTP client prefix and default hooks",
+      "source": "evidence/web/objects/01ad4f413e529b60.js",
+      "url": "https://pump.fun/_next/static/immutable/chunks/0oz8z5zyovele.js",
+      "sourceSha256": "ea34452a4ff15befcc08451f7d2efdc28797dba71e6148db02311ced5c21d0f6",
+      "sourceBytes": 27872,
+      "utf16": [
+        26060,
+        26152
+      ],
+      "utf8": [
+        26060,
+        26152
+      ],
+      "sha256": "7f4bb6fc5ef0e9e06fad39a0341afefbbad9fb44c2d2eae67450a25837efcaf6"
+    },
+    {
+      "label": "contract-client constructor",
+      "source": "evidence/web/objects/01ad4f413e529b60.js",
+      "url": "https://pump.fun/_next/static/immutable/chunks/0oz8z5zyovele.js",
+      "sourceSha256": "ea34452a4ff15befcc08451f7d2efdc28797dba71e6148db02311ced5c21d0f6",
+      "sourceBytes": 27872,
+      "utf16": [
+        26172,
+        26231
+      ],
+      "utf8": [
+        26172,
+        26231
+      ],
+      "sha256": "3f06fafac01cc853442e8921392ca3bc9aac56f2062652c4e3cf68482ccccbe0"
+    },
+    {
+      "label": "factory 599565",
+      "source": "evidence/web/objects/06e532443c8db686.js",
+      "url": "https://pump.fun/_next/static/immutable/chunks/1ez4nhskej4e_.js",
+      "sourceSha256": "cb585f0575019cbf1beec75238125daab8c7109750597de9d3133611abb4881a",
+      "sourceBytes": 366697,
+      "utf16": [
+        119,
+        340866
+      ],
+      "utf8": [
+        119,
+        366694
+      ],
+      "sha256": "375bf1a7298ca40a088210d7036d5422547ed59153f205de430426824b85caaf"
+    },
+    {
+      "label": "primitive $ZodCheckNumberFormat",
+      "source": "evidence/web/objects/06e532443c8db686.js",
+      "url": "https://pump.fun/_next/static/immutable/chunks/1ez4nhskej4e_.js",
+      "sourceSha256": "cb585f0575019cbf1beec75238125daab8c7109750597de9d3133611abb4881a",
+      "sourceBytes": 366697,
+      "utf16": [
+        13756,
+        14820
+      ],
+      "utf8": [
+        13760,
+        14824
+      ],
+      "sha256": "d04ae5677f08677b0350cfb22074dc2171aefd60de4e7cf1d455b7a875054714"
+    },
+    {
+      "label": "primitive $ZodCheckMaxLength",
+      "source": "evidence/web/objects/06e532443c8db686.js",
+      "url": "https://pump.fun/_next/static/immutable/chunks/1ez4nhskej4e_.js",
+      "sourceSha256": "cb585f0575019cbf1beec75238125daab8c7109750597de9d3133611abb4881a",
+      "sourceBytes": 366697,
+      "utf16": [
+        16473,
+        16928
+      ],
+      "utf8": [
+        16477,
+        16932
+      ],
+      "sha256": "dda350b5d39d9086209e91568ed3040efe9c6dec9ed9b73e86eb24977d5af8c1"
+    },
+    {
+      "label": "primitive $ZodCheckMinLength",
+      "source": "evidence/web/objects/06e532443c8db686.js",
+      "url": "https://pump.fun/_next/static/immutable/chunks/1ez4nhskej4e_.js",
+      "sourceSha256": "cb585f0575019cbf1beec75238125daab8c7109750597de9d3133611abb4881a",
+      "sourceBytes": 366697,
+      "utf16": [
+        16932,
+        17406
+      ],
+      "utf8": [
+        16936,
+        17410
+      ],
+      "sha256": "38dbc568ba6760b1f3894702465d15eca61eda27d858d5f3719f0b154c0be5c9"
+    },
+    {
+      "label": "primitive $ZodNumber",
+      "source": "evidence/web/objects/06e532443c8db686.js",
+      "url": "https://pump.fun/_next/static/immutable/chunks/1ez4nhskej4e_.js",
+      "sourceSha256": "cb585f0575019cbf1beec75238125daab8c7109750597de9d3133611abb4881a",
+      "sourceBytes": 366697,
+      "utf16": [
+        29764,
+        30197
+      ],
+      "utf8": [
+        29768,
+        30201
+      ],
+      "sha256": "c2a535743b3678ebeb28dc7bf15126dc8a39546cad02b063813015ff34fc41b6"
+    },
+    {
+      "label": "primitive safe integer nb",
+      "source": "evidence/web/objects/06e532443c8db686.js",
+      "url": "https://pump.fun/_next/static/immutable/chunks/1ez4nhskej4e_.js",
+      "sourceSha256": "cb585f0575019cbf1beec75238125daab8c7109750597de9d3133611abb4881a",
+      "sourceBytes": 366697,
+      "utf16": [
+        262420,
+        262539
+      ],
+      "utf8": [
+        288248,
+        288367
+      ],
+      "sha256": "d48e80189e451d20ca0f81f9cb74c55cef817df7152be9c5afc7b0a445f5b703"
+    },
+    {
+      "label": "primitive ZodNumber",
+      "source": "evidence/web/objects/06e532443c8db686.js",
+      "url": "https://pump.fun/_next/static/immutable/chunks/1ez4nhskej4e_.js",
+      "sourceSha256": "cb585f0575019cbf1beec75238125daab8c7109750597de9d3133611abb4881a",
+      "sourceBytes": 366697,
+      "utf16": [
+        306453,
+        307388
+      ],
+      "utf8": [
+        332281,
+        333216
+      ],
+      "sha256": "7c536ff7ceea1864d5342e631ba1ebf19994e88651896f3ab129d0a565ec63ab"
+    },
+    {
+      "label": "primitive safe integer u1",
+      "source": "evidence/web/objects/06e532443c8db686.js",
+      "url": "https://pump.fun/_next/static/immutable/chunks/1ez4nhskej4e_.js",
+      "sourceSha256": "cb585f0575019cbf1beec75238125daab8c7109750597de9d3133611abb4881a",
+      "sourceBytes": 366697,
+      "utf16": [
+        307496,
+        307527
+      ],
+      "utf8": [
+        333324,
+        333355
+      ],
+      "sha256": "513277e81d7f80fbeba452dfd57e5443c9bbc020624eef9f17efa8bd1f8a1790"
+    },
+    {
+      "label": "shell requests loader 544865",
+      "source": "evidence/web/objects/13c13db9eb86191b.js",
+      "url": "https://pump.fun/_next/static/immutable/chunks/1ggmlsuhd8iw1.js",
+      "sourceSha256": "15e7cb5caef8d58d0d263486883e7aac6e39e9e2f7e037af29887849bd0cd6c6",
+      "sourceBytes": 215208,
+      "utf16": [
+        147413,
+        147424
+      ],
+      "utf8": [
+        147421,
+        147432
+      ],
+      "sha256": "64350f57b7bfd2d577ad1553643534cf67a7dc9ad9fb03bae577b7ba7b24cbb9"
+    },
+    {
+      "label": "website default credentials",
+      "source": "evidence/web/objects/1e479323ffe53c14.js",
+      "url": "https://pump.fun/_next/static/immutable/chunks/1iz1f978wp41x.js",
+      "sourceSha256": "a824dde2b35895b6e4a4c642e880e6cbaec976f58a6cde4efcf5887e44f09172",
+      "sourceBytes": 29288,
+      "utf16": [
+        457,
+        484
+      ],
+      "utf8": [
+        457,
+        484
+      ],
+      "sha256": "cdff102a12d14bf98f2af1b2cb40e9bae308026d94826ec9639b20193fb69103"
+    },
+    {
+      "label": "website transport export j",
+      "source": "evidence/web/objects/1e479323ffe53c14.js",
+      "url": "https://pump.fun/_next/static/immutable/chunks/1iz1f978wp41x.js",
+      "sourceSha256": "a824dde2b35895b6e4a4c642e880e6cbaec976f58a6cde4efcf5887e44f09172",
+      "sourceBytes": 29288,
+      "utf16": [
+        496,
+        550
+      ],
+      "utf8": [
+        496,
+        550
+      ],
+      "sha256": "5817864818da591fbed5b3d6b7dbc92b8a42f2898777ae8a795f6dec5f8f5d9a"
+    },
+    {
+      "label": "website transport export f",
+      "source": "evidence/web/objects/1e479323ffe53c14.js",
+      "url": "https://pump.fun/_next/static/immutable/chunks/1iz1f978wp41x.js",
+      "sourceSha256": "a824dde2b35895b6e4a4c642e880e6cbaec976f58a6cde4efcf5887e44f09172",
+      "sourceBytes": 29288,
+      "utf16": [
+        557,
+        636
+      ],
+      "utf8": [
+        557,
+        636
+      ],
+      "sha256": "eaefa97c7c0cc9d891061dd458fd8a58cf7bb4c05bf67cfa1c5b0fd43e3c6c70"
+    },
+    {
+      "label": "website client server origin",
+      "source": "evidence/web/objects/1e479323ffe53c14.js",
+      "url": "https://pump.fun/_next/static/immutable/chunks/1iz1f978wp41x.js",
+      "sourceSha256": "a824dde2b35895b6e4a4c642e880e6cbaec976f58a6cde4efcf5887e44f09172",
+      "sourceBytes": 29288,
+      "utf16": [
+        884,
+        922
+      ],
+      "utf8": [
+        884,
+        922
+      ],
+      "sha256": "242dad8f5da075ec9ec1214151c14ad3a52ee0a99167e259c1a10341636eb8df"
+    },
+    {
+      "label": "query encoding, route interpolation, response JSON and error wrapping",
+      "source": "evidence/web/objects/2b47dd0b38a1608f.js",
+      "url": "https://pump.fun/_next/static/immutable/chunks/2cr_aqnw2j4n5.js",
+      "sourceSha256": "e78d2f38b06f971847c18dd05457c75afc85208135f50d6e4022a5f197e8839d",
+      "sourceBytes": 507700,
+      "utf16": [
+        1723,
+        3118
+      ],
+      "utf8": [
+        1723,
+        3118
+      ],
+      "sha256": "4b7fc75cbc8058f1a394c927ee8e09a650d869add6ce3f760a80752ab6460c60"
+    },
+    {
+      "label": "contract-client reexport to factory898661",
+      "source": "evidence/web/objects/2b47dd0b38a1608f.js",
+      "url": "https://pump.fun/_next/static/immutable/chunks/2cr_aqnw2j4n5.js",
+      "sourceSha256": "e78d2f38b06f971847c18dd05457c75afc85208135f50d6e4022a5f197e8839d",
+      "sourceBytes": 507700,
+      "utf16": [
+        35707,
+        35817
+      ],
+      "utf8": [
+        35715,
+        35825
+      ],
+      "sha256": "93b3c3b0a15c233da3c0148ff9beeae389e6a781eafddec117dd65fc6b7223c9"
+    },
+    {
+      "label": "factory 985722",
+      "source": "evidence/web/objects/2b47dd0b38a1608f.js",
+      "url": "https://pump.fun/_next/static/immutable/chunks/2cr_aqnw2j4n5.js",
+      "sourceSha256": "e78d2f38b06f971847c18dd05457c75afc85208135f50d6e4022a5f197e8839d",
+      "sourceBytes": 507700,
+      "utf16": [
+        100948,
+        124759
+      ],
+      "utf8": [
+        101003,
+        124816
+      ],
+      "sha256": "db8a6d669d7c3a8dedf92a8c926999dd0f530ff88ba2ba6926b7b41b0967d635"
+    },
+    {
+      "label": "schema 985722.local:l",
+      "source": "evidence/web/objects/2b47dd0b38a1608f.js",
+      "url": "https://pump.fun/_next/static/immutable/chunks/2cr_aqnw2j4n5.js",
+      "sourceSha256": "e78d2f38b06f971847c18dd05457c75afc85208135f50d6e4022a5f197e8839d",
+      "sourceBytes": 507700,
+      "utf16": [
+        101217,
+        101261
+      ],
+      "utf8": [
+        101272,
+        101316
+      ],
+      "sha256": "47c4388c2a3741c3b453be3e91b31e3183f2b1e5ef89f1cf656fe1de9f97937b"
+    },
+    {
+      "label": "schema 985722.local:d",
+      "source": "evidence/web/objects/2b47dd0b38a1608f.js",
+      "url": "https://pump.fun/_next/static/immutable/chunks/2cr_aqnw2j4n5.js",
+      "sourceSha256": "e78d2f38b06f971847c18dd05457c75afc85208135f50d6e4022a5f197e8839d",
+      "sourceBytes": 507700,
+      "utf16": [
+        101264,
+        101305
+      ],
+      "utf8": [
+        101319,
+        101360
+      ],
+      "sha256": "f12da586b211786f86433e0208c5a723049fabc0f1b73a975a7114b8776fe7ee"
+    },
+    {
+      "label": "schema 985722.local:u",
+      "source": "evidence/web/objects/2b47dd0b38a1608f.js",
+      "url": "https://pump.fun/_next/static/immutable/chunks/2cr_aqnw2j4n5.js",
+      "sourceSha256": "e78d2f38b06f971847c18dd05457c75afc85208135f50d6e4022a5f197e8839d",
+      "sourceBytes": 507700,
+      "utf16": [
+        101372,
+        101497
+      ],
+      "utf8": [
+        101427,
+        101552
+      ],
+      "sha256": "a4e3276dab9ed521b5c3d6899567641247226368f9ed0c63539ae86f048a0392"
+    },
+    {
+      "label": "schema 985722.local:h",
+      "source": "evidence/web/objects/2b47dd0b38a1608f.js",
+      "url": "https://pump.fun/_next/static/immutable/chunks/2cr_aqnw2j4n5.js",
+      "sourceSha256": "e78d2f38b06f971847c18dd05457c75afc85208135f50d6e4022a5f197e8839d",
+      "sourceBytes": 507700,
+      "utf16": [
+        101500,
+        101595
+      ],
+      "utf8": [
+        101555,
+        101650
+      ],
+      "sha256": "073581b13d8c35b87e89b7af0602c22d3b86e6c208d6fd99520256a09eeddddd"
+    },
+    {
+      "label": "schema 985722.local:z",
+      "source": "evidence/web/objects/2b47dd0b38a1608f.js",
+      "url": "https://pump.fun/_next/static/immutable/chunks/2cr_aqnw2j4n5.js",
+      "sourceSha256": "e78d2f38b06f971847c18dd05457c75afc85208135f50d6e4022a5f197e8839d",
+      "sourceBytes": 507700,
+      "utf16": [
+        105012,
+        105059
+      ],
+      "utf8": [
+        105067,
+        105114
+      ],
+      "sha256": "d4cd84ac0c982d142cd12f4a63dabcefe3257b813ed4a35cd5e55f0c1fcd3774"
+    },
+    {
+      "label": "schema 985722.local:_",
+      "source": "evidence/web/objects/2b47dd0b38a1608f.js",
+      "url": "https://pump.fun/_next/static/immutable/chunks/2cr_aqnw2j4n5.js",
+      "sourceSha256": "e78d2f38b06f971847c18dd05457c75afc85208135f50d6e4022a5f197e8839d",
+      "sourceBytes": 507700,
+      "utf16": [
+        106753,
+        110125
+      ],
+      "utf8": [
+        106808,
+        110180
+      ],
+      "sha256": "62a9a53f95d69a32a9553f878c8edb8a1c2603228acfb44ced96b1fbe70ebcb2"
+    },
+    {
+      "label": "GET /coins/search-v2 declared query schema",
+      "source": "evidence/web/objects/2b47dd0b38a1608f.js",
+      "url": "https://pump.fun/_next/static/immutable/chunks/2cr_aqnw2j4n5.js",
+      "sourceSha256": "e78d2f38b06f971847c18dd05457c75afc85208135f50d6e4022a5f197e8839d",
+      "sourceBytes": 507700,
+      "utf16": [
+        115786,
+        116202
+      ],
+      "utf8": [
+        115841,
+        116257
+      ],
+      "sha256": "d564884877842a9d815eebff6612f09ab4293725b6e3f5b3cbf423a1e5381a17"
+    },
+    {
+      "label": "GET /coins/search-v2 declared response schema",
+      "source": "evidence/web/objects/2b47dd0b38a1608f.js",
+      "url": "https://pump.fun/_next/static/immutable/chunks/2cr_aqnw2j4n5.js",
+      "sourceSha256": "e78d2f38b06f971847c18dd05457c75afc85208135f50d6e4022a5f197e8839d",
+      "sourceBytes": 507700,
+      "utf16": [
+        116212,
+        116669
+      ],
+      "utf8": [
+        116267,
+        116724
+      ],
+      "sha256": "47515632603434b4eeda4e5015d959afb768393e725a783192eaa9f904b47114"
+    },
+    {
+      "label": "GET /coins/search-unrestricted declared query schema",
+      "source": "evidence/web/objects/2b47dd0b38a1608f.js",
+      "url": "https://pump.fun/_next/static/immutable/chunks/2cr_aqnw2j4n5.js",
+      "sourceSha256": "e78d2f38b06f971847c18dd05457c75afc85208135f50d6e4022a5f197e8839d",
+      "sourceBytes": 507700,
+      "utf16": [
+        116757,
+        116843
+      ],
+      "utf8": [
+        116812,
+        116898
+      ],
+      "sha256": "551e6597372d7c6444335f9dbde8d7ae7c51ff10630ebf8638ca9d765e835582"
+    },
+    {
+      "label": "GET /coins/search-unrestricted declared response schema",
+      "source": "evidence/web/objects/2b47dd0b38a1608f.js",
+      "url": "https://pump.fun/_next/static/immutable/chunks/2cr_aqnw2j4n5.js",
+      "sourceSha256": "e78d2f38b06f971847c18dd05457c75afc85208135f50d6e4022a5f197e8839d",
+      "sourceBytes": 507700,
+      "utf16": [
+        116853,
+        116854
+      ],
+      "utf8": [
+        116908,
+        116909
+      ],
+      "sha256": "252f10c83610ebca1a059c0bae8255eba2f95be4d1d7bcfa89d7248a82d9f111"
+    },
+    {
+      "label": "factory 402734",
+      "source": "evidence/web/objects/2b47dd0b38a1608f.js",
+      "url": "https://pump.fun/_next/static/immutable/chunks/2cr_aqnw2j4n5.js",
+      "sourceSha256": "e78d2f38b06f971847c18dd05457c75afc85208135f50d6e4022a5f197e8839d",
+      "sourceBytes": 507700,
+      "utf16": [
+        358943,
+        362451
+      ],
+      "utf8": [
+        359192,
+        362704
+      ],
+      "sha256": "7679a980be1346c6fa329dd2104fa9302efe1a9bc7593b15d4d9b3dca049a85f"
+    },
+    {
+      "label": "GET /search/resolve declared query schema",
+      "source": "evidence/web/objects/2b47dd0b38a1608f.js",
+      "url": "https://pump.fun/_next/static/immutable/chunks/2cr_aqnw2j4n5.js",
+      "sourceSha256": "e78d2f38b06f971847c18dd05457c75afc85208135f50d6e4022a5f197e8839d",
+      "sourceBytes": 507700,
+      "utf16": [
+        361426,
+        361825
+      ],
+      "utf8": [
+        361679,
+        362078
+      ],
+      "sha256": "4baf4b7667eafc577d8731444a40e3d195915959440c5da97e33a6011220c925"
+    },
+    {
+      "label": "GET /search/resolve declared response schema",
+      "source": "evidence/web/objects/2b47dd0b38a1608f.js",
+      "url": "https://pump.fun/_next/static/immutable/chunks/2cr_aqnw2j4n5.js",
+      "sourceSha256": "e78d2f38b06f971847c18dd05457c75afc85208135f50d6e4022a5f197e8839d",
+      "sourceBytes": 507700,
+      "utf16": [
+        361835,
+        362446
+      ],
+      "utf8": [
+        362088,
+        362699
+      ],
+      "sha256": "acb498762d939d843acb7f31dc1a02312a02367b1e65984f1034e5e0dc557a40"
+    },
+    {
+      "label": "factory 876543",
+      "source": "evidence/web/objects/2b47dd0b38a1608f.js",
+      "url": "https://pump.fun/_next/static/immutable/chunks/2cr_aqnw2j4n5.js",
+      "sourceSha256": "e78d2f38b06f971847c18dd05457c75afc85208135f50d6e4022a5f197e8839d",
+      "sourceBytes": 507700,
+      "utf16": [
+        493856,
+        507354
+      ],
+      "utf8": [
+        494195,
+        507693
+      ],
+      "sha256": "4f5e713c7118058961d6d194625b7849fab8bd8cc447f079874947b4559367cc"
+    },
+    {
+      "label": "coin query defaults, session/device, creator and sort/order mapping",
+      "source": "evidence/web/objects/767cc801e3f88f8b.js",
+      "url": "https://pump.fun/_next/static/immutable/chunks/3_ebsevlxes66.js",
+      "sourceSha256": "8fd66b61a591235d4e3b0509b23d067bb76e0c4ec2e8a4d5d5ff738e29808e12",
+      "sourceBytes": 41325,
+      "utf16": [
+        15892,
+        16239
+      ],
+      "utf8": [
+        15896,
+        16243
+      ],
+      "sha256": "6bc4f991887a09c4b0d266be972014a1b0aa91348ec9d89b142f9a31a065cff2"
+    },
+    {
+      "label": "GET /coins/search-unrestricted",
+      "source": "evidence/web/objects/767cc801e3f88f8b.js",
+      "url": "https://pump.fun/_next/static/immutable/chunks/3_ebsevlxes66.js",
+      "sourceSha256": "8fd66b61a591235d4e3b0509b23d067bb76e0c4ec2e8a4d5d5ff738e29808e12",
+      "sourceBytes": 41325,
+      "utf16": [
+        18203,
+        18241
+      ],
+      "utf8": [
+        18207,
+        18245
+      ],
+      "sha256": "dc2ae5c35def58d28db419e95e2701cf7972e09a186789822f6e8f9ddc92b623"
+    },
+    {
+      "label": "GET /coins/search-v2",
+      "source": "evidence/web/objects/767cc801e3f88f8b.js",
+      "url": "https://pump.fun/_next/static/immutable/chunks/3_ebsevlxes66.js",
+      "sourceSha256": "8fd66b61a591235d4e3b0509b23d067bb76e0c4ec2e8a4d5d5ff738e29808e12",
+      "sourceBytes": 41325,
+      "utf16": [
+        18266,
+        18294
+      ],
+      "utf8": [
+        18270,
+        18298
+      ],
+      "sha256": "4de30bbf0483971645d59a8ff5b65620c6f559ceed21a6d7cedf4ec141ff3ebf"
+    },
+    {
+      "label": "dialog imports contextual coin hook",
+      "source": "evidence/web/objects/ccb10fa3de5597c4.js",
+      "url": "https://pump.fun/_next/static/immutable/chunks/1d97gye5pf9_i.js",
+      "sourceSha256": "c6ad82d12ff13427a9d01acacd17a6bbb6ae7266625b328027c1ad4e31f93ddf",
+      "sourceBytes": 52145,
+      "utf16": [
+        16440,
+        16454
+      ],
+      "utf8": [
+        16440,
+        16454
+      ],
+      "sha256": "51a1bc7310f68765b304d396903ce6199acc7fbdd4b0b6e45f654e04948242bb"
+    },
+    {
+      "label": "resolver catches errors and branches on definitive/kind/mint/chain",
+      "source": "evidence/web/objects/ccb10fa3de5597c4.js",
+      "url": "https://pump.fun/_next/static/immutable/chunks/1d97gye5pf9_i.js",
+      "sourceSha256": "c6ad82d12ff13427a9d01acacd17a6bbb6ae7266625b328027c1ad4e31f93ddf",
+      "sourceBytes": 52145,
+      "utf16": [
+        16817,
+        17218
+      ],
+      "utf8": [
+        16817,
+        17218
+      ],
+      "sha256": "bc769cb9de458ad60b1e614f350a87531d29de4321a983ca4b48c6b6d5c53100"
+    },
+    {
+      "label": "resolver GET query and abort signal",
+      "source": "evidence/web/objects/ccb10fa3de5597c4.js",
+      "url": "https://pump.fun/_next/static/immutable/chunks/1d97gye5pf9_i.js",
+      "sourceSha256": "c6ad82d12ff13427a9d01acacd17a6bbb6ae7266625b328027c1ad4e31f93ddf",
+      "sourceBytes": 52145,
+      "utf16": [
+        16849,
+        16917
+      ],
+      "utf8": [
+        16849,
+        16917
+      ],
+      "sha256": "de65309910a2192737ea3e64eae89c1041c6afaf4cd9c0d591666426b5a8bdbd"
+    },
+    {
+      "label": "factory 408162",
+      "source": "evidence/web/objects/d50c5c8832449b79.js",
+      "url": "https://pump.fun/_next/static/immutable/chunks/1xcocimg2nwu6.js",
+      "sourceSha256": "7f5a68ac06bdd665292804a4d96bb7266b3532ce5850c9f0927e008753ec5fc2",
+      "sourceBytes": 29379,
+      "utf16": [
+        14488,
+        29370
+      ],
+      "utf8": [
+        14490,
+        29372
+      ],
+      "sha256": "d27320343f07efeb58d5c33b728f3fdb687f68cfdaf361cbb07d80bb4800d1f2"
+    },
+    {
+      "label": "primitive codePointLength",
+      "source": "evidence/web/objects/d50c5c8832449b79.js",
+      "url": "https://pump.fun/_next/static/immutable/chunks/1xcocimg2nwu6.js",
+      "sourceSha256": "7f5a68ac06bdd665292804a4d96bb7266b3532ce5850c9f0927e008753ec5fc2",
+      "sourceBytes": 29379,
+      "utf16": [
+        24805,
+        24974
+      ],
+      "utf8": [
+        24807,
+        24976
+      ],
+      "sha256": "3166f2daf9b7e1dc512b375bf055b9135f6e49e53e76a0d2de230906585a84bc"
+    },
+    {
+      "label": "literal search chunk closure",
+      "source": "evidence/web/objects/e02656dccdb8d127.js",
+      "url": "https://pump.fun/_next/static/immutable/chunks/3cgqltdrvghmb.js",
+      "sourceSha256": "3876553b934075da6f668d5e56ecd17eb9b154da90736ec6270a8a08f814f2d0",
+      "sourceBytes": 21469,
+      "utf16": [
+        15496,
+        16150
+      ],
+      "utf8": [
+        15496,
+        16150
+      ],
+      "sha256": "6259cddb9eb9980496dce428df1f38aef79e1d6e715a664df92226878169efdb"
+    },
+    {
+      "label": "runtime.v module export",
+      "source": "evidence/web/objects/f25d7686d048ae16.js",
+      "url": "https://pump.fun/_next/static/immutable/chunks/turbopack-1byz1flvc-bu1.js",
+      "sourceSha256": "b5f9b5199b99ab6c141f4540f0b7d0fe803c4ecf6956849ecb6e59d3d439272e",
+      "sourceBytes": 11255,
+      "utf16": [
+        1359,
+        1414
+      ],
+      "utf8": [
+        1359,
+        1414
+      ],
+      "sha256": "019268f3528b57281be917ebe029710b784e23c9f0a54804839182d042934e70"
+    },
+    {
+      "label": "runtime.A callback invocation",
+      "source": "evidence/web/objects/f25d7686d048ae16.js",
+      "url": "https://pump.fun/_next/static/immutable/chunks/turbopack-1byz1flvc-bu1.js",
+      "sourceSha256": "b5f9b5199b99ab6c141f4540f0b7d0fe803c4ecf6956849ecb6e59d3d439272e",
+      "sourceBytes": 11255,
+      "utf16": [
+        3469,
+        3516
+      ],
+      "utf8": [
+        3469,
+        3516
+      ],
+      "sha256": "deb89702ceffb9e51fa466eca1ac648294caf8e7026ee331b9efdf1e204fc105"
+    },
+    {
+      "label": "runtime.l chunk loading",
+      "source": "evidence/web/objects/f25d7686d048ae16.js",
+      "url": "https://pump.fun/_next/static/immutable/chunks/turbopack-1byz1flvc-bu1.js",
+      "sourceSha256": "b5f9b5199b99ab6c141f4540f0b7d0fe803c4ecf6956849ecb6e59d3d439272e",
+      "sourceBytes": 11255,
+      "utf16": [
+        6086,
+        6133
+      ],
+      "utf8": [
+        6086,
+        6133
+      ],
+      "sha256": "a9bd80df86acbbde37342847013211352f4692cf711d0b2857c68e9d55a70966"
+    }
+  ],
+  "limits": [
+    "No captured JavaScript is evaluated.",
+    "Chunk provenance demonstrates a static loading chain, not execution or complete route reachability.",
+    "The small adapter does not reproduce Ky retries, ContractError wrapping, cache behavior, coin normalization, full hook lifecycle, backend responses or auth enforcement.",
+    "The captured website origin and cookie options do not establish that the developer API origin uses the same authentication.",
+    "No API, feature-progress or live compatibility milestone is awarded."
+  ]
+}
