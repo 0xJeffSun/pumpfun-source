@@ -10,7 +10,7 @@ snapshot retains `1463bd22` audit bindings; current selections are recorded in
 [completion ledger](COMPLETION.md) remains a selected-checkpoint record; its old
 candidate paths and “current” prose must not override newer evidence.
 
-Current [Pump Round46](../repro/pump/main-contract-round46-20261027/README.md)
+Current [Pump Round47](../repro/pump/main-contract-round47-20261027/README.md)
 has 203 raw-local matches, 620 normalized-only matches and 212 unmatched windows.
 The unmatched windows cover 684,136 original text bytes. Remaining bodies,
 data, relocations, uncovered behavior and original build provenance remain open.
@@ -20,8 +20,8 @@ reproduces all 585 bodies and the complete 873,256-byte meaningful ELF. The
 75,688-byte remaining capture tail is zero loader allocation. This does not
 establish the original historical source or deployment recipe.
 
-Current [AMM checkpoint](../repro/pump_amm/inverse-route-recovery-20261028/README.md)
-has 159 raw-local, 500 normalized-only and 126 unmatched windows, with 331,232
+Current [AMM checkpoint](../repro/pump_amm/create-incentive-recovery-20261028/README.md)
+has 159 raw-local, 501 normalized-only and 125 unmatched windows, with 330,664
 original text bytes unmatched. Older event and optional-decoder experiments
 retain their original artifact bindings.
 
@@ -43,13 +43,15 @@ and [completion review](MAYHEM-COMPLETION.md) list the four functions and the li
 of the 0.91% unmatched-window / 9.03% unmatched-text figures.
 
 The [data coverage ledger](../research/mayhem-current437-data-coverage-20261028/README.md)
-and [counted ErrorCode names](../research/mayhem-current437-error-names-20261028/README.md)
-cover 8,110 of 26,180 payload bytes (30.98%), leaving 18,070 unproved (69.02%).
-The new proof follows all 77 source discriminants to explicit pointer/length
-arguments, adding 2,010 exact bytes and preserving 431 closed windows / 581 pairs.
-This is not a count of known mismatches or a percentage of engineering effort.
-The largest residual interval is 8,971 bytes at [716457,725428); next targets
-include error messages, formatter piece descriptors and counted account names.
+with [counted ErrorCode names](../research/mayhem-current437-error-names-20261028/README.md)
+and [messages/descriptors](../research/mayhem-current437-error-messages-20261028/README.md)
+cover 12,910 of 26,180 payload bytes (49.31%), leaving 13,270 unproved (50.69%).
+The new message proof adds 3,568 string bytes and 1,232 descriptor bytes and
+checks that the selected pointer/count reaches the unresolved writer callback.
+All 431 closed windows / 581 pairs are retained. This is not a count of known
+mismatches or a percentage of engineering effort. The largest residual rodata
+interval is 5,499 bytes at [719929,725428); next targets include ProgramError
+messages, remaining formatter pieces and counted account names.
 
 The [current Legacy Buy ownership composition](../research/mayhem-current-ownership-composition-20261027/README.md)
 preserves the 430/100 frontier and its complete initializer. Its partial handler
