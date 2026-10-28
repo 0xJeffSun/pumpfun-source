@@ -3,6 +3,7 @@
 import argparse
 import hashlib
 import json
+import os
 from pathlib import Path
 import shutil
 import tomllib
@@ -11,7 +12,7 @@ parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument('--lockfile', type=Path, required=True)
 parser.add_argument('--output', type=Path, required=True)
 args = parser.parse_args()
-source = Path.home() / '.cargo/registry'
+source = Path(os.environ.get('CARGO_HOME') or Path.home() / '.cargo').expanduser() / 'registry'
 args.output = args.output.resolve()
 args.output.mkdir(parents=True, exist_ok=False)
 raw_lock = args.lockfile.read_bytes()
