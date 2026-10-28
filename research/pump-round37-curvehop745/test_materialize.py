@@ -319,4 +319,43 @@ class SourceTests(unittest.TestCase):
         self.assertIn('&a.quote_token_program.to_account_info(),&a.quote_mint.to_account_info(),&a.pool_authority_quote_account', line)
         self.assertIn('token_program_id:token_program.clone(),mint:mint.clone()', text)
         self.assertIn('vec![source.clone()]', text)
+    def nextfronts_parent(self):
+        out = self.root / 'nextfronts-parent'
+        m.materialize(PARENT, out, 'harvest799')
+        return {str(p.relative_to(out)): p.read_bytes() for p in out.rglob('*') if p.is_file()}
+    def test_exact_nextfronts_stage(self):
+        got = m.materialize(PARENT, self.root / 'source', 'nextfronts804')
+        self.assertEqual(got, json.loads((m.HERE / 'nextfronts-pins.json').read_text())['source_sha256'])
+        self.assertEqual(len(got), 60)
+    def test_nextfronts_only_two_files_and_line_counts(self):
+        old = self.nextfronts_parent(); new = m.nextfronts_apply(old)
+        self.assertEqual({n for n in old if old[n] != new[n]}, {'programs/pump/src/lib.rs', 'programs/pump/src/trade_v3.rs'})
+        for n in old: self.assertEqual(len(old[n].splitlines()), len(new[n].splitlines()))
+    def test_nextfronts_repaired_source_coordinates(self):
+        data = m.nextfronts_apply(self.nextfronts_parent()); lines = data['programs/pump/src/lib.rs'].decode().splitlines()
+        self.assertEqual(lines[1935].index('expect') + 1, 45)
+        self.assertEqual(lines[1938].index('expect') + 1, 14)
+        for line in [2496, 2501, 2506, 2511, 2520, 2525, 2530, 2535, 2550, 2554]: self.assertIn('PumpError::Overflow', lines[line - 1])
+        self.assertIn('PumpError::DivisionByZero', lines[2480])
+        self.assertIn('require_neq!', lines[1904])
+    def test_nextfronts_prechecks_and_private_helper_shape(self):
+        data = m.nextfronts_apply(self.nextfronts_parent()); lib = data['programs/pump/src/lib.rs'].decode(); trade = data['programs/pump/src/trade_v3.rs'].decode()
+        self.assertEqual(trade.count('let next_protocol='), 3)
+        self.assertEqual(trade.count('let next_creator='), 3)
+        self.assertEqual(trade.count('curve.accrue_fees('), 5)
+        self.assertEqual(lib.count('fn split_protocol_fee_values('), 1)
+        self.assertNotIn('pub fn split_protocol_fee_values', lib)
+        self.assertEqual(lib.count('split_protocol_fee_values(global.buyback_basis_points, protocol_fee)'), 2)
+        self.assertIn('fn v3_buyback_split(', trade)
+    def test_nextfronts_already_applied_rejected(self):
+        with self.assertRaises(ValueError): m.nextfronts_apply(m.nextfronts_apply(self.nextfronts_parent()))
+    def test_nextfronts_wrong_parent_rejected(self):
+        data = self.nextfronts_parent(); data['programs/pump/src/lib.rs'] += b'\n'
+        with self.assertRaises(ValueError): m.nextfronts_apply(data)
+    def test_nextfronts_extra_parent_rejected(self):
+        data = self.nextfronts_parent(); data['extra.rs'] = b''
+        with self.assertRaises(ValueError): m.nextfronts_apply(data)
+    def test_nextfronts_missing_parent_rejected(self):
+        data = self.nextfronts_parent(); data.pop('programs/pump/src/lib.rs')
+        with self.assertRaises(ValueError): m.nextfronts_apply(data)
 if __name__ == '__main__': unittest.main(argv=['test_materialize.py', *remaining])
