@@ -7,7 +7,7 @@ import gzip,hashlib,importlib.util,json,os,platform,shutil,subprocess,sys,tarfil
 ROOT=Path(__file__).resolve().parents[1]
 OUT=ROOT/'work/pump-macos-qualification'
 EVIDENCE=OUT/'evidence'
-SPEC=ROOT/'research/pump-macos-frontier793-qualification-20261028/inputs.json'
+SPEC=ROOT/'research/pump-macos-frontier795-qualification-20261028/inputs.json'
 def sha(path):
     h=hashlib.sha256()
     with Path(path).open('rb')as f:

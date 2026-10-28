@@ -57,6 +57,24 @@ def main():
         '--candidate', str(BUILD / 'candidate.so'),
         '--output', str(OUT / 'recipients.json'),
     ], cwd=ROOT, check=True)
+    migration_reports = {}
+    for label, script, count in [
+        ('legacy_migration_quote', 'pump_migration_quote_differential.py', 20),
+        ('v2_migration_quote', 'pump_migration_v2_quote_differential.py', 40),
+    ]:
+        output = OUT / (label + '.json.gz')
+        subprocess.run([
+            sys.executable, '-B', str(ROOT / 'scripts/pump_with_captured_loader.py'),
+            '--receipt', str(OUT / (label + '.loader.json')),
+            str(ROOT / 'scripts' / script), '--candidate', str(BUILD / 'candidate.so'),
+            '--output', str(output),
+        ], cwd=ROOT, check=True)
+        report = json.loads(gzip.decompress(output.read_bytes()))
+        assert report['candidate_sha256'] == binding['candidate_sha256']
+        assert report['case_count'] == count and not report['mismatches']
+        assert not report['diagnostics']['mismatches']
+        assert report['diagnostics']['log_bearing_cases'] == count
+        migration_reports[label] = count
     full = json.loads(gzip.decompress((OUT / 'full.json.gz').read_bytes()))
     recipients = json.loads((OUT / 'recipients.json').read_text())
     assert len(full['suites']) == 44 and full['case_count'] == 10468
@@ -67,6 +85,7 @@ def main():
     (OUT / 'qualification.json').write_text(json.dumps({
         'status': 'passed', 'candidate_sha256': binding['candidate_sha256'],
         'corpus_suites': 44, 'corpus_cases': 10468,
+        'targeted_migration_cases': migration_reports,
         'corpus_diagnostic_mismatches': 0, 'targeted_recipient_cases': 42,
         'scope': 'Separate bounded suites; their control cases can overlap. Whole original ELF equality is not established.',
     }, indent=2) + '\n')
