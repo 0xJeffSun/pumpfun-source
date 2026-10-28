@@ -64,7 +64,7 @@ pub fn validate_trade(complete:u8,cashback:u64,allow_cashback:u64)->Result<()> {
 #[inline(never)]
 fn add3(a:u64,b:u64,c:u64)->Result<u64>{a.checked_add(b).and_then(|x|x.checked_add(c)).ok_or_else(||error!(PumpError::Overflow))}
 #[inline(never)]
-fn sub3(a:u64,b:u64,c:u64)->Result<u64>{a.checked_sub(b).and_then(|x|x.checked_sub(c)).ok_or_else(||error!(PumpError::Overflow))}
+pub(crate) fn sub3(a:u64,b:u64,c:u64)->Result<u64>{a.checked_sub(b).and_then(|x|x.checked_sub(c)).ok_or_else(||error!(PumpError::Overflow))}
 /// Gross-up of the pool-side quote by the quote mint's transfer fee; the fee is re-derived from the gross.
 #[inline(always)]
 fn gross_up_quote(quote_fee:&Option<(u64,u64,u64)>,is_sol:bool,net:u64)->Result<(u64,u64)>{
@@ -84,7 +84,6 @@ pub fn buy(ctx:Context<SellV3>,amount:u64,max_sol_cost:u64,partial_fill:bool)->R
     require_gt!(amount,0,PumpError::BuyZeroAmount);
     let (quote_decimals,quote_fee)=check_quote(a)?;
     let is_sol=quote_decimals.is_none();
-    if is_sol{a.global.validate_buyback_fee_recipient(a.buyback_fee_recipient.key())?;}
     let curve=&a.bonding_curve;
     let is_fee_exempt=a.user.key()==a.global.whitelist_pda;
     let exceeds=requested_amount>amount;
@@ -197,7 +196,6 @@ pub fn buy_exact_quote(ctx:Context<SellV3>,spendable_quote_in:u64,min_tokens_out
     require_gt!(spendable_quote_in,0,PumpError::BuyNotEnoughSolToCoverFees);
     let (quote_decimals,quote_fee)=check_quote(a)?;
     let is_sol=quote_decimals.is_none();
-    if is_sol{a.global.validate_buyback_fee_recipient(a.buyback_fee_recipient.key())?;}
     let available=if is_sol{spendable_quote_in}else{quote_post_fee_amount(&quote_fee,spendable_quote_in)?};
     let curve=&a.bonding_curve;
     let is_fee_exempt=a.user.key()==a.global.whitelist_pda;
@@ -325,10 +323,9 @@ pub fn sell(ctx:Context<SellV3>,amount:u64,min_sol_output:u64)->Result<()> {
     crate::trade_types::prepare_bonding_curve(&a.bonding_curve, &a.system_program, &a.user)?;
     validate_trade(a.bonding_curve.complete as u8,a.bonding_curve.is_cashback_coin as u64,0)?;
     require_gt!(amount,0,PumpError::SellZeroAmount);
+    require_gte!(a.associated_base_user.amount,amount,PumpError::NotEnoughTokensToSell);
     let (quote_decimals,quote_fee)=check_quote(a)?;
     let is_sol=quote_decimals.is_none();
-    require_gte!(a.associated_base_user.amount,amount,PumpError::NotEnoughTokensToSell);
-    if is_sol{a.global.validate_buyback_fee_recipient(a.buyback_fee_recipient.key())?;}
     let curve=&a.bonding_curve;
     let quote=u64::try_from(curve.sell_quote(amount)?).map_err(|_|error!(PumpError::Truncation))?;
     let (fees,creator_bps)=if a.user.key()==a.global.whitelist_pda {
@@ -421,7 +418,10 @@ fn read_config(data:&[u8])->Result<FeeConfig>{
 }
 
 fn check_quote(a:&SellV3)->Result<(Option<u8>,Option<(u64,u64,u64)>)>{
- if a.bonding_curve.quote_mint==Pubkey::default(){return Ok((None,None))}
+ if a.bonding_curve.quote_mint==Pubkey::default(){
+  a.global.validate_buyback_fee_recipient(a.buyback_fee_recipient.key())?;
+  return Ok((None,None))
+ }
  require!(*a.quote_mint.to_account_info().owner==a.quote_token_program.key(),anchor_lang::error::ErrorCode::AccountOwnedByWrongProgram);
  let decimals=a.quote_mint.decimals;
  for (role,info) in [(0,a.associated_quote_bonding_curve.to_account_info()),(1,a.associated_quote_user.to_account_info()),(2,a.buyback_fee_recipient.to_account_info())]{
@@ -473,7 +473,7 @@ pub(crate) mod route_buy_budget {
     use anchor_lang::prelude::*;
     use crate::PumpError;
     use crate::legacy_sell::fee_math::fee;
-    use crate::multi_hop_curve::{add,n,sub};
+    use crate::multi_hop_curve::{n,sub};
 
 // A01: The corrected estimate is checked but not used as the route's net quote.
 pub(crate) fn buy_budget(budget: u64, p: u64, requested_c: u64, creator: Pubkey) -> Result<(u64,u64)> {
@@ -495,8 +495,11 @@ pub(crate) fn completion_pool_balances(
     real_quote_reserves:u64,migration_fee:u64,base_vault_amount:u64,
     native:bool,base_amount:u64,quote_amount:u64,
 )->Result<(u64,u64)>{
-    let pool_base = sub(base_vault_amount,base_amount)?;
-    let pool_quote = sub(add(real_quote_reserves,quote_amount)?,if native{migration_fee}else{0})?;
+    let pool_base = base_vault_amount.checked_sub(base_amount).ok_or_else(||error!(PumpError::Overflow))?;
+    let pool_quote = real_quote_reserves.checked_add(quote_amount).ok_or_else(||error!(PumpError::Overflow))?;
+    let pool_quote = if native {
+        pool_quote.checked_sub(migration_fee).ok_or_else(||error!(PumpError::Overflow))?
+    } else {pool_quote};
     require_gt!(pool_base,0,PumpError::NotEnoughTokensToBuy);
     require_gt!(pool_quote,0,PumpError::Overflow);
     Ok((pool_base,pool_quote))

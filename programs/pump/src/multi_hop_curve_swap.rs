@@ -265,7 +265,7 @@ pub fn execute<'info>(ctx: Context<'_,'_,'info,'info,MultiHopCurve<'info>>,
             let p_rate = if flag & 1 != 0 { selected.rates.protocol_fee_bps } else { 0 };
             let c_rate = if flag & 2 != 0 { selected.rates.creator_fee_bps } else { 0 };
             let (pf,cf) = buy_budget(trade_amount,p_rate,c_rate,c.creator)?;
-            let q = sub(sub(trade_amount,pf)?,cf)?;
+            let q = crate::trade::sub3(trade_amount,pf,cf)?;
             require!(q != 0,PumpError::Overflow);
             let effective = q - 1;
             let base = u64::try_from(div(effective as u128 * c.virtual_token_reserves as u128, c.virtual_quote_reserves as u128 + effective as u128)?).map_err(|_| error!(PumpError::Truncation))?;
@@ -302,7 +302,7 @@ pub fn execute<'info>(ctx: Context<'_,'_,'info,'info,MultiHopCurve<'info>>,
             let c_rate = if flag & 2 != 0 { selected.rates.creator_fee_bps } else { 0 };
             let pf = if flag & 1 != 0 { selected.protocol } else { 0 };
             let cf = if flag & 2 != 0 { selected.creator } else { 0 };
-            let net = sub(sub(gross_sell,pf)?,cf)?;
+            let net = crate::trade::sub3(gross_sell,pf,cf)?;
             require_gt!(net,0,PumpError::SellZeroAmount);
             (p_rate,c_rate,amount,gross_sell,pf,cf,net)
         };
