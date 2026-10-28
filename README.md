@@ -140,6 +140,9 @@ The [current selected-data checks](research/mayhem-current436-selected-prefixes-
 preserve all 429 closed windows while checking 486 Source coordinates, 48 code
 addresses and 119 references to 32-byte prefixes. They reject 22 ambiguous
 counterpart pairs without claiming complete data or indirect-call identity.
+A [writer-record extension](research/mayhem-current436-writer-records-20261028/README.md)
+checks ten further method pointers across five 48-byte spans while retaining the
+same closed relation; complete allocation extents and dynamic dispatch remain open.
 
 The [remaining-body review](docs/MAYHEM-COMPLETION.md#retained-partial-source-controls)
 also preserves the latest partial AMM, V2 and SweepFees source controls. Their

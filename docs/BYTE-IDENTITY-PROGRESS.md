@@ -2971,3 +2971,7 @@ The [joint AMM/V2 Linux packet](../research/mayhem-current436-linux-dependency-c
 ## SweepFees address-selection residual
 
 The [later full-size control](../research/mayhem-current436-sweep-address-selection-20261028/README.md) combines the Rent-local source with reused trader, quote ATA and token-program references. All 189 mapped blocks, opcodes and register fields agree, with 51 ordered callees and 13 Source values. It reaches 1,047/1,050 normalized words. The remaining three address operands at offsets 776, 808 and 1176 calculate the same selected field address in different forms. They remain literal mismatches under the unchanged matcher. Two root builds agree, complete 436/141/429 preservation passes, and eight corruption tests pass. This candidate has no fresh runtime qualification and adds no matched function.
+
+## Writer-record data extension
+
+The [48-byte writer-record proof](../research/mayhem-current436-writer-records-20261028/README.md) extends five selected prefixes across 47 matched owner-reference sites. It checks ten additional relocated method pointers, covering 80 more original storage bytes. Each target remains in the same recursive normalized/Source/code-reference relation, which retains 429 windows and 579 pairs. The complete local census remains 436 normalized/141 raw. Candidate-side compiler-library source identifies the methods, without authenticating the original type or proving allocation extents or arbitrary indirect calls. Eight corruption tests include all ten actual pointer mutations and an actual relocation removal.
