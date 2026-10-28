@@ -72,7 +72,24 @@ test("mobile navigation traps focus, restores it and closes after navigation", a
 
   await expect(navigation).toHaveAttribute("inert", "");
   await expect(open).toHaveAttribute("aria-expanded", "false");
-  await open.click();
+  await page.keyboard.press("Tab");
+  await expect(
+    page.getByRole("link", { name: "Skip to main content" }),
+  ).toBeFocused();
+  await page.keyboard.press("Tab");
+  await expect(open).toBeFocused();
+  expect(
+    await open.evaluate((element) => ({
+      focusVisible: element.matches(":focus-visible"),
+      outlineStyle: getComputedStyle(element).outlineStyle,
+      outlineWidth: getComputedStyle(element).outlineWidth,
+    })),
+  ).toEqual({
+    focusVisible: true,
+    outlineStyle: "solid",
+    outlineWidth: "2px",
+  });
+  await page.keyboard.press("Enter");
   await expect(open).toHaveAttribute("aria-expanded", "true");
   await expect(shell).toHaveAttribute("data-mobile-navigation", "open");
   await expect(
@@ -209,6 +226,13 @@ test("requested viewports have usable controls and no horizontal overflow", asyn
         .boundingBox();
       expect(menuBox?.width, name).toBeGreaterThanOrEqual(44);
       expect(menuBox?.height, name).toBeGreaterThanOrEqual(44);
+    } else {
+      await expect(
+        page.getByRole("link", { name: "Create a coin", exact: true }),
+      ).toBeVisible();
+      await expect(
+        page.getByRole("button", { name: "Open navigation" }),
+      ).toBeHidden();
     }
   }
 });

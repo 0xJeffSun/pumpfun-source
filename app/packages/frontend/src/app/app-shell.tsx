@@ -239,6 +239,7 @@ function NavigationGroup({
                 className="navigation-link"
                 data-active={active}
                 aria-current={active ? "page" : undefined}
+                aria-label={item.label}
                 href={item.href}
                 onClick={onNavigate}
                 title={item.label}
@@ -382,7 +383,9 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
             className="create-link"
             data-active={pathname === "/create"}
             aria-current={pathname === "/create" ? "page" : undefined}
+            aria-label="Create a coin"
             href="/create"
+            title="Create a coin"
             onClick={() => closeNavigation()}
           >
             <Icon name="create" />

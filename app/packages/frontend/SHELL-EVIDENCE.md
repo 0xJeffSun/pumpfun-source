@@ -15,13 +15,14 @@ This note records the static evidence used for the local shared application shel
 ## Inferred
 
 - The sidebar is the shared navigation surface across the captured included routes because the same route inventory and shell markup recur in the captured page HTML.
-- A compact rail is appropriate at tablet widths: the recovered sidebar has an icon-only collapsed state, while the recovered mobile drawer activates only below 768 px.
+- The recovered sidebar includes an icon-only collapsed state, while the recovered mobile drawer activates below 768 px.
 - Search belongs in the shared top bar. The available evidence establishes its label, placeholder and dialog trigger, but not a qualified local result service.
 
 ## Local design
 
 - The local search submits an encoded `q` parameter to `/explore`, synchronizes the field with browser history and exposes an explicit unavailable state. This preserves useful navigation without claiming reconstruction of the upstream search dialog or backend.
 - The local mobile drawer closes after navigation, on Escape and on backdrop activation. These behaviors are accessibility safeguards; the captured factory proves a dismissible mobile overlay, not each local event choice.
+- The local shell keeps labelled navigation at 768 px and above, and contains keyboard focus while the mobile drawer is open. These are local accessibility decisions; the retained source does not qualify the exact upstream tablet or focus behavior.
 - Simple local SVG icons stand in for the captured icon imports. Their meaning and accessible labels are local implementation details, not recovered original icon source.
 - The `Local reconstruction` badge makes the environment boundary explicit and prevents the shell from presenting scaffolded product data as live.
 
