@@ -20,6 +20,31 @@ These are binary-coverage measurements. Full call/data/relocation identity, orig
 
 Reproduce the selected Pump ELF with its [archived Rust/linker recipe](repro/pump/main-contract-round37-20261027/reproduce.py).
 
+<!-- MAIN-PUMP-REMAINING:BEGIN -->
+### Main Pump remaining work
+
+The maintained checkpoint matches **744/1,035 function windows (71.9%)**;
+**291/1,035 (28.1%) remain unmatched**. Matched windows cover
+**924,192/1,792,208 code bytes (51.6%)**, leaving **868,016 bytes
+(48.4%) uncovered**. Of the matched windows, 175 are raw byte-equal
+and 569 require normalization of specified call/address operands.
+
+These are binary coverage percentages. A defensible percentage of engineering
+work remaining is not yet known. Whole-ELF equality remains unproved.
+
+Remaining work is to recover the unmatched main-contract bodies and validation
+paths, reproduce referenced data and relocations, establish the original compiler
+and target-library provenance, and validate the combined source on the full
+captured-loader corpus. A confirmed SellV3 nonzero-volume event discrepancy has a
+staged fix awaiting combined validation. New upstream compiler and source research
+is being reviewed separately and is not counted as a maintained-source result.
+
+The [main-contract queue](research/main-pump-parallel-checkpoint-20261027/REMAINING-WORK.json)
+tracks the open bodies. The [selected checkpoint](repro/pump/main-contract-round37-20261027/README.md) binds the
+reported metrics and validation evidence. This review is limited to the main Pump
+contract.
+<!-- MAIN-PUMP-REMAINING:END -->
+
 Across the latest verified checkpoints, **2,906 / 3,338 inferred function windows
 match (87.1%)**. Their matched windows cover **3,894,064 / 5,213,128 original text
 bytes (74.7%)**. **Two of five programs have complete meaningful-ELF identity**;
