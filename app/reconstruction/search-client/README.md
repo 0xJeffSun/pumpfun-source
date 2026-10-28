@@ -5,10 +5,11 @@ This bounded recovery closes a captured search dependency chain that the
 stops at its lazy loader. It adds usable query declarations, request encoding
 and resolver handling rather than another formatted copy of the bundles.
 
-The inputs are the preserved public capture on upstream
-`2fc654a20e9c7be2b9529f585942bb82c4c83ab2`, with the corrected nested-registration
-index from dependency `7b52e2cfb780e246fe98c656122d95be769e17a3` (5,947 variants,
-7,337 occurrences). Original shipped JavaScript retains
+The inputs are the preserved public capture introduced on upstream
+`2fc654a20e9c7be2b9529f585942bb82c4c83ab2`. The inventory supplies bounded source
+references; inventory completeness is not claimed. The physical script objects
+are independently parsed, including the runtime's leading nested arrays.
+Original shipped JavaScript retains
 its original authorship. The descriptive names here are analyst names;
 original TypeScript, source filenames and backend source have not been recovered.
 
@@ -18,11 +19,18 @@ The captured `/` and `/explore` HTML reference the shell and Turbopack runtime.
 The runtime AST establishes `A(id)` calling the exported loader with an import
 function, `v` exporting its value, and `l` loading a parent chunk. The shell's
 factory400466 requests loader544865. Its literal fourteen-chunk list finishes
-by importing SearchDialogLazy238128. That list selects coin-hook379705 with
-factory hash `350da5b76741…`; other indexed variants are retained outside this
-loading context. The complete fourteen physical chunks are independently parsed,
-so an unindexed nested contender also causes an ambiguity failure. Numeric IDs
-are not assumed to be globally unique.
+by importing SearchDialogLazy238128. That list contains coin-hook379705 with
+factory hash `350da5b76741…`. However, the captured Explore HTML also includes
+an initial script registering379705/998515 with hash `642cafc9d2b3…`. The runtime
+preserves existing factory IDs in a global map and caches instantiated modules.
+The lazy list therefore does not establish the active hook variant.
+
+The report retains the initial-script and lazy candidates together for each
+route. It records both variants' search operation names, query-builder witnesses
+and common `include`/JSON request options without claiming full query-builder
+equivalence or choosing a runtime winner. All physical initial and lazy script
+objects are authenticated and parsed; an additional unreviewed lazy contender
+causes failure. Numeric IDs are not assumed to be globally unique.
 
 The request path then follows website transport759257 → client30181 → origin
 503630, and the `createContractClient` reexport402030 → encoder898661. This

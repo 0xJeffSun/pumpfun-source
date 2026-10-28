@@ -91,8 +91,25 @@ async function routeHtml(corpus, route, shell, runtime) {
     .map((match) => new URL(match[2], record.final_url ?? record.url).href);
   expect(scripts.includes(shell.capture.record.url), `${route} shell script`);
   expect(scripts.includes(runtime.record.url), `${route} runtime script`);
+  const initialChunks = [];
+  const initialCoinHooks = [];
+  const unresolvedScripts = [];
+  for (const url of scripts) {
+    const records = corpus.manifest.records.filter((entry) => entry.status === 200 && entry.url === url);
+    if (records.length !== 1 || !new URL(url).pathname.endsWith('.js')) {
+      unresolvedScripts.push(url);
+      continue;
+    }
+    const source = await corpus.javascript(records[0].path);
+    initialChunks.push({ source: source.record.path, url, sha256: source.record.sha256, bytes: source.record.bytes });
+    for (const factory of source.factories) {
+      if (factory.ids.includes(379705)) initialCoinHooks.push({ id: 379705, ids: factory.ids,
+        ...source.witness(factory.node, `${route} initial coin-hook registration`) });
+    }
+  }
   return { route, html: { source: record.path, url: record.url, sha256: record.sha256, bytes: record.bytes },
-    shellScript: shell.capture.record.url, runtimeScript: runtime.record.url };
+    shellScript: shell.capture.record.url, runtimeScript: runtime.record.url,
+    initialChunks, initialCoinHooks, unresolvedScripts };
 }
 
 // Recognize this captured loader grammar, not arbitrary JavaScript programs.
@@ -167,6 +184,11 @@ export async function buildSearchContract(appRoot = DEFAULT_APP_ROOT) {
   for (const [node, label] of [[a, 'runtime.A callback invocation'], [vHelper, 'runtime.v module export'], [l, 'runtime.l chunk loading']]) {
     witnesses.push(runtime.witness(node, label));
   }
+  const registrationDecoder = exactlyOne(findNodes(runtime.ast, (node) => node.type === 'FunctionDeclaration' && node.id.name === 'X'), 'runtime registration decoder');
+  witnesses.push(runtime.witness(registrationDecoder, 'global factory map preserves already registered IDs'));
+  for (const cacheRead of findNodes(runtime.ast, (node) => node.type === 'CallExpression' && member(node.callee, 'D', 'get'))) {
+    witnesses.push(runtime.witness(cacheRead, 'runtime module cache lookup'));
+  }
   const shellLoad = exactlyOne(findNodes(shell.node, (node) => node.type === 'CallExpression' &&
     member(node.callee, shell.runtime, 'A') && node.arguments[0]?.value === 544865), 'shell dynamic search loader');
   witness(shell, shellLoad, 'shell requests loader 544865');
@@ -189,6 +211,16 @@ export async function buildSearchContract(appRoot = DEFAULT_APP_ROOT) {
   expect(contextualHooks.length === 1 && contextualHooks[0].source === SEARCH_CHUNK, 'unambiguous loader-context coin hook');
   const coinHook = await corpus.factory(379705, { source: contextualHooks[0].source });
   factories.set(379705, coinHook);
+  const routes = await Promise.all(['/', '/explore'].map((route) => routeHtml(corpus, route, shell, runtime)));
+  const physicalHookVariants = new Map([[coinHook.provenance.sha256, coinHook]]);
+  for (const route of routes) {
+    for (const candidate of route.initialCoinHooks) {
+      const factory = await corpus.factory(379705, { source: candidate.source });
+      physicalHookVariants.set(candidate.sha256, factory);
+    }
+    route.coinHookCandidates = [...route.initialCoinHooks, coinHook.provenance];
+    route.selection = 'Conditional static candidates only. Initial scripts and lazy chunks share the runtime registration map/cache; this report does not choose an active variant or establish execution order.';
+  }
   witness(search, importBinding(search, 379705), 'dialog imports contextual coin hook');
   const resolverCall = operationCall(search, OPERATIONS[0], 759257, 'j');
   const query = objectProperty(resolverCall.arguments[1], 'query');
@@ -242,17 +274,33 @@ export async function buildSearchContract(appRoot = DEFAULT_APP_ROOT) {
     node.left.type === 'MemberExpression' && propertyName(node.left.property) === 'createContractClient' &&
     functionType(node.right)), 'contract encoder definition'),
   'query encoding, route interpolation, response JSON and error wrapping');
-  const searchCallback = exactlyOne(findNodes(coinHook.node, (node) =>
-    node.type === 'VariableDeclarator' && node.id.type === 'Identifier' && node.id.name === 'eT'),
-  'coin search callback').init;
-  for (const operation of OPERATIONS.slice(1)) {
-    const route = exactlyOne(findNodes(searchCallback, (node) => node.type === 'ObjectProperty' &&
-      propertyName(node.key) === 'route' && node.value.type === 'StringLiteral' && node.value.value === operation),
-    `coin search route ${operation}`);
-    witness(coinHook, route, operation);
+  const coinRequestContexts = [];
+  for (const candidate of physicalHookVariants.values()) {
+    const searchCallback = exactlyOne(findNodes(candidate.node, (node) =>
+      node.type === 'ArrowFunctionExpression' && node.async && findNodes(node, (child) =>
+        child.type === 'ObjectProperty' && propertyName(child.key) === 'route' && child.value.value === 'GET /coins/search-v2').length === 1),
+    'coin search callback');
+    for (const operation of OPERATIONS.slice(1)) {
+      witness(candidate, exactlyOne(findNodes(searchCallback, (node) => node.type === 'ObjectProperty' &&
+        propertyName(node.key) === 'route' && node.value.type === 'StringLiteral' && node.value.value === operation),
+      `coin search route ${operation}`), `${operation} in ${candidate.provenance.sha256}`);
+    }
+    const queryCall = exactlyOne(findNodes(searchCallback, (node) => node.type === 'CallExpression' &&
+      node.callee.type === 'Identifier' && node.arguments[0]?.type === 'ObjectExpression' &&
+      node.arguments[0].properties.some((property) => propertyName(property.key) === 'useLocalFilterLimit')), 'query-builder call');
+    const queryBuilder = exactlyOne(findNodes(candidate.node, (node) => node.type === 'VariableDeclarator' &&
+      node.id.type === 'Identifier' && node.id.name === queryCall.callee.name), 'query-builder declaration').init;
+    witness(candidate, queryBuilder, 'conditional coin query-builder context');
+    const imported = importBinding(candidate, 759257);
+    const call = exactlyOne(findNodes(candidate.node, (node) => node.type === 'CallExpression' &&
+      node.callee.type === 'CallExpression' && member(tail(node.callee.callee), imported.id.name, 'f')), 'coin client request');
+    const credentials = literal(objectProperty(call.arguments[1], 'credentials'));
+    const contentType = literal(objectProperty(objectProperty(call.arguments[1], 'headers'), 'Content-Type'));
+    expect(credentials === 'include' && contentType === 'application/json', 'reviewed common coin request options');
+    witness(candidate, call, 'conditional coin request options');
+    coinRequestContexts.push({ factory: candidate.provenance, operations: OPERATIONS.slice(1), credentials, contentType,
+      queryPlanning: 'Source-bound per-variant witness; complete query-builder equivalence and active runtime selection are not claimed' });
   }
-  const requestQuery = exactlyOne(findNodes(coinHook.node, (node) => node.type === 'VariableDeclarator' && node.id.name === 'eI'), 'coin query builder').init;
-  witness(coinHook, requestQuery, 'coin query defaults, session/device, creator and sort/order mapping');
   const schemas = await createSchemaExtractor(corpus, { sources: {
     402734: CHAIN_SOURCES[402734], 985722: CHAIN_SOURCES[985722],
     876543: 'evidence/web/objects/2b47dd0b38a1608f.js',
@@ -286,15 +334,18 @@ export async function buildSearchContract(appRoot = DEFAULT_APP_ROOT) {
     source: { repository: 'lalalune/pumpfun-source', base: '2fc654a20e9c7be2b9529f585942bb82c4c83ab2', ...corpus.anchors },
     inventory: { variants: corpus.index.modules.length,
       origins: corpus.index.modules.reduce((total, entry) => total + entry.origins.length, 0),
-      recovery: 'leading nested registration arrays, dependency7b52e2cfb780e246fe98c656122d95be769e17a3' },
+      completeness: 'Not claimed. The inventory supplies bounded source references; initial and lazy physical chunks are independently parsed, including leading nested registrations.' },
     scope: 'Captured shared search loader, client request contract, resolver handling and declared query schemas; original TypeScript and backend implementation remain unknown',
-    routes: await Promise.all(['/', '/explore'].map((route) => routeHtml(corpus, route, shell, runtime))),
+    routes,
     loader: { id: loader.id, targetId: decoded.targetId, chunks,
+      registrationPolicy: 'The captured global factory map preserves existing IDs and module caches can predate lazy loading. No active registration/cache state is captured.',
       chunkUrlResolution: 'Literal _next-relative chunk names matched to retained authenticated pump.fun asset URLs; runtime global base-path overrides are not executed or qualified',
-      contextualCoinHook: coinHook.provenance,
+      lazyCoinHookCandidate: coinHook.provenance,
       otherIndexedCoinHookVariants: corpus.index.modules.filter((entry) => entry.ids.includes(379705) &&
         entry.sha256 !== coinHook.provenance.sha256).map((entry) => entry.sha256).sort() },
-    factories: [...factories.values()].map((factory) => factory.provenance).sort((a, b) => a.id - b.id),
+    factories: [...factories.values(), ...[...physicalHookVariants.values()].filter((candidate) => candidate !== coinHook)]
+      .map((factory) => factory.provenance).sort((a, b) => a.id - b.id),
+    coinRequestContexts,
     operations,
     querySchemas: schemas.document({ type: 'object', properties: querySchemas }),
     witnesses: [...witnesses, ...schemas.witnesses()].sort((a, b) => a.source.localeCompare(b.source) || a.utf16[0] - b.utf16[0] || a.label.localeCompare(b.label)),

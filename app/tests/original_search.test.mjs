@@ -20,7 +20,8 @@ async function isolatedCorpus(t) {
   t.after(() => rm(root, { recursive: true, force: true }));
   const paths = new Set(['evidence/web/manifest.json', 'recovered/modules.json', CONTRACT_PATH,
     ...contract.witnesses.map((witness) => witness.source), ...contract.loader.chunks.map((chunk) => chunk.path),
-    ...contract.routes.map((route) => route.html.source)]);
+    ...contract.routes.map((route) => route.html.source),
+    ...contract.routes.flatMap((route) => route.initialChunks.map((chunk) => chunk.source))]);
   for (const file of paths) {
     await mkdir(path.dirname(path.join(root, file)), { recursive: true });
     await copyFile(path.join(DEFAULT_APP_ROOT, file), path.join(root, file));
@@ -32,10 +33,15 @@ test('complete bounded search artifact reproduces from original captures without
   assert.deepEqual(await verifySearchContract(), contract);
   assert.equal(contract.loader.chunks.length, 14);
   assert.equal(contract.loader.targetId, 238128);
-  assert.equal(contract.loader.contextualCoinHook.sha256, '350da5b767415ae168c12050d3627d71039bcc2c0a097572b5319ddbad04d8fe');
+  assert.equal(contract.loader.lazyCoinHookCandidate.sha256, '350da5b767415ae168c12050d3627d71039bcc2c0a097572b5319ddbad04d8fe');
   assert.ok(contract.loader.otherIndexedCoinHookVariants.length >= 3);
-  assert.equal(contract.inventory.variants, 5947);
-  assert.equal(contract.inventory.origins, 7337);
+  assert.match(contract.inventory.completeness, /Not claimed/);
+  const explore = contract.routes.find((route) => route.route === '/explore');
+  assert.deepEqual(explore.coinHookCandidates.map((candidate) => candidate.sha256),
+    ['642cafc9d2b3c27f2d2d35ea8699a509ded856839fb3d33a8a132333d85c82d6', contract.loader.lazyCoinHookCandidate.sha256]);
+  assert.match(explore.selection, /does not choose an active variant/);
+  assert.equal(contract.routes.find((route) => route.route === '/').initialCoinHooks.length, 0);
+  assert.equal(contract.coinRequestContexts.length, 2);
   assert.equal(contract.operations[resolveOperation].websiteOrigin, 'https://frontend-api-v3.pump.fun');
   assert.equal(contract.operations[resolveOperation].credentials, 'same-origin');
   assert.equal(contract.operations[coinOperation].credentials, 'include');
@@ -61,7 +67,7 @@ test('conflicting variants in the explicit loader context are not arbitrarily se
   const root = await isolatedCorpus(t);
   const file = path.join(root, 'recovered/modules.json');
   const index = JSON.parse(await readFile(file, 'utf8'));
-  const selected = index.modules.find((module) => module.sha256 === contract.loader.contextualCoinHook.sha256);
+  const selected = index.modules.find((module) => module.sha256 === contract.loader.lazyCoinHookCandidate.sha256);
   selected.origins.push({ ...selected.origins[0] });
   await writeFile(file, JSON.stringify(index));
   await assert.rejects(buildSearchContract(root), /explicit chunk context required/);
