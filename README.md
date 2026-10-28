@@ -13,11 +13,6 @@ The latest manually checked **Main Pump L15 artifact matches 967/1,035 windows
 (93.4%), leaving 68 (6.6%) unmatched**. It is an unpromoted layout experiment;
 the maintained main-contract source remains at **823/1,035 (79.5%)**.
 
-| Published research artifact | Matched windows | Remaining windows | Raw-equal bodies | Text in matched windows |
-| --- | ---: | ---: | ---: | ---: |
-| [Main Pump L15](research/claude-pump-integration-20261027/r37-layout-15/README.md) | 967 / 1,035 (93.4%) | 68 (6.6%) | 147 | 1,370,400 / 1,792,208 (76.5%) |
-| [PumpSwap union](research/claude-amm-union-20261028/README.md) | 755 / 785 (96.2%) | 30 (3.8%) | 159 | 969,128 / 1,162,040 (83.4%) |
-
 Main Pump L15 includes explicitly labelled **synthetic source-line positioning**.
 Its archived repository build passes 44 suites / 10,468 paired cases and the
 saved outcomes were manually rechecked. A separate 972-window identity-recipe
@@ -33,20 +28,27 @@ reaches 661 windows from the maintained 660-window baseline. Its saved runtime
 receipt is unavailable and its recorded complete workspace differs from the PR
 workspace; those build/runtime claims remain unverified here.
 
-## Current checkpoints
+## Latest verified progress
 
-The following table keeps the maintained Pump/PumpSwap sources separate from
-research compositions above. Fees and Mayhem rows are published research
-artifacts; Relay is the selected reconstruction.
+This table lists the latest published, manually verified artifact for each
+program, including unpromoted research. The maintained Pump and PumpSwap source
+versions remain separate; these research counts do not promote new sources.
 
-| Latest verified checkpoint | Matched windows | Matched % | Raw-equal bodies | Normalized only | Unmatched | Whole ELF equal |
+| Latest verified artifact | Matched windows | Matched % | Raw-equal bodies | Normalized only | Unmatched | Whole ELF equal |
 | --- | ---: | ---: | ---: | ---: | ---: | --- |
-| [Pump Round47](repro/pump/main-contract-round47-20261027/README.md) | 823 / 1,035 | 79.5% | 203 | 620 | 212 | No |
-| [PumpSwap maintained](repro/pump_amm/v2-mint-clone-recovery-20261028/README.md) | 660 / 785 | 84.1% | 159 | 501 | 125 | No |
+| [Main Pump L15 research](research/claude-pump-integration-20261027/r37-layout-15/README.md) | 967 / 1,035 | 93.4% | 147 | 820 | 68 | No |
+| [PumpSwap union research](research/claude-amm-union-20261028/README.md) | 755 / 785 | 96.2% | 159 | 596 | 30 | No |
 | [Fees research](research/claude-fees100-crank-donation-20261027/README.md) | 585 / 585 | 100.0% | 585 | 0 | 0 | **Yes** |
 | [Mayhem research](research/claude-mayhem-439-20261028/README.md) | 439 / 441 | 99.5% | 141 | 298 | 2 | No |
 | [Donation Relay](repro/donation-relay/canonical-exact-selection/README.md) | 492 / 492 | 100.0% | 492 | 0 | 0 | **Yes** |
-| **Total** | **2,999 / 3,338** | **89.8%** | **1,580** | **1,419** | **339** | **2 / 5** |
+| **Total** | **3,238 / 3,338** | **97.0%** | **1,524** | **1,714** | **100** | **2 / 5** |
+
+
+**Maintained source versions:** [Pump Round47](repro/pump/main-contract-round47-20261027/README.md)
+remains 823/1,035 (79.5%), with 203 raw-equal bodies; [PumpSwap maintained](repro/pump_amm/v2-mint-clone-recovery-20261028/README.md)
+remains 660/785 (84.1%), with 159 raw-equal bodies. L15's 147 raw-equal bodies
+come from a different build and link layout, so the research-table raw total
+is lower even though its normalized coverage is higher.
 
 Across the latest verified checkpoints, **2 of five programs have complete meaningful-ELF identity**. The remaining core contracts still differ from their captured binaries.
 
@@ -57,12 +59,12 @@ or data. Raw equality applies to that local body, not the entire program.
 
 | Checkpoint | Text bytes in matched windows | Text covered | Unmatched text |
 | --- | ---: | ---: | ---: |
-| Pump Round47 | 1,108,072 / 1,792,208 | 61.8% | 684,136 |
-| PumpSwap maintained | 831,376 / 1,162,040 | 71.5% | 330,664 |
+| Main Pump L15 research | 1,370,400 / 1,792,208 | 76.5% | 421,808 |
+| PumpSwap union research | 969,128 / 1,162,040 | 83.4% | 192,912 |
 | Fees research | 799,648 / 799,648 | 100.0% | 0 |
 | Mayhem research | 670,000 / 706,744 | 94.8% | 36,744 |
 | Donation Relay | 752,488 / 752,488 | 100.0% | 0 |
-| **Total** | **4,161,584 / 5,213,128** | **79.8%** | **1,051,544** |
+| **Total** | **4,561,664 / 5,213,128** | **87.5%** | **651,464** |
 
 The [Mayhem 439-window packet](research/claude-mayhem-439-20261028/README.md)
 adds the AMM Buy body to its qualified parent, with no prior match losses.
