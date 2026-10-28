@@ -1,7 +1,7 @@
 # Remaining reconstruction work — 28 October 2026
 
 This is the action list for the [reconstruction audit](RECONSTRUCTION-AUDIT.md),
-updated through upstream revision `a19f73fbf`. The historical audit retains its
+updated through upstream revision `718680c15`. The historical audit retains its
 `6b61b337` parent and linked visibility-recovery measurements. The [current review](RECONSTRUCTION-STATUS.md)
 and [complete refreshed inventory](../repro/reconstruction-status-2026-10-26/README.md)
 list every raw match and unresolved window in their dated snapshot. That core
@@ -10,9 +10,9 @@ snapshot retains `1463bd22` audit bindings; current selections are recorded in
 [completion ledger](COMPLETION.md) remains a selected-checkpoint record; its old
 candidate paths and “current” prose must not override newer evidence.
 
-Current [Pump Round40](../repro/pump/main-contract-round40-20261027/README.md)
-has 202 raw-local matches, 614 normalized-only matches and 219 unmatched windows.
-The unmatched windows cover 707,200 original text bytes. Remaining bodies,
+Current [Pump Round41](../repro/pump/main-contract-round41-20261027/README.md)
+has 203 raw-local matches, 614 normalized-only matches and 218 unmatched windows.
+The unmatched windows cover 706,752 original text bytes. Remaining bodies,
 data, relocations, uncovered behavior and original build provenance remain open.
 
 Current [Fees research](../research/claude-fees100-crank-donation-20261027/README.md)
@@ -20,7 +20,7 @@ reproduces all 585 bodies and the complete 873,256-byte meaningful ELF. The
 75,688-byte remaining capture tail is zero loader allocation. This does not
 establish the original historical source or deployment recipe.
 
-Current [AMM checkpoint](../repro/pump_amm/incentive-order-recovery-20261027/README.md)
+Current [AMM checkpoint](../repro/pump_amm/private-sweep-recovery-20261027/README.md)
 has 148 raw-local, 508 normalized-only and 129 unmatched windows, with 335,928
 original text bytes unmatched. Older event and optional-decoder experiments
 retain their original artifact bindings.

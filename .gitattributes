@@ -1498,3 +1498,5 @@ research/mayhem-current436-*-controls-20261027/**/*.so -text
 repro/pump_amm/incentive-order-recovery-20261027/results/** -whitespace
 repro/pump_amm/incentive-order-recovery-20261027/followup/** -whitespace
 research/amm-native-transfer-fee-recovery/** -text -whitespace
+repro/pump_amm/private-sweep-recovery-20261027/results/** -whitespace
+repro/pump_amm/private-sweep-recovery-20261027/followup/** -whitespace

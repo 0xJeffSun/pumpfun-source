@@ -28,8 +28,9 @@ pub fn execute(ctx: Context<SweepFees>, creator: bool) -> Result<()> {
     crate::instructions::swap::prepare_pool(
         &a.pool, a.system_program.as_ref(), a.payer.as_ref(),
     )?;
+    let recipient_key = a.recipient.key();
     require_keys_neq!(
-        a.recipient.key(),
+        recipient_key,
         Pubkey::default(),
         PumpAmmError::InvalidProtocolFeeRecipient
     );
@@ -40,7 +41,7 @@ pub fn execute(ctx: Context<SweepFees>, creator: bool) -> Result<()> {
         )
         .0;
         require_keys_eq!(
-            a.recipient.key(),
+            recipient_key,
             expected,
             anchor_lang::error::ErrorCode::ConstraintSeeds
         );
@@ -70,8 +71,8 @@ pub fn execute(ctx: Context<SweepFees>, creator: bool) -> Result<()> {
         timestamp: Clock::get()?.unix_timestamp,
         pool: a.pool.key(),
         base_mint: a.pool.base_mint,
-        quote_mint: a.quote_mint.key(),
-        recipient: a.recipient.key(),
+        quote_mint: a.pool.quote_mint,
+        recipient: recipient_key,
         payer: a.payer.key(),
         amount,
         bucket: if creator { 1 } else { 0 },

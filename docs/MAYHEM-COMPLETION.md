@@ -1,6 +1,6 @@
 # Mayhem completion review — 28 October 2026
 
-Reviewed upstream snapshot: `a19f73fbf52251292114a6744c4872b0ae22378f`, plus the
+Reviewed upstream snapshot: `718680c15`, plus the
 independently qualified composition below. **Whole-ELF identity is unfinished.**
 
 | Artifact | Complete normalized windows | Raw-equal bodies | Direct-call-closed windows | No complete body match |

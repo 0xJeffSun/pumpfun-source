@@ -102,6 +102,7 @@ jobs:
             commands: |
               python -B research/mayhem-current436-composition-20261027/verify.py
               python -B research/mayhem-current436-composition-20261027/test_verify.py
+              python -B research/mayhem-current436-composition-20261027/test_runtime.py
           - suite: mayhem-current436-selected-data
             commands: |
               python -B research/mayhem-current436-selected-prefixes-20261027/verify.py
@@ -319,7 +320,7 @@ jobs:
               python -B research/amm-transfer-fee-epoch/verify.py
               python -B research/amm-transfer-fee-epoch/test_verify.py
               python -B scripts/verify_pump_amm_checkpoint.py
-              python -B repro/pump_amm/incentive-order-recovery-20261027/replay_parallel.py --candidate repro/pump_amm/incentive-order-recovery-20261027/results/build/candidate.so --output work/pump-amm-current-replay
+              python -B repro/pump_amm/private-sweep-recovery-20261027/replay_parallel.py --candidate repro/pump_amm/private-sweep-recovery-20261027/results/build/candidate.so --output work/pump-amm-current-replay
               python -B scripts/verify_pump_amm_checkpoint.py --runtime work/pump-amm-current-replay
           - suite: mayhem-1
             commands: |
