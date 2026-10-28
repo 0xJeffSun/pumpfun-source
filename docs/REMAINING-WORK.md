@@ -1,7 +1,7 @@
 # Remaining reconstruction work — 28 October 2026
 
 This is the action list for the [reconstruction audit](RECONSTRUCTION-AUDIT.md),
-updated through upstream revision `718680c15`. The historical audit retains its
+updated through upstream revision `6d39c6993`. The historical audit retains its
 `6b61b337` parent and linked visibility-recovery measurements. The [current review](RECONSTRUCTION-STATUS.md)
 and [complete refreshed inventory](../repro/reconstruction-status-2026-10-26/README.md)
 list every raw match and unresolved window in their dated snapshot. That core
@@ -10,7 +10,7 @@ snapshot retains `1463bd22` audit bindings; current selections are recorded in
 [completion ledger](COMPLETION.md) remains a selected-checkpoint record; its old
 candidate paths and “current” prose must not override newer evidence.
 
-Current [Pump Round41](../repro/pump/main-contract-round41-20261027/README.md)
+Current [Pump Round42](../repro/pump/main-contract-round42-20261027/README.md)
 has 203 raw-local matches, 614 normalized-only matches and 218 unmatched windows.
 The unmatched windows cover 706,752 original text bytes. Remaining bodies,
 data, relocations, uncovered behavior and original build provenance remain open.

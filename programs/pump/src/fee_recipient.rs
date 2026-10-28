@@ -23,3 +23,19 @@ pub fn validate_fee_recipient<'info>(
         }
     }
 }
+
+pub fn set_fee_recipients(ctx: &mut Context<crate::SetParams>) -> Result<[Pubkey; 8]> {
+    require_gte!(ctx.remaining_accounts.len(),8,PumpError::NotEnoughRemainingAccounts);
+    let recipients = core::array::from_fn(|index|ctx.remaining_accounts[index].key());
+    require!(recipients.iter().all(|key|*key!=Pubkey::default()),PumpError::AllFeeRecipientsShouldBeNonZero);
+    let rent = Rent::get()?;
+    for (index,account) in ctx.remaining_accounts[..8].iter().enumerate() {
+        if !rent.is_exempt(account.lamports(),account.try_data_len()?) {
+            return Err(error!(anchor_lang::error::ErrorCode::ConstraintRentExempt).with_account_name(format!("fee_recipients[{}]",index)));
+        }
+    }
+    require!(recipients.windows(2).all(|window|window[0]<window[1]),PumpError::UnsortedNotUniqueFeeRecipients);
+    let global = &mut ctx.accounts.global;
+    global.fee_recipient=recipients[0];global.fee_recipients.copy_from_slice(&recipients[1..]);
+    Ok(recipients)
+}
