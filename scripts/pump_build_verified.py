@@ -62,7 +62,7 @@ def main():
     p.add_argument("--output", type=Path, required=True)
     p.add_argument("--data-order-certificate", type=Path,
                    help="Opt in to the two-object data-order certificate derived from this source's identity build.")
-    p.add_argument("--target-library-profile", choices=["linux-v1.44-sbf"],
+    p.add_argument("--target-library-profile", choices=["linux-v1.44-sbf", "linux-v1.44-sbpf"],
                    help="Opt in to a private native-host SDK with the pinned Linux v1.44 SBF libraries.")
     p.add_argument("--target-library-directory", type=Path,
                    help="Directory containing exactly the admitted profile's target libraries.")
@@ -113,6 +113,8 @@ def main():
         sdk, target_library_profile = pump_target_library_profile.prepare(
             a.target_library_profile, sdk, a.target_library_directory, out / "profile-sdk"
         )
+    target = target_library_profile["cache_context"]["target"] if target_library_profile else "sbf-solana-solana"
+    target_flags_key = "CARGO_TARGET_" + target.upper().replace("-", "_") + "_RUSTFLAGS"
     primary = crate
     primary_before = source_manifest(primary, primary, ROOT)
     workspace = crate
@@ -182,8 +184,8 @@ def main():
         AR=str(sdk / "llvm/bin/llvm-ar"),
         OBJDUMP=str(sdk / "llvm/bin/llvm-objdump"),
         OBJCOPY=str(tools["objcopy"]),
-        CARGO_TARGET_SBF_SOLANA_SOLANA_RUSTFLAGS="-Zremap-cwd-prefix=",
     )
+    env[target_flags_key] = "-Zremap-cwd-prefix="
     command = [
         str(tools["cargo"]),
         "build",
@@ -191,7 +193,7 @@ def main():
         str(crate / "Cargo.toml"),
         "--release",
         "--target",
-        "sbf-solana-solana",
+        target,
         "--locked",
         "--offline",
     ]
@@ -261,7 +263,7 @@ def main():
                 "AR",
                 "OBJDUMP",
                 "OBJCOPY",
-                "CARGO_TARGET_SBF_SOLANA_SOLANA_RUSTFLAGS",
+                target_flags_key,
             ]
         },
     }
@@ -307,7 +309,7 @@ def main():
     name = manifest.get("lib", {}).get(
         "name", manifest["package"]["name"].replace("-", "_")
     )
-    built = out / "target/sbf-solana-solana/release" / f"{name}.so"
+    built = out / "target" / target / "release" / f"{name}.so"
     shutil.copy2(built, out / "unstripped.so")
     subprocess.run(
         [str(tools["objcopy"]), "--strip-all", str(built), str(out / "candidate.so")],

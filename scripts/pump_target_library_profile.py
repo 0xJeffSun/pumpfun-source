@@ -11,6 +11,21 @@ from pump_dependency_cache import clone_file, digest, sha
 
 HERE = Path(__file__).resolve().parent
 TARGET_LIB = Path("rust/lib/rustlib/sbf-solana-solana/lib")
+PROFILE_TARGETS = {"linux-v1.44-sbf": "sbf-solana-solana", "linux-v1.44-sbpf": "sbpf-solana-solana"}
+
+
+def specification(name):
+    assert name in PROFILE_TARGETS, "unknown target-library profile"
+    suffix = "sbpf" if name == "linux-v1.44-sbpf" else "sbf"
+    path = HERE / ("pump_linux_v144_" + suffix + "_libraries.json")
+    spec = json.loads(path.read_text())
+    assert spec["name"] == name and spec["target"] == PROFILE_TARGETS[name]
+    return path, spec
+
+
+def target_library_path(target):
+    assert target in PROFILE_TARGETS.values(), "unsupported target triple"
+    return Path("rust/lib/rustlib") / target / "lib"
 
 
 def inventory(root):
@@ -39,10 +54,8 @@ def validate_libraries(directory, expected, empty_directories=("self-contained",
 
 
 def prepare(name, native_sdk, libraries, output):
-    assert name == "linux-v1.44-sbf"
-    spec_path = HERE / "pump_linux_v144_sbf_libraries.json"
-    spec = json.loads(spec_path.read_text())
-    assert spec["name"] == name and spec["target"] == "sbf-solana-solana"
+    spec_path, spec = specification(name)
+    target_lib = target_library_path(spec["target"])
     libraries = Path(libraries).resolve()
     native_sdk = Path(native_sdk).resolve()
     output = Path(output).resolve()
@@ -58,13 +71,13 @@ def prepare(name, native_sdk, libraries, output):
         return target
 
     shutil.copytree(native_sdk, output, copy_function=copy, symlinks=True)
-    assert not (output / TARGET_LIB).is_symlink()
-    shutil.rmtree(output / TARGET_LIB)
-    shutil.copytree(libraries, output / TARGET_LIB, copy_function=copy)
+    assert not (output / target_lib).is_symlink()
+    shutil.rmtree(output / target_lib)
+    shutil.copytree(libraries, output / target_lib, copy_function=copy)
     after = inventory(output)
     changed = [path for path in sorted(before.keys() | after.keys()) if before.get(path) != after.get(path)]
-    assert changed and all(path.startswith(str(TARGET_LIB) + "/") for path in changed), "profile changed a host/compiler file"
-    assert validate_libraries(output / TARGET_LIB, spec["target_libraries"]) == actual
+    assert changed and all(path.startswith(str(target_lib) + "/") for path in changed), "profile changed a host/compiler file"
+    assert validate_libraries(output / target_lib, spec["target_libraries"]) == actual
     identity = {"name": name, "target": spec["target"], "profile_spec_sha256": sha(spec_path),
                 "native_sdk_manifest_sha256": digest(before), "prepared_sdk_manifest_sha256": digest(after),
                 "target_libraries": actual, "empty_directories": spec["empty_directories"]}
@@ -81,6 +94,8 @@ def prepare(name, native_sdk, libraries, output):
 
 
 def finish(record):
+    target = record["cache_context"]["target"]
+    target_lib = target_library_path(target)
     assert sha(record["profile_spec"]) == record["profile_spec_sha256"]
     assert sha(record["implementation"]) == record["implementation_sha256"]
     assert sha(record["file_manifest"]) == record["file_manifest_sha256"]
@@ -92,10 +107,10 @@ def finish(record):
     assert digest(expected["prepared"]) == record["cache_context"]["prepared_sdk_manifest_sha256"]
     validate_libraries(Path(record["library_source"]), record["cache_context"]["target_libraries"])
     queries = []
-    for args in [["--print", "sysroot"], ["--print", "target-libdir", "--target", "sbf-solana-solana"]]:
+    for args in [["--print", "sysroot"], ["--print", "target-libdir", "--target", target]]:
         command = [str(prepared / "rust/bin/rustc"), *args]
         output = subprocess.check_output(command, text=True).strip()
         queries.append({"command": command, "stdout": output})
     assert queries[0]["stdout"] == str(prepared / "rust")
-    assert queries[1]["stdout"] == str(prepared / TARGET_LIB)
+    assert queries[1]["stdout"] == str(prepared / target_lib)
     return dict(record, status="verified", compiler_queries=queries)

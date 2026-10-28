@@ -362,13 +362,23 @@ pub fn fund_bonding_curve_rent<'info>(
 
 pub use crate::TradeEvent;
 pub use crate::pump_fees::{
-    accounts::FeeConfig,
     types::{FeeTier, Fees, Shareholder},
 };
 
 #[event]
 #[derive(Clone)]
 pub struct CompleteEvent {pub user:Pubkey,pub mint:Pubkey,pub bonding_curve:Pubkey,pub timestamp:i64,pub quote_mint:Pubkey}
+
+// Route decoding has its own Rust type; the external CPI account keeps the IDL type.
+#[derive(AnchorSerialize, AnchorDeserialize, Clone)]
+pub struct FeeConfig {
+    pub bump: u8,
+    pub admin: Pubkey,
+    pub flat_fees: Fees,
+    pub fee_tiers: Vec<FeeTier>,
+    pub stable_fee_tiers: Vec<FeeTier>,
+    pub exotic_flat_fees: Fees,
+}
 
 // Original shared event constructor 0x8bbd0. Both callers retain Clock reads.
 pub struct TradeEventFees {
