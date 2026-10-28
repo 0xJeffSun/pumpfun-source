@@ -22,7 +22,7 @@ class CapturePathTests(unittest.TestCase):
             with patch.object(capture, 'ROOT', root), patch.object(capture, 'OUT', root / 'evidence/web'), patch.object(capture.urllib.request, 'urlopen', return_value=response):
                 record, retained = capture.capture(url)
             self.assertEqual(retained, body)
-            expected = 'evidence/web/objects/' + hashlib.sha256(url.encode()).hexdigest()[:16] + '.js'
+            expected = 'evidence/web/objects/' + hashlib.sha256(url.encode()).hexdigest()[:16] + '-' + hashlib.sha256(body).hexdigest() + '.js'
             self.assertEqual(record['path'], expected)
             self.assertEqual(root.joinpath(*PurePosixPath(record['path']).parts).read_bytes(), body)
 

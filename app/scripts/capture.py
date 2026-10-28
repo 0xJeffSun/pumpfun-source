@@ -1,21 +1,36 @@
 #!/usr/bin/env python3
 """Capture public artifacts only; never submits forms or uses credentials."""
-import concurrent.futures, sys, datetime, hashlib, html, json, os, pathlib, re, stat, urllib.request, urllib.error, urllib.parse
+import concurrent.futures, sys, datetime, hashlib, html, json, os, pathlib, re, stat, tempfile, urllib.request, urllib.error, urllib.parse
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 OUT = ROOT / 'evidence' / 'web'
 OBJECT_PATH = pathlib.PurePosixPath('evidence/web/objects')
 UA = 'Googlebot'
 PAGES = ['/', '/explore', '/leaderboard', '/live', '/go', '/mayhem', '/holder-rewards', '/create', '/perps', '/docs/fees', '/docs/privacy-policy', '/docs/terms-and-conditions']
 HEADERS = {'server','x-powered-by','x-vercel-id','x-vercel-cache','cf-ray','cf-cache-status','content-type','content-security-policy','location','via','x-cache','x-amz-cf-id','x-amz-cf-pop'}
+def atomic_write(target, body):
+    """Publish complete bytes on the same filesystem; retain the old file on failure."""
+    target.parent.mkdir(parents=True, exist_ok=True)
+    temporary = None
+    try:
+        with tempfile.NamedTemporaryFile(dir=target.parent, prefix='.' + target.name + '.', suffix='.tmp', delete=False) as stream:
+            temporary = pathlib.Path(stream.name)
+            stream.write(body)
+        os.replace(temporary, target)
+    finally:
+        if temporary is not None:
+            temporary.unlink(missing_ok=True)
+
 def capture(url):
     key = hashlib.sha256(url.encode()).hexdigest()[:16]
     suffix = pathlib.PurePosixPath(urllib.parse.urlparse(url).path).suffix
-    target = OUT / 'objects' / (key + (suffix if suffix in ['.js','.css','.woff2','.json','.txt','.svg','.png','.ttf','.woff'] else ''))
     try:
         try: r = urllib.request.urlopen(urllib.request.Request(url, headers={'User-Agent': UA}), timeout=35)
         except urllib.error.HTTPError as e: r = e
-        body = r.read(); target.parent.mkdir(parents=True, exist_ok=True); target.write_bytes(body)
-        return {'url':url,'final_url':r.url,'status':r.status,'path':target.relative_to(ROOT).as_posix(), 'bytes':len(body),'sha256':hashlib.sha256(body).hexdigest(),'headers':{k.lower():v for k,v in r.headers.items() if k.lower() in HEADERS}}, body
+        body = r.read(); digest = hashlib.sha256(body).hexdigest()
+        # A fresh response must not overwrite bytes referenced by an older manifest.
+        target = OUT / 'objects' / (key + '-' + digest + (suffix if suffix in ['.js','.css','.woff2','.json','.txt','.svg','.png','.ttf','.woff'] else ''))
+        atomic_write(target, body)
+        return {'url':url,'final_url':r.url,'status':r.status,'path':target.relative_to(ROOT).as_posix(), 'bytes':len(body),'sha256':digest,'headers':{k.lower():v for k,v in r.headers.items() if k.lower() in HEADERS}}, body
     except Exception as e: return {'url':url,'error':str(e)}, b''
 class RetainedCaptureError(ValueError): pass
 def retained_id(url): return hashlib.sha256(str(url).encode('utf-8',errors='backslashreplace')).hexdigest()[:12]
@@ -108,6 +123,6 @@ def main():
                         if resolved.startswith('https://pump.fun/') and resolved.endswith(('.woff2','.woff','.ttf','.png','.svg')):assets.add(resolved)
     OUT.mkdir(parents=True,exist_ok=True)
     manifest={'captured_at':datetime.datetime.now(datetime.timezone.utc).isoformat(),'user_agent':UA,'scope':PAGES,'exclusions':['support','terminal','mobile app','token/coin detail pages','pump-token'],'records':records,'limits':{'asset_discovery_waves':8,'waves_used':waves,'unfetched_discovered':sorted(assets-done)}}
-    (OUT/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
+    atomic_write(OUT/'manifest.json', (json.dumps(manifest,indent=2)+'\n').encode('utf-8'))
     print(json.dumps({'records':len(records),'successful':sum(r.get('status')==200 for r in records),'bytes':sum(r.get('bytes',0) for r in records),'remaining':len(assets-done)}))
 if __name__=='__main__': main()
