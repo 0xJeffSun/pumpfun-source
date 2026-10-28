@@ -14,3 +14,12 @@ test('fixture replay matches method, path, normalized query, status and headers'
   assert.equal((await app.inject('/coins?limit=1&limit=2')).statusCode,501);
  } finally { await app.close(); }
 });
+
+
+test('ambiguous normalized fixture keys are rejected at startup', () => {
+ const first={method:'GET',path:'/coins',query:{limit:'1',offset:'0'},status:200,body:{snapshot:'one'},source:'first'};
+ const second={...first,method:'get',query:{offset:'0',limit:'1'},body:{snapshot:'two'},source:'second'};
+ assert.throws(()=>buildApp([first,second]),/Duplicate fixture key/);
+ const distinct=buildApp([first,{...second,query:{offset:'1',limit:'1'}}]);
+ return distinct.close();
+});
