@@ -59,7 +59,7 @@
     "path": "/create",
     "feature": "Create coin",
     "scope": "included",
-    "status": "scaffolded",
+    "status": "offline-draft",
     "behaviorQualified": false,
     "visualQualified": false
   },
