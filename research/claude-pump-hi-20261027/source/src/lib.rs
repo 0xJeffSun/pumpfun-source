@@ -6,6 +6,7 @@ pub mod incentives;
 pub use incentives::*;
 pub mod token_incentives;
 pub use token_incentives::*;
+pub use token_incentives::volume_accumulator::{GlobalVolumeAccumulator, UserVolumeAccumulator};
 pub mod mayhem_virtual_params;
 pub use mayhem_virtual_params::*;
 pub mod buy_v2;
@@ -115,8 +116,8 @@ pub mod pump_recovered {
     pub fn multi_hop_curve_swap<'info>(ctx:Context<'_,'_,'info,'info,MultiHopCurve<'info>>,amount_in:u64,hop_fees:Vec<u8>)->Result<CurveRunResult>{multi_hop_curve::execute(ctx,amount_in,hop_fees)}
     pub fn sweep_protocol_fee(ctx:Context<SweepFees>)->Result<()>{sweep::execute(ctx,false)}
     pub fn sweep_creator_fee(ctx:Context<SweepFees>)->Result<()>{sweep::execute(ctx,true)}
-    pub fn buy<'info>(ctx:Context<'_,'_,'_,'info,LegacyBuy<'info>>,amount:u64,max_sol_cost:u64,track_volume:OptionBool,partial_fill:OptionBool)->Result<()>{legacy_buy::execute(ctx,amount,max_sol_cost,track_volume.0,partial_fill.0,false)}
-    pub fn buy_exact_sol_in<'info>(ctx:Context<'_,'_,'_,'info,LegacyBuy<'info>>,spendable_sol_in:u64,min_tokens_out:u64,track_volume:OptionBool,partial_fill:OptionBool)->Result<()>{legacy_buy::execute(ctx,spendable_sol_in,min_tokens_out,track_volume.0,partial_fill.0,true)}
+    pub fn buy<'info>(ctx:Context<'_,'_,'_,'info,LegacyBuy<'info>>,amount:u64,max_sol_cost:u64,track_volume:OptionBool,partial_fill:OptionBool)->Result<()>{legacy_buy::execute::<false>(ctx,amount,max_sol_cost,track_volume.0,partial_fill.0)}
+    pub fn buy_exact_sol_in<'info>(ctx:Context<'_,'_,'_,'info,LegacyBuy<'info>>,spendable_sol_in:u64,min_tokens_out:u64,track_volume:OptionBool,partial_fill:OptionBool)->Result<()>{legacy_buy::execute::<true>(ctx,spendable_sol_in,min_tokens_out,track_volume.0,partial_fill.0)}
     pub fn sell(ctx:Context<LegacySell>,amount:u64,min_sol_output:u64)->Result<()>{legacy_sell::execute(ctx,amount,min_sol_output)}
     pub fn migrate<'info>(ctx:Context<'_,'_,'_,'info,Migrate<'info>>)->Result<()>{migrate::execute(ctx)}
     pub fn migrate_v2<'info>(ctx:Context<'_, '_, '_, 'info,MigrateV2<'info>>)->Result<()>{migrate_v2::execute(ctx)}
@@ -124,8 +125,10 @@ pub mod pump_recovered {
     pub fn collect_creator_fee(ctx:Context<CollectCreatorFee>)->Result<()>{
       require!(*ctx.accounts.creator.owner!=crate::distribution::FEES,PumpError::UnableToDistributeCreatorVaultMigratedToSharingConfig);
       if ctx.accounts.creator.executable{msg!("Creator account is executable, so it cannot receive lamports");return Ok(());}
-      let amount=ctx.accounts.creator_vault.lamports().saturating_sub(Rent::get()?.minimum_balance(0));
+      let rent=Rent::get()?;
+      let amount=ctx.accounts.creator_vault.lamports().saturating_sub(rent.minimum_balance(0));
       if amount==0{msg!("No creator fee to collect");return Ok(());}
+      if ctx.accounts.creator.lamports().saturating_add(amount)<rent.minimum_balance(ctx.accounts.creator.data_len()){msg!("Creator account does not have enough rent-exemption lamports");return Ok(());}
       let creator=ctx.accounts.creator.key();let bump=[ctx.bumps.creator_vault];let seeds:&[&[u8]]=&[b"creator-vault",creator.as_ref(),&bump];
       anchor_lang::system_program::transfer(CpiContext::new_with_signer(ctx.accounts.system_program.to_account_info(),anchor_lang::system_program::Transfer{from:ctx.accounts.creator_vault.to_account_info(),to:ctx.accounts.creator.to_account_info()},&[seeds]),amount)?;
       let event=CollectCreatorFeeEvent{timestamp:Clock::get()?.unix_timestamp,creator,creator_fee:amount,quote_mint:Pubkey::default()};emit!(event.clone());emit_cpi!(event);Ok(())
@@ -454,9 +457,6 @@ pub struct UpdateGlobalAuthorityEvent{pub global:Pubkey,pub authority:Pubkey,pub
 #[derive(Clone)]
 pub struct ReservedFeeRecipientsEvent{pub timestamp:i64,pub reserved_fee_recipient:Pubkey,pub reserved_fee_recipients:[Pubkey;7]}
 
-#[account]
-#[derive(Default)]
-pub struct UserVolumeAccumulator{pub user:Pubkey,pub needs_claim:bool,pub total_unclaimed_tokens:u64,pub total_claimed_tokens:u64,pub current_sol_volume:u64,pub last_update_timestamp:i64,pub has_total_claimed_tokens:bool,pub cashback_earned:u64,pub total_cashback_claimed:u64,pub stable_cashback_earned:u64,pub total_stable_cashback_claimed:u64}
 #[event_cpi]
 #[derive(Accounts)]
 pub struct InitUserVolume<'info>{
@@ -527,3 +527,125 @@ fn update_global_authority_handler(ctx:Context<UpdateGlobalAuthority>)->Result<(
     let event=UpdateGlobalAuthorityEvent{global:ctx.accounts.global.key(),authority:ctx.accounts.authority.key(),new_authority:ctx.accounts.new_authority.key(),timestamp:Clock::get()?.unix_timestamp};
     emit!(event.clone());emit_cpi!(event);Ok(())
 }
+
+// Shared user-signed quote payment helpers.
+pub mod user_quote_payments {
+    use anchor_lang::prelude::*;
+    use anchor_spl::token_interface::TokenInterface;
+    use crate::trade_types::BondingCurve;
+
+    #[inline(never)]
+    pub fn transfer_native<'info>(
+        system_program: &AccountInfo<'info>,
+        payer: &Signer<'info>,
+        destination: &Account<'info, BondingCurve>,
+        amount: u64,
+    ) -> Result<()> {
+        if amount == 0 { return Ok(()); }
+        anchor_lang::system_program::transfer(
+            CpiContext::new(system_program.clone(), anchor_lang::system_program::Transfer {
+                from: payer.to_account_info(),
+                to: destination.to_account_info(),
+            }), amount,
+        )
+    }
+
+    #[inline(never)]
+    pub fn transfer_from_user<'info>(
+        native: bool,
+        system_program: &AccountInfo<'info>,
+        payer: &Signer<'info>,
+        destination: &Account<'info, BondingCurve>,
+        amount: u64,
+        token_program: &Interface<'info, TokenInterface>,
+        quote_decimals: u8,
+        quote_mint: &AccountInfo<'info>,
+        quote_source: Option<&AccountInfo<'info>>,
+        quote_destination: Option<&AccountInfo<'info>>,
+    ) -> Result<()> {
+        if native { return transfer_native(system_program, payer, destination, amount); }
+        let from = quote_source.unwrap();
+        let to = quote_destination.unwrap();
+        let authority = payer.to_account_info();
+        crate::sell_v2::quote_token_transfers::transfer_quote_tokens(
+            token_program, from, to, authority, quote_decimals, quote_mint, amount, &[],
+        )
+    }
+    #[inline(never)]
+    pub fn transfer_native_owned<'info>(
+        system_program: &AccountInfo<'info>,
+        payer: &Signer<'info>,
+        destination: AccountInfo<'info>,
+        amount: u64,
+    ) -> Result<()> {
+        anchor_lang::system_program::transfer(
+            CpiContext::new(system_program.clone(), anchor_lang::system_program::Transfer {
+                from: payer.to_account_info(),
+                to: destination.clone(),
+            }), amount,
+        )
+    }
+
+    #[inline(never)]
+    pub fn transfer_from_user_owned<'info>(
+        native: bool,
+        system_program: &AccountInfo<'info>,
+        payer: &Signer<'info>,
+        destination: AccountInfo<'info>,
+        amount: u64,
+        token_program: &Interface<'info, TokenInterface>,
+        quote_decimals: u8,
+        quote_mint: &AccountInfo<'info>,
+        quote_source: Option<&AccountInfo<'info>>,
+        quote_destination: Option<&AccountInfo<'info>>,
+    ) -> Result<()> {
+        if native { return transfer_native_owned(system_program, payer, destination, amount); }
+        let from = quote_source.unwrap();
+        let to = quote_destination.unwrap();
+        let authority = payer.to_account_info();
+        crate::sell_v2::quote_token_transfers::transfer_quote_tokens(
+            token_program, from, to, authority, quote_decimals, quote_mint, amount, &[],
+        )
+    }
+
+    #[inline(never)]
+    pub fn transfer_native_recipient<'info>(
+        system_program: &AccountInfo<'info>,
+        payer: &Signer<'info>,
+        destination: &&UncheckedAccount<'info>,
+        amount: u64,
+    ) -> Result<()> {
+        if amount == 0 { return Ok(()); }
+        anchor_lang::system_program::transfer(
+            CpiContext::new(system_program.clone(), anchor_lang::system_program::Transfer {
+                from: payer.to_account_info(),
+                to: destination.to_account_info(),
+            }), amount,
+        )
+    }
+
+    #[inline(never)]
+    pub fn transfer_from_user_recipient<'info>(
+        native: bool,
+        system_program: &AccountInfo<'info>,
+        payer: &Signer<'info>,
+        destination: &&UncheckedAccount<'info>,
+        amount: u64,
+        token_program: &Interface<'info, TokenInterface>,
+        quote_decimals: u8,
+        quote_mint: &AccountInfo<'info>,
+        quote_source: Option<&AccountInfo<'info>>,
+        quote_destination: Option<&AccountInfo<'info>>,
+    ) -> Result<()> {
+        if native { return transfer_native_recipient(system_program, payer, destination, amount); }
+        let from = quote_source.unwrap();
+        let to = quote_destination.unwrap();
+        let authority = payer.to_account_info();
+        crate::sell_v2::quote_token_transfers::transfer_quote_tokens(
+            token_program, from, to, authority, quote_decimals, quote_mint, amount, &[],
+        )
+    }
+
+}
+declare_program!(pump_amm);
+declare_program!(pump_fees);
