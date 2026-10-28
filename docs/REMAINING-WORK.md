@@ -1,7 +1,7 @@
 # Remaining reconstruction work — 27 October 2026
 
 This is the action list for the [reconstruction audit](RECONSTRUCTION-AUDIT.md),
-updated through upstream revision `da27cbd68`. The historical audit retains its
+updated through upstream revision `d6e82d49d`. The historical audit retains its
 `6b61b337` parent and linked visibility-recovery measurements. The [current review](RECONSTRUCTION-STATUS.md)
 and [complete refreshed inventory](../repro/reconstruction-status-2026-10-26/README.md)
 list every raw match and unresolved window in their dated snapshot. That core
@@ -10,9 +10,9 @@ snapshot retains `1463bd22` audit bindings; current selections are recorded in
 [completion ledger](COMPLETION.md) remains a selected-checkpoint record; its old
 candidate paths and “current” prose must not override newer evidence.
 
-Current [Pump Round38](../repro/pump/main-contract-round38-20261027/README.md)
-has 175 raw-local matches, 569 normalized-only matches and 291 unmatched windows.
-The unmatched windows cover 868,016 original text bytes. Remaining bodies,
+Current [Pump Round39](../repro/pump/main-contract-round39-20261027/README.md)
+has 197 raw-local matches, 609 normalized-only matches and 229 unmatched windows.
+The unmatched windows cover 721,896 original text bytes. Remaining bodies,
 data, relocations, uncovered behavior and original build provenance remain open.
 
 Current [Fees research](../research/claude-fees100-crank-donation-20261027/README.md)
@@ -20,8 +20,8 @@ reproduces all 585 bodies and the complete 873,256-byte meaningful ELF. The
 75,688-byte remaining capture tail is zero loader allocation. This does not
 establish the original historical source or deployment recipe.
 
-Current [AMM checkpoint](../repro/pump_amm/optional-context-recovery-20261027/README.md)
-has 148 raw-local, 503 normalized-only and 134 unmatched windows, with 345,240
+Current [AMM checkpoint](../repro/pump_amm/admin-harvest-recovery-20261027/README.md)
+has 148 raw-local, 508 normalized-only and 129 unmatched windows, with 335,928
 original text bytes unmatched. Older event and optional-decoder experiments
 retain their original artifact bindings.
 
@@ -700,7 +700,7 @@ composition and compilation; their gains are not added to this count.
 
 ## Active priority: Mayhem
 
-The [Mayhem work plan](MAYHEM-RECONSTRUCTION-PLAN.md) supersedes earlier cross-program prioritization. Its current normalized research frontier has 430 of 441 matched windows, with eleven unmatched bodies. The quote-aware validator and initializer are recovered; remaining trade and quote bodies, recursive data/call closure, full ELF layout and historical provenance are still open. The separate parser-context composition and historical-framework controls do not establish complete Mayhem identity.
+The [Mayhem work plan](MAYHEM-RECONSTRUCTION-PLAN.md) supersedes earlier cross-program prioritization. Its current qualified research frontier has 434 of 441 matched windows, including 141 raw-equal bodies, with seven unmatched bodies. The quote-aware validator, initializer and SweepFeesAdmin are recovered; six trade bodies, SweepFees, recursive data/call closure, full ELF layout and historical provenance remain open. The [completion review](MAYHEM-COMPLETION.md) records 1.59% of windows and 14.01% of original executable text still unmatched. These are coverage measures, not estimates of engineering time.
 
 
 ### Mayhem historical event-parser allocator context

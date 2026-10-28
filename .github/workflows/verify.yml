@@ -82,6 +82,10 @@ jobs:
             commands: |
               python -B research/mayhem-current434-composition-20261027/verify.py
               python -B research/mayhem-current434-composition-20261027/test_verify.py
+          - suite: mayhem-current434-code-references
+            commands: |
+              python -B research/mayhem-current434-code-reference-closure-20261027/proof.py
+              python -B research/mayhem-current434-code-reference-closure-20261027/test_proof.py
           - suite: mayhem-current-native-ownership
             commands: |
               python -B research/mayhem-current-native-ownership-composition/verify.py

@@ -51,7 +51,7 @@ match (89.1%)**. Their matched windows cover **4,056,272 / 5,213,128 original te
 bytes (77.8%)**. **Two of five programs have complete meaningful-ELF identity**;
 three of the four core contracts still differ from their captured binaries.
 
-**429/3,338 function windows (12.9%) remain unmatched** across the five programs.
+**365/3,338 function windows (10.9%) remain unmatched** across the five programs.
 
 These percentages measure bounded binary-recovery progress, not a claim that
 89.1% of the engineering work is finished. Complete reconstruction also requires
@@ -121,6 +121,9 @@ O0075 now have complete normalized bodies. Every remaining function is listed
 in the [completion review](docs/MAYHEM-COMPLETION.md) and the
 [441-row inventory](research/mayhem-current434-composition-20261027/inventory.tsv).
 Data, indirect calls, global layout and original build provenance remain open.
+The [code-reference review](research/mayhem-current434-code-reference-closure-20261027/README.md)
+verifies all 48 relocated code-address sites in matched bodies and preserves the
+425-window closure. General indirect-call and data identity remain unresolved.
 
 The [native historical-macro composition](research/mayhem-native-current432-composition/README.md)
 also reproduces 432 normalized windows and 85 raw-local matches in its own
@@ -148,7 +151,7 @@ preserves two closer partial bodies, including an equal-length 17,312-byte
 control. Both retain 249 corresponding control-flow blocks and all 47 ordered
 callee shapes, but still differ in event construction. Each has its own 18-pair
 signed replay. These remain partial 432/89 search artifacts and add no match to
-the qualified 432/141 checkpoint.
+the qualified 434/141 checkpoint.
 
 The [Legacy/V2 ownership packet](research/mayhem-trade-ownership-current-20261027/README.md)
 preserves the larger BuyV2/SellV2 source reconstruction and two distinct Legacy

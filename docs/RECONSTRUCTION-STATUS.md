@@ -1,12 +1,12 @@
 # Reconstruction status after exact Relay ELF reproduction
 
-Latest upstream review: `da27cbd684b4195927ba4c988fe199573ab52142`; measurements are bound to the packets below.
+Latest upstream review: `d6e82d49d968f979dab3ebe2dc7133cb44986284`; measurements are bound to the packets below.
 This review updates the research frontier while preserving the selected-checkpoint
 [baseline audit](RECONSTRUCTION-AUDIT.md). The [recomputed inventory](../repro/reconstruction-status-2026-10-26/README.md)
 contains every one of the **4,415 selected/research function-window rows**.
 
 The generated inventory is a dated snapshot. Later maintained selections now
-include Pump Round37 and the AMM optional-context recovery; their current counts and
+include Pump Round39 and the AMM admin/harvest recovery; their current counts and
 evidence are in the [repository overview](../README.md). The current rows below
 are separate from the historical rows, and do not rewrite that snapshot.
 

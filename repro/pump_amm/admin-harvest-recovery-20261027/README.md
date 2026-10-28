@@ -52,6 +52,6 @@ python -B repro/pump_amm/admin-harvest-recovery-20261027/verify_saved.py
 ```
 
 Use `--current-source` to bind maintained AMM files. Result manifest:
-`a2f00d29efcb59a6dd3bcf27005d3311c93a1400fb5fe0fc769509ec01a88aa0`.
+`6bdb3853cf809c666e261b4be7f27ccc4e9632266f132c490f47164c51449b3a`.
 
 The [unselected follow-up controls](followup/README.md) retain negative results for the flags iterator and InitBoost alias spelling. Neither increases the recovery count.

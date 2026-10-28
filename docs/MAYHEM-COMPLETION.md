@@ -1,6 +1,6 @@
 # Mayhem completion review — 27 October 2026
 
-Reviewed upstream snapshot: `da27cbd684b4195927ba4c988fe199573ab52142`, plus the
+Reviewed upstream snapshot: `d6e82d49d968f979dab3ebe2dc7133cb44986284`, plus the
 independently qualified composition below. **Whole-ELF identity is unfinished.**
 
 | Artifact | Complete normalized windows | Raw-equal bodies | Direct-call-closed windows | No complete body match |
@@ -36,6 +36,14 @@ These percentages do not estimate remaining engineering time or prove the same
 fraction of behavior correct. Normalized matches mask specified address/call
 operands. Data, indirect calls, layout, relocations, reproducible whole-ELF
 equality and build provenance remain separate obligations.
+
+The [code-reference review](../research/mayhem-current434-code-reference-closure-20261027/README.md)
+checks all 48 relocated code-address sites in matched windows, targeting 15
+original functions. Adding those edges preserves the same 425-window recursive
+closure. Its eight tests include 48 actual pointer corruptions. This closes a
+bounded code-reference obligation; the 93 indirect calls in 51 matched windows
+still need their own value-flow and data evidence. The seven unmatched bodies
+contain no indirect calls.
 
 ## Seven bodies still unmatched
 

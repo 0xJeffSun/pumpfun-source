@@ -2779,3 +2779,32 @@ trade pairs, including the 58 inherited diagnostic repairs. The packet retains
 90 successful helper controls, eight compiler failures and 18 corruption checks.
 Nine functions and complete ELF identity remain open; the selected checkpoint
 is unchanged.
+
+
+## Latest review: qualified Mayhem434 code references and upstream refresh
+
+The current five-program frontier is 2,973/3,338 normalized windows, with
+1,563 raw-local bodies, 1,410 normalized-only bodies and 365 unmatched windows.
+Matched original text is 4,056,272/5,213,128 bytes. The current Pump Round39
+read-only verifier passed independently: 10,468 full cases, 7,641 additional
+executions, 18,105 paired log cases and 3,771 distinct signed transactions.
+These quantities overlap and do not imply whole-program identity.
+
+The new [Mayhem code-reference proof](../research/mayhem-current434-code-reference-closure-20261027/README.md)
+independently verifies all 48 relocated code-address sites, representing 56
+counterpart pairs and 15 original target functions. Adding these edges preserves
+425 recursively closed windows. Eight regression tests pass, including each
+actual pointer mutation and rejection of an unlisted FIFO. No source, binary or
+runtime record changes, and no additional function matches, are claimed.
+
+The new AMM656 archive inherited the same two never-committed Python cache
+entries repaired in AMM653. Its seven metadata/seal files now exclude those
+entries and update the dependent bindings; all 15,801 unaffected recorded
+hashes remain unchanged. The source, binaries and runtime records are unchanged.
+The result manifest is
+`6bdb3853cf809c666e261b4be7f27ccc4e9632266f132c490f47164c51449b3a`.
+
+Independent root validation also passes the repaired AMM656 current-source
+verifier, including all 17,462 primary cases and its retained supplemental
+matrices. The exact manifest delta is limited to two unavailable cache entries
+and four dependent metadata bindings.
