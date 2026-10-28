@@ -1,0 +1,217 @@
+import { expect, test, type Page } from "@playwright/test";
+
+const includedRoutes = [
+  ["/", "Home", "Feed"],
+  ["/explore", "Explore", "Explore"],
+  ["/leaderboard", "Leaderboard", "Leaderboard"],
+  ["/live", "Live", "Live"],
+  ["/go", "GO", "GO"],
+  ["/mayhem", "Mayhem", "Mayhem"],
+  ["/holder-rewards", "Holder rewards", "Holder rewards"],
+  ["/create", "Create", "Create a coin"],
+] as const;
+
+const viewports = [
+  ["desktop", 1440, 900],
+  ["laptop", 1280, 800],
+  ["tablet", 768, 1024],
+  ["mobile", 390, 844],
+  ["small mobile", 375, 667],
+] as const;
+
+function activeNavigation(page: Page) {
+  return page.locator('[aria-current="page"]');
+}
+
+test("included routes load with one accurate active navigation item", async ({
+  page,
+}) => {
+  for (const [path, navigationLabel, heading] of includedRoutes) {
+    const response = await page.goto(path);
+    expect(response?.status(), path).toBe(200);
+    await expect(
+      page.getByRole("heading", { level: 1, name: heading }),
+    ).toBeVisible();
+    await expect(activeNavigation(page)).toHaveCount(1);
+    await expect(activeNavigation(page)).toContainText(navigationLabel);
+    await expect(
+      page.locator('[data-product-state="unavailable"]'),
+    ).toBeVisible();
+  }
+});
+
+test("desktop links perform client navigation and preserve the shell", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto("/");
+  await page.getByRole("link", { name: "Explore", exact: true }).click();
+  await expect(page).toHaveURL(/\/explore$/);
+  await expect(activeNavigation(page)).toContainText("Explore");
+  await page.getByRole("link", { name: "Leaderboard", exact: true }).click();
+  await expect(page).toHaveURL(/\/leaderboard$/);
+  await expect(activeNavigation(page)).toContainText("Leaderboard");
+  await expect(page.getByRole("search")).toBeVisible();
+});
+
+test("mobile navigation opens, dismisses and closes after navigation", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/");
+  const shell = page.locator(".app-shell");
+  const open = page.getByRole("button", { name: "Open navigation" });
+
+  await open.click();
+  await expect(shell).toHaveAttribute("data-mobile-navigation", "open");
+  await expect(
+    page.getByRole("complementary", { name: "Application navigation" }),
+  ).toBeVisible();
+  await page.keyboard.press("Escape");
+  await expect(shell).toHaveAttribute("data-mobile-navigation", "closed");
+
+  await open.click();
+  await page.getByRole("link", { name: "Explore", exact: true }).click();
+  await expect(page).toHaveURL(/\/explore$/);
+  await expect(shell).toHaveAttribute("data-mobile-navigation", "closed");
+
+  await open.click();
+  await page.getByRole("button", { name: "Close navigation" }).first().click();
+  await expect(shell).toHaveAttribute("data-mobile-navigation", "closed");
+});
+
+test("search encodes queries, follows history and handles clearing and empties", async ({
+  page,
+}) => {
+  await page.goto("/");
+  const input = page.getByRole("searchbox", {
+    name: "Search for coins and users",
+  });
+  await input.fill("alpha & beta=one");
+  await input.press("Enter");
+  await expect(page).toHaveURL(/\/explore\?q=alpha\+%26\+beta%3Done$/);
+  await expect(
+    page.getByText("alpha & beta=one", { exact: true }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "Search results are unavailable" }),
+  ).toBeVisible();
+
+  await page.goBack();
+  await expect(page).toHaveURL(/\/$/);
+  await expect(input).toHaveValue("");
+  await page.goForward();
+  await expect(page).toHaveURL(/\/explore\?q=/);
+  await expect(input).toHaveValue("alpha & beta=one");
+
+  await page.getByRole("button", { name: "Clear search" }).click();
+  await expect(page).toHaveURL(/\/explore$/);
+  await expect(input).toHaveValue("");
+  await input.fill("   ");
+  await input.press("Enter");
+  await expect(page).toHaveURL(/\/explore$/);
+});
+
+test("keyboard traversal reaches shell navigation, search and actions", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto("/");
+  const focused: string[] = [];
+  for (let index = 0; index < 18; index += 1) {
+    await page.keyboard.press("Tab");
+    focused.push(
+      await page.evaluate(() => {
+        const element = document.activeElement;
+        return (
+          element?.getAttribute("aria-label") ??
+          element?.getAttribute("id") ??
+          element?.textContent?.trim() ??
+          ""
+        );
+      }),
+    );
+  }
+  expect(focused).toContain("Home");
+  expect(focused).toContain("Explore");
+  expect(focused).toContain("Create");
+  expect(focused).toContain("global-search");
+  expect(focused).toContain("Search");
+});
+
+test("requested viewports have usable controls and no horizontal overflow", async ({
+  page,
+}) => {
+  for (const [name, width, height] of viewports) {
+    await page.setViewportSize({ width, height });
+    await page.goto("/");
+    const dimensions = await page.evaluate(() => ({
+      clientWidth: document.documentElement.clientWidth,
+      scrollWidth: document.documentElement.scrollWidth,
+    }));
+    expect(dimensions.scrollWidth, name).toBeLessThanOrEqual(
+      dimensions.clientWidth,
+    );
+    await expect(
+      page.getByRole("searchbox", { name: "Search for coins and users" }),
+    ).toBeVisible();
+    if (width < 768) {
+      const menuBox = await page
+        .getByRole("button", { name: "Open navigation" })
+        .boundingBox();
+      expect(menuBox?.width, name).toBeGreaterThanOrEqual(44);
+      expect(menuBox?.height, name).toBeGreaterThanOrEqual(44);
+    }
+  }
+});
+
+test("unknown and explicitly excluded routes return not found", async ({
+  page,
+}) => {
+  for (const path of [
+    "/unknown-route",
+    "/coin/example",
+    "/pump-token",
+    "/support",
+  ]) {
+    const response = await page.goto(path);
+    expect(response?.status(), path).toBe(404);
+    await expect(
+      page.getByRole("heading", { name: "Page not reconstructed" }),
+    ).toBeVisible();
+  }
+});
+
+test("normal navigation emits no console errors or production mutations", async ({
+  page,
+}) => {
+  const consoleErrors: string[] = [];
+  const unexpectedRequests: string[] = [];
+  page.on("console", (message) => {
+    if (message.type() === "error") consoleErrors.push(message.text());
+  });
+  page.on("request", (request) => {
+    const url = new URL(request.url());
+    if (url.origin !== "http://127.0.0.1:3010") {
+      unexpectedRequests.push(
+        `${request.method()} ${url.origin}${url.pathname}`,
+      );
+    }
+    if (!["GET", "HEAD"].includes(request.method())) {
+      unexpectedRequests.push(`${request.method()} ${url.pathname}`);
+    }
+  });
+
+  await page.goto("/");
+  await page.getByRole("link", { name: "Live", exact: true }).click();
+  await page
+    .getByRole("searchbox", { name: "Search for coins and users" })
+    .fill("safe query");
+  await page.getByRole("button", { name: "Search", exact: true }).click();
+  await expect(
+    page.locator('[data-product-state="unavailable"]'),
+  ).toBeVisible();
+  await expect(page.getByText(/No fabricated live data/)).toBeVisible();
+  expect(consoleErrors).toEqual([]);
+  expect(unexpectedRequests).toEqual([]);
+});
