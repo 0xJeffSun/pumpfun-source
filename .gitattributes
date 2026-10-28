@@ -1445,3 +1445,10 @@ research/amm-buy-reserve-order/source.patch -whitespace
 research/amm-buy-reserve-order/public-parent.patch -whitespace
 research/amm-buy-reserve-order/proposed/** -whitespace
 research/amm-buy-reserve-order/controllers/** whitespace=cr-at-eol
+# Preserve the compiled AMM quote-helper recovery and compiler receipts.
+research/amm-quote-base-recovery/** -text
+research/amm-quote-base-recovery/source.patch -whitespace
+research/amm-quote-base-recovery/proposed/** -whitespace
+research/amm-quote-base-recovery/compiler/** -whitespace
+research/amm-quote-base-recovery/controllers/** -whitespace
+research/amm-quote-base-recovery/overlap-review.json -whitespace
