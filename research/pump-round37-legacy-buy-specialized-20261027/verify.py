@@ -54,3 +54,12 @@ while queue:
 closure=json.loads((P/'legacy-specialized-closure.json').read_text());assert edges==closure['edges']and opened==closure['open_edges']
 assert len(seen)==closure['visited_pairs']==152 and len(edges)==closure['direct_edges']==783 and len(opened)==4
 print('Verified 781 / 1,035, all 779 retained, repeated ELF identity, exact const-generic proposal, 152 matching pairs / 783 direct edges / four open edges.')
+
+runtime=json.loads(gzip.decompress((P/'runtime/legacy-buy.json.gz').read_bytes()))
+assert runtime['candidate_sha256']==sha(images['candidate']['candidate.so']) and runtime['original_sha256']==sha(original)
+assert runtime['case_count']==len(runtime['cases'])==284 and not runtime['mismatches']
+loader=json.loads((P/'runtime/legacy-buy.loader.json').read_text());assert {x['elf_sha256']for x in loader['loads']}=={sha(original),sha(images['candidate']['candidate.so'])}
+assert all(x['program_bytes']==36 and x['programdata_bytes']==10485760 and x['elf_prefix_unchanged']and x['zero_allocation_tail']for x in loader['loads'])
+spec=importlib.util.spec_from_file_location('diagnostics',P/'support/diagnostic_audit.py');audit=importlib.util.module_from_spec(spec);spec.loader.exec_module(audit)
+assert not audit.audit({'legacy_buy':runtime})['mismatches']
+print('Verified exact 781 candidate: 284 legacy-buy cases passed with zero diagnostic mismatches and captured-loader receipts.')

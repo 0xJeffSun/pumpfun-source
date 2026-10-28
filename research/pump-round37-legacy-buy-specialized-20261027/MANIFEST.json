@@ -1,5 +1,5 @@
 {
-  "README.md": "0a51445524b296e7d6fdb4efcaa0dd90453ed66d40884c582497bc4d6cfdecc1",
+  "README.md": "a53793c2a2454b15eebdce23913ea2bd2ce1bceaed4f539302755ac982acaa53",
   "builds/candidate/build-attempt.json.gz": "229cc41a90f1f924c84e4967a29a4e944582a5854937403bb08eec8034a2acd4",
   "builds/candidate/build-comparison.json": "dc27064beb9ec21463e866c97baceca86081af5437c7bd85d4f6d7cc7cc39236",
   "builds/candidate/build.log.gz": "e70b64ae0bc7721e6919d57c827275283d038f8c657037bd54c6900fb49af0f1",
@@ -22,10 +22,12 @@
   "legacy-specialized-closure.json": "fe5dbbe97e2c62ac00243932337c7a5c7eef77373e8fe48590d096291c3f43f3",
   "proposed/src/buy.rs": "d3bc35d154f188ea32b64133e8a02bc1c4fc89b17066cfbce130415aa553165c",
   "proposed/src/lib.rs": "d2ab1366a5663c1e8c9bd62607b780569494ba688549ad279dc0fb77f0499b41",
+  "runtime/legacy-buy.json.gz": "a6f97c54fc6a88c6bdb9627b5dce8d7b40d560b78c97de71f032770fcaca513b",
+  "runtime/legacy-buy.loader.json": "ce5e3fccf93260be5f32cefd35453524e739ea7b5a1f2d2f7e4a8657da02ee66",
   "specialization-only.patch": "484c976a3ced141b9bc40bd495d466790550ab7017673105b338be60de17ad0b",
   "support/analyze.py": "dd7fb38d795d4dd72a25aab0d65c2223d9f6f75d8b3ecb0de1d87d6e102910ac",
   "support/diagnostic_audit.py": "0343c70e4f9c7860ad392f0a8bd10d90ac94fe17bb2ba5bfd49a45683edbe343",
   "support/elf_helpers.py": "fbf808210b28698a65ca385220c48396fe9ab650284dc446a6b9d9194a250777",
   "support/window_map.py": "eeec82f751ea38827c5149f28590f19a3ff516c7eee57b6aa48949cbaac4a7e5",
-  "verify.py": "9b12cfde97475dcd7f1346d93c5d9cbb3c25f4729c8651964852e57056f7ec2a"
+  "verify.py": "f40b0fad793cb28dfe6b1513bf41184f7636aaeebb98196d30b5470db4b5660c"
 }

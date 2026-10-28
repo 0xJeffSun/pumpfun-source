@@ -5,3 +5,5 @@ Legacy buy and buy_exact_sol_in previously passed an extra runtime exact-mode fl
 Both modes retain the same source expressions and branch conditions, with the exact-mode value bound at compilation. This is a source proposal, not proof of the original historical source form. Maintained source and checkpoint are unchanged. The original deployed ELF is still different; normalized matches mask call offsets and relocated pointers.
 
 Fresh repeated builds produce identical stripped and unstripped artifacts. The bounded graph from both wrappers visits 152 matching pairs and 783 edges, with four open edges, including the still-unmatched buy bodies. Thus matching these wrappers does not establish matching handlers or complete runtime/data identity. Full sources, native outputs, compiler records, proposal patch and an independent verifier are retained.
+
+The exact 781 candidate passes all 284 focused legacy-buy cases with zero diagnostic mismatches. Its own report and captured-loader receipt are retained under runtime/. This does not replace a full 44-suite qualification and does not reuse prior binaries' runtime reports.
