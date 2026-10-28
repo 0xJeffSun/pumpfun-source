@@ -2822,3 +2822,45 @@ No fresh compiler build or runtime replay was performed for this archival merge.
 These historical packet counts do not alter the maintained frontier totals.
 The newest upstream follow-up records incentive-range counterexamples and also
 does not change current counts.
+
+## Qualified Mayhem436: both complete Legacy trade bodies
+
+PR #404 supplies the complete Legacy Buy and Legacy Sell source. Independent
+ELF measurement confirms both original body lengths, all 50 ordered immediate
+callees each, and their full 216/201-block CFGs. Its original 436/100 artifact
+uses a weaker parent and is not substituted for the stronger source-origin
+checkpoint. The six changed files are exactly equal between those two parents,
+so their source changes compose without conflict.
+
+The [new qualified436 packet](../research/mayhem-current436-composition-20261027/README.md)
+contains the actual combination: 436/441 normalized, 141 raw-local, 295 normalized-only
+and five unmatched windows. Every previous raw body, observed direct edge,
+Source observation and Source profile survives. Recursive direct-call closure
+rises 425→429, positive immediate edges 4,371→4,473, and matching Sources 472→486.
+The two added bodies cover 26,840 original bytes; 72,192 bytes remain unmatched.
+Two root compilations agree on both complete outputs. Fresh 14-family trade,
+initializer, sweep and rate replays pass with all records retained; overlapping
+scopes do not become distinct transaction counts. The candidate hash is
+`cac32dadb032cc80366124ab3ceb430fdc5bfae23ab9cec1b5d18bb9e0f55e5b`.
+
+The [conditional formatting proof](../research/mayhem-current434-format-route-20261027/README.md)
+remains explicitly bound to the previous 434 image. Independent verification and
+all 13 tests pass. It follows three actual indirect sites across 25 tag inputs,
+under allocation/prefix-writer contracts, stopping before the final write.
+It adds no function match or general indirect-call claim. The attempted panic
+route reaches external custom_panic/abort and is not claimed closed.
+
+SweepFees source controls have not closed O0076. Borrowed native-key access
+restores the 51 callee positions but loses the original comparison structure.
+An integer-valued validator yields the original 8,400-byte outer-body size but
+loses the already recovered O0073 body, so it is rejected. Boxing GlobalParams
+also loses three parser/wrapper matches; the apparent load offsets resolve to
+the same actual fields and do not establish a state-layout defect. Ordinary
+source-only controls and their exact artifacts are retained in the work ledger.
+
+The Custom/tag-zero formatting follow-up adds three conditional tuple dispatch
+sites, verifies a 32-byte vtable prefix and follows the payload pointer to the
+numeric formatter without reading or claiming its value. Its bounded contracts
+are the same as the unit-tag route; independent verification and 11 mutation/model
+tests pass. These proofs are bound to the old 434-window image and add no count
+to the qualified436 body frontier.

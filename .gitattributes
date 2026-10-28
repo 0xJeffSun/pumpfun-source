@@ -1481,3 +1481,7 @@ repro/pump_amm/event-ownership-recovery-20261027/results/** -whitespace
 repro/pump_amm/event-ownership-recovery-20261027/followup/** -whitespace
 repro/pump_amm/admin-harvest-recovery-20261027/results/** -whitespace
 repro/pump_amm/admin-harvest-recovery-20261027/followup/** -whitespace
+# Preserve exact compiled source and empty inventory columns in the qualified436 packet.
+research/mayhem-current436-composition-20261027/source.patch -whitespace
+research/mayhem-current436-composition-20261027/overrides/** -whitespace
+research/mayhem-current436-composition-20261027/inventory.tsv -whitespace

@@ -1,12 +1,12 @@
 # Parallel Mayhem reconstruction work
 
 The objective remains byte-identical Rust reproduction, including calls, data,
-relocations and ELF layout. The [qualified current composition](../research/mayhem-current434-composition-20261027/README.md)
-has **434/441 normalized windows: 141 raw-local, 293 normalized-only and seven
-unmatched**. The unmatched windows total **99,032 original text bytes**. It
-combines the two newer sweep body recoveries with the prior raw/call/data
-frontier, with no loss. The [completion review](MAYHEM-COMPLETION.md) gives
-exact percentages and evidence limits.
+relocations and ELF layout. The [qualified current composition](../research/mayhem-current436-composition-20261027/README.md)
+has **436/441 normalized windows: 141 raw-local, 295 normalized-only and five
+unmatched**. The unmatched windows total **72,192 original text bytes**. It
+adds both Legacy trade bodies to the prior raw/call/data frontier with no loss.
+The [completion review](MAYHEM-COMPLETION.md) gives exact percentages and evidence
+limits.
 
 ## Independent lanes
 
@@ -18,16 +18,16 @@ source and compiler investigations proceed.
 | Lane | Next scope |
 | --- | --- |
 | AMM trade and quote bodies | O0077 and O0079; cap/min selection, retained-reserve arithmetic, ownership and error flow |
-| Legacy and V2 trade bodies | O0081–O0084; source ownership, fallible arithmetic and CPI error lifetime |
+| V2 trade bodies | O0083–O0084; source ownership, fallible arithmetic and CPI error lifetime |
 | Runtime and layout | Allocator-provider repair is qualified; continue remaining data/indirect-call closure, section layout and ELF equality |
-| Integration / SweepFees | Preserve the qualified434/141 checkpoint, recover O0076, qualify further combinations and keep documentation current |
+| Integration / SweepFees | Preserve the qualified436/141 checkpoint, recover O0076, qualify further combinations and keep documentation current |
 
 The active objective covers the remaining source reconstruction and offline
 validation. No live-chain deployment or transaction is part of this work.
 
 ## All remaining windows
 
-This table comes from the qualified current [441-row inventory](../research/mayhem-current434-composition-20261027/inventory.json).
+This table comes from the qualified current [441-row inventory](../research/mayhem-current436-composition-20261027/inventory.json).
 Each unmatched original window occurs once. Body names are reconstruction
 attributions, not authenticated original symbols.
 
@@ -36,12 +36,14 @@ attributions, not authenticated original symbols.
 | O0076 | 77200 | 8400 | SweepFees business body; full match still open | Integration / SweepFees |
 | O0077 | 85600 | 9736 | AMM Buy | AMM trade and quote |
 | O0079 | 95848 | 17312 | AMM Sell | AMM trade and quote |
-| O0081 | 113672 | 13848 | Legacy Buy | Legacy and V2 trade |
-| O0082 | 127520 | 12992 | Legacy Sell | Legacy and V2 trade |
-| O0083 | 140512 | 18648 | BuyV2 | Legacy and V2 trade |
-| O0084 | 159160 | 18096 | SellV2 | Legacy and V2 trade |
+| O0083 | 140512 | 18648 | BuyV2 | V2 trade |
+| O0084 | 159160 | 18096 | SellV2 | V2 trade |
 
 ## Closed windows and partial controls
+
+The [qualified436 composition](../research/mayhem-current436-composition-20261027/README.md)
+closes Legacy Buy O0081 and Legacy Sell O0082 in full under the unchanged
+normalizer. The partial Legacy controls below are historical evidence.
 
 The [quote-aware validator](../research/mayhem-trade-origins-validator/README.md)
 closes O0095's complete 1,296-byte normalized body, with eight immediate callee
