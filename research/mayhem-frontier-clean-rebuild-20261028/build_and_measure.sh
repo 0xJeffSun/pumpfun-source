@@ -6,6 +6,12 @@
 # the published 432-window artifact. This script does not authenticate the SDK
 # paths; a controlled comparison also needs matching tool and dependency inputs.
 #
+# Optional: REMAP_FLAGS adds extra rustc flags for the root crate. The historical
+# crate path is programs/mayhem-program/, which the original binary embeds in
+# every panic/Source record. Set
+#   REMAP_FLAGS='--remap-path-prefix=src/=programs/mayhem-program/src/'
+# to reproduce those path lengths (see README: 20 windows depend on it).
+#
 # Prerequisites (see research/mayhem-v154-independent-reproduction-20261028):
 #   ~/.cache/solana/v1.54/platform-tools   (sha-pinned osx-aarch64 archive)
 #   ~/.cache/solana/v1.52/platform-tools/llvm/bin/llvm-objcopy (pinned strip)
@@ -25,7 +31,7 @@ PY="$ROOT/.venv/bin/python"
 ( cd "$OUT/source" && env -i HOME="$HOME" PATH="/usr/bin:/bin:/usr/sbin:/sbin" TERM=xterm \
     CARGO_HOME="$HOME/.cargo" CARGO_TARGET_DIR="$OUT/target" CARGO_NET_OFFLINE=true \
     RUSTC="$T/rust/bin/rustc" RUSTDOC="$T/rust/bin/rustdoc" \
-    CARGO_TARGET_SBPF_SOLANA_SOLANA_RUSTFLAGS="-Zremap-cwd-prefix=" \
+    CARGO_TARGET_SBPF_SOLANA_SOLANA_RUSTFLAGS="-Zremap-cwd-prefix= ${REMAP_FLAGS-}" \
     CC="$T/llvm/bin/clang" AR="$T/llvm/bin/llvm-ar" OBJDUMP="$T/llvm/bin/llvm-objdump" OBJCOPY="$T/llvm/bin/llvm-objcopy" \
     "$T/rust/bin/cargo" build --release --target sbpf-solana-solana --locked --offline >"$OUT/build.log" 2>&1 )
 
