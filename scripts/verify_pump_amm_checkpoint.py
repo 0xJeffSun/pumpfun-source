@@ -49,9 +49,11 @@ def verify(root=ROOT, runtime=None):
     assert upgradeable_report['candidate_sha256'] == CANDIDATE
     assert upgradeable_report['policy_cases'] == 24 and upgradeable_report['policy_mismatches'] == 0
     if runtime is None:
+        # Capture only stdout: the saved verifier's stderr (its failing
+        # assertion) must stay visible in the caller's log.
         result = subprocess.run(
             [sys.executable, '-B', str(checkpoint / 'verify_saved.py'), '--current-source'],
-            cwd=root, text=True, capture_output=True, check=True,
+            cwd=root, text=True, stdout=subprocess.PIPE, check=True,
         )
         report = json.loads(result.stdout.strip().splitlines()[-1])
         assert report['current_source_checked'] and report['candidate_sha256'] == CANDIDATE

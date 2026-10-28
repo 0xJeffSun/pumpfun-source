@@ -144,11 +144,13 @@ def verify(program, root):
         proof = root / TRANSITION
         verify_manifest(proof, TRANSITION_SEAL)
         assert sha(proof / 'before.py') == OLD_HELPER and sha(proof / 'after.py') == NEW_HELPER
-        subprocess.run([sys.executable, '-B', str(proof / 'verify.py')], check=True, capture_output=True)
+        # Discard only stdout; a failing proof must report its assertion on stderr.
+        subprocess.run([sys.executable, '-B', str(proof / 'verify.py')], check=True, stdout=subprocess.DEVNULL)
         transitions.append({'path': helper, 'recorded_sha256': recorded, 'current_sha256': actual, 'proof_seal': TRANSITION_SEAL})
     # Immutable verifier retains its original helper checks and all source/artifact
     # evidence. Current-source and reviewed-helper checks are performed above.
-    subprocess.run([sys.executable, '-B', str(package / 'verify.py')], check=True, capture_output=True)
+    # Discard only stdout; a failing verifier must report its assertion on stderr.
+    subprocess.run([sys.executable, '-B', str(package / 'verify.py')], check=True, stdout=subprocess.DEVNULL)
     return {'status': 'PASS', 'program': program, 'candidate_sha256': sha(candidate), 'source_inputs': len(report['source_sha256']),
             'actual_current_sources_checked': True, 'reviewed_helper_transitions': transitions,
             'recorded_toolchain': report['selected_toolchain'], 'target_executions': 0, 'original_global_failure_exits_rewritten': False}

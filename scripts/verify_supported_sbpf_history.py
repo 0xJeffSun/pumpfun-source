@@ -97,7 +97,8 @@ def stage_historical_view(root, view):
 
 
 def run_json(command, cwd):
-    result = subprocess.run(command, cwd=cwd, check=True, capture_output=True, text=True)
+    # Capture only stdout (parsed below); a failing command keeps its stderr in the log.
+    result = subprocess.run(command, cwd=cwd, check=True, stdout=subprocess.PIPE, text=True)
     return json.loads(result.stdout)
 
 
