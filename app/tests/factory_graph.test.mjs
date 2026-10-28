@@ -11,6 +11,7 @@ import {
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import test from "node:test";
+import prettier from "prettier";
 import {
   analyzeFactory,
   buildGraph,
@@ -24,6 +25,7 @@ const hash = (value) => createHash("sha256").update(value).digest("hex");
 async function fixture({
   corruptHash = false,
   corruptRange = false,
+  duplicateOrigin = false,
   reverse = false,
 } = {}) {
   const root = await mkdtemp(join(tmpdir(), "factory-graph-"));
@@ -41,6 +43,10 @@ async function fixture({
   const source = `globalThis.TURBOPACK=[${factories.map((item) => item.raw).join(",")}];`;
   const jsPath = "evidence/web/objects/source.js";
   await writeFile(join(root, jsPath), source);
+  const duplicateFactory = factories.at(-1);
+  const otherSource = `globalThis.TURBOPACK=[${duplicateFactory.raw}];`;
+  const otherPath = "evidence/web/objects/other.js";
+  if (duplicateOrigin) await writeFile(join(root, otherPath), otherSource);
   const html = `<html><script src="/_next/static/chunks/source.js"></script></html>`;
   const htmlPath = "evidence/web/objects/home.html";
   await writeFile(join(root, htmlPath), html);
@@ -51,7 +57,8 @@ async function fixture({
     const path = `recovered/modules/${item.id}-${digest.slice(0, 12)}.js`;
     await writeFile(
       join(root, path),
-      `// Recovered Turbopack factory. Requires original runtime/import IDs; not a standalone source module.\n${item.raw};\n`,
+      "// Recovered Turbopack factory. Requires original runtime/import IDs; not a standalone source module.\n" +
+        (await prettier.format(`(${item.raw});`, { parser: "babel" })),
     );
     modules.push({
       ids: [item.id],
@@ -67,6 +74,18 @@ async function fixture({
       path,
     });
   }
+  if (duplicateOrigin) {
+    const duplicateModule = modules.find(
+      (module) => module.sha256 === hash(duplicateFactory.raw),
+    );
+    const start = otherSource.indexOf(duplicateFactory.raw);
+    duplicateModule.origins.push({
+      source: otherPath,
+      url: "https://pump.fun/_next/static/chunks/other.js",
+      start,
+      end: start + duplicateFactory.raw.length,
+    });
+  }
   if (reverse) modules.reverse();
   if (corruptRange) modules[0].origins[0].end -= 1;
   const manifest = {
@@ -80,6 +99,19 @@ async function fixture({
         sha256: corruptHash ? "0".repeat(64) : hash(source),
         headers: { "content-type": "application/javascript" },
       },
+      ...(duplicateOrigin
+        ? [
+            {
+              url: "https://pump.fun/_next/static/chunks/other.js",
+              final_url: "https://pump.fun/_next/static/chunks/other.js",
+              status: 200,
+              path: otherPath,
+              bytes: Buffer.byteLength(otherSource),
+              sha256: hash(otherSource),
+              headers: { "content-type": "application/javascript" },
+            },
+          ]
+        : []),
       {
         url: "https://pump.fun/",
         final_url: "https://pump.fun/",
@@ -113,6 +145,28 @@ async function fixture({
     JSON.stringify({ bindings: [] }),
   );
   return root;
+}
+
+async function recoveredPath(root, id) {
+  const index = JSON.parse(
+    await readFile(join(root, "recovered/modules.json"), "utf8"),
+  );
+  return join(
+    root,
+    index.modules.find((module) => module.ids.includes(id)).path,
+  );
+}
+
+async function completeFixtureOptions(root, routes = ["/"]) {
+  const index = JSON.parse(
+    await readFile(join(root, "recovered/modules.json"), "utf8"),
+  );
+  let targetLines = 0;
+  for (const module of index.modules)
+    targetLines += countSourceLines(
+      await readFile(join(root, module.path), "utf8"),
+    );
+  return { routes, targetLines, maximumLines: 100 };
 }
 
 test("line census excludes recovery banners, blanks, and comment-only lines", () => {
@@ -153,11 +207,10 @@ test("malformed source never produces a partial AST result", () => {
 
 test("variant collisions remain ambiguous instead of resolving arbitrarily", async () => {
   const root = await fixture();
-  const reports = await buildGraph(root, {
-    routes: ["/", "/missing"],
-    targetLines: 4,
-    maximumLines: 100,
-  });
+  const reports = await buildGraph(
+    root,
+    await completeFixtureOptions(root, ["/", "/missing"]),
+  );
   const edges = reports["IMPORT-EDGES.json.gz"];
   const direct = edges.find((edge) => edge.requestedId === 2);
   assert.equal(direct.resolution, "AMBIGUOUS");
@@ -179,6 +232,95 @@ test("variant collisions remain ambiguous instead of resolving arbitrarily", asy
   assert.equal(
     reports["ROUTE-ATTRIBUTION.json"]["/missing"].status,
     "NO_EXACT_CAPTURE",
+  );
+});
+
+test("route seeds stay scoped to the linked origin of a deduplicated factory", async () => {
+  const root = await fixture({ duplicateOrigin: true });
+  const reports = await buildGraph(root, await completeFixtureOptions(root));
+  const identities = reports["MODULE-IDENTITIES.json.gz"].filter(
+    (identity) => identity.id === 3,
+  );
+  assert.equal(identities.length, 2);
+  const linked = identities.find((identity) =>
+    identity.origin.source.endsWith("source.js"),
+  );
+  const unlinked = identities.find((identity) =>
+    identity.origin.source.endsWith("other.js"),
+  );
+  assert.deepEqual(linked.routeSeeds, ["/"]);
+  assert.deepEqual(unlinked.routeSeeds, []);
+  const route = reports["ROUTE-ATTRIBUTION.json"]["/"];
+  assert.ok(route.seedNodes.includes(linked.key));
+  assert.ok(!route.seedNodes.includes(unlinked.key));
+  assert.ok(route.reachableNodes.includes(linked.key));
+  assert.ok(!route.reachableNodes.includes(unlinked.key));
+  assert.notEqual(linked.key, unlinked.key);
+  assert.equal(linked.sha256, unlinked.sha256);
+  assert.ok(
+    reports["IMPORT-EDGES.json.gz"].some(
+      (edge) => edge.source === linked.key && edge.target === linked.key,
+    ),
+  );
+});
+
+test("tampered formatted factories fail build, publish, and source verification", async () => {
+  const root = await fixture();
+  const options = { routes: ["/"], targetLines: 4, maximumLines: 100 };
+  const valid = await buildGraph(root, options);
+  assert.ok(
+    valid["IMPORT-EDGES.json.gz"].some((edge) => edge.requestedId === 2),
+  );
+  await publishGraph(root, "research/graph", options);
+  const manifestBefore = await readFile(
+    join(root, "research/graph/MANIFEST.json"),
+    "utf8",
+  );
+  const path = await recoveredPath(root, 1);
+  const formatted = await readFile(path, "utf8");
+  await writeFile(path, formatted.replace("e.i(2)", "e.i(777)"));
+  await assert.rejects(
+    buildGraph(root, options),
+    /recovered factory authenticity mismatch/,
+  );
+  await assert.rejects(
+    publishGraph(root, "research/graph", options),
+    /recovered factory authenticity mismatch/,
+  );
+  await assert.rejects(
+    verifyGraph(root, "research/graph", options),
+    /recovered factory authenticity mismatch/,
+  );
+  assert.equal(
+    await readFile(join(root, "research/graph/MANIFEST.json"), "utf8"),
+    manifestBefore,
+  );
+  const publishedEdges = JSON.parse(
+    (await import("node:zlib")).gunzipSync(
+      await readFile(join(root, "research/graph/IMPORT-EDGES.json.gz")),
+    ),
+  );
+  assert.ok(!publishedEdges.some((edge) => edge.requestedId === 777));
+});
+
+test("factory authenticity accepts AST-equivalent formatting and rejects semantic changes", async () => {
+  const options = { routes: ["/"], targetLines: 4, maximumLines: 100 };
+  const formattedRoot = await fixture();
+  const formattedPath = await recoveredPath(formattedRoot, 2);
+  const formatted = await readFile(formattedPath, "utf8");
+  await writeFile(
+    formattedPath,
+    formatted.replace("(e) => {", "/* formatting only */\n(e) => {"),
+  );
+  await buildGraph(formattedRoot, options);
+
+  const changedRoot = await fixture();
+  const changedPath = await recoveredPath(changedRoot, 2);
+  const changed = await readFile(changedPath, "utf8");
+  await writeFile(changedPath, changed.replace("42", "44"));
+  await assert.rejects(
+    buildGraph(changedRoot, options),
+    /recovered factory authenticity mismatch/,
   );
 });
 
@@ -218,6 +360,7 @@ test("symlinked evidence is rejected", async () => {
 test("publication is deterministic and generated evidence rejects tampering", async () => {
   const first = await fixture();
   const second = await fixture({ reverse: true });
+  const options = { routes: ["/"], targetLines: 4, maximumLines: 100 };
   await publishGraph(first, "research/graph", {
     routes: ["/"],
     targetLines: 4,
@@ -237,22 +380,23 @@ test("publication is deterministic and generated evidence rejects tampering", as
     "utf8",
   );
   assert.equal(firstManifest, secondManifest);
-  await verifyGraph(first, "research/graph");
+  await verifyGraph(first, "research/graph", options);
   await writeFile(join(first, "research/graph/unexpected.json"), "{}\n");
   await assert.rejects(
-    verifyGraph(first, "research/graph"),
+    verifyGraph(first, "research/graph", options),
     /unexpected generated evidence/,
   );
   await rm(join(first, "research/graph/unexpected.json"));
   await writeFile(join(first, "research/graph/GRAPH-SUMMARY.json"), "{}\n");
   await assert.rejects(
-    verifyGraph(first, "research/graph"),
+    verifyGraph(first, "research/graph", options),
     /generated evidence mismatch/,
   );
 });
 
 test("an interrupted replacement restores the last complete graph", async () => {
   const root = await fixture();
+  const options = { routes: ["/"], targetLines: 4, maximumLines: 100 };
   await publishGraph(root, "research/graph", {
     routes: ["/"],
     targetLines: 4,
@@ -277,7 +421,7 @@ test("an interrupted replacement restores the last complete graph", async () => 
     await readFile(join(root, "research/graph/MANIFEST.json"), "utf8"),
     before,
   );
-  await verifyGraph(root, "research/graph");
+  await verifyGraph(root, "research/graph", options);
 });
 
 test(
@@ -298,6 +442,16 @@ test(
         summary.resolutions.UNRESOLVED +
         summary.resolutions.EXTERNAL,
     );
-    assert.equal(reports["VERIFY-RESULTS.json"].capturedCodeExecuted, false);
+    const verification = reports["VERIFY-RESULTS.json"];
+    assert.equal(verification.capturedCodeExecuted, false);
+    assert.equal(
+      verification.formattedFactoriesParsed,
+      verification.formattedFactoriesAstAuthenticated +
+        verification.formattedFactoriesDerivationAuthenticated,
+    );
+    assert.ok(
+      summary.routeAttributedNodes < summary.identities,
+      "unreferenced provenance identities must not inherit a route seed",
+    );
   },
 );

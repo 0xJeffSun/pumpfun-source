@@ -12,6 +12,7 @@ import {
 import { dirname, join, relative, resolve, sep } from "node:path";
 import { gzipSync, gunzipSync } from "node:zlib";
 import { parse } from "@babel/parser";
+import prettier from "prettier";
 
 export const GRAPH_VERSION = 1;
 export const DEFAULT_ROUTES = [
@@ -31,6 +32,8 @@ const sha256 = (value) => createHash("sha256").update(value).digest("hex");
 const stable = (value) => `${JSON.stringify(value, null, 2)}\n`;
 const lexical = (a, b) => String(a).localeCompare(String(b), "en");
 const byKey = (a, b) => lexical(a.key, b.key);
+const FACTORY_BANNER =
+  "// Recovered Turbopack factory. Requires original runtime/import IDs; not a standalone source module.\n";
 
 export function countSourceLines(source) {
   let ast;
@@ -115,6 +118,48 @@ function literalValue(node) {
   return undefined;
 }
 
+const AST_METADATA_KEYS = new Set([
+  "comments",
+  "end",
+  "errors",
+  "extra",
+  "innerComments",
+  "leadingComments",
+  "loc",
+  "start",
+  "tokens",
+  "trailingComments",
+]);
+
+function canonicalAstDigest(value) {
+  const digest = createHash("sha256");
+  const update = (node) => {
+    if (Array.isArray(node)) {
+      digest.update("[");
+      for (const child of node) {
+        if (child?.type === "EmptyStatement") continue;
+        update(child);
+        digest.update(",");
+      }
+      digest.update("]");
+      return;
+    }
+    if (!node || typeof node !== "object") {
+      digest.update(`${typeof node}:${JSON.stringify(node)};`);
+      return;
+    }
+    digest.update("{");
+    for (const key of Object.keys(node).sort(lexical)) {
+      if (AST_METADATA_KEYS.has(key) || node[key] === undefined) continue;
+      digest.update(`${JSON.stringify(key)}:`);
+      update(node[key]);
+    }
+    digest.update("}");
+  };
+  update(value);
+  return digest.digest("hex");
+}
+
 export function analyzeFactory(source, label = "factory") {
   let ast;
   try {
@@ -125,7 +170,16 @@ export function analyzeFactory(source, label = "factory") {
       tokens: true,
     });
   } catch (error) {
-    throw new Error(`malformed factory ${label}: ${error.message}`);
+    try {
+      ast = parse(`(${source})`, {
+        sourceType: "script",
+        errorRecovery: false,
+        plugins: ["jsx", "typescript"],
+        tokens: true,
+      });
+    } catch {
+      throw new Error(`malformed factory ${label}: ${error.message}`);
+    }
   }
   const expression = ast.program.body.find(
     (entry) => entry.type === "ExpressionStatement",
@@ -184,6 +238,7 @@ export function analyzeFactory(source, label = "factory") {
     imports,
     exports: [...exports].sort(lexical),
     lineCount: countTokenLines(ast.tokens),
+    canonicalAstSha256: canonicalAstDigest(expression),
   };
 }
 
@@ -288,11 +343,12 @@ export async function buildGraph(root, options = {}) {
   };
 
   const variants = [];
+  const authenticatedAnalysisByHash = new Map();
+  const formattedDerivationByHash = new Map();
   for (const module of modulesIndex.modules) {
     const formattedPath = await safeFile(root, module.path);
     const formatted = await readFile(formattedPath, "utf8");
-    const analysis = analyzeFactory(formatted, module.path);
-    const lineCount = analysis.lineCount;
+    let authenticatedSource;
     for (const origin of module.origins) {
       const captured = await getCapture(origin.source);
       if (
@@ -306,15 +362,47 @@ export async function buildGraph(root, options = {}) {
           `invalid UTF-16 range: ${module.path} at ${origin.source}`,
         );
       }
-      if (
-        sha256(captured.text.slice(origin.start, origin.end)) !== module.sha256
-      ) {
+      const original = captured.text.slice(origin.start, origin.end);
+      if (sha256(original) !== module.sha256) {
         throw new Error(
           `source range mismatch: ${module.path} at ${origin.source}`,
         );
       }
+      authenticatedSource ??= original;
     }
-    variants.push({ ...module, formatted, analysis, lineCount });
+    const analysis = analyzeFactory(formatted, module.path);
+    if (!authenticatedAnalysisByHash.has(module.sha256))
+      authenticatedAnalysisByHash.set(
+        module.sha256,
+        analyzeFactory(
+          authenticatedSource,
+          `${module.path} authenticated origin`,
+        ),
+      );
+    const originalAnalysis = authenticatedAnalysisByHash.get(module.sha256);
+    let authenticityMethod = "CANONICAL_AST";
+    if (analysis.canonicalAstSha256 !== originalAnalysis.canonicalAstSha256) {
+      if (!formattedDerivationByHash.has(module.sha256))
+        formattedDerivationByHash.set(
+          module.sha256,
+          FACTORY_BANNER +
+            (await prettier.format(`(${authenticatedSource});`, {
+              parser: "babel",
+            })),
+        );
+      if (formatted !== formattedDerivationByHash.get(module.sha256))
+        throw new Error(
+          `recovered factory authenticity mismatch: ${module.path} matches neither the complete canonical AST nor the exact inventory formatter derivation of its authenticated origins`,
+        );
+      authenticityMethod = "EXACT_FORMATTER_DERIVATION";
+    }
+    const lineCount = analysis.lineCount;
+    variants.push({
+      ...module,
+      analysis,
+      lineCount,
+      authenticityMethod,
+    });
   }
 
   const routeAssets = {};
@@ -361,13 +449,22 @@ export async function buildGraph(root, options = {}) {
   }
 
   const directlyAttributed = new Map();
+  const originsBySource = new Map();
+  for (const variant of variants) {
+    for (const origin of variant.origins) {
+      if (!originsBySource.has(origin.source))
+        originsBySource.set(origin.source, []);
+      originsBySource.get(origin.source).push({ variant, origin });
+    }
+  }
   for (const [route, evidence] of Object.entries(routeAssets)) {
     for (const asset of evidence.assets) {
-      for (const variant of variants) {
-        if (variant.origins.some((origin) => origin.source === asset)) {
-          if (!directlyAttributed.has(variant.sha256))
-            directlyAttributed.set(variant.sha256, new Set());
-          directlyAttributed.get(variant.sha256).add(route);
+      for (const { variant, origin } of originsBySource.get(asset) || []) {
+        for (const id of variant.ids) {
+          const key = identityKey(id, variant.sha256, origin);
+          if (!directlyAttributed.has(key))
+            directlyAttributed.set(key, new Set());
+          directlyAttributed.get(key).add(route);
         }
       }
     }
@@ -381,8 +478,14 @@ export async function buildGraph(root, options = {}) {
   }
 
   const ordered = [...variants].sort((a, b) => {
-    const aRoute = directlyAttributed.has(a.sha256) ? 0 : 1;
-    const bRoute = directlyAttributed.has(b.sha256) ? 0 : 1;
+    const hasRouteSeed = (variant) =>
+      variant.origins.some((origin) =>
+        variant.ids.some((id) =>
+          directlyAttributed.has(identityKey(id, variant.sha256, origin)),
+        ),
+      );
+    const aRoute = hasRouteSeed(a) ? 0 : 1;
+    const bRoute = hasRouteSeed(b) ? 0 : 1;
     if (aRoute !== bRoute) return aRoute - bRoute;
     const aApi = a.origins.some((origin) => operationSources.has(origin.source))
       ? 0
@@ -417,9 +520,11 @@ export async function buildGraph(root, options = {}) {
           lineCount: variant.lineCount,
           origin,
           exports: variant.analysis.exports,
-          routeSeeds: [...(directlyAttributed.get(variant.sha256) || [])].sort(
-            lexical,
-          ),
+          routeSeeds: [
+            ...(directlyAttributed.get(
+              identityKey(id, variant.sha256, origin),
+            ) || []),
+          ].sort(lexical),
         });
       }
     }
@@ -628,7 +733,7 @@ export async function buildGraph(root, options = {}) {
       candidates,
       reason,
     }));
-  const readme = `# Authenticated Turbopack route graph\n\nThis packet is a deterministic static analysis of retained Pump.fun frontend evidence. It does not execute captured JavaScript and does not claim recovery of original TypeScript or runtime/API compatibility.\n\n## Measured scope\n\n- Analyzed code lines: ${summary.analyzedLines}\n- Unique factory content hashes: ${summary.uniqueFactories}\n- Provenance-qualified identities: ${summary.identities}\n- Authenticated captured JavaScript objects: ${summary.capturedObjects}\n- Import boundaries: ${summary.edges}\n- Exact / ambiguous / unresolved: ${summary.resolutions.EXACT} / ${summary.resolutions.AMBIGUOUS} / ${summary.resolutions.UNRESOLVED}\n- Exact cross-chunk edges: ${summary.crossChunkExactEdges}\n- Authenticated route captures: ${summary.authenticatedRoutes}\n- Internal / developer operations attributed: ${summary.internalOperationsAttributed} / ${summary.developerOperationsAttributed}\n\n## Reproduction\n\nFrom \`app/\` run:\n\n\`\`\`sh\npnpm install --frozen-lockfile\npnpm graph:build\npnpm graph:verify\npnpm test:graph\n\`\`\`\n\nThe builder authenticates manifest hashes and byte lengths, decodes UTF-8 strictly, checks every recovered factory's UTF-16 half-open source range, parses factories without evaluating them, and publishes through a temporary directory. \`MANIFEST.json\` binds every generated record.\n\n## Interpretation boundaries\n\n\`EXACT\` means the selected captured chunk context has one supported target, or the selected corpus contains one target identity. \`AMBIGUOUS\` preserves multiple compatible variants. \`UNRESOLVED\` means no target is present in the selected authenticated corpus; it is not evidence that the original application failed to resolve it. Route attribution requires captured HTML to reference an authenticated asset that contains the factory. API attribution links existing ledgers to enclosing factory ranges and remains static evidence, not a live-service qualification. Exact captures were unavailable for \`/profile/:id\` and \`/portfolio\`; those entries are deliberately empty.\n`;
+  const readme = `# Authenticated Turbopack route graph\n\nThis packet is a deterministic static analysis of retained Pump.fun frontend evidence. It does not execute captured JavaScript and does not claim recovery of original TypeScript or runtime/API compatibility.\n\n## Measured scope\n\n- Analyzed code lines: ${summary.analyzedLines}\n- Unique factory content hashes: ${summary.uniqueFactories}\n- Provenance-qualified identities: ${summary.identities}\n- Authenticated captured JavaScript objects: ${summary.capturedObjects}\n- Import boundaries: ${summary.edges}\n- Exact / ambiguous / unresolved: ${summary.resolutions.EXACT} / ${summary.resolutions.AMBIGUOUS} / ${summary.resolutions.UNRESOLVED}\n- Exact cross-chunk edges: ${summary.crossChunkExactEdges}\n- Authenticated route captures: ${summary.authenticatedRoutes}\n- Internal / developer operations attributed: ${summary.internalOperationsAttributed} / ${summary.developerOperationsAttributed}\n\n## Reproduction\n\nFrom \`app/\` run:\n\n\`\`\`sh\npnpm install --frozen-lockfile\npnpm graph:build\npnpm graph:verify\npnpm test:graph\n\`\`\`\n\nThe builder authenticates manifest hashes and byte lengths, decodes UTF-8 strictly, and checks every recovered factory's UTF-16 half-open source range. Each recovered formatted factory must have a complete canonical AST equal to its authenticated raw factory. The canonical form excludes parser locations, comments, tokens, raw literal spelling, and empty no-op statements while preserving executable structure. For the small set where the pinned formatter itself changes Babel AST shape, exact byte-for-byte re-derivation through that formatter is required instead. Route seeds are keyed by module ID, factory hash, captured object, and source range, so identical bytes in an unreferenced object do not inherit another object's route. Captured factories are parsed without evaluation, and publication uses a temporary directory. \`MANIFEST.json\` binds every generated record; verification rebuilds the packet from current authenticated inputs.\n\n## Interpretation boundaries\n\n\`EXACT\` means the selected captured chunk context has one supported target, or the selected corpus contains one target identity. \`AMBIGUOUS\` preserves multiple compatible variants. \`UNRESOLVED\` means no target is present in the selected authenticated corpus; it is not evidence that the original application failed to resolve it. Route attribution requires captured HTML to reference an authenticated asset that contains the exact provenance-qualified factory identity. API attribution links existing ledgers to enclosing factory ranges and remains static evidence, not a live-service qualification. Exact captures were unavailable for \`/profile/:id\` and \`/portfolio\`; those entries are deliberately empty.\n`;
   return {
     "README.md": readme,
     "SOURCE-MANIFEST.json": sourceManifest,
@@ -644,12 +749,27 @@ export async function buildGraph(root, options = {}) {
     "AMBIGUITIES.json": ambiguities,
     "VERIFY-RESULTS.json": {
       schemaVersion: GRAPH_VERSION,
-      captureObjectsVerified: sourceManifest.length,
-      factoryRangesVerified: selected.reduce(
+      captureObjectsVerified: sourceCache.size,
+      selectedCaptureObjects: sourceManifest.length,
+      factoryRangesVerified: variants.reduce(
         (sum, variant) => sum + variant.origins.length,
         0,
       ),
-      formattedFactoriesParsed: selected.length,
+      selectedFactoryRangesVerified: selected.reduce(
+        (sum, variant) => sum + variant.origins.length,
+        0,
+      ),
+      formattedFactoriesParsed: variants.length,
+      selectedFormattedFactories: selected.length,
+      formattedFactoriesAstAuthenticated: variants.filter(
+        (variant) => variant.authenticityMethod === "CANONICAL_AST",
+      ).length,
+      formattedFactoriesDerivationAuthenticated: variants.filter(
+        (variant) =>
+          variant.authenticityMethod === "EXACT_FORMATTER_DERIVATION",
+      ).length,
+      formattedAuthenticityPolicy:
+        "Complete canonical factory AST, with exact pinned-formatter derivation required when the formatter changes Babel AST shape",
       selectionWithinRange: true,
       unsafePathsRejected: true,
       symlinksRejected: true,
@@ -706,7 +826,7 @@ export async function publishGraph(root, outputRelative, options = {}) {
   return { output, summary: reports["GRAPH-SUMMARY.json"], manifest };
 }
 
-export async function verifyGraph(root, outputRelative) {
+export async function verifyGraph(root, outputRelative, options = {}) {
   const output = await safeFile(root, outputRelative);
   const manifest = JSON.parse(
     await readFile(join(output, "MANIFEST.json"), "utf8"),
@@ -735,9 +855,18 @@ export async function verifyGraph(root, outputRelative) {
       JSON.parse(content.toString("utf8"));
     }
   }
+  const rebuilt = await buildGraph(root, options);
+  for (const entry of manifest.files) {
+    if (!(entry.path in rebuilt))
+      throw new Error(`generated evidence is not reproducible: ${entry.path}`);
+    const bytes = encoded(entry.path, rebuilt[entry.path]);
+    if (bytes.length !== entry.bytes || sha256(bytes) !== entry.sha256)
+      throw new Error(`generated evidence is stale: ${entry.path}`);
+  }
   return {
     files: manifest.files.length,
     schemaVersion: manifest.schemaVersion,
+    sourceRebuildVerified: true,
   };
 }
 
