@@ -480,4 +480,38 @@ class SourceTests(unittest.TestCase):
     def test_v2errors_missing_parent_rejected(self):
         data = self.v2errors_parent(); data.pop('programs/pump/src/sell_v2.rs')
         with self.assertRaises(ValueError): m.v2errors_apply(data)
+    def truncation_parent(self):
+        out = self.root / 'truncation-parent'
+        m.materialize(PARENT, out, 'v2errors814')
+        return {str(p.relative_to(out)): p.read_bytes() for p in out.rglob('*') if p.is_file()}
+    def test_exact_truncation_stage(self):
+        got = m.materialize(PARENT, self.root / 'source', 'truncation815')
+        self.assertEqual(got, json.loads((m.HERE / 'truncation-pins.json').read_text())['source_sha256'])
+        self.assertEqual(len(got), 61)
+    def test_truncation_exact_scope(self):
+        old = self.truncation_parent(); new = m.truncation_apply(old)
+        self.assertEqual({n for n in old if old[n] != new[n]}, {'programs/pump/src/trade_v3.rs'})
+        a = old['programs/pump/src/trade_v3.rs'].splitlines(); b = new['programs/pump/src/trade_v3.rs'].splitlines()
+        self.assertEqual([i + 1 for i in range(len(a)) if a[i] != b[i]], [124])
+        self.assertEqual(a[77], b[77])
+    def test_truncation_callback_and_parent_preserved(self):
+        old = self.truncation_parent(); new = m.truncation_apply(old)
+        lines = new['programs/pump/src/trade_v3.rs'].splitlines()
+        self.assertIn(b'map_err(sell_quote_truncation)?', lines[123])
+        self.assertIn(b'fn sell_quote_truncation(_:core::num::TryFromIntError)', lines[1139])
+        self.assertIn(b'error!(PumpError::Truncation)', lines[1139])
+        self.assertNotIn(b'#[', b'\n'.join(lines[len(old['programs/pump/src/trade_v3.rs'].splitlines()):]))
+        self.assertEqual(new['programs/pump/src/lib.rs'], old['programs/pump/src/lib.rs'])
+        self.assertEqual(new['programs/pump/src/v3_native_transfer_fee.rs'], old['programs/pump/src/v3_native_transfer_fee.rs'])
+    def test_truncation_already_applied_rejected(self):
+        with self.assertRaises(ValueError): m.truncation_apply(m.truncation_apply(self.truncation_parent()))
+    def test_truncation_wrong_parent_rejected(self):
+        data = self.truncation_parent(); data['programs/pump/src/trade_v3.rs'] += b'\n'
+        with self.assertRaises(ValueError): m.truncation_apply(data)
+    def test_truncation_extra_parent_rejected(self):
+        data = self.truncation_parent(); data['extra.rs'] = b''
+        with self.assertRaises(ValueError): m.truncation_apply(data)
+    def test_truncation_missing_parent_rejected(self):
+        data = self.truncation_parent(); data.pop('programs/pump/src/trade_v3.rs')
+        with self.assertRaises(ValueError): m.truncation_apply(data)
 if __name__ == '__main__': unittest.main(argv=['test_materialize.py', *remaining])
