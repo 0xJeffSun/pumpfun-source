@@ -26,6 +26,10 @@ const routes: Record<string, [string, string]> = {
   ],
 };
 
+function routeInfo(path: string) {
+  return Object.hasOwn(routes, path) ? routes[path] : undefined;
+}
+
 type RoutePageProps = {
   params: Promise<{ slug: string[] }>;
   searchParams: Promise<{ q?: string | string[] }>;
@@ -39,14 +43,14 @@ export async function generateMetadata({
   params,
 }: Pick<RoutePageProps, "params">): Promise<Metadata> {
   const { slug } = await params;
-  const info = routes[slug.join("/")];
+  const info = routeInfo(slug.join("/"));
   return { title: info?.[0] ?? "Not found" };
 }
 
 export default async function Page({ params, searchParams }: RoutePageProps) {
   const { slug } = await params;
   const path = slug.join("/");
-  const info = routes[path];
+  const info = routeInfo(path);
   if (!info) notFound();
 
   const rawQuery = (await searchParams).q;
