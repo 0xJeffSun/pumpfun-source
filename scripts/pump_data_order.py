@@ -160,16 +160,15 @@ def sdk_identity(native, profile_name=None, library_directory=None):
     if profile_name is None:
         assert library_directory is None
         return {"profile": None, "sdk_manifest_sha256": digest(before)}
-    assert profile_name == "linux-v1.44-sbf" and library_directory
-    spec_path = HERE / "pump_linux_v144_sbf_libraries.json"
-    spec = json.loads(spec_path.read_text())
+    assert library_directory
+    spec_path, spec = profiles.specification(profile_name)
     libraries = Path(library_directory).resolve()
     profiles.validate_libraries(
         libraries, spec["target_libraries"], spec["empty_directories"]
     )
     for tool, expected in spec["native_tools"].items():
         assert sha(native / tool) == expected
-    prefix = str(profiles.TARGET_LIB) + "/"
+    prefix = str(profiles.target_library_path(spec["target"])) + "/"
     after = {p: v for p, v in before.items() if not p.startswith(prefix)}
     for p in libraries.iterdir():
         if p.is_file():
@@ -237,6 +236,7 @@ def implementation_hashes():
         "pump_text_layout_default.ld",
         "pump_target_library_profile.py",
         "pump_linux_v144_sbf_libraries.json",
+        "pump_linux_v144_sbpf_libraries.json",
         "pump_dependency_cache.py",
     ]
     return {n: sha(HERE / n) for n in names}
@@ -462,7 +462,9 @@ def check_request(
         if k in ("RUSTFLAGS", "CARGO_ENCODED_RUSTFLAGS", "RUSTC_BOOTSTRAP")
         or k.startswith("CARGO_PROFILE_")
     }
-    flags["CARGO_TARGET_SBF_SOLANA_SOLANA_RUSTFLAGS"] = "-Zremap-cwd-prefix="
+    target = p["toolchain"]["profile"]["target"] if p["toolchain"]["profile"] else "sbf-solana-solana"
+    target_flags_key = "CARGO_TARGET_" + target.upper().replace("-", "_") + "_RUSTFLAGS"
+    flags[target_flags_key] = "-Zremap-cwd-prefix="
     assert flags == p["cache_context"]["flags"], "data-order compiler flags differ"
     assert (
         sha(ROOT / "scripts/pump_physical_source_wrapper.py")
