@@ -1,5 +1,4 @@
 {
-  "schema": 1,
   "files": {
     "README.md": "caba722eb4d016883ed536d7b9aa53626b0d895c2a1ffcae23cda568a8efe2eb",
     "producer.py": "9f294eb1bb2f18c22cc2553aa87ecdc5f60a35603f42561ff6a42ee3e5ff5e2a",
@@ -16,12 +15,15 @@
     "runtime/raw-transactions-part8.jsonl.gz": "cb3c8b2bf1f13546c4bfc521a8b65f4a0a8975726277fb0999472fa334617dae",
     "runtime/raw-transactions-part9.jsonl.gz": "3cb6a13ffc6926a431e99ff769dac6b5bb96c9ab8f9d427d9372f1a205aef35b",
     "runtime/report.json.gz": "614e71608869df094bb34a54ad87ec427cd90f8299930291185f3ea218e5587b",
-    "verify.py": "0684208127a545792374d81b2f82bd9826c611ae82448fcf61a24ff76ee92d25"
+    "verify.py": "6dd7facd0bcf965af039d3173c30a6479a69b601d53c6f077fa599a3e690510f"
   },
   "repository_inputs": {
     "evidence/original/pump_amm/deployed.so": "6a7ad34596d83b4c435b32f458a56e718e9f82eb4ad38e4316616d15d24d8ff7",
+    "evidence/upstream/pump_amm.json": "b7d8c57a4d9c4dd0109a9ab893052352333252d4eedced10ac091d4d66cab89b",
+    "research/amm-multi-hop-group-slice-recovery/artifacts/candidate.so.gz": "1f25c51a89ed4c269dd7af1732c4a55dbc3fb908b6c9f5ecac69560cfe1026bd",
+    "research/amm-transfer-fee-diagnostic-recovery/artifacts/candidate.so.gz": "c00c011f12544cb7494e900efd99a3fcee7213a32e0257bf2e8f064d64d73453",
     "scripts/pump_amm_accumulator_differential.py": "ac3a2169dc1c26b7cfa89a131e4c7d69763433e4a31f7799350256154b5a1584",
-    "scripts/pump_amm_admin_differential.py": "cc3834231f951e3dbf36f38504d85f3135c0edf3792fabecd12fae10c493a72b",
-    "evidence/upstream/pump_amm.json": "b7d8c57a4d9c4dd0109a9ab893052352333252d4eedced10ac091d4d66cab89b"
-  }
+    "scripts/pump_amm_admin_differential.py": "cc3834231f951e3dbf36f38504d85f3135c0edf3792fabecd12fae10c493a72b"
+  },
+  "schema": 1
 }
