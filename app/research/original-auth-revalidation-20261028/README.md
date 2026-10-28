@@ -43,4 +43,8 @@ corepack pnpm typecheck
 corepack pnpm verify:evidence
 ```
 
-From the repository root, run `python3 scripts/verify_evidence.py` and `python3 scripts/test_tooling.py`. Focused tests are11 flow/adaptation cases plus11 shared source cases. Full gate results are recorded separately when complete; no fully green aggregate result is asserted while pending.
+From the repository root, run `python3 scripts/verify_evidence.py` and `python3 scripts/test_tooling.py`. Focused tests are11 flow/adaptation cases plus11 shared source cases. Full gate results and exact source/log hashes are recorded in VALIDATION.json.
+
+## Completed gates
+
+The22 focused tests, full app build, aggregate typecheck,698-object app evidence verification,9 root capture checks and6 tooling checks pass. The full app test run passes230 backend tests,60 app Node tests and every focused/Python suite; browser tests finish89/91. Failures are the unchanged leaderboard weekly/realized URL-state race tracked in PR663 and Explore test150 waiting for the no-results state. The latter passes1/1 when isolated. Relevant implementation/test bytes equal maintained main and are hashed in VALIDATION.json; complete stdout from the failed aggregate remains saved. No fully green aggregate result is claimed.
