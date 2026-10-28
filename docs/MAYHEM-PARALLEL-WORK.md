@@ -192,3 +192,7 @@ qualified ordered 141-raw checkpoint. No new normalized body is recovered. The u
 gate returns the direct-closed set to 414, but its complete ELF differs from the
 baseline. Indirect/data closure, initializer qualification on this artifact,
 historical source attribution and whole-original identity remain open.
+
+## 28 October continuation
+
+SweepFees now has a [verified Rent lifetime control](../research/mayhem-current436-sweep-rent-lifetime-20261028/README.md): 8,392/8,400 bytes, 189 bijectively mapped blocks, 51 ordered callees and one opcode-differing block. It retains the qualified frontier but remains a partial candidate without runtime qualification. AMM and V2 work continues on event/key allocation and expression lifetimes; a separate isolated Linux host/dependency build is testing the compiler hypothesis. Private experiments are not completion evidence or replacements for qualified436.

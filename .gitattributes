@@ -1501,3 +1501,7 @@ research/amm-native-transfer-fee-recovery/** -text -whitespace
 repro/pump_amm/private-sweep-recovery-20261027/results/** -whitespace
 repro/pump_amm/private-sweep-recovery-20261027/followup/** -whitespace
 research/amm-fee-value-call-recovery/** -text -whitespace
+
+repro/pump_amm/fee-helper-source-coordinates-20261028/source.patch -whitespace
+research/mayhem-current436-sweep-rent-lifetime-20261028/sweep/source.patch -whitespace
+research/mayhem-current436-sweep-rent-lifetime-20261028/sweep/**/link.map -whitespace

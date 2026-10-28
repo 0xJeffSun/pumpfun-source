@@ -145,6 +145,9 @@ counterpart pairs without claiming complete data or indirect-call identity.
 The [remaining-body review](docs/MAYHEM-COMPLETION.md#retained-partial-source-controls)
 also preserves the latest partial AMM, V2 and SweepFees source controls. Their
 stronger local diagnostics do not add to the 436 matched-window count.
+The [latest SweepFees control](research/mayhem-current436-sweep-rent-lifetime-20261028/README.md)
+preserves that frontier and reduces the 8,400-byte body to an 8,392-byte candidate
+with one opcode-differing CFG block. It remains unmatched and has no fresh runtime qualification.
 
 The [native historical-macro composition](research/mayhem-native-current432-composition/README.md)
 also reproduces 432 normalized windows and 85 raw-local matches in its own

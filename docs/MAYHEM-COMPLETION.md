@@ -107,3 +107,7 @@ replace the qualified build or add a recovered function.
 
 All execution in this work is local. No live-chain deployment or transaction is
 part of the completion claim.
+
+## 28 October SweepFees follow-up
+
+The [Rent lifetime control](../research/mayhem-current436-sweep-rent-lifetime-20261028/README.md) retains all 436/141/429 counts, 4,473 direct edges and 486 Source observations. Its 8,392-byte O0076 candidate maps all 189 CFG blocks bijectively and retains 51 ordered callees and 13 Source values; one initial opcode block and other operands remain unequal. Two root compilations agree. The exact artifact has no fresh runtime qualification. This improves the source diagnostic but leaves all five remaining windows and all completion percentages unchanged.

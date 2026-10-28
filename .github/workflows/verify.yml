@@ -17,6 +17,7 @@ jobs:
           - suite: amm-fee-value-call-recovery
             commands: |
               python -I -B research/amm-fee-value-call-recovery/verify.py
+              python -I -B research/amm-fee-value-call-recovery/test_inventory.py
           - suite: amm-native-transfer-fee-recovery
             commands: |
               python -I -B research/amm-native-transfer-fee-recovery/verify.py
@@ -118,6 +119,8 @@ jobs:
               python -B research/mayhem-current436-v2-controls-20261027/test_verify.py
               python -B research/mayhem-current436-sweep-controls-20261027/verify.py
               python -B research/mayhem-current436-sweep-controls-20261027/test_verify.py
+              python -B research/mayhem-current436-sweep-rent-lifetime-20261028/verify.py
+              python -B research/mayhem-current436-sweep-rent-lifetime-20261028/test_verify.py
           - suite: mayhem-current-native-ownership
             commands: |
               python -B research/mayhem-current-native-ownership-composition/verify.py
