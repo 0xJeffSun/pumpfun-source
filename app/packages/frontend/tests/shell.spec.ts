@@ -64,6 +64,11 @@ test("included routes load with one accurate active navigation item", async ({
       await expect(
         page.getByRole("form", { name: "Load public Solana wallet" }),
       ).toBeVisible();
+    } else if (path === "/mayhem") {
+      await expect(
+        page.locator('[data-product-state="unavailable"]'),
+      ).toHaveCount(0);
+      await expect(page.getByTestId("mayhem-unavailable")).toBeVisible();
     } else {
       await expect(
         page.locator('[data-product-state="unavailable"]'),
