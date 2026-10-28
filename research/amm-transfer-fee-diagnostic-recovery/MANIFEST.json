@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "files": {
-    "README.md": "2c21e5b010675e4641918b553372c8209f1db5e7e56a1b92a13dbc2bda8c37bf",
+    "README.md": "40141b7db872611f9d9143e7012d6bacdaf17c0e863e099fc1dd8049c7c228c1",
     "analysis.py": "c187ce559b0131fa90bfabef6e1f409c0ed9d4b4faae9f236406ac610379e8b4",
     "artifacts/candidate-symbols.so.gz": "28b8fdaa6063f48b81f10526385d1111acf752fe9cd929d460e55773ef7b05fa",
     "artifacts/candidate.so.gz": "c00c011f12544cb7494e900efd99a3fcee7213a32e0257bf2e8f064d64d73453",
@@ -13,7 +13,12 @@
     "runtime/raw-transactions.jsonl.gz": "dab5a5078a44cf5dc70bb6641d86e95b04dfcaa5f900e75523ae896ebb719534",
     "runtime/report.json.gz": "a60b83aba236b774f5ef79c773d48ab7c86082a9b151623b17db757eba473265",
     "runtime_check.py": "53cc6689f744cacc5ac5d308dcfc32f9a25f2e5c6cd14c4b609cf1e7d0bbae63",
-    "test_negative_controls.py": "584640c642747bac74d8fa5f6e7f8edb7c7e64804c695656d0258faf1e437f14",
-    "verify.py": "9b49f98db40c5dce12bce2a8c7d2e1639911004c0d7abdb2b9e3ec22a31495b6"
+    "test_negative_controls.py": "dfa7c1bf587541e66bab8bb52f1133182fe57d908ad14ba0f00ee2588c26f81a",
+    "verify.py": "f493cb2d73005e2b99fbf9d5539aa06838e3585e386e19d7efb9c4f76786071c"
+  },
+  "repository_inputs": {
+    "research/amm-mint-fee-reader-recovery/analysis.py": "492b3fd6cb1f28e06c6a771c07339ae397dc8dc019aafdb71e5b047774c65a63",
+    "research/amm-mint-fee-reader-recovery/elf_reader.py": "247700e9930d5e53daf93a50888ae1e5429f74ccb19155e7a205f72ee21d5883",
+    "repro/pump_amm/v2-mint-clone-recovery-20261028/results/new-proofs/lineage/independent-current/source_fields.py": "1aa5065d238381857d09bbdf0e1313dd0dc30782e6bfd7e321a58764e0156301"
   }
 }

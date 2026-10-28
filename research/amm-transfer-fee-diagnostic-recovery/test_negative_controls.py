@@ -4,7 +4,10 @@ import copy
 import gzip
 import importlib.util
 import json
+import shutil
 import struct
+import tempfile
+from unittest.mock import patch
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
@@ -16,6 +19,59 @@ def module(name, path):
     spec.loader.exec_module(result)
     return result
 
+
+verifier = module("fee_negative_verifier", HERE / "verify.py")
+verifier.verify_packet_inputs()
+integrity_rejected = 0
+with tempfile.TemporaryDirectory(prefix="amm-fee-input-controls-") as temporary:
+    copied = Path(temporary) / "packet"
+    shutil.copytree(HERE, copied)
+    extra = copied / "extra/MANIFEST.json"
+    extra.parent.mkdir()
+    extra.write_text("{}")
+    with patch.object(verifier, "HERE", copied):
+        try:
+            verifier.verify_packet_inputs()
+        except AssertionError as error:
+            assert str(error) == "['extra/MANIFEST.json']"
+            integrity_rejected += 1
+        else:
+            raise AssertionError("unlisted nested manifest was accepted")
+    extra.unlink()
+    extra.parent.rmdir()
+    copied_manifest = copied / "MANIFEST.json"
+    saved_manifest = Path(temporary) / "original-manifest.json"
+    copied_manifest.rename(saved_manifest)
+    copied_manifest.symlink_to(saved_manifest)
+    real_read_text = Path.read_text
+    def reject_manifest_read(path, *args, **kwargs):
+        if path == copied_manifest:
+            raise RuntimeError("symlink manifest read before filesystem validation")
+        return real_read_text(path, *args, **kwargs)
+    with patch.object(verifier, "HERE", copied), patch.object(Path, "read_text", reject_manifest_read):
+        try:
+            verifier.verify_packet_inputs()
+        except AssertionError:
+            integrity_rejected += 1
+        else:
+            raise AssertionError("symlink manifest was accepted")
+
+real_read_bytes = Path.read_bytes
+manifest = json.loads((HERE / "MANIFEST.json").read_text())
+for name in manifest["repository_inputs"]:
+    target = ROOT / name
+    def changed_helper(path, target=target):
+        data = real_read_bytes(path)
+        return data + b"\n# altered analysis input\n" if path == target else data
+    with patch.object(Path, "read_bytes", changed_helper):
+        try:
+            verifier.verify_packet_inputs()
+        except AssertionError as error:
+            assert str(error) == name
+            integrity_rejected += 1
+        else:
+            raise AssertionError("altered repository helper was accepted: " + name)
+assert integrity_rejected == 5
 
 analysis = module("fee_negative_analysis", HERE / "analysis.py")
 parent = module("fee_negative_parent", ROOT / "research/amm-mint-fee-reader-recovery/analysis.py")
@@ -60,4 +116,5 @@ else:
 
 assert rejected == 5
 print("PASS: four source-line mutations and one runtime-diagnostic mutation rejected; "
-      "relocation normalization control behaved as specified")
+      "relocation normalization control behaved as specified; "
+      "nested/symlink manifests and three altered repository helpers rejected")

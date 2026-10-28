@@ -24,16 +24,32 @@ def module(name, path):
     return result
 
 
-def main():
-    manifest = json.loads((HERE / "MANIFEST.json").read_text())
+def verify_packet_inputs():
     paths = list(HERE.rglob("*"))
     assert not any(path.is_symlink() for path in paths)
     assert all(path.is_file() or path.is_dir() for path in paths)
+    manifest_path = HERE / "MANIFEST.json"
+    assert manifest_path.is_file()
+    manifest = json.loads(manifest_path.read_text())
     files = {path.relative_to(HERE).as_posix() for path in paths
-             if path.is_file() and path.name != "MANIFEST.json"}
+             if path.is_file() and path != manifest_path}
     assert files == set(manifest["files"]), sorted(files ^ set(manifest["files"]))
     for name, digest in manifest["files"].items():
         assert sha((HERE / name).read_bytes()) == digest, name
+    assert set(manifest["repository_inputs"]) == {
+        "research/amm-mint-fee-reader-recovery/analysis.py",
+        "research/amm-mint-fee-reader-recovery/elf_reader.py",
+        "repro/pump_amm/v2-mint-clone-recovery-20261028/results/"
+        "new-proofs/lineage/independent-current/source_fields.py",
+    }
+    for name, digest in manifest["repository_inputs"].items():
+        path = ROOT / name
+        assert path.is_file() and not path.is_symlink(), name
+        assert sha(path.read_bytes()) == digest, name
+
+
+def main():
+    verify_packet_inputs()
 
     source = ROOT / "programs/pump-amm/src/utils/transfer_fee.rs"
     assert sha(source.read_bytes()) == "6685421e57809ca18c04abe381a9466141c3075d384cd3e88b429e3e71760701"

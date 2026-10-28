@@ -123,6 +123,9 @@ call, and validates all 648 signed receipts. Negative controls mutate each of
 the four line immediates and one retained runtime diagnostic in memory; all are
 rejected. A relocated-address mutation remains normalized-equal while becoming
 raw-unequal, demonstrating the intended normalization boundary.
+Packet-integrity controls also reject an unlisted nested manifest, a symlinked
+root manifest before reading it, and altered bytes in each of the three pinned
+repository analysis helpers before importing them.
 
 The standalone TLV decoder, raw/whole-ELF equality, complete transitive call/data
 closure and 120 other unmatched original windows remain open. Lines 49 and 57
