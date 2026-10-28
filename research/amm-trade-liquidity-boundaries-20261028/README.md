@@ -19,8 +19,9 @@ signed executions: `buy_v2` with base in 10^10, `sell_v2` with base
 in 10^9, `deposit` with LP amount 0 and limits u64::MAX, and
 `withdraw` with LP amount 0 and limits 0, on the repository's own
 trade-v2 and liquidity differential harnesses. The clock is slot
-100, epoch 0. `producer.py` reproduces every receipt from the
-repository files.
+100, epoch 0. `producer.py` generated these receipts on the author's machine; as committed it expects a
+checkout at `~/workspace/pumpfun-sparse` and the #424/#427 `candidate.so.gz` images gunzipped
+into `~/workspace/slop-verify`, so it does not run from this packet unmodified.
 
 | Case | Limit / amount | Result |
 | --- | ---: | --- |

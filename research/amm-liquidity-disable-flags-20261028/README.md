@@ -5,9 +5,9 @@
 The global config's `disable_flags` byte (offset 56) gates each
 instruction by bit: 1 create, 2 deposit, 4 withdraw, 8 buy, 16 sell.
 Bit 2 gates deposit (6018 DisabledDeposit) and bit 4 gates withdraw
-(6019 DisabledWithdraw). Bits 32, 64 and 128 gate nothing, and the
-create bit (1) does not touch withdraw, so a config that sets only
-an unused or unrelated bit leaves liquidity fully live. The gate is
+(6019 DisabledWithdraw). Bit 128 does not gate deposit, and the
+create bit (1) does not gate withdraw; bits 32 and 64 and the
+cross-bit pairs (2 on withdraw, 4 on deposit) are not executed here. The gate is
 checked before any reserve math, and the failure is a clean rollback
 with a named error.
 
@@ -19,7 +19,9 @@ u64::MAX, and `withdraw` with LP amount 10^9 and limits 0, on the
 repository's own liquidity differential harness
 (`scripts/pump_amm_liquidity_differential.py`), with the config's
 `disable_flags` byte patched per case. The clock is slot 100, epoch
-0. `producer.py` reproduces every receipt from the repository files.
+0. `producer.py` generated these receipts on the author's machine; as committed it expects a
+checkout at `~/workspace/pumpfun-sparse` and the #424/#427 `candidate.so.gz` images gunzipped
+into `~/workspace/slop-verify`, so it does not run from this packet unmodified.
 
 | Case | Flags | Result |
 | --- | ---: | --- |
@@ -42,8 +44,9 @@ GitHub's 25MB web-upload limit; `verify.py` reads them in order.
 
 ## Result
 
-- **The bit map is exact**: 2 gates deposit only, 4 gates withdraw
-  only; the other liquidity instruction is untouched by each bit.
+- **Each liquidity bit gates its instruction**: 2 gates deposit
+  (6018) and 4 gates withdraw (6019). Cross-bit inertness is not
+  executed in this packet.
 - **Unused and unrelated bits are inert**: flags 128 and the
   create bit 1 produce byte-identical success to flags 0.
 - **Deposit/withdraw rounding is asymmetric by one**: deposit
@@ -58,7 +61,6 @@ GitHub's 25MB web-upload limit; `verify.py` reads them in order.
   are the merged #424 and #427 artifacts; only the new runtime cases are
   added.
 - The trade bits (8 and 16) and the create bit (1) on create itself are
-  pinned by the companion trade packet and the create differential
-  tests; this packet covers liquidity only. No live transaction was
+  not covered by this packet (see the create differential tests); this packet covers liquidity only. No live transaction was
   submitted. All executions are offline LiteSVM replays with normally
   signed transactions.

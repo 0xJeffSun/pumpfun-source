@@ -22,7 +22,9 @@ case 155) with only the quote-mint TLV fee entry changed: both the older
 and the newer schedule carry the case's bps and maximum fee. The payer is a
 fresh deterministic keypair (seed byte 77) replacing the template payer
 everywhere it appears; the clock is slot 100, epoch 0, as in the #427 matrix.
-`producer.py` reproduces every receipt from the repository files.
+`producer.py` generated these receipts on the author's machine; as committed it expects a
+checkout at `~/workspace/pumpfun-sparse` and the #424/#427 `candidate.so.gz` images gunzipped
+into `~/workspace/slop-verify`, so it does not run from this packet unmodified.
 
 | Case | Instruction | bps | Amount | Original | Control | Candidate |
 | --- | --- | ---: | ---: | ---: | ---: | ---: |

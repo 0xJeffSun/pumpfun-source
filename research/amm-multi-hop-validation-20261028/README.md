@@ -12,8 +12,9 @@ zero errors are direction-aware, and whether two hops beat one.
 Ten fresh-VM triples (original / #424 control / #427 candidate),
 30 signed executions on the repository's own multi-hop harness
 (`scripts/pump_amm_multi_hop_differential.py`). The clock is slot
-100, epoch 0. `producer.py` reproduces every receipt from the
-repository files.
+100, epoch 0. `producer.py` generated these receipts on the author's machine; as committed it expects a
+checkout at `~/workspace/pumpfun-sparse` and the #424/#427 `candidate.so.gz` images gunzipped
+into `~/workspace/slop-verify`, so it does not run from this packet unmodified.
 
 | Case | Result |
 | --- | --- |
