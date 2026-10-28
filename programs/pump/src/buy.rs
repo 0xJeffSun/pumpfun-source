@@ -31,9 +31,24 @@ pub fn execute<'info,const EXACT:bool>(ctx:Context<'_,'_,'_,'info,LegacyBuy<'inf
  let quote=if !exact{pre_quote}else if computed<=c.real_token_reserves{adjusted}else{add(narrow(amount as u128*c.virtual_quote_reserves as u128/(c.virtual_token_reserves as u128-amount as u128))?,1)?};
  let fq=if exact && computed<=c.real_token_reserves{raw_quote}else{quote};let pf=if exact{ceil_fee(fq,protocol_fee_bps)?}else{initial_protocol_fee};let cf=if exact{ceil_fee(fq,cb)?}else{initial_creator_fee};
  if exact{if !(partial && computed>c.real_token_reserves){require_gte!(amount,limit,PumpError::BuySlippageBelowMinTokensOut);}}else{require_gte!(limit,add(add(quote,pf)?,cf)?,PumpError::TooMuchSolRequired);}
- let vb=sub(c.virtual_token_reserves,amount)?;let vq=add(c.virtual_quote_reserves,quote)?;let rb=sub(c.real_token_reserves,amount)?;let rq=add(c.real_quote_reserves,quote)?;
+ a.bonding_curve.virtual_token_reserves=sub(a.bonding_curve.virtual_token_reserves,amount)?;
+ a.bonding_curve.virtual_quote_reserves=add(a.bonding_curve.virtual_quote_reserves,quote)?;
+ a.bonding_curve.real_token_reserves=sub(a.bonding_curve.real_token_reserves,amount)?;
+ a.bonding_curve.real_quote_reserves=add(a.bonding_curve.real_quote_reserves,quote)?;
  let mint=a.mint.key();let bump=[ctx.bumps.bonding_curve];let seeds:&[&[u8]]=&[b"bonding-curve",mint.as_ref(),&bump];
  crate::buy_v2::token_transfers::transfer_curve_tokens_ref(&a.token_program,&a.associated_bonding_curve,&a.associated_user,&&a.bonding_curve,a.mint.decimals,a.mint.as_ref(),amount,&[seeds])?;
+ if a.user.key()==a.global.whitelist_pda {
+  a.associated_bonding_curve.reload()?;
+  a.associated_user.reload()?;
+  let quote_mint=a.bonding_curve.quote_mint;
+  a.bonding_curve.sync_virtual_quote_reserves(
+   a.associated_bonding_curve.amount,
+   a.associated_user.amount,
+   &quote_mint,
+  )?;
+ }
+ let c=&a.bonding_curve;
+ let vb=c.virtual_token_reserves;let vq=c.virtual_quote_reserves;let rb=c.real_token_reserves;let rq=c.real_quote_reserves;
  let v2=rem.get(0).ok_or_else(||error!(PumpError::InvalidBondingCurveV2))?;require!(v2.key()==Pubkey::find_program_address(&[b"bonding-curve-v2",a.mint.key().as_ref()],&crate::ID).0,PumpError::InvalidBondingCurveV2);
  let bbps=if c.is_mayhem_mode{0}else{a.global.buyback_basis_points};
  let cashback_coin=c.is_cashback_coin;
@@ -46,7 +61,7 @@ pub fn execute<'info,const EXACT:bool>(ctx:Context<'_,'_,'_,'info,LegacyBuy<'inf
  if bf>0{crate::user_quote_payments::transfer_native_unchecked(a.system_program.as_ref(),&a.user,bb,bf)?;}
  if protocol_fee>0{anchor_lang::system_program::transfer(CpiContext::new(a.system_program.to_account_info(),anchor_lang::system_program::Transfer{from:a.user.to_account_info(),to:a.fee_recipient.to_account_info()}),protocol_fee)?;}
  let ev=TradeEvent{mint:a.mint.key(),sol_amount:quote,token_amount:amount,is_buy:true,user:a.user.key(),timestamp:Clock::get()?.unix_timestamp,virtual_sol_reserves:vq,virtual_token_reserves:vb,real_sol_reserves:rq,real_token_reserves:rb,fee_recipient:a.fee_recipient.key(),fee_basis_points:protocol_fee_bps,fee:pf,creator:c.creator,creator_fee_basis_points:if c.is_cashback_coin{0}else{creator_fee_bps},creator_fee:if c.is_cashback_coin{0}else{cf},track_volume:track,total_unclaimed_tokens:a.user_volume_accumulator.total_unclaimed_tokens,total_claimed_tokens:a.user_volume_accumulator.total_claimed_tokens,current_sol_volume:a.user_volume_accumulator.current_sol_volume,last_update_timestamp:a.user_volume_accumulator.last_update_timestamp,ix_name:if exact{"buy_exact_sol_in".into()}else{"buy".into()},mayhem_mode:c.is_mayhem_mode,cashback_fee_basis_points:if c.is_cashback_coin{cb}else{0},cashback:if c.is_cashback_coin{cf}else{0},buyback_fee_basis_points:bbps,buyback_fee:bf,shareholders:vec![],quote_mint:Pubkey::default(),quote_amount:quote,virtual_quote_reserves:vq,real_quote_reserves:rq,holder_rewards_bps:if c.is_holder_reward{cb}else{0},holder_rewards:if c.is_holder_reward{cf}else{0},creator_fee_unclaimed:c.creator_fee,unparsed_trailing_field:0};
- let c=&mut a.bonding_curve;c.virtual_token_reserves=vb;c.virtual_quote_reserves=vq;c.real_token_reserves=rb;c.real_quote_reserves=rq;
+ let c=&mut a.bonding_curve;
  let complete=if rb==0{c.complete=true;Some(crate::trade_types::CompleteEvent{user:a.user.key(),mint:a.mint.key(),bonding_curve:a.bonding_curve.key(),timestamp:Clock::get()?.unix_timestamp,quote_mint:Pubkey::default()})}else{None};
  emit!(ev.clone());emit_cpi!(ev);if let Some(event)=complete{emit!(event.clone());emit_cpi!(event);}Ok(())
 }
