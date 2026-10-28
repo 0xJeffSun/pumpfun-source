@@ -1,5 +1,11 @@
 # Trace Legacy Sell price arithmetic through native lowering
 
+The subsequent [ordinary source-order control](guard/README.md) moves price
+before `checked_mul`. It restores both the original seven-callee prefix and
+nonzero overflow branch direction, with repeated complete outputs. A separate
+Option projection does not do so. Error-block placement and the full handler
+remain unmatched; the earlier overflow evidence below is retained unchanged.
+
 The original O0082 calculates price before testing a retained low-bit flag.
 The selected PR #330 source's `checked_mul` form tests its overflow flag first;
 its selected machine instructions also divide the tolerance product before

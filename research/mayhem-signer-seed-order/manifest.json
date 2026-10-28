@@ -844,9 +844,337 @@
       "bytes": 2051,
       "sha256": "fc6fbec27e5867fe57005e7138e80d19da82a8475184721906a331cecb0232d6"
     },
+    "composition/arithmetic/guard/builds/checked-price-first-late/candidate-v154-strip.so.gz": {
+      "bytes": 168243,
+      "sha256": "6ff68f4c38d48f86112e2cb4192394c07eb29108184f434245df1192a3e0746c"
+    },
+    "composition/arithmetic/guard/builds/checked-price-first-late/launch.json.gz": {
+      "bytes": 12657,
+      "sha256": "7f7ee6bb8ef3b7e214659d1a60700667c127a5d294d526ee02d5764c7da8508e"
+    },
+    "composition/arithmetic/guard/builds/checked-price-first-late/link/exit-code.txt.gz": {
+      "bytes": 22,
+      "sha256": "89ed3b723e0e40d8957a2df55fcb04d57b6d95fa665c5fe67b098df7f29694ae"
+    },
+    "composition/arithmetic/guard/builds/checked-price-first-late/link/forwarded.rsp.gz": {
+      "bytes": 2288,
+      "sha256": "07ba830101a15ca2a0bce95ed8ba381679892004748e8835dd94c410ef637a5c"
+    },
+    "composition/arithmetic/guard/builds/checked-price-first-late/link/input-10.bin.gz": {
+      "bytes": 292,
+      "sha256": "5c9ae372a006a528eebe8b8870fd43e776b5d82aa3f9d52dae066cd39f903ce2"
+    },
+    "composition/arithmetic/guard/builds/checked-price-first-late/link/input-11.bin.gz": {
+      "bytes": 204519,
+      "sha256": "9fa96c6f19243a82fecff03fab6a90fa04d5b2b291d93e1f87c9a67cf8567020"
+    },
+    "composition/arithmetic/guard/builds/checked-price-first-late/link/input-12.bin.gz": {
+      "bytes": 445,
+      "sha256": "de4b655de59850dd26349ecef62f3c6adaa3880d6140ed4e32bfd117e13af7d1"
+    },
+    "composition/arithmetic/guard/builds/checked-price-first-late/link/input-2.bin.gz": {
+      "bytes": 75,
+      "sha256": "46df9abb7321f0c19aefb3ca45a34c7e4050405808a63b6ce6e7008a9fcfd414"
+    },
+    "composition/arithmetic/guard/builds/checked-price-first-late/link/invocation.json.gz": {
+      "bytes": 3647,
+      "sha256": "5bfa9fefca32cc3c338d7de6cc089c34a31e32d999cb892129ec432cde323bdf"
+    },
+    "composition/arithmetic/guard/builds/checked-price-first-late/link/link.map.gz": {
+      "bytes": 44073,
+      "sha256": "0e65812da41dce25fd0a4278ea1e1d4db90b7e4a141d268469556365a3c2c095"
+    },
+    "composition/arithmetic/guard/builds/checked-price-first-late/link/os-arguments.json.gz": {
+      "bytes": 192,
+      "sha256": "8a411ba9995f839567f7ee013d3a3e70667cd28597efaf712c479f74fd1a44a5"
+    },
+    "composition/arithmetic/guard/builds/checked-price-first-late/link/response.bin.gz": {
+      "bytes": 2267,
+      "sha256": "10308bba40fb432cb74ddd9263d795d6a2e46700b5db3be1fa606aa95fb26b37"
+    },
+    "composition/arithmetic/guard/builds/checked-price-first-late/result.json.gz": {
+      "bytes": 510,
+      "sha256": "9a688ec9a55221d5ee742ea97534089146222a73dd3b7e7b8636b3a696c7057b"
+    },
+    "composition/arithmetic/guard/builds/checked-price-first-late/stderr.log.gz": {
+      "bytes": 40588,
+      "sha256": "5792b59f673cfb6bd82ef2b1abd48d0816f5b74f0474b01ce1274757cb281be2"
+    },
+    "composition/arithmetic/guard/builds/checked-price-first-late/stdout.log.gz": {
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    "composition/arithmetic/guard/builds/checked-price-first-late/strip.stderr.log.gz": {
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    "composition/arithmetic/guard/builds/checked-price-first-late/strip.stdout.log.gz": {
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    "composition/arithmetic/guard/builds/checked-price-first-late/symbols.so.gz": {
+      "bytes": 196208,
+      "sha256": "62dfa4c00547d8fafa4ce1f100f56f14986231dee6dfb0beba15ad0fc80a9ea1"
+    },
+    "composition/arithmetic/guard/builds/checked-price-first-late-repeat/candidate-v154-strip.so.gz": {
+      "bytes": 168243,
+      "sha256": "6ff68f4c38d48f86112e2cb4192394c07eb29108184f434245df1192a3e0746c"
+    },
+    "composition/arithmetic/guard/builds/checked-price-first-late-repeat/launch.json.gz": {
+      "bytes": 12568,
+      "sha256": "6235916fa4dc7c93000c0dc6865058e46cebcd7624bbdf8f281a1f4085bbbc85"
+    },
+    "composition/arithmetic/guard/builds/checked-price-first-late-repeat/link/exit-code.txt.gz": {
+      "bytes": 22,
+      "sha256": "89ed3b723e0e40d8957a2df55fcb04d57b6d95fa665c5fe67b098df7f29694ae"
+    },
+    "composition/arithmetic/guard/builds/checked-price-first-late-repeat/link/forwarded.rsp.gz": {
+      "bytes": 2294,
+      "sha256": "826a35ba5914151253f2fb86e18508698a6c822b8fb5d40e76a4fa7eab352f9a"
+    },
+    "composition/arithmetic/guard/builds/checked-price-first-late-repeat/link/input-10.bin.gz": {
+      "bytes": 292,
+      "sha256": "5c9ae372a006a528eebe8b8870fd43e776b5d82aa3f9d52dae066cd39f903ce2"
+    },
+    "composition/arithmetic/guard/builds/checked-price-first-late-repeat/link/input-11.bin.gz": {
+      "bytes": 204519,
+      "sha256": "9fa96c6f19243a82fecff03fab6a90fa04d5b2b291d93e1f87c9a67cf8567020"
+    },
+    "composition/arithmetic/guard/builds/checked-price-first-late-repeat/link/input-12.bin.gz": {
+      "bytes": 445,
+      "sha256": "de4b655de59850dd26349ecef62f3c6adaa3880d6140ed4e32bfd117e13af7d1"
+    },
+    "composition/arithmetic/guard/builds/checked-price-first-late-repeat/link/input-2.bin.gz": {
+      "bytes": 75,
+      "sha256": "46df9abb7321f0c19aefb3ca45a34c7e4050405808a63b6ce6e7008a9fcfd414"
+    },
+    "composition/arithmetic/guard/builds/checked-price-first-late-repeat/link/invocation.json.gz": {
+      "bytes": 3652,
+      "sha256": "825b8ad041ec1964293081d550007c0c5d7721604664ff70f11ae1f7f6bf139c"
+    },
+    "composition/arithmetic/guard/builds/checked-price-first-late-repeat/link/link.map.gz": {
+      "bytes": 44140,
+      "sha256": "7131d7e1d5daa0d8bab1781af2ac864c373f27a54c92d82edb09fa5f9b15aafc"
+    },
+    "composition/arithmetic/guard/builds/checked-price-first-late-repeat/link/os-arguments.json.gz": {
+      "bytes": 197,
+      "sha256": "82c72da1f65983503b890e389029bcb67144673cbe64522a131736c77eb5b1e2"
+    },
+    "composition/arithmetic/guard/builds/checked-price-first-late-repeat/link/response.bin.gz": {
+      "bytes": 2274,
+      "sha256": "2d11a401b49384b6be4fa651d01e0ce800e9619b3f7d6d1ad98b9932e335d20a"
+    },
+    "composition/arithmetic/guard/builds/checked-price-first-late-repeat/result.json.gz": {
+      "bytes": 513,
+      "sha256": "0a2bd89d7a35e028df8dc1c80a38e6dc5a938d94d3e9de26efb00a1b18aa9bb1"
+    },
+    "composition/arithmetic/guard/builds/checked-price-first-late-repeat/stderr.log.gz": {
+      "bytes": 7438,
+      "sha256": "dc598e9d47c6552763da67ab8e891447ef3b4c3f2e51017490afdd56512daeeb"
+    },
+    "composition/arithmetic/guard/builds/checked-price-first-late-repeat/stdout.log.gz": {
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    "composition/arithmetic/guard/builds/checked-price-first-late-repeat/strip.stderr.log.gz": {
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    "composition/arithmetic/guard/builds/checked-price-first-late-repeat/strip.stdout.log.gz": {
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    "composition/arithmetic/guard/builds/checked-price-first-late-repeat/symbols.so.gz": {
+      "bytes": 196208,
+      "sha256": "62dfa4c00547d8fafa4ce1f100f56f14986231dee6dfb0beba15ad0fc80a9ea1"
+    },
+    "composition/arithmetic/guard/builds/option-projection-late/candidate-v154-strip.so.gz": {
+      "bytes": 168240,
+      "sha256": "a4ccb639830b91271c55db5b56a81e242d0c84b6b83f4051a274b239070ef9b8"
+    },
+    "composition/arithmetic/guard/builds/option-projection-late/launch.json.gz": {
+      "bytes": 12716,
+      "sha256": "be8435ad3bba50cb56aeefb463aaef0d4f7a7c7cf7b11b83156e481ed10aa442"
+    },
+    "composition/arithmetic/guard/builds/option-projection-late/link/exit-code.txt.gz": {
+      "bytes": 22,
+      "sha256": "89ed3b723e0e40d8957a2df55fcb04d57b6d95fa665c5fe67b098df7f29694ae"
+    },
+    "composition/arithmetic/guard/builds/option-projection-late/link/forwarded.rsp.gz": {
+      "bytes": 2284,
+      "sha256": "cc1937cbea092c5b95d29199853fc51c7527f23d69dc7f812bc5be6b2507b559"
+    },
+    "composition/arithmetic/guard/builds/option-projection-late/link/input-10.bin.gz": {
+      "bytes": 292,
+      "sha256": "5c9ae372a006a528eebe8b8870fd43e776b5d82aa3f9d52dae066cd39f903ce2"
+    },
+    "composition/arithmetic/guard/builds/option-projection-late/link/input-11.bin.gz": {
+      "bytes": 204518,
+      "sha256": "47bb4b375db1d71798b25e21b069f8e99d549ad44f6eb2f076bc51b3a301eaa3"
+    },
+    "composition/arithmetic/guard/builds/option-projection-late/link/input-12.bin.gz": {
+      "bytes": 445,
+      "sha256": "de4b655de59850dd26349ecef62f3c6adaa3880d6140ed4e32bfd117e13af7d1"
+    },
+    "composition/arithmetic/guard/builds/option-projection-late/link/input-2.bin.gz": {
+      "bytes": 75,
+      "sha256": "46df9abb7321f0c19aefb3ca45a34c7e4050405808a63b6ce6e7008a9fcfd414"
+    },
+    "composition/arithmetic/guard/builds/option-projection-late/link/invocation.json.gz": {
+      "bytes": 3643,
+      "sha256": "be624007c7a0c562ea224fca98952d69a24a4c440be82bff7fcfda318be335f2"
+    },
+    "composition/arithmetic/guard/builds/option-projection-late/link/link.map.gz": {
+      "bytes": 44067,
+      "sha256": "5a05f960bb06505eb1ecf693ff07961cf72c8c9874f821ef58ca468e977c260b"
+    },
+    "composition/arithmetic/guard/builds/option-projection-late/link/os-arguments.json.gz": {
+      "bytes": 191,
+      "sha256": "8267da01ef7adad4f367bfebe881c79fd83ff71752ad4ae058c59456bf80a5a6"
+    },
+    "composition/arithmetic/guard/builds/option-projection-late/link/response.bin.gz": {
+      "bytes": 2264,
+      "sha256": "9c38ecc97cb6d371fd22e544de21f1b680b8a188148e2de820bf413a1fbb2dc6"
+    },
+    "composition/arithmetic/guard/builds/option-projection-late/result.json.gz": {
+      "bytes": 504,
+      "sha256": "4532daa14e4d549ae3128e56d18321655bc577faee25d433484dd2baed13624f"
+    },
+    "composition/arithmetic/guard/builds/option-projection-late/stderr.log.gz": {
+      "bytes": 40571,
+      "sha256": "ab57fb3175fb703c255dc03e26080868567bfcd82d86c540380ee5819f5cbf74"
+    },
+    "composition/arithmetic/guard/builds/option-projection-late/stdout.log.gz": {
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    "composition/arithmetic/guard/builds/option-projection-late/strip.stderr.log.gz": {
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    "composition/arithmetic/guard/builds/option-projection-late/strip.stdout.log.gz": {
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    "composition/arithmetic/guard/builds/option-projection-late/symbols.so.gz": {
+      "bytes": 196198,
+      "sha256": "041f1a6efcaee208ae71ce1a48b73ee1fa10fd0e11ca8537aa1dbee1a227dc95"
+    },
+    "composition/arithmetic/guard/README.md": {
+      "bytes": 5202,
+      "sha256": "b0e65ffcb3281ce98331929a4488ebe097a0a64e602624822526441ad47a751c"
+    },
+    "composition/arithmetic/guard/rebuild-validation/comparison.json.gz": {
+      "bytes": 322,
+      "sha256": "fcbdcf50065b4085a69c588d8cecfe8e1b1260019f0d21ee824275ae05da7e4a"
+    },
+    "composition/arithmetic/guard/rebuild-validation/launch.json.gz": {
+      "bytes": 5483,
+      "sha256": "5aa7ad0ebad3df36df7f3725e768091cf65ad9ecb64a20977138e7631de8da15"
+    },
+    "composition/arithmetic/guard/rebuild-validation/link/exit-code.txt.gz": {
+      "bytes": 22,
+      "sha256": "89ed3b723e0e40d8957a2df55fcb04d57b6d95fa665c5fe67b098df7f29694ae"
+    },
+    "composition/arithmetic/guard/rebuild-validation/link/forwarded.rsp.gz": {
+      "bytes": 2273,
+      "sha256": "00080dad1ac17de314f25a11c92373cdacab146ebd003db9b572d5912428500c"
+    },
+    "composition/arithmetic/guard/rebuild-validation/link/input-10.bin.gz": {
+      "bytes": 292,
+      "sha256": "5c9ae372a006a528eebe8b8870fd43e776b5d82aa3f9d52dae066cd39f903ce2"
+    },
+    "composition/arithmetic/guard/rebuild-validation/link/input-11.bin.gz": {
+      "bytes": 204519,
+      "sha256": "9fa96c6f19243a82fecff03fab6a90fa04d5b2b291d93e1f87c9a67cf8567020"
+    },
+    "composition/arithmetic/guard/rebuild-validation/link/input-12.bin.gz": {
+      "bytes": 445,
+      "sha256": "de4b655de59850dd26349ecef62f3c6adaa3880d6140ed4e32bfd117e13af7d1"
+    },
+    "composition/arithmetic/guard/rebuild-validation/link/input-2.bin.gz": {
+      "bytes": 75,
+      "sha256": "46df9abb7321f0c19aefb3ca45a34c7e4050405808a63b6ce6e7008a9fcfd414"
+    },
+    "composition/arithmetic/guard/rebuild-validation/link/invocation.json.gz": {
+      "bytes": 3625,
+      "sha256": "a8bb95184404b8b2f09af5edab31585dbd354c2ff1cc47f959ba32639f36b64b"
+    },
+    "composition/arithmetic/guard/rebuild-validation/link/link.map.gz": {
+      "bytes": 44125,
+      "sha256": "5321b7161ff871dc6a6b571c6b848298d366574ecb9fd6380a87ae0585e166b7"
+    },
+    "composition/arithmetic/guard/rebuild-validation/link/os-arguments.json.gz": {
+      "bytes": 198,
+      "sha256": "eb313924d463406212251a6603517b94b8ce012a17b534eae1d5df6b7292f5b8"
+    },
+    "composition/arithmetic/guard/rebuild-validation/link/response.bin.gz": {
+      "bytes": 2250,
+      "sha256": "77f8e6ae0c57c84df94c8837afc483e39b5d8d659ccd6f608385c2847fc86b1e"
+    },
+    "composition/arithmetic/guard/rebuild-validation/linker-compile.stderr.log.gz": {
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    "composition/arithmetic/guard/rebuild-validation/linker-compile.stdout.log.gz": {
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    "composition/arithmetic/guard/rebuild-validation/result.json.gz": {
+      "bytes": 732,
+      "sha256": "2a810f2a53007a27b4d24823159b062bc88cf6bdaaee1911696eb0c01fd78e8e"
+    },
+    "composition/arithmetic/guard/rebuild-validation/stderr.log.gz": {
+      "bytes": 25416,
+      "sha256": "e6717543627b2797ae1c901091a6a3b2ab145ea089991660214ddc42667af13a"
+    },
+    "composition/arithmetic/guard/rebuild-validation/stdout.log.gz": {
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    "composition/arithmetic/guard/rebuild-validation/strip.stderr.log.gz": {
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    "composition/arithmetic/guard/rebuild-validation/strip.stdout.log.gz": {
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    "composition/arithmetic/guard/rebuild-validation/wrapper-compile.stderr.log.gz": {
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    "composition/arithmetic/guard/rebuild-validation/wrapper-compile.stdout.log.gz": {
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    "composition/arithmetic/guard/rebuild-validation/wrapper-records.tar.gz": {
+      "bytes": 44753,
+      "sha256": "16e4f66dcf3fb601d687b1a4e7467035253471e4d9a5dee8e1751a2abd7faa9e"
+    },
+    "composition/arithmetic/guard/recorded-producer.py": {
+      "bytes": 4673,
+      "sha256": "ff0097c6ddc886bd03566e0a154b22c15566d42fe611e52442e99da68aec67ae"
+    },
+    "composition/arithmetic/guard/report.json.gz": {
+      "bytes": 46140,
+      "sha256": "1506447ceba8cad43364efef085bb157986b2d1917d2f44331d06c65335d4f51"
+    },
+    "composition/arithmetic/guard/sources/checked-price-first-late.rs": {
+      "bytes": 13240,
+      "sha256": "7258e03f81139f3f7c6d3dc9e118955dd3afc73ecf37b85536c476793b8d526c"
+    },
+    "composition/arithmetic/guard/sources/option-projection-late.rs": {
+      "bytes": 13278,
+      "sha256": "c8d33c5ab8457ec5e500648079d1ba24d9342fda54a806a4426ae90a14d81f95"
+    },
+    "composition/arithmetic/guard/verify.py": {
+      "bytes": 11916,
+      "sha256": "99ea4d8aebc13c1f152fe9ee5337866e4a3708a94823f367e1c7fc1f3d158573"
+    },
     "composition/arithmetic/README.md": {
-      "bytes": 8159,
-      "sha256": "f1750d5bf5626532c8fcfbc6145949b2b1cc0c8bc82a4c1217172e9c726ce34f"
+      "bytes": 8544,
+      "sha256": "0c5c0627e7af7f4100c4e14087a02020d6ae1d049f9537613b176e19d9205f05"
     },
     "composition/arithmetic/rebuild-validation/comparison.json.gz": {
       "bytes": 313,
@@ -937,8 +1265,8 @@
       "sha256": "faa3d106af62eeff23d903b8248a5055fce34f39f44eb0d7dc98f27802daa9d2"
     },
     "composition/arithmetic/rebuild.py": {
-      "bytes": 2142,
-      "sha256": "0ad824c83e602ea9ee36fcbf09cc05f517ce26b65d9bfaea589eca6324c54a47"
+      "bytes": 2458,
+      "sha256": "d24246d31b33c55f7eb6d3124163e6f3f2bdb9694a78f79dccd1e18a47295c0c"
     },
     "composition/arithmetic/recorded-acquire_price_overflow_control.py": {
       "bytes": 1649,
@@ -961,8 +1289,8 @@
       "sha256": "196c8e9315c35cf7e8f41d251a0f8cde605c584c11536ffc059cf9c44a517725"
     },
     "composition/arithmetic/report.json.gz": {
-      "bytes": 47187,
-      "sha256": "b1cf7a040df504abee83696aecfa70cdc5ec2be3f402765da996dce68e1f8bde"
+      "bytes": 47214,
+      "sha256": "f03c85cb61026e9ba4b9bad134b3425c35094dc218fffc867c63c757f9aef0a0"
     },
     "composition/arithmetic/sources/overflow-early.rs": {
       "bytes": 13317,
@@ -1005,8 +1333,8 @@
       "sha256": "255a65221d95dd5e719fd2711ecb7732e102878f9da8ece4587dc76acd323602"
     },
     "composition/arithmetic/verify.py": {
-      "bytes": 19004,
-      "sha256": "777321d8459574ad22a0085840e2ca5c42f5b4d11d1f328d13d13c5555a127db"
+      "bytes": 19341,
+      "sha256": "6fd9e5782b6d82fd313d369e0bd975b8da268f205702bbed87d0fd2f10eb24a8"
     },
     "composition/builds/baseline/candidate-v154-strip.so.gz": {
       "bytes": 168363,
@@ -2265,8 +2593,8 @@
       "sha256": "af17af1ba2cd128555bda8acf132fdb4ebc85ba5c1b24cc32a2b8a94e36a59a1"
     },
     "test_verify.py": {
-      "bytes": 12415,
-      "sha256": "69d530b29d80317bf2b292f3a23b76113a88818a09d34bffac0015ae877d0ade"
+      "bytes": 15043,
+      "sha256": "3e6420b523d5bb5f7c29e8af3e5a364cc60458ca387ebcdce1c34e208cb7dc3b"
     },
     "verify.py": {
       "bytes": 17111,

@@ -136,6 +136,13 @@ complete handler unmatched. Six root builds and one fresh dependency rebuild
 preserve 432/77 native matches and reproduce both complete control outputs.
 This is bounded source/compiler evidence, not a selected-source promotion.
 
+The [ordinary price-first control](../research/mayhem-signer-seed-order/composition/arithmetic/guard/README.md)
+then restores the original first seven callee identities and nonzero overflow
+branch direction by placing price before `checked_mul`. Three source-control
+compilations and a fresh 163-command rebuild repeat both complete checked
+outputs, but the shared error-block layout and full handler remain unmatched.
+The alternative Option conversion is retained as a negative control.
+
 ## Current-source allocator-provider composition
 
 The [current 432-window provider composition](../research/mayhem-current-provider-closure-20261027/README.md)
