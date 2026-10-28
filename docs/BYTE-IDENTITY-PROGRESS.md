@@ -2997,3 +2997,10 @@ The [new exact-candidate recheck](../research/mayhem-current437-selected-data-20
 ## Qualified437 data coverage inventory
 
 The [interval-union ledger](../research/mayhem-current437-data-coverage-20261028/README.md) recomputes the precise footprint of current Source, code-reference, prefix, writer and literal obligations. It covers 6,100 of 26,180 payload-data bytes: 5,352 raw-equal bytes plus 748 bytes of pointer correspondence. Another 20,080 payload bytes remain unproved, led by a 12,406-byte rodata interval referenced by ErrorCode names and error formatters. Relocation metadata is accounted for separately and only checked fields receive credit. Two independent runs reproduce the report byte for byte. This adds a prioritized work inventory, not new byte-identity evidence.
+
+
+## Qualified437 counted ErrorCode names
+
+The [strict source-tag proof](../research/mayhem-current437-error-names-20261028/README.md) decodes the matched ErrorCode::name body for all 77 explicit enum tags and checks the bytes and lengths passed to its matched vector helper. It verifies 77 previously uncovered strings totaling 2,010 bytes, while retaining 437 normalized / 141 raw bodies and 431 closed windows / 581 pairs. Independent full verification and 13 tests cover real string, pointer and length corruptions, dependency pruning, unsupported instructions and resealed report/coverage tampering.
+
+Combined with the preceding ledger, payload coverage is now 8,110/26,180 bytes (30.98%); 18,070 bytes (69.02%) remain unproved. The counted strings reduce the largest residual interval to 8,971 bytes. These are explicit byte spans; allocation extents, returned String behavior, arbitrary dispatch and whole-ELF equality remain unproved.

@@ -142,6 +142,10 @@ These bounded checks do not prove complete data allocations or arbitrary dispatc
 Earlier 436-based data proofs remain preserved with their original bindings.
 The [data coverage ledger](research/mayhem-current437-data-coverage-20261028/README.md)
 separates raw-equal and mapped bytes and prioritizes the remaining unproved ranges.
+The [counted ErrorCode-name proof](research/mayhem-current437-error-names-20261028/README.md)
+adds 77 exact strings / 2,010 bytes. Together these cover 8,110 of 26,180
+payload-data bytes (30.98%); 18,070 bytes remain unproved. This is a proof
+footprint, not a measure of engineering effort or whole-ELF completion.
 
 The [remaining-body review](docs/MAYHEM-COMPLETION.md#retained-partial-source-controls)
 preserves partial AMM and V2 source controls. The historical
