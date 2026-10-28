@@ -218,17 +218,20 @@ test("visible loaded pages exclude DM variants, keep duplicates, and count only 
     }),
     item("deeplink", { deeplink: "pump://dms/one" }),
   ];
-  const visible = visibleInboxItems([
-    normalizeInboxPage({ notifications: rows, count: 1000 }),
-  ]);
+  const visible = visibleInboxItems({
+    pages: [normalizeInboxPage({ notifications: rows, count: 1000 })],
+  });
   assert.deepEqual(
     visible.map((r) => r.id),
     ["a", "a"],
   );
   assert.equal(unreadCount(visible, null), 2);
   assert.deepEqual(visibleInboxItems(undefined), []);
+  assert.throws(() => visibleInboxItems({}), TypeError);
+  assert.throws(() => visibleInboxItems({ pages: null }), TypeError);
   assert.throws(
-    () => visibleInboxItems([{ notifications: [{ timestamp: "x" }] }]),
+    () =>
+      visibleInboxItems({ pages: [{ notifications: [{ timestamp: "x" }] }] }),
     TypeError,
   );
 });

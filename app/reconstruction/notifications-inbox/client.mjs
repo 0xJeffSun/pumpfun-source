@@ -110,8 +110,8 @@ export function isDirectMessage(item) {
     ) || item.deeplink.startsWith("pump://dms")
   );
 }
-export function visibleInboxItems(pages) {
-  return (pages?.flatMap((page) => page.notifications) ?? []).filter(
+export function visibleInboxItems(queryData) {
+  return (queryData?.pages.flatMap((page) => page.notifications) ?? []).filter(
     (item) => !isDirectMessage(item),
   );
 }

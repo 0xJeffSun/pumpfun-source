@@ -39,7 +39,7 @@ python3 scripts/verify-evidence.py
 node scripts/original-notifications-inbox.mjs --write
 ```
 
-`client.mjs` offers request plans, an injected-transport reader, projection, query keys/gates, cursor selection, visible-item/unread calculations and a storage-injected watermark model. There is no default origin/network implementation. A caller must supply a transport and user-refresh callback. Verify the generated JSON contract against source before consuming it. The HTTP(S)-only destination check is local adapter design, not an inferred original validator.
+`client.mjs` offers request plans, an injected-transport reader, projection, query keys/gates, cursor selection, visible-item/unread calculations and a storage-injected watermark model. There is no default origin/network implementation. A caller must supply a transport and user-refresh callback. Verify the generated JSON contract against source before consuming it. The HTTP(S)-only destination check is local adapter design, not an inferred original validator. `visibleInboxItems` takes query data with a `pages` field: a nullish data base is empty, but a present object with missing/null pages throws, preserving the original optional-chain boundary.
 
 Tests use synthetic messages and a real loopback server to receive GET paths/headers, serve pages/errors/empty bodies, and exercise cancellation. They cover falsy filters, escaped cursors, malformed data, DM exclusion, duplicates, strict time comparisons, restart/isolation/storage errors, and source/generated metadata tampering. Semantic tampering is resealed in disposable copies so hashes alone cannot make an incorrect relationship pass. No test is an upstream response fixture or authenticated compatibility proof.
 
