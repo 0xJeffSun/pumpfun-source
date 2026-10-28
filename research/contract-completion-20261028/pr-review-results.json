@@ -2743,5 +2743,69 @@
       },
       "hosted_ci": "Not established by local checks"
     }
+  ],
+  "eighth_review_batch": [
+    {
+      "number": 688,
+      "head": "6308d5f27bfa0adc6eb64318ab47dfb31fb27f99",
+      "merge": {
+        "sha": "d55f218840f291dbe5a97b38fe1e950d903fd416",
+        "merged": true,
+        "message": "Pull Request successfully merged"
+      },
+      "fresh_replay": {
+        "number": 688,
+        "head": "6308d5f27bfa0adc6eb64318ab47dfb31fb27f99",
+        "producer_sha256": "6db0e8dc39e0c8a6ae101d6ecf01d755fda08e91835d2f5787928a7fda918252",
+        "adapted_sha256": "59c724607610533bfabc613ebf0fc769edc8b750c6d7837b1193aa2d5d2f0ff3",
+        "path_only_changes": [
+          {
+            "kind": "host-path",
+            "before": "Path.home() / 'workspace/pumpfun-sparse/scripts'",
+            "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/scripts"
+          },
+          {
+            "kind": "host-path",
+            "before": "Path.home() / 'workspace/pumpfun-sparse'",
+            "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source"
+          },
+          {
+            "kind": "ROOT",
+            "before": "Path.home() / 'workspace/pumpfun-sparse'",
+            "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source"
+          },
+          {
+            "kind": "OUT",
+            "before": "ROOT / 'research/amm-sweep-transfer-fee-20261029'",
+            "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/work/contract-pr-review-20261028/replays/pr-688"
+          },
+          {
+            "kind": "WS",
+            "before": "Path.home() / 'workspace/slop-verify'",
+            "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/work/contract-pr-review-20261028/images"
+          }
+        ],
+        "actual_image_sha256": {
+          "original": "6a7ad34596d83b4c435b32f458a56e718e9f82eb4ad38e4316616d15d24d8ff7",
+          "control": "7a300434dced61413bde10788594b427d5649563e0223efcf09e6b214aff7ad3",
+          "candidate": "d17a657baf5cc19736a924c41e75424604411ddbe9f6e72cddf41ab72a695007"
+        },
+        "case_count": 21,
+        "returncode": 0,
+        "passed": true,
+        "fresh_report_sha256": "f138840f4d71bf2510367ac74fc536c2323e67626fdaa70080fc45f980f8938b",
+        "executions": 63
+      },
+      "portability_fix": {
+        "number": 688,
+        "prior_head": "458a3c89850f3e73b00a8d2a1f3934e8378f00eb",
+        "new_head": "6308d5f27bfa0adc6eb64318ab47dfb31fb27f99",
+        "changed_paths": [
+          "research/amm-sweep-transfer-fee-20261029/verify.py",
+          "research/amm-sweep-transfer-fee-20261029/MANIFEST.json"
+        ]
+      },
+      "hosted_ci": "Not established by local checks"
+    }
   ]
 }

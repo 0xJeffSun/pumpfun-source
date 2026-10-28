@@ -22,5 +22,9 @@
   "focused_report_directory": "research/pump-final-composition-673-20261028/runtime/focused",
   "cold_packet": "research/pump-final-composition-cold-20261028",
   "cold_manifest_sha256": "df461b8b5fd3ca0be4c842de1e8ab84cbb150a7b5f5fd89de26056d7dd3ea1f1",
-  "focused_verifier": "research/pump-final-composition-673-20261028/verify_focused.py"
+  "focused_verifier": "research/pump-final-composition-673-20261028/verify_focused.py",
+  "captured_create_packet": "research/pump-create-captured-successor-20261028",
+  "captured_create_manifest_sha256": "34ee132b379303b05c0a49439319e59cd0212a76818a3d9b5fd36baa89b318a1",
+  "captured_create_controller": "research/pump-create-captured-successor-20261028/replay.py",
+  "captured_create_verifier": "research/pump-create-captured-successor-20261028/verify.py"
 }

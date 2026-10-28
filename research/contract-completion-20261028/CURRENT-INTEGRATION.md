@@ -65,7 +65,9 @@ legacy/extension records. These are observations, not unique transaction counts.
 
 The strict cases cover the original Source198/220 creation boundaries, eighteen
 admin witnesses, and thirteen multi-hop fee/admission cases through the captured
-AMM. The selected image fixes the old acc5 eight-failure admin control and the
+AMM. The fourteen creation fixtures also pass a separate captured-loader replay
+with 42 signed executions and 84 signature fields. The selected image fixes the
+old acc5 eight-failure admin control and the
 parent multi-hop admission priority errors. Their unchanged controls remain
 historical evidence. Inherited blank-line alignment is a reconstructed source
 choice. Broad diagnostics retain Source/compute exclusions; diagnostic normalized

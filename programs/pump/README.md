@@ -23,6 +23,9 @@ records, 318 outcome executions and 465 signature fields: 61 sibling cases,
 14 creation cases, 18 admin cases and 13 multi-hop cases, without Source
 normalization. Separate strict legacy284 and extension126 pairs also pass;
 these overlapping corpora and repeated fields are not unique transaction counts.
+The same fourteen creation fixtures also pass a separate unchanged-adapter replay
+through the genuine captured Pump loader: 42 signed executions, 84 signature
+fields and 42 captured allocations. This supplements the direct creation replay.
 
 The [historical acc5 control](../../research/contract-completion-20261028/known-admin-wallet-guard-acc5.json.gz)
 retains its eight failing admin witnesses. All 18 witnesses pass on the selected

@@ -150,5 +150,17 @@
     "manifest_sha256": "df461b8b5fd3ca0be4c842de1e8ab84cbb150a7b5f5fd89de26056d7dd3ea1f1",
     "published_builder_byte_identical_to_executed_cold_controller": true,
     "published_builder_sha256": "c7d215a92dbb733cae044b40d06ce5da45df7d5c84fe2985acea023ecd316241"
+  },
+  "create_captured_successor": {
+    "packet": "research/pump-create-captured-successor-20261028",
+    "manifest": "research/pump-create-captured-successor-20261028/MANIFEST.json",
+    "manifest_sha256": "34ee132b379303b05c0a49439319e59cd0212a76818a3d9b5fd36baa89b318a1",
+    "cases": 14,
+    "executions": 42,
+    "signature_fields": 84,
+    "captured_pump_loads": 42,
+    "strict_source_or_structured_differences": 0,
+    "earlier_create_report_loader_scope": "Direct LiteSVM API; retained unchanged.",
+    "source_normalization": null
   }
 }

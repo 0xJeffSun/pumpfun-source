@@ -12,7 +12,7 @@ The selected image passes the unchanged 44-suite captured-loader corpus, 10,468 
 
 The legacy function remains unmatched at its original 13,224-byte size. Diagnostic CFG attribution pairs all 162 blocks injectively; 161 diagnostic normalized block bodies agree after CALL/LDDW normalization, and the remaining normalized body has two independent loads in reversed order. Physical block order also differs. This diagnostic is not the acceptance normalizer and receives no exact-window credit. The multi-hop function also remains unmatched despite its qualified behavioral correction.
 
-All executions are local, normally signed synthetic transactions using genuine captured dependencies and the captured Pump loader. No live transaction is submitted. Matcher rules, original images, compiler inputs and compiler outputs are not patched.
+All transactions are local, normally signed synthetic transactions using genuine captured dependencies. The broad44 and sibling/admin/legacy/multi-hop/extension replays use the captured Pump loader. The original create-only 14-case report used the direct LiteSVM loading API and is preserved unchanged. The separate `research/pump-create-captured-successor-20261028` supplement now reruns that unchanged adapter through the genuine captured loader: all 42 signed executions, 84 signature fields and 42 captured loads pass with zero strict Source/log or structured differences. No live transaction is submitted. Matcher rules, original images, compiler inputs and compiler outputs are not patched.
 
 Use the pinned repository Python requirements. Static verification also accepts the selected maintained primary source path:
 
@@ -31,3 +31,5 @@ python -B research/pump-final-composition-673-20261028/verify_focused.py \
 ```
 
 The self-contained [portable builder](build.py) accepts explicit native v1.44 SDK, official Linux-v1.44 target libraries, Cargo home, physical source wrapper, new empty target and new output paths. It authenticates locked registry archives and actual extracted sources, SDK tools/libraries, the source profile, the source staging, and both whole output hashes. Historical absolute paths in actual receipts describe those executions; they are not portable recipe prerequisites. `PUBLISH.json` provides the source, actual comparison receipt, compiled-workspace archive, selected images, census, runtime and controller paths for integration.
+
+`CORRECTION.md` preserves the prior manifest identity and states the narrowly corrected loader scope. The supplemental captured-create controller/checker paths are included in `PUBLISH.json`; no earlier source, compiler or runtime proof is rewritten.

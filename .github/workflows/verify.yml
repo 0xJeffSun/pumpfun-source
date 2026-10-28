@@ -29,6 +29,8 @@ jobs:
               python -B scripts/verify_current_checkpoint.py pump
               python -B research/pump-final-composition-673-20261028/replay_focused.py --candidate research/pump-final-composition-673-20261028/artifacts/candidate.so --output work/pump-canonical-focused
               python -B research/pump-final-composition-673-20261028/verify_focused.py --candidate research/pump-final-composition-673-20261028/artifacts/candidate.so --reports work/pump-canonical-focused
+              python -B research/pump-create-captured-successor-20261028/replay.py --candidate research/pump-final-composition-673-20261028/artifacts/candidate.so --output work/pump-captured-create
+              python -O -B research/pump-create-captured-successor-20261028/verify.py --candidate research/pump-final-composition-673-20261028/artifacts/candidate.so --runtime-directory work/pump-captured-create
           - suite: relay-current-repeat
             commands: |
               python -O -B research/relay-current-repeat-20261028/verify.py --repo .

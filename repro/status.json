@@ -116,9 +116,10 @@
       "106 strict focused case records / 318 outcome executions / 465 signature fields include siblings61, create14, admin18 and multihop13, without Source normalization. Separate legacy284 and extension126 pairs are overlapping finite corpora, not additive unique transactions.",
       "44 suites / 10,468 pairs retain 18,343 serialized transaction fields and 27,875 signature fields; broad diagnostics retain Source/compute exclusions.",
       "The historical acc5 eight-failure admin control remains unchanged; selected successor passes all eighteen cases. The selected image also passes the PR673 strict admission counterexamples.",
-      "Inherited deliberate blank-line Source alignment is a reconstructed recipe choice. Diagnostic normalized CFG pairing does not award raw blocks or a complete matched function."
+      "Inherited deliberate blank-line Source alignment is a reconstructed recipe choice. Diagnostic normalized CFG pairing does not award raw blocks or a complete matched function.",
+      "The same fourteen creation fixtures also pass a separate unchanged-adapter replay through the genuine captured Pump loader: 42 signed executions, 84 signature fields and 42 captured allocations. These overlap the 106 focused case records."
     ],
-    "candidate_packet_manifest_sha256": "a957150c3ad59dd2754f07844b7fa39b3d91d99dc8698ef1cdb8c4ca20fd729c",
+    "candidate_packet_manifest_sha256": "02646818f7a4d79b8c99daaa892a210f83f21e8995082f4082fa8cd9440404e4",
     "known_behavior_gaps": [],
     "legacy_runtime_cases": 284,
     "legacy_runtime_signature_fields": 568,
@@ -136,7 +137,10 @@
       "path": "research/contract-completion-20261028/pump-status-before-final-composition.json",
       "sha256": "19f0614dabf55e7d81b20f0e24afe2ff609ebd61e3b90db1d5f6f6015e436473",
       "scope": "Historical acc5 selection and its eight demonstrated admin witnesses; selected successor passes all eighteen witnesses."
-    }
+    },
+    "captured_create_packet_manifest_sha256": "34ee132b379303b05c0a49439319e59cd0212a76818a3d9b5fd36baa89b318a1",
+    "captured_create_cases": 14,
+    "captured_create_signature_fields": 84
   },
   "pump_amm": {
     "source_reconstruction": "maintained_partial_frontier",

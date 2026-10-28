@@ -27,7 +27,7 @@ def verify(root):
                 raise ValueError(message)
         packet = root / final
         cold = root / 'research/pump-final-composition-cold-20261028'
-        require(sha(packet / 'MANIFEST.json') == selected['candidate_packet_manifest_sha256'] == 'a957150c3ad59dd2754f07844b7fa39b3d91d99dc8698ef1cdb8c4ca20fd729c', 'Pump final composition seal')
+        require(sha(packet / 'MANIFEST.json') == selected['candidate_packet_manifest_sha256'] == '02646818f7a4d79b8c99daaa892a210f83f21e8995082f4082fa8cd9440404e4', 'Pump final composition seal')
         require(sha(cold / 'manifest.json') == selected['checkpoint_manifest_sha256'] == 'df461b8b5fd3ca0be4c842de1e8ab84cbb150a7b5f5fd89de26056d7dd3ea1f1', 'Pump actual empty-target repeat seal')
         # This sealed component explicitly rejects optimized Python. Its child
         # always runs normally, including when this public entry point uses -O.
@@ -46,12 +46,16 @@ def verify(root):
         require(focus['extension_case_pairs'] == selected['extension_runtime_cases'] == 126 and focus['extension_signature_fields_verified'] == selected['extension_runtime_signature_fields'] == 252, 'Pump final extension scope')
         for key, path in [('source_recipe', final + '/build.py'), ('source_builder', final + '/build.py'), ('source_binding_verifier', final + '/verify.py'), ('comparison_report', 'research/pump-final-composition-cold-20261028/builds/cold-01/build-comparison.json'), ('build_log', 'research/pump-final-composition-cold-20261028/builds/cold-01/build.log'), ('validation_report', final + '/runtime/full44.json.gz')]:
             require(selected[key] == path and (root / path).is_file(), 'Pump final selected ' + key)
+        captured_packet = root / 'research/pump-create-captured-successor-20261028'
+        require(sha(captured_packet / 'MANIFEST.json') == selected['captured_create_packet_manifest_sha256'] == '34ee132b379303b05c0a49439319e59cd0212a76818a3d9b5fd36baa89b318a1', 'Pump captured creation supplement seal')
+        captured = json.loads(subprocess.check_output([sys.executable, '-O', '-B', str(captured_packet / 'verify.py')], cwd=root, text=True))
+        require(captured['candidate_sha256'] == report['candidate_sha256'] and captured['cases'] == selected['captured_create_cases'] == 14 and captured['normally_signed_executions'] == captured['captured_pump_loads'] == 42 and captured['signature_fields_verified'] == selected['captured_create_signature_fields'] == 84 and captured['candidate_structured_or_strict_source_differences'] == 0, 'Pump captured creation scope')
         prior = selected['prior_closure_selection']
         require(sha(root / prior['path']) == prior['sha256'], 'Pump prior selection history')
         for gap in selected['historical_behavior_gaps']:
             require(sha(root / gap['report']) == gap['sha256'] and gap['candidate_sha256'] == 'acc5e6eba8c9295386443542847404e55a27d8e837402fb98de8ccffb679125f', 'Pump historical failure evidence')
         require(selected['known_behavior_gaps'] == [] and selected['full_byte_equality'] is False and selected['meaningful_elf_equal'] is False and selected['portable_empty_target_build'] is True, 'Pump final qualification scope')
-        return {**report, 'status': 'PASS', 'current_source_verified': True, 'portable_empty_target_build': True, 'independent_builds': 3, 'known_behavior_gaps': [], 'goal_complete': False}
+        return {**report, 'status': 'PASS', 'current_source_verified': True, 'portable_empty_target_build': True, 'independent_builds': 3, 'captured_create': captured, 'known_behavior_gaps': [], 'goal_complete': False}
     successor = 'research/pump-create-used-boundaries-20261028'
     if selected['candidate_artifact'] == successor + '/artifacts/candidate.so':
         def require(value, message):
