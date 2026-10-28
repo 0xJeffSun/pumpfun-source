@@ -108,6 +108,18 @@ jobs:
               python -B research/mayhem-current437-selected-data-20261028/test_verify.py
               python -B research/mayhem-current437-data-coverage-20261028/analyze.py --output-dir work/mayhem437-data-coverage
               cmp research/mayhem-current437-data-coverage-20261028/coverage.json work/mayhem437-data-coverage/coverage.json
+          - suite: mayhem-current437-error-names
+            commands: |
+              python -B research/mayhem-current437-error-names-20261028/verify.py
+              python -B research/mayhem-current437-error-names-20261028/test_verify.py
+          - suite: mayhem-current437-buy-prefix
+            commands: |
+              python -B research/mayhem-current437-buy-prefix-20261028/verify.py
+              python -B research/mayhem-current437-buy-prefix-20261028/test_verify.py
+          - suite: mayhem-clean-rebuild-archive
+            commands: |
+              python -B research/mayhem-frontier-clean-rebuild-20261028/verify.py
+              python -B research/mayhem-frontier-clean-rebuild-20261028/test_verify.py
           - suite: mayhem-current436-native
             commands: |
               python -I -B research/mayhem-current436-native-20261028/verify.py

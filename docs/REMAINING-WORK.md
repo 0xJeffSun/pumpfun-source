@@ -43,11 +43,13 @@ and [completion review](MAYHEM-COMPLETION.md) list the four functions and the li
 of the 0.91% unmatched-window / 9.03% unmatched-text figures.
 
 The [data coverage ledger](../research/mayhem-current437-data-coverage-20261028/README.md)
-measures the existing proof footprint: 6,100 of 26,180 payload bytes are covered,
-including 5,352 raw-equal and 748 pointer-correspondence bytes; 20,080 are still
-unproved by those obligations. This is not a count of known mismatches. The
-largest next targets are counted ErrorCode names, formatter piece descriptors
-and account-name strings with explicit lengths.
+and [counted ErrorCode names](../research/mayhem-current437-error-names-20261028/README.md)
+cover 8,110 of 26,180 payload bytes (30.98%), leaving 18,070 unproved (69.02%).
+The new proof follows all 77 source discriminants to explicit pointer/length
+arguments, adding 2,010 exact bytes and preserving 431 closed windows / 581 pairs.
+This is not a count of known mismatches or a percentage of engineering effort.
+The largest residual interval is 8,971 bytes at [716457,725428); next targets
+include error messages, formatter piece descriptors and counted account names.
 
 The [current Legacy Buy ownership composition](../research/mayhem-current-ownership-composition-20261027/README.md)
 preserves the 430/100 frontier and its complete initializer. Its partial handler

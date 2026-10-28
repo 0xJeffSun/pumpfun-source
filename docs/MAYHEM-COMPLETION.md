@@ -115,7 +115,8 @@ They do not replace qualified437 or add a recovered function.
 
 | Remaining body | Retained evidence | Limit |
 | --- | --- | --- |
-| AMM Buy / Sell | [AMM event controls](../research/mayhem-current436-amm-event-controls-20261027/README.md): Buy's complete 7,144-byte normalized prefix; Sell's opcode, field-read and 39 event-store order; 36 signed pairs | Whole bodies still differ in event construction and stack/register allocation |
+| AMM Buy | [Qualified437 prefix](../research/mayhem-current437-buy-prefix-20261028/README.md): exact 7,200/9,736-byte normalized prefix; three matching builds and 36 fresh signed pairs | No whole-body gain; event construction remains unmatched |
+| AMM Sell | [Historical event controls](../research/mayhem-current436-amm-event-controls-20261027/README.md): opcode, field-read and 39 event-store order; 36 signed pairs | Separate from current qualified437; whole body remains unmatched in that selection |
 | BuyV2 / SellV2 | [Four V2 controls](../research/mayhem-current436-v2-controls-20261027/README.md): alternative sizing and event-lifetime arrangements, retaining their prior 436/141 matches | No runtime qualification for these exact controls; no whole-body match |
 
 The [Linux dependency control](../research/mayhem-current436-linux-dependency-control-20261028/README.md)

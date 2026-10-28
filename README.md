@@ -145,9 +145,15 @@ These bounded checks do not prove complete data allocations or arbitrary dispatc
 Earlier 436-based data proofs remain preserved with their original bindings.
 The [data coverage ledger](research/mayhem-current437-data-coverage-20261028/README.md)
 separates raw-equal and mapped bytes and prioritizes the remaining unproved ranges.
+The [counted ErrorCode-name proof](research/mayhem-current437-error-names-20261028/README.md)
+adds 77 exact strings / 2,010 bytes. Together these cover 8,110 of 26,180
+payload-data bytes (30.98%); 18,070 bytes remain unproved. This is a proof
+footprint, not a measure of engineering effort or whole-ELF completion.
 
 The [remaining-body review](docs/MAYHEM-COMPLETION.md#retained-partial-source-controls)
-preserves partial AMM and V2 source controls. The historical
+preserves partial AMM and V2 source controls. The [qualified437 AMM Buy control](research/mayhem-current437-buy-prefix-20261028/README.md)
+extends its exact normalized prefix to 7,200/9,736 bytes; it adds no whole match.
+Three builds agree and 36 fresh signed pairs pass. The historical
 [SweepFees address-selection control](research/mayhem-current436-sweep-address-selection-20261028/README.md)
 matched 1,047/1,050 normalized words; the current source resolves those final
 three address operands by passing the existing global account into its helper.
