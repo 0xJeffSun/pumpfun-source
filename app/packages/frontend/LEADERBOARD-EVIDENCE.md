@@ -128,3 +128,27 @@ explicitly synthetic. Those fixtures qualify browser behavior—navigation,
 filtering, sorting, pagination, errors and accessibility—but are not evidence
 of live API compatibility or real rankings. Runtime contract tests live in
 `tests/leaderboard-contract.test.mjs`.
+
+### PNL response-period contract regression
+
+The checked-in developer OpenAPI **0.294.0** declares two distinct types:
+
+- Request `GET /pnl-leaderboard?period=...`: `daily`, `weekly`, or `monthly`.
+- Response `200` → `periodType`: numeric enum `0 | 1 | 2 | 3`.
+
+The server adapter previously accepted request strings in the response field,
+rejecting all four declared numeric values. The adapter now validates the numeric
+response enum without coercion. Request periods are unchanged. It does not infer
+which number maps to a request period, recalculate ranks/PnL, or reorder the board.
+
+The regression tests derive valid response values from the checked-in schema,
+validate their complete synthetic payloads using the existing schema validator,
+and cover invalid request strings, numeric strings, out-of-range/fractional
+numbers, null/missing/wrong-type values, and non-finite numbers. They also preserve
+row order, ranks, signed/fractional PnL, nullable identity, period labels, timestamps,
+and input immutability. Correcting the original synthetic tests to use the declared
+response type exposes the prior failure before the parser fix.
+
+`node --test tests/leaderboard-contract.test.mjs` passes all six tests after the
+fix. These are local contract regressions, not a successful production response,
+a native ranking implementation, or live compatibility qualification.
