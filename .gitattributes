@@ -1452,3 +1452,10 @@ research/amm-quote-base-recovery/proposed/** -whitespace
 research/amm-quote-base-recovery/compiler/** -whitespace
 research/amm-quote-base-recovery/controllers/** -whitespace
 research/amm-quote-base-recovery/overlap-review.json -whitespace
+# Preserve compiled AMM recipient-mode source and compiler evidence.
+research/amm-recipient-mode-recovery/** -text
+research/amm-recipient-mode-recovery/source.patch -whitespace
+research/amm-recipient-mode-recovery/proposed/** -whitespace
+research/amm-recipient-mode-recovery/compiler/** -whitespace
+research/amm-recipient-mode-recovery/controllers/** -whitespace
+research/amm-recipient-mode-recovery/overlap-review.json -whitespace

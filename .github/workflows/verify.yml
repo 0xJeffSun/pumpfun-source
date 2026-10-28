@@ -17,6 +17,8 @@ jobs:
               python -I -B research/amm-buy-reserve-order/verify.py
           - suite: amm-quote-base-recovery
               python -I -B research/amm-quote-base-recovery/verify.py
+          - suite: amm-recipient-mode-recovery
+              python -I -B research/amm-recipient-mode-recovery/verify.py
           - suite: mayhem-clean-linux-evidence
             commands: |
               python -B research/mayhem-clean-linux-build-20261027/verify.py
