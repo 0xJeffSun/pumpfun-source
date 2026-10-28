@@ -1,6 +1,5 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { openCorpus, objectProperty, findNodes } from '../scripts/original-contracts/source.mjs';
 import { createSchemaExtractor } from '../scripts/original-contracts/schema.mjs';
@@ -45,16 +44,18 @@ test('count declaration admits negative integer and arbitrary string cursor, wit
   assert.equal(check('GET /home-feed/new/count', 'query', {}), false);
   assert.equal(check('GET /home-feed/new/count', 'response', { newCount: -1, capped: false, headToken: '' }), true);
   assert.equal(check('GET /home-feed/new/count', 'response', { newCount: 1.5, capped: false, headToken: '' }), false);
+  assert.equal(check('GET /home-feed/new/count', 'response', { newCount: Number.MAX_SAFE_INTEGER, capped: false, headToken: '' }), true);
+  assert.equal(check('GET /home-feed/new/count', 'response', { newCount: Number.MAX_SAFE_INTEGER + 1, capped: false, headToken: '' }), false);
   assert.equal(check('GET /home-feed/new/count', 'response', { newCount: 0, capped: false, headToken: null }), false);
 });
 
-test('optional, nullable and UTF-16 length remain distinct in real declarations', () => {
+test('optional, nullable and code-point length remain distinct in real declarations', () => {
   assert.equal(check('GET /home-feed', 'response', { coins: [] }), true);
   assert.equal(check('GET /home-feed', 'response', { coins: [], nextPageToken: null }), false);
   assert.equal(check('GET /home-feed/new', 'response', { coins: [], headToken: null, liveSubject: '' }), true);
   assert.equal(check('GET /home-feed/new', 'response', { coins: [], liveSubject: '' }), false);
-  assert.equal(check('GET /home-feed', 'query', { device_id: '😀'.repeat(64) }), true);
-  assert.equal(check('GET /home-feed', 'query', { device_id: '😀'.repeat(65) }), false);
+  assert.equal(check('GET /home-feed', 'query', { device_id: '😀'.repeat(128) }), true);
+  assert.equal(check('GET /home-feed', 'query', { device_id: '😀'.repeat(129) }), false);
 });
 
 test('recursive quote/reply declarations close as references without invoking captured getters', () => {
