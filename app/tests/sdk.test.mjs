@@ -11,7 +11,7 @@ const require=createRequire(new URL('../packages/sdk/package.json',import.meta.u
 const BN=require('bn.js');
 const published=mkdtempSync(join(tmpdir(),'pump-sdk-reference-'));
 mkdirSync(join(published,'swap'));
-symlinkSync(join(root,'packages/sdk/node_modules'),join(published,'node_modules'),'dir');
+symlinkSync(join(root,'packages/sdk/node_modules'),join(published,'node_modules'),process.platform==='win32'?'junction':'dir');
 for(const sub of ['index.js','swap/index.js'])writeFileSync(join(published,sub),execFileSync('tar',['-xOf',join(root,'evidence/sdk/pump-sdk-4.3.1.tgz'),`package/dist/${sub}`]));
 process.on('exit',()=>rmSync(published,{recursive:true,force:true}));
 for(const sub of ['index','swap/index']) {
