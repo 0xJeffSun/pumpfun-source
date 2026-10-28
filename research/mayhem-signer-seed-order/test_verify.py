@@ -135,4 +135,24 @@ class Checks(unittest.TestCase):
         p=self.root/'composition/arithmetic/guard/rebuild-validation/comparison.json.gz';r=v.read(p);r['variant']='option-projection-late';self.save(p,r)
         with self.assertRaisesRegex(ValueError,'guard fresh output/variant'):self.guard().verify(self.root/'composition/arithmetic/guard',False)
 
+    def profile(self):
+        spec=importlib.util.spec_from_file_location('test_profile',self.root/'composition/price-profile/verify.py');p=importlib.util.module_from_spec(spec);spec.loader.exec_module(p);return p
+    def profile_pair(self):
+        p=self.profile();log=v.raw(self.root/'composition/price-profile/builds/closure-callee/stderr.log.gz').decode('utf-8');records=p.events(v,log,p.CLOSURE);b,a=p.pair(v,records,'SimplifyCFGPass',p.CLOSURE,1);return p,b['functions'][p.CLOSURE],a['functions'][p.CLOSURE]
+    def test_profile_closure_source_binding(self):
+        f=self.root/'composition/price-profile/closure-control.rs';b=f.read_bytes();changed=b.replace(b'let delta=scaled.ok_or(MayhemError::MathOverflow)?/10_000;',b'let delta=scaled.ok_or(MayhemError::MathOverflow)?/9_999;',1);self.assertNotEqual(b,changed);f.write_bytes(changed)
+        with self.assertRaisesRegex(ValueError,'profile closure source'):self.profile().verify(self.root/'composition/price-profile',False)
+    def test_profile_empty_diamond_reconvergence(self):
+        p,b,a=self.profile_pair();w=p.loss(v,b,a);join=w['empty_diamond_join'];old='br label %'+join;self.assertEqual(b.count(old),2);changed=b.replace(old,'br label %999999',1)
+        with self.assertRaisesRegex(ValueError,'empty diamond'):p.loss(v,changed,a)
+    def test_profile_surviving_guard_metadata(self):
+        p,b,a=self.profile_pair();guard=p.guard(v,a)['branches'][0]['text'];changed=a.replace(guard,guard+', !prof !5',1);self.assertNotEqual(a,changed)
+        with self.assertRaisesRegex(ValueError,'surviving guard'):p.loss(v,b,changed)
+    def test_profile_definition_binding(self):
+        p=self.profile();log=v.raw(self.root/'composition/price-profile/builds/helper/stderr.log.gz').decode('utf-8');changed=log.replace('define hidden { i64, ptr } @'+p.HANDLER+'(','define hidden { i64, ptr } @unrelated_function(',1);self.assertNotEqual(log,changed)
+        with self.assertRaisesRegex(ValueError,'unbound IR dump'):p.events(v,changed,p.HELPER)
+    def test_profile_nonallocated_repeat_byte(self):
+        folder=self.root/'composition/price-profile/builds/helper';f=folder/'symbols.so.gz';b=v.raw(f)+b'\0';f.write_bytes(gzip.compress(b,mtime=0));r=v.read(folder/'result.json.gz');r['outputs']['symbols.so']=v.identity(b);self.save(folder/'result.json.gz',r)
+        with self.assertRaisesRegex(ValueError,'complete outputs differ'):self.profile().verify(self.root/'composition/price-profile',False)
+
 if __name__=='__main__':unittest.main()
