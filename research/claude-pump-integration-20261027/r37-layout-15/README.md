@@ -1,6 +1,8 @@
-# Main Pump layout composite L15 (972/1035 with the original toolchain; includes SYNTHETIC Source-line positioning)
+# Main Pump layout composite L15 (967/1035 in archived build; includes synthetic Source-line positioning)
 
 Research package composed on the maintained [Round37](../../../repro/pump/main-contract-round37-20261027/README.md) main-Pump source. It is not a maintained checkpoint and does not edit `programs/pump`. **Whole-ELF identity remains false.**
+
+The retained repository-built artifacts below independently verify **967/1,035 normalized windows (93.4%)**, 147 raw-equal bodies and 1,370,400 matched text bytes. A separate identity-recipe run was reported at 972 windows; its ELF is not retained in this packet and this verifier does not authenticate that count. Neither recipe establishes the original historical toolchain.
 
 | | normalized | raw | unmatched | matched text bytes |
 |---|---:|---:|---:|---:|
