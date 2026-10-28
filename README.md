@@ -23,33 +23,36 @@ These are binary-coverage measurements. Full call/data/relocation identity, orig
 
 [Current main-Pump parallel research snapshot](research/main-pump-parallel-checkpoint-20261027/README.md) preserves the verified intermediates and in-progress source beyond the maintained checkpoint.
 
-**Main Pump: 78.8% of function windows matched; 60.5% of original text covered. Complete reconstruction remains unfinished.**
+**Main Pump: 78.9% of function windows matched; 60.6% of original text covered. Complete reconstruction remains unfinished.**
 
-Reproduce the selected Pump ELF with its [archived Rust/linker recipe](repro/pump/main-contract-round40-20261027/reproduce.py).
-
+Reproduce the selected Pump ELF with its [archived Rust/linker recipe](repro/pump/main-contract-round41-20261027/reproduce.py).
 
 <!-- MAIN-PUMP-REMAINING:BEGIN -->
 ### Main Pump remaining work
 
-The maintained checkpoint matches **816/1,035 function windows (78.8%)**;
-**219/1,035 (21.2%) remain unmatched**. Matched windows cover
-**1,085,008/1,792,208 code bytes (60.5%)**, leaving **707,200 bytes
-(39.5%) uncovered**. Of the matched windows, 202 are raw byte-equal
+The maintained checkpoint matches **817/1,035 function windows (78.9%)**;
+**218/1,035 (21.1%) remain unmatched**. Matched windows cover
+**1,085,456/1,792,208 code bytes (60.6%)**, leaving **706,752 bytes
+(39.4%) uncovered**. Of the matched windows, 203 are raw byte-equal
 and 614 require normalization of specified call/address operands.
 
 These are binary coverage percentages. A defensible percentage of engineering
 work remaining is not yet known. Whole-ELF equality remains unproved. The corpus
-checks structured Anchor/panic diagnostics; ordinary success-message parity is
-not required in every suite.
+checks structured Anchor/panic diagnostics and ordered raw logs within complete
+recorded main invocations. It requires zero non-filename mismatches and reports
+651 remaining source-filename differences.
 
 Remaining work is to recover the unmatched main-contract bodies and validation
 paths, reproduce referenced data and relocations, and establish the original
-compiler and target-library provenance. This checkpoint corrects the confirmed
-SellV3 nonzero-volume event discrepancy. New compiler-target research remains
-separate until its combined runtime and reproduction checks pass.
+compiler and target-library provenance. This checkpoint restores observed ordinary
+messages and CPI ordering and corrects cashback quote-program error precedence.
+The retained corpus does not establish complete behavior or original build identity.
+A newer signed compound-input witness still exposes a `set_params` zero-recipient
+versus rent-check precedence mismatch. Its fix is staged for the next checkpoint;
+it is outside the frozen Round41 regression corpus.
 
 The [main-contract queue](research/main-pump-parallel-checkpoint-20261027/REMAINING-WORK.json)
-tracks the open bodies. The [selected checkpoint](repro/pump/main-contract-round40-20261027/README.md) binds the
+tracks the open bodies. The [selected checkpoint](repro/pump/main-contract-round41-20261027/README.md) binds the
 reported metrics and validation evidence. This review is limited to the main Pump
 contract.
 <!-- MAIN-PUMP-REMAINING:END -->
@@ -61,12 +64,12 @@ all remaining code, calls, data, relocations and build provenance.
 
 | Latest verified checkpoint | Matched windows | Matched % | Raw-equal bodies | Normalized only | Unmatched | Whole ELF equal |
 | --- | ---: | ---: | ---: | ---: | ---: | --- |
-| [Pump Round40](repro/pump/main-contract-round40-20261027/README.md) | 816 / 1,035 | 78.8% | 202 | 614 | 219 | No |
+| [Pump Round41](repro/pump/main-contract-round41-20261027/README.md) | 817 / 1,035 | 78.9% | 203 | 614 | 218 | No |
 | [PumpSwap / AMM](repro/pump_amm/private-sweep-recovery-20261027/README.md) | 656 / 785 | 83.6% | 148 | 508 | 129 | No |
 | [Fees research](research/claude-fees100-crank-donation-20261027/README.md) | 585 / 585 | 100.0% | 585 | 0 | 0 | **Yes** |
 | [Mayhem qualified research](research/mayhem-current436-composition-20261027/README.md) | 436 / 441 | 98.9% | 141 | 295 | 5 | No |
 | [Donation Relay](repro/donation-relay/canonical-exact-selection/README.md) | 492 / 492 | 100.0% | 492 | 0 | 0 | **Yes** |
-| **Total** | **2,985 / 3,338** | **89.4%** | **1,568** | **1,417** | **353** | **2 / 5** |
+| **Total** | **2,986 / 3,338** | **89.5%** | **1,569** | **1,417** | **352** | **2 / 5** |
 
 “Windows” are inferred original machine-function ranges, including framework and
 runtime helpers. Complete normalized matches mask specified call/address
@@ -76,12 +79,12 @@ the whole program is identical.
 
 | Checkpoint | Text bytes in matched windows | Text covered | Unmatched text |
 | --- | ---: | ---: | ---: |
-| Pump Round40 | 1,085,008 / 1,792,208 | 60.5% | 707,200 |
+| Pump Round41 | 1,085,456 / 1,792,208 | 60.6% | 706,752 |
 | PumpSwap / AMM | 826,112 / 1,162,040 | 71.1% | 335,928 |
 | Fees research | 799,648 / 799,648 | 100.0% | 0 |
 | Mayhem research | 634,552 / 706,744 | 89.8% | 72,192 |
 | Donation Relay | 752,488 / 752,488 | 100.0% | 0 |
-| **Total** | **4,097,808 / 5,213,128** | **78.6%** | **1,115,320** |
+| **Total** | **4,098,256 / 5,213,128** | **78.6%** | **1,114,872** |
 
 Pump and AMM rows describe the verified maintained sources. Fees and Mayhem rows
 are the latest qualified research frontiers, distinct from their maintained
@@ -179,7 +182,7 @@ pass. Its 641-window research artifact remains bound to its former
 640-window parent; the maintained 647-window checkpoint is reported above.
 The parent's other supplemental matrices were not rerun on this artifact.
 
-Pump Round40 passes 10,468 full cases plus 7,641 focused executions, with 18,105
+Pump Round41 passes 10,468 full cases plus 7,642 focused executions, with 18,106
 paired diagnostic-log cases. AMM passes 17,462 full cases plus the separate
 account, fee, CPI, boundary and error-order matrices recorded in its checkpoint.
 The [independent Pump/AMM migration-pair replay](research/pump-amm-migration-composition/README.md)
@@ -273,7 +276,7 @@ no accepted matches.
 
 The latest [PumpSwap private-event and sweep source recovery](repro/pump_amm/private-sweep-recovery-20261027/README.md) retains 656 windows and 148 raw bodies. Four event sites share their first-Pubkey storage; SetCoinCreator restores error-RHS PDA reevaluation; sweep uses observed key and Pool-mint snapshots. No full private-body or full-callee match is claimed. All 1,730 fresh incentive boundaries preserve the resolved H11 correction.
 
-Remaining priorities are the 219 Pump, 129 AMM and 7 Mayhem unmatched
+Remaining priorities are the 218 Pump, 129 AMM and 5 Mayhem unmatched
 windows; deeper call/data/relocation identity; original build provenance; and
 uncovered behavior such as authentic fixed-admin AMM `create_config` success.
 The historical [150-handler audit](repro/reconstruction-audit-2026-10-26/handlers.md)

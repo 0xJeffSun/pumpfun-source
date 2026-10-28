@@ -1,6 +1,13 @@
 # Legacy Sell signer-seed evaluation order
 
-The current qualified Legacy Sell source reads `ctx.bumps.sol_vault` before
+This packet preserves historical 432-window source controls. The later
+[qualified436 composition](../mayhem-current436-composition-20261027/README.md)
+closes both Legacy bodies under normalization; its artifact and runtime
+qualification are separate. The [price-profile pass traces](composition/price-profile/README.md)
+explain a compiler difference and an exact candidate-output collision within
+these older controls, without changing the current checkpoint.
+
+The historical qualified Legacy Sell source reads `ctx.bumps.sol_vault` before
 constructing the Pump CPI account value. The original has a Context-associated
 byte load at relative offset **6,296**, among the later CPI preparation
 instructions. The current qualified and native baseline read it at **1,968**.

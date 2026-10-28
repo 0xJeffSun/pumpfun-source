@@ -124,6 +124,8 @@ def verify(root=HERE,check_manifest=True):
     v.require(placement==v.read(root/'placement/report.json.gz'),'placement saved report differs')
     arithmetic=module('composition_arithmetic_reader',root/'arithmetic/verify.py').verify(root/'arithmetic',False)
     v.require(arithmetic==v.read(root/'arithmetic/report.json.gz'),'arithmetic saved report differs')
+    profile=module('composition_profile_reader',root/'price-profile/verify.py').verify(root/'price-profile',False)
+    v.require(profile==v.read(root/'price-profile/report.json.gz'),'profile saved report differs')
     return json.loads(json.dumps(dict(upstream=up,builds=results,compiler_builds=9,incremental_root_builds=8,fresh_dependency_builds=1,rebuild_compiler_commands=163,placement_diagnostics=dict(compiler_builds=4,pre_placement_callees_equal=True,post_placement_callees_equal=False,post_placement_matches_both_final_artifacts=True),complete_windows_gained=0,target_executions=0,whole_original_equal=False,scope='Negative source controls. Internal observations exclude imported calls. Alignment and call-order correspondence are file-layout diagnostics, not recovery, dynamic call order or runtime qualification.')))
 
 if __name__=='__main__':
