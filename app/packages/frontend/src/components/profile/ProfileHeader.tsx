@@ -1,82 +1,82 @@
-export type ProfileData = {
-  address: string;
-  name: string;
-  bio: string;
-  avatar?: string;
-  followers: number;
-  following: number;
-  coinsCreated: number;
-};
+import { CopyAddressButton } from "./CopyAddressButton";
+import type { LocalProfile } from "./profile-data";
 
-/** Profile header with avatar, name, stats, and action buttons. */
-export function ProfileHeader({ profile }: { profile: ProfileData }) {
-  const truncatedAddress = `${profile.address.slice(0, 6)}…${profile.address.slice(-4)}`;
+function initial(name: string): string {
+  return Array.from(name.trim())[0]?.toLocaleUpperCase("en-US") ?? "?";
+}
 
+/** Read-only local profile identity. Recorded external media is never requested. */
+export function ProfileHeader({ profile }: { profile: LocalProfile }) {
   return (
-    <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:gap-5">
-      <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-bg-tertiary ring-2 ring-border-secondary sm:h-20 sm:w-20">
-        {profile.avatar ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={profile.avatar}
-            alt=""
-            className="h-full w-full rounded-full object-cover"
-          />
-        ) : (
-          <span className="text-2xl font-bold text-text-accent">
-            {profile.name.charAt(0).toUpperCase()}
-          </span>
-        )}
+    <header className="profile-header" data-testid="profile-header">
+      <div className="profile-avatar" aria-hidden="true">
+        {initial(profile.displayName)}
       </div>
-      <div className="min-w-0 flex-1">
-        <div className="flex flex-wrap items-center gap-3">
-          <h1 className="text-xl font-bold tracking-tight text-text-primary">
-            {profile.name}
-          </h1>
-          <span className="rounded-md bg-bg-tertiary px-2 py-0.5 font-mono text-[11px] text-text-muted">
-            {truncatedAddress}
-          </span>
+      <div className="profile-identity">
+        <div className="profile-title-row">
+          <div>
+            <p className="profile-kind">
+              {profile.kind === "group"
+                ? "Local group example"
+                : "Local person example"}
+            </p>
+            <h1>{profile.displayName}</h1>
+          </div>
+          <span className="profile-source-chip">Synthetic identity</span>
         </div>
+
+        <div className="profile-address-row">
+          <code>{profile.address}</code>
+          <CopyAddressButton address={profile.address} />
+        </div>
+
         {profile.bio ? (
-          <p className="mt-2 max-w-lg text-[13px] leading-relaxed text-text-tertiary">
-            {profile.bio}
+          <p className="profile-bio">{profile.bio}</p>
+        ) : (
+          <p className="profile-bio profile-bio--missing">
+            No local bio was recorded.
+          </p>
+        )}
+
+        <dl className="profile-stats" aria-label="Local example profile counts">
+          <div>
+            <dt>Followers</dt>
+            <dd>{profile.followers.toLocaleString("en-US")}</dd>
+          </div>
+          <div>
+            <dt>Following</dt>
+            <dd>{profile.following.toLocaleString("en-US")}</dd>
+          </div>
+          {profile.kind === "group" ? (
+            <div>
+              <dt>Members</dt>
+              <dd>{profile.memberCount.toLocaleString("en-US")}</dd>
+            </div>
+          ) : null}
+        </dl>
+
+        {profile.hasRecordedAvatar ? (
+          <p className="profile-media-note">
+            A remote avatar URL exists in the seed, but offline profiles use a
+            local fallback and do not request it.
           </p>
         ) : null}
-        <div className="mt-3 flex flex-wrap gap-5 text-[13px]">
-          <span>
-            <strong className="text-text-primary">{profile.followers}</strong>{" "}
-            <span className="text-text-tertiary">followers</span>
-          </span>
-          <span>
-            <strong className="text-text-primary">{profile.following}</strong>{" "}
-            <span className="text-text-tertiary">following</span>
-          </span>
-          <span>
-            <strong className="text-text-primary">
-              {profile.coinsCreated}
-            </strong>{" "}
-            <span className="text-text-tertiary">coins</span>
-          </span>
-        </div>
+
+        {!profile.banned ? (
+          <div
+            className="profile-actions"
+            aria-label="Unavailable profile actions"
+          >
+            <button
+              type="button"
+              disabled
+              title="Authentication and follow writes are unavailable offline"
+            >
+              Follow unavailable
+            </button>
+          </div>
+        ) : null}
       </div>
-      <div className="flex shrink-0 gap-2">
-        <button
-          type="button"
-          disabled
-          className="h-9 rounded-lg bg-bg-accent px-4 text-[13px] font-bold text-text-on-accent disabled:cursor-not-allowed disabled:opacity-50"
-          title="Disabled in reconstruction"
-        >
-          Follow
-        </button>
-        <button
-          type="button"
-          disabled
-          className="h-9 rounded-lg border border-border-tertiary bg-transparent px-4 text-[13px] font-semibold text-text-secondary disabled:cursor-not-allowed disabled:opacity-50"
-          title="Disabled in reconstruction"
-        >
-          Share
-        </button>
-      </div>
-    </div>
+    </header>
   );
 }
