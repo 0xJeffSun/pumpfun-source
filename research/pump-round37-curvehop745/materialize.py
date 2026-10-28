@@ -19,6 +19,12 @@ def swap(data):
     if digest(changed) != PINS['changed_source_sha256']:
         raise ValueError('unexpected source, fallback, coordinates or surrounding text')
     return changed
+STANDALONE = b'[profile.release]\npanic = "abort"\noverflow-checks = true\nlto = false\ncodegen-units = 1\n[workspace]\n'
+def member_manifest(data):
+    # primary/Cargo.toml is the standalone single-crate manifest; the workspace member omits its profile/workspace tail
+    if not data.endswith(STANDALONE) or data.count(b'[workspace]') != 1 or data.count(b'[profile.release]') != 1:
+        raise ValueError('exact standalone parent manifest required')
+    return data[:-len(STANDALONE)]
 def safe_relative(name):
     p = Path(name)
     if p.is_absolute() or '..' in p.parts or not p.parts:
@@ -678,6 +684,8 @@ def materialize(parent, output, stage='curvehop745'):
             if any(p.is_symlink() for p in [source, *source.parents]):
                 raise ValueError('symlink input')
             data = source.read_bytes()
+            if name == 'programs/pump/Cargo.toml':
+                data = member_manifest(data)
         if digest(data) != expected:
             raise ValueError('source mismatch: ' + name)
         staged[name] = swap(data) if name == PINS['changed_path'] else data

@@ -10,7 +10,7 @@ class SourceTests(unittest.TestCase):
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()
         self.addCleanup(self.tmp.cleanup)
-        self.root = Path(self.tmp.name)
+        self.root = Path(self.tmp.name).resolve()
         self.original = (PARENT / 'primary/src/multi_hop_curve_swap.rs').read_bytes()
     def test_exact_materialization(self):
         out = self.root / 'source'
