@@ -438,3 +438,26 @@ use crate::buy_fee_market_cap;
 pub mod quote_payments;
 
 pub use crate::user_quote_payments;
+
+pub(crate) mod route_buy_budget {
+    use anchor_lang::prelude::*;
+    use crate::PumpError;
+    use crate::legacy_sell::fee_math::fee;
+    use crate::multi_hop_curve::{n,sub};
+
+// A01: The corrected estimate is checked but not used as the route's net quote.
+pub(crate) fn buy_budget(budget: u64, p: u64, requested_c: u64, creator: Pubkey) -> Result<(u64,u64)> {
+    let c = if creator == Pubkey::default() { 0 } else { requested_c };
+    let sum = p.checked_add(c).ok_or(PumpError::Overflow)?;
+    let mut estimate = if sum == 0 { budget } else { n(budget as u128 * 10000 / (10000 + sum as u128))? };
+    require_gt!(estimate,0,PumpError::BuyNotEnoughSolToCoverFees);
+    let pf = fee(estimate, p)?;
+    let cf = fee(estimate, c)?;
+    let total = estimate.saturating_add(pf).saturating_add(cf);
+    if total > budget {
+        estimate = sub(estimate, total - budget)?;
+        require_gt!(estimate,0,PumpError::BuySlippageBelowMinTokensOut);
+    }
+    Ok((pf,cf))
+}
+}

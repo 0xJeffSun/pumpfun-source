@@ -1,18 +1,18 @@
 {
-  "scope": "Main Pump only; all 218 unmatched original function windows assigned for recovery or initial static triage. Attribution is provisional, not proof of semantics. Owners are triage domains, not simultaneous execution claims; root coordinates integration.",
+  "scope": "Main Pump only; all 217 unmatched original function windows assigned for recovery or initial static triage. Attribution is provisional, not proof of semantics. Owners are triage domains, not simultaneous execution claims; root coordinates integration.",
   "created_at_utc": "2026-10-27T12:02:42.069370+00:00",
-  "baseline_candidate": "Round43 verified and selected as maintained source; the publication receipt records its commit. Later isolated deliveries are not counted here.",
-  "candidate_sha256": "c8dc5101410127fb65af572decc455e5deb2987d8e43a7c63526322c972fe549",
-  "baseline_normalized_windows": 817,
+  "baseline_candidate": "Round44 verified and selected as maintained source; the publication receipt records its commit. Later isolated deliveries are not counted here.",
+  "candidate_sha256": "89e1c533816c53effee670da298e8493a08085e92aefe23a89c6ef0bdc7d7af5",
+  "baseline_normalized_windows": 818,
   "total_windows": 1035,
   "assignment_counts": {
     "main_frontier_review": 76,
-    "remaining_audit": 76,
+    "remaining_audit": 75,
     "trade_event_finish": 66
   },
   "assigned_text_bytes": {
     "main_frontier_review": 220536,
-    "remaining_audit": 256728,
+    "remaining_audit": 256208,
     "trade_event_finish": 229488
   },
   "lanes": {
@@ -52,7 +52,7 @@
       "owner": "main_frontier_review",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "context_finish"
     },
     {
@@ -62,7 +62,7 @@
       "owner": "main_frontier_review",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "context_finish"
     },
     {
@@ -72,7 +72,7 @@
       "owner": "main_frontier_review",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "context_finish"
     },
     {
@@ -82,7 +82,7 @@
       "owner": "remaining_audit",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "build_identity"
     },
     {
@@ -92,7 +92,7 @@
       "owner": "remaining_audit",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "build_identity"
     },
     {
@@ -102,7 +102,7 @@
       "owner": "trade_event_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "claim_finish"
     },
     {
@@ -112,7 +112,7 @@
       "owner": "main_frontier_review",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "context_finish"
     },
     {
@@ -122,7 +122,7 @@
       "owner": "main_frontier_review",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "context_finish"
     },
     {
@@ -132,7 +132,7 @@
       "owner": "remaining_audit",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "build_identity"
     },
     {
@@ -142,7 +142,7 @@
       "owner": "trade_event_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "claim_finish"
     },
     {
@@ -152,7 +152,7 @@
       "owner": "main_frontier_review",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "context_finish"
     },
     {
@@ -162,7 +162,7 @@
       "owner": "remaining_audit",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "build_identity"
     },
     {
@@ -174,7 +174,7 @@
       "source_attribution": [
         "programs/pump/src/create_v2.rs"
       ],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "build_identity"
     },
     {
@@ -184,7 +184,7 @@
       "owner": "remaining_audit",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "build_identity"
     },
     {
@@ -194,7 +194,7 @@
       "owner": "remaining_audit",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "build_identity"
     },
     {
@@ -204,7 +204,7 @@
       "owner": "remaining_audit",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "build_identity"
     },
     {
@@ -214,7 +214,7 @@
       "owner": "trade_event_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "claim_finish"
     },
     {
@@ -224,7 +224,7 @@
       "owner": "main_frontier_review",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "context_finish"
     },
     {
@@ -234,7 +234,7 @@
       "owner": "main_frontier_review",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "context_finish"
     },
     {
@@ -244,7 +244,7 @@
       "owner": "main_frontier_review",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "context_finish"
     },
     {
@@ -254,7 +254,7 @@
       "owner": "remaining_audit",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "build_identity"
     },
     {
@@ -264,7 +264,7 @@
       "owner": "remaining_audit",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "build_identity"
     },
     {
@@ -274,7 +274,7 @@
       "owner": "main_frontier_review",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "context_finish"
     },
     {
@@ -284,7 +284,7 @@
       "owner": "main_frontier_review",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "context_finish"
     },
     {
@@ -294,7 +294,7 @@
       "owner": "main_frontier_review",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "context_finish"
     },
     {
@@ -304,7 +304,7 @@
       "owner": "trade_event_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "claim_finish"
     },
     {
@@ -316,7 +316,7 @@
       "source_attribution": [
         "programs/pump/src/creator/distribute_creator_fee_v2.rs"
       ],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "context_finish"
     },
     {
@@ -326,7 +326,7 @@
       "owner": "main_frontier_review",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "context_finish"
     },
     {
@@ -336,7 +336,7 @@
       "owner": "remaining_audit",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "build_identity"
     },
     {
@@ -348,7 +348,7 @@
       "source_attribution": [
         "programs/pump/src/creator/distribute_creator_fees.rs"
       ],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "context_finish"
     },
     {
@@ -360,7 +360,7 @@
       "source_attribution": [
         "programs/pump/src/creator/distribute_fee_to_holders.rs"
       ],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "context_finish"
     },
     {
@@ -370,7 +370,7 @@
       "owner": "remaining_audit",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "build_identity"
     },
     {
@@ -382,7 +382,7 @@
       "source_attribution": [
         "programs/pump/src/extend_account.rs"
       ],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "claim_finish"
     },
     {
@@ -392,7 +392,7 @@
       "owner": "main_frontier_review",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "context_finish"
     },
     {
@@ -402,7 +402,7 @@
       "owner": "remaining_audit",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "build_identity"
     },
     {
@@ -412,7 +412,7 @@
       "owner": "trade_event_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "claim_finish"
     },
     {
@@ -422,7 +422,7 @@
       "owner": "remaining_audit",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "build_identity"
     },
     {
@@ -432,7 +432,7 @@
       "owner": "trade_event_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "claim_finish"
     },
     {
@@ -442,7 +442,7 @@
       "owner": "trade_event_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "claim_finish"
     },
     {
@@ -452,7 +452,7 @@
       "owner": "main_frontier_review",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "context_finish"
     },
     {
@@ -462,7 +462,7 @@
       "owner": "main_frontier_review",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "context_finish"
     },
     {
@@ -472,7 +472,7 @@
       "owner": "main_frontier_review",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "context_finish"
     },
     {
@@ -482,7 +482,7 @@
       "owner": "remaining_audit",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "build_identity"
     },
     {
@@ -492,7 +492,7 @@
       "owner": "remaining_audit",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "build_identity"
     },
     {
@@ -502,7 +502,7 @@
       "owner": "main_frontier_review",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "context_finish"
     },
     {
@@ -512,7 +512,7 @@
       "owner": "trade_event_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "claim_finish"
     },
     {
@@ -522,7 +522,7 @@
       "owner": "main_frontier_review",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "context_finish"
     },
     {
@@ -534,7 +534,7 @@
       "source_attribution": [
         "programs/pump/src/migrate.rs"
       ],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "assignment_note": "Active migration Burn/helper recovery supersedes initial triage owner.",
       "legacy_owner": "build_identity"
     },
@@ -545,7 +545,7 @@
       "owner": "trade_event_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "claim_finish"
     },
     {
@@ -555,7 +555,7 @@
       "owner": "remaining_audit",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "build_identity"
     },
     {
@@ -565,7 +565,7 @@
       "owner": "trade_event_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "claim_finish"
     },
     {
@@ -575,7 +575,7 @@
       "owner": "main_frontier_review",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "context_finish"
     },
     {
@@ -585,7 +585,7 @@
       "owner": "trade_event_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "claim_finish"
     },
     {
@@ -595,7 +595,7 @@
       "owner": "remaining_audit",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "build_identity"
     },
     {
@@ -605,7 +605,7 @@
       "owner": "main_frontier_review",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "context_finish"
     },
     {
@@ -615,7 +615,7 @@
       "owner": "remaining_audit",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "build_identity"
     },
     {
@@ -625,7 +625,7 @@
       "owner": "remaining_audit",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "build_identity"
     },
     {
@@ -637,7 +637,7 @@
       "source_attribution": [
         "programs/pump/src/migrate_v2.rs"
       ],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "assignment_note": "Active migration Burn/helper recovery supersedes initial triage owner.",
       "legacy_owner": "build_identity"
     },
@@ -650,18 +650,8 @@
       "source_attribution": [
         "programs/pump/src/multi_hop_curve_swap.rs"
       ],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "claim_finish"
-    },
-    {
-      "original_start": "0x57c38",
-      "bytes": 520,
-      "original_body_sha256": "9d55228662056eaa8fa86533a6fb614be0e62cf08201460001f1d74dd8bd9acb",
-      "owner": "remaining_audit",
-      "work": "Unattributed function: initial static triage required",
-      "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
-      "legacy_owner": "build_identity"
     },
     {
       "original_start": "0x57e40",
@@ -670,7 +660,7 @@
       "owner": "remaining_audit",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "build_identity"
     },
     {
@@ -680,7 +670,7 @@
       "owner": "main_frontier_review",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "context_finish"
     },
     {
@@ -690,7 +680,7 @@
       "owner": "main_frontier_review",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "context_finish"
     },
     {
@@ -700,7 +690,7 @@
       "owner": "remaining_audit",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "build_identity"
     },
     {
@@ -710,7 +700,7 @@
       "owner": "remaining_audit",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "build_identity"
     },
     {
@@ -720,7 +710,7 @@
       "owner": "trade_event_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "claim_finish"
     },
     {
@@ -730,7 +720,7 @@
       "owner": "trade_event_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "claim_finish"
     },
     {
@@ -740,7 +730,7 @@
       "owner": "main_frontier_review",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "context_finish"
     },
     {
@@ -750,7 +740,7 @@
       "owner": "remaining_audit",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "build_identity"
     },
     {
@@ -760,7 +750,7 @@
       "owner": "trade_event_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "claim_finish"
     },
     {
@@ -770,7 +760,7 @@
       "owner": "main_frontier_review",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "context_finish"
     },
     {
@@ -780,7 +770,7 @@
       "owner": "remaining_audit",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "build_identity"
     },
     {
@@ -790,7 +780,7 @@
       "owner": "trade_event_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "claim_finish"
     },
     {
@@ -800,7 +790,7 @@
       "owner": "remaining_audit",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "build_identity"
     },
     {
@@ -810,7 +800,7 @@
       "owner": "remaining_audit",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "build_identity"
     },
     {
@@ -820,7 +810,7 @@
       "owner": "remaining_audit",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "build_identity"
     },
     {
@@ -830,7 +820,7 @@
       "owner": "remaining_audit",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "build_identity"
     },
     {
@@ -840,7 +830,7 @@
       "owner": "trade_event_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "claim_finish"
     },
     {
@@ -850,7 +840,7 @@
       "owner": "remaining_audit",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "build_identity"
     },
     {
@@ -860,7 +850,7 @@
       "owner": "main_frontier_review",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "context_finish"
     },
     {
@@ -870,7 +860,7 @@
       "owner": "remaining_audit",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "build_identity"
     },
     {
@@ -880,7 +870,7 @@
       "owner": "main_frontier_review",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "context_finish"
     },
     {
@@ -890,7 +880,7 @@
       "owner": "remaining_audit",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "build_identity"
     },
     {
@@ -900,7 +890,7 @@
       "owner": "remaining_audit",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "build_identity"
     },
     {
@@ -910,7 +900,7 @@
       "owner": "main_frontier_review",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "context_finish"
     },
     {
@@ -920,7 +910,7 @@
       "owner": "main_frontier_review",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "context_finish"
     },
     {
@@ -930,7 +920,7 @@
       "owner": "remaining_audit",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "build_identity"
     },
     {
@@ -940,7 +930,7 @@
       "owner": "main_frontier_review",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "context_finish"
     },
     {
@@ -950,7 +940,7 @@
       "owner": "remaining_audit",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "build_identity"
     },
     {
@@ -960,7 +950,7 @@
       "owner": "trade_event_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "claim_finish"
     },
     {
@@ -970,7 +960,7 @@
       "owner": "trade_event_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "claim_finish"
     },
     {
@@ -982,7 +972,7 @@
       "source_attribution": [
         "programs/pump/src/sell.rs"
       ],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "context_finish"
     },
     {
@@ -992,7 +982,7 @@
       "owner": "trade_event_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "claim_finish"
     },
     {
@@ -1002,7 +992,7 @@
       "owner": "trade_event_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "claim_finish"
     },
     {
@@ -1012,7 +1002,7 @@
       "owner": "trade_event_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "claim_finish"
     },
     {
@@ -1022,7 +1012,7 @@
       "owner": "main_frontier_review",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "context_finish"
     },
     {
@@ -1032,7 +1022,7 @@
       "owner": "remaining_audit",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "build_identity"
     },
     {
@@ -1042,7 +1032,7 @@
       "owner": "trade_event_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "claim_finish"
     },
     {
@@ -1052,7 +1042,7 @@
       "owner": "trade_event_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "claim_finish"
     },
     {
@@ -1062,7 +1052,7 @@
       "owner": "remaining_audit",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "build_identity"
     },
     {
@@ -1072,7 +1062,7 @@
       "owner": "trade_event_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "claim_finish"
     },
     {
@@ -1084,7 +1074,7 @@
       "source_attribution": [
         "programs/pump/src/token_incentives/volume_accumulator.rs"
       ],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "claim_finish"
     },
     {
@@ -1094,7 +1084,7 @@
       "owner": "trade_event_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "claim_finish"
     },
     {
@@ -1104,7 +1094,7 @@
       "owner": "main_frontier_review",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "context_finish"
     },
     {
@@ -1114,7 +1104,7 @@
       "owner": "main_frontier_review",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "context_finish"
     },
     {
@@ -1126,7 +1116,7 @@
       "source_attribution": [
         "programs/pump/src/token_incentives/volume_accumulator.rs"
       ],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "claim_finish"
     },
     {
@@ -1138,7 +1128,7 @@
       "source_attribution": [
         "programs/pump/src/token_incentives/volume_accumulator.rs"
       ],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "claim_finish"
     },
     {
@@ -1148,7 +1138,7 @@
       "owner": "trade_event_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "claim_finish"
     },
     {
@@ -1158,7 +1148,7 @@
       "owner": "trade_event_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "claim_finish"
     },
     {
@@ -1168,7 +1158,7 @@
       "owner": "main_frontier_review",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "context_finish"
     },
     {
@@ -1178,7 +1168,7 @@
       "owner": "trade_event_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "claim_finish"
     },
     {
@@ -1188,7 +1178,7 @@
       "owner": "trade_event_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "claim_finish"
     },
     {
@@ -1198,7 +1188,7 @@
       "owner": "main_frontier_review",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "context_finish"
     },
     {
@@ -1208,7 +1198,7 @@
       "owner": "remaining_audit",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "build_identity"
     },
     {
@@ -1220,7 +1210,7 @@
       "source_attribution": [
         "programs/pump/src/lib.rs"
       ],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "claim_finish"
     },
     {
@@ -1230,7 +1220,7 @@
       "owner": "main_frontier_review",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "context_finish"
     },
     {
@@ -1240,7 +1230,7 @@
       "owner": "trade_event_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "claim_finish"
     },
     {
@@ -1250,7 +1240,7 @@
       "owner": "remaining_audit",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "build_identity"
     },
     {
@@ -1260,7 +1250,7 @@
       "owner": "remaining_audit",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "build_identity"
     },
     {
@@ -1270,7 +1260,7 @@
       "owner": "main_frontier_review",
       "work": "Shared fee/CPI/math recovery; coordinate V3 caller changes with claim_finish",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "collaborators": [
         "claim_finish"
       ],
@@ -1283,7 +1273,7 @@
       "owner": "main_frontier_review",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "context_finish"
     },
     {
@@ -1293,7 +1283,7 @@
       "owner": "trade_event_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "claim_finish"
     },
     {
@@ -1303,7 +1293,7 @@
       "owner": "main_frontier_review",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "context_finish"
     },
     {
@@ -1313,7 +1303,7 @@
       "owner": "trade_event_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "claim_finish"
     },
     {
@@ -1323,7 +1313,7 @@
       "owner": "remaining_audit",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "build_identity"
     },
     {
@@ -1333,7 +1323,7 @@
       "owner": "trade_event_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "claim_finish"
     },
     {
@@ -1343,7 +1333,7 @@
       "owner": "main_frontier_review",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "context_finish"
     },
     {
@@ -1353,7 +1343,7 @@
       "owner": "remaining_audit",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "build_identity"
     },
     {
@@ -1363,7 +1353,7 @@
       "owner": "trade_event_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "claim_finish"
     },
     {
@@ -1373,7 +1363,7 @@
       "owner": "main_frontier_review",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "context_finish"
     },
     {
@@ -1383,7 +1373,7 @@
       "owner": "remaining_audit",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "build_identity"
     },
     {
@@ -1393,7 +1383,7 @@
       "owner": "trade_event_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "claim_finish"
     },
     {
@@ -1403,7 +1393,7 @@
       "owner": "remaining_audit",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "build_identity"
     },
     {
@@ -1413,7 +1403,7 @@
       "owner": "main_frontier_review",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "context_finish"
     },
     {
@@ -1423,7 +1413,7 @@
       "owner": "remaining_audit",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "build_identity"
     },
     {
@@ -1433,7 +1423,7 @@
       "owner": "trade_event_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "claim_finish"
     },
     {
@@ -1443,7 +1433,7 @@
       "owner": "main_frontier_review",
       "work": "Shared fee/CPI/math recovery; coordinate V3 caller changes with claim_finish",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "collaborators": [
         "claim_finish"
       ],
@@ -1456,7 +1446,7 @@
       "owner": "main_frontier_review",
       "work": "Shared fee/CPI/math recovery; coordinate V3 caller changes with claim_finish",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "collaborators": [
         "claim_finish"
       ],
@@ -1471,7 +1461,7 @@
       "source_attribution": [
         "programs/pump/src/lib.rs"
       ],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "collaborators": [
         "claim_finish"
       ],
@@ -1484,7 +1474,7 @@
       "owner": "remaining_audit",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "build_identity"
     },
     {
@@ -1494,7 +1484,7 @@
       "owner": "trade_event_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "claim_finish"
     },
     {
@@ -1504,7 +1494,7 @@
       "owner": "main_frontier_review",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "context_finish"
     },
     {
@@ -1514,7 +1504,7 @@
       "owner": "main_frontier_review",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "context_finish"
     },
     {
@@ -1524,7 +1514,7 @@
       "owner": "main_frontier_review",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "context_finish"
     },
     {
@@ -1534,7 +1524,7 @@
       "owner": "remaining_audit",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "build_identity"
     },
     {
@@ -1544,7 +1534,7 @@
       "owner": "trade_event_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "claim_finish"
     },
     {
@@ -1554,7 +1544,7 @@
       "owner": "remaining_audit",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "build_identity"
     },
     {
@@ -1564,7 +1554,7 @@
       "owner": "main_frontier_review",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "context_finish"
     },
     {
@@ -1574,7 +1564,7 @@
       "owner": "main_frontier_review",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "context_finish"
     },
     {
@@ -1584,7 +1574,7 @@
       "owner": "main_frontier_review",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "context_finish"
     },
     {
@@ -1594,7 +1584,7 @@
       "owner": "remaining_audit",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "build_identity"
     },
     {
@@ -1604,7 +1594,7 @@
       "owner": "remaining_audit",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "build_identity"
     },
     {
@@ -1614,7 +1604,7 @@
       "owner": "trade_event_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "claim_finish"
     },
     {
@@ -1624,7 +1614,7 @@
       "owner": "main_frontier_review",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "context_finish"
     },
     {
@@ -1634,7 +1624,7 @@
       "owner": "main_frontier_review",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "context_finish"
     },
     {
@@ -1644,7 +1634,7 @@
       "owner": "trade_event_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "claim_finish"
     },
     {
@@ -1654,7 +1644,7 @@
       "owner": "main_frontier_review",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "context_finish"
     },
     {
@@ -1664,7 +1654,7 @@
       "owner": "remaining_audit",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "build_identity"
     },
     {
@@ -1674,7 +1664,7 @@
       "owner": "main_frontier_review",
       "work": "Shared fee/CPI/math recovery; coordinate V3 caller changes with claim_finish",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "collaborators": [
         "claim_finish"
       ],
@@ -1687,7 +1677,7 @@
       "owner": "main_frontier_review",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "context_finish"
     },
     {
@@ -1697,7 +1687,7 @@
       "owner": "remaining_audit",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "build_identity"
     },
     {
@@ -1709,7 +1699,7 @@
       "source_attribution": [
         "programs/pump/src/lib.rs"
       ],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "claim_finish"
     },
     {
@@ -1719,7 +1709,7 @@
       "owner": "remaining_audit",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "build_identity"
     },
     {
@@ -1729,7 +1719,7 @@
       "owner": "remaining_audit",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "build_identity"
     },
     {
@@ -1739,7 +1729,7 @@
       "owner": "trade_event_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "claim_finish"
     },
     {
@@ -1749,7 +1739,7 @@
       "owner": "main_frontier_review",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "context_finish"
     },
     {
@@ -1761,7 +1751,7 @@
       "source_attribution": [
         "programs/pump/src/create_v2.rs"
       ],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "build_identity"
     },
     {
@@ -1771,7 +1761,7 @@
       "owner": "remaining_audit",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "build_identity"
     },
     {
@@ -1781,7 +1771,7 @@
       "owner": "remaining_audit",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "build_identity"
     },
     {
@@ -1791,7 +1781,7 @@
       "owner": "remaining_audit",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "build_identity"
     },
     {
@@ -1801,7 +1791,7 @@
       "owner": "main_frontier_review",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "context_finish"
     },
     {
@@ -1811,7 +1801,7 @@
       "owner": "remaining_audit",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "build_identity"
     },
     {
@@ -1821,7 +1811,7 @@
       "owner": "remaining_audit",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "build_identity"
     },
     {
@@ -1831,7 +1821,7 @@
       "owner": "main_frontier_review",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "context_finish"
     },
     {
@@ -1841,7 +1831,7 @@
       "owner": "remaining_audit",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "build_identity"
     },
     {
@@ -1851,7 +1841,7 @@
       "owner": "trade_event_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "claim_finish"
     },
     {
@@ -1861,7 +1851,7 @@
       "owner": "trade_event_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "claim_finish"
     },
     {
@@ -1871,7 +1861,7 @@
       "owner": "remaining_audit",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "build_identity"
     },
     {
@@ -1883,7 +1873,7 @@
       "source_attribution": [
         "programs/pump/src/lib.rs"
       ],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "claim_finish"
     },
     {
@@ -1895,7 +1885,7 @@
       "source_attribution": [
         "programs/pump/src/lib.rs"
       ],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "claim_finish"
     },
     {
@@ -1905,7 +1895,7 @@
       "owner": "remaining_audit",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "build_identity"
     },
     {
@@ -1915,7 +1905,7 @@
       "owner": "main_frontier_review",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "context_finish"
     },
     {
@@ -1925,7 +1915,7 @@
       "owner": "trade_event_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "claim_finish"
     },
     {
@@ -1935,7 +1925,7 @@
       "owner": "main_frontier_review",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "context_finish"
     },
     {
@@ -1945,7 +1935,7 @@
       "owner": "remaining_audit",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "build_identity"
     },
     {
@@ -1955,7 +1945,7 @@
       "owner": "trade_event_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "claim_finish"
     },
     {
@@ -1965,7 +1955,7 @@
       "owner": "remaining_audit",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "build_identity"
     },
     {
@@ -1975,7 +1965,7 @@
       "owner": "trade_event_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "claim_finish"
     },
     {
@@ -1985,7 +1975,7 @@
       "owner": "main_frontier_review",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "context_finish"
     },
     {
@@ -1995,7 +1985,7 @@
       "owner": "main_frontier_review",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "context_finish"
     },
     {
@@ -2005,7 +1995,7 @@
       "owner": "trade_event_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "claim_finish"
     },
     {
@@ -2015,7 +2005,7 @@
       "owner": "remaining_audit",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "build_identity"
     },
     {
@@ -2025,7 +2015,7 @@
       "owner": "main_frontier_review",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "context_finish"
     },
     {
@@ -2035,7 +2025,7 @@
       "owner": "trade_event_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "claim_finish"
     },
     {
@@ -2045,7 +2035,7 @@
       "owner": "main_frontier_review",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "context_finish"
     },
     {
@@ -2055,7 +2045,7 @@
       "owner": "remaining_audit",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "build_identity"
     },
     {
@@ -2065,7 +2055,7 @@
       "owner": "trade_event_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "claim_finish"
     },
     {
@@ -2075,7 +2065,7 @@
       "owner": "main_frontier_review",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "context_finish"
     },
     {
@@ -2085,7 +2075,7 @@
       "owner": "trade_event_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "claim_finish"
     },
     {
@@ -2095,7 +2085,7 @@
       "owner": "trade_event_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "claim_finish"
     },
     {
@@ -2105,7 +2095,7 @@
       "owner": "remaining_audit",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "build_identity"
     },
     {
@@ -2115,7 +2105,7 @@
       "owner": "trade_event_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "claim_finish"
     },
     {
@@ -2125,7 +2115,7 @@
       "owner": "main_frontier_review",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "context_finish"
     },
     {
@@ -2135,7 +2125,7 @@
       "owner": "remaining_audit",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "build_identity"
     },
     {
@@ -2145,7 +2135,7 @@
       "owner": "trade_event_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "claim_finish"
     },
     {
@@ -2155,7 +2145,7 @@
       "owner": "main_frontier_review",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "context_finish"
     },
     {
@@ -2165,7 +2155,7 @@
       "owner": "remaining_audit",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "build_identity"
     },
     {
@@ -2177,7 +2167,7 @@
       "source_attribution": [
         "programs/pump/src/admin_set_idl_authority.rs"
       ],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "claim_finish"
     },
     {
@@ -2187,7 +2177,7 @@
       "owner": "remaining_audit",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "build_identity"
     },
     {
@@ -2197,7 +2187,7 @@
       "owner": "main_frontier_review",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "context_finish"
     },
     {
@@ -2207,7 +2197,7 @@
       "owner": "trade_event_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "claim_finish"
     },
     {
@@ -2217,7 +2207,7 @@
       "owner": "remaining_audit",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "build_identity"
     },
     {
@@ -2227,7 +2217,7 @@
       "owner": "main_frontier_review",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "context_finish"
     },
     {
@@ -2237,7 +2227,7 @@
       "owner": "trade_event_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "claim_finish"
     },
     {
@@ -2247,7 +2237,7 @@
       "owner": "main_frontier_review",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "context_finish"
     },
     {
@@ -2257,7 +2247,7 @@
       "owner": "main_frontier_review",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "context_finish"
     },
     {
@@ -2267,7 +2257,7 @@
       "owner": "trade_event_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "claim_finish"
     },
     {
@@ -2277,14 +2267,14 @@
       "owner": "remaining_audit",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round43; not a completion estimate",
+      "status": "unmatched in verified Round44; not a completion estimate",
       "legacy_owner": "build_identity"
     }
   ],
   "goal_complete": false,
-  "candidate_symbols_sha256": "b26ba9647f20e5515a0c14aa06ca0d8f639aa649dd9e724d4ef3934fbc51ec88",
+  "candidate_symbols_sha256": "b67a131fb3bb245765ba026fcf67bb550d02306c4cc35cebb5f6a52c4c6b8677",
   "ownership_rule": "Explicit source ownership takes precedence over initial balanced unknown-window triage; coordinate shared helpers before editing.",
-  "updated_at_utc": "2026-10-28T07:18:54.305397+00:00",
+  "updated_at_utc": "2026-10-28T07:26:44.204268+00:00",
   "cross_cutting_work": [
     {
       "owner": "root",
