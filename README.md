@@ -3,7 +3,8 @@
 Reconstructed Rust source for Pump.fun's Solana programs, with captured binaries,
 reproducible builds and local differential tests.
 
-**Progress as of 27 October 2026: all four core programs still differ from their
+**Progress as of 27 October 2026: the Pump Fees research reconstruction reproduces its
+complete meaningful ELF byte for byte; the other three core programs still differ from their
 captured binaries. The selected Donation Relay reconstruction reproduces its complete meaningful
 ELF and, through a separate loader deployment, its captured payload.**
 
@@ -11,33 +12,34 @@ ELF and, through a separate loader deployment, its captured payload.**
 
 [Current main-Pump parallel research snapshot](research/main-pump-parallel-checkpoint-20261027/README.md) preserves the verified intermediates and in-progress source beyond the maintained checkpoint.
 
-**Main Pump: 71.3% of function windows matched; 50.2% of original text covered. Complete reconstruction remains unfinished.**
+**Main Pump: 71.9% of function windows matched; 51.6% of original text covered. Complete reconstruction remains unfinished.**
 
-Reproduce the selected Pump ELF with its [archived Rust/linker recipe](repro/pump/main-contract-round36-20261027/reproduce.py).
-
-
+Reproduce the selected Pump ELF with its [archived Rust/linker recipe](repro/pump/main-contract-round37-20261027/reproduce.py).
 
 
 
 
 
-Across the latest verified checkpoints, **2,892 / 3,338 inferred function windows
-match (86.6%)**. Their matched windows cover **3,832,216 / 5,213,128 original text
-bytes (73.5%)**. **One of five programs has complete meaningful-ELF identity**;
-all four core contracts still differ from their captured binaries.
+
+
+
+Across the latest verified checkpoints, **2,904 / 3,338 inferred function windows
+match (87.0%)**. Their matched windows cover **3,891,920 / 5,213,128 original text
+bytes (74.7%)**. **Two of five programs have complete meaningful-ELF identity**;
+three of the four core contracts still differ from their captured binaries.
 
 These percentages measure bounded binary-recovery progress, not a claim that
-86.6% of the engineering work is finished. Complete reconstruction also requires
+86.9% of the engineering work is finished. Complete reconstruction also requires
 all remaining code, calls, data, relocations and build provenance.
 
 | Latest verified checkpoint | Matched windows | Matched % | Raw-equal bodies | Normalized only | Unmatched | Whole ELF equal |
 | --- | ---: | ---: | ---: | ---: | ---: | --- |
-| [Pump Round36](repro/pump/main-contract-round36-20261027/README.md) | 738 / 1,035 | 71.3% | 145 | 593 | 297 | No |
-| [PumpSwap / AMM](repro/pump_amm/event-decoder-recovery-20261027/README.md) | 647 / 785 | 82.4% | 148 | 499 | 138 | No |
-| [Fees research](research/fees-sweep-integration-20261027/README.md) | 583 / 585 | 99.7% | 200 | 383 | 2 | No |
-| [Mayhem research](research/mayhem-source-origin-recovery-20261027/README.md) | 432 / 441 | 98.0% | 141 | 291 | 9 | No |
+| [Pump Round37](repro/pump/main-contract-round37-20261027/README.md) | 744 / 1,035 | 71.9% | 175 | 569 | 291 | No |
+| [PumpSwap / AMM](repro/pump_amm/optional-context-recovery-20261027/README.md) | 651 / 785 | 82.9% | 148 | 503 | 134 | No |
+| [Fees research](research/claude-fees100-crank-donation-20261027/README.md) | 585 / 585 | 100.0% | 585 | 0 | 0 | **Yes** |
+| [Mayhem research](research/mayhem-quotes-current-recovery-20261027/README.md) | 432 / 441 | 98.0% | 100 | 332 | 9 | No |
 | [Donation Relay](repro/donation-relay/canonical-exact-selection/README.md) | 492 / 492 | 100.0% | 492 | 0 | 0 | **Yes** |
-| **Total** | **2,892 / 3,338** | **86.6%** | **1,126** | **1,766** | **446** | **1 / 5** |
+| **Total** | **2,904 / 3,338** | **87.0%** | **1,500** | **1,404** | **434** | **2 / 5** |
 
 “Windows” are inferred original machine-function ranges, including framework and
 runtime helpers. Complete normalized matches mask specified call/address
@@ -47,12 +49,12 @@ the whole program is identical.
 
 | Checkpoint | Text bytes in matched windows | Text covered | Unmatched text |
 | --- | ---: | ---: | ---: |
-| Pump Round36 | 900,520 / 1,792,208 | 50.2% | 891,688 |
-| PumpSwap / AMM | 810,544 / 1,162,040 | 69.8% | 351,496 |
-| Fees research | 769,872 / 799,648 | 96.3% | 29,776 |
+| Pump Round37 | 924,192 / 1,792,208 | 51.6% | 868,016 |
+| PumpSwap / AMM | 816,800 / 1,162,040 | 70.3% | 345,240 |
+| Fees research | 799,648 / 799,648 | 100.0% | 0 |
 | Mayhem research | 598,792 / 706,744 | 84.7% | 107,952 |
 | Donation Relay | 752,488 / 752,488 | 100.0% | 0 |
-| **Total** | **3,832,216 / 5,213,128** | **73.5%** | **1,380,912** |
+| **Total** | **3,891,920 / 5,213,128** | **74.7%** | **1,321,208** |
 
 Pump and AMM rows describe the verified maintained sources. Fees and Mayhem rows
 are the latest qualified research frontiers, distinct from their maintained
@@ -141,7 +143,7 @@ pass. Its 641-window research artifact remains bound to its former
 640-window parent; the maintained 647-window checkpoint is reported above.
 The parent's other supplemental matrices were not rerun on this artifact.
 
-Pump Round36 passes 10,468 full cases plus 7,628 focused executions, with 18,092
+Pump Round37 passes 10,468 full cases plus 7,636 focused executions, with 18,100
 paired diagnostic-log cases. AMM passes 17,462 full cases plus the separate
 account, fee, CPI, boundary and error-order matrices recorded in its checkpoint.
 The [independent Pump/AMM migration-pair replay](research/pump-amm-migration-composition/README.md)
@@ -212,12 +214,19 @@ root builds agree; the upstream-gated control reproduces the parent. The target
 runtime is still current Anchor, and no new original matches or target executions
 are claimed.
 
-The latest [Fees Sweep recovery](research/fees-sweep-integration-20261027/README.md)
-reconstructs the complete 848-instruction handler through ordinary Rust borrowing
-and evaluation order. Fees now has 583 normalized / 200 raw-local matches,
-preserving all 21,079 readonly bytes, 105 Source records and earlier recoveries.
-Two fresh normal Cargo builds agree; all 17,331 fresh runtime comparisons pass.
-Crank, CreateDonation, absolute layout and complete ELF identity remain unresolved.
+The latest [Fees Crank recovery](research/claude-fees100-crank-donation-20261027/README.md)
+completes the Pump Fees research reconstruction. Together with the
+[CreateDonation recovery](research/claude-fees100-create-donation-20261027/README.md), the Sweep recovery
+([#308](research/fees-sweep-integration/README.md), with the same source shape first published in
+[#299](research/fees-sweep-entry-recovery-20261027/README.md) and
+[#301](research/fees-sweep-integration-20261027/README.md)) and the earlier recoveries, all 585 original
+functions match normalized and raw. The stripped canonical Linux build is byte-identical to the captured
+program's complete 873,256-byte meaningful ELF; the remaining capture bytes are zero loader allocation. Two
+fresh builds agree and all 17,331 runtime comparisons pass. The
+[whole-ELF end-state proof](research/claude-fees100-whole-elf-endstate-20261027/README.md) shows why the
+existing layout recipe needed no further change. The qualified source is materialized from these research
+packets; the maintained `programs/pump-fees` tree is a separate build target, and the historical source
+spelling and build provenance remain unproven.
 
 The [Fees frame and inlining archive](research/fees-frame-inline-research-20261027/README.md)
 preserves another 1,675 new or updated research files beyond the earlier
@@ -226,9 +235,9 @@ improvements, and Create call-graph recovery. The full recovery chain contains
 88,263 current files. These experiments retain their individual status and add
 no accepted matches.
 
-The latest [PumpSwap event, decoder and rent recovery](repro/pump_amm/event-decoder-recovery-20261027/README.md) matches 647 windows and 148 raw bodies, recovers the optional-bool decoder, both legacy dispatch wrappers and sell-event capture, and corrects creator-transfer rent/error boundaries. All 17,462 corpus cases and retained supplemental suites pass; 138 AMM windows remain. A later [optional-u64 follow-up](repro/pump_amm/event-decoder-recovery-20261027/followup/optional-u64/README.md) records 123 differences in 264 short-tail cases; its correction is under test.
+The latest [PumpSwap optional-u64 and Context recovery](repro/pump_amm/optional-context-recovery-20261027/README.md) matches 651 windows and 148 raw bodies, fixes all 123 short optional-u64 differences, restores the CreatePool and V2 wrapper boundaries, and recovers typed creator-payout call structure. All 17,462 corpus cases and retained supplemental suites pass; 134 AMM windows remain.
 
-Remaining priorities are the 297 Pump, 138 AMM, 2 Fees and 9 Mayhem unmatched
+Remaining priorities are the 291 Pump, 134 AMM and 9 Mayhem unmatched
 windows; deeper call/data/relocation identity; original build provenance; and
 uncovered behavior such as authentic fixed-admin AMM `create_config` success.
 The historical [150-handler audit](repro/reconstruction-audit-2026-10-26/handlers.md)

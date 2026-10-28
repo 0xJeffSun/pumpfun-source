@@ -85,8 +85,8 @@ shapes and direct-call targets. Matching Source observations rise from 456 to
 pairs pass; all 14,042 signed records are independently checked. No additional
 complete function or whole-ELF identity is claimed.
 
-Current AMM matched windows cover **810,544 of 1,162,040 original text bytes
-(69.8%)**. Its 647 normalized matches include the 148 raw-local matches; complete
+Current AMM matched windows cover **816,800 of 1,162,040 original text bytes
+(70.3%)**. Its 651 normalized matches include the 148 raw-local matches; complete
 ELF identity remains false.
 
 - [Every exact local body, with candidate names and original addresses](../repro/reconstruction-status-2026-10-26/raw-body-matches.md).

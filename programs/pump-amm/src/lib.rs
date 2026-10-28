@@ -23,7 +23,7 @@ anchor_lang::declare_program!(pump);
 anchor_lang::declare_program!(pump_fees);
 mod trade;
 mod create;
-pub use instructions::boost;
+pub use instructions::{boost, swap::trade_v2};
 mod boost_burn;
 mod sweep;
 mod extend;

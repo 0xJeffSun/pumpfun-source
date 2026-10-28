@@ -1,0 +1,3 @@
+*.patch -whitespace
+*.gz -text
+proposed/** -text

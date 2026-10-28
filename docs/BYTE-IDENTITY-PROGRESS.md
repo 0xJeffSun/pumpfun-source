@@ -4,6 +4,16 @@ The [full audit](RECONSTRUCTION-AUDIT.md) and its generated tables retain their
 explicit `1463bd22` snapshot. This log records later research without silently
 changing that baseline or promoting new selected artifacts.
 
+## Fees complete: whole meaningful ELF reproduced (PRs #385, #392)
+
+The [CreateDonation recovery](../research/claude-fees100-create-donation-20261027/README.md) (#385) and the
+[Crank recovery](../research/claude-fees100-crank-donation-20261027/README.md) (#392) close the last two
+Fees functions. Fees research now matches 585/585 original functions normalized and raw, and the stripped
+canonical Linux build is byte-identical to the captured program's 873,256-byte meaningful ELF, as predicted by
+the [end-state transplant](../research/claude-fees100-whole-elf-endstate-20261027/README.md) (#317). Each
+packet's verifier re-checks the ELF hashes, the window sets and the runtime binding; the Crank packet also
+checks equality against `evidence/original/pump_fees/deployed.so`. Earlier entries below keep their dated counts.
+
 ## Mayhem: two exact Source-origin repairs
 
 The [qualified source-origin successor](../research/mayhem-source-origin-recovery-20261027/README.md)

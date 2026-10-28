@@ -9,10 +9,10 @@ import subprocess
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
-CHECKPOINT = 'repro/pump_amm/event-decoder-recovery-20261027'
+CHECKPOINT = 'repro/pump_amm/optional-context-recovery-20261027'
 ARTIFACT = CHECKPOINT + '/results/build/candidate.so'
-CANDIDATE = '0881a95dafe465623c7220fb3da84b3f9c7d9b0094d572f62487f05cbd80a07c'
-MANIFEST = '812cd2b5d751d965789a41f620b9e0eef8491c66454344a536d594fb37460a91'
+CANDIDATE = '97bd5553c199cd24fb2d07034c365527bee5b138bf5dd7a0aa3099186aad2643'
+MANIFEST = 'caf47424343c92b0bf15354c14129b89542062ef5c21316b3f77feaa1af33c38'
 
 
 def sha(path):

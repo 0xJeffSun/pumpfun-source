@@ -2,7 +2,9 @@ name: Verify Pump AMM migration composition
 on: [push, pull_request, workflow_dispatch]
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  # Superseded runs are cancelled on every ref except main, so each published
+  # main revision keeps one complete hosted verification.
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 jobs:
   verify:
     name: pump-amm-migration-composition

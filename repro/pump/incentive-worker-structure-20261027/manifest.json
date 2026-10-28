@@ -10,7 +10,7 @@
   "holdout-claim-cases.json.gz": "40788d27e4b6c0692fe458b1d8538f4ae4929b689eeffbf3c68c6f58b2566b70",
   "worker-microcheck.json": "ea6a8ce9a7b9ec2a52e4bfbb4ee6504a2b3848bcc33682fc65ebf9aea304115b",
   "original-7bfd8.asm": "434cf0ff8b27615091406ffba93d5e348ae71d6b199c9e68df2d3cb99dd1a601",
-  "verify.py": "c521c0b47287883ec18c82cb850be72a5e952f4eecfde8cb6e0df58ac562bd8d",
+  "verify.py": "e77db29b15e81fcd1ad764dbaa626a2a2b9fdf2e91bea1c57e87c0dabba5cf18",
   "panic-before-fix.json.gz": "588bf7f539e918ac79d5d6c46df9ab411e5c9fa1111426d7b1030f4847552ae8",
   "panic-cases.json.gz": "9ae43dff2623380f016c9d2d274a1d73ff16f8eddbe0ec274e8efa741613ca9d",
   "research/build-final-v2.py": "7039570851eccdcd8ca3c8aa9c511612b24262655da8e8cd85ad3b978dac7c03",

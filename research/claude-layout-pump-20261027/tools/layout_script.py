@@ -7,10 +7,14 @@ of qualified input-section selectors followed by the same catch-all
 alignment are unchanged. No address assignment, padding, fill, or data
 statement can appear.
 """
+import sys
+sys.dont_write_bytecode = True  # keep the packet free of __pycache__
 import re
 
 DEFAULT_RULE = '  .text : { *(.text*) } :text'
-SELECTOR = re.compile(r'^    \*[^\s()"]+\("\.text[^"]*"\)$')
+# one leading '*' (any directory prefix), then a literal object or archive:member basename, then a
+# literal quoted .text section name; no other glob metacharacters (* ? [ ] { } \\) are accepted
+SELECTOR = re.compile(r'^    \*[A-Za-z0-9_.:+-]+\("\.text[A-Za-z0-9_.$]*"\)$')
 
 
 def render(default, selectors):
@@ -20,8 +24,9 @@ def render(default, selectors):
 
 
 def selector(file_pattern, section):
-    assert '"' not in section and ' ' not in section and '(' not in file_pattern and ')' not in file_pattern
-    return '*' + file_pattern + '("' + section + '")'
+    line = '    *' + file_pattern + '("' + section + '")'
+    assert SELECTOR.match(line), ('selector would not be literal', file_pattern, section)
+    return line[4:]
 
 
 def check_script(default, script):

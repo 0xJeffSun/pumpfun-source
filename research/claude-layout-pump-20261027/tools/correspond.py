@@ -11,6 +11,8 @@ C calls function U at the same slot, then U must be in T's domain. Remaining
 choices are resolved deterministically (nearest original-relative position),
 and every assignment carries its basis.
 """
+import sys
+sys.dont_write_bytecode = True  # keep the packet free of __pycache__
 import collections
 import hashlib
 import struct

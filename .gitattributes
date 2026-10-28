@@ -1,6 +1,11 @@
 *.so binary
 *.bin binary
 
+# Preserve the source recovery's exact retained input and receipt bytes.
+research/pump-feeconfig-decoder-recovery/** -text
+research/pump-feeconfig-decoder-recovery/local-feeconfig.patch -whitespace
+research/pump-feeconfig-decoder-recovery/proposed/** -whitespace
+
 # Preserve the independent AMM replay's exact retained bytes on every checkout.
 research/amm-event-capture-independent-replay/** -text
 research/amm-event-capture-independent-replay/source.patch -whitespace
@@ -1441,3 +1446,32 @@ research/mayhem-trade-ownership-current-20261027/source/*.patch -whitespace
 research/mayhem-trade-ownership-current-20261027/cfg.py whitespace=-blank-at-eof
 research/mayhem-source-origin-recovery-20261027/source.patch -whitespace
 research/mayhem-source-origin-recovery-20261027/inventory.tsv -whitespace
+repro/pump_amm/optional-context-recovery-20261027/results/** -whitespace
+repro/pump_amm/optional-context-recovery-20261027/followup/** -whitespace
+# Preserve exact compiled AMM source bytes in the optional-context checkpoint.
+programs/pump-amm/src/trade.rs whitespace=-blank-at-eof
+programs/pump-amm/src/transfer_creator.rs whitespace=-blank-at-eol
+
+# Preserve reconstructed Sweep source and patch bytes.
+research/fees-sweep-integration/overrides/** -whitespace
+research/fees-sweep-integration/source.patch -whitespace
+research/amm-buy-reserve-order/** -text
+research/amm-buy-reserve-order/source.patch -whitespace
+research/amm-buy-reserve-order/public-parent.patch -whitespace
+research/amm-buy-reserve-order/proposed/** -whitespace
+research/amm-buy-reserve-order/controllers/** whitespace=cr-at-eol
+# Preserve the compiled AMM quote-helper recovery and compiler receipts.
+research/amm-quote-base-recovery/** -text
+research/amm-quote-base-recovery/source.patch -whitespace
+research/amm-quote-base-recovery/proposed/** -whitespace
+research/amm-quote-base-recovery/compiler/** -whitespace
+research/amm-quote-base-recovery/controllers/** -whitespace
+research/amm-quote-base-recovery/overlap-review.json -whitespace
+# Preserve compiled AMM recipient-mode source and compiler evidence.
+research/amm-recipient-mode-recovery/** -text
+research/amm-recipient-mode-recovery/source.patch -whitespace
+research/amm-recipient-mode-recovery/proposed/** -whitespace
+research/amm-recipient-mode-recovery/compiler/** -whitespace
+research/amm-recipient-mode-recovery/controllers/** -whitespace
+research/amm-recipient-mode-recovery/overlap-review.json -whitespace
+research/amm-prepare-pool-recovery/** -text -whitespace
