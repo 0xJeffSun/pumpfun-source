@@ -111,5 +111,6 @@
   "limits": [
     "No completely green aggregate test result is claimed.",
     "Pure frontend state predicates only; no backend authorization, real network or cookie state."
-  ]
+  ],
+  "testTiming": "Full app test started before the final additional rejected-source fixture input; the final21-test focused run covers it. Functional adapter files stayed unchanged throughout."
 }
