@@ -67,7 +67,7 @@
     "path": "/profile/:id",
     "feature": "Profile/social graph",
     "scope": "included",
-    "status": "planned",
+    "status": "offline-profile",
     "behaviorQualified": false,
     "visualQualified": false
   },

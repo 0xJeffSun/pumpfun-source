@@ -150,7 +150,7 @@ test("all required viewports keep the feed readable without overflow", async ({
 });
 
 test("excluded detail routes remain unavailable", async ({ page }) => {
-  for (const path of ["/coin/example", "/pump-token", "/profile/example"]) {
+  for (const path of ["/coin/example", "/pump-token"]) {
     const response = await page.goto(path);
     expect(response?.status(), path).toBe(404);
   }

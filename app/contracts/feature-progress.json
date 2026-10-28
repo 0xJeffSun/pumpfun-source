@@ -542,37 +542,55 @@
       ],
       "source": {
         "contract": {
-          "status": "pending",
-          "evidence": []
+          "status": "accepted",
+          "evidence": [
+            "packages/frontend/PROFILE-EVIDENCE.md#observed"
+          ]
         },
         "logic": {
-          "status": "pending",
-          "evidence": []
+          "status": "accepted",
+          "evidence": [
+            "packages/frontend/src/app/profile/[id]/page.tsx",
+            "packages/frontend/src/components/profile/ProfileHeader.tsx"
+          ]
         },
         "adapters": {
-          "status": "pending",
-          "evidence": []
+          "status": "accepted",
+          "evidence": [
+            "packages/frontend/src/components/profile/profile-data.ts",
+            "packages/frontend/src/components/profile/profile-snapshot.ts"
+          ]
         }
       },
       "completion": {
         "source": {
-          "status": "pending",
-          "evidence": []
+          "status": "accepted",
+          "evidence": [
+            "packages/frontend/PROFILE-EVIDENCE.md#local-design"
+          ]
         },
         "success": {
-          "status": "pending",
-          "evidence": []
+          "status": "accepted",
+          "evidence": [
+            "packages/frontend/tests/profile.spec.ts",
+            "tests/profile_data.test.ts"
+          ]
         },
         "failure": {
-          "status": "pending",
-          "evidence": []
+          "status": "accepted",
+          "evidence": [
+            "packages/frontend/tests/profile.spec.ts",
+            "tests/profile_data.test.ts"
+          ]
         },
         "consistency": {
           "status": "pending",
-          "evidence": []
+          "evidence": [
+            "packages/frontend/visual/profile-20261028/README.md"
+          ]
         }
       },
-      "note": "Planned route; identity, profile and social components unimplemented."
+      "note": "Evidence-mapped, hash-bound synthetic profiles resolve by exact user id or wallet and render filtered authored posts with responsive browser coverage. Native profile compatibility, follow graph, authenticated behavior and original visual parity remain unqualified."
     },
     {
       "id": "auth",
