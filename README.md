@@ -2,21 +2,21 @@
 
 Rust reconstruction of Pump.fun's Solana programs from captured binaries.
 
-**Current binary coverage — 28 October 2026:** 3,320 / 3,338 function
-windows match (99.5%); 18 remain unmatched. Three of five programs reproduce
+**Current binary coverage — 28 October 2026:** 3,321 / 3,338 function
+windows match (99.5%); 17 remain unmatched. Three of five programs reproduce
 their complete meaningful ELF.
 
 | Program | Matched windows | Matched % | Raw-equal bodies | Normalized only | Unmatched | Whole ELF equal |
 | --- | ---: | ---: | ---: | ---: | ---: | --- |
 | [Pump Main](research/claude-pump-integration-20261027/r37-layout-41/README.md) | 1,019 / 1,035 | 98.5% | 168 | 851 | 16 | No |
-| [PumpSwap / AMM](research/claude-amm-union12-20261028/README.md) | 783 / 785 | 99.7% | 236 | 547 | 2 | No |
+| [PumpSwap / AMM](research/amm-cashback-buy-recovery-20261028/README.md) | 784 / 785 | 99.9% | 267 | 517 | 1 | No |
 | [Fees](research/claude-fees100-crank-donation-20261027/README.md) | 585 / 585 | 100.0% | 585 | 0 | 0 | **Yes** |
 | [Mayhem](research/mayhem-meaningful-elf-20261028/README.md) | 441 / 441 | 100.0% | 441 | 0 | 0 | **Yes** |
 | [Donation Relay](repro/donation-relay/canonical-exact-selection/README.md) | 492 / 492 | 100.0% | 492 | 0 | 0 | **Yes** |
-| **Total** | **3,320 / 3,338** | **99.5%** | **1,922** | **1,398** | **18** | **3 / 5** |
+| **Total** | **3,321 / 3,338** | **99.5%** | **1,953** | **1,368** | **17** | **3 / 5** |
 
-Matched windows cover **5,014,880 / 5,213,128 code bytes (96.2%)**;
-**198,248 bytes (3.8%)** remain outside matched windows.
+Matched windows cover **5,022,984 / 5,213,128 code bytes (96.4%)**;
+**190,144 bytes (3.6%)** remain outside matched windows.
 
 These figures measure the latest published artifacts, including research not
 integrated into the maintained source tree. Raw-equal bodies match byte for byte;
@@ -31,8 +31,8 @@ normalized coverage.
 
 ## Remaining work
 
-- Recover the **16 Pump Main and 2 PumpSwap / AMM** unmatched windows. The AMM
-  remainder is `0x351a8 0x4c750`.
+- Recover the **16 Pump Main and 1 PumpSwap / AMM** unmatched windows. The AMM
+  remainder is sell cashback `0x4c750`.
 - Close remaining call, data and relocation differences, integrate qualified
   source changes, and verify reproducible whole-program builds and uncovered behavior.
 - Pump Main reaches 1,019 windows with the
@@ -52,13 +52,18 @@ normalized coverage.
   [cashback-v2 quote-program guard](research/pump-l38-cashback-quote-program-20261028/README.md),
   [direct-route FeeConfig selection](research/pump-direct-route-fee-config-20261028/README.md) and the
   [checked cashback decoder](research/pump-checked-cashback-decoder-20261028/README.md).
-- PumpSwap's [783-window union11](research/claude-amm-union11-20261028/README.md) recovers
+- PumpSwap reaches **784/785** with the [buy cashback recovery](research/amm-cashback-buy-recovery-20261028/README.md):
+  all 8,104 helper bytes match after official normalization, with no lost windows
+  and 267 raw-equal bodies. Both complete ELFs reproduce independently; the
+  maintained legacy-buy suite passes 1,011 paired cases with 2,022 independently
+  verified transaction signatures and no non-meter log differences. Whole-ELF
+  equality remains unachieved. The earlier [783-window union11](research/claude-amm-union11-20261028/README.md) recovers
   the volume updater (`0x6db20`) over the 782-window union10, with 0 normalized or raw losses;
   [union12](research/claude-amm-union12-20261028/README.md) is a data-side step with the same
   window sets. All nine panic Location operands in `0x6db20` now match the original
   ([panic locations](research/amm-incentive-panic-locations-20261028/README.md); 17,462 cases),
   and a [signed cashback witness](research/amm-cashback-signed-verification-20261028/README.md)
-  covers the still-unmatched `distribute_cashback` helper (`0x351a8`; 146 cases, 0 mismatches).
+  covers the now-matched `distribute_cashback` helper (`0x351a8`; 146 cases, 0 mismatches).
   The [maintained AMM checkpoint](repro/pump_amm/v2-mint-clone-recovery-20261028/README.md)
   remains at 660 windows; research candidates are not promoted.
 - Mayhem now [reproduces its complete meaningful ELF](research/mayhem-meaningful-elf-20261028/README.md):
