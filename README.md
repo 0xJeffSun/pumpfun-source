@@ -2,53 +2,66 @@
 
 Rust reconstruction of Pump.fun's Solana programs from captured binaries.
 
-**Current binary coverage — 28 October 2026:** 3,277 / 3,338 function
-windows match (98.2%); 61 remain unmatched. Three of five programs reproduce
+**Current binary coverage — 28 October 2026:** 3,307 / 3,338 function
+windows match (99.1%); 31 remain unmatched. Three of five programs reproduce
 their complete meaningful ELF.
 
 | Program | Matched windows | Matched % | Raw-equal bodies | Normalized only | Unmatched | Whole ELF equal |
 | --- | ---: | ---: | ---: | ---: | ---: | --- |
-| [Pump Main](research/claude-pump-integration-20261027/r37-layout-32/README.md) | 990 / 1,035 | 95.7% | 166 | 824 | 45 | No |
-| [PumpSwap / AMM](research/claude-amm-union4-20261028/README.md) | 769 / 785 | 98.0% | 160 | 609 | 16 | No |
+| [Pump Main](research/claude-pump-integration-20261027/r37-layout-33/README.md) | 1,010 / 1,035 | 97.6% | 168 | 842 | 25 | No |
+| [PumpSwap / AMM](research/claude-amm-union6-20261028/README.md) | 779 / 785 | 99.2% | 220 | 559 | 6 | No |
 | [Fees](research/claude-fees100-crank-donation-20261027/README.md) | 585 / 585 | 100.0% | 585 | 0 | 0 | **Yes** |
 | [Mayhem](research/mayhem-meaningful-elf-20261028/README.md) | 441 / 441 | 100.0% | 441 | 0 | 0 | **Yes** |
 | [Donation Relay](repro/donation-relay/canonical-exact-selection/README.md) | 492 / 492 | 100.0% | 492 | 0 | 0 | **Yes** |
-| **Total** | **3,277 / 3,338** | **98.2%** | **1,844** | **1,433** | **61** | **3 / 5** |
+| **Total** | **3,307 / 3,338** | **99.1%** | **1,906** | **1,401** | **31** | **3 / 5** |
 
-Matched windows cover **4,751,024 / 5,213,128 code bytes (91.1%)**;
-**462,104 bytes (8.9%)** remain outside matched windows.
+Matched windows cover **4,904,056 / 5,213,128 code bytes (94.1%)**;
+**309,072 bytes (5.9%)** remain outside matched windows.
 
 These figures measure the latest published artifacts, including research not
 integrated into the maintained source tree. Raw-equal bodies match byte for byte;
 normalized matches mask specified call/address operands. Window coverage is not
 a percentage of engineering work completed or proof of whole-program identity.
-The Pump Main and AMM rows use source-only builds. Separate original-derived
-linker layouts report 204 and 175 raw matches, respectively, without increasing
-normalized coverage.
+The Pump Main and AMM rows use source-only Linux v1.44 builds. Separately labeled
+linker layouts generated from the original program report 293 and 248 raw matches,
+respectively, without increasing normalized coverage.
 
 ## Remaining work
 
-- Recover the **45 Pump Main and 16 PumpSwap / AMM** unmatched windows.
+- Recover the **25 Pump Main and 6 PumpSwap / AMM** unmatched windows. The AMM
+  remainder is `0x19138 0x2ba60 0x351a8 0x40a08 0x4c750 0x6db20`.
 - Close remaining call, data and relocation differences, integrate qualified
   source changes, and verify reproducible whole-program builds and uncovered behavior.
-- Pump Main's 990-window build ([L32](research/claude-pump-integration-20261027/r37-layout-32/README.md))
-  uses synthetic source-line positioning. It folds in the
-  [empty-fee-sweep](research/pump-l30-fee-sweep-log-parity-20261028/README.md) and
-  [zero-cashback](research/pump-l24-cashback-log-parity-20261028/README.md) notice
-  fixes; its 44-suite captured-loader corpus passes (10,468 cases, 0 mismatches) and
-  ordered-log differences fall from 138 to 23, with no window change.
-- PumpSwap's [769-window union](research/claude-amm-union4-20261028/README.md) removes the
-  incentive error-order regression of the 763-window research (0 mismatches in its
-  signed negative controls). The [maintained AMM checkpoint](repro/pump_amm/v2-mint-clone-recovery-20261028/README.md)
-  remains at 660 windows; the research candidate is not promoted. A contributor packet
-  [recovers the mint scanner](research/amm-mint-scanner-raw-20261028/README.md)
-  (`0xf28b8`, all 1,192 bytes raw-equal); it is not yet composed into the union.
+- Pump Main's 1,010-window build ([L33](research/claude-pump-integration-20261027/r37-layout-33/README.md))
+  composes every fz final-run window lane on L32 (+20 windows, 0 losses) and keeps
+  synthetic source-line positioning; its 44-suite captured-loader corpus passes
+  (10,468 cases, 0 mismatches). Two log-parity packets on L32 are not yet folded into
+  L33: [creator diagnostics](research/pump-l32-creator-log-parity-20261028/README.md)
+  (three Round47 `admin_cto` messages) and the
+  [AdminCto collection order](research/pump-l32-admin-cto-log-order-20261028/README.md)
+  fix, which moves an ATA CPI to the right branch and takes ordered non-filename log
+  differences from 6 to 0 with no window loss. A future composition must combine both
+  and requalify against L33.
+- PumpSwap's [779-window union](research/claude-amm-union6-20261028/README.md) adds ten
+  windows over the 769-window union4 (including the mint scanner `0xf28b8` and
+  multi-hop `0x3dbc0`/`0x45940`/`0xfb08`), with 0 normalized or raw losses. All 25
+  suites (17,462 cases) report 0 mismatches and the five incentive error-order controls
+  agree. A separate contributor line,
+  [mint-scanner integration](research/amm-union4-mint-scanner-integration-20261028/README.md)
+  (770) and [multi-hop fee flags](research/amm-multi-hop-fee-flags-20261028/README.md)
+  (771), independently recovers `0xfb08` with an explicit call boundary. The
+  [maintained AMM checkpoint](repro/pump_amm/v2-mint-clone-recovery-20261028/README.md)
+  remains at 660 windows; research candidates are not promoted.
 - Mayhem now [reproduces its complete meaningful ELF](research/mayhem-meaningful-elf-20261028/README.md):
   ordinary stripping of two fresh builds equals all 775,416 meaningful original bytes.
   The closing change moves one vendored-Anchor module declaration and rebinds the data layout.
   A [follow-up](research/mayhem-fresh-host-20261028/README.md) rebuilds the host macro from
   source, with no cached host artifacts, across three fresh chains. The recipe still uses
   a target-derived linker layout, so historical source/compiler provenance remains open.
+  Static data proofs continue on the qualified437 image:
+  [Anchor log formatter pieces](research/mayhem-current437-format-pieces-20261028/README.md)
+  and [counted account-name intervals](research/mayhem-current437-account-names-20261028/README.md)
+  (125 `with_account_name` sites; `.rodata` coverage 1,724 -> 2,498 of 18,396 bytes).
 - PumpSwap transfer-fee diagnostics with basis points above 10,000 now trigger all
   three overflow sites at runtime: lines 57/67 for
   [deposit/withdraw](research/amm-transfer-fee-bps-overflow-20261028/README.md) and
