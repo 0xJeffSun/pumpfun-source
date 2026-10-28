@@ -11,9 +11,15 @@ meta=json.loads((root/'evidence/sdk/registry.json').read_text())
 archive=root/'evidence/sdk/pump-sdk-4.3.1.tgz'
 if 'sha512-'+base64.b64encode(hashlib.sha512(archive.read_bytes()).digest()).decode()!=meta['dist']['integrity']:
  raise ValueError('SDK archive npm integrity mismatch')
+expected_sources=set()
 with tarfile.open(archive) as tar:
  for member in tar.getmembers():
   if member.name.startswith('package/src/') and member.isfile():
+   expected_sources.add(member.name.removeprefix('package/src/'))
    if tar.extractfile(member).read()!=(root/'packages/sdk'/member.name.removeprefix('package/')).read_bytes():
     raise ValueError(f'SDK source bytes differ from archive: {member.name}')
+source_root=root/'packages/sdk/src'
+actual_sources={path.relative_to(source_root).as_posix() for path in source_root.rglob('*') if path.is_file()}
+if actual_sources != expected_sources:
+ raise ValueError(f'SDK source inventory differs from archive: extra={sorted(actual_sources-expected_sources)}, missing={sorted(expected_sources-actual_sources)}')
 print(f"Verified {len(records)} captured objects, npm integrity, and unchanged SDK sources")
