@@ -2985,3 +2985,7 @@ Three root compilations agree. Fresh 6,636 trade pairs, 69 initializer pairs, 69
 ## Counted instruction-label literals on qualified436
 
 The [counted-literal extension](../research/mayhem-current436-counted-literals-20261028/README.md) proves 20 disjoint byte intervals totaling 553 original bytes, selected by explicit pointer/length arguments before relocation-confirmed `sol_log_` calls. All 20 literal mutations, a redirected pointer, source/archive changes and filesystem corruptions are exercised by nine tests. The proof preserves its parent436/141 local counts and429-window/579-pair data relation. It is historical evidence for that exact artifact; it does not infer allocation extents, logged runtime output or automatic transfer to qualified437.
+
+## O0095 analysis withdrawal
+
+PR412 removes the earlier static-analysis packet because it treated absolute addresses as `.text` offsets and decoded a range shifted by 288 bytes. The earlier integration review reproduced that output but did not detect the incorrect range. Independent decoding at absolute188864–190160 confirms the eight already-known call targets and no internal entry. The validator's normalized match and the437-window frontier remain unchanged. The corrected address evidence is retained in [the review record](../research/pr-review-20261028/pr412-correction.json).
