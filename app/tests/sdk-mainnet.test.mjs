@@ -69,3 +69,32 @@ test('published and rebuilt SDK reproduce non-Mayhem mainnet buy and sell amount
  }
  assert.ok(compared>=80,`only ${compared} non-Mayhem buy/sell events compared`);
 });
+test('mainnet exact-in buys follow the reconstructed pricing and the SDK quote bounds them from above',()=>{
+ const original=require(join(published,'index.js')), built=require(join(root,'packages/sdk/dist/index.js'));
+ const exact=JSON.parse(readFileSync(new URL('./fixtures/mainnet-exact-in-buys.json',import.meta.url),'utf8'));
+ const zero=PublicKey.default, ceilFee=(amount,bps)=>amount.mul(bps).addn(9_999).divn(10_000);
+ assert.ok(exact.events.length>=50,`fixture has ${exact.events.length} events`);
+ let overQuoted=0;
+ for(const row of exact.events){
+  const e=decode(row.data), ix=Buffer.from(row.instruction,'base64'), label=`${row.ix} ${row.signature}`;
+  assert.equal(e.ixName,row.ix==='buy_exact_sol_in'?'buy_exact_sol_in':'buy_exact_quote_in',label);
+  const budget=new BN(ix.subarray(8,16),'le');
+  const vt=e.virtualTokenReserves.add(e.tokenAmount), vq=e.virtualQuoteReserves.sub(e.quoteAmount);
+  // programs/pump/src/buy.rs: fees are charged on raw_quote, which steps down by one when they overflow the budget; util/constant_product.rs prices quote-1.
+  const pb=e.feeBasisPoints, cb=e.creator.equals(zero)?new BN(0):e.creatorFeeBasisPoints;
+  const raw=budget.muln(10_000).div(pb.add(cb).addn(10_000));
+  const quote=raw.add(ceilFee(raw,pb)).add(ceilFee(raw,cb)).gt(budget)?raw.subn(1):raw;
+  const tokens=quote.subn(1).mul(vt).div(vq.add(quote.subn(1)));
+  assert.deepEqual([e.quoteAmount,e.fee,e.creatorFee,e.tokenAmount].map(String),[quote,ceilFee(raw,pb),ceilFee(raw,cb),tokens].map(String),label);
+  if(e.mayhemMode)continue;
+  const global={feeBasisPoints:pb,creatorFeeBasisPoints:e.creatorFeeBasisPoints,creatorFeeConfigurable:false,tokenTotalSupply:SUPPLY};
+  const bondingCurve={virtualTokenReserves:vt,virtualQuoteReserves:vq,realTokenReserves:e.realTokenReserves.add(e.tokenAmount),realQuoteReserves:e.realQuoteReserves.sub(e.quoteAmount),creator:e.creator,quoteMint:e.quoteMint,isMayhemMode:false,creatorFeeBps:new BN(0),complete:false};
+  const run=(sdk)=>sdk.getBuyTokenAmountFromSolAmount({global,feeConfig:null,mintSupply:SUPPLY,bondingCurve,amount:budget,quoteMint:e.quoteMint});
+  const reference=run(original);
+  assert.equal(run(built).toString(),reference.toString(),`rebuilt ${label}`);
+  assert.ok(reference.gte(e.tokenAmount),`${label}: SDK ${reference} below mainnet ${e.tokenAmount}`);
+  if(reference.gt(e.tokenAmount))overQuoted++;
+ }
+ // The SDK prices floor((budget-1)*1e4/(1e4+bps)) without the program's quote-1, so it over-quotes whenever that equals the charged quote.
+ assert.ok(overQuoted>0,'expected at least one SDK over-quote');
+});
