@@ -124,3 +124,15 @@ No runtime replay is retained or claimed for these reported clean-build
 artifacts. The older quote-pair packet's 6,636 trade pairs bind only to that
 packet's own artifact. Normalized matches do not establish raw whole-body,
 recursive call/data or whole-ELF identity.
+
+## Recheck
+
+```sh
+.venv/bin/python research/mayhem-frontier-clean-rebuild-20261028/verify.py
+```
+
+Rebuilds both recipes into a fresh temporary directory from the pinned source
+inputs and asserts the artifact hashes, 441-window counts and matched text
+bytes recorded above. A zero exit means every recorded value reproduced on the
+current host with its installed tools; it does not authenticate those tools.
+Use `--only <recipe>` for one recipe or `--keep <dir>` to retain the outputs.
