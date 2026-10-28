@@ -3,7 +3,7 @@
 An evidence-backed starting point for reconstructing the Pump website and APIs. This is separate from the Rust/on-chain reconstruction at the repository root.
 
 - `packages/sdk`: unchanged TypeScript sources from the official `@pump-fun/pump-sdk@4.3.1` npm archive, with a reconstructed tsup build.
-- `packages/frontend`: Next.js **16.4.1**, React **19.2.3**, Turbopack; evidence-mapped responsive shell, active route navigation, an offline historical Explore search, and URL-backed search entry using captured color tokens and Geist fonts. Native market search remains unimplemented.
+- `packages/frontend`: Next.js **16.4.1**, React **19.2.3**, Turbopack; evidence-mapped responsive shell, a hash-bound offline example feed, an offline historical Explore search, and URL-backed navigation using captured color tokens and Geist fonts. Native feed and market-search compatibility remain unimplemented.
 - `packages/backend`: independent Fastify compatibility harness. Documents 67 developer API operations, supports explicit read-only fixture replay, and returns **501** for unimplemented behavior.
 - `evidence`: original public bundles, HTML, styles, fonts, HTTP/DNS evidence, SDK archive and provenance.
 - `recovered/modules`: readable Turbopack factories, with module IDs, content hashes and exact source ranges in `recovered/modules.json`. These are not standalone original source files.
@@ -38,6 +38,22 @@ curl http://localhost:3001/services/frontend/sol-price
 Build commands intentionally run the SDK first. Tests compare both rebuilt entrypoints against the published SDK, verify fee-math samples, check recovery provenance and exercise the backend's failure/replay behavior. Pure-JS bigint fallback is allowed; native crypto performance is not qualified.
 
 `pnpm test` also runs the frontend's Chromium interaction suite. On a fresh host, install its pinned browser once with `pnpm --filter @pump-reconstruction/frontend test:browser:install`. The suite starts an isolated local Next development server and verifies the shared routes, active navigation, mobile dismissal, search/history semantics, 404 boundaries, requested viewport widths and absence of production mutations.
+
+## Offline Home Feed
+
+`/` hashes and validates the checked-in backend post and user seeds before
+rendering three visible root examples. Those seeds are hand-authored synthetic
+test data, not captured Pump users or activity, so the page labels the dataset
+and every card accordingly. Replies are not promoted, deleted and hidden rows
+are omitted, equal timestamps have a stable order, and missing authors receive
+an explicit unresolved identity. External avatar and media URLs are never sent
+to the browser.
+
+The Following tab is URL-backed but intentionally unavailable: no authenticated
+viewer or follow graph is invented. This feature performs no production API
+request or mutation and does not qualify the native feed service. See
+[`packages/frontend/HOME-FEED-EVIDENCE.md`](packages/frontend/HOME-FEED-EVIDENCE.md)
+for factory provenance and the local design boundary.
 
 ## Offline Explore snapshot
 
