@@ -18,6 +18,64 @@ const fixture = (overrides: Partial<Fixture> = {}): Fixture => ({
 const malformedFixture = (overrides: Record<string, unknown>) =>
   ({ ...fixture(), ...overrides }) as Fixture;
 
+const reservedFixturePaths = [
+  "/health",
+  "/__reconstruction/status",
+  "/__reconstruction/openapi.json",
+];
+
+test("GET and HEAD fixtures cannot shadow reserved internal routes", () => {
+  for (const path of reservedFixturePaths) {
+    for (const method of ["GET", "HEAD"]) {
+      const source = `https://user:password@example.test/${method}?token=secret`;
+      const sourceDigest = createHash("sha256")
+        .update(source)
+        .digest("hex")
+        .slice(0, 12);
+      const pathDigest = createHash("sha256")
+        .update(path)
+        .digest("hex")
+        .slice(0, 12);
+      assert.throws(
+        () => buildApp([fixture({ method, path, query: undefined, source })]),
+        (error: unknown) => {
+          assert.ok(error instanceof Error);
+          assert.match(error.message, /Reserved fixture route/);
+          assert.match(error.message, new RegExp(pathDigest));
+          assert.match(error.message, new RegExp(sourceDigest));
+          assert.doesNotMatch(
+            error.message,
+            /password|token=|user:|example\.test/,
+          );
+          return true;
+        },
+      );
+    }
+  }
+});
+
+test("reserved routes reject mixed-case methods and every query variant", () => {
+  for (const path of reservedFixturePaths) {
+    for (const [method, query] of [
+      ["gEt", { first: "1", second: "2" }],
+      ["hEaD", { second: "2", first: "1" }],
+    ] as const) {
+      assert.throws(
+        () =>
+          buildApp([
+            fixture({
+              method,
+              path,
+              query,
+              source: `synthetic:${path}:${method}`,
+            }),
+          ]),
+        /Reserved fixture route/,
+      );
+    }
+  }
+});
+
 test("fixture bodies must be explicitly present; null remains valid", async () => {
   const missing = { ...fixture() } as Partial<Fixture>;
   delete missing.body;
@@ -29,7 +87,10 @@ test("fixture bodies must be explicitly present; null remains valid", async () =
   }
   const app = buildApp([fixture({ body: null })]);
   try {
-    assert.equal((await app.inject("/__reconstruction/status")).json().fixtureCount, 1);
+    assert.equal(
+      (await app.inject("/__reconstruction/status")).json().fixtureCount,
+      1,
+    );
   } finally {
     await app.close();
   }
