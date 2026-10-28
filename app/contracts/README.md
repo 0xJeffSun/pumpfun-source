@@ -8,4 +8,6 @@
 
 Every fixture must explicitly provide `body`; use `null` for a JSON null body. Missing or `undefined` bodies fail registration instead of silently replaying an empty successful response.
 
+`developer-bindings.json` binds documented developer operations, one scope at a time, to the captured site's `publicRead` route-contract literals. It currently covers the 11 `leaderboards.read` operations. Each entry cites a spec JSON pointer, the captured object's manifest SHA-256 and the UTF-16 range of its `publicRead` literal, plus any `internal-operations.json` client call sites. One captured `leaderboards.read` route missing from spec 0.294.0 is listed under `observedNotDeclared` and stays outside the 67-operation denominator. Contract-bound does not mean implemented or qualified. It does not bind the origin of website calls or earn feature-milestone credit, and no network request was made. Verify with `python3 scripts/verify-bindings.py`.
+
 `routes.json` defines product scope; `coverage.json` records implementation status. Native API operations and visual/behavior-qualified frontend routes remain zero.
