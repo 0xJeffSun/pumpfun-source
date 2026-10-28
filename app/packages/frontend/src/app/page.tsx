@@ -1,0 +1,2 @@
+import Link from 'next/link';
+export default function Home() { return <><div className="heading"><div><p className="eyebrow">HOME</p><h1>Feed</h1></div><Link href="/explore">Explore coins →</Link></div><div className="tabs"><strong>For you</strong><span>Following</span></div><section className="empty"><span className="mark">◒</span><h2>Your feed starts here</h2><p>The captured feed contract is ready for implementation.</p><p className="muted">No synthetic trading data is presented as live activity.</p></section></> }

@@ -1,0 +1,41 @@
+{
+  "asOf": "2026-10-28",
+  "scope": "Foundation checkpoint; not product/API completion",
+  "developerApi": {
+    "documentedOperations": 67,
+    "implementedNatively": 0,
+    "qualified": 0
+  },
+  "internalApi": {
+    "staticCandidateOperations": 330,
+    "candidateDenominatorReviewed": false,
+    "implementedNatively": 0,
+    "qualified": 0
+  },
+  "fixtures": {
+    "publicSnapshots": 1,
+    "qualifiedLiveOperations": 0,
+    "format": "method + exact path + sorted unique string query keys + status + headers + JSON body + provenance; GET/HEAD only"
+  },
+  "frontend": {
+    "scaffolded": true,
+    "visuallyQualifiedRoutes": 0,
+    "behaviorQualifiedRoutes": 0
+  },
+  "sdk": {
+    "version": "4.3.1",
+    "sourceBytesUnchanged": true,
+    "entrypointExportsCompared": true,
+    "fullBehaviorQualified": false
+  },
+  "unknowns": [
+    "origin binding and full internal route set",
+    "authenticated UI and API states",
+    "mutation semantics",
+    "realtime events",
+    "database/cache/queue/runtime deployment",
+    "original frontend sources and exact full dependency tree"
+  ],
+  "featureProgress": "feature-progress.json",
+  "progressReport": "../PROGRESS.md"
+}

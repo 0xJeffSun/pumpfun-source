@@ -1,0 +1,23 @@
+{
+  "name": "@pump-reconstruction/frontend",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbopack -p 3000",
+    "build": "next build --turbopack",
+    "start": "next start -p 3000",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "next": "16.4.1",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "@pump-fun/pump-sdk": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/react": "19.2.7",
+    "@types/react-dom": "19.2.3",
+    "typescript": "5.9.3",
+    "@types/node": "22.18.6"
+  }
+}
