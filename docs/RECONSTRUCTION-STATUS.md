@@ -57,7 +57,7 @@ analysis. Candidate symbol names are hypotheses about original identity.
 | **Mayhem latest research** | **441** | **141** | **291** | **9** | **0** |
 | **Relay canonical selection** | **492** | **492** | **0** | **0** | **0** |
 
-The current rows are bound to [Pump Round36](../repro/pump/main-contract-round36-20261027/README.md), [AMM native-quote recovery](../repro/pump_amm/event-decoder-recovery-20261027/README.md), [Fees Sweep integration](../research/fees-sweep-integration-20261027/README.md) and [Mayhem current macro composition](../research/mayhem-current-macro-call-closure-20261027/README.md); they extend the dated generated inventory below. Each row is a partition, not a score of semantic correctness. The historical selected Mayhem source
+The current rows are bound to [Pump Round36](../repro/pump/main-contract-round36-20261027/README.md), [AMM native-quote recovery](../repro/pump_amm/event-decoder-recovery-20261027/README.md), [Fees Sweep integration](../research/fees-sweep-integration-20261027/README.md) and [Mayhem source-origin composition](../research/mayhem-source-origin-recovery-20261027/README.md); they extend the dated generated inventory below. Each row is a partition, not a score of semantic correctness. The historical selected Mayhem source
 ledger has 257 opaque windows, 12 of which happen to match local raw bytes.
 Selected Fees retains two call-conflicting rows; body existence does not resolve
 those conflicts. Different programs and studies use different matching rules.
@@ -73,10 +73,17 @@ repairs the allocator-provider mismatch and raises recursive ordered direct-call
 closure from 414 to 422 of its 432 normalized body matches. Ten matched windows
 still have no surviving counterpart because they depend on unmatched business
 handlers. Two builds, 6,636 fresh trade pairs and 69 initializer pairs pass;
-the [complete inventory](../research/mayhem-current-macro-call-closure-20261027/inventory.tsv)
+the [latest complete inventory](../research/mayhem-source-origin-recovery-20261027/inventory.tsv)
 separates local equality and direct-call closure. This relation does not prove
 data, indirect-call, external implementation, injective assignment or semantic
 identity, and does not change the normalized body total.
+
+The [source-origin successor](../research/mayhem-source-origin-recovery-20261027/README.md)
+corrects BpfWriter and ExtendAccountEvent Source records, preserving all function
+shapes and direct-call targets. Matching Source observations rise from 456 to
+458. Two builds, 6,636 trade pairs, 301 ExtendAccount pairs and 69 initializer
+pairs pass; all 14,042 signed records are independently checked. No additional
+complete function or whole-ELF identity is claimed.
 
 Current AMM matched windows cover **810,544 of 1,162,040 original text bytes
 (69.8%)**. Its 647 normalized matches include the 148 raw-local matches; complete

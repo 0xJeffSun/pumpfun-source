@@ -1439,3 +1439,5 @@ research/mayhem-amm-sell-cfg-recovery-20261027/controls/*/source.patch -whitespa
 research/mayhem-amm-sell-cfg-recovery-20261027/controls/*/overrides/** -whitespace
 research/mayhem-trade-ownership-current-20261027/source/*.patch -whitespace
 research/mayhem-trade-ownership-current-20261027/cfg.py whitespace=-blank-at-eof
+research/mayhem-source-origin-recovery-20261027/source.patch -whitespace
+research/mayhem-source-origin-recovery-20261027/inventory.tsv -whitespace

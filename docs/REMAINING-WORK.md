@@ -30,7 +30,7 @@ The later [optional-u64 probe](../repro/pump_amm/event-decoder-recovery-20261027
 records 123 differences among 264 short-tail cases; its correction is not in
 this sealed checkpoint. Complete data/call identity and provenance remain open.
 
-Current Mayhem research is the [qualified macro composition](../research/mayhem-current-macro-call-closure-20261027/README.md):
+Current Mayhem research is the [qualified source-origin composition](../research/mayhem-source-origin-recovery-20261027/README.md):
 141 raw-local, 291 normalized-only and nine unmatched windows / 107,952 original
 text bytes. O0092 and O0093 match their complete 1,256-byte and 1,120-byte bodies;
 all twenty immediate callees and twenty ordered typed references agree. The
@@ -43,7 +43,7 @@ closes the allocator task identified by the earlier direct-call audit: O0210 now
 calls the matching 328-byte `finish_grow`, closing it and seven affected windows.
 The direct-call relation now covers 422/432 matched bodies; ten still depend on
 the missing business bodies. Global data, indirect calls, layout and historical
-source/toolchain provenance remain work. The [441-row inventory](../research/mayhem-current-macro-call-closure-20261027/inventory.tsv)
+source/toolchain provenance remain work. The [441-row inventory](../research/mayhem-source-origin-recovery-20261027/inventory.tsv)
 and [nine-body work map](MAYHEM-PARALLEL-WORK.md#all-remaining-windows) list the exact scope.
 The [O0075 wrapper attribution](../research/mayhem-sweep-admin-attribution-20261027/README.md)
 identifies SweepFeesAdmin without closing its body; that lane remains paused.

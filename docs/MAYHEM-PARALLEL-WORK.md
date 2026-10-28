@@ -1,7 +1,7 @@
 # Parallel Mayhem reconstruction work
 
 The objective remains byte-identical Rust reproduction, including calls, data,
-relocations and ELF layout. The [current macro composition](../research/mayhem-current-macro-call-closure-20261027/README.md)
+relocations and ELF layout. The [current source-origin composition](../research/mayhem-source-origin-recovery-20261027/README.md)
 has **432/441 normalized windows: 141 raw-local, 291 normalized-only and 9
 unmatched**. The unmatched windows total **107,952 original text bytes**.
 Normalized body matches do not establish recursive semantic or whole-ELF equality.
@@ -27,7 +27,7 @@ available under its original artifact bindings.
 
 ## All remaining windows
 
-The table is derived from the current packet's [441-row inventory](../research/mayhem-current-macro-call-closure-20261027/inventory.json).
+The table is derived from the current packet's [441-row inventory](../research/mayhem-source-origin-recovery-20261027/inventory.json).
 Each unmatched original window occurs once. Body names are reconstruction
 attributions, not authenticated original symbols.
 

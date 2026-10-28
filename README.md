@@ -35,7 +35,7 @@ all remaining code, calls, data, relocations and build provenance.
 | [Pump Round36](repro/pump/main-contract-round36-20261027/README.md) | 738 / 1,035 | 71.3% | 145 | 593 | 297 | No |
 | [PumpSwap / AMM](repro/pump_amm/event-decoder-recovery-20261027/README.md) | 647 / 785 | 82.4% | 148 | 499 | 138 | No |
 | [Fees research](research/fees-sweep-integration-20261027/README.md) | 583 / 585 | 99.7% | 200 | 383 | 2 | No |
-| [Mayhem research](research/mayhem-current-macro-call-closure-20261027/README.md) | 432 / 441 | 98.0% | 141 | 291 | 9 | No |
+| [Mayhem research](research/mayhem-source-origin-recovery-20261027/README.md) | 432 / 441 | 98.0% | 141 | 291 | 9 | No |
 | [Donation Relay](repro/donation-relay/canonical-exact-selection/README.md) | 492 / 492 | 100.0% | 492 | 0 | 0 | **Yes** |
 | **Total** | **2,892 / 3,338** | **86.6%** | **1,126** | **1,766** | **446** | **1 / 5** |
 
@@ -80,14 +80,18 @@ alternative source is an unpromoted compiler-context diagnostic.
 
 ## Behavior and remaining work
 
-The [qualified current Mayhem macro composition](research/mayhem-current-macro-call-closure-20261027/README.md)
-retains 432/441 normalized windows and all prior 100 raw matches, reaching
-141 raw-equal and 291 normalized-only bodies. Two complete builds agree;
-6,636 fresh trade pairs and 69 initializer pairs pass with 13,440 checked signed
-records. The complete 1,256-byte Buy quote, 1,120-byte Sell quote and 960-byte
+The [qualified current Mayhem source-origin composition](research/mayhem-source-origin-recovery-20261027/README.md)
+preserves 432/441 normalized windows, 141 raw-equal and 291 normalized-only
+bodies. Two complete builds agree; 6,636 fresh trade pairs, 301 ExtendAccount
+pairs and 69 initializer pairs pass with 14,042 checked signed records.
+The complete 1,256-byte Buy quote, 1,120-byte Sell quote and 960-byte
 initializer retain their ordered calls and 24 bounded typed references.
 The prior partial trade handlers are preserved. [Nine bodies remain](docs/MAYHEM-PARALLEL-WORK.md#all-remaining-windows),
-with every function classified in the [441-row inventory](research/mayhem-current-macro-call-closure-20261027/inventory.tsv).
+with every function classified in the [441-row inventory](research/mayhem-source-origin-recovery-20261027/inventory.tsv).
+
+The successor corrects the BpfWriter and ExtendAccountEvent Source references,
+raising matching Source observations from 456 to 458 while preserving all 447
+linked function shapes and 4,838 actual direct-call targets.
 
 The historical macro/IDL context repairs the actual allocator call target and
 raises the recursive direct-call relation from 414 to 422 of the 432 matched

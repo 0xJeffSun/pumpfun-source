@@ -4,6 +4,27 @@ The [full audit](RECONSTRUCTION-AUDIT.md) and its generated tables retain their
 explicit `1463bd22` snapshot. This log records later research without silently
 changing that baseline or promoting new selected artifacts.
 
+## Mayhem: two exact Source-origin repairs
+
+The [qualified source-origin successor](../research/mayhem-source-origin-recovery-20261027/README.md)
+uses an exact-file Anchor remap for BpfWriter and moves the existing
+ExtendAccountEvent definition to its recovered module. O0270 now references
+`src/bpf_writer.rs:33:9`; O0112 now references
+`programs/mayhem-program/src/instructions/extend_account.rs:27:1`.
+
+Two complete builds agree. The result preserves **432 normalized / 141 raw /
+422 direct-closed** windows, all 447 linked function shapes and all 4,838 actual
+direct-call targets. Matching Source observations increase **456 to 458**.
+The twenty quote references, four initializer references and selected nested
+integer-Debug data route are independently rechecked. No new complete body or
+whole-ELF identity is claimed.
+
+Fresh evidence contains 6,636 trade pairs, 301 ExtendAccount pairs and 69
+initializer pairs. Root independently verifies all **14,042 signed records**,
+the complete 441-row classification, and all **20 corruption/control tests**.
+The separate runtime scopes are not summed as unique transactions or exhaustive
+behavior. Current aggregate body/text counts remain unchanged.
+
 ## Reviewed current Fees recovery and independent evidence
 
 The [qualified Fees Sweep composition](../research/fees-sweep-integration-20261027/README.md)
