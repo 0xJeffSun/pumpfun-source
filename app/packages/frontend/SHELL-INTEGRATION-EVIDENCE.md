@@ -23,7 +23,7 @@ The existing 91 browser cases remain enabled. Three kinds of adaptations follow 
 
 Drawer locators distinguish the captured bottom navigation from its duplicate drawer route. Existing close, inertness, tab wrapping, focus restoration, active route, legal links, 404 and viewport checks are retained.
 
-Rapid leaderboard query updates use the separately reviewed PR #663 dependency (`502033a57a38135753f55022c42380dd46ffa0ac`, cherry-pick `1652d4c32`). This is not a shell recovery claim. Its failure was reproduced on the untouched control; the root worker already qualified the fix with all 91 browser cases.
+Rapid leaderboard query updates use the separately reviewed PR #663 dependency (`502033a57a38135753f55022c42380dd46ffa0ac`, initial cherry-pick `1652d4c32`, publication dependency `81ab7a2c0e86edd298c3374c7b6edb42f4124013`). This is not a shell recovery claim. Its failure was reproduced on the untouched control; the root worker already qualified the fix with all 91 browser cases.
 
 ## Safe original-reference rendering
 
@@ -47,4 +47,4 @@ node --test tests/shell_integration.test.mjs
 
 Control source: `6aa66f03c6e83e23f546be406b1eed158e15a507`; candidate adds the explicit #663 dependency and this integration. The app tree at pinned publication main is unchanged from that control.
 
-Validation results and measured differences are recorded in `SHELL-INTEGRATION-VALIDATION.json`. Pending checks remain pending there until completed. Coverage/progress ledgers and qualification counts are unchanged.
+Validation results and measured differences are recorded in `SHELL-INTEGRATION-VALIDATION.json`. Full app build/test/typecheck, all 91 standard-port browser cases, 698-object evidence verification, 8 progress tests, generated asset checks, and the 3 new source/reference tests pass. Root independently verified all 9 repository captures and 6 tooling tests on the exact tested source head. `visual/shell-integration-20261028/image-hashes.json` authenticates all 36 committed PNGs. Coverage/progress ledgers and qualification counts are unchanged.
