@@ -140,6 +140,8 @@ sites, 121 references to 32-byte prefixes, five 48-byte writer records and 21
 counted instruction labels (575 bytes). It rejects 22 ambiguous counterpart pairs.
 These bounded checks do not prove complete data allocations or arbitrary dispatch.
 Earlier 436-based data proofs remain preserved with their original bindings.
+The [data coverage ledger](research/mayhem-current437-data-coverage-20261028/README.md)
+separates raw-equal and mapped bytes and prioritizes the remaining unproved ranges.
 
 The [remaining-body review](docs/MAYHEM-COMPLETION.md#retained-partial-source-controls)
 preserves partial AMM and V2 source controls. The historical

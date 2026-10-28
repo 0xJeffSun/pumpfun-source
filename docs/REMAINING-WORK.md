@@ -42,6 +42,13 @@ The [441-row inventory](../research/mayhem-current437-composition-20261028/inven
 and [completion review](MAYHEM-COMPLETION.md) list the four functions and the limits
 of the 0.91% unmatched-window / 9.03% unmatched-text figures.
 
+The [data coverage ledger](../research/mayhem-current437-data-coverage-20261028/README.md)
+measures the existing proof footprint: 6,100 of 26,180 payload bytes are covered,
+including 5,352 raw-equal and 748 pointer-correspondence bytes; 20,080 are still
+unproved by those obligations. This is not a count of known mismatches. The
+largest next targets are counted ErrorCode names, formatter piece descriptors
+and account-name strings with explicit lengths.
+
 The [current Legacy Buy ownership composition](../research/mayhem-current-ownership-composition-20261027/README.md)
 preserves the 430/100 frontier and its complete initializer. Its partial handler
 is 13,784 bytes versus 13,848 original bytes, with fifty immediate callee shapes

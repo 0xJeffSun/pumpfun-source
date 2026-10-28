@@ -2993,3 +2993,7 @@ PR412 removes the earlier static-analysis packet because it treated absolute add
 ## Qualified437 selected-data recheck
 
 The [new exact-candidate recheck](../research/mayhem-current437-selected-data-20261028/README.md) retains 431 original windows and 581 counterpart pairs after checking Source data, relocated code references, selected 32-byte prefixes, five 48-byte writer spans and 21 counted instruction labels. It checks 499 Source sites, 48 code sites and 121 prefix references. The 21 label intervals total 575 bytes; lengths are explicit call arguments. All 13 corruption/portability tests pass. This strengthens bounded data evidence without changing function counts or claiming complete allocation extents, arbitrary dispatch or whole-ELF identity.
+
+## Qualified437 data coverage inventory
+
+The [interval-union ledger](../research/mayhem-current437-data-coverage-20261028/README.md) recomputes the precise footprint of current Source, code-reference, prefix, writer and literal obligations. It covers 6,100 of 26,180 payload-data bytes: 5,352 raw-equal bytes plus 748 bytes of pointer correspondence. Another 20,080 payload bytes remain unproved, led by a 12,406-byte rodata interval referenced by ErrorCode names and error formatters. Relocation metadata is accounted for separately and only checked fields receive credit. Two independent runs reproduce the report byte for byte. This adds a prioritized work inventory, not new byte-identity evidence.
