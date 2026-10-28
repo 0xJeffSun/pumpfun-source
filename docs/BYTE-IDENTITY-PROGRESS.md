@@ -3009,3 +3009,10 @@ Combined with the preceding ledger, payload coverage is now 8,110/26,180 bytes (
 ## Qualified437 AMM Buy prefix
 
 The [ordinary-Rust field-order control](../research/mayhem-current437-buy-prefix-20261028/README.md) extends the exact normalized AMM Buy prefix to 7,200 of 9,736 bytes. Only one existing pure field expression moves; strict source-prefix/suffix checks reject unrelated source changes. The candidate preserves 437 normalized, 141 raw and 431 closed windows. Two recorded builds plus an independent root rebuild agree, and 36 fresh signed AMM pairs pass, including seven original successes. Eight corruption/portability tests pass. The full body and ELF still differ; current whole-body completion is unchanged.
+
+
+## Qualified437 counted ErrorCode messages
+
+The [message and descriptor proof](../research/mayhem-current437-error-messages-20261028/README.md) verifies all 77 source messages (3,568 bytes), plus 924 exact scalar/zero descriptor bytes and 308 bytes of pointer correspondence. It traces the selected descriptor into the matched formatter and verifies the known one-piece/zero-argument path reads its pointer and length before the unresolved writer callback. It does not claim callback identity, output behavior or complete allocation extents. All 431 closed windows and 581 pairs remain.
+
+Aggregate payload coverage is 12,910/26,180 bytes (49.31%); 13,270 bytes (50.69%) remain unproved. The largest residual rodata interval is now 5,499 bytes. Function counts and full-ELF status do not change.
