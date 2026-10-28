@@ -107,6 +107,10 @@ jobs:
               python -B research/mayhem-current436-composition-20261027/verify.py
               python -B research/mayhem-current436-composition-20261027/test_verify.py
               python -B research/mayhem-current436-composition-20261027/test_runtime.py
+          - suite: mayhem-current436-linux-recipe
+            commands: |
+              python -B research/mayhem-current436-linux-dependency-control-20261028/verify.py
+              python -B research/mayhem-current436-linux-dependency-control-20261028/test_verify.py
           - suite: mayhem-current436-selected-data
             commands: |
               python -B research/mayhem-current436-selected-prefixes-20261027/verify.py

@@ -1505,3 +1505,5 @@ research/amm-fee-value-call-recovery/** -text -whitespace
 repro/pump_amm/fee-helper-source-coordinates-20261028/source.patch -whitespace
 research/mayhem-current436-sweep-rent-lifetime-20261028/sweep/source.patch -whitespace
 research/mayhem-current436-sweep-rent-lifetime-20261028/sweep/**/link.map -whitespace
+
+research/mayhem-current436-linux-dependency-control-20261028/**/link.map -whitespace
