@@ -8,12 +8,12 @@ their complete meaningful ELF.
 
 | Program | Matched windows | Matched % | Raw-equal bodies | Normalized only | Unmatched | Whole ELF equal |
 | --- | ---: | ---: | ---: | ---: | ---: | --- |
-| [Pump Main](research/claude-pump-integration-20261027/r37-layout-41/README.md) | 1,019 / 1,035 | 98.5% | 168 | 851 | 16 | No |
+| [Pump Main](research/pump-l41-v2-whitelist-multihop-parity-20261028/README.md) | 1,019 / 1,035 | 98.5% | 188 | 831 | 16 | No |
 | [PumpSwap / AMM](research/amm-cashback-buy-recovery-20261028/README.md) | 784 / 785 | 99.9% | 267 | 517 | 1 | No |
 | [Fees](programs/pump-fees/README.md) | 585 / 585 | 100.0% | 585 | 0 | 0 | **Yes** |
 | [Mayhem](research/mayhem-meaningful-elf-20261028/README.md) | 441 / 441 | 100.0% | 441 | 0 | 0 | **Yes** |
 | [Donation Relay](repro/donation-relay/canonical-exact-selection/README.md) | 492 / 492 | 100.0% | 492 | 0 | 0 | **Yes** |
-| **Total** | **3,321 / 3,338** | **99.5%** | **1,953** | **1,368** | **17** | **3 / 5** |
+| **Total** | **3,321 / 3,338** | **99.5%** | **1,973** | **1,348** | **17** | **3 / 5** |
 
 Matched windows cover **5,022,984 / 5,213,128 code bytes (96.4%)**;
 **190,144 bytes (3.6%)** remain outside matched windows.
@@ -23,8 +23,10 @@ integrated into the maintained source tree. Raw-equal bodies match byte for byte
 normalized matches mask specified call/address operands. Window coverage is not
 a percentage of engineering work completed or proof of whole-program identity.
 The Pump Main row is the composed [L41](research/claude-pump-integration-20261027/r37-layout-41/README.md)
-build (L40 plus the legacy-sell boundary, repository Linux profile): 1,019 normalized and
-168 raw. The AMM row is a
+build (L40 plus the legacy-sell boundary) with the
+[v2 whitelist sync and multi-hop crossing guard](research/pump-l41-v2-whitelist-multihop-parity-20261028/README.md)
+composed in (repository Linux profile): 1,019 normalized and 188 raw (L41 alone: 168; the
+20 raw gains are link-layout effects). The AMM row is a
 source-only Linux v1.44 build. Separately labeled linker layouts generated from the
 original program report 293 (L41) and 259 (AMM) raw matches without increasing
 normalized coverage.
@@ -44,21 +46,31 @@ normalized coverage.
   [L40](research/claude-pump-integration-20261027/r37-layout-40/README.md) to
   [L41](research/claude-pump-integration-20261027/r37-layout-41/README.md), which adds the
   legacy-sell boundary (1,019 windows, raw-ready 1,005/1,019 with the layout layer, 44-suite
-  corpus 10,468 cases, 0 mismatches). Behavior corrections qualified with signed
-  original/candidate replays and no window loss, not yet composed into one build:
-  [v2 whitelist reserve sync](research/pump-v2-whitelist-sync-20261028/README.md),
+  corpus 10,468 cases, 0 mismatches). The
+  [L41 parity composition](research/pump-l41-v2-whitelist-multihop-parity-20261028/README.md)
+  adds the [v2 whitelist reserve sync](research/pump-v2-whitelist-sync-20261028/README.md) and
+  [multi-hop crossing guard](research/pump-multi-hop-crossing-guard-20261028/README.md) (error 6021)
+  with no window loss (26 focused cases and the 10,468-case corpus, 0 mismatches). Behavior
+  corrections qualified with signed original/candidate replays and no window loss, not yet
+  composed into that build:
   [v3 sell recovery](research/pump-l39-v3sell-recovery-20261028/README.md) (128 cases),
   [sweep zero-recipient guard](research/pump-l38-sweep-zero-recipient-20261028/README.md) (error 6000),
-  [multi-hop crossing guard](research/pump-multi-hop-crossing-guard-20261028/README.md) (error 6021),
   [cashback-v2 quote-program guard](research/pump-l38-cashback-quote-program-20261028/README.md),
+  [cashback validation order](research/pump-cashback-validation-order-20261028/README.md) (6010 before 6076),
+  [shared buyback panic provenance](research/pump-shared-buyback-panic-20261028/README.md),
   [direct-route FeeConfig selection](research/pump-direct-route-fee-config-20261028/README.md) and the
-  [checked cashback decoder](research/pump-checked-cashback-decoder-20261028/README.md).
+  [checked cashback decoder](research/pump-checked-cashback-decoder-20261028/README.md). A separate
+  [L39 semantic union](research/pump-semantic-union-20261028/README.md) composes six of these
+  (1,019 normalized, 183 raw native, 205 paired cases) but is built on L39 and lacks L40's
+  data-side corrections (against L41: same windows, 19 raw gains and 4 raw losses).
 - PumpSwap reaches **784/785** with the [buy cashback recovery](research/amm-cashback-buy-recovery-20261028/README.md):
   all 8,104 helper bytes match after official normalization, with no lost windows
   and 267 raw-equal bodies. Both complete ELFs reproduce independently; the
   maintained legacy-buy suite passes 1,011 paired cases with 2,022 independently
   verified transaction signatures and no non-meter log differences. Whole-ELF
-  equality remains unachieved. The earlier [783-window union11](research/claude-amm-union11-20261028/README.md) recovers
+  equality remains unachieved. A follow-up
+  [restores the checked sell cashback decoder edge](research/amm-sell-checked-decoder-20261028/README.md)
+  (`try_from`, as in the original) with the same 784/267 counts. The earlier [783-window union11](research/claude-amm-union11-20261028/README.md) recovers
   the volume updater (`0x6db20`) over the 782-window union10, with 0 normalized or raw losses;
   [union12](research/claude-amm-union12-20261028/README.md) is a data-side step with the same
   window sets. All nine panic Location operands in `0x6db20` now match the original
