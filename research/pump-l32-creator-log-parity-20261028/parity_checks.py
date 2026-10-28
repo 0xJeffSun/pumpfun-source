@@ -75,4 +75,3 @@ def validate_repeated_build(first, second, expected):
     require(hashlib.sha256(first).hexdigest() == expected, 'first build hash mismatch')
     require(hashlib.sha256(second).hexdigest() == expected, 'second build hash mismatch')
     require(first == second, 'repeated build bytes differ')
-
