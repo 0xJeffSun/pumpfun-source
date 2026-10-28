@@ -85,3 +85,7 @@ The unchanged `sourcefronts780` inputs also have an independently built and repe
 ## Optional SBPF clamp stage: 786
 
 The additional `--stage clamp786` preserves the default and all prior stages. See [CLAMP786.md](CLAMP786.md) for the attributed one-line #323 edit, independently repeated 786 / 1,035 injective and 131 raw checkpoint, typed incoming-call proof and Source 57 versus 2911 limitation. Runtime remains **NOT RUN** and whole-original identity remains false. Use the separate [SBPF recipe](SBPF_RECIPE.md), not an inferred SBF result.
+
+## Optional SBPF visibility stage: 788
+
+Select `--stage visibility788` for the exact three attributed #323 visibility changes on `clamp786`. See [VISIBILITY788.md](VISIBILITY788.md) for the independently repeated 788 / 1,035 injective and 131 raw checkpoint, typed helper boundaries, unchanged contract-route evidence and explicit v2 residual. All prior stages and default remain available. Runtime is **NOT RUN**; whole-original identity remains false.

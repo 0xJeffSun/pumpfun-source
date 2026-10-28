@@ -181,4 +181,37 @@ class SourceTests(unittest.TestCase):
                 amount = min(value, reserve)
                 self.assertEqual(amount <= 0, amount == 0)
                 self.assertEqual(amount, min(value, reserve))
+    def visibility_parent(self):
+        out = self.root / 'visibility-parent'
+        m.materialize(PARENT, out, 'clamp786')
+        return {str(p.relative_to(out)): p.read_bytes() for p in out.rglob('*') if p.is_file()}
+    def test_exact_visibility_stage(self):
+        got = m.materialize(PARENT, self.root / 'source', 'visibility788')
+        pins = json.loads((m.HERE / 'visibility-pins.json').read_text())
+        self.assertEqual(got, pins['source_sha256'])
+        self.assertEqual(len(got), 60)
+    def test_visibility_only_three_lines(self):
+        data = self.visibility_parent(); changed = m.visibility_apply(data)
+        expected = {'programs/pump/src/buy.rs': [2945], 'programs/pump/src/legacy_native_payments.rs': [4, 18]}
+        self.assertEqual({n for n in data if data[n] != changed[n]}, set(expected))
+        for n, lines in expected.items():
+            a, b = data[n].splitlines(), changed[n].splitlines()
+            self.assertEqual(len(a), len(b))
+            self.assertEqual([i+1 for i, (x, y) in enumerate(zip(a, b)) if x != y], lines)
+    def test_visibility_already_applied_rejected(self):
+        with self.assertRaises(ValueError): m.visibility_apply(m.visibility_apply(self.visibility_parent()))
+    def test_visibility_wrong_parent_rejected(self):
+        data = self.visibility_parent(); data['programs/pump/src/buy.rs'] += b'\n'
+        with self.assertRaises(ValueError): m.visibility_apply(data)
+    def test_visibility_extra_parent_rejected(self):
+        data = self.visibility_parent(); data['extra.rs'] = b''
+        with self.assertRaises(ValueError): m.visibility_apply(data)
+    def test_visibility_missing_parent_rejected(self):
+        data = self.visibility_parent(); data.pop('programs/pump/src/lib.rs')
+        with self.assertRaises(ValueError): m.visibility_apply(data)
+    def test_visibility_keeps_dispatcher_v2_clamp(self):
+        data = self.visibility_parent(); changed = m.visibility_apply(data)
+        for n in ['lib.rs', 'v2_native_payments.rs', 'buy_v2.rs', 'sell_v2.rs']:
+            self.assertEqual(data['programs/pump/src/' + n], changed['programs/pump/src/' + n])
+        self.assertEqual(data['programs/pump/src/buy.rs'].splitlines()[2910], changed['programs/pump/src/buy.rs'].splitlines()[2910])
 if __name__ == '__main__': unittest.main(argv=['test_materialize.py', *remaining])
