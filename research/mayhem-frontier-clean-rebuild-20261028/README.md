@@ -89,13 +89,20 @@ What the remap does **not** explain, and why:
   linker places functions differently from `ordered.ld`. Raw-equal counts, not
   normalized counts, are the layout-sensitive measure.
 
-Both recipes were run twice from scratch (fresh materialized source, fresh
-target directory) with identical outputs:
+Both recipes were built four times from scratch (fresh materialized source,
+fresh target directory) with identical outputs each time. The artifacts of the
+final run are archived under `builds/<recipe>/` so the claims above can be
+re-audited from this packet's files alone:
 
 | Recipe | Unstripped SHA-256 | Stripped SHA-256 |
 | --- | --- | --- |
-| default, no remap | `d6ea5caa34d876a29f790ef70690daeb7a5b41d7176c36412743b70d27b05440` | `6fa1945d4041587226c5091258b61ad7e1d86590024c962228820d63d1485944` |
-| historical path remap | `1e12f53043efe10370cc60f470e1d90e3aa496fcba5f8b7118dfb61842d68458` | `3c33835363257b8012078cb04f9495f30c5aaeee447184a0d092de0c24b77f17` |
+| `builds/default/` | `d6ea5caa34d876a29f790ef70690daeb7a5b41d7176c36412743b70d27b05440` | `6fa1945d4041587226c5091258b61ad7e1d86590024c962228820d63d1485944` |
+| `builds/historical-path-remap/` | `1e12f53043efe10370cc60f470e1d90e3aa496fcba5f8b7118dfb61842d68458` | `3c33835363257b8012078cb04f9495f30c5aaeee447184a0d092de0c24b77f17` |
+
+Each archive holds `symbols.so.gz` (unstripped), `candidate.so.gz` (stripped),
+`build.log.gz`, the 441-row `inventory.json.gz` and `sha256.txt`. The archived
+unstripped artifacts are the inputs the inventory counts were computed from, so
+anyone can recompute the partition offline with the inventory tool.
 
 This control changes no checkpoint. It uses the same unauthenticated local
 installation as the rest of this packet, and normalized matches do not
@@ -128,11 +135,17 @@ recursive call/data or whole-ELF identity.
 ## Recheck
 
 ```sh
+# offline: verify archived artifact hashes and recompute both inventories (no toolchain needed)
 .venv/bin/python research/mayhem-frontier-clean-rebuild-20261028/verify.py
+
+# additionally rebuild both recipes from the pinned source and compare to the archive
+.venv/bin/python research/mayhem-frontier-clean-rebuild-20261028/verify.py --rebuild
 ```
 
-Rebuilds both recipes into a fresh temporary directory from the pinned source
-inputs and asserts the artifact hashes, 441-window counts and matched text
-bytes recorded above. A zero exit means every recorded value reproduced on the
-current host with its installed tools; it does not authenticate those tools.
-Use `--only <recipe>` for one recipe or `--keep <dir>` to retain the outputs.
+The offline check asserts the archived `symbols.so.gz` / `candidate.so.gz`
+hashes, re-runs the 441-window inventory on the archived symbol artifact and
+compares it with the recorded counts and the archived `inventory.json.gz`.
+`--rebuild` also rebuilds each recipe into a fresh directory with the installed
+tools and asserts the fresh artifacts equal the archive. A zero exit means every
+recorded value reproduced; it does not authenticate the local tool installation.
+Use `--only <recipe>` for one recipe or `--keep <dir>` to retain rebuild outputs.

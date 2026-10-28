@@ -1,18 +1,25 @@
 #!/usr/bin/env python3
-"""Recheck the clean-rebuild packet: rebuild from pinned inputs and assert the recorded results.
+"""Recheck the clean-rebuild packet against its archived artifacts and, optionally, by rebuilding.
 
-Runs both recipes (default linker without and with the historical crate-path
-remap), rebuilding each into a fresh directory, and asserts that the stripped
-artifact hashes and the 441-window inventories equal the values recorded in
-README.md. Exit status 0 means every recorded claim reproduced on this host.
+Default (offline) mode needs no toolchain. For each recipe it decompresses the
+archived ``builds/<recipe>/symbols.so.gz`` and ``candidate.so.gz``, asserts their
+SHA-256 against the values recorded below, and re-runs the 441-window inventory
+tool on the archived symbol artifact to assert the recorded raw / normalized /
+unmatched counts and matched text bytes. The original binary is read only by
+the inventory step, after the archived artifacts have been verified.
 
-Requires the pinned toolchains under ~/.cache/solana (see README) and an offline
-crate cache populated once with `cargo fetch --locked` in a materialized source
-tree. Nothing here reads the original binary before compilation finishes; the
-inventory step compares only after the build and strip have completed.
+``--rebuild`` additionally rebuilds each recipe from the pinned source inputs
+into a fresh directory (requires the installed v1.54 tools and v1.52 strip tool
+under ~/.cache/solana and an offline crate cache) and asserts that the fresh
+artifacts equal the archived ones.
+
+Exit status 0 means every recorded value reproduced on this host. Passing does
+not authenticate the local tool installation or establish whole-ELF identity.
 """
 import argparse
+import gzip
 import hashlib
+import importlib.util
 import json
 import os
 import subprocess
@@ -23,6 +30,7 @@ from pathlib import Path
 P = Path(__file__).resolve().parent
 ROOT = P.parents[1]
 BUILD = P / "build_and_measure.sh"
+INVENTORY_TOOL = ROOT / "research/mayhem-window-inventory-tool-20261028/window_inventory.py"
 
 EXPECTED = {
     "default": {
@@ -42,46 +50,78 @@ EXPECTED = {
 }
 
 
-def sha(path):
-    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+def sha(data):
+    return hashlib.sha256(data).hexdigest()
 
 
-def run_recipe(name, spec, workdir):
-    out = Path(workdir) / name
-    env = dict(os.environ, REMAP_FLAGS=spec["remap"])
-    subprocess.run([str(BUILD), str(out)], env=env, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
-    inventory = json.loads((out / "inventory.json").read_text())
-    got = {
-        "candidate_sha256": sha(out / "candidate.so"),
-        "symbols_sha256": sha(out / "symbols.so"),
-        "counts": inventory["counts"],
-        "matched_text_bytes": inventory["matched_text_bytes"],
-    }
+def load_inventory_tool():
+    spec = importlib.util.spec_from_file_location("mayhem_window_inventory", INVENTORY_TOOL)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+def check_archived(name, spec, tool, reader):
+    archive = P / "builds" / name
+    symbols = gzip.decompress((archive / "symbols.so.gz").read_bytes())
+    candidate = gzip.decompress((archive / "candidate.so.gz").read_bytes())
+    got = {"symbols_sha256": sha(symbols), "candidate_sha256": sha(candidate)}
     failures = [k for k in got if got[k] != spec[k]]
+    if not failures:
+        with tempfile.TemporaryDirectory(prefix="mayhem-recheck-") as directory:
+            path = Path(directory) / "symbols.so"
+            path.write_bytes(symbols)
+            result = tool.inventory(path, reader)
+        got["counts"] = result["counts"]
+        got["matched_text_bytes"] = result["matched_text_bytes"]
+        failures += [k for k in ("counts", "matched_text_bytes") if got[k] != spec[k]]
+        recorded = json.loads(gzip.decompress((archive / "inventory.json.gz").read_bytes()))
+        if recorded["counts"] != result["counts"] or recorded["candidate_sha256"] != result["candidate_sha256"]:
+            failures.append("archived inventory.json.gz disagrees with recomputed inventory")
     return got, failures
 
 
+def rebuild(name, spec, workdir):
+    out = Path(workdir) / name
+    env = dict(os.environ, REMAP_FLAGS=spec["remap"])
+    subprocess.run([str(BUILD), str(out)], env=env, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+    got = {"candidate_sha256": sha((out / "candidate.so").read_bytes()),
+           "symbols_sha256": sha((out / "symbols.so").read_bytes())}
+    return got, [k for k in got if got[k] != spec[k]]
+
+
+def report(stage, name, got, failures):
+    verdict = "OK" if not failures else "FAIL"
+    counts = got.get("counts")
+    detail = (f"raw {counts['raw-equal']} / normalized {counts['normalized-only']} / unmatched {counts['unmatched']}  "
+              f"matched {got['matched_text_bytes']}") if counts else ""
+    print(f"[{verdict}] {stage} {name}: candidate {got['candidate_sha256'][:16]}…  {detail}")
+    for item in failures:
+        expected = EXPECTED[name].get(item, "")
+        print(f"       {item}: expected {expected} got {got.get(item, '?')}" if expected else f"       {item}", file=sys.stderr)
+    return not failures
+
+
 def main():
-    ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("--only", choices=sorted(EXPECTED), help="run a single recipe")
-    ap.add_argument("--keep", type=Path, help="keep build outputs under this new directory")
+    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("--only", choices=sorted(EXPECTED), help="check a single recipe")
+    ap.add_argument("--rebuild", action="store_true", help="also rebuild each recipe and compare to the archive")
+    ap.add_argument("--keep", type=Path, help="with --rebuild, keep build outputs under this new directory")
     args = ap.parse_args()
     names = [args.only] if args.only else sorted(EXPECTED)
-    status = 0
-    with tempfile.TemporaryDirectory() as tmp:
-        workdir = args.keep if args.keep else Path(tmp)
-        if args.keep:
-            args.keep.mkdir(parents=True, exist_ok=False)
-        for name in names:
-            got, failures = run_recipe(name, EXPECTED[name], workdir)
-            verdict = "OK" if not failures else "FAIL"
-            print(f"[{verdict}] {name}: candidate {got['candidate_sha256'][:16]}…  "
-                  f"raw {got['counts']['raw-equal']} / normalized {got['counts']['normalized-only']} / "
-                  f"unmatched {got['counts']['unmatched']}  matched {got['matched_text_bytes']}")
-            for k in failures:
-                print(f"       {k}: expected {EXPECTED[name][k]} got {got[k]}", file=sys.stderr)
-                status = 1
-    return status
+    tool = load_inventory_tool()
+    reader = tool.load_reader()
+    ok = True
+    for name in names:
+        ok &= report("archived", name, *check_archived(name, EXPECTED[name], tool, reader))
+    if args.rebuild:
+        with tempfile.TemporaryDirectory() as tmp:
+            workdir = args.keep or Path(tmp)
+            if args.keep:
+                args.keep.mkdir(parents=True, exist_ok=False)
+            for name in names:
+                ok &= report("rebuilt ", name, *rebuild(name, EXPECTED[name], workdir))
+    return 0 if ok else 1
 
 
 if __name__ == "__main__":
