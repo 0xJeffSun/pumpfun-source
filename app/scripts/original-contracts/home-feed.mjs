@@ -1,12 +1,12 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { openCorpus, findNodes, exactlyOne, propertyName, objectProperty, member, literal } from './source.mjs';
+import { openCorpus, findNodes, exactlyOne, propertyName, objectProperty, member, literal, sha256 } from './source.mjs';
 import { createSchemaExtractor } from './schema.mjs';
 
 export const FROZEN_INPUTS = Object.freeze({
   manifestSha256: '9e0fc00719eb8c919dd4205d3c118eb48c4927e056c77e8343e26d6f7189bbb5',
-  inventorySha256: '1d268ae7f2eb0f61eaaffd222269bf29d9ce06e9946372861721b2f159d868e2',
+  inventorySha256: '9631271006faa37ea6055a11be4ec1faf971b45e2c7cdb78fc08a6530e777a50',
 });
 const operations = ['GET /home-feed', 'GET /home-feed/new', 'GET /home-feed/new/count'];
 const contractChunk = 'evidence/web/objects/2b47dd0b38a1608f.js';
@@ -208,12 +208,32 @@ export async function extractHomeFeed(root) {
       text: capture.text.slice(record.utf16[0], record.utf16[1]),
     } : {}) });
   }
+  const compatibilityPath = 'contracts/original-home-feed-index-compatibility.json';
+  const compatibilityBytes = await fs.readFile(path.join(root, compatibilityPath));
+  const compatibility = JSON.parse(compatibilityBytes);
+  if (compatibility.maintainedInventorySha256 !== corpus.anchors.inventorySha256 ||
+      compatibility.equalCompleteIndexEntries !== true) throw new Error('invalid index compatibility witness');
+  const contextRanges = new Set([...fragments.values()].map((record) => `${record.source}:${record.utf16.join(':')}`));
+  const selected = [...new Set([...factories.values()].map((entry) => entry.sha256).concat(
+    corpus.index.modules.filter((entry) => entry.origins.some((origin) => contextRanges.has(`${origin.source}:${origin.start}:${origin.end}`))).map((entry) => entry.sha256)))].sort();
+  if (JSON.stringify(selected) !== JSON.stringify(compatibility.entries.map((entry) => entry.factorySha256))) throw new Error('selected factory compatibility set changed');
+  for (const entry of compatibility.entries) {
+    const current = exactlyOne(corpus.index.modules.filter((module) => module.sha256 === entry.factorySha256), 'selected complete index entry');
+    if (sha256(JSON.stringify(current)) !== entry.completeEntrySha256) throw new Error('selected complete index entry changed');
+  }
+  for (const row of compatibility.numericIdVariants) {
+    const hashes = corpus.index.modules.filter((entry) => entry.ids.includes(row.id)).map((entry) => entry.sha256).sort();
+    if (JSON.stringify(hashes) !== JSON.stringify(row.factorySha256)) throw new Error(`selected numeric-ID variants changed: ${row.id}`);
+  }
   return {
     formatVersion: 1,
     authority: 'Static original captured client source and declared schemas; no original JavaScript executed',
     frozenInputs: { ...corpus.anchors, uniqueFactoryVariants: corpus.index.modules.length,
       factoryOrigins: corpus.index.modules.reduce((total, entry) => total + entry.origins.length, 0),
-      inventoryRecoveryCommit: '7b52e2cfb780e246fe98c656122d95be769e17a3' },
+      inventoryCompatibility: { document: compatibilityPath, sha256: sha256(compatibilityBytes),
+        selectedVariants: compatibility.selectedVariants, expandedInventoryCommit: compatibility.expandedInventoryCommit,
+        expandedInventorySha256: compatibility.expandedInventorySha256,
+        note: 'The expanded inventory is separate comparison evidence; this producer requires only the maintained index' } },
     scope: operations,
     operations: result,
     transport: {
