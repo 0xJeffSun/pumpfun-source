@@ -14,8 +14,9 @@ itself (lp 40..48, protocol 48..56, recipients 57..313, creator
 Ten fresh-VM triples (original / #424 control / #427 candidate),
 30 signed executions on the repository's own admin harness
 (`scripts/pump_amm_admin_differential.py`). The clock is slot 100,
-epoch 0. `producer.py` reproduces every receipt from the
-repository files.
+epoch 0. `producer.py` generated these receipts on the author's machine; as committed it expects a
+checkout at `~/workspace/pumpfun-sparse` and the #424/#427 `candidate.so.gz` images gunzipped
+into `~/workspace/slop-verify`, so it does not run from this packet unmodified.
 
 | Case | Result |
 | --- | --- |

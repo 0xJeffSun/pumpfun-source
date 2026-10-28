@@ -1,12 +1,12 @@
 {
   "schema": 1,
   "files": {
-    "README.md": "21acaaad2cbca214e29342bb9966637d804af9fbe13da1bbf4e6815e41ada21f",
+    "README.md": "99efc36a8f5ca282800ba471d0bc66716ed0245578f33efc91d0a3c73eeeb1d3",
     "producer.py": "053c0e2ae6123e9df3946a7b1ef4079670cd16196665c1fe8ad37f87643ad4f0",
     "runtime/raw-transactions-part1.jsonl.gz": "2ae9f5216c466bf77fabe60226c3d5d20a2b3cd949851f9a0764fd5866d6cf2f",
     "runtime/raw-transactions-part2.jsonl.gz": "b44a0f4786d6bcfd43ff73c5b7198446ec0c95bb8c3fa4818d5420957c94ebc6",
     "runtime/report.json.gz": "95e4079804b7e1b7ff00d28a02325d8ef58b1f1dbb2f73d8faa0a0f96c8bff3b",
-    "verify.py": "c6cd2b442cb8b014df76d86712a37b262f014ae27a0fc04832feb61b74bf2325"
+    "verify.py": "ecf267fa2ee0923395d42ffc590d4fc063f1a2e91cee95c704e10292e742694a"
   },
   "repository_inputs": {
     "research/amm-multi-hop-group-slice-recovery/artifacts/candidate.so.gz": "1f25c51a89ed4c269dd7af1732c4a55dbc3fb908b6c9f5ecac69560cfe1026bd",

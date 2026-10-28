@@ -9,7 +9,8 @@ configuration, not a given. On the shared fixture they agree
 exactly: legacy buy spends and gains what buy_v2 does, with or
 without volume tracking; legacy buy_exact_quote_in gains and
 spends what buy_exact_quote_in_v2 does; legacy sell spends and
-gains what sell_v2 does, and its limit is inclusive the same way.
+gains what sell_v2 does. The v2 amounts are not executed in this
+packet; the receipts pin the legacy amounts.
 
 ## Cases
 
@@ -18,8 +19,9 @@ Five fresh-VM triples (original / #424 control / #427 candidate),
 the repository's own legacy differential harnesses
 (`scripts/pump_amm_legacy_buy_differential.py`,
 `scripts/pump_amm_legacy_sell_differential.py`). The clock is slot
-100, epoch 0. `producer.py` reproduces every receipt from the
-repository files.
+100, epoch 0. `producer.py` generated these receipts on the author's machine; as committed it expects a
+checkout at `~/workspace/pumpfun-sparse` and the #424/#427 `candidate.so.gz` images gunzipped
+into `~/workspace/slop-verify`, so it does not run from this packet unmodified.
 
 | Case | Result |
 | --- | --- |
@@ -41,12 +43,14 @@ in order.
 
 ## Result
 
-- **v1 and v2 agree on every measured amount**: the fee
-  configuration produces identical results through both paths.
+- **Legacy (v1) amounts equal the v2 values for this fixture**: this
+  packet executes only legacy instructions; the v2 amounts are not
+  re-executed here.
 - **Volume tracking does not change trade amounts**: the track
   flag leaves the buy result byte-identical.
-- **The sell limit is inclusive on both paths**: exact passes,
-  one above fails, with the same error at a different site.
+- **The legacy sell limit fails one above the output**: limit 180,213
+  fails with 6004 (`sell.rs:189` on the original, `legacy_sell.rs:152`
+  on the rebuilt images). The exact limit (180,212) is not executed.
 
 ## Limits
 

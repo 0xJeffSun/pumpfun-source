@@ -21,8 +21,9 @@ repository's own trade-v2 and liquidity differential harnesses,
 with one account's data zeroed per case (the volume account, which
 the fixture leaves empty, is instead given 64 zero bytes owned by
 the program so its discriminator check fires). The clock is slot
-100, epoch 0. `producer.py` reproduces every receipt from the
-repository files.
+100, epoch 0. `producer.py` generated these receipts on the author's machine; as committed it expects a
+checkout at `~/workspace/pumpfun-sparse` and the #424/#427 `candidate.so.gz` images gunzipped
+into `~/workspace/slop-verify`, so it does not run from this packet unmodified.
 
 | Case | Zeroed account | Result |
 | --- | --- | --- |

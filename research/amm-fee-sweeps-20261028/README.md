@@ -19,8 +19,9 @@ Five fresh-VM triples (original / #424 control / #427 candidate),
 differential harness (`scripts/pump_amm_sweep_differential.py`),
 using the fixture's real pool balances (protocol fees 2,488,
 creator fees 123,394) rather than patched values. The clock is slot
-100, epoch 0. `producer.py` reproduces every receipt from the
-repository files.
+100, epoch 0. `producer.py` generated these receipts on the author's machine; as committed it expects a
+checkout at `~/workspace/pumpfun-sparse` and the #424/#427 `candidate.so.gz` images gunzipped
+into `~/workspace/slop-verify`, so it does not run from this packet unmodified.
 
 | Case | Result |
 | --- | --- |

@@ -6,8 +6,7 @@ Every trade validates the buyback fee recipient in two layers.
 First, the account must be a token account at all: a non-token
 account (here the system program) fails AccountTypeNotSupported
 (6027). Second, a real token account must be the authorized
-recipient: the user's own quote account — and the pool vault, which
-was probed the same way — fail
+recipient: the user's own quote account fails
 BuybackFeeRecipientNotAuthorized (6053). The fee cannot be
 redirected to an arbitrary account on either path.
 
@@ -19,8 +18,9 @@ signed executions: `buy_v2` with base in 10^10 and limit 10^9, and
 trade-v2 differential harness
 (`scripts/pump_amm_trade_v2_differential.py`), with the buyback
 fee recipient account replaced per case. The clock is slot 100,
-epoch 0. `producer.py` reproduces every receipt from the repository
-files.
+epoch 0. `producer.py` generated these receipts on the author's machine; as committed it expects a
+checkout at `~/workspace/pumpfun-sparse` and the #424/#427 `candidate.so.gz` images gunzipped
+into `~/workspace/slop-verify`, so it does not run from this packet unmodified.
 
 | Case | Buyback recipient | Result |
 | --- | --- | --- |

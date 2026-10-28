@@ -19,8 +19,9 @@ signed executions: `deposit` and `withdraw` with LP amount 10^9 on
 the repository's own liquidity differential harness
 (`scripts/pump_amm_liquidity_differential.py`), with limits set to
 the exact computed amounts or one unit past them. The clock is slot
-100, epoch 0. `producer.py` reproduces every receipt from the
-repository files.
+100, epoch 0. `producer.py` generated these receipts on the author's machine; as committed it expects a
+checkout at `~/workspace/pumpfun-sparse` and the #424/#427 `candidate.so.gz` images gunzipped
+into `~/workspace/slop-verify`, so it does not run from this packet unmodified.
 
 | Case | Limits | Result |
 | --- | --- | --- |

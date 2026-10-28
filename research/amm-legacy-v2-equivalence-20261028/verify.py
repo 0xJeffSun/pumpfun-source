@@ -1,4 +1,4 @@
-"""Verify the retained buy-exact transfer-fee receipts (no build claimed).
+"""Verify this packet's retained signed runtime receipts (no build claimed).
 
 Checks, independently of the producer:
 - packet manifest lists exactly the files present, with matching hashes;
@@ -144,8 +144,7 @@ def main():
         if kind == "ok":
             assert len(pairs) == 1, (case, "images must agree on amounts")
     print("PASS: 5 cases, 15 signed receipts, "
-          "legacy v2 equivalence pinned, "
-          "v1 and v2 agree on the shared fixture, "
+          "legacy amounts pinned (v2 not executed here), "
           "all images agree")
 
 
