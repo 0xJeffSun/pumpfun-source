@@ -7,6 +7,8 @@ import { registerPostRoutes } from "./posts-routes.js";
 import { PostStore, defaultPostStore } from "./posts-store.js";
 import { registerUserRoutes } from "./users-routes.js";
 import { UserStore, defaultStore } from "./users-store.js";
+import { registerCompetitionRoutes } from "./competitions-routes.js";
+import { CompetitionStore, defaultCompetitionStore } from "./competitions-store.js";
 
 export type Fixture = {
   method: string;
@@ -210,6 +212,11 @@ const NATIVE_ROUTES = new Set<string>([
   "GET /posts/{postId}/likers",
   "GET /posts/{postId}/quotes",
   "GET /posts/{postId}/reposters",
+  "GET /competitions",
+  "GET /competitions/{idOrSlug}",
+  "GET /competitions/{id}/entries/{entryId}",
+  "GET /competitions/{id}/entries/{entryId}/highlights",
+  "GET /competitions/{id}/highlights",
 ]);
 
 export interface BuildAppOptions {
@@ -217,6 +224,8 @@ export interface BuildAppOptions {
   userStore?: UserStore;
   /** Override the post store (for tests). */
   postStore?: PostStore;
+  /** Override the competition store (for tests). */
+  competitionStore?: CompetitionStore;
 }
 
 export function buildApp(fixtures: Fixture[] = [], opts: BuildAppOptions = {}) {
@@ -251,6 +260,10 @@ export function buildApp(fixtures: Fixture[] = [], opts: BuildAppOptions = {}) {
   const postStore =
     opts.postStore ?? (opts.userStore ? new PostStore(undefined, store) : defaultPostStore);
   registerPostRoutes(app, postStore);
+  const compStore =
+    opts.competitionStore ??
+    (opts.userStore ? new CompetitionStore(undefined, store) : defaultCompetitionStore);
+  registerCompetitionRoutes(app, compStore);
 
   // Routing recognizes documented paths; no fabricated domain responses or live proxy fallback.
   for (const [path, item] of Object.entries(spec.paths)) {
