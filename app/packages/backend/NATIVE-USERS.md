@@ -84,25 +84,25 @@ any of them is a contract decision, not a bug fix.
     with route detail added alongside). The contract declares no schema for the 400 and
     `default` responses, so the envelope is a choice; using the component keeps error
     responses machine-checkable instead of free-form.
-12. **`searchTerm` in `GET /users/search-v2`** performs a case-insensitive substring match
+13. **`searchTerm` in `GET /users/search-v2`** performs a case-insensitive substring match
     against `username`, `address`, `userId`, `x_username`, and `wallet_label`. An omitted,
     empty, or whitespace-only `searchTerm` matches all eligible users.
-13. **`includeLabelledWallets` in `GET /users/search-v2`** defaults to `false`. When false (or
+14. **`includeLabelledWallets` in `GET /users/search-v2`** defaults to `false`. When false (or
     omitted), users with a non-empty `wallet_label` are excluded from search results; when
     `'true'` or `'1'`, they are included.
-14. **Lookup miss on `GET /users/{id}/overview`** returns `404 {"error":"NOT_FOUND"}` when
+15. **Lookup miss on `GET /users/{id}/overview`** returns `404 {"error":"NOT_FOUND"}` when
     no user matches the requested `id`, consistent with `GET /users/{id}` and the OpenAPI spec
     note ("A user id with none is a 404").
-15. **Overview `viewer` omitted**: Anonymous callers receive no `viewer` object, matching
+16. **Overview `viewer` omitted**: Anonymous callers receive no `viewer` object, matching
     the OpenAPI spec description ("Absent on anonymous responses").
-16. **Overview degraded services**: The local reconstruction backend operates entirely in-memory
+17. **Overview degraded services**: The local reconstruction backend operates entirely in-memory
     with no failing microservices, so `degraded` is returned as `[]`.
-17. **`POST /profiles/verified` validation boundaries**: Rejects with `400` if `ids` is empty
+18. **`POST /profiles/verified` validation boundaries**: Rejects with `400` if `ids` is empty
     (`minItems: 1`), exceeds 200 items (`maxItems: 200`), or contains any non-string or id
     longer than 64 characters (`maxLength: 64`).
-18. **Unregistered or unknown IDs in `POST /profiles/verified`** map to `false` in the response
+19. **Unregistered or unknown IDs in `POST /profiles/verified`** map to `false` in the response
     object, matching the spec note ("ids with no user... are false").
-19. **Verified identification**: A user is verified if their address or userId is in the store's
+20. **Verified identification**: A user is verified if their address or userId is in the store's
     verified set. Default seed marks Alice (`user-001` / `7xKXtg2CW87d97TXJSDpbD5jBkheTqA83TZRuJosgAsU`)
     as verified.
 
@@ -118,7 +118,7 @@ any of them is a contract decision, not a bug fix.
 
 ```sh
 cd app/packages/backend
-npx tsx --test test/*.test.ts     # 86 tests, 12 suites
+npx tsx --test test/*.test.ts     # counts grow as operations are added; the run prints the current totals
 ../../node_modules/.bin/tsc --noEmit -p tsconfig.json
 ```
 

@@ -100,6 +100,6 @@ is a contract decision, not a bug fix.
 
 ```sh
 cd app/packages/backend
-npx tsx --test test/*.test.ts     # 133 tests, 19 suites
+npx tsx --test test/*.test.ts     # counts grow as operations are added; the run prints the current totals
 ../../node_modules/.bin/tsc --noEmit -p tsconfig.json
 ```

@@ -69,8 +69,8 @@ is a contract decision, not a bug fix.
 38. **Dual resolution in `GET /competitions/{idOrSlug}`**: The path parameter `:idOrSlug` matches against
     competition `id` (UUID) first, then case-insensitively against `slug`.
 39. **Response shape of `GET /competitions/{idOrSlug}`**: Returns `{ competition, leaderboard }` conforming
-    to the OpenAPI schema. The prompt references `{ competition, board }`, but the contract specification
-    explicitly requires the property name `leaderboard` with `additionalProperties: false`.
+    to the OpenAPI schema. The ranking array is named `leaderboard`, as the contract requires with
+    `additionalProperties: false`; the name `board` is not used anywhere in the response.
 40. **Anonymous viewer omission**: In `GET /competitions/{idOrSlug}`, the `viewer` property is omitted
     entirely for anonymous requests, matching the OpenAPI description ("Absent on the API host" / "omitted,
     never null, when anonymous").
@@ -123,6 +123,6 @@ Any request targeting these unimplemented paths continues to return `501 COMPATI
 
 ```sh
 cd app/packages/backend
-npx tsx --test test/*.test.ts     # 170 tests, 26 suites
+npx tsx --test test/*.test.ts     # counts grow as operations are added; the run prints the current totals
 ../../node_modules/.bin/tsc --noEmit -p tsconfig.json
 ```
