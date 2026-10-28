@@ -14,6 +14,10 @@ jobs:
       max-parallel: 12
       matrix:
         include:
+          - suite: amm-hop-gate-recovery
+            commands: |
+              python -I -B research/amm-hop-gate-recovery/verify.py
+              python -I -B research/amm-hop-gate-recovery/test_runtime_controls.py
           - suite: amm-fee-value-call-recovery
             commands: |
               python -I -B research/amm-fee-value-call-recovery/verify.py
