@@ -52,6 +52,11 @@ function validateFixture(
     );
   }
   const candidate = fixture as Partial<Record<keyof Fixture, unknown>>;
+  if (!Object.hasOwn(candidate, "body") || candidate.body === undefined) {
+    throw new Error(
+      `Invalid fixture registration (${provenance}): body must be explicitly present; use null for a JSON null body`,
+    );
+  }
   if (typeof candidate.source !== "string" || candidate.source.length === 0) {
     throw new Error(
       `Invalid fixture registration (${provenance}): source must be a non-empty string`,
