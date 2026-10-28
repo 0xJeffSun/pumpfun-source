@@ -68,3 +68,7 @@ checks every result-manifest member, including ignored files, against the Git
 index. The result manifest is `85ad7cea40032e01c1beb84e10dae30514170d78ec27baf4b192be51afa6295e`.
 
 The [materialization review](followup/materialization-proof/README.md) validates omitting unreferenced historical lineage copies while retaining complete current proof dependencies. Historical packets remain in their archived checkpoints.
+
+## Additional open boundary
+
+The [AdminCtoPool counterexamples](followup/admin-cto-order/README.md) preserve two synthetic direct-CPI error-order differences in the selected candidate. Rollback agrees; the captured Pump program rejects the wrong-creator requests before invoking AMM. The correction remains open and does not change the bounded coverage totals above.

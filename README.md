@@ -19,6 +19,8 @@ distinction between 141 raw-equal and 295 normalized-only matches.
 
 These are binary-coverage measurements. Full call/data/relocation identity, original build provenance and uncovered behavior remain open. The [remaining-work review](repro/pump_amm/private-sweep-recovery-20261027/remaining-audit/README.md) lists all 129 unmatched AMM windows. The latest checkpoint restores private-event storage reuse, SetCoinCreator PDA reevaluation and sweep key/mint snapshots while preserving the resolved incentive guard and all 1,730 fresh boundary cases.
 
+**Open AdminCtoPool boundary:** two signed synthetic direct-CPI controls on an existing holder-reward pool expose a different error ordering; rollback state agrees. The captured Pump program rejects these requests upstream. The [counterexample packet](repro/pump_amm/private-sweep-recovery-20261027/followup/admin-cto-order/README.md) records the evidence, and the source correction is in progress.
+
 [Current main-Pump parallel research snapshot](research/main-pump-parallel-checkpoint-20261027/README.md) preserves the verified intermediates and in-progress source beyond the maintained checkpoint.
 
 **Main Pump: 78.8% of function windows matched; 60.5% of original text covered. Complete reconstruction remains unfinished.**

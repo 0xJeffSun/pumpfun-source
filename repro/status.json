@@ -393,6 +393,16 @@
       "baseline_differences": 128,
       "current_differences": 0,
       "scope": "H11 guard preserved byte for byte; fresh signed H12 state/clock boundaries, no network reachability claim."
+    },
+    "remaining_semantic_followup": {
+      "status": "open",
+      "candidate_sha256": "9278a52ae4fd93bb6159a72fa625f121394902a93f701d86931a7ec3778055fb",
+      "report_path": "repro/pump_amm/private-sweep-recovery-20261027/followup/admin-cto-order/README.md",
+      "manifest_sha256": "ed392e84beb46d7815c96c6c8201f185704ef67d5e2951c225afadef2e8de042",
+      "direct_cases": 10,
+      "captured_pump_cases": 12,
+      "mismatches": 2,
+      "scope": "Synthetic direct-CPI error-order mismatch; captured Pump rejects the wrong-creator requests upstream."
     }
   },
   "pump_fees": {
