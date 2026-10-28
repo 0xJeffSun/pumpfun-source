@@ -1,6 +1,23 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { buildApp } from '../src/app.js';
+
+test('JSON scalar fixtures retain their JSON representation', async () => {
+ const cases=[
+  {path:'/string',headers:{'Content-Type':'application/json; charset=utf-8'},body:'recorded string'},
+  {path:'/null',headers:{'Content-Type':'application/json'},body:null},
+  {path:'/vendor',headers:{'Content-Type':'application/problem+json'},body:'vendor string'},
+  {path:'/plain',headers:{'Content-Type':'text/plain'},body:'plain string'},
+ ];
+ const app=buildApp(cases.map(f=>({...f,method:'GET',status:200,source:'synthetic-test'})));
+ try {
+  for (const fixture of cases) {
+   const response=await app.inject(fixture.path);
+   assert.equal(response.statusCode,200);
+   assert.equal(response.body,fixture.path==='/plain' ? fixture.body : JSON.stringify(fixture.body));
+  }
+ } finally { await app.close(); }
+});
 test('unimplemented domain routes cannot pass as working APIs', async () => {
  const app=buildApp();
  try { const r=await app.inject('/v1/users/test'); assert.equal(r.statusCode,501); assert.equal(r.json().error,'COMPATIBILITY_NOT_IMPLEMENTED'); } finally { await app.close(); }
