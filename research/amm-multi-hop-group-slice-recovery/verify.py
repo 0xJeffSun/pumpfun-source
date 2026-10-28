@@ -102,7 +102,7 @@ def main():
             assert report["case_count"] == report["passed"] == 735
             assert report["mismatches"] == []
 
-    runtime = "735 offline cases replayed" if not args.skip_runtime else "saved runtime evidence retained"
+    runtime = "735 offline cases replayed" if not args.skip_runtime else "static checks only; runtime not verified"
     print(f"PASS: 661/785 normalized, 159 raw, one 520-byte gain, no losses; {runtime}")
 
 

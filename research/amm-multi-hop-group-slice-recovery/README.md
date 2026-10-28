@@ -35,29 +35,36 @@ contain discriminant 44, both vtables have identical size/alignment metadata
 and normalized method targets, the display-error message is exact, the Rust
 panic location is exact, and the 57-byte PumpSwap source path is exact.
 
-## Reproducible build and offline execution
+## Retained artifacts and reported execution
 
-Two package-clean builds used the official Linux v1.44 platform archive under
-the pinned amd64 container with network disabled, `--locked --offline`, the
-maintained two-member workspace, opt-level 3, overflow checks, panic abort, one
-codegen unit and LTO disabled. Both produced:
+The author reports two package-clean builds using the official Linux v1.44
+platform archive under the pinned amd64 container with network disabled,
+`--locked --offline`, a two-member workspace, opt-level 3, overflow checks,
+panic abort, one codegen unit and LTO disabled. The retained artifacts have:
 
 | Artifact | Bytes | SHA-256 |
 |---|---:|---|
 | Unstripped | 1,813,360 | `d35beab66073f1739d7d371a67160675d5b0a2f047605325b9cda189167ad947` |
 | Stripped | 1,291,424 | `7a300434dced61413bde10788594b427d5649563e0223efcf09e6b214aff7ad3` |
 
-The inherited `admin_update_token_incentives` frame-overwrite diagnostic remains
-visible; Cargo completed successfully on both builds. Tool, image, workspace and
-artifact hashes are in `build-provenance.json`.
+The author reports an inherited `admin_update_token_incentives` frame-overwrite
+diagnostic and successful Cargo exits. Tool, image, workspace and repeated
+artifact hashes are recorded in `build-provenance.json`; the build logs and
+complete build workspace are not included. The recorded root manifest,
+lockfile and program manifest hashes differ from the corresponding files at
+this PR's head and its recorded upstream commit. The changed Rust file hash
+does match. The static audit authenticates the retained artifacts and their
+binary comparisons, but does not establish that the current complete source
+tree rebuilds to them.
 
-The existing offline MultiHopSwap differential runner executed 735 signed
-original-versus-candidate cases with zero reported return, log, event, inner
-instruction, return-data or account-state mismatches. Sixteen malformed
-remaining-account cases return error 6044 before the recovered line-307 branch;
-the suite therefore validates the enclosing route but does not claim direct
-runtime reachability of the new closure. Compute consumption is outside this
-runner's equality fields.
+The author reports that the existing offline MultiHopSwap differential runner
+executed 735 signed original-versus-candidate cases with zero return, log,
+event, inner-instruction, return-data or account-state mismatches. Only a result
+hash is recorded; that runtime receipt is not included or checked by
+`--skip-runtime`. A successful default verifier run independently replays the
+735-case suite. That replay exercises the enclosing route and does not claim
+direct runtime reachability of the new closure. Compute consumption is outside
+the runner's equality fields.
 
 ## Reachability of the recovered closure
 
@@ -92,8 +99,8 @@ four direct callees, and reruns the 735-case offline suite. It does not rebuild
 the program. Rebuild inputs and limitations are recorded rather than treating a
 saved artifact as historical build provenance.
 
-For a lightweight revalidation that does not replay the already-qualified
-735-case suite, pass `--skip-runtime`. The reachability tests inspect the exact
+For a static revalidation without runtime evidence, pass `--skip-runtime`.
+The reachability tests inspect the exact
 source precondition, loop bounds, both index-advance paths and line 307; model
 32-bit and 64-bit maximum bounds; enumerate all curve/AMM shapes through eight
 hops; and reject five mutations of the proof obligations. They are source-level
