@@ -15,9 +15,9 @@ bodies; five remain (1.13%). Unmatched code is 72,192 bytes (10.21%).**
 See the [completion review](docs/MAYHEM-COMPLETION.md) for all five bodies and the
 distinction between 141 raw-equal and 295 normalized-only matches.
 
-**PumpSwap: 658/785 function windows matched (83.8%); 127 remain (16.2%). Matched windows cover 71.4% of original executable text, leaving 332,008 bytes (28.6%).**
+**PumpSwap: 659/785 function windows matched (83.9%); 126 remain (16.1%). Matched windows cover 71.5% of original executable text, leaving 331,232 bytes (28.5%).**
 
-These are binary-coverage measurements. Full call/data/relocation identity, original build provenance and uncovered behavior remain open. The [remaining-work review](repro/pump_amm/native-ownership-recovery-20261028/remaining-audit/README.md) lists all 127 unmatched AMM windows. The current checkpoint records source composition, reproducible builds and signed verification results.
+These are binary-coverage measurements. Full call/data/relocation identity, original build provenance and uncovered behavior remain open. The [remaining-work review](repro/pump_amm/inverse-route-recovery-20261028/remaining-audit/README.md) lists all 126 unmatched AMM windows. The current checkpoint records source composition, reproducible builds and signed verification results.
 
 [Current main-Pump parallel research snapshot](research/main-pump-parallel-checkpoint-20261027/README.md) preserves the verified intermediates and in-progress source beyond the maintained checkpoint.
 
@@ -60,11 +60,11 @@ all remaining code, calls, data, relocations and build provenance.
 | Latest verified checkpoint | Matched windows | Matched % | Raw-equal bodies | Normalized only | Unmatched | Whole ELF equal |
 | --- | ---: | ---: | ---: | ---: | ---: | --- |
 | [Pump Round44](repro/pump/main-contract-round44-20261027/README.md) | 818 / 1,035 | 79.0% | 203 | 615 | 217 | No |
-| [PumpSwap / AMM](repro/pump_amm/native-ownership-recovery-20261028/README.md) | 658 / 785 | 83.8% | 148 | 510 | 127 | No |
+| [PumpSwap / AMM](repro/pump_amm/inverse-route-recovery-20261028/README.md) | 659 / 785 | 83.9% | 159 | 500 | 126 | No |
 | [Fees research](research/claude-fees100-crank-donation-20261027/README.md) | 585 / 585 | 100.0% | 585 | 0 | 0 | **Yes** |
 | [Mayhem qualified research](research/mayhem-current436-composition-20261027/README.md) | 436 / 441 | 98.9% | 141 | 295 | 5 | No |
 | [Donation Relay](repro/donation-relay/canonical-exact-selection/README.md) | 492 / 492 | 100.0% | 492 | 0 | 0 | **Yes** |
-| **Total** | **2,989 / 3,338** | **89.5%** | **1,569** | **1,420** | **349** | **2 / 5** |
+| **Total** | **2,990 / 3,338** | **89.6%** | **1,580** | **1,410** | **348** | **2 / 5** |
 
 “Windows” are inferred original machine-function ranges, including framework and
 runtime helpers. Complete normalized matches mask specified call/address
@@ -75,11 +75,11 @@ the whole program is identical.
 | Checkpoint | Text bytes in matched windows | Text covered | Unmatched text |
 | --- | ---: | ---: | ---: |
 | Pump Round44 | 1,085,976 / 1,792,208 | 60.6% | 706,232 |
-| PumpSwap / AMM | 830,032 / 1,162,040 | 71.4% | 332,008 |
+| PumpSwap / AMM | 830,808 / 1,162,040 | 71.5% | 331,232 |
 | Fees research | 799,648 / 799,648 | 100.0% | 0 |
 | Mayhem research | 634,552 / 706,744 | 89.8% | 72,192 |
 | Donation Relay | 752,488 / 752,488 | 100.0% | 0 |
-| **Total** | **4,102,696 / 5,213,128** | **78.7%** | **1,110,432** |
+| **Total** | **4,103,472 / 5,213,128** | **78.7%** | **1,109,656** |
 
 Pump and AMM rows describe the verified maintained sources. Fees and Mayhem rows
 are the latest qualified research frontiers, distinct from their maintained
@@ -284,9 +284,9 @@ improvements, and Create call-graph recovery. The full recovery chain contains
 88,263 current files. These experiments retain their individual status and add
 no accepted matches.
 
-The latest [PumpSwap native fee and source ownership recovery](repro/pump_amm/native-ownership-recovery-20261028/README.md) matches 658 windows and 148 raw bodies. Two complete functions are recovered with no losses. The repeated build and all 13 standard groups pass; 127 AMM windows remain. Fourteen native-fee cases still differ in raw source-line diagnostics.
+The latest [PumpSwap inverse fee and route recovery](repro/pump_amm/inverse-route-recovery-20261028/README.md) matches 659 windows and 159 raw bodies. The 776-byte inverse-fee function at 0xf2ed0 now matches; eleven already-normalized windows additionally match raw bytes, with no losses. The repeated build and all 13 standard groups pass; 126 AMM windows remain. Fourteen native-fee cases still differ in raw source-line diagnostics.
 
-Remaining priorities are the 217 Pump, 127 AMM and 5 Mayhem unmatched
+Remaining priorities are the 217 Pump, 126 AMM and 5 Mayhem unmatched
 windows; deeper call/data/relocation identity; original build provenance; and
 uncovered behavior such as authentic fixed-admin AMM `create_config` success.
 The historical [150-handler audit](repro/reconstruction-audit-2026-10-26/handlers.md)

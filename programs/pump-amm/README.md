@@ -1,14 +1,15 @@
 # PumpSwap source reconstruction
 
-The maintained source is the [native fee and source ownership checkpoint](../../repro/pump_amm/native-ownership-recovery-20261028/README.md),
-candidate `ea14ee8e5ea9a9b6695110fa141af77f378a21dcd36e159ae92279c9c6d6b593`.
-It matches **658/785 normalized windows (83.8%)**, including **148 raw bodies**,
-and covers **830,032/1,162,040 text bytes (71.4%)**. **127 windows remain**;
+The maintained source is the [inverse fee and route checkpoint](../../repro/pump_amm/inverse-route-recovery-20261028/README.md),
+candidate `98ed250d3999e79b55683daa574b984fb7f650dc9eef0e3256671d0612b49fc3`.
+It matches **659/785 normalized windows (83.9%)**, including **159 raw bodies**,
+and covers **830,808/1,162,040 text bytes (71.5%)**. **126 windows remain**;
 whole ELF identity is false. These percentages measure binary coverage, not
 engineering effort completed.
 
-The new complete body matches are `prepare_pool` and the native transfer-fee
-calculation. The source also preserves the tested incentive and CTO error-order
+The new complete body match is the 776-byte native inverse-fee method at `0xf2ed0`;
+eleven already-normalized windows additionally match raw bytes. The route helper
+preserves the original fallible error 6044 for a missing optional sell leg. The source also preserves the tested incentive and CTO error-order
 fixes, private-event storage, creator source ownership and borrowed account
 boundaries. All 17,462 core cases and 13 current acceptance groups pass; suite
 counts overlap. The native 216-case replay retains 14 raw source-coordinate log
@@ -24,16 +25,16 @@ behavior remain open.
 From the repository root, verify the saved checkpoint and current source:
 
 ```sh
-python -B repro/pump_amm/native-ownership-recovery-20261028/verify_saved.py --current-source
+python -B repro/pump_amm/inverse-route-recovery-20261028/verify_saved.py --current-source
 ```
 
 To stage and check a new workspace without changing Rust source, use the current
 version 3 recipe; version 2 predates the native path dependency:
 
 ```sh
-python -B repro/pump_amm/native-ownership-recovery-20261028/workspace_recipe_v3.py stage \
+python -B repro/pump_amm/inverse-route-recovery-20261028/workspace_recipe_v3.py stage \
   --source-root "$PWD" --output "$PWD/work/amm-current-workspace"
-python -B repro/pump_amm/native-ownership-recovery-20261028/workspace_recipe_v3.py verify \
+python -B repro/pump_amm/inverse-route-recovery-20261028/workspace_recipe_v3.py verify \
   --source-root "$PWD" --workspace "$PWD/work/amm-current-workspace"
 ```
 
