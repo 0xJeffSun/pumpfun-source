@@ -14,6 +14,10 @@ jobs:
       max-parallel: 12
       matrix:
         include:
+          - suite: amm-v2-selector-union-recovery
+            commands: |
+              python -I -B -X pycache_prefix=/tmp/amm-selector-union-unused research/amm-v2-selector-union-recovery/verify.py
+              python -I -B -X pycache_prefix=/tmp/amm-selector-union-unused research/amm-v2-selector-union-recovery/test_runtime_controls.py
           - suite: amm-v2-fee-selector-recovery
             commands: |
               python -I -B research/amm-v2-fee-selector-recovery/verify.py
