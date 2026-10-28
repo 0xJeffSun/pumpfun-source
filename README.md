@@ -2,21 +2,21 @@
 
 Rust reconstruction of Pump.fun's Solana programs from captured binaries.
 
-**Current binary coverage — 28 October 2026:** 3,308 / 3,338 function
-windows match (99.1%); 30 remain unmatched. Three of five programs reproduce
+**Current binary coverage — 28 October 2026:** 3,318 / 3,338 function
+windows match (99.4%); 20 remain unmatched. Three of five programs reproduce
 their complete meaningful ELF.
 
 | Program | Matched windows | Matched % | Raw-equal bodies | Normalized only | Unmatched | Whole ELF equal |
 | --- | ---: | ---: | ---: | ---: | ---: | --- |
-| [Pump Main](research/claude-pump-integration-20261027/r37-layout-33/README.md) | 1,010 / 1,035 | 97.6% | 168 | 842 | 25 | No |
-| [PumpSwap / AMM](research/claude-amm-union7-20261028/README.md) | 780 / 785 | 99.4% | 220 | 560 | 5 | No |
+| [Pump Main](research/claude-pump-integration-20261027/r37-layout-38/README.md) | 1,018 / 1,035 | 98.4% | 168 | 850 | 17 | No |
+| [PumpSwap / AMM](research/claude-amm-union10-20261028/README.md) | 782 / 785 | 99.6% | 236 | 546 | 3 | No |
 | [Fees](research/claude-fees100-crank-donation-20261027/README.md) | 585 / 585 | 100.0% | 585 | 0 | 0 | **Yes** |
 | [Mayhem](research/mayhem-meaningful-elf-20261028/README.md) | 441 / 441 | 100.0% | 441 | 0 | 0 | **Yes** |
 | [Donation Relay](repro/donation-relay/canonical-exact-selection/README.md) | 492 / 492 | 100.0% | 492 | 0 | 0 | **Yes** |
-| **Total** | **3,308 / 3,338** | **99.1%** | **1,906** | **1,402** | **30** | **3 / 5** |
+| **Total** | **3,318 / 3,338** | **99.4%** | **1,922** | **1,396** | **20** | **3 / 5** |
 
-Matched windows cover **4,919,568 / 5,213,128 code bytes (94.4%)**;
-**293,560 bytes (5.6%)** remain outside matched windows.
+Matched windows cover **5,000,080 / 5,213,128 code bytes (95.9%)**;
+**213,048 bytes (4.1%)** remain outside matched windows.
 
 These figures measure the latest published artifacts, including research not
 integrated into the maintained source tree. Raw-equal bodies match byte for byte;
@@ -28,35 +28,31 @@ respectively, without increasing normalized coverage.
 
 ## Remaining work
 
-- Recover the **25 Pump Main and 5 PumpSwap / AMM** unmatched windows. The AMM
-  remainder is `0x19138 0x2ba60 0x351a8 0x4c750 0x6db20`.
+- Recover the **17 Pump Main and 3 PumpSwap / AMM** unmatched windows. The AMM
+  remainder is `0x351a8 0x4c750 0x6db20`.
 - Close remaining call, data and relocation differences, integrate qualified
   source changes, and verify reproducible whole-program builds and uncovered behavior.
-- Pump Main's 1,010-window build ([L33](research/claude-pump-integration-20261027/r37-layout-33/README.md))
-  composes every fz final-run window lane on L32 (+20 windows, 0 losses) and keeps
-  synthetic source-line positioning; its 44-suite captured-loader corpus passes
-  (10,468 cases, 0 mismatches). Two log-parity packets on L32 are not yet folded into
-  L33: [creator diagnostics](research/pump-l32-creator-log-parity-20261028/README.md)
-  (three Round47 `admin_cto` messages) and the
-  [AdminCto collection order](research/pump-l32-admin-cto-log-order-20261028/README.md)
-  fix, which moves an ATA CPI to the right branch and takes ordered non-filename log
-  differences from 6 to 0 with no window loss. A future composition must combine both
-  and requalify against L33.
-- PumpSwap's [780-window union](research/claude-amm-union7-20261028/README.md) adds the
-  15,512-byte `multi_hop_swap::amm_hop` (`0x40a08`) to the
-  [779-window union6](research/claude-amm-union6-20261028/README.md), which added ten
-  windows over the 769-window union4 (including the mint scanner `0xf28b8` and
-  multi-hop `0x3dbc0`/`0x45940`/`0xfb08`), with 0 normalized or raw losses. All 25
-  suites (17,462 cases) report 0 mismatches and the five incentive error-order controls
-  agree. A separate contributor line,
-  [mint-scanner integration](research/amm-union4-mint-scanner-integration-20261028/README.md)
-  (770) and [multi-hop fee flags](research/amm-multi-hop-fee-flags-20261028/README.md)
-  (771), independently recovers `0xfb08` with an explicit call boundary. A
-  [fresh-dependency rebuild](research/amm-fresh-v144-20261028/README.md) of the unchanged
-  union6 workspace (all 257 locked packages, no cache) reproduces 779 normalized windows with
-  the official Linux v1.44 target libraries, plus one raw serializer match (`0xcaa8`, 221 raw);
-  Windows target libraries give 774. The
-  [maintained AMM checkpoint](repro/pump_amm/v2-mint-clone-recovery-20261028/README.md)
+- Pump Main's 1,018-window build ([L38](research/claude-pump-integration-20261027/r37-layout-38/README.md))
+  adds eight windows over L33 through L35-L38 (including `nested_create::walk`, v1
+  `create`, `migrate::execute`, `multi_hop_curve::execute` and
+  `set_reserved_fee_recipients`), with 0 normalized or raw losses, and keeps synthetic
+  source-line positioning. It folds in the
+  [creator diagnostics](research/pump-l32-creator-log-parity-20261028/README.md) (L35) and
+  [AdminCto collection order](research/pump-l32-admin-cto-log-order-20261028/README.md) (L37)
+  log-parity fixes; its 44-suite captured-loader corpus passes (10,468 cases, 0 mismatches).
+  Narrow behavior/source corrections not yet composed into a frontier build: the
+  [cashback-v2 quote-program guard](research/pump-l38-cashback-quote-program-20261028/README.md)
+  (on L38, 1,018 retained), the [checked cashback decoder](research/pump-checked-cashback-decoder-20261028/README.md)
+  and [legacy-sell cashback path](research/pump-legacy-sell-cashback-20261028/README.md).
+- PumpSwap's [782-window union](research/claude-amm-union10-20261028/README.md) adds
+  `0x2ba60` and the `set_reserved_fee_recipients` handler (`0x19138`) to the
+  [780-window union7](research/claude-amm-union7-20261028/README.md) (which added
+  `multi_hop_swap::amm_hop`, `0x40a08`), plus 16 raw matches by code motion, with 0 normalized
+  or raw losses. All 25 suites (17,462 cases) report 0 mismatches and the five incentive
+  error-order controls agree. A [fresh-dependency rebuild](research/amm-fresh-v144-20261028/README.md)
+  of the union6 workspace (all 257 locked packages, no cache) reproduces its 779 normalized
+  windows with the official Linux v1.44 target libraries; Windows target libraries give 774.
+  The [maintained AMM checkpoint](repro/pump_amm/v2-mint-clone-recovery-20261028/README.md)
   remains at 660 windows; research candidates are not promoted.
 - Mayhem now [reproduces its complete meaningful ELF](research/mayhem-meaningful-elf-20261028/README.md):
   ordinary stripping of two fresh builds equals all 775,416 meaningful original bytes.
@@ -65,9 +61,11 @@ respectively, without increasing normalized coverage.
   source, with no cached host artifacts, across three fresh chains. The recipe still uses
   a target-derived linker layout, so historical source/compiler provenance remains open.
   Static data proofs continue on the qualified437 image:
-  [Anchor log formatter pieces](research/mayhem-current437-format-pieces-20261028/README.md)
-  and [counted account-name intervals](research/mayhem-current437-account-names-20261028/README.md)
-  (125 `with_account_name` sites; `.rodata` coverage 1,724 -> 2,498 of 18,396 bytes).
+  [Anchor log formatter pieces](research/mayhem-current437-format-pieces-20261028/README.md),
+  [counted account-name intervals](research/mayhem-current437-account-names-20261028/README.md)
+  (125 `with_account_name` sites) and
+  [`MayhemError` Display messages](research/mayhem-current437-mayhem-error-display-20261028/README.md)
+  (20 messages, 531 bytes).
 - PumpSwap transfer-fee diagnostics with basis points above 10,000 now trigger all
   three overflow sites at runtime: lines 57/67 for
   [deposit/withdraw](research/amm-transfer-fee-bps-overflow-20261028/README.md) and
