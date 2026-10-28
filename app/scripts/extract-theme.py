@@ -28,9 +28,11 @@ THEME_JSON = ROOT / 'packages/frontend/src/theme/captured-theme.json'
 ROOT_CSS = ROOT / 'packages/frontend/src/app/captured-root.css'
 SHELL_CSS = ROOT / 'packages/frontend/src/app/captured-shell.css'
 # Non-utility rules the shell markup depends on. Each selector list is copied verbatim.
-SHELL_SELECTOR = re.compile(r'\.(?:pump-main-shell|pump-page-container|pump-main-row|custom-scrollbar|scrollbar-hide)\b')
-# Site base rules layered after Tailwind's preflight (`html{scrollbar-gutter:stable}`, `body{isolation:isolate;...}`).
-BASE_SELECTORS = {'html', 'body'}
+SHELL_SELECTOR = re.compile(r'\.(?:pump-main-shell|pump-page-container|pump-main-row|custom-scrollbar|scrollbar-hide)\b'
+                            r'|\[data-pf-auth')
+# Site base rules layered after Tailwind's preflight: `html{scrollbar-gutter:stable}`,
+# `body{isolation:isolate;...}` and the universal `*{border-color:...}` default.
+BASE_SELECTORS = {'html', 'body', '*'}
 
 COLOR_PREFIXES = ('bg', 'text', 'border', 'ring', 'outline', 'fill', 'stroke', 'from', 'via', 'to',
                   'divide', 'placeholder', 'caret', 'accent', 'decoration', 'ring-offset', 'shadow')

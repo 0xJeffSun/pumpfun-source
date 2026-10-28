@@ -1,5 +1,10 @@
 @import "./recovered-tokens.css";
 @import "./recovered-fonts.css";
+@import "./captured-root.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
   color-scheme: dark;
@@ -562,7 +567,11 @@ h1 {
 }
 
 @media (max-width: 767px) {
-  :root {
+  @tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
     --shell-header: auto;
   }
 
@@ -687,5 +696,21 @@ h1 {
   *::after {
     scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;
+  }
+}
+
+/* Inline <style> from the captured server-rendered pages */
+html[data-clickwrap-accepted] [data-clickwrap-overlay],
+html[data-clickwrap-legacy-accepted] [data-clickwrap-overlay],
+html[data-clickwrap-oos] [data-clickwrap-overlay] {
+  display: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-app-shell] *,
+  [data-app-shell] *::before,
+  [data-app-shell] *::after {
+    transition-duration: 0s !important;
+    animation-duration: 0s !important;
   }
 }
