@@ -3,14 +3,13 @@ use anchor_spl::token_2022::spl_token_2022::{
     extension::transfer_fee::TransferFee,
 };
 
-#[derive(Clone, Copy, Debug)]
-pub struct DecodedTransferFee {
-    pub epoch: u64,
-    pub maximum_fee: u64,
-    pub transfer_fee_basis_points: u16,
+pub use native_transfer_fee::DecodedTransferFee;
+
+trait SplFee {
+    fn spl_fee(&self) -> TransferFee;
 }
 
-impl DecodedTransferFee {
+impl SplFee for DecodedTransferFee {
     fn spl_fee(&self) -> TransferFee {
         TransferFee {
             epoch: self.epoch.into(),
@@ -24,22 +23,19 @@ pub type TransferFeeData = Option<DecodedTransferFee>;
 
 pub fn from_mint(mint: &AccountInfo) -> Result<TransferFeeData> {
     if mint.owner != &anchor_spl::token_2022::ID {
-        return Ok(None);
+        return const { Ok(None) };
     }
     let data = mint.try_borrow_data()?;
     let fees = decode_transfer_fees(&data)
         .map_err(|_| error!(PumpAmmError::UnsupportedQuoteMint))?;
-    let Some((older, newer)) = fees else {
-        return Ok(None);
-    };
     let epoch = Clock::get()?.epoch;
-    Ok(Some(if epoch >= newer.epoch { newer } else { older }))
+    Ok(fees.map(|(older, newer)| if epoch >= newer.epoch { newer } else { older }))
 }
 
 pub fn calculate_fee(data: &TransferFeeData, amount: u64) -> Result<u64> {
-    match data {
+    match *data {
         None => Ok(0),
-        Some(fee) => fee.spl_fee().calculate_fee(amount)
+        Some(fee) => fee.calculate_fee(amount)
             .ok_or_else(|| error!(PumpAmmError::Overflow)),
     }
 }

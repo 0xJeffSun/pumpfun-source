@@ -141,7 +141,7 @@ pub fn execute<'info, const EXACT: bool>(
     crate::instructions::swap::validate_protocol_fee_recipient(
         &a.global_config,
         &a.protocol_fee_recipient,
-        a.pool.is_mayhem_mode,
+        u8::from(a.pool.is_mayhem_mode),
     )?;
     if EXACT {
         require_gt!(limit, 0, PumpAmmError::ZeroBaseAmount);

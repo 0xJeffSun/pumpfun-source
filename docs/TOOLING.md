@@ -115,6 +115,31 @@ pads either input and exits zero only on complete raw equality.
 
 `build_partial_candidate.py` records crate Rust sources/manifests, the owning workspace manifest and lockfile, ancestor `idls/` JSON files used by Anchor `declare_program!`, and repository-local Cargo/toolchain configuration before and after compilation. `--extra-input <path>` adds a repository-local path dependency or other build-script/include asset; repeat it for additional inputs. The before/after maps must be identical. This is an inventory of known local inputs, not a hermetic toolchain/dependency closure. Registry archives, environment and toolchain identity require their separate build records.
 
+The current PumpSwap source has a local path dependency outside its standalone
+crate: `crates/native-transfer-fee`. Generic build helpers require it explicitly,
+along with the retained Pubkey source directory. Run this from the repository root:
+
+```sh
+python scripts/build_reconstruction_candidate.py \
+  --manifest programs/pump-amm/Cargo.toml --program pump_amm \
+  --artifact-name pump_amm_recovered.so --tools-version v1.44 \
+  --extra-input programs/pump-amm/vendor/solana-pubkey \
+  --extra-input crates/native-transfer-fee --output work/amm-research-build --dry-run
+```
+
+Remove `--dry-run` only when ready to run a new research build with the required
+SDK and locked cache. The native flag includes both `Cargo.toml` and `src/lib.rs`;
+without it, the historical helper can compile the dependency without recording
+its bytes. The supported-target adapter instead rejects unrecorded local path
+dependencies. These input inventories do not by themselves authenticate registry
+sources, tools or runtime behavior.
+
+Use the [current AMM version 3 workspace recipe](../repro/pump_amm/native-ownership-recovery-20261028/workspace_recipe_v3.py)
+when staging the standalone AMM and native crate as a workspace. Version 3 binds
+56 canonical and 57 workspace inputs without changing Rust. Its `stage` and
+`verify` commands are shown in the [AMM README](../programs/pump-amm/README.md).
+The version 2 recipe is retained for checkpoints that predate this dependency.
+
 Older saved builds keep their original manifests; their scope is not retroactively expanded. Fees workspace experiments explicitly bind their root manifest/lock and IDLs in separate provenance records. Run `python3 scripts/test_build_source_manifest.py` to verify that workspace-lock, IDL and explicit-asset changes are detected.
 
 The manual [controlled Linux Fees workflow](../repro/pump_fees/linux-v144-build-plan/README.md) performs one fixed-source build using the official Linux v1.44 distribution. Its comparison is separate from runtime acceptance; changed bytes do not inherit the current candidate’s saved receipts.

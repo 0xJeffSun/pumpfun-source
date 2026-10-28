@@ -4,6 +4,7 @@ use anchor_lang::prelude::*;
 use anchor_lang::solana_program::{instruction::{Instruction,AccountMeta},program::{invoke,invoke_signed},program_error::ProgramError};
 use anchor_spl::{token::Token,token_2022::Token2022,token_interface::{Mint,TokenAccount}};
 use crate::{Global,PumpError};
+use crate::trade::route_buy_budget::buy_budget;
 use crate::legacy_sell::fee_math::{fee, tier, validate_config_length};
 use crate::trade_types::{BondingCurve,FeeConfig,FeeTier,Fees};
 const FEES:Pubkey=anchor_lang::solana_program::pubkey!("pfeeUxB6jkeY1Hxd7CsFCAjcbHA9rWtchMGdZ6VojVZ");
@@ -62,9 +63,9 @@ impl AccountDeserialize for RouteFeeConfig {
             .map_err(|_| error!(anchor_lang::error::ErrorCode::AccountDidNotDeserialize))
     }
 }
-fn add(a: u64, b: u64) -> Result<u64> { a.checked_add(b).ok_or(error!(PumpError::Overflow)) }
-fn sub(a: u64, b: u64) -> Result<u64> { a.checked_sub(b).ok_or(error!(PumpError::Overflow)) }
-fn n(a: u128) -> Result<u64> { u64::try_from(a).map_err(|_| error!(PumpError::Truncation)) }
+pub(crate) fn add(a: u64, b: u64) -> Result<u64> { a.checked_add(b).ok_or(error!(PumpError::Overflow)) }
+pub(crate) fn sub(a: u64, b: u64) -> Result<u64> { a.checked_sub(b).ok_or(error!(PumpError::Overflow)) }
+pub(crate) fn n(a: u128) -> Result<u64> { u64::try_from(a).map_err(|_| error!(PumpError::Truncation)) }
 fn div(a: u128, b: u128) -> Result<u128> {
     a.checked_div(b).ok_or(error!(PumpError::DivisionByZero))
 }
@@ -93,21 +94,7 @@ fn select_fees(a: &MultiHopCurve, c: &BondingCurve, cap: u128, amount: u64) -> R
     Ok(SelectedFees { protocol, creator, rates })
 }
 
-// A01: The corrected estimate is checked but not used as the route's net quote.
-fn buy_budget(budget: u64, p: u64, requested_c: u64, creator: Pubkey) -> Result<(u64,u64)> {
-    let c = if creator == Pubkey::default() { 0 } else { requested_c };
-    let sum = p.checked_add(c).ok_or(PumpError::Overflow)?;
-    let mut estimate = if sum == 0 { budget } else { n(budget as u128 * 10000 / (10000 + sum as u128))? };
-    require_gt!(estimate,0,PumpError::BuyNotEnoughSolToCoverFees);
-    let pf = fee(estimate, p)?;
-    let cf = fee(estimate, c)?;
-    let total = estimate.saturating_add(pf).saturating_add(cf);
-    if total > budget {
-        estimate = sub(estimate, total - budget)?;
-        require_gt!(estimate,0,PumpError::BuySlippageBelowMinTokensOut);
-    }
-    Ok((pf,cf))
-}
+
 
 // T01: Exact four AccountInfos; program identity is in the instruction.
 fn checked_transfer<'info>(from: AccountInfo<'info>, mint: AccountInfo<'info>,
@@ -295,10 +282,9 @@ pub fn execute<'info>(ctx: Context<'_,'_,'info,'info,MultiHopCurve<'info>>,
                 let post_protocol = fee(post_estimate,p_rate)?;
                 let post_creator = if c.creator == Pubkey::default(){0}else{fee(post_estimate,c_rate)?};
                 let post_quote = sub(sub(remaining_budget,post_protocol)?,post_creator)?;
-                let pool_base = sub(h.associated_base_bonding_curve.amount,capped)?;
-                let pool_quote = sub(add(c.real_quote_reserves,first_quote)?,if native{a.global.pool_migration_fee}else{0})?;
-                require_gt!(pool_base,0,PumpError::NotEnoughTokensToBuy);
-                require_gt!(pool_quote,0,PumpError::Overflow);
+                let (pool_base,pool_quote) = crate::trade::route_buy_budget::completion_pool_balances(
+                    c.real_quote_reserves,a.global.pool_migration_fee,
+                    h.associated_base_bonding_curve.amount,native,capped,first_quote)?;
                 let post_base = if post_estimate > 1 && post_quote > 0 {
                     n(div(pool_base as u128 * (post_quote-1) as u128,
                         pool_quote as u128 + (post_quote-1) as u128)?)?

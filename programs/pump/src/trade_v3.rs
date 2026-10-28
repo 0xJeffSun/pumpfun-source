@@ -337,7 +337,18 @@ pub fn sell(ctx:Context<SellV3>,amount:u64,min_sol_output:u64)->Result<()> {
     let next_real_base=add(curve.real_token_reserves,amount)?;
     let next_real_quote=sub(curve.real_quote_reserves,quote)?;
     let next_creator=add(curve.creator_fee,creator_fee)?;
+    a.bonding_curve.apply_sell(amount,quote)?;
     crate::sell_v2::user_token_transfers::transfer_user_tokens(&a.base_token_program,&a.associated_base_user,&a.associated_base_bonding_curve,a.user.as_ref(),a.base_mint.decimals,a.base_mint.as_ref().as_ref(),amount)?;
+    if a.user.key()==a.global.whitelist_pda {
+        a.associated_base_bonding_curve.reload()?;
+        a.associated_base_user.reload()?;
+        let quote_mint=a.bonding_curve.quote_mint;
+        a.bonding_curve.sync_virtual_quote_reserves(
+            a.associated_base_bonding_curve.amount,
+            a.associated_base_user.amount,
+            &quote_mint,
+        )?;
+    }
     let source_quote=if is_sol{None}else{Some(a.associated_quote_bonding_curve.as_ref())};
     let user_quote=if is_sol{None}else{Some(a.associated_quote_user.as_ref())};
     quote_payments::transfer_to_user(
@@ -346,7 +357,7 @@ pub fn sell(ctx:Context<SellV3>,amount:u64,min_sol_output:u64)->Result<()> {
         source_quote,user_quote,ctx.bumps.bonding_curve,
     )?;
     let (buyback_fee,retained)=v3_buyback_split(protocol_fee,buyback_bps);
-    let next_protocol=add(curve.protocol_fees,retained)?;
+    let next_protocol=add(a.bonding_curve.protocol_fees,retained)?;
     let buyback_received=if is_sol{buyback_fee}else{sub(buyback_fee,quote_fee_for_amount(&quote_fee,buyback_fee,false)?)?};
     let buyback_quote=if is_sol{None}else{Some(a.buyback_fee_recipient.as_ref())};
     quote_payments::transfer_to_owned(
@@ -355,7 +366,6 @@ pub fn sell(ctx:Context<SellV3>,amount:u64,min_sol_output:u64)->Result<()> {
         source_quote,buyback_quote,ctx.bumps.bonding_curve,
     )?;
     let curve=&mut a.bonding_curve;
-    curve.apply_sell(amount,quote)?;
     let _=curve.accrue_fees(&a.global,protocol_fee,creator_fee)?;
     let event_mint=a.base_mint.key();
     let event_user=a.user.key();
@@ -438,3 +448,37 @@ use crate::buy_fee_market_cap;
 pub mod quote_payments;
 
 pub use crate::user_quote_payments;
+
+pub(crate) mod route_buy_budget {
+    use anchor_lang::prelude::*;
+    use crate::PumpError;
+    use crate::legacy_sell::fee_math::fee;
+    use crate::multi_hop_curve::{add,n,sub};
+
+// A01: The corrected estimate is checked but not used as the route's net quote.
+pub(crate) fn buy_budget(budget: u64, p: u64, requested_c: u64, creator: Pubkey) -> Result<(u64,u64)> {
+    let c = if creator == Pubkey::default() { 0 } else { requested_c };
+    let sum = p.checked_add(c).ok_or(PumpError::Overflow)?;
+    let mut estimate = if sum == 0 { budget } else { n(budget as u128 * 10000 / (10000 + sum as u128))? };
+    require_gt!(estimate,0,PumpError::BuyNotEnoughSolToCoverFees);
+    let pf = fee(estimate, p)?;
+    let cf = fee(estimate, c)?;
+    let total = estimate.saturating_add(pf).saturating_add(cf);
+    if total > budget {
+        estimate = sub(estimate, total - budget)?;
+        require_gt!(estimate,0,PumpError::BuySlippageBelowMinTokensOut);
+    }
+    Ok((pf,cf))
+}
+// Reconstruct the shared completed-curve pool-balance boundary; the original name is unknown.
+pub(crate) fn completion_pool_balances(
+    real_quote_reserves:u64,migration_fee:u64,base_vault_amount:u64,
+    native:bool,base_amount:u64,quote_amount:u64,
+)->Result<(u64,u64)>{
+    let pool_base = sub(base_vault_amount,base_amount)?;
+    let pool_quote = sub(add(real_quote_reserves,quote_amount)?,if native{migration_fee}else{0})?;
+    require_gt!(pool_base,0,PumpError::NotEnoughTokensToBuy);
+    require_gt!(pool_quote,0,PumpError::Overflow);
+    Ok((pool_base,pool_quote))
+}
+}

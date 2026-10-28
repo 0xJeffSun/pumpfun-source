@@ -49,7 +49,7 @@ pub fn execute(ctx: Context<SweepFees>, creator: bool) -> Result<()> {
         crate::instructions::swap::validate_protocol_fee_recipient(
             &a.global_config,
             &a.recipient,
-            a.pool.is_mayhem_mode,
+            u8::from(a.pool.is_mayhem_mode),
         )?;
     }
     a.pool.available_quote_reserves(a.pool_quote_token_account.amount)?;

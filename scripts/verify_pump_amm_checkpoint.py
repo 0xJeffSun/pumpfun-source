@@ -9,10 +9,10 @@ import subprocess
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
-CHECKPOINT = 'repro/pump_amm/private-sweep-recovery-20261027'
+CHECKPOINT = 'repro/pump_amm/native-ownership-recovery-20261028'
 ARTIFACT = CHECKPOINT + '/results/build/candidate.so'
-CANDIDATE = '9278a52ae4fd93bb6159a72fa625f121394902a93f701d86931a7ec3778055fb'
-MANIFEST = '85ad7cea40032e01c1beb84e10dae30514170d78ec27baf4b192be51afa6295e'
+CANDIDATE = 'ea14ee8e5ea9a9b6695110fa141af77f378a21dcd36e159ae92279c9c6d6b593'
+MANIFEST = '5cc10d03fec88d0d06c84775bbc6c508b8142e7251cd5cad9ed0a19c56dbc511'
 
 
 def sha(path):
@@ -49,7 +49,7 @@ def verify(root=ROOT, runtime=None):
     }
     for name, digest in entries.items():
         assert sha(results / name) == digest, name
-    for name in ['verify_source_binding.py', 'workspace_recipe_v2.py']:
+    for name in ['verify_source_binding.py', 'workspace_recipe_v3.py']:
         assert sha(checkpoint / name) == sha(results / 'harness' / name)
     sys.path.insert(0, str(checkpoint))
     try:
@@ -59,7 +59,7 @@ def verify(root=ROOT, runtime=None):
                                results / 'build/unstripped.so', results / 'dependency-proof', root)
     finally:
         sys.path.pop(0)
-    assert bound['total_compiled_inputs_verified'] == 227 and bound['current_source_verified']
+    assert bound['total_compiled_inputs_verified'] == 232 and bound['current_source_verified']
     dependencies = module('selected_amm_dependencies', results / 'dependency-proof/verify.py')
     assert dependencies.verify(results / 'canonical-source', results / 'build/build-comparison.json')['packages'] == 9
     runtime = Path(runtime).resolve()
