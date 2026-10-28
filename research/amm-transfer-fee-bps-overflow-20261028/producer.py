@@ -44,7 +44,8 @@ PAYER_LAMPORTS = 10 ** 12
 
 def _decompress(path):
     import gzip as _gzip
-    out = Path("/tmp") / ("bps-overflow-" + path.name.replace(".gz", ""))
+    # Distinct output per source packet: both artifacts are named candidate.so.gz.
+    out = Path("/tmp") / ("bps-overflow-" + path.parent.parent.name + "-candidate.so")
     if not out.exists():
         out.write_bytes(_gzip.decompress(path.read_bytes()))
     return out
