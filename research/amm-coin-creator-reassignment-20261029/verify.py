@@ -39,7 +39,8 @@ if not __debug__:
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
-WS = Path.home() / "workspace/slop-verify"
+CONTROL = ROOT / "research/amm-multi-hop-group-slice-recovery/artifacts/candidate.so.gz"
+CANDIDATE = ROOT / "research/amm-transfer-fee-diagnostic-recovery/artifacts/candidate.so.gz"
 IMAGES = ("original", "control", "candidate")
 
 sys.path.insert(0, str(ROOT / "scripts"))
@@ -115,16 +116,20 @@ def main():
     assert sorted(manifest["files"]) == present, (sorted(manifest["files"]), present)
     for name, digest in manifest["files"].items():
         assert sha((HERE / name).read_bytes()) == digest, name
+    assert manifest["frozen_repository_inputs"] == {"programs/pump-amm/idls/pump.json": "inputs/pump.json"}
     for rel, digest in manifest["repository_inputs"].items():
-        assert sha((ROOT / rel).read_bytes()) == digest, rel
+        path = HERE / "inputs/pump.json" if rel == "programs/pump-amm/idls/pump.json" else ROOT / rel
+        assert sha(path.read_bytes()) == digest, rel
 
     report = json.loads(gzip.decompress((HERE / "runtime/report.json.gz").read_bytes()))
+    for rel, digest in report["input_sha256"].items():
+        assert manifest["repository_inputs"][rel] == digest, rel
     assert report["case_count"] == len(EXPECTED) == 36, report["case_count"]
     assert report["counts"] == {"vms": 108, "transactions": 108, "signature_fields": 108}, report["counts"]
     assert report["mismatches"] == []
     assert report["image_sha256"]["original"] == sha((ROOT / "evidence/original/pump_amm/deployed.so").read_bytes())
-    assert report["image_sha256"]["control"] == sha((WS / "control.so").read_bytes())
-    assert report["image_sha256"]["candidate"] == sha((WS / "candidate.so").read_bytes())
+    assert report["image_sha256"]["control"] == sha(gzip.decompress(CONTROL.read_bytes()))
+    assert report["image_sha256"]["candidate"] == sha(gzip.decompress(CANDIDATE.read_bytes()))
 
     receipts = []
     for part in report["transaction_receipts"]["parts"]:

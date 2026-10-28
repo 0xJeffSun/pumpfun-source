@@ -152,3 +152,5 @@ behavior; it does not claim a divergence.
   deserialization, not succeed. That combination is not a case here.
 
 Made via @slopdotcash
+
+The saved receipts authenticate the exact prior Pump IDL retained at `inputs/pump.json`. The maintained-source promotion changed the live file, so the verifier binds this historical schema separately. The producer only hashes that IDL as report metadata; its fixture construction uses the frozen byte layouts and the unchanged AMM instruction IDL. No current-source claim is made for the retained schema.
