@@ -285,4 +285,38 @@ class SourceTests(unittest.TestCase):
         self.assertIn('legacy_buy::execute::<true>', lib)
         for line, error in [(1950, 'QuoteMintNotEligibleForWhitelist'), (1955, 'QuoteMintNotEligibleForWhitelist'), (1960, 'QuoteMintAlreadyWhitelisted'), (1971, 'QuoteMintWhitelistFull'), (1975, 'QuoteMintNotEligibleForWhitelist'), (1986, 'QuoteMintNotWhitelisted')]:
             self.assertIn(error, lib.splitlines()[line-1])
+    def harvest_parent(self):
+        out = self.root / 'harvest-parent'
+        m.materialize(PARENT, out, 'fourfronts795')
+        return {str(p.relative_to(out)): p.read_bytes() for p in out.rglob('*') if p.is_file()}
+    def test_exact_harvest_stage(self):
+        got = m.materialize(PARENT, self.root / 'source', 'harvest799')
+        self.assertEqual(got, json.loads((m.HERE / 'harvest-pins.json').read_text())['source_sha256'])
+        self.assertEqual(len(got), 60)
+    def test_harvest_only_one_file_and_existing_coordinates(self):
+        old = self.harvest_parent(); new = m.harvest_apply(old)
+        name = 'programs/pump/src/migrate_v2.rs'
+        self.assertEqual({n for n in old if old[n] != new[n]}, {name})
+        a, b = old[name].splitlines(), new[name].splitlines()
+        self.assertEqual(len(b), len(a) + 6)
+        self.assertEqual([i + 1 for i in range(len(a)) if a[i] != b[i]], [328])
+    def test_harvest_already_applied_rejected(self):
+        with self.assertRaises(ValueError): m.harvest_apply(m.harvest_apply(self.harvest_parent()))
+    def test_harvest_wrong_parent_rejected(self):
+        data = self.harvest_parent(); data['programs/pump/src/migrate_v2.rs'] += b'\n'
+        with self.assertRaises(ValueError): m.harvest_apply(data)
+    def test_harvest_extra_parent_rejected(self):
+        data = self.harvest_parent(); data['extra.rs'] = b''
+        with self.assertRaises(ValueError): m.harvest_apply(data)
+    def test_harvest_missing_parent_rejected(self):
+        data = self.harvest_parent(); data.pop('programs/pump/src/migrate_v2.rs')
+        with self.assertRaises(ValueError): m.harvest_apply(data)
+    def test_harvest_guard_and_typed_account_order(self):
+        text = m.harvest_apply(self.harvest_parent())['programs/pump/src/migrate_v2.rs'].decode()
+        line = text.splitlines()[327]
+        self.assertLess(line.index('quote_extensions'), line.index('is_writable'))
+        self.assertLess(line.index('is_writable'), line.index('harvest_withheld_tokens_to_mint'))
+        self.assertIn('&a.quote_token_program.to_account_info(),&a.quote_mint.to_account_info(),&a.pool_authority_quote_account', line)
+        self.assertIn('token_program_id:token_program.clone(),mint:mint.clone()', text)
+        self.assertIn('vec![source.clone()]', text)
 if __name__ == '__main__': unittest.main(argv=['test_materialize.py', *remaining])
