@@ -53,7 +53,7 @@ pub(crate) fn execute(ctx: Context<SetMayhemVirtualParams>) -> Result<()> {
 impl BondingCurve {
     // The original handler calls a separate helper at 0xa23f0.
     #[inline(never)]
-    fn sync_virtual_quote_reserves(
+    pub(crate) fn sync_virtual_quote_reserves(
         &mut self,
         initial_real_token_reserves: u64,
         vault_amount: u64,
