@@ -30,6 +30,17 @@ def case_digest(case):
     return hashlib.sha256(raw).hexdigest()
 
 
+def structured_view(outcome):
+    """Return state/CPI/event/return fields while excluding logs and compute."""
+    result = {key: value for key, value in outcome.items()
+              if key not in ("logs", "relevant_logs", "transaction_base64", "compute_units", "compute_units_consumed",
+                             "program_sha256")}
+    if "metadata" in result:
+        result["metadata"] = {key: value for key, value in result["metadata"].items()
+                              if key not in ("logs", "compute_units_consumed")}
+    return result
+
+
 def validate_source(parent, candidate):
     old = "let amount=if creator{cf}else{pf};if amount==0{return Ok(());}"
     new = ('let amount=if creator{cf}else{pf};if amount==0{msg!('
@@ -61,15 +72,18 @@ def validate_focused(candidate, baseline, expected_indices):
     for index, (fresh, before) in enumerate(zip(candidate["cases"], baseline["cases"])):
         assert fresh["case"] == before["case"]
         assert fresh["original"] == before["original"]
-        bucket = bucket_for(fresh["case"])
-        message = MESSAGE.format(bucket)
-        for key in STRUCTURED:
-            assert fresh["candidate"][key] == fresh["original"][key], (index, key)
-            assert before["candidate"][key] == before["original"][key], (index, key)
+        assert structured_view(fresh["candidate"]) == structured_view(fresh["original"]), index
+        assert structured_view(before["candidate"]) == structured_view(before["original"]), index
         original_logs = normalized_logs(fresh["original"].get("logs", []))
         candidate_logs = normalized_logs(fresh["candidate"].get("logs", []))
         baseline_logs = normalized_logs(before["candidate"].get("logs", []))
         assert candidate_logs == original_logs, index
+        if "op" not in fresh["case"]:
+            assert not any(MESSAGE.format(value) in original_logs for value in (0, 1))
+            assert baseline_logs == original_logs
+            continue
+        bucket = bucket_for(fresh["case"])
+        message = MESSAGE.format(bucket)
         has_message = message in original_logs
         assert not any(MESSAGE.format(other) in original_logs for other in (0, 1) if other != bucket)
         if has_message:
