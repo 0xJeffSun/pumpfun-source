@@ -11,6 +11,7 @@ import { registerCompetitionRoutes } from "./competitions-routes.js";
 import { CompetitionStore, defaultCompetitionStore } from "./competitions-store.js";
 import { registerFollowingRoutes } from "./following-routes.js";
 import { FollowingStore, defaultFollowingStore } from "./following-store.js";
+import { registerLocalMediaRoutes, type LocalMediaOptions } from "./local-media-routes.js";
 
 export type Fixture = {
   method: string;
@@ -311,6 +312,8 @@ const NATIVE_ROUTES = new Set<string>([
 ]);
 
 export interface BuildAppOptions {
+  /** Explicit local/CLI-only capability; absent by default, independent of developer auth. */
+  localMedia?: LocalMediaOptions;
   /** Override the user store (for tests). */
   userStore?: UserStore;
   /** Override the post store (for tests). */
@@ -347,6 +350,11 @@ export function buildApp(fixtures: Fixture[] = [], opts: BuildAppOptions = {}) {
       .digest("hex"),
     compatibility: "unqualified",
   }));
+  if (opts.localMedia) {
+    const { store } = opts.localMedia;
+    app.addHook("onClose", async () => { await store.close(); });
+    registerLocalMediaRoutes(app, opts.localMedia);
+  }
   // Register native handlers first. They win over a captured fixture for the same route.
   // They are documented /v1 operations too, so the same API-key gate runs before them.
   const store = opts.userStore ?? defaultStore;
