@@ -43,7 +43,7 @@
     "path": "/mayhem",
     "feature": "Mayhem",
     "scope": "included",
-    "status": "scaffolded",
+    "status": "offline-screener",
     "behaviorQualified": false,
     "visualQualified": false
   },

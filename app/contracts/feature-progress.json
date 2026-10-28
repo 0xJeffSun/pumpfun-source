@@ -374,37 +374,55 @@
       ],
       "source": {
         "contract": {
-          "status": "pending",
-          "evidence": []
+          "status": "accepted",
+          "evidence": [
+            "packages/frontend/MAYHEM-EVIDENCE.md#observed",
+            "packages/frontend/MAYHEM-EVIDENCE.md#declared"
+          ]
         },
         "logic": {
-          "status": "pending",
-          "evidence": []
+          "status": "accepted",
+          "evidence": [
+            "packages/frontend/src/app/mayhem/mayhem-screener.tsx"
+          ]
         },
         "adapters": {
-          "status": "pending",
-          "evidence": []
+          "status": "accepted",
+          "evidence": [
+            "packages/frontend/src/app/mayhem/mayhem-data.ts",
+            "packages/frontend/src/app/api/mayhem-screener/route.ts"
+          ]
         }
       },
       "completion": {
         "source": {
-          "status": "pending",
-          "evidence": []
+          "status": "accepted",
+          "evidence": [
+            "packages/frontend/MAYHEM-EVIDENCE.md#local-design"
+          ]
         },
         "success": {
           "status": "pending",
-          "evidence": []
+          "evidence": [
+            "packages/frontend/tests/mayhem.spec.ts",
+            "tests/mayhem_screener.test.ts"
+          ]
         },
         "failure": {
-          "status": "pending",
-          "evidence": []
+          "status": "accepted",
+          "evidence": [
+            "packages/frontend/tests/mayhem.spec.ts",
+            "tests/mayhem_screener.test.ts"
+          ]
         },
         "consistency": {
           "status": "pending",
-          "evidence": []
+          "evidence": [
+            "packages/frontend/visual/mayhem-20261028/README.md"
+          ]
         }
       },
-      "note": "Route scaffold only."
+      "note": "Evidence-mapped state filters, sorting, strict validation and fail-closed offline states pass unit and browser tests. No archived Mayhem response, qualified live API compatibility or original visual parity is claimed."
     },
     {
       "id": "rewards",
