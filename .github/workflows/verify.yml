@@ -94,6 +94,8 @@ jobs:
             commands: |
               python -B research/metaplex-utilize-exact-recovery/verify.py
               python -B research/metaplex-utilize-exact-recovery/test_verify.py
+              python -B research/metaplex-exact-independent/verify.py --execute
+              python -B research/metaplex-exact-independent/test_verify.py
           - suite: evidence
             commands: |
               python scripts/verify_evidence.py
