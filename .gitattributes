@@ -1436,3 +1436,8 @@ repro/pump_amm/optional-context-recovery-20261027/followup/** -whitespace
 # Preserve exact compiled AMM source bytes in the optional-context checkpoint.
 programs/pump-amm/src/trade.rs whitespace=-blank-at-eof
 programs/pump-amm/src/transfer_creator.rs whitespace=-blank-at-eol
+research/amm-buy-reserve-order/** -text
+research/amm-buy-reserve-order/source.patch -whitespace
+research/amm-buy-reserve-order/public-parent.patch -whitespace
+research/amm-buy-reserve-order/proposed/** -whitespace
+research/amm-buy-reserve-order/controllers/** whitespace=cr-at-eol
