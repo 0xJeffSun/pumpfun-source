@@ -78,6 +78,35 @@ test('captured openEnum permits new strings, not arbitrary values', () => {
   assert.equal(validateDeclared(document, provider, 7).success, false);
 });
 
+test('nonempty nested feed card validates real callout, quote and followed-holder fields', () => {
+  // Synthetic values exercise the recovered declarations; they are not an
+  // observed HTTP fixture and do not qualify server response behavior.
+  function sample(rule) {
+    if (rule.$ref) return sample(document.$defs[rule.$ref.slice('#/$defs/'.length)]);
+    if (rule.anyOf) return sample(rule.anyOf.find((entry) => entry.type === 'null') ?? rule.anyOf[0]);
+    if (rule.enum) return rule.enum[0];
+    if ('const' in rule) return rule.const;
+    if (rule.type === 'object') return Object.fromEntries(rule.required.map((name) => [name, sample(rule.properties[name])]));
+    if (rule.type === 'array') return [];
+    if (rule.type === 'string') return '';
+    if (rule.type === 'boolean') return false;
+    if (rule.type === 'null') return null;
+    if (['number', 'integer'].includes(rule.type)) return Math.max(0, rule.minimum ?? 0);
+    throw new Error('unknown fixture shape');
+  }
+  const card = sample(document.$defs['387665.local:u']);
+  card.position = sample(document.$defs['387665.local:c']);
+  card.position.callout = sample(document.$defs['421504.calloutDto']);
+  card.position.quote = sample(document.$defs['421504.userReplyRowDto']);
+  card.followedHolders = { holders: [sample(document.$defs['540480.followedHolderSummaryDto'])], totalCount: 1 };
+  assert.equal(check('GET /home-feed', 'response', { coins: [card] }), true);
+  card.position.quote.reply.hasLiked = 'false';
+  assert.equal(check('GET /home-feed', 'response', { coins: [card] }), false);
+  card.position.quote.reply.hasLiked = null;
+  delete card.followedHolders.holders[0].walletAddress;
+  assert.equal(check('GET /home-feed', 'response', { coins: [card] }), false);
+});
+
 test('unsupported reachable syntax fails instead of emitting a permissive schema', async () => {
   const modified = structuredClone(queries['GET /home-feed']);
   const calls = findNodes(modified, (node) => node.type === 'CallExpression' && node.callee.type === 'MemberExpression' && node.callee.property.name === 'optional');
