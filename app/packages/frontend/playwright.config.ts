@@ -2,7 +2,7 @@ import { defineConfig } from "@playwright/test";
 
 export default defineConfig({
   testDir: "./tests",
-  testIgnore: "native-home-feed.spec.ts",
+  testIgnore: ["native-home-feed.spec.ts", "native-home-feed-real.spec.ts"],
   outputDir: "../../artifacts/playwright",
   fullyParallel: false,
   forbidOnly: true,
