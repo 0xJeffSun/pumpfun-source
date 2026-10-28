@@ -70,6 +70,9 @@ jobs:
             commands: |
               python -B research/mayhem-sell-current-recovery-20261027/verify.py
               python -B research/mayhem-sell-current-recovery-20261027/test_verify.py
+          - suite: mayhem-validate-sweep-o0073
+            commands: |
+              python -B research/claude-fees-final-mayhem-o0073/verify.py
           - suite: mayhem-sweep-failures
             commands: |
               python -B research/mayhem-sweep-failure-recovery/verify.py
