@@ -25,12 +25,14 @@ export function buildApp(fixtures: Fixture[] = []) {
   }
   app.all('/*', replay);
   function replay(request: { method: string; url: string }, reply: any) {
-    const url = new URL(request.url, 'http://localhost');
-    const entries = [...url.searchParams.entries()];
+    // URL normalizes dot segments; fixture paths must match the raw request target.
+    const separator = request.url.indexOf('?');
+    const pathname = separator < 0 ? request.url : request.url.slice(0, separator);
+    const entries = [...new URLSearchParams(separator < 0 ? '' : request.url.slice(separator + 1)).entries()];
     // The initial fixture format cannot represent duplicate query keys: fail explicitly.
     if (new Set(entries.map(([key])=>key)).size !== entries.length) return reply.code(501).send({ error: 'DUPLICATE_QUERY_KEYS_UNIMPLEMENTED' });
-    const fixture=fixtureMap.get(fixtureKey(request.method,url.pathname,Object.fromEntries(entries)));
-    if (!fixture) return reply.code(501).send({ error: 'COMPATIBILITY_NOT_IMPLEMENTED', method: request.method, path: url.pathname });
+    const fixture=fixtureMap.get(fixtureKey(request.method,pathname,Object.fromEntries(entries)));
+    if (!fixture) return reply.code(501).send({ error: 'COMPATIBILITY_NOT_IMPLEMENTED', method: request.method, path: pathname });
     if (fixture.headers) reply.headers(fixture.headers);
     return reply.code(fixture.status).send(fixture.body);
   }
