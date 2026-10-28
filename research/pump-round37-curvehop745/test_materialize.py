@@ -12,6 +12,65 @@ class SourceTests(unittest.TestCase):
         self.addCleanup(self.tmp.cleanup)
         self.root = Path(self.tmp.name).resolve()
         self.original = (PARENT / 'primary/src/multi_hop_curve_swap.rs').read_bytes()
+    def copy_parent(self):
+        parent = self.root / 'parent'; parent.mkdir()
+        shutil.copyfile(PARENT / 'CHECKPOINT.json', parent / 'CHECKPOINT.json')
+        shutil.copytree(PARENT / 'primary', parent / 'primary')
+        return parent
+    def pinned_manifests(self):
+        standalone = (PARENT / 'primary/Cargo.toml').read_bytes()
+        checkpoint = json.loads((PARENT / 'CHECKPOINT.json').read_bytes())
+        standalone_sha256 = checkpoint['primary_source_sha256']['Cargo.toml']
+        workspace = m.member_manifest(standalone, standalone_sha256)
+        return workspace, workspace + m.STANDALONE, standalone_sha256
+    def test_exact_public_standalone_manifest(self):
+        workspace, standalone, expected = self.pinned_manifests()
+        self.assertEqual(m.digest(standalone), expected)
+        self.assertEqual(m.member_manifest(standalone, expected), workspace)
+        self.assertEqual(m.digest(workspace), m.PINS['parent_source_sha256']['programs/pump/Cargo.toml'])
+    def test_prepared_workspace_manifest_remains_supported(self):
+        workspace, _, _ = self.pinned_manifests()
+        parent = self.copy_parent()
+        (parent / 'primary/Cargo.toml').write_bytes(workspace)
+        got = m.materialize(parent, self.root / 'source')
+        self.assertEqual(got['programs/pump/Cargo.toml'], m.digest(workspace))
+    def test_public_parent_manifest_not_modified(self):
+        parent = self.copy_parent(); path = parent / 'primary/Cargo.toml'
+        before = path.read_bytes()
+        m.materialize(parent, self.root / 'source')
+        self.assertEqual(path.read_bytes(), before)
+    def test_standalone_manifest_changes_rejected_before_write(self):
+        _, standalone, _ = self.pinned_manifests()
+        mutations = [
+            standalone.replace(b'overflow-checks = true', b'overflow-checks = false'),
+            standalone.replace(b'lto = false', b'lto = true'),
+            standalone.replace(b'version = "=0.7.0"', b'version = "=0.7.1"'),
+            standalone + b'\n',
+            standalone.replace(b'[workspace]\n', b''),
+        ]
+        parent = self.copy_parent(); path = parent / 'primary/Cargo.toml'
+        for bad in mutations:
+            with self.subTest(manifest=bad):
+                path.write_bytes(bad)
+                with self.assertRaises(ValueError): m.materialize(parent, self.root / 'source')
+                self.assertFalse((self.root / 'source').exists())
+    def test_standalone_manifest_wrong_authentication_rejected(self):
+        _, standalone, _ = self.pinned_manifests()
+        with self.assertRaises(ValueError): m.member_manifest(standalone, '0' * 64)
+    def test_standalone_manifest_suffix_not_generic_toml_rewrite(self):
+        _, standalone, _ = self.pinned_manifests()
+        changed = standalone.replace(b'codegen-units = 1', b'codegen-units = 2')
+        with self.assertRaises(ValueError): m.member_manifest(changed, m.digest(changed))
+    def test_standalone_manifest_output_pin_still_enforced(self):
+        _, standalone, _ = self.pinned_manifests()
+        changed = standalone.replace(b'publish = false', b'publish = true')
+        with self.assertRaises(ValueError): m.member_manifest(changed, m.digest(changed))
+    def test_manifest_symlink_rejected_before_write(self):
+        parent = self.copy_parent(); path = parent / 'primary/Cargo.toml'
+        content = path.read_bytes(); path.unlink()
+        other = self.root / 'manifest'; other.write_bytes(content); path.symlink_to(other)
+        with self.assertRaises(ValueError): m.materialize(parent, self.root / 'source')
+        self.assertFalse((self.root / 'source').exists())
     def test_exact_materialization(self):
         out = self.root / 'source'
         got = m.materialize(PARENT, out)

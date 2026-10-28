@@ -20,11 +20,21 @@ def swap(data):
         raise ValueError('unexpected source, fallback, coordinates or surrounding text')
     return changed
 STANDALONE = b'[profile.release]\npanic = "abort"\noverflow-checks = true\nlto = false\ncodegen-units = 1\n[workspace]\n'
-def member_manifest(data):
+def member_manifest(data, standalone_sha256):
+    # Keep previously prepared parents compatible with the unchanged workspace pin.
+    expected = PINS['parent_source_sha256']['programs/pump/Cargo.toml']
+    if digest(data) == expected:
+        return data
+    # This additional digest comes from the hash-authenticated parent checkpoint.
+    if digest(data) != standalone_sha256:
+        raise ValueError('standalone parent manifest checksum changed')
     # primary/Cargo.toml is the standalone single-crate manifest; the workspace member omits its profile/workspace tail
     if not data.endswith(STANDALONE) or data.count(b'[workspace]') != 1 or data.count(b'[profile.release]') != 1:
         raise ValueError('exact standalone parent manifest required')
-    return data[:-len(STANDALONE)]
+    result = data[:-len(STANDALONE)]
+    if digest(result) != expected:
+        raise ValueError('workspace parent manifest changed')
+    return result
 def safe_relative(name):
     p = Path(name)
     if p.is_absolute() or '..' in p.parts or not p.parts:
@@ -671,7 +681,8 @@ def materialize(parent, output, stage='curvehop745'):
     checkpoint = (parent / 'CHECKPOINT.json').read_bytes()
     if digest(checkpoint) != PINS['checkpoint_sha256']:
         raise ValueError('wrong parent checkpoint')
-    if json.loads(checkpoint)['source_sha256'] != PINS['parent_source_sha256']:
+    checkpoint_data = json.loads(checkpoint)
+    if checkpoint_data['source_sha256'] != PINS['parent_source_sha256']:
         raise ValueError('parent source map changed')
     staged = {}
     for name, expected in PINS['parent_source_sha256'].items():
@@ -685,7 +696,7 @@ def materialize(parent, output, stage='curvehop745'):
                 raise ValueError('symlink input')
             data = source.read_bytes()
             if name == 'programs/pump/Cargo.toml':
-                data = member_manifest(data)
+                data = member_manifest(data, checkpoint_data['primary_source_sha256']['Cargo.toml'])
         if digest(data) != expected:
             raise ValueError('source mismatch: ' + name)
         staged[name] = swap(data) if name == PINS['changed_path'] else data

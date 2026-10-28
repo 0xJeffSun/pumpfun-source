@@ -38,6 +38,12 @@ python3 -B "$PACKET/materialize.py" --parent "$PARENT" --output /fresh/path/sour
 
 Do not modify the archived parent/checkpoint in place. The materializer verifies content hashes rather than trusting a directory name or branch label. This packet contains no original/generated binaries, compiler IR, raw experimental receipts, dependency archives or runtime fixtures.
 
+### Parent manifest compatibility
+
+The existing upstream `member_manifest` repair supports the public archive's standalone `primary/Cargo.toml` by removing its exact trailing release-profile and empty-workspace block in memory. This packet additionally retains compatibility with an already prepared workspace-member manifest: either representation must produce the same existing source pin. Standalone input is also checked explicitly against `primary_source_sha256` in the already hash-authenticated parent checkpoint. This is defense in depth; upstream's exact suffix and final workspace hash already constrained the accepted standalone bytes.
+
+Neither parent representation is rewritten. Dependencies, profiles, source pins and all seventeen output inventories are unchanged. The 131 pure source tests pass against both public-standalone and prepared-workspace parents, including altered manifests, symlinks and archive-preservation cases. This restores input compatibility, not an additional matched window, a new build or runtime validation. See [PARENT_MANIFEST.md](PARENT_MANIFEST.md) for attribution and the fresh-main baseline.
+
 ## Optional reserve-sync stage: 746
 
 The default `curvehop745` stage above remains unchanged. Select `--stage reserve746` to additionally apply the one-line checked-add source expression from [PR #340](https://github.com/lalalune/pumpfun-source/pull/340), exact head `d2c01ad86df5f9088cca6a255df30ed65ee2a96c`, credited there to PR #323. `reserve.patch` shows that separate edit; `reserve-pins.json` binds its entire before/after Rust file. Both stages retain all 57 inputs, unchanged dependency/SDK configuration, and the CurveHop correction.
