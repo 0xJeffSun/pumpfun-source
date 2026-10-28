@@ -1,14 +1,12 @@
 # Parallel Mayhem reconstruction work
 
 The objective remains byte-identical Rust reproduction, including calls, data,
-relocations and ELF layout. The [current source-origin composition](../research/mayhem-source-origin-recovery-20261027/README.md)
-has **432/441 normalized windows: 141 raw-local, 291 normalized-only and 9
-unmatched**. The unmatched windows total **107,952 original text bytes**.
-The newer O0073/O0075 source composition reaches 434 normalized bodies with
-100 raw matches and weaker runtime qualification. These results have not yet
-been combined; the [completion review](MAYHEM-COMPLETION.md) gives exact remaining
-percentages and the seven-body structural residual. Normalized body matches do
-not establish recursive semantic or whole-ELF equality.
+relocations and ELF layout. The [qualified current composition](../research/mayhem-current434-composition-20261027/README.md)
+has **434/441 normalized windows: 141 raw-local, 293 normalized-only and seven
+unmatched**. The unmatched windows total **99,032 original text bytes**. It
+combines the two newer sweep body recoveries with the prior raw/call/data
+frontier, with no loss. The [completion review](MAYHEM-COMPLETION.md) gives
+exact percentages and evidence limits.
 
 ## Independent lanes
 
@@ -22,22 +20,20 @@ source and compiler investigations proceed.
 | AMM trade and quote bodies | O0077 and O0079; cap/min selection, retained-reserve arithmetic, ownership and error flow |
 | Legacy and V2 trade bodies | O0081–O0084; source ownership, fallible arithmetic and CPI error lifetime |
 | Runtime and layout | Allocator-provider repair is qualified; continue remaining data/indirect-call closure, section layout and ELF equality |
-| Integration / SweepFees | Compose the O0073/O0075 recoveries with the 141-raw checkpoint; qualify the combination and recover O0076 |
+| Integration / SweepFees | Preserve the qualified434/141 checkpoint, recover O0076, qualify further combinations and keep documentation current |
 
 The active objective covers the remaining source reconstruction and offline
 validation. No live-chain deployment or transaction is part of this work.
 
 ## All remaining windows
 
-This table retains the qualified 432-window checkpoint's [441-row inventory](../research/mayhem-source-origin-recovery-20261027/inventory.json).
+This table comes from the qualified current [441-row inventory](../research/mayhem-current434-composition-20261027/inventory.json).
 Each unmatched original window occurs once. Body names are reconstruction
 attributions, not authenticated original symbols.
 
 | Window | Original start | Bytes | Remaining body | Lane |
 | --- | ---: | ---: | --- | --- |
-| O0073 | 65472 | 912 | Recovered in structural434; combine and qualify | Integration |
-| O0075 | 69192 | 8008 | Recovered in structural434; combine and qualify | Integration |
-| O0076 | 77200 | 8400 | SweepFees business body; still unmatched in both | Integration / SweepFees |
+| O0076 | 77200 | 8400 | SweepFees business body; full match still open | Integration / SweepFees |
 | O0077 | 85600 | 9736 | AMM Buy | AMM trade and quote |
 | O0079 | 95848 | 17312 | AMM Sell | AMM trade and quote |
 | O0081 | 113672 | 13848 | Legacy Buy | Legacy and V2 trade |

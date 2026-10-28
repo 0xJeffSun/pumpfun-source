@@ -1,29 +1,24 @@
 # Mayhem completion review — 27 October 2026
 
-Reviewed upstream snapshot: `450c11d7d71994e25fb02f649d6ac5bf9bf7035b`.
-Mayhem is **not whole-ELF identical**. Its two strongest published results are
-different artifacts and must not be added together.
+Reviewed upstream snapshot: `da27cbd684b4195927ba4c988fe199573ab52142`, plus the
+independently qualified composition below. **Whole-ELF identity is unfinished.**
 
 | Artifact | Complete normalized windows | Raw-equal bodies | Direct-call-closed windows | No complete body match |
 | --- | ---: | ---: | ---: | ---: |
-| [Qualified source-origin checkpoint](../research/mayhem-source-origin-recovery-20261027/README.md) | 432 / 441 (97.96%) | 141 / 441 (31.97%) | 422 / 441 (95.69%) | 9 / 441 (2.04%) |
-| [Newer sweep-source composition](../research/claude-fees-final-mayhem-o0073/README.md) | 434 / 441 (98.41%) | 100 / 441 (22.68%) | 417 / 441 (94.56%) | 7 / 441 (1.59%) |
+| [Current qualified composition](../research/mayhem-current434-composition-20261027/README.md) | 434 / 441 (98.41%) | 141 / 441 (31.97%) | 425 / 441 (96.37%) | 7 / 441 (1.59%) |
+| [Previous source-origin checkpoint](../research/mayhem-source-origin-recovery-20261027/README.md) | 432 / 441 (97.96%) | 141 / 441 (31.97%) | 422 / 441 (95.69%) | 9 / 441 (2.04%) |
 
-The first row has two agreeing complete builds and independently checked
-6,636 trade, 301 ExtendAccount and 69 initializer pairs: 14,042 signed records.
-Its 20 corruption/control tests pass. The second row adds complete normalized
-O0073 and O0075 bodies, but loses 41 raw matches and eight allocator-related
-direct-call closures relative to the first row. It has one composed build,
-saved sweep/rate result records without signed-transaction/program-account
-attestations, a trade summary without the full reports, and no stated
-initializer replay. It is a structural recovery result, not a fully qualified
-successor to the first row.
+The current artifact combines O0073 and O0075 recovery with all 141 raw bodies
+and the repaired allocator/data references. It is one measured build, not a sum
+of separate frontiers. An unchanged control reproduces the previous checkpoint;
+two combined builds agree. Independent verification passes all nine controls and
+18,534 signed records across the overlapping trade, initializer, sweep and rate
+scopes. The [packet](../research/mayhem-current434-composition-20261027/README.md)
+contains the source, complete artifacts, receipts and verification commands.
 
-The immediate integration task is to reproduce the 434-window source gains
-while preserving all 141 raw bodies, the allocator repair and the checked
-source/data references, then repeat the build and authenticate fresh local
-runtime records for that exact combined artifact. That combined result is not
-claimed yet.
+The older published 434/100 composition was weaker in raw equality and runtime
+evidence. It is retained as source provenance; its limitations do not transfer
+to the newly compiled and independently qualified 434/141 artifact.
 
 ## Percentage of original code still unmatched
 
@@ -32,20 +27,17 @@ original `.text` bytes, including framework/runtime helpers.
 
 | Artifact | Text in complete normalized matches | Unmatched original text |
 | --- | ---: | ---: |
-| Qualified source-origin checkpoint | 598,792 / 706,744 (84.73%) | 107,952 bytes (15.27%) |
-| Newer sweep-source composition | 607,712 / 706,744 (85.99%) | 99,032 bytes (14.01%) |
+| Current qualified composition | 607,712 / 706,744 (85.99%) | 99,032 bytes (14.01%) |
+| Previous source-origin checkpoint | 598,792 / 706,744 (84.73%) | 107,952 bytes (15.27%) |
 
-The qualified checkpoint's 141 raw-equal bodies contain **65,504 original text
-bytes (9.27%)**. This is local raw-body coverage, not the fraction of the whole
-ELF that is identical: different layouts, pointers and data remain unresolved.
+The 141 raw-equal bodies contain **65,504 original text bytes (9.27%)**. This is
+local raw-body coverage, not the fraction of the whole ELF that is identical.
+These percentages do not estimate remaining engineering time or prove the same
+fraction of behavior correct. Normalized matches mask specified address/call
+operands. Data, indirect calls, layout, relocations, reproducible whole-ELF
+equality and build provenance remain separate obligations.
 
-These percentages measure complete machine-body coverage. They do not estimate
-remaining engineering time or prove that the same fraction of behavior is
-correct. Normalized matches mask specified address/call operands; raw equality
-is local to the body. Data, indirect calls, layout, relocations, reproducible
-whole-ELF equality and build provenance remain separate obligations.
-
-## Seven bodies still unmatched in the structural frontier
+## Seven bodies still unmatched
 
 | Original window | Start | Bytes | Remaining function |
 | --- | ---: | ---: | --- |
@@ -62,20 +54,18 @@ whole-ELF equality and build provenance remain separate obligations.
 unchanged matcher. It does not mean no Rust implementation exists. The trade
 handlers have substantial partial reconstructions; equal size, ordered callee
 profiles, CFG correspondence or passing bounded tests do not make them complete
-matches. O0073 and O0075 remain unmatched in the qualified 432-window artifact
-until their newer source recovery is composed and qualified there.
+matches. O0073 and O0075 are now complete normalized matches in the qualified
+composition.
 
-The [qualified 441-row inventory](../research/mayhem-source-origin-recovery-20261027/inventory.tsv)
-lists raw-equal, normalized-only and unmatched bodies with actual counterpart
+The [441-row inventory](../research/mayhem-current434-composition-20261027/inventory.tsv)
+lists every raw-equal, normalized-only and unmatched body with actual counterpart
 names and addresses. The [parallel work map](MAYHEM-PARALLEL-WORK.md) records
-the source investigations and their separate artifact bindings.
+the source investigations and their artifact bindings.
 
 ## Active work
 
-- Compose and qualify the two newer body recoveries without losing the stronger
-  raw/call/data result.
 - Finish the six trade bodies, focusing on actual CPI ownership, seed lifetimes,
-  arithmetic order and event construction.
+  arithmetic order, alias metadata and event construction.
 - Reconstruct the remaining SweepFees body and validate its local cases.
 - Close remaining data and indirect-call obligations, then reproduce the
   complete original ELF from ordinary Rust and a documented build recipe.

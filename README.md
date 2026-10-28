@@ -46,9 +46,9 @@ reported metrics and validation evidence. This review is limited to the main Pum
 contract.
 <!-- MAIN-PUMP-REMAINING:END -->
 
-Across the latest verified checkpoints, **2,906 / 3,338 inferred function windows
-match (87.1%)**. Their matched windows cover **3,894,064 / 5,213,128 original text
-bytes (74.7%)**. **Two of five programs have complete meaningful-ELF identity**;
+Across the latest verified checkpoints, **2,908 / 3,338 inferred function windows
+match (87.1%)**. Their matched windows cover **3,902,984 / 5,213,128 original text
+bytes (74.9%)**. **Two of five programs have complete meaningful-ELF identity**;
 three of the four core contracts still differ from their captured binaries.
 
 These percentages measure bounded binary-recovery progress, not a claim that
@@ -60,9 +60,9 @@ all remaining code, calls, data, relocations and build provenance.
 | [Pump Round38](repro/pump/main-contract-round38-20261027/README.md) | 744 / 1,035 | 71.9% | 175 | 569 | 291 | No |
 | [PumpSwap / AMM](repro/pump_amm/event-ownership-recovery-20261027/README.md) | 653 / 785 | 83.2% | 148 | 505 | 132 | No |
 | [Fees research](research/claude-fees100-crank-donation-20261027/README.md) | 585 / 585 | 100.0% | 585 | 0 | 0 | **Yes** |
-| [Mayhem qualified research](research/mayhem-source-origin-recovery-20261027/README.md) | 432 / 441 | 98.0% | 141 | 291 | 9 | No |
+| [Mayhem qualified research](research/mayhem-current434-composition-20261027/README.md) | 434 / 441 | 98.4% | 141 | 293 | 7 | No |
 | [Donation Relay](repro/donation-relay/canonical-exact-selection/README.md) | 492 / 492 | 100.0% | 492 | 0 | 0 | **Yes** |
-| **Total** | **2,906 / 3,338** | **87.1%** | **1,541** | **1,365** | **432** | **2 / 5** |
+| **Total** | **2,908 / 3,338** | **87.1%** | **1,541** | **1,367** | **430** | **2 / 5** |
 
 “Windows” are inferred original machine-function ranges, including framework and
 runtime helpers. Complete normalized matches mask specified call/address
@@ -75,9 +75,9 @@ the whole program is identical.
 | Pump Round38 | 924,192 / 1,792,208 | 51.6% | 868,016 |
 | PumpSwap / AMM | 818,944 / 1,162,040 | 70.5% | 343,096 |
 | Fees research | 799,648 / 799,648 | 100.0% | 0 |
-| Mayhem research | 598,792 / 706,744 | 84.7% | 107,952 |
+| Mayhem research | 607,712 / 706,744 | 86.0% | 99,032 |
 | Donation Relay | 752,488 / 752,488 | 100.0% | 0 |
-| **Total** | **3,894,064 / 5,213,128** | **74.7%** | **1,319,064** |
+| **Total** | **3,902,984 / 5,213,128** | **74.9%** | **1,310,144** |
 
 Pump and AMM rows describe the verified maintained sources. Fees and Mayhem rows
 are the latest qualified research frontiers, distinct from their maintained
@@ -105,33 +105,20 @@ alternative source is an unpromoted compiler-context diagnostic.
 
 ## Behavior and remaining work
 
-**Mayhem's latest structural recovery matches 434/441 complete normalized
-windows (98.41%), leaving seven bodies (1.59%) and 99,032 original text bytes
-(14.01%) unmatched.** Its 100 raw bodies and runtime evidence are weaker than
-the qualified 432/141 checkpoint used in the table above. These results are not
-one combined build. The [completion review](docs/MAYHEM-COMPLETION.md) lists the
-remaining functions, exact percentages, evidence limits and integration work.
+**Mayhem now has 434/441 complete normalized matches (98.41%), leaving seven
+bodies (1.59%) and 99,032 original text bytes (14.01%) unmatched.** The
+[qualified composition](research/mayhem-current434-composition-20261027/README.md)
+preserves all 141 raw-equal bodies and raises direct-call closure to 425 windows.
+Two combined builds agree; full trade, initializer, sweep and rate verification
+checks 18,534 signed records across overlapping scopes. Whole-ELF identity is
+still unfinished.
 
-The [qualified current Mayhem source-origin composition](research/mayhem-source-origin-recovery-20261027/README.md)
-preserves 432/441 normalized windows, 141 raw-equal and 291 normalized-only
-bodies. Two complete builds agree; 6,636 fresh trade pairs, 301 ExtendAccount
-pairs and 69 initializer pairs pass with 14,042 checked signed records.
-The complete 1,256-byte Buy quote, 1,120-byte Sell quote and 960-byte
-initializer retain their ordered calls and 24 bounded typed references.
-The prior partial trade handlers are preserved. [Nine bodies remain](docs/MAYHEM-PARALLEL-WORK.md#all-remaining-windows),
-with every function classified in the [441-row inventory](research/mayhem-source-origin-recovery-20261027/inventory.tsv).
-
-The successor corrects the BpfWriter and ExtendAccountEvent Source references,
-raising matching Source observations from 456 to 458 while preserving all 447
-linked function shapes and 4,838 actual direct-call targets.
-
-The historical macro/IDL context repairs the actual allocator call target and
-raises the recursive direct-call relation from 414 to 422 of the 432 matched
-bodies. Ten matched windows still lack direct-call closure because they depend
-on unmatched business handlers. Data, indirect calls, global layout and original
-build provenance remain open. The formerly unnamed O0075 is now [statically
-attributed to SweepFeesAdmin](research/mayhem-sweep-admin-attribution-20261027/README.md);
-its body remains unmatched and sweep execution remains outside the active scope.
+The complete Buy/Sell quotes and initializer retain their bounded typed-data
+checks, and the BpfWriter/ExtendAccountEvent origins remain repaired. O0073 and
+O0075 now have complete normalized bodies. Every remaining function is listed
+in the [completion review](docs/MAYHEM-COMPLETION.md) and the
+[441-row inventory](research/mayhem-current434-composition-20261027/inventory.tsv).
+Data, indirect calls, global layout and original build provenance remain open.
 
 The [native historical-macro composition](research/mayhem-native-current432-composition/README.md)
 also reproduces 432 normalized windows and 85 raw-local matches in its own
@@ -268,7 +255,7 @@ no accepted matches.
 The latest [PumpSwap event ownership and sweep Context recovery](repro/pump_amm/event-ownership-recovery-20261027/README.md) matches 653 windows and 148 raw bodies. All 38 IDL dispatch wrappers match, eight event sites reuse the observed object, and the quote selector borrows its mint key. All17,462 corpus cases and retained supplemental suites pass;132 AMM windows remain.
 
 Remaining priorities are the 291 Pump and 132 AMM unmatched windows, plus the
-9 Mayhem windows in the qualified checkpoint (7 in the newer structural build);
+7 Mayhem windows in the qualified checkpoint;
 deeper call/data/relocation identity; original build provenance; and
 uncovered behavior such as authentic fixed-admin AMM `create_config` success.
 The historical [150-handler audit](repro/reconstruction-audit-2026-10-26/handlers.md)

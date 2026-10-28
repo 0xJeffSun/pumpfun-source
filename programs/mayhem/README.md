@@ -2,7 +2,7 @@
 
 The [initializer-current checkpoint](../../repro/mayhem/initializer-current-20261027/README.md) binds the maintained14 source inputs to two identical native v1.54 builds. Its fresh baseline covers9,595 instruction comparisons, plus16 original-Pump-to-Mayhem initialization cases (nine successful creates). The saved verifier authenticates19,252 transactions and38,286 signatures.
 
-The current candidate is `8dac1ff7575e3aa74ffa1ab4c4db2152781f0c644665dbf1c278e284751b19cb`. It is not whole-ELF equal to the original, and this current-source selection is separate from the larger [432/441-window qualified research frontier](../../research/mayhem-source-origin-recovery-20261027/README.md), which has 141 raw-local matches and nine unmatched bodies. The historical checkpoint documentation remains below.
+The current candidate is `8dac1ff7575e3aa74ffa1ab4c4db2152781f0c644665dbf1c278e284751b19cb`. It is not whole-ELF equal to the original, and this current-source selection is separate from the larger [434/441-window qualified research frontier](../../research/mayhem-current434-composition-20261027/README.md), which has 141 raw-local matches and seven unmatched bodies. The historical checkpoint documentation remains below.
 
 # Mayhem reconstructed candidate — measured v1.54 recipe
 

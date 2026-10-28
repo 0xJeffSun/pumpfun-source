@@ -4,6 +4,25 @@ The [full audit](RECONSTRUCTION-AUDIT.md) and its generated tables retain their
 explicit `1463bd22` snapshot. This log records later research without silently
 changing that baseline or promoting new selected artifacts.
 
+## Qualified Mayhem434 composition without prior losses
+
+The [current composition](../research/mayhem-current434-composition-20261027/README.md)
+combines complete O0073 and O0075 recovery with the qualified source-origin
+parent. Two builds agree, and an unchanged control reproduces that parent.
+It has **434/441 normalized windows, 141 raw bodies, 293 normalized-only and
+seven unmatched**. Direct-call closure rises from 422 to 425; positive immediate
+calls rise to 4,371 and matching Source observations to 472. No earlier complete,
+raw, call or Source match is lost. The earlier separate 434/100 and 432/141
+counts are not added together; this is a newly measured combined artifact.
+
+Independent verification authenticates 6,636 trade pairs, 69 initializer pairs,
+692 three-way sweep cases, 150 three-way rate cases and 856 targeted three-way
+rate cases: **18,534 signed records across overlapping scopes**. All checked
+effects and non-compute logs agree. Nine corruption/control tests pass. The
+remaining seven bodies cover 99,032 original text bytes: **1.59% of windows and
+14.01% of text remain unmatched**. Whole-ELF identity is still false; see the
+[completion review](MAYHEM-COMPLETION.md) for the complete remaining list.
+
 ## Fees complete: whole meaningful ELF reproduced (PRs #385, #392)
 
 The [CreateDonation recovery](../research/claude-fees100-create-donation-20261027/README.md) (#385) and the

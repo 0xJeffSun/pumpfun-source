@@ -1,7 +1,7 @@
 # Remaining reconstruction work — 27 October 2026
 
 This is the action list for the [reconstruction audit](RECONSTRUCTION-AUDIT.md),
-updated through upstream revision `450c11d7d`. The historical audit retains its
+updated through upstream revision `da27cbd68`. The historical audit retains its
 `6b61b337` parent and linked visibility-recovery measurements. The [current review](RECONSTRUCTION-STATUS.md)
 and [complete refreshed inventory](../repro/reconstruction-status-2026-10-26/README.md)
 list every raw match and unresolved window in their dated snapshot. That core
@@ -10,7 +10,7 @@ snapshot retains `1463bd22` audit bindings; current selections are recorded in
 [completion ledger](COMPLETION.md) remains a selected-checkpoint record; its old
 candidate paths and “current” prose must not override newer evidence.
 
-Current [Pump Round37](../repro/pump/main-contract-round37-20261027/README.md)
+Current [Pump Round38](../repro/pump/main-contract-round38-20261027/README.md)
 has 175 raw-local matches, 569 normalized-only matches and 291 unmatched windows.
 The unmatched windows cover 868,016 original text bytes. Remaining bodies,
 data, relocations, uncovered behavior and original build provenance remain open.
@@ -25,27 +25,22 @@ has 148 raw-local, 503 normalized-only and 134 unmatched windows, with 345,240
 original text bytes unmatched. Older event and optional-decoder experiments
 retain their original artifact bindings.
 
-Current Mayhem research is the [qualified source-origin composition](../research/mayhem-source-origin-recovery-20261027/README.md):
-141 raw-local, 291 normalized-only and nine unmatched windows / 107,952 original
+Current Mayhem research is the [qualified434 composition](../research/mayhem-current434-composition-20261027/README.md):
+141 raw-local, 293 normalized-only and seven unmatched windows / 99,032 original
 text bytes. O0092 and O0093 match their complete 1,256-byte and 1,120-byte bodies;
 all twenty immediate callees and twenty ordered typed references agree. The
 960-byte initializer remains complete and the previous partial Legacy Buy body
 is preserved. Two builds, 6,636 fresh trade pairs and 69 initializer pairs pass.
 Large trade handlers, remaining data/call closure and whole-ELF identity remain unresolved.
 
-The [current macro composition](../research/mayhem-current-macro-call-closure-20261027/README.md)
-closes the allocator task identified by the earlier direct-call audit: O0210 now
-calls the matching 328-byte `finish_grow`, closing it and seven affected windows.
-The direct-call relation now covers 422/432 matched bodies; ten still depend on
-the missing business bodies. Global data, indirect calls, layout and historical
-source/toolchain provenance remain work. The [441-row inventory](../research/mayhem-source-origin-recovery-20261027/inventory.tsv)
-and [qualified baseline work map](MAYHEM-PARALLEL-WORK.md#all-remaining-windows) list that scope.
-The newer [O0073/O0075 source composition](../research/claude-fees-final-mayhem-o0073/README.md)
-reaches 434 normalized bodies, leaving seven / 99,032 text bytes unmatched, but
-retains only 100 raw bodies and weaker runtime evidence. The [completion review](MAYHEM-COMPLETION.md)
-keeps both frontiers separate. Combining those two body gains with the 141-raw
-checkpoint and qualifying the result is active work, followed by the remaining
-SweepFees and six trade bodies.
+The current composition preserves the repaired allocator and both source-origin
+fixes while adding O0073 and O0075. Ordered direct-call closure now covers
+425/434 matched bodies. Full signed trade, initializer, sweep and rate
+verification passes with 18,534 records across overlapping scopes. Global data,
+indirect calls, layout and historical source/toolchain provenance remain work.
+The [441-row inventory](../research/mayhem-current434-composition-20261027/inventory.tsv)
+and [completion review](MAYHEM-COMPLETION.md) list the exact remaining seven
+functions and the distinction between local raw equality and whole-ELF identity.
 
 The [current Legacy Buy ownership composition](../research/mayhem-current-ownership-composition-20261027/README.md)
 preserves the 430/100 frontier and its complete initializer. Its partial handler

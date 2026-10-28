@@ -1446,6 +1446,8 @@ research/mayhem-trade-ownership-current-20261027/source/*.patch -whitespace
 research/mayhem-trade-ownership-current-20261027/cfg.py whitespace=-blank-at-eof
 research/mayhem-source-origin-recovery-20261027/source.patch -whitespace
 research/mayhem-source-origin-recovery-20261027/inventory.tsv -whitespace
+research/mayhem-current434-composition-20261027/source.patch -whitespace
+research/mayhem-current434-composition-20261027/inventory.tsv -whitespace
 repro/pump_amm/optional-context-recovery-20261027/results/** -whitespace
 repro/pump_amm/optional-context-recovery-20261027/followup/** -whitespace
 # Preserve exact compiled AMM source bytes in the optional-context checkpoint.

@@ -1,6 +1,6 @@
 # Reconstruction status after exact Relay ELF reproduction
 
-Latest upstream review: `450c11d7d71994e25fb02f649d6ac5bf9bf7035b`; measurements are bound to the packets below.
+Latest upstream review: `da27cbd684b4195927ba4c988fe199573ab52142`; measurements are bound to the packets below.
 This review updates the research frontier while preserving the selected-checkpoint
 [baseline audit](RECONSTRUCTION-AUDIT.md). The [recomputed inventory](../repro/reconstruction-status-2026-10-26/README.md)
 contains every one of the **4,415 selected/research function-window rows**.
@@ -54,46 +54,34 @@ analysis. Candidate symbol names are hypotheses about original identity.
 | **Pump current Round37** | **1,035** | **175** | **569** | **291** | **0** |
 | **PumpSwap current** | **785** | **148** | **505** | **132** | **0** |
 | **Fees latest research** | **585** | **585** | **0** | **0** | **0** |
-| **Mayhem latest research** | **441** | **141** | **291** | **9** | **0** |
+| **Mayhem latest research** | **441** | **141** | **293** | **7** | **0** |
 | **Relay canonical selection** | **492** | **492** | **0** | **0** | **0** |
 
-The current rows are bound to [Pump Round38](../repro/pump/main-contract-round38-20261027/README.md), [AMM event-ownership recovery](../repro/pump_amm/event-ownership-recovery-20261027/README.md), [exact Fees research](../research/claude-fees100-crank-donation-20261027/README.md) and [Mayhem source-origin composition](../research/mayhem-source-origin-recovery-20261027/README.md); they extend the dated generated inventory below. Each row is a partition, not a score of semantic correctness. The historical selected Mayhem source
+The current rows are bound to [Pump Round38](../repro/pump/main-contract-round38-20261027/README.md), [AMM event-ownership recovery](../repro/pump_amm/event-ownership-recovery-20261027/README.md), [exact Fees research](../research/claude-fees100-crank-donation-20261027/README.md) and [qualified Mayhem434 composition](../research/mayhem-current434-composition-20261027/README.md); they extend the dated generated inventory below. Each row is a partition, not a score of semantic correctness. The historical selected Mayhem source
 ledger has 257 opaque windows, 12 of which happen to match local raw bytes.
 Selected Fees retains two call-conflicting rows; body existence does not resolve
 those conflicts. Different programs and studies use different matching rules.
 
-Across these five frontier rows, **2,906/3,338 windows (87.1%)** match and
-**3,894,064/5,213,128 original text bytes (74.7%)** lie in matched windows.
-There are **432 unmatched windows**. Fees research and Relay have complete meaningful-ELF
+Across these five frontier rows, **2,908/3,338 windows (87.1%)** match and
+**3,902,984/5,213,128 original text bytes (74.9%)** lie in matched windows.
+There are **430 unmatched windows**. Fees research and Relay have complete meaningful-ELF
 identity; Pump, AMM and Mayhem remain byte-unequal. These are structural
 coverage measures, not a percentage of engineering work completed.
 
-The [current Mayhem macro composition](../research/mayhem-current-macro-call-closure-20261027/README.md)
-repairs the allocator-provider mismatch and raises recursive ordered direct-call
-closure from 414 to 422 of its 432 normalized body matches. Ten matched windows
-still have no surviving counterpart because they depend on unmatched business
-handlers. Two builds, 6,636 fresh trade pairs and 69 initializer pairs pass;
-the [latest complete inventory](../research/mayhem-source-origin-recovery-20261027/inventory.tsv)
-separates local equality and direct-call closure. This relation does not prove
-data, indirect-call, external implementation, injective assignment or semantic
-identity, and does not change the normalized body total.
-
-The [source-origin successor](../research/mayhem-source-origin-recovery-20261027/README.md)
-corrects BpfWriter and ExtendAccountEvent Source records, preserving all function
-shapes and direct-call targets. Matching Source observations rise from 456 to
-458. Two builds, 6,636 trade pairs, 301 ExtendAccount pairs and 69 initializer
-pairs pass; all 14,042 signed records are independently checked. No additional
-complete function or whole-ELF identity is claimed.
+The [qualified current Mayhem composition](../research/mayhem-current434-composition-20261027/README.md)
+combines O0073/O0075 recovery with the prior allocator and Source-origin repairs.
+It retains all 141 raw bodies and reaches 434 complete normalized bodies, with
+425 direct-call-closed windows and 472 matching Source observations. Two builds
+agree; the full signed trade, initializer, sweep and rate scopes pass. The
+[complete inventory](../research/mayhem-current434-composition-20261027/inventory.tsv)
+separates local equality and direct-call closure. This does not establish general
+data, indirect-call or semantic identity. Seven bodies remain; see the
+[completion review](MAYHEM-COMPLETION.md) for exact percentages and names.
 
 Current AMM matched windows cover **818,944 of 1,162,040 original text bytes
 (70.5%)**. Its 653 normalized matches include the 148 raw-local matches; complete
 ELF identity remains false.
 
-Mayhem also has a newer 434/441 structural source recovery with only 100 raw
-bodies and weaker runtime evidence. Its seven unmatched functions cover 99,032
-text bytes. It is not combined with the 141-raw checkpoint in the table. See the
-[completion review](MAYHEM-COMPLETION.md) for both inventories, exact percentages
-and the active composition/qualification work.
 
 - [Every exact local body, with candidate names and original addresses](../repro/reconstruction-status-2026-10-26/raw-body-matches.md).
 - [Every matched/unmatched/opaque window and candidate correspondence](../repro/reconstruction-status-2026-10-26/functions.tsv).
