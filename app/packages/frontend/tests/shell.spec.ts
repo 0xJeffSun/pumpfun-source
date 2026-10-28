@@ -34,7 +34,12 @@ test("included routes load with one accurate active navigation item", async ({
     ).toBeVisible();
     await expect(activeNavigation(page)).toHaveCount(1);
     await expect(activeNavigation(page)).toContainText(navigationLabel);
-    if (path === "/leaderboard") {
+    if (path === "/") {
+      await expect(
+        page.locator('[data-product-state="unavailable"]'),
+      ).toHaveCount(0);
+      await expect(page.getByTestId("local-feed-item")).toHaveCount(3);
+    } else if (path === "/leaderboard") {
       await expect(page.getByTestId("leaderboard-error")).toBeVisible();
     } else if (path === "/explore") {
       await expect(
