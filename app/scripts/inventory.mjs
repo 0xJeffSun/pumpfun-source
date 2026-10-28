@@ -4,7 +4,7 @@ import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { parse } from '@babel/parser';
 import prettier from 'prettier';
-const root=fileURLToPath(new URL('..',import.meta.url));
+export async function inventory(root=fileURLToPath(new URL('..',import.meta.url))){
 const manifest=JSON.parse(await fs.readFile(path.join(root,'evidence/web/manifest.json'),'utf8'));
 const output=path.join(root,'recovered/modules');await fs.mkdir(output,{recursive:true});
 const modules=new Map(), failures=[], routes=[], dependencies=[];
@@ -41,3 +41,7 @@ await fs.writeFile(path.join(root,'recovered/modules.json'),JSON.stringify(repor
 await fs.writeFile(path.join(root,'contracts/internal-operations.json'),JSON.stringify({notice:'Static candidate operations; includes shared/excluded/admin code. Never probe privileged routes automatically.',operations:[...new Map(routes.map(r=>[r.operation,r])).values()].sort((a,b)=>a.operation.localeCompare(b.operation)),occurrences:routes},null,2)+'\n');
 await fs.writeFile(path.join(root,'evidence/web/dependency-paths.json'),JSON.stringify(dependencies,null,2)+'\n');
 console.log(JSON.stringify({modules:modules.size,parseFailures:failures.length,uniqueOperations:new Set(routes.map(r=>r.operation)).size}));
+if(failures.length)throw new Error(`AST inventory failed for ${failures.length} captured script(s); see recovered/modules.json`);
+return report;
+}
+if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.url))await inventory();
