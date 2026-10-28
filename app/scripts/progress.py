@@ -4,7 +4,7 @@ import argparse, collections, hashlib, json, pathlib, re, tarfile
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 BEGIN = '<!-- app-progress:start -->'
 END = '<!-- app-progress:end -->'
-def read(path): return json.loads((ROOT/path).read_text())
+def read(path): return json.loads((ROOT/path).read_text(encoding='utf-8'))
 def score(items):
     applicable=[v for v in items.values() if v['status']!='not-applicable']
     for item in items.values():
@@ -65,9 +65,9 @@ def render():
     return '\n'.join(text)
 def main():
     parser=argparse.ArgumentParser();parser.add_argument('--check',action='store_true');args=parser.parse_args();block=render()
-    outputs={ROOT/'PROGRESS.md':'# Application progress report\n\n'+block.replace('](app/', '](')+'\n',ROOT.parent/'README.md':replace_readme((ROOT.parent/'README.md').read_text(),block)}
+    outputs={ROOT/'PROGRESS.md':'# Application progress report\n\n'+block.replace('](app/', '](')+'\n',ROOT.parent/'README.md':replace_readme((ROOT.parent/'README.md').read_text(encoding='utf-8'),block)}
     for file,expected in outputs.items():
-        if args.check: assert file.read_text()==expected,f'Generated progress is stale: {file}'
-        else:file.write_text(expected)
+        if args.check: assert file.read_text(encoding='utf-8')==expected,f'Generated progress is stale: {file}'
+        else:file.write_text(expected,encoding='utf-8')
     print('Application source and feature progress '+('verified' if args.check else 'updated'))
 if __name__=='__main__':main()
