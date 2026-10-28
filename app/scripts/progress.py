@@ -5,33 +5,36 @@ ROOT = pathlib.Path(__file__).resolve().parents[1]
 BEGIN = '<!-- app-progress:start -->'
 END = '<!-- app-progress:end -->'
 def read(path): return json.loads((ROOT/path).read_text(encoding='utf-8'))
+
+def require(condition, message):
+    if not condition: raise ValueError(message)
 def score(items):
     applicable=[v for v in items.values() if v['status']!='not-applicable']
     for item in items.values():
-        assert item['status'] in {'pending','accepted','not-applicable'}
+        require(item['status'] in {'pending','accepted','not-applicable'}, 'Unknown milestone status')
         if item['status'] in {'accepted','not-applicable'}:
-            assert item['evidence'], 'Accepted/excluded gates require evidence or an explicit applicability decision'
-            for evidence in item['evidence']: assert (ROOT/evidence.split('#')[0]).is_file(), evidence
+            require(item['evidence'], 'Accepted/excluded gates require evidence or an explicit applicability decision')
+            for evidence in item['evidence']: require((ROOT/evidence.split('#')[0]).is_file(), evidence)
     complete=sum(v['status']=='accepted' for v in applicable)
     return 'N/A' if not applicable else f'{complete}/{len(applicable)} ({100*complete/len(applicable):.0f}%)'
 def replace_readme(text,block):
     section=f'{BEGIN}\n{block}\n{END}\n\n'
     if BEGIN in text:
-        assert text.count(BEGIN)==text.count(END)==1
+        require(text.count(BEGIN)==text.count(END)==1, 'Expected one progress marker pair')
         return re.sub(re.escape(BEGIN)+r'.*?'+re.escape(END)+r'\n*',lambda _:section,text,flags=re.S)
     anchor='## Remaining work' if '## Remaining work' in text else '## License'
-    assert anchor in text
+    require(anchor in text, 'README progress insertion anchor is missing')
     return text.replace(anchor,section+anchor,1)
 def render():
     ledger=read('contracts/feature-progress.json'); manifest=read('evidence/web/manifest.json'); recovered=read('recovered/modules.json'); candidates=read('contracts/internal-operations.json')['operations']; spec=read('contracts/developer.openapi.json')
-    assert len({r['id'] for r in ledger['frontend']})==len(ledger['frontend'])
-    assert len({r['id'] for r in ledger['backend']})==len(ledger['backend'])
+    require(len({r['id'] for r in ledger['frontend']})==len(ledger['frontend']), 'Duplicate frontend feature IDs')
+    require(len({r['id'] for r in ledger['backend']})==len(ledger['backend']), 'Duplicate backend feature IDs')
     for layer in ['frontend','backend']:
         for row in ledger[layer]:
             for category in ['source','completion']:
-                assert set(row[category])==set(ledger['gates'][category]);score(row[category])
+                require(set(row[category])==set(ledger['gates'][category]), 'Milestone gates differ from the ledger');score(row[category])
             if row['completion']['source']['status']=='accepted':
-                assert all(g['status'] in {'accepted','not-applicable'} for g in row['source'].values()), 'Source completion requires all source gates'
+                require(all(g['status'] in {'accepted','not-applicable'} for g in row['source'].values()), 'Source completion requires all source gates')
     scripts=[r for r in manifest['records'] if r['url'].endswith('.js')]
     verified=sum(r.get('status')==200 and hashlib.sha256((ROOT/r['path']).read_bytes()).hexdigest()==r['sha256'] for r in scripts)
     source_count=source_equal=0
@@ -67,7 +70,7 @@ def main():
     parser=argparse.ArgumentParser();parser.add_argument('--check',action='store_true');args=parser.parse_args();block=render()
     outputs={ROOT/'PROGRESS.md':'# Application progress report\n\n'+block.replace('](app/', '](')+'\n',ROOT.parent/'README.md':replace_readme((ROOT.parent/'README.md').read_text(encoding='utf-8'),block)}
     for file,expected in outputs.items():
-        if args.check: assert file.read_text(encoding='utf-8')==expected,f'Generated progress is stale: {file}'
+        if args.check: require(file.read_text(encoding='utf-8')==expected,f'Generated progress is stale: {file}')
         else:file.write_text(expected,encoding='utf-8')
     print('Application source and feature progress '+('verified' if args.check else 'updated'))
 if __name__=='__main__':main()
