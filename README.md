@@ -25,7 +25,8 @@ These are binary-coverage measurements. Full call/data/relocation identity, orig
 
 **Main Pump: 78.9% of function windows matched; 60.6% of original text covered. Complete reconstruction remains unfinished.**
 
-Reproduce the selected Pump ELF with its [archived Rust/linker recipe](repro/pump/main-contract-round42-20261027/reproduce.py).
+Reproduce the selected Pump ELF with its [archived Rust/linker recipe](repro/pump/main-contract-round43-20261027/reproduce.py).
+
 
 
 <!-- MAIN-PUMP-REMAINING:BEGIN -->
@@ -41,16 +42,16 @@ These are binary coverage percentages. A defensible percentage of engineering
 work remaining is not yet known. Whole-ELF equality remains unproved. The corpus
 checks structured Anchor/panic diagnostics and ordered raw logs within complete
 recorded main invocations. It requires zero non-filename mismatches and reports
-492 remaining source-filename differences.
+302 remaining source-filename differences.
 
 Remaining work is to recover the unmatched main-contract bodies and validation
 paths, reproduce referenced data and relocations, and establish the original
-compiler and target-library provenance. This checkpoint corrects fee-recipient
-zero-before-rent precedence and restores selected quote-helper source ownership.
+compiler and target-library provenance. This checkpoint restores shared fee and
+native-distribution source ownership while retaining earlier validated behavior fixes.
 The retained corpus does not establish complete behavior or original build identity.
 
 The [main-contract queue](research/main-pump-parallel-checkpoint-20261027/REMAINING-WORK.json)
-tracks the open bodies. The [selected checkpoint](repro/pump/main-contract-round42-20261027/README.md) binds the
+tracks the open bodies. The [selected checkpoint](repro/pump/main-contract-round43-20261027/README.md) binds the
 reported metrics and validation evidence. This review is limited to the main Pump
 contract.
 <!-- MAIN-PUMP-REMAINING:END -->
@@ -62,7 +63,7 @@ all remaining code, calls, data, relocations and build provenance.
 
 | Latest verified checkpoint | Matched windows | Matched % | Raw-equal bodies | Normalized only | Unmatched | Whole ELF equal |
 | --- | ---: | ---: | ---: | ---: | ---: | --- |
-| [Pump Round42](repro/pump/main-contract-round42-20261027/README.md) | 817 / 1,035 | 78.9% | 203 | 614 | 218 | No |
+| [Pump Round43](repro/pump/main-contract-round43-20261027/README.md) | 817 / 1,035 | 78.9% | 203 | 614 | 218 | No |
 | [PumpSwap / AMM](repro/pump_amm/private-sweep-recovery-20261027/README.md) | 656 / 785 | 83.6% | 148 | 508 | 129 | No |
 | [Fees research](research/claude-fees100-crank-donation-20261027/README.md) | 585 / 585 | 100.0% | 585 | 0 | 0 | **Yes** |
 | [Mayhem qualified research](research/mayhem-current436-composition-20261027/README.md) | 436 / 441 | 98.9% | 141 | 295 | 5 | No |
@@ -77,7 +78,7 @@ the whole program is identical.
 
 | Checkpoint | Text bytes in matched windows | Text covered | Unmatched text |
 | --- | ---: | ---: | ---: |
-| Pump Round42 | 1,085,456 / 1,792,208 | 60.6% | 706,752 |
+| Pump Round43 | 1,085,456 / 1,792,208 | 60.6% | 706,752 |
 | PumpSwap / AMM | 826,112 / 1,162,040 | 71.1% | 335,928 |
 | Fees research | 799,648 / 799,648 | 100.0% | 0 |
 | Mayhem research | 634,552 / 706,744 | 89.8% | 72,192 |
@@ -187,7 +188,7 @@ pass. Its 641-window research artifact remains bound to its former
 640-window parent; the maintained 647-window checkpoint is reported above.
 The parent's other supplemental matrices were not rerun on this artifact.
 
-Pump Round42 passes 10,468 full cases plus 7,643 focused executions, with 18,107
+Pump Round43 passes 10,468 full cases plus 7,643 focused executions, with 18,107
 paired diagnostic-log cases. AMM passes 17,462 full cases plus the separate
 account, fee, CPI, boundary and error-order matrices recorded in its checkpoint.
 The [independent Pump/AMM migration-pair replay](research/pump-amm-migration-composition/README.md)

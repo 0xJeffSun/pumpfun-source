@@ -4,6 +4,7 @@ use anchor_lang::prelude::*;
 use anchor_lang::solana_program::{instruction::{Instruction,AccountMeta},program::{invoke,invoke_signed},program_error::ProgramError};
 use anchor_spl::{token::Token,token_2022::Token2022,token_interface::{Mint,TokenAccount}};
 use crate::{Global,PumpError};
+use crate::legacy_sell::fee_math::{fee, tier, validate_config_length};
 use crate::trade_types::{BondingCurve,FeeConfig,FeeTier,Fees};
 const FEES:Pubkey=anchor_lang::solana_program::pubkey!("pfeeUxB6jkeY1Hxd7CsFCAjcbHA9rWtchMGdZ6VojVZ");
 const AMM:Pubkey=anchor_lang::solana_program::pubkey!("pAMMBay6oceH9fJKBRHGP5D4bD4sWpmSwMn52FMfXEA");
@@ -67,19 +68,11 @@ fn n(a: u128) -> Result<u64> { u64::try_from(a).map_err(|_| error!(PumpError::Tr
 fn div(a: u128, b: u128) -> Result<u128> {
     a.checked_div(b).ok_or(error!(PumpError::DivisionByZero))
 }
-fn fee(a: u64, b: u64) -> Result<u64> { n((a as u128 * b as u128 + 9999) / 10000) }
 
-// D02: First-threshold gate before reverse search matters for unsorted tables.
-fn tier(tiers: &[FeeTier], cap: u128) -> Result<Fees> {
-    let first = tiers.first().ok_or(error!(PumpError::FeeTiersEmpty))?;
-    if cap < first.market_cap_lamports_threshold { return Ok(first.fees.clone()); }
-    Ok(tiers.iter().rev().find(|t| t.market_cap_lamports_threshold <= cap)
-        .unwrap_or(first).fees.clone())
-}
 struct SelectedFees { protocol: u64, creator: u64, rates: Fees }
 fn select_fees(a: &MultiHopCurve, c: &BondingCurve, cap: u128, amount: u64) -> Result<SelectedFees> {
     let len = a.fee_config.to_account_info().data_len();
-    require!(len >= 2512, PumpError::FeeConfigTooShort);
+    validate_config_length(len)?;
     let config = &a.fee_config.0;
     // Exact selector constants, descriptive labels only; emitted from sealed bytes.
     let quote = c.quote_mint;
