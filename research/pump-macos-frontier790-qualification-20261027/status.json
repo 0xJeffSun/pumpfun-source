@@ -1,5 +1,8 @@
 {
-  "status": "prepared",
+  "status": "queued",
+  "run_id": 40613566110,
+  "run_url": "https://github.com/shawkkkkk/pumpfun-source/actions/runs/40613566110",
+  "tested_revision": "78b28da7",
   "source_frontier_normalized_matches": 790,
   "original_windows": 1035,
   "whole_original_elf_equal": false
