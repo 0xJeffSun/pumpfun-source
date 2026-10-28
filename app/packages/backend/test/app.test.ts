@@ -18,6 +18,23 @@ const fixture = (overrides: Partial<Fixture> = {}): Fixture => ({
 const malformedFixture = (overrides: Record<string, unknown>) =>
   ({ ...fixture(), ...overrides }) as Fixture;
 
+test("fixture bodies must be explicitly present; null remains valid", async () => {
+  const missing = { ...fixture() } as Partial<Fixture>;
+  delete missing.body;
+  for (const invalid of [missing, fixture({ body: undefined })]) {
+    assert.throws(
+      () => buildApp([invalid as Fixture]),
+      /body must be explicitly present/,
+    );
+  }
+  const app = buildApp([fixture({ body: null })]);
+  try {
+    assert.equal((await app.inject("/__reconstruction/status")).json().fixtureCount, 1);
+  } finally {
+    await app.close();
+  }
+});
+
 test("JSON scalar fixtures retain their JSON representation", async () => {
   const cases = [
     {
