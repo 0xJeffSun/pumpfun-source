@@ -88,14 +88,12 @@ is eliminated; it does not establish full toolchain equivalence or recover the
 initializer. Further work must still resolve source/IR shape and original
 compilation settings.
 
-Current [Fees Extend integration](../research/fees-extend-integration/README.md)
-has 200 raw-local, 382 normalized-only and three unmatched windows, covering
-762,912 of 799,648 original text bytes. Sweep, Crank and CreateDonation remain
-unmatched; their windows total 36,736 bytes. Absolute layout, recursive
-callee/data closure and original build provenance remain unresolved. Two normal
-Cargo builds agree and 17,331 retained comparisons across 18 suites verify,
-along with 17 corruption tests. This research frontier remains separate from
-the selected Fees baseline.
+Current Fees research ([Crank recovery](../research/claude-fees100-crank-donation-20261027/README.md))
+matches all 585 original functions normalized and raw (799,648 / 799,648 original text bytes), and its
+stripped canonical Linux build equals the captured program's complete meaningful ELF. Two builds agree and
+17,331 comparisons across 18 suites pass. Remaining Fees work is provenance only: the historical source
+spelling, toolchain and build recipe are not proven, and this research frontier remains separate from the
+selected Fees baseline in `programs/pump-fees`.
 
 The [safe Crank source proposal](../research/fees-crank-safe-context-source/README.md)
 adds no accepted coverage. To advance it, publish or independently recover its
@@ -802,6 +800,26 @@ exactly at 427 normalized, 74 raw-local and 426 injective matches, with no losse
 Only O0199 (`custom_panic`) remains different from the older current-runtime
 control. Its 200-byte historical body has a 192-byte prefix equal to the complete
 original function, followed by an extra `exit`; the full body remains unmatched.
-The retained syscall declarations differ by unit versus never return type. That
-source explanation is untested and adds no accepted match. No result here
-advances the current 432-window checkpoint or proves original source identity.
+The subsequent one-line never-return source control restores the complete
+192-byte O0199 body, with identical complete outputs from two fresh patched
+builds. It reaches 428 normalized / 70 raw-local / 427 injective under a fixed
+local syscall path override. That setup already loses five raw-local matches
+against the preceding registry build; those losses remain explicit, while the
+one-line change gains only O0199 and loses none. All 441 windows, the 204-package
+graph, exact source port and 462 actual compiler commands are replayed offline.
+Whole text and ELFs still differ from the older current-runtime control. No
+result here advances the current 432-window checkpoint or proves original
+source identity, build date, runtime qualification or syscall implementation
+identity.
+
+Four further fresh builds isolate the five-loss setup at fixed source paths:
+unchanged registry and local syscall source yield 427/74/426 and 427/69/426,
+respectively, with complete raw and stripped output repetition for each.
+Root relocation alone retains the registry match set. Each affected full caller
+differs only at one direct call whose target shifts 720 bytes, or 90 encoded
+instructions. Two extra allocator helpers account for the net 720 text bytes;
+the providing archive differs between the two measured path-source locations.
+Four called bodies remain raw-equal; O0271's target is normalized-only.
+The source/graph control, all 616 actual compiler commands, complete maps and
+both ownership observations replay offline. This explains a Cargo source
+selection effect without recovering a new body or claiming transitive identity.

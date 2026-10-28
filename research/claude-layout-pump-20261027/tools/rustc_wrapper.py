@@ -9,6 +9,8 @@ Only the root crate's cdylib invocation (LAYOUT_ROOT_CRATE) additionally receive
 same as in the archived recipe. The linker hook only changes which linker
 script rust-lld receives (see linker.py).
 """
+import sys
+sys.dont_write_bytecode = True  # keep the packet free of __pycache__
 import os
 import sys
 from pathlib import Path

@@ -86,6 +86,14 @@ repeats the same 414-window relation and the same 18 unclosed windows on two
 fresh-dependency artifacts. The allocator task remains an actual call-target
 problem; merely rebuilding the previous source with a fresh cache did not fix it.
 
+The [independent allocator composition reproduction](../research/mayhem-allocator-call-closure/README.md)
+repeats PR295/296's complete native artifacts from two empty dependency target
+directories. It provides an executed portable build recipe, current curve/root
+optimized IR comparison and fresh initializer qualification. Its 432 normalized,
+85 native raw and 422 direct-closed counts are inherited source results, not
+additional recovery. The separate qualified 432/100 layout and ten unmatched
+handler-dependent call relationships remain unresolved.
+
 ## Integration requirements
 
 Preserve every prior normalized/raw match, immediate call shape and Source
@@ -110,3 +118,28 @@ O0210. O0209 has a matching body elsewhere, but O0210 calls a different
 `finish_grow` specialization. This adds a target-by-target recovery obligation,
 not a new body match or semantic-equivalence claim. Indirect/data closure and
 whole-ELF identity remain open.
+
+The [Legacy Sell signer-seed controls](../research/mayhem-signer-seed-order/README.md)
+trace a current-source evaluation-order difference: moving the signer-bump read
+after CPI account construction moves its instruction offset from 1,968 to
+6,144, versus 6,296 in the original. The repeated inline control remains an
+unmatched 12,952-byte body versus 12,992 original bytes. All 432/77 native
+matches and 4,314 positive immediate-call observations remain; the qualified
+432/100 artifact is separate. This is source-order research with no new complete
+match, runtime qualification or checkpoint promotion.
+
+## Current-source allocator-provider composition
+
+The [current 432-window provider composition](../research/mayhem-current-provider-closure-20261027/README.md)
+combines the qualified quote/initializer program source with the complete historical
+macro/IDL context. In the fresh Linux cohort, the curve reserve now calls the
+matching 328-byte allocator at relative offset 528. Eight windows regain ordered
+direct-call closure (414 to 422), and O0207 becomes raw-equal (84 to 85), with
+all prior normalized and raw matches preserved. Three enabled builds agree;
+6,636 fresh trade pairs pass independent signature/state/non-compute-log checks.
+
+This remains a mixed-framework source-context diagnostic, separate from the
+selected 100-raw checkpoint. No new normalized body is recovered. The upstream
+gate returns the direct-closed set to 414, but its complete ELF differs from the
+baseline. Indirect/data closure, initializer qualification on this artifact,
+historical source attribution and whole-original identity remain open.

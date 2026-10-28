@@ -11,6 +11,8 @@ when any such candidate body is byte-identical. Window boundaries come from a
 frontier packet inventory (they are fixed properties of the original).
 `--check-against` asserts the result equals that packet's recorded inventory.
 """
+import sys
+sys.dont_write_bytecode = True  # keep the packet free of __pycache__
 import argparse
 import gzip
 import hashlib

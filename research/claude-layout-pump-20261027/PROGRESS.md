@@ -4,7 +4,60 @@ Lane: `layout-pump` (raw matches and whole-ELF layout for main Pump). Branch
 `claude/layout-pump-20261027`. Scratch: `SP/lanes/layout-pump/out`, targets:
 `SP/lanes/layout-pump/target` (SP = the session scratchpad).
 
+## Verified gains ledger (coordinator format)
+
+| base round | lane commit | ordered unstripped sha256 | raw | raw windows gained | lost |
+|---|---|---|---|---|---|
+| Round21 (v2) | bf78e7ad3 | 476c6765769b720009611dd162db20a5e4463668a2f322fd960384d6294a654f | 123 → 130 | 0x18a4d8 0x18a888 0x1a2340 0x1b3220 0x1b38c0 0x1b4088 0x1b40d0 | none |
+| Round22 (v3) | 174985797 | 590c932df05e67e690f648cd8caf40936676215e8b2a459be9c71d19afc587b3 | 123 → 135 | 0x18a4d8 0x18a888 0x1a0f68 0x1a2340 0x1a6370 0x1a6940 0x1ab220 0x1ab730 0x1b3220 0x1b38c0 0x1b4088 0x1b40d0 | none |
+| Round23 (v3) | 3cc495a6f | 0d87bec8f3f7e74a7a4458af940c89010c2a42953ffb0abfc1487d9a3ef40a5d | 123 → 135 | same twelve as Round22 | none |
+| Round36 (composed) | audit commit (see git log) | 9cc0982edb18a9f3af68783efe791c0348e08a4f7de299da0f8ba2cadf4cb8ce (published) | 121 → 145 | 0xa7e0 0x18a3b0 0x18a4d8 0x18a888 0x18de90 0x18e568 0x194998 0x194ae0 0x197508 0x1991e0 0x19a758 0x19a8a0 0x1a0f68 0x1a2340 0x1a6370 0x1a6940 0x1ab220 0x1ab730 0x1b31d8 0x1b3220 0x1b38b0 0x1b38c0 0x1b4088 0x1b40d0 | none |
+| Round25 (v3) | audit commit (see git log) | 6f31ae2dfad5e044d583ae2034c89cae543dd6ca78d972fcc856c3b3fa4ab1c2 | 123 → 135 | same twelve as Round22 | none |
+
+Normalized windows are never lost (705/708/711/712/720 kept on Round20–23, Round25).
+
 ## State (newest first)
+
+### 2026-10-27 — admission-audit fixes (on Round25) and Round36 composed result
+- Round36 (newest, 738 normalized) was published by the integration session
+  with this generator's text order (plus its own data-order layer). The
+  generator regenerates `layout-proof/text-order.ld` byte for byte; the
+  recorded default-layout baseline is 121 raw, the published round 145 raw
+  (24 gained, none lost, no raw body with data operands).
+- Round36's build uses Linux v1.44 target libraries and an entrypoint-2.2.1
+  registry, consistent with this packet's Location findings.
+- Audit items addressed (see README): per-round reproduce commands from the
+  archived primary sources; verify.py recomputes every recorded figure
+  (counts and text bytes, translation statistics, residuals, blockers,
+  pricing, correspondence disclosure), checks the stripped candidate in pure
+  Python (no objcopy), binds builds to each round's archived source, and
+  re-checks Round25's 44 per-suite runtime results; runtime_summary computes
+  instead of asserting totals; numbers without saved data were removed or
+  replaced by `round25/policy-controls.json`; test_scope runs 12 controls
+  through the real verifier; selector grammar rejects globs; relink records
+  archive hashes; README labels the correspondence a hypothesis and discloses
+  its basis; tracked inventory_current.py cited; `-v` and toolchain path noted.
+- Item 2 (objdump-free symbol listing in measure.py/correspond.py) is being
+  done by the coordinator; this lane did not edit that code.
+- Round25 (720 normalized): baseline `ef31dfd3…`/`d36b2984…`; ordered
+  `87ba67cc…`/`6f31ae2d…` (persistent build = relink); runtime 10,468 cases,
+  10,464 log, 0 mismatches. Round26 (721 normalized) baseline built
+  (`2071d716…`/`c2f9e163…`, out/builds/r26-baseline) but not yet laid out.
+- `tools/build.py --persistent DIR`: dependencies compile once; `cargo clean -p`
+  recompiles and relinks the root each build (~35 s ordered build).
+
+### 2026-10-27 — Round23 full evidence (builds ×2, runtime) committed
+- Round23 (712 normalized): baseline reproduces `d9fd8f1e…`/`d5a80618…`;
+  ordered `936cce1d…`/`0d87bec8…` from two complete builds = relink; 44-suite
+  corpus 10,468 cases / 10,464 log cases / 0 mismatches.
+- Round20–23 repackaged by `tools/package_round.py` (claims now include
+  `residual_data_operands`: Location-record breakdown).
+- New findings recorded in README: std Location paths show a Linux-built
+  sysroot; `solana_program_entrypoint::deserialize` Locations show the original
+  used solana-program-entrypoint 2.2.1 (lock pins 2.3.0); 38 matched windows
+  reference differing Location records.
+- Coordinator: integration session harvests this branch; Round25 is newest
+  (origin/main 730c5cba3). Next: Round25 by passthrough build + relink.
 
 ### 2026-10-27 — Round22 full evidence committed; Round23 baseline building
 - **Round22: 123 raw → 135 raw**, 711 normalized, 0 lost. Two complete builds
