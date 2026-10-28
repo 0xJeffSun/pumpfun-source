@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import CreateCoinForm from "../create-coin-form";
 
 const routes: Record<string, [string, string]> = {
   explore: ["Explore", "Search, filters, coin rankings and discovery."],
@@ -66,27 +67,31 @@ export default async function Page({ params, searchParams }: RoutePageProps) {
           Search query: <strong>{query}</strong>
         </p>
       ) : null}
-      <section className="empty-state" data-product-state="unavailable">
-        <div className="empty-state-content">
-          <span className="empty-mark" aria-hidden="true">
-            P
-          </span>
-          <h2>
-            {isSearch
-              ? "Search results are unavailable"
-              : "Feature unavailable"}
-          </h2>
-          <p>
-            {isSearch
-              ? "Your query is preserved in the URL. A native market-search service has not yet been reconstructed or qualified."
-              : "This route remains a product scaffold while its native behavior and data contracts are reconstructed."}
-          </p>
-          <p className="muted">
-            No fabricated live data, wallet action or production mutation is
-            enabled.
-          </p>
-        </div>
-      </section>
+      {path === "create" ? (
+        <CreateCoinForm />
+      ) : (
+        <section className="empty-state" data-product-state="unavailable">
+          <div className="empty-state-content">
+            <span className="empty-mark" aria-hidden="true">
+              P
+            </span>
+            <h2>
+              {isSearch
+                ? "Search results are unavailable"
+                : "Feature unavailable"}
+            </h2>
+            <p>
+              {isSearch
+                ? "Your query is preserved in the URL. A native market-search service has not yet been reconstructed or qualified."
+                : "This route remains a product scaffold while its native behavior and data contracts are reconstructed."}
+            </p>
+            <p className="muted">
+              No fabricated live data, wallet action or production mutation is
+              enabled.
+            </p>
+          </div>
+        </section>
+      )}
     </>
   );
 }
