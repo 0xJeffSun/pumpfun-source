@@ -11,7 +11,7 @@ for name,status in json.loads((ROOT/'repro/status.json').read_text()).items():
  if name=='mayhem' and status['candidate_artifact']=='repro/mayhem/initializer-current-20261027/candidate.so':
   subprocess.run([sys.executable,'-B',str(ROOT/'repro/mayhem/initializer-current-20261027/verify.py'),'--current-source',str(ROOT),'--expected-seal','b6b01b400fb7c5ab10db803ba27fe6a76e0e59e9ea7fad25250dc95760cf485c'],check=True)
   continue
- if name=='pump_amm' and status['candidate_artifact']=='repro/pump_amm/inverse-route-recovery-20261028/results/build/candidate.so':
+ if name=='pump_amm' and status['candidate_artifact']=='repro/pump_amm/native-scanners-recovery-20261028/results/build/candidate.so':
   subprocess.run([sys.executable,'-B',str(ROOT/'scripts/verify_pump_amm_checkpoint.py')],check=True)
   continue
  if name=='pump' and status['candidate_artifact']=='repro/pump/main-contract-round45-20261027/candidate.so':

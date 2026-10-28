@@ -1519,3 +1519,7 @@ research/mayhem-current436-sweep-address-selection-20261028/sweep/**/link.map -w
 repro/pump_amm/inverse-route-recovery-20261028/results/** -whitespace
 
 repro/pump_amm/inverse-route-recovery-20261028/followup/** -whitespace
+
+repro/pump_amm/native-scanners-recovery-20261028/results/** -whitespace
+
+repro/pump_amm/native-scanners-recovery-20261028/followup/** -whitespace
