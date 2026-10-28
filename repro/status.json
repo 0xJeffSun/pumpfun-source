@@ -5,10 +5,10 @@
     "compiler": "Authenticated macOS v1.44 compiler with official Linux v1.44 SBPF target libraries; historical provenance unresolved",
     "dependencies": "254 checksum-verified locked registry packages (4,176 archive source files); reconstructed pump-token-ext local crate",
     "build_flags": "Recorded standalone-to-workspace recipe; locked offline release build; portable empty-target recipe with pinned SDK and target libraries",
-    "candidate_artifact": "repro/pump/canonical-frontier-20261028/candidate.so",
-    "candidate_sha256": "1d031f64b9656ba572817c20a46e0bcb3d43716fee4c857d9b59447724a28904",
-    "candidate_symbols_artifact": "repro/pump/canonical-frontier-20261028/unstripped.so",
-    "symbols_sha256": "c1ae752d631721c468191a8f49df9fbbde292a0e36a914e2788c89a11ac8bf73",
+    "candidate_artifact": "research/pump-create-used-boundaries-20261028/artifacts/candidate.so",
+    "candidate_sha256": "acc5e6eba8c9295386443542847404e55a27d8e837402fb98de8ccffb679125f",
+    "candidate_symbols_artifact": "research/pump-create-used-boundaries-20261028/artifacts/unstripped.so",
+    "symbols_sha256": "f7951066b200541cc337303feb64dd656ed49bcaee4539771cd9672096535138",
     "full_byte_equality": false,
     "meaningful_elf_equal": false,
     "comparison_status": "DIFFERS_PARTIAL_RECONSTRUCTION",
@@ -62,19 +62,19 @@
       "remove_quote_control_mint",
       "set_quote_control_mint_reserves"
     ],
-    "comparison_report": "repro/pump/canonical-frontier-20261028/VERIFICATION.json",
-    "build_log": "repro/pump/canonical-frontier-20261028/portable-build/build.log.gz",
+    "comparison_report": "research/pump-create-portable-repeat-20261028/build-comparison.json",
+    "build_log": "research/pump-create-portable-repeat-20261028/build.log.gz",
     "validated_cases": 10468,
-    "validation_report": "repro/pump/canonical-frontier-20261028/runtime/full44.json.gz",
+    "validation_report": "research/pump-create-used-boundaries-20261028/runtime/full44.json.gz",
     "runtime_transaction_fields": 18343,
     "runtime_transaction_count_kind": "serialized observations; not unique transaction or total VM-execution count",
     "verified_transaction_signatures": 27875,
-    "focused_runtime_cases": 65,
-    "focused_runtime_transactions": 195,
-    "focused_runtime_signature_fields": 258,
+    "focused_runtime_cases": 75,
+    "focused_runtime_transactions": 225,
+    "focused_runtime_signature_fields": 318,
     "current_binding_command": "python3 -B scripts/verify_pump_main_checkpoint.py --repo .",
     "main_acceptance_verifier": "scripts/verify_pump_main_checkpoint.py",
-    "checkpoint_manifest_sha256": "3a4a8541cf82e5c0da0963c81f34e6a1c4de9ec6544d54052194e2020bbe2394",
+    "checkpoint_manifest_sha256": "1d6870ccdc246852ff39cc17b781a2766e6b45dc5fc8eae7101c6b8975aa2409",
     "normalized_function_matches": 1019,
     "raw_function_matches": 188,
     "total_function_windows": 1035,
@@ -100,21 +100,30 @@
     ],
     "canonical_source_inputs": 65,
     "materialized_workspace_inputs": 66,
-    "source_recipe": "repro/pump/canonical-frontier-20261028/compose.py",
-    "source_binding_verifier": "repro/pump/canonical-frontier-20261028/verify.py",
-    "source_builder": "repro/pump/canonical-frontier-20261028/build.py",
+    "source_recipe": "research/pump-create-used-boundaries-20261028/build.py",
+    "source_binding_verifier": "research/pump-create-portable-repeat-20261028/verify.py",
+    "source_builder": "research/pump-create-used-boundaries-20261028/build.py",
     "portable_empty_target_build": true,
-    "paired_fee_config_immediate_calls": 220,
     "historical_checkpoint_status": {
-      "path": "research/contract-completion-20261028/pump-status-before.json",
-      "sha256": "031bad85fed01b6dde07d08feeeb648cd8b37cd0bf5e54148145c22523566294",
-      "scope": "Prior selected source/artifact/runtime facts remain historical; not current-candidate evidence"
+      "path": "research/contract-completion-20261028/pump-status-before-closure.json",
+      "sha256": "399b68e7dadbe912eb560df88da9b9fc1c659ab41a70e943375f11cba5528877",
+      "scope": "Prior r31-era source and receipts remain historical; no signature evidence is relabeled"
     },
     "validation_notes": [
-      "Maintained source composes PR569 with direct FeeConfig use sites and qualified588/570/595/616/619/627 corrections. No negative source trial earns reconstruction credit.",
-      "44 suites/10,468 cases pass. 65 focused cases include signed control witnesses and exact structured comparisons.",
-      "The four creation-key cases explicitly retain original create_v2.rs Source220 versus reconstructed70; the compared-key payload is corrected. Other focused message comparisons keep their stated strict scopes.",
-      "The same16 original windows remain unmatched, and whole ELF identity remains false."
+      "Same1,019 normalized/188raw memberships; create remains unmatched.",
+      "Used quote admission, raw ATA CPI, metadata validation and state-before-CPI boundaries are recovered source hypotheses. Inherited blank-line layout is deliberately retargeted to observed Source coordinates; unique historical source is not established.",
+      "75 focused cases/225 transaction fields/318 signature fields include14 strict create cases with original Source198/220 and no coordinate normalization.",
+      "44 suites/10,468 paired cases retain18,343 serialized transaction fields and27,875 signature fields; these are observations, not unique transaction counts.",
+      "Actual portable empty-target source build authenticates254 registry archives/4,176 source files and reproduces both complete qualified outputs."
+    ],
+    "candidate_packet_manifest_sha256": "bb76099bd1956b83889c66f7e794ba5c251f46d85a5dfc624c8775dd9b0d89af",
+    "known_behavior_gaps": [
+      {
+        "report": "research/contract-completion-20261028/known-admin-wallet-guard-acc5.json.gz",
+        "sha256": "cdf3c21d9e8e5f9baf8baad5f749a074cfde552daaae6d593a711b908a7a52be",
+        "candidate_sha256": "acc5e6eba8c9295386443542847404e55a27d8e837402fb98de8ccffb679125f",
+        "scope": "Fresh18 focused cases;8 Token/Token2022 cases differ on coin-ATA validation/CPI order or inner observations. Native controls match. This remains unresolved in acc5; source correction is in progress."
+      }
     ]
   },
   "pump_amm": {
@@ -123,10 +132,10 @@
     "compiler": "Authenticated Linux platform-tools v1.44; historical provenance unresolved",
     "dependencies": "257 checksum-verified registry packages (8,180 archive files) and reconstructed local native-transfer-fee crate",
     "build_flags": "Explicit standalone-to-workspace mapping; locked offline Linux v1.44 SBPF release build; unchanged recorded registry and SDK inputs",
-    "candidate_artifact": "repro/pump_amm/canonical-frontier-20261028/results/build-a/candidate.so",
-    "candidate_sha256": "15aadc37c6a4fb2148895eafa22a969f7ad28a363c8972a8fe526a015fa85d21",
-    "candidate_symbols_artifact": "repro/pump_amm/canonical-frontier-20261028/results/build-a/symbols.so",
-    "symbols_sha256": "281a72ea4b5bccc02b91699472639d91c81f3af15a3ae284b0ad3a346f4620f7",
+    "candidate_artifact": "research/amm-layout-closure-20261028/results/build-a/candidate.so",
+    "candidate_sha256": "86dbc2c64e81988dead173039b61fa01ba5f68a00fbb6f6dd49f2cda0afec37f",
+    "candidate_symbols_artifact": "research/amm-layout-closure-20261028/results/build-a/symbols.so",
+    "symbols_sha256": "7271aaf8afe13b6c8f13a6cf0e9534896a66650dda13a2aa1b32e41edd46426d",
     "full_byte_equality": false,
     "meaningful_elf_equal": false,
     "comparison_status": "DIFFERS_PARTIAL_RECONSTRUCTION",
@@ -169,17 +178,17 @@
       "boost_buy_and_burn",
       "multi_hop_swap"
     ],
-    "comparison_report": "repro/pump_amm/canonical-frontier-20261028/results/saved-audit.json",
-    "build_log": "repro/pump_amm/canonical-frontier-20261028/results/build-a/build.log.gz",
+    "comparison_report": "research/amm-layout-closure-20261028/results/literal-elf-audit.json",
+    "build_log": "research/amm-layout-closure-20261028/results/build-a/build.log.gz",
     "validated_cases": 17462,
-    "validation_report": "repro/pump_amm/canonical-frontier-20261028/results/runtime/audit.json",
+    "validation_report": "research/amm-layout-closure-20261028/results/runtime/audit.json",
     "verified_transaction_signatures": 35418,
-    "main_acceptance_report": "repro/pump_amm/canonical-frontier-20261028/results/saved-audit.json",
+    "main_acceptance_report": "research/amm-layout-closure-20261028/results/runtime/audit.json",
     "main_acceptance_verifier": "scripts/verify_pump_amm_checkpoint.py",
     "current_binding_command": "python3 -B scripts/verify_pump_amm_checkpoint.py --repo .",
-    "checkpoint_manifest_sha256": "d05b92a344e1e095e6f68276eb50ddc64a36a0792ac20cb0e7c31c6f6f384489",
+    "checkpoint_manifest_sha256": "f942488a78df7ce4a839fe01ab70112a138eca3979208d83f5d08f511cd836d3",
     "normalized_function_matches": 784,
-    "raw_function_matches": 394,
+    "raw_function_matches": 784,
     "total_function_windows": 785,
     "matched_text_bytes": 1153016,
     "total_text_bytes": 1162040,
@@ -188,17 +197,17 @@
     ],
     "canonical_source_inputs": 68,
     "materialized_workspace_inputs": 69,
-    "source_recipe": "repro/pump_amm/canonical-frontier-20261028/workspace_recipe.py",
-    "source_binding_verifier": "repro/pump_amm/canonical-frontier-20261028/verify.py",
+    "source_recipe": "research/amm-layout-closure-20261028/ordered.ld",
+    "source_binding_verifier": "research/amm-layout-closure-20261028/verify.py",
     "dependency_packages": 257,
     "source_registry_archive_files": 8180,
     "candidate_cargo_lock_sha256": "799a8a32e862a81a73c5301a2d69f3d718d0e448670c48c4e077cfdc7dc35ac7",
-    "candidate_build_identity_report": "repro/pump_amm/canonical-frontier-20261028/results/build-b/build-record.json",
-    "source_builder": "repro/pump_amm/canonical-frontier-20261028/build.py",
+    "candidate_build_identity_report": "research/amm-layout-closure-20261028/results/build-b/build-record.json",
+    "source_builder": "research/amm-layout-closure-20261028/build.py",
     "maintained_builds": 2,
     "cold_dependency_build": true,
     "loader_controls": {
-      "report": "repro/pump_amm/canonical-frontier-20261028/results/loader/audit.json",
+      "report": "research/amm-layout-closure-20261028/results/loader/audit.json",
       "equal_allocation_pairs": 48,
       "upgradeable_policy_pairs": 24,
       "negative_programdata_loads": 3,
@@ -207,23 +216,22 @@
       "live_reachability_verified": false
     },
     "historical_checkpoint_status": {
-      "path": "research/contract-completion-20261028/amm-status-before.json",
-      "sha256": "4b2bf096fcca404ecc736ddeb661539c633a89642ddb9fa75187b16e2bd97ff8",
-      "scope": "Prior source, evidence and loader controls remain historical; they are not current-candidate qualification"
+      "path": "research/contract-completion-20261028/pump_amm-status-before-closure.json",
+      "sha256": "1eb1112f8791242e6c0edcb07b2220cf78febe02bd6533510dbb2600edfc02b3",
+      "scope": "Prior r31 image/recipe/runtime stay historical; current loader and corpus use86dbc"
     },
     "validation_notes": [
-      "25 suites, 17,462 cases; every retained observation field compared recursively and ordered logs equal after removing only compute consumption lines.",
-      "Final r31 adds three fully consumed immutable PDA seed statics, preserving every r13 normalized and raw window and adding127 raw windows (267 to394). No padding, unused data or binary editing is used.",
-      "A one-to-one physical assignment covers784 distinct candidate bodies and all7143 direct edges, with only the explicit sell boundary unmatched. Both programs have785 physical starts and1162040 text bytes; indirect/data-pointer closure remains separate.",
-      "Whole ELF remains unequal. Original and current rodata have25715 bytes, with moved/edited source-data regions still unresolved.",
-      "The sealed packet preserves earlier r13 build and runtime receipts as history; they are not relabeled as current source."
+      "Target-derived ordering of785real text sections and772rodata sections changes no source/object/output bytes; all784 recovered physical windows are raw-identical.",
+      "Every meaningful ELF byte outside sell9024bytes and21relocation-offset rows inside sell agrees literally, including data and headers. Whole ELF remains unequal.",
+      "The9,217,211-byte zero allocation suffix is separately verified and never emitted as compiler output.",
+      "Checked constructor correction preserves actual sell80callee-target occurrences and115transitive raw-identical callees/456edges; broad indirect closure is not claimed.",
+      "Two actual source builds, including an entirely empty host/target dependency build, reproduce both outputs. Fresh25suites/17,462strictpairs and72loader-control pairs bind this exact image."
     ],
     "compiler_diagnostics": {
-      "report": "research/contract-completion-20261028/amm-backend-diagnostics.json",
-      "sha256": "f09edd8136344d2cd12cf20171a36be54cdb1052e16f24215b0a2d6bdad2a0b6",
-      "scope": "Both compiled artifacts retain three Solana backend call/frame diagnostics. The named 1488-byte original wrapper and its six actual direct callees match complete normalized bodies; the fresh incentives_admin suite has 668 cases and 296 successful pairs. No broad frame-safety claim."
-    },
-    "prior_r13_raw_function_matches": 267
+      "report": "research/contract-completion-20261028/amm-layout-backend-diagnostics.json",
+      "scope": "Three retained backend diagnostics per actual build. Diagnosed wrapper and its six callees are literal original bodies; no broad frame-safety claim.",
+      "sha256": "03e3c47a834544be88f6f3b7cbe2d4bb19b445842f1972e9716bd24364b5eb95"
+    }
   },
   "pump_fees": {
     "source_reconstruction": "complete_meaningful_elf_reproduced_from_canonical_source",
@@ -296,14 +304,19 @@
     "workspace_lock_sha256": "8aafb199ee71c8ba61ecd9b2cd696de265ba555cc137f119fcd105d4a391054d"
   },
   "mayhem": {
-    "source_reconstruction": "partial_handlers_compiled",
+    "source_reconstruction": "maintained_exact_recipe",
     "historical_source_recovered": false,
-    "compiler": "native official platform-tools v1.54; original historical compiler unresolved",
-    "dependencies": "unresolved",
-    "build_flags": "recorded offline native source build",
-    "candidate_artifact": "repro/mayhem/initializer-current-20261027/candidate.so",
-    "full_byte_equality": false,
-    "comparison_status": "DIFFERS_PARTIAL_IMPLEMENTATION",
+    "compiler": "Pinned Windowsv1.54 SDK with authenticated Linux target libraries; fixed MSVC and WindowsSDK native inventory",
+    "dependencies": "215authenticated registry archives, reconstructed local source, and freshly compiled historical macro cohort",
+    "build_flags": "Explicit maintained build_exact.py with disclosed target-derived layout and539 unique Cargo filename-locator normalizations",
+    "candidate_artifact": "research/mayhem-canonical-promotion-20261028/hosted/40770208958/candidate.so",
+    "candidate_symbols_artifact": "research/mayhem-canonical-promotion-20261028/hosted/40770208958/symbols.so",
+    "candidate_sha256": "9af9e3b1cbc9d89340af4d9d46e4c88d3dc2fc67e0090f9370047d97532ff09d",
+    "symbols_sha256": "7b15bb1e5c7c9c53041322fa64d4a420906fffd96ff97a55d70d627bcb854960",
+    "candidate_bytes": 775416,
+    "full_byte_equality": true,
+    "meaningful_elf_equal": true,
+    "comparison_status": "MEANINGFUL_ELF_LITERAL_EQUAL",
     "implemented_handlers": [
       "initialize_global_params",
       "update_global_params",
@@ -331,330 +344,47 @@
       "sell_pump_swap",
       "initialize_mayhem_state"
     ],
-    "comparison_report": "repro/mayhem/initializer-current-20261027/comparison.json",
-    "build_log": "repro/mayhem/initializer-current-20261027/build.log",
+    "comparison_report": "research/mayhem-canonical-promotion-20261028/qualification.json",
+    "validation_report": "research/mayhem-canonical-promotion-20261028/runtime/summary.json",
+    "build_log": "research/contract-completion-20261028/mayhem-current-build.log.gz",
     "validated_cases": 9592,
-    "validation_reports": [
-      "repro/mayhem/initializer-current-20261027/runtime/admin.json.gz",
-      "repro/mayhem/initializer-current-20261027/runtime/burn.json.gz",
-      "repro/mayhem/initializer-current-20261027/runtime/buy.json.gz",
-      "repro/mayhem/initializer-current-20261027/runtime/buy-pump-swap-native.json.gz",
-      "repro/mayhem/initializer-current-20261027/runtime/buy-pump-swap-token.json.gz",
-      "repro/mayhem/initializer-current-20261027/runtime/buy-pump-swap-token22.json.gz",
-      "repro/mayhem/initializer-current-20261027/runtime/buy-v2-native.json.gz",
-      "repro/mayhem/initializer-current-20261027/runtime/buy-v2-token.json.gz",
-      "repro/mayhem/initializer-current-20261027/runtime/buy-v2-token22.json.gz",
-      "repro/mayhem/initializer-current-20261027/runtime/extend.json.gz",
-      "repro/mayhem/initializer-current-20261027/runtime/fee_recipient.json.gz",
-      "repro/mayhem/initializer-current-20261027/runtime/quote_withdraw.json.gz",
-      "repro/mayhem/initializer-current-20261027/runtime/sell.json.gz",
-      "repro/mayhem/initializer-current-20261027/runtime/sell-pump-swap-native.json.gz",
-      "repro/mayhem/initializer-current-20261027/runtime/sell-pump-swap-token.json.gz",
-      "repro/mayhem/initializer-current-20261027/runtime/sell-pump-swap-token22.json.gz",
-      "repro/mayhem/initializer-current-20261027/runtime/sell-v2-native.json.gz",
-      "repro/mayhem/initializer-current-20261027/runtime/sell-v2-token.json.gz",
-      "repro/mayhem/initializer-current-20261027/runtime/sell-v2-token22.json.gz",
-      "repro/mayhem/initializer-current-20261027/runtime/sweeps.json.gz",
-      "repro/mayhem/initializer-current-20261027/runtime/withdraw.json.gz",
-      "repro/mayhem/initializer-current-20261027/runtime/initializer.json.gz"
-    ],
-    "compiler_family_candidates": [
-      "v1.52",
-      "v1.53",
-      "v1.54",
-      "v1.55",
-      "v1.56"
-    ],
-    "compiler_family_evidence": "repro/compiler-fingerprints/REPORT.md",
-    "genuine_snapshot_sequences": {
-      "report": "repro/mayhem/compiler-v154-main/runtime/replay/burn/comparison.json",
-      "verification": "repro/mayhem/compiler-v154-main/runtime/verification/burn.json",
-      "sequences": 3,
-      "instruction_comparisons": 6,
-      "signed_transactions": 12,
-      "known_differences": [
-        "compute-unit logs",
-        "second-burn source location"
-      ],
-      "historical_replay": false
-    },
-    "framework_candidate": "Anchor 1.0.0 with explicit System-ID checking and runtime event-PDA contexts; exact historical revision unresolved",
-    "sell_validation": {
-      "synthetic_cases": 396,
-      "successful_cases": 134,
-      "signed_transactions": 792,
-      "report": "repro/mayhem/compiler-v154-main/runtime/replay/sell.json.gz",
-      "verification": "repro/mayhem/compiler-v154-main/runtime/verification/sell.json",
-      "historical_replay": false
-    },
-    "buy_validation": {
-      "synthetic_cases": 486,
-      "successful_cases": 187,
-      "signed_transactions": 972,
-      "report": "repro/mayhem/compiler-v154-main/runtime/replay/buy.json.gz",
-      "verification": "repro/mayhem/compiler-v154-main/runtime/verification/buy.json",
-      "historical_replay": false
-    },
-    "sell_v2_validation": {
-      "synthetic_cases": 1419,
-      "successful_cases": 418,
-      "rejection_cases": 1001,
-      "signed_transactions": 2838,
-      "families": {
-        "native": {
-          "cases": 473,
-          "mismatches": 0,
-          "receipt": "repro/mayhem/compiler-v154-main/runtime/replay/sell-v2-native.json.gz",
-          "compressed_sha256": "aadcfb993d3e0688939f3a91f220c3493f2b6e7c82e6346f97cde03469b884ce",
-          "successes": 176,
-          "rejections": 297,
-          "signed_transactions": 946,
-          "normalized_log_differences": [
-            "interval_overflow",
-            "retained10001",
-            "retained65535",
-            "quote_extreme_1_0_1"
-          ],
-          "verification": "repro/mayhem/compiler-v154-main/runtime/verification/sell-v2-native.json"
-        },
-        "token": {
-          "cases": 473,
-          "mismatches": 0,
-          "receipt": "repro/mayhem/compiler-v154-main/runtime/replay/sell-v2-token.json.gz",
-          "compressed_sha256": "c690acab9bcf38f86905ff69b331289f87d9684b943e9a882b21cb52bf351165",
-          "successes": 121,
-          "rejections": 352,
-          "signed_transactions": 946,
-          "normalized_log_differences": [
-            "interval_overflow",
-            "retained10001",
-            "retained65535",
-            "quote_extreme_1_0_1"
-          ],
-          "verification": "repro/mayhem/compiler-v154-main/runtime/verification/sell-v2-token.json"
-        },
-        "token22": {
-          "cases": 473,
-          "mismatches": 0,
-          "receipt": "repro/mayhem/compiler-v154-main/runtime/replay/sell-v2-token22.json.gz",
-          "compressed_sha256": "995ba8af281d12d050601c39de4650628d59a2f693a6af85d8f57b49ff896ada",
-          "successes": 121,
-          "rejections": 352,
-          "signed_transactions": 946,
-          "normalized_log_differences": [
-            "interval_overflow",
-            "retained10001",
-            "retained65535",
-            "quote_extreme_1_0_1"
-          ],
-          "verification": "repro/mayhem/compiler-v154-main/runtime/verification/sell-v2-token22.json"
-        }
-      },
-      "historical_replay": false
-    },
-    "buy_v2_validation": {
-      "synthetic_cases": 1839,
-      "successful_cases": 704,
-      "rejection_cases": 1135,
-      "signed_transactions": 3678,
-      "families": {
-        "native": {
-          "cases": 613,
-          "mismatches": 0,
-          "receipt": "repro/mayhem/compiler-v154-main/runtime/replay/buy-v2-native.json.gz",
-          "compressed_sha256": "f29c0ad172c885b72faec1eab69e9330eed2da6a2912877ed0842595d0734f73",
-          "successes": 284,
-          "rejections": 329,
-          "signed_transactions": 1226,
-          "normalized_log_differences": [
-            "interval_overflow",
-            "retained10001",
-            "retained65535",
-            "quote_extreme_1_0_1"
-          ],
-          "verification": "repro/mayhem/compiler-v154-main/runtime/verification/buy-v2-native.json"
-        },
-        "token": {
-          "cases": 613,
-          "mismatches": 0,
-          "receipt": "repro/mayhem/compiler-v154-main/runtime/replay/buy-v2-token.json.gz",
-          "compressed_sha256": "a1a93d20f7680ae035810054bb48de5dac063acb7ad40c97af9e500e56360c4f",
-          "successes": 210,
-          "rejections": 403,
-          "signed_transactions": 1226,
-          "normalized_log_differences": [
-            "interval_overflow",
-            "retained10001",
-            "retained65535",
-            "quote_extreme_1_0_1"
-          ],
-          "verification": "repro/mayhem/compiler-v154-main/runtime/verification/buy-v2-token.json"
-        },
-        "token22": {
-          "cases": 613,
-          "mismatches": 0,
-          "receipt": "repro/mayhem/compiler-v154-main/runtime/replay/buy-v2-token22.json.gz",
-          "compressed_sha256": "b9b7bd2fd77f6ac07751b8dca8b104f9fed0397ed4c94292404a6df9c8a67336",
-          "successes": 210,
-          "rejections": 403,
-          "signed_transactions": 1226,
-          "normalized_log_differences": [
-            "interval_overflow",
-            "retained10001",
-            "retained65535",
-            "quote_extreme_1_0_1"
-          ],
-          "verification": "repro/mayhem/compiler-v154-main/runtime/verification/buy-v2-token22.json"
-        }
-      },
-      "historical_replay": false
-    },
-    "buy_pump_swap_validation": {
-      "synthetic_cases": 1257,
-      "successful_cases": 327,
-      "rejection_cases": 930,
-      "signed_transactions": 2514,
-      "families": {
-        "native": {
-          "cases": 419,
-          "mismatches": 0,
-          "receipt": "repro/mayhem/compiler-v154-main/runtime/replay/buy-pump-swap-native.json.gz",
-          "compressed_sha256": "e6de94d7c922b766afb1eb5a760149413b6f27cb76771f3a2940157ec56b945a",
-          "successes": 163,
-          "rejections": 256,
-          "signed_transactions": 838,
-          "normalized_log_differences": [
-            "tokens_1000000000",
-            "tokens_10000000000",
-            "retained_10001",
-            "retained_65535",
-            "cap_1",
-            "cap_182495",
-            "rate_9223372036854775807_1_100",
-            "virtual_-122946690720",
-            "pool_tokens_14_18446744073709551615",
-            "pool_tokens_15_0",
-            "pool_tokens_15_1000000000"
-          ],
-          "verification": "repro/mayhem/compiler-v154-main/runtime/verification/buy-pump-swap-native.json"
-        },
-        "token": {
-          "cases": 419,
-          "mismatches": 0,
-          "receipt": "repro/mayhem/compiler-v154-main/runtime/replay/buy-pump-swap-token.json.gz",
-          "compressed_sha256": "aad5e7be7650ed5bcfe63b34059173fcea3b385318149556341f6b4fdde5f4de",
-          "successes": 164,
-          "rejections": 255,
-          "signed_transactions": 838,
-          "normalized_log_differences": [
-            "retained_10001",
-            "retained_65535",
-            "rate_9223372036854775807_1_100",
-            "virtual_-122946690720",
-            "pool_tokens_15_0"
-          ],
-          "verification": "repro/mayhem/compiler-v154-main/runtime/verification/buy-pump-swap-token.json"
-        },
-        "token22": {
-          "cases": 419,
-          "mismatches": 0,
-          "receipt": "repro/mayhem/compiler-v154-main/runtime/replay/buy-pump-swap-token22.json.gz",
-          "compressed_sha256": "0f445ecdc27d3dfdf698b785fa0c3af12262d03ada5cb4e3c32fcc1ba225baa0",
-          "successes": 0,
-          "rejections": 419,
-          "signed_transactions": 838,
-          "normalized_log_differences": [],
-          "verification": "repro/mayhem/compiler-v154-main/runtime/verification/buy-pump-swap-token22.json"
-        }
-      },
-      "historical_replay": false
-    },
-    "sell_pump_swap_validation": {
-      "synthetic_cases": 1239,
-      "successful_cases": 353,
-      "rejection_cases": 886,
-      "signed_transactions": 2478,
-      "families": {
-        "native": {
-          "cases": 413,
-          "mismatches": 0,
-          "receipt": "repro/mayhem/compiler-v154-main/runtime/replay/sell-pump-swap-native.json.gz",
-          "compressed_sha256": "c97b76d2613a006926be6b860fe6788609754d24088bef909e904d79d7a3b083",
-          "successes": 176,
-          "rejections": 237,
-          "signed_transactions": 826,
-          "normalized_log_differences": [
-            "retained_10001",
-            "retained_65535",
-            "rate_9223372036854775807_1_100",
-            "virtual_-122946690720",
-            "pool_tokens_15_0"
-          ],
-          "verification": "repro/mayhem/compiler-v154-main/runtime/verification/sell-pump-swap-native.json"
-        },
-        "token": {
-          "cases": 413,
-          "mismatches": 0,
-          "receipt": "repro/mayhem/compiler-v154-main/runtime/replay/sell-pump-swap-token.json.gz",
-          "compressed_sha256": "25b93f6ae0229f85bbb85c9f850cee01f7802bb6be2566931964eab8ccbb6ba4",
-          "successes": 177,
-          "rejections": 236,
-          "signed_transactions": 826,
-          "normalized_log_differences": [
-            "retained_10001",
-            "retained_65535",
-            "rate_9223372036854775807_1_100",
-            "virtual_-122946690720",
-            "pool_tokens_15_0"
-          ],
-          "verification": "repro/mayhem/compiler-v154-main/runtime/verification/sell-pump-swap-token.json"
-        },
-        "token22": {
-          "cases": 413,
-          "mismatches": 0,
-          "receipt": "repro/mayhem/compiler-v154-main/runtime/replay/sell-pump-swap-token22.json.gz",
-          "compressed_sha256": "9cca067d7585ac41478f390b15e73805939c3968c2f0e82bad81725558af73ab",
-          "successes": 0,
-          "rejections": 413,
-          "signed_transactions": 826,
-          "normalized_log_differences": [],
-          "verification": "repro/mayhem/compiler-v154-main/runtime/verification/sell-pump-swap-token22.json"
-        }
-      },
-      "historical_replay": false
-    },
-    "candidate_sha256": "8dac1ff7575e3aa74ffa1ab4c4db2152781f0c644665dbf1c278e284751b19cb",
-    "candidate_bytes": 620168,
-    "main_promotion_evidence": "repro/mayhem/initializer-current-20261027",
-    "main_build_identity_report": "repro/mayhem/initializer-current-20261027/stats.json",
-    "prior_checkpoint": "repro/mayhem/sell-result-error-main-twentyfour",
-    "candidate_build_identity_report": "repro/mayhem/initializer-current-20261027/stats.json",
-    "candidate_toolchain": "v1.54",
-    "candidate_build_frontend": "direct official Cargo/rustc; stock sbpf-solana-solana; fixedv1.52strip",
-    "candidate_symbols_artifact": "repro/mayhem/initializer-current-20261027/unstripped.so",
-    "main_acceptance_verifier": "repro/mayhem/initializer-current-20261027/verify.py",
-    "checkpoint_manifest_sha256": "b6b01b400fb7c5ab10db803ba27fe6a76e0e59e9ea7fad25250dc95760cf485c",
-    "current_source_snapshot": "repro/mayhem/initializer-current-20261027/source14.json",
-    "main_acceptance_report": "repro/mayhem/initializer-current-20261027/stats.json",
     "validated_instruction_comparisons": 9595,
-    "initializer_validated_cases": 16,
-    "signature_evidence_report": "repro/mayhem/initializer-current-20261027/stats.json",
+    "verified_transaction_signatures": 39062,
+    "retained_signed_transactions": 20056,
+    "normalized_function_matches": 441,
+    "raw_function_matches": 441,
+    "total_function_windows": 441,
+    "matched_text_bytes": 706744,
+    "total_text_bytes": 706744,
+    "remaining_unmatched_original_windows": [],
+    "canonical_source_inputs": 69,
+    "actual_raw_compiler_inputs": 67,
+    "maintained_builds": 2,
+    "allocation_suffix_bytes_not_emitted": 1992,
+    "source_builder": "programs/mayhem/build_exact.py",
+    "source_binding_verifier": "research/mayhem-canonical-promotion-20261028/verify.py",
+    "source_identity_report": "research/mayhem-canonical-promotion-20261028/selection.json",
+    "source_identity_report_sha256": "40878ee84e8d26d67f630979a9c3b7a8d023d1e3da397ac57eabbfcb6daaa29a",
+    "main_acceptance_verifier": "scripts/verify_mayhem_checkpoint.py",
+    "current_binding_command": "python3 -B scripts/verify_mayhem_checkpoint.py --repo .",
+    "checkpoint_manifest_sha256": "352ff61d70e81bdb009bf23ca8effe14cd7789d86f13ea214ddbd381f802239e",
+    "historical_checkpoint_status": {
+      "path": "research/contract-completion-20261028/mayhem-status-before-closure.json",
+      "sha256": "0751d75c3c22998529cc853dfea3235591dece1e4ba6234f7588aad467b9e3a9",
+      "scope": "Old15-source initializer selection and research precursors preserved"
+    },
     "validation_notes": [
-      "Exact current source14 is bound to two identical native builds.",
-      "9595 baseline instruction comparisons and16 genuine original-Pump initializer cases are separately counted.",
-      "No new whole-ELF identity or historical-source claim."
+      "Two independent fresh hosted host42/target163 compiler runs reproduce both complete ELFs. Full8491 native-file inventory unchanged.",
+      "Compiler output matches775416meaningful bytes; real-loader execution returns777408captured bytes with1992zero allocation suffix.",
+      "21suites:9592fixturecases include3two-step burn sequences, giving9595pairedtransactioncomparisons. All complete saved observations equal literally.",
+      "Corpus19190signed submissions/38192signaturefields; loader864/866 and direct control2/4 bring retained totals20056/39062.",
+      "Incidental runtime source_sha snapshots describe the actual prior15-file tree present during execution. They are not compiler-input proof; separate actual host archives establish current67compiled inputs.",
+      "Catalog-encoding digest caveat and unknown unique historical source/build provenance remain disclosed. No deployed/live acceptance claim."
     ],
-    "historical_full_inventory": "repro/mayhem/compiler-v154-main/main/complete-inventory.json.gz",
-    "historical_current_full_function_inventory": "repro/mayhem/compiler-v154-main/main/complete-inventory.json.gz",
-    "historical_source_refinement": "BuyPumpSwap and SellPumpSwap zero-divisor sizing failures preserve original typed PumpSwapCpiMathOverflow Result unwrap; no new handlers/cases.",
-    "historical_signature_count_scope": "19190 recorded/derived executions;13284retained raw transactions/26500signatures independently checked;5906administrative executions lack raw bytes. Per-family legacyhistory0/default-control limits remain explicit.",
-    "historical_compiler_recipe_note": "Current measured candidate uses actual officialv1.54 directCargo/genericV0 with unchanged14source/lock/profile. Genuine managedmain reproduced wholeca5d+f9de; default frontend choices unchanged. This does not recover unique historical compiler/recipe.",
-    "historical_runtime_publication": "repro/mayhem/compiler-v154-runtime",
-    "historical_known_diagnostic_differences": "repro/mayhem/compiler-v154-main/runtime/diagnostic-differences.json",
-    "source_refinement": "Preserves baseline handlers and adds original-Pump-authorized initialize_mayhem_state.",
-    "signature_count_scope": "19252 freshly captured signed transactions;38286 cryptographically verified signatures across baseline and initializer receipts.",
-    "compiler_recipe_note": "Two identical current-source nativev1.54 builds; original historical compiler/recipe remains unresolved.",
-    "runtime_publication": "repro/mayhem/initializer-current-20261027",
-    "diagnostic_comparison_scope": "Stored per-family comparators and full initializer fields; exact source coordinates and compute usage are excluded."
+    "build_log_archive": {
+      "path": "research/mayhem-canonical-promotion-20261028/hosted/40770208958/build.zip",
+      "member": "build/build/target/stderr.log",
+      "uncompressed_sha256": "0f050e97425b2c68ad85ba9dfd90dcd1b984381f39ca545247317ed323aca352"
+    }
   }
 }

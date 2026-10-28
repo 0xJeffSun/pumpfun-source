@@ -448,7 +448,7 @@ fn cashback<'info>(
             return err!(PumpAmmError::InvalidCashbackAccumulator);
         }
     }
-    let mut accumulator = Account::<UserVolumeAccumulator>::try_from_unchecked(user_volume_accumulator)?;
+    let mut accumulator = Account::<UserVolumeAccumulator>::try_from(user_volume_accumulator)?;
     let expected_ata = anchor_spl::associated_token::get_associated_token_address_with_program_id(
         &accumulator.key(),
         &quote_mint.key(),

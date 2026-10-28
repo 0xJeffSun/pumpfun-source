@@ -29,6 +29,20 @@ def module(name, path):
 def verify(root=ROOT, runtime=None):
     root = Path(root).resolve()
     selected = json.loads((root / 'repro/status.json').read_text())['pump_amm']
+    closure = 'research/amm-layout-closure-20261028'
+    if selected['candidate_artifact'] == closure + '/results/build-a/candidate.so':
+        def require(value, message):
+            if not value:
+                raise ValueError(message)
+        packet = root / closure
+        require(sha(packet / 'manifest.json') == selected['checkpoint_manifest_sha256'] == 'f942488a78df7ce4a839fe01ab70112a138eca3979208d83f5d08f511cd836d3', 'AMM layout packet seal')
+        report = module('current_amm_layout_closure', packet / 'verify.py').verify(root, runtime=runtime, signatures=True)
+        require(report['candidate_sha256'] == selected['candidate_sha256'] == sha(root / selected['candidate_artifact']), 'AMM selected layout image')
+        require(selected['candidate_symbols_artifact'] == closure + '/results/build-a/symbols.so' and report['symbols_sha256'] == selected['symbols_sha256'] == sha(root / selected['candidate_symbols_artifact']), 'AMM selected layout symbols')
+        require(report['normalized'] == selected['normalized_function_matches'] == 784 and report['raw'] == selected['raw_function_matches'] == 784, 'AMM literal window scope')
+        require(report['cases'] == selected['validated_cases'] == 17462 and report['signature_fields'] == selected['verified_transaction_signatures'] == 35418, 'AMM current runtime scope')
+        require(report['current_source_verified'] and report['cold_dependency_build'] and selected['full_byte_equality'] is False, 'AMM current source/build scope')
+        return report
     current = 'repro/pump_amm/canonical-frontier-20261028'
     if selected['candidate_artifact'] == current + '/results/build-a/candidate.so':
         def require(value, message):

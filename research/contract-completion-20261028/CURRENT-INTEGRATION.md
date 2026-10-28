@@ -41,41 +41,52 @@ exactly the reviewed serialization change from `str(relative_path)` to
 source, ELF and loader check. Four controls reject unrelated scanner changes,
 extra source and changed source. It performs no new compilation or replay.
 
-## Mayhem and remaining gaps
+## Current Mayhem, Pump and AMM closure
 
-The manual Windows workflow publishes a 67-input source proposal. Its first run
-records exact native tool candidates and a complete MSVC/Windows Kit inventory;
-its build run requires the reviewed inventory hash. The offline-vendor successor now compiles host and target on Windows. Its
-expected output hash gate fails: actual archive basenames differ from the
-file-specific linker selectors, so orphaned sections change the layout. Those
-failed fresh receipts remain separate. Canonical Mayhem promotion still requires
-a qualified explicit recipe, two fresh exact outputs, and candidate-bound runtime.
+Mayhem now selects its qualified 69-file maintained source, including the exact
+67 raw compiler inputs and the actually executed build entry point. Two separate
+fresh Windows host/target builds reproduce both complete ELFs. The 775,416-byte
+meaningful file is literally original; the 1,992-byte zero allocation suffix is
+separate. Real loader execution produces the complete captured allocation.
+All 9,595 paired transaction comparisons across 9,592 fixtures agree on every
+saved object. Independent cryptographic checks cover 20,056 retained transactions
+and 39,062 signature fields. Historical source/host provenance and the admitted
+catalog-encoding caveat remain disclosed in its current proof.
 
-The combined current reconstruction verifier now passes with the new Pump and
-AMM selections. The old checkpoints and their source/loader evidence remain
-historical; no stale source guard is disabled or reset.
+Pump selects the used create-boundary successor. Its 65 standalone inputs map to
+66 compiler inputs. Ordinary builds and an actual portable empty-target build
+repeat acc5/f795. Coverage stays 1,019 normalized / 188 raw. The full corpus has
+10,468 paired cases; 75 focused cases include 14 strict creation cases with
+original Source 198/220 and no coordinate substitution. The source explicitly
+retargets inherited blank-line layout around real used helpers; that layout is a
+reconstruction choice, not historical source proof. Broad diagnostic policy
+retains its stated Source/compute exclusions. Repeated transaction/signature
+fields are observations rather than unique counts.
 
-Pump binds 65 canonical inputs to 66 compiler inputs, two fresh local-crate
-builds and a portable empty-target build. All complete outputs reproduce.
-Its exact 1,019 normalized / 188 raw membership remains, with 44 suites / 10,468
-cases and 65 focused cases. The 18,343 serialized transaction fields and 27,875
-signature fields in the full receipt are observations, not unique transaction
-counts. Focused evidence adds 195 outcome transactions / 258 signature fields.
-The four creation-key cases explicitly retain Source220 versus reconstructed70.
+AMM selects the checked-constructor source with an explicit target-derived section
+order. Two actual builds, including a cold host/dependency target, repeat 86dbc/7271.
+All 784 recovered physical windows are raw-identical. Every meaningful ELF byte
+outside the 9,024-byte sell boundary and 21 relocation-offset rows inside it
+matches literally, including data and headers. Fresh 17,462 strict paired cases,
+35,418 signature fields and 72 loader pairs / 148 loader signatures pass. Three
+backend frame diagnostics remain per build; their wrapper and callees are literal
+original bodies. Broad frame safety is not claimed.
 
-AMM binds 68 canonical inputs to 69 compiler inputs and authenticates all 257
-registry packages / 8,180 archive files. Its final cold build and repeat produce
-the 784 normalized / 394 raw frontier; 17,462 strict runtime pairs and 72 loader
-pairs pass. Three retained backend call/frame diagnostics refer to a matched
-1,488-byte original wrapper with six matched actual callees; its incentives-admin
-suite has 668 pairs and 296 successes. This does not claim broad frame safety.
+The maintained source, selected artifacts, current-source gates and CI inputs now
+bind these qualified replacements. Prior selections and all precursor research
+remain archived unchanged. Mayhem CI uses the genuine loader-returned payload to
+preserve the captured own-program allocation; compiler output remains separate.
 
 [Relay's second maintained build](../relay-current-repeat-20261028/README.md)
-reproduces the entire meaningful ELF from an empty target. Fresh real-loader
-execution uses 912 signed transactions, and the resulting exact allocation
-payload passes all 536 retained records with literal account-state and ordered
-log agreement. The new gate rechecks 3,006 loader/runtime signature fields.
+reproduces its complete meaningful ELF from an empty target. Fresh real-loader
+execution uses 912 signed transactions and all 536 retained replay records agree.
 
-Sixteen Pump windows, one AMM window, complete Pump/AMM ELF identity and current
-Mayhem promotion remain open. None of these integration results completes the
-full objective in REQUIREMENTS.md.
+Sixteen Pump windows and the AMM sell window still prevent full reconstruction.
+Their whole meaningful ELFs remain unequal. The objective in REQUIREMENTS.md is
+still active. Hosted CI for the integration is not established by local checks.
+
+A fresh 18-case admin wallet control on selected acc5 exposes 8 Token/Token2022
+coin-validation/CPI-order or inner-observation differences. The control and its
+exact candidate identity are retained in known-admin-wallet-guard-acc5.json.gz.
+Those cases are outside the earlier 44-suite corpus; the mismatch is not hidden
+by the source/build qualification and remains an active source correction.
