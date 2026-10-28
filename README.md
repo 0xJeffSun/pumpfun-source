@@ -140,6 +140,9 @@ counterpart pairs without claiming complete data or indirect-call identity.
 A [writer-record extension](research/mayhem-current436-writer-records-20261028/README.md)
 checks ten further method pointers across five 48-byte spans while retaining the
 same closed relation; complete allocation extents and dynamic dispatch remain open.
+The [counted-literal proof](research/mayhem-current436-counted-literals-20261028/README.md)
+checks 553 instruction-label bytes through explicit pointer/length arguments.
+Both extensions remain bound to the previous 436-window artifact.
 
 The [remaining-body review](docs/MAYHEM-COMPLETION.md#retained-partial-source-controls)
 preserves partial AMM and V2 source controls. The historical
