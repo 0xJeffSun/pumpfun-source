@@ -91,6 +91,24 @@ def _verify_amm_owner6048(root):
 
 def verify(program, root):
     status = read(root / 'repro/status.json')[program]
+    if program == 'pump_fees' and status['candidate_artifact'] == 'research/all-contract-completion-20261028/fees-built/canonical-01/candidate.so':
+        def require(value, message):
+            if not value:
+                raise ValueError(message)
+        packet = root / 'research/all-contract-completion-20261028'
+        require(sha(packet / 'fees-selection.json') == status['source_identity_report_sha256'], 'Fees selection binding')
+        result = subprocess.run([sys.executable, '-B', str(root / 'research/all-contract-completion-20261028/verify_current_fees.py'), '--repo', str(root)], capture_output=True, text=True, check=True)
+        detail = json.loads(result.stdout)
+        require(detail['meaningful_elf_equal'] is True and detail['meaningful_elf_bytes'] == 873256, 'Fees meaningful ELF identity')
+        require(detail['candidate_sha256'] == status['candidate_sha256'], 'Fees selected candidate hash')
+        require(detail['symbols_sha256'] == status['symbols_sha256'], 'Fees selected symbols hash')
+        require(sha(root / status['candidate_artifact']) == detail['candidate_sha256'], 'Fees literal candidate binding')
+        require(sha(root / status['candidate_symbols_artifact']) == detail['symbols_sha256'], 'Fees literal symbols binding')
+        require(sha(root / 'Cargo.toml') == status['workspace_manifest_sha256'], 'Fees workspace manifest binding')
+        require(sha(root / 'Cargo.lock') == status['workspace_lock_sha256'], 'Fees workspace lock binding')
+        runtime = subprocess.run([sys.executable, '-B', str(root / 'research/contract-completion-20261028/verify_fees_runtime.py'), '--repo', str(root)], capture_output=True, text=True, check=True)
+        detail['fresh_runtime_qualification'] = json.loads(runtime.stdout)
+        return {'status': 'PASS', 'program': program, 'candidate_sha256': detail['candidate_sha256'], 'actual_current_sources_checked': True, 'meaningful_elf_equal': True, 'source_and_build': detail}
     if program == 'pump_amm' and status['candidate_artifact'] == 'repro/pump_amm/v2-mint-clone-recovery-20261028/results/build/candidate.so':
         from verify_pump_amm_checkpoint import verify as verify_amm
         return verify_amm(root)
