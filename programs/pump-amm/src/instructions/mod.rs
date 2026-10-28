@@ -8,3 +8,5 @@ pub mod liquidity;
 pub mod create_pool;
 
 pub mod boost;
+
+pub mod sweep_fees;

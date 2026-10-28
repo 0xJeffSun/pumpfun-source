@@ -1465,3 +1465,5 @@ research/amm-recipient-mode-recovery/compiler/** -whitespace
 research/amm-recipient-mode-recovery/controllers/** -whitespace
 research/amm-recipient-mode-recovery/overlap-review.json -whitespace
 research/amm-prepare-pool-recovery/** -text -whitespace
+repro/pump_amm/event-ownership-recovery-20261027/results/** -whitespace
+repro/pump_amm/event-ownership-recovery-20261027/followup/** -whitespace

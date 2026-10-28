@@ -10,36 +10,33 @@ ELF and, through a separate loader deployment, its captured payload.**
 
 ## Current progress
 
+**PumpSwap: 653/785 function windows matched (83.2%); 132 remain (16.8%). Matched windows cover 70.5% of original executable text, leaving 343,096 bytes (29.5%).**
+
+These are binary-coverage measurements. Full call/data/relocation identity, original build provenance and uncovered behavior remain open. The [remaining-work review](repro/pump_amm/event-ownership-recovery-20261027/remaining-audit/README.md) lists all 132 unmatched windows.
+
 [Current main-Pump parallel research snapshot](research/main-pump-parallel-checkpoint-20261027/README.md) preserves the verified intermediates and in-progress source beyond the maintained checkpoint.
 
 **Main Pump: 71.9% of function windows matched; 51.6% of original text covered. Complete reconstruction remains unfinished.**
 
 Reproduce the selected Pump ELF with its [archived Rust/linker recipe](repro/pump/main-contract-round37-20261027/reproduce.py).
 
-
-
-
-
-
-
-
-Across the latest verified checkpoints, **2,904 / 3,338 inferred function windows
-match (87.0%)**. Their matched windows cover **3,891,920 / 5,213,128 original text
+Across the latest verified checkpoints, **2,906 / 3,338 inferred function windows
+match (87.1%)**. Their matched windows cover **3,894,064 / 5,213,128 original text
 bytes (74.7%)**. **Two of five programs have complete meaningful-ELF identity**;
 three of the four core contracts still differ from their captured binaries.
 
 These percentages measure bounded binary-recovery progress, not a claim that
-86.9% of the engineering work is finished. Complete reconstruction also requires
+87.1% of the engineering work is finished. Complete reconstruction also requires
 all remaining code, calls, data, relocations and build provenance.
 
 | Latest verified checkpoint | Matched windows | Matched % | Raw-equal bodies | Normalized only | Unmatched | Whole ELF equal |
 | --- | ---: | ---: | ---: | ---: | ---: | --- |
 | [Pump Round37](repro/pump/main-contract-round37-20261027/README.md) | 744 / 1,035 | 71.9% | 175 | 569 | 291 | No |
-| [PumpSwap / AMM](repro/pump_amm/optional-context-recovery-20261027/README.md) | 651 / 785 | 82.9% | 148 | 503 | 134 | No |
+| [PumpSwap / AMM](repro/pump_amm/event-ownership-recovery-20261027/README.md) | 653 / 785 | 83.2% | 148 | 505 | 132 | No |
 | [Fees research](research/claude-fees100-crank-donation-20261027/README.md) | 585 / 585 | 100.0% | 585 | 0 | 0 | **Yes** |
 | [Mayhem research](research/mayhem-quotes-current-recovery-20261027/README.md) | 432 / 441 | 98.0% | 100 | 332 | 9 | No |
 | [Donation Relay](repro/donation-relay/canonical-exact-selection/README.md) | 492 / 492 | 100.0% | 492 | 0 | 0 | **Yes** |
-| **Total** | **2,904 / 3,338** | **87.0%** | **1,500** | **1,404** | **434** | **2 / 5** |
+| **Total** | **2,906 / 3,338** | **87.1%** | **1,500** | **1,406** | **432** | **2 / 5** |
 
 “Windows” are inferred original machine-function ranges, including framework and
 runtime helpers. Complete normalized matches mask specified call/address
@@ -50,11 +47,11 @@ the whole program is identical.
 | Checkpoint | Text bytes in matched windows | Text covered | Unmatched text |
 | --- | ---: | ---: | ---: |
 | Pump Round37 | 924,192 / 1,792,208 | 51.6% | 868,016 |
-| PumpSwap / AMM | 816,800 / 1,162,040 | 70.3% | 345,240 |
+| PumpSwap / AMM | 818,944 / 1,162,040 | 70.5% | 343,096 |
 | Fees research | 799,648 / 799,648 | 100.0% | 0 |
 | Mayhem research | 598,792 / 706,744 | 84.7% | 107,952 |
 | Donation Relay | 752,488 / 752,488 | 100.0% | 0 |
-| **Total** | **3,891,920 / 5,213,128** | **74.7%** | **1,321,208** |
+| **Total** | **3,894,064 / 5,213,128** | **74.7%** | **1,319,064** |
 
 Pump and AMM rows describe the verified maintained sources. Fees and Mayhem rows
 are the latest qualified research frontiers, distinct from their maintained
@@ -214,9 +211,9 @@ improvements, and Create call-graph recovery. The full recovery chain contains
 88,263 current files. These experiments retain their individual status and add
 no accepted matches.
 
-The latest [PumpSwap optional-u64 and Context recovery](repro/pump_amm/optional-context-recovery-20261027/README.md) matches 651 windows and 148 raw bodies, fixes all 123 short optional-u64 differences, restores the CreatePool and V2 wrapper boundaries, and recovers typed creator-payout call structure. All 17,462 corpus cases and retained supplemental suites pass; 134 AMM windows remain.
+The latest [PumpSwap event ownership and sweep Context recovery](repro/pump_amm/event-ownership-recovery-20261027/README.md) matches 653 windows and 148 raw bodies. All 38 IDL dispatch wrappers match, eight event sites reuse the observed object, and the quote selector borrows its mint key. All17,462 corpus cases and retained supplemental suites pass;132 AMM windows remain.
 
-Remaining priorities are the 291 Pump, 134 AMM and 9 Mayhem unmatched
+Remaining priorities are the 291 Pump, 132 AMM and 9 Mayhem unmatched
 windows; deeper call/data/relocation identity; original build provenance; and
 uncovered behavior such as authentic fixed-admin AMM `create_config` success.
 The historical [150-handler audit](repro/reconstruction-audit-2026-10-26/handlers.md)

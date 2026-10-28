@@ -1,15 +1,15 @@
 # PumpSwap source reconstruction
 
-The maintained source is the [optional-u64 and Context checkpoint](../../repro/pump_amm/optional-context-recovery-20261027/README.md),
-candidate `97bd5553c199cd24fb2d07034c365527bee5b138bf5dd7a0aa3099186aad2643`. It matches **651/785 normalized windows (82.9%)**,
-including **148 raw bodies**, and covers **816,800/1,162,040 text bytes (70.3%)**.
-Whole ELF identity is false; **134 windows remain**.
+The maintained source is the [event ownership and sweep Context checkpoint](../../repro/pump_amm/event-ownership-recovery-20261027/README.md),
+candidate `4e6a5617a7a8c3474ed7662f0188df4b1824c08253ebfb08212351ca5249da12`. It matches **653/785 normalized windows (83.2%)**,
+including **148 raw bodies**, and covers **818,944/1,162,040 text bytes (70.5%)**.
+Whole ELF identity is false; **132 windows remain**.
 
-Two strict offline builds agree. All 17,462 corpus cases and retained supplemental
-suites pass. The 264-case optional-u64 matrix closes all 123 prior differences.
-The CreatePool and three V2 dispatch wrappers now match; typed creator-payout
-boundaries are recovered. The recipe binds 51 canonical, 52 workspace and 175
-registry inputs, 227 total, with 762 cached dependency artifacts unchanged.
+Two strict offline builds agree. All17,462 corpus cases and retained supplemental
+suites pass. The21-case reserved-recipient matrix closes all11 prior differences, and
+160 resize cases remain matched. Claim/InitBoost and legacy operation boundaries
+are restored;17 entrypoint source descriptors remain matched. The recipe binds51 canonical,52 workspace
+and175 registry inputs,227 total, with762 cached dependency artifacts unchanged.
 Counts overlap. Full code/data/call identity, original provenance and exhaustive
 behavior remain open; the linked checkpoint records the exact proof limits.
 

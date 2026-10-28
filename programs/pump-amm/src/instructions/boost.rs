@@ -77,7 +77,7 @@ pub fn execute(ctx: Context<InitBoost>) -> Result<()> {
         virtual_quote_reserves: a.pool.virtual_quote_reserves,
         real_quote_reserves_after: a.pool_quote_token_account.amount,
     };
-    emit!(event.clone());
+    emit!(event);
     emit_cpi!(event);
     Ok(())
 }

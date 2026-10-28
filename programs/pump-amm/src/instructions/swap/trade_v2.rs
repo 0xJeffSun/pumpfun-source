@@ -419,7 +419,7 @@ pub fn execute_sell(ctx: Context<TradeV2>, base_amount: u64, limit: u64) -> Resu
         raw_quote_reserves, curve_quote, &selected, quote_without_lp_fee, total_quote,
         old_virtual, buyback_received, quote_transfer_fee,
     )?;
-        emit!(event.clone()); emit_cpi!(event);
+        emit!(event); emit_cpi!(event);
     Ok(())
 }
 
@@ -459,7 +459,7 @@ pub fn execute_buy(ctx: Context<TradeV2>, amount: u64, limit: u64) -> Result<()>
         user_base_reserves, user_quote_reserves, b, raw_quote_reserves,
         old_virtual, buyback_received, "buy_v2",
     )?;
-    emit!(event.clone()); emit_cpi!(event);
+    emit!(event); emit_cpi!(event);
     Ok(())
 }
 
@@ -507,6 +507,6 @@ pub fn execute_buy_exact_quote(ctx: Context<TradeV2>, amount: u64, limit: u64) -
         user_base_reserves, user_quote_reserves, b, raw_quote_reserves,
         old_virtual, buyback_received, "buy_exact_quote_in_v2",
     )?;
-    emit!(event.clone()); emit_cpi!(event);
+    emit!(event); emit_cpi!(event);
     Ok(())
 }

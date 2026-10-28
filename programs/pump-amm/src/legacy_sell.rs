@@ -310,7 +310,7 @@ pub fn execute<'info>(
         creator_fee_unclaimed: a.pool.creator_fees,
         quote_transfer_fee,
     };
-    emit!(event.clone());
+    emit!(event);
     emit_cpi!(event);
     Ok(())
 }

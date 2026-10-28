@@ -269,7 +269,6 @@ fn transfer<'info>(program: &AccountInfo<'info>, mint: &InterfaceAccount<'info, 
     }
 }
 
-#[inline(never)]
 pub(crate) fn prepare(a:&mut TradeV2) -> Result<()> {
     crate::instructions::swap::trade_v2::validate_cashback_coin(a.pool.is_cashback_coin as u8)?;
     crate::instructions::swap::prepare_pool(
