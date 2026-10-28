@@ -27,6 +27,8 @@ jobs:
               python -O -B research/mayhem-clean-linux-build-20261027/verify.py
           - suite: mayhem-native-current432
             commands: |
+              python -B research/mayhem-cpi-abort-proof/verify.py
+              python -B research/mayhem-cpi-abort-proof/test_verify.py
               python -I -B research/mayhem-native-current432-composition/verify.py
               python -I -B research/mayhem-native-current432-composition/test_verify.py
           - suite: mayhem-amm-shape-controls
