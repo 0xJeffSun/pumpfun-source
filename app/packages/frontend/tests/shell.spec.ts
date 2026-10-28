@@ -34,9 +34,16 @@ test("included routes load with one accurate active navigation item", async ({
     ).toBeVisible();
     await expect(activeNavigation(page)).toHaveCount(1);
     await expect(activeNavigation(page)).toContainText(navigationLabel);
-    await expect(
-      page.locator('[data-product-state="unavailable"]'),
-    ).toBeVisible();
+    if (path === "/create") {
+      await expect(
+        page.locator('[data-product-state="unavailable"]'),
+      ).toHaveCount(0);
+      await expect(page.getByRole("form")).toBeVisible();
+    } else {
+      await expect(
+        page.locator('[data-product-state="unavailable"]'),
+      ).toBeVisible();
+    }
   }
 });
 

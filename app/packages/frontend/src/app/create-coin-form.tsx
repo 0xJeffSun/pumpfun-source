@@ -187,6 +187,7 @@ export default function CreateCoinForm() {
       <form
         className="create-form create-panel"
         ref={formRef}
+        aria-label="Create coin metadata draft"
         onSubmit={previewDraft}
         noValidate
       >
