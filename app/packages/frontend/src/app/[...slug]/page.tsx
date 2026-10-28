@@ -5,7 +5,6 @@ import HolderRewardsInspector from "../holder-rewards-inspector";
 
 const routes: Record<string, [string, string]> = {
   explore: ["Explore", "Search, filters, coin rankings and discovery."],
-  live: ["Live", "Livestream discovery and viewing."],
   go: ["GO", "Campaign discovery and participation."],
   "holder-rewards": [
     "Holder rewards",
