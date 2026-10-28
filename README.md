@@ -19,6 +19,8 @@ distinction between 141 raw-equal and 296 normalized-only matches.
 
 These are binary-coverage measurements. Full call/data/relocation identity, original build provenance and uncovered behavior remain open. The [remaining-work review](repro/pump_amm/create-incentive-recovery-20261028/remaining-audit/README.md) lists all 125 unmatched AMM windows. The current checkpoint records source composition, reproducible builds and signed verification results.
 
+**Open compute-budget boundary:** four of 24 signed synthetic canonical Token-2022 CreatePool cases exceed the original program's default 200,000-unit budget while the current reconstruction succeeds. The [same baseline mismatch and higher-budget controls](repro/pump_amm/create-incentive-recovery-20261028/followup/canonical-compute/README.md) preserve this difference; these local synthetic calls do not establish network reachability.
+
 [Current main-Pump parallel research snapshot](research/main-pump-parallel-checkpoint-20261027/README.md) preserves the verified intermediates and in-progress source beyond the maintained checkpoint.
 
 **Main Pump: 79.5% of function windows matched; 61.8% of original text covered. Complete reconstruction remains unfinished.**

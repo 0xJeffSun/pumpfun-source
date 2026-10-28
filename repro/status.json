@@ -417,6 +417,18 @@
       "checkpoint": "repro/pump_amm/native-scanners-recovery-20261028",
       "candidate_sha256": "e33e6aace7d53008b3300364c07540f0cd7d1764196cd601554b08838b06e615",
       "scope": "Immutable H15 native compilation reused under the H16 dependency proof; not relabeled as a fresh native compilation."
+    },
+    "remaining_resource_followup": {
+      "status": "open",
+      "candidate_sha256": "9e4891b1a25fc8f7413e1e9f2ed8e5730a1c39301e306ab68fc4e82acfd952c3",
+      "report_path": "repro/pump_amm/create-incentive-recovery-20261028/followup/canonical-compute/README.md",
+      "manifest_sha256": "3ebb5a4c57a0f91d5a52c35fb640e2266cf75da6c95b56e2e5dbc6dc0cb38fac",
+      "default_compute_budget": 200000,
+      "cases": 24,
+      "mismatches": 4,
+      "high_compute_budget": 1400000,
+      "high_budget_mismatches": 0,
+      "scope": "Signed synthetic canonical Token-2022 CreatePool calls. Original budget exhaustion versus current success; no public-network reachability claim."
     }
   },
   "pump_fees": {

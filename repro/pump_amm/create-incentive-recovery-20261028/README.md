@@ -78,3 +78,7 @@ Add `--current-source` to bind maintained files. Before committing, run
 `verify_index_coverage.py --repository <checkout> --verify-blobs` to verify every
 result-manifest member in the Git index. The result manifest is
 `ffede26ff0512cd703b2b6ea72b64b4b0da4c949e76e5c08594e11cd28b83c26`.
+
+## Additional observed resource boundary
+
+The [canonical Token-2022 controls](followup/canonical-compute/README.md) record four default-budget differences also present in this checkpoint. All 24 higher-budget pairs agree. This is a synthetic-caller resource boundary, not a demonstrated live-network route, and remains open.

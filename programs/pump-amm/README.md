@@ -13,6 +13,8 @@ boundaries. All 17,462 core cases and 13 current acceptance groups pass; suite
 counts overlap. The native 216-case replay retains 14 raw source-coordinate log
 differences, with no differences after the declared diagnostic normalization.
 
+Four synthetic canonical Token-2022 CreatePool cases still differ at the default compute budget; the captured original exhausts compute while this checkpoint succeeds. See the [preserved resource-boundary proof](../../repro/pump_amm/create-incentive-recovery-20261028/followup/canonical-compute/README.md). Higher-budget agreement does not close default-budget parity.
+
 Two strict offline Linux builds agree. The version 3 source recipe binds
 **56 canonical, 57 workspace and 175 registry inputs**, 232 total. It includes
 `crates/native-transfer-fee`, a local path dependency. The 762 framework artifacts
