@@ -1,11 +1,9 @@
 # PumpSwap source reconstruction
 
-The maintained source is the [admin and withheld-fee harvest checkpoint](../../repro/pump_amm/admin-harvest-recovery-20261027/README.md),
-candidate `58478a978292ea6bc4e6a9776a536f91a9384da7f1f82a2e1f9743659a34b58b`. It matches **656/785 normalized windows (83.6%)**,
+The maintained source is the [incentive ordering and liquidity checkpoint](../../repro/pump_amm/incentive-order-recovery-20261027/README.md),
+candidate `c20007e860f47db1cc443344605afafe505d61bb4de6d61306fa164db3482544`. It matches **656/785 normalized windows (83.6%)**,
 including **148 raw bodies**, and covers **826,112/1,162,040 text bytes (71.1%)**.
 Whole ELF identity is false; **129 windows remain**.
-
-A [new incentive boundary matrix](../../repro/pump_amm/admin-harvest-recovery-20261027/followup/incentive-range-order/README.md) records 128 error-order differences in 1,730 synthetic cases. Both sides roll back state; a correction is in progress.
 
 Two strict offline builds agree. All17,462 corpus cases and retained supplemental
 suites pass. The21-case reserved-recipient matrix closes all11 prior differences, and

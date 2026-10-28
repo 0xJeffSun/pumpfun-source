@@ -57,7 +57,7 @@ analysis. Candidate symbol names are hypotheses about original identity.
 | **Mayhem latest research** | **441** | **141** | **293** | **7** | **0** |
 | **Relay canonical selection** | **492** | **492** | **0** | **0** | **0** |
 
-The current rows are bound to [Pump Round39](../repro/pump/main-contract-round39-20261027/README.md), [AMM admin/harvest recovery](../repro/pump_amm/admin-harvest-recovery-20261027/README.md), [exact Fees research](../research/claude-fees100-crank-donation-20261027/README.md) and [qualified Mayhem434 composition](../research/mayhem-current434-composition-20261027/README.md). They extend the dated inventory below. Each row is a partition, not a score of semantic correctness. The historical selected Mayhem source
+The current rows are bound to [Pump Round39](../repro/pump/main-contract-round39-20261027/README.md), [AMM admin/harvest recovery](../repro/pump_amm/incentive-order-recovery-20261027/README.md), [exact Fees research](../research/claude-fees100-crank-donation-20261027/README.md) and [qualified Mayhem434 composition](../research/mayhem-current434-composition-20261027/README.md). They extend the dated inventory below. Each row is a partition, not a score of semantic correctness. The historical selected Mayhem source
 ledger has 257 opaque windows, 12 of which happen to match local raw bytes.
 Selected Fees retains two call-conflicting rows; body existence does not resolve
 those conflicts. Different programs and studies use different matching rules.

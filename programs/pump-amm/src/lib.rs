@@ -30,7 +30,7 @@ mod extend;
 mod collect;
 mod transfer_creator;
 use anchor_spl::{token::Token, token_2022::Token2022, token_interface::{self, Mint, TokenAccount}};
-pub use instructions::admin;
+pub use instructions::{admin, liquidity};
 declare_id!("pAMMBay6oceH9fJKBRHGP5D4bD4sWpmSwMn52FMfXEA");
 
 #[program]
@@ -157,11 +157,11 @@ pub mod pump_amm_recovered {
         emit_cpi!(event);
         Ok(())
     }
-    pub fn deposit(ctx: Context<Liquidity>, lp_token_amount_out: u64, max_base_amount_in: u64, max_quote_amount_in: u64) -> Result<()> {
-        instructions::liquidity::deposit::deposit(ctx, lp_token_amount_out, max_base_amount_in, max_quote_amount_in)
+    pub fn deposit(mut ctx: Context<Liquidity>, lp_token_amount_out: u64, max_base_amount_in: u64, max_quote_amount_in: u64) -> Result<()> {
+        instructions::liquidity::deposit::deposit(&mut ctx, lp_token_amount_out, max_base_amount_in, max_quote_amount_in)
     }
-    pub fn withdraw(ctx: Context<Liquidity>, lp_token_amount_in: u64, min_base_amount_out: u64, min_quote_amount_out: u64) -> Result<()> {
-        instructions::liquidity::withdraw::withdraw(ctx, lp_token_amount_in, min_base_amount_out, min_quote_amount_out)
+    pub fn withdraw(mut ctx: Context<Liquidity>, lp_token_amount_in: u64, min_base_amount_out: u64, min_quote_amount_out: u64) -> Result<()> {
+        instructions::liquidity::withdraw::withdraw(&mut ctx, lp_token_amount_in, min_base_amount_out, min_quote_amount_out)
     }
 
     pub fn admin_update_token_incentives(ctx:Context<AdminUpdateTokenIncentives>,start_time:i64,end_time:i64,seconds_in_a_day:i64,day_number:u64,token_supply_per_day:u64)->Result<()>{incentives::admin(ctx,start_time,end_time,seconds_in_a_day,day_number,token_supply_per_day)}

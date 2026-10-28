@@ -27,10 +27,10 @@
     },
     {
       "name": "mayhem_research",
-      "matched_windows": 432,
+      "matched_windows": 434,
       "windows": 441,
-      "raw_bodies": 100,
-      "matched_text_bytes": 598792,
+      "raw_bodies": 141,
+      "matched_text_bytes": 607712,
       "text_bytes": 706744
     },
     {
@@ -43,10 +43,10 @@
     }
   ],
   "totals": {
-    "matched_windows": 2971,
+    "matched_windows": 2973,
     "windows": 3338,
-    "raw_bodies": 1522,
-    "matched_text_bytes": 4047352,
+    "raw_bodies": 1563,
+    "matched_text_bytes": 4056272,
     "text_bytes": 5213128,
     "complete_elf_programs": 2,
     "programs": 5

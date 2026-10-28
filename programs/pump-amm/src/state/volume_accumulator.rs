@@ -58,7 +58,9 @@ impl GlobalVolumeAccumulator {
             }
         }
         if token_supply_per_day>0 {
-            require!(current_timestamp<=self.end_time,PumpAmmError::SupplyUpdateForFinishedRange);
+            if current_timestamp>=self.start_time {
+                require!(current_timestamp<=self.end_time,PumpAmmError::SupplyUpdateForFinishedRange);
+            }
             let current=if current_timestamp<self.start_time {0}else{
                 usize::try_from(current_timestamp).expect("SVM is 64-bit")
                     .checked_sub(usize::try_from(self.start_time).expect("SVM is 64-bit"))
