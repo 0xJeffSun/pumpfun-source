@@ -1,6 +1,10 @@
 *.so binary
 *.bin binary
 
+# Captured application artifacts and published SDK sources are byte evidence.
+app/evidence/** -text
+app/packages/sdk/src/** -text
+
 # Preserve the source recovery's exact retained input and receipt bytes.
 research/pump-feeconfig-decoder-recovery/** -text
 research/pump-feeconfig-decoder-recovery/local-feeconfig.patch -whitespace
