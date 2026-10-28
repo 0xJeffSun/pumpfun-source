@@ -12,6 +12,16 @@ pub fn transfer_native<'info,T:AsRef<AccountInfo<'info>>>(
     Ok(())
 }
 
+/// Lamport move without the zero-amount early return (callers check the amount).
+#[inline(never)]
+pub fn move_native<'a,'info,T:AsRef<AccountInfo<'info>>>(
+    source:&Account<'a,BondingCurve>,destination:T,amount:u64,
+)->Result<()>{
+    source.sub_lamports(amount)?;
+    destination.add_lamports(amount)?;
+    Ok(())
+}
+
 #[inline(never)]
 pub fn transfer_to_user<'info>(
     native:bool,base_mint:&AccountInfo<'info>,curve:&Account<'info,BondingCurve>,
@@ -23,12 +33,9 @@ pub fn transfer_to_user<'info>(
     if native{return transfer_native(curve,destination,amount)}
     let from=quote_source.unwrap();
     let to=quote_destination.unwrap();
-    let authority=curve.to_account_info();
-    let mint_key=*base_mint.key;
-    let bump=[bump];
-    let seeds:&[&[u8]]=&[b"bonding-curve",mint_key.as_ref(),&bump];
     crate::sell_v2::quote_token_transfers::transfer_quote_tokens(
-        token_program,from,to,authority,quote_decimals,quote_mint,amount,&[seeds],
+        token_program,from,to,curve.to_account_info(),quote_decimals,quote_mint,amount,
+        &[&[b"bonding-curve",base_mint.key().as_ref(),&[bump]]],
     )
 }
 
@@ -43,12 +50,9 @@ pub fn transfer_to_owned<'info>(
     if native{return transfer_native(curve,destination,amount)}
     let from=quote_source.unwrap();
     let to=quote_destination.unwrap();
-    let authority=curve.to_account_info();
-    let mint_key=*base_mint.key;
-    let bump=[bump];
-    let seeds:&[&[u8]]=&[b"bonding-curve",mint_key.as_ref(),&bump];
     crate::sell_v2::quote_token_transfers::transfer_quote_tokens(
-        token_program,from,to,authority,quote_decimals,quote_mint,amount,&[seeds],
+        token_program,from,to,curve.to_account_info(),quote_decimals,quote_mint,amount,
+        &[&[b"bonding-curve",base_mint.key().as_ref(),&[bump]]],
     )
 }
 
@@ -63,12 +67,17 @@ pub fn transfer_to_recipient<'info>(
     if native{return transfer_native(curve,destination,amount)}
     let from=quote_source.unwrap();
     let to=quote_destination.unwrap();
-    let authority=curve.to_account_info();
-    let mint_key=*base_mint.key;
-    let bump=[bump];
-    let seeds:&[&[u8]]=&[b"bonding-curve",mint_key.as_ref(),&bump];
     crate::sell_v2::quote_token_transfers::transfer_quote_tokens(
-        token_program,from,to,authority,quote_decimals,quote_mint,amount,&[seeds],
+        token_program,from,to,curve.to_account_info(),quote_decimals,quote_mint,amount,
+        &[&[b"bonding-curve",base_mint.key().as_ref(),&[bump]]],
     )
 }
 
+#[inline(never)]
+pub fn transfer_native_unchecked<'info,T:AsRef<AccountInfo<'info>>>(
+    source:&Account<'info,BondingCurve>,destination:T,amount:u64,
+)->Result<()>{
+    source.sub_lamports(amount)?;
+    destination.add_lamports(amount)?;
+    Ok(())
+}

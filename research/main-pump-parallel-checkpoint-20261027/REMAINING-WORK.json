@@ -1,19 +1,19 @@
 {
-  "scope": "Main Pump only; all 291 unmatched original function windows assigned for recovery or initial static triage. Attribution is provisional, not proof of semantics.",
+  "scope": "Main Pump only; all 229 unmatched original function windows assigned for recovery or initial static triage. Attribution is provisional, not proof of semantics.",
   "created_at_utc": "2026-10-27T12:02:42.069370+00:00",
-  "baseline_candidate": "Round38 verified and selected as maintained source; the publication receipt records its commit. Later isolated deliveries are not counted here.",
-  "candidate_sha256": "92175d04269f4c2c6b6f7059042d331c41508a6828e98ff7d4154c528c552f25",
-  "baseline_normalized_windows": 744,
+  "baseline_candidate": "Round39 verified and selected as maintained source; the publication receipt records its commit. Later isolated deliveries are not counted here.",
+  "candidate_sha256": "3dc58bbdb78d04c97ad974fee8db83b88fc113c75feb812c13ca96486ba2d97a",
+  "baseline_normalized_windows": 806,
   "total_windows": 1035,
   "assignment_counts": {
-    "build_identity": 94,
-    "context_finish": 107,
-    "claim_finish": 90
+    "context_finish": 79,
+    "claim_finish": 72,
+    "build_identity": 78
   },
   "assigned_text_bytes": {
-    "build_identity": 287440,
-    "context_finish": 304016,
-    "claim_finish": 276560
+    "context_finish": 224208,
+    "claim_finish": 240520,
+    "build_identity": 257168
   },
   "lanes": {
     "build_identity": "Creation account parsers/wrappers, remaining Anchor/Borsh framework code, then assigned unattributed windows.",
@@ -46,31 +46,13 @@
   "safety_boundary": "The previously stopped token-owner experiment remains preserved locally and is not retried in these assignments.",
   "tasks": [
     {
-      "original_start": "0x340",
-      "bytes": 1336,
-      "original_body_sha256": "accb0db1a495ab79adaaff4bc5243a8fcb2b45d13308bc3dfcfc9c927eb121f5",
-      "owner": "build_identity",
-      "work": "Unattributed function: initial static triage required",
-      "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
-    },
-    {
-      "original_start": "0x2bc0",
-      "bytes": 232,
-      "original_body_sha256": "6440f16c8f221cedf3efa2ca18b31d5a6b4383838f8b5202d034c94cce04e07d",
-      "owner": "context_finish",
-      "work": "Unattributed function: initial static triage required",
-      "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
-    },
-    {
       "original_start": "0x7890",
       "bytes": 688,
       "original_body_sha256": "6642dc9a73d842c46533ed0d87a3efbe1cfa02e727506d50860ca0d5b6e5cc11",
       "owner": "context_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0xce50",
@@ -79,7 +61,7 @@
       "owner": "claim_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0xd300",
@@ -88,25 +70,7 @@
       "owner": "context_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
-    },
-    {
-      "original_start": "0xea68",
-      "bytes": 1240,
-      "original_body_sha256": "2e69b7d0d170298ccb9742427029b4a40513d4ca782cf37603ba3121148abaf0",
-      "owner": "context_finish",
-      "work": "Unattributed function: initial static triage required",
-      "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
-    },
-    {
-      "original_start": "0xf130",
-      "bytes": 1424,
-      "original_body_sha256": "16a1aec142235ffc803fec2f02f557a59f831ae4ae5505e3f31569d5c664bd01",
-      "owner": "context_finish",
-      "work": "Unattributed function: initial static triage required",
-      "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x14910",
@@ -115,7 +79,7 @@
       "owner": "context_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x160d0",
@@ -124,7 +88,7 @@
       "owner": "context_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x16bb8",
@@ -133,7 +97,7 @@
       "owner": "build_identity",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x16dc0",
@@ -142,7 +106,7 @@
       "owner": "build_identity",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x16fc8",
@@ -151,7 +115,7 @@
       "owner": "claim_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x171d0",
@@ -160,7 +124,7 @@
       "owner": "context_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x173d8",
@@ -169,7 +133,7 @@
       "owner": "context_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x176d8",
@@ -178,7 +142,7 @@
       "owner": "build_identity",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x178e0",
@@ -187,7 +151,7 @@
       "owner": "claim_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x17ae8",
@@ -196,7 +160,7 @@
       "owner": "context_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x17cf0",
@@ -205,7 +169,7 @@
       "owner": "build_identity",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x18678",
@@ -216,7 +180,7 @@
       "source_attribution": [
         "programs/pump/src/create_v2.rs"
       ],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x19cc0",
@@ -225,7 +189,7 @@
       "owner": "build_identity",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x19ec8",
@@ -234,7 +198,7 @@
       "owner": "build_identity",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x1a918",
@@ -243,7 +207,7 @@
       "owner": "build_identity",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x1ac28",
@@ -252,7 +216,7 @@
       "owner": "claim_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x1c880",
@@ -261,7 +225,7 @@
       "owner": "context_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x1db88",
@@ -270,7 +234,7 @@
       "owner": "context_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x1e7c0",
@@ -279,7 +243,7 @@
       "owner": "context_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x22498",
@@ -288,7 +252,7 @@
       "owner": "build_identity",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x22a10",
@@ -297,7 +261,7 @@
       "owner": "build_identity",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x298b0",
@@ -306,16 +270,7 @@
       "owner": "context_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
-    },
-    {
-      "original_start": "0x2a8e8",
-      "bytes": 2984,
-      "original_body_sha256": "5377f103f111663f8f8b7bfa9b94985bf6b427dcc354e11691ee9ae6a0d0b1eb",
-      "owner": "build_identity",
-      "work": "Unattributed function: initial static triage required",
-      "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x2b490",
@@ -324,7 +279,7 @@
       "owner": "context_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x2bf18",
@@ -333,7 +288,7 @@
       "owner": "context_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x2d920",
@@ -342,7 +297,7 @@
       "owner": "claim_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x2fa60",
@@ -353,7 +308,7 @@
       "source_attribution": [
         "programs/pump/src/creator/distribute_creator_fee_v2.rs"
       ],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x311f8",
@@ -362,7 +317,7 @@
       "owner": "context_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x32840",
@@ -371,7 +326,7 @@
       "owner": "build_identity",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x33c50",
@@ -382,7 +337,7 @@
       "source_attribution": [
         "programs/pump/src/creator/distribute_creator_fees.rs"
       ],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x34558",
@@ -393,7 +348,7 @@
       "source_attribution": [
         "programs/pump/src/creator/distribute_fee_to_holders.rs"
       ],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x37e08",
@@ -402,7 +357,7 @@
       "owner": "build_identity",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x38fc0",
@@ -413,7 +368,7 @@
       "source_attribution": [
         "programs/pump/src/creator/set_creator.rs"
       ],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x3a7b8",
@@ -424,25 +379,7 @@
       "source_attribution": [
         "programs/pump/src/creator/set_metaplex_creator.rs"
       ],
-      "status": "unmatched in verified Round38; not a completion estimate"
-    },
-    {
-      "original_start": "0x3b598",
-      "bytes": 416,
-      "original_body_sha256": "4973a3137571c0d6605593b2ad4670bae8c7516c22a0599f4f0588f554734298",
-      "owner": "context_finish",
-      "work": "Unattributed function: initial static triage required",
-      "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
-    },
-    {
-      "original_start": "0x3b738",
-      "bytes": 416,
-      "original_body_sha256": "5543f3fe19a3645cb16a9876656daacad41217a00e9e892078a18a1e287dd327",
-      "owner": "claim_finish",
-      "work": "Unattributed function: initial static triage required",
-      "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x3b8d8",
@@ -453,7 +390,7 @@
       "source_attribution": [
         "programs/pump/src/extend_account.rs"
       ],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x3cd50",
@@ -462,7 +399,7 @@
       "owner": "context_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x3d250",
@@ -471,7 +408,7 @@
       "owner": "build_identity",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x3dd78",
@@ -480,7 +417,7 @@
       "owner": "claim_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x3e550",
@@ -489,7 +426,7 @@
       "owner": "build_identity",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x3fb70",
@@ -498,7 +435,7 @@
       "owner": "claim_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x410b0",
@@ -507,7 +444,7 @@
       "owner": "claim_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x412b8",
@@ -516,7 +453,7 @@
       "owner": "context_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x414c0",
@@ -525,7 +462,7 @@
       "owner": "context_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x42618",
@@ -534,7 +471,7 @@
       "owner": "context_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x43060",
@@ -543,7 +480,7 @@
       "owner": "build_identity",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x43ea0",
@@ -552,7 +489,7 @@
       "owner": "build_identity",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x45fa0",
@@ -561,16 +498,7 @@
       "owner": "context_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
-    },
-    {
-      "original_start": "0x47d00",
-      "bytes": 296,
-      "original_body_sha256": "923e7d07a121bb492276b2fe485d79b5c4a430f2d959a1c40cf742b8be85b121",
-      "owner": "claim_finish",
-      "work": "Unattributed function: initial static triage required",
-      "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x47e28",
@@ -579,7 +507,7 @@
       "owner": "claim_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x48128",
@@ -588,16 +516,7 @@
       "owner": "context_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
-    },
-    {
-      "original_start": "0x48710",
-      "bytes": 1792,
-      "original_body_sha256": "955e911cf96eb3725ac762baab85c531928aa09275d11942aabd6d36140908d7",
-      "owner": "claim_finish",
-      "work": "Unattributed function: initial static triage required",
-      "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x48e10",
@@ -608,7 +527,7 @@
       "source_attribution": [
         "programs/pump/src/migrate.rs"
       ],
-      "status": "unmatched in verified Round38; not a completion estimate",
+      "status": "unmatched in verified Round39; not a completion estimate",
       "assignment_note": "Active migration Burn/helper recovery supersedes initial triage owner."
     },
     {
@@ -618,7 +537,7 @@
       "owner": "build_identity",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x49888",
@@ -627,7 +546,7 @@
       "owner": "claim_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x4bb40",
@@ -636,7 +555,7 @@
       "owner": "build_identity",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x4bd48",
@@ -645,7 +564,7 @@
       "owner": "claim_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x4bf50",
@@ -654,7 +573,7 @@
       "owner": "context_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x4c158",
@@ -663,7 +582,7 @@
       "owner": "claim_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x4e208",
@@ -672,7 +591,7 @@
       "owner": "build_identity",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x4eb28",
@@ -681,7 +600,7 @@
       "owner": "context_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x502f0",
@@ -690,16 +609,7 @@
       "owner": "build_identity",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
-    },
-    {
-      "original_start": "0x524f0",
-      "bytes": 368,
-      "original_body_sha256": "538daa7b1bf2c8caf9043b54233cd5b65eb863d6b2c9c8a6a58d0b6e9336d4b5",
-      "owner": "context_finish",
-      "work": "Unattributed function: initial static triage required",
-      "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x52660",
@@ -708,34 +618,7 @@
       "owner": "build_identity",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
-    },
-    {
-      "original_start": "0x54c90",
-      "bytes": 296,
-      "original_body_sha256": "2477692d1890ad974950d11d3e8415d2db0415008c9dd7e6214abcdb9bde2c44",
-      "owner": "context_finish",
-      "work": "Unattributed function: initial static triage required",
-      "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
-    },
-    {
-      "original_start": "0x54f30",
-      "bytes": 1792,
-      "original_body_sha256": "80793d1781b35d77e2fabd122118077b7a626e210bb1ee23919fd5d180a9f194",
-      "owner": "context_finish",
-      "work": "Unattributed function: initial static triage required",
-      "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
-    },
-    {
-      "original_start": "0x55630",
-      "bytes": 1792,
-      "original_body_sha256": "60455e9f8d015ebdadf47acb6793fff00acda141c7bae1c0dd3e1c0ffaa23c18",
-      "owner": "build_identity",
-      "work": "Unattributed function: initial static triage required",
-      "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x55d30",
@@ -746,17 +629,8 @@
       "source_attribution": [
         "programs/pump/src/migrate_v2.rs"
       ],
-      "status": "unmatched in verified Round38; not a completion estimate",
+      "status": "unmatched in verified Round39; not a completion estimate",
       "assignment_note": "Active migration Burn/helper recovery supersedes initial triage owner."
-    },
-    {
-      "original_start": "0x56658",
-      "bytes": 384,
-      "original_body_sha256": "02b30661d972e0693689d2cd8794de4522c5696187b7c82ab43f4cf7682c9b99",
-      "owner": "build_identity",
-      "work": "Unattributed function: initial static triage required",
-      "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
     },
     {
       "original_start": "0x567d8",
@@ -767,7 +641,7 @@
       "source_attribution": [
         "programs/pump/src/multi_hop_curve_swap.rs"
       ],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x57c38",
@@ -776,7 +650,7 @@
       "owner": "build_identity",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x57e40",
@@ -785,7 +659,7 @@
       "owner": "build_identity",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x58668",
@@ -794,7 +668,7 @@
       "owner": "context_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x58bf0",
@@ -803,7 +677,7 @@
       "owner": "context_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x58f58",
@@ -812,7 +686,7 @@
       "owner": "build_identity",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x5a260",
@@ -821,7 +695,7 @@
       "owner": "build_identity",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x5b3b0",
@@ -830,7 +704,7 @@
       "owner": "claim_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x5fc48",
@@ -839,7 +713,7 @@
       "owner": "claim_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x5fe50",
@@ -848,7 +722,7 @@
       "owner": "context_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x60058",
@@ -857,7 +731,7 @@
       "owner": "build_identity",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x60260",
@@ -866,7 +740,7 @@
       "owner": "claim_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x60468",
@@ -875,7 +749,7 @@
       "owner": "context_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x60670",
@@ -884,7 +758,7 @@
       "owner": "build_identity",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x60878",
@@ -893,7 +767,7 @@
       "owner": "claim_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x60a80",
@@ -902,7 +776,7 @@
       "owner": "build_identity",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x60ee0",
@@ -911,7 +785,7 @@
       "owner": "build_identity",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x61348",
@@ -920,7 +794,7 @@
       "owner": "build_identity",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x617e8",
@@ -929,7 +803,7 @@
       "owner": "build_identity",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x62170",
@@ -938,7 +812,7 @@
       "owner": "claim_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x62aa0",
@@ -947,7 +821,7 @@
       "owner": "build_identity",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x63530",
@@ -956,7 +830,7 @@
       "owner": "context_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x63738",
@@ -965,7 +839,7 @@
       "owner": "build_identity",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x63940",
@@ -974,7 +848,7 @@
       "owner": "context_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x63cf0",
@@ -983,7 +857,7 @@
       "owner": "build_identity",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x64358",
@@ -992,7 +866,7 @@
       "owner": "build_identity",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x645f8",
@@ -1001,7 +875,7 @@
       "owner": "context_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x64888",
@@ -1010,7 +884,7 @@
       "owner": "context_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x65238",
@@ -1019,7 +893,7 @@
       "owner": "build_identity",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x65eb0",
@@ -1028,7 +902,7 @@
       "owner": "context_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x68bd8",
@@ -1037,7 +911,7 @@
       "owner": "build_identity",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x6a1e0",
@@ -1046,7 +920,7 @@
       "owner": "claim_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x6a8a8",
@@ -1055,7 +929,7 @@
       "owner": "claim_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x6cd78",
@@ -1066,7 +940,7 @@
       "source_attribution": [
         "programs/pump/src/sell.rs"
       ],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x6eed8",
@@ -1075,7 +949,7 @@
       "owner": "claim_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x6f3e8",
@@ -1084,7 +958,7 @@
       "owner": "claim_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x6f6d8",
@@ -1093,7 +967,7 @@
       "owner": "claim_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x6f8e0",
@@ -1102,7 +976,7 @@
       "owner": "context_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x6fae8",
@@ -1111,7 +985,7 @@
       "owner": "build_identity",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x6fcf0",
@@ -1120,7 +994,7 @@
       "owner": "claim_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x6fef8",
@@ -1129,7 +1003,7 @@
       "owner": "claim_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x722d0",
@@ -1138,7 +1012,7 @@
       "owner": "build_identity",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x72810",
@@ -1147,7 +1021,7 @@
       "owner": "claim_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x746a8",
@@ -1156,7 +1030,7 @@
       "owner": "context_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x75308",
@@ -1167,7 +1041,7 @@
       "source_attribution": [
         "programs/pump/src/token_incentives/volume_accumulator.rs"
       ],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x76a28",
@@ -1176,7 +1050,7 @@
       "owner": "claim_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x77940",
@@ -1185,7 +1059,7 @@
       "owner": "context_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x7b250",
@@ -1194,7 +1068,7 @@
       "owner": "context_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x7bfd8",
@@ -1205,7 +1079,7 @@
       "source_attribution": [
         "programs/pump/src/token_incentives/volume_accumulator.rs"
       ],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x7c720",
@@ -1216,7 +1090,7 @@
       "source_attribution": [
         "programs/pump/src/token_incentives/volume_accumulator.rs"
       ],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x7e0b0",
@@ -1225,7 +1099,7 @@
       "owner": "claim_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x7e490",
@@ -1234,7 +1108,7 @@
       "owner": "claim_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x7f010",
@@ -1243,7 +1117,7 @@
       "owner": "context_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x7fde8",
@@ -1252,7 +1126,7 @@
       "owner": "claim_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x801f8",
@@ -1261,7 +1135,7 @@
       "owner": "claim_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x80488",
@@ -1270,7 +1144,7 @@
       "owner": "context_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x806c8",
@@ -1279,7 +1153,7 @@
       "owner": "build_identity",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x80df8",
@@ -1290,7 +1164,7 @@
       "source_attribution": [
         "programs/pump/src/lib.rs"
       ],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x81640",
@@ -1299,7 +1173,7 @@
       "owner": "context_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x81848",
@@ -1308,7 +1182,7 @@
       "owner": "claim_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x81aa0",
@@ -1317,7 +1191,7 @@
       "owner": "build_identity",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x82128",
@@ -1326,7 +1200,7 @@
       "owner": "build_identity",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x82af8",
@@ -1335,7 +1209,7 @@
       "owner": "context_finish",
       "work": "Shared fee/CPI/math recovery; coordinate V3 caller changes with claim_finish",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate",
+      "status": "unmatched in verified Round39; not a completion estimate",
       "collaborators": [
         "claim_finish"
       ]
@@ -1347,7 +1221,7 @@
       "owner": "context_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x834c8",
@@ -1356,7 +1230,7 @@
       "owner": "claim_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x837a8",
@@ -1365,7 +1239,7 @@
       "owner": "context_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x83c00",
@@ -1374,7 +1248,7 @@
       "owner": "claim_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x84970",
@@ -1383,7 +1257,7 @@
       "owner": "build_identity",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x84b78",
@@ -1392,7 +1266,7 @@
       "owner": "claim_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x84d80",
@@ -1401,7 +1275,7 @@
       "owner": "context_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x84f88",
@@ -1410,7 +1284,7 @@
       "owner": "build_identity",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x85190",
@@ -1419,7 +1293,7 @@
       "owner": "claim_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x85398",
@@ -1428,7 +1302,7 @@
       "owner": "context_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x855a0",
@@ -1437,7 +1311,7 @@
       "owner": "build_identity",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x857a8",
@@ -1446,7 +1320,7 @@
       "owner": "claim_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x859b0",
@@ -1455,7 +1329,7 @@
       "owner": "build_identity",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x87ca0",
@@ -1464,7 +1338,7 @@
       "owner": "context_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x87ea8",
@@ -1473,7 +1347,7 @@
       "owner": "build_identity",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x880b0",
@@ -1482,7 +1356,7 @@
       "owner": "claim_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x88908",
@@ -1491,7 +1365,7 @@
       "owner": "context_finish",
       "work": "Shared fee/CPI/math recovery; coordinate V3 caller changes with claim_finish",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate",
+      "status": "unmatched in verified Round39; not a completion estimate",
       "collaborators": [
         "claim_finish"
       ]
@@ -1503,7 +1377,7 @@
       "owner": "context_finish",
       "work": "Shared fee/CPI/math recovery; coordinate V3 caller changes with claim_finish",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate",
+      "status": "unmatched in verified Round39; not a completion estimate",
       "collaborators": [
         "claim_finish"
       ]
@@ -1517,7 +1391,7 @@
       "source_attribution": [
         "programs/pump/src/lib.rs"
       ],
-      "status": "unmatched in verified Round38; not a completion estimate",
+      "status": "unmatched in verified Round39; not a completion estimate",
       "collaborators": [
         "claim_finish"
       ]
@@ -1529,7 +1403,7 @@
       "owner": "build_identity",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x89ec8",
@@ -1538,16 +1412,7 @@
       "owner": "claim_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
-    },
-    {
-      "original_start": "0x8b970",
-      "bytes": 608,
-      "original_body_sha256": "ffcaf181a1d7a45483dd31016831c090686a93c8035f7b46125b82287d63edad",
-      "owner": "build_identity",
-      "work": "Unattributed function: initial static triage required",
-      "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x8bbd0",
@@ -1556,34 +1421,7 @@
       "owner": "context_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
-    },
-    {
-      "original_start": "0x8c2d8",
-      "bytes": 1176,
-      "original_body_sha256": "22ed1f87d8ced1fcf2f09af8d27963e02559c45f0681204bc2b9a76bcdc018e3",
-      "owner": "context_finish",
-      "work": "Unattributed function: initial static triage required",
-      "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
-    },
-    {
-      "original_start": "0x8cc58",
-      "bytes": 1200,
-      "original_body_sha256": "b1f830b3e75f14d95086583a6d59930c7fa33f80351a962aa766bc006d1fbbfc",
-      "owner": "build_identity",
-      "work": "Unattributed function: initial static triage required",
-      "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
-    },
-    {
-      "original_start": "0x8e908",
-      "bytes": 1176,
-      "original_body_sha256": "637da1bb92e2970f35bec47b4a29600fbc4007961a69926f96352168bc82fd26",
-      "owner": "claim_finish",
-      "work": "Unattributed function: initial static triage required",
-      "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x8eda0",
@@ -1592,34 +1430,7 @@
       "owner": "context_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
-    },
-    {
-      "original_start": "0x90e60",
-      "bytes": 2096,
-      "original_body_sha256": "7fe65674129a7fafbee684325828d5db9b8043ba9b4cbffdc58ec07c838f2bf6",
-      "owner": "context_finish",
-      "work": "Unattributed function: initial static triage required",
-      "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
-    },
-    {
-      "original_start": "0x91690",
-      "bytes": 2144,
-      "original_body_sha256": "943341444ce77e37e43492154f0fb7390784a41da7700d9c2c91aa8dc8d82107",
-      "owner": "context_finish",
-      "work": "Unattributed function: initial static triage required",
-      "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
-    },
-    {
-      "original_start": "0x92820",
-      "bytes": 2096,
-      "original_body_sha256": "f10a0c6933af5a2bd3b9907346dd590b672bf1f14280432bc48eaa83cec47e62",
-      "owner": "claim_finish",
-      "work": "Unattributed function: initial static triage required",
-      "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x93050",
@@ -1628,16 +1439,7 @@
       "owner": "context_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
-    },
-    {
-      "original_start": "0x93898",
-      "bytes": 2088,
-      "original_body_sha256": "8e6075ff6720c6efc415de0083fe7f2d4b06f640b7a755d2b2ae0a87949f12ba",
-      "owner": "build_identity",
-      "work": "Unattributed function: initial static triage required",
-      "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x940c0",
@@ -1646,7 +1448,7 @@
       "owner": "build_identity",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x94908",
@@ -1655,7 +1457,7 @@
       "owner": "claim_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x94e28",
@@ -1664,7 +1466,7 @@
       "owner": "build_identity",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x950e0",
@@ -1673,7 +1475,7 @@
       "owner": "context_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x95360",
@@ -1682,70 +1484,7 @@
       "owner": "context_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
-    },
-    {
-      "original_start": "0x95610",
-      "bytes": 1480,
-      "original_body_sha256": "351c3d17b96ebbfacd7c8a7f23f362a053610791795da71161ef240902c3a75b",
-      "owner": "context_finish",
-      "work": "Unattributed function: initial static triage required",
-      "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
-    },
-    {
-      "original_start": "0x95f38",
-      "bytes": 840,
-      "original_body_sha256": "5990c16c6afae7bc8c414fb849a4bb8f986b6b651ead2c75589ec712a374f1d0",
-      "owner": "context_finish",
-      "work": "Unattributed function: initial static triage required",
-      "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
-    },
-    {
-      "original_start": "0x96280",
-      "bytes": 824,
-      "original_body_sha256": "3de4f56ce317bcfa4c33c9c35dbb7259d8882ad040782118a58be08beecc4fe2",
-      "owner": "context_finish",
-      "work": "Unattributed function: initial static triage required",
-      "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
-    },
-    {
-      "original_start": "0x96d48",
-      "bytes": 944,
-      "original_body_sha256": "bacaaacce6d505c02ff959db0a382d2d45e94141be80b3c0ca7d3ffe5e999489",
-      "owner": "claim_finish",
-      "work": "Other main-contract instruction/helper recovery",
-      "source_attribution": [
-        "programs/pump/src/lib.rs"
-      ],
-      "status": "unmatched in verified Round38; not a completion estimate",
-      "assignment_note": "Current ABI/caller work explicitly assigned after R22 static triage."
-    },
-    {
-      "original_start": "0x970f8",
-      "bytes": 1160,
-      "original_body_sha256": "37d2a492f6ae4d9aa2cf971109ca85b1656bee9fb013f6ea48bce8a06ee0bd96",
-      "owner": "claim_finish",
-      "work": "Other main-contract instruction/helper recovery",
-      "source_attribution": [
-        "programs/pump/src/lib.rs"
-      ],
-      "status": "unmatched in verified Round38; not a completion estimate",
-      "assignment_note": "Current ABI/caller work explicitly assigned after R22 static triage."
-    },
-    {
-      "original_start": "0x97580",
-      "bytes": 944,
-      "original_body_sha256": "371d523ed7c3e18d08298d021524844d74087497f1d64e4db9fcfb1c329bc09a",
-      "owner": "claim_finish",
-      "work": "Other main-contract instruction/helper recovery",
-      "source_attribution": [
-        "programs/pump/src/lib.rs"
-      ],
-      "status": "unmatched in verified Round38; not a completion estimate",
-      "assignment_note": "Current ABI/caller work explicitly assigned after R22 static triage."
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x98210",
@@ -1754,7 +1493,7 @@
       "owner": "context_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x98438",
@@ -1763,7 +1502,7 @@
       "owner": "build_identity",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x98af0",
@@ -1772,7 +1511,7 @@
       "owner": "build_identity",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x9a190",
@@ -1781,7 +1520,7 @@
       "owner": "claim_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x9ac28",
@@ -1790,7 +1529,7 @@
       "owner": "context_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x9b148",
@@ -1799,7 +1538,7 @@
       "owner": "context_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x9b430",
@@ -1808,7 +1547,7 @@
       "owner": "claim_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0xa0070",
@@ -1817,7 +1556,7 @@
       "owner": "context_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0xa0538",
@@ -1826,16 +1565,7 @@
       "owner": "build_identity",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
-    },
-    {
-      "original_start": "0xa0838",
-      "bytes": 192,
-      "original_body_sha256": "acd0315faa5e218a89d787b2d10793c5ac5e881df56000ac15344de8f67264ad",
-      "owner": "build_identity",
-      "work": "Unattributed function: initial static triage required",
-      "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0xa08f8",
@@ -1844,7 +1574,7 @@
       "owner": "context_finish",
       "work": "Shared fee/CPI/math recovery; coordinate V3 caller changes with claim_finish",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate",
+      "status": "unmatched in verified Round39; not a completion estimate",
       "collaborators": [
         "claim_finish"
       ]
@@ -1856,7 +1586,7 @@
       "owner": "context_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0xa13e0",
@@ -1865,7 +1595,7 @@
       "owner": "build_identity",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0xa1bd8",
@@ -1876,7 +1606,7 @@
       "source_attribution": [
         "programs/pump/src/lib.rs"
       ],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0xa2188",
@@ -1885,16 +1615,7 @@
       "owner": "build_identity",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
-    },
-    {
-      "original_start": "0xa23f0",
-      "bytes": 1168,
-      "original_body_sha256": "009888be81346b30257d737d5fa017da09b27503091100bcfd076d639afbfe9f",
-      "owner": "context_finish",
-      "work": "Unattributed function: initial static triage required",
-      "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0xa9eb8",
@@ -1903,7 +1624,7 @@
       "owner": "build_identity",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0xac2b8",
@@ -1912,7 +1633,7 @@
       "owner": "claim_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0xac4c0",
@@ -1921,7 +1642,7 @@
       "owner": "context_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0xb0158",
@@ -1932,7 +1653,7 @@
       "source_attribution": [
         "programs/pump/src/create_v2.rs"
       ],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0xb3b90",
@@ -1941,25 +1662,7 @@
       "owner": "build_identity",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
-    },
-    {
-      "original_start": "0xc5650",
-      "bytes": 7344,
-      "original_body_sha256": "32110410dcc3b6eec9df445fca7d27bbe1d883c7fbabb754d6106c02af1894ca",
-      "owner": "context_finish",
-      "work": "Unattributed function: initial static triage required",
-      "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
-    },
-    {
-      "original_start": "0xca628",
-      "bytes": 1944,
-      "original_body_sha256": "97ab47d89e02351c7416f71e1215d869f723787641300f2675f043db4b5347b2",
-      "owner": "context_finish",
-      "work": "Unattributed function: initial static triage required",
-      "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0xcd3d8",
@@ -1968,34 +1671,7 @@
       "owner": "build_identity",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
-    },
-    {
-      "original_start": "0xcf510",
-      "bytes": 576,
-      "original_body_sha256": "5d6f979a9b905fdaafc2114d7d3f7b190b4e243b4689e2c99b87ed5beea1e2a7",
-      "owner": "claim_finish",
-      "work": "Unattributed function: initial static triage required",
-      "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
-    },
-    {
-      "original_start": "0xd5af0",
-      "bytes": 23608,
-      "original_body_sha256": "ce77541fc24099fc66a2e8171295b0718ba1d15d250ac6a3ce9009b7a8c88a3f",
-      "owner": "context_finish",
-      "work": "Unattributed function: initial static triage required",
-      "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
-    },
-    {
-      "original_start": "0xdd700",
-      "bytes": 3512,
-      "original_body_sha256": "c56dec7a3d2703848e4b8563b3d34a98dde65646b7569c30d47f1f0b1e481e03",
-      "owner": "context_finish",
-      "work": "Unattributed function: initial static triage required",
-      "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0xdf2d8",
@@ -2004,7 +1680,7 @@
       "owner": "build_identity",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0xebaa0",
@@ -2013,7 +1689,7 @@
       "owner": "context_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0xfdf20",
@@ -2022,7 +1698,7 @@
       "owner": "build_identity",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x101170",
@@ -2031,7 +1707,7 @@
       "owner": "build_identity",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x101c20",
@@ -2040,7 +1716,7 @@
       "owner": "context_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x105b78",
@@ -2049,7 +1725,7 @@
       "owner": "build_identity",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x1091b0",
@@ -2058,135 +1734,7 @@
       "owner": "claim_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
-    },
-    {
-      "original_start": "0x109488",
-      "bytes": 3160,
-      "original_body_sha256": "72a0d338b3d83e1d4d527fa1adc215edeb40c010584325a02672430754a0636e",
-      "owner": "claim_finish",
-      "work": "Other main-contract instruction/helper recovery",
-      "source_attribution": [
-        "programs/pump/src/lib.rs"
-      ],
-      "status": "unmatched in verified Round38; not a completion estimate"
-    },
-    {
-      "original_start": "0x10a0e0",
-      "bytes": 4056,
-      "original_body_sha256": "7580e453c6389a4ac640d04381b57cd5259df7db44874515fbe0e4119c02a916",
-      "owner": "claim_finish",
-      "work": "Unattributed function: initial static triage required",
-      "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
-    },
-    {
-      "original_start": "0x10b0b8",
-      "bytes": 4096,
-      "original_body_sha256": "f5a7c0e04c86cb0bd0f5a355fe4f36776fdc9838e90b25db5007fbb6f20c9b0d",
-      "owner": "build_identity",
-      "work": "Unattributed function: initial static triage required",
-      "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
-    },
-    {
-      "original_start": "0x10c0b8",
-      "bytes": 5504,
-      "original_body_sha256": "86a4692eef21660667649436f002c1a455ab8681da7ec992fa8dec563014c4f9",
-      "owner": "context_finish",
-      "work": "Unattributed function: initial static triage required",
-      "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
-    },
-    {
-      "original_start": "0x10d638",
-      "bytes": 4864,
-      "original_body_sha256": "4edeb56366a65e077d35553bbc3fc90ea83bc45affecf1f48964cd88d2cfb6fb",
-      "owner": "context_finish",
-      "work": "Unattributed function: initial static triage required",
-      "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
-    },
-    {
-      "original_start": "0x10e938",
-      "bytes": 4608,
-      "original_body_sha256": "618d5851f668cdaf9c7c0c713d8ba5a2a4b2cbce0ba4926f981002adbe148c3a",
-      "owner": "context_finish",
-      "work": "Unattributed function: initial static triage required",
-      "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
-    },
-    {
-      "original_start": "0x10fb38",
-      "bytes": 1472,
-      "original_body_sha256": "5b67440f750ef15c799a0c4da3c9b6046dd2621fe7dadad0c50c62f5eeaed635",
-      "owner": "build_identity",
-      "work": "Unattributed function: initial static triage required",
-      "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
-    },
-    {
-      "original_start": "0x1100f8",
-      "bytes": 3144,
-      "original_body_sha256": "38a95989999f3d7c9c5dbfd30511fc06f37f3e86167bb9e297581c39cfab0e81",
-      "owner": "build_identity",
-      "work": "Unattributed function: initial static triage required",
-      "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
-    },
-    {
-      "original_start": "0x110d40",
-      "bytes": 1672,
-      "original_body_sha256": "0eb2f09b55866470955ba0f011d151c785611486a7742f2e948e48066eff656b",
-      "owner": "context_finish",
-      "work": "Unattributed function: initial static triage required",
-      "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
-    },
-    {
-      "original_start": "0x1113c8",
-      "bytes": 3672,
-      "original_body_sha256": "1d5a482cc8a9ed251f9aaff01d0d67017ef4711291787483fab5e8cda22e7045",
-      "owner": "build_identity",
-      "work": "Unattributed function: initial static triage required",
-      "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
-    },
-    {
-      "original_start": "0x112220",
-      "bytes": 4520,
-      "original_body_sha256": "97d82d661b1664cc6e766fec7000e3f771907e26a4fa40315b2eca12e070ef58",
-      "owner": "claim_finish",
-      "work": "Unattributed function: initial static triage required",
-      "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
-    },
-    {
-      "original_start": "0x1133c8",
-      "bytes": 2872,
-      "original_body_sha256": "535a2a380aa8ce02ea63558a2a1a12c66547f70262f33e0179cd3fdfa06c3296",
-      "owner": "claim_finish",
-      "work": "Unattributed function: initial static triage required",
-      "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
-    },
-    {
-      "original_start": "0x113f00",
-      "bytes": 3656,
-      "original_body_sha256": "cbd0ae03b023629be8be1a183c4aa696c2d82b654b3afca2250f8cccbe69783a",
-      "owner": "claim_finish",
-      "work": "Unattributed function: initial static triage required",
-      "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
-    },
-    {
-      "original_start": "0x114d48",
-      "bytes": 2472,
-      "original_body_sha256": "795c6409cb1eeb4633255291aeb8a3ffd1fd5c2d7049ece9102e2e86647c66c1",
-      "owner": "claim_finish",
-      "work": "Unattributed function: initial static triage required",
-      "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x1156f0",
@@ -2195,7 +1743,7 @@
       "owner": "claim_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x1159d8",
@@ -2206,7 +1754,7 @@
       "source_attribution": [
         "programs/pump/src/lib.rs"
       ],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x115e70",
@@ -2215,34 +1763,7 @@
       "owner": "build_identity",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
-    },
-    {
-      "original_start": "0x116718",
-      "bytes": 4040,
-      "original_body_sha256": "29448eb927f43b914f919fa969440b2d7192b77a501548ee3f22da69ffe63833",
-      "owner": "context_finish",
-      "work": "Unattributed function: initial static triage required",
-      "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
-    },
-    {
-      "original_start": "0x118360",
-      "bytes": 1472,
-      "original_body_sha256": "1c8fe4a6b5cb222d0c844f620708834e2822f80423d0d54170c3d97633f3d961",
-      "owner": "claim_finish",
-      "work": "Unattributed function: initial static triage required",
-      "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
-    },
-    {
-      "original_start": "0x119c50",
-      "bytes": 2216,
-      "original_body_sha256": "3470df8d759ad278b1fe046aa2e6d4e341000bdbd150acb8ea82281047bae683",
-      "owner": "build_identity",
-      "work": "Unattributed function: initial static triage required",
-      "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x120628",
@@ -2253,7 +1774,7 @@
       "source_attribution": [
         "programs/pump/src/lib.rs"
       ],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x120c00",
@@ -2264,43 +1785,7 @@
       "source_attribution": [
         "programs/pump/src/lib.rs"
       ],
-      "status": "unmatched in verified Round38; not a completion estimate"
-    },
-    {
-      "original_start": "0x1255a8",
-      "bytes": 1344,
-      "original_body_sha256": "3357590751b06fef2f1200b12e73a32bd846682dfaea091093c74bb42235c2e0",
-      "owner": "context_finish",
-      "work": "Unattributed function: initial static triage required",
-      "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
-    },
-    {
-      "original_start": "0x12a4e0",
-      "bytes": 1768,
-      "original_body_sha256": "1f005c25e25e391a0b781c75f30793a46f0fa3988b29b0c57aaf07b1e49a5bbe",
-      "owner": "claim_finish",
-      "work": "Unattributed function: initial static triage required",
-      "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
-    },
-    {
-      "original_start": "0x12abc8",
-      "bytes": 1768,
-      "original_body_sha256": "5a0279c9385bee18f26c071f72ccefdb09059c10b96b07ce00bd6b47bb310c94",
-      "owner": "context_finish",
-      "work": "Unattributed function: initial static triage required",
-      "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
-    },
-    {
-      "original_start": "0x12ba48",
-      "bytes": 1072,
-      "original_body_sha256": "54faecfc0d29dcc01c77e3b4e371c700f3e1021f00d43bef887eb009a9c40468",
-      "owner": "build_identity",
-      "work": "Unattributed function: initial static triage required",
-      "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x135580",
@@ -2309,7 +1794,7 @@
       "owner": "build_identity",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x135820",
@@ -2318,7 +1803,7 @@
       "owner": "context_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x135ac0",
@@ -2327,7 +1812,7 @@
       "owner": "claim_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x1367c0",
@@ -2336,7 +1821,7 @@
       "owner": "context_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x137db8",
@@ -2345,16 +1830,7 @@
       "owner": "build_identity",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
-    },
-    {
-      "original_start": "0x137fc0",
-      "bytes": 2912,
-      "original_body_sha256": "b8b15b1534db87f80deded916e1ebd8bfd8e9f4dccb266ee4a54542868611013",
-      "owner": "build_identity",
-      "work": "Unattributed function: initial static triage required",
-      "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x138b20",
@@ -2363,7 +1839,7 @@
       "owner": "claim_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x13b9b8",
@@ -2372,7 +1848,7 @@
       "owner": "build_identity",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x13f630",
@@ -2381,7 +1857,7 @@
       "owner": "claim_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x144508",
@@ -2390,7 +1866,7 @@
       "owner": "context_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x147ba0",
@@ -2399,7 +1875,7 @@
       "owner": "context_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x1489f8",
@@ -2408,7 +1884,7 @@
       "owner": "claim_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x14a8a8",
@@ -2417,7 +1893,7 @@
       "owner": "build_identity",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x14c038",
@@ -2426,7 +1902,7 @@
       "owner": "context_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x14eab8",
@@ -2435,7 +1911,7 @@
       "owner": "claim_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x14ecc0",
@@ -2444,7 +1920,7 @@
       "owner": "context_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x14eec8",
@@ -2453,7 +1929,7 @@
       "owner": "build_identity",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x14f0d0",
@@ -2462,7 +1938,7 @@
       "owner": "claim_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x14f2d8",
@@ -2471,7 +1947,7 @@
       "owner": "context_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x14f4e0",
@@ -2480,7 +1956,7 @@
       "owner": "claim_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x152888",
@@ -2489,7 +1965,7 @@
       "owner": "claim_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x1549b0",
@@ -2498,7 +1974,7 @@
       "owner": "build_identity",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x154bb8",
@@ -2507,7 +1983,7 @@
       "owner": "claim_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x154dc0",
@@ -2516,7 +1992,7 @@
       "owner": "context_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x154fc8",
@@ -2525,7 +2001,7 @@
       "owner": "build_identity",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x1551d0",
@@ -2534,7 +2010,7 @@
       "owner": "claim_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x1553d8",
@@ -2543,7 +2019,7 @@
       "owner": "context_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x1555e0",
@@ -2552,7 +2028,7 @@
       "owner": "build_identity",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x1557e8",
@@ -2563,7 +2039,7 @@
       "source_attribution": [
         "programs/pump/src/admin_set_idl_authority.rs"
       ],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x15fdd0",
@@ -2572,16 +2048,7 @@
       "owner": "build_identity",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
-    },
-    {
-      "original_start": "0x163ea8",
-      "bytes": 1040,
-      "original_body_sha256": "efdc96e7a58e596e1a1a35b9cda88fc648fd68ac480c15f9c25f72e9fd29db43",
-      "owner": "context_finish",
-      "work": "Unattributed function: initial static triage required",
-      "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x164e40",
@@ -2590,7 +2057,7 @@
       "owner": "context_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x16a3e0",
@@ -2599,7 +2066,7 @@
       "owner": "claim_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x16bdf0",
@@ -2608,7 +2075,7 @@
       "owner": "build_identity",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x172110",
@@ -2617,7 +2084,7 @@
       "owner": "context_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x1774f8",
@@ -2626,7 +2093,7 @@
       "owner": "claim_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x177700",
@@ -2635,7 +2102,7 @@
       "owner": "context_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x17b780",
@@ -2644,7 +2111,7 @@
       "owner": "context_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x17bc48",
@@ -2653,16 +2120,7 @@
       "owner": "claim_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
-    },
-    {
-      "original_start": "0x17c0f0",
-      "bytes": 744,
-      "original_body_sha256": "134493d033646d46ff4d18902239f56bc4705e967bc15a43a9cd38312f31b780",
-      "owner": "context_finish",
-      "work": "Unattributed function: initial static triage required",
-      "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x17c850",
@@ -2671,16 +2129,7 @@
       "owner": "build_identity",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
-    },
-    {
-      "original_start": "0x184e38",
-      "bytes": 2664,
-      "original_body_sha256": "9a31235abcd225e39d1ffa1598fdd474b3b9194a9efe9c8e878a988d94adf9f6",
-      "owner": "claim_finish",
-      "work": "Unattributed function: initial static triage required",
-      "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x188cc8",
@@ -2689,25 +2138,7 @@
       "owner": "claim_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
-    },
-    {
-      "original_start": "0x18fc98",
-      "bytes": 2320,
-      "original_body_sha256": "8b8aed556178d06c679af059fb54ce1fba74c933361031fec79ef6234ebedafd",
-      "owner": "context_finish",
-      "work": "Unattributed function: initial static triage required",
-      "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
-    },
-    {
-      "original_start": "0x1905a8",
-      "bytes": 1104,
-      "original_body_sha256": "da2ac7150ee100470fa6ae9b491316c5d9ec07b34f98bc047f2dd1d13c4e8129",
-      "owner": "build_identity",
-      "work": "Unattributed function: initial static triage required",
-      "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x19a1a0",
@@ -2716,7 +2147,7 @@
       "owner": "build_identity",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x1a8e28",
@@ -2725,7 +2156,7 @@
       "owner": "context_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     },
     {
       "original_start": "0x1ab9b8",
@@ -2734,13 +2165,13 @@
       "owner": "claim_finish",
       "work": "Unattributed function: initial static triage required",
       "source_attribution": [],
-      "status": "unmatched in verified Round38; not a completion estimate"
+      "status": "unmatched in verified Round39; not a completion estimate"
     }
   ],
   "goal_complete": false,
-  "candidate_symbols_sha256": "e336d0cd0ec7e86495a85a0dc16201e1c8cfe232171f6b0cbaa9b7317cc5dc10",
+  "candidate_symbols_sha256": "f78be09190b15f47f91d795839251de46181e98d2d7b0218a306b849c692ef51",
   "ownership_rule": "Explicit source ownership takes precedence over initial balanced unknown-window triage; coordinate shared helpers before editing.",
-  "updated_at_utc": "2026-10-28T05:58:54.399220+00:00",
+  "updated_at_utc": "2026-10-28T06:11:39.416311+00:00",
   "cross_cutting_work": [
     {
       "owner": "root",

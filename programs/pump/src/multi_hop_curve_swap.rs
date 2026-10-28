@@ -4,7 +4,7 @@ use anchor_lang::prelude::*;
 use anchor_lang::solana_program::{instruction::{Instruction,AccountMeta},program::{invoke,invoke_signed},program_error::ProgramError};
 use anchor_spl::{token::Token,token_2022::Token2022,token_interface::{Mint,TokenAccount}};
 use crate::{Global,PumpError};
-use crate::trade_types::{BondingCurve,FeeConfig,FeeTier,Fees,TradeEvent};
+use crate::trade_types::{BondingCurve,FeeConfig,FeeTier,Fees};
 const FEES:Pubkey=anchor_lang::solana_program::pubkey!("pfeeUxB6jkeY1Hxd7CsFCAjcbHA9rWtchMGdZ6VojVZ");
 const AMM:Pubkey=anchor_lang::solana_program::pubkey!("pAMMBay6oceH9fJKBRHGP5D4bD4sWpmSwMn52FMfXEA");
 const WSOL:Pubkey=anchor_spl::token::spl_token::native_mint::ID;
@@ -32,7 +32,7 @@ pub struct CurveHop<'info>{
  pub base_mint:Box<InterfaceAccount<'info,Mint>>,
  pub quote_mint:Box<InterfaceAccount<'info,Mint>>,
  #[account(mut,seeds=[b"bonding-curve",base_mint.key().as_ref()],bump,
- constraint=bonding_curve.quote_mint==quote_mint.key() || (bonding_curve.quote_mint==Pubkey::default() && quote_mint.key()==WSOL) @ PumpError::MintDoesNotMatchBondingCurve)]
+ constraint=quote_mint.key()==bonding_curve.quote_mint || (bonding_curve.quote_mint==Pubkey::default() && quote_mint.key()==WSOL) @ PumpError::MintDoesNotMatchBondingCurve)]
  pub bonding_curve:Box<Account<'info,BondingCurve>>,
  #[account(mut)]pub associated_base_bonding_curve:Box<InterfaceAccount<'info,TokenAccount>>,
  /// CHECK: Address and native quote branch checked before transfer.
@@ -261,7 +261,7 @@ pub fn execute<'info>(ctx: Context<'_,'_,'info,'info,MultiHopCurve<'info>>,
         let mut h = CurveHop::try_accounts(&crate::ID,&mut remaining,&[],&mut bumps,
             &mut std::collections::BTreeSet::new())?;
         prepare_curve(a,&h)?;
-        crate::trade::validate_trade(h.bonding_curve.complete as u8,h.bonding_curve.is_cashback_coin as u8,flag & 2 == 0)?;
+        crate::trade::validate_trade(h.bonding_curve.complete as u8,h.bonding_curve.is_cashback_coin as u64,(flag & 2 == 0) as u64)?;
         require!(!h.bonding_curve.is_mayhem_mode,PumpError::MultiHopMayhemCurveNotSupported);
         admit_vaults(&h)?;
         if flag & 1 != 0 {
@@ -276,23 +276,19 @@ pub fn execute<'info>(ctx: Context<'_,'_,'info,'info,MultiHopCurve<'info>>,
         let trade_amount = if buy && !native {
             sub(amount,crate::trade::quote_transfer_fee(&h.quote_mint.to_account_info(),amount,false)?)?
         }else{amount};
+        let buy_transfer_fee = amount.checked_sub(trade_amount).ok_or_else(|| error!(PumpError::Overflow))?;
         let cap = div(h.base_mint.supply as u128 * c.virtual_quote_reserves as u128,
             c.virtual_token_reserves as u128)?;
-        let gross_sell = if buy { 0 } else {
-            n(div(amount as u128 * c.virtual_quote_reserves as u128,
-                c.virtual_token_reserves as u128 + amount as u128)?)?
-        };
-        let selected = select_fees(a,c,cap,if buy { trade_amount } else { gross_sell })?;
-        let p_rate = if flag & 1 != 0 { selected.rates.protocol_fee_bps } else { 0 };
-        let c_rate = if flag & 2 != 0 { selected.rates.creator_fee_bps } else { 0 };
         let mut post_fill = None;
-        let (base_amount,quote_amount,pf,cf,raw_output) = if buy {
+        let (p_rate,c_rate,base_amount,quote_amount,pf,cf,raw_output) = if buy {
+            let selected = select_fees(a,c,cap,trade_amount)?;
+            let p_rate = if flag & 1 != 0 { selected.rates.protocol_fee_bps } else { 0 };
+            let c_rate = if flag & 2 != 0 { selected.rates.creator_fee_bps } else { 0 };
             let (pf,cf) = buy_budget(trade_amount,p_rate,c_rate,c.creator)?;
             let q = sub(sub(trade_amount,pf)?,cf)?;
             require!(q != 0,PumpError::Overflow);
             let effective = q - 1;
-            let base = n(div(effective as u128 * c.virtual_token_reserves as u128,
-                c.virtual_quote_reserves as u128 + effective as u128)?)?;
+            let base = u64::try_from(div(effective as u128 * c.virtual_token_reserves as u128, c.virtual_quote_reserves as u128 + effective as u128)?).map_err(|_| error!(PumpError::Truncation))?;
             require_gt!(base,0,PumpError::BuyZeroAmount);
             let capped = base.min(c.real_token_reserves);
             if base > c.real_token_reserves {
@@ -317,21 +313,24 @@ pub fn execute<'info>(ctx: Context<'_,'_,'info,'info,MultiHopCurve<'info>>,
                 if post_base > 0 {
                     post_fill=Some(PostCompleteFill { base:post_base,quote:post_quote,
                         protocol:post_protocol,creator:post_creator,pool_base,pool_quote });
-                    (capped,first_quote,first_protocol,first_creator,add(capped,post_base)?)
-                }else{(capped,q,pf,cf,capped)}
-            }else{(base,q,pf,cf,base)}
+                    (p_rate,c_rate,capped,first_quote,first_protocol,first_creator,capped.checked_add(post_base).ok_or_else(|| error!(PumpError::Overflow))?)
+                }else{(p_rate,c_rate,capped,q,pf,cf,capped)}
+            }else{(p_rate,c_rate,base,q,pf,cf,base)}
         } else {
+            let gross_sell = u64::try_from(c.sell_quote(amount)?).map_err(|_| error!(PumpError::Truncation))?;
+            let selected = select_fees(a,c,cap,gross_sell)?;
+            let p_rate = if flag & 1 != 0 { selected.rates.protocol_fee_bps } else { 0 };
+            let c_rate = if flag & 2 != 0 { selected.rates.creator_fee_bps } else { 0 };
             let pf = if flag & 1 != 0 { selected.protocol } else { 0 };
             let cf = if flag & 2 != 0 { selected.creator } else { 0 };
             let net = sub(sub(gross_sell,pf)?,cf)?;
             require_gt!(net,0,PumpError::SellZeroAmount);
-            (amount,gross_sell,pf,cf,net)
+            (p_rate,c_rate,amount,gross_sell,pf,cf,net)
         };
         let output = if !buy && !native {
             sub(raw_output,crate::trade::quote_transfer_fee(&h.quote_mint.to_account_info(),raw_output,false)?)?
         }else{raw_output};
-        let quote_before_adapter = if buy { amount } else { raw_output };
-        let quote_after_adapter = if buy { trade_amount } else { output };
+        let sell_transfer_fee = raw_output.checked_sub(output).ok_or_else(|| error!(PumpError::Overflow))?;
         if buy && native {
             crate::user_quote_payments::transfer_native(a.system_program.as_ref(),&a.user,h.bonding_curve.as_ref(),amount)?;
         } else if buy {
@@ -361,7 +360,7 @@ pub fn execute<'info>(ctx: Context<'_,'_,'info,'info,MultiHopCurve<'info>>,
             } else { (h.associated_quote_bonding_curve.to_account_info(),h.quote_mint.to_account_info(),h.quote_mint.decimals) };
             checked_transfer(from,mint,a.destination.to_account_info(),h.bonding_curve.to_account_info(),if buy{output}else{raw_output},decimals,&[seeds])?;
         }
-        let adapter_difference = sub(quote_before_adapter,quote_after_adapter)?;
+        let adapter_difference = if buy { buy_transfer_fee } else { sell_transfer_fee };
         // S02: Both assertions reflect terminal original edges, not new recoverable guards.
         let product = pf as u128 * a.global.buyback_basis_points as u128;
         assert!(product >> 64 <= 9999,"buyback fee is at most protocol_fee");
@@ -404,23 +403,18 @@ pub fn execute<'info>(ctx: Context<'_,'_,'info,'info,MultiHopCurve<'info>>,
             move_lamports(&h.bonding_curve.to_account_info(),&a.user.to_account_info(),output)?;
         }
         let c = &h.bonding_curve;
-        let event = TradeEvent {
-            mint: mint_key,sol_amount: if native { quote_amount } else { 0 },token_amount: base_amount,
-            is_buy: buy,user: a.user.key(),timestamp: Clock::get()?.unix_timestamp,
-            virtual_sol_reserves: if native { c.virtual_quote_reserves } else { 0 },
-            virtual_token_reserves: c.virtual_token_reserves,
-            real_sol_reserves: if native { c.real_quote_reserves } else { 0 },real_token_reserves: c.real_token_reserves,
-            fee_recipient: Pubkey::default(),fee_basis_points: p_rate,fee: pf,creator: c.creator,
-            creator_fee_basis_points: c_rate,creator_fee: cf,track_volume: false,total_unclaimed_tokens: 0,
-            total_claimed_tokens: 0,current_sol_volume: 0,last_update_timestamp: 0,ix_name: "multi_hop_swap".into(),
-            mayhem_mode: false,cashback_fee_basis_points: 0,cashback: 0,
-            buyback_fee_basis_points: a.global.buyback_basis_points,buyback_fee: buyback,shareholders: vec![],
-            quote_mint: c.quote_mint,quote_amount,virtual_quote_reserves: c.virtual_quote_reserves,
-            real_quote_reserves: c.real_quote_reserves,
-            holder_rewards_bps: if c.is_holder_reward { c_rate } else { 0 },
-            holder_rewards: if c.is_holder_reward { cf } else { 0 },
-            creator_fee_unclaimed: c.creator_fee,unparsed_trailing_field: adapter_difference,
+        let event_user=a.user.key();
+        let event_timestamp=Clock::get()?.unix_timestamp;
+        let event_fees=crate::trade_types::TradeEventFees {
+            fee:pf, creator_fee:cf,
+            fee_basis_points:p_rate, creator_fee_basis_points:c_rate,
         };
+        let event_volume=crate::UserVolumeAccumulator::default();
+        let event=crate::trade_types::make_trade_event(
+            c,&a.global,&event_volume,&event_user,&mint_key,buy,base_amount,
+            quote_amount,&event_fees,adapter_difference,buyback,
+            "multi_hop_swap",event_timestamp,
+        );
         route_event(a,&event,ctx.bumps.event_authority)?;
         if completed {
             let completion=crate::trade_types::CompleteEvent { user:a.user.key(),mint:mint_key,

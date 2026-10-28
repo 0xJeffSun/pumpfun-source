@@ -1,4 +1,5 @@
 use anchor_lang::prelude::*;
+use crate::reserved_bonding_curve_fees;
 #[derive(AnchorSerialize, AnchorDeserialize, Clone)]
 pub struct BondingCurve {
     pub virtual_token_reserves: u64,
@@ -329,12 +330,6 @@ pub fn prepare_bonding_curve<'info>(
 }
 
 #[inline(never)]
-pub fn reserved_bonding_curve_fees(curve: &BondingCurve) -> Result<u64> {
-    curve.creator_fee.checked_add(curve.protocol_fees)
-        .ok_or_else(|| error!(crate::PumpError::Overflow))
-}
-
-#[inline(never)]
 pub fn fund_bonding_curve_rent<'info>(
     curve: &Account<'info, BondingCurve>,
     system_program: &Program<'info, System>,
@@ -374,3 +369,71 @@ pub use crate::pump_fees::{
 #[event]
 #[derive(Clone)]
 pub struct CompleteEvent {pub user:Pubkey,pub mint:Pubkey,pub bonding_curve:Pubkey,pub timestamp:i64,pub quote_mint:Pubkey}
+
+// Original shared event constructor 0x8bbd0. Both callers retain Clock reads.
+pub struct TradeEventFees {
+    pub fee: u64,
+    pub creator_fee: u64,
+    pub fee_basis_points: u64,
+    pub creator_fee_basis_points: u64,
+}
+
+#[inline(never)]
+pub fn make_trade_event(
+    curve: &BondingCurve,
+    global: &crate::Global,
+    volume: &crate::UserVolumeAccumulator,
+    user: &Pubkey,
+    mint: &Pubkey,
+    is_buy: bool,
+    token_amount: u64,
+    quote_amount: u64,
+    fees: &TradeEventFees,
+    unparsed_trailing_field: u64,
+    buyback_fee: u64,
+    ix_name: &str,
+    timestamp: i64,
+) -> TradeEvent {
+    let real_quote_reserves = curve.real_quote_reserves;
+    let virtual_quote_reserves = curve.virtual_quote_reserves;
+    let quote_mint = curve.quote_mint;
+    let native = quote_mint == Pubkey::default();
+    TradeEvent {
+        mint: *mint,
+        sol_amount: if native { quote_amount } else { 0 },
+        token_amount,
+        is_buy,
+        user: *user,
+        timestamp,
+        virtual_sol_reserves: if native { virtual_quote_reserves } else { 0 },
+        virtual_token_reserves: curve.virtual_token_reserves,
+        real_sol_reserves: if native { real_quote_reserves } else { 0 },
+        real_token_reserves: curve.real_token_reserves,
+        fee_recipient: Pubkey::default(),
+        fee_basis_points: fees.fee_basis_points,
+        fee: fees.fee,
+        creator: curve.creator,
+        creator_fee_basis_points: fees.creator_fee_basis_points,
+        creator_fee: fees.creator_fee,
+        track_volume: false,
+        total_unclaimed_tokens: volume.total_unclaimed_tokens,
+        total_claimed_tokens: volume.total_claimed_tokens,
+        current_sol_volume: volume.current_sol_volume,
+        last_update_timestamp: volume.last_update_timestamp,
+        ix_name: ix_name.into(),
+        mayhem_mode: curve.is_mayhem_mode,
+        cashback_fee_basis_points: 0,
+        cashback: 0,
+        buyback_fee_basis_points: if curve.is_mayhem_mode { 0 } else { global.buyback_basis_points },
+        buyback_fee,
+        shareholders: Vec::new(),
+        quote_mint,
+        quote_amount,
+        virtual_quote_reserves: virtual_quote_reserves,
+        real_quote_reserves: real_quote_reserves,
+        holder_rewards_bps: if curve.is_holder_reward { fees.creator_fee_basis_points } else { 0 },
+        holder_rewards: if curve.is_holder_reward { fees.creator_fee } else { 0 },
+        creator_fee_unclaimed: curve.creator_fee,
+        unparsed_trailing_field,
+    }
+}
