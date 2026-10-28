@@ -95,6 +95,14 @@ function validateFixture(
       `Invalid fixture registration (${provenance}): path must be a local absolute path without a query or fragment`,
     );
   }
+  try {
+    if (/[^\x21-\x7e]/.test(candidate.path)) throw new URIError();
+    decodeURI(candidate.path);
+  } catch {
+    throw new Error(
+      `Invalid fixture registration (${provenance}): path must be a valid percent-encoded ASCII request-target`,
+    );
+  }
   if (candidate.query !== undefined) {
     if (
       candidate.query === null ||
@@ -111,6 +119,17 @@ function validateFixture(
     ) {
       throw new Error(
         `Invalid fixture registration (${provenance}): query values must be strings`,
+      );
+    }
+    try {
+      for (const [name, value] of Object.entries(candidate.query)) {
+        // URLSearchParams replaces unpaired surrogates; reject lossy keys first.
+        encodeURIComponent(name);
+        encodeURIComponent(value as string);
+      }
+    } catch {
+      throw new Error(
+        `Invalid fixture registration (${provenance}): query keys and values must be well-formed Unicode`,
       );
     }
   }
