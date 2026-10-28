@@ -73,6 +73,9 @@ jobs:
           - suite: mayhem-validate-sweep-o0073
             commands: |
               python -B research/claude-fees-final-mayhem-o0073/verify.py
+          - suite: mayhem-436-o0081-o0082
+            commands: |
+              python -B research/claude-mayhem-436-20261027/verify.py
           - suite: mayhem-sweep-failures
             commands: |
               python -B research/mayhem-sweep-failure-recovery/verify.py
