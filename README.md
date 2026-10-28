@@ -10,10 +10,10 @@ ELF and, through a separate loader deployment, its captured payload.**
 
 ## Current progress
 
-**Mayhem: 436/441 function windows matched (98.87%), including both Legacy trade
-bodies; five remain (1.13%). Unmatched code is 72,192 bytes (10.21%).**
-See the [completion review](docs/MAYHEM-COMPLETION.md) for all five bodies and the
-distinction between 141 raw-equal and 295 normalized-only matches.
+**Mayhem: 437/441 function windows matched (99.09%), including SweepFees and
+both Legacy trade bodies; four remain (0.91%). Unmatched code is 63,792 bytes (9.03%).**
+See the [completion review](docs/MAYHEM-COMPLETION.md) for all four bodies and the
+distinction between 141 raw-equal and 296 normalized-only matches.
 
 **PumpSwap: 656/785 function windows matched (83.6%); 129 remain (16.4%). Matched windows cover 71.1% of original executable text, leaving 335,928 bytes (28.9%).**
 
@@ -66,9 +66,9 @@ all remaining code, calls, data, relocations and build provenance.
 | [Pump Round43](repro/pump/main-contract-round43-20261027/README.md) | 817 / 1,035 | 78.9% | 203 | 614 | 218 | No |
 | [PumpSwap / AMM](repro/pump_amm/private-sweep-recovery-20261027/README.md) | 656 / 785 | 83.6% | 148 | 508 | 129 | No |
 | [Fees research](research/claude-fees100-crank-donation-20261027/README.md) | 585 / 585 | 100.0% | 585 | 0 | 0 | **Yes** |
-| [Mayhem qualified research](research/mayhem-current436-composition-20261027/README.md) | 436 / 441 | 98.9% | 141 | 295 | 5 | No |
+| [Mayhem qualified research](research/mayhem-current437-composition-20261028/README.md) | 437 / 441 | 99.1% | 141 | 296 | 4 | No |
 | [Donation Relay](repro/donation-relay/canonical-exact-selection/README.md) | 492 / 492 | 100.0% | 492 | 0 | 0 | **Yes** |
-| **Total** | **2,986 / 3,338** | **89.5%** | **1,569** | **1,417** | **352** | **2 / 5** |
+| **Total** | **2,987 / 3,338** | **89.5%** | **1,569** | **1,418** | **351** | **2 / 5** |
 
 “Windows” are inferred original machine-function ranges, including framework and
 runtime helpers. Complete normalized matches mask specified call/address
@@ -81,9 +81,9 @@ the whole program is identical.
 | Pump Round43 | 1,085,456 / 1,792,208 | 60.6% | 706,752 |
 | PumpSwap / AMM | 826,112 / 1,162,040 | 71.1% | 335,928 |
 | Fees research | 799,648 / 799,648 | 100.0% | 0 |
-| Mayhem research | 634,552 / 706,744 | 89.8% | 72,192 |
+| Mayhem research | 642,952 / 706,744 | 91.0% | 63,792 |
 | Donation Relay | 752,488 / 752,488 | 100.0% | 0 |
-| **Total** | **4,098,256 / 5,213,128** | **78.6%** | **1,114,872** |
+| **Total** | **4,106,656 / 5,213,128** | **78.8%** | **1,106,472** |
 
 Pump and AMM rows describe the verified maintained sources. Fees and Mayhem rows
 are the latest qualified research frontiers, distinct from their maintained
@@ -111,20 +111,19 @@ alternative source is an unpromoted compiler-context diagnostic.
 
 ## Behavior and remaining work
 
-**Mayhem now has 436/441 complete normalized matches (98.87%), leaving five
-bodies (1.13%) and 72,192 original text bytes (10.21%) unmatched.** The
-[qualified composition](research/mayhem-current436-composition-20261027/README.md)
-adds the complete Legacy Buy and Legacy Sell bodies, preserves all 141 raw-equal
-bodies and raises direct-call closure to 429 windows.
-Two combined builds agree; full trade, initializer, sweep and rate verification
-checks 18,534 signed records across overlapping scopes. Whole-ELF identity is
-still unfinished.
+**Mayhem now has 437/441 complete normalized matches (99.09%), leaving four
+bodies (0.91%) and 63,792 original text bytes (9.03%) unmatched.** The
+[qualified composition](research/mayhem-current437-composition-20261028/README.md)
+adds the complete SweepFees body, preserves all 141 raw-equal bodies and raises
+direct-call closure to 431 windows. Three root compilations agree. Fresh trade,
+initializer, sweep and rate verification checks 18,534 signed records across
+overlapping scopes. Whole-ELF identity is still unfinished.
 
 The complete Buy/Sell quotes and initializer retain their bounded typed-data
 checks, and the BpfWriter/ExtendAccountEvent origins remain repaired. O0073 and
-O0075 now have complete normalized bodies. Every remaining function is listed
+O0075 and O0076 now have complete normalized bodies. Every remaining function is listed
 in the [completion review](docs/MAYHEM-COMPLETION.md) and the
-[441-row inventory](research/mayhem-current436-composition-20261027/inventory.tsv).
+[441-row inventory](research/mayhem-current437-composition-20261028/inventory.tsv).
 Data, indirect calls, global layout and original build provenance remain open.
 The [code-reference review](research/mayhem-current434-code-reference-closure-20261027/README.md)
 verifies all 48 relocated code-address sites in matched bodies and preserves the
@@ -136,7 +135,7 @@ adds three tuple-dispatch sites and follows the payload pointer to the numeric
 formatter. Both proofs remain bound to the preceding 434 artifact. General
 indirect-call and data identity remain unresolved.
 
-The [current selected-data checks](research/mayhem-current436-selected-prefixes-20261027/README.md)
+The [previous selected-data checks](research/mayhem-current436-selected-prefixes-20261027/README.md)
 preserve all 429 closed windows while checking 486 Source coordinates, 48 code
 addresses and 119 references to 32-byte prefixes. They reject 22 ambiguous
 counterpart pairs without claiming complete data or indirect-call identity.
@@ -145,12 +144,11 @@ checks ten further method pointers across five 48-byte spans while retaining the
 same closed relation; complete allocation extents and dynamic dispatch remain open.
 
 The [remaining-body review](docs/MAYHEM-COMPLETION.md#retained-partial-source-controls)
-also preserves the latest partial AMM, V2 and SweepFees source controls. Their
-stronger local diagnostics do not add to the 436 matched-window count.
-The [latest SweepFees control](research/mayhem-current436-sweep-address-selection-20261028/README.md)
-preserves that frontier and matches 1,047/1,050 normalized instruction words in
-the complete 8,400-byte body. Three address operands still differ, so it remains
-unmatched and has no fresh runtime qualification.
+preserves partial AMM and V2 source controls. The historical
+[SweepFees address-selection control](research/mayhem-current436-sweep-address-selection-20261028/README.md)
+matched 1,047/1,050 normalized words; the current source resolves those final
+three address operands by passing the existing global account into its helper.
+
 The [Linux dependency comparison](research/mayhem-current436-linux-dependency-control-20261028/README.md)
 reproduces the same four partial trade bodies under its tested recipes and does
 not close another function. Its separate artifact retains 80 raw-local matches;

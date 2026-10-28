@@ -102,6 +102,11 @@ jobs:
             commands: |
               python -B research/mayhem-current434-custom-format-route-20261027/verify.py
               python -B research/mayhem-current434-custom-format-route-20261027/test_verify.py
+          - suite: mayhem-current437
+            commands: |
+              python -B research/mayhem-current437-composition-20261028/verify.py
+              python -B research/mayhem-current437-composition-20261028/test_verify.py
+              python -B research/mayhem-current437-composition-20261028/test_runtime.py
           - suite: mayhem-current436
             commands: |
               python -B research/mayhem-current436-composition-20261027/verify.py

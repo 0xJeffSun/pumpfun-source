@@ -2975,3 +2975,9 @@ The [later full-size control](../research/mayhem-current436-sweep-address-select
 ## Writer-record data extension
 
 The [48-byte writer-record proof](../research/mayhem-current436-writer-records-20261028/README.md) extends five selected prefixes across 47 matched owner-reference sites. It checks ten additional relocated method pointers, covering 80 more original storage bytes. Each target remains in the same recursive normalized/Source/code-reference relation, which retains 429 windows and 579 pairs. The complete local census remains 436 normalized/141 raw. Candidate-side compiler-library source identifies the methods, without authenticating the original type or proving allocation extents or arbitrary indirect calls. Eight corruption tests include all ten actual pointer mutations and an actual relocation removal.
+
+## Qualified437 SweepFees completion
+
+The [new qualified composition](../research/mayhem-current437-composition-20261028/README.md) reproduces O0076's complete 8,400-byte normalized body, all 51 ordered callees and 13 Source observations. Passing the same existing GlobalParams account as a separate helper argument preserves the original base-plus-field address calculation; no explicit numeric address arithmetic or matcher change is used. It adds O0076 and closes O0169 transitively, reaching 437 normalized/141 raw/431 closed windows, 4,525 positive edges and 499 Source observations. All prior body, raw, edge and Source-profile obligations survive.
+
+Three root compilations agree. Fresh 6,636 trade pairs, 69 initializer pairs, 692 sweep triples, 150 rate triples and 856 targeted rate triples pass independent signature, program-hash, state, return and non-compute-log checks. Their 18,534 signed records overlap and are not unique scenarios. Four trade bodies and 63,792 original text bytes remain unmatched. Whole-ELF identity remains false.
