@@ -81,3 +81,7 @@ The 31 new bodies have 405 direct-call sites: 404 bind to complete normalized-eq
 ## Separate ordinary SBPF profile: 785
 
 The unchanged `sourcefronts780` inputs also have an independently built and repeated ordinary Linux SBPF profile: **785 / 1,035 injective normalized windows and 131 raw windows**, retaining all SBF780 matches. This is a profile choice, not a fifth source stage; the default materializer and all four existing source stages remain unchanged. See [SBPF_PROFILE.md](SBPF_PROFILE.md) for bounded TypeId/record qualification and explicit residuals, and [SBPF_RECIPE.md](SBPF_RECIPE.md) for the minimal ordinary target/library recipe delta. Credit PRs #307, #321 and #338. Runtime NOT RUN; whole-original identity false.
+
+## Optional SBPF clamp stage: 786
+
+The additional `--stage clamp786` preserves the default and all prior stages. See [CLAMP786.md](CLAMP786.md) for the attributed one-line #323 edit, independently repeated 786 / 1,035 injective and 131 raw checkpoint, typed incoming-call proof and Source 57 versus 2911 limitation. Runtime remains **NOT RUN** and whole-original identity remains false. Use the separate [SBPF recipe](SBPF_RECIPE.md), not an inferred SBF result.

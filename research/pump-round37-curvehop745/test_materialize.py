@@ -146,4 +146,39 @@ class SourceTests(unittest.TestCase):
         data = self.sourcefronts_parent(); changed = m.sourcefronts_apply(data)
         for name in ['multi_hop_curve_swap.rs', 'mayhem_virtual_params.rs', 'util/constant_product.rs']:
             self.assertEqual(data['programs/pump/src/' + name], changed['programs/pump/src/' + name])
+    def clamp_parent(self):
+        out = self.root / 'clamp-parent'
+        m.materialize(PARENT, out, 'sourcefronts780')
+        return {str(p.relative_to(out)): p.read_bytes() for p in out.rglob('*') if p.is_file()}
+    def test_exact_clamp_stage(self):
+        got = m.materialize(PARENT, self.root / 'source', 'clamp786')
+        pins = json.loads((m.HERE / 'clamp-pins.json').read_text())
+        expected = json.loads((m.HERE / 'sourcefronts-pins.json').read_text())['source_sha256']
+        expected[pins['changed_path']] = pins['changed_sha256']
+        self.assertEqual(got, expected)
+        self.assertEqual(len(got), 60)
+    def test_clamp_only_line2911(self):
+        data = self.clamp_parent(); changed = m.clamp_apply(data)
+        names = [n for n in data if data[n] != changed[n]]
+        self.assertEqual(names, ['programs/pump/src/buy.rs'])
+        old, new = data[names[0]].splitlines(), changed[names[0]].splitlines()
+        self.assertEqual(len(old), len(new))
+        self.assertEqual([i+1 for i, (a, b) in enumerate(zip(old, new)) if a != b], [2911])
+    def test_clamp_already_applied_rejected(self):
+        with self.assertRaises(ValueError): m.clamp_apply(m.clamp_apply(self.clamp_parent()))
+    def test_clamp_changed_parent_rejected(self):
+        data = self.clamp_parent(); data['programs/pump/src/buy.rs'] += b'\n'
+        with self.assertRaises(ValueError): m.clamp_apply(data)
+    def test_clamp_extra_parent_rejected(self):
+        data = self.clamp_parent(); data['extra.rs'] = b''
+        with self.assertRaises(ValueError): m.clamp_apply(data)
+    def test_clamp_missing_parent_rejected(self):
+        data = self.clamp_parent(); data.pop('programs/pump/src/buy.rs')
+        with self.assertRaises(ValueError): m.clamp_apply(data)
+    def test_clamp_pure_unsigned_min_failure_zero(self):
+        for value in [0, 1, 2, (1 << 64)-1]:
+            for reserve in [0, 1, 2, (1 << 64)-1]:
+                amount = min(value, reserve)
+                self.assertEqual(amount <= 0, amount == 0)
+                self.assertEqual(amount, min(value, reserve))
 if __name__ == '__main__': unittest.main(argv=['test_materialize.py', *remaining])
