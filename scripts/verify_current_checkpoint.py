@@ -91,6 +91,12 @@ def _verify_amm_owner6048(root):
 
 def verify(program, root):
     status = read(root / 'repro/status.json')[program]
+    if program == 'pump' and status['candidate_artifact'] == 'repro/pump/canonical-frontier-20261028/candidate.so':
+        from verify_pump_main_checkpoint import verify as verify_pump
+        return verify_pump(root)
+    if program == 'pump_amm' and status['candidate_artifact'] == 'repro/pump_amm/canonical-frontier-20261028/results/build-a/candidate.so':
+        from verify_pump_amm_checkpoint import verify as verify_amm
+        return verify_amm(root)
     if program == 'pump_fees' and status['candidate_artifact'] == 'research/all-contract-completion-20261028/fees-built/canonical-01/candidate.so':
         def require(value, message):
             if not value:

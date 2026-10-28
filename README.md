@@ -8,12 +8,12 @@ their complete meaningful ELF.
 
 | Program | Matched windows | Matched % | Raw-equal bodies | Normalized only | Unmatched | Whole ELF equal |
 | --- | ---: | ---: | ---: | ---: | ---: | --- |
-| [Pump Main](research/claude-pump-integration-20261027/r37-layout-41/README.md) | 1,019 / 1,035 | 98.5% | 168 | 851 | 16 | No |
-| [PumpSwap / AMM](research/amm-cashback-buy-recovery-20261028/README.md) | 784 / 785 | 99.9% | 267 | 517 | 1 | No |
+| [Pump Main](programs/pump/README.md) | 1,019 / 1,035 | 98.5% | 188 | 831 | 16 | No |
+| [PumpSwap / AMM](programs/pump-amm/README.md) | 784 / 785 | 99.9% | 394 | 390 | 1 | No |
 | [Fees](programs/pump-fees/README.md) | 585 / 585 | 100.0% | 585 | 0 | 0 | **Yes** |
 | [Mayhem](research/mayhem-meaningful-elf-20261028/README.md) | 441 / 441 | 100.0% | 441 | 0 | 0 | **Yes** |
 | [Donation Relay](repro/donation-relay/canonical-exact-selection/README.md) | 492 / 492 | 100.0% | 492 | 0 | 0 | **Yes** |
-| **Total** | **3,321 / 3,338** | **99.5%** | **1,953** | **1,368** | **17** | **3 / 5** |
+| **Total** | **3,321 / 3,338** | **99.5%** | **2,100** | **1,221** | **17** | **3 / 5** |
 
 Matched windows cover **5,022,984 / 5,213,128 code bytes (96.4%)**;
 **190,144 bytes (3.6%)** remain outside matched windows.
@@ -22,15 +22,14 @@ These figures measure the latest published artifacts, including research not
 integrated into the maintained source tree. Raw-equal bodies match byte for byte;
 normalized matches mask specified call/address operands. Window coverage is not
 a percentage of engineering work completed or proof of whole-program identity.
-The Pump Main row is the composed [L41](research/claude-pump-integration-20261027/r37-layout-41/README.md)
-build (L40 plus the legacy-sell boundary, repository Linux profile): 1,019 normalized and
-168 raw. The AMM row is a
-source-only Linux v1.44 build. Separately labeled linker layouts generated from the
-original program report 293 (L41) and 259 (AMM) raw matches without increasing
-normalized coverage.
+Pump Main and AMM now select their qualified maintained sources and complete
+build/runtime receipts. The earlier [L41](research/claude-pump-integration-20261027/r37-layout-41/README.md)
+and AMM linker-layout experiments remain separate historical evidence; their
+293 and 259 raw matches are not measurements of these current selections.
 
 ## Remaining work
 
+- [Relay maintained-source repeat](research/relay-current-repeat-20261028/README.md) reproduces the complete meaningful ELF from an empty target. A fresh real-loader deployment uses 912 signed transactions and yields the exact allocated payload; all 536 replay records pass with matching account observations and ordered logs.
 - [Fees is integrated into maintained source](research/contract-completion-20261028/CURRENT-INTEGRATION.md): two builds reproduce all 873,256 meaningful ELF bytes, including one from an empty dependency target. The exact candidate passes 17,331 paired runtime cases. Its 75,688-byte zero allocation suffix remains separate.
 - Recover the **16 Pump Main and 1 PumpSwap / AMM** unmatched windows. The AMM
   remainder is sell cashback `0x4c750`.
@@ -44,8 +43,9 @@ normalized coverage.
   [L40](research/claude-pump-integration-20261027/r37-layout-40/README.md) to
   [L41](research/claude-pump-integration-20261027/r37-layout-41/README.md), which adds the
   legacy-sell boundary (1,019 windows, raw-ready 1,005/1,019 with the layout layer, 44-suite
-  corpus 10,468 cases, 0 mismatches). Behavior corrections qualified with signed
-  original/candidate replays and no window loss, not yet composed into one build:
+  corpus 10,468 cases, 0 mismatches). The current maintained selection composes
+  the qualified behavior corrections with signed original/candidate replays and
+  no normalized window loss:
   [v2 whitelist reserve sync](research/pump-v2-whitelist-sync-20261028/README.md),
   [v3 sell recovery](research/pump-l39-v3sell-recovery-20261028/README.md) (128 cases),
   [sweep zero-recipient guard](research/pump-l38-sweep-zero-recipient-20261028/README.md) (error 6000),
@@ -53,20 +53,14 @@ normalized coverage.
   [cashback-v2 quote-program guard](research/pump-l38-cashback-quote-program-20261028/README.md),
   [direct-route FeeConfig selection](research/pump-direct-route-fee-config-20261028/README.md) and the
   [checked cashback decoder](research/pump-checked-cashback-decoder-20261028/README.md).
-- PumpSwap reaches **784/785** with the [buy cashback recovery](research/amm-cashback-buy-recovery-20261028/README.md):
-  all 8,104 helper bytes match after official normalization, with no lost windows
-  and 267 raw-equal bodies. Both complete ELFs reproduce independently; the
-  maintained legacy-buy suite passes 1,011 paired cases with 2,022 independently
-  verified transaction signatures and no non-meter log differences. Whole-ELF
-  equality remains unachieved. The earlier [783-window union11](research/claude-amm-union11-20261028/README.md) recovers
-  the volume updater (`0x6db20`) over the 782-window union10, with 0 normalized or raw losses;
-  [union12](research/claude-amm-union12-20261028/README.md) is a data-side step with the same
-  window sets. All nine panic Location operands in `0x6db20` now match the original
-  ([panic locations](research/amm-incentive-panic-locations-20261028/README.md); 17,462 cases),
-  and a [signed cashback witness](research/amm-cashback-signed-verification-20261028/README.md)
-  covers the now-matched `distribute_cashback` helper (`0x351a8`; 146 cases, 0 mismatches).
-  The [maintained AMM checkpoint](repro/pump_amm/v2-mint-clone-recovery-20261028/README.md)
-  remains at 660 windows; research candidates are not promoted.
+- The [maintained AMM frontier](repro/pump_amm/canonical-frontier-20261028/README.md)
+  reaches **784/785 normalized and 394 raw**. It composes the
+  [buy cashback recovery](research/amm-cashback-buy-recovery-20261028/README.md)
+  with three fully consumed PDA-seed statics, preserving every previous match
+  and adding 127 raw bodies. Its cold build and repeat reproduce both ELFs;
+  25 suites / 17,462 paired cases and 72 refreshed loader-control pairs pass.
+  A one-to-one physical mapping covers all 784 matched bodies and 7,143 direct
+  call edges. Sell cashback and whole-file data/relocation closure remain open.
 - Mayhem now [reproduces its complete meaningful ELF](research/mayhem-meaningful-elf-20261028/README.md):
   ordinary stripping of two fresh builds equals all 775,416 meaningful original bytes.
   The closing change moves one vendored-Anchor module declaration and rebinds the data layout.

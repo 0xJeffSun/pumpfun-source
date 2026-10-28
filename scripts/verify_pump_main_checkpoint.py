@@ -19,6 +19,30 @@ def sha(path):
 
 def verify(root):
     root = Path(root).resolve()
+    selected = json.loads((root / 'repro/status.json').read_text())['pump']
+    current = 'repro/pump/canonical-frontier-20261028'
+    if selected['candidate_artifact'] == current + '/candidate.so':
+        def require(value, message):
+            if not value:
+                raise ValueError(message)
+        packet = root / current
+        seal = '3a4a8541cf82e5c0da0963c81f34e6a1c4de9ec6544d54052194e2020bbe2394'
+        require(sha(packet / 'MANIFEST.json') == selected['checkpoint_manifest_sha256'] == seal, 'Pump canonical packet seal')
+        # This sealed component explicitly rejects optimized Python. Launch a
+        # normal interpreter so its historical assertions remain active.
+        result = subprocess.run([sys.executable, '-B', str(packet / 'verify.py'), '--repo', str(root), '--signatures'], cwd=root, capture_output=True, text=True, check=True)
+        report = json.loads(result.stdout)
+        require(report['candidate_sha256'] == selected['candidate_sha256'] == sha(root / selected['candidate_artifact']), 'Pump selected executable')
+        require(selected['candidate_symbols_artifact'] == current + '/unstripped.so', 'Pump selected symbol path')
+        require(sha(root / selected['candidate_symbols_artifact']) == selected['symbols_sha256'], 'Pump selected symbols')
+        require(report['normalized_windows'] == selected['normalized_function_matches'] == 1019 and report['raw_windows'] == selected['raw_function_matches'] == 188, 'Pump selected window counts')
+        require(report['runtime_cases'] == selected['validated_cases'] == 10468 and report['focused_runtime_cases'] == 65, 'Pump selected runtime scope')
+        require(report['portable_empty_target_build'] is True and selected['full_byte_equality'] is False, 'Pump reconstruction scope')
+        require(report['runtime_transactions'] == selected['runtime_transaction_fields'] == 18343 and report['runtime_signature_fields'] == selected['verified_transaction_signatures'] == 27875, 'Pump retained signature scope')
+        require(report['focused_transactions'] == selected['focused_runtime_transactions'] == 195 and report['focused_signature_fields'] == selected['focused_runtime_signature_fields'] == 258, 'Pump focused signature scope')
+        for key, relative in [('source_recipe', '/compose.py'), ('source_builder', '/build.py'), ('build_log', '/portable-build/build.log.gz'), ('validation_report', '/runtime/full44.json.gz')]:
+            require(selected[key] == current + relative and (root / selected[key]).is_file(), 'Pump selected ' + key)
+        return {'status': 'PASS', 'actual_current_sources_checked': True, 'goal_complete': False, **report}
     package = root / PACKAGE
     assert sha(package / 'MANIFEST.json') == MANIFEST_SHA256
     checkpoint = json.loads((package / 'CHECKPOINT.json').read_text())

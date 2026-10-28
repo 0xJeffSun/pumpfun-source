@@ -105,6 +105,13 @@ def verify(root):
     finally:
         sys.path.pop(0)
 
+    relay_repeat = root / 'research/relay-current-repeat-20261028'
+    if sha(relay_repeat / 'manifest.json') != 'ad2353dec21a94f5d9a202e956d95b112f3130420301988399c845b8122aaea3':
+        raise ValueError('Current Relay repeat packet seal')
+    relay_repeat_report = run_json(root, [relay_repeat / 'verify.py', '--repo', root])[-1]
+    if not relay_repeat_report['meaningful_elf_equal'] or not relay_repeat_report['genuine_loader_payload_equal']:
+        raise ValueError('Current Relay repeat qualification')
+
     mayhem_directory = root / MAYHEM
     assert sha(mayhem_directory / 'manifest.json') == MAYHEM_SEAL
     manifest = read(mayhem_directory / 'manifest.json')['files']
@@ -146,6 +153,7 @@ def verify(root):
         'current_source_and_artifact_reports': verified,
         'relay': relay,
         'relay_scanner_transition': relay_transition,
+        'relay_maintained_repeat': relay_repeat_report,
         'relay_saved_replay': relay_replay,
         'historical_p27': {
             'metadata_manifest_sha256': P27_SEAL,

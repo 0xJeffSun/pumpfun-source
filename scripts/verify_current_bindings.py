@@ -119,7 +119,7 @@ def main():
     if args.program == 'fees' and artifact == 'research/all-contract-completion-20261028/fees-built/canonical-01/candidate.so':
         subprocess.run([sys.executable, '-B', str(ROOT / 'scripts/verify_current_checkpoint.py'), 'pump_fees'], check=True)
         return
-    if args.program == "pump" and artifact == "repro/pump/main-contract-round47-20261027/candidate.so":
+    if args.program == "pump" and artifact in ["repro/pump/main-contract-round47-20261027/candidate.so", "repro/pump/canonical-frontier-20261028/candidate.so"]:
         subprocess.run([sys.executable, "-B", str(ROOT / "scripts/verify_pump_main_checkpoint.py")], check=True)
         return
     if artifact == "repro/pump/remaining-guards-main-fortyeight/main/candidate.so":
