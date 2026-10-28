@@ -42,3 +42,26 @@ assert sha(images['round37-canonical']['candidate.so'])==spec['round37_candidate
 assert sha(images['round37-canonical']['unstripped.so'])==spec['round37_unstripped_sha256']
 assert not measurement['whole_elf_equal']
 print('Verified 52 artifact hashes, exact canonical Round37 hashes, repeated native 778 builds, all 744 retained; whole original ELF equality remains false.')
+
+import tarfile
+full=json.loads(gzip.decompress((P/'runtime/full.json.gz').read_bytes()))
+record=json.loads(gzip.decompress((D/'candidate/build-comparison.json.gz').read_bytes()))
+assert full['candidate_sha256']==sha(images['candidate']['candidate.so']) and full['original_sha256']==sha(original)
+assert full['compiled_source_sha256']==record['source_sha256']
+assert len(full['suites'])==44 and full['case_count']==10468 and not full['mismatches']
+with tarfile.open(P/'runtime/compiled-source.tar.gz')as a:source={m.name:sha(a.extractfile(m).read())for m in a.getmembers()if m.isfile()}
+prefix='work/pump-macos-qualification/candidate/source/'
+assert all(source[k[len(prefix):]]==h for k,h in record['source_sha256'].items())
+corpus=json.loads((P/'runtime/corpus.json').read_text());assert full['script_sha256']=={v['script']:v['sha256']for v in corpus.values()}
+assert all(sha((R/k).read_bytes())==h for k,h in full['script_sha256'].items())
+receipts=json.loads(gzip.decompress((P/'runtime/full-loader-receipts.json.gz').read_bytes()));assert len(receipts)==44
+for name,result in full['suites'].items():
+ assert result['case_count']==corpus[name]['cases']
+ receipt=json.loads(receipts[name+'.loader.json'])
+ assert {x['elf_sha256']for x in receipt['loads']}=={sha(original),sha(images['candidate']['candidate.so'])}
+ assert all(x['program_bytes']==36 and x['programdata_bytes']==10485760 and x['elf_prefix_unchanged']and x['zero_allocation_tail']for x in receipt['loads'])
+a=importlib.util.spec_from_file_location('runtime_audit',P/'runtime/diagnostic_audit.py');auditor=importlib.util.module_from_spec(a);a.loader.exec_module(auditor)
+result=auditor.audit(full['suites']);assert not result['mismatches']and result['log_bearing_cases']==10464
+assert full['resumption']['initial_completed_suites']==42 and set(full['resumption']['resumed_suites'])=={'tokenkeg_two_curve','claim_panic_diagnostics'}
+assert sha((P/'runtime/initial-failure.json').read_bytes())==full['resumption']['initial_failure_sha256']
+print('Verified exact macOS 778 candidate: 44 suites / 10,468 cases; 10,464 log-bearing cases, zero diagnostic mismatches.')
