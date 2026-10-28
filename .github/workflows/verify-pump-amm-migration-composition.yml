@@ -1,9 +1,11 @@
 name: Verify Pump AMM migration composition
 on: [push, pull_request, workflow_dispatch]
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  # Superseded runs are cancelled on every ref except main, so each published
-  # main revision keeps one complete hosted verification.
+  # On main each revision gets its own group, so a newer push can neither
+  # cancel a running main verification nor displace a pending one; GitHub
+  # keeps only one pending run per group regardless of cancel-in-progress.
+  # Other refs share one group per ref and cancel superseded runs.
+  group: ${{ github.workflow }}-${{ github.ref == 'refs/heads/main' && github.sha || github.ref }}
   cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 jobs:
   verify:
