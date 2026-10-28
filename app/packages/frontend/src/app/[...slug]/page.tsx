@@ -18,10 +18,6 @@ const routes: Record<string, [string, string]> = {
     "Create a coin",
     "Metadata, media, quote asset and SDK transaction composition.",
   ],
-  perps: [
-    "Perps",
-    "External Hyperliquid integration; deferred pending scope decision.",
-  ],
   "docs/fees": ["Fees", "Fee schedule and SDK integration."],
   "docs/privacy-policy": [
     "Privacy policy",

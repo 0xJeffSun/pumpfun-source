@@ -2,7 +2,15 @@
 
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { FormEvent, Suspense, useEffect, useId, useState } from "react";
+import {
+  FormEvent,
+  KeyboardEvent as ReactKeyboardEvent,
+  Suspense,
+  useEffect,
+  useId,
+  useRef,
+  useState,
+} from "react";
 
 type IconName =
   | "home"
@@ -248,8 +256,23 @@ function NavigationGroup({
 
 export default function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+  const [isMobile, setIsMobile] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const navigationId = useId();
+  const navigationRef = useRef<HTMLElement>(null);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 767px)");
+    const updateViewport = () => {
+      setIsMobile(mediaQuery.matches);
+      if (!mediaQuery.matches) setMobileOpen(false);
+    };
+    updateViewport();
+    mediaQuery.addEventListener("change", updateViewport);
+    return () => mediaQuery.removeEventListener("change", updateViewport);
+  }, []);
 
   useEffect(() => {
     setMobileOpen(false);
@@ -258,13 +281,45 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (!mobileOpen) return;
     const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setMobileOpen(false);
+      if (event.key === "Escape") {
+        event.preventDefault();
+        setMobileOpen(false);
+        requestAnimationFrame(() => menuButtonRef.current?.focus());
+      }
     };
     window.addEventListener("keydown", closeOnEscape);
     return () => window.removeEventListener("keydown", closeOnEscape);
   }, [mobileOpen]);
 
-  const closeNavigation = () => setMobileOpen(false);
+  useEffect(() => {
+    if (mobileOpen) closeButtonRef.current?.focus();
+  }, [mobileOpen]);
+
+  const closeNavigation = (restoreFocus = false) => {
+    setMobileOpen(false);
+    if (restoreFocus) {
+      requestAnimationFrame(() => menuButtonRef.current?.focus());
+    }
+  };
+
+  const keepFocusInNavigation = (event: ReactKeyboardEvent<HTMLElement>) => {
+    if (!isMobile || !mobileOpen || event.key !== "Tab") return;
+    const focusable = Array.from(
+      navigationRef.current?.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
+      ) ?? [],
+    ).filter((element) => element.getClientRects().length > 0);
+    const first = focusable[0];
+    const last = focusable.at(-1);
+    if (!first || !last) return;
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  };
 
   return (
     <div
@@ -278,19 +333,24 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
         className="mobile-backdrop"
         type="button"
         aria-label="Close navigation"
-        tabIndex={mobileOpen ? 0 : -1}
-        onClick={closeNavigation}
+        aria-hidden="true"
+        tabIndex={-1}
+        onClick={() => closeNavigation(true)}
       />
       <aside
         className="sidebar"
         id={navigationId}
+        ref={navigationRef}
         aria-label="Application navigation"
+        aria-hidden={isMobile && !mobileOpen ? true : undefined}
+        inert={isMobile && !mobileOpen}
+        onKeyDown={keepFocusInNavigation}
       >
         <div className="sidebar-heading">
           <Link
             href="/"
             aria-label="Pump reconstruction home"
-            onClick={closeNavigation}
+            onClick={() => closeNavigation()}
           >
             <Brand />
           </Link>
@@ -298,7 +358,8 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
             className="mobile-close"
             type="button"
             aria-label="Close navigation"
-            onClick={closeNavigation}
+            ref={closeButtonRef}
+            onClick={() => closeNavigation(true)}
           >
             <Icon name="close" />
           </button>
@@ -307,13 +368,13 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
           <NavigationGroup
             items={primaryNavigation}
             pathname={pathname}
-            onNavigate={closeNavigation}
+            onNavigate={() => closeNavigation()}
           />
           <NavigationGroup
             label="Discover"
             items={discoverNavigation}
             pathname={pathname}
-            onNavigate={closeNavigation}
+            onNavigate={() => closeNavigation()}
           />
         </nav>
         <div className="sidebar-actions">
@@ -322,16 +383,20 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
             data-active={pathname === "/create"}
             aria-current={pathname === "/create" ? "page" : undefined}
             href="/create"
-            onClick={closeNavigation}
+            onClick={() => closeNavigation()}
           >
             <Icon name="create" />
-            <span>Create</span>
+            <span>Create a coin</span>
           </Link>
         </div>
         <footer className="sidebar-footer">
           <div className="legal-links" aria-label="Reference links">
             {legalNavigation.map((item) => (
-              <Link href={item.href} key={item.href} onClick={closeNavigation}>
+              <Link
+                href={item.href}
+                key={item.href}
+                onClick={() => closeNavigation()}
+              >
                 {item.label}
               </Link>
             ))}
@@ -340,7 +405,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
         </footer>
       </aside>
 
-      <div className="shell-content">
+      <div className="shell-content" inert={isMobile && mobileOpen}>
         <header className="topbar">
           <div className="mobile-brand-row">
             <button
@@ -349,6 +414,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
               aria-label="Open navigation"
               aria-controls={navigationId}
               aria-expanded={mobileOpen}
+              ref={menuButtonRef}
               onClick={() => setMobileOpen(true)}
             >
               <Icon name="menu" />
