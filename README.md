@@ -12,7 +12,7 @@ ELF and, through a separate loader deployment, its captured payload.**
 
 **PumpSwap: 656/785 function windows matched (83.6%); 129 remain (16.4%). Matched windows cover 71.1% of original executable text, leaving 335,928 bytes (28.9%).**
 
-These are binary-coverage measurements. Full call/data/relocation identity, original build provenance and uncovered behavior remain open. The [remaining-work review](repro/pump_amm/incentive-order-recovery-20261027/remaining-audit/README.md) lists all 129 unmatched windows. The latest checkpoint also resolves all 128 incentive error-order counterexamples in the new 1,730-case matrix.
+These are binary-coverage measurements. Full call/data/relocation identity, original build provenance and uncovered behavior remain open. The [remaining-work review](repro/pump_amm/private-sweep-recovery-20261027/remaining-audit/README.md) lists all 129 unmatched AMM windows. The latest checkpoint restores private-event storage reuse, SetCoinCreator PDA reevaluation and sweep key/mint snapshots while preserving the resolved incentive guard and all 1,730 fresh boundary cases.
 
 [Current main-Pump parallel research snapshot](research/main-pump-parallel-checkpoint-20261027/README.md) preserves the verified intermediates and in-progress source beyond the maintained checkpoint.
 
@@ -47,19 +47,15 @@ reported metrics and validation evidence. This review is limited to the main Pum
 contract.
 <!-- MAIN-PUMP-REMAINING:END -->
 
-Across the latest verified checkpoints, **2,983 / 3,338 inferred function windows
-match (89.4%)**. Their matched windows cover **4,070,968 / 5,213,128 original text
-bytes (78.1%)**. **Two of five programs have complete meaningful-ELF identity**;
-three of the four core contracts still differ from their captured binaries.
+Across the latest verified checkpoints, **2 of five programs have complete meaningful-ELF identity**. The remaining core contracts still differ from their captured binaries.
 
-These percentages measure bounded binary-recovery progress, not a claim that
-89.4% of the engineering work is finished. Complete reconstruction also requires
+These percentages measure bounded binary-recovery progress, not the fraction of engineering work finished. Complete reconstruction also requires
 all remaining code, calls, data, relocations and build provenance.
 
 | Latest verified checkpoint | Matched windows | Matched % | Raw-equal bodies | Normalized only | Unmatched | Whole ELF equal |
 | --- | ---: | ---: | ---: | ---: | ---: | --- |
 | [Pump Round40](repro/pump/main-contract-round40-20261027/README.md) | 816 / 1,035 | 78.8% | 202 | 614 | 219 | No |
-| [PumpSwap / AMM](repro/pump_amm/incentive-order-recovery-20261027/README.md) | 656 / 785 | 83.6% | 148 | 508 | 129 | No |
+| [PumpSwap / AMM](repro/pump_amm/private-sweep-recovery-20261027/README.md) | 656 / 785 | 83.6% | 148 | 508 | 129 | No |
 | [Fees research](research/claude-fees100-crank-donation-20261027/README.md) | 585 / 585 | 100.0% | 585 | 0 | 0 | **Yes** |
 | [Mayhem qualified research](research/mayhem-current434-composition-20261027/README.md) | 434 / 441 | 98.4% | 141 | 293 | 7 | No |
 | [Donation Relay](repro/donation-relay/canonical-exact-selection/README.md) | 492 / 492 | 100.0% | 492 | 0 | 0 | **Yes** |
@@ -256,7 +252,7 @@ improvements, and Create call-graph recovery. The full recovery chain contains
 88,263 current files. These experiments retain their individual status and add
 no accepted matches.
 
-The latest [PumpSwap incentive ordering and liquidity structure recovery](repro/pump_amm/incentive-order-recovery-20261027/README.md) retains 656 windows and 148 raw bodies while fixing all 128 new incentive error-order counterexamples. All 1,730 new signed boundary cases, 17,462 core cases and retained supplemental suites pass; 129 AMM windows remain. Liquidity Context and LegacyBuy source organization are also restored without claiming new complete body matches.
+The latest [PumpSwap private-event and sweep source recovery](repro/pump_amm/private-sweep-recovery-20261027/README.md) retains 656 windows and 148 raw bodies. Four event sites share their first-Pubkey storage; SetCoinCreator restores error-RHS PDA reevaluation; sweep uses observed key and Pool-mint snapshots. No full private-body or full-callee match is claimed. All 1,730 fresh incentive boundaries preserve the resolved H11 correction.
 
 Remaining priorities are the 219 Pump, 129 AMM and 7 Mayhem unmatched
 windows; deeper call/data/relocation identity; original build provenance; and

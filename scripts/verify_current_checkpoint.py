@@ -91,7 +91,7 @@ def _verify_amm_owner6048(root):
 
 def verify(program, root):
     status = read(root / 'repro/status.json')[program]
-    if program == 'pump_amm' and status['candidate_artifact'] == 'repro/pump_amm/incentive-order-recovery-20261027/results/build/candidate.so':
+    if program == 'pump_amm' and status['candidate_artifact'] == 'repro/pump_amm/private-sweep-recovery-20261027/results/build/candidate.so':
         from verify_pump_amm_checkpoint import verify as verify_amm
         return verify_amm(root)
     if program == 'pump' and status['candidate_artifact'] == 'repro/pump/main-contract-round40-20261027/candidate.so':
