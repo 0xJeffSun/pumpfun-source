@@ -5,6 +5,7 @@ import json
 from pathlib import Path
 import subprocess
 import sys
+import tarfile
 
 from verify_pump_main_checkpoint import PACKAGE, ROOT, sha, verify
 
@@ -18,6 +19,44 @@ def main():
     args = parser.parse_args()
     assert 1 <= args.shard <= args.shards
     verify(ROOT)
+    selected = json.loads((ROOT / 'repro/status.json').read_text())['pump']
+    if selected['candidate_artifact'] == 'repro/pump/canonical-frontier-20261028/candidate.so':
+        if not __debug__:
+            raise SystemExit('Replay requires normal Python; do not use -O.')
+        package = ROOT / 'repro/pump/canonical-frontier-20261028'
+        comparison = package / 'builds/primary/build-comparison.json'
+        record = json.loads(comparison.read_text())
+        prefix = next(iter(record['source_sha256'])).split('/source/', 1)[0] + '/source'
+        workspace = ROOT / prefix
+        workspace.resolve().relative_to(ROOT.resolve())
+        # Use the actual compiled workspace and receipt. The sealed source
+        # archive materializes that same workspace in a clean CI checkout.
+        with tarfile.open(package / 'builds/primary/compiled-source.tar.gz') as archive:
+            for item in archive:
+                path = Path(item.name)
+                if not item.isfile() or path.is_absolute() or '..' in path.parts:
+                    raise ValueError('Unsafe compiled source archive member')
+                destination = workspace / path
+                data = archive.extractfile(item).read()
+                import hashlib
+                if hashlib.sha256(data).hexdigest() != record['source_sha256'][str(destination.relative_to(ROOT))]:
+                    raise ValueError('Compiled source archive binding')
+                if destination.exists():
+                    if destination.is_symlink() or destination.read_bytes() != data:
+                        raise ValueError('Existing compiled workspace differs')
+                else:
+                    destination.parent.mkdir(parents=True, exist_ok=True)
+                    destination.write_bytes(data)
+        args.output = args.output.resolve()
+        args.output.parent.mkdir(parents=True, exist_ok=True)
+        subprocess.run([sys.executable, '-B', str(ROOT / 'scripts/pump_validate_parallel.py'),
+                        '--candidate', str(package / 'candidate.so'),
+                        '--source-directory', str(workspace / 'programs/pump'),
+                        '--build-comparison', str(comparison), '--output', str(args.output),
+                        '--captured-loader', '--workers', str(args.workers),
+                        '--shard', str(args.shard), '--shards', str(args.shards)], cwd=ROOT, check=True)
+        verify(ROOT)
+        return
     package = ROOT / PACKAGE
     checkpoint = json.loads((package / 'CHECKPOINT.json').read_text())
     record = json.loads((package / 'canonical-build.json').read_text())

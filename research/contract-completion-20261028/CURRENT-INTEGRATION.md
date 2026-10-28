@@ -45,11 +45,37 @@ extra source and changed source. It performs no new compilation or replay.
 
 The manual Windows workflow publishes a 67-input source proposal. Its first run
 records exact native tool candidates and a complete MSVC/Windows Kit inventory;
-its build run requires the reviewed inventory hash. Canonical Mayhem promotion
-requires actual fresh host-and-target compiler evidence from that route.
+its build run requires the reviewed inventory hash. The offline-vendor successor now compiles host and target on Windows. Its
+expected output hash gate fails: actual archive basenames differ from the
+file-specific linker selectors, so orphaned sections change the layout. Those
+failed fresh receipts remain separate. Canonical Mayhem promotion still requires
+a qualified explicit recipe, two fresh exact outputs, and candidate-bound runtime.
 
-The combined current reconstruction verifier currently fails on existing AMM
-source drift: the 660-window maintained checkpoint has two changed input files.
-No stale guard is reset or bypassed. The active AMM lane is preparing a newly
-qualified canonical selection and candidate-bound runtime evidence. Pump and AMM
-still need remaining function recovery and whole meaningful ELF identity.
+The combined current reconstruction verifier now passes with the new Pump and
+AMM selections. The old checkpoints and their source/loader evidence remain
+historical; no stale source guard is disabled or reset.
+
+Pump binds 65 canonical inputs to 66 compiler inputs, two fresh local-crate
+builds and a portable empty-target build. All complete outputs reproduce.
+Its exact 1,019 normalized / 188 raw membership remains, with 44 suites / 10,468
+cases and 65 focused cases. The 18,343 serialized transaction fields and 27,875
+signature fields in the full receipt are observations, not unique transaction
+counts. Focused evidence adds 195 outcome transactions / 258 signature fields.
+The four creation-key cases explicitly retain Source220 versus reconstructed70.
+
+AMM binds 68 canonical inputs to 69 compiler inputs and authenticates all 257
+registry packages / 8,180 archive files. Its final cold build and repeat produce
+the 784 normalized / 394 raw frontier; 17,462 strict runtime pairs and 72 loader
+pairs pass. Three retained backend call/frame diagnostics refer to a matched
+1,488-byte original wrapper with six matched actual callees; its incentives-admin
+suite has 668 pairs and 296 successes. This does not claim broad frame safety.
+
+[Relay's second maintained build](../relay-current-repeat-20261028/README.md)
+reproduces the entire meaningful ELF from an empty target. Fresh real-loader
+execution uses 912 signed transactions, and the resulting exact allocation
+payload passes all 536 retained records with literal account-state and ordered
+log agreement. The new gate rechecks 3,006 loader/runtime signature fields.
+
+Sixteen Pump windows, one AMM window, complete Pump/AMM ELF identity and current
+Mayhem promotion remain open. None of these integration results completes the
+full objective in REQUIREMENTS.md.

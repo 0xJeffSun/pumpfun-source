@@ -1,0 +1,1668 @@
+{
+  "scope": "Exact-head contract PR review and merge actions; hosted CI remains separately observed",
+  "merged_prs": [
+    585,
+    586,
+    587,
+    588,
+    589,
+    590,
+    591,
+    592,
+    593,
+    594,
+    595,
+    596,
+    597,
+    598,
+    599,
+    576,
+    577,
+    578,
+    579,
+    580,
+    581,
+    582,
+    583,
+    584,
+    600,
+    602,
+    603,
+    604,
+    605,
+    607,
+    608,
+    609,
+    610,
+    611,
+    612,
+    613
+  ],
+  "merges": [
+    {
+      "sha": "f2f0d21a036dc70fe21fcf0a804e7b56ef04e207",
+      "merged": true,
+      "message": "Pull Request successfully merged",
+      "number": 585,
+      "head": "6579a16911b00e7f06be7a48cfda740c63b007f7",
+      "returncode": 0
+    },
+    {
+      "sha": "76b206996288a35ecbb57d76c943217dcd581eff",
+      "merged": true,
+      "message": "Pull Request successfully merged",
+      "number": 586,
+      "head": "1596511b39b09ecd8ae01ecce67e1d5ee3b052c9",
+      "returncode": 0
+    },
+    {
+      "sha": "bae0fe703aa84d9b8aabe564392b69a657da1e1a",
+      "merged": true,
+      "message": "Pull Request successfully merged",
+      "number": 587,
+      "head": "e1bf881263ec4ac63102f021b32d523423a51355",
+      "returncode": 0
+    },
+    {
+      "number": 588,
+      "head": "1acbb027aef115512b35c785f56057c9cac19974",
+      "merged": true,
+      "already_merged": true,
+      "record": {
+        "mergeCommit": {
+          "oid": "84f17890fed32a98be8f6e0ff8fe3f2e4591f39f"
+        },
+        "mergedAt": "2026-10-28T19:35:47Z"
+      }
+    },
+    {
+      "sha": "d049fae3300d7e852b6dfb7ebd6ebf42d37c76fc",
+      "merged": true,
+      "message": "Pull Request successfully merged",
+      "number": 589,
+      "head": "3b704bf14cdf4278973d285001b11114951b3f80",
+      "returncode": 0
+    },
+    {
+      "sha": "ddaaaa5cf653adb91cddc93b163c053a90b5f24a",
+      "merged": true,
+      "message": "Pull Request successfully merged",
+      "number": 590,
+      "head": "fa7eac320983d19e153d52b4644074bbbb3df11c",
+      "returncode": 0
+    },
+    {
+      "sha": "4b94097387457d288f333121f85d7bead272f109",
+      "merged": true,
+      "message": "Pull Request successfully merged",
+      "number": 591,
+      "head": "13309d299fca201eb9055e97b01dba0e006c001d",
+      "returncode": 0
+    },
+    {
+      "sha": "efdc0ff66a5791eb672029d06eb22475e77f37fa",
+      "merged": true,
+      "message": "Pull Request successfully merged",
+      "number": 592,
+      "head": "3753eab17b674eef1b8993961f9a12496f03e3c0",
+      "returncode": 0
+    },
+    {
+      "sha": "add13c506c2efd07940bd36db7dfef57408457fe",
+      "merged": true,
+      "message": "Pull Request successfully merged",
+      "number": 593,
+      "head": "e7ab4c35e6353188e1a8d1f1926d479f9b8abd15",
+      "returncode": 0
+    },
+    {
+      "sha": "a0062d0bee3f3a9c07b28a74122c86def331a79f",
+      "merged": true,
+      "message": "Pull Request successfully merged",
+      "number": 594,
+      "head": "beebc1fd94f7a273c6b3dfcb7eebb5792d46b4dd",
+      "returncode": 0
+    },
+    {
+      "sha": "f9ecaec59fb667c9f84ec179d0287465409f0e8f",
+      "merged": true,
+      "message": "Pull Request successfully merged",
+      "number": 595,
+      "head": "5482bc8c07a5ebd791bb024ac17b97956fe6c11f",
+      "returncode": 0
+    },
+    {
+      "sha": "1adc635cab2a0432a116dd1357b9308e840f02e6",
+      "merged": true,
+      "message": "Pull Request successfully merged",
+      "number": 596,
+      "head": "24e8b4b589204d27009cb97411bb8bbf8ac8ed87",
+      "returncode": 0
+    },
+    {
+      "sha": "b4452a916571e0659237d6f7090c34ae4f3d9101",
+      "merged": true,
+      "message": "Pull Request successfully merged",
+      "number": 597,
+      "head": "cec10f2154085027f6c0e601588266d9398d6bda",
+      "returncode": 0
+    },
+    {
+      "sha": "4cad3e81a82a0ad335dfafad650ebff9ab8a930c",
+      "merged": true,
+      "message": "Pull Request successfully merged",
+      "number": 598,
+      "head": "4ac750b2ca70370e2b48ead777a4c136e67730dc",
+      "returncode": 0
+    },
+    {
+      "sha": "d7cfab6e7c178cdb08223b7b6e31e600271bec43",
+      "merged": true,
+      "message": "Pull Request successfully merged",
+      "number": 599,
+      "head": "e797494956d2a4bb49ddd28d7e4fb86353e936bc",
+      "returncode": 0
+    },
+    {
+      "sha": "ea442f74159d404105fac685fd8158c616c6d94d",
+      "merged": true,
+      "message": "Pull Request successfully merged",
+      "number": 576,
+      "head": "4e1de9d4b6a252f1943dd2eddc6218f5efa04db1",
+      "returncode": 0
+    },
+    {
+      "sha": "e60be051dc3e3d1d922bfcffeb6d026b5503eefc",
+      "merged": true,
+      "message": "Pull Request successfully merged",
+      "number": 577,
+      "head": "c0be40e6f6bbd9ab0b22be0a4e2b32f05290c7a1",
+      "returncode": 0
+    },
+    {
+      "sha": "d9157bd02548c184ebfef2dee5fffd79a94716e3",
+      "merged": true,
+      "message": "Pull Request successfully merged",
+      "number": 578,
+      "head": "5535970f7c1647369e0fd1908328c5b2eb0f90d8",
+      "returncode": 0
+    },
+    {
+      "sha": "d181693d9b9d40705a0ca9f4bd8242458a0448c5",
+      "merged": true,
+      "message": "Pull Request successfully merged",
+      "number": 579,
+      "head": "651830d594d39fcde54f4db82abdfe43e9d7acb9",
+      "returncode": 0
+    },
+    {
+      "sha": "7d452c05f908dc4e14d44c2341278a9a736b1d88",
+      "merged": true,
+      "message": "Pull Request successfully merged",
+      "number": 580,
+      "head": "d5ec368f5f7ca149e323127c5083812c104fc48d",
+      "returncode": 0
+    },
+    {
+      "sha": "296d5f6c5a3524081f9f249fb589a02199d5f3c9",
+      "merged": true,
+      "message": "Pull Request successfully merged",
+      "number": 581,
+      "head": "684f45a2ed6cd32f710e4edf49a443db5d0a639c",
+      "returncode": 0
+    },
+    {
+      "sha": "51750b86ffe9d2cb6026a1bdcae95e62783fc913",
+      "merged": true,
+      "message": "Pull Request successfully merged",
+      "number": 582,
+      "head": "ae6b4dc7d75ec54c1f9b8e400f34496251467784",
+      "returncode": 0
+    },
+    {
+      "sha": "4a8fd525b8810e8dfacf03a63cc68fe609f19e3d",
+      "merged": true,
+      "message": "Pull Request successfully merged",
+      "number": 583,
+      "head": "8cc8e746cb9aa4a43e1fb7ef1976097fccbfe5fc",
+      "returncode": 0
+    },
+    {
+      "sha": "0eee8b24e438b9425733db6fd80036c55d2125ba",
+      "merged": true,
+      "message": "Pull Request successfully merged",
+      "number": 584,
+      "head": "1971f78bc50aa23ac360e0b4609dd6c63719c711",
+      "returncode": 0
+    },
+    {
+      "sha": "9c5776d339c235e08a8e9a8edf53c9cc18845406",
+      "merged": true,
+      "message": "Pull Request successfully merged",
+      "number": 600,
+      "head": "bc8df1da54efb333cdbcc395e1620ec1c9dd4e5e",
+      "returncode": 0
+    },
+    {
+      "sha": "77b23a0ae2098479ec7134e61c13f515cd5a3104",
+      "merged": true,
+      "message": "Pull Request successfully merged",
+      "number": 602,
+      "head": "abfbf3d35b9e980d38294e9605bf0b716dc2e79a",
+      "returncode": 0
+    },
+    {
+      "sha": "86249031364885eb3f13c8eb2a4b24160a50b327",
+      "merged": true,
+      "message": "Pull Request successfully merged",
+      "number": 603,
+      "head": "2acab6a0ab781c32a939aeef88e9382517c89823",
+      "returncode": 0
+    },
+    {
+      "sha": "214761eabdca539c504e7aad1178c6c5caf57162",
+      "merged": true,
+      "message": "Pull Request successfully merged",
+      "number": 604,
+      "head": "2c4c787f75508b9d2935637836b3a226a9a09f47",
+      "returncode": 0
+    },
+    {
+      "sha": "8deb18253ca68db6f8af5552d8d8806a174cc705",
+      "merged": true,
+      "message": "Pull Request successfully merged",
+      "number": 605,
+      "head": "6e5043a35f8366f473888c3e47e21a837c0d9b12",
+      "returncode": 0
+    },
+    {
+      "number": 607,
+      "head": "1271d3e265abd149556dcead5f61613f42b0ce17",
+      "merged": true,
+      "already_merged": true,
+      "record": {
+        "mergeCommit": {
+          "oid": "0c7364561af8de6ed0dd0276b85af5770313f9b7"
+        },
+        "mergedAt": "2026-10-28T19:56:56Z"
+      }
+    },
+    {
+      "number": 608,
+      "head": "0a209a05bf23f35619bc3813fc8298b0ab0a3651",
+      "merged": true,
+      "already_merged": true,
+      "record": {
+        "mergeCommit": {
+          "oid": "583ec6291d51d0083df17a0f61423dc904f53f2a"
+        },
+        "mergedAt": "2026-10-28T19:57:08Z"
+      }
+    },
+    {
+      "number": 609,
+      "head": "361bcc9777ead75412fe43c7fa40584cf0fec60f",
+      "merged": true,
+      "already_merged": true,
+      "record": {
+        "mergeCommit": {
+          "oid": "758c56bea1b49a24e28a450c18fa8c1702c32e6d"
+        },
+        "mergedAt": "2026-10-28T19:57:21Z"
+      }
+    },
+    {
+      "number": 610,
+      "head": "1657f2be6372c8dca11bb3d4b67d680c0d40ec82",
+      "merged": true,
+      "already_merged": true,
+      "record": {
+        "mergeCommit": {
+          "oid": "afc5192bb153ae031afee131dc2e04fe0d964730"
+        },
+        "mergedAt": "2026-10-28T19:57:34Z"
+      }
+    },
+    {
+      "number": 611,
+      "head": "ee19b31a71ea3adbedc9a79a030f203dec0caa4f",
+      "merged": true,
+      "already_merged": true,
+      "record": {
+        "mergeCommit": {
+          "oid": "42dbfcaa7e15aaa99130472297ffd380bb8df2d0"
+        },
+        "mergedAt": "2026-10-28T19:57:49Z"
+      }
+    },
+    {
+      "number": 612,
+      "head": "e29442503a1e73515c12874cba1bbf9ccabf4939",
+      "merged": true,
+      "already_merged": true,
+      "record": {
+        "mergeCommit": {
+          "oid": "a5a7f34b731512d115e3296e5da5b54de44f628a"
+        },
+        "mergedAt": "2026-10-28T19:58:01Z"
+      }
+    },
+    {
+      "number": 613,
+      "head": "a74ec29c57a80b7a9f5a8c1f56a8e776e942f310",
+      "merged": true,
+      "already_merged": true,
+      "record": {
+        "mergeCommit": {
+          "oid": "51b405dde6b88d96109712758129bda28a230a96"
+        },
+        "mergedAt": "2026-10-28T19:58:13Z"
+      }
+    }
+  ],
+  "local_packet_verification": [
+    {
+      "number": 576,
+      "head": "4e1de9d4b6a252f1943dd2eddc6218f5efa04db1",
+      "commands": [
+        {
+          "argv": [
+            "/opt/homebrew/opt/python@3.14/bin/python3.14",
+            "-B",
+            "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/research/amm-legacy-v2-equivalence-20261028/verify.py"
+          ],
+          "returncode": 0,
+          "log": "work/contract-pr-review-20261028/pr-576-verify-0.log"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "number": 577,
+      "head": "c0be40e6f6bbd9ab0b22be0a4e2b32f05290c7a1",
+      "commands": [
+        {
+          "argv": [
+            "/opt/homebrew/opt/python@3.14/bin/python3.14",
+            "-B",
+            "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/research/amm-liquidity-disable-flags-20261028/verify.py"
+          ],
+          "returncode": 0,
+          "log": "work/contract-pr-review-20261028/pr-577-verify-0.log"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "number": 578,
+      "head": "5535970f7c1647369e0fd1908328c5b2eb0f90d8",
+      "commands": [
+        {
+          "argv": [
+            "/opt/homebrew/opt/python@3.14/bin/python3.14",
+            "-B",
+            "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/research/amm-liquidity-slippage-boundaries-20261028/verify.py"
+          ],
+          "returncode": 0,
+          "log": "work/contract-pr-review-20261028/pr-578-verify-0.log"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "number": 579,
+      "head": "651830d594d39fcde54f4db82abdfe43e9d7acb9",
+      "commands": [
+        {
+          "argv": [
+            "/opt/homebrew/opt/python@3.14/bin/python3.14",
+            "-B",
+            "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/research/amm-trade-liquidity-boundaries-20261028/verify.py"
+          ],
+          "returncode": 0,
+          "log": "work/contract-pr-review-20261028/pr-579-verify-0.log"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "number": 580,
+      "head": "d5ec368f5f7ca149e323127c5083812c104fc48d",
+      "commands": [
+        {
+          "argv": [
+            "/opt/homebrew/opt/python@3.14/bin/python3.14",
+            "-B",
+            "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/research/amm-fee-sweeps-20261028/verify.py"
+          ],
+          "returncode": 0,
+          "log": "work/contract-pr-review-20261028/pr-580-verify-0.log"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "number": 581,
+      "head": "684f45a2ed6cd32f710e4edf49a443db5d0a639c",
+      "commands": [
+        {
+          "argv": [
+            "/opt/homebrew/opt/python@3.14/bin/python3.14",
+            "-B",
+            "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/research/amm-admin-authorization-20261028/verify.py"
+          ],
+          "returncode": 0,
+          "log": "work/contract-pr-review-20261028/pr-581-verify-0.log"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "number": 582,
+      "head": "ae6b4dc7d75ec54c1f9b8e400f34496251467784",
+      "commands": [
+        {
+          "argv": [
+            "/opt/homebrew/opt/python@3.14/bin/python3.14",
+            "-B",
+            "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/research/amm-collect-creator-fee-20261028/verify.py"
+          ],
+          "returncode": 0,
+          "log": "work/contract-pr-review-20261028/pr-582-verify-0.log"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "number": 583,
+      "head": "8cc8e746cb9aa4a43e1fb7ef1976097fccbfe5fc",
+      "commands": [
+        {
+          "argv": [
+            "/opt/homebrew/opt/python@3.14/bin/python3.14",
+            "-B",
+            "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/research/amm-account-validation-20261028/verify.py"
+          ],
+          "returncode": 0,
+          "log": "work/contract-pr-review-20261028/pr-583-verify-0.log"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "number": 584,
+      "head": "1971f78bc50aa23ac360e0b4609dd6c63719c711",
+      "commands": [
+        {
+          "argv": [
+            "/opt/homebrew/opt/python@3.14/bin/python3.14",
+            "-B",
+            "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/research/amm-liquidity-extremes-20261028/verify.py"
+          ],
+          "returncode": 0,
+          "log": "work/contract-pr-review-20261028/pr-584-verify-0.log"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "number": 585,
+      "head": "6579a16911b00e7f06be7a48cfda740c63b007f7",
+      "commands": [
+        {
+          "argv": [
+            "/opt/homebrew/opt/python@3.14/bin/python3.14",
+            "-B",
+            "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/research/amm-trade-buyback-recipient-20261028/verify.py"
+          ],
+          "returncode": 0,
+          "log": "work/contract-pr-review-20261028/pr-585-verify-0.log"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "number": 586,
+      "head": "1596511b39b09ecd8ae01ecce67e1d5ee3b052c9",
+      "commands": [
+        {
+          "argv": [
+            "/opt/homebrew/opt/python@3.14/bin/python3.14",
+            "-B",
+            "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/research/amm-creator-fee-boost-controls-20261028/verify.py"
+          ],
+          "returncode": 0,
+          "log": "work/contract-pr-review-20261028/pr-586-verify-0.log"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "number": 587,
+      "head": "e1bf881263ec4ac63102f021b32d523423a51355",
+      "commands": [
+        {
+          "argv": [
+            "/opt/homebrew/opt/python@3.14/bin/python3.14",
+            "-B",
+            "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/research/amm-multi-hop-validation-20261028/verify.py"
+          ],
+          "returncode": 0,
+          "log": "work/contract-pr-review-20261028/pr-587-verify-0.log"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "number": 588,
+      "head": "1acbb027aef115512b35c785f56057c9cac19974",
+      "commands": [
+        {
+          "argv": [
+            "/opt/homebrew/opt/python@3.14/bin/python3.14",
+            "-B",
+            "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/research/pump-v3-buy-cost-overflow/verify.py"
+          ],
+          "returncode": 0,
+          "log": "work/contract-pr-review-20261028/pr-588-verify-0.log"
+        },
+        {
+          "argv": [
+            "/opt/homebrew/opt/python@3.14/bin/python3.14",
+            "-B",
+            "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/research/pump-v3-buy-cost-overflow/test_controls.py"
+          ],
+          "returncode": 0,
+          "log": "work/contract-pr-review-20261028/pr-588-verify-1.log"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "number": 589,
+      "head": "3b704bf14cdf4278973d285001b11114951b3f80",
+      "commands": [
+        {
+          "argv": [
+            "/opt/homebrew/opt/python@3.14/bin/python3.14",
+            "-B",
+            "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/research/amm-trade-zero-extremes-20261028/verify.py"
+          ],
+          "returncode": 0,
+          "log": "work/contract-pr-review-20261028/pr-589-verify-0.log"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "number": 590,
+      "head": "fa7eac320983d19e153d52b4644074bbbb3df11c",
+      "commands": [
+        {
+          "argv": [
+            "/opt/homebrew/opt/python@3.14/bin/python3.14",
+            "-B",
+            "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/research/amm-create-pool-validation-20261028/verify.py"
+          ],
+          "returncode": 0,
+          "log": "work/contract-pr-review-20261028/pr-590-verify-0.log"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "number": 591,
+      "head": "13309d299fca201eb9055e97b01dba0e006c001d",
+      "commands": [
+        {
+          "argv": [
+            "/opt/homebrew/opt/python@3.14/bin/python3.14",
+            "-B",
+            "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/research/amm-update-fee-config-20261028/verify.py"
+          ],
+          "returncode": 0,
+          "log": "work/contract-pr-review-20261028/pr-591-verify-0.log"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "number": 592,
+      "head": "3753eab17b674eef1b8993961f9a12496f03e3c0",
+      "commands": [
+        {
+          "argv": [
+            "/opt/homebrew/opt/python@3.14/bin/python3.14",
+            "-B",
+            "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/research/amm-update-buyback-config-20261028/verify.py"
+          ],
+          "returncode": 0,
+          "log": "work/contract-pr-review-20261028/pr-592-verify-0.log"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "number": 593,
+      "head": "e7ab4c35e6353188e1a8d1f1926d479f9b8abd15",
+      "commands": [
+        {
+          "argv": [
+            "/opt/homebrew/opt/python@3.14/bin/python3.14",
+            "-B",
+            "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/research/amm-trade-account-validation-20261028/verify.py"
+          ],
+          "returncode": 0,
+          "log": "work/contract-pr-review-20261028/pr-593-verify-0.log"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "number": 594,
+      "head": "beebc1fd94f7a273c6b3dfcb7eebb5792d46b4dd",
+      "commands": [
+        {
+          "argv": [
+            "/opt/homebrew/opt/python@3.14/bin/python3.14",
+            "-B",
+            "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/research/amm-reserved-fee-recipients-20261028/verify.py"
+          ],
+          "returncode": 0,
+          "log": "work/contract-pr-review-20261028/pr-594-verify-0.log"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "number": 595,
+      "head": "5482bc8c07a5ebd791bb024ac17b97956fe6c11f",
+      "commands": [
+        {
+          "argv": [
+            "/opt/homebrew/opt/python@3.14/bin/python3.14",
+            "-B",
+            "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/research/pump-admin-cto-source-records-20261028/verify.py"
+          ],
+          "returncode": 0,
+          "log": "work/contract-pr-review-20261028/pr-595-verify-0.log"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "number": 596,
+      "head": "24e8b4b589204d27009cb97411bb8bbf8ac8ed87",
+      "commands": [
+        {
+          "argv": [
+            "/opt/homebrew/opt/python@3.14/bin/python3.14",
+            "-B",
+            "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/research/amm-incentive-updater-edge-parity-20261028/verify.py",
+            "--signatures"
+          ],
+          "returncode": 0,
+          "log": "work/contract-pr-review-20261028/pr-596-verify-0.log"
+        },
+        {
+          "argv": [
+            "/opt/homebrew/opt/python@3.14/bin/python3.14",
+            "-B",
+            "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/research/amm-incentive-updater-edge-parity-20261028/test_verify.py"
+          ],
+          "returncode": 0,
+          "log": "work/contract-pr-review-20261028/pr-596-verify-1.log"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "number": 597,
+      "head": "cec10f2154085027f6c0e601588266d9398d6bda",
+      "commands": [
+        {
+          "argv": [
+            "/opt/homebrew/opt/python@3.14/bin/python3.14",
+            "-B",
+            "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/research/amm-multi-hop-account-validation-20261028/verify.py"
+          ],
+          "returncode": 0,
+          "log": "work/contract-pr-review-20261028/pr-597-verify-0.log"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "number": 598,
+      "head": "4ac750b2ca70370e2b48ead777a4c136e67730dc",
+      "commands": [
+        {
+          "argv": [
+            "/opt/homebrew/opt/python@3.14/bin/python3.14",
+            "-B",
+            "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/research/amm-legacy-account-validation-20261028/verify.py"
+          ],
+          "returncode": 0,
+          "log": "work/contract-pr-review-20261028/pr-598-verify-0.log"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "number": 599,
+      "head": "e797494956d2a4bb49ddd28d7e4fb86353e936bc",
+      "commands": [
+        {
+          "argv": [
+            "/opt/homebrew/opt/python@3.14/bin/python3.14",
+            "-B",
+            "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/research/amm-collect-account-validation-20261028/verify.py"
+          ],
+          "returncode": 0,
+          "log": "work/contract-pr-review-20261028/pr-599-verify-0.log"
+        }
+      ],
+      "passed": true
+    }
+  ],
+  "fresh_replay_packets": 21,
+  "fresh_replay_executions": 492,
+  "fresh_replay_failures": [],
+  "second_batch_saved_verification": [
+    {
+      "number": 600,
+      "head": "bc8df1da54efb333cdbcc395e1620ec1c9dd4e5e",
+      "commands": [
+        {
+          "argv": [
+            "/opt/homebrew/opt/python@3.14/bin/python3.14",
+            "-B",
+            "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/research/amm-admin-account-validation-20261028/verify.py"
+          ],
+          "returncode": 0,
+          "log": "work/contract-pr-review-20261028/pr-600-verify-0.log"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "number": 602,
+      "head": "abfbf3d35b9e980d38294e9605bf0b716dc2e79a",
+      "commands": [
+        {
+          "argv": [
+            "/opt/homebrew/opt/python@3.14/bin/python3.14",
+            "-B",
+            "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/research/amm-liquidity-account-validation-20261028/verify.py"
+          ],
+          "returncode": 0,
+          "log": "work/contract-pr-review-20261028/pr-602-verify-0.log"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "number": 603,
+      "head": "2acab6a0ab781c32a939aeef88e9382517c89823",
+      "commands": [
+        {
+          "argv": [
+            "/opt/homebrew/opt/python@3.14/bin/python3.14",
+            "-B",
+            "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/research/amm-liquidity-transfer-fee-20261028/verify.py"
+          ],
+          "returncode": 0,
+          "log": "work/contract-pr-review-20261028/pr-603-verify-0.log"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "number": 604,
+      "head": "2c4c787f75508b9d2935637836b3a226a9a09f47",
+      "commands": [
+        {
+          "argv": [
+            "/opt/homebrew/opt/python@3.14/bin/python3.14",
+            "-B",
+            "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/research/amm-sweep-account-validation-20261028/verify.py"
+          ],
+          "returncode": 0,
+          "log": "work/contract-pr-review-20261028/pr-604-verify-0.log"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "number": 605,
+      "head": "6e5043a35f8366f473888c3e47e21a837c0d9b12",
+      "commands": [
+        {
+          "argv": [
+            "/opt/homebrew/opt/python@3.14/bin/python3.14",
+            "-B",
+            "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/research/amm-multi-hop-token22-rejection-20261028/verify.py"
+          ],
+          "returncode": 0,
+          "log": "work/contract-pr-review-20261028/pr-605-verify-0.log"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "number": 607,
+      "head": "1271d3e265abd149556dcead5f61613f42b0ce17",
+      "commands": [
+        {
+          "argv": [
+            "/opt/homebrew/opt/python@3.14/bin/python3.14",
+            "-B",
+            "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/research/amm-legacy-token22-rejection-20261028/verify.py"
+          ],
+          "returncode": 0,
+          "log": "work/contract-pr-review-20261028/pr-607-verify-0.log"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "number": 608,
+      "head": "0a209a05bf23f35619bc3813fc8298b0ab0a3651",
+      "commands": [
+        {
+          "argv": [
+            "/opt/homebrew/opt/python@3.14/bin/python3.14",
+            "-B",
+            "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/research/amm-collect-token22-rejection-20261028/verify.py"
+          ],
+          "returncode": 0,
+          "log": "work/contract-pr-review-20261028/pr-608-verify-0.log"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "number": 609,
+      "head": "361bcc9777ead75412fe43c7fa40584cf0fec60f",
+      "commands": [
+        {
+          "argv": [
+            "/opt/homebrew/opt/python@3.14/bin/python3.14",
+            "-B",
+            "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/research/amm-buy-exact-base-transfer-fee-20261028/verify.py"
+          ],
+          "returncode": 0,
+          "log": "work/contract-pr-review-20261028/pr-609-verify-0.log"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "number": 610,
+      "head": "1657f2be6372c8dca11bb3d4b67d680c0d40ec82",
+      "commands": [
+        {
+          "argv": [
+            "/opt/homebrew/opt/python@3.14/bin/python3.14",
+            "-B",
+            "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/research/amm-sweep-token22-rejection-20261028/verify.py"
+          ],
+          "returncode": 0,
+          "log": "work/contract-pr-review-20261028/pr-610-verify-0.log"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "number": 611,
+      "head": "ee19b31a71ea3adbedc9a79a030f203dec0caa4f",
+      "commands": [
+        {
+          "argv": [
+            "/opt/homebrew/opt/python@3.14/bin/python3.14",
+            "-B",
+            "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/research/amm-boost-transfer-fee-20261028/verify.py"
+          ],
+          "returncode": 0,
+          "log": "work/contract-pr-review-20261028/pr-611-verify-0.log"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "number": 612,
+      "head": "e29442503a1e73515c12874cba1bbf9ccabf4939",
+      "commands": [
+        {
+          "argv": [
+            "/opt/homebrew/opt/python@3.14/bin/python3.14",
+            "-B",
+            "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/research/amm-transfer-token22-rejection-20261028/verify.py"
+          ],
+          "returncode": 0,
+          "log": "work/contract-pr-review-20261028/pr-612-verify-0.log"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "number": 613,
+      "head": "a74ec29c57a80b7a9f5a8c1f56a8e776e942f310",
+      "commands": [
+        {
+          "argv": [
+            "/opt/homebrew/opt/python@3.14/bin/python3.14",
+            "-B",
+            "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/research/amm-trade-base-transfer-fee-20261028/verify.py"
+          ],
+          "returncode": 0,
+          "log": "work/contract-pr-review-20261028/pr-613-verify-0.log"
+        }
+      ],
+      "passed": true
+    }
+  ],
+  "second_batch_fresh_replays": [
+    {
+      "number": 600,
+      "head": "bc8df1da54efb333cdbcc395e1620ec1c9dd4e5e",
+      "producer_sha256": "4555be84ce5c4617fa00e63998a76f90f8be112a3ca1400420e77fd16b01c23a",
+      "adapted_sha256": "0ff7fab38776e40fa8594835d6a96969e91071a516c2564c567697938b6ff6ab",
+      "path_only_changes": [
+        {
+          "kind": "host-path",
+          "before": "Path.home() / 'workspace/pumpfun-sparse/scripts'",
+          "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/scripts"
+        },
+        {
+          "kind": "host-path",
+          "before": "Path.home() / 'workspace/pumpfun-sparse'",
+          "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source"
+        },
+        {
+          "kind": "ROOT",
+          "before": "Path.home() / 'workspace/pumpfun-sparse'",
+          "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source"
+        },
+        {
+          "kind": "OUT",
+          "before": "ROOT / 'research/amm-admin-account-validation-20261028'",
+          "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/work/contract-pr-review-20261028/replays/pr-600"
+        },
+        {
+          "kind": "WS",
+          "before": "Path.home() / 'workspace/slop-verify'",
+          "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/work/contract-pr-review-20261028/images"
+        }
+      ],
+      "actual_image_sha256": {
+        "original": "6a7ad34596d83b4c435b32f458a56e718e9f82eb4ad38e4316616d15d24d8ff7",
+        "control": "7a300434dced61413bde10788594b427d5649563e0223efcf09e6b214aff7ad3",
+        "candidate": "d17a657baf5cc19736a924c41e75424604411ddbe9f6e72cddf41ab72a695007"
+      },
+      "case_count": 9,
+      "returncode": 0,
+      "passed": true,
+      "fresh_report_sha256": "88ffce6767b10a96a72a9b9f3aaf26e4fa0f8a023b722978f9a48cb45736f1dd",
+      "executions": 27
+    },
+    {
+      "number": 602,
+      "head": "abfbf3d35b9e980d38294e9605bf0b716dc2e79a",
+      "producer_sha256": "35742cf1011113702c91f56d01f32273fd85defc90df6ea0c5f17b1ecd3724eb",
+      "adapted_sha256": "a8cdb967b64e6a486074e5e3532f4d5c6ab318441cd30c38e55135fb119daec9",
+      "path_only_changes": [
+        {
+          "kind": "host-path",
+          "before": "Path.home() / 'workspace/pumpfun-sparse/scripts'",
+          "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/scripts"
+        },
+        {
+          "kind": "host-path",
+          "before": "Path.home() / 'workspace/pumpfun-sparse'",
+          "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source"
+        },
+        {
+          "kind": "ROOT",
+          "before": "Path.home() / 'workspace/pumpfun-sparse'",
+          "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source"
+        },
+        {
+          "kind": "OUT",
+          "before": "ROOT / 'research/amm-liquidity-account-validation-20261028'",
+          "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/work/contract-pr-review-20261028/replays/pr-602"
+        },
+        {
+          "kind": "WS",
+          "before": "Path.home() / 'workspace/slop-verify'",
+          "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/work/contract-pr-review-20261028/images"
+        }
+      ],
+      "actual_image_sha256": {
+        "original": "6a7ad34596d83b4c435b32f458a56e718e9f82eb4ad38e4316616d15d24d8ff7",
+        "control": "7a300434dced61413bde10788594b427d5649563e0223efcf09e6b214aff7ad3",
+        "candidate": "d17a657baf5cc19736a924c41e75424604411ddbe9f6e72cddf41ab72a695007"
+      },
+      "case_count": 11,
+      "returncode": 0,
+      "passed": true,
+      "fresh_report_sha256": "0daeb66015a8062828072711cebcea3898c3a29cfcc9868f24a25480dc89b13e",
+      "executions": 33
+    },
+    {
+      "number": 603,
+      "head": "2acab6a0ab781c32a939aeef88e9382517c89823",
+      "producer_sha256": "d1e81c570af0d9ab22f7673a491e010da8efa034fd5144f396b4c76ff30a3356",
+      "adapted_sha256": "1e09a0990b3041660b19dd60831bd934833e33199db23fc3a7b7bab411d93644",
+      "path_only_changes": [
+        {
+          "kind": "host-path",
+          "before": "Path.home() / 'workspace/pumpfun-sparse/scripts'",
+          "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/scripts"
+        },
+        {
+          "kind": "host-path",
+          "before": "Path.home() / 'workspace/pumpfun-sparse'",
+          "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source"
+        },
+        {
+          "kind": "ROOT",
+          "before": "Path.home() / 'workspace/pumpfun-sparse'",
+          "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source"
+        },
+        {
+          "kind": "OUT",
+          "before": "ROOT / 'research/amm-liquidity-transfer-fee-20261028'",
+          "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/work/contract-pr-review-20261028/replays/pr-603"
+        },
+        {
+          "kind": "WS",
+          "before": "Path.home() / 'workspace/slop-verify'",
+          "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/work/contract-pr-review-20261028/images"
+        }
+      ],
+      "actual_image_sha256": {
+        "original": "6a7ad34596d83b4c435b32f458a56e718e9f82eb4ad38e4316616d15d24d8ff7",
+        "control": "7a300434dced61413bde10788594b427d5649563e0223efcf09e6b214aff7ad3",
+        "candidate": "d17a657baf5cc19736a924c41e75424604411ddbe9f6e72cddf41ab72a695007"
+      },
+      "case_count": 10,
+      "returncode": 0,
+      "passed": true,
+      "fresh_report_sha256": "7db0bdc3e233ee65b18ec192778d75a2a2ed500eea04d54f222a92316f5e6f5f",
+      "executions": 30
+    },
+    {
+      "number": 604,
+      "head": "2c4c787f75508b9d2935637836b3a226a9a09f47",
+      "producer_sha256": "e614e2e6c0496731c5d2759a837123f7e7af83b55fb73d3580c8b5a9341f725c",
+      "adapted_sha256": "ea8e86d57cc902065cd894abdfcc9e4d06a6850b4342502179b60c9a1f6ac62b",
+      "path_only_changes": [
+        {
+          "kind": "host-path",
+          "before": "Path.home() / 'workspace/pumpfun-sparse/scripts'",
+          "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/scripts"
+        },
+        {
+          "kind": "host-path",
+          "before": "Path.home() / 'workspace/pumpfun-sparse'",
+          "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source"
+        },
+        {
+          "kind": "ROOT",
+          "before": "Path.home() / 'workspace/pumpfun-sparse'",
+          "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source"
+        },
+        {
+          "kind": "OUT",
+          "before": "ROOT / 'research/amm-sweep-account-validation-20261028'",
+          "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/work/contract-pr-review-20261028/replays/pr-604"
+        },
+        {
+          "kind": "WS",
+          "before": "Path.home() / 'workspace/slop-verify'",
+          "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/work/contract-pr-review-20261028/images"
+        }
+      ],
+      "actual_image_sha256": {
+        "original": "6a7ad34596d83b4c435b32f458a56e718e9f82eb4ad38e4316616d15d24d8ff7",
+        "control": "7a300434dced61413bde10788594b427d5649563e0223efcf09e6b214aff7ad3",
+        "candidate": "d17a657baf5cc19736a924c41e75424604411ddbe9f6e72cddf41ab72a695007"
+      },
+      "case_count": 8,
+      "returncode": 0,
+      "passed": true,
+      "fresh_report_sha256": "9f2c84414ef763247d4ac16ea3ff0c34c3e125050345584b2a9fc53383f4adbd",
+      "executions": 24
+    },
+    {
+      "number": 605,
+      "head": "6e5043a35f8366f473888c3e47e21a837c0d9b12",
+      "producer_sha256": "b2cdd8b20d8a05ba44bc72e97004f83c43caa3c87f68a985d1e904f38f9b2130",
+      "adapted_sha256": "3229dee4f7389326048b5b8ad2ad2faf259bb4df79a896ca88d9a7eb6f4c9b53",
+      "path_only_changes": [
+        {
+          "kind": "host-path",
+          "before": "Path.home() / 'workspace/pumpfun-sparse/scripts'",
+          "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/scripts"
+        },
+        {
+          "kind": "host-path",
+          "before": "Path.home() / 'workspace/pumpfun-sparse'",
+          "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source"
+        },
+        {
+          "kind": "ROOT",
+          "before": "Path.home() / 'workspace/pumpfun-sparse'",
+          "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source"
+        },
+        {
+          "kind": "OUT",
+          "before": "ROOT / 'research/amm-multi-hop-token22-rejection-20261028'",
+          "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/work/contract-pr-review-20261028/replays/pr-605"
+        },
+        {
+          "kind": "WS",
+          "before": "Path.home() / 'workspace/slop-verify'",
+          "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/work/contract-pr-review-20261028/images"
+        }
+      ],
+      "actual_image_sha256": {
+        "original": "6a7ad34596d83b4c435b32f458a56e718e9f82eb4ad38e4316616d15d24d8ff7",
+        "control": "7a300434dced61413bde10788594b427d5649563e0223efcf09e6b214aff7ad3",
+        "candidate": "d17a657baf5cc19736a924c41e75424604411ddbe9f6e72cddf41ab72a695007"
+      },
+      "case_count": 8,
+      "returncode": 0,
+      "passed": true,
+      "fresh_report_sha256": "40e6e45c2ed6a00ee1e24b506cba2bbbc8768723a58bde7939f3417ad23c393e",
+      "executions": 24
+    },
+    {
+      "number": 607,
+      "head": "1271d3e265abd149556dcead5f61613f42b0ce17",
+      "producer_sha256": "8d6e2e7ad107ef80cbaab9526dc2425a930b02724a5951352d4d42b27c320b70",
+      "adapted_sha256": "a77a7b35656652304f3da6d57c841184c51133ae34fa1580aa6684e4c2a986c1",
+      "path_only_changes": [
+        {
+          "kind": "host-path",
+          "before": "Path.home() / 'workspace/pumpfun-sparse/scripts'",
+          "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/scripts"
+        },
+        {
+          "kind": "host-path",
+          "before": "Path.home() / 'workspace/pumpfun-sparse'",
+          "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source"
+        },
+        {
+          "kind": "ROOT",
+          "before": "Path.home() / 'workspace/pumpfun-sparse'",
+          "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source"
+        },
+        {
+          "kind": "OUT",
+          "before": "ROOT / 'research/amm-legacy-token22-rejection-20261028'",
+          "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/work/contract-pr-review-20261028/replays/pr-607"
+        },
+        {
+          "kind": "WS",
+          "before": "Path.home() / 'workspace/slop-verify'",
+          "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/work/contract-pr-review-20261028/images"
+        }
+      ],
+      "actual_image_sha256": {
+        "original": "6a7ad34596d83b4c435b32f458a56e718e9f82eb4ad38e4316616d15d24d8ff7",
+        "control": "7a300434dced61413bde10788594b427d5649563e0223efcf09e6b214aff7ad3",
+        "candidate": "d17a657baf5cc19736a924c41e75424604411ddbe9f6e72cddf41ab72a695007"
+      },
+      "case_count": 8,
+      "returncode": 0,
+      "passed": true,
+      "fresh_report_sha256": "bf00db838f5e0f33cb2533b24877134dd43584e77fb974860a0e0236cbdcfa0d",
+      "executions": 24
+    },
+    {
+      "number": 608,
+      "head": "0a209a05bf23f35619bc3813fc8298b0ab0a3651",
+      "producer_sha256": "b1be976ad0a1522b4c9cf70660ea3901a35678edb38b04413de9016784ed597c",
+      "adapted_sha256": "c55af68538333e3623d5ecd1f01353fb480d69b729c3c97f8cd3b71434787be8",
+      "path_only_changes": [
+        {
+          "kind": "host-path",
+          "before": "Path.home() / 'workspace/pumpfun-sparse/scripts'",
+          "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/scripts"
+        },
+        {
+          "kind": "host-path",
+          "before": "Path.home() / 'workspace/pumpfun-sparse'",
+          "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source"
+        },
+        {
+          "kind": "ROOT",
+          "before": "Path.home() / 'workspace/pumpfun-sparse'",
+          "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source"
+        },
+        {
+          "kind": "OUT",
+          "before": "ROOT / 'research/amm-collect-token22-rejection-20261028'",
+          "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/work/contract-pr-review-20261028/replays/pr-608"
+        },
+        {
+          "kind": "WS",
+          "before": "Path.home() / 'workspace/slop-verify'",
+          "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/work/contract-pr-review-20261028/images"
+        }
+      ],
+      "actual_image_sha256": {
+        "original": "6a7ad34596d83b4c435b32f458a56e718e9f82eb4ad38e4316616d15d24d8ff7",
+        "control": "7a300434dced61413bde10788594b427d5649563e0223efcf09e6b214aff7ad3",
+        "candidate": "d17a657baf5cc19736a924c41e75424604411ddbe9f6e72cddf41ab72a695007"
+      },
+      "case_count": 6,
+      "returncode": 0,
+      "passed": true,
+      "fresh_report_sha256": "b0717aa63391d831281b122c63e5a14226875f4c432339c671635b725feeaa8f",
+      "executions": 18
+    },
+    {
+      "number": 609,
+      "head": "361bcc9777ead75412fe43c7fa40584cf0fec60f",
+      "producer_sha256": "2c3d1913164555ad690eabf6078c276ae2c264f24bd646f077ba3eb948cf4bf4",
+      "adapted_sha256": "9b74038263108ff359f51072dea9b6d1357a8ddff58ac1c8e1f1d3a23e4dd781",
+      "path_only_changes": [
+        {
+          "kind": "host-path",
+          "before": "Path.home() / 'workspace/pumpfun-sparse/scripts'",
+          "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/scripts"
+        },
+        {
+          "kind": "host-path",
+          "before": "Path.home() / 'workspace/pumpfun-sparse'",
+          "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source"
+        },
+        {
+          "kind": "ROOT",
+          "before": "Path.home() / 'workspace/pumpfun-sparse'",
+          "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source"
+        },
+        {
+          "kind": "OUT",
+          "before": "ROOT / 'research/amm-buy-exact-base-transfer-fee-20261028'",
+          "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/work/contract-pr-review-20261028/replays/pr-609"
+        },
+        {
+          "kind": "WS",
+          "before": "Path.home() / 'workspace/slop-verify'",
+          "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/work/contract-pr-review-20261028/images"
+        }
+      ],
+      "actual_image_sha256": {
+        "original": "6a7ad34596d83b4c435b32f458a56e718e9f82eb4ad38e4316616d15d24d8ff7",
+        "control": "7a300434dced61413bde10788594b427d5649563e0223efcf09e6b214aff7ad3",
+        "candidate": "d17a657baf5cc19736a924c41e75424604411ddbe9f6e72cddf41ab72a695007"
+      },
+      "case_count": 8,
+      "returncode": 0,
+      "passed": true,
+      "fresh_report_sha256": "61e541ba66dfea1f5ddc47da4b4957ce1c57dd92ffa2721e80bbbe037bbcbafc",
+      "executions": 24
+    },
+    {
+      "number": 610,
+      "head": "1657f2be6372c8dca11bb3d4b67d680c0d40ec82",
+      "producer_sha256": "c3287f80157fed7e0b8fabc5f685fef81f380e0509229da8920cc2d10d6226fb",
+      "adapted_sha256": "a92182b1892dd715c3f88c601520abec5286bccbd46b66c287663e60b62550f3",
+      "path_only_changes": [
+        {
+          "kind": "host-path",
+          "before": "Path.home() / 'workspace/pumpfun-sparse/scripts'",
+          "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/scripts"
+        },
+        {
+          "kind": "host-path",
+          "before": "Path.home() / 'workspace/pumpfun-sparse'",
+          "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source"
+        },
+        {
+          "kind": "ROOT",
+          "before": "Path.home() / 'workspace/pumpfun-sparse'",
+          "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source"
+        },
+        {
+          "kind": "OUT",
+          "before": "ROOT / 'research/amm-sweep-token22-rejection-20261028'",
+          "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/work/contract-pr-review-20261028/replays/pr-610"
+        },
+        {
+          "kind": "WS",
+          "before": "Path.home() / 'workspace/slop-verify'",
+          "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/work/contract-pr-review-20261028/images"
+        }
+      ],
+      "actual_image_sha256": {
+        "original": "6a7ad34596d83b4c435b32f458a56e718e9f82eb4ad38e4316616d15d24d8ff7",
+        "control": "7a300434dced61413bde10788594b427d5649563e0223efcf09e6b214aff7ad3",
+        "candidate": "d17a657baf5cc19736a924c41e75424604411ddbe9f6e72cddf41ab72a695007"
+      },
+      "case_count": 6,
+      "returncode": 0,
+      "passed": true,
+      "fresh_report_sha256": "7b10b0262c829e2d7350f8386f4fc8d784dac75af507caac619511d1b40ef2f5",
+      "executions": 18
+    },
+    {
+      "number": 611,
+      "head": "ee19b31a71ea3adbedc9a79a030f203dec0caa4f",
+      "producer_sha256": "795be67f3181f4c98f461bed03426f5bf1123e929ff0f21430389380c8433834",
+      "adapted_sha256": "9e2a868b3bade37c0cea97d67b7b06c896f6cb60cc51ab1d3b295242c610feb7",
+      "path_only_changes": [
+        {
+          "kind": "host-path",
+          "before": "Path.home() / 'workspace/pumpfun-sparse/scripts'",
+          "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/scripts"
+        },
+        {
+          "kind": "host-path",
+          "before": "Path.home() / 'workspace/pumpfun-sparse'",
+          "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source"
+        },
+        {
+          "kind": "ROOT",
+          "before": "Path.home() / 'workspace/pumpfun-sparse'",
+          "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source"
+        },
+        {
+          "kind": "OUT",
+          "before": "ROOT / 'research/amm-boost-transfer-fee-20261028'",
+          "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/work/contract-pr-review-20261028/replays/pr-611"
+        },
+        {
+          "kind": "WS",
+          "before": "Path.home() / 'workspace/slop-verify'",
+          "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/work/contract-pr-review-20261028/images"
+        }
+      ],
+      "actual_image_sha256": {
+        "original": "6a7ad34596d83b4c435b32f458a56e718e9f82eb4ad38e4316616d15d24d8ff7",
+        "control": "7a300434dced61413bde10788594b427d5649563e0223efcf09e6b214aff7ad3",
+        "candidate": "d17a657baf5cc19736a924c41e75424604411ddbe9f6e72cddf41ab72a695007"
+      },
+      "case_count": 8,
+      "returncode": 0,
+      "passed": true,
+      "fresh_report_sha256": "cf8f5fa7673488181c461f9aaefc8d844299532f499528b7875886f465a47f70",
+      "executions": 24
+    },
+    {
+      "number": 612,
+      "head": "e29442503a1e73515c12874cba1bbf9ccabf4939",
+      "producer_sha256": "32188387ec2f689f24c78f8a41e48ed03daa9092822caa4dbde1666c1de63568",
+      "adapted_sha256": "0b527e62c21c0c1767df3a7be6228217d7c100ab9c5189f182ec73a8fe1c9c72",
+      "path_only_changes": [
+        {
+          "kind": "host-path",
+          "before": "Path.home() / 'workspace/pumpfun-sparse/scripts'",
+          "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/scripts"
+        },
+        {
+          "kind": "host-path",
+          "before": "Path.home() / 'workspace/pumpfun-sparse'",
+          "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source"
+        },
+        {
+          "kind": "ROOT",
+          "before": "Path.home() / 'workspace/pumpfun-sparse'",
+          "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source"
+        },
+        {
+          "kind": "OUT",
+          "before": "ROOT / 'research/amm-transfer-token22-rejection-20261028'",
+          "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/work/contract-pr-review-20261028/replays/pr-612"
+        },
+        {
+          "kind": "WS",
+          "before": "Path.home() / 'workspace/slop-verify'",
+          "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/work/contract-pr-review-20261028/images"
+        }
+      ],
+      "actual_image_sha256": {
+        "original": "6a7ad34596d83b4c435b32f458a56e718e9f82eb4ad38e4316616d15d24d8ff7",
+        "control": "7a300434dced61413bde10788594b427d5649563e0223efcf09e6b214aff7ad3",
+        "candidate": "d17a657baf5cc19736a924c41e75424604411ddbe9f6e72cddf41ab72a695007"
+      },
+      "case_count": 6,
+      "returncode": 0,
+      "passed": true,
+      "fresh_report_sha256": "b43d152ebf49ce11e1425cadcb7a3bb8aea1ee1f1fabc739f34a3cf195bc9ede",
+      "executions": 18
+    },
+    {
+      "number": 613,
+      "head": "a74ec29c57a80b7a9f5a8c1f56a8e776e942f310",
+      "producer_sha256": "96ef212159ef2ca6969313a467442c612c1946bced5dfe9bda861019483999d7",
+      "adapted_sha256": "95e6e96cf4fd580f857ddfaadda21cc09ae286e8ba559b157327d37283d54ff5",
+      "path_only_changes": [
+        {
+          "kind": "host-path",
+          "before": "Path.home() / 'workspace/pumpfun-sparse/scripts'",
+          "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/scripts"
+        },
+        {
+          "kind": "host-path",
+          "before": "Path.home() / 'workspace/pumpfun-sparse'",
+          "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source"
+        },
+        {
+          "kind": "ROOT",
+          "before": "Path.home() / 'workspace/pumpfun-sparse'",
+          "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source"
+        },
+        {
+          "kind": "OUT",
+          "before": "ROOT / 'research/amm-trade-base-transfer-fee-20261028'",
+          "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/work/contract-pr-review-20261028/replays/pr-613"
+        },
+        {
+          "kind": "WS",
+          "before": "Path.home() / 'workspace/slop-verify'",
+          "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/work/contract-pr-review-20261028/images"
+        }
+      ],
+      "actual_image_sha256": {
+        "original": "6a7ad34596d83b4c435b32f458a56e718e9f82eb4ad38e4316616d15d24d8ff7",
+        "control": "7a300434dced61413bde10788594b427d5649563e0223efcf09e6b214aff7ad3",
+        "candidate": "d17a657baf5cc19736a924c41e75424604411ddbe9f6e72cddf41ab72a695007"
+      },
+      "case_count": 10,
+      "returncode": 0,
+      "passed": true,
+      "fresh_report_sha256": "ef5b6b85822a74dd3e983f5ca1d247b7785335af0ee45b0aee50207125dd3e33",
+      "executions": 30
+    }
+  ],
+  "second_batch_executions": 294,
+  "later_reviews": [
+    {
+      "number": 617,
+      "head": "708070413c67a2a18b06c8d08b52483570e80551",
+      "review": {
+        "headRefOid": "708070413c67a2a18b06c8d08b52483570e80551",
+        "isDraft": false,
+        "reviewDecision": "",
+        "state": "MERGED",
+        "checks_summary": {
+          "QUEUED": 71
+        }
+      },
+      "result": {
+        "already_merged": true
+      },
+      "fresh_replay": {
+        "passed": true,
+        "number": 617,
+        "head": "708070413c67a2a18b06c8d08b52483570e80551",
+        "fresh_cases": 1011,
+        "transactions": 2022,
+        "signatures_reverified": 2022,
+        "candidate_sha256": "a775c319eefbb30c3134b46f452dc9c0286bb45c0eb65e96d0f73bb0f524ac68",
+        "ordered_log_mismatches": 0,
+        "full_corpus_run": false
+      }
+    },
+    {
+      "number": 619,
+      "head": "1cdc7dabb92eaec6e39a82f7418820a2b620cae9",
+      "review": {
+        "headRefOid": "1cdc7dabb92eaec6e39a82f7418820a2b620cae9",
+        "isDraft": false,
+        "reviewDecision": "",
+        "state": "OPEN"
+      },
+      "result": {
+        "sha": "06194245dcc85eefc3ed11961c272eeae349c004",
+        "merged": true,
+        "message": "Pull Request successfully merged"
+      },
+      "fresh_replay": {
+        "cases": 12,
+        "signature_verifications": 36,
+        "candidate_mismatches": 0,
+        "control_mismatches": 9,
+        "producer_modified": false,
+        "import_path_supplied_via_PYTHONPATH": true
+      }
+    },
+    {
+      "number": 626,
+      "review": {
+        "headRefOid": "d7481175dc8b7a6922126bb1602afaf2ad283ff5",
+        "isDraft": false,
+        "reviewDecision": "",
+        "state": "MERGED"
+      },
+      "merge": {
+        "already_merged": true
+      },
+      "fresh_v2_cases": 18,
+      "fresh_multihop_cases": 8,
+      "mutations_passed": 19,
+      "hosted_checks": "Not established by these local results"
+    },
+    {
+      "number": 627,
+      "review": {
+        "headRefOid": "b79152657b12576eafe690b7b38bd99d70d17e6a",
+        "isDraft": false,
+        "reviewDecision": "",
+        "state": "MERGED"
+      },
+      "merge": {
+        "already_merged": true
+      },
+      "fresh_cases": 20,
+      "fresh_candidate_log_mismatches": 0,
+      "hosted_checks": "Not established by these local results"
+    },
+    {
+      "number": 638,
+      "review": {
+        "headRefOid": "cb3ab1c0b0fb093012be2fe72913998c5770666a",
+        "isDraft": false,
+        "reviewDecision": "",
+        "state": "OPEN"
+      },
+      "merge": {
+        "sha": "3ae0faabf2c2b714facd416e33cf25395234e624",
+        "merged": true,
+        "message": "Pull Request successfully merged"
+      },
+      "fresh_original_packet_executions": 48,
+      "additional_current_candidate_run": true,
+      "hosted_checks": "Not established by these local results",
+      "additional_current_candidate_scope": "Additional run used historical r13 6eac0c candidate, not final r31"
+    },
+    {
+      "number": 640,
+      "review": {
+        "headRefOid": "f878f05a6e0193f97270cb67d697d6a2b4a1c50b",
+        "isDraft": false,
+        "reviewDecision": "",
+        "state": "OPEN"
+      },
+      "merge": {
+        "sha": "f8f85f1a4d177da98c0e8ffbbe46417542df9627",
+        "merged": true,
+        "message": "Pull Request successfully merged"
+      },
+      "fresh_original_packet_executions": 96,
+      "additional_current_candidate_run": true,
+      "reviewer_portability_fix": {
+        "prior_head": "d504944b4bcd9c7359ae112e498457cda0a7c6da",
+        "new_head": "f878f05a6e0193f97270cb67d697d6a2b4a1c50b",
+        "changed_paths": [
+          "research/amm-admin-token-incentives-20261029/verify.py",
+          "research/amm-admin-token-incentives-20261029/MANIFEST.json"
+        ],
+        "head_branch": "research/amm-admin-token-incentives-20261029",
+        "head_repository": "Chihyunpark1/pumpfun-source"
+      },
+      "hosted_checks": "Not established by these local results",
+      "additional_current_candidate_scope": "Additional run used historical r13 6eac0c candidate, not final r31"
+    },
+    {
+      "number": 641,
+      "review": {
+        "headRefOid": "1ab9ed89983e60c184f4ce5396000f6674dfa48a",
+        "isDraft": false,
+        "reviewDecision": "",
+        "state": "OPEN"
+      },
+      "merge": {
+        "sha": "9a236a66e9972f08866f24405e3d44ebcb00e6e3",
+        "merged": true,
+        "message": "Pull Request successfully merged"
+      },
+      "actual_changed_files": 160,
+      "saved_pairs": 264,
+      "saved_signatures_reverified": 694,
+      "fresh_focused_cases": 36,
+      "hosted_checks": "Not established by these local results"
+    },
+    {
+      "number": 642,
+      "review": {
+        "headRefOid": "bd59711937aafad2481cb71a05182e87de4c8b5d",
+        "state": "OPEN"
+      },
+      "merge": {
+        "sha": "a76014a26bc7426d30630913cf2c8e156be4812e",
+        "merged": true
+      },
+      "fresh_original_packet_executions": 120,
+      "hosted_checks_at_merge": "queued; not claimed passing",
+      "reviewer_portability_fix": {
+        "prior_head": "d79d06f46d269ac7237298a12868d07aa971e978",
+        "new_head": "bd59711937aafad2481cb71a05182e87de4c8b5d",
+        "changed_paths": [
+          "research/amm-claim-token-incentives-20261029/verify.py",
+          "research/amm-claim-token-incentives-20261029/MANIFEST.json"
+        ]
+      },
+      "hosted_checks": "Not established by these local results"
+    }
+  ],
+  "held": [
+    {
+      "number": 620,
+      "head": "66643437bab4722f89ed7ee5a2041b912d063fa4",
+      "reason": "Source regression test refers to pump_interface_v2.rs absent from actual maintained Mayhem source; await qualified source promotion and rerun"
+    }
+  ],
+  "already_merged_606": {
+    "head": "9918a3e7aac71a8ee721f76f5a4879c9add6bc59",
+    "merged_by_this_review": false,
+    "normal_and_optimized_materializer_tests": 28,
+    "TMPDIR": "/private/tmp",
+    "whole_build_or_runtime_claimed": false
+  }
+}
