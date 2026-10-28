@@ -91,12 +91,15 @@ def _verify_amm_owner6048(root):
 
 def verify(program, root):
     status = read(root / 'repro/status.json')[program]
-    if program == 'pump' and status['candidate_artifact'] == 'repro/pump/canonical-frontier-20261028/candidate.so':
+    if program == 'pump' and status['candidate_artifact'] in ['repro/pump/canonical-frontier-20261028/candidate.so', 'research/pump-create-used-boundaries-20261028/artifacts/candidate.so', 'research/pump-final-composition-673-20261028/artifacts/candidate.so']:
         from verify_pump_main_checkpoint import verify as verify_pump
         return verify_pump(root)
-    if program == 'pump_amm' and status['candidate_artifact'] == 'repro/pump_amm/canonical-frontier-20261028/results/build-a/candidate.so':
+    if program == 'pump_amm' and status['candidate_artifact'] in ['repro/pump_amm/canonical-frontier-20261028/results/build-a/candidate.so', 'research/amm-layout-closure-20261028/results/build-a/candidate.so']:
         from verify_pump_amm_checkpoint import verify as verify_amm
         return verify_amm(root)
+    if program == 'mayhem' and status['candidate_artifact'] == 'research/mayhem-canonical-promotion-20261028/hosted/40770208958/candidate.so':
+        from verify_mayhem_checkpoint import verify as verify_mayhem
+        return verify_mayhem(root)
     if program == 'pump_fees' and status['candidate_artifact'] == 'research/all-contract-completion-20261028/fees-built/canonical-01/candidate.so':
         def require(value, message):
             if not value:
@@ -182,7 +185,7 @@ def verify(program, root):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('program', choices=['pump', 'pump_amm', 'pump_fees'])
+    parser.add_argument('program', choices=['pump', 'pump_amm', 'pump_fees', 'mayhem'])
     parser.add_argument('--repo', type=Path, default=ROOT)
     args = parser.parse_args()
     root = args.repo.resolve()

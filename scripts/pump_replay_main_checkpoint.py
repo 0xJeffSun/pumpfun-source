@@ -20,10 +20,12 @@ def main():
     assert 1 <= args.shard <= args.shards
     verify(ROOT)
     selected = json.loads((ROOT / 'repro/status.json').read_text())['pump']
-    if selected['candidate_artifact'] == 'repro/pump/canonical-frontier-20261028/candidate.so':
+    if selected['candidate_artifact'] in ['repro/pump/canonical-frontier-20261028/candidate.so', 'research/pump-create-used-boundaries-20261028/artifacts/candidate.so', 'research/pump-final-composition-673-20261028/artifacts/candidate.so']:
         if not __debug__:
             raise SystemExit('Replay requires normal Python; do not use -O.')
-        package = ROOT / 'repro/pump/canonical-frontier-20261028'
+        package = (ROOT / selected['candidate_artifact']).parent
+        if package.name == 'artifacts':
+            package = package.parent
         comparison = package / 'builds/primary/build-comparison.json'
         record = json.loads(comparison.read_text())
         prefix = next(iter(record['source_sha256'])).split('/source/', 1)[0] + '/source'
@@ -37,6 +39,10 @@ def main():
                 if not item.isfile() or path.is_absolute() or '..' in path.parts:
                     raise ValueError('Unsafe compiled source archive member')
                 destination = workspace / path
+                if not destination.resolve().is_relative_to(workspace.resolve()):
+                    raise ValueError('Compiled source destination escapes workspace')
+                if any(parent.is_symlink() for parent in destination.parents if parent.is_relative_to(workspace)):
+                    raise ValueError('Compiled source parent symlink')
                 data = archive.extractfile(item).read()
                 import hashlib
                 if hashlib.sha256(data).hexdigest() != record['source_sha256'][str(destination.relative_to(ROOT))]:
@@ -50,7 +56,7 @@ def main():
         args.output = args.output.resolve()
         args.output.parent.mkdir(parents=True, exist_ok=True)
         subprocess.run([sys.executable, '-B', str(ROOT / 'scripts/pump_validate_parallel.py'),
-                        '--candidate', str(package / 'candidate.so'),
+                        '--candidate', str(ROOT / selected['candidate_artifact']),
                         '--source-directory', str(workspace / 'programs/pump'),
                         '--build-comparison', str(comparison), '--output', str(args.output),
                         '--captured-loader', '--workers', str(args.workers),

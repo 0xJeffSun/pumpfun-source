@@ -91,7 +91,7 @@ pub mod native_payments;
 // layout-pad
  require_gt!(raw_quote,0,PumpError::BuyNotEnoughSolToCoverFees);
  let protocol_fee=ceil_fee(raw_quote,protocol_fee_bps)?;
- let creator_fee=if bonding_curve.creator==Pubkey::default(){0}else{ceil_fee(raw_quote,creator_fee_bps)?};
+ let creator_fee=if bonding_curve.creator!=Pubkey::default(){ceil_fee(raw_quote,creator_fee_bps)?}else{0};
  let total=raw_quote.saturating_add(protocol_fee).saturating_add(creator_fee);
  let quote=if total>spendable_sol_in{raw_quote.checked_sub(total.saturating_sub(spendable_sol_in)).ok_or(PumpError::Overflow)?}else{raw_quote};
 // layout-pad
@@ -113,7 +113,7 @@ pub mod native_payments;
   let amount=bonding_curve.real_token_reserves;
   let quote=u64::try_from(crate::legacy_sell::fee_cpi::buy_quote(bonding_curve,amount)?).map_err(|_|PumpError::Truncation)?;
   let protocol_fee=ceil_fee(quote,protocol_fee_bps)?;
-  let creator_fee=if bonding_curve.creator==Pubkey::default(){0}else{ceil_fee(quote,creator_fee_bps)?};
+  let creator_fee=if bonding_curve.creator!=Pubkey::default(){ceil_fee(quote,creator_fee_bps)?}else{0};
   let total=quote.checked_add(protocol_fee).ok_or(PumpError::Overflow)?.checked_add(creator_fee).ok_or(PumpError::Overflow)?;
 // layout-pad
 // layout-pad
@@ -164,7 +164,7 @@ pub mod native_payments;
  let mint=ctx.accounts.mint.key();
  let mut cashback=false;
  if creator_fee!=0{
-  crate::legacy_sell::check_bonding_curve_v2(ctx.remaining_accounts,&mint.key())?;
+  crate::legacy_sell::check_bonding_curve_v2(ctx.remaining_accounts,&mint)?;
   if bonding_curve.is_cashback_coin{
    #[inline(always)] fn pay_owned<'info>(to:AccountInfo<'info>,system_program:&AccountInfo<'info>,user:&Signer<'info>,amount:u64)->Result<()>{crate::user_quote_payments::transfer_native_owned(system_program,user,to,amount)}
    pay_owned(ctx.accounts.user_volume_accumulator.to_account_info(),ctx.accounts.system_program.as_ref(),&ctx.accounts.user,creator_fee)?;
@@ -237,13 +237,13 @@ pub mod native_payments;
   }
  }
  crate::user_quote_payments::transfer_native_curve(ctx.accounts.system_program.as_ref(),&ctx.accounts.user,&bonding_curve,quote)?;
- let mut buyback_fee=0;
- if protocol_fee!=0{
-  let (fee,remaining)=crate::buy_v2::recipient_payments::split_protocol_fee(&ctx.accounts.global,protocol_fee,bonding_curve.is_mayhem_mode);
-  if fee!=0{crate::user_quote_payments::transfer_native_curve_unchecked(ctx.accounts.system_program.as_ref(),&ctx.accounts.user,&buyback_fee_recipient,fee)?;}
-  crate::user_quote_payments::transfer_native_recipient(ctx.accounts.system_program.as_ref(),&ctx.accounts.user,&fee_recipient,remaining)?;
-  buyback_fee=fee;
- }
+ let (buyback_fee,remaining)=crate::buy_v2::recipient_payments::split_protocol_fee(&ctx.accounts.global,protocol_fee,bonding_curve.is_mayhem_mode);
+ if buyback_fee!=0{crate::user_quote_payments::transfer_native_curve_unchecked(ctx.accounts.system_program.as_ref(),&ctx.accounts.user,&buyback_fee_recipient,buyback_fee)?;}
+ crate::user_quote_payments::transfer_native_recipient(ctx.accounts.system_program.as_ref(),&ctx.accounts.user,&fee_recipient,remaining)?;
+
+
+
+
  let virtual_token_reserves=bonding_curve.virtual_token_reserves;
  let virtual_quote_reserves=bonding_curve.virtual_quote_reserves;
  let real_token_reserves=bonding_curve.real_token_reserves;
@@ -255,11 +255,11 @@ pub mod native_payments;
  total_claimed_tokens:ctx.accounts.user_volume_accumulator.total_claimed_tokens,
  current_sol_volume:ctx.accounts.user_volume_accumulator.current_sol_volume,
  last_update_timestamp:ctx.accounts.user_volume_accumulator.last_update_timestamp,
+ user:ctx.accounts.user.key(),
  mint,
  sol_amount:quote,
  token_amount:amount,
  is_buy:true,
- user:ctx.accounts.user.key(),
  timestamp,
  virtual_sol_reserves:virtual_quote_reserves,
  virtual_token_reserves,
@@ -292,7 +292,7 @@ pub mod native_payments;
  emit_cpi!(event);
  if ctx.accounts.bonding_curve.real_token_reserves==0{
  ctx.accounts.bonding_curve.complete=true;
- let event=crate::trade_types::CompleteEvent{user:ctx.accounts.user.key(),mint,bonding_curve:ctx.accounts.bonding_curve.key(),timestamp,quote_mint:ctx.accounts.bonding_curve.quote_mint};
+ let event=crate::trade_types::CompleteEvent{mint,user:ctx.accounts.user.key(),bonding_curve:ctx.accounts.bonding_curve.key(),timestamp,quote_mint:ctx.accounts.bonding_curve.quote_mint};
  emit!(event);
  emit_cpi!(event);
  }

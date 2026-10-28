@@ -2,95 +2,66 @@
 
 Rust reconstruction of Pump.fun's Solana programs from captured binaries.
 
-**Current binary coverage — 28 October 2026:** 3,321 / 3,338 function
-windows match (99.5%); 17 remain unmatched. Three of five programs reproduce
-their complete meaningful ELF.
+**Current maintained binary coverage — 28 October 2026:** 3,321/3,338 function
+windows match (99.5%); 17 remain unmatched. Fees, Mayhem and Donation Relay
+reproduce their complete meaningful ELF from qualified maintained sources.
 
-| Program | Matched windows | Matched % | Raw-equal bodies | Normalized only | Unmatched | Whole ELF equal |
+| Program | Matched windows | Matched % | Raw-equal bodies | Normalized only | Unmatched | Whole meaningful ELF equal |
 | --- | ---: | ---: | ---: | ---: | ---: | --- |
-| [Pump Main](programs/pump/README.md) | 1,019 / 1,035 | 98.5% | 188 | 831 | 16 | No |
-| [PumpSwap / AMM](programs/pump-amm/README.md) | 784 / 785 | 99.9% | 394 | 390 | 1 | No |
-| [Fees](programs/pump-fees/README.md) | 585 / 585 | 100.0% | 585 | 0 | 0 | **Yes** |
-| [Mayhem](research/mayhem-meaningful-elf-20261028/README.md) | 441 / 441 | 100.0% | 441 | 0 | 0 | **Yes** |
-| [Donation Relay](repro/donation-relay/canonical-exact-selection/README.md) | 492 / 492 | 100.0% | 492 | 0 | 0 | **Yes** |
-| **Total** | **3,321 / 3,338** | **99.5%** | **2,100** | **1,221** | **17** | **3 / 5** |
+| [Pump Main](programs/pump/README.md) |1,019/1,035|98.5%|188|831|16|No|
+| [PumpSwap / AMM](programs/pump-amm/README.md) |784/785|99.9%|784|0|1|No|
+| [Fees](programs/pump-fees/README.md) |585/585|100.0%|585|0|0|**Yes**|
+| [Mayhem](programs/mayhem/README.md) |441/441|100.0%|441|0|0|**Yes**|
+| [Donation Relay](repro/donation-relay/canonical-exact-selection/README.md) |492/492|100.0%|492|0|0|**Yes**|
+| **Total** |**3,321/3,338**|**99.5%**|**2,490**|**831**|**17**|**3/5**|
 
-Matched windows cover **5,022,984 / 5,213,128 code bytes (96.4%)**;
-**190,144 bytes (3.6%)** remain outside matched windows.
+Matched windows cover **5,022,984/5,213,128 code bytes (96.4%)**.
+Raw equality compares complete instruction bytes. Normalized windows mask
+specified call/address operands and do not prove whole-program identity.
+These counts describe the selected maintained recipes; they are not a
+percentage of engineering work completed.
 
-These figures measure the latest published artifacts, including research not
-integrated into the maintained source tree. Raw-equal bodies match byte for byte;
-normalized matches mask specified call/address operands. Window coverage is not
-a percentage of engineering work completed or proof of whole-program identity.
-Pump Main and AMM now select their qualified maintained sources and complete
-build/runtime receipts. The earlier [L41](research/claude-pump-integration-20261027/r37-layout-41/README.md)
-and AMM linker-layout experiments remain separate historical evidence; their
-293 and 259 raw matches are not measurements of these current selections.
+## Current qualifications and remaining work
 
-## Remaining work
+- [Pump's composed source](research/pump-final-composition-673-20261028/README.md)
+  preserves 1,019 normalized / 188 raw windows while fixing common admin wallet
+  validation/CPI order and multi-hop quote-fee snapshot/shared vault admission.
+  Two ordinary builds and an independent
+  [empty-target build](research/pump-final-composition-cold-20261028/README.md)
+  repeat both outputs. All 10,468 broad pairs and 106 strict focused case records
+  pass; separate legacy284 and extension126 pairs also pass. The historical acc5
+  eight-failure admin control is retained, and all eighteen witnesses pass on the
+  selected image. Deliberate Source-line alignment is disclosed; sixteen windows
+  and whole meaningful ELF identity remain open.
+- [AMM's explicit layout recipe](research/amm-layout-closure-20261028/README.md)
+  produces784 raw-identical physical windows. Every meaningful ELF byte outside
+  sell's 9,024 bytes and 21 relocation-offset rows inside sell is literally equal,
+  including data and headers. Two actual source builds, one with entirely empty
+  dependency targets, repeat both outputs. Fresh 17,462 strict pairs and 72 loader
+  pairs pass. Sell `0x4c750` remains unequal; whole ELF identity remains false.
+- [Mayhem's maintained69-file source](research/mayhem-canonical-promotion-20261028/README.md)
+  reproduces all 775,416 meaningful bytes in two independent fresh Windows
+  host-and-target builds. Actual loader execution returns the 777,408-byte
+  captured allocation. All9,595 paired transaction comparisons agree literally;
+  all 39,062 retained signature fields verify. The 1,992-byte zero allocation
+  suffix is separate from compiler output.
+- [Fees](research/contract-completion-20261028/CURRENT-INTEGRATION.md) reproduces
+  all 873,256 meaningful bytes in two builds, including an empty dependency target.
+  The exact image passes17,331 paired cases. Its75,688-byte zero allocation
+  suffix remains separate.
+- [Relay's maintained-source repeat](research/relay-current-repeat-20261028/README.md)
+  reproduces the complete meaningful ELF from an empty target. A genuine loader
+  deployment uses912 signed transactions and yields the exact allocated payload;
+  all 536 retained replay records agree on account observations and ordered logs.
 
-- [Relay maintained-source repeat](research/relay-current-repeat-20261028/README.md) reproduces the complete meaningful ELF from an empty target. A fresh real-loader deployment uses 912 signed transactions and yields the exact allocated payload; all 536 replay records pass with matching account observations and ordered logs.
-- [Fees is integrated into maintained source](research/contract-completion-20261028/CURRENT-INTEGRATION.md): two builds reproduce all 873,256 meaningful ELF bytes, including one from an empty dependency target. The exact candidate passes 17,331 paired runtime cases. Its 75,688-byte zero allocation suffix remains separate.
-- Recover the **16 Pump Main and 1 PumpSwap / AMM** unmatched windows. The AMM
-  remainder is sell cashback `0x4c750`.
-- Close remaining call, data and relocation differences, integrate qualified
-  source changes, and verify reproducible whole-program builds and uncovered behavior.
-- Pump Main reaches 1,019 windows with the
-  [legacy-sell cashback boundary](research/pump-legacy-sell-boundary-20261028/README.md)
-  (`0x152888`, all 8,488 bytes; 0 losses; 182 signed paired runtime cases) on L38. The
-  composed line continues through data-side steps
-  [L39](research/claude-pump-integration-20261027/r37-layout-39/README.md) and
-  [L40](research/claude-pump-integration-20261027/r37-layout-40/README.md) to
-  [L41](research/claude-pump-integration-20261027/r37-layout-41/README.md), which adds the
-  legacy-sell boundary (1,019 windows, raw-ready 1,005/1,019 with the layout layer, 44-suite
-  corpus 10,468 cases, 0 mismatches). The current maintained selection composes
-  the qualified behavior corrections with signed original/candidate replays and
-  no normalized window loss:
-  [v2 whitelist reserve sync](research/pump-v2-whitelist-sync-20261028/README.md),
-  [multi-hop crossing guard](research/pump-multi-hop-crossing-guard-20261028/README.md) (error 6021),
-  [v3 sell recovery](research/pump-l39-v3sell-recovery-20261028/README.md) (128 cases),
-  [sweep zero-recipient guard](research/pump-l38-sweep-zero-recipient-20261028/README.md) (error 6000),
-  [cashback-v2 quote-program guard](research/pump-l38-cashback-quote-program-20261028/README.md),
-  [cashback validation order](research/pump-cashback-validation-order-20261028/README.md) (6010 before 6076),
-  [shared buyback panic provenance](research/pump-shared-buyback-panic-20261028/README.md),
-  [direct-route FeeConfig selection](research/pump-direct-route-fee-config-20261028/README.md) and the
-  [checked cashback decoder](research/pump-checked-cashback-decoder-20261028/README.md).
-- The [maintained AMM frontier](repro/pump_amm/canonical-frontier-20261028/README.md)
-  reaches **784/785 normalized and 394 raw**. It composes the
-  [buy cashback recovery](research/amm-cashback-buy-recovery-20261028/README.md)
-  with three fully consumed PDA-seed statics, preserving every previous match
-  and adding 127 raw bodies. Its cold build and repeat reproduce both ELFs;
-  25 suites / 17,462 paired cases and 72 refreshed loader-control pairs pass.
-  A one-to-one physical mapping covers all 784 matched bodies and 7,143 direct
-  call edges. Sell cashback and whole-file data/relocation closure remain open.
-- Mayhem now [reproduces its complete meaningful ELF](research/mayhem-meaningful-elf-20261028/README.md):
-  ordinary stripping of two fresh builds equals all 775,416 meaningful original bytes.
-  The closing change moves one vendored-Anchor module declaration and rebinds the data layout.
-  A [follow-up](research/mayhem-fresh-host-20261028/README.md) rebuilds the host macro from
-  source, with no cached host artifacts, across three fresh chains. The recipe still uses
-  a target-derived linker layout, so historical source/compiler provenance remains open.
-  Static data proofs continue on the qualified437 image:
-  [Anchor log formatter pieces](research/mayhem-current437-format-pieces-20261028/README.md),
-  [counted account-name intervals](research/mayhem-current437-account-names-20261028/README.md)
-  (125 `with_account_name` sites) and
-  [`MayhemError` Display messages](research/mayhem-current437-mayhem-error-display-20261028/README.md)
-  (20 messages, 531 bytes).
-- Binary analysis packets ([window](research/pump-window-analysis-20261028/README.md),
-  [deep disassembly](research/pump-deep-disasm-20261028/README.md) and
-  [section](research/pump-section-analysis-20261028/README.md) analyses for each program, and a
-  [reconstruction roadmap](research/reconstruction-roadmap-20261028/README.md)) describe the
-  deployed binaries; the roadmap's open-window lists use the maintained checkpoints, not the
-  research frontier above.
-- PumpSwap transfer-fee diagnostics with basis points above 10,000 now trigger all
-  three overflow sites at runtime: lines 57/67 for
-  [deposit/withdraw](research/amm-transfer-fee-bps-overflow-20261028/README.md) and
-  [v2 trades](research/amm-trade-v2-bps-overflow-20261028/README.md), and
-  [line 49](research/amm-withdraw-bps-overflow-line49-20261028/README.md). Deployed and
-  rebuilt programs agree in each case.
+The full objective remains active until Pump and AMM also reproduce their entire
+meaningful files from maintained source. Target-derived layout rules are explicit
+reconstructed recipes; original source spelling and unique private build provenance
+remain unknown. Finite offline tests do not establish a security audit or live
+operational acceptance. Historical research remains linked from the
+[integration record](research/contract-completion-20261028/CURRENT-INTEGRATION.md).
 
-The linked program reports contain source, build and validation evidence.
-[Build and verification guide](docs/TOOLING.md) ·
-[Scripts](scripts/README.md) ·
+[Build and verification guide](docs/TOOLING.md) · [Scripts](scripts/README.md) ·
 [Dependency status](repro/dependency-status.json)
 
 <!-- app-progress:start -->

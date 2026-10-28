@@ -123,19 +123,23 @@ def verify(root):
         assert not path.is_symlink() and sha(path) == digest, name
     stats = read(mayhem_directory / 'stats.json')
     status = initial_status['mayhem']
-    assert status['candidate_artifact'] == MAYHEM + '/candidate.so'
-    assert status['candidate_sha256'] == stats['candidate_sha256']
-    assert status['candidate_symbols_artifact'] == MAYHEM + '/unstripped.so'
-    assert sha(root / status['candidate_symbols_artifact']) == stats['unstripped_sha256']
-    assert status['comparison_report'] == MAYHEM + '/comparison.json'
-    assert status['full_byte_equality'] is False
+    if status['candidate_artifact'] == 'research/mayhem-canonical-promotion-20261028/hosted/40770208958/candidate.so':
+        mayhem_command = [root / 'scripts/verify_mayhem_checkpoint.py', '--repo', root]
+    else:
+        assert status['candidate_artifact'] == MAYHEM + '/candidate.so'
+        assert status['candidate_sha256'] == stats['candidate_sha256']
+        assert status['candidate_symbols_artifact'] == MAYHEM + '/unstripped.so'
+        assert sha(root / status['candidate_symbols_artifact']) == stats['unstripped_sha256']
+        assert status['comparison_report'] == MAYHEM + '/comparison.json'
+        assert status['full_byte_equality'] is False
+        mayhem_command = [mayhem_directory / 'verify.py', '--current-source', root,
+                          '--expected-seal', MAYHEM_SEAL]
 
     commands = {
         'pump': [root / 'scripts/verify_pump_main_checkpoint.py', '--repo', root],
         'pump_amm': [root / 'scripts/verify_pump_amm_checkpoint.py', '--repo', root],
         'pump_fees': [root / 'scripts/verify_current_checkpoint.py', 'pump_fees', '--repo', root],
-        'mayhem': [mayhem_directory / 'verify.py', '--current-source', root,
-                   '--expected-seal', MAYHEM_SEAL],
+        'mayhem': mayhem_command,
     }
     with concurrent.futures.ThreadPoolExecutor(max_workers=4) as executor:
         futures = {name: executor.submit(run_json, root, command)
