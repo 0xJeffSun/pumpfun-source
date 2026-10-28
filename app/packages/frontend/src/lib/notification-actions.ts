@@ -1,4 +1,4 @@
-import type { NotificationController } from "./notification-controller.js";
+import type { NotificationController } from "./notification-controller";
 import {
   NOTIFICATION_TOPICS,
   copyJson,
@@ -6,7 +6,7 @@ import {
   type NotificationTopic,
   type PreferencePatch,
   type TopicAction,
-} from "./notification-state.js";
+} from "./notification-state";
 
 export type TopicChange = Readonly<{
   topic: NotificationTopic;

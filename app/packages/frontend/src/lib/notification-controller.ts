@@ -12,7 +12,7 @@ import {
   type PreferenceSnapshot,
   type TopicAction,
   type TopicSnapshot,
-} from "./notification-state.js";
+} from "./notification-state";
 
 /** No HTTP implementation. A local adapter must be supplied deliberately. */
 export interface NotificationAdapter {

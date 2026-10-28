@@ -1,12 +1,12 @@
 /** Test-only local memory. Never imported by the application or initialized implicitly. */
-import type { NotificationAdapter } from "../../packages/frontend/src/lib/notification-controller.ts";
+import type { NotificationAdapter } from "../../packages/frontend/src/lib/notification-controller";
 import {
   readPreferenceSnapshot,
   readTopicSnapshot,
   type PreferenceSnapshot,
   type TopicAction,
   type NotificationTopic,
-} from "../../packages/frontend/src/lib/notification-state.ts";
+} from "../../packages/frontend/src/lib/notification-state";
 
 export function createSyntheticNotificationAdapter(seed: {
   settings: unknown;

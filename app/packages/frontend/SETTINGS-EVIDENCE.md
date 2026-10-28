@@ -125,10 +125,19 @@ compatibility harness's unknown-operation 501 behavior is unchanged.
   It covers malformed queries, deep links, close/history, search/empty states,
   keyboard/focus behavior, four desktop/mobile widths, storage preservation and
   blocked permission/service-worker hooks. Tests must be run after shell integration.
-- **Not run**: full build, frontend typecheck, browser screenshots and aggregate
-  evidence verification. The pinned frozen frontend install is blocked by the
-  active package minimum-release-age policy for `electron-to-chromium@1.5.467`.
-  No policy was relaxed and the lockfile was not changed.
+- Passed in the combined settings/auth/Live validation tree: full root
+  `pnpm build` (SDK, backend and Next 16.4.1 Turbopack, including JSX type analysis
+  and 15 static pages) and `pnpm typecheck` for all three packages. The first
+  integrated build exposed browser imports that named nonexistent `.js` files;
+  the frontend fixture typecheck also exposed `.ts` imports in its test helper.
+  Five import literals across three notification files were changed to the
+  frontend's extensionless convention; the full checks and all 27 notification
+  tests passed afterward. No runtime logic, dependency or lockfile changed.
+- The frozen frontend installation ran only after the package minimum-release-age
+  cutoff elapsed on 2026-10-28. No policy was relaxed.
+- **Not run**: browser runtime/screenshots, aggregate test command and aggregate
+  evidence verification for this combined feature. Build/typecheck success is
+  not browser behavior or original-reference parity.
 - Pinned Next 16.4.1 bundled URL-hook, CSS-module and client-component docs were
   read from an integrity-verified official npm archive extracted as documentation
   only. No dependency-install restriction was bypassed for that read-only step.

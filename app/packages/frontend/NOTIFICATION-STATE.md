@@ -7,7 +7,8 @@ settings modal through an explicitly supplied adapter. It is not a second
 settings page, a Hermes backend, an authenticated account, or native API
 compatibility. Opt-in UI component source is provided alongside the controller. The settings owner
 implemented the narrow modal insertion, and it passed independent source review.
-Full UI/runtime/browser validation remains pending.
+The combined integration passes the full workspace production build and
+TypeScript check. Browser/runtime interaction validation remains pending.
 
 Default construction uses `unavailableNotificationAdapter`. It cannot read,
 submit preferences, subscribe, request a browser permission, or send a message.
@@ -124,9 +125,17 @@ support its IPC setup. Both strict compile-to-JavaScript plus Node's runner and
 the documented `node --import tsx --test` loader pass without that CLI feature.
 No permission, package policy, lockfile, or environment setting was changed.
 
-No frontend build, browser test, screenshot parity, full workspace build/test,
-full evidence verification, production request, or authenticated behavior is
-claimed. The frontend dependency age gate remains untouched.
+After the frontend dependency age gate elapsed, the combined integration passed
+root `pnpm build` and `pnpm typecheck` with frozen pinned dependencies. This
+includes SDK/backend builds, Next 16.4.1 Turbopack compilation, full frontend
+JSX/test typechecking, and generation of all 15 static pages. The initial run
+identified import-resolution defects; extensionless imports fixed those without
+resolver aliases or TypeScript configuration changes, and both commands passed
+on the corrected source. The 27 focused tests were rerun successfully as well.
+
+No browser test, screenshot parity, full workspace test suite, full evidence
+verification, production request, or authenticated behavior is claimed here.
+Build/typecheck results do not establish interactive UI correctness.
 
 ## Opt-in component source
 
