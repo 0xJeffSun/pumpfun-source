@@ -383,6 +383,16 @@
       "current_report": "repro/pump_amm/admin-harvest-recovery-20261027/results/new-proofs/lineage/refined-joint/extras-verification.json",
       "current_cases": 264,
       "current_differences": 0
+    },
+    "remaining_semantic_followup": {
+      "status": "open",
+      "candidate_sha256": "58478a978292ea6bc4e6a9776a536f91a9384da7f1f82a2e1f9743659a34b58b",
+      "report_path": "repro/pump_amm/admin-harvest-recovery-20261027/followup/incentive-range-order/README.md",
+      "manifest_sha256": "7a0f1b4ded88bea505a9529c75c94c5fe1e2a1ca329110ad226c61500b480e1d",
+      "cases": 1730,
+      "mismatches": 128,
+      "different_final_states": 0,
+      "scope": "Synthetic signed offline state/clock boundary cases; no current-chain reachability claim."
     }
   },
   "pump_fees": {

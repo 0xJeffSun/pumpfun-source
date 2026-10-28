@@ -2808,3 +2808,17 @@ Independent root validation also passes the repaired AMM656 current-source
 verifier, including all 17,462 primary cases and its retained supplemental
 matrices. The exact manifest delta is limited to two unavailable cache entries
 and four dependent metadata bindings.
+
+
+## PR403 archive review
+
+Reviewed and merged commit `2962af1a5bf3a7cbcdc7dd6f85b6e8082410cf03`. Its
+230 changed files are limited to four historical main-Pump research packets.
+Every Python file parses, all 83 gzip files decompress, and independent static
+remeasurement confirms the stored hi, mid and lo candidates at 774/133,
+724/123 and 749/175 respectively. The hi candidate has 42 fewer raw matches
+than the differently ordered Round37 selection; it is not a current selection.
+No fresh compiler build or runtime replay was performed for this archival merge.
+These historical packet counts do not alter the maintained frontier totals.
+The newest upstream follow-up records incentive-range counterexamples and also
+does not change current counts.

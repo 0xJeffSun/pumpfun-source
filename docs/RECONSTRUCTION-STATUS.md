@@ -1,6 +1,6 @@
 # Reconstruction status after exact Relay ELF reproduction
 
-Latest upstream review: `d6e82d49d968f979dab3ebe2dc7133cb44986284`; measurements are bound to the packets below.
+Latest upstream review: `9a77d121116526339e87c376d01eb1ce48f3c180`; measurements are bound to the packets below.
 This review updates the research frontier while preserving the selected-checkpoint
 [baseline audit](RECONSTRUCTION-AUDIT.md). The [recomputed inventory](../repro/reconstruction-status-2026-10-26/README.md)
 contains every one of the **4,415 selected/research function-window rows**.
