@@ -20,8 +20,10 @@ the reconstruction.
 | Manifest               | `evidence/web/manifest.json`                                       |
 
 The adapter requires the manifest URL, final URL, status, object path, byte
-count and hash to match before parsing. It then extracts five exact archived
-card objects from the captured `Most viewers` payload and validates their
+count and hash to match before parsing. It then extracts the first five of the 42
+card objects in the captured `Most viewers` payload, in captured order (not the five
+highest viewer counts), undoes React Flight string escaping (`$$` → `$`; any other
+`$`-prefixed value fails closed) and validates their
 identity, creator address, symbol, title, historical viewer count and captured
 `isLive` flag. Playlist and thumbnail fields are deliberately discarded before
 data crosses the Server/Client Component boundary.
@@ -71,8 +73,9 @@ Hashes identify recovered factory text, not original source files.
 
 - Viewer numbers are interpreted only as values at capture time because the
   response and page were captured together.
-- The `Most viewers` ordering is retained for the default local order. No
-  ranking formula beyond the captured numeric order is inferred.
+- The captured array order of these five cards is retained for the default
+  local order. The captured section is not strictly ordered by viewer count (a
+  later card reports 40 viewers), so no ranking formula is inferred.
 
 ## LOCAL DESIGN
 

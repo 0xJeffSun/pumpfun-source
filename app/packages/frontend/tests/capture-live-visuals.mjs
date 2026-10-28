@@ -49,7 +49,7 @@ try {
     812,
     async (page) => {
       await page
-        .getByRole("button", { name: "Inspect archived stream M $$M" })
+        .getByRole("button", { name: "Inspect archived stream M $M" })
         .click();
       const panel = page.getByTestId("playback-unavailable");
       await panel.waitFor();
