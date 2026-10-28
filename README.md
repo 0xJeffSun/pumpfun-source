@@ -10,7 +10,7 @@ their complete meaningful ELF.
 | --- | ---: | ---: | ---: | ---: | ---: | --- |
 | [Pump Main](research/claude-pump-integration-20261027/r37-layout-41/README.md) | 1,019 / 1,035 | 98.5% | 168 | 851 | 16 | No |
 | [PumpSwap / AMM](research/amm-cashback-buy-recovery-20261028/README.md) | 784 / 785 | 99.9% | 267 | 517 | 1 | No |
-| [Fees](research/claude-fees100-crank-donation-20261027/README.md) | 585 / 585 | 100.0% | 585 | 0 | 0 | **Yes** |
+| [Fees](programs/pump-fees/README.md) | 585 / 585 | 100.0% | 585 | 0 | 0 | **Yes** |
 | [Mayhem](research/mayhem-meaningful-elf-20261028/README.md) | 441 / 441 | 100.0% | 441 | 0 | 0 | **Yes** |
 | [Donation Relay](repro/donation-relay/canonical-exact-selection/README.md) | 492 / 492 | 100.0% | 492 | 0 | 0 | **Yes** |
 | **Total** | **3,321 / 3,338** | **99.5%** | **1,953** | **1,368** | **17** | **3 / 5** |
@@ -31,6 +31,7 @@ normalized coverage.
 
 ## Remaining work
 
+- [Fees is integrated into maintained source](research/contract-completion-20261028/CURRENT-INTEGRATION.md): two builds reproduce all 873,256 meaningful ELF bytes, including one from an empty dependency target. The exact candidate passes 17,331 paired runtime cases. Its 75,688-byte zero allocation suffix remains separate.
 - Recover the **16 Pump Main and 1 PumpSwap / AMM** unmatched windows. The AMM
   remainder is sell cashback `0x4c750`.
 - Close remaining call, data and relocation differences, integrate qualified
