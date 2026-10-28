@@ -4,6 +4,7 @@ import { mkdtempSync, mkdirSync, writeFileSync, symlinkSync, rmSync } from 'node
 import { execFileSync } from 'node:child_process';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
+import { createHash } from 'node:crypto';
 import { createRequire } from 'node:module';
 import { fileURLToPath } from 'node:url';
 const root=fileURLToPath(new URL('..',import.meta.url));
@@ -23,6 +24,33 @@ for(const sub of ['index','swap/index']) {
   assert.deepEqual(Object.keys(esm).sort(),Object.keys(reference).sort());
  });
 }
+test('rebuilt PDA constants and derivations match published root and swap',()=>{
+ const {PublicKey}=require('@solana/web3.js');
+ const original=require(join(published,'index.js')), built=require(join(root,'packages/sdk/dist/index.js'));
+ const originalSwap=require(join(published,'swap/index.js')), builtSwap=require(join(root,'packages/sdk/dist/swap/index.js'));
+ const keys=[]; for(let i=0;i<8;i++)keys.push(new PublicKey(createHash('sha256').update(`pump-sdk-pda-probe-${i}`).digest()));
+ keys.push(new PublicKey(new Uint8Array(32)),original.PUMP_PROGRAM_ID,original.PUMP_AMM_PROGRAM_ID,original.PUMP_FEE_PROGRAM_ID);
+ const eq=(label,a,b)=>assert.equal(a.toBase58(),b.toBase58(),label);
+ for(const [label,reference,rebuilt] of [['root',original,built],['swap',originalSwap,builtSwap]])
+  for(const name of Object.keys(reference)) if(reference[name]&&typeof reference[name].toBase58==='function') eq(`${label} constant ${name}`,reference[name],rebuilt[name]);
+ const oneKey=['bondingCurvePda','bondingCurveV2Pda','creatorVaultPda','holderRewardsPda','pumpPoolAuthorityPda','canonicalPumpPoolPda','boostVaultAuthorityPda','getMayhemStatePda','getTokenVaultPda','feeSharingConfigPda','ammCreatorVaultPda','getEventAuthorityPda'];
+ for(const fn of oneKey)for(const key of keys)eq(`${fn} ${key.toBase58()}`,original[fn](key),built[fn](key));
+ for(const base of keys.slice(0,4))for(const quote of keys.slice(4,6)){
+  eq('canonicalPumpPoolPdaWithQuote',original.canonicalPumpPoolPdaWithQuote(base,quote),built.canonicalPumpPoolPdaWithQuote(base,quote));
+  eq('donationFeePda',original.donationFeePda(base,quote),built.donationFeePda(base,quote));
+  eq('userVolumeAccumulatorPda',original.userVolumeAccumulatorPda(base),built.userVolumeAccumulatorPda(base));
+  for(const program of [original.DONATION_RELAY_PROGRAM_ID_MAINNET,original.DONATION_RELAY_PROGRAM_ID_DEVNET]){
+   eq('donationRelayEpochTrackerPda',original.donationRelayEpochTrackerPda(base,quote,program),built.donationRelayEpochTrackerPda(base,quote,program));
+   eq('donationRelayDebouncerPda',original.donationRelayDebouncerPda(base,quote,program),built.donationRelayDebouncerPda(base,quote,program));
+  }
+ }
+ for(const program of [original.DONATION_RELAY_PROGRAM_ID_MAINNET,original.DONATION_RELAY_PROGRAM_ID_DEVNET]){
+  eq('donationRelayMintWhitelistPda',original.donationRelayMintWhitelistPda(program),built.donationRelayMintWhitelistPda(program));
+  eq('donationRelayEventAuthorityPda',original.donationRelayEventAuthorityPda(program),built.donationRelayEventAuthorityPda(program));
+ }
+ for(const platform of [0,1,2,3,255])eq(`socialFeePda ${platform}`,original.socialFeePda('user-42',platform),built.socialFeePda('user-42',platform));
+ for(const key of keys.slice(0,4))eq('swap lpMintPda',originalSwap.lpMintPda(key),builtSwap.lpMintPda(key));
+});
 test('rebuilt transfer fee math matches published root and swap across caps and rounding',()=>{
  const original=require(join(published,'index.js')), built=require(join(root,'packages/sdk/dist/index.js'));
  const originalSwap=require(join(published,'swap/index.js')),builtSwap=require(join(root,'packages/sdk/dist/swap/index.js'));
