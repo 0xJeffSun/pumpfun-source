@@ -71,6 +71,6 @@ def main():
     outputs={ROOT/'PROGRESS.md':'# Application progress report\n\n'+block.replace('](app/', '](')+'\n',ROOT.parent/'README.md':replace_readme((ROOT.parent/'README.md').read_text(encoding='utf-8'),block)}
     for file,expected in outputs.items():
         if args.check: require(file.read_text(encoding='utf-8')==expected,f'Generated progress is stale: {file}')
-        else:file.write_text(expected,encoding='utf-8')
+        else:file.write_text(expected,encoding='utf-8',newline='\n')
     print('Application source and feature progress '+('verified' if args.check else 'updated'))
 if __name__=='__main__':main()

@@ -7,6 +7,14 @@ spec=importlib.util.spec_from_file_location('progress',pathlib.Path(__file__).re
 progress=importlib.util.module_from_spec(spec)
 spec.loader.exec_module(progress)
 class ProgressTests(unittest.TestCase):
+    def test_generated_reports_use_canonical_lf_bytes(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=pathlib.Path(tmp)/'app';root.mkdir()
+            readme=root.parent/'README.md';readme.write_bytes(b'## Remaining work\n')
+            with patch.object(progress,'ROOT',root),patch.object(progress,'render',return_value='Current report'),patch('sys.argv',['progress.py']):
+                progress.main()
+            self.assertEqual((root/'PROGRESS.md').read_bytes(),b'# Application progress report\n\nCurrent report\n')
+            self.assertEqual(readme.read_bytes(),progress.replace_readme('## Remaining work\n','Current report').encode('utf-8'))
     def test_pending_does_not_earn_credit(self):
         self.assertEqual(progress.score({'one':{'status':'pending','evidence':[]}}),'0/1 (0%)')
     def test_acceptance_requires_evidence(self):
