@@ -1,12 +1,12 @@
 use crate::*;
 
-pub fn withdraw(ctx: Context<Liquidity>, amount: u64, base_limit: u64, quote_limit: u64) -> Result<()> {
+pub fn withdraw(ctx: &mut Context<Liquidity>, amount: u64, base_limit: u64, quote_limit: u64) -> Result<()> {
     let a = &mut *ctx.accounts;
     require!(a.global_config.disable_flags & 4 == 0, PumpAmmError::DisabledWithdraw);
     require_gte!(a.pool.lp_supply, a.lp_mint.supply, PumpAmmError::SeedLockViolation);
-    let base_reserve = a.pool_base_token_account.amount;
-    let user_quote_token_reserves = a.user_quote_token_account.amount;
     let user_base_token_reserves = a.user_base_token_account.amount;
+    let user_quote_token_reserves = a.user_quote_token_account.amount;
+    let base_reserve = a.pool_base_token_account.amount;
     let pool_quote_token_reserves = a.pool_quote_token_account.amount;
     let quote_reserve = liquidity_quote_reserves(&a.pool, pool_quote_token_reserves)?;
     let old_supply = a.pool.lp_supply;
@@ -22,14 +22,14 @@ pub fn withdraw(ctx: Context<Liquidity>, amount: u64, base_limit: u64, quote_lim
     let quote_transfer_fee = quote_amount.checked_sub(quote_received)
         .ok_or_else(|| error!(PumpAmmError::Overflow))?;
     require_gte!(quote_received, quote_limit, PumpAmmError::ExceededSlippage);
-    let base_program = if *a.base_mint.to_account_info().owner == anchor_spl::token::ID {
+    let base_program = if a.base_mint.to_account_info().owner == a.token_program.as_ref().key {
         a.token_program.as_ref()
     } else {
         a.token_2022_program.as_ref()
     };
     crate::utils::token::transfer_from_pool(base_program, &a.base_mint,
         &a.pool_base_token_account, &a.user_base_token_account, base_amount, &a.pool)?;
-    let quote_program = if *a.quote_mint.to_account_info().owner == anchor_spl::token::ID {
+    let quote_program = if a.quote_mint.to_account_info().owner == a.token_program.as_ref().key {
         a.token_program.as_ref()
     } else {
         a.token_2022_program.as_ref()

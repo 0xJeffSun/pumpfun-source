@@ -82,8 +82,8 @@ pub fn execute<'info>(ctx:Context<'_, '_, '_, 'info,Migrate<'info>>)->Result<()>
 #[inline(never)]
 fn refund_pool_authority<'info>(a:&Migrate<'info>,bump:u8,destination:&AccountInfo<'info>,amount:u64)->Result<()>{
  if amount==0{return Ok(());}
- let mint=a.mint.key();let bump=[bump];let signer_seeds:&[&[&[u8]];1]=&[&[b"pool-authority",mint.as_ref(),&bump]];
- crate::migrate::transfer_native(a.system_program.as_ref(),&a.pool_authority,destination,amount,signer_seeds)
+ let transfer=|signer_seeds:&[&[&[u8]];1]|crate::migrate::transfer_native(a.system_program.as_ref(),&a.pool_authority,destination,amount,signer_seeds);
+ transfer(&[&[b"pool-authority",a.mint.key().as_ref(),&[bump]]])
 }
 
 #[inline(never)]
