@@ -20,7 +20,11 @@ REUSE={}
 def pool(urls):
     def fetch(url):
         old=REUSE.get(url)
-        if old and 'path' in old and (ROOT/old['path']).exists():return old,(ROOT/old['path']).read_bytes()
+        if old and 'path' in old and (ROOT/old['path']).exists():
+            body=(ROOT/old['path']).read_bytes()
+            if len(body)!=old.get('bytes') or hashlib.sha256(body).hexdigest()!=old.get('sha256'):
+                raise ValueError(f"Retained capture integrity mismatch: {old['path']}")
+            return old,body
         return capture(url)
     with concurrent.futures.ThreadPoolExecutor(max_workers=6) as ex: return list(ex.map(fetch, sorted(urls)))
 def main():
