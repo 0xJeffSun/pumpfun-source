@@ -1,0 +1,1 @@
+neither pairs with only source-coordinate differences vs original: 0
