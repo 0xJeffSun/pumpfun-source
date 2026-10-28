@@ -29,7 +29,7 @@ bytes (74.7%)**. **Two of five programs have complete meaningful-ELF identity**;
 three of the four core contracts still differ from their captured binaries.
 
 These percentages measure bounded binary-recovery progress, not a claim that
-86.9% of the engineering work is finished. Complete reconstruction also requires
+87.0% of the engineering work is finished. Complete reconstruction also requires
 all remaining code, calls, data, relocations and build provenance.
 
 | Latest verified checkpoint | Matched windows | Matched % | Raw-equal bodies | Normalized only | Unmatched | Whole ELF equal |
@@ -37,9 +37,9 @@ all remaining code, calls, data, relocations and build provenance.
 | [Pump Round37](repro/pump/main-contract-round37-20261027/README.md) | 744 / 1,035 | 71.9% | 175 | 569 | 291 | No |
 | [PumpSwap / AMM](repro/pump_amm/optional-context-recovery-20261027/README.md) | 651 / 785 | 82.9% | 148 | 503 | 134 | No |
 | [Fees research](research/claude-fees100-crank-donation-20261027/README.md) | 585 / 585 | 100.0% | 585 | 0 | 0 | **Yes** |
-| [Mayhem research](research/mayhem-quotes-current-recovery-20261027/README.md) | 432 / 441 | 98.0% | 100 | 332 | 9 | No |
+| [Mayhem qualified research](research/mayhem-source-origin-recovery-20261027/README.md) | 432 / 441 | 98.0% | 141 | 291 | 9 | No |
 | [Donation Relay](repro/donation-relay/canonical-exact-selection/README.md) | 492 / 492 | 100.0% | 492 | 0 | 0 | **Yes** |
-| **Total** | **2,904 / 3,338** | **87.0%** | **1,500** | **1,404** | **434** | **2 / 5** |
+| **Total** | **2,904 / 3,338** | **87.0%** | **1,541** | **1,363** | **434** | **2 / 5** |
 
 “Windows” are inferred original machine-function ranges, including framework and
 runtime helpers. Complete normalized matches mask specified call/address
@@ -81,6 +81,13 @@ receipts and two separately signed replays of that same 147-case corpus. Its
 alternative source is an unpromoted compiler-context diagnostic.
 
 ## Behavior and remaining work
+
+**Mayhem's latest structural recovery matches 434/441 complete normalized
+windows (98.41%), leaving seven bodies (1.59%) and 99,032 original text bytes
+(14.01%) unmatched.** Its 100 raw bodies and runtime evidence are weaker than
+the qualified 432/141 checkpoint used in the table above. These results are not
+one combined build. The [completion review](docs/MAYHEM-COMPLETION.md) lists the
+remaining functions, exact percentages, evidence limits and integration work.
 
 The [qualified current Mayhem source-origin composition](research/mayhem-source-origin-recovery-20261027/README.md)
 preserves 432/441 normalized windows, 141 raw-equal and 291 normalized-only
@@ -237,8 +244,9 @@ no accepted matches.
 
 The latest [PumpSwap optional-u64 and Context recovery](repro/pump_amm/optional-context-recovery-20261027/README.md) matches 651 windows and 148 raw bodies, fixes all 123 short optional-u64 differences, restores the CreatePool and V2 wrapper boundaries, and recovers typed creator-payout call structure. All 17,462 corpus cases and retained supplemental suites pass; 134 AMM windows remain.
 
-Remaining priorities are the 291 Pump, 134 AMM and 9 Mayhem unmatched
-windows; deeper call/data/relocation identity; original build provenance; and
+Remaining priorities are the 291 Pump and 134 AMM unmatched windows, plus the
+9 Mayhem windows in the qualified checkpoint (7 in the newer structural build);
+deeper call/data/relocation identity; original build provenance; and
 uncovered behavior such as authentic fixed-admin AMM `create_config` success.
 The historical [150-handler audit](repro/reconstruction-audit-2026-10-26/handlers.md)
 remains a separate bounded classification; newer function matches do not

@@ -1,7 +1,8 @@
 # Remaining reconstruction work — 27 October 2026
 
-This is the action list for the [current reconstruction audit](RECONSTRUCTION-AUDIT.md),
-with current research based on reviewed parent revision `6b61b337` and the linked visibility-recovery measurements. The [current review](RECONSTRUCTION-STATUS.md)
+This is the action list for the [reconstruction audit](RECONSTRUCTION-AUDIT.md),
+updated through upstream revision `450c11d7d`. The historical audit retains its
+`6b61b337` parent and linked visibility-recovery measurements. The [current review](RECONSTRUCTION-STATUS.md)
 and [complete refreshed inventory](../repro/reconstruction-status-2026-10-26/README.md)
 list every raw match and unresolved window in their dated snapshot. That core
 snapshot retains `1463bd22` audit bindings; current selections are recorded in
@@ -9,26 +10,20 @@ snapshot retains `1463bd22` audit bindings; current selections are recorded in
 [completion ledger](COMPLETION.md) remains a selected-checkpoint record; its old
 candidate paths and “current” prose must not override newer evidence.
 
-Current [Pump Round36](../repro/pump/main-contract-round36-20261027/README.md)
-has 145 raw-local matches, 593 normalized-only matches and 297 unmatched windows.
-The unmatched windows cover 891,688 original text bytes. Remaining bodies,
+Current [Pump Round37](../repro/pump/main-contract-round37-20261027/README.md)
+has 175 raw-local matches, 569 normalized-only matches and 291 unmatched windows.
+The unmatched windows cover 868,016 original text bytes. Remaining bodies,
 data, relocations, uncovered behavior and original build provenance remain open.
 
-Current [Fees Sweep integration](../research/fees-sweep-integration-20261027/README.md)
-has 200 raw-local matches, 383 normalized-only matches and two unmatched windows.
-The complete 6,960-byte SweepBuyback body and prior readonly/reference matches
-are preserved through repeat builds and 17,331 bounded runtime cases. Crank and
-CreateDonation remain unmatched, covering 29,776 original text bytes. The
-[current residual controls](../research/fees-residual-current583-20261027/README.md)
-preserve the 583-window search frontier but recover neither complete body.
+Current [Fees research](../research/claude-fees100-crank-donation-20261027/README.md)
+reproduces all 585 bodies and the complete 873,256-byte meaningful ELF. The
+75,688-byte remaining capture tail is zero loader allocation. This does not
+establish the original historical source or deployment recipe.
 
-Current [AMM checkpoint](../repro/pump_amm/event-decoder-recovery-20261027/README.md)
-has 148 raw-local, 499 normalized-only and 138 unmatched windows, with
-351,496 original text bytes still unmatched. The independently verified 641-window
-event composition stays bound to its earlier parent and is not added again.
-The later [optional-u64 probe](../repro/pump_amm/event-decoder-recovery-20261027/followup/optional-u64/README.md)
-records 123 differences among 264 short-tail cases; its correction is not in
-this sealed checkpoint. Complete data/call identity and provenance remain open.
+Current [AMM checkpoint](../repro/pump_amm/optional-context-recovery-20261027/README.md)
+has 148 raw-local, 503 normalized-only and 134 unmatched windows, with 345,240
+original text bytes unmatched. Older event and optional-decoder experiments
+retain their original artifact bindings.
 
 Current Mayhem research is the [qualified source-origin composition](../research/mayhem-source-origin-recovery-20261027/README.md):
 141 raw-local, 291 normalized-only and nine unmatched windows / 107,952 original
@@ -44,9 +39,13 @@ calls the matching 328-byte `finish_grow`, closing it and seven affected windows
 The direct-call relation now covers 422/432 matched bodies; ten still depend on
 the missing business bodies. Global data, indirect calls, layout and historical
 source/toolchain provenance remain work. The [441-row inventory](../research/mayhem-source-origin-recovery-20261027/inventory.tsv)
-and [nine-body work map](MAYHEM-PARALLEL-WORK.md#all-remaining-windows) list the exact scope.
-The [O0075 wrapper attribution](../research/mayhem-sweep-admin-attribution-20261027/README.md)
-identifies SweepFeesAdmin without closing its body; that lane remains paused.
+and [qualified baseline work map](MAYHEM-PARALLEL-WORK.md#all-remaining-windows) list that scope.
+The newer [O0073/O0075 source composition](../research/claude-fees-final-mayhem-o0073/README.md)
+reaches 434 normalized bodies, leaving seven / 99,032 text bytes unmatched, but
+retains only 100 raw bodies and weaker runtime evidence. The [completion review](MAYHEM-COMPLETION.md)
+keeps both frontiers separate. Combining those two body gains with the 141-raw
+checkpoint and qualifying the result is active work, followed by the remaining
+SweepFees and six trade bodies.
 
 The [current Legacy Buy ownership composition](../research/mayhem-current-ownership-composition-20261027/README.md)
 preserves the 430/100 frontier and its complete initializer. Its partial handler
