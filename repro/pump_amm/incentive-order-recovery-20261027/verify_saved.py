@@ -180,5 +180,5 @@ def main():
  assert sha(HERE/'verify_recovery.py')==sha(d/'harness/verify_recovery.py')
  recovery=module('current_recovery',HERE/'verify_recovery.py').verify(d,candidate,ROOT)
  print(json.dumps({**corpus,**current_expanded,**recovery,'candidate_sha256':CANDIDATE,'buyback_cases':72,'cpi_cases':91,'account_fee_cases':1281,'trade_fee_cases':273,'liquidity_cases':18,'trade_boundary_cases':1996,'sqrt_cases':40,'new_transfer_order_cases':134,'mint_policy_cases':58,'context_constraint_cases':21,'normalized_matches':656,'raw_matches':148,'new_route_decoder_event_cases':534,'new_multihop_sell_cases':44,'error_order_cases':1485,'error_order_baseline_mismatches':67,'error_order_signature_fields':5940,'new_liquidity_cases':liquidity['cases'],'new_pool_predicate_cases':refinements['cases'],'dependency_packages':dependency['packages'],'build_source_inputs':227,'canonical_source_inputs':51,'transfer_fee_decoder_cases':58,'transfer_fee_decoder_baseline_mismatches':20,'independent_tlv_cases':876,'independent_tlv_baseline_mismatches':430,'current_source_checked':a.current_source,'whole_elf_equal':False}))
-MANIFEST='d0427fb3ca3e41403d0c14e7e1ce3d93e96a1110fa75f6345e879ce7d08689bf'
+MANIFEST='6c06d070fe0d68ae3df5d48637c0cd28a314d2f134107ec56cafa9ba812fde35'
 if __name__=='__main__':main()

@@ -1,7 +1,7 @@
 # Remaining reconstruction work — 27 October 2026
 
 This is the action list for the [reconstruction audit](RECONSTRUCTION-AUDIT.md),
-updated through upstream revision `038e72412`. The historical audit retains its
+updated through upstream revision `55eb899b4`. The historical audit retains its
 `6b61b337` parent and linked visibility-recovery measurements. The [current review](RECONSTRUCTION-STATUS.md)
 and [complete refreshed inventory](../repro/reconstruction-status-2026-10-26/README.md)
 list every raw match and unresolved window in their dated snapshot. That core

@@ -60,5 +60,5 @@
   "restored_preview_bytes": 296,
   "restored_scalar_method_bytes": 600,
   "scope": "Full new wrapper bodies plus actual immediate targets/operands. Four business handlers remain unequal; method600 is an ABI/shape check, not full source-origin identity.",
-  "independent_manifest_sha256": "906a8ee210ca1828b9f85e373ae2541aa3f51df3f472029b710a0aca0d773dda"
+  "independent_manifest_sha256": "2ecc814225b5bd79745fe03f9b422f8e2fd9045dc3d10845612cf57df6a6fe57"
 }

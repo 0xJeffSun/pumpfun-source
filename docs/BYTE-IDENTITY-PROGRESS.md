@@ -2896,3 +2896,11 @@ The repaired current AMM incentive-order packet passes the independent full
 `--current-source` verifier, including all 17,462 core cases and its retained
 supplemental matrices. All 19,463 result-file hashes pass the post-run inventory
 check. This metadata repair changes no source, binary or runtime record.
+
+A concurrent upstream publication fix then restored the two originally recorded
+cache files at their exact hashes. The integration retains that fix and restores
+the original incentive-order manifests rather than carrying the alternative
+cache-entry removal. All 19,465 recorded result files hash-verify, including the
+two restored files; compiled source, candidate and runtime records are unchanged.
+The canonical result-manifest seal is
+`6c06d070fe0d68ae3df5d48637c0cd28a314d2f134107ec56cafa9ba812fde35`.
