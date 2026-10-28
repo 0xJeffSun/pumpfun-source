@@ -380,13 +380,15 @@ export function buildApp(fixtures: Fixture[] = [], opts: BuildAppOptions = {}) {
       });
     }
     if (fixture.headers) reply.headers(fixture.headers);
-    // Fastify sends strings verbatim and null as an empty payload, even for JSON.
+    // Fixture bodies are JSON by default; explicit non-JSON types stay verbatim.
     const contentType = reply.getHeader("content-type");
     if (
       (fixture.body === null || typeof fixture.body === "string") &&
-      typeof contentType === "string" &&
-      /^application\/(?:[^;\s]+\+)?json(?:\s*;|$)/i.test(contentType)
+      (contentType === undefined ||
+        (typeof contentType === "string" &&
+          /^application\/(?:[^;\s]+\+)?json(?:\s*;|$)/i.test(contentType)))
     ) {
+      if (contentType === undefined) reply.type("application/json");
       return reply.code(fixture.status).send(JSON.stringify(fixture.body));
     }
     return reply.code(fixture.status).send(fixture.body);
