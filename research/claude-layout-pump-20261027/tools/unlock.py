@@ -9,21 +9,14 @@ size), or minus its size when nothing is placed. Greedy selection reports the
 cumulative gain of closing blockers in order. Data-referencing bodies are
 excluded: they also need data addresses to agree.
 """
+import sys
+sys.dont_write_bytecode = True  # keep the packet free of __pycache__
 import argparse, bisect, gzip, json, sys
 from pathlib import Path
 import correspond as C
 
-def main():
-    ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument('--plan', type=Path, required=True)
-    ap.add_argument('--windows-from', type=Path, required=True)
-    ap.add_argument('--candidate', type=Path, required=True, help='default-layout unstripped ELF the plan was derived from')
-    ap.add_argument('--top', type=int, default=25)
-    ap.add_argument('--output', type=Path)
-    a = ap.parse_args()
-    rd = lambda p: json.loads(gzip.decompress(p.read_bytes()) if p.read_bytes()[:2] == b'\x1f\x8b' else p.read_bytes())
-    plan = rd(a.plan); ref = rd(a.windows_from)
-    windows = [{'start': w['start'], 'bytes': w['bytes']} for w in ref['windows']]
+def compute(plan, windows, candidate, top=25):
+    """Pricing for one plan; pure function of the plan, windows and default-layout ELF."""
     orig = C.Image(C.ROOT / 'evidence/original/pump/deployed.so', windows)
     rows = [s for s in plan['sections'] if s['original'] is not None]
     assigned = {s['original']: s for s in rows if s['normalized_equal']}
@@ -33,7 +26,7 @@ def main():
         if not s['normalized_equal']:
             delta[s['original']] = s['bytes'] - s['original_bytes']
     U = sorted(o for o, d in delta.items() if d)
-    cand = C.Image(a.candidate)
+    cand = C.Image(candidate)
     inv = {s['candidate']: s['original'] for s in assigned.values()}
     # calls must reach the assigned instance of the original callee
     instance_ok = {o: all(inv.get(u) == t for t, u in zip(orig.funcs[o]['calls'], cand.funcs[s['candidate']]['calls']))
@@ -58,7 +51,7 @@ def main():
     base = raw_set(set())
     chosen, cur, steps = set(), base, []
     cand_blockers = [u for u in U]
-    for _ in range(a.top):
+    for _ in range(top):
         best = None
         for u in cand_blockers:
             if u in chosen: continue
@@ -75,8 +68,22 @@ def main():
         S = {u for u in U if u >= lo}
         regions.append({'region': name, 'start': lo, 'windows': sorted(S), 'bytes': sum(orig.funcs[u]['bytes'] for u in S),
                         'raw_if_neutral': len(raw_set(S)), 'gain': len(raw_set(S)) - len(base)})
-    result = {'scope': __doc__.split('\n')[0], 'call_only_raw_now': len(base), 'call_only_raw_if_all_neutral': len(all_neutral),
-              'size_changing_unmatched_windows': len(U), 'regions': regions, 'greedy': steps}
+    return {'scope': __doc__.split('\n')[0], 'call_only_raw_now': len(base), 'call_only_raw_if_all_neutral': len(all_neutral),
+            'size_changing_unmatched_windows': len(U), 'regions': regions, 'greedy': steps}
+
+
+def main():
+    ap = argparse.ArgumentParser(description=__doc__)
+    ap.add_argument('--plan', type=Path, required=True)
+    ap.add_argument('--windows-from', type=Path, required=True)
+    ap.add_argument('--candidate', type=Path, required=True, help='default-layout unstripped ELF the plan was derived from')
+    ap.add_argument('--top', type=int, default=25)
+    ap.add_argument('--output', type=Path)
+    a = ap.parse_args()
+    rd = lambda p: json.loads(gzip.decompress(p.read_bytes()) if p.read_bytes()[:2] == b'\x1f\x8b' else p.read_bytes())
+    plan = rd(a.plan); ref = rd(a.windows_from)
+    windows = [{'start': w['start'], 'bytes': w['bytes']} for w in ref['windows']]
+    result = compute(plan, windows, a.candidate, a.top)
     if a.output: a.output.write_text(json.dumps(result, indent=1) + '\n')
     print(json.dumps({k: result[k] for k in ['call_only_raw_now', 'call_only_raw_if_all_neutral', 'size_changing_unmatched_windows']}))
     for r in regions: print(r['region'], len(r['windows']), 'windows', r['bytes'], 'bytes ->', r['raw_if_neutral'], '(+%d)' % r['gain'])

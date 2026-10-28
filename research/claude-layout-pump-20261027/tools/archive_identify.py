@@ -9,6 +9,8 @@ object's operands are unrelocated). An equal size and masked body is a
 heuristic identification of which dependency function the original links;
 it is not proof of semantics or of the referenced data.
 """
+import sys
+sys.dont_write_bytecode = True  # keep the packet free of __pycache__
 import argparse
 import collections
 import hashlib

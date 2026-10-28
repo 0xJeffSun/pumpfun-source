@@ -19,6 +19,8 @@ Placement policy (all deterministic; no original byte is a linker input):
 The script is the SDK default with only the `.text` input list expanded into
 qualified object/archive-member selectors and the original catch-all kept.
 """
+import sys
+sys.dont_write_bytecode = True  # keep the packet free of __pycache__
 import argparse
 import collections
 import gzip
@@ -56,7 +58,10 @@ def region_owners(orig, assign, owner_of, o):
     return owners
 
 
-def counterparts(orig, cand, assign, owner_of):
+DEFAULT_POLICY = {'owner_preference': True, 'skeleton_rule': True, 'counterparts': True, 'extras': 'end'}
+
+
+def counterparts(orig, cand, assign, owner_of, skeleton_rule=True):
     """Evidence-backed counterparts for unmatched original windows."""
     inv = {c: o for o, c in assign.items()}
     free = [c for c in cand.order if c not in inv]
@@ -73,7 +78,7 @@ def counterparts(orig, cand, assign, owner_of):
             d = sum(a != b for a, b in zip(on, cn))
             # same instruction skeleton (opcode, registers, offset) in every slot: only immediates
             # differ; accepted only from the object that owns this region of the original
-            skeleton = all(a & 0xffffffff == b & 0xffffffff for a, b in zip(on, cn)) and owner_of[c] in owners
+            skeleton = skeleton_rule and all(a & 0xffffffff == b & 0xffffffff for a, b in zip(on, cn)) and owner_of[c] in owners
             if 2 * d <= len(on) or skeleton:
                 pairs.append((owner_of[c] not in owners, d / len(on), d, o, c))
     fills, used, basis = {}, set(), {}
@@ -100,14 +105,16 @@ def counterparts(orig, cand, assign, owner_of):
     return fills, basis
 
 
-def plan(original, windows, candidate, link_map):
+def plan(original, windows, candidate, link_map, policy=None):
+    """Return (ordered sections, counts). `policy` overrides DEFAULT_POLICY (used only by controls)."""
+    pol = {**DEFAULT_POLICY, **(policy or {})}
     orig = C.Image(original, windows)
     cand = C.Image(candidate)
     records = {r['address']: r for r in mapfile.parse(link_map) if r['out'] == '.text'}
     assert sorted(records) == cand.order, 'map input sections must tile the candidate functions'
     owner_of = {a: mapfile.owner_pattern(r) for a, r in records.items()}
-    assign, basis, dom = C.derive(orig, cand, owner_of)
-    fills, fill_basis = counterparts(orig, cand, assign, owner_of)
+    assign, basis, dom = C.derive(orig, cand, owner_of if pol['owner_preference'] else None)
+    fills, fill_basis = counterparts(orig, cand, assign, owner_of, pol['skeleton_rule']) if pol['counterparts'] else ({}, {})
     rows, placed = [], set()
     for o in orig.order:
         if o in assign:
@@ -119,8 +126,24 @@ def plan(original, windows, candidate, link_map):
         placed.add(c)
         rows.append((o, c, why))
     extras = [c for c in cand.order if c not in placed]
+    sequence = rows + [(None, c, 'no original counterpart (kept after placed sections)') for c in extras]
+    if pol['extras'] == 'in_place':
+        # control: keep each unplaced section right after its nearest preceding placed neighbour in
+        # the default layout instead of after all placed sections
+        slot_of = {c: i for i, (o, c, why) in enumerate(rows)}
+        after = collections.defaultdict(list)
+        prev = None
+        for c in cand.order:
+            if c in slot_of:
+                prev = slot_of[c]
+            elif c not in placed:
+                after[prev].append(c)
+        sequence = [(None, c, 'no original counterpart (kept beside its default-layout neighbour)') for c in after[None]]
+        for i, row in enumerate(rows):
+            sequence.append(row)
+            sequence += [(None, c, 'no original counterpart (kept beside its default-layout neighbour)') for c in after[i]]
     ordered = []
-    for o, c, why in rows + [(None, c, 'no original counterpart (kept after placed sections)') for c in extras]:
+    for o, c, why in sequence:
         r = records[c]
         ordered.append({'original': o, 'original_bytes': orig.funcs[o]['bytes'] if o is not None else None,
                         'candidate': c, 'bytes': r['size'], 'owner': mapfile.owner_pattern(r),

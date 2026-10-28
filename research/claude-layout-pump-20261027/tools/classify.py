@@ -14,6 +14,8 @@ For each such window the best normalized candidate body is compared slot by slot
     address, so every data operand differs.
 `--layout-plan` supplies the correspondence used for the layout (plan.json).
 """
+import sys
+sys.dont_write_bytecode = True  # keep the packet free of __pycache__
 import argparse
 import bisect
 import collections
@@ -37,6 +39,19 @@ def content(img, secs, value, n=24):
             off = s['offset'] + value - s['addr']
             return name, value - s['addr'], img[off:off + min(n, s['addr'] + s['size'] - value)]
     return None, None, b''
+
+
+def location(img, secs, value):
+    """Decode a core::panic::Location-shaped record: {&str ptr (high-half reloc), len u64, line u32, col u32}."""
+    name, off, b = content(img, secs, value, 24)
+    if name != '.data.rel.ro' or len(b) < 24:
+        return None
+    ptr, length, line, col = struct.unpack('<QQII', b)
+    rod = secs['.rodata']
+    if ptr & 0xffffffff or not (rod['addr'] <= ptr >> 32 < rod['addr'] + rod['size']) or not 0 < length < 4096 or not 0 < line < 100000 or col > 1000:
+        return None
+    s = img[rod['offset'] + (ptr >> 32) - rod['addr']:rod['offset'] + (ptr >> 32) - rod['addr'] + length]
+    return {'file': s.decode(errors='replace'), 'line': line, 'column': col}
 
 
 def classify(inventory, plan, original, candidate, link_map):
@@ -92,8 +107,12 @@ def classify(inventory, plan, original, candidate, link_map):
                     same = True  # both are relocated pointers (address in the high half); targets not compared
                 else:
                     same = on == cn and len(ob) > 0 and ob == cb
-                data.append({'offset': x['offset'], 'section': on, 'candidate_section': cn,
-                             'section_offset': [ooff, coff], 'referenced_8_byte_prefix_equal': bool(same)})
+                lo, lc = location(orig.b, orig.secs, x['value']), location(cand.b, cand.secs, y['value'])
+                entry = {'offset': x['offset'], 'section': on, 'candidate_section': cn,
+                         'section_offset': [ooff, coff], 'referenced_8_byte_prefix_equal': bool(same)}
+                if lo and lc:
+                    entry['location'] = {'original': lo, 'candidate': lc, 'equal': lo == lc}
+                data.append(entry)
         kinds = []
         if calls:
             kinds.append('call')
@@ -108,6 +127,18 @@ def classify(inventory, plan, original, candidate, link_map):
             key += ' (referenced 8-byte prefixes equal)' if same else ' (some referenced prefix differs)'
         summary[key] += 1
         rows.append({'start': o, 'bytes': w['bytes'], 'candidate': c, 'class': key, 'calls': calls, 'data': data})
+    loc = collections.Counter()
+    for r in rows:
+        ls = [d['location'] for d in r['data'] if 'location' in d]
+        if ls:
+            loc['windows referencing Location records'] += 1
+            if any(not x['equal'] for x in ls):
+                loc['windows with a differing Location (file/line/column)'] += 1
+        loc['data operands'] += len(r['data'])
+        loc['data operands into .rodata'] += sum(d['section'] == '.rodata' for d in r['data'])
+        loc['data operands into .data.rel.ro'] += sum(d['section'] == '.data.rel.ro' for d in r['data'])
+        loc['Location operands'] += sum('location' in d for d in r['data'])
+        loc['Location operands with equal file/line/column'] += sum(d.get('location', {}).get('equal', False) for d in r['data'])
     blockers = collections.Counter()
     for r in rows:
         if r['data']:
@@ -115,7 +146,7 @@ def classify(inventory, plan, original, candidate, link_map):
         for x in r['calls']:
             for b in x.get('blocking_windows', []):
                 blockers[b] += 1
-    return {'counts': dict(summary), 'call_only_blockers': [{'window': b, 'bytes': orig.funcs[b]['bytes'], 'blocked_call_sites': n}
+    return {'counts': dict(summary), 'data_operands': dict(loc), 'call_only_blockers': [{'window': b, 'bytes': orig.funcs[b]['bytes'], 'blocked_call_sites': n}
                                                             for b, n in blockers.most_common()],
             'text_size': {'original': orig.text['size'], 'candidate': cand.text['size']},
             'rodata_start': {'original': orig.secs['.rodata']['addr'], 'candidate': cand.secs['.rodata']['addr']},
@@ -133,7 +164,7 @@ def main():
     inv = read(a.inventory)
     r = classify(inv, read(a.layout_plan), C.ROOT / 'evidence/original/pump/deployed.so', a.candidate, a.map)
     a.output.write_bytes(gzip.compress(json.dumps(r, indent=1).encode(), mtime=0) if a.output.suffix == '.gz' else json.dumps(r, indent=1).encode())
-    print(json.dumps({k: r[k] for k in ['counts', 'text_size', 'rodata_start']}, indent=1))
+    print(json.dumps({k: r[k] for k in ['counts', 'data_operands', 'text_size', 'rodata_start']}, indent=1))
     print('top call-only blockers:', [(hex(x['window']), x['bytes'], x['blocked_call_sites']) for x in r['call_only_blockers'][:12]])
 
 

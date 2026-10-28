@@ -1,12 +1,17 @@
 #!/usr/bin/env python3
 """Repeat a recorded root link (build.py --output DIR) with another linker script.
 
-Used only for fast layout trials. It re-runs the same rust-lld with the same
-recorded arguments and the same compiler-produced inputs (copies taken by
-linker.py; archives still in the build's target directory, hash-checked), with
-the script and output paths substituted. Accepted results are always
-re-established by a real build.py compilation.
+Used for fast layout trials. It re-runs the same rust-lld with the same
+recorded arguments and the same compiler-produced object inputs (copies taken
+by linker.py and hash-checked against its record), with the script and output
+paths substituted. Archives (.rlib) are read from the build's target
+directory and the SDK sysroot. Their sha256 are recorded in relink.json, and
+when the build record lists archive hashes (linker.py records them since the
+Round25 packet) they must be equal. Results used as round evidence were
+compared with real build.py compilations wherever both ran.
 """
+import sys
+sys.dont_write_bytecode = True  # keep the packet free of __pycache__
 import argparse
 import hashlib
 import json
@@ -49,6 +54,9 @@ def relink(build_dir, script, out_dir, objcopy):
     assert subs == 1
     for path, rec in inv['object_inputs'].items():
         assert sha(rec['copy']) == rec['sha256'], path
+    archives = {a: sha(a) for a in args if a.endswith('.rlib')}
+    for a, digest in inv.get('archive_sha256', {}).items():
+        assert archives.get(a) == digest, ('archive changed since the build', a)
     args.append('-Map=' + str(out_dir / 'link.map'))
     real = inv['real_linker']
     assert sha(real) == inv['real_linker_sha256']
@@ -58,6 +66,7 @@ def relink(build_dir, script, out_dir, objcopy):
     subprocess.run([objcopy, '--strip-all', str(out_dir / 'unstripped.so'), str(out_dir / 'candidate.so')], check=True)
     record = {'scope': __doc__.split('\n')[0], 'build_dir': str(build_dir), 'script': str(script) if script else None,
               'script_sha256': sha(script) if script else None, 'arguments': [real, *args],
+              'archive_sha256': archives, 'archives_checked_against_build': bool(inv.get('archive_sha256')),
               'unstripped_sha256': sha(out_dir / 'unstripped.so'), 'candidate_sha256': sha(out_dir / 'candidate.so')}
     (out_dir / 'relink.json').write_text(json.dumps(record, indent=1) + '\n')
     return record

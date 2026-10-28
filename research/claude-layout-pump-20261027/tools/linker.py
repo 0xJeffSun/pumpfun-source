@@ -12,6 +12,8 @@ The compiler-generated object inputs are copied into the record directory so a
 link can be repeated exactly (relink.py). No object, archive or output byte is
 edited; rust-lld resolves every address, call displacement and relocation.
 """
+import sys
+sys.dont_write_bytecode = True  # keep the packet free of __pycache__
 import hashlib
 import json
 import os
@@ -61,6 +63,7 @@ for arg in before:
         shutil.copy2(p, dest)
         objects[path] = {'copy': str(dest), 'sha256': sha(dest.read_bytes())}
 
+archives = {arg: sha(Path(arg).read_bytes()) for arg in before if arg.endswith('.rlib') and Path(arg).is_file()}
 (record / 'linker-invocation.json').write_text(json.dumps({
     'incoming': before,
     'forwarded': after,
@@ -70,5 +73,6 @@ for arg in before:
     'replacement_script': replacement,
     'replacement_script_sha256': sha(Path(replacement).read_bytes()) if replacement else None,
     'object_inputs': objects,
+    'archive_sha256': archives,
 }, indent=2) + '\n')
 os.execv(real, [real, *after])
