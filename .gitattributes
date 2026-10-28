@@ -1436,3 +1436,7 @@ repro/pump_amm/optional-context-recovery-20261027/followup/** -whitespace
 # Preserve exact compiled AMM source bytes in the optional-context checkpoint.
 programs/pump-amm/src/trade.rs whitespace=-blank-at-eof
 programs/pump-amm/src/transfer_creator.rs whitespace=-blank-at-eol
+
+# Preserve reconstructed Sweep source and patch bytes.
+research/fees-sweep-integration/overrides/** -whitespace
+research/fees-sweep-integration/source.patch -whitespace
