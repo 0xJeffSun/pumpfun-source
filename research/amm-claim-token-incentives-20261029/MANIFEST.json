@@ -16,7 +16,7 @@
     "runtime/raw-transactions-part8.jsonl.gz": "72d894e42b891dbec0cb7b5ce9a74609a5073249efadab8ae5b9c191df808d82",
     "runtime/raw-transactions-part9.jsonl.gz": "0c760e7650e938348394dabaf1f5662f1080e6096b0c1da0d275f14c5d9cfec3",
     "runtime/report.json.gz": "29300ab74bc31867b3e33187c959c0cbe459e0d9c9c3e15b0672b36f97e26400",
-    "verify.py": "f4282339bc15deb188ad3b666c813a74fe635e96971d4aa3acf82e2c9e2790bb"
+    "verify.py": "6161c5b3fb4e87db96b1cc793966ff43a4ef822d6f1b455e9346b1c6ee4923a5"
   },
   "repository_inputs": {
     "evidence/original/pump_amm/deployed.so": "6a7ad34596d83b4c435b32f458a56e718e9f82eb4ad38e4316616d15d24d8ff7",
@@ -24,6 +24,8 @@
     "evidence/dependencies/spl_token_2022/deployed.so": "15a2e615a42e20f31714bbaaee43002ae6f1cda2e8d7118243117ab3c1342e2d",
     "scripts/pump_amm_incentives_differential.py": "b5f1f520aec909178d625d1c4a7d33ba3801f91a8c5d7eab11e8ae244a07472c",
     "scripts/pump_amm_admin_differential.py": "cc3834231f951e3dbf36f38504d85f3135c0edf3792fabecd12fae10c493a72b",
-    "scripts/pump_amm_reusable_harness.py": "19b7b2439db913e8dd187deba0aa561aa537bfe06a35007470e0f215c94f1cf2"
+    "scripts/pump_amm_reusable_harness.py": "19b7b2439db913e8dd187deba0aa561aa537bfe06a35007470e0f215c94f1cf2",
+    "research/amm-multi-hop-group-slice-recovery/artifacts/candidate.so.gz": "1f25c51a89ed4c269dd7af1732c4a55dbc3fb908b6c9f5ecac69560cfe1026bd",
+    "research/amm-transfer-fee-diagnostic-recovery/artifacts/candidate.so.gz": "c00c011f12544cb7494e900efd99a3fcee7213a32e0257bf2e8f064d64d73453"
   }
 }
