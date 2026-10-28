@@ -32,9 +32,13 @@ def retained_body(record,url):
     try: relative=pure.relative_to(OBJECT_PATH)
     except ValueError: raise RetainedCaptureError(f'Retained capture {identity} path outside evidence objects') from None
     if not relative.parts: raise RetainedCaptureError(f'Retained capture {identity} invalid path')
-    allowed=ROOT.joinpath(*OBJECT_PATH.parts)
+    allowed=ROOT
+    for part in OBJECT_PATH.parts:
+        allowed/=part
+        if allowed.is_symlink(): raise RetainedCaptureError(f'Retained capture {identity} symlink path rejected')
     try: allowed_resolved=allowed.resolve(strict=True)
     except (OSError,RuntimeError) as error: raise RetainedCaptureError(f'Retained capture {identity} object directory unavailable') from error
+    if not allowed_resolved.is_dir(): raise RetainedCaptureError(f'Retained capture {identity} object directory unavailable')
     candidate=allowed
     for part in relative.parts:
         candidate/=part
@@ -61,8 +65,13 @@ def retained_body(record,url):
         raise RetainedCaptureError(f'Retained capture {identity} integrity mismatch')
     return body
 REUSE={}
-def validate_reuse():
-    for url,record in REUSE.items(): retained_body(record,url)
+def load_reuse(records):
+    validated={}
+    for index,record in enumerate(records):
+        url=record.get('url') if isinstance(record,dict) else None
+        if not isinstance(url,str): raise RetainedCaptureError(f'Retained capture {retained_id(f"index:{index}")} invalid record')
+        retained_body(record,url);validated[url]=record
+    REUSE.update(validated)
 def pool(urls):
     ordered=sorted(urls);retained={}
     for url in ordered:
@@ -74,8 +83,7 @@ def pool(urls):
     with concurrent.futures.ThreadPoolExecutor(max_workers=6) as ex: return list(ex.map(fetch, ordered))
 def main():
     if '--resume' in sys.argv and (OUT/'manifest.json').exists():
-        REUSE.update({r['url']:r for r in json.loads((OUT/'manifest.json').read_text())['records']})
-        validate_reuse()
+        load_reuse(json.loads((OUT/'manifest.json').read_text())['records'])
     records=[]; pages=pool({'https://pump.fun'+p for p in PAGES} | {'https://docs.pump.fun/openapi.public.json','https://docs.pump.fun/llms-full.txt'})
     records.extend(r for r,b in pages)
     assets=set()

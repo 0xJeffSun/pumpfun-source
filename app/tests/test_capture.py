@@ -187,6 +187,23 @@ class CaptureResumeTests(unittest.TestCase):
             capture.pool([url])
         self.network.assert_not_called()
 
+    def test_symlinked_object_directory_is_rejected(self):
+        url = 'https://pump.fun/object-root-symlink.js'
+        body = b'external object root bytes'
+        self.objects.rmdir()
+        redirected = self.external / 'objects'
+        redirected.mkdir()
+        (redirected / 'object.js').write_bytes(body)
+        try:
+            self.objects.symlink_to(redirected, target_is_directory=True)
+        except (NotImplementedError, OSError) as error:
+            self.skipTest(f'directory symlink creation unavailable: {error}')
+        self.record(url, 'evidence/web/objects/object.js', body)
+
+        with self.assertRaisesRegex(capture.RetainedCaptureError, 'symlink path rejected'):
+            capture.pool([url])
+        self.network.assert_not_called()
+
     def test_missing_retained_target_fails_closed(self):
         url = 'https://pump.fun/missing.js'
         body = b'missing bytes'
@@ -350,6 +367,33 @@ class CaptureResumeTests(unittest.TestCase):
         }
         original = json.dumps({'records': [record]}, indent=2) + '\n'
         manifest_path.write_text(original)
+
+        with patch.object(capture.sys, 'argv', ['capture.py', '--resume']), patch.object(
+            capture, 'pool'
+        ) as worker_pool:
+            with self.assertRaises(capture.RetainedCaptureError):
+                capture.main()
+
+        worker_pool.assert_not_called()
+        self.network.assert_not_called()
+        self.assertEqual(manifest_path.read_text(), original)
+
+    def test_duplicate_manifest_records_are_validated_before_url_collapsing(self):
+        manifest_path = self.root / 'evidence/web/manifest.json'
+        url = 'https://pump.fun/duplicate.js'
+        body = b'valid duplicate bytes'
+        self.write_object('duplicate.js', body)
+        invalid = {
+            'url': url,
+            'path': 'evidence/web/objects/../../../outside.js',
+            'status': 200,
+            'bytes': len(body),
+            'sha256': self.sha256(body),
+        }
+        valid = self.record(url, 'evidence/web/objects/duplicate.js', body)
+        original = json.dumps({'records': [invalid, valid]}, indent=2) + '\n'
+        manifest_path.write_text(original)
+        self.reuse.clear()
 
         with patch.object(capture.sys, 'argv', ['capture.py', '--resume']), patch.object(
             capture, 'pool'
