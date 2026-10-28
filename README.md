@@ -8,12 +8,12 @@ their complete meaningful ELF.
 
 | Program | Matched windows | Matched % | Raw-equal bodies | Normalized only | Unmatched | Whole ELF equal |
 | --- | ---: | ---: | ---: | ---: | ---: | --- |
-| [Pump Main](research/pump-legacy-sell-boundary-20261028/README.md) | 1,019 / 1,035 | 98.5% | 166 | 853 | 16 | No |
+| [Pump Main](research/claude-pump-integration-20261027/r37-layout-41/README.md) | 1,019 / 1,035 | 98.5% | 168 | 851 | 16 | No |
 | [PumpSwap / AMM](research/claude-amm-union12-20261028/README.md) | 783 / 785 | 99.7% | 236 | 547 | 2 | No |
 | [Fees](research/claude-fees100-crank-donation-20261027/README.md) | 585 / 585 | 100.0% | 585 | 0 | 0 | **Yes** |
 | [Mayhem](research/mayhem-meaningful-elf-20261028/README.md) | 441 / 441 | 100.0% | 441 | 0 | 0 | **Yes** |
 | [Donation Relay](repro/donation-relay/canonical-exact-selection/README.md) | 492 / 492 | 100.0% | 492 | 0 | 0 | **Yes** |
-| **Total** | **3,320 / 3,338** | **99.5%** | **1,920** | **1,400** | **18** | **3 / 5** |
+| **Total** | **3,320 / 3,338** | **99.5%** | **1,922** | **1,398** | **18** | **3 / 5** |
 
 Matched windows cover **5,014,880 / 5,213,128 code bytes (96.2%)**;
 **198,248 bytes (3.8%)** remain outside matched windows.
@@ -22,11 +22,11 @@ These figures measure the latest published artifacts, including research not
 integrated into the maintained source tree. Raw-equal bodies match byte for byte;
 normalized matches mask specified call/address operands. Window coverage is not
 a percentage of engineering work completed or proof of whole-program identity.
-The Pump Main row is a native Linux v1.44 build of L38 plus the legacy-sell boundary;
-the composed [L40](research/claude-pump-integration-20261027/r37-layout-40/README.md) build
-(repository Linux profile) reports 1,018 normalized and 168 raw. The AMM row is a
+The Pump Main row is the composed [L41](research/claude-pump-integration-20261027/r37-layout-41/README.md)
+build (L40 plus the legacy-sell boundary, repository Linux profile): 1,019 normalized and
+168 raw. The AMM row is a
 source-only Linux v1.44 build. Separately labeled linker layouts generated from the
-original program report 293 (L40) and 259 (AMM) raw matches without increasing
+original program report 293 (L41) and 259 (AMM) raw matches without increasing
 normalized coverage.
 
 ## Remaining work
@@ -40,9 +40,10 @@ normalized coverage.
   (`0x152888`, all 8,488 bytes; 0 losses; 182 signed paired runtime cases) on L38. The
   composed line continues through data-side steps
   [L39](research/claude-pump-integration-20261027/r37-layout-39/README.md) and
-  [L40](research/claude-pump-integration-20261027/r37-layout-40/README.md) (1,018 windows,
-  raw-ready 1,005/1,018 with the layout layer, 44-suite corpus 10,468 cases, 0 mismatches),
-  which do not yet include the legacy-sell boundary. Behavior corrections qualified with signed
+  [L40](research/claude-pump-integration-20261027/r37-layout-40/README.md) to
+  [L41](research/claude-pump-integration-20261027/r37-layout-41/README.md), which adds the
+  legacy-sell boundary (1,019 windows, raw-ready 1,005/1,019 with the layout layer, 44-suite
+  corpus 10,468 cases, 0 mismatches). Behavior corrections qualified with signed
   original/candidate replays and no window loss, not yet composed into one build:
   [v2 whitelist reserve sync](research/pump-v2-whitelist-sync-20261028/README.md),
   [v3 sell recovery](research/pump-l39-v3sell-recovery-20261028/README.md) (128 cases),
