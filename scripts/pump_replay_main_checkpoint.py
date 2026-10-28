@@ -61,6 +61,10 @@ def main():
                         '--build-comparison', str(comparison), '--output', str(args.output),
                         '--captured-loader', '--workers', str(args.workers),
                         '--shard', str(args.shard), '--shards', str(args.shards)], cwd=ROOT, check=True)
+        if selected['candidate_artifact'] == 'research/pump-final-composition-673-20261028/artifacts/candidate.so':
+            subprocess.run([sys.executable, '-O', '-B', str(ROOT / 'scripts/pump_strict_ordered_logs.py'),
+                            '--report', str(args.output), '--candidate', str(ROOT / selected['candidate_artifact']),
+                            '--output', str(args.output) + '.strict-logs.json'], cwd=ROOT, check=True)
         verify(ROOT)
         return
     package = ROOT / PACKAGE

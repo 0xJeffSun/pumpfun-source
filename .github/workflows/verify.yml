@@ -27,6 +27,7 @@ jobs:
           - suite: pump-canonical-frontier
             commands: |
               python -B scripts/verify_current_checkpoint.py pump
+              python -O -B scripts/test_pump_strict_ordered_logs.py
               python -B research/pump-final-composition-673-20261028/replay_focused.py --candidate research/pump-final-composition-673-20261028/artifacts/candidate.so --output work/pump-canonical-focused
               python -B research/pump-final-composition-673-20261028/verify_focused.py --candidate research/pump-final-composition-673-20261028/artifacts/candidate.so --reports work/pump-canonical-focused
               python -B research/pump-create-captured-successor-20261028/replay.py --candidate research/pump-final-composition-673-20261028/artifacts/candidate.so --output work/pump-captured-create

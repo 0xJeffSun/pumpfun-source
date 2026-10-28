@@ -2807,5 +2807,21 @@
       },
       "hosted_ci": "Not established by local checks"
     }
-  ]
+  ],
+  "maintained_integration_merge": {
+    "number": 678,
+    "reviewed_head": "54f86c07239767e49bbb328ae445b3bf79f2e0f4",
+    "merge": {
+      "sha": "633e3d68220d3e8ec0df17c1eb062ba568febc3e",
+      "merged": true,
+      "message": "Pull Request successfully merged"
+    },
+    "hosted_checks_at_merge": {
+      "count": 154,
+      "states": [
+        "QUEUED"
+      ]
+    },
+    "qualification": "Current five source/artifact gates passed locally; Pump199f public shard1, public focus and captured creation replay/checker passed. Three meaningful ELFs complete;17windows remain. No hosted CI success claimed."
+  }
 }

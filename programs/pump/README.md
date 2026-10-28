@@ -18,7 +18,10 @@ before and after compilation.
 
 The selected image passes all 44 maintained suites: 10,468 paired cases,
 18,343 serialized transaction fields and 27,875 signature fields. Broad diagnostics
-retain their Source/compute exclusions. The strict focused corpus has 106 case
+retain their frozen Source/compute exclusions. An additive current gate verifies
+all 10,468 saved pairs with every ordered log line preserved except complete
+compute-meter lines, including unchanged Source coordinates. The public replay
+controller applies this stricter check to each fresh shard. The strict focused corpus has 106 case
 records, 318 outcome executions and 465 signature fields: 61 sibling cases,
 14 creation cases, 18 admin cases and 13 multi-hop cases, without Source
 normalization. Separate strict legacy284 and extension126 pairs also pass;
