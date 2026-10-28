@@ -81,7 +81,9 @@ for row in panic['cases']:
  Transaction.from_bytes(base64.b64decode(row['original']['transaction_base64'])).verify()
 before=read(HERE/'panic-before-fix.json.gz');assert before['mismatches']==['claimed-add-overflow']
 assert before['candidate_sha256']==sha(HERE/'research/final/candidate.so')
-old_hash=before['inputs_sha256'][str(ROOT/'scripts/pump_claim_panic_differential.py')]
+# The sealed receipt keys its inputs by the authoring checkout's absolute paths;
+# select the panic harness entry by its repository-relative suffix.
+old_hash,=[h for k,h in before['inputs_sha256'].items() if k.endswith('/scripts/pump_claim_panic_differential.py')]
 assert old_hash==sha(HERE/'research/panic-harness-before-dependency-binding.py')
 inventory=read(HERE/'recovered/exact-body-inventory.json');assert inventory['candidate_sha256']==sha(candidate)
 assert inventory['raw_equal_windows']==112 and inventory['original_windows']==1035 and not inventory['whole_file_equal']
