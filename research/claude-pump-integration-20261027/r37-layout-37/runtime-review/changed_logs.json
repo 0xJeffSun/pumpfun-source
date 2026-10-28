@@ -1,0 +1,20 @@
+{
+ "changed": 6,
+ "classes": {
+  "now_equal_original": 6
+ },
+ "suites": {
+  "admin_cto": 6
+ },
+ "line_kinds": [
+  [
+   "length change delete",
+   6
+  ],
+  [
+   "length change insert",
+   6
+  ]
+ ],
+ "examples": []
+}
