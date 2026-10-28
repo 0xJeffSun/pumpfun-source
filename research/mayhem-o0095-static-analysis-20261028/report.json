@@ -1,0 +1,2175 @@
+{
+  "scope": "Original-only static structural inventory. Not a rebuild, candidate comparison, byte match or semantic claim.",
+  "binary": "evidence/original/mayhem/deployed.so",
+  "binary_sha256": "a87fa9f866272514e6acb852b668c4a08aeb173d56c883039991d114d1199bdb",
+  "program": "mayhem",
+  "window": {
+    "text_start": 188864,
+    "text_end": 190160,
+    "bytes": 1296,
+    "slots": 162
+  },
+  "window_sha256": "e0e2f20f8357fbd64bf60f6b122b1e45f9b3cff063f54c37e4d27cee1bd620f7",
+  "selected_disposition": "opaque_unassessed",
+  "selected_candidate": "[]",
+  "instruction_count": 139,
+  "basic_block_count": 37,
+  "exit_count": 1,
+  "call_count": 7,
+  "calls": [
+    {
+      "site": 188976,
+      "kind": "rel_call",
+      "target": 195768,
+      "target_window": "190160-196056",
+      "target_disposition": "opaque_unassessed",
+      "target_candidate": "[]"
+    },
+    {
+      "site": 189168,
+      "kind": "rel_call",
+      "target": 620424,
+      "target_window": "620336-620616",
+      "target_disposition": "normalized_body_only",
+      "target_candidate": "\"[\"\"_<anchor_lang::bpf_writer::BpfWriter<&mut $u5b$u8$u5d$> as std::io::Write>::write_all\"\"]\""
+    },
+    {
+      "site": 189344,
+      "kind": "rel_call",
+      "target": 189872,
+      "target_window": "188864-190160",
+      "target_disposition": "opaque_unassessed",
+      "target_candidate": "[]"
+    },
+    {
+      "site": 189480,
+      "kind": "rel_call",
+      "target": 195768,
+      "target_window": "190160-196056",
+      "target_disposition": "opaque_unassessed",
+      "target_candidate": "[]"
+    },
+    {
+      "site": 189784,
+      "kind": "rel_call",
+      "target": 673992,
+      "target_window": "673976-674080",
+      "target_disposition": "raw_body_equal",
+      "target_candidate": "\"[\"\"core::panicking::panic\"\"]\""
+    },
+    {
+      "site": 189864,
+      "kind": "rel_call",
+      "target": 673992,
+      "target_window": "673976-674080",
+      "target_disposition": "raw_body_equal",
+      "target_candidate": "\"[\"\"core::panicking::panic\"\"]\""
+    },
+    {
+      "site": 189888,
+      "kind": "rel_call",
+      "target": 537808,
+      "target_window": "537584-537888",
+      "target_disposition": "normalized_body_only",
+      "target_candidate": "\"[\"\"_RNvCscR3e5J6VSLN_7___rustc19___rust_alloc_zeroed\"\"]\""
+    }
+  ],
+  "loaded_constants": [
+    {
+      "site": 188872,
+      "value": 725560,
+      "hex": "0x00000000000b1238"
+    },
+    {
+      "site": 188920,
+      "value": 3758096416,
+      "hex": "0x00000000e0000020"
+    },
+    {
+      "site": 188960,
+      "value": 708700,
+      "hex": "0x00000000000ad05c"
+    },
+    {
+      "site": 189088,
+      "value": 710295,
+      "hex": "0x00000000000ad697"
+    },
+    {
+      "site": 189184,
+      "value": 9548101793880775430,
+      "hex": "0x8481abfe57889b06"
+    },
+    {
+      "site": 189216,
+      "value": 3873122370134698235,
+      "hex": "0x35c01846637f68fb"
+    },
+    {
+      "site": 189240,
+      "value": 6141761017446253786,
+      "hex": "0x553beb1adc39c4da"
+    },
+    {
+      "site": 189264,
+      "value": 72057594053697688,
+      "hex": "0x0100000000f0a098"
+    },
+    {
+      "site": 189328,
+      "value": 708744,
+      "hex": "0x00000000000ad088"
+    },
+    {
+      "site": 189376,
+      "value": 725560,
+      "hex": "0x00000000000b1238"
+    },
+    {
+      "site": 189424,
+      "value": 3758096416,
+      "hex": "0x00000000e0000020"
+    },
+    {
+      "site": 189464,
+      "value": 708744,
+      "hex": "0x00000000000ad088"
+    },
+    {
+      "site": 189592,
+      "value": 710295,
+      "hex": "0x00000000000ad697"
+    },
+    {
+      "site": 189728,
+      "value": 709876,
+      "hex": "0x00000000000ad4f4"
+    },
+    {
+      "site": 189752,
+      "value": 725952,
+      "hex": "0x00000000000b13c0"
+    },
+    {
+      "site": 189768,
+      "value": 727352,
+      "hex": "0x00000000000b1938"
+    },
+    {
+      "site": 189808,
+      "value": 708633,
+      "hex": "0x00000000000ad019"
+    },
+    {
+      "site": 189832,
+      "value": 725608,
+      "hex": "0x00000000000b1268"
+    },
+    {
+      "site": 189848,
+      "value": 725640,
+      "hex": "0x00000000000b1288"
+    },
+    {
+      "site": 189896,
+      "value": 12884901888,
+      "hex": "0x0000000300000000"
+    },
+    {
+      "site": 190008,
+      "value": 12884934639,
+      "hex": "0x0000000300007fef"
+    },
+    {
+      "site": 190032,
+      "value": 12884901895,
+      "hex": "0x0000000300000007"
+    },
+    {
+      "site": 190136,
+      "value": 12884934637,
+      "hex": "0x0000000300007fed"
+    }
+  ],
+  "memory_access_offsets": {
+    "ldxdw": [
+      -248,
+      -236,
+      -80,
+      -72,
+      -64,
+      -56,
+      -48,
+      -40,
+      0
+    ],
+    "ldxw": [
+      0
+    ],
+    "stb imm": [
+      -160,
+      96
+    ],
+    "stdw imm": [
+      -240,
+      -224,
+      -56,
+      -48,
+      -40
+    ],
+    "stw imm": [
+      -216,
+      -88
+    ],
+    "stxdw": [
+      -232,
+      -208,
+      -200,
+      -192,
+      -184,
+      -176,
+      -168,
+      -32,
+      -24,
+      -16
+    ]
+  },
+  "in_window_relocations": [
+    {
+      "text_offset": 188872,
+      "type": 8,
+      "symbol_index": 0
+    },
+    {
+      "text_offset": 188960,
+      "type": 8,
+      "symbol_index": 0
+    },
+    {
+      "text_offset": 189088,
+      "type": 8,
+      "symbol_index": 0
+    },
+    {
+      "text_offset": 189328,
+      "type": 8,
+      "symbol_index": 0
+    },
+    {
+      "text_offset": 189376,
+      "type": 8,
+      "symbol_index": 0
+    },
+    {
+      "text_offset": 189464,
+      "type": 8,
+      "symbol_index": 0
+    },
+    {
+      "text_offset": 189592,
+      "type": 8,
+      "symbol_index": 0
+    },
+    {
+      "text_offset": 189728,
+      "type": 8,
+      "symbol_index": 0
+    },
+    {
+      "text_offset": 189752,
+      "type": 8,
+      "symbol_index": 0
+    },
+    {
+      "text_offset": 189768,
+      "type": 8,
+      "symbol_index": 0
+    },
+    {
+      "text_offset": 189808,
+      "type": 8,
+      "symbol_index": 0
+    },
+    {
+      "text_offset": 189832,
+      "type": 8,
+      "symbol_index": 0
+    },
+    {
+      "text_offset": 189848,
+      "type": 8,
+      "symbol_index": 0
+    }
+  ],
+  "basic_blocks": [
+    {
+      "start": 188864,
+      "end": 188984,
+      "insns": 12,
+      "terminator": "call"
+    },
+    {
+      "start": 188984,
+      "end": 188992,
+      "insns": 1,
+      "terminator": "jne imm"
+    },
+    {
+      "start": 188992,
+      "end": 189136,
+      "insns": 17,
+      "terminator": "stw imm"
+    },
+    {
+      "start": 189136,
+      "end": 189176,
+      "insns": 5,
+      "terminator": "call"
+    },
+    {
+      "start": 189176,
+      "end": 189184,
+      "insns": 1,
+      "terminator": "ja"
+    },
+    {
+      "start": 189184,
+      "end": 189216,
+      "insns": 3,
+      "terminator": "jne reg"
+    },
+    {
+      "start": 189216,
+      "end": 189240,
+      "insns": 2,
+      "terminator": "jne reg"
+    },
+    {
+      "start": 189240,
+      "end": 189264,
+      "insns": 2,
+      "terminator": "jne reg"
+    },
+    {
+      "start": 189264,
+      "end": 189288,
+      "insns": 2,
+      "terminator": "jne reg"
+    },
+    {
+      "start": 189288,
+      "end": 189312,
+      "insns": 3,
+      "terminator": "jge reg"
+    },
+    {
+      "start": 189312,
+      "end": 189352,
+      "insns": 4,
+      "terminator": "call"
+    },
+    {
+      "start": 189352,
+      "end": 189488,
+      "insns": 14,
+      "terminator": "call"
+    },
+    {
+      "start": 189488,
+      "end": 189496,
+      "insns": 1,
+      "terminator": "jne imm"
+    },
+    {
+      "start": 189496,
+      "end": 189648,
+      "insns": 18,
+      "terminator": "ja"
+    },
+    {
+      "start": 189648,
+      "end": 189680,
+      "insns": 4,
+      "terminator": "jlt reg"
+    },
+    {
+      "start": 189680,
+      "end": 189688,
+      "insns": 1,
+      "terminator": "stb imm"
+    },
+    {
+      "start": 189688,
+      "end": 189696,
+      "insns": 1,
+      "terminator": "exit"
+    },
+    {
+      "start": 189696,
+      "end": 189792,
+      "insns": 9,
+      "terminator": "call"
+    },
+    {
+      "start": 189792,
+      "end": 189872,
+      "insns": 7,
+      "terminator": "call"
+    },
+    {
+      "start": 189872,
+      "end": 189896,
+      "insns": 3,
+      "terminator": "call"
+    },
+    {
+      "start": 189896,
+      "end": 189936,
+      "insns": 4,
+      "terminator": "jsgt imm"
+    },
+    {
+      "start": 189936,
+      "end": 189944,
+      "insns": 1,
+      "terminator": "jsgt imm"
+    },
+    {
+      "start": 189944,
+      "end": 189952,
+      "insns": 1,
+      "terminator": "jsle imm"
+    },
+    {
+      "start": 189952,
+      "end": 189960,
+      "insns": 1,
+      "terminator": "jeq imm"
+    },
+    {
+      "start": 189960,
+      "end": 189968,
+      "insns": 1,
+      "terminator": "jne imm"
+    },
+    {
+      "start": 189968,
+      "end": 190000,
+      "insns": 4,
+      "terminator": "jle reg"
+    },
+    {
+      "start": 190000,
+      "end": 190008,
+      "insns": 1,
+      "terminator": "jeq imm"
+    },
+    {
+      "start": 190008,
+      "end": 190032,
+      "insns": 2,
+      "terminator": "jne imm"
+    },
+    {
+      "start": 190032,
+      "end": 190056,
+      "insns": 2,
+      "terminator": "jgt reg"
+    },
+    {
+      "start": 190056,
+      "end": 190064,
+      "insns": 1,
+      "terminator": "ja"
+    },
+    {
+      "start": 190064,
+      "end": 190072,
+      "insns": 1,
+      "terminator": "jsgt imm"
+    },
+    {
+      "start": 190072,
+      "end": 190080,
+      "insns": 1,
+      "terminator": "jsle imm"
+    },
+    {
+      "start": 190080,
+      "end": 190088,
+      "insns": 1,
+      "terminator": "jeq imm"
+    },
+    {
+      "start": 190088,
+      "end": 190096,
+      "insns": 1,
+      "terminator": "jne imm"
+    },
+    {
+      "start": 190096,
+      "end": 190128,
+      "insns": 4,
+      "terminator": "jle reg"
+    },
+    {
+      "start": 190128,
+      "end": 190136,
+      "insns": 1,
+      "terminator": "jeq imm"
+    },
+    {
+      "start": 190136,
+      "end": 190160,
+      "insns": 2,
+      "terminator": "jne imm"
+    }
+  ],
+  "instructions": [
+    {
+      "text_offset": 188864,
+      "vaddr": 189152,
+      "raw": "7a0ac8ff00000000",
+      "opcode": 122,
+      "mnemonic": "stdw imm",
+      "dst": 10,
+      "src": 0,
+      "off": -56,
+      "imm": 0
+    },
+    {
+      "text_offset": 188872,
+      "vaddr": 189160,
+      "raw": "1801000038120b000000000000000000",
+      "opcode": 24,
+      "mnemonic": "lddw",
+      "dst": 1,
+      "src": 0,
+      "off": 0,
+      "imm": 725560,
+      "imm64": 725560,
+      "relocation": {
+        "type": 8,
+        "symbol_index": 0
+      }
+    },
+    {
+      "text_offset": 188888,
+      "vaddr": 189176,
+      "raw": "7b1ae8ff00000000",
+      "opcode": 123,
+      "mnemonic": "stxdw",
+      "dst": 10,
+      "src": 1,
+      "off": -24,
+      "imm": 0
+    },
+    {
+      "text_offset": 188896,
+      "vaddr": 189184,
+      "raw": "bfa1000000000000",
+      "opcode": 191,
+      "mnemonic": "mov64 reg",
+      "dst": 1,
+      "src": 10,
+      "off": 0,
+      "imm": 0
+    },
+    {
+      "text_offset": 188904,
+      "vaddr": 189192,
+      "raw": "07010000c8ffffff",
+      "opcode": 7,
+      "mnemonic": "add64 imm",
+      "dst": 1,
+      "src": 0,
+      "off": 0,
+      "imm": -56
+    },
+    {
+      "text_offset": 188912,
+      "vaddr": 189200,
+      "raw": "7b1ae0ff00000000",
+      "opcode": 123,
+      "mnemonic": "stxdw",
+      "dst": 10,
+      "src": 1,
+      "off": -32,
+      "imm": 0
+    },
+    {
+      "text_offset": 188920,
+      "vaddr": 189208,
+      "raw": "18010000200000e00000000000000000",
+      "opcode": 24,
+      "mnemonic": "lddw",
+      "dst": 1,
+      "src": 0,
+      "off": 0,
+      "imm": -536870880,
+      "imm64": 3758096416
+    },
+    {
+      "text_offset": 188936,
+      "vaddr": 189224,
+      "raw": "7b1af0ff00000000",
+      "opcode": 123,
+      "mnemonic": "stxdw",
+      "dst": 10,
+      "src": 1,
+      "off": -16,
+      "imm": 0
+    },
+    {
+      "text_offset": 188944,
+      "vaddr": 189232,
+      "raw": "bfa2000000000000",
+      "opcode": 191,
+      "mnemonic": "mov64 reg",
+      "dst": 2,
+      "src": 10,
+      "off": 0,
+      "imm": 0
+    },
+    {
+      "text_offset": 188952,
+      "vaddr": 189240,
+      "raw": "07020000e0ffffff",
+      "opcode": 7,
+      "mnemonic": "add64 imm",
+      "dst": 2,
+      "src": 0,
+      "off": 0,
+      "imm": -32
+    },
+    {
+      "text_offset": 188960,
+      "vaddr": 189248,
+      "raw": "180100005cd00a000000000000000000",
+      "opcode": 24,
+      "mnemonic": "lddw",
+      "dst": 1,
+      "src": 0,
+      "off": 0,
+      "imm": 708700,
+      "imm64": 708700,
+      "relocation": {
+        "type": 8,
+        "symbol_index": 0
+      }
+    },
+    {
+      "text_offset": 188976,
+      "vaddr": 189264,
+      "raw": "8510000050030000",
+      "opcode": 133,
+      "mnemonic": "call",
+      "dst": 0,
+      "src": 1,
+      "off": 0,
+      "imm": 848,
+      "call_target": 195768,
+      "call_kind": "rel_call"
+    },
+    {
+      "text_offset": 188984,
+      "vaddr": 189272,
+      "raw": "5500640000000000",
+      "opcode": 85,
+      "mnemonic": "jne imm",
+      "dst": 0,
+      "src": 0,
+      "off": 100,
+      "imm": 0,
+      "branch_target": 189792
+    },
+    {
+      "text_offset": 188992,
+      "vaddr": 189280,
+      "raw": "79a1d8ff00000000",
+      "opcode": 121,
+      "mnemonic": "ldxdw",
+      "dst": 1,
+      "src": 10,
+      "off": -40,
+      "imm": 0
+    },
+    {
+      "text_offset": 189000,
+      "vaddr": 189288,
+      "raw": "7b1a58ff00000000",
+      "opcode": 123,
+      "mnemonic": "stxdw",
+      "dst": 10,
+      "src": 1,
+      "off": -168,
+      "imm": 0
+    },
+    {
+      "text_offset": 189008,
+      "vaddr": 189296,
+      "raw": "79a1d0ff00000000",
+      "opcode": 121,
+      "mnemonic": "ldxdw",
+      "dst": 1,
+      "src": 10,
+      "off": -48,
+      "imm": 0
+    },
+    {
+      "text_offset": 189016,
+      "vaddr": 189304,
+      "raw": "7b1a50ff00000000",
+      "opcode": 123,
+      "mnemonic": "stxdw",
+      "dst": 10,
+      "src": 1,
+      "off": -176,
+      "imm": 0
+    },
+    {
+      "text_offset": 189024,
+      "vaddr": 189312,
+      "raw": "79a1c8ff00000000",
+      "opcode": 121,
+      "mnemonic": "ldxdw",
+      "dst": 1,
+      "src": 10,
+      "off": -56,
+      "imm": 0
+    },
+    {
+      "text_offset": 189032,
+      "vaddr": 189320,
+      "raw": "7b1a48ff00000000",
+      "opcode": 123,
+      "mnemonic": "stxdw",
+      "dst": 10,
+      "src": 1,
+      "off": -184,
+      "imm": 0
+    },
+    {
+      "text_offset": 189040,
+      "vaddr": 189328,
+      "raw": "79a1b0ff00000000",
+      "opcode": 121,
+      "mnemonic": "ldxdw",
+      "dst": 1,
+      "src": 10,
+      "off": -80,
+      "imm": 0
+    },
+    {
+      "text_offset": 189048,
+      "vaddr": 189336,
+      "raw": "7b1a30ff00000000",
+      "opcode": 123,
+      "mnemonic": "stxdw",
+      "dst": 10,
+      "src": 1,
+      "off": -208,
+      "imm": 0
+    },
+    {
+      "text_offset": 189056,
+      "vaddr": 189344,
+      "raw": "79a1b8ff00000000",
+      "opcode": 121,
+      "mnemonic": "ldxdw",
+      "dst": 1,
+      "src": 10,
+      "off": -72,
+      "imm": 0
+    },
+    {
+      "text_offset": 189064,
+      "vaddr": 189352,
+      "raw": "7b1a38ff00000000",
+      "opcode": 123,
+      "mnemonic": "stxdw",
+      "dst": 10,
+      "src": 1,
+      "off": -200,
+      "imm": 0
+    },
+    {
+      "text_offset": 189072,
+      "vaddr": 189360,
+      "raw": "79a1c0ff00000000",
+      "opcode": 121,
+      "mnemonic": "ldxdw",
+      "dst": 1,
+      "src": 10,
+      "off": -64,
+      "imm": 0
+    },
+    {
+      "text_offset": 189080,
+      "vaddr": 189368,
+      "raw": "7b1a40ff00000000",
+      "opcode": 123,
+      "mnemonic": "stxdw",
+      "dst": 10,
+      "src": 1,
+      "off": -192,
+      "imm": 0
+    },
+    {
+      "text_offset": 189088,
+      "vaddr": 189376,
+      "raw": "1801000097d60a000000000000000000",
+      "opcode": 24,
+      "mnemonic": "lddw",
+      "dst": 1,
+      "src": 0,
+      "off": 0,
+      "imm": 710295,
+      "imm64": 710295,
+      "relocation": {
+        "type": 8,
+        "symbol_index": 0
+      }
+    },
+    {
+      "text_offset": 189104,
+      "vaddr": 189392,
+      "raw": "7b1a18ff00000000",
+      "opcode": 123,
+      "mnemonic": "stxdw",
+      "dst": 10,
+      "src": 1,
+      "off": -232,
+      "imm": 0
+    },
+    {
+      "text_offset": 189112,
+      "vaddr": 189400,
+      "raw": "620aa8ff74170000",
+      "opcode": 98,
+      "mnemonic": "stw imm",
+      "dst": 10,
+      "src": 0,
+      "off": -88,
+      "imm": 6004
+    },
+    {
+      "text_offset": 189120,
+      "vaddr": 189408,
+      "raw": "720a60ff02000000",
+      "opcode": 114,
+      "mnemonic": "stb imm",
+      "dst": 10,
+      "src": 0,
+      "off": -160,
+      "imm": 2
+    },
+    {
+      "text_offset": 189128,
+      "vaddr": 189416,
+      "raw": "620a28ff43020000",
+      "opcode": 98,
+      "mnemonic": "stw imm",
+      "dst": 10,
+      "src": 0,
+      "off": -216,
+      "imm": 579
+    },
+    {
+      "text_offset": 189136,
+      "vaddr": 189424,
+      "raw": "7a0a20ff24000000",
+      "opcode": 122,
+      "mnemonic": "stdw imm",
+      "dst": 10,
+      "src": 0,
+      "off": -224,
+      "imm": 36
+    },
+    {
+      "text_offset": 189144,
+      "vaddr": 189432,
+      "raw": "7a0a10ff00000000",
+      "opcode": 122,
+      "mnemonic": "stdw imm",
+      "dst": 10,
+      "src": 0,
+      "off": -240,
+      "imm": 0
+    },
+    {
+      "text_offset": 189152,
+      "vaddr": 189440,
+      "raw": "bfa1000000000000",
+      "opcode": 191,
+      "mnemonic": "mov64 reg",
+      "dst": 1,
+      "src": 10,
+      "off": 0,
+      "imm": 0
+    },
+    {
+      "text_offset": 189160,
+      "vaddr": 189448,
+      "raw": "0701000010ffffff",
+      "opcode": 7,
+      "mnemonic": "add64 imm",
+      "dst": 1,
+      "src": 0,
+      "off": 0,
+      "imm": -240
+    },
+    {
+      "text_offset": 189168,
+      "vaddr": 189456,
+      "raw": "8510000092d20000",
+      "opcode": 133,
+      "mnemonic": "call",
+      "dst": 0,
+      "src": 1,
+      "off": 0,
+      "imm": 53906,
+      "call_target": 620424,
+      "call_kind": "rel_call"
+    },
+    {
+      "text_offset": 189176,
+      "vaddr": 189464,
+      "raw": "05003f0000000000",
+      "opcode": 5,
+      "mnemonic": "ja",
+      "dst": 0,
+      "src": 0,
+      "off": 63,
+      "imm": 0,
+      "branch_target": 189688
+    },
+    {
+      "text_offset": 189184,
+      "vaddr": 189472,
+      "raw": "18070000069b885700000000feab8184",
+      "opcode": 24,
+      "mnemonic": "lddw",
+      "dst": 7,
+      "src": 0,
+      "off": 0,
+      "imm": 1468570374,
+      "imm64": 9548101793880775430
+    },
+    {
+      "text_offset": 189200,
+      "vaddr": 189488,
+      "raw": "79a908ff00000000",
+      "opcode": 121,
+      "mnemonic": "ldxdw",
+      "dst": 9,
+      "src": 10,
+      "off": -248,
+      "imm": 0
+    },
+    {
+      "text_offset": 189208,
+      "vaddr": 189496,
+      "raw": "5d75360000000000",
+      "opcode": 93,
+      "mnemonic": "jne reg",
+      "dst": 5,
+      "src": 7,
+      "off": 54,
+      "imm": 0,
+      "branch_target": 189648
+    },
+    {
+      "text_offset": 189216,
+      "vaddr": 189504,
+      "raw": "18050000fb687f63000000004618c035",
+      "opcode": 24,
+      "mnemonic": "lddw",
+      "dst": 5,
+      "src": 0,
+      "off": 0,
+      "imm": 1669294331,
+      "imm64": 3873122370134698235
+    },
+    {
+      "text_offset": 189232,
+      "vaddr": 189520,
+      "raw": "5d54330000000000",
+      "opcode": 93,
+      "mnemonic": "jne reg",
+      "dst": 4,
+      "src": 5,
+      "off": 51,
+      "imm": 0,
+      "branch_target": 189648
+    },
+    {
+      "text_offset": 189240,
+      "vaddr": 189528,
+      "raw": "18040000dac439dc000000001aeb3b55",
+      "opcode": 24,
+      "mnemonic": "lddw",
+      "dst": 4,
+      "src": 0,
+      "off": 0,
+      "imm": -600193830,
+      "imm64": 6141761017446253786
+    },
+    {
+      "text_offset": 189256,
+      "vaddr": 189544,
+      "raw": "5d43300000000000",
+      "opcode": 93,
+      "mnemonic": "jne reg",
+      "dst": 3,
+      "src": 4,
+      "off": 48,
+      "imm": 0,
+      "branch_target": 189648
+    },
+    {
+      "text_offset": 189264,
+      "vaddr": 189552,
+      "raw": "1803000098a0f0000000000000000001",
+      "opcode": 24,
+      "mnemonic": "lddw",
+      "dst": 3,
+      "src": 0,
+      "off": 0,
+      "imm": 15769752,
+      "imm64": 72057594053697688
+    },
+    {
+      "text_offset": 189280,
+      "vaddr": 189568,
+      "raw": "5d322d0000000000",
+      "opcode": 93,
+      "mnemonic": "jne reg",
+      "dst": 2,
+      "src": 3,
+      "off": 45,
+      "imm": 0,
+      "branch_target": 189648
+    },
+    {
+      "text_offset": 189288,
+      "vaddr": 189576,
+      "raw": "0f18000000000000",
+      "opcode": 15,
+      "mnemonic": "add64 reg",
+      "dst": 8,
+      "src": 1,
+      "off": 0,
+      "imm": 0
+    },
+    {
+      "text_offset": 189296,
+      "vaddr": 189584,
+      "raw": "7981000000000000",
+      "opcode": 121,
+      "mnemonic": "ldxdw",
+      "dst": 1,
+      "src": 8,
+      "off": 0,
+      "imm": 0
+    },
+    {
+      "text_offset": 189304,
+      "vaddr": 189592,
+      "raw": "3d192e0000000000",
+      "opcode": 61,
+      "mnemonic": "jge reg",
+      "dst": 9,
+      "src": 1,
+      "off": 46,
+      "imm": 0,
+      "branch_target": 189680
+    },
+    {
+      "text_offset": 189312,
+      "vaddr": 189600,
+      "raw": "bfa1000000000000",
+      "opcode": 191,
+      "mnemonic": "mov64 reg",
+      "dst": 1,
+      "src": 10,
+      "off": 0,
+      "imm": 0
+    },
+    {
+      "text_offset": 189320,
+      "vaddr": 189608,
+      "raw": "07010000b0ffffff",
+      "opcode": 7,
+      "mnemonic": "add64 imm",
+      "dst": 1,
+      "src": 0,
+      "off": 0,
+      "imm": -80
+    },
+    {
+      "text_offset": 189328,
+      "vaddr": 189616,
+      "raw": "1802000088d00a000000000000000000",
+      "opcode": 24,
+      "mnemonic": "lddw",
+      "dst": 2,
+      "src": 0,
+      "off": 0,
+      "imm": 708744,
+      "imm64": 708744,
+      "relocation": {
+        "type": 8,
+        "symbol_index": 0
+      }
+    },
+    {
+      "text_offset": 189344,
+      "vaddr": 189632,
+      "raw": "8510000041000000",
+      "opcode": 133,
+      "mnemonic": "call",
+      "dst": 0,
+      "src": 1,
+      "off": 0,
+      "imm": 65,
+      "call_target": 189872,
+      "call_kind": "rel_call"
+    },
+    {
+      "text_offset": 189352,
+      "vaddr": 189640,
+      "raw": "7a0ad8ff00000000",
+      "opcode": 122,
+      "mnemonic": "stdw imm",
+      "dst": 10,
+      "src": 0,
+      "off": -40,
+      "imm": 0
+    },
+    {
+      "text_offset": 189360,
+      "vaddr": 189648,
+      "raw": "7a0ad0ff01000000",
+      "opcode": 122,
+      "mnemonic": "stdw imm",
+      "dst": 10,
+      "src": 0,
+      "off": -48,
+      "imm": 1
+    },
+    {
+      "text_offset": 189368,
+      "vaddr": 189656,
+      "raw": "7a0ac8ff00000000",
+      "opcode": 122,
+      "mnemonic": "stdw imm",
+      "dst": 10,
+      "src": 0,
+      "off": -56,
+      "imm": 0
+    },
+    {
+      "text_offset": 189376,
+      "vaddr": 189664,
+      "raw": "1801000038120b000000000000000000",
+      "opcode": 24,
+      "mnemonic": "lddw",
+      "dst": 1,
+      "src": 0,
+      "off": 0,
+      "imm": 725560,
+      "imm64": 725560,
+      "relocation": {
+        "type": 8,
+        "symbol_index": 0
+      }
+    },
+    {
+      "text_offset": 189392,
+      "vaddr": 189680,
+      "raw": "7b1ae8ff00000000",
+      "opcode": 123,
+      "mnemonic": "stxdw",
+      "dst": 10,
+      "src": 1,
+      "off": -24,
+      "imm": 0
+    },
+    {
+      "text_offset": 189400,
+      "vaddr": 189688,
+      "raw": "bfa1000000000000",
+      "opcode": 191,
+      "mnemonic": "mov64 reg",
+      "dst": 1,
+      "src": 10,
+      "off": 0,
+      "imm": 0
+    },
+    {
+      "text_offset": 189408,
+      "vaddr": 189696,
+      "raw": "07010000c8ffffff",
+      "opcode": 7,
+      "mnemonic": "add64 imm",
+      "dst": 1,
+      "src": 0,
+      "off": 0,
+      "imm": -56
+    },
+    {
+      "text_offset": 189416,
+      "vaddr": 189704,
+      "raw": "7b1ae0ff00000000",
+      "opcode": 123,
+      "mnemonic": "stxdw",
+      "dst": 10,
+      "src": 1,
+      "off": -32,
+      "imm": 0
+    },
+    {
+      "text_offset": 189424,
+      "vaddr": 189712,
+      "raw": "18010000200000e00000000000000000",
+      "opcode": 24,
+      "mnemonic": "lddw",
+      "dst": 1,
+      "src": 0,
+      "off": 0,
+      "imm": -536870880,
+      "imm64": 3758096416
+    },
+    {
+      "text_offset": 189440,
+      "vaddr": 189728,
+      "raw": "7b1af0ff00000000",
+      "opcode": 123,
+      "mnemonic": "stxdw",
+      "dst": 10,
+      "src": 1,
+      "off": -16,
+      "imm": 0
+    },
+    {
+      "text_offset": 189448,
+      "vaddr": 189736,
+      "raw": "bfa2000000000000",
+      "opcode": 191,
+      "mnemonic": "mov64 reg",
+      "dst": 2,
+      "src": 10,
+      "off": 0,
+      "imm": 0
+    },
+    {
+      "text_offset": 189456,
+      "vaddr": 189744,
+      "raw": "07020000e0ffffff",
+      "opcode": 7,
+      "mnemonic": "add64 imm",
+      "dst": 2,
+      "src": 0,
+      "off": 0,
+      "imm": -32
+    },
+    {
+      "text_offset": 189464,
+      "vaddr": 189752,
+      "raw": "1801000088d00a000000000000000000",
+      "opcode": 24,
+      "mnemonic": "lddw",
+      "dst": 1,
+      "src": 0,
+      "off": 0,
+      "imm": 708744,
+      "imm64": 708744,
+      "relocation": {
+        "type": 8,
+        "symbol_index": 0
+      }
+    },
+    {
+      "text_offset": 189480,
+      "vaddr": 189768,
+      "raw": "8510000011030000",
+      "opcode": 133,
+      "mnemonic": "call",
+      "dst": 0,
+      "src": 1,
+      "off": 0,
+      "imm": 785,
+      "call_target": 195768,
+      "call_kind": "rel_call"
+    },
+    {
+      "text_offset": 189488,
+      "vaddr": 189776,
+      "raw": "5500250000000000",
+      "opcode": 85,
+      "mnemonic": "jne imm",
+      "dst": 0,
+      "src": 0,
+      "off": 37,
+      "imm": 0,
+      "branch_target": 189792
+    },
+    {
+      "text_offset": 189496,
+      "vaddr": 189784,
+      "raw": "79a1d8ff00000000",
+      "opcode": 121,
+      "mnemonic": "ldxdw",
+      "dst": 1,
+      "src": 10,
+      "off": -40,
+      "imm": 0
+    },
+    {
+      "text_offset": 189504,
+      "vaddr": 189792,
+      "raw": "7b1a58ff00000000",
+      "opcode": 123,
+      "mnemonic": "stxdw",
+      "dst": 10,
+      "src": 1,
+      "off": -168,
+      "imm": 0
+    },
+    {
+      "text_offset": 189512,
+      "vaddr": 189800,
+      "raw": "79a1d0ff00000000",
+      "opcode": 121,
+      "mnemonic": "ldxdw",
+      "dst": 1,
+      "src": 10,
+      "off": -48,
+      "imm": 0
+    },
+    {
+      "text_offset": 189520,
+      "vaddr": 189808,
+      "raw": "7b1a50ff00000000",
+      "opcode": 123,
+      "mnemonic": "stxdw",
+      "dst": 10,
+      "src": 1,
+      "off": -176,
+      "imm": 0
+    },
+    {
+      "text_offset": 189528,
+      "vaddr": 189816,
+      "raw": "79a1c8ff00000000",
+      "opcode": 121,
+      "mnemonic": "ldxdw",
+      "dst": 1,
+      "src": 10,
+      "off": -56,
+      "imm": 0
+    },
+    {
+      "text_offset": 189536,
+      "vaddr": 189824,
+      "raw": "7b1a48ff00000000",
+      "opcode": 123,
+      "mnemonic": "stxdw",
+      "dst": 10,
+      "src": 1,
+      "off": -184,
+      "imm": 0
+    },
+    {
+      "text_offset": 189544,
+      "vaddr": 189832,
+      "raw": "79a1b0ff00000000",
+      "opcode": 121,
+      "mnemonic": "ldxdw",
+      "dst": 1,
+      "src": 10,
+      "off": -80,
+      "imm": 0
+    },
+    {
+      "text_offset": 189552,
+      "vaddr": 189840,
+      "raw": "7b1a30ff00000000",
+      "opcode": 123,
+      "mnemonic": "stxdw",
+      "dst": 10,
+      "src": 1,
+      "off": -208,
+      "imm": 0
+    },
+    {
+      "text_offset": 189560,
+      "vaddr": 189848,
+      "raw": "79a1b8ff00000000",
+      "opcode": 121,
+      "mnemonic": "ldxdw",
+      "dst": 1,
+      "src": 10,
+      "off": -72,
+      "imm": 0
+    },
+    {
+      "text_offset": 189568,
+      "vaddr": 189856,
+      "raw": "7b1a38ff00000000",
+      "opcode": 123,
+      "mnemonic": "stxdw",
+      "dst": 10,
+      "src": 1,
+      "off": -200,
+      "imm": 0
+    },
+    {
+      "text_offset": 189576,
+      "vaddr": 189864,
+      "raw": "79a1c0ff00000000",
+      "opcode": 121,
+      "mnemonic": "ldxdw",
+      "dst": 1,
+      "src": 10,
+      "off": -64,
+      "imm": 0
+    },
+    {
+      "text_offset": 189584,
+      "vaddr": 189872,
+      "raw": "7b1a40ff00000000",
+      "opcode": 123,
+      "mnemonic": "stxdw",
+      "dst": 10,
+      "src": 1,
+      "off": -192,
+      "imm": 0
+    },
+    {
+      "text_offset": 189592,
+      "vaddr": 189880,
+      "raw": "1801000097d60a000000000000000000",
+      "opcode": 24,
+      "mnemonic": "lddw",
+      "dst": 1,
+      "src": 0,
+      "off": 0,
+      "imm": 710295,
+      "imm64": 710295,
+      "relocation": {
+        "type": 8,
+        "symbol_index": 0
+      }
+    },
+    {
+      "text_offset": 189608,
+      "vaddr": 189896,
+      "raw": "7b1a18ff00000000",
+      "opcode": 123,
+      "mnemonic": "stxdw",
+      "dst": 10,
+      "src": 1,
+      "off": -232,
+      "imm": 0
+    },
+    {
+      "text_offset": 189616,
+      "vaddr": 189904,
+      "raw": "620aa8ff73170000",
+      "opcode": 98,
+      "mnemonic": "stw imm",
+      "dst": 10,
+      "src": 0,
+      "off": -88,
+      "imm": 6003
+    },
+    {
+      "text_offset": 189624,
+      "vaddr": 189912,
+      "raw": "720a60ff02000000",
+      "opcode": 114,
+      "mnemonic": "stb imm",
+      "dst": 10,
+      "src": 0,
+      "off": -160,
+      "imm": 2
+    },
+    {
+      "text_offset": 189632,
+      "vaddr": 189920,
+      "raw": "620a28ff51020000",
+      "opcode": 98,
+      "mnemonic": "stw imm",
+      "dst": 10,
+      "src": 0,
+      "off": -216,
+      "imm": 593
+    },
+    {
+      "text_offset": 189640,
+      "vaddr": 189928,
+      "raw": "0500c0ff00000000",
+      "opcode": 5,
+      "mnemonic": "ja",
+      "dst": 0,
+      "src": 0,
+      "off": -64,
+      "imm": 0,
+      "branch_target": 189136
+    },
+    {
+      "text_offset": 189648,
+      "vaddr": 189936,
+      "raw": "b7010000c8000000",
+      "opcode": 183,
+      "mnemonic": "mov64 imm",
+      "dst": 1,
+      "src": 0,
+      "off": 0,
+      "imm": 200
+    },
+    {
+      "text_offset": 189656,
+      "vaddr": 189944,
+      "raw": "0f18000000000000",
+      "opcode": 15,
+      "mnemonic": "add64 reg",
+      "dst": 8,
+      "src": 1,
+      "off": 0,
+      "imm": 0
+    },
+    {
+      "text_offset": 189664,
+      "vaddr": 189952,
+      "raw": "7981000000000000",
+      "opcode": 121,
+      "mnemonic": "ldxdw",
+      "dst": 1,
+      "src": 8,
+      "off": 0,
+      "imm": 0
+    },
+    {
+      "text_offset": 189672,
+      "vaddr": 189960,
+      "raw": "ad19d2ff00000000",
+      "opcode": 173,
+      "mnemonic": "jlt reg",
+      "dst": 9,
+      "src": 1,
+      "off": -46,
+      "imm": 0,
+      "branch_target": 189312
+    },
+    {
+      "text_offset": 189680,
+      "vaddr": 189968,
+      "raw": "7206600001000000",
+      "opcode": 114,
+      "mnemonic": "stb imm",
+      "dst": 6,
+      "src": 0,
+      "off": 96,
+      "imm": 1
+    },
+    {
+      "text_offset": 189688,
+      "vaddr": 189976,
+      "raw": "9500000000000000",
+      "opcode": 149,
+      "mnemonic": "exit",
+      "dst": 0,
+      "src": 0,
+      "off": 0,
+      "imm": 0
+    },
+    {
+      "text_offset": 189696,
+      "vaddr": 189984,
+      "raw": "79a114ff00000000",
+      "opcode": 121,
+      "mnemonic": "ldxdw",
+      "dst": 1,
+      "src": 10,
+      "off": -236,
+      "imm": 0
+    },
+    {
+      "text_offset": 189704,
+      "vaddr": 189992,
+      "raw": "7b1ae0ff00000000",
+      "opcode": 123,
+      "mnemonic": "stxdw",
+      "dst": 10,
+      "src": 1,
+      "off": -32,
+      "imm": 0
+    },
+    {
+      "text_offset": 189712,
+      "vaddr": 190000,
+      "raw": "bfa3000000000000",
+      "opcode": 191,
+      "mnemonic": "mov64 reg",
+      "dst": 3,
+      "src": 10,
+      "off": 0,
+      "imm": 0
+    },
+    {
+      "text_offset": 189720,
+      "vaddr": 190008,
+      "raw": "07030000e0ffffff",
+      "opcode": 7,
+      "mnemonic": "add64 imm",
+      "dst": 3,
+      "src": 0,
+      "off": 0,
+      "imm": -32
+    },
+    {
+      "text_offset": 189728,
+      "vaddr": 190016,
+      "raw": "18010000f4d40a000000000000000000",
+      "opcode": 24,
+      "mnemonic": "lddw",
+      "dst": 1,
+      "src": 0,
+      "off": 0,
+      "imm": 709876,
+      "imm64": 709876,
+      "relocation": {
+        "type": 8,
+        "symbol_index": 0
+      }
+    },
+    {
+      "text_offset": 189744,
+      "vaddr": 190032,
+      "raw": "b70200002b000000",
+      "opcode": 183,
+      "mnemonic": "mov64 imm",
+      "dst": 2,
+      "src": 0,
+      "off": 0,
+      "imm": 43
+    },
+    {
+      "text_offset": 189752,
+      "vaddr": 190040,
+      "raw": "18040000c0130b000000000000000000",
+      "opcode": 24,
+      "mnemonic": "lddw",
+      "dst": 4,
+      "src": 0,
+      "off": 0,
+      "imm": 725952,
+      "imm64": 725952,
+      "relocation": {
+        "type": 8,
+        "symbol_index": 0
+      }
+    },
+    {
+      "text_offset": 189768,
+      "vaddr": 190056,
+      "raw": "1805000038190b000000000000000000",
+      "opcode": 24,
+      "mnemonic": "lddw",
+      "dst": 5,
+      "src": 0,
+      "off": 0,
+      "imm": 727352,
+      "imm64": 727352,
+      "relocation": {
+        "type": 8,
+        "symbol_index": 0
+      }
+    },
+    {
+      "text_offset": 189784,
+      "vaddr": 190072,
+      "raw": "851000006dec0000",
+      "opcode": 133,
+      "mnemonic": "call",
+      "dst": 0,
+      "src": 1,
+      "off": 0,
+      "imm": 60525,
+      "call_target": 673992,
+      "call_kind": "rel_call"
+    },
+    {
+      "text_offset": 189792,
+      "vaddr": 190080,
+      "raw": "bfa3000000000000",
+      "opcode": 191,
+      "mnemonic": "mov64 reg",
+      "dst": 3,
+      "src": 10,
+      "off": 0,
+      "imm": 0
+    },
+    {
+      "text_offset": 189800,
+      "vaddr": 190088,
+      "raw": "07030000ffffffff",
+      "opcode": 7,
+      "mnemonic": "add64 imm",
+      "dst": 3,
+      "src": 0,
+      "off": 0,
+      "imm": -1
+    },
+    {
+      "text_offset": 189808,
+      "vaddr": 190096,
+      "raw": "1801000019d00a000000000000000000",
+      "opcode": 24,
+      "mnemonic": "lddw",
+      "dst": 1,
+      "src": 0,
+      "off": 0,
+      "imm": 708633,
+      "imm64": 708633,
+      "relocation": {
+        "type": 8,
+        "symbol_index": 0
+      }
+    },
+    {
+      "text_offset": 189824,
+      "vaddr": 190112,
+      "raw": "b702000037000000",
+      "opcode": 183,
+      "mnemonic": "mov64 imm",
+      "dst": 2,
+      "src": 0,
+      "off": 0,
+      "imm": 55
+    },
+    {
+      "text_offset": 189832,
+      "vaddr": 190120,
+      "raw": "1804000068120b000000000000000000",
+      "opcode": 24,
+      "mnemonic": "lddw",
+      "dst": 4,
+      "src": 0,
+      "off": 0,
+      "imm": 725608,
+      "imm64": 725608,
+      "relocation": {
+        "type": 8,
+        "symbol_index": 0
+      }
+    },
+    {
+      "text_offset": 189848,
+      "vaddr": 190136,
+      "raw": "1805000088120b000000000000000000",
+      "opcode": 24,
+      "mnemonic": "lddw",
+      "dst": 5,
+      "src": 0,
+      "off": 0,
+      "imm": 725640,
+      "imm64": 725640,
+      "relocation": {
+        "type": 8,
+        "symbol_index": 0
+      }
+    },
+    {
+      "text_offset": 189864,
+      "vaddr": 190152,
+      "raw": "8510000063ec0000",
+      "opcode": 133,
+      "mnemonic": "call",
+      "dst": 0,
+      "src": 1,
+      "off": 0,
+      "imm": 60515,
+      "call_target": 673992,
+      "call_kind": "rel_call"
+    },
+    {
+      "text_offset": 189872,
+      "vaddr": 190160,
+      "raw": "bf16000000000000",
+      "opcode": 191,
+      "mnemonic": "mov64 reg",
+      "dst": 6,
+      "src": 1,
+      "off": 0,
+      "imm": 0
+    },
+    {
+      "text_offset": 189880,
+      "vaddr": 190168,
+      "raw": "6127000000000000",
+      "opcode": 97,
+      "mnemonic": "ldxw",
+      "dst": 7,
+      "src": 2,
+      "off": 0,
+      "imm": 0
+    },
+    {
+      "text_offset": 189888,
+      "vaddr": 190176,
+      "raw": "85100000e1a90000",
+      "opcode": 133,
+      "mnemonic": "call",
+      "dst": 0,
+      "src": 1,
+      "off": 0,
+      "imm": 43489,
+      "call_target": 537808,
+      "call_kind": "rel_call"
+    },
+    {
+      "text_offset": 189896,
+      "vaddr": 190184,
+      "raw": "18010000000000000000000003000000",
+      "opcode": 24,
+      "mnemonic": "lddw",
+      "dst": 1,
+      "src": 0,
+      "off": 0,
+      "imm": 0,
+      "imm64": 12884901888
+    },
+    {
+      "text_offset": 189912,
+      "vaddr": 190200,
+      "raw": "7911000000000000",
+      "opcode": 121,
+      "mnemonic": "ldxdw",
+      "dst": 1,
+      "src": 1,
+      "off": 0,
+      "imm": 0
+    },
+    {
+      "text_offset": 189920,
+      "vaddr": 190208,
+      "raw": "bf12000000000000",
+      "opcode": 191,
+      "mnemonic": "mov64 reg",
+      "dst": 2,
+      "src": 1,
+      "off": 0,
+      "imm": 0
+    },
+    {
+      "text_offset": 189928,
+      "vaddr": 190216,
+      "raw": "6507100009000000",
+      "opcode": 101,
+      "mnemonic": "jsgt imm",
+      "dst": 7,
+      "src": 0,
+      "off": 16,
+      "imm": 9,
+      "branch_target": 190064
+    },
+    {
+      "text_offset": 189936,
+      "vaddr": 190224,
+      "raw": "65071f0004000000",
+      "opcode": 101,
+      "mnemonic": "jsgt imm",
+      "dst": 7,
+      "src": 0,
+      "off": 31,
+      "imm": 4,
+      "branch_target": 190192
+    },
+    {
+      "text_offset": 189944,
+      "vaddr": 190232,
+      "raw": "d507440001000000",
+      "opcode": 213,
+      "mnemonic": "jsle imm",
+      "dst": 7,
+      "src": 0,
+      "off": 68,
+      "imm": 1,
+      "branch_target": 190496
+    },
+    {
+      "text_offset": 189952,
+      "vaddr": 190240,
+      "raw": "15078c0002000000",
+      "opcode": 21,
+      "mnemonic": "jeq imm",
+      "dst": 7,
+      "src": 0,
+      "off": 140,
+      "imm": 2,
+      "branch_target": 191080
+    },
+    {
+      "text_offset": 189960,
+      "vaddr": 190248,
+      "raw": "5507da0003000000",
+      "opcode": 85,
+      "mnemonic": "jne imm",
+      "dst": 7,
+      "src": 0,
+      "off": 218,
+      "imm": 3,
+      "branch_target": 191712
+    },
+    {
+      "text_offset": 189968,
+      "vaddr": 190256,
+      "raw": "07020000efffffff",
+      "opcode": 7,
+      "mnemonic": "add64 imm",
+      "dst": 2,
+      "src": 0,
+      "off": 0,
+      "imm": -17
+    },
+    {
+      "text_offset": 189976,
+      "vaddr": 190264,
+      "raw": "b703000000000000",
+      "opcode": 183,
+      "mnemonic": "mov64 imm",
+      "dst": 3,
+      "src": 0,
+      "off": 0,
+      "imm": 0
+    },
+    {
+      "text_offset": 189984,
+      "vaddr": 190272,
+      "raw": "b704000001000000",
+      "opcode": 183,
+      "mnemonic": "mov64 imm",
+      "dst": 4,
+      "src": 0,
+      "off": 0,
+      "imm": 1
+    },
+    {
+      "text_offset": 189992,
+      "vaddr": 190280,
+      "raw": "bd12730100000000",
+      "opcode": 189,
+      "mnemonic": "jle reg",
+      "dst": 2,
+      "src": 1,
+      "off": 371,
+      "imm": 0,
+      "branch_target": 192968
+    },
+    {
+      "text_offset": 190000,
+      "vaddr": 190288,
+      "raw": "1504740100000000",
+      "opcode": 21,
+      "mnemonic": "jeq imm",
+      "dst": 4,
+      "src": 0,
+      "off": 372,
+      "imm": 0,
+      "branch_target": 192984
+    },
+    {
+      "text_offset": 190008,
+      "vaddr": 190296,
+      "raw": "18020000ef7f00000000000003000000",
+      "opcode": 24,
+      "mnemonic": "lddw",
+      "dst": 2,
+      "src": 0,
+      "off": 0,
+      "imm": 32751,
+      "imm64": 12884934639
+    },
+    {
+      "text_offset": 190024,
+      "vaddr": 190312,
+      "raw": "5501750100000000",
+      "opcode": 85,
+      "mnemonic": "jne imm",
+      "dst": 1,
+      "src": 0,
+      "off": 373,
+      "imm": 0,
+      "branch_target": 193016
+    },
+    {
+      "text_offset": 190032,
+      "vaddr": 190320,
+      "raw": "18010000070000000000000003000000",
+      "opcode": 24,
+      "mnemonic": "lddw",
+      "dst": 1,
+      "src": 0,
+      "off": 0,
+      "imm": 7,
+      "imm64": 12884901895
+    },
+    {
+      "text_offset": 190048,
+      "vaddr": 190336,
+      "raw": "2d12760100000000",
+      "opcode": 45,
+      "mnemonic": "jgt reg",
+      "dst": 2,
+      "src": 1,
+      "off": 374,
+      "imm": 0,
+      "branch_target": 193048
+    },
+    {
+      "text_offset": 190056,
+      "vaddr": 190344,
+      "raw": "0500b00200000000",
+      "opcode": 5,
+      "mnemonic": "ja",
+      "dst": 0,
+      "src": 0,
+      "off": 688,
+      "imm": 0,
+      "branch_target": 195568
+    },
+    {
+      "text_offset": 190064,
+      "vaddr": 190352,
+      "raw": "65071e000e000000",
+      "opcode": 101,
+      "mnemonic": "jsgt imm",
+      "dst": 7,
+      "src": 0,
+      "off": 30,
+      "imm": 14,
+      "branch_target": 190312
+    },
+    {
+      "text_offset": 190072,
+      "vaddr": 190360,
+      "raw": "d50741000b000000",
+      "opcode": 213,
+      "mnemonic": "jsle imm",
+      "dst": 7,
+      "src": 0,
+      "off": 65,
+      "imm": 11,
+      "branch_target": 190600
+    },
+    {
+      "text_offset": 190080,
+      "vaddr": 190368,
+      "raw": "150790000c000000",
+      "opcode": 21,
+      "mnemonic": "jeq imm",
+      "dst": 7,
+      "src": 0,
+      "off": 144,
+      "imm": 12,
+      "branch_target": 191240
+    },
+    {
+      "text_offset": 190088,
+      "vaddr": 190376,
+      "raw": "5507d6000d000000",
+      "opcode": 85,
+      "mnemonic": "jne imm",
+      "dst": 7,
+      "src": 0,
+      "off": 214,
+      "imm": 13,
+      "branch_target": 191808
+    },
+    {
+      "text_offset": 190096,
+      "vaddr": 190384,
+      "raw": "07020000edffffff",
+      "opcode": 7,
+      "mnemonic": "add64 imm",
+      "dst": 2,
+      "src": 0,
+      "off": 0,
+      "imm": -19
+    },
+    {
+      "text_offset": 190104,
+      "vaddr": 190392,
+      "raw": "b703000000000000",
+      "opcode": 183,
+      "mnemonic": "mov64 imm",
+      "dst": 3,
+      "src": 0,
+      "off": 0,
+      "imm": 0
+    },
+    {
+      "text_offset": 190112,
+      "vaddr": 190400,
+      "raw": "b704000001000000",
+      "opcode": 183,
+      "mnemonic": "mov64 imm",
+      "dst": 4,
+      "src": 0,
+      "off": 0,
+      "imm": 1
+    },
+    {
+      "text_offset": 190120,
+      "vaddr": 190408,
+      "raw": "bd12790100000000",
+      "opcode": 189,
+      "mnemonic": "jle reg",
+      "dst": 2,
+      "src": 1,
+      "off": 377,
+      "imm": 0,
+      "branch_target": 193144
+    },
+    {
+      "text_offset": 190128,
+      "vaddr": 190416,
+      "raw": "15047a0100000000",
+      "opcode": 21,
+      "mnemonic": "jeq imm",
+      "dst": 4,
+      "src": 0,
+      "off": 378,
+      "imm": 0,
+      "branch_target": 193160
+    },
+    {
+      "text_offset": 190136,
+      "vaddr": 190424,
+      "raw": "18020000ed7f00000000000003000000",
+      "opcode": 24,
+      "mnemonic": "lddw",
+      "dst": 2,
+      "src": 0,
+      "off": 0,
+      "imm": 32749,
+      "imm64": 12884934637
+    },
+    {
+      "text_offset": 190152,
+      "vaddr": 190440,
+      "raw": "55017b0100000000",
+      "opcode": 85,
+      "mnemonic": "jne imm",
+      "dst": 1,
+      "src": 0,
+      "off": 379,
+      "imm": 0,
+      "branch_target": 193192
+    }
+  ]
+}
