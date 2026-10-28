@@ -5,7 +5,7 @@ Thirteen parallel lanes attacked every one of the 128 main-Pump windows left on 
 ## Status: unverified research, not a promoted package
 
 - Every delivery here was rebuilt with the identity recipe: macOS v1.44 rustc with the official Linux v1.44 `sbpf-solana-solana` target libraries.
-- I re-scored each one independently against `L12-inventory` with `harness/score.py`. The results are in `deliveries/*/score-verified.json` and `verified-scores.json`. Every delivery has `losses == []` and `raw_losses == []`, and is runtime-valid (no SBF stack-offset warnings).
+- I re-scored each one independently against `L12-inventory` with `harness/score.py`. The results are in `deliveries/*/score-verified.json`. Every delivery has `losses == []` and `raw_losses == []`, and is runtime-valid (no SBF stack-offset warnings).
 - **Not done yet:**
   - The deliveries have not been composed into one crate. Their gains cover **53 distinct windows**, so if they compose without conflicts the target is 907 → **960/1035**.
   - The 44-suite captured-loader regression.
@@ -37,9 +37,7 @@ Each delivery contains:
 
 - `lanes/*-PROGRESS.md`: every window's status and diff, and every strategy each lane tried, including the negative results.
 - `INSIGHTS-R5.md`: the shared insight log the lanes wrote while working.
-- `r5-partition.json`: how the windows were split into lanes.
 - `L12-triage.json`: the categories of the 128 windows L12 started with.
-- `verified-scores.json`: the independent re-score.
 
 ## Reproduce a score
 
