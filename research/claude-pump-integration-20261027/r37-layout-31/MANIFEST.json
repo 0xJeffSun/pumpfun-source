@@ -1,6 +1,6 @@
 {
- "README.md": "f348726ab303ea74123c1892d281d3ada6b8fde8fb7d8624b8b83f75224e1c8e",
- "RESULT.json": "c8f19c42133406dc3557d691948ab63091e93662f513174389dc3357d1be9909",
+ "README.md": "b9357c8fc290f859d90b77e0488ee4fc434637b28c258bf7d9e4b25d37fd4a36",
+ "RESULT.json": "c9891ed5b68cca33b23a71deeb693bf4e2d9c84040bb7fc24a5d60016d24df76",
  "build-attempt.json": "6617019d1ea6de55a99f2a81e04badd8942754662fdb8324c43e4d0bf4ed4753",
  "build-comparison.json": "3aa7474151f56139f7e2ae832fbe70d11d88caea8e1fd16bd118701ed1a17d8a",
  "build.log.gz": "ec590b1cd39b6590e2e0797363c300b9c93e77cd58a965763c875840083ed883",
@@ -65,6 +65,7 @@
  "control/source/programs/pump/src/v3_native_transfer_fee.rs": "81047d109f5cffabdb13795c67003eb34e8285708d68d7594485c0bfc55b9b75",
  "control/source/programs/pump/src/volume_sync.rs": "6ed1f053f6b318d7cb27cbaa723f88917e87e757df0d5035d00b6b40c29ce699",
  "control/unstripped.so": "373196e7bca8f2fba642c35540cdfc72758d67507469d9d075950ed649bb23d1",
+ "full.json.gz": "84b804bc9294625b65d83d9b1b215182f48d8ff28d442b707ea2582a3551b969",
  "inventory.json.gz": "48c9f350c4459ca54e5081c85391d66759c5c6b195b9bdb1a6e6a5d68f55bd1e",
  "layout-run/candidate.so": "0b0ad9431a34c752a22ede9f21f2a98099c0386cc351694402140d33b75eccad",
  "layout-run/link.map.gz": "bf486db880afe3a3358ede7185c3a8262cc56903072ddb141c3e39e86ee09813",

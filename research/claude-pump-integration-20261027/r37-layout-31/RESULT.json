@@ -1097,7 +1097,14 @@
       "summary": "lib.rs pub mod/pub use declarations reordered to the original codegen (module) order, same statements and line count; no normalized or raw change by itself; prepares merged-constant (.rodata.cst*) order for raw identity (raw-ready 952 -> 955 of 990 with the layout layer)"
     }
   ],
-  "regression": null,
+  "regression": {
+    "runner": "scripts/pump_validate_parallel.py --captured-loader",
+    "suites": 44,
+    "cases": 10468,
+    "paired_log_cases": 10464,
+    "mismatches": 0,
+    "seconds": 185
+  },
   "whole_elf_equal": false,
   "goal_complete": false
 }
