@@ -9,8 +9,13 @@ export function fixtureKey(method: string, path: string, query: Record<string, s
 }
 export function buildApp(fixtures: Fixture[] = []) {
   if (fixtures.some(f => !['GET','HEAD'].includes(f.method.toUpperCase()))) throw new Error('Only read-only public fixtures are supported');
+  const fixtureMap = new Map<string, Fixture>();
+  for (const fixture of fixtures) {
+    const key = fixtureKey(fixture.method, fixture.path, fixture.query);
+    if (fixtureMap.has(key)) throw new Error(`Duplicate fixture key: ${key}`);
+    fixtureMap.set(key, fixture);
+  }
   const app = Fastify({ logger: false });
-  const fixtureMap = new Map(fixtures.map(f=>[fixtureKey(f.method,f.path,f.query),f]));
   const specPath = fileURLToPath(new URL('../../../contracts/developer.openapi.json', import.meta.url));
   const specification = readFileSync(specPath,'utf8');
   const spec = JSON.parse(specification) as { paths: Record<string, Record<string, unknown>> };
