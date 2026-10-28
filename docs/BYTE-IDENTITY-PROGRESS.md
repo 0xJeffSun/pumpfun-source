@@ -2904,3 +2904,18 @@ cache-entry removal. All 19,465 recorded result files hash-verify, including the
 two restored files; compiled source, candidate and runtime records are unchanged.
 The canonical result-manifest seal is
 `6c06d070fe0d68ae3df5d48637c0cd28a314d2f134107ec56cafa9ba812fde35`.
+
+## Mayhem436 selected data checks
+
+The current artifact now has a stronger bounded correspondence: 486 Source
+coordinates, 48 relocated code-address sites and 119 references to 30 selected
+32-byte data prefixes are checked with their mapped callback targets. The
+recursive relation retains all 429 previously closed windows while reducing
+601 candidate pairs to 579, rejecting 22 ambiguous pairings. Whole data objects,
+generic indirect dispatch and whole-ELF identity remain outside this result.
+
+The new packet independently passes its verifier and ten tests, including
+90 actual scalar/target corruption subcases, a missing relocation, a function-
+interior pointer, a Source-coordinate corruption and filesystem controls. It
+adds no function match, build or runtime execution. Its manifest is
+`f6c21d4d597cd088f115f47c2f394518c31f852df12960d6288f1b71b9773483`.

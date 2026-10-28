@@ -54,6 +54,13 @@ The [Custom branch follow-up](../research/mayhem-current434-custom-format-route-
 adds three tuple-dispatch sites and a 32-byte vtable check, stopping at the
 numeric formatter with the payload value opaque.
 
+The [current selected-data checks](../research/mayhem-current436-selected-prefixes-20261027/README.md)
+bind the 436-window artifact. They add all 486 matching Source coordinates,
+48 code-address sites and 119 references to selected 32-byte data prefixes to
+the recursive relation. All 429 previously closed windows survive, while 22
+ambiguous counterpart pairs are rejected. This checks the stated prefix values
+and targets; full data-object extent and general dispatch remain open.
+
 ## Five bodies still unmatched
 
 | Original window | Start | Bytes | Remaining function |

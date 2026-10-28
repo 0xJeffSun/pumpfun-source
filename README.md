@@ -136,6 +136,11 @@ adds three tuple-dispatch sites and follows the payload pointer to the numeric
 formatter. Both proofs remain bound to the preceding 434 artifact. General
 indirect-call and data identity remain unresolved.
 
+The [current selected-data checks](research/mayhem-current436-selected-prefixes-20261027/README.md)
+preserve all 429 closed windows while checking 486 Source coordinates, 48 code
+addresses and 119 references to 32-byte prefixes. They reject 22 ambiguous
+counterpart pairs without claiming complete data or indirect-call identity.
+
 The [native historical-macro composition](research/mayhem-native-current432-composition/README.md)
 also reproduces 432 normalized windows and 85 raw-local matches in its own
 recipe. Its earlier Legacy Buy source remains distinct. The later
