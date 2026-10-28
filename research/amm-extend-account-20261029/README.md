@@ -40,10 +40,9 @@ Anchor discriminator.
 
 ## Result
 
-- Exactly four discriminators are recognized, each with one target
-  size: Pool -> 301, GlobalConfig -> 949, UserVolumeAccumulator ->
-  137, GlobalVolumeAccumulator -> 600. FeeConfig, SharingConfig and
-  BondingCurve discriminators are rejected with 6027, as is any
+- Four discriminators extend, each to one target size: Pool -> 301, GlobalConfig -> 949, UserVolumeAccumulator ->
+  137, GlobalVolumeAccumulator -> 600. FeeConfig and SharingConfig discriminators are rejected with 6027
+  (BondingCurve and other discriminators are not executed here), as is any
   account data shorter than 8 bytes (the discriminator cannot be
   read).
 - The rent delta is exactly `(target - current) * 6960` lamports,
@@ -69,6 +68,11 @@ Anchor discriminator.
 
 ## Limits
 
+- `producer.py` generated these receipts on the author's machine; as
+  committed it expects a checkout at `~/workspace/pumpfun-sparse` and
+  the #424/#427 images in `~/workspace/slop-verify`, so it does not run
+  from this packet unmodified. `verify.py` reads the same two images
+  from their repository packets.
 - Offline LiteSVM replay on synthetic accounts only; no mainnet
   state, no source change, no build, and no whole-program
   equivalence claim.
