@@ -39,11 +39,74 @@ inventory and execution receipts are not retained in this packet. These results
 therefore cannot be independently re-audited from its files alone.
 
 The reported difference is 22 fewer normalized windows than the older 432-window
-artifact. It does not isolate a cause: compiler, target libraries, dependency
-builds and linker recipe must be controlled separately before attributing a
-window difference to layout. This packet does not prove that the historical
-recipe is unreproducible. Later archived recipes and the current436 evidence
-have their own explicit reproduction and qualification scopes.
+artifact. On its own it does not isolate a cause: compiler, target libraries,
+dependency builds and linker recipe must be controlled separately before
+attributing a window difference to layout. This packet does not prove that the
+historical recipe is unreproducible. Later archived recipes and the current436
+evidence have their own explicit reproduction and qualification scopes.
+
+## Source-path remap control: one flag accounts for 20 of the 22 windows
+
+A single-variable control isolates one cause. The first lost window, `O0095`
+(`MayhemState::validate_quote`, 1,296 bytes), differs from the default-linker
+build in **exactly one slot of 162**: `stdw [r10-224], imm` stores `36` in the
+original and `12` in the clean build. Those are string lengths:
+`len("programs/mayhem-program/src/state.rs") == 36` and
+`len("src/state.rs") == 12`. The original binary embeds every source path under
+the historical crate directory `programs/mayhem-program/`; a bare build embeds
+`src/…`. The archived quote-pair and current436 recipes already carry
+`--remap-path-prefix=src/=programs/mayhem-program/src/` in their rustc commands;
+this control measures that flag's effect in isolation, with everything else
+(toolchain installation, dependency builds, default linker) held fixed.
+
+| Recipe (same source, same installation) | raw-equal | normalized-only | unmatched | matched text |
+| --- | ---: | ---: | ---: | ---: |
+| default linker, no remap | 83 | 327 | 31 | 557,664 B |
+| default linker, `--remap-path-prefix=src/=programs/mayhem-program/src/` | 83 | 347 | 11 | 598,712 B |
+| older published 432 artifact (layered toolchain + `ordered.ld`) | 100 | 332 | 9 | 598,792 B |
+
+The remap restores the 20 windows whose bodies carry a source-path length:
+`O0071` (Burn), `O0072`, `O0074`, `O0090`, `O0094`, `O0095`, the five
+`try_deserialize` instances `O0114/O0139/O0143/O0150/O0158`, the GlobalParams
+validators `O0085/O0086/O0088/O0089`, the CPI-failure wrappers `O0078/O0080`,
+and `O0100/O0117/O0147`. The 11 remaining unmatched windows are the published
+artifact's own nine (six trade bodies, `O0075`, `O0076`, `O0073`) plus
+`O0236`/`O0337`.
+
+What the remap does **not** explain, and why:
+
+- **`O0236` / `O0337`** (40 bytes each) are `core::error::Error::type_id`
+  stubs: two `lddw` immediates holding a 128-bit Rust `TypeId` hash. `TypeId`
+  incorporates the crate `-C metadata` disambiguator of the type's defining
+  crate. Cargo assigns the root crate the same `metadata=cf9f0934f5538f31` as
+  the published command, so the differing hash belongs to a dependency crate
+  whose compiled metadata differed between the two dependency builds. This is
+  dependency-build provenance, not source; see
+  `research/mayhem-alloc-typeid-provenance`.
+- **17 raw-equal windows** (11,416 bytes) are normalized-only here but raw-equal
+  in the published artifact. Their instruction bytes are identical after
+  masking; only absolute call/data immediates differ, because the default
+  linker places functions differently from `ordered.ld`. Raw-equal counts, not
+  normalized counts, are the layout-sensitive measure.
+
+Both recipes were built four times from scratch (fresh materialized source,
+fresh target directory) with identical outputs each time. The artifacts of the
+final run are archived under `builds/<recipe>/` so the claims above can be
+re-audited from this packet's files alone:
+
+| Recipe | Unstripped SHA-256 | Stripped SHA-256 |
+| --- | --- | --- |
+| `builds/default/` | `d6ea5caa34d876a29f790ef70690daeb7a5b41d7176c36412743b70d27b05440` | `6fa1945d4041587226c5091258b61ad7e1d86590024c962228820d63d1485944` |
+| `builds/historical-path-remap/` | `1e12f53043efe10370cc60f470e1d90e3aa496fcba5f8b7118dfb61842d68458` | `3c33835363257b8012078cb04f9495f30c5aaeee447184a0d092de0c24b77f17` |
+
+Each archive holds `symbols.so.gz` (unstripped), `candidate.so.gz` (stripped),
+`build.log.gz`, the 441-row `inventory.json.gz` and `sha256.txt`. The archived
+unstripped artifacts are the inputs the inventory counts were computed from, so
+anyone can recompute the partition offline with the inventory tool.
+
+This control changes no checkpoint. It uses the same unauthenticated local
+installation as the rest of this packet, and normalized matches do not
+establish raw whole-body, recursive call/data or whole-ELF identity.
 
 ## Run the historical experiment
 
@@ -51,6 +114,10 @@ have their own explicit reproduction and qualification scopes.
 python3 -B research/mayhem-frontier-clean-rebuild-20261028/materialize_frontier_source.py <new-source-dir>
 (cd <new-source-dir> && ~/.cache/solana/v1.54/platform-tools/rust/bin/cargo fetch --locked)
 research/mayhem-frontier-clean-rebuild-20261028/build_and_measure.sh <new-output-dir>
+
+# the same with the historical crate path remap
+REMAP_FLAGS='--remap-path-prefix=src/=programs/mayhem-program/src/' \
+  research/mayhem-frontier-clean-rebuild-20261028/build_and_measure.sh <new-output-dir>
 ```
 
 The driver expects a v1.54 installation and v1.52 strip tool under
@@ -64,3 +131,21 @@ No runtime replay is retained or claimed for these reported clean-build
 artifacts. The older quote-pair packet's 6,636 trade pairs bind only to that
 packet's own artifact. Normalized matches do not establish raw whole-body,
 recursive call/data or whole-ELF identity.
+
+## Recheck
+
+```sh
+# offline: verify archived artifact hashes and recompute both inventories (no toolchain needed)
+.venv/bin/python research/mayhem-frontier-clean-rebuild-20261028/verify.py
+
+# additionally rebuild both recipes from the pinned source and compare to the archive
+.venv/bin/python research/mayhem-frontier-clean-rebuild-20261028/verify.py --rebuild
+```
+
+The offline check asserts the archived `symbols.so.gz` / `candidate.so.gz`
+hashes, re-runs the 441-window inventory on the archived symbol artifact and
+compares it with the recorded counts and the archived `inventory.json.gz`.
+`--rebuild` also rebuilds each recipe into a fresh directory with the installed
+tools and asserts the fresh artifacts equal the archive. A zero exit means every
+recorded value reproduced; it does not authenticate the local tool installation.
+Use `--only <recipe>` for one recipe or `--keep <dir>` to retain rebuild outputs.

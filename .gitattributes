@@ -1524,6 +1524,8 @@ repro/pump_amm/inverse-route-recovery-20261028/results/** -whitespace
 
 repro/pump_amm/inverse-route-recovery-20261028/followup/** -whitespace
 
+repro/pump_amm/native-scanners-recovery-20261028/results/** -whitespace
 
+repro/pump_amm/native-scanners-recovery-20261028/followup/** -whitespace
 # Preserve the byte-pinned Windows manifest line endings.
 research/mayhem-current436-native-20261028/manifest.json -whitespace
