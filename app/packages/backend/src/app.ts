@@ -34,6 +34,11 @@ export function buildApp(fixtures: Fixture[] = []) {
     const fixture=fixtureMap.get(fixtureKey(request.method,pathname,Object.fromEntries(entries)));
     if (!fixture) return reply.code(501).send({ error: 'COMPATIBILITY_NOT_IMPLEMENTED', method: request.method, path: pathname });
     if (fixture.headers) reply.headers(fixture.headers);
+    // Fastify sends strings verbatim and null as an empty payload, even for JSON.
+    const contentType = reply.getHeader('content-type');
+    if ((fixture.body === null || typeof fixture.body === 'string') && typeof contentType === 'string' && /^application\/(?:[^;\s]+\+)?json(?:\s*;|$)/i.test(contentType)) {
+      return reply.code(fixture.status).send(JSON.stringify(fixture.body));
+    }
     return reply.code(fixture.status).send(fixture.body);
   }
   return app;
