@@ -1,12 +1,12 @@
 # Parallel Mayhem reconstruction work
 
 The objective remains byte-identical Rust reproduction, including calls, data,
-relocations and ELF layout. The [qualified current composition](../research/mayhem-current437-composition-20261028/README.md)
-has **437/441 normalized windows: 141 raw-local, 296 normalized-only and four
-unmatched**. The unmatched windows total **63,792 original text bytes**; 642,952
-of 706,744 text bytes occur in complete normalized matches. SweepFees O0076 is
-now matched in full, preserving every prior body, call-edge and Source result.
-Direct closure reaches 431 windows, with 4,525 positive immediate edges and 499
+relocations and ELF layout. The [qualified current composition](../research/mayhem-current438-composition-20261028/README.md)
+has **438/441 normalized windows: 141 raw-local, 297 normalized-only and three
+unmatched**. The unmatched windows total **46,480 original text bytes**; 660,264
+of 706,744 text bytes occur in complete normalized matches. AMM Sell O0079 is
+now matched in full, preserving SweepFees and every prior body/edge/Source result.
+Direct closure reaches 433 windows, with 4,573 positive immediate edges and 502
 Source observations. The [completion review](MAYHEM-COMPLETION.md) gives exact
 percentages and evidence limits.
 
@@ -19,28 +19,33 @@ source and compiler investigations proceed.
 
 | Lane | Next scope |
 | --- | --- |
-| AMM trade and quote bodies | O0077 and O0079; cap/min selection, retained-reserve arithmetic, ownership and error flow |
+| AMM Buy | O0077; event storage, field ordering and remaining operand differences |
 | V2 trade bodies | O0083–O0084; source ownership, fallible arithmetic and CPI error lifetime |
 | Runtime and layout | Allocator-provider repair is qualified; continue remaining data/indirect-call closure, section layout and ELF equality |
-| Integration / qualification | Preserve the qualified437/141 checkpoint, qualify further combinations, maintain fresh runtime evidence and review incoming PRs |
+| Integration / qualification | Preserve the qualified438/141 checkpoint, qualify further combinations, maintain fresh runtime evidence and review incoming PRs |
 
 The active objective covers the remaining source reconstruction and offline
 validation. No live-chain deployment or transaction is part of this work.
 
 ## All remaining windows
 
-This table comes from the qualified current [441-row inventory](../research/mayhem-current437-composition-20261028/inventory.json).
+This table comes from the qualified current [441-row inventory](../research/mayhem-current438-composition-20261028/inventory.json).
 Each unmatched original window occurs once. Body names are reconstruction
 attributions, not authenticated original symbols.
 
 | Window | Original start | Bytes | Remaining body | Lane |
 | --- | ---: | ---: | --- | --- |
 | O0077 | 85600 | 9736 | AMM Buy | AMM trade and quote |
-| O0079 | 95848 | 17312 | AMM Sell | AMM trade and quote |
 | O0083 | 140512 | 18648 | BuyV2 | V2 trade |
 | O0084 | 159160 | 18096 | SellV2 | V2 trade |
 
 ## Closed windows and partial controls
+
+The [qualified438 composition](../research/mayhem-current438-composition-20261028/README.md)
+adds AMM Sell O0079 through ordinary Rust. All 17,312 normalized bytes, 47 ordered
+calls and 13 bounded data references agree. Its fresh runtime records and three
+matching builds are independent of the preceding packets below.
+
 
 The [qualified437 composition](../research/mayhem-current437-composition-20261028/README.md)
 adds the complete 8,400-byte SweepFees body O0076 to the prior 436 source. An

@@ -3,32 +3,28 @@
 Mayhem is the active reconstruction priority. Other PRs can be reviewed and
 merged, but new body-recovery experiments should advance Mayhem first.
 
-The current [Buy/Sell quote composition](../research/mayhem-quotes-current-recovery-20261027/README.md)
-has **432/441 normalized windows: 100 raw-local, 332 normalized-only and 9
-unmatched**. The unmatched windows cover 107,952 of 706,744 original text bytes.
-Both AMM quotes, quote-aware validator and complete 960-byte initializer match normalized
-code. Two current-source builds agree, and the packet binds 6,636 trade pairs
-and 69 initializer pairs to its exact artifact. These are bounded results;
-recursive code/data closure, original build provenance and whole-ELF identity
-remain open.
+The [qualified438 composition](../research/mayhem-current438-composition-20261028/README.md)
+has **438/441 normalized windows: 141 raw-local, 297 normalized-only and three
+unmatched**. AMM Buy, BuyV2 and SellV2 account for the remaining 46,480 original
+text bytes (6.58%). AMM Sell, SweepFees, both Legacy trade bodies, both quote
+helpers and the initializer are complete normalized matches. Three builds agree,
+and fresh trade, initializer, sweep and rate records verify on this exact image.
 
-The preceding [Legacy Buy composition](../research/mayhem-current-ownership-composition-20261027/README.md)
-retained the 430/100 frontier with a 13,784-byte partial body versus 13,848 original
-bytes. Its fifty immediate callee shapes and seven Source records agree; two
-builds and 486 fresh signed pairs pass. It adds no complete window.
+The [parallel work map](MAYHEM-PARALLEL-WORK.md) assigns the three bodies and
+separate data/layout obligations. Preserve every prior matched body, raw body,
+call target and Source observation. Continue ordinary-Rust ownership/lifetime
+recovery; compare complete functions without relaxing the normalizer. Data
+proofs from older candidates require explicit transfer to the new image.
 
-The [parallel work map](MAYHEM-PARALLEL-WORK.md) lists all nine remaining
-windows, completed work and cross-cutting obligations. Trade source/IR shape,
-ownership and error flow are the next active source-recovery targets.
-The [same-IR quote backend control](../research/mayhem-quote-backend-replay-20261027/README.md)
-adds diagnostic evidence without a new function match. Sweep/burn work remains
-outside the currently active scope.
+Whole-ELF identity, indirect-call/data closure and original build provenance
+remain open. Do not substitute coverage percentages for an engineering estimate
+or for the final literal ELF comparison. No live-chain deployment is required.
 
 ## Historical native-parser and curve plans
 
 The following records retain their original candidate bindings. Their old
 "current" measurements and unfinished-task lists are superseded by the linked
-432-window checkpoint and work map above.
+438-window checkpoint and work map above.
 
 The then-current research baseline was
 [native Program parser recovery](../research/mayhem-native-program-recovery/README.md),

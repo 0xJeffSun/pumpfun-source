@@ -1,38 +1,32 @@
 # Mayhem completion review — 28 October 2026
 
-Reviewed candidate: `da217317cd82d23898b846c1d3b47d8643b495fad90796c2a6ef62b37cfbbeef`.
+Reviewed candidate: `b69ee99d83cb1eaaa999082dc707560e95e1540174f27b5e6a8e1438cc4c34fc`.
 **Whole-ELF identity is unfinished.**
 
 | Artifact | Complete normalized windows | Raw-equal bodies | Direct-call-closed windows | No complete body match |
 | --- | ---: | ---: | ---: | ---: |
-| [Current qualified composition](../research/mayhem-current437-composition-20261028/README.md) | 437 / 441 (99.09%) | 141 / 441 (31.97%) | 431 / 441 (97.73%) | 4 / 441 (0.91%) |
-| [Previous qualified composition](../research/mayhem-current436-composition-20261027/README.md) | 436 / 441 (98.87%) | 141 / 441 (31.97%) | 429 / 441 (97.28%) | 5 / 441 (1.13%) |
+| [Current qualified composition](../research/mayhem-current438-composition-20261028/README.md) | 438 / 441 (99.32%) | 141 / 441 (31.97%) | 433 / 441 (98.19%) | 3 / 441 (0.68%) |
+| [Previous qualified composition](../research/mayhem-current437-composition-20261028/README.md) | 437 / 441 (99.09%) | 141 / 441 (31.97%) | 431 / 441 (97.73%) | 4 / 441 (0.91%) |
 
-The 437 matched windows comprise 141 raw-local bodies and 296 normalized-only
-matches. The current artifact adds the complete 8,400-byte SweepFees body, O0076,
-to the qualified436 source. Passing the existing GlobalParams account as a separate
-method argument preserves the original base-plus-field addressing. Named Rent
-locals and reused AccountInfo references preserve the observed lifetimes. These
-are ordinary Rust source changes in one file. All 1,050 normalized instruction
-words, the relocation pattern, 189 CFG blocks, 51 immediate callee positions and
-13 Source observations for this body agree with the original.
+The 438 matched windows comprise 141 raw-local bodies and 297 normalized-only
+matches. The current artifact adds AMM Sell O0079, all 17,312 bytes, 249 CFG
+blocks and 47 ordered direct calls. Its 13 direct data references receive
+separate bounded checks. Only `sell_pump_swap.rs` changes from qualified437:
+inlined arithmetic helpers, inline signer seeds, and scalar/key lifetimes in
+the event construction reproduce the original body.
 
-All 141 prior raw bodies, normalized matches, positive call edges and Source
-observations survive. O0076 and its wrapper O0169 enter the direct-call-closed
-set. The complete artifact supports **4,525 positive immediate edges and 499
-Source observations**. Repeated root compilations agree; the result is one
-composed artifact, not a sum of separate frontiers.
+All prior raw bodies, normalized matches, positive edges and Source observations
+survive. Direct closure now covers 433 windows, with 4,573 positive immediate
+edges and 502 Source observations. Three root builds agree. The fresh 6,636 trade
+pairs, 69 initializer pairs, 692 sweep triples, 150 rate triples and 856 targeted
+rate triples are bound to this exact artifact. Their 18,534 signed records overlap;
+they do not establish exhaustive behavior or historical build provenance.
+Independent verification and 21 corruption tests pass.
 
-Fresh signed trade, initializer, sweep and rate receipts bind to this exact
-437-window candidate. The trade run covers 6,636 pairs; the packet records each
-suite's full scope and counts. Scopes overlap and must not be summed as unique
-transactions. The qualified436 receipts remain historical evidence for their
-own artifact and are not relabeled as 437 results.
-
-The previous composition added O0081 Legacy Buy and O0082 Legacy Sell by applying
-PR404's six disjoint source changes to the stronger 434/141 parent. Its own
-source, builds and runtime receipts remain in the
-[qualified436 packet](../research/mayhem-current436-composition-20261027/README.md).
+Qualified437 previously closed SweepFees O0076 and its wrapper O0169, preserving
+all 1,050 normalized words, 51 ordered calls and 13 Source observations. The
+preceding qualified436 composition closed both Legacy trade bodies. Each older
+packet retains its own source, build and runtime bindings.
 
 ## Percentage of original code still unmatched
 
@@ -41,12 +35,12 @@ original `.text` bytes, including framework/runtime helpers.
 
 | Artifact | Text in complete normalized matches | Unmatched original text |
 | --- | ---: | ---: |
-| Current qualified composition | 642,952 / 706,744 (90.97%) | 63,792 bytes (9.03%) |
-| Previous qualified composition | 634,552 / 706,744 (89.79%) | 72,192 bytes (10.21%) |
+| Current qualified composition | 660,264 / 706,744 (93.42%) | 46,480 bytes (6.58%) |
+| Previous qualified composition | 642,952 / 706,744 (90.97%) | 63,792 bytes (9.03%) |
 
 The 141 raw-equal bodies contain **65,504 original text bytes (9.27%)**. This is
 local raw-body coverage, not the fraction of the whole ELF that is identical.
-The remaining 0.91% of function windows and 9.03% of text are binary-coverage
+The remaining 0.68% of function windows and 6.58% of text are binary-coverage
 figures, not estimates of remaining engineering time. Normalized matches mask
 specified address/call operands. Data, indirect calls, layout, relocations,
 reproducible whole-ELF equality and build provenance remain separate obligations.
@@ -56,7 +50,7 @@ checks 48 relocated code-address sites targeting 15 original functions on the
 historical 434-window artifact. It preserves that artifact's 425-window recursive
 closure. Its eight tests include 48 actual pointer corruptions. The 93 indirect
 calls in 51 matched windows still need their own value-flow and data evidence;
-the four unmatched trade bodies contain no indirect calls.
+the three unmatched trade bodies contain no indirect calls.
 
 The [conditional formatting proof](../research/mayhem-current434-format-route-20261027/README.md)
 traces three indirect sites for 25 explicit tag inputs on that 434 artifact.
@@ -78,32 +72,36 @@ results do not automatically transfer to 437. Full object extents, arbitrary
 dispatch and complete data identity remain open.
 
 The [explicit437 data recheck](../research/mayhem-current437-selected-data-20261028/README.md)
-now recomputes those obligations on the current candidate: 431 windows and 581
+recomputes those obligations on its qualified437 candidate: 431 windows and 581
 counterpart pairs survive, with 499 Source sites, 48 code-address sites, 121
 selected-prefix references, 48 writer-record references and 21 counted literals
 covering 575 bytes. This is a separate measured transfer, not an assumption of
 identity from the previous artifact. The same allocation and dispatch limits apply.
 
-## Four bodies still unmatched
+The [chained literal/table checks](../research/mayhem-current437-unicode-tables-20261028/README.md)
+cover 16,678 of 26,180 payload bytes on the qualified437 image pair, leaving
+9,502 unproved bytes. Their exact transfer to qualified438 is being checked
+separately; new Sell data checks do not silently rebind those older proofs.
+
+## Three bodies still unmatched
 
 | Original window | Start | Bytes | Remaining function |
 | --- | ---: | ---: | --- |
 | O0077 | 85,600 | 9,736 | AMM Buy |
-| O0079 | 95,848 | 17,312 | AMM Sell |
 | O0083 | 140,512 | 18,648 | BuyV2 |
 | O0084 | 159,160 | 18,096 | SellV2 |
-| **Total** | | **63,792** | |
+| **Total** | | **46,480** | |
 
 “Unmatched” means no complete original machine-body counterpart under the
-unchanged matcher. It does not mean no Rust implementation exists. All four
+unchanged matcher. It does not mean no Rust implementation exists. All three
 trade handlers have substantial partial reconstructions. Equal size, ordered
 callee profiles, CFG correspondence or bounded runtime tests do not make those
 bodies complete matches.
 
-O0073, O0075, O0076, O0081 and O0082 are complete normalized matches in the
-qualified composition. SweepFees and both Legacy bodies remain normalized-only:
+O0073, O0075, O0076, O0079, O0081 and O0082 are complete normalized matches in the
+qualified composition. SweepFees, AMM Sell and both Legacy bodies remain normalized-only:
 this does not make them raw-equal or prove all referenced data. The
-[441-row inventory](../research/mayhem-current437-composition-20261028/inventory.json)
+[441-row inventory](../research/mayhem-current438-composition-20261028/inventory.json)
 lists every raw-equal, normalized-only and unmatched body with actual counterpart
 names and addresses. The [parallel work map](MAYHEM-PARALLEL-WORK.md) records the
 source investigations and their artifact bindings.
@@ -111,12 +109,11 @@ source investigations and their artifact bindings.
 ## Retained partial source controls
 
 These separate artifacts preserve the frontier measured for their own builds.
-They do not replace qualified437 or add a recovered function.
+They do not replace qualified438 or add a recovered function.
 
 | Remaining body | Retained evidence | Limit |
 | --- | --- | --- |
 | AMM Buy | [Qualified437 prefix](../research/mayhem-current437-buy-prefix-20261028/README.md): exact 7,200/9,736-byte normalized prefix; three matching builds and 36 fresh signed pairs | No whole-body gain; event construction remains unmatched |
-| AMM Sell | [Historical event controls](../research/mayhem-current436-amm-event-controls-20261027/README.md): opcode, field-read and 39 event-store order; 36 signed pairs | Separate from current qualified437; whole body remains unmatched in that selection |
 | BuyV2 / SellV2 | [Four V2 controls](../research/mayhem-current436-v2-controls-20261027/README.md): alternative sizing and event-lifetime arrangements, retaining their prior 436/141 matches | No runtime qualification for these exact controls; no whole-body match |
 
 The [Linux dependency control](../research/mayhem-current436-linux-dependency-control-20261028/README.md)
