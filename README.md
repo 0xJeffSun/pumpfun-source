@@ -41,7 +41,7 @@ staged fix awaiting combined validation. New upstream compiler and source resear
 is being reviewed separately and is not counted as a maintained-source result.
 
 The [main-contract queue](research/main-pump-parallel-checkpoint-20261027/REMAINING-WORK.json)
-tracks the open bodies. The [selected checkpoint](repro/pump/main-contract-round37-20261027/README.md) binds the
+tracks the open bodies. The [selected checkpoint](repro/pump/main-contract-round38-20261027/README.md) binds the
 reported metrics and validation evidence. This review is limited to the main Pump
 contract.
 <!-- MAIN-PUMP-REMAINING:END -->
