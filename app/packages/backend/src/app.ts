@@ -3,6 +3,12 @@ import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 import { validateHeaderName, validateHeaderValue } from "node:http";
 import { fileURLToPath } from "node:url";
+import { registerPostRoutes } from "./posts-routes.js";
+import { PostStore, defaultPostStore } from "./posts-store.js";
+import { registerUserRoutes } from "./users-routes.js";
+import { UserStore, defaultStore } from "./users-store.js";
+import { registerCompetitionRoutes } from "./competitions-routes.js";
+import { CompetitionStore, defaultCompetitionStore } from "./competitions-store.js";
 
 export type Fixture = {
   method: string;
@@ -243,7 +249,41 @@ async function apiKeyGate(
   });
 }
 
-export function buildApp(fixtures: Fixture[] = []) {
+/**
+ * Routes handled natively and therefore excluded from the generic replay loop.
+ * Key: `METHOD /openapi-path` (the OpenAPI template path, not the Fastify param path).
+ */
+const NATIVE_ROUTES = new Set<string>([
+  "GET /users",
+  "GET /users/{id}",
+  "POST /users/batch",
+  "GET /users/username-exists/{username}",
+  "GET /users/search-v2",
+  "GET /users/{id}/overview",
+  "POST /profiles/verified",
+  "GET /posts",
+  "GET /posts/{postId}",
+  "GET /posts/{postId}/replies",
+  "GET /posts/{postId}/likers",
+  "GET /posts/{postId}/quotes",
+  "GET /posts/{postId}/reposters",
+  "GET /competitions",
+  "GET /competitions/{idOrSlug}",
+  "GET /competitions/{id}/entries/{entryId}",
+  "GET /competitions/{id}/entries/{entryId}/highlights",
+  "GET /competitions/{id}/highlights",
+]);
+
+export interface BuildAppOptions {
+  /** Override the user store (for tests). */
+  userStore?: UserStore;
+  /** Override the post store (for tests). */
+  postStore?: PostStore;
+  /** Override the competition store (for tests). */
+  competitionStore?: CompetitionStore;
+}
+
+export function buildApp(fixtures: Fixture[] = [], opts: BuildAppOptions = {}) {
   // Reject an invalid inventory before constructing an application that can listen.
   const fixtureMap = registerFixtures(fixtures);
   const app = Fastify({ logger: false });
@@ -269,6 +309,21 @@ export function buildApp(fixtures: Fixture[] = []) {
       .digest("hex"),
     compatibility: "unqualified",
   }));
+  // Register native handlers first. They win over a captured fixture for the same route.
+  // They are documented /v1 operations too, so the same API-key gate runs before them.
+  const store = opts.userStore ?? defaultStore;
+  const postStore =
+    opts.postStore ?? (opts.userStore ? new PostStore(undefined, store) : defaultPostStore);
+  const compStore =
+    opts.competitionStore ??
+    (opts.userStore ? new CompetitionStore(undefined, store) : defaultCompetitionStore);
+  app.register(async (native) => {
+    native.addHook("preHandler", apiKeyGate);
+    registerUserRoutes(native, store);
+    registerPostRoutes(native, postStore);
+    registerCompetitionRoutes(native, compStore);
+  });
+
   // Routing recognizes documented paths; no fabricated domain responses or live proxy fallback.
   for (const [path, item] of Object.entries(spec.paths)) {
     for (const method of Object.keys(item).filter((value) =>
@@ -276,6 +331,8 @@ export function buildApp(fixtures: Fixture[] = []) {
         value,
       ),
     )) {
+      // Skip operations that a native handler already serves.
+      if (NATIVE_ROUTES.has(`${method.toUpperCase()} ${path}`)) continue;
       app.route({
         method: method.toUpperCase() as "GET",
         url: "/v1" + path.replace(/\{([^}]+)\}/g, ":$1"),

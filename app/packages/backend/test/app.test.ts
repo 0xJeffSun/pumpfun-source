@@ -371,18 +371,43 @@ test("validation fails before startup without exposing fixture sources", () => {
 
 const wellFormedKey = `pf_live_${"A".repeat(49)}`;
 
+test("native /v1 operations sit behind the API-key gate", async () => {
+  const app = buildApp();
+  try {
+    for (const url of ["/v1/users", "/v1/posts", "/v1/competitions"]) {
+      const missing = await app.inject(url);
+      assert.equal(missing.statusCode, 401, url);
+      assert.equal(missing.json().error, "API_KEY_REQUIRED", url);
+      const invalid = await app.inject({
+        url,
+        headers: { authorization: "Bearer pf_live_short" },
+      });
+      assert.equal(invalid.statusCode, 401, url);
+      assert.equal(invalid.json().error, "API_KEY_INVALID", url);
+      const accepted = await app.inject({
+        url,
+        headers: { authorization: `Bearer ${wellFormedKey}` },
+      });
+      assert.notEqual(accepted.statusCode, 401, url);
+    }
+  } finally {
+    await app.close();
+  }
+});
+
 test("unimplemented domain routes cannot pass as working APIs", async () => {
   const app = buildApp();
   try {
+    // /v1/users is native now; use a documented operation with no native handler.
     const response = await app.inject({
-      url: "/v1/users/test",
+      url: "/v1/pnl-leaderboard",
       headers: { authorization: `Bearer ${wellFormedKey}` },
     });
     assert.equal(response.statusCode, 501);
     assert.deepEqual(response.json(), {
       error: "COMPATIBILITY_NOT_IMPLEMENTED",
       method: "GET",
-      path: "/v1/users/test",
+      path: "/v1/pnl-leaderboard",
     });
   } finally {
     await app.close();
@@ -452,18 +477,18 @@ test("a key in the query string does not satisfy the gate", async () => {
 
 test("a well-formed key in either header reaches fixture replay", async () => {
   const app = buildApp([
-    fixture({ path: "/v1/users/test", query: undefined, body: { id: "test" } }),
+    fixture({ path: "/v1/pnl-leaderboard", query: undefined, body: { id: "test" } }),
   ]);
   try {
     for (const headers of [
       { authorization: `Bearer ${wellFormedKey}` },
       { "x-api-key": wellFormedKey },
     ]) {
-      const response = await app.inject({ url: "/v1/users/test", headers });
+      const response = await app.inject({ url: "/v1/pnl-leaderboard", headers });
       assert.equal(response.statusCode, 200);
       assert.deepEqual(response.json(), { id: "test" });
     }
-    const rejected = await app.inject("/v1/users/test");
+    const rejected = await app.inject("/v1/pnl-leaderboard");
     assert.equal(rejected.statusCode, 401);
   } finally {
     await app.close();
