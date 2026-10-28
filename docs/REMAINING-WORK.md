@@ -25,33 +25,34 @@ has 159 raw-local, 501 normalized-only and 125 unmatched windows, with 330,664
 original text bytes unmatched. Older event and optional-decoder experiments
 retain their original artifact bindings.
 
-Current Mayhem research is the [qualified437 composition](../research/mayhem-current437-composition-20261028/README.md):
-141 raw-local, 296 normalized-only and four unmatched windows / 63,792 original
-text bytes. It adds the complete 8,400-byte SweepFees body to the preceding
-qualified436 source. Both Legacy bodies, both quotes, the 960-byte initializer,
+Current Mayhem research is the [qualified438 composition](../research/mayhem-current438-composition-20261028/README.md):
+141 raw-local, 297 normalized-only and three unmatched windows / 46,480 original
+text bytes. It adds the complete 17,312-byte AMM Sell body to the preceding
+qualified437 source. SweepFees, both Legacy bodies, both quotes, the initializer,
 O0073 and O0075 remain complete normalized matches.
 
-The current composition preserves every prior raw body, allocator edge,
-Source profile and observed direct-call relationship. Ordered direct-call
-closure covers 431/437 matched bodies; 4,525 positive immediate edges and 499
-matching Source observations are retained. Three builds and fresh signed trade,
-initializer, sweep and rate verification pass. Inputs overlap and their 18,534
-signed records are not unique scenarios. Four large trade bodies, global data,
-indirect calls, layout and historical source/toolchain provenance remain work.
-The [441-row inventory](../research/mayhem-current437-composition-20261028/inventory.tsv)
-and [completion review](MAYHEM-COMPLETION.md) list the four functions and the limits
-of the 0.91% unmatched-window / 9.03% unmatched-text figures.
+The composition preserves every prior raw body, allocator edge, Source profile
+and observed direct-call relationship. Ordered direct-call closure covers 433
+bodies; 4,573 positive immediate edges and 502 Source observations are retained.
+Three matching builds and fresh signed trade, initializer, sweep and rate
+verification pass. The 18,534 signed records overlap and are not unique scenarios.
+The [441-row inventory](../research/mayhem-current438-composition-20261028/inventory.tsv)
+and [completion review](MAYHEM-COMPLETION.md) list the three functions and the limits
+of the 0.68% unmatched-window / 6.58% unmatched-text figures. Data, indirect calls,
+layout and historical source/toolchain provenance remain separate obligations.
 
 The [data coverage ledger](../research/mayhem-current437-data-coverage-20261028/README.md)
 with [counted ErrorCode names](../research/mayhem-current437-error-names-20261028/README.md)
 and [messages/descriptors](../research/mayhem-current437-error-messages-20261028/README.md)
 and [static ProgramError messages](../research/mayhem-current437-program-error-messages-20261028/README.md)
 plus [selected ErrorKind tables](../research/mayhem-current437-error-kind-tables-20261028/README.md)
-cover 15,229 of 26,180 payload bytes (58.17%), leaving 10,951 unproved (41.83%).
+and [six counted Unicode tables](../research/mayhem-current437-unicode-tables-20261028/README.md)
+cover 16,678 of 26,180 payload bytes (63.70%), leaving 9,502 unproved (36.30%).
 The new message proof adds 3,568 string bytes and 1,232 descriptor bytes and
 checks that the selected pointer/count reaches the unresolved writer callback.
-All 431 closed windows / 581 pairs are retained. This is not a count of known
-mismatches or a percentage of engineering effort. Next targets include counted Unicode tables, remaining formatter pieces and
+These data proofs retain 431 windows / 581 pairs on their qualified437 artifact;
+the complete chain is being transferred to 438 separately. This is not a count of known
+mismatches or a percentage of engineering effort. Next targets include remaining formatter pieces and
 counted account names. ErrorKind table coverage is restricted to the 42
 source-supported entries; installed sysroot source is context, not original-build provenance.
 
@@ -713,7 +714,7 @@ composition and compilation; their gains are not added to this count.
 
 ## Active priority: Mayhem
 
-The [Mayhem work plan](MAYHEM-RECONSTRUCTION-PLAN.md) supersedes earlier cross-program prioritization. Its current qualified research frontier has 436 of 441 matched windows, including 141 raw-equal bodies, with five unmatched bodies. The quote-aware validator, initializer, SweepFeesAdmin, Legacy Buy and Legacy Sell are recovered; four trade bodies, SweepFees, recursive data/call closure, full ELF layout and historical provenance remain open. The [completion review](MAYHEM-COMPLETION.md) records 1.13% of windows and 10.21% of original executable text still unmatched. These are coverage measures, not estimates of engineering time.
+The [Mayhem work plan](MAYHEM-RECONSTRUCTION-PLAN.md) supersedes earlier cross-program prioritization. Its current qualified research frontier has 438 of 441 matched windows, including 141 raw-equal bodies, with three unmatched bodies. The quote-aware validator, initializer, SweepFees, AMM Sell, Legacy Buy and Legacy Sell are recovered; AMM Buy, BuyV2, SellV2, recursive data/call closure, full ELF layout and historical provenance remain open. The [completion review](MAYHEM-COMPLETION.md) records 0.68% of windows and 6.58% of original executable text still unmatched. These are coverage measures, not estimates of engineering time.
 
 
 ### Mayhem historical event-parser allocator context

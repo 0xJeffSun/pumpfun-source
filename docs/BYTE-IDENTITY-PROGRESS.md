@@ -3030,3 +3030,15 @@ Payload coverage reaches 14,015/26,180 bytes (53.53%); 12,165 bytes remain unpro
 The [42-entry table proof](../research/mayhem-current437-error-kind-tables-20261028/README.md) validates the complete 112-byte index/count-loading body and its writer forwarding. It adds 542 counted name bytes, 336 exact length bytes, 168 exact pointer-zero bytes and 168 mapped pointer bytes. The domain comes from the archived installed sysroot source, explicitly treated as context rather than proof of the original build. No larger table extent or arbitrary-byte-tag behavior is claimed. Independent full verification and 14 corruption tests pass.
 
 The chained payload footprint reaches 15,229/26,180 bytes (58.17%), leaving 10,951 bytes unproved. No complete function or whole-ELF claim changes.
+
+
+## Qualified438: complete AMM Sell composition
+
+The [438-window composition](../research/mayhem-current438-composition-20261028/README.md) applies only PR417's ordinary-Rust SellPumpSwap source to qualified437. Three builds agree on candidate b69ee99d83cb1eaaa999082dc707560e95e1540174f27b5e6a8e1438cc4c34fc. The complete 17,312-byte normalized O0079 body, all 47 direct calls and 13 bounded data references match. There are no prior body, raw, edge or Source losses; closure rises to 433 windows with 4,573 immediate edges and 502 Source observations.
+
+Independent full verification covers fresh trade, initializer, sweep and rate records: 18,534 overlapping signed records. All 16 static/source/data corruption tests and five runtime corruption tests pass. Only AMM Buy, BuyV2 and SellV2 remain unmatched: 3/441 windows (0.68%) and 46,480/706,744 text bytes (6.58%). The 141 raw-local bodies remain a separate partition. Whole-ELF equality remains false.
+
+
+## Qualified437 counted Unicode tables
+
+The [six-table proof](../research/mayhem-current437-unicode-tables-20261028/README.md) verifies 1,449 additional data bytes using actual plane guards, pointer/count operands and helper element widths. Installed sysroot source supplies context and exact expected values; it does not authenticate the original build. Independent full verification and 12 corruption tests pass. This brings the 437-bound payload chain to 16,678/26,180 bytes (63.70%), with 9,502 unproved. Transfer of the full chain to qualified438 is a separate active check.

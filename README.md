@@ -10,10 +10,10 @@ ELF and, through a separate loader deployment, its captured payload.**
 
 ## Current progress
 
-**Mayhem: 437/441 function windows matched (99.09%), including SweepFees and
-both Legacy trade bodies; four remain (0.91%). Unmatched code is 63,792 bytes (9.03%).**
-See the [completion review](docs/MAYHEM-COMPLETION.md) for all four bodies and the
-distinction between 141 raw-equal and 296 normalized-only matches.
+**Mayhem: 438/441 function windows matched (99.32%), including AMM Sell, SweepFees
+and both Legacy trade bodies; three remain (0.68%). Unmatched code is 46,480 bytes (6.58%).**
+See the [completion review](docs/MAYHEM-COMPLETION.md) for all three bodies and the
+distinction between 141 raw-equal and 297 normalized-only matches.
 
 **PumpSwap: 660/785 function windows matched (84.1%); 125 remain (15.9%). Matched windows cover 71.5% of original executable text, leaving 330,664 bytes (28.5%).**
 
@@ -70,9 +70,9 @@ all remaining code, calls, data, relocations and build provenance.
 | [Pump Round47](repro/pump/main-contract-round47-20261027/README.md) | 823 / 1,035 | 79.5% | 203 | 620 | 212 | No |
 | [PumpSwap / AMM](repro/pump_amm/create-incentive-recovery-20261028/README.md) | 660 / 785 | 84.1% | 159 | 501 | 125 | No |
 | [Fees research](research/claude-fees100-crank-donation-20261027/README.md) | 585 / 585 | 100.0% | 585 | 0 | 0 | **Yes** |
-| [Mayhem qualified research](research/mayhem-current437-composition-20261028/README.md) | 437 / 441 | 99.1% | 141 | 296 | 4 | No |
+| [Mayhem qualified research](research/mayhem-current438-composition-20261028/README.md) | 438 / 441 | 99.3% | 141 | 297 | 3 | No |
 | [Donation Relay](repro/donation-relay/canonical-exact-selection/README.md) | 492 / 492 | 100.0% | 492 | 0 | 0 | **Yes** |
-| **Total** | **2,997 / 3,338** | **89.8%** | **1,580** | **1,417** | **341** | **2 / 5** |
+| **Total** | **2,998 / 3,338** | **89.8%** | **1,580** | **1,418** | **340** | **2 / 5** |
 
 “Windows” are inferred original machine-function ranges, including framework and
 runtime helpers. Complete normalized matches mask specified call/address
@@ -85,9 +85,9 @@ the whole program is identical.
 | Pump Round47 | 1,108,072 / 1,792,208 | 61.8% | 684,136 |
 | PumpSwap / AMM | 831,376 / 1,162,040 | 71.5% | 330,664 |
 | Fees research | 799,648 / 799,648 | 100.0% | 0 |
-| Mayhem research | 642,952 / 706,744 | 91.0% | 63,792 |
+| Mayhem research | 660,264 / 706,744 | 93.4% | 46,480 |
 | Donation Relay | 752,488 / 752,488 | 100.0% | 0 |
-| **Total** | **4,134,536 / 5,213,128** | **79.3%** | **1,078,592** |
+| **Total** | **4,151,848 / 5,213,128** | **79.6%** | **1,061,280** |
 
 Pump and AMM rows describe the verified maintained sources. Fees and Mayhem rows
 are the latest qualified research frontiers, distinct from their maintained
@@ -115,19 +115,19 @@ alternative source is an unpromoted compiler-context diagnostic.
 
 ## Behavior and remaining work
 
-**Mayhem now has 437/441 complete normalized matches (99.09%), leaving four
-bodies (0.91%) and 63,792 original text bytes (9.03%) unmatched.** The
-[qualified composition](research/mayhem-current437-composition-20261028/README.md)
-adds the complete SweepFees body, preserves all 141 raw-equal bodies and raises
-direct-call closure to 431 windows. Three root compilations agree. Fresh trade,
-initializer, sweep and rate verification checks 18,534 signed records across
-overlapping scopes. Whole-ELF identity is still unfinished.
+**Mayhem now has 438/441 complete normalized matches (99.32%), leaving three
+bodies (0.68%) and 46,480 original text bytes (6.58%) unmatched.** The
+[qualified composition](research/mayhem-current438-composition-20261028/README.md)
+adds the complete 17,312-byte AMM Sell body, preserves all 141 raw-equal bodies
+and raises direct-call closure to 433 windows. Three root compilations agree.
+Fresh trade, initializer, sweep and rate verification checks 18,534 signed records
+across overlapping scopes. Whole-ELF identity is still unfinished.
 
 The complete Buy/Sell quotes and initializer retain their bounded typed-data
 checks, and the BpfWriter/ExtendAccountEvent origins remain repaired. O0073 and
-O0075 and O0076 now have complete normalized bodies. Every remaining function is listed
+O0075, O0076 and O0079 now have complete normalized bodies. Every remaining function is listed
 in the [completion review](docs/MAYHEM-COMPLETION.md) and the
-[441-row inventory](research/mayhem-current437-composition-20261028/inventory.tsv).
+[441-row inventory](research/mayhem-current438-composition-20261028/inventory.tsv).
 Data, indirect calls, global layout and original build provenance remain open.
 The [code-reference review](research/mayhem-current434-code-reference-closure-20261027/README.md)
 verifies all 48 relocated code-address sites in matched bodies and preserves the
@@ -139,7 +139,7 @@ adds three tuple-dispatch sites and follows the payload pointer to the numeric
 formatter. Both proofs remain bound to the preceding 434 artifact. General
 indirect-call and data identity remain unresolved.
 
-The [current selected-data proof](research/mayhem-current437-selected-data-20261028/README.md)
+The [437-bound selected-data proof](research/mayhem-current437-selected-data-20261028/README.md)
 retains all 431 closed windows while checking 499 Source sites, 48 code-address
 sites, 121 references to 32-byte prefixes, five 48-byte writer records and 21
 counted instruction labels (575 bytes). It rejects 22 ambiguous counterpart pairs.
@@ -151,9 +151,12 @@ The [counted ErrorCode-name proof](research/mayhem-current437-error-names-202610
 the [ErrorCode-message proof](research/mayhem-current437-error-messages-20261028/README.md)
 and [static ProgramError messages](research/mayhem-current437-program-error-messages-20261028/README.md)
 are extended by [42 selected ErrorKind table entries](research/mayhem-current437-error-kind-tables-20261028/README.md).
-Together the current proofs cover 15,229 of 26,180 payload-data bytes (58.17%);
-10,951 bytes remain unproved.
-This is a proof footprint, not a measure of engineering effort or whole-ELF completion.
+The [six Unicode-table proof](research/mayhem-current437-unicode-tables-20261028/README.md)
+brings this chain to 16,678 of 26,180 payload-data bytes (63.70%);
+9,502 bytes remain unproved.
+These data proofs remain bound to the qualified437 image pair; their full transfer
+to 438 is being checked separately. This is a proof footprint, not a measure of
+engineering effort or whole-ELF completion.
 
 The [remaining-body review](docs/MAYHEM-COMPLETION.md#retained-partial-source-controls)
 preserves partial AMM and V2 source controls. The [qualified437 AMM Buy control](research/mayhem-current437-buy-prefix-20261028/README.md)
@@ -302,7 +305,7 @@ no accepted matches.
 
 The latest [PumpSwap CreatePool and incentive ownership recovery](repro/pump_amm/create-incentive-recovery-20261028/README.md) matches 660 windows and 159 raw bodies. CreatePool now uses the observed constant program-ID reference and creator snapshot order; the incentive handler reuses its pre-Clock mint snapshot. The 660-window count and 159 raw matches are retained with no losses. The repeated build and all 13 standard groups pass; 125 AMM windows remain. Fourteen native-fee cases still differ in raw source-line diagnostics.
 
-Remaining priorities are the 212 Pump, 125 AMM and 4 Mayhem unmatched
+Remaining priorities are the 212 Pump, 125 AMM and 3 Mayhem unmatched
 windows; deeper call/data/relocation identity; original build provenance; and
 uncovered behavior such as authentic fixed-admin AMM `create_config` success.
 The historical [150-handler audit](repro/reconstruction-audit-2026-10-26/handlers.md)

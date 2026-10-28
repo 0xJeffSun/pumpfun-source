@@ -124,6 +124,15 @@ jobs:
             commands: |
               python -B research/mayhem-current437-error-kind-tables-20261028/verify.py
               python -B research/mayhem-current437-error-kind-tables-20261028/test_verify.py
+          - suite: mayhem-current437-unicode-tables
+            commands: |
+              python -B research/mayhem-current437-unicode-tables-20261028/verify.py
+              python -B research/mayhem-current437-unicode-tables-20261028/test_verify.py
+          - suite: mayhem-current438
+            commands: |
+              python -B research/mayhem-current438-composition-20261028/verify.py
+              python -B research/mayhem-current438-composition-20261028/test_verify.py
+              python -B research/mayhem-current438-composition-20261028/test_runtime.py
           - suite: mayhem-current437-buy-prefix
             commands: |
               python -B research/mayhem-current437-buy-prefix-20261028/verify.py
@@ -211,6 +220,7 @@ jobs:
           - suite: mayhem-437-o0079
             commands: |
               python -B research/claude-mayhem-437-20261028/verify.py
+              python -B research/claude-mayhem-437-20261028/test_elf_check.py
           - suite: mayhem-sweep-failures
             commands: |
               python -B research/mayhem-sweep-failure-recovery/verify.py
