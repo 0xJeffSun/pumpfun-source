@@ -9,6 +9,8 @@ An evidence-backed starting point for reconstructing the Pump website and APIs. 
 - `recovered/modules`: readable Turbopack factories, with module IDs, content hashes and exact source ranges in `recovered/modules.json`. These are not standalone original source files.
 - `contracts`: official OpenAPI snapshot, internal operation candidates, fixture format and coverage ledger.
 
+The developer contract ledger binds all 67 documented operations to the checked-in first-party `publicRead` contract, including exact method/path, scope, bearer-auth declaration, error-code contract, captured UTF-16 range, and any independently inventoried client literal. One additional captured route is recorded separately because it is absent from OpenAPI 0.294.0. These are offline contract bindings only: native implementation and compatibility qualification remain 0/67, and website request origins remain unresolved.
+
 Start with [PRD.md](PRD.md) and [AGENTS.md](AGENTS.md). Every coverage claim must distinguish captured, reconstructed, implemented and qualified.
 
 ## Run
