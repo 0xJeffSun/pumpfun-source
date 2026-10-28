@@ -111,17 +111,17 @@ function validateFixture(
   if (
     typeof candidate.status !== "number" ||
     !Number.isInteger(candidate.status) ||
-    candidate.status < 100 ||
+    candidate.status < 200 ||
     candidate.status > 599
   ) {
     throw new Error(
-      `Invalid fixture registration (${provenance}): status must be an integer from 100 through 599`,
+      `Invalid fixture registration (${provenance}): status must be an integer from 200 through 599`,
     );
   }
   const status = candidate.status as number;
   if (
     candidate.body !== null &&
-    ((status >= 100 && status <= 199) || status === 204 || status === 304)
+    (status === 204 || status === 304)
   ) {
     throw new Error(
       `Invalid fixture registration (${provenance}): status ${status} responses cannot carry a body; use null`,

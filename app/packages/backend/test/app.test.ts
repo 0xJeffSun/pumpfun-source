@@ -211,7 +211,7 @@ test("fixture bodies must be explicitly present; null remains valid", async () =
 });
 
 test("fixtures for statuses that cannot carry a body must use null", async () => {
-  for (const status of [101, 150, 199, 204, 304]) {
+  for (const status of [204, 304]) {
     assert.throws(
       () => buildApp([fixture({ status, body: { recorded: true } })]),
       new RegExp(`status ${status} responses cannot carry a body`),
@@ -609,7 +609,7 @@ test("malformed HTTP status codes are rejected", () => {
   for (const status of [undefined, null, "200", Number.NaN, 99, 600, 200.5]) {
     assert.throws(
       () => buildApp([malformedFixture({ status })]),
-      /status must be an integer from 100 through 599/,
+      /status must be an integer from 200 through 599/,
     );
   }
 });
