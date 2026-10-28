@@ -141,3 +141,11 @@ Select `--stage next369810` after `feeconfig806` with the same ordinary SBPF pro
 The accepted checkpoint is **810 / 1,035 injective normalized windows and 133 raw windows**, retaining all preceding matches. Four original bodies gain matches: buy/sell quote, post-fee amount and migration subtraction error. The already-matched addition error is not counted again. Both complete generated ELFs repeat byte-for-byte, and 95 pure source tests pass across thirteen stages.
 
 Migration intentionally repairs post-completion quote funding and changes nonzero/invalid-input behavior. The correctly typed calculator (696 versus 640 bytes), inverse wrapper (688 versus 632), two previously unresolved panic-coordinate identities and earlier limits remain explicit. No whole-handler or recursive closure is claimed. See [NEXT369810.md](NEXT369810.md). Runtime remains **NOT RUN** and full original identity remains **false**.
+
+## Optional v2errors814 stage
+
+Select `--stage v2errors814` after `next369810` under the unchanged ordinary SBPF profile. All thirteen prior stages and the default remain selectable. This two-file stage credits [#371](https://github.com/lalalune/pumpfun-source/pull/371) and [#375](https://github.com/lalalune/pumpfun-source/pull/375), explicitly rebased to preserve the earlier qualified Token-2022 harvest wrapper. The negative receiver experiment is excluded.
+
+The accepted checkpoint is **814 / 1,035 injective normalized windows and 133 raw windows**, retaining all prior matches. Four new standalone error bodies match; two existing migration errors are requalified, not counted again. All 102 pure source tests pass across fourteen stages, and both complete generated ELFs repeat byte-for-byte.
+
+Migration funding intentionally adds post-completion quote before native-only fee subtraction; this is not baseline invalid/nonzero-domain equivalence. Original-backed lazy callback Source ownership, changed-handler prior edges and the restricted repeated-subtraction/error-drop case are documented in [V2ERRORS814.md](V2ERRORS814.md). Fee wrapper, decoder, handler, PDA and historical metadata/identity limits remain explicit. Runtime is **NOT RUN** and full original binary identity is **false**.

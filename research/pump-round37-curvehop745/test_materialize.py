@@ -448,4 +448,36 @@ class SourceTests(unittest.TestCase):
     def test_next369_missing_parent_rejected(self):
         data = self.next369_parent(); data.pop('programs/pump/src/lib.rs')
         with self.assertRaises(ValueError): m.next369_apply(data)
+    def v2errors_parent(self):
+        out = self.root / 'v2errors-parent'
+        m.materialize(PARENT, out, 'next369810')
+        return {str(p.relative_to(out)): p.read_bytes() for p in out.rglob('*') if p.is_file()}
+    def test_exact_v2errors_stage(self):
+        got = m.materialize(PARENT, self.root / 'source', 'v2errors814')
+        self.assertEqual(got, json.loads((m.HERE / 'v2errors-pins.json').read_text())['source_sha256'])
+        self.assertEqual(len(got), 61)
+    def test_v2errors_exact_scope(self):
+        old = self.v2errors_parent(); new = m.v2errors_apply(old)
+        self.assertEqual({n for n in old if old[n] != new[n]}, {'programs/pump/src/migrate_v2.rs', 'programs/pump/src/sell_v2.rs'})
+        self.assertEqual(len(new['programs/pump/src/migrate_v2.rs'].splitlines()), len(old['programs/pump/src/migrate_v2.rs'].splitlines()))
+        self.assertEqual(new['programs/pump/src/lib.rs'], old['programs/pump/src/lib.rs'])
+    def test_v2errors_source_and_harvest(self):
+        old = self.v2errors_parent(); new = m.v2errors_apply(old)
+        path = 'programs/pump/src/migrate_v2.rs'
+        self.assertEqual(new[path].splitlines()[327], old[path].splitlines()[327])
+        self.assertIn(b'quote_balance_overflow', new[path].splitlines()[325])
+        sell = new['programs/pump/src/sell_v2.rs'].splitlines()
+        for line, name in [(366, b'protocol_fee_overflow'), (368, b'creator_fee_overflow'), (386, b'transfer_fee_overflow')]: self.assertIn(name, sell[line - 1])
+        self.assertIn(b'calculate_fee(&self,', new['programs/pump/src/v3_native_transfer_fee.rs'])
+    def test_v2errors_already_applied_rejected(self):
+        with self.assertRaises(ValueError): m.v2errors_apply(m.v2errors_apply(self.v2errors_parent()))
+    def test_v2errors_wrong_parent_rejected(self):
+        data = self.v2errors_parent(); data['programs/pump/src/migrate_v2.rs'] += b'\n'
+        with self.assertRaises(ValueError): m.v2errors_apply(data)
+    def test_v2errors_extra_parent_rejected(self):
+        data = self.v2errors_parent(); data['extra.rs'] = b''
+        with self.assertRaises(ValueError): m.v2errors_apply(data)
+    def test_v2errors_missing_parent_rejected(self):
+        data = self.v2errors_parent(); data.pop('programs/pump/src/sell_v2.rs')
+        with self.assertRaises(ValueError): m.v2errors_apply(data)
 if __name__ == '__main__': unittest.main(argv=['test_materialize.py', *remaining])
