@@ -23,13 +23,13 @@ These are binary-coverage measurements. Full call/data/relocation identity, orig
 
 [Current main-Pump parallel research snapshot](research/main-pump-parallel-checkpoint-20261027/README.md) preserves the verified intermediates and in-progress source beyond the maintained checkpoint.
 
-**Main Pump: 79.5% of function windows matched; 61.8% of original text covered. Complete reconstruction remains unfinished.**
+**Pump Main: 79.5% of function windows matched; 61.8% of original text covered. Complete reconstruction remains unfinished.**
 
 Reproduce the selected Pump ELF with its [archived Rust/linker recipe](repro/pump/main-contract-round47-20261027/reproduce.py).
 
 
 <!-- MAIN-PUMP-REMAINING:BEGIN -->
-### Main Pump remaining work
+### Pump Main remaining work
 
 The maintained checkpoint matches **823/1,035 function windows (79.5%)**;
 **212/1,035 (20.5%) remain unmatched**. Matched windows cover
@@ -67,10 +67,10 @@ all remaining code, calls, data, relocations and build provenance.
 
 | Latest verified checkpoint | Matched windows | Matched % | Raw-equal bodies | Normalized only | Unmatched | Whole ELF equal |
 | --- | ---: | ---: | ---: | ---: | ---: | --- |
-| [Pump Round47](repro/pump/main-contract-round47-20261027/README.md) | 823 / 1,035 | 79.5% | 203 | 620 | 212 | No |
+| [Pump Main](repro/pump/main-contract-round47-20261027/README.md) | 823 / 1,035 | 79.5% | 203 | 620 | 212 | No |
 | [PumpSwap / AMM](repro/pump_amm/boost-buyback-cashback-recovery-20261028/README.md) | 660 / 785 | 84.1% | 159 | 501 | 125 | No |
-| [Fees research](research/claude-fees100-crank-donation-20261027/README.md) | 585 / 585 | 100.0% | 585 | 0 | 0 | **Yes** |
-| [Mayhem qualified research](research/mayhem-current438-composition-20261028/README.md) | 438 / 441 | 99.3% | 141 | 297 | 3 | No |
+| [Fees](research/claude-fees100-crank-donation-20261027/README.md) | 585 / 585 | 100.0% | 585 | 0 | 0 | **Yes** |
+| [Mayhem](research/mayhem-current438-composition-20261028/README.md) | 438 / 441 | 99.3% | 141 | 297 | 3 | No |
 | [Donation Relay](repro/donation-relay/canonical-exact-selection/README.md) | 492 / 492 | 100.0% | 492 | 0 | 0 | **Yes** |
 | **Total** | **2,998 / 3,338** | **89.8%** | **1,580** | **1,418** | **340** | **2 / 5** |
 
@@ -82,10 +82,10 @@ the whole program is identical.
 
 | Checkpoint | Text bytes in matched windows | Text covered | Unmatched text |
 | --- | ---: | ---: | ---: |
-| Pump Round47 | 1,108,072 / 1,792,208 | 61.8% | 684,136 |
+| Pump Main | 1,108,072 / 1,792,208 | 61.8% | 684,136 |
 | PumpSwap / AMM | 831,376 / 1,162,040 | 71.5% | 330,664 |
-| Fees research | 799,648 / 799,648 | 100.0% | 0 |
-| Mayhem research | 660,264 / 706,744 | 93.4% | 46,480 |
+| Fees | 799,648 / 799,648 | 100.0% | 0 |
+| Mayhem | 660,264 / 706,744 | 93.4% | 46,480 |
 | Donation Relay | 752,488 / 752,488 | 100.0% | 0 |
 | **Total** | **4,151,848 / 5,213,128** | **79.6%** | **1,061,280** |
 
@@ -211,7 +211,7 @@ pass. Its 641-window research artifact remains bound to its former
 640-window parent; the maintained 647-window checkpoint is reported above.
 The parent's other supplemental matrices were not rerun on this artifact.
 
-Pump Round47 passes 10,468 full cases plus 7,677 focused executions, with 18,141
+The Pump Main checkpoint passes 10,468 full cases plus 7,677 focused executions, with 18,141
 paired diagnostic-log cases. AMM passes 17,462 full cases plus the separate
 account, fee, CPI, boundary and error-order matrices recorded in its checkpoint.
 The [independent Pump/AMM migration-pair replay](research/pump-amm-migration-composition/README.md)
