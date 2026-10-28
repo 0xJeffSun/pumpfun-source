@@ -140,8 +140,9 @@ def verify_build(stage, expected):
     return candidate, unstripped
 
 def verify_patch():
-    patch = HERE / "source.patch"
-    text = patch.read_text()
+    patch = HERE / "source.patch.gz"
+    raw = gzip.decompress(patch.read_bytes())
+    text = raw.decode()
     expected_headers = {"buy_v2.rs", "sell_v2.rs", "multi_hop_curve_swap.rs"}
     headers = {line.rsplit("/", 1)[-1] for line in text.splitlines() if line.startswith("--- a/")}
     require(headers == expected_headers, "source patch file set")
@@ -152,7 +153,9 @@ def verify_patch():
         destination.mkdir(parents=True)
         for name in expected_headers:
             shutil.copy2(source / name, destination / name)
-        result = subprocess.run(["patch", "-s", "-p1", "-d", str(target), "-i", str(patch)], capture_output=True, text=True)
+        patch_file = target / "source.patch"
+        patch_file.write_bytes(raw)
+        result = subprocess.run(["patch", "-s", "-p1", "-d", str(target), "-i", str(patch_file)], capture_output=True, text=True)
         require(result.returncode == 0, "source patch application: " + result.stderr)
         for name in expected_headers:
             require((destination / name).read_bytes() == (HERE / "proposed/programs/pump/src" / name).read_bytes(), "patched source " + name)

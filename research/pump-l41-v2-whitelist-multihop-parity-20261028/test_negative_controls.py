@@ -71,7 +71,10 @@ def main():
         path = root / "RESULT.json"; path.unlink(); path.symlink_to("README.md")
     case("symlink substitution", symlink)
     def source_patch(root):
-        path = root / "source.patch"; path.write_text(path.read_text().replace("require!(!c.is_mayhem_mode", "require_eq!(!c.is_mayhem_mode", 1)); refresh(root, "source.patch")
+        path = root / "source.patch.gz"
+        data = gzip.decompress(path.read_bytes()).decode().replace("require!(!c.is_mayhem_mode", "require_eq!(!c.is_mayhem_mode", 1)
+        path.write_bytes(gzip.compress(data.encode(), mtime=0))
+        refresh(root, "source.patch.gz")
     case("missing source hunk", source_patch)
     case("altered candidate ELF", lambda r: flip_gzip(r, "builds/C-combined-1/candidate.so.gz"))
     case("altered unstripped ELF", lambda r: flip_gzip(r, "builds/C-combined-1/unstripped.so.gz"))

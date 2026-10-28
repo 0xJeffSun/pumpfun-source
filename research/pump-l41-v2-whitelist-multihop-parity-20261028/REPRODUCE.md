@@ -22,8 +22,8 @@ parent=research/claude-pump-integration-20261027/r37-layout-41/source/programs/p
 output=work/pump-l41-v2-whitelist-multihop-reproduction/source/programs/pump
 mkdir -p "$(dirname "$output")"
 cp -R "$parent" "$output"
-patch -p1 -d work/pump-l41-v2-whitelist-multihop-reproduction/source \
-  -i "$PWD/$packet/source.patch"
+gzip -dc "$packet/source.patch.gz" | \
+  patch -p1 -d work/pump-l41-v2-whitelist-multihop-reproduction/source
 ```
 
 Confirm the three resulting source files equal `proposed/programs/pump/src/`.
@@ -85,4 +85,3 @@ python3 scripts/pump_validate_parallel.py \
 
 Expected: 44 suites, 10,468 cases, 10,464 paired-log cases, zero structured
 and ordered-log mismatches.
-

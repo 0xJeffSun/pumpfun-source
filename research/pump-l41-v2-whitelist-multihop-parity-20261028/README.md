@@ -30,7 +30,7 @@ in `builds/`.
 
 ## Source composition
 
-`source.patch` changes only:
+`source.patch.gz` contains the exact source patch and changes only:
 
 - `src/buy_v2.rs`
 - `src/sell_v2.rs`
@@ -134,4 +134,3 @@ commands.
 - The corpus cannot prove behavior for every possible account state.
 - Whole-ELF identity and historical source identity are not established.
 - The 20 raw gains are not promoted to recovered-function claims.
-
