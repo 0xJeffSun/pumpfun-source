@@ -77,6 +77,13 @@ checks 80 additional original data bytes as ten relocated method pointers in fiv
 results do not automatically transfer to 437. Full object extents, arbitrary
 dispatch and complete data identity remain open.
 
+The [explicit437 data recheck](../research/mayhem-current437-selected-data-20261028/README.md)
+now recomputes those obligations on the current candidate: 431 windows and 581
+counterpart pairs survive, with 499 Source sites, 48 code-address sites, 121
+selected-prefix references, 48 writer-record references and 21 counted literals
+covering 575 bytes. This is a separate measured transfer, not an assumption of
+identity from the previous artifact. The same allocation and dispatch limits apply.
+
 ## Four bodies still unmatched
 
 | Original window | Start | Bytes | Remaining function |

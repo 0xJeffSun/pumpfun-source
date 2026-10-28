@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Counterexamples for the static proof boundaries and saved build provenance."""
 from pathlib import Path
-import gzip, importlib.util, io, json, shutil, socket, struct, subprocess, tarfile, tempfile, unittest
+import gzip, importlib.util, io, json, os, shutil, socket, struct, subprocess, tarfile, tempfile, unittest
 from unittest.mock import patch
 
 P = Path(__file__).resolve().parent
@@ -61,6 +61,13 @@ class EvidenceTests(unittest.TestCase):
         target.write_bytes(gzip.compress(v.raw(target) + b'\n', mtime=0))
         with self.assertRaisesRegex(ValueError, 'source bytes'):
             v.source_inputs(p)
+
+    @unittest.skipUnless(hasattr(os, 'mkfifo'), 'FIFO unavailable on this host')
+    def test_fifo_rejected(self):
+        p = self.packet()
+        os.mkfifo(p / 'unexpected-fifo')
+        with self.assertRaisesRegex(ValueError, 'special file'):
+            v.verify_manifest(p)
 
     def test_unexpected_file_rejected(self):
         p = self.packet()

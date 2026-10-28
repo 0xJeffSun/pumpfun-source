@@ -134,16 +134,12 @@ adds three tuple-dispatch sites and follows the payload pointer to the numeric
 formatter. Both proofs remain bound to the preceding 434 artifact. General
 indirect-call and data identity remain unresolved.
 
-The [previous selected-data checks](research/mayhem-current436-selected-prefixes-20261027/README.md)
-preserve all 429 closed windows while checking 486 Source coordinates, 48 code
-addresses and 119 references to 32-byte prefixes. They reject 22 ambiguous
-counterpart pairs without claiming complete data or indirect-call identity.
-A [writer-record extension](research/mayhem-current436-writer-records-20261028/README.md)
-checks ten further method pointers across five 48-byte spans while retaining the
-same closed relation; complete allocation extents and dynamic dispatch remain open.
-The [counted-literal proof](research/mayhem-current436-counted-literals-20261028/README.md)
-checks 553 instruction-label bytes through explicit pointer/length arguments.
-Both extensions remain bound to the previous 436-window artifact.
+The [current selected-data proof](research/mayhem-current437-selected-data-20261028/README.md)
+retains all 431 closed windows while checking 499 Source sites, 48 code-address
+sites, 121 references to 32-byte prefixes, five 48-byte writer records and 21
+counted instruction labels (575 bytes). It rejects 22 ambiguous counterpart pairs.
+These bounded checks do not prove complete data allocations or arbitrary dispatch.
+Earlier 436-based data proofs remain preserved with their original bindings.
 
 The [remaining-body review](docs/MAYHEM-COMPLETION.md#retained-partial-source-controls)
 preserves partial AMM and V2 source controls. The historical

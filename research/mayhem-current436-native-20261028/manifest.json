@@ -262,7 +262,7 @@
   "reference/original-windows.json": "866f42b728cb37c2b64c581bbe7a851f957ede58023a1c06b2a3cb4614d6ce41",
   "reference/reader.py": "7be3a56418587fdc05178529428ab18df40a252fbd46431ceb98e9107fe414b1",
   "report.json.gz": "5f56ac6a24645971f4e2e5ceb586b98b0fe1ab9a4d087957fd43a6517b0ecd0d",
-  "test_verify.py": "5d7b6d77aecd2ebf3f7ba46c97539fabc1c13ecc35c04bfeb62624b73eefd19e",
+  "test_verify.py": "e68981a2f5c1d17e740123e3c045ed19254d7ed07eb1b4e60a6c98e5a5dffa33",
   "upstream/builds/first/candidate.so.gz": "15990cfd9153b3d168b7baa276671268c4d767aa2d5a7305f53c26f642563952",
   "upstream/builds/first/default.ld": "5e8370b9380f55411d827721e2e43c8cfd1eac71d1383e20b938397bc0bd82c3",
   "upstream/builds/first/invocation.json": "c7b3aa707ac19a0d42a77ca27628e145bfd7fce8bac68b56fd9764bc1f68f587",
@@ -283,5 +283,5 @@
   "upstream/static.json": "1d64ef493f5666f0c528638702a7165f6546a5e47a9cdab80aac0e9dc808e2b9",
   "upstream/tools-observed.json": "78ca7019a20fe362f978788586fff344ec022ceda1b8916a45d0f57f266c8f2c",
   "upstream/verify.py": "ea6bc325713045d017f2ffec6aa79e66821d36ef3e71a5c2150b4b7a099691e0",
-  "verify.py": "4ead78a6fd10336d5580a277437a7ff1c1f91cef0ffbd5fd31532358dae8b60e"
+  "verify.py": "73ef706097a0c17e19e8d562dbc2a18b5286bffc4df13ad376435e942b80076e"
 }

@@ -2989,3 +2989,7 @@ The [counted-literal extension](../research/mayhem-current436-counted-literals-2
 ## O0095 analysis withdrawal
 
 PR412 removes the earlier static-analysis packet because it treated absolute addresses as `.text` offsets and decoded a range shifted by 288 bytes. The earlier integration review reproduced that output but did not detect the incorrect range. Independent decoding at absolute188864–190160 confirms the eight already-known call targets and no internal entry. The validator's normalized match and the437-window frontier remain unchanged. The corrected address evidence is retained in [the review record](../research/pr-review-20261028/pr412-correction.json).
+
+## Qualified437 selected-data recheck
+
+The [new exact-candidate recheck](../research/mayhem-current437-selected-data-20261028/README.md) retains 431 original windows and 581 counterpart pairs after checking Source data, relocated code references, selected 32-byte prefixes, five 48-byte writer spans and 21 counted instruction labels. It checks 499 Source sites, 48 code sites and 121 prefix references. The 21 label intervals total 575 bytes; lengths are explicit call arguments. All 13 corruption/portability tests pass. This strengthens bounded data evidence without changing function counts or claiming complete allocation extents, arbitrary dispatch or whole-ELF identity.

@@ -55,6 +55,7 @@ def unpack(p):
 def verify_manifest(p):
     paths = list(p.rglob('*'))
     require(not any(x.is_symlink() for x in paths), 'packet symlink')
+    require(all(x.is_file() or x.is_dir() for x in paths), 'packet special file')
     actual = {x.relative_to(p).as_posix(): sha(x.read_bytes()) for x in paths
               if x.is_file() and x != p / 'manifest.json'}
     require(actual == read(p / 'manifest.json'), 'packet manifest differs')
