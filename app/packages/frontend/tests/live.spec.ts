@@ -350,6 +350,43 @@ test("selection dismisses on page changes and Escape has a visible fallback for 
   ).toBeFocused();
 });
 
+test("direct-visit details handle Escape as soon as they are exposed", async ({ page }) => {
+  await page.addInitScript(() => {
+    const probe = window as Window & {
+      firstDetailEscape?: { prevented: boolean };
+    };
+    // This runs at the first DOM exposure, before a later passive effect could
+    // make an otherwise-ready panel's missing keyboard handler pass by timing.
+    const observer = new MutationObserver(() => {
+      if (
+        probe.firstDetailEscape ||
+        !document.querySelector(
+          '[data-testid="playback-unavailable"], [data-testid="invalid-stream-selection"]',
+        )
+      ) return;
+      const event = new KeyboardEvent("keydown", {
+        key: "Escape", bubbles: true, cancelable: true,
+      });
+      probe.firstDetailEscape = { prevented: false };
+      window.dispatchEvent(event);
+      probe.firstDetailEscape.prevented = event.defaultPrevented;
+    });
+    observer.observe(document, { childList: true, subtree: true });
+  });
+
+  for (const selection of [FIRST_MINT, ""]) {
+    const response = await page.goto(`/live?page=4&stream=${selection}`);
+    await expect(page).toHaveURL(/\/live\?page=4$/);
+    expect(await response?.text()).toContain("Loading archived details…");
+    expect(await page.evaluate(() => (window as Window & {
+      firstDetailEscape?: { prevented: boolean };
+    }).firstDetailEscape)).toEqual({ prevented: true });
+    await expect(
+      page.getByRole("searchbox", { name: "Search captured streams" }),
+    ).toBeFocused();
+  }
+});
+
 test("Escape belongs to an open modal before the underlying nonmodal stream detail", async ({
   page,
 }) => {
