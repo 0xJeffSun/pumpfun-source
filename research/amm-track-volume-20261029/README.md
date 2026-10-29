@@ -1,4 +1,4 @@
-# AMM track_volume is event-only; no trade path writes current_sol_volume
+# AMM track_volume and seeded accumulators in 26 historical fixtures
 
 ## Problem
 
@@ -11,16 +11,14 @@ volume). What was never pinned is whether the flag does
 anything at all, and whether any trade path ever moves the
 field it supposedly tracks. 2nd #47 noted in passing that
 one cashback buy with track=1 left sol untouched; this
-packet turns that aside into the full seat: legacy buy /
-buy_exact, legacy sell (plain and cashback), trade_v2 buy /
-sell / buy_exact, and 1-hop multi_hop buy / sell, each on a
-fresh accumulator, on a fully pre-seeded accumulator, and
-(where the path has a user field) on an accumulator whose
-stored user is a stranger.
+packet records 26 finite fixtures covering legacy buy / buy_exact, legacy sell
+(plain and cashback), trade_v2 buy / sell / buy_exact, and 1-hop multi_hop
+buy / sell. The table below states which paths use fresh, seeded or
+stranger-user accumulators; it is not every combination of those inputs.
 
 ## Cases
 
-26 cases x 3 images (original / #424 control / #427
+26 cases x 3 historical images (original / #424 control / #427
 candidate) = 78 signed receipts. The pre-seed is the same
 137-byte accumulator everywhere: discriminator + user +
 needs_claim=1, total_unclaimed=111, total_claimed=222,
@@ -97,35 +95,25 @@ Measured anchors (all 3 images agree):
 
 ## Result
 
-- **track_volume is event-only.** Legacy buy with
+- **The tested legacy-buy track flag changes the recorded event only.** Legacy buy with
   track=0 and track=1 produces byte-identical token
   deltas, payer cost, accumulator bytes, and event
   fields except event byte 360. With a pre-seeded
-  accumulator, both values leave all 90 accumulator
+  accumulator, both values leave all 137 accumulator
   bytes untouched -- including current_sol_volume,
   which stays 333444 after a 10^10 buy that spent
   1,847,796.
-- **No trade path writes current_sol_volume.**
-  Legacy buy / buy_exact (track 0 and 1), legacy sell
-  (plain: no volume account in the instruction at
-  all), v2 buy / sell / buy_exact (event track
-  hardcoded false), and 1-hop multi-hop buy / sell
-  all leave a pre-seeded sol value exactly in place.
-  The only accumulator field any trade path moves is
-  `user` (see below) plus cashback_earned on the
-  cashback sell path. Consequence, stated as a
-  LiteSVM observation, not an on-chain claim: in
-  this program, volume that a later
-  claim_token_incentives could pay out on can only
-  arrive by external seeding, never by trading --
-  which is why 2nd #4's claim math had to be fed a
-  seeded accumulator, and why sync's "No changes in
-  accumulator" no-op (a known negative, not
-  re-probed here) has no trade-side writer to
-  explain it away.
+- **The tested seeded accumulators retain current_sol_volume.**
+  In the seeded legacy buy / buy_exact, plain/cashback legacy sell,
+  v2 buy / sell / buy_exact and 1-hop multi-hop fixtures, the full
+  137-byte before-state is checked and the value remains 333444.
+  Plain legacy sell does not pass the volume account; its helper
+  explicitly watches the derived PDA. These observations do not
+  establish writer absence for other inputs or the entire original
+  program, and no buy-then-claim sequence is executed here.
 - **User-field write rule diverges by path.**
-  Legacy buy overwrites `user` unconditionally
-  (buy.rs:339): an OUTSIDER-stored user becomes the
+  In these fixtures legacy buy overwrites `user`
+  (recovered-source context buy.rs:339): an OUTSIDER-stored user becomes the
   signer. trade_v2 (trade_v2.rs:404-405) and
   multi_hop_swap (multi_hop_swap.rs:446-447) write
   it only when it is still the default pubkey, so
@@ -140,8 +128,7 @@ Measured anchors (all 3 images agree):
   `init_if_needed` does not consult the flag. A
   pre-seeded accumulator costs only the 5,000 fee
   on every path.
-- **The track byte is an OptionBool.** Byte 2 (or
-  any non-0/1 byte) fails deserialization with 102
+- **The tested track-byte edge is 2.** That byte fails deserialization with 102
   before any account work -- the accumulator is
   never created, 0 events, full rollback. A missing
   track byte deserializes as None and succeeds
@@ -167,10 +154,36 @@ Measured anchors (all 3 images agree):
 - The multi-hop sell protocol/creator legs are
   pinned via vault-leg arithmetic only (see above);
   the multi-hop receipts do not watch those ATAs.
-- The claim-side consequence (nothing claimable
-  accrues from trading) is an inference from the
-  measured non-writes, not a separately executed
-  buy-then-claim sequence in one VM.
+- No general claim about incentive accrual or writer absence follows
+  from these finite fixtures. Recovered-source comments/line references
+  supply context and are not whole-original-program proof.
 - Error 102 has no "thrown in" site line (it fails
   at deserialization); verify.py checks the code
   and fragment, not a site.
+
+
+## Saved-proof integrity at review
+
+The verifier parses only the producer's finite `CASES` input AST through an
+explicit whitelist for amount/limit/track, `vol_seed`, `sell_cash` and `combine`.
+It never imports or executes the producer, harness or VM. It checks the entire
+137-byte seeded before-state, owner and 10^9 lamports, or exact fresh absence,
+then verifies the existing full after-state checks. It binds exact 26-case
+membership, all 78 image/receipt roles, signed payloads, payer, full account
+positions/effective privileges, and the exact non-executable watched key set.
+Plain legacy sell's unpassed volume PDA is explicitly derived and watched; it
+is not represented as a signed instruction account. Event discriminators and
+counts bind to the ordered logs. Seven resealed controls exercise altered seed
+prestate, missing cases, valid wrong wires, off-wire pool state, wrong event
+discriminators, image declarations and invalid signatures.
+
+The three image declarations bind authentic original, historical #424 and
+historical #427 repository artifacts. Hash-equivalent compressed images make
+the saved verifier portable. They are not the current selected AMM86dbc and no
+current-image runtime acceptance is claimed. No captured loader records or
+cryptographic VM execution attestation is present. The recorded repository-input
+hashes are checked, while prior actual dependency loads and VM construction
+counts remain uncaptured. The producer uses the reusable harness unless a fresh
+VM switch is enabled; its environment is not retained. Original producer, report
+and all eight raw parts remain byte-exact. No new VM run or compiler build was
+performed. Both public entrypoints reject optimized Python before imports.
