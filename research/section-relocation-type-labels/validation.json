@@ -20,7 +20,9 @@
       },
       "layer2_sha256": {
         "before": "18af32b3a5b909e84119c1b7b21f6db80c747247cf1e757d1e211cb56547338d",
-        "after": "034a79df1755e48e412f83e05dd16bd997ff7e8ca907d1e68200b51ca0af3fb8"
+        "after": "034a79df1755e48e412f83e05dd16bd997ff7e8ca907d1e68200b51ca0af3fb8",
+        "before_lf": "f3df7205da84ca255e680020b275524115aa46b412583240ad3b2c095b4d9766",
+        "after_lf": "6583cc6928d9504212675ecc7362df8c6580d3200a768118c679719a6d4b35ad"
       },
       "other_layers_and_summary": "byte-identical",
       "before_and_after_packet_verifiers": "passed"
@@ -38,7 +40,9 @@
       },
       "layer2_sha256": {
         "before": "532e406503deda7a642f610a35c734b09007e23ee097d026f0ab1058cd9c7638",
-        "after": "3b268f797e7bdb6af511962b603fd856082c21ef7acf25ba9335c3153a125a07"
+        "after": "3b268f797e7bdb6af511962b603fd856082c21ef7acf25ba9335c3153a125a07",
+        "before_lf": "3dd4f4f2bac4ddd383432e3ecaecbf40366a1e0091ac208c4290101ab7cc54d1",
+        "after_lf": "9e029defd752dc165b4f3135c7fcd3688089e2a1e254fa20a4272e35d5009a59"
       },
       "other_layers_and_summary": "byte-identical",
       "before_and_after_packet_verifiers": "passed"
@@ -56,10 +60,13 @@
       },
       "layer2_sha256": {
         "before": "47662fd6d0aeb989a73d2241127eeb4468ec70ebb164b95c2b7378610235103c",
-        "after": "6097df349871d6587e8b849a72a558bd714dd2bf6e59ed103ea147da37ecb380"
+        "after": "6097df349871d6587e8b849a72a558bd714dd2bf6e59ed103ea147da37ecb380",
+        "before_lf": "14e351319cf580eac70fb116bb9d329f5c2875b748fe6b607e29dcb8058e880e",
+        "after_lf": "97017165a478e4dca148bef2ec603b537eed62eb3a1de9cd8c456c182ceb8e4e"
       },
       "other_layers_and_summary": "byte-identical",
       "before_and_after_packet_verifiers": "passed"
     }
-  }
+  },
+  "layer2_sha256_line_endings": "before/after hash CRLF output (Windows text-mode writes); before_lf/after_lf hash the same layer2-relocation-map.json as written on LF platforms"
 }
