@@ -2,8 +2,13 @@
   "files": [
     {
       "path": "README.md",
-      "sha256": "c19f5f2a6a29dff85cfe35708427f25a88b74d83a6d15ec7faecd316a381872a",
-      "bytes": 7611
+      "sha256": "ba0c3642229e8725acc00104d714a246bb57fd1c816368910dd2831e6a03fc64",
+      "bytes": 10494
+    },
+    {
+      "path": "fixture-bindings.json",
+      "sha256": "22ceb729bb373e4a5c57c416856368e9026b118fe1af702f7f2ef9c28b7046e8",
+      "bytes": 73796
     },
     {
       "path": "producer.py",
@@ -71,9 +76,14 @@
       "bytes": 2261
     },
     {
+      "path": "test_verify.py",
+      "sha256": "3d6f8105b725a877262f1a94fa5578e39ca4f663f1458d8480c00118dbad284e",
+      "bytes": 5397
+    },
+    {
       "path": "verify.py",
-      "sha256": "0905e5c1c40f948d09425d8e974d7f17e5f2df41979620f79bc1142b2589b46f",
-      "bytes": 12115
+      "sha256": "ae2c6552478861e5c9e1000eaec69154a379657393b4dfd53e6f45caf8b39395",
+      "bytes": 19049
     }
   ]
 }

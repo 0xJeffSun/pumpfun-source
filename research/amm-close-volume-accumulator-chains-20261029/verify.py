@@ -25,7 +25,11 @@ Checks, from the packet files alone (plus the three program images):
 
 Usage: python3 verify.py   (run from this packet directory)
 """
+if not __debug__:
+    raise SystemExit('Run without -O')
+import argparse
 import base64
+import copy
 import gzip
 import hashlib
 import json
@@ -35,14 +39,20 @@ from pathlib import Path
 
 from solders.pubkey import Pubkey
 from solders.transaction import Transaction
+from solders.instruction import AccountMeta, Instruction
+from solders.message import Message
 
 ROOT = Path(__file__).resolve().parent
-WS = Path.home() / "workspace/slop-verify"
-SPARSE = Path.home() / "workspace/pumpfun-sparse"
-IMAGE_PATHS = {
-    "original": SPARSE / "evidence/original/pump_amm/deployed.so",
-    "control": WS / "control.so",
-    "candidate": WS / "candidate.so",
+sys.dont_write_bytecode = True
+IMAGE_RELATIVE = {
+    "original": "evidence/original/pump_amm/deployed.so",
+    "control": "research/amm-multi-hop-group-slice-recovery/artifacts/candidate.so.gz",
+    "candidate": "research/amm-transfer-fee-diagnostic-recovery/artifacts/candidate.so.gz",
+}
+IMAGE_SHA = {
+    "original": "6a7ad34596d83b4c435b32f458a56e718e9f82eb4ad38e4316616d15d24d8ff7",
+    "control": "7a300434dced61413bde10788594b427d5649563e0223efcf09e6b214aff7ad3",
+    "candidate": "d17a657baf5cc19736a924c41e75424604411ddbe9f6e72cddf41ab72a695007",
 }
 TOKEN = Pubkey.from_string("TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA")
 MINT = Pubkey.from_bytes(bytes([226]) * 32)
@@ -123,13 +133,103 @@ def decode_event(kind, rec):
     return None
 
 
+def strict_bindings(report, receipts, repo):
+    """Join retained declarations to reviewed fixture data, wires and state chains."""
+    def need(value, message):
+        if not value:
+            fail(message)
+    raw = (ROOT / 'fixture-bindings.json').read_bytes()
+    need(sha(raw) == '22ceb729bb373e4a5c57c416856368e9026b118fe1af702f7f2ef9c28b7046e8',
+         'reviewed fixture bindings changed')
+    b = json.loads(raw)
+    need(sha((ROOT / 'producer.py').read_bytes()) == b['producer_sha256'] ==
+         '78d8b62965be5e732a3126f97d32613715dfcbedf107c74f3281b5341aa4ff02', 'producer source pin')
+    for name, expected in b['reference_data'].items():
+        need(sha((repo / name).read_bytes()) == expected, 'reviewed reference data: ' + name)
+    need(report['images'] == report['input_sha256'] == IMAGE_SHA,
+         'authenticated historical image declarations')
+    need([(x['file'], x['count']) for x in report['parts']] ==
+         [(f'runtime/raw-transactions-part{i:02d}.jsonl.gz', 10 if i < 11 else 2) for i in range(1, 12)],
+         'exact part membership')
+    need([dict(label=x['label'], family=x['family'], steps=x['steps']) for x in report['cases']] ==
+         [dict(label=x['label'], family=x['family'], steps=x['expect']) for x in b['cases']],
+         'exact source-owned case expectations')
+    expected_order = [(c['label'], image, s['kind']) for c in b['cases']
+                      for image in IMAGE_SHA for s in c['steps']]
+    need([(r['case'], r['image'], r['step']) for r in receipts] == expected_order,
+         'exact case/image/step membership and every receipt consumed')
+    roles = b['roles']; user, payer, uva = (roles[x] for x in ['user', 'payer', 'uva'])
+    def uva_state(fields):
+        if fields is None:
+            return None
+        data = bytes.fromhex(b['uva_discriminator']) + bytes(Pubkey.from_string(user))
+        data += struct.pack('<BQQQqBQQ', *(fields[k] for k in ['needs','unc','claimed','vol','last','has','cb','cbcl']))
+        return dict(lamports=fields['lamports'], owner=roles['program'], data_hex=data.ljust(137, b'\0').hex())
+    index = 0
+    for case in b['cases']:
+        seed = dict(zip(['needs','unc','claimed','vol','last','has','cb','cbcl'], case['seed']), lamports=10**9)
+        initial = dict(b['initial'], **{uva: uva_state(seed)})
+        for image in IMAGE_SHA:
+            previous = None
+            for step, exp in zip(case['steps'], case['expect']):
+                rec = receipts[index]; index += 1
+                tag = f"{case['label']}/{image}/{step['kind']}"
+                need(set(rec['before']) == set(rec['after']) == set(initial), tag + ': watched account membership')
+                if previous is None:
+                    for key, expected in initial.items():
+                        got = rec['before'][key]
+                        if key in [user, payer]:
+                            need(got is not None and {k:v for k,v in got.items() if k != 'lamports'} == expected,
+                                 tag + ': source-owned payer account data/owner')
+                        else:
+                            need(got == expected, tag + ': source-owned initial prestate')
+                else:
+                    need(rec['before'] == previous, tag + ': chained before/after continuity')
+                tx = Transaction.from_bytes(base64.b64decode(rec['transaction_base64'], validate=True))
+                instruction = Instruction(PROGRAM, bytes.fromhex(step['data_hex']),
+                    [AccountMeta(Pubkey.from_string(m['key']), m['signer'], m['writable']) for m in step['accounts']])
+                expected_message = Message.new_with_blockhash([instruction], Pubkey.from_string(step['payer']), tx.message.recent_blockhash)
+                need(bytes(tx.message) == bytes(expected_message), tag + ': signed instruction/accounts/privileges')
+                events = [line for line in rec['logs'] if line.startswith('Program data: ')]
+                need(rec['events'] == events, tag + ': event/log payload join')
+                site = next((line for line in rec['logs'] if 'thrown in' in line or 'caused by account' in line), None)
+                need(rec['site'] == site, tag + ': recorded error-site/log join')
+                if exp['error'] is not None:
+                    code = exp['error']
+                    need(rec['error'] == f'TransactionErrorInstructionError((0, Tagged(InstructionErrorCustom({code}))))',
+                         tag + ': exact instruction error')
+                    account = 'user' if code == '3010' else 'user_volume_accumulator'
+                    need(site is not None and f'caused by account: {account}. ' in site
+                         and f'Error Number: {code}.' in site, tag + ': exact caused-by gate')
+                after = copy.deepcopy(rec['before'])
+                after[user]['lamports'] += exp['dUSER']; after[payer]['lamports'] += exp['dPAYER']
+                after[uva] = uva_state(exp['uva'])
+                for role, field in [('vault','vault'), ('user_ata','ua')]:
+                    if exp.get(field) is not None:
+                        entry = after[roles[role]]
+                        data = bytearray.fromhex(entry['data_hex'])
+                        struct.pack_into('<Q', data, 64, exp[field]); entry['data_hex'] = data.hex()
+                need(rec['after'] == after, tag + ': source-owned full state/delta transition')
+                previous = rec['after']
+    need(index == len(receipts) == 102, 'unconsumed receipts')
+
+
 def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--repo-root', type=Path, default=ROOT.parents[1])
+    repo = parser.parse_args().repo_root.resolve()
     manifest = json.loads((ROOT / "MANIFEST.json").read_text())
+    names = [entry['path'] for entry in manifest['files']]
+    actual = [p.relative_to(ROOT).as_posix() for p in ROOT.rglob('*') if p.is_file() and p.relative_to(ROOT).as_posix() != 'MANIFEST.json']
+    if (len(names) != len(set(names)) or set(names) != set(actual)
+            or any(p.is_symlink() for p in ROOT.rglob('*'))
+            or any(Path(n).is_absolute() or '..' in Path(n).parts or '\\' in n for n in names)):
+        fail('exact regular packet manifest membership')
     for entry in manifest["files"]:
         path = ROOT / entry["path"]
         if not path.exists():
             fail(f"missing file {entry['path']}")
-        if sha(path.read_bytes()) != entry["sha256"]:
+        if sha(path.read_bytes()) != entry["sha256"] or len(path.read_bytes()) != entry['bytes']:
             fail(f"sha mismatch {entry['path']}")
     with gzip.open(ROOT / "runtime" / "report.json.gz", "rt", encoding="utf-8") as fh:
         report = json.load(fh)
@@ -139,8 +239,12 @@ def main():
         fail(f"counts block {report['counts']}")
     if report["mismatches"] != []:
         fail(f"mismatches recorded: {report['mismatches']}")
-    for name, path in IMAGE_PATHS.items():
-        if sha(path.read_bytes()) != report["images"][name]:
+    for name, relative in IMAGE_RELATIVE.items():
+        path = repo / relative
+        data = path.read_bytes()
+        if path.suffix == '.gz':
+            data = gzip.decompress(data)
+        if sha(data) != IMAGE_SHA[name] or report['images'][name] != IMAGE_SHA[name]:
             fail(f"image hash mismatch {name}")
     receipts = []
     for part in report["parts"]:
@@ -155,6 +259,7 @@ def main():
         receipts.extend(chunk)
     if len(receipts) != 102:
         fail(f"receipt total {len(receipts)}")
+    strict_bindings(report, receipts, repo)
     # USER pubkey: the close event's user field, identical in every receipt.
     user_hex = None
     for rec in receipts:

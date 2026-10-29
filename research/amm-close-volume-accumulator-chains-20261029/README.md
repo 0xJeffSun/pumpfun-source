@@ -16,7 +16,7 @@ one signed transaction per step, on three program images
 
 ## Fixture
 
-Per case, fresh VM per image: global volume accumulator (start 20,
+Per-case reset fixture state on each historical image: global volume accumulator (start 20,
 end 49, period 1, supplies 1000x30, volumes 100x30), incentive mint,
 vault 10^9 tokens, user ATA 17 tokens, seeded user accumulator
 (needs_claim 1, total_unclaimed 500, total_claimed 700,
@@ -60,7 +60,7 @@ Family C — close chains:
 - `c-close-then-cashback`: close, then claim_cashback -> 3012
   (the accumulator check fires before any token-account check).
 - `c-close-then-init`: close, then init. Fresh 137-byte account,
-  rent 1,844,400, payer -1,849,400, every field zeroed: the 700
+  rent 1,844,400, payer -1,849,400, all eight numeric/flag fields zeroed (the user key is retained): the 700
   claimed and 55 cashback_earned history is gone, not preserved.
 - `c-close-init-claim10`: close, init, claim at now=10. The claim
   succeeds with 0 events ("No tokens to claim") and leaves the
@@ -110,8 +110,8 @@ Family R — claim/sync interplay with close:
   Every downstream instruction that requires the accumulator
   (claim, sync, second close, cashback claim) fails 3012 after a
   close until a re-init creates a fresh account.
-- Re-init is a full reset, not a restore: all nine serialized
-  fields return to zero, including total_claimed and
+- Re-init resets all eight numeric/flag fields to zero while writing
+  the user key, including total_claimed and
   cashback_earned, and a later claim cannot recover the
   pre-close history.
 - A zero claim is not a no-op on the timestamp: at now=21 a
@@ -146,3 +146,46 @@ Family R — claim/sync interplay with close:
 - Absolute fee-payer lamport balances are not asserted (the
   harness VM accumulates airdrops across setups in one process);
   every payer assertion in this packet is a per-step delta.
+
+
+## Saved evidence verification
+
+Run from the repository root with Python 3 and `solders==0.27.1`:
+
+```sh
+python -B research/amm-close-volume-accumulator-chains-20261029/verify.py --repo-root .
+python -B research/amm-close-volume-accumulator-chains-20261029/test_verify.py --repo-root . -v
+```
+
+The verifier binds the complete packet membership, the pinned unchanged producer,
+reviewed source-owned fixture expectations in `fixture-bindings.json`, all 102
+signed instruction layouts (eight distinct wires), exact case/image/step membership,
+watched accounts and effective signer/write privileges. It checks initial synthetic
+state, every chained before/after join, full account transitions, relative payer
+deltas, token amounts, event payloads and recorded error-site/log joins. Ten
+coherently resealed corruption controls reject omitted cases, a valid wrong signed
+operation, an altered image declaration, broken chain continuity, unsupported token
+expectations, a detached event field, a wrong accumulator owner and a wrong initial
+accumulator, an omitted token obligation and an omitted event member with coherently
+altered receipt data. These are saved-data checks; no compiler or VM is run by verification.
+The fixture map was derived from only the producer's reviewed literal assignments
+and the pinned public IDL/config reference data; the producer is never imported.
+
+The report's image hashes and input declarations bind these repository artifacts:
+
+| Image | Repository artifact | SHA256 of ELF |
+| --- | --- | --- |
+| Original | `evidence/original/pump_amm/deployed.so` | `6a7ad34596d83b4c435b32f458a56e718e9f82eb4ad38e4316616d15d24d8ff7` |
+| Historical #424 control | `research/amm-multi-hop-group-slice-recovery/artifacts/candidate.so.gz` | `7a300434dced61413bde10788594b427d5649563e0223efcf09e6b214aff7ad3` |
+| Historical #427 candidate | `research/amm-transfer-fee-diagnostic-recovery/artifacts/candidate.so.gz` | `d17a657baf5cc19736a924c41e75424604411ddbe9f6e72cddf41ab72a695007` |
+
+These are authenticated image declarations. This packet retains no captured-loader
+record, imported-module snapshot or execution-environment receipt, so saved checks
+cannot attest which images/modules were actually loaded. The unchanged producer
+requests 48 case/image setups and 102 signed transactions through a reusable harness;
+the fresh-versus-cached environment switch was not recorded, so no exact constructed
+VM count is claimed. The historical rebuilt images differ from selected AMM
+`86dbc2c64e81988dead173039b61fa01ba5f68a00fbb6f6dd49f2cda0afec37f`.
+This packet supplies finite historical research, with no current-source, native-build,
+complete-window gain, canonical-promotion or whole-program-equivalence credit.
+The original producer, report and eleven raw receipt parts remain byte for byte intact.
