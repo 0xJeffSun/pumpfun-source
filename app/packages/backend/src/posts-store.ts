@@ -155,6 +155,8 @@ export function decodeCursor(cursor: unknown): { createdAt: string; postId: stri
       // Preserve the null-time sentinel and all date representations understood
       // by the existing comparator. NaN would otherwise silently empty a page.
       if (parsed[0] !== '' && !Number.isFinite(new Date(parsed[0]).getTime())) return null;
+      if (/[\u0000-\u001f\u007f]/.test(parsed[1])) return null;
+      encodeURIComponent(parsed[1]); // Reject lone surrogates before comparison.
       return { createdAt: parsed[0], postId: parsed[1] };
     }
     return null;
