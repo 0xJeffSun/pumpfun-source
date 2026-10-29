@@ -9,7 +9,10 @@ continuation slots.
 This reviewed-source-bound successor counts complete instructions per window,
 adds explicit `instruction_count` and `instruction_slots` section totals, and
 uses the decoded counts in both README locations. Other analysis fields and
-raw inputs stay unchanged; original helpers and reports remain intact. Both
+raw inputs stay unchanged; original helpers and reports remain intact.
+The archived `research/{pump,amm,mayhem}-window-analysis-20261028/README.md`
+packets are not rewritten, so their "BPF instructions" figures (224,026,
+145,255, 88,343) still denote eight-byte slots. Both
 reviewed LF/CRLF source hashes are accepted and other drift is rejected.
 
 ```sh
