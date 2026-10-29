@@ -605,7 +605,8 @@
         "contract": {
           "status": "accepted",
           "evidence": [
-            "packages/frontend/PROFILE-EVIDENCE.md#observed"
+            "packages/frontend/PROFILE-EVIDENCE.md#observed",
+            "contracts/ORIGINAL-FOLLOW-LIST.md"
           ]
         },
         "logic": {
