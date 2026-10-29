@@ -34,7 +34,7 @@ def render():
         for row in ledger[layer]:
             for category in ['source','completion']:
                 require(set(row[category])==set(ledger['gates'][category]), 'Milestone gates differ from the ledger');score(row[category])
-            if row['completion']['source']['status']=='accepted':
+            if row['completion']['source']['status'] in {'accepted','not-applicable'}:
                 require(all(g['status'] in {'accepted','not-applicable'} for g in row['source'].values()), 'Source completion requires all source gates')
     scripts=[r for r in manifest['records'] if r['url'].endswith('.js')]
     verified=sum(r.get('status')==200 and hashlib.sha256((ROOT/r['path']).read_bytes()).hexdigest()==r['sha256'] for r in scripts)
