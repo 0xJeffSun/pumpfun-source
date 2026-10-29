@@ -89,6 +89,8 @@ is a contract decision, not a bug fix.
     `top` carries ranks 1..3 from the active board build; for other phases, `top` is `[]`. For competitions
     in phase `ended`, `winners` carries ranks 1..N (where N is the highest `rankTo` in `prizes`, or 3 if `prizes`
     is empty), with `prize` populated from the matching prize tier; for other phases, `winners` is `[]`.
+    In `GET /competitions/{idOrSlug}`, `top` and `winners` rows slice `topPositions` to the request's
+    `positionsLimit`, like `leaderboard.entries`; the list buckets use the default of 3.
 45. **Struck entry availability in `GET /competitions/:id/entries/:entryId`**: Struck entries (`struck: true`,
     rank 0) are excluded from public boards but remain accessible via direct entry detail lookup, matching the
     contract specification. Member legs are sorted by `pnlUsd` descending.
