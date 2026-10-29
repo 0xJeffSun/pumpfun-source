@@ -2,7 +2,9 @@
 
 ## Problem
 
-2nd #44 pinned the legacy *sell* cashback conversion and explicitly
+An earlier run by the author (external run numbers such as "#44", "#12",
+"#16", "#17", "#36" and "#43" below refer to that run series, not to pull
+requests in this repository) pinned the legacy *sell* cashback conversion and explicitly
 left legacy buy out, because buy needs a separate remaining
 layout. This packet fills that seat: what `buy` and
 `buy_exact_quote_in` do on a pool with `is_cashback_coin` set
@@ -13,7 +15,8 @@ a quote transfer fee.
 Source anchor (`instructions/swap/buy.rs`, `execute` +
 `distribute_cashback`): when `creator_fee > 0` and the pool is a
 cashback pool, the handler calls `distribute_cashback(remaining,
-...)` and then reads the buyback accounts from remaining index
+...)` (on main through `pay_cashback` / `pay_cashback_exact`,
+buy.rs:546 / :916) and then reads the buyback accounts from remaining index
 2. `distribute_cashback` writes remaining[0] as the
 user_volume accumulator's ATA (key mismatch or read-only ->
 6061), creates it via the ATA program when absent, transfers
@@ -25,19 +28,27 @@ accounts from index 1.
 
 ## Cases
 
-42 cases x 3 images (original / #424 control / #427 candidate)
-= 126 receipts. Families:
+42 labelled cases x 3 images (original / #424 control / #427
+candidate) = 126 receipts. Two labels repeat another case's
+transaction exactly (same transaction, pre-state, logs, events and
+post-state on all three images): `cb-readonly-poolv2` =
+`cb-fresh-buy` and `cb-del-uvata` = `cb-std-remaining`, so there are
+40 distinct transactions per image. Families:
 
 - **A — success anchors (10 cases).** Non-cashback buy anchor,
   cashback fresh / present buy at 10^10, fresh buy at 10^6 and
   at 1, fresh buy_exact at 10^7, limit-exact buy and buy_exact,
   track=1 with a pre-existing accumulator, and cashback_earned
   accumulation on top of a pre-existing 1000.
-- **B — remaining ladder (13 cases).** No remaining, standard
-  remaining, substituted / read-only / deleted cashback ATA,
-  truncated remainings (ATA only; ATA+pool-v2; ATA+pool-v2+owner),
-  substituted pool-v2, substituted buyback owner / dest,
-  read-only pool-v2 (success), read-only buyback dest.
+- **B — remaining ladder (13 labels, 11 distinct new
+  transactions).** No remaining, standard remaining, substituted /
+  read-only / deleted cashback ATA, truncated remainings (ATA only;
+  ATA+pool-v2; ATA+pool-v2+owner), substituted pool-v2, substituted
+  buyback owner / dest, read-only pool-v2, read-only buyback dest.
+  "Deleted cashback ATA" is the standard 3-account remaining (same
+  receipt), and "read-only pool-v2" is the same transaction as the
+  fresh cashback buy, because pool-v2 is already read-only in every
+  baseline transaction.
 - **C — creator-0 window shift (5 cases).** Zero-creator-fee
   tier on non-cashback standard remaining, on cashback layout,
   and on cashback standard remaining (all 6053), plus the
@@ -121,19 +132,21 @@ Accumulation: pre-existing earned 1000 + present ATA with
   MissingCashbackAccounts (this is the only 6059 in the
   packet; a merely *wrong* first account gives 6061).
 - Standard 3-account remaining on a cashback pool -> 6061
-  InvalidCashbackAccumulatorAta. Contrast with #44's legacy
-  sell, where the same mistake gives 6060
-  InvalidCashbackAccumulator: sell checks the accumulator PDA
-  first, buy checks the ATA key first.
-- Substituted cashback ATA, read-only cashback ATA, or
-  cashback ATA deleted from the layout -> 6061.
+  InvalidCashbackAccumulatorAta. (The author's earlier legacy-sell
+  run reported 6060 InvalidCashbackAccumulator for the same mistake
+  on sell; that contrast is not re-tested in this packet.)
+- Substituted or read-only cashback ATA -> 6061 (deleting the
+  ATA from the cashback layout is the standard 3-account case
+  above, same receipt).
 - Cashback ATA alone (pool-v2 missing) -> 6062
   InvalidPoolV2; cashback ATA + pool-v2, or plus owner
   (dest missing) -> 6058 BuybackFeeRecipientMissing.
 - Substituted pool-v2 -> 6062; substituted buyback owner
   or dest -> 6053 BuybackFeeRecipientNotAuthorized.
-- Read-only pool-v2 succeeds with anchor deltas
-  (validate_pool_v2 is a key-only check). Read-only buyback
+- Pool-v2 is read-only in every receipt, including all
+  successes; that `validate_pool_v2` only checks the key is a
+  source reading (sell.rs:520-526), not a separate receipt.
+  Read-only buyback
   dest -> runtime PrivilegeEscalation (not an Anchor error),
   payer -5,000, full rollback, 0 events.
 
@@ -149,22 +162,26 @@ PDA is not an authorized buyback recipient. Trimming the
 remaining to `[owner, dest]` restores success on both pool
 kinds at the no-creator-fee spend 1,842,321 (= 1,825,348 +
 8,487 + 8,486, no creator leg), payer -1,849,400, event
-creator 0/0, cashback 0/0, buyback 5000/8,486. This is the
-mechanism behind the whitelist trap (#12/#17): the whitelist
-zeroes every fee, so creator_fee == 0 and the buyback window
-shifts left by one.
+creator 0/0, cashback 0/0, buyback 5000/8,486. Here
+creator_fee == 0 comes from a custom (2, 93, 0) bps fee tier,
+not from a whitelisted user; the shift is consistent with the
+source's `whitelist_pda` branch (which zeroes the fees), but no
+whitelisted-user case was executed, and family C covers `buy`
+only, not `buy_exact_quote_in`.
 
 ### Gate order
 
-disable_flags buy (6020) > protocol-recipient validation
-(6013) > zero guards (6001/6002) > cashback conversion >
-buyback validation. Evidence: cashback + flags 8 -> 6020;
-mayhem buy -> 6013 (mayhem pools check the RESERVED list,
-and the fixture recipient is not reserved -- the #43 binding
-seen from the trade side); cashback+mayhem buy -> 6013, so
-protocol validation precedes cashback conversion; amount 0
-with a cashback layout -> 6001, so the zero guard precedes
-the conversion. Unsigned user -> 3010 AccountNotSigner
+Source order (buy.rs:317-327): disable_flags buy (6020) >
+protocol-recipient validation (6013) > zero guards (6001/6002) >
+cashback conversion > buyback validation. Each gate case has a
+single fault, so no receipt orders two gates against each other,
+and 6002 is not observed. Observed: cashback + flags 8 -> 6020;
+mayhem buy -> 6013 (mayhem pools check the RESERVED list, and the
+fixture recipient is not reserved); cashback+mayhem buy -> 6013;
+amount 0 with a cashback layout -> 6001. In the 6013 and 6001
+failures the logs show only a System Program invocation before
+the error, with no associated-token or token-program call, so the
+cashback conversion had not started. Unsigned user -> 3010 AccountNotSigner
 (caused by account: user), payer delta 0 for the watched
 payer key (the fee payer is the OUTSIDER signer, unwatched).
 Cashback_earned at u64::MAX + present buy -> 6023 Overflow,
@@ -195,8 +212,10 @@ grossed up:
   protocol / buyback / uvata legs are unchanged from tf100
   (withheld 85 / 85 / 55), because their per-leg fees are
   already under the cap.
-- tf10000 buy -> 6023 Overflow in transfer_fee.rs (like
-  #17's non-cashback buy; unlike buy_exact's 6039).
+- tf10000 buy -> 6023 Overflow in transfer_fee.rs. (Legacy
+  buy_exact at tf10000 gives 6039 in
+  research/amm-legacy-buy-exact-transfer-fee-20261029/README.md:55;
+  no buy_exact tf10000 case is in this packet.)
 - buy_exact tf100 fresh: out 53,573,907,921, spend
   9,998,786 of 10,000,000 (exact-in spends only the computed
   gross total), vault +9,779,732, protocol net 45,012
@@ -212,7 +231,7 @@ grossed up:
   track amount + rent (fresh cashback ATA: 2,039,280 +
   amount), as in #44's sell observation.
 
-### Error sites (original / rebuilt)
+### Error sites (original / control and candidate)
 
 6059 buy.rs:44 / :499. 6061 ATA-key buy.rs:54 / :503,
 read-only buy.rs:57 / :504. 6062 pool-v2-missing sell.rs:520
@@ -225,8 +244,12 @@ buy.rs:326 / :150. 6004 buy.rs:405 / :272. 6040 buy.rs:776
 transfer_fee.rs:67 / :35 (candidate matches original :67,
 control :35). 3010 caused by account: user (all images).
 Codes and names agree on all 3 images; only line numbers
-differ, so verify.py checks each image's site line against
-that image's logs.
+differ. The second column comes from the #424/#427 images, which
+were built from an older buy.rs (765f432b, 532 lines); main's
+maintained buy.rs (993 lines) reproduces the original column.
+These README line numbers are not machine-checked against
+source: verify.py compares the report's recorded site strings
+with the same receipts' logs.
 
 ## Limits
 
@@ -249,3 +272,12 @@ that image's logs.
 - The read-only buyback dest failure is a runtime
   PrivilegeEscalation, not a program error; it is recorded
   as such rather than forced into an Anchor code.
+- `producer.py` records the author's run: it hard-codes
+  `~/workspace/pumpfun-sparse` and `~/workspace/slop-verify/{control,candidate}.so`,
+  which are not in this repository, so it cannot be re-run from
+  here as committed, and it writes empty `mismatches` /
+  `divergent_cases` lists rather than computing them.
+  `verify.py` checks the recorded receipts (manifest hashes,
+  signatures, logs, events and the README figures) without
+  re-executing the transactions, and its input hashes do not
+  cover the control and candidate images.
