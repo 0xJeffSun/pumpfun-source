@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import {
   FormEvent,
   useCallback,
@@ -453,7 +453,6 @@ function CompetitionEntryRows({ entries }: { entries: CompetitionEntry[] }) {
 }
 
 export default function LeaderboardClient() {
-  const router = useRouter();
   const searchParams = useSearchParams();
   const category = oneOf(
     searchParams.get("category"),
@@ -563,11 +562,15 @@ export default function LeaderboardClient() {
       }
       if (resetPage && !Object.hasOwn(changes, "page")) next.delete("page");
       const serialized = next.toString();
-      router.push(serialized ? `/leaderboard?${serialized}` : "/leaderboard", {
-        scroll: false,
-      });
+      // Commit the URL synchronously so a second control change merges with it
+      // even before React renders. Next syncs native history with useSearchParams.
+      window.history.pushState(
+        null,
+        "",
+        serialized ? `/leaderboard?${serialized}` : "/leaderboard",
+      );
     },
-    [router],
+    [],
   );
 
   const setSearch = (nextQuery: string) =>
