@@ -36,8 +36,14 @@ class Tests(unittest.TestCase):
             with self.assertRaises(AssertionError): proof.check(packet,ROOT)
     def test_no_baseline_overlap(self):
         d=proof.delta(ROOT,self.report)
-        self.assertEqual(d['baseline_payload_bytes'],20747)
+        self.assertEqual(d['baseline_payload_bytes'],21451)
         self.assertEqual(d['new_payload_bytes'],183)
         self.assertEqual(len(self.report['sites']),10)
+        baseline = json.loads((ROOT / proof.MERGED[1] / 'coverage-delta.json').read_bytes())
+        before = {n for section in baseline['sections'] for a,b in section['covered_intervals'] for n in range(a,b)}
+        after = {n for section in d['sections'] for a,b in section['covered_intervals'] for n in range(a,b)}
+        self.assertTrue(before <= after)
+        self.assertEqual(len(after - before),183)
+        self.assertEqual(len(after),21634)
 
 if __name__=='__main__': unittest.main()

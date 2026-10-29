@@ -5,6 +5,7 @@ if not __debug__: raise RuntimeError('必须启用断言')
 P = Path(__file__).resolve().parent
 COPY = 'research/mayhem-current437-programerror-debug-copy-20261029'
 OTHERS = ('research/mayhem-current437-mayhemerror-debug-names-20261029', 'research/mayhem-current437-rust-panic-messages-20261029')
+MERGED = ('research/mayhem-current437-bounded-error-strings-20261029', 'research/mayhem-current437-option-seeds-paths-20261029')
 # 原始指令地址、原始指针、候选指针、长度及长度寄存器。
 SITES = ((645800,720036,700476,43,2),(649104,720191,700631,22,3),(649200,720079,700519,2,3),(649296,720100,700540,19,3),(649392,720138,700578,18,3),(649448,720182,700622,9,3),(649520,720081,700521,19,3),(649576,720119,700559,19,3),(649648,720213,700653,6,3),(649712,720156,700596,26,3))
 sha = lambda b: hashlib.sha256(b).hexdigest()
@@ -16,8 +17,8 @@ def old(root): return module(root, COPY, 'copy_prior')
 def panic(root): return module(root, OTHERS[1], 'panic_prior')
 
 def crumb_baseline(root, original, candidate):
-    # #770 的固定版本 57fa31774027c426a0a68c18344d523f1e85ff98 尚未合入当前 main。
-    # 重新检查其公开的三条路径，供并集基线使用，不新增这三个区间。
+    # Recheck the three already-merged #770 paths as historical proof sites.
+    # Their payload intervals belong to the baseline, never this contribution.
     prev = old(root).prior(root); base = prev.inspect(root / old(root).PRIOR, original, candidate, root)
     pairs = {tuple(p) for p in base['active_pairs']}; bundle = prev.images(root, original, candidate)
     rows = []
@@ -70,7 +71,7 @@ def inspect(root, original, candidate):
     return dict(sites=rows, baseline_770=crumb_baseline(root,original,candidate))
 
 def delta(root, report):
-    prev=old(root).prior(root); paths=(COPY,*OTHERS)
+    prev=old(root).prior(root); paths=(COPY,*OTHERS,*MERGED)
     bases=[json.loads((root/p/'coverage-delta.json').read_bytes()) for p in paths]; result=[]
     for i,section in enumerate(bases[0]['sections']):
         raw=prev.union([x for b in bases for x in b['sections'][i]['raw_intervals']]+(report['baseline_770'] if section['section']=='.rodata' else []))
@@ -79,8 +80,9 @@ def delta(root, report):
         assert all(not (a<d and c<b) for a,b in added for c,d in prev.union(raw+mapped))
         raw=prev.union(raw+added); covered=prev.union(raw+mapped); n=prev.measure(covered)
         result.append(dict(section=section['section'],total_bytes=section['total_bytes'],raw_intervals=raw,mapped_intervals=mapped,covered_intervals=covered,raw_equal_bytes=prev.measure(raw),pointer_only_bytes=n-prev.measure(raw),covered_bytes=n,new_bytes=n-before))
-    assert [x['covered_bytes']-x['new_bytes'] for x in result]==[14035,6712]
-    return dict(scope='仅指令直接限定长度的字符串；不计 NUL、邻接、分配范围或重定位表。', baseline_delta_sha256={p:sha((root/p/'coverage-delta.json').read_bytes()) for p in paths}, baseline_770_commit='57fa31774027c426a0a68c18344d523f1e85ff98',baseline_payload_bytes=20747,sections=result,new_payload_bytes=sum(x['new_bytes'] for x in result),payload_covered_bytes=sum(x['covered_bytes'] for x in result),payload_total_bytes=26180)
+    assert [x['covered_bytes']-x['new_bytes'] for x in result]==[14627,6824]
+    assert [x['new_bytes'] for x in result]==[183,0]
+    return dict(scope='仅指令直接限定长度的字符串；不计 NUL、邻接、分配范围或重定位表。', baseline_delta_sha256={p:sha((root/p/'coverage-delta.json').read_bytes()) for p in paths}, baseline_770_commit='57fa31774027c426a0a68c18344d523f1e85ff98',baseline_payload_bytes=21451,sections=result,new_payload_bytes=sum(x['new_bytes'] for x in result),payload_covered_bytes=sum(x['covered_bytes'] for x in result),payload_total_bytes=26180)
 
 def images(root): return old(root).images(root)
 def inventory(packet): return {str(p.relative_to(packet)):sha(p.read_bytes()) for p in sorted(packet.rglob('*')) if p.is_file() and p.name!='manifest.json'}
@@ -90,11 +92,12 @@ def check(packet,root):
     pins=json.loads((packet/'inputs.json').read_bytes())
     for path,digest in pins.items():
         q=Path(path); assert not q.is_absolute() and '..' not in q.parts and sha((root/q).read_bytes())==digest
-    for name in (COPY,*OTHERS):
+    for name in (COPY,*OTHERS,*MERGED):
         for p in (root/name).rglob('*'):
             if p.is_file(): assert str(p.relative_to(root)) in pins
     old(root).check(root/COPY,root)
     for name in OTHERS: module(root,name,'other_prior').check(root/name,root)
+    for name in MERGED: module(root,name,'merged_prior').check(root/name,root)
     report=inspect(root,*images(root)); assert report==json.loads(gzip.decompress((packet/'observations.json.gz').read_bytes()))
     d=delta(root,report); assert d==json.loads((packet/'coverage-delta.json').read_bytes())
     return {'sites':len(report['sites']),'new_bytes':d['new_payload_bytes'],'payload_covered':d['payload_covered_bytes'],'payload_total':d['payload_total_bytes']}

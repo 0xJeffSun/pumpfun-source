@@ -3,10 +3,12 @@
   "baseline_delta_sha256": {
     "research/mayhem-current437-programerror-debug-copy-20261029": "2922e4eb065a5db22ad5299ee34a192567e0a6205c4859c23905dfb2bae38cb2",
     "research/mayhem-current437-mayhemerror-debug-names-20261029": "e36281cc8703789ef01fbdd127181d10075c1c2f786fedec3621dad3f4b3d77a",
-    "research/mayhem-current437-rust-panic-messages-20261029": "839174494ffefa29fab70b027aea1b2672777ea5efd69ad194cf9c7c8eaef5e4"
+    "research/mayhem-current437-rust-panic-messages-20261029": "839174494ffefa29fab70b027aea1b2672777ea5efd69ad194cf9c7c8eaef5e4",
+    "research/mayhem-current437-bounded-error-strings-20261029": "e7cae6dd26e406a43d34d428a5ea8ee87c8e2ec3d4fc852d183d06b98eaa722e",
+    "research/mayhem-current437-option-seeds-paths-20261029": "e8f6c7f03f18b6e8ce94d778cc9c4aaa56de798ad5a634412e8cf79ce9dedf2d"
   },
   "baseline_770_commit": "57fa31774027c426a0a68c18344d523f1e85ff98",
-  "baseline_payload_bytes": 20747,
+  "baseline_payload_bytes": 21451,
   "sections": [
     {
       "section": ".rodata",
@@ -50,10 +52,6 @@
         ],
         [
           709245,
-          709739
-        ],
-        [
-          710331,
           710438
         ],
         [
@@ -201,10 +199,6 @@
         ],
         [
           709245,
-          709739
-        ],
-        [
-          710331,
           710438
         ],
         [
@@ -312,9 +306,9 @@
           725204
         ]
       ],
-      "raw_equal_bytes": 14218,
+      "raw_equal_bytes": 14810,
       "pointer_only_bytes": 0,
-      "covered_bytes": 14218,
+      "covered_bytes": 14810,
       "new_bytes": 183
     },
     {
@@ -386,6 +380,14 @@
           725788
         ],
         [
+          725800,
+          725808
+        ],
+        [
+          725816,
+          725824
+        ],
+        [
           725856,
           725860
         ],
@@ -396,6 +398,14 @@
         [
           725888,
           725904
+        ],
+        [
+          725912,
+          725920
+        ],
+        [
+          725928,
+          725936
         ],
         [
           725952,
@@ -416,6 +426,10 @@
         [
           726040,
           726056
+        ],
+        [
+          726064,
+          726072
         ],
         [
           726088,
@@ -618,7 +632,11 @@
           727416
         ],
         [
-          727448,
+          727424,
+          727432
+        ],
+        [
+          727440,
           727452
         ],
         [
@@ -1809,7 +1827,11 @@
         ],
         [
           725788,
-          725792
+          725800
+        ],
+        [
+          725808,
+          725816
         ],
         [
           725860,
@@ -1818,6 +1840,14 @@
         [
           725884,
           725888
+        ],
+        [
+          725904,
+          725912
+        ],
+        [
+          725920,
+          725928
         ],
         [
           725980,
@@ -1834,6 +1864,10 @@
         [
           726036,
           726040
+        ],
+        [
+          726056,
+          726064
         ],
         [
           726092,
@@ -2018,6 +2052,14 @@
         [
           727396,
           727400
+        ],
+        [
+          727416,
+          727424
+        ],
+        [
+          727432,
+          727440
         ],
         [
           727452,
@@ -3127,15 +3169,15 @@
         ],
         [
           725704,
-          725792
+          725824
         ],
         [
           725856,
-          725904
+          725936
         ],
         [
           725952,
-          726056
+          726072
         ],
         [
           726088,
@@ -3151,10 +3193,6 @@
         ],
         [
           727392,
-          727416
-        ],
-        [
-          727448,
           727592
         ],
         [
@@ -3210,13 +3248,13 @@
           733120
         ]
       ],
-      "raw_equal_bytes": 5360,
-      "pointer_only_bytes": 1352,
-      "covered_bytes": 6712,
+      "raw_equal_bytes": 5416,
+      "pointer_only_bytes": 1408,
+      "covered_bytes": 6824,
       "new_bytes": 0
     }
   ],
   "new_payload_bytes": 183,
-  "payload_covered_bytes": 20930,
+  "payload_covered_bytes": 21634,
   "payload_total_bytes": 26180
 }
