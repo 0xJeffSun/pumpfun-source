@@ -22,6 +22,8 @@ jobs:
           sparse-checkout: |
             research/pump-v3-costs-source-20261029
             evidence/original/pump
+            evidence/original/pump_fees
+            evidence/dependencies
             repro/reconstruction-status-2026-10-26
       - uses: actions/setup-python@v5
         with:
@@ -31,3 +33,5 @@ jobs:
         run: python -B research/pump-v3-costs-source-20261029/verify.py --repo-root .
       - name: Recompute original call and bounded data reference correspondence
         run: python -B research/pump-v3-costs-source-20261029/audit_refs.py --repo-root . --compare-retained
+      - name: Reject six coherently resealed source, fixture and prestate corruptions
+        run: python -B research/pump-v3-costs-source-20261029/test_verify.py --repo-root . -v

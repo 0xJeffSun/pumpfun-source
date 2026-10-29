@@ -3,7 +3,10 @@
 Requires Python 3 and solders (CI pins 0.27.1). Only temporary files are written.
 This verifies packet consistency and signatures, not execution attestation.
 """
-import argparse, base64, difflib, gzip, hashlib, importlib, json, re, struct
+if not __debug__:
+    raise SystemExit("Run without -O")
+
+import argparse, base64, difflib, gzip, hashlib, importlib, importlib.util, json, re, struct
 import sys, tarfile, tempfile
 from pathlib import Path, PurePosixPath
 sys.dont_write_bytecode = True
@@ -104,6 +107,7 @@ def builds(packet, inputs):
         require(isinstance(command,list) and all(x in command for x in
                 ("build","--release","--offline","--locked","-vv")), "build flags differ")
         require(command[command.index("--target")+1] == "sbpf-solana-solana", "build target differs")
+        require(launch["controller_sha256"]==sha((packet/"controllers/local_build.py").read_bytes()), "actual executed build controller")
         record = (launch["tools"],launch["controller_sha256"])
         require(record[0] and re.fullmatch("[0-9a-f]{64}",record[1]), "build provenance missing")
         require(provenance is None or record == provenance, "build tool/controller hashes differ")
@@ -263,9 +267,15 @@ def main():
     files=manifest(packet)
     inputs=sources(packet)
     images=builds(packet,inputs)
+    spec=importlib.util.spec_from_file_location("costs_saved_correspondence",packet/"correspondence.py")
+    correspondence=importlib.util.module_from_spec(spec);spec.loader.exec_module(correspondence)
+    correspondence.source_parent(inputs)
+    for label in LABELS[:2]:
+        require(inputs[label]==doc(packet/("source-"+label+".json")),"source map/archive join")
     with tempfile.TemporaryDirectory(prefix="pump-costs-verify-") as temporary:
         binary_report=binary(packet,repo,images,Path(temporary))
     runtime_report=runtime(packet,repo,images)
+    runtime_report["correspondence"]=correspondence.verify(packet,repo,images,read,doc)
     print(json.dumps(dict(verified=True,
         scope="Retained evidence consistency and signatures; no compilation, VM replay or execution attestation.",
         manifest_files=files,source_files=66,changed_source_lines=[366,376],build_records=3,
