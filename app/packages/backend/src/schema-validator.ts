@@ -118,7 +118,15 @@ export function validateAgainstSchema(
   const issues: ValidationIssue[] = [];
   if (!schema || typeof schema !== 'object') return issues;
 
-  if (value === null && schema.nullable === true) return issues;
+  if (value === null && schema.nullable === true) {
+    if (schema.enum && !schema.enum.includes(null)) {
+      issues.push({ path, message: `value null is not one of ${JSON.stringify(schema.enum)}` });
+    }
+    if ('const' in schema && schema.const !== null) {
+      issues.push({ path, message: `value null is not the required const ${JSON.stringify(schema.const)}` });
+    }
+    return issues;
+  }
 
   if (schema.$ref) {
     const target = resolveRef(schema.$ref, root);
