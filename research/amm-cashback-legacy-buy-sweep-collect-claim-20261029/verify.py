@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 """Independent re-verification for amm-cashback-legacy-buy-sweep-collect-claim-20261029.
 
-Checks, from the packet files alone (plus the three program images):
+Checks, from the packet files alone (plus the three program images retained in the
+repository: evidence/original/pump_amm/deployed.so and the two
+candidate.so.gz artifacts named in IMAGE_PATHS):
 - MANIFEST.json lists every packet file with a matching sha256.
 - runtime/report.json.gz: 16 cases, 138 receipts, 14 parts
   (13x10 + 8), part sha256/byte counts match the part files.
@@ -24,12 +26,15 @@ Checks, from the packet files alone (plus the three program images):
   per-image site line in their logs. Site lines are checked per
   image, never compared across images, because original and rebuilt
   sources differ in line numbers.
+- Silent no-op collects (no error, 0 events) leave every watched
+  account except the fee payer unchanged; the payer pays 5,000.
 - The observed surface of every case (step, error, event count, and
   snapshots with fee-payer lamports zeroed) is identical across the
   original, control, and candidate images.
 - The three program images hash to the values recorded in the report.
 
-Usage: python3 verify.py   (run from this packet directory)
+Usage (from the repository root):
+    python3 -I -B research/amm-cashback-legacy-buy-sweep-collect-claim-20261029/verify.py
 """
 import base64
 import gzip
@@ -43,12 +48,13 @@ from solders.pubkey import Pubkey
 from solders.transaction import Transaction
 
 ROOT = Path(__file__).resolve().parent
-WS = Path.home() / "workspace/slop-verify"
-SPARSE = Path.home() / "workspace/pumpfun-sparse"
+REPO = ROOT.parents[1]
+# The three program images are retained in the repository; the two
+# rebuilt images are stored gzip-compressed and hashed decompressed.
 IMAGE_PATHS = {
-    "original": SPARSE / "evidence/original/pump_amm/deployed.so",
-    "control": WS / "control.so",
-    "candidate": WS / "candidate.so",
+    "original": REPO / "evidence/original/pump_amm/deployed.so",
+    "control": REPO / "research/amm-multi-hop-group-slice-recovery/artifacts/candidate.so.gz",
+    "candidate": REPO / "research/amm-transfer-fee-diagnostic-recovery/artifacts/candidate.so.gz",
 }
 PAYER_KEY = Pubkey.from_string("DXyM8yAHqpMzDtvwz5DXoEUQmPxjJPMKCASCPhLMKpEx")
 POOL = Pubkey.from_string("GseMAnNDvntR5uFePZ51yZBXzNSn7GdFPkfHwfr6d77J")
@@ -190,7 +196,10 @@ def main():
     if report["mismatches"] != []:
         fail(f"mismatches recorded: {report['mismatches']}")
     for name, path in IMAGE_PATHS.items():
-        if sha(path.read_bytes()) != report["images"][name]:
+        data = path.read_bytes()
+        if path.suffix == ".gz":
+            data = gzip.decompress(data)
+        if sha(data) != report["images"][name]:
             fail(f"image hash mismatch {name}")
     receipts = []
     for part in report["parts"]:
@@ -247,7 +256,13 @@ def main():
                 if exp.get("uva") is not None:
                     if uva_fields(rec["after"][str(VOLUME)]) != exp["uva"]:
                         fail(f"{tag}: uva {uva_fields(rec['after'][str(VOLUME)])} != {exp['uva']}")
-                if exp.get("rollback"):
+                # A silent no-op collect (no error, 0 events) must leave every
+                # watched account except the fee payer unchanged.
+                silent_noop = (rec["step"] == "col" and exp["error"] is None
+                               and exp["events"] == 0)
+                if silent_noop and lam_delta(rec, PAYER_KEY) != -5000:
+                    fail(f"{tag}: silent no-op collect payer delta {lam_delta(rec, PAYER_KEY)}")
+                if exp.get("rollback") or silent_noop:
                     for k, b in rec["before"].items():
                         if k == str(PAYER_KEY):
                             continue

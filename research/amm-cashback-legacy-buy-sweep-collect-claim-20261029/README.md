@@ -11,11 +11,11 @@ the sell side structurally: a buy moves quote into the vaults
 and base out to the user, creates the volume accumulator when
 absent, and its creator leg is the one the cashback flag
 reroutes. So a collect after a cashback buy should find nothing
-to drain even though the buy paid a creator leg -- and the swept
-pool accrual is the only thing collect ever sees. The claim pipe
-is where the buy's creator leg lives, and the two pipes together
-conserve the non-cashback total exactly. This packet chains all
-of it on three program images (original, #424 control, #427
+to drain even though the buy paid a creator leg -- and in the
+cashback cases measured here the swept pool accrual is the only
+thing collect drained. The claim pipe is where the buy's creator
+leg lives, and in the cases measured the two pipes together sum
+to the non-cashback total. This packet chains all of it on three program images (original, #424 control, #427
 candidate).
 
 ## Fixture
@@ -37,7 +37,8 @@ dest]. The claim uses `claim_cashback` with keys
 [payer, accumulator PDA, quote mint, token program, accumulator
 ATA, user quote ATA, default, event authority, program].
 
-Event layouts (verified byte-for-byte):
+Event layouts (offsets as read from the receipts; verify.py
+decodes only the fields its expectations name):
 - BuyEvent (legacy buy and buy_exact share the v2 buy disc),
   497 bytes for buy / 512 bytes for buy_exact, disc
   `67f4521f2cf57777`: out @16, max @24, curve @64, lp_bps @72,
@@ -133,35 +134,38 @@ Family M -- mayhem buy fails, pipe intact:
   InvalidProtocolFeeRecipient, full rollback, 0 events (the
   protocol recipient is not on the reserved list), then
   sweep creator 123,394 and collect 123,394. The failed buy
-  accrues nothing and disturbs nothing.
+  leaves every watched account except the fee payer unchanged
+  (verify.py checks the rollback).
 
 ## Result
 
 - The cashback flag reroutes the legacy buy's creator leg out
   of the collect pipe and into the claim pipe: collect after
   a cashback buy is a silent no-op, collect after a
-  non-cashback buy drains the leg directly, and the two
-  pipes together always sum to the non-cashback total
-  (128,869 for buy 10^10 + the pool's 123,394 accrual;
-  153,024 for buy_exact 10^7).
-- Pipe order does not matter: buy -> sweep -> collect ->
-  claim and buy -> claim -> sweep -> collect end at the
-  same DEST 123,394 + user quote +5,475.
+  non-cashback buy drains the leg directly, and in every
+  case measured the two pipes together summed to the
+  non-cashback total (128,869 for buy 10^10 + the pool's
+  123,394 accrual; 153,024 for buy_exact 10^7).
+- The two pipe orders measured, buy -> sweep -> collect ->
+  claim and buy -> claim -> sweep -> collect, end at the
+  same final watched-account state (DEST 123,394, user quote
+  +5,475); other orders were not run.
 - Earned accumulates across buys (5,475 -> 10,951, the second
   buy's leg growing to 5,476 on the moved curve) and a single
-  claim pays the full accumulation; sweep/collect legs are
-  untouched by the second buy.
-- A buy creates the volume accumulator when absent
-  (1,844,400 lamports, 137 bytes) on non-cashback pools too;
-  on a cashback pool it additionally creates the accumulator
-  ATA (2,039,280 lamports) when absent.
-- The protocol sweep is orthogonal to collect: sweeping the
-  protocol bucket after a cashback buy leaves collect a
-  no-op, because collect only ever drains the creator vault
-  ATA.
-- The mayhem reserved-recipient gate binds the buy handler
-  (6013) and the failed buy leaves the sweep/collect pipe
-  intact.
+  claim pays the full accumulation; the second buy again
+  leaves the creator vault ATA unchanged (delta 0).
+- In the cases measured, a buy created the volume accumulator
+  when absent (1,844,400 lamports, 137 bytes) on the
+  non-cashback pool too; on the cashback pool with a fresh
+  accumulator it additionally created the accumulator ATA
+  (2,039,280 lamports).
+- Sweeping the protocol bucket after a cashback buy left the
+  following collect a silent no-op (DEST 0, accumulator ATA
+  5,475 intact); in every collect measured, only the creator
+  vault ATA was drained.
+- On the mayhem pool measured, the buy failed 6013 with full
+  rollback, and the following creator sweep and collect
+  proceeded with the same amounts as without the failed buy.
 
 ## Limits
 
@@ -189,3 +193,26 @@ Family M -- mayhem buy fails, pipe intact:
   the buy-side cashback chain under tf is the remaining open
   seat (3rd #2 + 2nd #47 cover claim-only and accrual-only
   under tf).
+
+## Verify and provenance
+
+From the repository root:
+
+    python3 -I -B research/amm-cashback-legacy-buy-sweep-collect-claim-20261029/verify.py
+
+`verify.py` needs only `solders` plus files in the repository: this
+packet, `evidence/original/pump_amm/deployed.so`, and the two
+retained rebuilt images
+`research/amm-multi-hop-group-slice-recovery/artifacts/candidate.so.gz`
+(control, #424) and
+`research/amm-transfer-fee-diagnostic-recovery/artifacts/candidate.so.gz`
+(candidate, #427), whose decompressed sha256 values match the
+`images` block of `runtime/report.json.gz`. It re-checks the
+recorded receipts against the report's expected values; it does
+not re-execute any transaction.
+
+`producer.py` is the script that generated the receipts and is
+kept as a provenance record. It is not runnable as committed: it
+hard-codes a private workspace layout (`~/workspace/pumpfun-sparse`
+for the harness scripts and `~/workspace/slop-verify` for the
+control/candidate `.so` files) and chdirs there on start.
