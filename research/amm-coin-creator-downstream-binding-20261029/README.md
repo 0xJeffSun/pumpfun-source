@@ -181,3 +181,38 @@ The binding rules, each verified on all three images:
 - The collect 6048 case's "use pump:distribute_creator_fees
   instead" path is not executed here; only the refusal is
   pinned.
+
+
+## Saved proof binding
+
+The verifier reads the hash-equivalent committed historical #424/#427 image
+archives. These images are not the AMM image selected at review (`86dbc2c6…`).
+No raw captured loader record is present: the three image roles remain producer
+declarations, authenticated against available image bytes, not execution attestation.
+The retained producer, report and all 12 raw parts are byte-exact.
+
+`fixture-bindings.json` records the reviewed 18 named family-specific chains and
+39 steps, original serialized signed-wire hashes and 16 source WATCH roles. The
+verifier binds all receipts to that finite set, checks account continuity between
+steps, derives token deltas from their named accounts, identifies the payer from
+the signed message, and checks actual event log discriminators/layouts. The one
+new ATA's rent plus creator fee is also checked from its lamports. Unrecognized
+expected fields are rejected. These joins strengthen saved evidence; they do not
+establish a fresh VM replay, broad state-space coverage or current-image acceptance.
+
+The producer uses the reusable harness; 117 counts signed executions/receipts,
+not independently attested fresh VM constructions. Source and helper references
+outside the retained producer were not captured as a separate execution inventory.
+`python -B research/amm-coin-creator-downstream-binding-20261029/test_verify.py`
+checks repinned proof mutations without a compiler or VM.
+
+The binding file also retains the complete reviewed expected-step obligations:
+every value and member of the original report's 39 step expectations. Dropping
+a known token-delta or event-field assertion cannot weaken verification. These
+are review-derived saved-proof constraints, copied from the unchanged report
+and tied to its origin SHA256 and the unchanged producer. The origin hash is
+provenance metadata, rather than a claim that reencoded test reports are captured
+execution. The expected-step map, wire pins and WATCH roles are not runtime
+receipts, loader records or cryptographic execution attestation. Two additional
+coherent resealed controls omit a known token/event obligation and alter the
+corresponding observed value; both must reject. All ten controls run offline.
