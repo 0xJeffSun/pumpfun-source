@@ -1,5 +1,5 @@
 /** Independent public aggregate-balance read model; all values are supplied facts. */
-import { closeSync, fstatSync, openSync, readSync } from "node:fs";
+import { closeSync, constants, fstatSync, openSync, readSync } from "node:fs";
 
 export const balanceWalletPattern = /^[1-9A-HJ-NP-Za-km-z]{32,44}$/;
 export interface PublicBalanceFacts {
@@ -149,7 +149,7 @@ export function loadPortfolioBalancesStore(
   path: string,
 ): PortfolioBalancesStore {
   const limit = 16 * 1024 * 1024;
-  const fd = openSync(path, "r");
+  const fd = openSync(path, constants.O_RDONLY | constants.O_NONBLOCK);
   try {
     const info = fstatSync(fd);
     if (!info.isFile() || info.size > limit)
