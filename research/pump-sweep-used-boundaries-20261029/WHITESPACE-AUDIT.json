@@ -1,5 +1,6 @@
 {
-  "scope": "Frozen source/patch whitespace only; no Git policy change or byte cleanup",
+  "scope": "Exact frozen-source/unified-patch whitespace diagnostics; no Git policy or source-byte cleanup",
+  "base": "a18e1e89b59bf9d734955550c92f321c97c95e62",
   "full_diff_check_exit": 2,
   "diagnostics": [
     "research/pump-sweep-used-boundaries-20261029/history/unbuilt-c77.patch:10: trailing whitespace.",
@@ -8,6 +9,7 @@
     "+ ",
     "research/pump-sweep-used-boundaries-20261029/history/unbuilt-c77.patch:26: trailing whitespace.",
     "+ ",
+    "research/pump-sweep-used-boundaries-20261029/qualification/build/proposed-source.rs:180: new blank line at EOF.",
     "research/pump-sweep-used-boundaries-20261029/source-before.rs:162: new blank line at EOF.",
     "research/pump-sweep-used-boundaries-20261029/source.patch:10: trailing whitespace.",
     "+ ",
@@ -24,25 +26,29 @@
   ],
   "files": [
     {
-      "path": "history/unbuilt-c77.patch",
+      "path": "research/pump-sweep-used-boundaries-20261029/history/unbuilt-c77.patch",
       "sha256": "bc0653bc5f3e19314c8e161d853f3761f686112c83036b420c0a9f9c7b0c880a"
     },
     {
-      "path": "source-before.rs",
+      "path": "research/pump-sweep-used-boundaries-20261029/qualification/build/proposed-source.rs",
+      "sha256": "15dbbd46bdbe7af62c6b7bb436f657c45e290c080c185fc075b7a3c08e3df7e8"
+    },
+    {
+      "path": "research/pump-sweep-used-boundaries-20261029/source-before.rs",
       "sha256": "8735adba8b670c3b4ee63a6fd716d1d639be6efa56269a15365c15ff2f44ba0c"
     },
     {
-      "path": "source.patch",
+      "path": "research/pump-sweep-used-boundaries-20261029/source.patch",
       "sha256": "e22825c01976997dca79331bd0ef3faad209bf874b66f6b5dfcdbc7e88e8d3e8"
     },
     {
-      "path": "source/programs/pump/src/sweep_fees.rs",
+      "path": "research/pump-sweep-used-boundaries-20261029/source/programs/pump/src/sweep_fees.rs",
       "sha256": "15dbbd46bdbe7af62c6b7bb436f657c45e290c080c185fc075b7a3c08e3df7e8"
     }
   ],
   "explanation": [
-    "Unified patch context lines represent unchanged blank source lines using one leading space; preserving the exact patch retains those whitespace-only context records.",
-    "The source before and exact frozen overlay each inherit two newline characters at EOF. These are not added code padding; the overlay hash15dbbd46 was fixed before publication.",
-    "The Python, Markdown, and JSON additions pass a separate ordinary git diff --cached --check. No global/local whitespace config or comparison rule is relaxed."
+    "Unified patch context lines preserve unchanged blank source lines as a leading space; exact source/patch hashes remain fixed.",
+    "The source-before and15db overlay retain their inherited blank EOF line; raw CI measurement patch context retains its exact whitespace.",
+    "Newly authored active verifiers/replay/tests/docs pass the ordinary whitespace gate separately. No global/local whitespace configuration or comparison policy is changed."
   ]
 }
