@@ -503,7 +503,7 @@ export class CompetitionStore {
         const profile = this.hydrateProfile(m.userId);
         members.push({
           userId: m.userId,
-          walletAddress: m.walletAddress ?? profile.walletAddress,
+          walletAddress: m.walletAddress === undefined ? profile.walletAddress : m.walletAddress,
           pnlUsd: m.pnlUsd,
           realizedPnlUsd: m.realizedPnlUsd,
           unrealizedPnlUsd: m.unrealizedPnlUsd,
@@ -564,7 +564,7 @@ export class CompetitionStore {
         const profile = this.hydrateProfile(m.userId);
         return {
           userId: m.userId,
-          walletAddress: m.walletAddress ?? profile.walletAddress,
+          walletAddress: m.walletAddress === undefined ? profile.walletAddress : m.walletAddress,
           pnlUsd: m.pnlUsd,
           realizedPnlUsd: m.realizedPnlUsd,
           unrealizedPnlUsd: m.unrealizedPnlUsd,
@@ -632,7 +632,7 @@ export class CompetitionStore {
               entryId: entry.entryId,
               rank: entry.rank,
               userId: member.userId,
-              walletAddress: member.walletAddress ?? profile.walletAddress,
+              walletAddress: member.walletAddress === undefined ? profile.walletAddress : member.walletAddress,
               pnlUsd: member.pnlUsd,
               realizedPnlUsd: member.realizedPnlUsd,
               unrealizedPnlUsd: member.unrealizedPnlUsd,
