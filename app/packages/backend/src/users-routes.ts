@@ -40,6 +40,12 @@ export function toDeveloperUser(user: User): Omit<User, 'last_active_at'> {
   return profile;
 }
 
+/** Hydrated search and batch rows omit the single-profile rename timestamp. */
+function toHydratedDeveloperUser(user: User): Omit<User, 'last_active_at' | 'last_username_update_timestamp'> {
+  const { last_username_update_timestamp: _renamed, ...profile } = toDeveloperUser(user);
+  return profile;
+}
+
 /**
  * Keep the existing replay harness's fail-closed duplicate-query boundary on
  * native reads too. The scalar OpenAPI parameters do not establish semantics
@@ -115,7 +121,7 @@ export function registerUserRoutes(app: FastifyInstance, store: UserStore = defa
       limit: limit === undefined ? undefined : Math.max(0, limit),
       includeLabelledWallets,
     });
-    return sendSynthetic(reply, 200, result.map(toDeveloperUser));
+    return sendSynthetic(reply, 200, result.map(user => user.wallet_label?.trim() ? toDeveloperUser(user) : toHydratedDeveloperUser(user)));
   });
 
   /**
@@ -151,7 +157,7 @@ export function registerUserRoutes(app: FastifyInstance, store: UserStore = defa
       return reply.code(400).send(errorBody(400, 'TOO_MANY_ADDRESSES', { maxItems: 100, received: body.addresses.length }));
     }
     const result = store.batch(body.addresses);
-    return sendSynthetic(reply, 201, result.map(toDeveloperUser));
+    return sendSynthetic(reply, 201, result.map(toHydratedDeveloperUser));
   });
 
   /**
