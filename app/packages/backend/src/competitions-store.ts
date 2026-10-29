@@ -322,8 +322,9 @@ export class CompetitionStore {
 
   /**
    * Convert raw competition into CompetitionView with top and winners populated.
+   * `positionsLimit` slices top and winner rows like leaderboard rows (default 3).
    */
-  public toCompetitionView(comp: RawCompetition): CompetitionView {
+  public toCompetitionView(comp: RawCompetition, positionsLimit = 3): CompetitionView {
     const ranked = this.rankEntries(comp);
     const nonStruckRanked = ranked.filter(e => !e.struck && e.rank >= 1);
 
@@ -337,7 +338,7 @@ export class CompetitionStore {
     if (comp.phase === 'registration' || comp.phase === 'live') {
       top = nonStruckRanked
         .slice(0, 3)
-        .map(e => this.buildLeaderboardRow(comp, e, 3));
+        .map(e => this.buildLeaderboardRow(comp, e, positionsLimit));
     }
 
     // winners: ranks 1..N for phase ended; [] otherwise
@@ -349,7 +350,7 @@ export class CompetitionStore {
       winners = nonStruckRanked
         .filter(e => e.rank <= maxRank)
         .map(e => {
-          const row = this.buildLeaderboardRow(comp, e, 3);
+          const row = this.buildLeaderboardRow(comp, e, positionsLimit);
           const tier = comp.prizes.find(p => p.rankFrom <= e.rank && e.rank <= p.rankTo);
           return {
             ...row,
@@ -440,11 +441,11 @@ export class CompetitionStore {
     const comp = this.byId.get(idOrSlug) ?? this.bySlug.get(idOrSlug.toLowerCase());
     if (!comp) return null;
 
-    const competition = this.toCompetitionView(comp);
+    const positionsLimit = opts.positionsLimit !== undefined ? opts.positionsLimit : 3;
+    const competition = this.toCompetitionView(comp, positionsLimit);
     const ranked = this.rankEntries(comp);
     const nonStruckRanked = ranked.filter(e => !e.struck && e.rank >= 1);
 
-    const positionsLimit = opts.positionsLimit !== undefined ? opts.positionsLimit : 3;
     const limit = opts.limit !== undefined ? opts.limit : 100;
 
     const entries = nonStruckRanked
