@@ -213,3 +213,47 @@ windows, with no gains/losses and two reversed loads remaining. It supplies no
 cold/runtime qualification or canonical promotion. Parallel audits and one
 private CTO guard-placement trial also gained no complete windows; the full
 reconstruction objective remains active with sixteen Pump and one AMM window.
+
+The next review integrates nine incoming contract research/tooling PRs (#666,
+#783, #812, #825, #827, #831, #846, #847 and #848). Corrected successors #872,
+#883 and #896 preserve their original ancestry; #880 repairs the already-merged
+legacy cashback proof while retaining its narrowed documentation and raw receipts.
+The named reviewed Mayhem data chain reaches 21,796/26,180 payload bytes; newer
+attribution packets remain outside that subtotal. [Exact outcomes and evidence
+limits](pr-review-batch18-independent.json) distinguish historical signed records,
+review-derived proof constraints and maintained runtime qualification.
+
+Two actual native V3 cost builds reproduce identical complete outputs with a
+qualified passive trace. The target matches the Linux proposal at 2,144 bytes,
+still 25 aligned slots from the original. The trace locates the extra branch,
+return-pointer spill and split error tail; it selects no further Rust patch.
+No complete windows are gained or lost, and the maintained D037/86dbc selections
+remain unchanged. The two-build allowance is exhausted; no VM, cold build or
+canonical promotion followed. The full reconstruction objective remains active.
+
+The [portable native trace packet](../pump-v3-final-native-trace-20261029/README.md)
+retains all 295 original native evidence members and their exact inner seal. Its
+saved reader and five corruption controls pass from physically copied published
+inputs only. Historical and corrected PR831 verifier views remain distinct; old
+recipes and verifiers are not executed or relabeled as current native provenance.
+
+Ten further incoming contract proof/data PRs (#819, #821, #823, #851, #852,
+#879, #881, #884, #889 and #890) are merged, with #908 preserving #884's
+original ancestry. The eight Mayhem packets add 1,510 disjoint historical data
+bytes to the reviewed 21,796-byte baseline, reaching 23,306/26,180. This includes
+1,446 new raw-equal bytes and 64 mapped pointer bytes. The formatting-record
+claim is corrected from 18 to 16 bytes after following its actual branch path;
+seven other original observation reports remain byte exact. Saved positives,
+69 tests and 24 optimized-mode refusals pass on the composed reviewed trees.
+
+The accumulator-close lifecycle proof now binds all 16 cases, 102 signed
+receipts, eight wires, complete expected-step membership and 54 chain joins.
+Ten coherent corruption controls reject substitutions accepted by the old
+reader. Its historical images remain distinct from the selected AMM image.
+The sealed historical r37 packet is restored by moving an unrelated unchanged
+patch into its originating packet; its manifest and original evidence stay
+unchanged. [Exact heads, validation and limits](pr-review-batch19-independent.json)
+record these outcomes. No VM/compiler execution or source selection follows
+from these PR reviews, and no complete code window is added. The final observed
+main checks were queued; meaningful ELF exactness remains three of five, with
+sixteen Pump and one AMM function still unmatched.

@@ -8,6 +8,8 @@ import type { FastifyInstance } from 'fastify';
 import { PostStore, defaultPostStore } from './posts-store.js';
 import { sendSynthetic, errorBody, rejectDuplicateQueryKeys } from './users-routes.js';
 
+const POST_ID = /^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/;
+
 /**
  * Pagination on the posts sub-resources is declared as integers in
  * contracts/developer.openapi.json (limit minimum 1, offset minimum 0, both
@@ -66,6 +68,10 @@ export function registerPostRoutes(app: FastifyInstance, store: PostStore = defa
     // Contract specifies maxItems: 100 on ids array
     if (list.length > 100) {
       return reply.code(400).send(errorBody(400, 'TOO_MANY_IDS', { maxItems: 100, received: list.length }));
+    }
+
+    if (list.some(id => !POST_ID.test(id))) {
+      return reply.code(400).send(errorBody(400, 'INVALID_POST_ID'));
     }
 
     const posts = store.batch(list);

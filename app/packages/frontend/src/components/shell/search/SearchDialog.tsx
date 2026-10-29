@@ -5,6 +5,7 @@ import { useEffect, useRef, useState, type FormEvent } from "react";
 import { useSidebar } from "@/components/ui/sidebar";
 import { SearchMobileIcon } from "../captured-icons";
 import { onOpenSearch } from "./search-events";
+import { createSearchShortcutHandler } from "./search-shortcuts.mjs";
 
 /**
  * The shell's search entry point (the captured search box and ⌘K hint open it).
@@ -30,12 +31,20 @@ export function SearchDialog() {
       const dialog = dialogRef.current;
       if (dialog && !dialog.open) dialog.showModal();
     };
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key.toLowerCase() === "k" && (event.metaKey || event.ctrlKey)) {
-        event.preventDefault();
+    const toggle = () => {
+      const dialog = dialogRef.current;
+      if (dialog?.open) {
+        dialog.close();
+        setQuery("");
+      } else {
         open();
       }
     };
+    const onKeyDown = createSearchShortcutHandler([
+      { keys: ["Meta", "k"], callback: toggle },
+      { keys: ["Control", "k"], callback: toggle },
+      { keys: ["/"], callback: toggle },
+    ]);
     window.addEventListener("keydown", onKeyDown);
     const stopListening = onOpenSearch(open);
     return () => {
@@ -59,6 +68,14 @@ export function SearchDialog() {
     <dialog
       ref={dialogRef}
       aria-label="Search for coins and users"
+      onKeyDown={(event) => {
+        if (event.key !== "Escape") return;
+        // A populated search input otherwise clears itself before native
+        // dialog cancellation. The modal owns this key and preserves the draft.
+        event.preventDefault();
+        event.stopPropagation();
+        event.currentTarget.close();
+      }}
       className="mx-auto mt-[12vh] w-[min(560px,calc(100vw-32px))] overflow-hidden rounded-xl border border-border-tertiary bg-bg-secondary p-0 text-text-primary shadow-lg backdrop:bg-black/60"
     >
       <form

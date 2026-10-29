@@ -15,6 +15,12 @@ The factory inventory now contains 5,947 variants and 7,337 captured occurrences
 
 Start with [PRD.md](PRD.md) and [AGENTS.md](AGENTS.md). Every coverage claim must distinguish captured, reconstructed, implemented and qualified.
 
+The [original portfolio-chart reader](reconstruction/portfolio-chart/README.md)
+recovers the captured GET/query, cache keys, computing-503 retry predicate and
+response-parser boundary. It includes an explicit single-attempt local HTTP
+adapter and loopback workflow checks. It does not calculate charts, integrate a
+chart UI, emulate Ky scheduling or qualify native portfolio compatibility.
+
 ## Run
 
 From this directory, using Node >=22 and pnpm 10.24.0:
@@ -115,6 +121,15 @@ profile API, follow graph, authenticated viewer state, remote image, or social
 mutation is used. See
 [`packages/frontend/PROFILE-EVIDENCE.md`](packages/frontend/PROFILE-EVIDENCE.md)
 for source provenance and the local-data contract.
+
+## Opt-in public balance batches
+
+The backend can serve the documented `POST /v1/portfolio-summary/balances`
+operation from an explicit `PORTFOLIO_BALANCES_FILE`. It batches supplied public
+aggregate facts, preserves null versus zero, and keeps owner-only holdings and
+perp cash unavailable on the API host. No default dataset, valuation engine or
+production provider is enabled. This is an unqualified local read capability;
+see [`packages/backend/PORTFOLIO-BALANCES.md`](packages/backend/PORTFOLIO-BALANCES.md).
 
 ## Live Solana portfolio
 
