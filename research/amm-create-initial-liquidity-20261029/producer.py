@@ -18,10 +18,10 @@ Source (instructions/create_pool.rs execute()):
   output = initial_liquidity - 100 (minimum_liquidity 100).
   The 100 is never minted to anyone: user LP == output,
   LP mint supply == output, pool lp_supply == output + 100;
-- output < 100 (i.e. liquidity < 100) fails with 6003
+- liquidity < 100 (checked_sub(100) underflows; output 0 at liquidity exactly 100 succeeds) fails with 6003
   TooLittlePoolTokenLiquidity AFTER the transfers, so the
   failure is only safe because the whole transaction rolls
-  back: pool / LP mint / user LP accounts are not created,
+    back: the pool / LP mint / user LP accounts created during execution are rolled back (absent after the transaction),
   vaults keep their pre-transaction balances, payer -5,000;
 - the CreatePoolEvent echoes base_amount_in / quote_amount_in
   (the instruction args) separately from pool_base_amount /
