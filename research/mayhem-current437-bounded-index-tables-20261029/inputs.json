@@ -33,5 +33,13 @@
   "research/mayhem-current437-rust-panic-messages-20261029/observations.json.gz": "b86a921b893cef48dd2913bec78235622dacee562fc592e949a50df4eeb169aa",
   "research/mayhem-current437-rust-panic-messages-20261029/proof.py": "7d6fda31aa87d66adbd43ea28d0ecc9dde1af8bb6ff6d0580e6549d301360b49",
   "research/mayhem-current437-rust-panic-messages-20261029/test_verify.py": "783dcdeecdd2eb054ea28a18c06d0d971364e0c32b1537ed4319b6bf27c86603",
-  "research/mayhem-current437-rust-panic-messages-20261029/verify.py": "fd8c9ea9e5fbe54a72cf8a283cedbbd5e03e2803f29e0a8aa893f09a0d39ad6d"
+  "research/mayhem-current437-rust-panic-messages-20261029/verify.py": "fd8c9ea9e5fbe54a72cf8a283cedbbd5e03e2803f29e0a8aa893f09a0d39ad6d",
+  "research/mayhem-current437-bounded-encoding-20261029/observations.json.gz": "49305055eb1ed21dc42cd9ad06494b345e3a9046b7f81d0cb60ba3109f90f1da",
+  "research/mayhem-current437-bounded-encoding-20261029/test_verify.py": "059f4e025e61260f92418b53644a03526f3a69fb09a18f5087a64394804f62df",
+  "research/mayhem-current437-bounded-encoding-20261029/coverage-delta.json": "461f1bed916351813d11793ce2544cd4c036499ea3669c8982813c9b6349705d",
+  "research/mayhem-current437-bounded-encoding-20261029/README.md": "16f7d65aa98a3ef9d3191b4d8f1c0a0bc157f00d5c20b3673011470fc70e4716",
+  "research/mayhem-current437-bounded-encoding-20261029/inputs.json": "690af9751d3b769ee5b586455778b5638c41626845847d526045bc5623759d22",
+  "research/mayhem-current437-bounded-encoding-20261029/manifest.json": "b7783203fb2dffad473214a51ef64d28caf1864b99d41e89c3cc2eff1132be0d",
+  "research/mayhem-current437-bounded-encoding-20261029/proof.py": "8d6afb5e8b2c9db25148b6d22a0ac42744e9c569236d10f6ea94f380984fe305",
+  "research/mayhem-current437-bounded-encoding-20261029/verify.py": "85251beb0dbc9e270c890e4277600c15a40f4eb7a00f3f22b05c375ac2ef9882"
 }

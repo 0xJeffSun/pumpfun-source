@@ -5,3 +5,5 @@
 ## 验证
 
 运行证据包的 verify.py、test_verify.py，以及 scripts/verify_evidence.py、scripts/test_tooling.py。证据仅支持静态表与匹配路径，不代表运行时或整个程序相等。
+
+Review binds every instruction between the second index guard and load, preserving the bounded index register, and excludes relocations in the credited table ranges. Three tests cover the revised decoder and baseline union. No new function window or runtime claim.

@@ -23,7 +23,7 @@ class MutationTests(unittest.TestCase):
                 section = next(s for s in image.sections if s['name'] == '.rodata')
                 at = section['offset'] + info['pointer'] - section['address']
                 pc = window['start'] + offset
-                offsets = [-24, -16, -8, 16, 24] if reg == 2 else [-56, -48, 16, 24, 32]
+                offsets = [-24, -16, -8, 16, 24] if reg == 2 else [-56, -48, -40, -32, -24, -16, -8, 16, 24, 32]
                 positions = list(range(at, at + len(expected))) + [pc + 4] + [pc + x for x in offsets]
                 for pos in positions:
                     saved = image.b
@@ -45,6 +45,15 @@ class MutationTests(unittest.TestCase):
             (packet/'coverage-delta.json').write_text(json.dumps(data))
             with self.assertRaises(AssertionError):
                 proof.check(packet, ROOT)
+
+    def test_latest_baseline_and_disjoint_union(self):
+        report=proof.inspect(ROOT)
+        delta=proof.delta(ROOT,report)
+        baseline=json.loads((ROOT/proof.BASELINE/'coverage-delta.json').read_bytes())
+        before={i for s in baseline['sections'] for a,b in s['covered_intervals'] for i in range(a,b)}
+        after={i for s in delta['sections'] for a,b in s['covered_intervals'] for i in range(a,b)}
+        self.assertTrue(before<=after)
+        self.assertEqual((len(before),len(after-before),len(after)),(21634,162,21796))
 
 if __name__ == '__main__':
     unittest.main()
