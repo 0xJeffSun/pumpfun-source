@@ -26,7 +26,7 @@ def candidate_measurements(expected, projected, frozen_builder):
     terminal = b";assert record['qualified_image_hashes_equal']\n"
     assert frozen_builder.endswith(terminal)
     for row in rows:
-        assert row['candidate'] in ['cto', 'sweep', 'perhop', 'sell-event', 'constructor', 'cto-used-flow', 'perhop-clock']
+        assert row['candidate'] in ['cto', 'sweep', 'perhop', 'sell-event', 'constructor', 'cto-used-flow', 'perhop-clock', 'sweep-read-timing']
         assert row['zip'] == row['candidate'] + '-' + str(int(row['run_id'])) + '.zip'
         archive = (HERE / 'evidence' / row['zip']).read_bytes()
         assert digest(archive) == row['zip_sha256']

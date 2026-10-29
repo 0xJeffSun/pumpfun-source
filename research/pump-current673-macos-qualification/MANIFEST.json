@@ -1,17 +1,20 @@
 {
-  "README.md": "b8e9fbb0bf516fb666a83b9bc677e1d4cdc129f33841164c3b19d168dea59c9f",
+  "README.md": "ca9745a6a66c6d30f554da0c5e58132a4feb42d982b3fa0126a548f6fcf6ee2b",
   "candidates/constructor.rs": "8cf97e31c958609aa5bbc07e2d4fb092fc980f724d4054d24af2163241e7a931",
   "candidates/cto-used-flow.rs": "5203d20c2e63be7337204491588e0ec69808f8ddd39d96b8b5fa1964d6ec201d",
   "candidates/cto.rs": "f4a2bb7d33431e0fb4911e39d5e03c8bb9f45c6f7a184da21d1a6762f9127955",
-  "candidates/descriptors.json": "14d0de224f595d729ecb62179417a9eabfa9ed4235bba71dc28de9edc1d2ff5c",
+  "candidates/descriptors.json": "7d8b1de28a3957cdd8024c423515ce23fedbba55344d8b05fb4bed13201cb0a3",
   "candidates/perhop-clock.rs": "5871a2cf35ebe0db502eb242db0f1652ef93e51e4971e56483016d900349ac2b",
   "candidates/perhop.rs": "734bdae1189dd4e4f54a27fd215624611228f36b92d3877b63f00df19ccc9e44",
   "candidates/sell-event.rs": "f1f484c50a792c82fba414dff31b6bfc55f03cbec54d7115782c60ad5870b45d",
+  "candidates/sweep-read-timing.rs": "3d3363ddd7713999363bf950fb404fa4e35e42731d43806cb6ceeccda94985e9",
   "candidates/sweep.rs": "15dbbd46bdbe7af62c6b7bb436f657c45e290c080c185fc075b7a3c08e3df7e8",
-  "evidence/candidate-receipts.json": "6b36e4e2417e779b679e16e85ab715ae2f9679facb563e8bd9ac6ac20a3fdd3f",
+  "evidence/candidate-receipts.json": "a113fee1e13651f6b6334e2b79dc70782c2680280c2e3ba507c98d7cc746de51",
   "evidence/census/baseline-inventory.json.gz": "521ce42fe3c4e701897f42a59c39f3fff6d85c53c1070aac96360e42d18d3b7a",
   "evidence/census/cto-40792775552/delta.json": "ed1c269ee149fd0f046dfe5172e5dfa7ce1ef7325d01f8ce9c7269d4b5e9023d",
   "evidence/census/cto-40792775552/inventory.json.gz": "e0206c2e9c1557950adf8749b16ceaf3c3e34275c3d255839fb746ed3a6c2fe9",
+  "evidence/census/cto-used-flow-40794982049/delta.json": "88725b4fa07ac6c61af14bc4592fb9db98b92673144d0be7c9f6826c4b0e64cb",
+  "evidence/census/cto-used-flow-40794982049/inventory.json.gz": "c5092539edbb5c9ba200a9e17a039e95c01c3a16de1b75fbc8fa3350d8cd9e1b",
   "evidence/census/input-binding.json": "e9add38eb34acceba87770378b894ecaefe128ffebefa7b7270f191264d7247c",
   "evidence/census/perhop-40792780769/delta.json": "a09b00fd736dd3fcb7bd289a94b8ab595aa200de28f86b9c729eb387ffebc2a2",
   "evidence/census/perhop-40792780769/inventory.json.gz": "34e0ca24ea3b0c4ed657254d2ed9ec78900a074c978b52ceed61049a9893a487",
@@ -24,6 +27,7 @@
   "evidence/control-hosted.log.gz": "617d7680e0d64da3a847b0d567e4b728f1dea8368637dc37f8ac17215c04366c",
   "evidence/control-run.json": "d3d2e267b4b859fe8a8877e6979e8096bd4cdb2676608ef640a28f487636746b",
   "evidence/cto-40792775552.zip": "ae51db24a49ab387651edf38c74842d898a087d2c7513f01c443d96e9687043a",
+  "evidence/cto-used-flow-40794982049.zip": "3221c39f6339364785116982cc93bc2a62d172cc25fb1c5be355a1057c40ca9b",
   "evidence/perhop-40792780769.zip": "28a3c4f85250b0018e0d79b79bea04a850190355feb8fa16ae66a09055cd2c6b",
   "evidence/sell-event-40793772555.zip": "9db254ba1d516c88425f344e439291ff1d584d6937c5d748157eeea199c9c8bd",
   "evidence/source-input-Cargo.toml": "de2a8a93b5c2de8bfe3719bb6ece3fc5d9f71e4e10ef7086596cbd67165bf843",
@@ -31,5 +35,5 @@
   "evidence/sweep-precompile-api403-run.json": "8975c26a2f8b50aa03e87d9e3cfdf27c13487c75b294b688f8c61a0cc7d01fb7",
   "evidence/sweep-precompile-api403.log.gz": "1a0f7faefffff9fa6774fc0c7d0eda4cee549a0ee2930573e6038da87c32e9c7",
   "inputs.json": "40d1d18d9979d1039506dfebe6d86cbba5c67ec2b462c43e1ae890b035c804d2",
-  "verify.py": "f3e8aa5dc26b634d58408690eb1d213efe38c6a309cb9a5bc055a6ab158030f4"
+  "verify.py": "b57deb32a0eb0514597576a1fdca713d1cc3e021f20380cad5efbb6672fc2e30"
 }

@@ -45,7 +45,7 @@ def descriptor(name):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--candidate', choices=['cto', 'sweep', 'perhop', 'sell-event', 'constructor', 'cto-used-flow', 'perhop-clock'], required=True)
+    parser.add_argument('--candidate', choices=['cto', 'sweep', 'perhop', 'sell-event', 'constructor', 'cto-used-flow', 'perhop-clock', 'sweep-read-timing'], required=True)
     parser.add_argument('--inspect', action='store_true')
     args = parser.parse_args()
     assert __debug__, 'Optimized Python is unsupported'

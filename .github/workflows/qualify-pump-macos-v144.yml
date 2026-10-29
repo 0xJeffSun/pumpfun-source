@@ -7,7 +7,7 @@ on:
         description: Unchanged control or one independently frozen proposal
         type: choice
         default: control
-        options: [control, cto, sweep, perhop, sell-event, constructor, cto-used-flow, perhop-clock]
+        options: [control, cto, sweep, perhop, sell-event, constructor, cto-used-flow, perhop-clock, sweep-read-timing]
 permissions:
   contents: read
   actions: read

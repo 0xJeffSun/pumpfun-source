@@ -51,8 +51,9 @@ measurement adapter. It executes no captured program or compiler.
 | Sweep | [40793129553](https://github.com/shawkkkkk/pumpfun-source/actions/runs/40793129553) | `21b0de29ebc71c69` |
 | SellV2 event order, compiler only | [40793772555](https://github.com/shawkkkkk/pumpfun-source/actions/runs/40793772555) | `844415f7d0615f0c` |
 | Constructor array lifetime | [40794358580](https://github.com/shawkkkkk/pumpfun-source/actions/runs/40794358580) | `199fd7379b6881ad` |
+| CTO used CPI flow | [40794982049](https://github.com/shawkkkkk/pumpfun-source/actions/runs/40794982049) | `df40382896c913ba` |
 
-All five raw artifacts and exact measured hashes are retained under `evidence`.
+All six raw artifacts and exact measured hashes are retained under `evidence`.
 The coordinator independently ran the unchanged official1035-window census for
 the first four. `evidence/census` retains those full outputs and input bindings: all preserve
 1019 normalized and188 raw memberships, with no original-start gains or losses.
@@ -124,6 +125,15 @@ three actual event constructors. It keeps the734 accrual source and changes only
 three consumed statements, with no Source positions, event fields or ordering
 changed. Both canonical679-to587 and immediate734-to587 source bindings are
 recorded. This remains a separate one-file measurement, not a cross-file union.
+
+The eighth `sweep-read-timing` proposal moves the one genuinely used native/quote
+mint read after authorization, fee clear and zero exit as the original CFG shows.
+Its canonical8735-to3d336 and immediate15db-to3d336 hashes are frozen separately.
+All guards, state/helper operations, events and five bangmacro positions remain;
+the vacated line27 stays blank and an existing blank is reused to preserve those
+actual source positions, disclosed here. No missing predicate or byte gain is
+inferred from this source-level timing evidence. The qualified15db proposal is
+preserved unchanged.
 
 ## Hosted retention and a later cohort
 
