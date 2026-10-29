@@ -84,6 +84,32 @@
         "both_local_crates_compiled": true,
         "limits": "No acceptance, census gain, runtime behavior or original whole-ELF identity claim."
       }
+    },
+    {
+      "candidate": "sell-event",
+      "run_id": 40793772555,
+      "artifact_id": 12862703266,
+      "zip": "sell-event-40793772555.zip",
+      "zip_sha256": "9db254ba1d516c88425f344e439291ff1d584d6937c5d748157eeea199c9c8bd",
+      "result": {
+        "status": "compiled-measurement-only",
+        "candidate": "sell-event",
+        "base_commit": "1285b5e9e3a29c1e2cf32246d6046035e5d66fad",
+        "control_run": 40791064153,
+        "proposal": {
+          "source_path": "src/sell_v2.rs",
+          "frozen_file": "sell-event.rs",
+          "before_sha256": "0a214cbd9077b5606c1c867e831d9ccc5cc2705262d568061c03925334783b4c",
+          "after_sha256": "f1f484c50a792c82fba414dff31b6bfc55f03cbec54d7115782c60ad5870b45d",
+          "state": "staged only; one compiler measurement after preceding cohort; no runtime authorization"
+        },
+        "candidate_sha256": "844415f7d0615f0cfc1db695a5e0521dd9166802ae76286d46d8deb331989910",
+        "unstripped_sha256": "3d7c549f16e854b866d72ad86347f6048c04e8f22115c56f2c8ef0f023a1ee53",
+        "control_hashes_equal": false,
+        "cold_empty_target": true,
+        "both_local_crates_compiled": true,
+        "limits": "No acceptance, census gain, runtime behavior or original whole-ELF identity claim."
+      }
     }
   ]
 }

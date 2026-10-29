@@ -41,7 +41,7 @@ Run `python3 -B research/pump-current673-macos-qualification/verify.py` to check
 the retained artifact hashes, actual65-to66 input projection, all254 locked
 registry archive bindings, native tools/target libraries, source-preservation
 receipts and genuine compilation of both local crates. The verifier also binds
-the three retained candidate artifacts to their sole source changes and explicit
+the retained candidate artifacts to their sole source changes and explicit
 measurement adapter. It executes no captured program or compiler.
 
 | Independent compile | Hosted run | Stripped SHA-256 prefix |
@@ -49,8 +49,15 @@ measurement adapter. It executes no captured program or compiler.
 | CTO | [40792775552](https://github.com/shawkkkkk/pumpfun-source/actions/runs/40792775552) | `d537faf5907c594e` |
 | Per-hop | [40792780769](https://github.com/shawkkkkk/pumpfun-source/actions/runs/40792780769) | `c0e29e2d41c30e85` |
 | Sweep | [40793129553](https://github.com/shawkkkkk/pumpfun-source/actions/runs/40793129553) | `21b0de29ebc71c69` |
+| SellV2 event order, compiler only | [40793772555](https://github.com/shawkkkkk/pumpfun-source/actions/runs/40793772555) | `844415f7d0615f0c` |
 
-All three raw artifacts and exact measured hashes are retained under `evidence`.
+All four raw artifacts and exact measured hashes are retained under `evidence`.
+The coordinator independently ran the unchanged official1035-window census for
+each. `evidence/census` retains those full outputs and input bindings: all preserve
+1019 normalized and188 raw memberships, with no original-start gains or losses.
+The default verifier binds their symbol hashes and independently recomputes the
+retained membership deltas; it does not rerun the normalizer. Runtime qualification
+belongs to the separate source proposals and is not inferred here.
 The original Sweep attempt40792778116 failed before downloading SDKs or compiling:
 the shared host's unauthenticated control-run API quota returned403. Its log and
 metadata are preserved. The retry changed only control-proof retrieval to the
@@ -94,7 +101,31 @@ The authored source proposals are [CTO#712](https://github.com/lalalune/pumpfun-
 packets supply the source/call-data evidence and retain credit for that recovery.
 
 The subsequent one-shot `sell-event` proposal (used SellV2 key/snapshot order)
-was dispatched after all three successful builds. The `constructor` proposal
-(used six-account array lifetime) is frozen but remains disabled until that fourth
-measurement completes. The SellV2 VM and old corrective/transfer-fee lanes remain
-stopped. These descriptors authorize no variants or composition.
+compiled successfully after all three builds. The `constructor` proposal
+(used six-account array lifetime) was dispatched after that fourth measurement.
+The sixth `cto-used-flow` proposal is staged for one separate measurement after
+the constructor: original used payout body and three CPI constructor orders,
+retaining the first CTO changes. It remains a canonical673-to-one-file comparison;
+the immediate f4 source parent is additionally recorded. Its natural obsolete
+helper deletion moves `token_raw_amount` from line775 to772; this is disclosed for
+the actual Location audit, with all17 explicit Source sites unchanged. The SellV2
+VM and old corrective/transfer-fee lanes remain stopped. These descriptors
+authorize no variants or composition.
+
+## Hosted retention and a later cohort
+
+Hosted artifacts expire after30 days. Their current download URLs and the
+workflow's fixed control run are not an indefinite availability promise. The
+checked-in exact ZIPs are permanent historical proof, and `verify.py` requires
+no GitHub API, SDK download or network access.
+
+To start a fresh cohort, preserve this packet and use the pinned1285 source65
+with the same authenticated builder/tool/library inputs. Dispatch `proposal=control`
+first and verify its actual RESULT, raw ELF hashes, host head and input manifest.
+Only after both published control hashes reproduce may a new descriptor ledger
+bind that **new** run ID and head, and the official download step bind its exact
+artifact name/run ID. Freeze new candidate descriptors against the canonical
+source, retaining each previous source/attempt separately. Never substitute an
+unrun ID, reuse an expired HTTP URL as proof, relabel historical control outputs,
+or overwrite this retained control ZIP. Changed maintained sources require their
+own explicitly qualified frontier instead of inheriting this673 label.

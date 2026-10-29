@@ -81,6 +81,39 @@ def candidate_measurements(expected, projected, frozen_builder):
     return len(rows)
 
 
+def retained_census():
+    directory = HERE / 'evidence/census'
+    baseline = json.loads(gzip.decompress((directory / 'baseline-inventory.json.gz').read_bytes()))
+    assert baseline['candidate_sha256'] == '49df399b8a36a0a60de03e8d55f1417261dc451e44845ca9d17a94040968c680'
+    measurements = json.loads((HERE / 'evidence/candidate-receipts.json').read_text())['measurements']
+    checked = 0
+    for measurement in measurements:
+        path = directory / (measurement['candidate'] + '-' + str(measurement['run_id']))
+        if not path.is_dir():
+            continue
+        compressed = (path / 'inventory.json.gz').read_bytes()
+        candidate = json.loads(gzip.decompress(compressed))
+        delta = json.loads((path / 'delta.json').read_text())
+        assert delta['inventory_sha256'] == digest(compressed)
+        assert candidate['candidate_sha256'] == delta['candidate_symbols_sha256'] == measurement['result']['unstripped_sha256']
+        assert len(baseline['windows']) == len(candidate['windows']) == 1035
+        changes = []
+        for before, after in zip(baseline['windows'], candidate['windows']):
+            assert all(before[key] == after[key] for key in ['start', 'end', 'bytes', 'raw_sha256'])
+            states = lambda row: {'normalized': bool(row['normalized_matches']), 'raw': row['raw_match']}
+            old, new = states(before), states(after)
+            if old != new:
+                changes.append({'original_start': before['start'], 'original_start_hex': hex(before['start']),
+                    'bytes': before['bytes'], 'before': old, 'after': new})
+        assert changes == delta['all_match_changes']
+        assert delta['gained'] == [r for r in changes if any(not r['before'][k] and r['after'][k] for k in ['normalized', 'raw'])]
+        assert delta['lost'] == [r for r in changes if any(r['before'][k] and not r['after'][k] for k in ['normalized', 'raw'])]
+        assert delta['no_window_regressions'] == (not delta['lost'])
+        assert delta['baseline_counts'] == baseline['counts'] and delta['candidate_counts'] == candidate['counts']
+        checked += 1
+    return checked
+
+
 def main():
     assert __debug__, 'Optimized Python is unsupported'
     packet_manifest = json.loads((HERE / 'MANIFEST.json').read_text())
@@ -155,9 +188,11 @@ def main():
     assert digest(log) == record['build_log_sha256']
     assert b'--crate-name pump_recovered ' in log and b'--crate-name pump_token_ext ' in log
     measurements = candidate_measurements(expected, projected, files['executed-builder.py'])
+    censuses = retained_census()
     print(json.dumps({'control_run': run['id'], **spec['expected'], 'primary_source_files': 65,
         'compiled_source_files': 66, 'locked_registry_packages': len(locked), 'independent_candidate_measurements': measurements,
-        'limits': 'Actual hosted build/source bindings only; no new census/runtime/original identity claim.'}, indent=2))
+        'retained_census_deltas': censuses,
+        'limits': 'Actual hosted build/source bindings and retained delta arithmetic; no fresh normalizer/runtime/original identity claim.'}, indent=2))
 
 
 if __name__ == '__main__':
