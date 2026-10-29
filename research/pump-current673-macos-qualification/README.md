@@ -27,3 +27,30 @@ reuse or relabel that historical execution. No candidate, new window census,
 runtime replay or original whole-ELF equality is claimed. Each grounded source
 proposal must remain independently frozen and compared with this exact control
 before any composition.
+
+## Independent candidate measurements
+
+The `proposal` dispatch input selects `cto`, `sweep` or `perhop`. These are
+separately authored, uncompiled source proposals by the CTO, lifecycle and
+creation workers; storing them here supplies frozen CI inputs, not a new claim
+to their recovery. `candidates/descriptors.json` records exact before/after
+hashes. No proposal is composed with another.
+
+Candidate execution requires the successful control run40791064153 at exact
+head `c6ae78c36ef59de4f1b2a057b54e57b6c9f3dce7`. A fresh isolated copy contains
+the same65 source inputs with exactly one declared replacement. The unchanged
+cold source is retained; its visibly derived measurement builder removes only
+the final assertion demanding that the candidate output equal the control.
+The original comparison and `qualified_image_hashes_equal` result remain in the
+receipt. The exact adapter diff, candidate input descriptor, proposed source,
+both compiler outputs and logs are retained. No candidate output hash is guessed
+or supplied as an expected result. All SDK, dependency, profile, unchanged-input
+and fresh-target checks remain active, with actual rustc commands required for
+both local crates.
+
+`python3 -B scripts/pump_current673_macos_candidate.py --candidate cto --inspect`
+authenticates a proposal and prints the complete one-line adapter diff without
+network access or compilation. A successful candidate job establishes a compiled
+measurement only. The independent official census must still compare gained and
+lost original starts for both normalized and raw membership, followed by the
+relevant genuine signed runtime cases. Neither happens implicitly in this job.

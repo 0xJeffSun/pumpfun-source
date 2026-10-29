@@ -1,0 +1,28 @@
+{
+  "schema": "PUMP_CURRENT673_SINGLE_FILE_CANDIDATES_V1",
+  "control_run": 40791064153,
+  "control_head": "c6ae78c36ef59de4f1b2a057b54e57b6c9f3dce7",
+  "proposals": {
+    "cto": {
+      "source_path": "src/creator/admin_cto.rs",
+      "frozen_file": "cto.rs",
+      "before_sha256": "6353b1f7b9e613bb8d819000c504d44410b04f7da7dfbdc7fb2e5132df100180",
+      "after_sha256": "f4a2bb7d33431e0fb4911e39d5e03c8bb9f45c6f7a184da21d1a6762f9127955",
+      "state": "uncompiled independent proposal; not accepted coverage"
+    },
+    "sweep": {
+      "source_path": "src/sweep_fees.rs",
+      "frozen_file": "sweep.rs",
+      "before_sha256": "8735adba8b670c3b4ee63a6fd716d1d639be6efa56269a15365c15ff2f44ba0c",
+      "after_sha256": "15dbbd46bdbe7af62c6b7bb436f657c45e290c080c185fc075b7a3c08e3df7e8",
+      "state": "uncompiled independent proposal; not accepted coverage"
+    },
+    "perhop": {
+      "source_path": "src/multi_hop_curve_swap.rs",
+      "frozen_file": "perhop.rs",
+      "before_sha256": "679b34ae4965bf1cdc999e0f45f3ae5e171116c5f04173e7394c3b9e48a0fb43",
+      "after_sha256": "734bdae1189dd4e4f54a27fd215624611228f36b92d3877b63f00df19ccc9e44",
+      "state": "uncompiled independent proposal; not accepted coverage"
+    }
+  }
+}
