@@ -1,4 +1,4 @@
-import { expect, test, type Page } from "@playwright/test";
+import { expect, test, type Page, type Route } from "@playwright/test";
 
 const FIRST_MINT = "7bS1mH6MXbw1GnEkKTU6w5YLTywPkQ1w3YVZXWFupump";
 
@@ -389,4 +389,40 @@ test("a prevented Escape does not dismiss stream detail", async ({ page }) => {
   await expect(page.getByTestId("playback-unavailable")).toBeVisible();
   await page.keyboard.press("Escape");
   await expect(page).toHaveURL(/\/live$/);
+});
+
+test("search preserves a sort change while its navigation is pending", async ({
+  page,
+}) => {
+  await page.goto("/live");
+  const search = page.getByRole("searchbox", {
+    name: "Search captured streams",
+  });
+  await search.fill("$major");
+  const held: Route[] = [];
+  let holdNavigation = true;
+  await page.route("**/live?**", async (route) => {
+    if (
+      holdNavigation &&
+      new URL(route.request().url()).searchParams.has("_rsc")
+    ) {
+      held.push(route);
+    } else {
+      await route.continue();
+    }
+  });
+  try {
+    await page.getByLabel("Sort captured cards").selectOption("viewers");
+    await expect.poll(() => held.length).toBe(1);
+    await search.press("Enter");
+    await expect.poll(() => held.length).toBe(2);
+    holdNavigation = false;
+    await Promise.all(held.map((route) => route.continue()));
+    await expect(page).toHaveURL(/\/live\?sort=viewers&q=%24major$/);
+    await expect(page.getByLabel("Sort captured cards")).toHaveValue("viewers");
+    await expect(page.getByTestId("archived-stream-card")).toHaveCount(1);
+    await expect(search).toHaveValue("$major");
+  } finally {
+    await page.unrouteAll({ behavior: "ignoreErrors" });
+  }
 });
