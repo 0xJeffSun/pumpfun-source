@@ -63,7 +63,10 @@ function byUsername(a: User, b: User): number {
   const an = a.username ?? '\uffff';
   const bn = b.username ?? '\uffff';
   if (an !== bn) return an < bn ? -1 : 1;
-  return (a.userId ?? '') < (b.userId ?? '') ? -1 : 1;
+  const left = a.userId ?? a.address;
+  const right = b.userId ?? b.address;
+  if (left !== right) return left < right ? -1 : 1;
+  return a.address === b.address ? 0 : a.address < b.address ? -1 : 1;
 }
 
 /**
