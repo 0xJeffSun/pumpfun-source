@@ -91,8 +91,13 @@ not user authentication, wallet ownership or the format-only developer-key gate.
 
 Every read and write checks the direct socket peer, not `X-Forwarded-For`:
 `127.0.0.1`, `::1`, or `::ffff:127.0.0.1` only. An `Origin` header or cross-site
-Fetch Metadata is rejected. Bearer authorization is checked using constant-time
-SHA-256 digest comparison. No CORS headers or cookie authentication are added.
+Fetch Metadata is rejected. Exactly one raw `Authorization` field is required:
+duplicate fields are rejected with the existing 401 even if their names have
+different casing or their values are identical. This check precedes normalized
+header use because Node may otherwise discard later Authorization values.
+Bearer authorization is checked using constant-time SHA-256 digest comparison.
+`X-API-Key` is not an alternate local capability source. No CORS headers or
+cookie authentication are added.
 This is defense in depth for an explicitly loopback-bound development server;
 it is **not** a safe way to expose these endpoints through a public reverse
 proxy (whose socket would itself be loopback).
@@ -175,6 +180,7 @@ python3 -m unittest discover -s tests -p test_create_media_bindings.py
 cd packages/backend
 node --import tsx --test test/local-media.test.ts
 node --import tsx --test test/local-media-runtime.test.ts
+node --import tsx --test test/local-media-authorization.test.ts
 ```
 
 Synthetic tests cover the complete lifecycle, restart, exact byte readback,
@@ -185,7 +191,12 @@ read results, failed publication, owner locking, stale locks, corrupt snapshots,
 and symlink paths. Factory mutation tests reject source range/hash/context and
 SDK-binding drift. Bootstrap tests additionally cover default-off, paired config,
 pre-filesystem host validation, actual opt-in app routing, ownership preservation,
-shutdown, restart and startup-failure cleanup. The listen failure is synthetic;
-tests do not open a network socket or instantiate a real capability.
+shutdown, restart and startup-failure cleanup. The bootstrap listen failure is
+synthetic. The authorization regression tests do open ephemeral loopback HTTP
+listeners with visibly synthetic capabilities, to exercise Node's actual raw
+header normalization. They check duplicate-field ordering, case, identical and
+empty values across reads, HEAD, metadata creation and deletion, unchanged disk
+state on rejection, and preservation of single-header/default-off/Origin guards.
+No real capability or production listener is instantiated.
 These qualify only the stated local service, not the original
 website/backend behavior.
