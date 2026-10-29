@@ -2,8 +2,8 @@
 
 Checks, independently of the producer:
 - packet manifest lists exactly the files present, with matching hashes;
-- repository inputs (images, harness scripts, evidence programs)
-  hash to the recorded values;
+- repository inputs (original image, harness scripts, fixture) hash to the
+  recorded values; control/candidate are the in-repo #424/#427 artifacts;
 - 19 cases x 3 images = 57 receipts, ordered, with contexts matching the report;
 - every transaction verifies (all signatures valid, 1 signature field);
 - success cases: exactly 1 CreatePoolEvent (discriminator

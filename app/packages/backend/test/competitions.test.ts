@@ -277,6 +277,45 @@ describe('GET /v1/competitions/:idOrSlug', () => {
     }
   });
 
+  test('positionsLimit also slices competition.top rows', async () => {
+    const app = buildApp([]);
+    try {
+      for (const [positionsLimit, expected] of [[0, 0], [1, 1], [5, 4]]) {
+        const res = await app.inject({ method: 'GET', url: `/v1/competitions/${LIVE_ID}?positionsLimit=${positionsLimit}` });
+        assert.equal(res.statusCode, 200);
+        const json = res.json();
+        assertSchema(json, documentedSchema('/competitions/{idOrSlug}', 'get', 200), `GET /competitions positionsLimit=${positionsLimit}`, specRoot);
+        // Entry 1 has 4 positions in seed; top and leaderboard rows describe the same entry
+        assert.equal(json.competition.top[0].entryId, LIVE_ENTRY_1);
+        assert.equal(json.competition.top[0].positionsCount, 4);
+        assert.equal(json.competition.top[0].topPositions.length, expected, `top[0] at positionsLimit=${positionsLimit}`);
+        assert.deepEqual(json.competition.top[0].topPositions, json.leaderboard.entries[0].topPositions);
+      }
+    } finally {
+      await app.close();
+    }
+  });
+
+  test('positionsLimit also slices winners rows of an ended person competition that is not final', async () => {
+    const seed = JSON.parse(readFileSync(new URL('../src/competitions-seed.json', import.meta.url), 'utf8')) as RawCompetition[];
+    const live = seed.find(c => c.id === LIVE_ID);
+    assert.ok(live);
+    const ended: RawCompetition = { ...live, phase: 'ended', isFinal: false };
+    const app = buildApp([], { competitionStore: new CompetitionStore([ended]) });
+    try {
+      for (const [positionsLimit, expected] of [[0, 0], [5, 4]]) {
+        const res = await app.inject({ method: 'GET', url: `/v1/competitions/${LIVE_ID}?positionsLimit=${positionsLimit}` });
+        assert.equal(res.statusCode, 200);
+        const json = res.json();
+        assertSchema(json, documentedSchema('/competitions/{idOrSlug}', 'get', 200), `GET /competitions winners positionsLimit=${positionsLimit}`, specRoot);
+        assert.equal(json.competition.winners[0].entryId, LIVE_ENTRY_1);
+        assert.equal(json.competition.winners[0].topPositions.length, expected, `winners[0] at positionsLimit=${positionsLimit}`);
+      }
+    } finally {
+      await app.close();
+    }
+  });
+
   test('squad competition: walletAddress is null, topPositions is [], positionsCount is 0', async () => {
     const app = buildApp([]);
     try {

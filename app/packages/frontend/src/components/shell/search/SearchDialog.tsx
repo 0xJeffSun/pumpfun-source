@@ -59,6 +59,14 @@ export function SearchDialog() {
     <dialog
       ref={dialogRef}
       aria-label="Search for coins and users"
+      onKeyDown={(event) => {
+        if (event.key !== "Escape") return;
+        // A populated search input otherwise clears itself before native
+        // dialog cancellation. The modal owns this key and preserves the draft.
+        event.preventDefault();
+        event.stopPropagation();
+        event.currentTarget.close();
+      }}
       className="mx-auto mt-[12vh] w-[min(560px,calc(100vw-32px))] overflow-hidden rounded-xl border border-border-tertiary bg-bg-secondary p-0 text-text-primary shadow-lg backdrop:bg-black/60"
     >
       <form

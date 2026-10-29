@@ -42,7 +42,9 @@
   "progressReport": "../PROGRESS.md",
   "localReadModels": {
     "callouts": {
-      "operations": ["GET /callout/{calloutId}"],
+      "operations": [
+        "GET /callout/{calloutId}"
+      ],
       "status": "opt-in-public-spot-slice",
       "defaultEnabled": false,
       "qualified": false,
@@ -52,6 +54,34 @@
         "packages/backend/test/callouts-evidence.test.ts"
       ],
       "limits": "Server-owned materialization only; no production absence, ranking, prices, auth or complete operation compatibility claim."
+    },
+    "portfolioBalances": {
+      "operations": [
+        "POST /portfolio-summary/balances"
+      ],
+      "status": "opt-in-public-aggregate-batch-slice",
+      "defaultEnabled": false,
+      "qualified": false,
+      "evidence": [
+        "packages/backend/PORTFOLIO-BALANCES.md",
+        "packages/backend/test/portfolio-balances.test.ts",
+        "packages/backend/test/portfolio-balances-evidence.test.ts"
+      ],
+      "limits": "Supplied aggregate facts only; no valuation, canonical EVM-link discovery, live RPC/provider, owner holdings/perp cash, API key verification or full operation compatibility claim."
+    }
+  },
+  "frontendReadClients": {
+    "portfolioChart": {
+      "operation": "GET /portfolio-summary/chart",
+      "status": "captured-reader-and-explicit-single-attempt-http-port",
+      "qualified": false,
+      "uiIntegrated": false,
+      "evidence": [
+        "reconstruction/portfolio-chart/README.md",
+        "reconstruction/portfolio-chart/contract.json",
+        "tests/original_portfolio_chart.test.mjs"
+      ],
+      "limits": "Website client boundary only; parser and HTTPError remain explicit dependencies; no Ky scheduling, chart aggregation, native backend, auth, UI or feature milestone claim."
     }
   }
 }
