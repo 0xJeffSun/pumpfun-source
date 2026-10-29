@@ -137,7 +137,8 @@ boolean; no server default is invented. The 16 KiB JSON request cap, 16 MB total
 image-byte quota, 128-image quota, 128-metadata quota, error names and statuses
 are local choices. Quotas can be explicitly lowered for tests/development.
 
-Signatures reject obvious content-type mismatches. They do **not** prove that an
+Signatures compare exact bytes, rejecting high-bit lookalikes of the GIF, PNG
+IHDR and WebP markers as well as obvious content-type mismatches. They do **not** prove that an
 image fully decodes, is safe, lacks hidden content, or is malware-free. No image
 decoder, transcoder, scanner, thumbnail pipeline or SVG support is implied.
 

@@ -89,6 +89,8 @@ is a contract decision, not a bug fix.
     `top` carries ranks 1..3 from the active board build; for other phases, `top` is `[]`. For competitions
     in phase `ended`, `winners` carries ranks 1..N (where N is the highest `rankTo` in `prizes`, or 3 if `prizes`
     is empty), with `prize` populated from the matching prize tier; for other phases, `winners` is `[]`.
+    In `GET /competitions/{idOrSlug}`, `top` and `winners` rows slice `topPositions` to the request's
+    `positionsLimit`, like `leaderboard.entries`; the list buckets use the default of 3.
 45. **Struck entry availability in `GET /competitions/:id/entries/:entryId`**: Struck entries (`struck: true`,
     rank 0) are excluded from public boards but remain accessible via direct entry detail lookup, matching the
     contract specification. Member legs are sorted by `pnlUsd` descending.
@@ -105,6 +107,9 @@ is a contract decision, not a bug fix.
 49. **UserStore hydration**: Competition entries and members hydrate profile information (username,
     profileImageUrl, walletAddress, isVerified) from the shared `UserStore` and its synthetic seed
     (`users-seed.json`), preventing divergent user identities. Squad rows set `walletAddress: null` per contract.
+50. **`leaderboard.startSec` and `endSec`**: `startSec` is `startsAt`. `endSec` is the scoring window end the
+    served legs were read at: the last board build (`builtAtMs`, in seconds) while the board is not final, and
+    `endsAt` once `isFinal` is true. Before the first build `builtAtMs` and `endSec` are both 0.
 
 ## Not implemented
 

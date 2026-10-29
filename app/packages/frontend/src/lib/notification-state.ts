@@ -69,7 +69,7 @@ export function copyJson(
   ancestors.add(value);
   try {
     const result: JsonValue = Array.isArray(value)
-      ? value.map((item) => copyJson(item, ancestors))
+      ? Array.from(value, (item) => copyJson(item, ancestors))
       : Object.fromEntries(
           Object.entries(value).map(([key, item]) => [
             key,

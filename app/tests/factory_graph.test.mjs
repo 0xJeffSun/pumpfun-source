@@ -205,6 +205,122 @@ test("malformed source never produces a partial AST result", () => {
   );
 });
 
+test("exports distinguish constant triples from getter pairs and setters", () => {
+  const result = analyzeFactory(`(runtime) => {
+    runtime.s([
+      "first", 0, "not_an_export",
+      "second", 0, 42,
+      "third", () => { throw new Error("getter must not execute"); },
+      "mutable", () => current, (next) => { throw new Error("setter must not execute"); },
+      "functionValue", 0, () => { throw new Error("value must not execute"); },
+      "last", () => last
+    ]);
+  }`);
+  assert.deepEqual(result.exports, [
+    "first",
+    "functionValue",
+    "last",
+    "mutable",
+    "second",
+    "third",
+  ]);
+});
+
+test("export decoding supports empty arrays, repeated names and multiple registrations", () => {
+  assert.deepEqual(analyzeFactory(`(e)=>{e.s([])}`).exports, []);
+  assert.deepEqual(
+    analyzeFactory(`(e)=>{
+    e.s(["z", 0, "value", "a", () => 1]);
+    e.s(["z", () => 2, "é😀", 0, undefined], 42);
+  }`).exports,
+    ["a", "é😀", "z"],
+  );
+});
+
+test("unsupported or incomplete export arrays make no partial name claim", () => {
+  for (const entries of [
+    '["x"]',
+    '["x", 0]',
+    '["x", 1, "not_an_export"]',
+    '["x", -1, "not_an_export"]',
+    '["x", 0, , "y", () => y]',
+    '["x", 0, ...values]',
+    '["x", () => x, ...entries]',
+    "[name, () => x]",
+    '["x", getter]',
+    '["x", false]',
+    '["x", () => x, setter]',
+    '["known", 0, 1, "dynamic", getter]',
+    "entries",
+  ]) {
+    assert.deepEqual(
+      analyzeFactory(`(e)=>{e.s(${entries})}`, "unsupported fixture").exports,
+      [],
+      entries,
+    );
+  }
+});
+
+test("unrelated non-array s calls do not become new analysis failures", () => {
+  assert.deepEqual(
+    analyzeFactory(`(e)=>{
+      e.s(["real", 0, 1]);
+      function unrelated(e) { e.s("ordinary-method-argument"); }
+    }`).exports,
+    ["real"],
+  );
+});
+
+test("captured settings exports match authenticated mixed runtime descriptors", async () => {
+  // Read and parse inert public source only; none of these factories is imported.
+  const root = join(import.meta.dirname, "..");
+  const runtime = await readFile(
+    join(root, "evidence/web/objects/f25d7686d048ae16.js"),
+  );
+  assert.equal(
+    hash(runtime),
+    "b5f9b5199b99ab6c141f4540f0b7d0fe803c4ecf6956849ecb6e59d3d439272e",
+  );
+  const bytes = await readFile(
+    join(root, "evidence/web/objects/11cf0bf8a734ea43.js"),
+  );
+  assert.equal(
+    hash(bytes),
+    "a859077ba48e8afb625cd917a674ace225a0959ad40932f02331402dd5365f83",
+  );
+  const source = new TextDecoder("utf-8", {
+    fatal: true,
+    ignoreBOM: true,
+  }).decode(bytes);
+  for (const { start, end, digest, names } of [
+    {
+      start: 47485,
+      end: 48430,
+      digest:
+        "5adc58d562f652cfc69ab06c0735b0bc196440d952f1f2fc61eaaa8725dd3edf",
+      names: ["C", "L", "M", "O", "q", "s", "u", "V", "W", "X"],
+    },
+    {
+      start: 12934,
+      end: 15396,
+      digest:
+        "00b703deb875b1517888552730f857a14e594ae5d6e0cf6948d55a23731b57e2",
+      names: ["d", "f", "I", "n"],
+    },
+    {
+      start: 32638,
+      end: 40444,
+      digest:
+        "854b2b23846f367dbc1e84904d2954eaac355ef8c5412b32cd7cef39e7340110",
+      names: ["g", "k", "n"],
+    },
+  ]) {
+    const factory = source.slice(start, end);
+    assert.equal(hash(factory), digest);
+    assert.deepEqual(analyzeFactory(factory).exports, names);
+  }
+});
+
 test("variant collisions remain ambiguous instead of resolving arbitrarily", async () => {
   const root = await fixture();
   const reports = await buildGraph(
