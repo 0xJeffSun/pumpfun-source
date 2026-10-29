@@ -1,17 +1,17 @@
 {
   "pump": {
-    "source_reconstruction": "maintained_partial_frontier",
+    "source_reconstruction": "Qualified composed source with original multi-hop fee-accrual calls and strict overflow diagnostics; reconstructed recipe, historical Rust spelling unproven.",
     "historical_source_recovered": false,
     "compiler": "Authenticated macOS v1.44 compiler with official Linux v1.44 SBPF target libraries; historical provenance unresolved",
     "dependencies": "254 checksum-verified locked registry packages (4,176 archive source files); reconstructed pump-token-ext local crate",
     "build_flags": "Recorded standalone-to-workspace recipe; locked offline release build; portable empty-target recipe with pinned SDK and target libraries",
-    "candidate_artifact": "research/pump-final-composition-673-20261028/artifacts/candidate.so",
-    "candidate_sha256": "199fd7379b6881adefd9e54803f75902176c17bded1718bfc1c59b1cf5bc8473",
-    "candidate_symbols_artifact": "research/pump-final-composition-673-20261028/artifacts/unstripped.so",
-    "symbols_sha256": "49df399b8a36a0a60de03e8d55f1417261dc451e44845ca9d17a94040968c680",
+    "candidate_artifact": "research/pump-multihop-accrual-qualification-20261028/artifacts/candidate.so",
+    "candidate_sha256": "c0e29e2d41c30e854f3548b37e87798d516e4e0e7769f40b7d8d16e31429795f",
+    "candidate_symbols_artifact": "research/pump-multihop-accrual-qualification-20261028/artifacts/unstripped.so",
+    "symbols_sha256": "dd73afe77d90d289e9383ee1aa12cdb26608752eb1a1f8b3a4135c0af786cb17",
     "full_byte_equality": false,
     "meaningful_elf_equal": false,
-    "comparison_status": "DIFFERS_PARTIAL_RECONSTRUCTION",
+    "comparison_status": "1019 normalized /188 raw windows, same16 residuals; actual matching warm/cold outputs; no whole meaningful ELF equality.",
     "implemented_handlers": [
       "toggle_create_v2",
       "toggle_mayhem_mode",
@@ -62,10 +62,10 @@
       "remove_quote_control_mint",
       "set_quote_control_mint_reserves"
     ],
-    "comparison_report": "research/pump-final-composition-cold-20261028/builds/cold-01/build-comparison.json",
-    "build_log": "research/pump-final-composition-cold-20261028/builds/cold-01/build.log",
+    "comparison_report": "research/pump-multihop-accrual-qualification-20261028/builds/cold-01/build-comparison.json",
+    "build_log": "research/pump-multihop-accrual-qualification-20261028/builds/cold-01/build.log",
     "validated_cases": 10468,
-    "validation_report": "research/pump-final-composition-673-20261028/runtime/full44.json.gz",
+    "validation_report": "research/pump-multihop-accrual-qualification-20261028/runtime/full44.json.gz",
     "runtime_transaction_fields": 18343,
     "runtime_transaction_count_kind": "serialized observations; not unique transaction or total VM-execution count",
     "verified_transaction_signatures": 27875,
@@ -74,7 +74,7 @@
     "focused_runtime_signature_fields": 465,
     "current_binding_command": "python3 -B scripts/verify_pump_main_checkpoint.py --repo .",
     "main_acceptance_verifier": "scripts/verify_pump_main_checkpoint.py",
-    "checkpoint_manifest_sha256": "df461b8b5fd3ca0be4c842de1e8ab84cbb150a7b5f5fd89de26056d7dd3ea1f1",
+    "checkpoint_manifest_sha256": "d5a7e29ae52b385453e055cc619a1bee700f646123e86507daf35d9be5a2c9dd",
     "normalized_function_matches": 1019,
     "raw_function_matches": 188,
     "total_function_windows": 1035,
@@ -100,27 +100,17 @@
     ],
     "canonical_source_inputs": 65,
     "materialized_workspace_inputs": 66,
-    "source_recipe": "research/pump-final-composition-673-20261028/build.py",
-    "source_binding_verifier": "research/pump-final-composition-673-20261028/verify.py",
-    "source_builder": "research/pump-final-composition-673-20261028/build.py",
+    "source_recipe": "research/pump-multihop-accrual-qualification-20261028/build.py",
+    "source_binding_verifier": "research/pump-multihop-accrual-qualification-20261028/verify.py",
+    "source_builder": "research/pump-multihop-accrual-qualification-20261028/build.py",
     "portable_empty_target_build": true,
     "historical_checkpoint_status": {
       "path": "research/contract-completion-20261028/pump-status-before-closure.json",
       "sha256": "399b68e7dadbe912eb560df88da9b9fc1c659ab41a70e943375f11cba5528877",
       "scope": "Prior r31-era source and receipts remain historical; no signature evidence is relabeled"
     },
-    "validation_notes": [
-      "Same 1,019 normalized / 188 raw memberships; sixteen windows and the whole meaningful ELF remain unequal.",
-      "Composes used create boundaries, common admin wallet validation/CPI order, legacy payment/event ownership and PR673 multi-hop quote-fee snapshot/shared vault admission.",
-      "Two ordinary fresh local-crate builds and an independently executed portable empty-target build repeat both complete outputs. Cold authentication covers 254 locked archives and 4,176 registry source files.",
-      "106 strict focused case records / 318 outcome executions / 465 signature fields include siblings61, create14, admin18 and multihop13, without Source normalization. Separate legacy284 and extension126 pairs are overlapping finite corpora, not additive unique transactions.",
-      "44 suites / 10,468 pairs retain 18,343 serialized transaction fields and 27,875 signature fields; broad diagnostics retain Source/compute exclusions.",
-      "The historical acc5 eight-failure admin control remains unchanged; selected successor passes all eighteen cases. The selected image also passes the PR673 strict admission counterexamples.",
-      "Inherited deliberate blank-line Source alignment is a reconstructed recipe choice. Diagnostic normalized CFG pairing does not award raw blocks or a complete matched function.",
-      "The same fourteen creation fixtures also pass a separate unchanged-adapter replay through the genuine captured Pump loader: 42 signed executions, 84 signature fields and 42 captured allocations. These overlap the 106 focused case records.",
-      "An additive checker verifies all 10,468 saved pairs with every ordered log line retained except complete runtime compute-meter lines; Source/file/line text is unchanged. The frozen broad diagnostic policy remains unchanged. This adds no execution or signature coverage."
-    ],
-    "candidate_packet_manifest_sha256": "02646818f7a4d79b8c99daaa892a210f83f21e8995082f4082fa8cd9440404e4",
+    "validation_notes": "44 fresh captured-loader suites/10468 pairs and strict ordered Source logs pass.106 focused records plus separate overlapping legacy284/extensions126 pass. Twelve counter fixtures/36 signed executions reproduce original diagnostics; selected199f differs on3Source logs. Warm plus independent empty-target build repeat bothC0/DD outputs. No new exact window, historical source or whole-ELF claim.",
+    "candidate_packet_manifest_sha256": "d5a7e29ae52b385453e055cc619a1bee700f646123e86507daf35d9be5a2c9dd",
     "known_behavior_gaps": [],
     "legacy_runtime_cases": 284,
     "legacy_runtime_signature_fields": 568,
@@ -132,19 +122,29 @@
         "sha256": "cdf3c21d9e8e5f9baf8baad5f749a074cfde552daaae6d593a711b908a7a52be",
         "candidate_sha256": "acc5e6eba8c9295386443542847404e55a27d8e837402fb98de8ccffb679125f",
         "scope": "Fresh18 focused cases;8 Token/Token2022 cases differ on coin-ATA validation/CPI order or inner observations. Native controls match. This remains unresolved in acc5; source correction is in progress."
+      },
+      {
+        "kind": "ordered Source diagnostic mismatch",
+        "candidate_sha256": "199fd7379b6881adefd9e54803f75902176c17bded1718bfc1c59b1cf5bc8473",
+        "report": "research/pump-multihop-accrual-qualification-20261028/runtime/counter/counter-witness.json.gz",
+        "sha256": "5b0d3a54bffb4f22cac4c353e1933eab16ada2c4213db651cc03acfb6665a0ed",
+        "parent_source_differences": 3,
+        "scope": "Ten primary synthetic fixture triples; state/errors agree, three selected-parent Source logs differ. Two separate protocol-flag-disabled controls also pass; no reachable-chain claim."
       }
     ],
     "prior_closure_selection": {
-      "path": "research/contract-completion-20261028/pump-status-before-final-composition.json",
-      "sha256": "19f0614dabf55e7d81b20f0e24afe2ff609ebd61e3b90db1d5f6f6015e436473",
-      "scope": "Historical acc5 selection and its eight demonstrated admin witnesses; selected successor passes all eighteen witnesses."
+      "path": "research/contract-completion-20261028/pump-status-before-accrual.json",
+      "sha256": "20b12ca44c2603eafb597078150beb6ea4500f5ab3f05ba57405848f881a2b0f"
     },
-    "captured_create_packet_manifest_sha256": "34ee132b379303b05c0a49439319e59cd0212a76818a3d9b5fd36baa89b318a1",
+    "captured_create_packet_manifest_sha256": "d5a7e29ae52b385453e055cc619a1bee700f646123e86507daf35d9be5a2c9dd",
     "captured_create_cases": 14,
     "captured_create_signature_fields": 84,
     "strict_ordered_log_checker_sha256": "459b40e04a730f01f257005ed705a4f7d576c04f55acd4eca6a3d37c5326cf5e",
-    "strict_ordered_log_report": "research/contract-completion-20261028/pump-final-strict-ordered-logs.json",
-    "strict_ordered_log_pairs": 10468
+    "strict_ordered_log_report": "research/pump-multihop-accrual-qualification-20261028/runtime/full44.strict-logs.json",
+    "strict_ordered_log_pairs": 10468,
+    "accrual_counter_cases": 12,
+    "accrual_counter_executions": 36,
+    "independent_builds": 2
   },
   "pump_amm": {
     "source_reconstruction": "maintained_partial_frontier",

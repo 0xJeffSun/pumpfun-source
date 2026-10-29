@@ -40,7 +40,11 @@
     699,
     702,
     703,
-    704
+    704,
+    714,
+    708,
+    710,
+    722
   ],
   "merges": [
     {
@@ -3383,5 +3387,38 @@
     "source_inputs": 69,
     "native_inputs_sha256": "24e416c49991394bda6374439d05d8f004144a6e5c93492fc5541a78c472a36e",
     "new_windows_awarded": 0
+  },
+  "new_research_and_infrastructure_merges": [
+    {
+      "number": 714,
+      "head": "ba0524261f2140d7aee5d3290f681ad659a888e6",
+      "merge": "bff6f89a3ff0346ad3edd48e56979ff1b0bc9bff",
+      "scope": "Exact69 AMM Windows default host control recipe; first job40792092737 failed vendor checksum JSON before compiler, native24e reproduced; no coveragegain"
+    },
+    {
+      "number": 708,
+      "head": "c1a140f5cc41d27bf1c000c232851ea2717192b0",
+      "merge": "d58bb753597ae5b22bbccecd418ed15a128b06bf",
+      "scope": "Research only;72 freshfocusedexecutions independentlyaudited; no currentSource/imagepromotion or windowgain"
+    },
+    {
+      "number": 710,
+      "head": "dfcd0f3e5201a43e74403f14060bf637e662d8af",
+      "merge": "219e8502f012a379d86ce92bc602abfa081b8b3a",
+      "scope": "Saved AMM Windows path-key compatibility;13local tests passed,1native-Windows-onlytest skipped; saved17462pairs/35418signaturefields reverified; no new compiler/VMexecution"
+    },
+    {
+      "number": 722,
+      "head": "46a3b3c620e92e4f28e12dd7cd948196775afd33",
+      "merge": "e476d5ad1d1b762f3a8a4e681711752e96cc609d",
+      "scope": "Exact-pinned Windows vendor metadata successor;257archives/8437filepins localcontrol; manualjob40795170346 dispatched; no Windows success claimed"
+    }
+  ],
+  "pending_qualified_accrual_promotion": {
+    "review": "research/contract-completion-20261028/pump-accrual-promotion-review.json",
+    "sha256": "e2f1c88935a48b3983297fa2b9321c38900110b4e228a812f56e0042ed5ac011",
+    "candidate_sha256": "c0e29e2d41c30e854f3548b37e87798d516e4e0e7769f40b7d8d16e31429795f",
+    "packet_manifest_sha256": "d5a7e29ae52b385453e055cc619a1bee700f646123e86507daf35d9be5a2c9dd",
+    "new_windows": 0
   }
 }

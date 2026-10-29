@@ -54,30 +54,43 @@ saved object. Independent cryptographic checks cover 20,056 retained transaction
 and 39,062 signature fields. Historical source/host provenance and the admitted
 catalog-encoding caveat remain disclosed in its current proof.
 
-Pump selects the composed creation, admin-wallet, legacy-payment and multi-hop
-admission successor. Its 65 standalone inputs map to 66 actual compiler inputs.
-Two ordinary builds and an independent portable empty-target build repeat both
-199fd/49df outputs. Coverage remains 1,019 normalized / 188 raw windows. All
-10,468 broad pairs, 106 strict focused case records, separate legacy284 pairs and
-extension126 pairs pass. Independent verification checks 27,875 broad signature
-fields and 465 strict focused signature fields, plus the separate overlapping
-legacy/extension records. These are observations, not unique transaction counts.
+Pump selects the [qualified accrual successor](../pump-multihop-accrual-qualification-20261028/README.md),
+which preserves the composed creation, admin-wallet, legacy-payment and multi-hop
+admission fixes. Its 65 standalone inputs map to 66 actual compiler inputs.
+Two actual builds—an ordinary build with fresh local crates and an independent
+portable empty-target build—repeat both c0e29/dd73 outputs. The cold build took
+57.538 seconds and authenticated 254 locked archives and 4,176 source files under
+the unchanged native macOS v1.44/Linux v1.44 SBPF library recipe. Coverage remains
+1,019 normalized / 188 raw windows, with the same sixteen residuals.
 
-The strict cases cover the original Source198/220 creation boundaries, eighteen
-admin witnesses, and thirteen multi-hop fee/admission cases through the captured
-AMM. The fourteen creation fixtures also pass a separate captured-loader replay
-with 42 signed executions and 84 signature fields. The selected image fixes the
-old acc5 eight-failure admin control and the
-parent multi-hop admission priority errors. Their unchanged controls remain
-historical evidence. Inherited blank-line alignment is a reconstructed source
-choice. Broad diagnostics retain Source/compute exclusions; diagnostic normalized
-CFG pairing awards no raw blocks or complete function matches.
+The new source restores two original used `accrue_fees` calls and the post-fill
+stores before the second call. Twelve synthetic counter fixtures provide
+36 signed executions and actual captured-loader observations. Original and new
+images agree on state, errors and ordered logs; the prior selected 199fd image
+differs only on three Source diagnostics. Creator-counter overflow now reports
+the original `lib.rs:2554`, instead of `multi_hop_curve_swap.rs:64`. No mainnet
+reachability or new complete-window match is claimed.
 
-An additive current gate verifies all 10,468 saved pairs with complete ordered
-logs and unchanged Source/file/line text; only complete runtime compute-meter
-lines are excluded. The public controller also checks every fresh shard this
-way. This adds no executions, signatures or matched windows. The frozen broad
-diagnostic producer and its historical policy remain unchanged.
+All 44 fresh suites / 10,468 paired cases pass, with 18,343 serialized transaction
+fields and 27,875 verified signature fields. The six strict focused families
+retain 106 case records / 318 outcome executions / 465 signature fields, plus
+separate overlapping legacy284 pairs / 568 signature fields and extension126
+pairs / 252 signature fields. These are observations, not unique transaction
+counts. The strict cases preserve the creation Source198/220 boundaries,
+eighteen admin witnesses and thirteen multi-hop fee/admission cases through the
+captured AMM. Fourteen creation fixtures also pass a distinct captured-loader
+supplement with 42 signed executions, 84 signature fields and 42 actual loads.
+
+The historical acc5 eight-failure admin control and prior multi-hop admission
+controls remain unchanged. Inherited blank-line alignment is a reconstructed
+source choice; historical Rust spelling is unproven. Diagnostic normalized CFG
+pairing and callee attribution award no raw blocks or complete function matches.
+
+The current gate verifies all 10,468 saved pairs with complete ordered logs and
+unchanged Source/file/line text; only complete runtime compute-meter lines are
+excluded. The public controller applies the same check to every fresh shard.
+The frozen broad diagnostic producer and its historical policy remain unchanged.
+Whole-function and meaningful ELF identity remain unresolved.
 
 AMM selects the checked-constructor source with an explicit target-derived section
 order. Two actual builds, including a cold host/dependency target, repeat 86dbc/7271.
