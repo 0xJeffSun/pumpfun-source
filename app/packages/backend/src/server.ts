@@ -4,7 +4,11 @@ import { loadCalloutsStore } from './callouts-store.js';
 import { loadPositionsStore } from './positions-store.js';
 import { startWithLocalMedia } from './local-media-runtime.js';
 import { loadPortfolioBalancesStore } from './portfolio-balances-store.js';
-const fixtures: Fixture[] = process.env.FIXTURES_FILE ? JSON.parse(readFileSync(process.env.FIXTURES_FILE,'utf8')) : [];
+// The sibling startup loaders (callouts, positions, portfolio balances) all
+// reject malformed UTF-8 with a fatal decoder. Fixtures must fail the same
+// way: a lossy "utf8" read would silently replace corrupted bytes with
+// U+FFFD and start the server serving altered replay content.
+const fixtures: Fixture[] = process.env.FIXTURES_FILE ? JSON.parse(new TextDecoder('utf-8', { fatal: true }).decode(readFileSync(process.env.FIXTURES_FILE))) : [];
 const portfolioBalancesStore = process.env.PORTFOLIO_BALANCES_FILE ? loadPortfolioBalancesStore(process.env.PORTFOLIO_BALANCES_FILE) : undefined;
 const calloutsStore = process.env.CALLOUTS_FILE ? loadCalloutsStore(process.env.CALLOUTS_FILE) : undefined;
 const positionsStore = process.env.POSITIONS_FILE ? loadPositionsStore(process.env.POSITIONS_FILE) : undefined;
