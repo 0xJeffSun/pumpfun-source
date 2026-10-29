@@ -1,4 +1,6 @@
 """The 20-offset display cap must not decide the struct size."""
+import hashlib
+import json
 import sys
 import unittest
 from pathlib import Path
@@ -23,10 +25,8 @@ class StructSizeTests(unittest.TestCase):
 
     def test_archived_helper_is_bound(self):
         raw = correct.HELPER.read_bytes()
-        self.assertEqual(
-            __import__('hashlib').sha256(raw).hexdigest(),
-            '805379ab5b529f77fd9207155f3bf0f19442a818749d3a55152f83007b861310',
-        )
+        # Accept either line-ending form so a CRLF checkout still binds.
+        self.assertIn(hashlib.sha256(raw).hexdigest(), correct.HELPER_SHA256)
         self.assertEqual(raw.replace(b'\r\n', b'\n').decode().count(correct.BEFORE), 1)
 
     def test_display_cap_understates_positive_sizes(self):
@@ -59,6 +59,10 @@ class StructSizeTests(unittest.TestCase):
             if old['window'] == '0xfbc0' and old['base_reg'] == 3
         ]
         self.assertEqual(len(rows), 1)
+        # Multi-offset case: more than 20 distinct offsets, so the display
+        # list is full and the archived size is its last entry + 8.
+        self.assertEqual(len(rows[0][0]['field_offsets']), 20)
+        self.assertEqual(rows[0][0]['field_offsets'][-1] + 8, 215)
         self.assertEqual(rows[0][0]['likely_struct_size'], 215)
         self.assertEqual(rows[0][1]['likely_struct_size'], 231)
 
@@ -69,6 +73,35 @@ class StructSizeTests(unittest.TestCase):
         self.assertIn(215, before)
         self.assertIn(231, after)
         self.assertFalse(before == after)
+
+    def test_validation_json_matches_correct(self):
+        """validation.json is hand-written; every recorded value must be recomputable here."""
+        validation = json.loads((Path(__file__).resolve().parent / 'validation.json').read_text())
+        self.assertEqual(set(validation['archivedHelperSha256'].values()), correct.HELPER_SHA256)
+        self.assertIn(
+            hashlib.sha256(correct.HELPER.read_bytes()).hexdigest(),
+            set(validation['archivedHelperSha256'].values()),
+        )
+        witness = validation['witness']
+        elf = elf_for(witness['program'])
+        for module, key in ((self.archived, 'before'), (self.corrected, 'after')):
+            sizes = [
+                d['likely_struct_size']
+                for d in module.recover_anchor_idl(elf)['deserialization_patterns']
+                if d['window'] == witness['window'] and d['base_reg'] == witness['baseRegister']
+            ]
+            self.assertEqual(sizes, [witness[key]])
+        for program, counts in validation['inferredPositiveSizes'].items():
+            elf = elf_for(program)
+            before = set(self.archived.recover_anchor_idl(elf)['inferred_struct_sizes'])
+            after = set(self.corrected.recover_anchor_idl(elf)['inferred_struct_sizes'])
+            self.assertEqual(
+                counts,
+                {'before': len(before), 'after': len(after),
+                 'added': len(after - before), 'removed': len(before - after)},
+                program,
+            )
+        self.assertEqual(set(validation['inferredPositiveSizes']), set(PROGRAMS))
 
 
 if __name__ == '__main__':
