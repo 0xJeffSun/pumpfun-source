@@ -69,7 +69,8 @@ def retained_body(record,url):
     except (OSError,RuntimeError) as error: raise RetainedCaptureError(f'Retained capture {identity} path cannot be resolved') from error
     try: resolved.relative_to(allowed_resolved)
     except ValueError: raise RetainedCaptureError(f'Retained capture {identity} path escaped evidence objects') from None
-    flags=os.O_RDONLY|getattr(os,'O_BINARY',0)|getattr(os,'O_CLOEXEC',0)|getattr(os,'O_NOFOLLOW',0)
+    # O_NONBLOCK lets a FIFO open without a writer so the regular-file check can reject it.
+    flags=os.O_RDONLY|getattr(os,'O_BINARY',0)|getattr(os,'O_CLOEXEC',0)|getattr(os,'O_NOFOLLOW',0)|getattr(os,'O_NONBLOCK',0)
     try: descriptor=os.open(resolved,flags)
     except OSError as error: raise RetainedCaptureError(f'Retained capture {identity} object unavailable') from error
     try:
