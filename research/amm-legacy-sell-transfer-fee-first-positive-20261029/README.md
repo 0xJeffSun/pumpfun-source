@@ -40,8 +40,7 @@ ATAs; the base mint has no fee, so base deltas are exact.
 - The vault always moves the GROSS total, fee-blind: vault delta is
   -(gross user receipt + 2) in every case (legs gross 1/1/0), e.g.
   tf9000 at 71235 moves vault -12 exactly like nofee at 71235.
-- Each recipient nets gross minus the ceiling withholding
-  ceil(gross * bps / 10000) (capped at maxfee). A 1-unit gross leg
+- Each recipient nets gross minus ceil(gross * bps / 10000) in the executed cases (the user's withheld deltas in TransferFeeAmount match exactly). maxfee=0 removes all withholding. maxfee=1 never binds at the executed amounts. A 1-unit gross leg
   is fully withheld at any nonzero bps (ceil(1 * bps / 10000) = 1),
   so legs net 0/0/0 in every tf case here.
 - The user's first positive net receipt lands at the first amount
@@ -51,8 +50,7 @@ ATAs; the base mint has no fee, so base deltas are exact.
   bps 6667 -> G = 4 (38358, since gross 3 withholds 3); bps 8000
   -> G = 5 (43837, since gross 4 withholds 4); bps 9000 -> G = 10
   (71235, since gross 9 withholds 9 and gross 10 withholds 9).
-  The step from one gross level to the next is exactly the nofee
-  ladder (27398 -> 32878 -> 38358 -> 43837 -> 71235).
+  At each probed pair the tf boundary falls on the same adjacent amounts as the nofee gross steps 1->2 (27397/27398), 2->3 (32877/32878), 3->4 (38357/38358), 4->5 (43836/43837) and 9->10 (71234/71235). The gross 5->9 steps are not probed.
 - Cap 0 restores the nofee boundary exactly: tf100max0 at 21918
   nets 0 with legs 1/1/0, at 21919 nets 1 with legs 1/1/0 -- no
   withholding at all. Cap 1 does not move the tf100 boundary:
@@ -63,15 +61,10 @@ ATAs; the base mint has no fee, so base deltas are exact.
   (withheld 5), vault -12 in both, legs 0/0/0.
 - The error bands are fee-blind: tf5000 and tf10000 give the same
   6053 at 5479, 6023 at 5480 and 16438, and success at 16439 as
-  nofee -- the band is driven by the curve quote and the
-  fee-subtraction underflow, both computed before any transfer fee
-  is withheld from the legs.
-- tf10000 never pays a positive net receipt: at 100000 the user
-  nets 0 (gross 15 fully withheld), vault -17, legs 0/0/0.
+  nofee. In every error receipt the program fails before any Token-2022 TransferChecked is invoked (6053 at original global_config.rs:326, 6023 at sell.rs:179/183), so no transfer fee is ever applied in these cases. The underlying cause of the bands is not isolated here.
+- tf10000 pays no positive net receipt at either executed success amount: 16439 (gross 0) and 100000 (user nets 0, gross 15 fully withheld, vault -17, legs 0/0/0). That 10000 bps withholds every gross amount follows from the ceiling rule and is not exhaustively executed.
 - All 3 images agree on every case. Error cases roll back
-  everything except the payer's 5,000 fee. Success cases also
-  charge the payer only 5,000 (legacy sell creates no volume
-  accumulator, unlike buy).
+  everything except the payer's 5,000 fee. Success cases also charge the payer only 5,000 lamports (no account creation is observed in these sell receipts).
 
 Error sites (log paths as emitted by each image):
 
@@ -83,6 +76,14 @@ Error sites (log paths as emitted by each image):
 - tf10000-amount16438: original programs/pump-amm/src/instructions/swap/sell.rs:183. Error Code: Overflow. Error Number: 6023. Error Message: Overflow.; control programs/pump-amm/src/legacy_sell.rs:150. Error Code: Overflow. Error Number: 6023. Error Message: Overflow.; candidate programs/pump-amm/src/legacy_sell.rs:150. Error Code: Overflow. Error Number: 6023. Error Message: Overflow.
 
 ## Limits
+
+- `producer.py` regenerated these receipts on the author's machine: it hard-codes
+  `~/workspace/pumpfun-sparse` and reads the control/candidate images from
+  `~/workspace/slop-verify`, so it does not run from this packet unmodified. The control
+  and candidate are the gunzipped in-repo #424/#427 artifacts
+  (`research/amm-multi-hop-group-slice-recovery/artifacts/candidate.so.gz`,
+  `research/amm-transfer-fee-diagnostic-recovery/artifacts/candidate.so.gz`), which
+  `verify.py` reads directly.
 
 Offline LiteSVM synthetic fixture only (shared v1/v2 fixture,
 clock slot 100). No source change, build, or whole-program

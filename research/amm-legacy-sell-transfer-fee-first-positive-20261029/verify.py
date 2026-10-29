@@ -2,8 +2,8 @@
 
 Checks, independently of the producer:
 - packet manifest lists exactly the files present, with matching hashes;
-- repository inputs (images, harness scripts, fixture) hash to the
-  recorded values;
+- repository inputs (original image, harness scripts, fixture) hash to the
+  recorded values; control/candidate are the in-repo #424/#427 artifacts;
 - 39 cases x 3 images = 117 receipts, ordered, with contexts matching
   the report, stored as 12 parts (11 x 10 + 7), each under 25MB;
 - every transaction verifies (all signatures valid, 1 signature
@@ -35,7 +35,9 @@ if not __debug__:
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
-WS = Path.home() / "workspace/slop-verify"
+# Control and candidate are the merged #424 and #427 images stored in the repository.
+CONTROL_GZ = ROOT / "research/amm-multi-hop-group-slice-recovery/artifacts/candidate.so.gz"
+CANDIDATE_GZ = ROOT / "research/amm-transfer-fee-diagnostic-recovery/artifacts/candidate.so.gz"
 IMAGES = ("original", "control", "candidate")
 
 
@@ -81,8 +83,8 @@ def main():
     assert report["mismatches"] == []
     assert report["image_sha256"] == {
         "original": sha((ROOT / "evidence/original/pump_amm/deployed.so").read_bytes()),
-        "control": sha((WS / "control.so").read_bytes()),
-        "candidate": sha((WS / "candidate.so").read_bytes()),
+        "control": sha(gzip.decompress(CONTROL_GZ.read_bytes())),
+        "candidate": sha(gzip.decompress(CANDIDATE_GZ.read_bytes())),
     }
     for name, digest in report["input_sha256"].items():
         assert sha((ROOT / name).read_bytes()) == digest, name

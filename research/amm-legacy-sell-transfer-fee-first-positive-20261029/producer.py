@@ -22,7 +22,7 @@ G satisfies ceil(G * bps / 10000) = G - 1:
 
 - nofee gross ladder (re-pinned): receipt 1 at 21919, 2 at 27398,
   3 at 32878, 4 at 38358, 5 at 43837, 10 at 71235;
-- bps <= 5000 -> first positive net at gross 2 (27398): tf100, tf5000;
+- bps 100 and 5000 (executed) -> first positive net at gross 2 (27398);
 - bps 5001 -> gross 3 (32878): ceil(3*5001/10000) = 2, net 1, while
   gross 2 withholds ceil(2*5001/10000) = 2, net 0;
 - bps 6667 -> gross 4 (38358): ceil(4*6667/10000) = 3, net 1, while
@@ -37,10 +37,8 @@ G satisfies ceil(G * bps / 10000) = G - 1:
   27398 -> 1; the gross-1 unit was already fully withheld uncapped);
 - the error bands are fee-blind: tf5000 and tf10000 give the same
   6053 at 5479, 6023 at 5480 and 16438, and success at 16439 as nofee
-  (the band is driven by the curve quote and the fee-subtraction
-  underflow, both computed before any transfer fee is withheld);
-- tf10000 never pays a positive net receipt: at 100000 the user nets 0
-  (gross 15 fully withheld), vault -17, legs 0/0/0.
+  (every error receipt fails before any Token-2022 transfer is invoked; the cause of the bands is not isolated here);
+- tf10000 pays no positive net at the executed amounts 16439 (gross 0) and 100000 (gross 15 fully withheld, vault -17, legs 0/0/0).
 
 All cases are pinned on all 3 images (original / #424 control /
 #427 candidate). Every success case charges the payer exactly 5,000
@@ -359,12 +357,11 @@ report = {"schema": 1, "packet": "amm-legacy-sell-transfer-fee-first-positive-20
           "scope": ("First-positive-net-receipt boundaries of the legacy sell "
                     "small-amount band under quote transfer fees. #15 left "
                     "the tf first-positive amount unmeasured (only that "
-                    "tf100 delays it past 21919); this packet bisects the "
+                    "tf100 delays it past 21919); this packet pins hard-coded adjacent-amount pairs on the "
                     "nofee gross ladder and pins the first positive net "
                     "receipt for bps 100, 5000, 5001, 6667, 8000, 9000, "
                     "caps 0 and 1, plus fee-blindness of the 6053/6023 "
-                    "bands under tf5000/tf10000. Fresh VM per case per "
-                    "image. Receipts are stored as parts to stay under "
+                    "bands under tf5000/tf10000. One cached VM per image, reset before each case (acquire_harness; PUMP_AMM_FRESH_VM not set). Receipts are stored as parts to stay under "
                     "GitHub's 25MB web-upload limit; verify.py reads them "
                     "in order. Snapshots cover non-executable accounts "
                     "only. The quote mint carries the transfer-fee "
@@ -467,8 +464,7 @@ ATAs; the base mint has no fee, so base deltas are exact.
   nofee -- the band is driven by the curve quote and the
   fee-subtraction underflow, both computed before any transfer fee
   is withheld from the legs.
-- tf10000 never pays a positive net receipt: at 100000 the user
-  nets 0 (gross 15 fully withheld), vault -17, legs 0/0/0.
+- tf10000 pays no positive net at the executed amounts 16439 (gross 0) and 100000 (gross 15 fully withheld, vault -17, legs 0/0/0).
 - All 3 images agree on every case. Error cases roll back
   everything except the payer's 5,000 fee. Success cases also
   charge the payer only 5,000 (legacy sell creates no volume
