@@ -1,6 +1,7 @@
 "use client";
 
 import { type FormEvent, useState } from "react";
+import { HolderRewardsPublicBalances } from "./holder-rewards/public-balances";
 import { RewardSummary } from "../components/rewards/RewardSummary";
 import {
   deriveHolderRewardsAddress,
@@ -16,7 +17,7 @@ const UNKNOWN_REWARDS = [
   {
     label: "Claimed rewards",
     amount: null,
-    explanation: "No payout history is loaded in this offline inspector.",
+    explanation: "No payout history is loaded in this inspector.",
   },
   {
     label: "Claimable rewards",
@@ -183,6 +184,8 @@ export default function HolderRewardsInspector() {
         </section>
       )}
 
+      {result?.ok && <HolderRewardsPublicBalances key={result.holderRewardsPda} address={result.holderRewardsPda} />}
+
       <section aria-labelledby="holder-rewards-status-heading">
         <div className="mb-3">
           <h2 className="text-xl font-semibold tracking-tight text-text-primary" id="holder-rewards-status-heading">
@@ -197,7 +200,7 @@ export default function HolderRewardsInspector() {
 
       <section className="rounded-2xl border border-border-secondary bg-bg-secondary p-5 sm:p-7" aria-labelledby="holder-rewards-boundary-heading">
         <h2 className="text-lg font-semibold text-text-primary" id="holder-rewards-boundary-heading">
-          Offline trust boundary
+          Rewards trust boundary
         </h2>
         <ul className="mt-3 grid gap-2 pl-5 text-sm leading-6 text-text-tertiary marker:text-text-accent">
           <li>Mint existence and Pump-coin status are not checked.</li>
@@ -205,7 +208,7 @@ export default function HolderRewardsInspector() {
           <li>No wallet is connected and no transaction can be signed or submitted.</li>
         </ul>
         <button className="mt-5 min-h-11 w-full cursor-not-allowed rounded-xl border border-border-tertiary bg-bg-tertiary px-4 text-sm font-semibold text-text-muted sm:w-auto" type="button" disabled>
-          Claim unavailable in offline reconstruction
+          Claim unavailable
         </button>
       </section>
 

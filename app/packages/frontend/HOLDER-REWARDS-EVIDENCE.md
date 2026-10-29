@@ -1,3 +1,5 @@
+> Current extension: [HOLDER-PUBLIC-BALANCES.md](HOLDER-PUBLIC-BALANCES.md) adds an explicit public account read using the existing Solana RPC service. The offline derivation and unavailable reward/claim values below are preserved. No fees API, reward eligibility or authenticated behavior is established by public holdings.
+
 # Holder Rewards offline inspector evidence
 
 This document scopes the local `/holder-rewards` reconstruction. It supports
