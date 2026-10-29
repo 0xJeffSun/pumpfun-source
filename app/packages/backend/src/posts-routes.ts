@@ -17,7 +17,9 @@ const POST_ID = /^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-
  * The previous parsing silently truncated fractional values and silently
  * fell back to the default for non-numeric or non-finite values, so
  * limit=1.5 served one row and limit=abc served the default page, both
- * with 200. A supplied value must parse to a safe integer. Out-of-range
+ * with 200. A supplied value must parse to a safe integer; an empty or
+ * whitespace-only value is not an integer literal either (Number('') is 0,
+ * so it would otherwise read as limit=0 / offset=0). Out-of-range
  * safe integers keep the existing clamp behavior (limit capped at 200,
  * offset at 10000, negative offset at 0, as the existing negative-offset
  * test documents). Returns null for an invalid supplied value.
@@ -31,6 +33,7 @@ function pageValue(
 ): number | null {
   const raw = qs[field];
   if (raw === undefined) return fallback;
+  if (raw.trim() === '') return null;
   const parsed = Number(raw);
   if (!Number.isSafeInteger(parsed)) return null;
   return Math.min(maximum, Math.max(minimum, parsed));

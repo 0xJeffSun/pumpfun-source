@@ -66,12 +66,23 @@ export function rejectDuplicateQueryKeys(request: { url: string }, reply: Fastif
   return false;
 }
 
-/** Both user read contracts bound offset/limit to JavaScript safe integers. */
+/**
+ * Both user read contracts bound offset/limit to JavaScript safe integers.
+ * An empty or whitespace-only value is not an integer literal (Number('') is
+ * 0, so it would otherwise read as offset=0 / limit=0) and is rejected like
+ * any other non-integer, matching /v1/pnl-leaderboard.
+ */
+function userPageValue(raw: string | undefined): number | null | undefined {
+  if (raw === undefined) return undefined;
+  if (raw.trim() === '') return null;
+  const parsed = Number(raw);
+  return Number.isSafeInteger(parsed) ? parsed : null;
+}
+
 function userPagination(qs: Record<string, string | undefined>) {
-  const offset = qs.offset === undefined ? undefined : Number(qs.offset);
-  const limit = qs.limit === undefined ? undefined : Number(qs.limit);
-  if ((offset !== undefined && !Number.isSafeInteger(offset)) ||
-      (limit !== undefined && !Number.isSafeInteger(limit))) return null;
+  const offset = userPageValue(qs.offset);
+  const limit = userPageValue(qs.limit);
+  if (offset === null || limit === null) return null;
   return { offset, limit };
 }
 

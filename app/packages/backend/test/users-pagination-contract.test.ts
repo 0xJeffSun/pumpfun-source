@@ -19,7 +19,18 @@ test('both user pagination declarations permit exactly the safe-integer range wi
   }
 });
 
-test('real HTTP user list/search rejects fractional, nonfinite and unsafe pagination before reading the store', async (t) => {
+test('no user or posts pagination declaration allows an empty value', () => {
+  for (const [path, item] of Object.entries(contract.paths as Record<string, { get?: { parameters?: { name: string; allowEmptyValue?: boolean }[] } }>)) {
+    if (!path.startsWith('/users') && !path.startsWith('/posts/')) continue;
+    for (const parameter of item.get?.parameters ?? []) {
+      if (parameter.name === 'offset' || parameter.name === 'limit') {
+        assert.notEqual(parameter.allowEmptyValue, true, `${path} ${parameter.name}`);
+      }
+    }
+  }
+});
+
+test('real HTTP user list/search rejects empty, fractional, nonfinite and unsafe pagination before reading the store', async (t) => {
   const store = new UserStore([row]);
   let reads = 0;
   const list = store.list.bind(store), search = store.search.bind(store);
@@ -29,7 +40,8 @@ test('real HTTP user list/search rejects fractional, nonfinite and unsafe pagina
   t.after(() => app.close());
   const base = await app.listen({ port: 0, host: '127.0.0.1' });
   for (const route of routes) for (const field of ['offset', 'limit']) {
-    for (const value of ['1.5', '-1.5', 'NaN', 'Infinity', '-Infinity', 'not-a-number',
+    // '' and whitespace: Number('') === 0, so an empty value must not read as 0.
+    for (const value of ['', ' ', '1.5', '-1.5', 'NaN', 'Infinity', '-Infinity', 'not-a-number',
       String(Number.MAX_SAFE_INTEGER + 1), String(Number.MIN_SAFE_INTEGER - 1)]) {
       const response = await fetch(`${base}${route}?${new URLSearchParams({ [field]: value })}`, { headers });
       assert.equal(response.status, 400, `${route} ${field}=${value}`);
