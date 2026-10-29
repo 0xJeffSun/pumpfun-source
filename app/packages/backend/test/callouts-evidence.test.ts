@@ -65,3 +65,65 @@ test("single-callout contract binding and coverage claims remain exact and unqua
   const client = readFileSync(new URL(records[1].file, root), "utf8");
   assert.equal(client.slice(3530, 3556), '"GET /callout/{calloutId}"');
 });
+
+test("callout-list binding, client policy and response knowledge are source-bound without qualification", () => {
+  const spec = JSON.parse(
+    readFileSync(new URL("contracts/developer.openapi.json", root), "utf8"),
+  );
+  const bindings = JSON.parse(
+    readFileSync(new URL("contracts/developer-bindings.json", root), "utf8"),
+  );
+  const coverage = JSON.parse(
+    readFileSync(new URL("contracts/coverage.json", root), "utf8"),
+  );
+  const operation = "GET /callout/list/{userId}";
+  const binding = bindings.bindings.find(
+    (row: { operation: string }) => row.operation === operation,
+  );
+  assert.equal(binding.scope, "content.read");
+  assert.equal(binding.origin.websiteCallOrigin, "unresolved");
+  assert.equal(binding.implemented, false);
+  assert.equal(binding.qualified, false);
+  assert.equal(coverage.developerApi.implementedNatively, 0);
+  assert.equal(coverage.developerApi.qualified, 0);
+  assert.ok(coverage.localReadModels.callouts.operations.includes(operation));
+  const contract = readFileSync(new URL(records[0].file, root), "utf8");
+  assert.equal(
+    contract.slice(74780, 74840),
+    '"GET /callout/list/{userId}":(0,s.publicRead)("content.read"',
+  );
+  const client = readFileSync(new URL(records[1].file, root), "utf8");
+  assert.equal(client.slice(3021, 3049), '"GET /callout/list/{userId}"');
+  const factory = client.slice(records[1].start, records[1].end);
+  assert.ok(
+    factory.includes(
+      'limit:i=30,sortBy:n="TIMESTAMP",sortOrder:r="DESC",pageToken:l,includeMembers:s=!1,window:o',
+    ),
+  );
+  assert.ok(
+    factory.includes(
+      "pageToken:l||void 0,includeMembers:s||void 0,window:o||void 0",
+    ),
+  );
+  const route = spec.paths["/callout/list/{userId}"].get;
+  assert.equal(route["x-api-scope"], "content.read");
+  assert.equal(
+    route.parameters.find((p: { name: string }) => p.name === "limit").schema
+      .default,
+    undefined,
+  );
+  const response = route.responses[200].content["application/json"].schema;
+  assert.deepEqual(response.required, ["callouts", "nextPageToken"]);
+  assert.match(
+    response.properties.nextPageToken.description,
+    /Empty string on the last page/,
+  );
+  assert.match(
+    response.properties.callouts.items.properties.user_uuid.description,
+    /always empty on the list read/,
+  );
+  assert.match(
+    response.properties.callouts.description,
+    /page on nextPageToken, not on array length/,
+  );
+});
