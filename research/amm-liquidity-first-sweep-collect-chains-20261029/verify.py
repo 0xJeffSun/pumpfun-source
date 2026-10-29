@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 """Independent re-verification for amm-liquidity-first-sweep-collect-chains-20261029.
 
-Checks, from the packet files alone (plus the three program images):
+Checks, from the packet files alone (plus the three program images retained in the
+repository: evidence/original/pump_amm/deployed.so and the two
+candidate.so.gz artifacts named in IMAGE_PATHS, hashed decompressed):
 - MANIFEST.json lists every packet file with a matching sha256.
- - runtime/report.json.gz: 17 cases, 198 receipts, 20 parts
+- runtime/report.json.gz: 17 cases, 198 receipts, 20 parts
   (19x10 + 8), part sha256/byte counts match the part files.
 - Every receipt transaction parses (solders) and all signatures verify.
 - Every receipt's recorded before/after snapshots reproduce the
@@ -16,20 +18,23 @@ Checks, from the packet files alone (plus the three program images):
   decoded event fields (deposit/withdraw base/quote, v2 buy/sell,
   legacy buy disc/len, sweep amount/bucket/recipient, collect
   fee/creator/vault-ATA/dest).
- - A second collect after a full drain is a silent no-op (0 events,
-  payer 5,000 only), as is a collect after a protocol-only sweep
-  with an empty creator vault ATA; failure steps roll back every
-  watched account except the fee payer (fee 5,000) and carry the
-  expected error code plus the recorded per-image site line in
-  their logs.
-  Site lines are checked per image, never compared across images,
-  because original and rebuilt sources differ in line numbers.
+- Token deltas for every watched token account NOT listed in a
+  step's expected deltas must be exactly zero (this is what pins
+  e.g. the untouched protocol ATA and DEST outside sweep/collect).
+- Silent no-op collects (no error, 0 events: the second collect
+  after a full drain, and the collect after a protocol-only sweep
+  with an empty creator vault ATA) leave every watched account
+  except the fee payer unchanged; the payer pays 5,000.
+- No step in this packet is expected to fail; the error-code,
+  rollback and per-image site-line checks below are generic and
+  vacuous for the recorded cases (every expected error is None).
 - The observed surface of every case (step, error, event count, and
   snapshots with fee-payer lamports zeroed) is identical across the
   original, control, and candidate images.
 - The three program images hash to the values recorded in the report.
 
-Usage: python3 verify.py   (run from this packet directory)
+Usage (from the repository root):
+    python3 -I -B research/amm-liquidity-first-sweep-collect-chains-20261029/verify.py
 """
 import base64
 import gzip
@@ -43,12 +48,13 @@ from solders.pubkey import Pubkey
 from solders.transaction import Transaction
 
 ROOT = Path(__file__).resolve().parent
-WS = Path.home() / "workspace/slop-verify"
-SPARSE = Path.home() / "workspace/pumpfun-sparse"
+REPO = ROOT.parents[1]
+# The three program images are retained in the repository; the two
+# rebuilt images are stored gzip-compressed and hashed decompressed.
 IMAGE_PATHS = {
-    "original": SPARSE / "evidence/original/pump_amm/deployed.so",
-    "control": WS / "control.so",
-    "candidate": WS / "candidate.so",
+    "original": REPO / "evidence/original/pump_amm/deployed.so",
+    "control": REPO / "research/amm-multi-hop-group-slice-recovery/artifacts/candidate.so.gz",
+    "candidate": REPO / "research/amm-transfer-fee-diagnostic-recovery/artifacts/candidate.so.gz",
 }
 PAYER_KEY = Pubkey.from_string("DXyM8yAHqpMzDtvwz5DXoEUQmPxjJPMKCASCPhLMKpEx")
 POOL = Pubkey.from_string("GseMAnNDvntR5uFePZ51yZBXzNSn7GdFPkfHwfr6d77J")
@@ -176,7 +182,10 @@ def main():
     if report["mismatches"] != []:
         fail(f"mismatches recorded: {report['mismatches']}")
     for name, path in IMAGE_PATHS.items():
-        if sha(path.read_bytes()) != report["images"][name]:
+        data = path.read_bytes()
+        if path.suffix == ".gz":
+            data = gzip.decompress(data)
+        if sha(data) != report["images"][name]:
             fail(f"image hash mismatch {name}")
     receipts = []
     for part in report["parts"]:
@@ -219,6 +228,9 @@ def main():
                 for role, want in exp["deltas"].items():
                     if tok_delta(rec, ROLE_KEY[role]) != want:
                         fail(f"{tag}: delta {role} {tok_delta(rec, ROLE_KEY[role])} != {want}")
+                for role, key in ROLE_KEY.items():
+                    if role not in exp["deltas"] and tok_delta(rec, key) != 0:
+                        fail(f"{tag}: unlisted {role} moved {tok_delta(rec, key)}")
                 for role, want in exp.get("lam_after", {}).items():
                     got = rec["after"][str(ROLE_KEY[role])]
                     if got is None or got["lamports"] != want:
@@ -230,7 +242,13 @@ def main():
                     fail(f"{tag}: pool {pool_state(rec['after'][str(POOL)])} != {exp['pool_after']}")
                 if vol_state(rec["after"][str(VOLUME)]) != exp["volume"]:
                     fail(f"{tag}: volume {vol_state(rec['after'][str(VOLUME)])} != {exp['volume']}")
-                if exp.get("rollback"):
+                # A silent no-op collect (no error, 0 events) must leave every
+                # watched account except the fee payer unchanged and cost 5,000.
+                silent_noop = (rec["step"] == "col" and exp["error"] is None
+                               and exp["events"] == 0)
+                if silent_noop and exp["dPAYER"] != -5000:
+                    fail(f"{tag}: silent no-op collect expected dPAYER {exp['dPAYER']}")
+                if exp.get("rollback") or silent_noop:
                     for k, b in rec["before"].items():
                         if k == str(PAYER_KEY):
                             continue
@@ -276,7 +294,7 @@ def main():
             for rec, site in zip(recs, sites):
                 if site is not None and site not in "\n".join(rec["logs"]):
                     fail(f"{label}/{image}: recorded site line not in logs: {site}")
-    print("PASS: 17 cases, 198 receipts, 20 parts, 3 images agree (signatures, deltas, events, error codes/sites, rollback)")
+    print("PASS: 17 cases, 198 receipts, 20 parts, 3 images agree (signatures, deltas, unlisted zero deltas, events, silent no-op collects)")
 
 
 if __name__ == "__main__":
