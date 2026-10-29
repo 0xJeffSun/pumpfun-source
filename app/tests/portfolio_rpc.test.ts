@@ -260,7 +260,6 @@ test("rejects unexpected token programs, owners and parsed account states", asyn
     await assert.rejects(
       readPortfolioWithRpc(WALLET, call, "rpc.example.com"),
       PortfolioRpcError,
-  readLivePortfolio,
     );
   }
 });
@@ -297,7 +296,6 @@ test("fails closed on malformed RPC quantities and inventories", async () => {
     await assert.rejects(
       readPortfolioWithRpc(WALLET, call, "rpc.example.com"),
       PortfolioRpcError,
-  readLivePortfolio,
     );
   }
   const { call: wrongGenesis } = fixtureCall({ genesis: "devnet" });
