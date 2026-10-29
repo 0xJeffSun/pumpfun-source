@@ -8,7 +8,11 @@ export function registerCalloutRoutes(
 ): void {
   app.get("/v1/callout/:calloutId", async (request, reply) => {
     // No query behavior is documented for this operation. Do not pretend viewer/filter hints work.
-    if (new URLSearchParams(request.url.split("?")[1] ?? "").size !== 0) {
+    const queryStart = request.url.indexOf("?");
+    if (
+      queryStart !== -1 &&
+      new URLSearchParams(request.url.slice(queryStart + 1)).size !== 0
+    ) {
       return reply
         .code(501)
         .send({
