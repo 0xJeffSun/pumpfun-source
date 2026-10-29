@@ -29,10 +29,10 @@ export default async function LivePage() {
           <p className="eyebrow">Archived first-party evidence</p>
           <h1 id="live-title">Live discovery</h1>
           <p className="description">
-            Inspect the first five cards of the captured Most viewers section,
-            in captured order.
-            Records are historical, read-only and never refreshed from a
-            production livestream service.
+            Browse all 42 cards in the captured Most viewers section. Captured
+            order, sorting and page controls apply only to this archive. Records
+            are historical, read-only and never refreshed from a production
+            livestream service.
           </p>
         </div>
         <div className="live-safety-badge" aria-label="Live status boundary">
