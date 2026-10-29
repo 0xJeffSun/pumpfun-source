@@ -434,3 +434,16 @@ test("product entrypoint is fixed to unavailable adapter and contains no credent
     /<(?:input|form|textarea)\b|dangerouslySetInnerHTML|fetch\(|localStorage|sessionStorage|window\.open\(/,
   );
 });
+
+test("closing synchronously on loading does not leave an orphan timer", async () => {
+  const clock = manualTimer();
+  let reads = 0;
+  const controller = new AuthDialogController({ read: async () => { reads++; return synthetic(); } }, { timer: clock.timer, allowSynthetic: true });
+  controller.subscribe(() => { if (controller.getSnapshot().status === "loading") controller.close(); });
+  controller.open();
+  await flush();
+  assert.equal(controller.getSnapshot().status, "closed");
+  assert.equal(clock.tasks.size, 0);
+  assert.equal(reads, 0);
+  controller.dispose();
+});
