@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "files": {
+    "README.md": "bef0ecb43bb73ec0ee7f4a5490a8176858c1834e6e63ae66225e826e8f51463f",
+    "verify.py": "a8d0928a50a701f2df55c6751b5c4b02390d4edabba24adecab5ee5b639eadd4",
+    "test_verify.py": "f04c55fd6b9da22161cd85a8189fa691b27be23cc23599fe9a2590ded1c789ab",
+    "source.patch": "193f6d056192bac14bdcc2e32945a01836e91657a457754e24e40aee65a0d282",
+    "overlay/sell_v2.rs": "f1f484c50a792c82fba414dff31b6bfc55f03cbec54d7115782c60ad5870b45d",
+    "STATIC-PROOF.json": "797735d133750d4d262509f2a68c344e2822d052b27407ae53b33943269a5bfb",
+    "VALIDATION.json": "f3cbc3ed02043704e18958de0d15396778d1ee7023af1c829b7748a7bef79e7f",
+    "COMMON-PYTHON-CHECKS.json": "1589632989a9ae2221c909669f3cf8f2097bdb8c2b4a64216addb47ac41af107"
+  },
+  "not_included": "Original captures and current selected ELF/source are authenticated existing inputs; no ELF is duplicated."
+}
