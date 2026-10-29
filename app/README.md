@@ -118,6 +118,11 @@ for source provenance and the local-data contract.
 
 ## Live Solana portfolio
 
+The separate [captured mint-position reader](reconstruction/positions-by-mint/README.md)
+recovers the original 200-mint batches, response hooks, quote-admission guard and
+lookup helpers with real loopback HTTP checks. It is not connected to this RPC
+UI and does not implement prices, PnL, indexing or native API compatibility.
+
 `/portfolio` accepts a public Solana address and reads current mainnet account
 data through a server-owned JSON-RPC endpoint. It reports SOL lamports, separate
 SPL Token and Token-2022 accounts, exact integer-derived quantities, independent

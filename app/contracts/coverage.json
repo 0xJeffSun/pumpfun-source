@@ -22,7 +22,18 @@
   "frontend": {
     "scaffolded": true,
     "visuallyQualifiedRoutes": 0,
-    "behaviorQualifiedRoutes": 0
+    "behaviorQualifiedRoutes": 0,
+    "positionsByMintReader": {
+      "status": "captured-reader-normalizer-and-explicit-local-http-port",
+      "qualified": false,
+      "uiIntegrated": false,
+      "evidence": [
+        "reconstruction/positions-by-mint/README.md",
+        "reconstruction/positions-by-mint/contract.json",
+        "tests/original_positions_by_mint.test.mjs"
+      ],
+      "limits": "Static client workflow and synthetic loopback HTTP only; no native API, price/PnL, indexer, wallet auth, full React hook or UI qualification."
+    }
   },
   "sdk": {
     "version": "4.3.1",
