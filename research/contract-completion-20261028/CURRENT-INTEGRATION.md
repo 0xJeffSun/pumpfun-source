@@ -236,3 +236,24 @@ retains all 295 original native evidence members and their exact inner seal. Its
 saved reader and five corruption controls pass from physically copied published
 inputs only. Historical and corrected PR831 verifier views remain distinct; old
 recipes and verifiers are not executed or relabeled as current native provenance.
+
+Ten further incoming contract proof/data PRs (#819, #821, #823, #851, #852,
+#879, #881, #884, #889 and #890) are merged, with #908 preserving #884's
+original ancestry. The eight Mayhem packets add 1,510 disjoint historical data
+bytes to the reviewed 21,796-byte baseline, reaching 23,306/26,180. This includes
+1,446 new raw-equal bytes and 64 mapped pointer bytes. The formatting-record
+claim is corrected from 18 to 16 bytes after following its actual branch path;
+seven other original observation reports remain byte exact. Saved positives,
+69 tests and 24 optimized-mode refusals pass on the composed reviewed trees.
+
+The accumulator-close lifecycle proof now binds all 16 cases, 102 signed
+receipts, eight wires, complete expected-step membership and 54 chain joins.
+Ten coherent corruption controls reject substitutions accepted by the old
+reader. Its historical images remain distinct from the selected AMM image.
+The sealed historical r37 packet is restored by moving an unrelated unchanged
+patch into its originating packet; its manifest and original evidence stay
+unchanged. [Exact heads, validation and limits](pr-review-batch19-independent.json)
+record these outcomes. No VM/compiler execution or source selection follows
+from these PR reviews, and no complete code window is added. The final observed
+main checks were queued; meaningful ELF exactness remains three of five, with
+sixteen Pump and one AMM function still unmatched.
