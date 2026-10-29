@@ -1,0 +1,48 @@
+{
+  "base_revision": "537b68401fb3e437017fd746b7ff471c6a4f2250",
+  "checks": {
+    "special_operand_regressions": "2 passed",
+    "relative_call_dependency_regressions": "3 passed",
+    "original_captures": "9 passed",
+    "comparator_tests": "6 passed"
+  },
+  "real_counts": {
+    "pump": {
+      "callx": 144,
+      "neg64": 25,
+      "be": 0
+    },
+    "pump_amm": {
+      "callx": 123,
+      "neg64": 24,
+      "be": 0
+    },
+    "mayhem": {
+      "callx": 93,
+      "neg64": 30,
+      "be": 8
+    }
+  },
+  "mayhem_regeneration": {
+    "windows": 441,
+    "changed_instruction_mnemonics": 131,
+    "decompressed_disassembly_sha256": {
+      "before": "781e43f76805d59b809b910630913bedc91cc5286c3571fb73e574b3762ed391",
+      "after": "34576be66ec67db8c9796092f821196660083c228b6c00f4a431608b0f62c8f3"
+    },
+    "unchanged_files": [
+      "README.md",
+      "dispatch-table.json",
+      "error-strings.json",
+      "extern-usage.json",
+      "fingerprints.json",
+      "rodata-strings.json",
+      "summary.json",
+      "syscall-usage.json",
+      "verify.py",
+      "windows-deep.json"
+    ],
+    "before_and_after_packet_verifiers": "passed"
+  },
+  "limits": "Static SBPF v0 forms only. Unknown indirect targets are not resolved, and no execution coverage or source-equivalence claim is made."
+}
