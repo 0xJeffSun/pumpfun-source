@@ -71,6 +71,6 @@ Ends are exclusive. Pointer and length offsets are relative to each owner start.
 | 24 | `Immutable` | 709712–709721 | 9 | 528 / 544 |
 | 25 | `IncorrectAuthority` | 709721–709739 | 18 | 952 / 968 |
 
-provider=OpenCode (Zen) model=opencode/deepseek-v4.1-flash-free client=opencode CLI 1.19.5
+provider=OpenCode (Zen) model=opencode/glm-5.3-flash-free client=opencode CLI 1.19.5
 
 Made via @slopdotcash

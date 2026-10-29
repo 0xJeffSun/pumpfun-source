@@ -35,6 +35,6 @@ PYTHONDONTWRITEBYTECODE=1 python3 -B scripts/verify_evidence.py
 cd scripts && PYTHONDONTWRITEBYTECODE=1 python3 -B test_tooling.py
 ```
 
-provider=OpenCode (Zen) model=opencode/deepseek-v4.1-flash-free client=opencode CLI 1.19.5
+provider=OpenCode (Zen) model=opencode/glm-5.3-flash-free client=opencode CLI 1.19.5
 
 Made via @slopdotcash
