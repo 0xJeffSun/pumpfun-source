@@ -99,7 +99,7 @@ function resolveRef(ref: string, root?: SchemaRoot): SchemaNode | undefined {
   let node: unknown = root;
   for (const rawPart of ref.slice(2).split('/')) {
     const part = rawPart.replace(/~1/g, '/').replace(/~0/g, '~');
-    if (node === null || typeof node !== 'object') return undefined;
+    if (node === null || typeof node !== 'object' || !Object.hasOwn(node, part)) return undefined;
     node = (node as Record<string, unknown>)[part];
   }
   return node && typeof node === 'object' ? (node as SchemaNode) : undefined;
