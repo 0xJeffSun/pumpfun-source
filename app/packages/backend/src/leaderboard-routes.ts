@@ -14,6 +14,28 @@ import {
 } from './leaderboard-store.js';
 import { sendSynthetic, errorBody, rejectDuplicateQueryKeys } from './users-routes.js';
 
+/**
+ * Pagination on the PnL board is declared as integers in
+ * contracts/developer.openapi.json (`limit` rows served, default and ceiling
+ * 100; `positionsLimit` top positions per row, default 3, values above 5 clamp
+ * to 5). The previous parsing silently truncated fractional values and silently
+ * fell back to the default for non-numeric or non-finite values, so
+ * limit=1.5 served one row and limit=abc served the default board, both
+ * with 200. A supplied value must parse to a safe integer; an empty or
+ * whitespace-only value is not an integer literal either. Out-of-range safe
+ * integers keep the existing store clamp behavior. Returns null for an
+ * invalid supplied value.
+ */
+function pageValue(
+  raw: string | undefined,
+): number | null | undefined {
+  if (raw === undefined) return undefined;
+  if (raw.trim() === '') return null;
+  const parsed = Number(raw);
+  if (!Number.isSafeInteger(parsed)) return null;
+  return parsed;
+}
+
 export function registerLeaderboardRoutes(
   app: FastifyInstance,
   store: LeaderboardStore = defaultLeaderboardStore,
@@ -25,10 +47,12 @@ export function registerLeaderboardRoutes(
    * Returns: 200, { entries, periodType, periodLabel, windowStartSec }.
    *
    * `period` is a required enum; a missing or unknown value is a 400 rather than
-   * a silent default. `sort`, `positionsLimit` and `limit` default leniently,
-   * matching the other native routes. A repeated query key (including a
-   * percent-encoded one) fails closed with 501 DUPLICATE_QUERY_KEYS_UNIMPLEMENTED,
-   * like the other native reads, before any value is interpreted.
+   * a silent default. A missing `sort`, `positionsLimit` or `limit` defaults
+   * leniently, matching the other native routes, but a supplied pagination
+   * value must be a safe integer (see pageValue above). A repeated query key
+   * (including a percent-encoded one) fails closed with 501
+   * DUPLICATE_QUERY_KEYS_UNIMPLEMENTED, like the other native reads, before
+   * any value is interpreted.
    */
   app.get('/v1/pnl-leaderboard', async (request, reply) => {
     if (rejectDuplicateQueryKeys(request, reply)) return reply;
@@ -46,18 +70,21 @@ export function registerLeaderboardRoutes(
       }));
     }
 
-    const asInt = (value?: string) => {
-      if (value === undefined) return undefined;
-      const parsed = Number(value);
-      return Number.isFinite(parsed) ? Math.trunc(parsed) : undefined;
-    };
+    const limit = pageValue(qs.limit);
+    if (limit === null) {
+      return reply.code(400).send(errorBody(400, 'INVALID_LIMIT'));
+    }
+    const positionsLimit = pageValue(qs.positionsLimit);
+    if (positionsLimit === null) {
+      return reply.code(400).send(errorBody(400, 'INVALID_POSITIONS_LIMIT'));
+    }
 
     const board = store.getBoard({
       period: qs.period,
       // An unknown sort falls back to the default measure instead of failing.
       sort: isSort(qs.sort) ? qs.sort : undefined,
-      positionsLimit: asInt(qs.positionsLimit),
-      limit: asInt(qs.limit),
+      positionsLimit,
+      limit,
     });
 
     return sendSynthetic(reply, 200, board);
