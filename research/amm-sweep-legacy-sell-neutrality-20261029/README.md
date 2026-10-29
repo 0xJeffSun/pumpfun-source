@@ -104,12 +104,16 @@ Family R -- sweep between two sells is transparent:
   the post-sweep pool state),
   after either partial sweep or both, and the post-sweep limit
   gate binds at the fresh price to the unit.
-- A legacy sell accrues nothing to the pool: pool fields are
-  (-125,882, 2,488, 123,394) before and after every sell in this
-  packet. The fee legs go straight to the recipient ATAs, so a
-  sweep after a legacy sell still finds the ORIGINAL accruals
-  (2,488 / 123,394) to move -- the opposite of a v2 trade, which
-  accrues into the pool and is then swept (3rd #4).
+- Each recorded legacy sell preserves its incoming pool tuple
+  (virtual_quote_reserves, protocol_fees, creator_fees): fresh
+  anchors retain (-125,882, 2,488, 123,394); sells after both
+  sweeps retain (0, 0, 0); sells after only the creator sweep
+  retain (-2,488, 2,488, 0); and sells after only the protocol
+  sweep retain (-123,394, 0, 123,394). The fee legs go straight
+  to the recipient ATAs. With no preceding sweep, a sweep after
+  a legacy sell still finds the original accruals (2,488 / 123,394)
+  to move -- the opposite of a v2 trade, which accrues into the
+  pool and is then swept (3rd #4).
 - The two facts compose: because the sell neither reads the
   accrual buckets for pricing nor writes them, a sweep placed
   anywhere around legacy sells -- before, between, or after --
