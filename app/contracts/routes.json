@@ -51,7 +51,7 @@
     "path": "/holder-rewards",
     "feature": "Holder rewards",
     "scope": "included",
-    "status": "offline-inspector",
+    "status": "public-configuration-read",
     "behaviorQualified": false,
     "visualQualified": false
   },

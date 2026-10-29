@@ -21,6 +21,8 @@ import { LeaderboardStore, defaultLeaderboardStore } from "./leaderboard-store.j
 import { registerHomeFeedRoutes } from "./home-feed-routes.js";
 import { HomeFeedStore, defaultHomeFeedStore } from "./home-feed-store.js";
 import { registerLocalMediaRoutes, type LocalMediaOptions } from "./local-media-routes.js";
+import type { PortfolioBalancesStore } from "./portfolio-balances-store.js";
+import { registerPortfolioBalancesRoutes, PORTFOLIO_BALANCES_NATIVE_ROUTES } from "./portfolio-balances-routes.js";
 
 export type Fixture = {
   method: string;
@@ -295,6 +297,8 @@ export interface BuildAppOptions {
   followingStore?: FollowingStore;
   /** Override the leaderboard store (for tests). */
   leaderboardStore?: LeaderboardStore;
+  /** Explicit server-owned public aggregate balance snapshot, disabled by default. */
+  portfolioBalancesStore?: PortfolioBalancesStore;
   /** Override the local Home Feed store (for tests). */
   homeFeedStore?: HomeFeedStore;
 }
@@ -347,6 +351,7 @@ export function buildApp(fixtures: Fixture[] = [], opts: BuildAppOptions = {}) {
   registerHomeFeedRoutes(app, opts.homeFeedStore ?? defaultHomeFeedStore);
   app.register(async (native) => {
     native.addHook("preHandler", apiKeyGate);
+    if (opts.portfolioBalancesStore) registerPortfolioBalancesRoutes(native, opts.portfolioBalancesStore);
     registerUserRoutes(native, store);
     registerPostRoutes(native, postStore);
     registerCompetitionRoutes(native, compStore);
@@ -365,6 +370,7 @@ export function buildApp(fixtures: Fixture[] = [], opts: BuildAppOptions = {}) {
     )) {
       // Skip operations that a native handler already serves.
       if (NATIVE_ROUTES.has(`${method.toUpperCase()} ${path}`) ||
+        (opts.portfolioBalancesStore && PORTFOLIO_BALANCES_NATIVE_ROUTES.has(`${method.toUpperCase()} ${path}`)) ||
         (opts.calloutsStore && CALLOUTS_NATIVE_ROUTES.has(`${method.toUpperCase()} ${path}`)) ||
         (opts.positionsStore && POSITIONS_NATIVE_ROUTES.has(`${method.toUpperCase()} ${path}`))) continue;
       app.route({

@@ -479,7 +479,8 @@
           "status": "accepted",
           "evidence": [
             "packages/frontend/HOLDER-REWARDS-EVIDENCE.md#captured-factories",
-            "packages/frontend/HOLDER-REWARDS-EVIDENCE.md#published-sdk-contract"
+            "packages/frontend/HOLDER-REWARDS-EVIDENCE.md#published-sdk-contract",
+            "packages/frontend/HOLDER-CONFIGURATION.md"
           ]
         },
         "logic": {
@@ -493,7 +494,8 @@
           "status": "accepted",
           "evidence": [
             "packages/frontend/src/app/holder-rewards-derivation.ts",
-            "packages/frontend/src/components/rewards/RewardSummary.tsx"
+            "packages/frontend/src/components/rewards/RewardSummary.tsx",
+            "research/holder-rewards-config-20261029/SOURCE.json"
           ]
         }
       },
@@ -692,7 +694,7 @@
           "evidence": []
         }
       },
-      "note": "No local authenticated UI or wallet workflow."
+      "note": "Sign-in remains unavailable. An opt-in Wallet Standard public-address connection/forget workflow is implemented with source witnesses and local protocol/UI tests; it supplies no authentication, signing or persisted identity. See packages/frontend/PUBLIC-WALLET-EVIDENCE.md. Full original auth/wallet parity remains pending."
     },
     {
       "id": "portfolio",
