@@ -56,7 +56,15 @@ for (const dismissal of ["Escape", "Back"] as const) {
     const initialOverflow = await page.evaluate(
       () => document.body.style.overflow,
     );
+    await page.getByRole("button", { name: "Open navigation" }).click();
     if (dismissal === "Back") {
+      // Playback can be visible in SSR HTML before the router hydrates. Open
+      // the real sidebar before seeding native history so Back does not target
+      // an uninitialized entry that the router cannot restore.
+      await expect(page.locator("[data-app-shell]")).toHaveAttribute(
+        "data-mobile-navigation",
+        "open",
+      );
       await page.evaluate(() =>
         history.pushState(
           null,
@@ -66,7 +74,6 @@ for (const dismissal of ["Escape", "Back"] as const) {
       );
       await expect(page).toHaveURL(/step=2$/);
     }
-    await page.getByRole("button", { name: "Open navigation" }).click();
     const sidebarOverflow = await page.evaluate(
       () => document.body.style.overflow,
     );
