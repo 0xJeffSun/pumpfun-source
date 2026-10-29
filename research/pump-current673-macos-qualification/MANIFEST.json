@@ -1,9 +1,10 @@
 {
-  "README.md": "f80f2c1057f0fb088301d2752114a5458d9e3cc1097f963ca39eda6ff9e59edf",
+  "README.md": "b8e9fbb0bf516fb666a83b9bc677e1d4cdc129f33841164c3b19d168dea59c9f",
   "candidates/constructor.rs": "8cf97e31c958609aa5bbc07e2d4fb092fc980f724d4054d24af2163241e7a931",
   "candidates/cto-used-flow.rs": "5203d20c2e63be7337204491588e0ec69808f8ddd39d96b8b5fa1964d6ec201d",
   "candidates/cto.rs": "f4a2bb7d33431e0fb4911e39d5e03c8bb9f45c6f7a184da21d1a6762f9127955",
-  "candidates/descriptors.json": "019eff283604e4ee962c6f62cee366f3d2605cf201271d3a7caf8030007952e5",
+  "candidates/descriptors.json": "14d0de224f595d729ecb62179417a9eabfa9ed4235bba71dc28de9edc1d2ff5c",
+  "candidates/perhop-clock.rs": "5871a2cf35ebe0db502eb242db0f1652ef93e51e4971e56483016d900349ac2b",
   "candidates/perhop.rs": "734bdae1189dd4e4f54a27fd215624611228f36b92d3877b63f00df19ccc9e44",
   "candidates/sell-event.rs": "f1f484c50a792c82fba414dff31b6bfc55f03cbec54d7115782c60ad5870b45d",
   "candidates/sweep.rs": "15dbbd46bdbe7af62c6b7bb436f657c45e290c080c185fc075b7a3c08e3df7e8",
@@ -30,5 +31,5 @@
   "evidence/sweep-precompile-api403-run.json": "8975c26a2f8b50aa03e87d9e3cfdf27c13487c75b294b688f8c61a0cc7d01fb7",
   "evidence/sweep-precompile-api403.log.gz": "1a0f7faefffff9fa6774fc0c7d0eda4cee549a0ee2930573e6038da87c32e9c7",
   "inputs.json": "40d1d18d9979d1039506dfebe6d86cbba5c67ec2b462c43e1ae890b035c804d2",
-  "verify.py": "1f8207e8ce9ad88f752981a9f930968bde7c8a0b0d669815ccdfb620e89ae956"
+  "verify.py": "f3e8aa5dc26b634d58408690eb1d213efe38c6a309cb9a5bc055a6ab158030f4"
 }

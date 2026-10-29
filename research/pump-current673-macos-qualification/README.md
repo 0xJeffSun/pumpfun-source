@@ -118,6 +118,13 @@ the actual Location audit, with all17 explicit Source sites unchanged. The SellV
 VM and old corrective/transfer-fee lanes remain stopped. These descriptors
 authorize no variants or composition.
 
+The seventh `perhop-clock` proposal is separately frozen after the sixth build:
+original CFG/reaching-definition evidence selects one timestamp reused by all
+three actual event constructors. It keeps the734 accrual source and changes only
+three consumed statements, with no Source positions, event fields or ordering
+changed. Both canonical679-to587 and immediate734-to587 source bindings are
+recorded. This remains a separate one-file measurement, not a cross-file union.
+
 ## Hosted retention and a later cohort
 
 Hosted artifacts expire after30 days. Their current download URLs and the
