@@ -297,12 +297,16 @@ function isData(value: unknown): value is LeaderboardData {
       value.entries.length <= 25 &&
       value.entries.every(isCreatorEntry) &&
       typeof value.totalEarners === "number" &&
-      Number.isFinite(value.totalEarners) &&
+      Number.isSafeInteger(value.totalEarners) &&
+      value.totalEarners >= 0 &&
       (typeof value.generatedAt === "string" || value.generatedAt === null) &&
       typeof value.page === "number" &&
-      Number.isFinite(value.page) &&
+      Number.isSafeInteger(value.page) &&
+      value.page >= 1 &&
       typeof value.pageSize === "number" &&
-      Number.isFinite(value.pageSize)
+      Number.isSafeInteger(value.pageSize) &&
+      value.pageSize >= 1 &&
+      value.pageSize <= 200
     );
   }
   if (value.kind === "competitions") {

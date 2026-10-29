@@ -5,6 +5,8 @@ import { CALLOUTS_NATIVE_ROUTES, registerCalloutRoutes } from "./callouts-routes
 import type { CalloutsStore } from "./callouts-store.js";
 import { PositionsStore } from "./positions-store.js";
 import { registerPositionsRoutes, POSITIONS_NATIVE_ROUTES } from "./positions-routes.js";
+import type { PayoutsStore } from "./payouts-store.js";
+import { registerPayoutRoutes, PAYOUTS_NATIVE_ROUTES } from "./payouts-routes.js";
 import type { UserTradesStore } from "./user-trades-store.js";
 import { registerUserTradesRoutes, USER_TRADES_NATIVE_ROUTES } from "./user-trades-routes.js";
 import { apiKeyGate } from "./api-key-gate.js";
@@ -293,6 +295,8 @@ export interface BuildAppOptions {
   calloutDiscussionsStore?: CalloutDiscussionsStore;
   /** Explicit local materialization; absent preserves the fixture/501 harness. */
   positionsStore?: PositionsStore;
+  /** Explicit confirmed-payout facts; absent preserves fixture/501 behavior. */
+  payoutsStore?: PayoutsStore;
   /** Explicit operator-owned spot trade history; absent retains fixture/501 behavior. */
   userTradesStore?: UserTradesStore;
   /** Explicit local/CLI-only capability; absent by default, independent of developer auth. */
@@ -370,6 +374,7 @@ export function buildApp(fixtures: Fixture[] = [], opts: BuildAppOptions = {}) {
     if (opts.calloutsStore) registerCalloutRoutes(native, opts.calloutsStore);
     if (opts.calloutDiscussionsStore) registerCalloutDiscussionRoutes(native, opts.calloutDiscussionsStore);
     if (opts.positionsStore) registerPositionsRoutes(native, opts.positionsStore);
+    if (opts.payoutsStore) registerPayoutRoutes(native, opts.payoutsStore);
     if (opts.userTradesStore) registerUserTradesRoutes(native, opts.userTradesStore);
   });
 
@@ -386,6 +391,7 @@ export function buildApp(fixtures: Fixture[] = [], opts: BuildAppOptions = {}) {
         (opts.calloutDiscussionsStore && CALLOUT_DISCUSSIONS_NATIVE_ROUTES.has(`${method.toUpperCase()} ${path}`)) ||
         (opts.calloutsStore && CALLOUTS_NATIVE_ROUTES.has(`${method.toUpperCase()} ${path}`)) ||
         (opts.positionsStore && POSITIONS_NATIVE_ROUTES.has(`${method.toUpperCase()} ${path}`)) ||
+        (opts.payoutsStore && PAYOUTS_NATIVE_ROUTES.has(`${method.toUpperCase()} ${path}`)) ||
         (opts.userTradesStore && USER_TRADES_NATIVE_ROUTES.has(`${method.toUpperCase()} ${path}`))) continue;
       app.route({
         method: method.toUpperCase() as "GET",
