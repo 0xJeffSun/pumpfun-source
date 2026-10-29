@@ -1,3 +1,18 @@
+# Historical Mayhem data attribution: PR #879
+
+This packet independently bounds **10 new bytes** against the common reviewed,
+merged #846 data baseline: **21,796 / 26,180 bytes**. Its own bounded historical
+union with that baseline is **21,806 / 26,180**. Other open packets are not
+included in this per-packet baseline. The separate batch review deduplicates all
+eight additions; these figures are not a latest complete source footprint.
+
+The original and qualified437 candidate payload/descriptor/argument/index paths
+are checked. This adds finite historical data attribution only: no maintained
+code, normalized window or current-native-ELF progress is credited. Text and
+relocation-table bytes are proof evidence, not credited payload.
+
+## Retained attribution detail
+
 # Qualified437 `src/lib.rs` path-site remainder
 
 This packet counts **1 static `.rodata` string totaling 10 bytes** (`src/lib.rs`) and proves **2 path/seed sites** as proof sites only. All checks run on both the original and candidate images. This packet adds data evidence, not a function match.
@@ -9,12 +24,6 @@ The prior obligations are preserved: **437 normalized functions, 141 raw functio
 Only static bytes are read. The string is bounded by the path/seed grammar established in `research/mayhem-current437-option-seeds-paths-20261029/`: `lddw` of a relocated `.rodata` pointer, immediate `stxdw` of that register to the stack, and a store of the exact length to the adjacent eight-byte stack field within the next 12 instructions, before any branch or overwrite.
 
 One documented tightening relative to that packet: relocation uniqueness is required through the closed pointer/length pair (up to and including the length store), not through the full 12-instruction search ceiling. A later independent relocated `lddw` (here the `#851` `BondingCurve` site) that falls inside that search ceiling is ignored once the pair is closed. NUL, the following byte, and adjacency are not bounds. No descriptor is claimed.
-
-## Coverage
-
-The baseline is the option-seeds-paths packet at **21,451 / 26,180** payload bytes (`.rodata` 14,627 / 18,396, `.data.rel.ro` 6,824 / 7,784).
-
-These intervals were disjoint from that baseline. Payload coverage becomes **21,461 / 26,180 bytes (81.98%)**, leaving **4,719 unproved**. `.rodata` becomes **14,637 / 18,396** (+10). `.data.rel.ro` is unchanged. The added `.rodata` union is `[713420, 713430)`.
 
 ## Still open
 
@@ -34,8 +43,6 @@ PYTHONDONTWRITEBYTECODE=1 python3.12 -B research/mayhem-current437-src-lib-rs-pa
 PYTHONDONTWRITEBYTECODE=1 python3.12 -B scripts/verify_evidence.py
 PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3.12 -B scripts/test_tooling.py
 ```
-
-Tests mutate every selected string byte and every path/seed length immediate; each mutation must be rejected. A following byte in an unselected hole is not absorbed. Inventory, symlink, FIFO, and resealed report and coverage edits are rejected.
 
 ## Exact intervals
 
@@ -57,3 +64,12 @@ Ends are exclusive.
 provider=OpenCode model=opencode/deepseek-v4.1-flash-free client=opencode CLI 1.19.5
 
 Made via @slopdotcash
+
+
+The original observations.json.gz is preserved byte-exact; only the derived
+coverage baseline/classification report and checker/docs/input seals are updated.
+
+Verification requires the already-merged #846 baseline at its pinned hash.
+Use normal Python: public entrypoints refuse `-O` because the retained proof
+chain uses assertions. Tests mutate in-memory analysis copies only; these are
+never compiler inputs or replacement artifacts.

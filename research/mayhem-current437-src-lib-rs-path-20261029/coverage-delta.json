@@ -1,8 +1,9 @@
 {
-  "scope": "Counted static .rodata src/lib.rs bytes only, bounded by path/seed stack length stores. Path sites are proof-only. No descriptor or relocation-table credit; NUL and adjacency are not bounds. Binary leftovers in the assigned gap are left open.",
-  "prior_option_seeds_paths_delta_sha256": "e8f6c7f03f18b6e8ce94d778cc9c4aaa56de798ad5a634412e8cf79ce9dedf2d",
-  "baseline_payload_bytes": 21451,
-  "baseline_rodata_bytes": 14627,
+  "scope": "Finite historical data attribution against common reviewed merged #846; no current-native/window/source-footprint credit.",
+  "reviewed_baseline_path": "research/mayhem-current437-bounded-index-tables-20261029/coverage-delta.json",
+  "reviewed_baseline_sha256": "f6efa470f1d18bcec99cab2c95ecf1fc650fe5606bcdbc73956986779e7cb282",
+  "baseline_payload_bytes": 21796,
+  "baseline_rodata_bytes": 14972,
   "baseline_data_rel_ro_bytes": 6824,
   "sections": [
     {
@@ -124,6 +125,14 @@
         [
           713819,
           719929
+        ],
+        [
+          719932,
+          720219
+        ],
+        [
+          720248,
+          720306
         ],
         [
           720376,
@@ -273,6 +282,14 @@
           719929
         ],
         [
+          719932,
+          720219
+        ],
+        [
+          720248,
+          720306
+        ],
+        [
           720376,
           721473
         ],
@@ -301,9 +318,9 @@
           725204
         ]
       ],
-      "raw_equal_bytes": 14637,
+      "raw_equal_bytes": 14982,
       "pointer_only_bytes": 0,
-      "covered_bytes": 14637,
+      "covered_bytes": 14982,
       "new_bytes": 10
     },
     {
@@ -3250,6 +3267,6 @@
     }
   ],
   "new_payload_bytes": 10,
-  "payload_covered_bytes": 21461,
+  "payload_covered_bytes": 21806,
   "payload_total_bytes": 26180
 }
