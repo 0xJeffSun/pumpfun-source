@@ -5,6 +5,7 @@ import { useEffect, useRef, useState, type FormEvent } from "react";
 import { useSidebar } from "@/components/ui/sidebar";
 import { SearchMobileIcon } from "../captured-icons";
 import { onOpenSearch } from "./search-events";
+import { createSearchShortcutHandler } from "./search-shortcuts.mjs";
 
 /**
  * The shell's search entry point (the captured search box and ⌘K hint open it).
@@ -30,12 +31,20 @@ export function SearchDialog() {
       const dialog = dialogRef.current;
       if (dialog && !dialog.open) dialog.showModal();
     };
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key.toLowerCase() === "k" && (event.metaKey || event.ctrlKey)) {
-        event.preventDefault();
+    const toggle = () => {
+      const dialog = dialogRef.current;
+      if (dialog?.open) {
+        dialog.close();
+        setQuery("");
+      } else {
         open();
       }
     };
+    const onKeyDown = createSearchShortcutHandler([
+      { keys: ["Meta", "k"], callback: toggle },
+      { keys: ["Control", "k"], callback: toggle },
+      { keys: ["/"], callback: toggle },
+    ]);
     window.addEventListener("keydown", onKeyDown);
     const stopListening = onOpenSearch(open);
     return () => {
