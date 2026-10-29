@@ -5,6 +5,7 @@ import {
   closeSync,
   fstatSync,
   readSync,
+  constants,
 } from "node:fs";
 import type { operations } from "./generated/developer-api.js";
 import { assertSchema, type SchemaNode } from "./schema-validator.js";
@@ -179,6 +180,8 @@ const enrichmentDates = new Set([
 function publicCallout(value: unknown, quoteDepth = 0): void {
   if (!value || typeof value !== "object") return;
   for (const [field, child] of Object.entries(value)) {
+    if (field === "updates" && Array.isArray(child) && child.length > 0)
+      fail("callout updates must come from the separate update relation");
     if (["hasLiked", "hasReposted"].includes(field) && child !== null)
       fail("viewer-specific callout state is not public");
     if (["perp", "collectible"].includes(field) && child !== null)
@@ -266,8 +269,6 @@ export class PositionsStore {
       assertSchema(item.body, calloutSchema, "callout", spec);
       if (typeof item.updatesComplete !== "boolean")
         fail("callout updates completeness must be explicit");
-      if (item.body.updates.length)
-        fail("callout updates must come from the separate update relation");
       if (item.body.assetClass && item.body.assetClass !== "ASSET_CLASS_TOKEN")
         fail("non-spot callout");
       publicCallout(item.body);
@@ -541,7 +542,7 @@ export class UnavailableUpdatesError extends Error {
 /** Bounded startup-only import from a server-owned local file, never a request URL. */
 export function loadPositionsStore(path: string): PositionsStore {
   const limit = 16 * 1024 * 1024;
-  const fd = openSync(path, "r");
+  const fd = openSync(path, constants.O_RDONLY | constants.O_NONBLOCK);
   try {
     const stat = fstatSync(fd);
     if (!stat.isFile() || stat.size > limit)

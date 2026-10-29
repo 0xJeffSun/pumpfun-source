@@ -82,6 +82,7 @@ export class AuthDialogController {
     const abort = new AbortController();
     this.abort = abort;
     this.publish({ status: "loading" });
+    if (attempt !== this.attempt || abort.signal.aborted) return;
     this.timeout = this.clock.set(() => {
       if (attempt !== this.attempt) return;
       this.cancelAttempt();

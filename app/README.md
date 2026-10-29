@@ -15,6 +15,12 @@ The factory inventory now contains 5,947 variants and 7,337 captured occurrences
 
 Start with [PRD.md](PRD.md) and [AGENTS.md](AGENTS.md). Every coverage claim must distinguish captured, reconstructed, implemented and qualified.
 
+The [original portfolio-chart reader](reconstruction/portfolio-chart/README.md)
+recovers the captured GET/query, cache keys, computing-503 retry predicate and
+response-parser boundary. It includes an explicit single-attempt local HTTP
+adapter and loopback workflow checks. It does not calculate charts, integrate a
+chart UI, emulate Ky scheduling or qualify native portfolio compatibility.
+
 ## Run
 
 From this directory, using Node >=22 and pnpm 10.24.0:
@@ -28,7 +34,7 @@ pnpm verify:evidence
 pnpm dev
 ```
 
-Frontend: `http://localhost:3000`. Backend: `http://localhost:3001`. The frontend forwards `/api/compat/*` to the local backend. No credentials, wallet connection or production API proxy is enabled.
+Frontend: `http://localhost:3000`. Backend: `http://localhost:3001`. The frontend forwards `/api/compat/*` to the local backend. No credentials, authenticated sign-in or production API proxy is enabled. The Sign in chooser offers an explicit [public-address-only Wallet Standard connection](packages/frontend/PUBLIC-WALLET-EVIDENCE.md); it requests no signature, stores no address and does not authenticate an account.
 
 Replay the captured price snapshot (historical evidence, never a live price):
 
@@ -116,7 +122,21 @@ mutation is used. See
 [`packages/frontend/PROFILE-EVIDENCE.md`](packages/frontend/PROFILE-EVIDENCE.md)
 for source provenance and the local-data contract.
 
+## Opt-in public balance batches
+
+The backend can serve the documented `POST /v1/portfolio-summary/balances`
+operation from an explicit `PORTFOLIO_BALANCES_FILE`. It batches supplied public
+aggregate facts, preserves null versus zero, and keeps owner-only holdings and
+perp cash unavailable on the API host. No default dataset, valuation engine or
+production provider is enabled. This is an unqualified local read capability;
+see [`packages/backend/PORTFOLIO-BALANCES.md`](packages/backend/PORTFOLIO-BALANCES.md).
+
 ## Live Solana portfolio
+
+The separate [captured mint-position reader](reconstruction/positions-by-mint/README.md)
+recovers the original 200-mint batches, response hooks, quote-admission guard and
+lookup helpers with real loopback HTTP checks. It is not connected to this RPC
+UI and does not implement prices, PnL, indexing or native API compatibility.
 
 `/portfolio` accepts a public Solana address and reads current mainnet account
 data through a server-owned JSON-RPC endpoint. It reports SOL lamports, separate
@@ -138,6 +158,17 @@ positions, PnL, cost basis, price/metadata enrichment, spam classification, and
 history are not implemented. See
 [`packages/frontend/PORTFOLIO-RPC.md`](packages/frontend/PORTFOLIO-RPC.md) for the
 contract, precision rules, live qualification, and limitations.
+
+## Opt-in materialized trade history
+
+The backend can serve `GET /v1/user-trades/:id` from an operator-owned
+`TRADES_FILE`. It computes person/raw-wallet selection, mint/chain/type filters,
+stable pages and page-specific metadata joins from supplied spot facts; no
+default history dataset, indexer or production proxy is enabled. The existing
+developer key-shape gate still applies and does not verify key scopes or
+revocation. This bounded read model is separate from the live portfolio UI and
+is not qualified Pump API compatibility. See
+[`packages/backend/USER-TRADES.md`](packages/backend/USER-TRADES.md).
 
 ## Refresh / inspect
 
@@ -168,4 +199,14 @@ See `evidence/validation.json` for this checkpoint's actual results. Lockfile ch
 
 ## Source and feature completion
 
+The [captured portfolio read policies](reconstruction/portfolio-read-policies/README.md)
+recover dust-floor and spam-mint requests, memoized query options and local cache
+helpers. Their explicit ports preserve session/runtime boundaries; they do not
+add a private preference setter, native service, UI or completion credit.
+
 See [generated progress tables](PROGRESS.md) and the [feature ledger](contracts/feature-progress.json). From the repository root run `python3 app/scripts/progress.py` to refresh both the root README tables and the standalone report. Run `pnpm --dir app check:progress` to check freshness and scoring rules. Accepted milestones require checked-in evidence; excluded/deferred surfaces are N/A. Captured JavaScript and extracted factories are not counted as completed product features.
+
+The [captured portfolio-summary client](reconstruction/portfolio-summary/README.md)
+provides fixed JSON response projection, the original holdings/fresh GET branches
+and explicit read/cancel/cache-write ordering. It does not calculate portfolio
+values, implement server ownership, reproduce Zod issues or integrate a UI.

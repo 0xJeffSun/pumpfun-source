@@ -118,6 +118,32 @@ function literalValue(node) {
   return undefined;
 }
 
+// The captured runtime's `s` decoder consumes getter pairs, optional setter
+// functions, and numeric-tag-0 constant triples. Never evaluate descriptor
+// expressions: dynamic forms cannot establish a static export inventory.
+function exportNames(argument) {
+  if (argument?.type !== "ArrayExpression") return [];
+  const values = argument.elements;
+  const names = [];
+  const isFunction = (node) =>
+    ["ArrowFunctionExpression", "FunctionExpression"].includes(node?.type);
+  for (let index = 0; index < values.length; ) {
+    const name = values[index++];
+    if (name?.type !== "StringLiteral") return [];
+    const descriptor = values[index++];
+    if (!descriptor) return [];
+    if (descriptor.type === "NumericLiteral" && descriptor.value === 0) {
+      const value = values[index++];
+      if (!value || value.type === "SpreadElement") return [];
+    } else {
+      if (!isFunction(descriptor)) return [];
+      if (isFunction(values[index])) index += 1;
+    }
+    names.push(name.value);
+  }
+  return names;
+}
+
 const AST_METADATA_KEYS = new Set([
   "comments",
   "end",
@@ -221,14 +247,7 @@ export function analyzeFactory(source, label = "factory") {
         column: node.loc?.start.column ?? null,
       });
     } else if (method === "s") {
-      const values =
-        node.arguments[0]?.type === "ArrayExpression"
-          ? node.arguments[0].elements
-          : [];
-      for (let index = 0; index < values.length; index += 2) {
-        const name = literalValue(values[index]);
-        if (typeof name === "string") exports.add(name);
-      }
+      for (const name of exportNames(node.arguments[0])) exports.add(name);
     }
   });
   imports.sort(
@@ -890,8 +909,7 @@ export async function verifyGraph(root, outputRelative, options = {}) {
       throw new Error(`generated evidence is not reproducible: ${entry.path}`);
     const raw = content(rebuilt[entry.path]);
     const fresh = entry.path.endsWith(".gz")
-      ? raw.length === entry.contentBytes &&
-        sha256(raw) === entry.contentSha256
+      ? raw.length === entry.contentBytes && sha256(raw) === entry.contentSha256
       : raw.length === entry.bytes && sha256(raw) === entry.sha256;
     if (!fresh) throw new Error(`generated evidence is stale: ${entry.path}`);
   }

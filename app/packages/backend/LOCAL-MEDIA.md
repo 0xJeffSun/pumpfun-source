@@ -91,8 +91,13 @@ not user authentication, wallet ownership or the format-only developer-key gate.
 
 Every read and write checks the direct socket peer, not `X-Forwarded-For`:
 `127.0.0.1`, `::1`, or `::ffff:127.0.0.1` only. An `Origin` header or cross-site
-Fetch Metadata is rejected. Bearer authorization is checked using constant-time
-SHA-256 digest comparison. No CORS headers or cookie authentication are added.
+Fetch Metadata is rejected. Exactly one raw `Authorization` field is required:
+duplicate fields are rejected with the existing 401 even if their names have
+different casing or their values are identical. This check precedes normalized
+header use because Node may otherwise discard later Authorization values.
+Bearer authorization is checked using constant-time SHA-256 digest comparison.
+`X-API-Key` is not an alternate local capability source. No CORS headers or
+cookie authentication are added.
 This is defense in depth for an explicitly loopback-bound development server;
 it is **not** a safe way to expose these endpoints through a public reverse
 proxy (whose socket would itself be loopback).
@@ -137,7 +142,8 @@ boolean; no server default is invented. The 16 KiB JSON request cap, 16 MB total
 image-byte quota, 128-image quota, 128-metadata quota, error names and statuses
 are local choices. Quotas can be explicitly lowered for tests/development.
 
-Signatures reject obvious content-type mismatches. They do **not** prove that an
+Signatures compare exact bytes, rejecting high-bit lookalikes of the GIF, PNG
+IHDR and WebP markers as well as obvious content-type mismatches. They do **not** prove that an
 image fully decodes, is safe, lacks hidden content, or is malware-free. No image
 decoder, transcoder, scanner, thumbnail pipeline or SVG support is implied.
 
@@ -166,6 +172,12 @@ must be operator-controlled; this does not defend against a malicious local user
 who can replace ancestor directories or modify files concurrently. In-memory
 reads do not reread external disk changes until a graceful restart.
 
+Snapshot read-open is nonblocking before the descriptor's file-type check,
+preserving the no-follow policy. On POSIX, a readerless FIFO therefore rejects
+without waiting for a writer, closes its snapshot descriptor and releases the
+newly acquired owner lock. A valid reopen then succeeds. This is not a general
+filesystem I/O timeout; Windows named-pipe behavior is not qualified.
+
 ## Checks
 
 From `app/` (no production network access or real credentials required):
@@ -175,6 +187,8 @@ python3 -m unittest discover -s tests -p test_create_media_bindings.py
 cd packages/backend
 node --import tsx --test test/local-media.test.ts
 node --import tsx --test test/local-media-runtime.test.ts
+node --import tsx --test test/regular-file-admission.test.ts
+node --import tsx --test test/local-media-authorization.test.ts
 ```
 
 Synthetic tests cover the complete lifecycle, restart, exact byte readback,
@@ -185,7 +199,12 @@ read results, failed publication, owner locking, stale locks, corrupt snapshots,
 and symlink paths. Factory mutation tests reject source range/hash/context and
 SDK-binding drift. Bootstrap tests additionally cover default-off, paired config,
 pre-filesystem host validation, actual opt-in app routing, ownership preservation,
-shutdown, restart and startup-failure cleanup. The listen failure is synthetic;
-tests do not open a network socket or instantiate a real capability.
+shutdown, restart and startup-failure cleanup. The bootstrap listen failure is
+synthetic. The authorization regression tests do open ephemeral loopback HTTP
+listeners with visibly synthetic capabilities, to exercise Node's actual raw
+header normalization. They check duplicate-field ordering, case, identical and
+empty values across reads, HEAD, metadata creation and deletion, unchanged disk
+state on rejection, and preservation of single-header/default-off/Origin guards.
+No real capability or production listener is instantiated.
 These qualify only the stated local service, not the original
 website/backend behavior.

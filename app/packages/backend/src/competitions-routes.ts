@@ -4,9 +4,17 @@
  * Registered as native Fastify handlers taking priority over generic fixture replay.
  * Serves deterministic data from in-memory CompetitionStore linked to UserStore.
  */
-import type { FastifyInstance } from 'fastify';
+import type { FastifyInstance, FastifyReply } from 'fastify';
 import { CompetitionStore, defaultCompetitionStore } from './competitions-store.js';
 import { sendSynthetic, errorBody, rejectDuplicateQueryKeys } from './users-routes.js';
+
+function rejectInvalidNumbers(query: Record<string, string | undefined>, keys: string[], reply: FastifyReply): boolean {
+  if (keys.some(key => query[key] !== undefined && (!query[key]!.trim() || !Number.isFinite(Number(query[key]))))) {
+    reply.code(400).send(errorBody(400, 'INVALID_QUERY'));
+    return true;
+  }
+  return false;
+}
 
 export function registerCompetitionRoutes(
   app: FastifyInstance,
@@ -33,6 +41,7 @@ export function registerCompetitionRoutes(
     if (rejectDuplicateQueryKeys(request, reply)) return reply;
     const { id, entryId } = request.params as { id: string; entryId: string };
     const qs = request.query as Record<string, string | undefined>;
+    if (rejectInvalidNumbers(qs, ['limit'], reply)) return reply;
 
     let limit = 10;
     if (qs.limit !== undefined) {
@@ -77,6 +86,7 @@ export function registerCompetitionRoutes(
     if (rejectDuplicateQueryKeys(request, reply)) return reply;
     const { id } = request.params as { id: string };
     const qs = request.query as Record<string, string | undefined>;
+    if (rejectInvalidNumbers(qs, ['limit', 'perMemberLimit'], reply)) return reply;
 
     let limit = 20;
     if (qs.limit !== undefined) {
@@ -112,6 +122,7 @@ export function registerCompetitionRoutes(
     if (rejectDuplicateQueryKeys(request, reply)) return reply;
     const { idOrSlug } = request.params as { idOrSlug: string };
     const qs = request.query as Record<string, string | undefined>;
+    if (rejectInvalidNumbers(qs, ['limit', 'positionsLimit'], reply)) return reply;
 
     let limit = 100;
     if (qs.limit !== undefined) {

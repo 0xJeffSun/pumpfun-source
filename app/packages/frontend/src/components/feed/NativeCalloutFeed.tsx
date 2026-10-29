@@ -1,6 +1,9 @@
 import Link from "next/link";
 import type { NativeCallout, NativeFeedKind } from "./native-feed-data";
-import { nativeFeedHref } from "./native-feed-navigation";
+import {
+  NATIVE_FEED_MAX_TRAIL,
+  nativeFeedHref,
+} from "./native-feed-navigation";
 import type { NativeFeedLoadResult } from "./native-feed-server";
 
 const money = new Intl.NumberFormat("en-US", {
@@ -125,6 +128,9 @@ export function NativeCalloutFeed({
   trail,
   result,
 }: NativeCalloutFeedProps) {
+  const historyLimitReached = Boolean(
+    cursor && trail.length >= NATIVE_FEED_MAX_TRAIL,
+  );
   return (
     <div className="native-callout-view">
       <aside
@@ -202,7 +208,9 @@ export function NativeCalloutFeed({
               <span aria-disabled="true">← Previous</span>
             )}
             <strong>Local page {trail.length + (cursor ? 2 : 1)}</strong>
-            {result.page.nextPageToken ? (
+            {result.page.nextPageToken && historyLimitReached ? (
+              <span aria-disabled="true">Local navigation limit</span>
+            ) : result.page.nextPageToken ? (
               <Link
                 rel="next"
                 href={nativeFeedHref(
@@ -217,6 +225,17 @@ export function NativeCalloutFeed({
               <span aria-disabled="true">End of local list</span>
             )}
           </nav>
+          {result.page.nextPageToken && historyLimitReached ? (
+            <p className="native-feed-count" role="status">
+              More local records are available, but this preview limits
+              pagination history to {NATIVE_FEED_MAX_TRAIL} saved cursors. Go
+              back or{" "}
+              <Link className="feed-state-link" href={nativeFeedHref(kind)}>
+                return to the first local page
+              </Link>
+              .
+            </p>
+          ) : null}
         </>
       )}
     </div>

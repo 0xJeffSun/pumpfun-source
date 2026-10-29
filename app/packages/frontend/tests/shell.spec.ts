@@ -1,4 +1,4 @@
-import { expect, test, type Page } from "@playwright/test";
+import { expect, test, type Page, type Route } from "@playwright/test";
 import { createViaShell, openShellSearch } from "./shell-controls";
 
 const includedRoutes = [
@@ -378,4 +378,43 @@ test("normal navigation emits no console errors or production mutations", async 
   ).toBeVisible();
   expect(consoleErrors).toEqual([]);
   expect(unexpectedRequests).toEqual([]);
+});
+
+test("a delayed search clear preserves a newly typed draft", async ({
+  page,
+}) => {
+  await page.goto("/explore?q=previous", { waitUntil: "networkidle" });
+  const input = await openShellSearch(page);
+  await expect(input).toHaveValue("previous");
+  const held: Route[] = [];
+  let holdClear = true;
+  await page.route("**/explore?**", async (route) => {
+    if (
+      holdClear &&
+      new URL(route.request().url()).searchParams.has("_rsc")
+    ) {
+      held.push(route);
+    } else {
+      await route.continue();
+    }
+  });
+  try {
+    await page.getByRole("button", { name: "Clear search", exact: true }).click();
+    await expect.poll(() => held.length).toBe(1);
+    await input.fill("new draft");
+    holdClear = false;
+    await Promise.all(held.map((route) => route.continue()));
+    await expect(page).toHaveURL(/\/explore$/);
+    await expect(input).toHaveValue("new draft");
+    await input.press("Enter");
+    await expect(page).toHaveURL(/\/explore\?q=new\+draft$/);
+    await openShellSearch(page);
+    await page.goBack();
+    await expect(page).toHaveURL(/\/explore$/);
+    await expect(input).toHaveValue("");
+    await page.goForward();
+    await expect(input).toHaveValue("new draft");
+  } finally {
+    await page.unrouteAll({ behavior: "ignoreErrors" });
+  }
 });

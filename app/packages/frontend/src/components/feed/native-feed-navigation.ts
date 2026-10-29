@@ -4,6 +4,9 @@ import {
   type NativeFeedKind,
 } from "./native-feed-data";
 
+/** Existing local URL-history bound; this is not a backend result limit. */
+export const NATIVE_FEED_MAX_TRAIL = 20;
+
 export type NativeFeedNavigation = {
   kind: NativeFeedKind;
   cursor?: string;
@@ -43,7 +46,7 @@ export function parseNativeFeedNavigation(
       : Array.isArray(params.nativeTrail)
         ? params.nativeTrail
         : [params.nativeTrail];
-  if (rawTrail.length > 20) {
+  if (rawTrail.length > NATIVE_FEED_MAX_TRAIL) {
     throw new NativeFeedDataError("nativeTrail exceeds the local page bound");
   }
   const trail = rawTrail.map((value, index) =>
