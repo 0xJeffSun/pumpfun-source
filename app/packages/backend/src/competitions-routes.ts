@@ -4,9 +4,17 @@
  * Registered as native Fastify handlers taking priority over generic fixture replay.
  * Serves deterministic data from in-memory CompetitionStore linked to UserStore.
  */
-import type { FastifyInstance } from 'fastify';
+import type { FastifyInstance, FastifyReply } from 'fastify';
 import { CompetitionStore, defaultCompetitionStore } from './competitions-store.js';
-import { sendSynthetic, errorBody } from './users-routes.js';
+import { sendSynthetic, errorBody, rejectDuplicateQueryKeys } from './users-routes.js';
+
+function rejectInvalidNumbers(query: Record<string, string | undefined>, keys: string[], reply: FastifyReply): boolean {
+  if (keys.some(key => query[key] !== undefined && (!query[key]!.trim() || !Number.isFinite(Number(query[key]))))) {
+    reply.code(400).send(errorBody(400, 'INVALID_QUERY'));
+    return true;
+  }
+  return false;
+}
 
 export function registerCompetitionRoutes(
   app: FastifyInstance,
@@ -17,7 +25,8 @@ export function registerCompetitionRoutes(
    * Every competition in three viewer-independent buckets: upcoming, live, and past.
    * Returns: 200, { upcoming: Competition[], live: Competition[], past: Competition[] }
    */
-  app.get('/v1/competitions', async (_request, reply) => {
+  app.get('/v1/competitions', async (request, reply) => {
+    if (rejectDuplicateQueryKeys(request, reply)) return reply;
     const buckets = store.listBuckets();
     return sendSynthetic(reply, 200, buckets);
   });
@@ -29,8 +38,10 @@ export function registerCompetitionRoutes(
    * NOTE: Registered before /v1/competitions/:id/entries/:entryId to avoid route shadowing.
    */
   app.get('/v1/competitions/:id/entries/:entryId/highlights', async (request, reply) => {
+    if (rejectDuplicateQueryKeys(request, reply)) return reply;
     const { id, entryId } = request.params as { id: string; entryId: string };
     const qs = request.query as Record<string, string | undefined>;
+    if (rejectInvalidNumbers(qs, ['limit'], reply)) return reply;
 
     let limit = 10;
     if (qs.limit !== undefined) {
@@ -54,6 +65,7 @@ export function registerCompetitionRoutes(
    * Returns: 200, { entry: LeaderboardRow, members: Member[] }
    */
   app.get('/v1/competitions/:id/entries/:entryId', async (request, reply) => {
+    if (rejectDuplicateQueryKeys(request, reply)) return reply;
     const { id, entryId } = request.params as { id: string; entryId: string };
 
     const result = store.getEntryDetail(id, entryId);
@@ -71,8 +83,10 @@ export function registerCompetitionRoutes(
    * NOTE: Registered before /v1/competitions/:idOrSlug.
    */
   app.get('/v1/competitions/:id/highlights', async (request, reply) => {
+    if (rejectDuplicateQueryKeys(request, reply)) return reply;
     const { id } = request.params as { id: string };
     const qs = request.query as Record<string, string | undefined>;
+    if (rejectInvalidNumbers(qs, ['limit', 'perMemberLimit'], reply)) return reply;
 
     let limit = 20;
     if (qs.limit !== undefined) {
@@ -105,8 +119,10 @@ export function registerCompetitionRoutes(
    * Returns: 200, { competition: Competition, leaderboard: Leaderboard }
    */
   app.get('/v1/competitions/:idOrSlug', async (request, reply) => {
+    if (rejectDuplicateQueryKeys(request, reply)) return reply;
     const { idOrSlug } = request.params as { idOrSlug: string };
     const qs = request.query as Record<string, string | undefined>;
+    if (rejectInvalidNumbers(qs, ['limit', 'positionsLimit'], reply)) return reply;
 
     let limit = 100;
     if (qs.limit !== undefined) {
