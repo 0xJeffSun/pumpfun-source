@@ -32,6 +32,17 @@
       "limits": "Dust-floor and spam-mint client reads only; no session ownership, private POST setter, native API, React mount/scheduling, UI or feature credit."
     },
     "scaffolded": true,
+    "portfolioSummaryClient": {
+      "status": "captured-fixed-json-projection-and-read-refresh-workflow",
+      "qualified": false,
+      "uiIntegrated": false,
+      "evidence": [
+        "reconstruction/portfolio-summary/README.md",
+        "reconstruction/portfolio-summary/contract.json",
+        "tests/original_portfolio_summary.test.mjs"
+      ],
+      "limits": "Selected captured client and JSON response values only; original Zod issue identity, provider/auth, native financial API, React/cache lifecycle and UI remain unqualified."
+    },
     "visuallyQualifiedRoutes": 0,
     "behaviorQualifiedRoutes": 0,
     "positionsByMintReader": {
