@@ -75,6 +75,16 @@ qualified counts remain unchanged. See
 for the captured hashes, website-origin attribution, local cursor/count policy,
 tests, and unsupported behavior.
 
+When the server explicitly sets `PUMP_LOCAL_HOME_FEED=enabled`, `/` also offers
+a separate Local Callouts view backed by PR #700's synthetic local read model at
+the fixed loopback origin `127.0.0.1:3001`. Next performs the requests on the
+server; the browser never contacts the backend directly. Every view remains
+labelled synthetic and local-unqualified, cursors stay opaque, and errors never
+fall back to production Pump.fun. The default remains the offline post feed.
+See
+[`packages/frontend/NATIVE-HOME-FEED.md`](packages/frontend/NATIVE-HOME-FEED.md)
+for the response, pagination, test, and trust boundaries.
+
 ## Offline Explore snapshot
 
 `/explore` hashes and validates the checked-in one-record response from
