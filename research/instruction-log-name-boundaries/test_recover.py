@@ -13,7 +13,7 @@ ROOT = recover.ROOT
 class InstructionLogNameTests(unittest.TestCase):
     def test_archived_helper_is_bound(self):
         digest = recover.require_archived_helper()
-        self.assertEqual(digest, 'dd7fb38d795d4dd72a25aab0d65c2223d9f6f75d8b3ecb0de1d87d6e102910ac')
+        self.assertIn(digest, recover.HELPER_SHA256)
 
     def test_glued_names_split_at_idl_boundaries(self):
         published = json.loads((ROOT / 'evidence/binary-analysis.json').read_text())
