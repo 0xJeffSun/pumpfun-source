@@ -105,6 +105,40 @@ class InstructionLogNameTests(unittest.TestCase):
             bounded = nxt.startswith(b'Instruction:') or not nxt[:1].isalnum()
             self.assertTrue(bounded, match.group(1))
 
+    def test_validation_json_matches_recover(self):
+        """validation.json is hand-written; every recorded value must be recomputable here."""
+        validation = json.loads((Path(__file__).resolve().parent / 'validation.json').read_text())
+        self.assertIn(recover.require_archived_helper(), set(validation['archivedHelperSha256'].values()))
+        self.assertEqual(set(validation['archivedHelperSha256'].values()), recover.HELPER_SHA256)
+        for witness in validation['witnesses']:
+            blob = recover.program_blob(witness['program'])
+            offset = int(witness['fileOffset'], 16)
+            raw = witness['bytes'].encode()
+            self.assertEqual(blob[offset:offset + len(raw)], raw)
+            archived = recover.ARCHIVED_PATTERN.match(blob, offset).group(1).decode()
+            self.assertEqual(archived, witness['before'])
+            sites = recover.instruction_sites(blob, recover.allowed_names(witness['program']))
+            self.assertEqual([row['name'] for row in sites if row['offset'] == offset], [witness['after']])
+        blob = recover.program_blob('pump')
+        allowed = recover.allowed_names('pump')
+        long_name = validation['pumpLongName']
+        archived = [name for name in recover.archived_names(blob) if name.startswith(long_name['beforePrefix'])]
+        self.assertIn(long_name['beforeLength'], [len(name) for name in archived])
+        self.assertIn(long_name['after'], recover.corrected_names(blob, allowed))
+        for program in recover.PROGRAMS:
+            blob = recover.program_blob(program)
+            allowed = recover.allowed_names(program)
+            archived = recover.archived_names(blob)
+            corrected = recover.corrected_names(blob, allowed)
+            counts = validation['counts'][program]
+            self.assertEqual(counts['sites'], len(recover.instruction_sites(blob, allowed)))
+            self.assertEqual(counts['archivedNames'], len(archived))
+            self.assertEqual(counts['correctedNames'], len(corrected))
+            self.assertEqual(counts['replacedNames'], len(set(archived) - set(corrected)))
+        mayhem = recover.program_blob('mayhem')
+        self.assertEqual(validation['counts']['mayhem']['sites'], mayhem.count(b'Instruction: '))
+        self.assertEqual(validation['counts']['mayhem']['sites'], len(recover.archived_names(mayhem)))
+
 
 if __name__ == '__main__':
     unittest.main()

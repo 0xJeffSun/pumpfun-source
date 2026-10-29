@@ -14,7 +14,7 @@ plus the seven standard Anchor IDL instructions that are present in the
 captures, and checks the chosen name against the bytes at every site.
 
 ```
-python3 research/instruction-log-name-boundaries/test_recover.py
+python3 -I -B research/instruction-log-name-boundaries/test_recover.py
 ```
 
 Mayhem's 25 archived names are already bounded by `Instruction:` or a
