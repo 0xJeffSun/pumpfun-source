@@ -348,6 +348,8 @@ async function postPinnedJson(
         },
       },
       (response) => {
+        // A reset after headers is emitted by the response, not the request.
+        response.on("error", reject);
         const chunks: Buffer[] = [];
         let size = 0;
         response.on("data", (chunk: Buffer) => {
