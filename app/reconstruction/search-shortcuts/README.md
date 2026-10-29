@@ -59,11 +59,29 @@ Temporary fixture hard links fall back to copies across filesystem boundaries;
 captured files remain read-only. Next typegen and frontend TypeScript pass.
 Required root 9-capture/6-tooling and app 698-object/npm/unchanged-SDK checks pass.
 
+## Clear-navigation merge compatibility
+
+The later #918 merge added a `pendingClear` popstate listener to the same
+maintained effect. The checker previously rejected that new free variable,
+even though the mounted matcher and its captured evidence were unchanged.
+It now binds the actual component-local React `useRef(false)` as a maintained
+UI role. The complete effect, including the popstate reset and cleanup, remains
+in the caller fingerprint; unknown free variables still fail closed. Only that
+fingerprint changes in `PROVENANCE.json`. The planner comparator, captured
+proofs, matcher and mounted component are unchanged.
+
+The static-only binding regression checks the merged caller, rejects an
+incorrect ref initializer/import and an unmapped free variable, and confirms
+that a known-role reset mutation changes the fingerprint. Together with the
+existing matcher/source tests this qualifies the checker integration, not a
+new browser run or expanded original clear-navigation compatibility. The
+historical browser receipts above remain historical and are not regenerated.
+
 Run from `app`:
 
 ```sh
 node scripts/verify-search-shortcuts.mjs --check
-node --test tests/search_shortcuts.test.mjs tests/original_source.test.mjs
+node --test tests/search_shortcut_bindings.test.mjs tests/search_shortcuts.test.mjs tests/original_source.test.mjs
 ```
 
 Run from `app/packages/frontend`:
