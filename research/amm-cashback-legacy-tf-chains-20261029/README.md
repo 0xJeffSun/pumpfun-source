@@ -12,9 +12,10 @@ question is sharp because the fee withholds at every hop: the
 buy/sell creator leg is withheld into the accumulator ATA, the
 sweep is withheld into the vault ATA, the collect is withheld
 into DEST, and the claim itself withholds into the user quote
-ATA -- so the two pipes no longer conserve the non-cashback
-total, and each hop's gap is pinned here to the unit on three
-program images (original, #424 control, #427 candidate).
+ATA -- so in the chains measured here the two pipes no longer
+sum to the non-cashback total, and each hop's gap is pinned to
+the unit for this fixture on three program images (original,
+#424 control, #427 candidate).
 
 ## Fixture
 
@@ -44,7 +45,8 @@ claim uses `claim_cashback` with keys [payer, accumulator PDA,
 quote mint, token program, accumulator ATA, user quote ATA,
 default, event authority, program].
 
-Event layouts (verified byte-for-byte):
+Event layouts (offsets as read from the receipts; verify.py
+decodes only the fields its expectations name):
 - BuyEvent (legacy buy 497 bytes / buy_exact 512 bytes, disc
   `67f4521f2cf57777`): out @16, max @24, curve @64, lp_bps @72,
   lp_fee @80, protocol_bps @88, protocol_fee @96 (GROSS),
@@ -53,7 +55,7 @@ Event layouts (verified byte-for-byte):
   pools), track @360, cashback_bps @408 (buy) / @423 (exact),
   cashback @416 (buy) / @431 (exact) (GROSS), buyback_bps
   @424 (buy) / @439 (exact), buyback_fee @432 (buy) / @447
-  (exact) (NET -- the one net field in the event).
+  (exact) (NET -- the one net field among those decoded).
 - SellEvent (legacy sell, 449 bytes, disc `3e2f370aa503dc2a`):
   curve @64, lp_fee @80, protocol_fee @96 (GROSS 1,698 =
   gross protocol 849 + gross buyback 849, identical to the
@@ -103,8 +105,8 @@ lamports, 0 tokens):
   stranded withheld (1,234 + 1,222 + 55 + 55 uvata).
 - `b-buy-claim-sweep-collect-tf100`: buy, claim, sweep,
   collect -- the same finals as the previous case (DEST
-  120,938, user +5,365, claimed 5,420, gap 55). Pipe order
-  does not matter under the fee either.
+  120,938, user +5,365, claimed 5,420, gap 55). The two
+  orders measured end at the same values under the fee.
 - `b-buy-buy-claim-tf100`: two cashback buys, then one
   claim. The second buy spends 1,866,291 (curve moved:
   vault +1,825,403, withheld 18,439) with the same 8,402 /
@@ -121,9 +123,9 @@ lamports, 0 tokens):
   then sweep 122,160, collect 120,938, claim 5,365 -- the
   same chain as the seeded case, with creation costs only
   on the first step. The claim leaves accumulator ATA
-  lamports at 2,163,075 (unlike the nofee claim, which
-  restores rent to 2,039,280: the Token-2022 account's
-  lamports do not mirror its token balance).
+  lamports at 2,163,075 (the nofee chain in 3rd #14 reports
+  the claim restoring rent to 2,039,280; that nofee claim is
+  not re-run here).
 - `b-buyexact-sweep-collect-claim-tf100`: cashback
   buy_exact 10^7 under tf100. Spend 9,998,786 -- LESS than
   the nofee 10,000,000: the exact quote-in is the gross
@@ -185,41 +187,53 @@ Family L -- limit gates under tf100 on a cashback pool:
 
 ## Result
 
-- The fee withholds at every hop of the cashback pipes, and
-  every hop's gap is additive and permanent: buy tf100 loses
+- In the chains measured, the fee withheld at every hop of
+  the cashback pipes and no later step in these chains
+  released any withheld balance: buy tf100 loses
   55 at accrual, 1,234 at sweep, 1,222 at collect, 55 at
   claim; the two pipes together deliver 126,303 of the
   nofee 128,869, and the 2,566 shortfall is exactly the
   stranded withheld (vault ATA 1,234 + DEST 1,222 +
   userquote 55 + uvata 55).
-- Earned always rises by the GROSS creator leg (5,475 /
-  29,334 / 548) while the accumulator ATA nets; claimed
-  always equals the ATA balance paid out, so
-  earned-minus-claimed equals the cumulative withheld and
-  never closes -- at tf100 (55 / 110 / 294 / 6) and at
-  tf5000 (2,738, half the gross).
-- Events report gross everywhere except buyback_fee, which
-  is net in both the buy and the sell events (8,401 / 4,243
+- In every accrual measured, earned rose by the GROSS
+  creator leg (5,475 / 29,334 / 548) while the accumulator
+  ATA netted; in every claim measured, claimed equalled the
+  ATA balance paid out, so earned-minus-claimed equalled the
+  cumulative withheld at the end of each chain -- at tf100
+  (55 / 110 / 294 / 6) and at tf5000 (2,738, half the
+  gross). No step in these chains closed that gap.
+- Among the event fields decoded, amounts are gross except
+  buyback_fee, which is net in both the buy and the sell
+  events (8,401 / 4,243
   / 45,012 buy-side, 840 sell-side); the buy event's
   user_quote_in is the nofee spend (1,847,796) while the
   user actually pays the grossed-up 1,866,234 (tf100) or
   3,673,144 (tf5000).
-- Buy_exact under tf is the one path where the user pays
-  LESS than nofee: the exact quote-in is a gross budget, so
+- Of the paths measured, buy_exact under tf is the one
+  where the user pays LESS than nofee: the exact quote-in
+  is a gross budget, so
   the out falls (54,115,018,303 -> 53,573,907,921) instead
   of the spend rising.
-- Pipe order does not matter under the fee: buy -> sweep ->
-  collect -> claim and buy -> claim -> sweep -> collect end
-  at the same DEST + user + claimed, and collect after a
-  cashback buy/sell is a silent no-op with or without the
-  fee, because the creator leg never enters the vault ATA.
-- Limit sides under tf100 on a cashback pool: buy limit is
-  gross-spend-side, sell limit is net-receipt-side; nofee
-  anchors copied as limits fail both ways.
-- The Token-2022 accumulator ATA's lamports do not mirror
-  its token balance: the fresh buy funds it at rent + gross
-  (2,163,075) and the claim leaves lamports unchanged, while
-  the nofee SPL-token claim restores rent (2,039,280).
+- The two pipe orders measured under the fee, buy -> sweep
+  -> collect -> claim and buy -> claim -> sweep -> collect,
+  end at the same DEST 120,938, user +5,365 and claimed
+  5,420; other orders were not run. Collect after the
+  cashback buy and after the cashback sell measured here is
+  a silent no-op (0 events, payer 5,000, every other watched
+  account unchanged -- verify.py checks this), consistent
+  with the creator leg going to the accumulator ATA instead
+  of the creator vault ATA. The nofee no-op is from 3rd
+  #13/#14, not re-run here.
+- Limit sides under tf100 on this cashback pool: the buy
+  limit binds on the gross spend and the sell limit on the
+  net receipt; the nofee anchors copied as limits failed
+  6004 in both measured directions.
+- On this synthesized transfer-fee quote mint, the
+  accumulator ATA's lamports did not track its token
+  balance: the fresh buy left it at rent + gross (2,163,075)
+  and the claim left lamports unchanged while draining the
+  tokens. (3rd #14 reports the nofee SPL-token claim
+  restoring rent, 2,039,280; not re-run here.)
 
 ## Limits
 
@@ -251,3 +265,26 @@ Family L -- limit gates under tf100 on a cashback pool:
 - The buy event's interior u64 slots past buyback_fee are not
   decoded here; the exact event is asserted by discriminator
   and length plus the named slots above.
+
+## Verify and provenance
+
+From the repository root:
+
+    python3 -I -B research/amm-cashback-legacy-tf-chains-20261029/verify.py
+
+`verify.py` needs only `solders` plus files in the repository: this
+packet, `evidence/original/pump_amm/deployed.so`, and the two
+retained rebuilt images
+`research/amm-multi-hop-group-slice-recovery/artifacts/candidate.so.gz`
+(control, #424) and
+`research/amm-transfer-fee-diagnostic-recovery/artifacts/candidate.so.gz`
+(candidate, #427), whose decompressed sha256 values match the
+`images` block of `runtime/report.json.gz`. It re-checks the
+recorded receipts against the report's expected values; it does
+not re-execute any transaction.
+
+`producer.py` is the script that generated the receipts and is
+kept as a provenance record. It is not runnable as committed: it
+hard-codes a private workspace layout (`~/workspace/pumpfun-sparse`
+for the harness scripts and `~/workspace/slop-verify` for the
+control/candidate `.so` files) and chdirs there on start.
