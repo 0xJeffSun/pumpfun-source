@@ -40,9 +40,7 @@ tool binaries (`rustc`, `cargo`, `clang`, `llvm-objcopy`, `llvm-ar`) and the 25
 SBF target libraries SHA-256-match the qualified native v1.44 cohort; the exact
 values are in [`reproduction/toolchain-public-hashes.json`](reproduction/toolchain-public-hashes.json).
 
-Running the selected packet's unmodified portable builder produced both qualified
-images bit-for-bit (`qualified_image_hashes_equal: true`) in 35.9 s on
-Apple Silicon. The full receipt — tool and library hashes, source manifest, build
+The contributor reports that running the selected packet's unmodified portable builder produced both qualified images (receipt field `qualified_image_hashes_equal: true`, 35.9 s on Apple Silicon); the build log and outputs are not committed, so this packet does not independently prove the rebuild. The full receipt — tool and library hashes, source manifest, build
 command, environment and output hashes — is
 [`reproduction/build-comparison.json`](reproduction/build-comparison.json).
 
@@ -92,16 +90,14 @@ by instruction order.
 
 Reading of the data:
 
-- **Fifteen of sixteen residuals differ in instruction count** from their
-  counterpart, so they are structural (inlining or code-generation differences),
+- **Fourteen of the fifteen mapped residuals differ in instruction count** from their counterpart (0x83c00 is unmapped), so they are structural (inlining or code-generation differences),
   not layout. Jaccard ranks how far each is from its counterpart.
 - The one count-identical residual, `0x14f4e0` (legacy `buy_exact_sol_in`), has
   1,602 normalized slots on both sides and 0.984 slot overlap, yet is **not** a
   pure permutation: `reorder_invariant_multiset_identical` is `false`, so roughly
   a dozen slots differ in content. The difference is dominated by basic-block
   placement and branch-condition polarity, plus the two independent reversed
-  loads noted in the selected packet — confirmed and quantified here from an
-  independent disassembly. It is the closest residual but is not closeable by
+  loads noted in the selected packet — consistent with the atlas's slot comparison (13 differing slots per side, 2 after masking branch displacements). It is the closest residual but is not closeable by
   reordering alone.
 - `0x83c00` has no matched caller to vote a counterpart; it is left unmapped
   rather than guessed.
@@ -109,8 +105,7 @@ Reading of the data:
 ## Verify
 
 Stdlib-only and offline. It recomputes the census and the atlas from the
-committed images, matches them against `atlas.json`, and binds the reproduction
-receipt to the public toolchain hashes and the qualified image hashes:
+committed images, matches them against `atlas.json`, and checks that the reproduction receipt's tool and library hashes equal the qualified native v1.44 cohort values recorded in reproduction/toolchain-public-hashes.json (not independently authenticated against the release) and the qualified image hashes:
 
 ```sh
 python3 -B research/pump-independent-reproduction-atlas-20261029/verify.py

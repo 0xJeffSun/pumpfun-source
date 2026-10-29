@@ -49,8 +49,8 @@ def main():
     check(rec.get('qualified_image_hashes_equal') is True, 'receipt reports qualified image hashes equal')
     check(rec['comparison']['candidate_sha256'] == QUALIFIED_CANDIDATE, 'reproduced stripped image == qualified c0e29')
     check(rec['unstripped_sha256'] == QUALIFIED_UNSTRIPPED, 'reproduced symbols image == qualified dd73')
-    check(rec['tool_sha256'] == prov['tool_sha256'], 'receipt tools == public v1.44 tool hashes')
-    check(rec['target_libraries_sha256'] == prov['target_libraries_sha256'], 'receipt target libs == public v1.44 lib hashes')
+    check(rec['tool_sha256'] == prov['tool_sha256'], 'receipt tools == recorded v1.44 cohort tool hashes (not authenticated against the release)')
+    check(rec['target_libraries_sha256'] == prov['target_libraries_sha256'], 'receipt target libs == recorded v1.44 cohort lib hashes (not authenticated against the release)')
 
     # 4: the atlas describes the qualified symbols image and the deployed original.
     check(hashlib.sha256(SELECTED.read_bytes()).hexdigest() == QUALIFIED_UNSTRIPPED, 'committed selected image == qualified dd73')
