@@ -63,7 +63,8 @@ already pinned for buy in #33, sell in #32, buy_exact in #36).
   2488/123394 (pool protocol 2544 after), and at accrued ==
   raw 10^10 (pool protocol 10000000056 after). Sell 10^6 is
   curve 9999 - lp 10 - protocol 111 = user +9878, vault -9933,
-  buyback 55, at all three accrual levels.
+  buyback 55, at accrued 0 and at 2488/123394. At accrued ==
+  raw, sell 10^6 fails 6063 at the real-reserve gate.
 - The sell gate is real-only and inclusive. calculate_sell_quote
   requires real_quote_reserves >= quote_without_lp_fee, else
   6063 InsufficientRealQuoteReserves. With real = 5000, sell
@@ -136,3 +137,5 @@ VB 10^12, VQ 10^10), not claims about other pool states or
 mainnet settings. Accrued fees above the raw vault and negative
 virtual reserves are synthetic pool states used to pin the
 gate order, not claims about reachable mainnet states.
+
+The retained producer's generated README template contains the superseded phrase "at all three accrual levels" for sell 10^6. Its execution logic and raw receipts are unchanged: the accrued-equals-raw case fails 6063. The corrected result above distinguishes unchanged pricing inputs from the real-reserve payout gate.
