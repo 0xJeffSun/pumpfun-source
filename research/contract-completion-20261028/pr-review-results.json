@@ -3613,5 +3613,33 @@
     "new_VM_or_compiler_runs": 0,
     "new_complete_windows": 0,
     "maintained_goal_complete": false
+  },
+  "twentieth_review_batch": {
+    "review": "research/contract-completion-20261028/pr-review-batch20-independent.json",
+    "sha256": "fba84d70071a026fe691e2d54b0e71f79ca626d470fdc4fa234b23b4ad67df8f",
+    "incoming_integrated": [
+      899,
+      900,
+      904
+    ],
+    "correction_successors": [
+      930,
+      934
+    ],
+    "mayhem_bounded_historical_union": 23514,
+    "total_historical_payload_bytes": 26180,
+    "new_VM_or_compiler_runs": 0,
+    "new_native_qualification": false,
+    "new_complete_windows": 0,
+    "hosted_CI_pass_claim": false,
+    "maintained_goal_complete": false,
+    "externally_merged_runtime_versions_requiring_our_verification": [
+      897,
+      907,
+      912,
+      915,
+      920,
+      923
+    ]
   }
 }

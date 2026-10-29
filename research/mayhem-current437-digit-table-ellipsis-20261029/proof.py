@@ -142,7 +142,7 @@ def text_site(image, pc, pointer, length, length_register, length_at):
         end=pc+40
     else:
         assert length == 5 and register == 6, 'ellipsis pointer register'
-        # The SAME signed comparison selects(ptr,len)=(ellipsis,5) or(1,0).
+        # The SAME unsigned comparison selects(ptr,len)=(ellipsis,5) or(1,0).
         # Bind both branches/fallbacks and the final pointer/length stores.
         sequence=[(16,(0xad,0x20,1,0)),(24,(0xb7,6,0,1)),(32,(0xb7,7,0,5)),(40,(0xad,0x20,1,0)),(48,(0xb7,7,0,0)),(56,(0x7b,0x0a,-184,0)),(64,(0x7b,0x1a,-192,0)),(72,(0x7b,0x7a,-168,0)),(80,(0x7b,0x6a,-176,0))]
         assert all(struct.unpack_from('<BBhi',image.b,pc+offset)==expected for offset,expected in sequence), 'ellipsis conditional pointer/length record'
