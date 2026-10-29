@@ -6,7 +6,7 @@
  */
 import type { FastifyInstance } from 'fastify';
 import { CompetitionStore, defaultCompetitionStore } from './competitions-store.js';
-import { sendSynthetic, errorBody } from './users-routes.js';
+import { sendSynthetic, errorBody, rejectDuplicateQueryKeys } from './users-routes.js';
 
 export function registerCompetitionRoutes(
   app: FastifyInstance,
@@ -17,7 +17,8 @@ export function registerCompetitionRoutes(
    * Every competition in three viewer-independent buckets: upcoming, live, and past.
    * Returns: 200, { upcoming: Competition[], live: Competition[], past: Competition[] }
    */
-  app.get('/v1/competitions', async (_request, reply) => {
+  app.get('/v1/competitions', async (request, reply) => {
+    if (rejectDuplicateQueryKeys(request, reply)) return reply;
     const buckets = store.listBuckets();
     return sendSynthetic(reply, 200, buckets);
   });
@@ -29,6 +30,7 @@ export function registerCompetitionRoutes(
    * NOTE: Registered before /v1/competitions/:id/entries/:entryId to avoid route shadowing.
    */
   app.get('/v1/competitions/:id/entries/:entryId/highlights', async (request, reply) => {
+    if (rejectDuplicateQueryKeys(request, reply)) return reply;
     const { id, entryId } = request.params as { id: string; entryId: string };
     const qs = request.query as Record<string, string | undefined>;
 
@@ -54,6 +56,7 @@ export function registerCompetitionRoutes(
    * Returns: 200, { entry: LeaderboardRow, members: Member[] }
    */
   app.get('/v1/competitions/:id/entries/:entryId', async (request, reply) => {
+    if (rejectDuplicateQueryKeys(request, reply)) return reply;
     const { id, entryId } = request.params as { id: string; entryId: string };
 
     const result = store.getEntryDetail(id, entryId);
@@ -71,6 +74,7 @@ export function registerCompetitionRoutes(
    * NOTE: Registered before /v1/competitions/:idOrSlug.
    */
   app.get('/v1/competitions/:id/highlights', async (request, reply) => {
+    if (rejectDuplicateQueryKeys(request, reply)) return reply;
     const { id } = request.params as { id: string };
     const qs = request.query as Record<string, string | undefined>;
 
@@ -105,6 +109,7 @@ export function registerCompetitionRoutes(
    * Returns: 200, { competition: Competition, leaderboard: Leaderboard }
    */
   app.get('/v1/competitions/:idOrSlug', async (request, reply) => {
+    if (rejectDuplicateQueryKeys(request, reply)) return reply;
     const { idOrSlug } = request.params as { idOrSlug: string };
     const qs = request.query as Record<string, string | undefined>;
 
