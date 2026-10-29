@@ -24,7 +24,7 @@ class QueryAssetTests(unittest.TestCase):
         requested=[]
         def urlopen(request,timeout):
             url=request.full_url;requested.append(url)
-            return SimpleNamespace(read=lambda:bodies.get(url,b''),url=url,status=200 if url in bodies else 404,headers={})
+            return SimpleNamespace(read=lambda:bodies.get(url,b''),close=lambda:None,url=url,status=200 if url in bodies else 404,headers={})
         with tempfile.TemporaryDirectory() as tmp:
             root=Path(tmp);out=root/'evidence/web'
             with patch.object(capture,'ROOT',root),patch.object(capture,'OUT',out),patch.object(capture,'PAGES',['/']),patch.object(capture,'REUSE',{}),patch.object(capture.urllib.request,'urlopen',side_effect=urlopen),patch('sys.argv',['capture.py']):

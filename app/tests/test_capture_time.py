@@ -16,7 +16,7 @@ spec.loader.exec_module(capture)
 
 class CaptureTimeTests(unittest.TestCase):
     def response(self,request,timeout):
-        return SimpleNamespace(read=lambda:b'',url=request.full_url,status=200,headers={})
+        return SimpleNamespace(read=lambda:b'',close=lambda:None,url=request.full_url,status=200,headers={})
 
     def test_fresh_response_has_a_timezone_aware_acquisition_time(self):
         with tempfile.TemporaryDirectory() as tmp:
