@@ -100,8 +100,7 @@ vault base +10^9, vault quote -182,458, as in 2nd #13):
 
 All three images (original / #424 control / #427 candidate)
 agree on every case: this packet pins behavior, it does not
-claim a divergence. Error sites are recorded per image in the
-report; verify checks error codes and error names, which are
+claim a divergence. Error sites appear per image only in the receipt logs (not as report fields); verify checks error codes and error names, which are
 image-independent, since rebuilt images may report different
 line numbers (the #36 precedent).
 """
