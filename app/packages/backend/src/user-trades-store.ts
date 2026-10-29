@@ -6,6 +6,7 @@ import {
   openSync,
   readFileSync,
   readSync,
+  constants,
 } from "node:fs";
 import type { operations } from "./generated/developer-api.js";
 import { assertSchema, type SchemaNode } from "./schema-validator.js";
@@ -396,11 +397,10 @@ export class UserTradesStore {
       traders: profileIds.flatMap((key) =>
         this.traders.has(key) ? [clone(this.traders.get(key)!)] : [],
       ),
-      coins: coinIds.map((key) => {
+      coins: coinIds.flatMap((key) => {
         const supplied = this.coins.get(key);
-        if (supplied) return clone(supplied);
-        const [mint, chainId] = JSON.parse(key) as [string, number];
-        return { mint, chainId, name: null, symbol: null, image: null };
+        // The captured contract omits lookup misses; a null-filled card is not a miss.
+        return supplied ? [clone(supplied)] : [];
       }),
       nextCursor,
     };
@@ -410,7 +410,8 @@ export class UserTradesStore {
 /** Explicit server-owned startup import; never accepts a request-supplied path or URL. */
 export function loadUserTradesStore(path: string): UserTradesStore {
   const limit = 16 * 1024 * 1024;
-  const fd = openSync(path, "r");
+  // Reach fstat for a FIFO instead of waiting indefinitely for a writer.
+  const fd = openSync(path, constants.O_RDONLY | constants.O_NONBLOCK);
   try {
     const stat = fstatSync(fd);
     if (!stat.isFile() || stat.size > limit)

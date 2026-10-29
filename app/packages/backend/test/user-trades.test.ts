@@ -278,15 +278,7 @@ test("chain-keyed identities and metadata never collapse same mint/slot across c
   const unknown = store.page("unregistered")!;
   assert.equal(unknown.trades[0].userId, null);
   assert.equal(unknown.trades[0].timestamp, null);
-  assert.deepEqual(unknown.coins, [
-    {
-      mint: "unknown-metadata",
-      chainId: SOLANA,
-      name: null,
-      symbol: null,
-      image: null,
-    },
-  ]);
+  assert.deepEqual(unknown.coins, []);
   assert.deepEqual(unknown.traders, []);
 });
 

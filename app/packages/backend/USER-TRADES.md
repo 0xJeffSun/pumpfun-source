@@ -74,8 +74,11 @@ Starknet, perps and collectibles are not implemented here.
   stale-cursor policy and error envelope are local design, not upstream cursor
   byte compatibility or authentication. A cursor is not a permission token.
 - Each page joins only its distinct public profiles and `(mint,chainId)` coin
-  identities. Absent coin metadata stays null; the identity comes from the actual
-  row. Same mint/slot/signature on different chains is not collapsed.
+  identities. A missing coin lookup omits the enrichment entry, as factory 76439
+  declares; it does not fabricate a null-filled card. Supplied exact-identity
+  cards may still have nullable attributes. Same mint/slot/signature on different
+  chains is not collapsed. The supplying adapter must omit hidden or unavailable
+  cards; this store does not calculate a security verdict.
 - Null nextCursor means exhaustion of this finite materialization, not proof of
   all production history. No background fetch, live source, stale-cache header,
   reorg/rebuild, websocket update or global completeness claim is involved.
@@ -89,7 +92,8 @@ TRADES_FILE=/absolute/operator-owned/trades.json node packages/backend/dist/serv
 ```
 
 The bounded startup loader accepts only a regular UTF-8 JSON file up to16MiB,
-validates it, and fails closed on corruption. The server never accepts a request
+opens nonblocking so a FIFO fails the regular-file check without waiting for a
+writer, validates the file, and fails closed on corruption. The server never accepts a request
 path or URL for import and never writes that file. Its read-only in-memory
 snapshot stays fixed until restart. Reimporting the same file preserves cursors;
 a different dataset invalidates them. File production/atomic publication belongs
