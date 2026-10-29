@@ -20,6 +20,17 @@
     "format": "method + exact path + sorted unique string query keys + status + headers + JSON body + provenance; GET/HEAD only"
   },
   "frontend": {
+    "portfolioReadPolicies": {
+      "status": "captured-read-query-callbacks-with-explicit-runtime-ports",
+      "qualified": false,
+      "uiIntegrated": false,
+      "evidence": [
+        "reconstruction/portfolio-read-policies/README.md",
+        "reconstruction/portfolio-read-policies/contract.json",
+        "tests/original_portfolio_read_policies.test.mjs"
+      ],
+      "limits": "Dust-floor and spam-mint client reads only; no session ownership, private POST setter, native API, React mount/scheduling, UI or feature credit."
+    },
     "scaffolded": true,
     "visuallyQualifiedRoutes": 0,
     "behaviorQualifiedRoutes": 0,
