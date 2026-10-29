@@ -43,13 +43,21 @@ assert.equal(
     ),
   ),
 );
+// The portable run is bound to the qualified PR head, not the live worktree:
+// later main commits may legitimately change these files, which invalidates
+// the run's scope (a fresh run is required) but not the saved receipt.
+const qualifiedHead = "56bf34935a32b3a744502358efb8116f76c4f8fb";
 for (const [relative, sha] of Object.entries(current.inputs)) {
   assert.ok(!relative.includes(".."));
-  assert.equal(
-    hash(await readFile(path.join(app, "packages/frontend", relative))),
-    sha,
-    `current input ${relative}`,
+  const bytes = execFileSync(
+    "git",
+    ["show", `${qualifiedHead}:app/packages/frontend/${relative}`],
+    {
+      cwd: path.resolve(app, ".."),
+      env: { ...process.env, GIT_NO_LAZY_FETCH: "1" },
+    },
   );
+  assert.equal(hash(bytes), sha, `qualified-head input ${relative}`);
 }
 const oldOrder = initial.results.find((r) => r.mode === "light-original");
 const interactive = initial.results.find((r) => r.mode === "light-interactive");

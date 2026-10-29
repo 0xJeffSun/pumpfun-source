@@ -24,7 +24,7 @@ The cause is timing dependent. Intercepting all local requests delayed scripts e
 - The remaining four desktop/tablet/mobile viewport cases pass. The unchanged final no-network/no-preference-write/no-permission case passes on its required port 3010; it hardcodes that origin, so its expectation was not loosened for the 3027 diagnostic.
 - Unique coverage is **14 pass, 1 known separate failure**, not a whole-suite pass. Logs and checksums are retained in `verification.json`. All actual diagnostic cases reported zero page errors and external requests.
 
-`verify-settings-history-readiness.mjs` authenticates saved logs/producers/current and historical source hashes plus these bounded results. It does not rerun a browser or make the saved report an independent oracle. Historical producer and portable producer bindings are separate. The package makes no original-website, backend, visual-parity, full-app or security-equivalence claim.
+`verify-settings-history-readiness.mjs` authenticates saved logs/producers, the historical (`31cea320`) and qualified-head (`56bf3493`) source hashes via `git show`, plus these bounded results. It does not check the live worktree, so it keeps passing after later main changes; those changes are outside this receipt and need a fresh run. It does not rerun a browser or make the saved report an independent oracle. Historical producer and portable producer bindings are separate. The package makes no original-website, backend, visual-parity, full-app or security-equivalence claim.
 
 ## Repeat
 
