@@ -2,7 +2,7 @@
 
 Checks, independently of the producer:
 - packet manifest lists exactly the files present, with matching hashes;
-- repository inputs (images, harness scripts, fixture) hash to the
+- repository inputs (original image, IDLs, harness scripts, fixture) hash to the
   recorded values;
 - 25 cases x 3 images = 75 receipts, ordered, with contexts matching
   the report, stored as 8 parts (10 x 7 + 5), each under 25MB;
@@ -12,7 +12,7 @@ Checks, independently of the producer:
   values), and the recorded error sites match the receipts' logs
   ("thrown in" and "caused by account" forms; the panic line for
   the buy limit cases);
-- success cases: the fourteen token-amount deltas (userquote, u5,
+- success cases: the thirteen token-amount deltas (userquote, u5,
   buyback, vb1, vq1, vb2, vq2, vb3, vq3, vb4, vq4, vb5, vq5) match
   the case's expected deltas, the payer is charged exactly
   1,849,400 lamports (1,844,400 volume-accumulator rent + 5,000
@@ -50,7 +50,9 @@ if not __debug__:
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
-WS = Path.home() / "workspace/slop-verify"
+# Control and candidate are the merged #424 and #427 images stored in the repository.
+CONTROL_GZ = ROOT / "research/amm-multi-hop-group-slice-recovery/artifacts/candidate.so.gz"
+CANDIDATE_GZ = ROOT / "research/amm-transfer-fee-diagnostic-recovery/artifacts/candidate.so.gz"
 IMAGES = ("original", "control", "candidate")
 WATCH = ("userquote", "u5", "buyback", "vb1", "vq1", "vb2", "vq2",
           "vb3", "vq3", "vb4", "vq4", "vb5", "vq5")
@@ -98,8 +100,8 @@ def main():
     assert report["mismatches"] == []
     assert report["image_sha256"] == {
         "original": sha((ROOT / "evidence/original/pump_amm/deployed.so").read_bytes()),
-        "control": sha((WS / "control.so").read_bytes()),
-        "candidate": sha((WS / "candidate.so").read_bytes()),
+        "control": sha(gzip.decompress(CONTROL_GZ.read_bytes())),
+        "candidate": sha(gzip.decompress(CANDIDATE_GZ.read_bytes())),
     }
     for name, digest in report["input_sha256"].items():
         assert sha((ROOT / name).read_bytes()) == digest, name
