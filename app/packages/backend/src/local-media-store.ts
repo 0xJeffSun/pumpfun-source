@@ -249,7 +249,7 @@ export class LocalMediaStore {
       try {
         file = await open(
           store.file,
-          constants.O_RDONLY | constants.O_NOFOLLOW,
+          constants.O_RDONLY | constants.O_NOFOLLOW | constants.O_NONBLOCK,
         );
       } catch (error) {
         if ((error as NodeJS.ErrnoException).code === "ENOENT") return store;

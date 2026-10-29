@@ -166,6 +166,12 @@ must be operator-controlled; this does not defend against a malicious local user
 who can replace ancestor directories or modify files concurrently. In-memory
 reads do not reread external disk changes until a graceful restart.
 
+Snapshot read-open is nonblocking before the descriptor's file-type check,
+preserving the no-follow policy. On POSIX, a readerless FIFO therefore rejects
+without waiting for a writer, closes its snapshot descriptor and releases the
+newly acquired owner lock. A valid reopen then succeeds. This is not a general
+filesystem I/O timeout; Windows named-pipe behavior is not qualified.
+
 ## Checks
 
 From `app/` (no production network access or real credentials required):
@@ -175,6 +181,7 @@ python3 -m unittest discover -s tests -p test_create_media_bindings.py
 cd packages/backend
 node --import tsx --test test/local-media.test.ts
 node --import tsx --test test/local-media-runtime.test.ts
+node --import tsx --test test/regular-file-admission.test.ts
 ```
 
 Synthetic tests cover the complete lifecycle, restart, exact byte readback,

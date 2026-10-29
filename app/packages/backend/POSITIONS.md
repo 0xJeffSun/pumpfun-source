@@ -103,6 +103,13 @@ it, and fails closed before listening. A request cannot select that path or
 submit materializations. For programmatic integration, construct `PositionsStore`
 with the validated dataset and pass `{ positionsStore }` to `buildApp`.
 
+On POSIX, the read-open is nonblocking before the descriptor's file-type check,
+so a named pipe with no writer is rejected rather than hanging startup. The
+descriptor closes on both success and validation failure. This is local file
+admission, not a general I/O deadline or production API behavior. Bounded child
+tests cover readerless FIFOs; they skip Windows, whose named-pipe semantics are
+not claimed. Ordinary-file validation and descriptor-cleanup controls still run.
+
 The tests contain a clearly synthetic dataset builder, not a production default
 or captured Pump activity. An actual data-producing adapter is still required.
 
@@ -141,6 +148,7 @@ From `app/packages/backend`:
 
 ```sh
 node --import tsx --test test/positions*.test.ts
+node --import tsx --test test/regular-file-admission.test.ts
 node --import tsx --test test/*.test.ts
 node node_modules/typescript/bin/tsc -p tsconfig.json
 ```
