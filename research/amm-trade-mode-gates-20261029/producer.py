@@ -12,9 +12,7 @@ Family A -- trade_v2 (single tier (0, lp 10 / protocol 111 /
 creator 0 bps), VB 10^12, VQ 10^10, supply 10^12, accrued 0,
 vq 0; the #33/#38 fixture):
 - buy_v2 / sell_v2 / buy_exact_quote_in_v2 on a cashback pool
-  all fail 6079 CashbackCoinNotSupported (trade_v2 prepare(),
-  trade.rs validate_cashback_coin), before any curve math,
-  transfer, or volume funding: payer -5,000 only, 0 events,
+  all fail 6079 CashbackCoinNotSupported (trade.rs prepare() -> trade_v2.rs validate_cashback_coin), after the volume-accumulator init CPI (rolled back) and before any token transfer: payer -5,000 only, 0 events,
   pool bytes unchanged, no volume accumulator.
 - Gate order on v2: disable_flags beats cashback (cashback +
   flags 8 -> 6020 DisabledBuy; cashback + flags 16 -> 6021
@@ -24,9 +22,7 @@ vq 0; the #33/#38 fixture):
   a non-token buyback account -> 6079, while the same bad
   recipient without cashback fails 6027
   AccountTypeNotSupported).
-- Mayhem pools trade fine on v2 (buyback forced to 0, supply
-  substituted to 10^15 for tier selection -- the tier here is
-  still A): buy 10^6 spends 10124 exactly as the non-mayhem
+- Mayhem pools trade fine on v2 (buyback forced to 0, supply substitution for tier selection is not exercised: the fixture has a single fee tier, so mayhem and non-mayhem pools necessarily use the same tier): buy 10^6 spends 10124 exactly as the non-mayhem
   anchor, but the whole 10124 lands in the vault (buyback 0,
   pool protocol +112, vq -112); sell 10^6 pays the same 9878
   to the user, but the vault sends only 9878 (buyback 0, pool
@@ -53,7 +49,7 @@ Family B -- multi_hop_swap, 3 AMM hops (tail pool quote<->base
   (0 prior events). Both-flags cells confirm the order: at
   an enforced hop the original fails 6079 (cashback first),
   at an ignored hop it fails 6080 (mayhem only).
-- Order pins (all images agree): disable beats mode
+- Order pins (receipts agree on all images; ordering pinned on the original only for the sell disable cell at P3): disable beats cashback
   (cashback + flags 8 -> 6020 buy / flags 16 -> 6021 sell);
   the amount guard beats the hop checks (amount 0 +
   cashback tail pool -> 6002); canonical beats mode
