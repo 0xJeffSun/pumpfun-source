@@ -30,7 +30,7 @@ def capture(url):
         # A fresh response must not overwrite bytes referenced by an older manifest.
         target = OUT / 'objects' / (key + '-' + digest + (suffix if suffix in ['.js','.css','.woff2','.json','.txt','.svg','.png','.ttf','.woff'] else ''))
         atomic_write(target, body)
-        return {'url':url,'final_url':r.url,'status':r.status,'path':target.relative_to(ROOT).as_posix(), 'bytes':len(body),'sha256':digest,'headers':{k.lower():v for k,v in r.headers.items() if k.lower() in HEADERS}}, body
+        return {'captured_at':datetime.datetime.now(datetime.timezone.utc).isoformat(),'url':url,'final_url':r.url,'status':r.status,'path':target.relative_to(ROOT).as_posix(), 'bytes':len(body),'sha256':digest,'headers':{k.lower():v for k,v in r.headers.items() if k.lower() in HEADERS}}, body
     except Exception as e: return {'url':url,'error':str(e)}, b''
 class RetainedCaptureError(ValueError): pass
 def retained_id(url): return hashlib.sha256(str(url).encode('utf-8',errors='backslashreplace')).hexdigest()[:12]
@@ -80,12 +80,15 @@ def retained_body(record,url):
         raise RetainedCaptureError(f'Retained capture {identity} integrity mismatch')
     return body
 REUSE={}
-def load_reuse(records):
+def load_reuse(records,captured_at=None):
     validated={}
     for index,record in enumerate(records):
         url=record.get('url') if isinstance(record,dict) else None
         if not isinstance(url,str): raise RetainedCaptureError(f'Retained capture {retained_id(f"index:{index}")} invalid record')
-        retained_body(record,url);validated[url]=record
+        retained_body(record,url)
+        if isinstance(captured_at,str):
+            record=dict(record);record.setdefault('captured_at',captured_at)
+        validated[url]=record
     REUSE.update(validated)
 def pool(urls):
     ordered=sorted(urls);retained={}
@@ -98,7 +101,8 @@ def pool(urls):
     with concurrent.futures.ThreadPoolExecutor(max_workers=6) as ex: return list(ex.map(fetch, ordered))
 def main():
     if '--resume' in sys.argv and (OUT/'manifest.json').exists():
-        load_reuse(json.loads((OUT/'manifest.json').read_text())['records'])
+        previous=json.loads((OUT/'manifest.json').read_text())
+        load_reuse(previous['records'],previous.get('captured_at'))
     records=[]; pages=pool({'https://pump.fun'+p for p in PAGES} | {'https://docs.pump.fun/openapi.public.json','https://docs.pump.fun/llms-full.txt'})
     records.extend(r for r,b in pages)
     assets=set()
