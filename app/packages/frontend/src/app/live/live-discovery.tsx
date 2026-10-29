@@ -40,10 +40,12 @@ function StreamPlaceholder({ stream }: { stream: ArchivedStream }) {
 function PlaybackPanel({
   selected,
   invalidSelection,
+  controlsReady,
   onClose,
 }: {
   selected?: ArchivedStream;
   invalidSelection: boolean;
+  controlsReady: boolean;
   onClose: () => void;
 }) {
   if (!selected && !invalidSelection) {
@@ -55,6 +57,19 @@ function PlaybackPanel({
           Select a captured card to inspect its read-only metadata. No player or
           production media session starts here.
         </p>
+      </aside>
+    );
+  }
+
+  if (!controlsReady) {
+    return (
+      <aside
+        className="playback-panel"
+        role="status"
+        aria-live="polite"
+        data-testid="stream-detail-loading"
+      >
+        Loading archived details…
       </aside>
     );
   }
@@ -157,6 +172,7 @@ export default function LiveDiscovery({
   const query = searchParams.get("q") ?? "";
   const selectedId = searchParams.get("stream");
   const [draftQuery, setDraftQuery] = useState(query);
+  const [controlsReady, setControlsReady] = useState(false);
   const cardRefs = useRef(new Map<string, HTMLButtonElement>());
   const searchRef = useRef<HTMLInputElement>(null);
   const selected = streams.find((stream) => stream.id === selectedId);
@@ -197,7 +213,10 @@ export default function LiveDiscovery({
   }, [navigate, selectedId, section]);
 
   useEffect(() => {
-    if (selectedId === null) return;
+    if (selectedId === null) {
+      setControlsReady(true);
+      return;
+    }
     const closeOnEscape = (event: globalThis.KeyboardEvent) => {
       // A modal (for example, shell settings/search) owns Escape before the
       // nonmodal metadata panel. Native dialog cancellation follows keydown;
@@ -217,6 +236,9 @@ export default function LiveDiscovery({
       }
     };
     window.addEventListener("keydown", closeOnEscape);
+    // A direct visit can paint its archived selection before passive effects.
+    // Expose the detail only after its advertised dismissal controls work.
+    setControlsReady(true);
     return () => window.removeEventListener("keydown", closeOnEscape);
   }, [closeSelection, selectedId]);
 
@@ -491,6 +513,7 @@ export default function LiveDiscovery({
         <PlaybackPanel
           selected={selected}
           invalidSelection={invalidSelection}
+          controlsReady={controlsReady}
           onClose={closeSelection}
         />
       </div>
