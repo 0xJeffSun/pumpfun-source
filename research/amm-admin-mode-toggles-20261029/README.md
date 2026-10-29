@@ -112,3 +112,9 @@ binary reports per-instruction files. Receipt snapshots cover
 non-executable accounts only (the program account itself is
 excluded: its size and lamports differ between the original
 10,485,715-byte binary and the 1,291,424-byte rebuilds).
+
+## Retained receipt counts
+
+The raw `counts.vms` and per-receipt `vm` fields are execution/receipt ordinals. This packet covers 105 fixture/image scenarios and 120 signed executions, because its chained scenarios submit multiple transactions in the same VM. The producer and raw receipts remain unchanged; no separate count of runtime VM constructor calls is claimed.
+
+The retained source fingerprints identify the historical AMM source archived at `repro/pump_amm/v2-mint-clone-recovery-20261028/results/canonical-source`. Verification reads that exact snapshot, including the former `cashback.rs`; each recorded hash stays mandatory. Runtime uses the three explicitly pinned historical executable images. This packet does not compile or qualify the current maintained AMM source.

@@ -30,10 +30,10 @@ import sys
 from pathlib import Path
 
 import os
-os.chdir(Path.home() / "workspace/pumpfun-sparse")
+os.chdir(Path(__file__).resolve().parents[2])
 from solders.transaction import Transaction
 
-ROOT = Path.home() / "workspace/pumpfun-sparse"
+ROOT = Path(__file__).resolve().parents[2]
 PACKET = ROOT / "research/amm-admin-mode-toggles-20261029"
 
 
@@ -54,12 +54,15 @@ assert report["mismatches"] == []
 assert report["counts"]["transactions"] == 120, report["counts"]
 assert report["counts"]["signature_fields"] == 120
 for name, digest in report["input_sha256"].items():
-    assert sha((ROOT / name).read_bytes()) == digest, name
+    recorded = ROOT / name
+    if name.startswith("programs/pump-amm/"):
+        recorded = ROOT / "repro/pump_amm/v2-mint-clone-recovery-20261028/results/canonical-source" / name
+    assert sha(recorded.read_bytes()) == digest, name
 for name, digest in report["image_sha256"].items():
     path = {"original": ROOT / "evidence/original/pump_amm/deployed.so",
-            "control": Path.home() / "workspace/slop-verify/control.so",
-            "candidate": Path.home() / "workspace/slop-verify/candidate.so"}[name]
-    assert sha(path.read_bytes()) == digest, name
+            "control": ROOT / "research/amm-multi-hop-group-slice-recovery/artifacts/candidate.so.gz",
+            "candidate": ROOT / "research/amm-transfer-fee-diagnostic-recovery/artifacts/candidate.so.gz"}[name]
+    assert sha(gzip.decompress(path.read_bytes()) if path.suffix == ".gz" else path.read_bytes()) == digest, name
 
 receipts = []
 for part in report["transaction_receipts"]["parts"]:
