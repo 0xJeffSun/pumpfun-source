@@ -355,7 +355,6 @@ test("opt-in route gates API keys, labels data, conforms to schema, and leaves o
     for (const url of [
       "/v1/callout/a/quotes",
       "/v1/callout/a/replies",
-      "/v1/callout/list/author-a",
     ]) {
       assert.equal((await app.inject({ url, headers })).statusCode, 501);
     }
@@ -429,6 +428,28 @@ test("unsupported viewer and filter query semantics fail closed instead of being
       assert.equal(response.statusCode, 501);
       assert.equal(response.json().reason, "CALLOUT_QUERY_UNSUPPORTED");
       assert.equal(response.body.includes("secret"), false);
+    }
+  } finally {
+    await app.close();
+  }
+});
+
+test("question marks inside the full callout query cannot bypass unsupported-query rejection", async () => {
+  const app = buildApp([], { calloutsStore: new CalloutsStore(dataset()) });
+  try {
+    for (const query of ["?userId=other", "&?userId=other"]) {
+      for (const method of ["GET", "HEAD"] as const) {
+        const response = await app.inject({
+          method,
+          url: `/v1/callout/a?${query}`,
+          headers,
+        });
+        assert.equal(response.statusCode, 501, `${method} ${query}`);
+        if (method === "GET") {
+          assert.equal(response.json().reason, "CALLOUT_QUERY_UNSUPPORTED");
+          assert.equal(Object.hasOwn(response.json(), "callout"), false);
+        } else assert.equal(response.body, "");
+      }
     }
   } finally {
     await app.close();

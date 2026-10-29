@@ -711,3 +711,29 @@ test("existing posts and unknown-route behavior remain intact", async () => {
     await app.close();
   }
 });
+
+test("empty query names cannot mask unknown Home Feed parameters", async (t) => {
+  const app = buildApp();
+  try {
+    const head = (await app.inject(NEW_ROUTE)).json().headToken;
+    for (const route of [ROUTE, NEW_ROUTE, COUNT_ROUTE]) {
+      await t.test(route, async () => {
+        const prefix =
+          route === COUNT_ROUTE ? `since=${encodeURIComponent(head)}&` : "";
+        assert.equal((await app.inject(`${route}?${prefix}`)).statusCode, 200);
+        for (const query of [
+          "=ignored",
+          "=ignored&unknown=true",
+          "unknown=true&=ignored",
+        ]) {
+          const url = `${route}?${prefix}${query}`;
+          const response = await app.inject(url);
+          assert.equal(response.statusCode, 400, url);
+          assert.equal(response.json().error, "UNKNOWN_QUERY_PARAMETER", url);
+        }
+      });
+    }
+  } finally {
+    await app.close();
+  }
+});

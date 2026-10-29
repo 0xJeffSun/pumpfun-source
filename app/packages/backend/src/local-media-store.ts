@@ -156,7 +156,7 @@ function imageType(bytes: Buffer): ImageType | undefined {
   if (
     bytes.length >= 24 &&
     bytes.subarray(0, 8).equals(Buffer.from("89504e470d0a1a0a", "hex")) &&
-    bytes.subarray(12, 16).toString("ascii") === "IHDR" &&
+    bytes.subarray(12, 16).equals(Buffer.from("IHDR")) &&
     bytes.readUInt32BE(16) > 0 &&
     bytes.readUInt32BE(20) > 0
   )
@@ -170,15 +170,17 @@ function imageType(bytes: Buffer): ImageType | undefined {
     return "image/jpeg";
   if (
     bytes.length >= 10 &&
-    ["GIF87a", "GIF89a"].includes(bytes.subarray(0, 6).toString("ascii")) &&
+    ["GIF87a", "GIF89a"].some((header) =>
+      bytes.subarray(0, 6).equals(Buffer.from(header)),
+    ) &&
     bytes.readUInt16LE(6) > 0 &&
     bytes.readUInt16LE(8) > 0
   )
     return "image/gif";
   if (
     bytes.length >= 16 &&
-    bytes.subarray(0, 4).toString("ascii") === "RIFF" &&
-    bytes.subarray(8, 12).toString("ascii") === "WEBP"
+    bytes.subarray(0, 4).equals(Buffer.from("RIFF")) &&
+    bytes.subarray(8, 12).equals(Buffer.from("WEBP"))
   )
     return "image/webp";
   return undefined;
@@ -249,7 +251,7 @@ export class LocalMediaStore {
       try {
         file = await open(
           store.file,
-          constants.O_RDONLY | constants.O_NOFOLLOW,
+          constants.O_RDONLY | constants.O_NOFOLLOW | constants.O_NONBLOCK,
         );
       } catch (error) {
         if ((error as NodeJS.ErrnoException).code === "ENOENT") return store;
@@ -264,7 +266,7 @@ export class LocalMediaStore {
         if (!stat.isFile() || stat.size > maxSnapshot)
           throw new Error("Invalid local media snapshot size/type.");
         store.state = store.validateSnapshot(
-          JSON.parse(await file.readFile("utf8")),
+          JSON.parse(new TextDecoder("utf-8", { fatal: true, ignoreBOM: true }).decode(await file.readFile())),
         );
       } finally {
         await file.close();

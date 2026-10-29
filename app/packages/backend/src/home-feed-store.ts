@@ -362,8 +362,8 @@ function contextHash(filters: HomeFeedFilters): string {
   return createHash("sha256")
     .update(
       JSON.stringify({
-        chains: [...filters.chains],
-        assetClasses: [...filters.assetClasses],
+        chains: [...filters.chains].sort(),
+        assetClasses: [...filters.assetClasses].sort(),
         minMarketCapUsd: filters.minMarketCapUsd ?? null,
         maxMarketCapUsd: filters.maxMarketCapUsd ?? null,
         minCostBasisUsd: filters.minCostBasisUsd ?? null,

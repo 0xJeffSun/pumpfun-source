@@ -3,7 +3,7 @@
   "archiveSha256": "c8ff4e850651c81e9f488bfc6dffb4513a041bb4bca0819879dc19d9a72a4641",
   "transport": {
     "base": "c3b6530dab32b79ce0feb8977a4d50768ad38d7e",
-    "sourceSha256": "eda26bedeff8e196fe004c287cfb59dd792f6bf73b782ccb3eee5e10adc84bcb",
+    "sourceSha256": "4f8753a6fe767df69da69b56a1851d897598def572c47d3ebe4f36ea6bab39fc",
     "unchangedFactoryBodySha256": "49c42e491310e985a652dbfdcb553a9edfdbb58c16acd3005f63e7daafa41ab1",
     "delta": "export existing factory; add readonly getAccountInfo to TypeScript method union. Shared export and Node agent-package boundary credited to #893."
   },

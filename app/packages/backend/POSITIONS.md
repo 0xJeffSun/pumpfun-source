@@ -103,6 +103,13 @@ it, and fails closed before listening. A request cannot select that path or
 submit materializations. For programmatic integration, construct `PositionsStore`
 with the validated dataset and pass `{ positionsStore }` to `buildApp`.
 
+On POSIX, the read-open is nonblocking before the descriptor's file-type check,
+so a named pipe with no writer is rejected rather than hanging startup. The
+descriptor closes on both success and validation failure. This is local file
+admission, not a general I/O deadline or production API behavior. Bounded child
+tests cover readerless FIFOs; they skip Windows, whose named-pipe semantics are
+not claimed. Ordinary-file validation and descriptor-cleanup controls still run.
+
 The tests contain a clearly synthetic dataset builder, not a production default
 or captured Pump activity. An actual data-producing adapter is still required.
 
@@ -128,9 +135,12 @@ or captured Pump activity. An actual data-producing adapter is still required.
 - Trust flags are retained for consumers to mask; no basis, PnL, quote, lifetime
   total, entry timestamp or exact trade count is invented. Monetary fields use
   the contract's JSON-number representation; this is not an exact-integer ledger.
-- Group folds, cross-wallet financial aggregation, reorgs, backfill, trade history,
+- Group folds, cross-wallet financial aggregation, reorgs, backfill,
   realtime updates, prices, cache TTLs, canonical identity discovery, live marks,
   NEAR/Starknet/TON/perps/collectibles and provider availability are not implemented.
+- A separate opt-in [spot trade-history read model](USER-TRADES.md) now computes
+  canonical-wallet selection, trade/transfer filters and keyset pages from
+  explicitly supplied facts. It does not derive this store's positions or PnL.
 - Partial materialized spot-token support is not two qualified operations. The
   global native/qualified ledgers are unchanged. Other five positions.read
   operations remain untouched.
@@ -141,6 +151,7 @@ From `app/packages/backend`:
 
 ```sh
 node --import tsx --test test/positions*.test.ts
+node --import tsx --test test/regular-file-admission.test.ts
 node --import tsx --test test/*.test.ts
 node node_modules/typescript/bin/tsc -p tsconfig.json
 ```

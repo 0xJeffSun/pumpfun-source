@@ -7,7 +7,7 @@ const routes: Record<string, [string, string]> = {
   explore: ["Explore", "Search, filters, coin rankings and discovery."],
   "holder-rewards": [
     "Holder rewards",
-    "Derive a holder-rewards PDA locally without querying balances, eligibility or claims.",
+    "Derive a holder-rewards PDA locally and optionally inspect its public account holdings. Reward eligibility and claims remain unavailable.",
   ],
   create: [
     "Create a coin",
