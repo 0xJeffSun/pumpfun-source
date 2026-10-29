@@ -33,5 +33,6 @@
   "research/mayhem-current437-rust-panic-messages-20261029/observations.json.gz": "b86a921b893cef48dd2913bec78235622dacee562fc592e949a50df4eeb169aa",
   "research/mayhem-current437-rust-panic-messages-20261029/proof.py": "7d6fda31aa87d66adbd43ea28d0ecc9dde1af8bb6ff6d0580e6549d301360b49",
   "research/mayhem-current437-rust-panic-messages-20261029/test_verify.py": "783dcdeecdd2eb054ea28a18c06d0d971364e0c32b1537ed4319b6bf27c86603",
-  "research/mayhem-current437-rust-panic-messages-20261029/verify.py": "fd8c9ea9e5fbe54a72cf8a283cedbbd5e03e2803f29e0a8aa893f09a0d39ad6d"
+  "research/mayhem-current437-rust-panic-messages-20261029/verify.py": "fd8c9ea9e5fbe54a72cf8a283cedbbd5e03e2803f29e0a8aa893f09a0d39ad6d",
+  "research/mayhem-current437-bounded-index-tables-20261029/coverage-delta.json": "f6efa470f1d18bcec99cab2c95ecf1fc650fe5606bcdbc73956986779e7cb282"
 }

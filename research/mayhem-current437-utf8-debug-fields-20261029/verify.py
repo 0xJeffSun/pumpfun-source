@@ -1,3 +1,5 @@
+if not __debug__:
+    raise SystemExit('Run without -O')
 from pathlib import Path
 import argparse
 import json

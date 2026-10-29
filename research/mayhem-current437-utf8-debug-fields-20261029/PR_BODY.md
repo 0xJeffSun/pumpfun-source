@@ -1,3 +1,14 @@
-证明 `Utf8Error` 调试格式调用中的三个有界字符串，共新增 `.rodata` 29 字节：`[720219,720228)`、`[720228,720239)`、`[720239,720248)`。检查原始和候选程序的指针、长度、字节与对应调用；证明止于调用，不推断运行输出。基线不含 #783，本次不计入 `[720036,720219)`。
+# Historical Mayhem data attribution: PR #819
 
-验证：证明包验证、字节和指令变异测试、仓库证据检查及工具测试均通过。
+This packet independently bounds **29 new bytes** against the common reviewed,
+merged #846 data baseline: **21,796 / 26,180 bytes**. Its own bounded historical
+union with that baseline is **21,825 / 26,180**. Other open packets are not
+included in this per-packet baseline. The separate batch review deduplicates all
+eight additions; these figures are not a latest complete source footprint.
+
+The original and qualified437 candidate payload/descriptor/argument/index paths
+are checked. This adds finite historical data attribution only: no maintained
+code, normalized window or current-native-ELF progress is credited. Text and
+relocation-table bytes are proof evidence, not credited payload.
+
+Original attribution observations remain byte-exact.
