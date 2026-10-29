@@ -16,6 +16,8 @@ import { registerCompetitionRoutes } from "./competitions-routes.js";
 import { CompetitionStore, defaultCompetitionStore } from "./competitions-store.js";
 import { registerFollowingRoutes } from "./following-routes.js";
 import { FollowingStore, defaultFollowingStore } from "./following-store.js";
+import { registerLeaderboardRoutes } from "./leaderboard-routes.js";
+import { LeaderboardStore, defaultLeaderboardStore } from "./leaderboard-store.js";
 import { registerHomeFeedRoutes } from "./home-feed-routes.js";
 import { HomeFeedStore, defaultHomeFeedStore } from "./home-feed-store.js";
 import { registerLocalMediaRoutes, type LocalMediaOptions } from "./local-media-routes.js";
@@ -273,6 +275,7 @@ const NATIVE_ROUTES = new Set<string>([
   "GET /following/v3/following/search/{userId}",
   "GET /following/v3/followers/{userId}",
   "GET /following/v3/following/{userId}",
+  "GET /pnl-leaderboard",
 ]);
 
 export interface BuildAppOptions {
@@ -290,6 +293,8 @@ export interface BuildAppOptions {
   competitionStore?: CompetitionStore;
   /** Override the follow-graph store (for tests). */
   followingStore?: FollowingStore;
+  /** Override the leaderboard store (for tests). */
+  leaderboardStore?: LeaderboardStore;
   /** Override the local Home Feed store (for tests). */
   homeFeedStore?: HomeFeedStore;
 }
@@ -336,6 +341,9 @@ export function buildApp(fixtures: Fixture[] = [], opts: BuildAppOptions = {}) {
   const followStore =
     opts.followingStore ??
     (opts.userStore ? new FollowingStore(store) : defaultFollowingStore);
+  const lbStore =
+    opts.leaderboardStore ??
+    (opts.userStore ? new LeaderboardStore(undefined, store) : defaultLeaderboardStore);
   registerHomeFeedRoutes(app, opts.homeFeedStore ?? defaultHomeFeedStore);
   app.register(async (native) => {
     native.addHook("preHandler", apiKeyGate);
@@ -343,6 +351,7 @@ export function buildApp(fixtures: Fixture[] = [], opts: BuildAppOptions = {}) {
     registerPostRoutes(native, postStore);
     registerCompetitionRoutes(native, compStore);
     registerFollowingRoutes(native, followStore);
+    registerLeaderboardRoutes(native, lbStore);
     if (opts.calloutsStore) registerCalloutRoutes(native, opts.calloutsStore);
     if (opts.positionsStore) registerPositionsRoutes(native, opts.positionsStore);
   });
