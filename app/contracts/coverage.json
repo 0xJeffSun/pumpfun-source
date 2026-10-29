@@ -52,6 +52,21 @@
         "packages/backend/test/callouts-evidence.test.ts"
       ],
       "limits": "Server-owned materialization only; no production absence, ranking, prices, auth or complete operation compatibility claim."
+    },
+    "calloutDiscussions": {
+      "operations": [
+        "GET /callout/{calloutId}/replies",
+        "GET /callout/replies/{replyId}/chain"
+      ],
+      "status": "opt-in-public-live-discussion-slice",
+      "defaultEnabled": false,
+      "qualified": false,
+      "evidence": [
+        "packages/backend/CALLOUT-DISCUSSIONS.md",
+        "packages/backend/test/callout-discussions.test.ts",
+        "packages/backend/test/callout-discussions-evidence.test.ts"
+      ],
+      "limits": "Explicit complete local ordinary-reply graph only. No production completeness, tombstone synthesis, financial ranking, identity resolver, auth or full operation compatibility claim."
     }
   }
 }
