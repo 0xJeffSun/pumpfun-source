@@ -131,6 +131,29 @@ class RelocatedPointerTests(unittest.TestCase):
         self.assertTrue(kept['in_text'])
         self.assertNotIn('target_section', kept)
 
+    def test_validation_record_matches_computed_values(self):
+        import json
+        record = json.loads((Path(generate.__file__).parent / 'validation.json').read_text())
+        self.assertEqual(set(record['archivedHelperSha256'].values()), generate.HELPER_SHA256)
+        lf = generate.HELPER.read_bytes().replace(b'\r\n', b'\n')
+        self.assertEqual(record['archivedHelperSha256']['lf'], hashlib.sha256(lf).hexdigest())
+        for program, counts in record['pointerCounts'].items():
+            elf = elf_for(program)
+            with self.subTest(program=program):
+                before = self.archived.analyze_data_layout(elf)['.data.rel.ro']['pointer_count']
+                after = self.corrected.analyze_data_layout(elf)['.data.rel.ro']['pointer_count']
+                self.assertEqual(counts, {'before': before, 'after': after})
+                self.assertEqual(after, EXPECTED[program])
+        witness = record['witness']
+        elf = elf_for(witness['program'])
+        address = int(witness['fileOffset'], 16)
+        self.assertEqual(elf.b[address:address + 8].hex(), witness['bytes'])
+        self.assertEqual(hex(struct.unpack_from('<Q', elf.b, address)[0]), witness['stored'])
+        after = self.corrected.analyze_data_layout(elf)['.data.rel.ro']['pointer_like_values']
+        row = next(row for row in after if row['address'] == witness['fileOffset'])
+        self.assertEqual(row['points_to'], witness['pointsTo'])
+        self.assertEqual(row['target_section'], witness['targetSection'])
+
     def relocated_landings(self, elf):
         sec = elf.secs['.data.rel.ro']
         start, size = sec[4], sec[5]

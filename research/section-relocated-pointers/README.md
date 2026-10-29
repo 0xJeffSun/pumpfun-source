@@ -15,6 +15,9 @@ The successor checks the archived helper and, for a type-8 slot that is not
 an `lddw`, tests the high half. Pointers into another section are kept.
 The 200-row display cap and the struct-size expression are unchanged.
 
+`validation.json` is a hand-written record; `test_generate.py` recomputes its
+helper hashes, before/after pointer counts and witness row and fails on drift.
+
 ```
 python3 scripts/verify_evidence.py
 python3 scripts/test_tooling.py
