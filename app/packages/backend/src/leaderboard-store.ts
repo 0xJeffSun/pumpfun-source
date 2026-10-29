@@ -28,10 +28,11 @@ const PERIOD_SECONDS: Record<Period, number> = { daily: 86_400, weekly: 604_800,
 
 /**
  * Fixed window anchor so `windowStartSec` is deterministic across calls and
- * hosts. Chosen as 2026-10-01T00:00:00Z; the window start snaps the anchor down
- * to the period boundary.
+ * hosts. Chosen as 2025-10-01T00:00:00Z, the date the synthetic seed rows were
+ * authored around (their lastRefreshedAtMs values fall in September 2025); the
+ * window start snaps the anchor down to the period boundary.
  */
-const ANCHOR_SEC = Date.parse('2026-10-01T00:00:00Z') / 1000;
+const ANCHOR_SEC = Date.parse('2025-10-01T00:00:00Z') / 1000; // 1_759_276_800
 
 export interface TopPosition {
   mint: string;
