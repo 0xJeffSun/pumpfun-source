@@ -162,6 +162,7 @@ export default function LiveDiscovery({
 }) {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const pendingQuery = useRef(searchParams.toString());
   const section: SectionId =
     searchParams.get("section") === "other-sections"
       ? "other-sections"
@@ -186,18 +187,24 @@ export default function LiveDiscovery({
 
   useEffect(() => setDraftQuery(query), [query]);
 
+  useEffect(() => {
+    pendingQuery.current = searchParams.toString();
+  }, [searchParams]);
+
   const navigate = useCallback(
     (changes: Record<string, string | null>, replace = false) => {
-      const parameters = new URLSearchParams(searchParams.toString());
+      // Compose rapid actions before the router commits its previous URL.
+      const parameters = new URLSearchParams(pendingQuery.current);
       for (const [key, value] of Object.entries(changes)) {
         if (value === null || value === "") parameters.delete(key);
         else parameters.set(key, value);
       }
+      pendingQuery.current = parameters.toString();
       const target = parameters.size ? `/live?${parameters}` : "/live";
       if (replace) router.replace(target, { scroll: false });
       else router.push(target, { scroll: false });
     },
-    [router, searchParams],
+    [router],
   );
 
   const closeSelection = useCallback(() => {
