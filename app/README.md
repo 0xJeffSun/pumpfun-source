@@ -168,4 +168,9 @@ See `evidence/validation.json` for this checkpoint's actual results. Lockfile ch
 
 ## Source and feature completion
 
+The [captured portfolio read policies](reconstruction/portfolio-read-policies/README.md)
+recover dust-floor and spam-mint requests, memoized query options and local cache
+helpers. Their explicit ports preserve session/runtime boundaries; they do not
+add a private preference setter, native service, UI or completion credit.
+
 See [generated progress tables](PROGRESS.md) and the [feature ledger](contracts/feature-progress.json). From the repository root run `python3 app/scripts/progress.py` to refresh both the root README tables and the standalone report. Run `pnpm --dir app check:progress` to check freshness and scoring rules. Accepted milestones require checked-in evidence; excluded/deferred surfaces are N/A. Captured JavaScript and extracted factories are not counted as completed product features.
