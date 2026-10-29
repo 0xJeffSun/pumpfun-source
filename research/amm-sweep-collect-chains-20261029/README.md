@@ -33,7 +33,11 @@ trade step costs 1,849,400 (volume rent 1,844,400 + fee 5,000), later
 steps cost 5,000, and a sweep to a fresh ATA costs 2,044,280 (fee
 5,000 + ATA rent 2,039,280).
 
-Event layouts (all verified byte-for-byte):
+Event layouts (offsets as read from the receipts; verify.py decodes
+only the discriminator, length, and the sweep timestamp / recipient /
+amount / bucket, collect timestamp / creator / fee / vault ATA /
+destination, and v2 buy/sell curve / fee / user fields -- the other
+offsets below are informational):
 - SweepPoolFeeEvent, 185 bytes, disc `82a42461e48287a5`
   (= sha256("event:SweepPoolFeeEvent")[:8]): timestamp @8, pool
   @16, base mint @48, quote mint @80, recipient @112, payer @144,
@@ -66,7 +70,8 @@ Family A -- sweep anchors, as-is fixture, recipient ATAs absent:
 - `a-sweep-proto-zero` / `a-sweep-creator-zero`: with the bucket
   patched to 0, the sweep is a silent no-op -- 0 events, payer
   5,000 only, pool unchanged, and the recipient ATA is NOT created
-  (the handler returns before create_ata_if_empty).
+  (observed: the ATA stays absent; the early return is in the
+  handler source).
 - `a-sweep-proto-twice` / `a-sweep-creator-twice`: the second sweep
   of an emptied bucket is a silent no-op -- 0 events, payer 5,000,
   log "Nothing to sweep for fee bucket 0/1".
@@ -101,18 +106,22 @@ Family B -- v2 pipeline:
   cf 128,869), sweep creator 128,869 (pool cf 0, vq -10,974),
   collect 128,869.
 
-Family C -- sweeping does not move trade prices:
+Family C -- sweeping does not move trade prices (the raw trade
+events are NOT byte-identical to the anchors: the pool quote
+reserve word @56 and some trailing words record the post-sweep
+pool state):
 - `c-sweep-both-buy`: both sweeps, then buy 10^10 settles
-  byte-identical to the fresh anchor (spend 1,847,796, vault
-  +1,839,310, buyback 8,486, same event) with pool
+  identical to the fresh anchor in every measured leg and decoded
+  event field (spend 1,847,796, vault +1,839,310, buyback 8,486,
+  same curve / fees / user-in) with pool
   (vq -13,962, pf 8,487, cf 5,475) -- the accruals restart from 0
   but the trade itself does not move.
 - `c-sweep-creator-buy`: creator sweep, then buy 10^10 is
-  byte-identical to the anchor, pool (vq -16,450, pf 10,975,
+  identical to the anchor in legs and decoded event fields, pool (vq -16,450, pf 10,975,
   cf 5,475).
 - `c-sweep-proto-sell`: protocol sweep, then sell 10^10 is
-  byte-identical to the fresh anchor (user +1,802,115, vault
-  -1,810,601, buyback 8,486, same event), pool
+  identical to the fresh anchor in legs and decoded event fields
+  (user +1,802,115, vault -1,810,601, buyback 8,486), pool
   (vq -137,355, pf 8,486, cf 128,869).
 
 Family D -- legacy routing contrast (protocol/creator ATAs
@@ -166,3 +175,27 @@ pre-created, as in the legacy differential):
   the legacy-routing claim.
 - Collect with a missing vault ATA, and sweep/collect under
   transfer-fee mints, were not executed here.
+
+## Verify and provenance
+
+From the repository root:
+
+    python3 -I -B research/amm-sweep-collect-chains-20261029/verify.py
+
+`verify.py` needs only `solders` plus files in the repository: this
+packet, `evidence/original/pump_amm/deployed.so`, and the two
+retained rebuilt images
+`research/amm-multi-hop-group-slice-recovery/artifacts/candidate.so.gz`
+(control, #424) and
+`research/amm-transfer-fee-diagnostic-recovery/artifacts/candidate.so.gz`
+(candidate, #427), whose decompressed sha256 values match the
+`images` block of `runtime/report.json.gz`. It re-checks the
+recorded receipts against the report's expected values; it does
+not re-execute any transaction.
+
+`producer.py` is the script that generated the receipts and is
+kept as a provenance record. It is not runnable as committed: it
+hard-codes a private workspace layout (`~/workspace/pumpfun-sparse`
+for the harness scripts and `~/workspace/slop-verify` for the
+control/candidate `.so` files) and chdirs there on start.
+
