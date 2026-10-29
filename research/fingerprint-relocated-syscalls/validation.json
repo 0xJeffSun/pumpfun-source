@@ -1,0 +1,40 @@
+{
+  "base_revision": "aa7e769a21c5c20a70c85ca4288d5ed8ac4faf50",
+  "checks": {
+    "regressions": "2 passed",
+    "original_captures": "9 passed",
+    "comparator_tests": "6 passed"
+  },
+  "real_known_relocated_call_sites": {
+    "pump": 114,
+    "pump_amm": 83,
+    "mayhem": 104
+  },
+  "mayhem": {
+    "windows": 441,
+    "sequence_entries": {
+      "before": 0,
+      "after": 104
+    },
+    "changed_window_sequences": 58,
+    "fingerprints_sha256": {
+      "before": "d24c25cb30670837329f3a8433ae5675228751e417e3d2ef203753ef520bc040",
+      "after": "5859bb29e62c7c3367eb92c577dd5b2f7d75bc2ff4c5ba89564470ab58cbe844"
+    },
+    "other_fields_and_packet_payloads": "unchanged",
+    "unchanged_payloads": [
+      "README.md",
+      "disassembly.json.gz",
+      "dispatch-table.json",
+      "error-strings.json",
+      "extern-usage.json",
+      "rodata-strings.json",
+      "summary.json",
+      "syscall-usage.json",
+      "verify.py",
+      "windows-deep.json"
+    ],
+    "before_and_after_packet_verifiers": "passed"
+  },
+  "limits": "Static recognized syscall sites in file order, not path-feasible execution order or proof of execution; registry unchanged, no source/runtime equivalence claim."
+}
