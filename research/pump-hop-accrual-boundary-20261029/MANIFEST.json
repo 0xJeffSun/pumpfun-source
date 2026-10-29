@@ -63,7 +63,7 @@
     "native-builds/perhop-40792780769/unstripped.so": "dd73afe77d90d289e9383ee1aa12cdb26608752eb1a1f8b3a4135c0af786cb17",
     "native-builds/perhop-40792780769/workflow.yml": "be677e50bb6b12de619d7adda112da984c702d3309577106eada31f3262691f8",
     "proposal.diff": "7d5c127c03e05379a8ad923e9183f5fe58501ddb986c21e03709136e74b73227",
-    "qualification/CENSUS-INPUTS.json": "006f16fb29254e71dfa3f80c8aaef3f402e0528d3d9ea4a5788870b6c9f687a6",
+    "qualification/CENSUS-INPUTS.json": "e951316feee8edc7d7b5c283d0a2b26cc18397a0199567bb31cbbeec3a41c95b",
     "qualification/COMMANDS.md": "3f96ad32561164ad0b26162d8cbd050297859cf956ea0b2757415415fad08609",
     "qualification/INPUTS.json": "ed5222bfea80d8eac85a6f749f0fbe95cadd9e2d6f60a379a5f0bd2403814b72",
     "qualification/QUALIFIED.json": "938ec45a9f077a0f898cf9fc5b1233e1f74e5af6faee720bb851dd00a264cb50",
@@ -88,7 +88,7 @@
     "qualification/reports/perhop-hop13.log": "a8f0328a72565f1526efcb2b5953b62f40cef66f75501a52c7855fe165c7c558",
     "qualification/reports/perhop-native-accrual-caller.dis": "8d727c4c16b6b85cde54675faf9bd3c2be4c3ec67b26a0d8daa2bbb505cccffc",
     "qualification/tools/census.py": "804b88102b69c7bf41f7a3f751454bf9d4d1c89cc36fb7e7f52bdc89f28b9d5c",
-    "qualification/verify.py": "c8f57dc20e80b17e7979020ca7b1eb391d71cca66f362f25a2e6c8477799c0ab",
+    "qualification/verify.py": "addcf990fb99414ab4fd153c1090ae2610fa59e528450ed09e51a41df942491c",
     "source-before.rs": "679b34ae4965bf1cdc999e0f45f3ae5e171116c5f04173e7394c3b9e48a0fb43",
     "verify.py": "b3d2203885a4c4139d7842f1e0c4be79d0bf95a0acafc47d5d26b0a6449fc5c2"
   },

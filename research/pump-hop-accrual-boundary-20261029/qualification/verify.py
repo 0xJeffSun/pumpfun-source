@@ -22,7 +22,7 @@ def main():
     for name, digest in inputs.items():
         path = PACKET / name if name.startswith('qualification/') else root / name
         assert sha(path.read_bytes()) == digest, name
-    sys.path.insert(0, str(root / 'scripts'))
+    sys.path.insert(0, str(root / 'research/pump-final-composition-673-20261028/tools'))
     from pump_compare_function_bytes import body, normalize
     from pump_quote_control_function_match import sections
     # The retained census implementation is unchanged. Only its input root is
