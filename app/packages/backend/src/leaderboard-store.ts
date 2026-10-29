@@ -31,7 +31,7 @@ const PERIOD_SECONDS: Record<Period, number> = { daily: 86_400, weekly: 604_800,
  * hosts. Chosen as 2026-10-01T00:00:00Z; the window start snaps the anchor down
  * to the period boundary.
  */
-const ANCHOR_SEC = 1_759_276_800;
+const ANCHOR_SEC = Date.parse('2026-10-01T00:00:00Z') / 1000;
 
 export interface TopPosition {
   mint: string;
