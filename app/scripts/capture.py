@@ -92,6 +92,8 @@ def load_reuse(records,captured_at=None):
     for index,record in enumerate(records):
         url=record.get('url') if isinstance(record,dict) else None
         if not isinstance(url,str): raise RetainedCaptureError(f'Retained capture {retained_id(f"index:{index}")} invalid record')
+        # A transport failure has no retained body to reuse; leave it queued for retry.
+        if set(record)=={'url','error'} and isinstance(record['error'],str): continue
         retained_body(record,url)
         if isinstance(captured_at,str):
             record=dict(record);record.setdefault('captured_at',captured_at)
