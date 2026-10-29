@@ -2,8 +2,8 @@
   "files": [
     {
       "path": "README.md",
-      "sha256": "cd10439cc59bd5d53c3468014d41958fa424ef4c64d53fc9205f6151a71bfdbc",
-      "bytes": 7984
+      "sha256": "c96ab62024948ec000bf8fdd1fc9db4b3fc471c30b595ec1db6d079a8588e24f",
+      "bytes": 8223
     },
     {
       "path": "producer.py",
