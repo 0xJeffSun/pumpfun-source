@@ -98,9 +98,12 @@ for (const relation of ['replies', 'quotes'] as const) {
         assert.equal(response.json().statusCode, 400, name);
         assert.equal(response.headers['x-reconstruction-data-source'], undefined, name);
       }
+      // A repeated cursor is a duplicate query key, not a malformed cursor value:
+      // the shared duplicate-key boundary (users, following, replay harness)
+      // runs before cursor decoding, so it reports 501, still a rejection.
       const repeated = await app.inject(`/v1/posts/${root.postId}/${relation}?cursor=${valid}&cursor=${valid}`);
-      assert.equal(repeated.statusCode, 400);
-      assert.equal(repeated.json().error, 'INVALID_CURSOR');
+      assert.equal(repeated.statusCode, 501);
+      assert.equal(repeated.json().error, 'DUPLICATE_QUERY_KEYS_UNIMPLEMENTED');
     } finally {
       await app.close();
     }

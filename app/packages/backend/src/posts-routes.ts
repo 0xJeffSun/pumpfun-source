@@ -6,7 +6,7 @@
  */
 import type { FastifyInstance } from 'fastify';
 import { PostStore, defaultPostStore } from './posts-store.js';
-import { sendSynthetic, errorBody } from './users-routes.js';
+import { sendSynthetic, errorBody, rejectDuplicateQueryKeys } from './users-routes.js';
 
 export function registerPostRoutes(app: FastifyInstance, store: PostStore = defaultPostStore): void {
   /**
@@ -53,6 +53,7 @@ export function registerPostRoutes(app: FastifyInstance, store: PostStore = defa
    * NOTE: Registered before /v1/posts/:postId to prevent route shadowing.
    */
   app.get('/v1/posts/:postId/replies', async (request, reply) => {
+    if (rejectDuplicateQueryKeys(request, reply)) return reply;
     const { postId } = request.params as { postId: string };
     const qs = request.query as Record<string, string | undefined>;
 
@@ -85,6 +86,7 @@ export function registerPostRoutes(app: FastifyInstance, store: PostStore = defa
    * NOTE: Registered before /v1/posts/:postId.
    */
   app.get('/v1/posts/:postId/likers', async (request, reply) => {
+    if (rejectDuplicateQueryKeys(request, reply)) return reply;
     const { postId } = request.params as { postId: string };
     const qs = request.query as Record<string, string | undefined>;
 
@@ -118,6 +120,7 @@ export function registerPostRoutes(app: FastifyInstance, store: PostStore = defa
    * NOTE: Registered before /v1/posts/:postId.
    */
   app.get('/v1/posts/:postId/quotes', async (request, reply) => {
+    if (rejectDuplicateQueryKeys(request, reply)) return reply;
     const { postId } = request.params as { postId: string };
     const qs = request.query as Record<string, string | undefined>;
 
@@ -150,6 +153,7 @@ export function registerPostRoutes(app: FastifyInstance, store: PostStore = defa
    * NOTE: Registered before /v1/posts/:postId.
    */
   app.get('/v1/posts/:postId/reposters', async (request, reply) => {
+    if (rejectDuplicateQueryKeys(request, reply)) return reply;
     const { postId } = request.params as { postId: string };
     const qs = request.query as Record<string, string | undefined>;
 
