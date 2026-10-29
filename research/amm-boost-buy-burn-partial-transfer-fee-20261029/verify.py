@@ -27,16 +27,18 @@ import struct
 import sys
 from pathlib import Path
 
-sys.path.insert(0, str(Path.home() / "workspace/pumpfun-sparse/scripts"))
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "scripts"))
 import os
-os.chdir(Path.home() / "workspace/pumpfun-sparse")
+os.chdir(Path(__file__).resolve().parents[2])
 from solders.transaction import Transaction
 from pump_amm_liquidity_differential import PAYER, vaultbase, vaultquote
 from pump_amm_boost_burn_differential import BOOST
 
-ROOT = Path.home() / "workspace/pumpfun-sparse"
+ROOT = Path(__file__).resolve().parents[2]
 PACKET = ROOT / "research/amm-boost-buy-burn-partial-transfer-fee-20261029"
 M = 2 ** 64 - 1
+CONTROL = ROOT / "research/amm-multi-hop-group-slice-recovery/artifacts/candidate.so.gz"
+CANDIDATE = ROOT / "research/amm-transfer-fee-diagnostic-recovery/artifacts/candidate.so.gz"
 
 # (label, expected) — must match producer.py CASES.
 # ok: ("ok", vq_gained, vb_spent, boost_spent, closed, payer_delta,
@@ -149,6 +151,13 @@ def main():
             fail(f"repo input hash mismatch for {rel}")
     report = json.loads(gzip.decompress(
         (PACKET / "runtime/report.json.gz").read_bytes()))
+    expected_images = {
+        "original": sha((ROOT / "evidence/original/pump_amm/deployed.so").read_bytes()),
+        "control": sha(gzip.decompress(CONTROL.read_bytes())),
+        "candidate": sha(gzip.decompress(CANDIDATE.read_bytes())),
+    }
+    if report["image_sha256"] != expected_images:
+        fail("report image hashes differ from actual historical images")
     if report["case_count"] != len(EXPECTED):
         fail(f"case_count {report['case_count']} != {len(EXPECTED)}")
     if report["mismatches"]:
@@ -179,6 +188,9 @@ def main():
         fail(f"total receipts {len(receipts)}")
 
     for r in receipts:
+        image = r["context"]["image"]
+        if image not in expected_images or r["loaded_programs"]["pAMM"]["sha256"] != expected_images[image]:
+            fail(f"AMM image declaration mismatch seq {r['sequence']}")
         raw = base64.b64decode(r["transaction_base64"])
         if sha(raw) != r["transaction_sha256"]:
             fail(f"transaction sha mismatch seq {r['sequence']}")

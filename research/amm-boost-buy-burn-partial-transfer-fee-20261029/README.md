@@ -88,3 +88,29 @@ quote 122,946,690,720, pool base 673,696,395,912,745, creator
 fees 123,394), not claims about other pool states or mainnet
 settings. The tf cases use a post-hoc synthesized quote-mint fee
 extension, as in #26.
+
+## Portable review scope
+
+The verifier selects its repository from its own path. The producer and raw
+receipts remain unchanged. These 22 fixtures contain 66 fresh-VM image scenarios,
+66 signed executions and 66 verified signature fields. The images are historical
+#424 and #427 artifacts, not the maintained current-source selection; no matching
+window or global coverage increase is claimed. The receipt `inner_instructions`
+arrays are empty placeholders and supply no inner-instruction parity evidence.
+`loaded_programs` is the producer's image-hash declaration, not an independently
+captured loader-header or full ProgramData attestation. The finite state/event
+and signature checks retain their stated scope.
+
+The verifier also binds `image_sha256` to the original file and the decompressed
+repository control/candidate artifacts, then checks each raw AMM declaration
+against that image. These checks reject declaration drift while retaining the
+loader-attestation limit above. In the burn formula, `q` is the effective quote
+reserve: the fixture vault 122,946,690,720 plus virtual 1,000,000,000, or
+123,946,690,720. Accrued fees gate admission separately.
+
+The three images agree on the checked states, arithmetic and event fields. Full
+ordered log equality is not claimed: the four failure fixtures retain original
+Source sites (`instructions/boost.rs:274` or `state/pool.rs:417`) versus historical
+reconstruction sites (`boost_burn.rs:51` or `:47`), producing eight non-compute
+log differences across the two reconstructed images. Those raw logs remain
+unchanged and each image's recorded site is checked separately.
