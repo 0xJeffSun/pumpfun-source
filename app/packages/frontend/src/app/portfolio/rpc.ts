@@ -752,9 +752,10 @@ export async function readLivePortfolio(
     signal?: AbortSignal;
   } = {},
 ): Promise<PortfolioSuccess> {
+  const canonicalAddress = validateWalletAddress(address);
   const { call, endpointHost } = await createPinnedRpcCall(
     options.rpcUrl === undefined ? process.env.SOLANA_RPC_URL : options.rpcUrl,
     options.timeoutMs ?? 10_000,
   );
-  return readPortfolioWithRpc(address, call, endpointHost, options.signal);
+  return readPortfolioWithRpc(canonicalAddress, call, endpointHost, options.signal);
 }

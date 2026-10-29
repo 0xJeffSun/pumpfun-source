@@ -3,6 +3,7 @@ import test from "node:test";
 import {
   DEFAULT_SOLANA_RPC_URL,
   PortfolioRpcError,
+  readLivePortfolio,
   formatBaseUnits,
   isPublicRpcAddress,
   readPortfolioWithRpc,
@@ -259,6 +260,7 @@ test("rejects unexpected token programs, owners and parsed account states", asyn
     await assert.rejects(
       readPortfolioWithRpc(WALLET, call, "rpc.example.com"),
       PortfolioRpcError,
+  readLivePortfolio,
     );
   }
 });
@@ -295,6 +297,7 @@ test("fails closed on malformed RPC quantities and inventories", async () => {
     await assert.rejects(
       readPortfolioWithRpc(WALLET, call, "rpc.example.com"),
       PortfolioRpcError,
+  readLivePortfolio,
     );
   }
   const { call: wrongGenesis } = fixtureCall({ genesis: "devnet" });
@@ -370,4 +373,13 @@ test("rejects private, local, reserved and malformed resolved RPC addresses", ()
   }
   assert.equal(isPublicRpcAddress("1.1.1.1"), true);
   assert.equal(isPublicRpcAddress("2606:4700:4700::1111"), true);
+});
+
+test('invalid wallet input is rejected before reading or resolving RPC configuration',async()=>{
+  for (const address of ['', 'invalid wallet', 'not-base58']) {
+    await assert.rejects(readLivePortfolio(address,{rpcUrl:''}),(error:unknown)=>error instanceof PortfolioRpcError && error.code==='INVALID_ADDRESS');
+  }
+});
+test('a valid wallet still reports missing RPC configuration',async()=>{
+  await assert.rejects(readLivePortfolio('11111111111111111111111111111111',{rpcUrl:''}),(error:unknown)=>error instanceof PortfolioRpcError && error.code==='RPC_CONFIGURATION_INVALID');
 });
