@@ -35,6 +35,14 @@ pnpm --filter @pump-reconstruction/frontend exec playwright test tests/holder-re
 
 The normal `pnpm test` wildcard includes the new `.test.mjs`. It uses the backend's already-pinned public tsx loader API to load maintained TypeScript; it never evaluates captured factories. Seven new groups cover fixed HTTP/privacy semantics, exact string quantities, mismatched identity/cluster/program/owner, invalid envelopes/JSON, HTTP/provider failures, cancellation and a real loopback HTTP success/rate-limit flow, plus unchanged prerequisite hashes. Existing four SDK-derivation and ten RPC groups also pass (21 combined).
 
-Six product-browser cases cover explicit-only requests/no cookies, exact quantities/slots, refresh, provider failure/retry privacy, wrong-PDA rejection, edit/clear cancellation, zero/empty observations and 320/1440px containment. Browser execution and full build/evidence/progress results are pending in the shared validation tree until recorded. Fixtures are synthetic protocol responses, not production observations; the HTTP fixture is a local transport test, not a Solana service oracle. Existing offline inspector behavior remains the default.
+Six product-browser cases cover explicit-only requests/no cookies, exact quantities/slots, refresh, provider failure/retry privacy, wrong-PDA rejection, edit/clear cancellation, zero/empty observations and 320/1440px containment. All six new and eight existing Holder Rewards product cases passed (14/14) on the actual local Next app. SDK/backend/Next production build, recursive typecheck, 698 app capture/npm/unchanged-SDK checks and progress verification with eight tests passed on the same runtime revision. Fixtures are synthetic protocol responses, not production observations; the HTTP fixture is a local transport test, not a Solana service oracle. Existing offline inspector behavior remains the default.
 
 No original authenticated Holder Rewards screenshot or response oracle is available, so no original visual, reward API or exhaustive compatibility claim is made. Existing feature milestone statuses and operation qualification counts are unchanged.
+
+## Recorded result
+
+[Validation record](visual/holder-public-balances-20261029/validation.json) binds tested runtime `93d150b71f1c3e0c78f817cb39faec1689f9940e`, raw commands/logs/results and inspected 320×640 and 1440×900 local screenshots. The first browser attempt failed before any case ran because a dependency-directory symlink left Turbopack's root; hardlinking the pinned physical dependency layout fixed startup without source/lock/config changes. The failure is preserved. A separate direct public RPC read returned unavailable; that negative is retained and is not replaced with fixture balances. No successful live-chain or original rewards-service oracle is claimed.
+
+![Local mobile public account holdings fixture](visual/holder-public-balances-20261029/holder-public-balances-320.png)
+
+![Local desktop public account holdings fixture](visual/holder-public-balances-20261029/holder-public-balances-1440.png)
