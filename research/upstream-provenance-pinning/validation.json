@@ -2,8 +2,9 @@
   "baseRevision": "112062c087c21a92f6bbc1f8fcddd8d7186390c8",
   "archivedHelper": "scripts/verify_evidence.py",
   "archivedHelperSha256": {
-    "lf": "de254298e2a064711f1709f5c7827fd34c2cca12af90504620e364c88d511c23",
-    "crlf": "95f9564d4b70985962f826e2b6a8a990ea665f39d698f43a50ae006bb61a4bed"
+    "lf": "4aa1995f1670ce650ebcb1133c3fee2c6d033bc73e5cd29671a6e5c4614bd254",
+    "crlf": "def9115ea4627f55616d5dbf962b7fce0cdfb7c8f7045ea739978b6adffb1ed9",
+    "note": "git blob bytes of scripts/verify_evidence.py at baseRevision (LF) and the same bytes with LF->CRLF; corrected by maintainer review, the originally recorded digests matched neither"
   },
   "before": {
     "tool": "scripts/verify_evidence.py",
@@ -86,7 +87,7 @@
     "each pinned IDL parses, names its published address and instruction count, and has unique instruction names",
     "evidence/interface-inventory.json address, instruction count and metadata are derived from the pinned IDLs",
     "docs/SCOPE.md still cites the pinned upstream commit and all three published IDL addresses",
-    "nine mutation controls run on sealed copies; the repository tree is never modified"
+    "one baseline test and eight mutation controls run on sealed copies; the repository tree is never modified"
   ],
   "limits": [
     "does not re-fetch pump-public-docs and does not prove the saved bytes came from commit 639b87fb",

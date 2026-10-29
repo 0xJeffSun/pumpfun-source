@@ -41,11 +41,14 @@ inventory_entries: 3
 scope_addresses: 3
 ```
 
-`test_verify.py` runs nine mutation controls on sealed copies. Three of them
-confirm that the archived gate accepts the mutations above; the rest assert
-that this gate rejects coordinated IDL deletion, IDL substitution, an added
-upstream file, a rewritten provenance commit, a rewritten `docs/SCOPE.md`
-address, and an interface inventory that no longer matches the pinned IDLs.
+`test_verify.py` runs nine tests: one baseline check that the current
+evidence matches every pin, and eight mutation controls on sealed copies.
+Three of the controls confirm that the archived gate accepts the mutations
+above (two of them also assert this gate rejects the deletion and the
+substitution); the rest assert that this gate rejects the tree listing and
+repository inventory mutations, an added upstream file, a rewritten
+provenance commit, a rewritten `docs/SCOPE.md` address, and an interface
+inventory that no longer matches the pinned IDLs.
 The repository tree is never modified.
 
 This does not re-fetch `pump-public-docs` or prove the saved bytes came from
