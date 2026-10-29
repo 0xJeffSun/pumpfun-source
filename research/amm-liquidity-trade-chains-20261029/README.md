@@ -34,7 +34,10 @@ PAYER for every step: deposit/withdraw steps cost 5,000, the first
 trade step in a case costs 1,849,400 (volume rent 1,844,400 + fee
 5,000), later trade steps cost 5,000.
 
-Event layouts (all verified byte-for-byte):
+Event layouts (offsets as read from the receipts; verify.py decodes
+only the discriminator, length, deposit/withdraw base and quote
+legs, and the buy/sell curve / fee / user fields -- the other
+offsets below are informational):
 - DepositEvent / WithdrawEvent, 264 bytes, disc `78f83d531f8e6b90` /
   `1609851aa02c47c0`: timestamp @8, LP amount @16, limits @24/@32,
   user reserves @40/@48, pool reserves @56/@64, base leg @72,
@@ -79,8 +82,11 @@ Family A -- anchors, as-is fixture:
 
 Family B -- chains:
 - `b-dep-buy-1e6` / `b-dep-sell-1e6`: a 10^9 LP deposit leaves a
-  10^6 trade BYTE-IDENTICAL to its anchor (buy 187, sell 178,
-  same event, same pool fee accruals).
+  10^6 trade identical to its anchor in every measured token leg,
+  every decoded event field, and the pool fee accruals (buy 187,
+  sell 178). The raw trade events are NOT byte-identical: the
+  reserve words @32..64 differ because the deposit enlarged the
+  vaults.
 - `b-dep12-buy-1e10`: after a 10^12 LP deposit (+24% vaults), buy
   10^10 spends 1,847,790 -- 6 less than the anchor -- vault
   +1,839,304, buyback +8,486, pool accruals identical to the
@@ -141,15 +147,16 @@ Family D -- reserve-definition separation (pool patches):
   (deposit.rs:152 / withdraw.rs:160 original; rebuilt lines in
   the report's error_sites), full rollback, payer -5,000 only.
   can_boost is true (vq + accrued = -125,882 != 0) but the
-  effective virtual is negative, so u128::try_from fails before
-  any transfer settles. The as-is fixture escapes this only
+  virtual sum is negative; the Overflow site is consistent with a
+  checked unsigned conversion of that sum failing (an inference
+  from the site line, not observed directly). The as-is fixture escapes this only
   because vq + accrued is exactly 0.
 
 ## Result
 
 - Liquidity quote legs use available reserves (raw - accrued),
   never virtual reserves: vq patches of 0 / +10^9 leave dep/wd
-  quote legs byte-identical, while the limit gates pin the
+  legs and their raw Deposit/Withdraw events unchanged, while the limit gates pin the
   available value to the unit (29,312,410 / 29,312,409).
 - Trade pricing uses effective reserves (raw + vq): the same vq
   patch that leaves liquidity untouched moves a 10^10 trade by
@@ -157,8 +164,8 @@ Family D -- reserve-definition separation (pool patches):
   only when vq = -accrued, which is exactly the as-is fixture.
 - The deposit/withdraw virtual update is armed by
   `total_virtual_quote_reserves() = vq + accrued != 0`, not by
-  any boost state: deposit adds floor(effective * lp / supply),
-  withdraw subtracts ceil(effective * lp / supply), so a
+  any boost state: deposit adds floor((vq + accrued) * lp / supply),
+  withdraw subtracts ceil((vq + accrued) * lp / supply), so a
   round trip drifts vq by -1; a negative sum fails both paths
   with 6023.
 - Deposit does not move small trades at all and moves a 10^10
@@ -191,3 +198,27 @@ Family D -- reserve-definition separation (pool patches):
 - The buyback ATA lamport balance moves 1:1 with its token
   balance (native wSOL account); only token deltas are asserted
   for it.
+
+## Verify and provenance
+
+From the repository root:
+
+    python3 -I -B research/amm-liquidity-trade-chains-20261029/verify.py
+
+`verify.py` needs only `solders` plus files in the repository: this
+packet, `evidence/original/pump_amm/deployed.so`, and the two
+retained rebuilt images
+`research/amm-multi-hop-group-slice-recovery/artifacts/candidate.so.gz`
+(control, #424) and
+`research/amm-transfer-fee-diagnostic-recovery/artifacts/candidate.so.gz`
+(candidate, #427), whose decompressed sha256 values match the
+`images` block of `runtime/report.json.gz`. It re-checks the
+recorded receipts against the report's expected values; it does
+not re-execute any transaction.
+
+`producer.py` is the script that generated the receipts and is
+kept as a provenance record. It is not runnable as committed: it
+hard-codes a private workspace layout (`~/workspace/pumpfun-sparse`
+for the harness scripts and `~/workspace/slop-verify` for the
+control/candidate `.so` files) and chdirs there on start.
+
