@@ -124,7 +124,23 @@ export function registerUserRoutes(app: FastifyInstance, store: UserStore = defa
     const pagination = userPagination(qs);
     if (!pagination) return reply.code(400).send(errorBody(400, 'INVALID_QUERY'));
     const { offset, limit } = pagination;
-    const includeLabelledWallets = qs.includeLabelledWallets === 'true' || qs.includeLabelledWallets === '1';
+    // includeLabelledWallets is a boolean in the contract, but any value other
+    // than 'true'/'1' previously read as false, so a typo or garbage value
+    // silently narrowed the result set instead of failing. The sibling
+    // boolean parsers reject anything else: positions boolean() throws on
+    // anything but true/1/false/0, home-feed boolean() on anything but
+    // true/false, and this file's own batch handler rejects a non-boolean
+    // forceFetch. Accept the same true/1/false/0 spellings positions does.
+    let includeLabelledWallets = false;
+    if (qs.includeLabelledWallets !== undefined) {
+      if (qs.includeLabelledWallets === 'true' || qs.includeLabelledWallets === '1') {
+        includeLabelledWallets = true;
+      } else if (qs.includeLabelledWallets === 'false' || qs.includeLabelledWallets === '0') {
+        includeLabelledWallets = false;
+      } else {
+        return reply.code(400).send(errorBody(400, 'INVALID_QUERY'));
+      }
+    }
     const result = store.search({
       searchTerm: qs.searchTerm,
       sort: qs.sort,
