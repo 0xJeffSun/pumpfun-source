@@ -95,11 +95,8 @@ Family C -- legacy sell (#13 fixture, sell 10^9):
 ## Result
 
 - v2 rejects cashback pools outright. buy_v2, sell_v2 and
-  buy_exact_quote_in_v2 all fail 6079 in prepare(), before
-  curve math, transfers, or volume funding -- payer -5,000
-  only, 0 events, pool unchanged. The gate order is
-  disable_flags > cashback > zero guards and buyback
-  validation: disable wins over cashback, cashback wins
+  buy_exact_quote_in_v2 all fail 6079 in the handler's cashback check. On all three images the volume-accumulator init CPI runs before the 6079 and is rolled back. No token transfer or event is logged before the error. -- payer -5,000
+  only, 0 events, pool unchanged. On buy_v2, disable_flags beats cashback (also seen on sell_v2), and cashback beats amount=0, limit=0 and a bad buyback recipient (6079). The amount/limit/recipient orderings were not executed on sell_v2 or buy_exact_quote_in_v2, and no non-cashback zero-guard control ran: disable wins over cashback, cashback wins
   over amount/limit zero guards and over recipient
   validation.
 - v2 trades mayhem pools with buyback forced to 0. Pricing
@@ -110,8 +107,7 @@ Family C -- legacy sell (#13 fixture, sell 10^9):
   +56; sell: vault -9878 vs -9933, pool protocol +111 vs
   +56; buy_exact: vault +10000 vs +9945, pool protocol
   +110 vs +55).
-- DIVERGENCE -- multi-hop cashback enforcement differs
-  between the deployed program and the reconstruction.
+- DIVERGENCE -- multi-hop cashback enforcement differs between the deployed program and the #424 control / #427 candidate images (current main source already gates it on the creator-fee hop; not rebuilt here).
   Rebuilt images enforce 6079 at EVERY hop, before mayhem:
   the first failing hop fails with 0/1/2 prior-hop events.
   The ORIGINAL image enforces 6079 only at the
@@ -126,19 +122,12 @@ Family C -- legacy sell (#13 fixture, sell 10^9):
   ignored hop it fails 6080 (mayhem only). Mayhem
   enforcement does NOT diverge: 6080 fires at every hop
   on all three images.
-- Multi-hop order pins (all images): disable beats mode,
-  the amount guard beats the hop checks, canonical beats
-  mode (6078 before 6079/6080).
+- Multi-hop order pins: disable beats cashback (all images via mh-sell-cb-disable at P3; buy cell rebuilt-only), amount=0 beats tail-pool cashback (rebuilt images only; the original ignores that flag on buys), and canonical beats mayhem (6078 before 6080, all images). 6078 vs 6079 and disable/amount vs mayhem were not executed.
 - Legacy sell is the odd one out: it ACCEPTS cashback
   pools and diverts the creator fee into the cashback
   accumulator (548 to the accumulator ATA, creator leg 0,
-  event cashback 548), while v2 and multi-hop reject the
-  same pool with 6079. But it rejects mayhem pools with
-  6013, because mayhem switches protocol-recipient
-  validation to the reserved list.
-- Every success funds the volume accumulator with
-  1,844,400 lamports (137 bytes, payer key [8:40]) except
-  legacy sells, which fund nothing (payer -5,000, or
+  event cashback 548), while v2 rejects cashback pools with 6079 and multi-hop rejects them at every hop on the rebuilt images, but only at the creator-fee hop (P3 here) on the original. On a mayhem pool with the fixture's non-reserved protocol recipient it fails 6013. Per source (swap/mod.rs:159-164), mayhem pools validate against the reserved recipients, but a reserved-recipient mayhem sell was not executed
+- Every v2 and multi-hop success funds the volume accumulator with 1,844,400 lamports (137 bytes, payer key [8:40]). Legacy sells fund none, except ls-cashback-fresh, which creates the cashback user_volume_accumulator (1,844,400) and its ATA (2,039,280) (payer -5,000, or
   -3,888,680 when the cashback accumulator + ATA are
   created fresh). Every failure rolls back fully except
   the payer fee; multi-hop failures retain the completed
@@ -186,6 +175,14 @@ Error sites (original / rebuilt):
 - ls-mayhem: original programs/pump-amm/src/instructions/swap/mod.rs:164. Error Code: InvalidProtocolFeeRecipient. Error Number: 6013. Error Message: InvalidProtocolFeeRecipient.; control programs/pump-amm/src/instructions/swap/mod.rs:23. Error Code: InvalidProtocolFeeRecipient. Error Number: 6013. Error Message: InvalidProtocolFeeRecipient.; candidate programs/pump-amm/src/instructions/swap/mod.rs:23. Error Code: InvalidProtocolFeeRecipient. Error Number: 6013. Error Message: InvalidProtocolFeeRecipient.
 
 ## Limits
+
+- `producer.py` regenerated these receipts on the author's machine: it hard-codes
+  `~/workspace/pumpfun-sparse` and reads the control/candidate images from
+  `~/workspace/slop-verify`, so it does not run from this packet unmodified. The control
+  and candidate are the gunzipped in-repo #424/#427 artifacts
+  (`research/amm-multi-hop-group-slice-recovery/artifacts/candidate.so.gz`,
+  `research/amm-transfer-fee-diagnostic-recovery/artifacts/candidate.so.gz`); `verify.py`
+  checks the recorded receipts and does not load the images.
 
 Offline LiteSVM synthetic fixtures only. No source change,
 build, or whole-program equivalence claim. The creator-fee-hop
