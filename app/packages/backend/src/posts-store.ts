@@ -142,11 +142,19 @@ export function encodeCursor(item: { createdAt: string | null; postId: string })
   return Buffer.from(payload, 'utf8').toString('base64url');
 }
 
-export function decodeCursor(cursor: string): { createdAt: string; postId: string } | null {
+export function decodeCursor(cursor: unknown): { createdAt: string; postId: string } | null {
   try {
-    const raw = Buffer.from(cursor, 'base64url').toString('utf8');
+    // Buffer's base64 decoder silently ignores junk and accepts alternate
+    // encodings. Require the unchanged encoder's alphabet and trailing bits.
+    if (typeof cursor !== 'string' || !/^[A-Za-z0-9_-]+$/.test(cursor)) return null;
+    const bytes = Buffer.from(cursor, 'base64url');
+    if (bytes.toString('base64url') !== cursor) return null;
+    const raw = new TextDecoder('utf-8', { fatal: true, ignoreBOM: true }).decode(bytes);
     const parsed = JSON.parse(raw);
     if (Array.isArray(parsed) && parsed.length === 2 && typeof parsed[0] === 'string' && typeof parsed[1] === 'string') {
+      // Preserve the null-time sentinel and all date representations understood
+      // by the existing comparator. NaN would otherwise silently empty a page.
+      if (parsed[0] !== '' && !Number.isFinite(new Date(parsed[0]).getTime())) return null;
       return { createdAt: parsed[0], postId: parsed[1] };
     }
     return null;
@@ -300,7 +308,7 @@ export class PostStore {
     let items = this.posts.filter(p => p.parentPostId === postId && !p.deleted && !p.hidden);
     items.sort(comparePostsNewestFirst);
 
-    if (opts.cursor) {
+    if (opts.cursor !== undefined) {
       const decoded = decodeCursor(opts.cursor);
       if (!decoded) {
         throw new Error('INVALID_CURSOR');
@@ -336,7 +344,7 @@ export class PostStore {
     let items = this.posts.filter(p => p.quotedPostId === postId && p.kind === 'quote' && !p.deleted && !p.hidden);
     items.sort(comparePostsNewestFirst);
 
-    if (opts.cursor) {
+    if (opts.cursor !== undefined) {
       const decoded = decodeCursor(opts.cursor);
       if (!decoded) {
         throw new Error('INVALID_CURSOR');

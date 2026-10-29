@@ -96,6 +96,38 @@ is a contract decision, not a bug fix.
     `/v1/posts/:postId/quotes`, `/v1/posts/:postId/reposters`) are registered before `/v1/posts/:postId`
     so `:postId` never captures sub-paths.
 
+## Local cursor integrity
+
+The declared developer contract is `https://api.pump.fun/v1`, not a website feed
+service. In `contracts/developer.openapi.json` (version `0.294.0`), both
+`get_posts_by_postId_replies` and `get_posts_by_postId_quotes` describe a cursor
+as the previous response's `nextCursor`, omitted for the first page. Post
+`createdAt` is a nullable string described as ISO 8601. The specification does
+not disclose the upstream cursor encoding, tie-breaker, or malformed-cursor
+error policy. The tuple codec and `400 INVALID_CURSOR` above remain local design.
+
+The local decoder now accepts only the unpadded base64url form emitted by
+`encodeCursor`, valid UTF-8 JSON containing exactly two strings, and a timestamp
+that the existing local date comparator can evaluate finitely. The empty first
+string remains the existing sentinel for a null timestamp. No new timestamp
+normalization or narrower ISO grammar is imposed: offset and fractional-second
+forms retain their original bytes. A finite JavaScript date parse is not a
+complete ISO 8601/calendar validator or evidence of upstream acceptance.
+
+Previously, Node's permissive base64 decoder could ignore appended garbage;
+an unparseable timestamp then compared as `NaN` and silently returned a successful
+empty page. An explicitly empty cursor also reset pagination to the first page.
+Both reply and quote reads now reject those malformed inputs without a synthetic
+data marker. Omitting the cursor still selects the first page. Existing emitted
+cursors, newest-first ordering, tie-breaks, null-time ordering, unknown-post
+precedence, and the API-key gate are unchanged.
+
+`test/posts-cursor.test.ts` pins the documented boundary, all seed cursor bytes,
+malformed encoding/tuple/date failures, and full multi-page traversal at equal,
+offset-equivalent, null, and pre-epoch timestamps. Its custom rows are synthetic
+test inputs only. This correction adds no operation, persistence, website feed,
+production observation, or native compatibility qualification.
+
 ## Verification
 
 ```sh
