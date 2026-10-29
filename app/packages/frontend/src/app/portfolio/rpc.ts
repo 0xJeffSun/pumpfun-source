@@ -44,7 +44,8 @@ type RpcMethod =
   | "getGenesisHash"
   | "getBalance"
   | "getTokenAccountsByOwner"
-  | "getMultipleAccounts";
+  | "getMultipleAccounts"
+  | "getAccountInfo";
 export type RpcCall = (
   method: RpcMethod,
   params: readonly unknown[],

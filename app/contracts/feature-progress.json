@@ -714,7 +714,8 @@
         "contract": {
           "status": "accepted",
           "evidence": [
-            "packages/frontend/PORTFOLIO-RPC.md#declared-solana-contract"
+            "packages/frontend/PORTFOLIO-RPC.md#declared-solana-contract",
+            "research/wallet-program-record-20261029/SOURCE.json"
           ]
         },
         "logic": {
@@ -728,7 +729,8 @@
           "status": "accepted",
           "evidence": [
             "packages/frontend/src/app/portfolio/rpc.ts",
-            "packages/frontend/src/app/api/portfolio/route.ts"
+            "packages/frontend/src/app/api/portfolio/route.ts",
+            "packages/frontend/src/app/wallet-program-record/server.ts"
           ]
         }
       },
