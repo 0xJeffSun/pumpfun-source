@@ -55,18 +55,29 @@ def main():
         return
     assert platform.system() == 'Darwin' and platform.machine() == 'arm64'
     assert sys.version_info >= (3, 12)
-    # A successful prior execution of this exact unchanged control is required.
-    request = urllib.request.Request('https://api.github.com/repos/shawkkkkk/pumpfun-source/actions/runs/' + str(ledger['control_run']),
-                                     headers={'Accept': 'application/vnd.github+json', 'User-Agent': 'pump-current673-qualification'})
-    with urllib.request.urlopen(request, timeout=60) as response:
-        run = json.load(response)
-    assert run['conclusion'] == 'success' and run['head_sha'] == ledger['control_head']
-    assert run['workflow_id'] == 398832206 and run['event'] == 'workflow_dispatch'
+    # The pinned official action retrieves the exact prior control artifact.
+    # Authenticate the actual reproduced ELFs, source-bound builder and host head;
+    # no unauthenticated shared-runner GitHub API quota is required here.
+    proof = ROOT / 'work/pump-current673-control-proof'
+    proof_manifest = json.loads((proof / 'MANIFEST.json').read_text())
+    for name, digest in proof_manifest.items():
+        relative = Path(name)
+        assert not relative.is_absolute() and '..' not in relative.parts
+        assert control.sha(proof / relative) == digest
+    result = json.loads((proof / 'RESULT.json').read_text())
+    host = json.loads((proof / 'host.json').read_text())
+    assert result['status'] == 'reproduced' and host['revision'] == ledger['control_head']
+    assert result['base_commit'] == spec['base_commit'] and result['cold_empty_target']
+    assert control.sha(proof / 'executed-builder.py') == spec['builder_sha256']
+    for field, filename in [('candidate_sha256', 'candidate.so'), ('unstripped_sha256', 'unstripped.so')]:
+        assert result[field] == spec['expected'][field] == control.sha(proof / filename)
     control.WORK = ROOT / ('work/pump-current673-macos-' + args.candidate)
     control.EVIDENCE = control.WORK / 'evidence'
     evidence, work = control.EVIDENCE, control.WORK
     evidence.mkdir(parents=True, exist_ok=False)
-    control.write(evidence / 'control-run.json', run)
+    control.write(evidence / 'control-proof.json', {'run_id': ledger['control_run'],
+                  'artifact_name': 'pump-current673-native-control-' + str(ledger['control_run']) + '-1',
+                  'manifest_sha256': control.sha(proof / 'MANIFEST.json'), 'result': result, 'host': host})
     control.write(evidence / 'proposal.json', proposal)
     control.write(evidence / 'inputs.json', spec)
     control.write(evidence / 'candidate-build-inputs.json', expected)

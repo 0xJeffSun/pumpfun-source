@@ -37,7 +37,11 @@ to their recovery. `candidates/descriptors.json` records exact before/after
 hashes. No proposal is composed with another.
 
 Candidate execution requires the successful control run40791064153 at exact
-head `c6ae78c36ef59de4f1b2a057b54e57b6c9f3dce7`. A fresh isolated copy contains
+head `c6ae78c36ef59de4f1b2a057b54e57b6c9f3dce7`. The pinned official artifact
+download action retrieves that exact run's retained outputs using the standard
+read-only Actions permission. The controller authenticates the actual ELF hashes,
+RESULT, host revision, executed cold builder and complete artifact ledger before
+compilation. No script reads or handles a token. A fresh isolated copy contains
 the same65 source inputs with exactly one declared replacement. The unchanged
 cold source is retained; its visibly derived measurement builder removes only
 the final assertion demanding that the candidate output equal the control.
