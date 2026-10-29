@@ -122,6 +122,10 @@ routes, intentionally not `/services/frontend/ipfs/*` or `/v1/*`.
 | `DELETE /metadata/:id` | Removes metadata, retains its image. |
 | `DELETE /images/:id` | Removes an unreferenced image; returns 409 while any metadata references it. |
 
+Image Content-Type matching is case-insensitive, as required by
+[RFC 9110 section 8.3.1](https://www.rfc-editor.org/rfc/rfc9110.html#section-8.3.1).
+Stored image descriptors use canonical lowercase MIME types.
+
 New images/metadata return 201, exact repeats return 200 without consuming another
 quota slot. Deletion returns 204; missing IDs return 404. SHA-256 identifiers are
 lowercase hexadecimal, **not CIDs**. Client filenames and paths are never used.
