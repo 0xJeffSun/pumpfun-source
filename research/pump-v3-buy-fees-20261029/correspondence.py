@@ -122,6 +122,11 @@ def verify(packet,repo,images,read,doc):
                 if family=='fees':
                     observation=row['observations'][name];need(set(observation['before'])==set(observation['after'])==keys,'focused snapshot signed-key membership')
                     focused_prestate(case,fixture,observation,keys)
+                    tx=Transaction.from_bytes(base64.b64decode(result['transaction_base64'],validate=True))
+                    metadata=observation['metadata']
+                    need(set(metadata)=={'signature','logs','inner_instructions','compute_units_consumed','return_data'},'focused exact raw metadata membership')
+                    need(metadata['signature']==str(tx.signatures[0]) and metadata['logs']==result['logs'] and metadata['inner_instructions']==result['inner_instructions'] and metadata['return_data']==result['return_data'],'focused raw metadata signed result join')
+                    need(result['event_payloads']==[line[14:] for line in metadata['logs'] if line.startswith('Program data: ')],'focused raw event payload join')
                     for key,after in observation['after'].items():
                         if after is not None and key in result['accounts']:
                             actual=result['accounts'][key];need(all(actual[k]==after[k]for k in ['lamports','owner','data_sha256']),'focused observation/result state join')

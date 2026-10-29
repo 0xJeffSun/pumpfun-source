@@ -70,6 +70,12 @@ def quote_prestate(packet):
     for label in ['original','parent','proposal']:value['cases'][4]['observations'][label]['before'][key]['data_sha256']=sha(b'wrong synthetic quote balance')
     write(path,value)
 
+def raw_metadata(packet):
+    path=packet/'runtime/fees-eight.json.gz';value=json.loads(gzip.decompress(path.read_bytes()))
+    for observation in value['cases'][0]['observations'].values():
+        observation['metadata']['return_data']={'program_id':[0]*32,'data':[99]}
+    write(path,value)
+
 def load(path):return json.loads(path.read_text())
 def save(path,value):path.write_text(json.dumps(value,indent=2)+'\n')
 def command_drift(packet):
@@ -89,6 +95,8 @@ def stream_drift(packet):
     path=packet/'runtime/fees.stdout.log';path.write_bytes(path.read_bytes()+b'\nchanged retained stream\n')
 
 CONTROLS=[('coherent non-D037 source',nonparent,'selected D037 66-input source parent'),('duplicate fixtures',duplicate,'exact source-owned fees case definitions'),('valid signed wrong amount wire',wire,'fixture signed operation/amount'),('coherent wrong focused prestate',prestate,'focused actual fixture prestate'),('coherent wrong user lamports',user_lamports,'focused source-owned user account metadata'),('coherent wrong base vault amount',base_vault_prestate,'focused actual fixture prestate'),('wrong fee case configuration',fee_configuration,'exact source-owned fees case definitions'),('wrong full accumulator prestate',accumulator_prestate,'focused actual fixture prestate'),('valid signed wrong quote-account wire',quote_wire,'fixture signed account roles/order'),('coherent wrong synthetic quote prestate',quote_prestate,'focused synthetic quote account prestate')]
+
+CONTROLS += [('coherent raw focused return metadata',raw_metadata,'focused raw metadata signed result join')]
 
 CONTROLS += [('changed literal build command',command_drift,'reviewed literal Cargo command differs'),('coherent unqualified compiler hashes',coherent_tools,'qualified v1.44 tool hashes differ'),('wrong runtime result name',result_name,'actual runtime launch success/input custody'),('missing runtime result',missing_result,'actual runtime launch success/input custody'),('missing output receipt',missing_output,'runtime output membership'),('extra output receipt',extra_output,'runtime output membership'),('resealed changed output stream',stream_drift,'runtime result stream receipt join')]
 
