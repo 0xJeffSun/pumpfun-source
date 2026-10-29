@@ -144,8 +144,10 @@ function parseTraderEntry(value: unknown, index: number): TraderEntry {
 
 function parseTraders(value: unknown): TradersData {
   const payload = record(value, "trader leaderboard");
-  const periodType = text(payload.periodType, "periodType", 40);
-  if (!["daily", "weekly", "monthly"].includes(periodType)) {
+  // The response uses a numeric enum; daily/weekly/monthly are request values.
+  // See OpenAPI 0.294.0 GET /pnl-leaderboard, 200 response periodType.
+  const periodType = number(payload.periodType, "periodType");
+  if (![0, 1, 2, 3].includes(periodType)) {
     throw new UpstreamValidationError("periodType is unsupported.");
   }
   return {
