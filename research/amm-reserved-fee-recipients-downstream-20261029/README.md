@@ -22,12 +22,11 @@ setter DOES downstream, in three families:
   #47 creator-0 window shift reappears, now triggered by the
   whitelist instead of a zero creator fee. Multi-hop is the exception:
   it calls `select_and_apply_v2` directly and never `trade::fees`, so
-  it ignores the whitelist entirely.
+  the tested multi-hop path does not apply whitelist fee zeroing.
 - **M — the mayhem reserved chain.** Mayhem pools validate the
   protocol fee recipient against the RESERVED list
   (`instructions/swap/mod.rs` `validate_protocol_fee_recipient`), not
-  the sorted protocol list. The setter is the only way to extend that
-  list, and it replaces rather than appends.
+  the sorted protocol list. The tested setter call replaces that list rather than appending.
 
 ## Cases (34)
 
@@ -47,8 +46,8 @@ Family S — setter alone, signer = pool admin (PAYER), clock 1234567890:
   (set_reserved_fee_recipients.rs:40), full rollback, payer 5,000.
 - `s-set-zero`: first recipient = default pubkey → 6011
   AllProtocolFeeRecipientsShouldBeNonZero (:60), rollback.
-- `s-set-dup`: all 8 recipients identical → SUCCESS, all three write
-  ranges filled with R0. No sorted/unique check — the exact opposite
+- `s-set-dup`: all 8 recipients identical → SUCCESS, both recipient fields filled with R0 while
+  whitelist_pda remains PAYER. No sorted/unique check — the exact opposite
   of `update_fee_config`'s 6012 gate (2nd #43).
 - `s-set-exec`: first recipient = an executable program account →
   2007 ConstraintExecutable (`caused by account:
@@ -94,8 +93,8 @@ Family W — whitelist chain. Every chain case starts with the setter
 - `w-v2sell`: v2 sell 10^6 → SUCCESS, user +182 (curve 182, all
   fees 0, vault −182). Anchor `a-v2sell`: user +178 (curve 182,
   lp 1, protocol 2, buyback 1, vault −179).
-- `w-mhbuy` / `w-mhsell`: 1-hop multi-hop buy/sell settle
-  BYTE-IDENTICAL to the non-whitelist anchors `a-mhbuy` /
+- `w-mhbuy` / `w-mhsell`: 1-hop multi-hop buy/sell have the same recorded settlement deltas and listed event fields as
+  the non-whitelist anchors `a-mhbuy` /
   `a-mhsell` (buy: out 5,368,809,031,467, buyback +4,592,593;
   sell: user +180,212, vault −181,061, buyback +849). The whitelist
   is ignored because multi-hop never consults `trade::fees`.
@@ -154,7 +153,7 @@ not mask the reserved gate:
   OUTSIDER curve-only under opposite whitelist values), but for
   legacy buy/sell it comes with the remaining-account trap: standard
   remaining fails 6053, empty fails 6058, only trimmed succeeds.
-  v2 zeroes out cleanly; multi-hop ignores the whitelist entirely.
+  v2 zeroes out cleanly; the tested multi-hop cases retain their non-whitelist fees.
 - Mayhem reserved gate: 6013 without a listed recipient, success
   with one, immediate invalidation on replacement, and no effect on
   non-mayhem trades.
@@ -182,3 +181,42 @@ not mask the reserved gate:
   event's fields (@64 amount, @72 lp_bps, @80 lp_fee, @88
   protocol_bps, @96 protocol_fee, @104, @112), recorded verbatim;
   user-level deltas are asserted separately.
+
+
+## Retained proof integrity at review
+
+The saved verifier now decodes and verifies every signed wire, binds its program,
+payer, instruction data, named and remaining account positions and effective
+signer/writable privileges to each retained case. It checks the exact 34 case
+definitions and all 162 ordered image/step receipts once, uses the same wire
+across image roles, and requires complete watched-state continuity between each
+setter and trade. It checks every declared token and lamport delta, event
+discriminator/length, and the exact sixteen watched keys. The fixed watched set
+also contains fixture accounts not passed by a particular instruction; those are
+retained for state comparison, without claiming they were instruction accounts.
+The review pins the recorded initial watched snapshots explicitly. These new
+review-derived pins preserve this finite fixture and are not producer execution
+receipts or original runtime dependency hashes.
+
+Original/control/candidate bind to the authentic original, historical #424 and
+historical #427 images. The latter two use their existing hash-equivalent
+compressed repository artifacts. This packet does not execute the selected AMM
+image `86dbc2c64e81988dead173039b61fa01ba5f68a00fbb6f6dd49f2cda0afec37f`.
+Image declarations are not captured loader records or cryptographic VM execution
+attestation. The report records only these three image hashes; it does not pin
+the author's harness/dependency sources or the dependency code loaded by that
+prior VM. The retained producer and raw report/parts remain byte-exact. The
+producer uses the reusable resettable harness unless its fresh-VM environment
+switch is enabled; construction counts and that environment are not recorded.
+
+The setter's remaining recipient accounts are not included in its sixteen-account
+watch list. Their keys/privileges and error outcomes are bound, while funding and
+executable prestates are supported by the retained setup source, rather than
+complete saved account snapshots. No new VM run or build is claimed.
+
+Run `python3 -B research/amm-reserved-fee-recipients-downstream-20261029/verify.py`
+and `python3 -B research/amm-reserved-fee-recipients-downstream-20261029/test_verify.py`.
+Both reject optimized Python. The eight resealed controls check valid wrong
+remaining-layout wires, broken chain continuity, off-wire pool state, wrong token
+deltas, wrong event discriminators, invalid signatures, missing case membership
+and image declarations. The checks establish saved-proof correspondence only.
