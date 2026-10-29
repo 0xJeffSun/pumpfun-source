@@ -487,7 +487,15 @@ test("startup rejects symlinked storage/snapshots and does not read their conten
   const outside = await mkdtemp(join(tmpdir(), "local-media-target-"));
   t.after(() => rm(outside, { recursive: true, force: true }));
   await writeFile(join(outside, "target"), "{}");
-  await symlink(join(outside, "target"), join(directory, "media.json"));
+  try {
+    await symlink(join(outside, "target"), join(directory, "media.json"));
+  } catch (error) {
+    if (process.platform === "win32" && (error as NodeJS.ErrnoException).code === "EPERM") {
+      t.skip("Windows account cannot create file symlinks; requires Developer Mode or symlink privilege");
+      return;
+    }
+    throw error;
+  }
   await assert.rejects(LocalMediaStore.open(directory));
   const linked = join(directory, "linked");
   await symlink(outside, linked);
