@@ -1,0 +1,48 @@
+{
+  "baseRevision": "537b68401fb3e437017fd746b7ff471c6a4f2250",
+  "helper": "scripts/deep_disassembly.py",
+  "helperSha256": {
+    "lf": "e0241c00f43218f15a127ded6c6e5398811faa38d7b6fcd8f875029135db0ceb",
+    "crlf": "bcc2c08b7f6e800ea484b81fc188324c89ca5f197d55815e98efa89beaca6c8e"
+  },
+  "witness": {
+    "program": "mayhem",
+    "fileOffset": "0x638",
+    "raw": "8d00000002000000",
+    "before": "raw_0x8d r0,r0,0,2",
+    "after": "callx r2"
+  },
+  "immediateFormCalls": {
+    "pump": {"2": 61, "3": 21, "4": 54, "5": 3, "9": 5, "total": 144},
+    "pump_amm": {"2": 40, "3": 21, "4": 54, "5": 3, "9": 5, "total": 123},
+    "pump_fees": {"2": 51, "3": 18, "4": 44, "5": 3, "9": 5, "total": 121},
+    "mayhem": {"2": 25, "3": 20, "4": 34, "5": 4, "7": 5, "8": 3, "9": 2, "total": 93},
+    "donation_relay": {"2": 33, "3": 15, "4": 34, "5": 3, "7": 2, "8": 2, "total": 89},
+    "total": 570
+  },
+  "mayhemPacket": {
+    "pythonHashSeed": "0",
+    "windows": 441,
+    "changedMnemonics": 93,
+    "otherPacketFilesUnchanged": true,
+    "beforeDisassemblySha256": "88be3d6e0a94c24b54ab5d344006c7f70ee3cc28b3b743ca0fbca0a5e11bb871",
+    "afterDisassemblySha256": "c06d1a4d50951ec50caaacd2d303385e40a0575932ef1de9adb2333f1a8c3054",
+    "windowsDeepSha256": "e6fac84dbf2818631bc33d4ee9faa6a2445a303f610db9804f01753f8aa0f465",
+    "summarySha256": "4442c6ff1b4f3b528ac0bee3d48e7e1e8dd95e83cc7ab2abbbb28a9258a735fe",
+    "generatedPacketVerifier": "passed"
+  },
+  "checks": [
+    "synthetic immediate form, r10, and rejected src/dst/offset/out-of-range shapes",
+    "reviewed LF and CRLF helper forms load; altered helper rejected",
+    "all 570 original 0x8d instructions checked; no other mnemonic changes",
+    "Mayhem packet regenerated with PYTHONHASHSEED=0; verifier passed",
+    "nine original captures and six comparator regressions pass"
+  ],
+  "limits": [
+    "static mnemonic correction for the immediate-register form only",
+    "V2 source-nibble and V3/V4 destination-nibble callx stay raw",
+    "no call target, CFG edge, or callee identity is added",
+    "memory widths, relative-call nibbles, byte swaps and neg mnemonics unchanged",
+    "no capture or root-helper changes"
+  ]
+}
