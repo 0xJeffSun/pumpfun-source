@@ -6,7 +6,7 @@ import { createSchemaExtractor } from './schema.mjs';
 
 const pins = {
   manifestSha256: '9e0fc00719eb8c919dd4205d3c118eb48c4927e056c77e8343e26d6f7189bbb5',
-  inventorySha256: '9631271006faa37ea6055a11be4ec1faf971b45e2c7cdb78fc08a6530e777a50',
+  inventorySha256: '1d268ae7f2eb0f61eaaffd222269bf29d9ce06e9946372861721b2f159d868e2',
 };
 const operation = 'GET /callout/list/{userId}';
 const implementation = 'packages/frontend/src/lib/original-profile-callouts.mjs';

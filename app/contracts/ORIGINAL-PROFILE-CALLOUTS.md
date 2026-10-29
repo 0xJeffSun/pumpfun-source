@@ -106,7 +106,11 @@ The source-reader prerequisite belongs to the search-contract lane. The shared
 bounded declaration extractor/validator was introduced with PR686; this unit
 does not count either prerequisite as new profile recovery. The separately
 owned full inventory expansion is unnecessary: every selected factory is in
-the maintained index. Raw capture bytes, SDK source, existing fixture/historical
+the maintained index. Main has since adopted that expansion (#679 added factory
+files and index entries only), so the frozen `inventorySha256` now pins the
+expanded 5,947-variant index. Every index entry carrying a factory ID this
+producer resolves is byte-identical before and after #679, and the artifact's
+fragments, factories and declarations are unchanged. Raw capture bytes, SDK source, existing fixture/historical
 pages, auth, native state and qualification ledgers remain unchanged.
 
 Overlap was checked against [PR689](https://github.com/lalalune/pumpfun-source/pull/689)
