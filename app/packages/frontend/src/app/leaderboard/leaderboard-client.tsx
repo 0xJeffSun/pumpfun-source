@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { CompetitionCountdown } from "../../components/leaderboard/CompetitionCountdown";
 import { useSearchParams } from "next/navigation";
 import {
   FormEvent,
@@ -400,6 +401,7 @@ function CompetitionCards({
               <dd>{safeDate(competition.endsAt)}</dd>
             </div>
           </dl>
+          <CompetitionCountdown competition={competition} />
           <Link className="competition-link" href={detailHref(competition)}>
             View ranked entries
           </Link>
