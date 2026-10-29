@@ -54,7 +54,7 @@
   "public_integration_report": "research/contract-completion-20261028/pump-notice-public-integration.json",
   "public_integration_sha256": "7a0127471242ff5450d01078aa487e00d4fac10c9f160e6b22fd9c627d9b6105",
   "public_captured_controls_report": "research/contract-completion-20261028/pump-notice-public-captured-controls.json",
-  "public_captured_controls_sha256": "e7e6a8774a71ba9e913b6168ff74ef4bc9d9c2dc7a3fde395104d3a9998a0851",
+  "public_captured_controls_sha256": "d3220ae2453319d7a68f5713cca944304fdd647d9de8a86960f07cc518d8561b",
   "whole_elf_equal": false,
   "new_complete_windows": 0,
   "remaining_pump_windows": 16,

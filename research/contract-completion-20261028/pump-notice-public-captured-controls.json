@@ -3,6 +3,7 @@
   "helper_sha256": "ece7b2932fb5f54ea6b6ffc681801aadb8d121ed8e3d69a8c504a82902a5ffde",
   "source_log_and_wire_controls": {
     "status": "PASS",
+    "helper_sha256": "ece7b2932fb5f54ea6b6ffc681801aadb8d121ed8e3d69a8c504a82902a5ffde",
     "baseline_before_after": "PASS",
     "report_hash_resealed_for_each_control": true,
     "controls": [
@@ -14,10 +15,10 @@
       {
         "control": "signed-wire",
         "status": "REJECTED",
-        "boundary": "captured actual signatures"
+        "boundary": "captured exact sealed fixture descriptors and original signed wires"
       }
     ],
-    "scope": "Pure saved-proof mutations outside sealed packet; no new VM execution"
+    "scope": "Actual final helper after sealed fixture/wire binding; no new VM execution"
   },
   "fixture_membership_review": {
     "status": "REAL_FRESH_MEMBERSHIP_GAP_FIXED_IN_PRIVATE_DRAFT",

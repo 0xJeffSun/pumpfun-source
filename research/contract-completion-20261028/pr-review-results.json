@@ -3522,7 +3522,7 @@
   },
   "program_creator_notice_qualification": {
     "review": "research/contract-completion-20261028/pump-notice-promotion-review.json",
-    "sha256": "7b755fd5e460158092e7785fd2f8f8bb0bed78c9c59dca38b94e0f0b4624dee2",
+    "sha256": "00761fe14d6f5c5c1672d6ae165ea66d5271f18fcd7057b7722b1952111cfce9",
     "candidate_sha256": "d0377d7cef5b7378063f8bfabac5dc9c08d29eeaaaaa14022d36909688ff5e1b",
     "packet_manifest_sha256": "ef50bb5262f67c59f4d1850f83e2821fa1e9c5f02649589cab356a6e28cffb49",
     "status": "QUALIFIED_PENDING_PUBLICATION",
