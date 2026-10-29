@@ -5,7 +5,7 @@
 Packet #18 pinned multi_hop_swap through four AMM hops (packet
 #5 covered one to three hops). The handler reads remaining
 accounts in groups of 5 with no hop cap
-(multi_hop_swap.rs:273: count = remaining.len() / 5), so a
+(multi_hop_swap.rs:276 splits remaining accounts with chunks_exact(5) and :278 rejects a remainder with NotEnoughRemainingAccounts; no hop cap), so a
 fifth pool should chain cleanly -- but whether the fifth hop
 preserves the 4-hop invariants (buyback only at the tail hop,
 net-receipt limit, per-hop vault deltas) was unpinned, whether
@@ -92,8 +92,7 @@ curve hops.
   verify.py pins this log-surface split per image. By
   contrast, 4-hop buy limit failure returned clean
   Tagged(6004) (#18), and 5-hop sell limit failure still
-  returns clean Tagged(6004) here, so the panic is buy-side
-  and five-hop specific in this harness. The mechanism (why
+  returns clean Tagged(6004) here. Among the tested routes, the panic appears only on five-hop buys; routes longer than five hops were not run. The mechanism (why
   the error return exhausts the heap at five buy hops) is
   NOT determined here -- this packet records the observed
   LiteSVM behavior only and makes no on-chain claim about it.
@@ -114,10 +113,9 @@ curve hops.
   MultiHopDiscontinuousPath (6084) -- note the 6084 site
   splits by direction: buy-side junk/trunc at
   multi_hop_swap.rs:300 (original) / :294 (rebuilds),
-  sell-side at :251 / :285, so the two directions validate
-  the route at different points. 24 remaining accounts (not
+  sell-side at :251 / :285. Both are in the pre-execution route check: a buy's corrupted or missing tail mint is caught by the final user_out mint check, and a sell's by next_mint on the first group. 24 remaining accounts (not
   a multiple of 5) fails NotEnoughRemainingAccounts (6044)
-  in both directions. A hop5 pool owned by nobody fails
+  in both directions. A hop5 pool reassigned to the all-zero owner (Pubkey.default(), the System Program id) fails
   AccountTypeNotSupported (6027) in both directions. An
   unsigned user fails AccountNotSigner (3010). All error
   cases roll back everything except the payer's 5,000 fee,
@@ -148,6 +146,14 @@ Error sites (log paths as emitted by each image):
 - sell-limit0: original programs/pump-amm/src/instructions/swap/multi_hop_swap.rs:274. Error Code: ZeroBaseAmount. Error Number: 6001. Error Message: ZeroBaseAmount.; control programs/pump-amm/src/instructions/swap/multi_hop_swap.rs:267. Error Code: ZeroBaseAmount. Error Number: 6001. Error Message: ZeroBaseAmount.; candidate programs/pump-amm/src/instructions/swap/multi_hop_swap.rs:267. Error Code: ZeroBaseAmount. Error Number: 6001. Error Message: ZeroBaseAmount.
 
 ## Limits
+
+- `producer.py` regenerated these receipts on the author's machine: it hard-codes
+  `~/workspace/pumpfun-sparse` and reads the control/candidate images from
+  `~/workspace/slop-verify`, so it does not run from this packet unmodified. The control
+  and candidate are the gunzipped in-repo #424/#427 artifacts
+  (`research/amm-multi-hop-group-slice-recovery/artifacts/candidate.so.gz`,
+  `research/amm-transfer-fee-diagnostic-recovery/artifacts/candidate.so.gz`), which
+  `verify.py` now reads directly.
 
 Offline LiteSVM synthetic fixture only (shared v1/v2 fixture,
 clock slot 100). No source change, build, or whole-program
