@@ -25,7 +25,7 @@ def load(name, path):
     return module
 
 
-V = load('cto_stage1_verifier', P.parent/'verify.py')
+V = load('cto_stage1_verifier', P.parent/'pump-cto-direct-borrows-20261029/verify.py')
 require = V.require
 
 
@@ -58,7 +58,7 @@ def without_call_immediates(data):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--repo', type=Path, default=P.parents[2])
+    parser.add_argument('--repo', type=Path, default=P.parents[1])
     args = parser.parse_args()
     root = args.repo.resolve()
     record = read(P/'MEASUREMENT.json')
@@ -73,7 +73,7 @@ def main():
     require(before.count(b'\n') == 775 and after.count(b'\n') == 772, 'honest natural helper deletion/line drift')
     build = read(P/'native-build/build-comparison.json')
     attempt = read(P/'native-build/build-attempt.json')
-    canonical = read(P.parent/'native-build/canonical-SOURCE-FROZEN.json')['source_files']
+    canonical = read(P.parent/'pump-cto-direct-borrows-20261029/native-build/canonical-SOURCE-FROZEN.json')['source_files']
     primary = {name.removeprefix('source/'): value for name, value in build['primary_source_sha256'].items()}
     require(set(primary) == set(canonical) and len(primary) == 65, 'same65 primary source inputs')
     require([name for name in primary if primary[name] != canonical[name]] == ['src/creator/admin_cto.rs'], 'one canonical source delta')
@@ -111,7 +111,7 @@ def main():
         require(sha((P/'independent-audit'/name).read_bytes()) == row['sha256'], 'exact independent producer/report: '+name)
     require(audit['images']['5203'] == sha(elf.data) and audit['source_sha256'] == sha(after), 'independent actual image/source binding')
     require(audit['holder_extra_copy_removed'] and audit['three_program_first_context_groups_reproduce_original_source_pointer_order'], 'actual original-backed copy/order observations')
-    parent = V.Elf(P.parent/'native-build/unstripped.so')
+    parent = V.Elf(P.parent/'pump-cto-direct-borrows-20261029/native-build/unstripped.so')
     _, old_raw, old_size = exactly(symbols(parent),'admin_cto16token_raw_amount')
     _, new_raw, new_size = exactly(syms,'admin_cto16token_raw_amount')
     require(old_size == new_size == 448, 'same used raw helper')

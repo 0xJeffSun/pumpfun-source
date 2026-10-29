@@ -91,5 +91,12 @@
     "newer_main": "f57bbf0dd856b101acd02c242cb5c4a56bf276b1",
     "newer_per_hop734_composition_qualified_by_this_packet": false,
     "maintained_CTO_blob_at_newer_main": "f8127a38285fa993c5fbdcb99304451bf8ccb4ee"
+  },
+  "published_package": "research/pump-cto-used-cpi-flow-20261029",
+  "merged_prerequisite": {
+    "pr": 712,
+    "path": "research/pump-cto-direct-borrows-20261029",
+    "head": "a70725ff32c16249a0493b4b8f423dd554ca5d84",
+    "sealed_tree_changed": false
   }
 }
