@@ -3,7 +3,7 @@
 ## Problem
 
 3rd #6 chained sweeps into deposit, withdraw, and legacy buy and
-showed a sweep is a pure relabeling for every downstream price: it
+showed a sweep is a pure relabeling for those downstream prices: it
 debits the pool accrual by A, credits virtual quote reserves by A,
 and drains the quote vault by A, so both available (raw - accrued)
 and effective (raw + vq) are invariant. But 3rd #6's Limits
@@ -13,7 +13,7 @@ v2 sell structurally: it transfers its fee legs straight to the
 recipient ATAs and leaves the pool accrual fields untouched. That
 raises two concrete questions this packet answers on three program
 images (original, #424 control, #427 candidate): does a sweep
-before a legacy sell leave its legs byte-identical, and does a
+before a legacy sell leave its legs unchanged, and does a
 legacy sell accrue anything for a later sweep to move?
 
 ## Fixture
@@ -30,7 +30,9 @@ the 5,000 fee (as in 3rd #6 family G); a legacy sell step also costs
 instruction (21 keys + remaining [pool-v2 PDA, buyback owner,
 buyback dest]) with arguments (amount, minquote).
 
-Event layouts (verified byte-for-byte):
+Event layouts (offsets as read from the receipts; verify.py decodes
+only the fields named below, and for the second sell of the R
+chains only quote and user output):
 - SellEvent (legacy, shares the v2 sell disc), 449 bytes, disc
   `3e2f370aa503dc2a`: curve @64, lp_bps @72, lp_fee @80,
   protocol_bps @88, protocol_fee @96 (GROSS: net protocol 849 +
@@ -83,8 +85,9 @@ Family R -- sweep between two sells is transparent:
   first, because the first sell moved the vaults), legs
   849 / 548 / 849, pool unchanged.
 - `r-sell-sweep-sell`: sell 10^9, both sweeps, sell 10^9: the
-  second sell is byte-identical to `r-sell-sell`'s second sell
-  (+180,211 / -182,457), pool (0, 0, 0). The sweep in the
+  second sell has the same legs and decoded event fields as
+  `r-sell-sell`'s second sell (+180,211 / -182,457), pool
+  (0, 0, 0). The sweep in the
   middle moved nothing -- not the price, not the legs.
 - `r-sell-sell-1e10` / `r-sell-sweep-sell-1e10`: sell 10^9,
   then sell 10^10, with and without both sweeps in between:
@@ -95,7 +98,10 @@ Family R -- sweep between two sells is transparent:
 
 - A sweep is price-neutral for legacy sell exactly as 3rd #6
   showed for deposit, withdraw, and legacy buy: sweep-first legs
-  are byte-identical to fresh anchors at 10^6, 10^9, and 10^10,
+  equal the fresh anchors' legs and decoded event fields at 10^6,
+  10^9, and 10^10 (the raw sell events are NOT byte-identical:
+  the pool quote reserve word @56 and some trailing words record
+  the post-sweep pool state),
   after either partial sweep or both, and the post-sweep limit
   gate binds at the fresh price to the unit.
 - A legacy sell accrues nothing to the pool: pool fields are
@@ -133,3 +139,27 @@ Family R -- sweep between two sells is transparent:
 - Legacy sell on a cashback or mayhem pool was not chained here;
   the mode gates for legacy sell were pinned in 2nd #44, and this
   packet covers the sweep dimension only.
+
+## Verify and provenance
+
+From the repository root:
+
+    python3 -I -B research/amm-sweep-legacy-sell-neutrality-20261029/verify.py
+
+`verify.py` needs only `solders` plus files in the repository: this
+packet, `evidence/original/pump_amm/deployed.so`, and the two
+retained rebuilt images
+`research/amm-multi-hop-group-slice-recovery/artifacts/candidate.so.gz`
+(control, #424) and
+`research/amm-transfer-fee-diagnostic-recovery/artifacts/candidate.so.gz`
+(candidate, #427), whose decompressed sha256 values match the
+`images` block of `runtime/report.json.gz`. It re-checks the
+recorded receipts against the report's expected values; it does
+not re-execute any transaction.
+
+`producer.py` is the script that generated the receipts and is
+kept as a provenance record. It is not runnable as committed: it
+hard-codes a private workspace layout (`~/workspace/pumpfun-sparse`
+for the harness scripts and `~/workspace/slop-verify` for the
+control/candidate `.so` files) and chdirs there on start.
+
