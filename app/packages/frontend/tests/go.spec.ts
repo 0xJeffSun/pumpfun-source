@@ -240,7 +240,9 @@ test("all required viewports avoid document overflow and preserve shell navigati
     if (width < 760) {
       await page.getByRole("button", { name: "Open navigation" }).click();
       await expect(
-        page.getByRole("link", { name: "GO", exact: true }),
+        page
+          .getByRole("navigation", { name: "Primary", exact: true })
+          .getByRole("link", { name: "GO", exact: true }),
       ).toHaveAttribute("aria-current", "page");
       await page.keyboard.press("Escape");
     }

@@ -74,6 +74,9 @@ export type CompetitionSummary = {
   title: string;
   description: string;
   prizeCopy: string;
+  prizes: { rankFrom: number; rankTo: number; amount: string }[];
+  minMembers: number;
+  maxMembers: number;
   registrationOpensAt: string | null;
   registrationClosesAt: string | null;
   startsAt: string | null;
@@ -227,6 +230,20 @@ function isCompetitionSummary(value: unknown): value is CompetitionSummary {
     ) &&
     [value.maxEntries, value.entriesCount, value.participants].every(
       (number) => typeof number === "number" && Number.isFinite(number),
+    ) &&
+    [value.minMembers, value.maxMembers].every(
+      (number) =>
+        typeof number === "number" && Number.isFinite(number) && number >= 0,
+    ) &&
+    Array.isArray(value.prizes) &&
+    value.prizes.length <= 100 &&
+    value.prizes.every(
+      (prize) =>
+        isRecord(prize) &&
+        [prize.rankFrom, prize.rankTo].every(
+          (rank) => typeof rank === "number" && Number.isFinite(rank) && rank >= 0,
+        ) &&
+        typeof prize.amount === "string" && prize.amount.length <= 200,
     ) &&
     typeof value.joinable === "boolean" &&
     typeof value.isFinal === "boolean"

@@ -50,3 +50,5 @@ The original machine code re-reads `payer.key` after the CPI. The normal `&Accou
 Behavior is unchanged: ATA derivation, ownership checks, optional idempotent creation, token-account deserialization, and mint validation remain the same.
 
 Source evidence: `research/claude-pump-integration-20261027/r37-layout-35/tools/l33-inputs/fz-P-buyv2a-r1-01/README.md` records the successful run and the exact three-line recipe.
+
+The recipe as a patch against the L31-base `programs/pump/src/buy_v2.rs` it was recorded on is `buy_v2-14910-exact.patch` in this directory (current `main` already carries the three changes, so it no longer applies there). It lives here rather than beside the source evidence because `r37-layout-35` is a sealed package whose `verify.py` requires its file set to equal `MANIFEST.json`.
