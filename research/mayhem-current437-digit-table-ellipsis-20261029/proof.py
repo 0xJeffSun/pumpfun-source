@@ -135,12 +135,34 @@ def text_site(image, pc, pointer, length, length_register, length_at):
     assert struct.unpack_from('<BBhi', image.b, pc + length_at) == (
         0xb7, length_register, 0, length
     )
+    if length == 3:
+        assert register == 2, 'crumb pointer argument register'
+        assert struct.unpack_from('<BBhi',image.b,pc+16)==(0xbf,0x39,0,0), 'crumb intervening instruction'
+        assert struct.unpack_from('<BBhi',image.b,pc+32)==(0x8d,0,0,4), 'crumb indirect consumer'
+        end=pc+40
+    else:
+        assert length == 5 and register == 6, 'ellipsis pointer register'
+        # The SAME signed comparison selects(ptr,len)=(ellipsis,5) or(1,0).
+        # Bind both branches/fallbacks and the final pointer/length stores.
+        sequence=[(16,(0xad,0x20,1,0)),(24,(0xb7,6,0,1)),(32,(0xb7,7,0,5)),(40,(0xad,0x20,1,0)),(48,(0xb7,7,0,0)),(56,(0x7b,0x0a,-184,0)),(64,(0x7b,0x1a,-192,0)),(72,(0x7b,0x7a,-168,0)),(80,(0x7b,0x6a,-176,0))]
+        assert all(struct.unpack_from('<BBhi',image.b,pc+offset)==expected for offset,expected in sequence), 'ellipsis conditional pointer/length record'
+        end=pc+88
+    assert not any(pc+16<=reloc<end for reloc in image.rel), 'unexpected context relocation'
     return image.b[pc:pc + length_at + 8]
+
+
+INDEX_CONTEXTS = {0: ('b7030000030000007114000000000000bf41000000000000a50410000a000000bf410000000000003701000064000000bf130000000000002703000064000000bf450000000000001f35000000000000670500000100000057050000fe000000', '0f530000000000007135010000000000735affff000000007133000000000000733afeff00000000b703000001000000150401000000000015010c000000000067010000010000004701000001000000'), 1: ('bf20000000000000bf1400000000000057040000ff000000bf32000000000000a50415000a000000bf450000000000003705000064000000bf5200000000000027020000640000001f21000000000000670100000100000057010000fe000000', '0f16000000000000bf010000000000000f3100000000000071620100000000007321ffff00000000bf3200000000000007020000feffffffbf010000000000000f210000000000007166000000000000'), 2: ('bf5100000000000067010000200000007701000020000000b5011c0009000000bf5100000000000057010000ffff00003701000064000000bf1300000000000027030000640000001f35000000000000670500000100000057050000feff0000', '0f53000000000000bf050000000000000f2500000000000071360100000000007365ffff0000000007020000feffffffbf050000000000000f2500000000000071330000000000007335000000000000'), 3: ('733700000000000007020000fcffffff2506dfff7f969800b504160009000000bf4500000000000057050000ffff00003705000064000000bf5300000000000027030000640000001f34000000000000670400000100000057040000feff0000', '0f43000000000000bf040000000000000f2400000000000071360100000000007364ffff0000000007020000feffffffbf040000000000000f2400000000000071330000000000007334000000000000')}
 
 
 def index_site(image, pc, pointer, and_mask):
     """Prove one (n%100)<<1 digit-table access ending at lddw pc."""
-    assert image.lo <= pc - 64 and pc + 40 <= image.hi
+    assert image.lo <= pc - 96 and pc + 96 <= image.hi
+    site = next(i for i, row in enumerate(INDEX_SITES) if pc in row[:2])
+    before, after = INDEX_CONTEXTS[site]
+    assert sorted(reloc for reloc in image.rel if pc-96 <= reloc < pc+96) == [pc], 'unexpected index context relocation'
+    assert image.b[pc-96:pc] == bytes.fromhex(before), "digit quotient/remainder register flow"
+    assert image.b[pc+16:pc+96] == bytes.fromhex(after), "digit base/index and both byte-load flow"
+    assert image.b[pc+1] == (3,6,3,3)[site], "digit base-pointer register"
     assert sorted(reloc for reloc in image.rel if pc <= reloc < pc + 16) == [pc]
     reloc = image.rel[pc]
     assert reloc['type'] == 8 and reloc['symbol_index'] == 0
@@ -149,24 +171,12 @@ def index_site(image, pc, pointer, and_mask):
     continuation, high = struct.unpack_from('<II', image.b, pc + 8)
     assert continuation == 0
     assert ((immediate & 0xffffffff) | (high << 32)) == pointer
-    # Walk the 96 bytes before pc for %100 * 2 shape.
-    window = image.b[pc - 96:pc]
-    div100 = mul100 = lsh1 = masked = False
-    for at in range(0, 96, 8):
-        op, regs, off, imm = struct.unpack_from('<BBhi', window, at)
-        if op == 0x37 and imm == 100:
-            div100 = True
-        if op == 0x27 and imm == 100:
-            mul100 = True
-        if op == 0x67 and imm == 1:
-            lsh1 = True
-        if op == 0x57 and imm == and_mask:
-            masked = True
-    assert div100 and mul100 and lsh1 and masked
-    # After lddw: add then at least one ldxB.
-    after = image.b[pc + 16:pc + 48]
-    assert struct.unpack_from('<BBhi', after, 0)[0] == 0x0f
-    assert any(after[i] == 0x71 for i in range(0, len(after), 8))
+    # Fixed decoded register chains above bind the actual dividend, quotient,
+    # remainder, shift, mask, base add and BOTH byte loads at offsets0/1.
+    # Sites0/1 use the low8 input; sites2/3 use low16. The final masks
+    # remove higher input bits, so the index is2*(u-100*(u//100)),0..198.
+    # The second byte is at most199; no adjacency or merely nearby opcode
+    # occurrence is used as a length bound.
     return dict(pointer=pointer, and_mask=and_mask, bytes_hex=image.b[pc:pc + 24].hex())
 
 

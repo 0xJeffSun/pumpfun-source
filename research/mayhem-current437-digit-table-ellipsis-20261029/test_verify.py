@@ -108,6 +108,28 @@ class DigitTableEllipsis(unittest.TestCase):
                 with self.assertRaises(AssertionError):
                     proof.verify_images(self.original_elf, self.mutated_index_mask(row))
 
+    def test_actual_register_and_load_chains(self):
+        for label,image in [('original',self.original_elf),('candidate',self.candidate_elf)]:
+            for j,(op,cp,mask)in enumerate(proof.INDEX_SITES):
+                pc=op if label=='original'else cp
+                for delta,kind in [(-24,'register'),(16,'register'),(24 if j==0 else 40,'load')]:
+                    mutated=copy.copy(image);blob=bytearray(image.b)
+                    if kind=='register':blob[pc+delta+1]^=0x10
+                    else:struct.pack_into('<h',blob,pc+delta+2,201)
+                    mutated.b=bytes(blob)
+                    with self.subTest(image=label,site=j,delta=delta):
+                        with self.assertRaises(AssertionError):proof.index_site(mutated,pc,proof.DIGIT_ORIGINAL if label=='original'else proof.DIGIT_CANDIDATE,mask)
+            for j,(op,cp,ptr,cptr,length,reg,length_at)in enumerate(proof.TEXT_SITES):
+                pc=op if label=='original'else cp
+                for kind in ['pointer','clobber']:
+                    mutated=copy.copy(image);blob=bytearray(image.b)
+                    if kind=='pointer':blob[pc+1]^=1
+                    elif j==0:blob[pc+17]=(blob[pc+17]&0xf0)|2
+                    else:blob[pc+17]^=1
+                    mutated.b=bytes(blob)
+                    with self.subTest(image=label,text=j,kind=kind):
+                        with self.assertRaises(AssertionError):proof.text_site(mutated,pc,ptr if label=='original'else cptr,length,reg,length_at)
+
     def test_following_byte_is_not_absorbed(self):
         # Ellipsis end sits at the rust-panic boundary; mutate the following covered byte.
         end = self.digit['candidate_ptr'] + self.digit['length'] + 5  # after [...]

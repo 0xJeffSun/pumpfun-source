@@ -10,7 +10,7 @@ Only static bytes are read.
 
 - `[723444, 723447)` — crumb ` {\n`, bounded by relocated `lddw` of the `.rodata` pointer plus `mov` of length immediate 3 at `pc+24` (equal rigor to classic text sites; length is not at `pc+16`).
 - `[723458, 723658)` — 200-byte decimal digit table `00`..`99`. Length comes from index-table equal rigor: four matched sites compute `(n % 100) << 1` (div/mul 100, left-shift 1, and-mask 254 or 65534), add the base pointer, and load table bytes. Same discipline as `research/mayhem-current437-bounded-index-tables-20261029/`.
-- `[723658, 723663)` — `[...]`, bounded by `lddw` of the pointer plus `mov` of length immediate 5 in the same block (`pc+32`).
+- `[723658, 723663)` — `[...]`, bounded by an exact conditional pointer/length record: the same signed comparison selects `(ellipsis,5)` or the empty `(1,0)` representation. Both branches, fallback assignments and final stack stores are checked; the length5 assignment is at`pc+32`.
 
 NUL, the following byte, and adjacency are not bounds. No descriptor is claimed.
 
@@ -41,3 +41,9 @@ PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3.12 -B scripts/test_tooling.
 ## Attribution
 
 provider=OpenCode model=opencode/deepseek-v4.1-flash-free client=opencode CLI 1.19.5
+
+## Independent decoder review
+
+The checked arithmetic chains now bind every register, instruction and both byte loads through the base/index addition. For low8 or low16 input`u`, division/multiplication/subtraction gives`u-100*(u//100)` in`[0,99]`; shifting produces`[0,198]`, and loads at offsets0/1 stay within the200-byte table. The final masks remove higher input bits in the wider register. The crumb check binds its actualr2 pointer/r3 length arguments and the intervening move. The ellipsis record is conditional, with identical signed predicates selecting pointer and length together.
+
+These checks close32 reproduced decoder false positives over both images; the original observations,208-byte attribution and21796-byte historical baseline remain byte exact. This packet's union is disjoint from the prior reviewed batch's1510-byte additions. These are static attribution checks on the historical437-function image; they do not change the current meaningful-ELF identity or function-completion counts.
