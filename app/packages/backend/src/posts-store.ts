@@ -268,17 +268,29 @@ export class PostStore {
   }
 
   /**
-   * Get a live post by ID. Returns undefined for unknown, deleted, or hidden posts.
+   * A post row can be served when it is live. A repost also needs a live target, because the
+   * contract's `reposted` embed is "always present on a served repost".
+   */
+  private isServed(raw: RawPost): boolean {
+    if (raw.deleted || raw.hidden) return false;
+    if (raw.kind !== 'repost') return true;
+    const target = raw.repostedPostId ? this.byPostId.get(raw.repostedPostId) : undefined;
+    return target !== undefined && !target.deleted && !target.hidden;
+  }
+
+  /**
+   * Get a servable post by ID. Returns undefined for unknown, deleted, or hidden posts,
+   * and for reposts whose target is unknown, deleted, or hidden.
    */
   getLivePost(postId: string): Post | undefined {
     const raw = this.byPostId.get(postId);
-    if (!raw || raw.deleted || raw.hidden) return undefined;
+    if (!raw || !this.isServed(raw)) return undefined;
     return this.hydrate(raw);
   }
 
   /**
    * Batch-fetch posts by ids in requested order.
-   * Duplicates collapse, and unknown, hidden or deleted ids leave no placeholder.
+   * Duplicates collapse, and ids that cannot be served (see isServed) leave no placeholder.
    */
   batch(ids: string[]): Post[] {
     const seen = new Set<string>();
@@ -289,7 +301,7 @@ export class PostStore {
       seen.add(id);
 
       const raw = this.byPostId.get(id);
-      if (raw && !raw.deleted && !raw.hidden) {
+      if (raw && this.isServed(raw)) {
         result.push(this.hydrate(raw));
       }
     }
