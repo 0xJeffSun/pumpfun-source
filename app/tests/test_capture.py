@@ -405,6 +405,19 @@ class CaptureResumeTests(unittest.TestCase):
         self.network.assert_not_called()
         self.assertEqual(manifest_path.read_text(), original)
 
+    def test_duplicate_url_rejects_the_entire_resume_update(self):
+        url = 'https://pump.fun/synthetic.js'
+        self.write_object('one', b'one')
+        self.write_object('two', b'two')
+        first = self.record(url, 'evidence/web/objects/one', b'one')
+        second = self.record(url, 'evidence/web/objects/two', b'two')
+        sentinel = {'untouched': 'synthetic'}
+        self.reuse.clear()
+        self.reuse.update(sentinel)
+        with self.assertRaises(capture.RetainedCaptureError):
+            capture.load_reuse([first, second])
+        self.assertEqual(self.reuse, sentinel)
+
 
 if __name__ == '__main__':
     unittest.main()

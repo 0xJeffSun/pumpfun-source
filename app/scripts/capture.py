@@ -85,6 +85,7 @@ def load_reuse(records):
     for index,record in enumerate(records):
         url=record.get('url') if isinstance(record,dict) else None
         if not isinstance(url,str): raise RetainedCaptureError(f'Retained capture {retained_id(f"index:{index}")} invalid record')
+        if url in validated: raise RetainedCaptureError(f'Retained capture {retained_id(url)} duplicate URL')
         retained_body(record,url);validated[url]=record
     REUSE.update(validated)
 def pool(urls):
