@@ -13,6 +13,7 @@ import {
   type KeyboardEvent as ReactKeyboardEvent,
 } from "react";
 import { usePathname } from "next/navigation";
+import { lockBodyScroll } from "@/lib/body-scroll-lock";
 import { SidebarToggleIcon } from "@/components/shell/captured-icons";
 import { cn } from "@/lib/cn";
 
@@ -88,8 +89,7 @@ export function SidebarProvider({ children }: { children: ReactNode }) {
     const content = document.querySelector<HTMLElement>("[data-shell-content]");
     content?.toggleAttribute("inert", mobileOpen);
     if (!mobileOpen) return;
-    const priorOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
+    const unlockScroll = lockBodyScroll();
     mobileClose.current?.focus();
     const dismiss = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
@@ -100,7 +100,7 @@ export function SidebarProvider({ children }: { children: ReactNode }) {
     window.addEventListener("keydown", dismiss);
     return () => {
       content?.removeAttribute("inert");
-      document.body.style.overflow = priorOverflow;
+      unlockScroll();
       window.removeEventListener("keydown", dismiss);
     };
   }, [mobileOpen, closeMobile]);

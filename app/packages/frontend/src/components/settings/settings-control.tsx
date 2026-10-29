@@ -1,6 +1,7 @@
 "use client";
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { lockBodyScroll } from "@/lib/body-scroll-lock";
 import {
   Suspense,
   useEffect,
@@ -193,11 +194,7 @@ function SettingsControlContent({
 
   useEffect(() => {
     if (!open || !mounted) return;
-    const previous = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = previous;
-    };
+    return lockBodyScroll();
   }, [open, mounted]);
 
   function trapFocus(event: KeyboardEvent<HTMLDialogElement>) {
