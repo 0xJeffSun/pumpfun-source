@@ -12,9 +12,12 @@ import { AuthDialogController } from "./auth-controller";
 import { walletChoices, type AuthPresentationAdapter } from "./auth-model";
 import copy from "./auth-copy.json";
 import styles from "./auth-dialog.module.css";
+import { PublicWalletPanel } from "./public-wallet/panel";
 
 type Props = {
   adapter: AuthPresentationAdapter;
+  /** Public-address connection only; does not supply authentication. */
+  publicWallet?: boolean;
   /** Only the external browser-test fixture passes this; product entrypoint cannot. */
   syntheticTest?: boolean;
   /** Presentation only: lets the host shell match its captured sign-in button. */
@@ -42,6 +45,7 @@ function Arrow({ back = false }: { back?: boolean }) {
 /** Internal client component. No auth commands exist on its read-only adapter. */
 export function AuthControl({
   adapter,
+  publicWallet = false,
   syntheticTest = false,
   triggerClassName,
 }: Props) {
@@ -231,7 +235,7 @@ export function AuthControl({
                 {syntheticTest
                   ? "Synthetic UI test — not an authenticated account."
                   : "Local reconstruction — sign-in is unavailable."}{" "}
-                No account, email, or wallet is connected.
+                No authenticated account or email is connected.
               </p>
 
               {state.status === "loading" && (
@@ -399,9 +403,9 @@ export function AuthControl({
                     </button>
                   )}
                   <p className={styles.footnote}>
-                    Provider login, email codes, wallet detection and signing
-                    are disabled.
+                    Provider login, email codes and signing are disabled.
                   </p>
+                  {publicWallet && <PublicWalletPanel />}
                 </div>
               )}
             </div>

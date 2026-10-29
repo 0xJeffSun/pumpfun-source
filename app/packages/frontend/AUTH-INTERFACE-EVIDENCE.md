@@ -1,3 +1,5 @@
+> Current extension: [PUBLIC-WALLET-EVIDENCE.md](PUBLIC-WALLET-EVIDENCE.md) adds an opt-in, public-address-only Wallet Standard workflow. The original unavailable-auth adapter and its boundary remain. Statements below about disabled wallet discovery describe the prior chooser checkpoint; the new panel does not implement server sign-in.
+
 # Sign-in presentation reconstruction
 
 ## Scope and acceptance boundary
