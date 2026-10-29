@@ -105,7 +105,9 @@ function counter(record: UnknownRecord, field: string): number {
 
 function parseTimestamp(value: string, field: string): number {
   const timestamp = Date.parse(value);
-  if (!Number.isFinite(timestamp)) {
+  const iso = /^(\d{4}-\d{2}-\d{2})T(?:[01]\d|2[0-3]):[0-5]\d:[0-5]\d(?:\.\d+)?(?:Z|[+-](?:[01]\d|2[0-3]):[0-5]\d)$/u.exec(value);
+  const calendar = iso ? new Date(`${iso[1]}T00:00:00Z`) : null;
+  if (!Number.isFinite(timestamp) || !iso || !calendar || !Number.isFinite(calendar.getTime()) || calendar.toISOString().slice(0, 10) !== iso[1]) {
     throw new FeedDataError(`Local feed ${field} must be an ISO timestamp`);
   }
   return timestamp;
