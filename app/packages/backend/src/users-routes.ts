@@ -66,6 +66,15 @@ export function rejectDuplicateQueryKeys(request: { url: string }, reply: Fastif
   return false;
 }
 
+/** Both user read contracts bound offset/limit to JavaScript safe integers. */
+function userPagination(qs: Record<string, string | undefined>) {
+  const offset = qs.offset === undefined ? undefined : Number(qs.offset);
+  const limit = qs.limit === undefined ? undefined : Number(qs.limit);
+  if ((offset !== undefined && !Number.isSafeInteger(offset)) ||
+      (limit !== undefined && !Number.isSafeInteger(limit))) return null;
+  return { offset, limit };
+}
+
 export function registerUserRoutes(app: FastifyInstance, store: UserStore = defaultStore): void {
   /**
    * GET /v1/users
@@ -75,16 +84,12 @@ export function registerUserRoutes(app: FastifyInstance, store: UserStore = defa
   app.get('/v1/users', async (request, reply) => {
     if (rejectDuplicateQueryKeys(request, reply)) return reply;
     const qs = request.query as Record<string, string | undefined>;
-    // Contract permits any integer for offset/limit (including negatives).
+    // Contract permits any safe integer for offset/limit (including negatives).
     // Documented assumption: negatives clamp to 0 rather than producing
     // slicing surprises, so offset<0 behaves as 0 and limit<0 returns [].
-    const asInt = (v?: string) => {
-      if (v === undefined) return undefined;
-      const n = Number(v);
-      return Number.isFinite(n) ? Math.trunc(n) : undefined;
-    };
-    const offset = asInt(qs.offset);
-    const limit = asInt(qs.limit);
+    const pagination = userPagination(qs);
+    if (!pagination) return reply.code(400).send(errorBody(400, 'INVALID_QUERY'));
+    const { offset, limit } = pagination;
     const result = store.list({
       sort: qs.sort,
       order: qs.order,
@@ -105,13 +110,9 @@ export function registerUserRoutes(app: FastifyInstance, store: UserStore = defa
   app.get('/v1/users/search-v2', async (request, reply) => {
     if (rejectDuplicateQueryKeys(request, reply)) return reply;
     const qs = request.query as Record<string, string | undefined>;
-    const asInt = (v?: string) => {
-      if (v === undefined) return undefined;
-      const n = Number(v);
-      return Number.isFinite(n) ? Math.trunc(n) : undefined;
-    };
-    const offset = asInt(qs.offset);
-    const limit = asInt(qs.limit);
+    const pagination = userPagination(qs);
+    if (!pagination) return reply.code(400).send(errorBody(400, 'INVALID_QUERY'));
+    const { offset, limit } = pagination;
     const includeLabelledWallets = qs.includeLabelledWallets === 'true' || qs.includeLabelledWallets === '1';
     const result = store.search({
       searchTerm: qs.searchTerm,
