@@ -90,7 +90,7 @@ function sendLocal(reply: FastifyReply, dataSource: string, body: unknown) {
 
 function failUnknownKeys(query: Record<string, unknown>, allowed: Set<string>) {
   const unknown = Object.keys(query).find((key) => !allowed.has(key));
-  if (unknown)
+  if (unknown !== undefined)
     throw new HomeFeedRequestError(400, "UNKNOWN_QUERY_PARAMETER", unknown);
 }
 
