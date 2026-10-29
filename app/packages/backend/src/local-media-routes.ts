@@ -97,7 +97,7 @@ export function registerLocalMediaRoutes(
               "Send raw image bytes with an image MIME type.",
             );
           const mime =
-            request.headers["content-type"]?.split(";", 1)[0].trim() ?? "";
+            request.headers["content-type"]?.split(";", 1)[0].trim().toLowerCase() ?? "";
           const result = await options.store.putImage(request.body, mime);
           return reply.code(result.created ? 201 : 200).send(result);
         },
