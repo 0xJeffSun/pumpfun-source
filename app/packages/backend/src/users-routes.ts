@@ -150,6 +150,12 @@ export function registerUserRoutes(app: FastifyInstance, store: UserStore = defa
     if (body.addresses.length > 100) {
       return reply.code(400).send(errorBody(400, 'TOO_MANY_ADDRESSES', { maxItems: 100, received: body.addresses.length }));
     }
+    if (body.addresses.some(address => typeof address !== 'string')) {
+      return reply.code(400).send(errorBody(400, 'INVALID_ADDRESS'));
+    }
+    if (body.forceFetch !== undefined && typeof body.forceFetch !== 'boolean') {
+      return reply.code(400).send(errorBody(400, 'INVALID_FORCE_FETCH'));
+    }
     const result = store.batch(body.addresses);
     return sendSynthetic(reply, 201, result.map(toDeveloperUser));
   });
