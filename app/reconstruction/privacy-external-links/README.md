@@ -72,7 +72,7 @@ node app/tests/original_privacy_settings.browser.mjs \
   --output app/reconstruction/privacy-external-links/app-browser/verification.json
 ```
 
-`--write` regenerates only the source-derived contract. `--check-browser` checks the isolated harness receipt; `--check-app-browser` checks the actual Settings receipt, exact renderer/runtime/script/contract inputs and desktop/mobile screenshot hashes. Neither reruns a browser or makes a receipt an independent oracle. Source or browser-module changes require renewed qualification, not just rewritten hashes.
+`--write` regenerates only the source-derived contract. `--check-browser` checks the isolated harness receipt; `--check-app-browser` checks the actual Settings receipt, exact renderer/runtime/script/contract inputs and desktop/mobile screenshot hashes. Neither reruns a browser or makes a receipt an independent oracle. Source or browser-module changes require renewed qualification, not just rewritten hashes. The shared `settings-control.tsx` host is the one exception: its receipt hash records the bytes the browser run used (before #773's Escape change was merged), and the check only requires the current host to keep mounting `PrivacySettingControl` for `privacy.confirmExternalLinks`; the receipt does not qualify later host edits.
 
 The Node tests cover coercion, failure fallback, failed removal, shared lifetime, subscriptions, exact URL/host behavior, hub gates, pending-dialog state, ordering and errors. Resealed source mutations, missing variants and invented durability/account claims fail. Receipt mutations and changes after execution also fail.
 

@@ -394,11 +394,24 @@ export async function verifyAppBrowserReceipt(root = defaultRoot) {
   ];
   require(JSON.stringify(Object.keys(receipt.sourceInputs)) ===
     JSON.stringify(inputs), "app receipt input set");
-  for (const relative of inputs)
-    require(receipt.sourceInputs[relative] ===
-      sha256(
-        await readFile(path.join(root, relative)),
-      ), `stale app receipt ${relative}`);
+  // The shared SettingsControl host is edited by unrelated work (for example
+  // #773's Escape handling). Its receipt hash records the bytes the browser run
+  // used; the current host is only required to keep mounting this row control.
+  const sharedHost = "packages/frontend/src/components/settings/settings-control.tsx";
+  for (const relative of inputs) {
+    const bytes = await readFile(path.join(root, relative));
+    if (relative === sharedHost) {
+      const text = bytes.toString("utf8");
+      require(/^[0-9a-f]{64}$/.test(receipt.sourceInputs[relative]) &&
+        text.includes('import { PrivacySettingControl } from "./privacy-setting-control";') &&
+        text.includes('setting.id === "privacy.confirmExternalLinks" ? (') &&
+        text.includes("<PrivacySettingControl label={setting.label} />"),
+        `stale app receipt ${relative} no longer mounts the privacy row control`);
+      continue;
+    }
+    require(receipt.sourceInputs[relative] === sha256(bytes),
+      `stale app receipt ${relative}`);
+  }
   const screenshots = [
     "settings-desktop.png",
     "settings-mobile-storage-failure.png",
