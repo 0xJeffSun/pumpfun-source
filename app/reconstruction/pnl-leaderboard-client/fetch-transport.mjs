@@ -12,7 +12,8 @@ export function createPnlFetchTransport({ baseUrl, fetch: send }) {
 
   return async (operation, options) => {
     if (operation !== 'GET /pnl-leaderboard') throw new TypeError('Unsupported PnL operation');
-    const url = new URL(`${base.pathname.replace(/\/$/, '')}/pnl-leaderboard`, base);
+    const url = new URL(base);
+    url.pathname = `${base.pathname.replace(/\/$/, '')}/pnl-leaderboard`;
     for (const name of ['period', 'sort', 'limit']) {
       const value = options.query[name];
       if (value !== undefined) url.searchParams.set(name, String(value));

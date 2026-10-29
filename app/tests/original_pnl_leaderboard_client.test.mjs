@@ -229,3 +229,15 @@ test('the local transport has explicit configuration, one GET operation and no i
   const { client } = harness({ transport });
   await assert.rejects(client.request({}), SyntaxError);
 });
+
+test('a double-slash base path remains on the explicitly supplied origin', async () => {
+  let actual;
+  const transport = createPnlFetchTransport({
+    baseUrl: 'http://127.0.0.1:12345//path-segment.invalid/prefix',
+    fetch: async (request) => { actual = new URL(request.url); return Response.json({ entries: [] }); },
+  });
+  const { client } = harness({ transport });
+  assert.deepEqual(await client.request({ period: 'daily', sort: 'combined', limit: 1 }), { entries: [] });
+  assert.equal(actual.origin, 'http://127.0.0.1:12345');
+  assert.equal(actual.pathname, '//path-segment.invalid/prefix/pnl-leaderboard');
+});
