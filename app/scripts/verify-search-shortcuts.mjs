@@ -77,6 +77,16 @@ export async function verifySearchShortcuts(root = APP_ROOT) {
   const ui = parse(source.toString('utf8'), { sourceType: 'module', plugins: ['typescript', 'jsx'] });
   const react = exactlyOne(ui.program.body.filter((node) => node.type === 'ImportDeclaration' && node.source.value === 'react'), 'UI React import');
   expect(react.specifiers.some((node) => node.imported?.name === 'useEffect' && node.local.name === 'useEffect'), 'actual UI effect import');
+  // The merged clear-navigation listener shares this effect, but its ref is a
+  // maintained UI binding, not an original matcher dependency. Keep the whole
+  // effect fingerprinted and bind only the actual component-local React ref.
+  expect(react.specifiers.some((node) => node.imported?.name === 'useRef' && node.local.name === 'useRef'), 'UI clear ref import');
+  const component = exactlyOne(ui.program.body.filter((node) => node.type === 'ExportNamedDeclaration')
+    .map((node) => node.declaration).filter((node) => node?.type === 'FunctionDeclaration' && node.id?.name === 'SearchDialog'), 'UI SearchDialog component');
+  const clearRef = exactlyOne(component.body.body.filter((node) => node.type === 'VariableDeclaration')
+    .flatMap((node) => node.declarations).filter((node) => node.id.type === 'Identifier' && node.id.name === 'pendingClear'), 'UI clear ref declaration');
+  expect(clearRef.init?.type === 'CallExpression' && clearRef.init.callee.type === 'Identifier' && clearRef.init.callee.name === 'useRef' &&
+    clearRef.init.arguments.length === 1 && clearRef.init.arguments[0].type === 'BooleanLiteral' && clearRef.init.arguments[0].value === false, 'UI clear ref initializer');
   const imported = exactlyOne(ui.program.body.filter((node) => node.type === 'ImportDeclaration' && node.source.value === './search-shortcuts.mjs'), 'UI matcher import');
   expect(imported.specifiers.length === 1 && imported.specifiers[0].imported.name === 'createSearchShortcutHandler' && imported.specifiers[0].local.name === 'createSearchShortcutHandler', 'UI import identity');
   const constructed = exactlyOne(findNodes(ui, (node) => node.type === 'VariableDeclarator' && node.id.name === 'onKeyDown' &&
@@ -84,7 +94,7 @@ export async function verifySearchShortcuts(root = APP_ROOT) {
   const installedEffect = exactlyOne(findNodes(ui, (node) => node.type === 'CallExpression' && node.callee.name === 'useEffect' &&
     node.arguments[0]?.type === 'ArrowFunctionExpression' && findNodes(node.arguments[0], (entry) => entry === constructed).length === 1), 'actual UI useEffect consumer');
   const uiBinding = normalizePlanner(installedEffect, { useEffect: 'react:useEffect', dialogRef: 'ui:dialogRef', closeMobile: 'ui:closeMobile',
-    setQuery: 'ui:setQuery', createSearchShortcutHandler: 'kernel:create', window: 'dom:window', onOpenSearch: 'ui:subscribe' });
+    setQuery: 'ui:setQuery', pendingClear: 'ui:pendingClear', createSearchShortcutHandler: 'kernel:create', window: 'dom:window', onOpenSearch: 'ui:subscribe' });
   const input = constructed.init.arguments[0];
   expect(input?.type === 'ArrayExpression' && constructed.init.arguments.length === 1 &&
     JSON.stringify(input.elements.map((entry) => entry.properties.find((item) => propertyName(item.key) === 'keys').value.elements.map((item) => item.value))) ===
