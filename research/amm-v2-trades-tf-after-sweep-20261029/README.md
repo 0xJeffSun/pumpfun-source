@@ -46,9 +46,12 @@ Family A — tf anchors, no sweep (6 cases, one trade each):
   +45,012 (withheld 455), pool vq -74,801 / protocol +45,467 /
   creator +29,334.
 - `a-buy-tf5000`: buy 10^6: spend 373, vault +186 (withheld
-  186), buyback net 0 (withheld 1). Same event as tf100.
+  186), buyback net 0 (withheld 1). Same decoded event
+  fields as tf100 (the raw event differs in one trailing
+  word).
 - `a-sell-tf5000`: sell 10^6: user +89 (withheld 89), vault
-  -179, buyback net 0 (withheld 1). Same event as tf100.
+  -179, buyback net 0 (withheld 1). Same decoded event fields as
+  tf100 (the raw event differs in one trailing word).
 - `a-exact-tf5000`: exact 10^7: out 27,058,593,160, spend
   9,977,037, vault +4,977,037 (withheld 4,977,037), buyback
   +11,481 (withheld 11,482), pool vq -37,778 / protocol
@@ -59,8 +62,11 @@ Family S — sweeps -> v2 trades, tf100 (6 cases):
   `s-both-exact-tf100`: both sweeps (proto 2,463 net /
   withheld 25, creator 122,160 net / withheld 1,234, pool
   vq 0 / fees 0), then the trade. Every token delta, pool
-  delta, and event field is BYTE-IDENTICAL to the matching
-  Family A anchor.
+  delta, and decoded event field equals the matching Family A
+  anchor's (for the exact trade, only the event discriminator
+  and length are checked). The raw event bytes are NOT
+  byte-identical: the pool quote reserve word @56 and several
+  trailing words record the post-sweep pool state.
 - `s-proto-buy-tf100`: proto-only sweep, then buy 10^6:
   identical to the anchor (creator fees 123,394 stay accrued).
 - `s-creat-buy-tf100`: creator-only sweep, then buy 10^6:
@@ -77,8 +83,9 @@ Family S — sweeps -> v2 trades, tf100 (6 cases):
 
 Family S5 — both sweeps -> v2 trades, tf5000 (3 cases):
 - `s-both-buy-tf5000`, `s-both-sell-tf5000`,
-  `s-both-exact-tf5000`: every delta and event field
-  BYTE-IDENTICAL to the matching Family A tf5000 anchor.
+  `s-both-exact-tf5000`: every delta and decoded event field
+  equal to the matching Family A tf5000 anchor's (raw event
+  bytes differ in the same words as at tf100).
 
 Family L — limit gates post-sweep, tf100 (9 cases):
 - `l-buy-limit189`: buy limit exactly the gross spend 189:
@@ -98,10 +105,12 @@ Family L — limit gates post-sweep, tf100 (9 cases):
 
 ## Result
 
-The binding rules, each verified on all three images:
+The binding rules, each observed on all three images
+(items marked as inference are readings of those observations):
 1. Sweep -> v2 trades under tf are neutral: at tf100 and
    tf5000, buy/sell/exact after either or both sweeps settle
-   exactly like the no-sweep anchors. The sweep's withholding
+   with the same legs and decoded event fields as the
+   no-sweep anchors. The sweep's withholding
    stays confined to the sweep steps and the vq shift does not
    move these trades.
 2. The v2 buy under quote tf splits into two user transfers:
@@ -112,12 +121,13 @@ The binding rules, each verified on all three images:
    The sell payout is gross-side too (vault -179 = 178 payout
    + 1 buyback; user nets 176 at tf100, 89 at tf5000 after
    ceiling withholding).
-3. The buy_exact vault-leg gross is tf-invariant: 9,954,074
-   at nofee, tf100, and tf5000 alike; only the net/withheld
+3. The buy_exact vault-leg gross (net + withheld) is the same
+   9,954,074 at tf100 and tf5000 (the nofee value is quoted
+   from earlier packets, not measured here); only the net/withheld
    split moves. Total exact spend = vault leg + buyback leg
    (9,999,541 at tf100, 9,977,037 at tf5000). The exact out
-   falls with tf (54,115,018,303 -> 53,573,907,921 ->
-   27,058,593,160).
+   falls with tf (nofee 54,115,018,303, quoted, ->
+   53,573,907,921 -> 27,058,593,160).
 4. Limit sides post-sweep under tf100: buy limit is
    gross-spend-side, sell limit is net-receipt-side, exact
    limit is out-side; nofee anchors copied as limits fail
@@ -158,3 +168,26 @@ The binding rules, each verified on all three images:
   from the observed split (vault leg grossed to a constant
   net, buyback leg exactly 1 at both rates); the program's
   internal transfer ordering is not separately instrumented.
+
+## Verify and provenance
+
+From the repository root:
+
+    python3 -I -B research/amm-v2-trades-tf-after-sweep-20261029/verify.py
+
+`verify.py` needs only `solders` plus files in the repository: this
+packet, `evidence/original/pump_amm/deployed.so`, and the two
+retained rebuilt images
+`research/amm-multi-hop-group-slice-recovery/artifacts/candidate.so.gz`
+(control, #424) and
+`research/amm-transfer-fee-diagnostic-recovery/artifacts/candidate.so.gz`
+(candidate, #427), whose decompressed sha256 values match the
+`images` block of `runtime/report.json.gz`. It re-checks the
+recorded receipts against the report's expected values; it does
+not re-execute any transaction.
+
+`producer.py` is the script that generated the receipts and is
+kept as a provenance record. It is not runnable as committed: it
+hard-codes a private workspace layout (`~/workspace/pumpfun-sparse`
+for the harness scripts and `~/workspace/slop-verify` for the
+control/candidate `.so` files) and chdirs there on start.
