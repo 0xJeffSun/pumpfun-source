@@ -5,6 +5,7 @@ import {
   closeSync,
   fstatSync,
   readSync,
+  constants,
 } from "node:fs";
 import type { operations } from "./generated/developer-api.js";
 import { assertSchema, type SchemaNode } from "./schema-validator.js";
@@ -541,7 +542,7 @@ export class UnavailableUpdatesError extends Error {
 /** Bounded startup-only import from a server-owned local file, never a request URL. */
 export function loadPositionsStore(path: string): PositionsStore {
   const limit = 16 * 1024 * 1024;
-  const fd = openSync(path, "r");
+  const fd = openSync(path, constants.O_RDONLY | constants.O_NONBLOCK);
   try {
     const stat = fstatSync(fd);
     if (!stat.isFile() || stat.size > limit)
