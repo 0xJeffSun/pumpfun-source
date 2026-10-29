@@ -2,9 +2,11 @@
 
 The original per-hop function acquires Clock once and uses the same timestamp in
 TradeEvent, CompleteEvent and PostCompleteBuyEvent. Current main after merged
-PR #711 acquires Clock separately for those three constructors. This three-line
-source change restores the single consumed snapshot at the original pre-event
-acquisition point. Earlier fee-accrual recovery is already accepted in #711 and
+PR #711 acquires Clock separately for those three constructors. The retained three-line
+source proposal restores that consumed snapshot in the recorded candidate. This
+research publication keeps canonical734 and the maintained C0 checkpoint unchanged.
+The proposed5871 source remains exact in `native-build/proposed-source.rs` and the
+actual compiled archive. Earlier fee-accrual recovery is already accepted in #711 and
 is not claimed again here. No event, payment, guard, Source position or field
 ordering changes.
 
@@ -82,20 +84,39 @@ callee-count changes, and all saved strict replays/signatures/loader bindings.
 output. Required root capture/tooling gates are recorded on the exact final PR
 head in the PR description.
 
-Prepare and verify without new VM execution from the repository root:
+Verify saved evidence with normal Python and `solders` installed:
 
 ```sh
-python3 -B research/pump-hop-clock-snapshot-20261029/prepare_runtime.py \
-  --repository . \
-  --parent-packet research/pump-hop-accrual-boundary-20261029 \
-  --output /absolute/path/to/new-clock-runtime
-python3 -B research/pump-hop-clock-snapshot-20261029/verify.py \
-  --repository . \
-  --parent-packet research/pump-hop-accrual-boundary-20261029 \
-  --runtime-root /absolute/path/to/new-clock-runtime
+python3 -B research/pump-hop-clock-snapshot-20261029/verify.py --repo .
 ```
 
-Fresh replay commands are in [`COMMANDS.md`](COMMANDS.md). Source/fixtures and
+Both verification entrypoints explicitly reject optimized Python before imports
+or validation because retained native authentication uses assertions. The exact
+authored77 verifier is retained for inspection in
+`review/author-verify-77e1701.py.txt`; its saved final-verification log remains a
+historical execution record. Its declared old section-parser pin requires the
+exact frozen673 helper cohort, which independent review checked without repinning.
+The new entrypoint verifies retained proposed source, actual cold receipts,
+complete censuses/Clock dataflow and cryptographic signatures/full ProgramData
+hash derivations while leaving canonical734 selected.
+
+The prior independent reviewer counter replay is also retained unchanged:36
+executions/signature occurrences/literal captured loads across the same12cases and
+two signed messages. Exact source/image/build/corpus/producer inputs are unchanged
+between974 and77, so this execution evidence transfers; it was not rerun for77.
+The new authored36-outcome counter run is separately verified, including exact
+per-case loader associations. These are overlapping execution corpora, not added
+unique cases. Eight private resealed controls reject Source-only, signature,
+loader, cold-flag, timestamp-claim, counter-prestate and two valid-wrong-image loader
+substitutions after an unaltered baseline passes.
+
+No full-window or observed behavior gain warrants maintained promotion or an
+additional native repeat/full44-suite run. Current accepted artifacts and source
+remain selected. The one actual recorded cold build retains native macOS v1.44
+and Linux SBPF libraries; it is not a native Linux build.
+
+The authored preparation helper and fresh replay commands remain in
+[`COMMANDS.md`](COMMANDS.md); they require new owned output paths and normal Python. Source/fixtures and
 actual cold receipts remain authenticated; no historical expected-image guard is
 disabled, and current c0e29 is distinct from the historical 199fd SDK anchor. No
 additional compiler variant or broader compatibility/security claim is made.

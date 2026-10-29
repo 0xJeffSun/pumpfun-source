@@ -3420,5 +3420,104 @@
     "candidate_sha256": "c0e29e2d41c30e854f3548b37e87798d516e4e0e7769f40b7d8d16e31429795f",
     "packet_manifest_sha256": "d5a7e29ae52b385453e055cc619a1bee700f646123e86507daf35d9be5a2c9dd",
     "new_windows": 0
+  },
+  "qualified_accrual_promotion_outcome": {
+    "status": "MERGED",
+    "number": 711,
+    "head": "850be13f9bff211f2fef818c9645cfd135ab8838",
+    "merge": "f57bbf0dd856b101acd02c242cb5c4a56bf276b1",
+    "candidate_sha256": "c0e29e2d41c30e854f3548b37e87798d516e4e0e7769f40b7d8d16e31429795f",
+    "packet_manifest_sha256": "d5a7e29ae52b385453e055cc619a1bee700f646123e86507daf35d9be5a2c9dd",
+    "selection": "research/pump-multihop-accrual-qualification-20261028",
+    "actual_builds": 2,
+    "new_complete_windows": 0,
+    "scope": "Restores original used fee-accrual calls and three finite synthetic Source diagnostics; no new whole-ELF identity or mainnet reachability claim"
+  },
+  "windows_host_control_outcome": {
+    "status": "SUCCEEDED_AUTHENTICATED_NEGATIVE_CONTROL",
+    "review_status": "PASS_NEGATIVE_CONTROL",
+    "run_id": 40795170346,
+    "run_url": "https://github.com/lalalune/pumpfun-source/actions/runs/40795170346",
+    "head": "46a3b3c620e92e4f28e12dd7cd948196775afd33",
+    "review": "research/contract-completion-20261028/amm-r51-windows-measurement-review.json",
+    "review_sha256": "14ce72c209f0dc33b47f1cfda8d4c76a9a6dca2f36e837b5d043ed8162bf0557",
+    "candidate_sha256": "b480d0dc6d0c357f590c17dc84c9528e689f53ead44f08a4f743dc61c0101f60",
+    "symbols_sha256": "65a7df192ae10e25cef9789cf28b40ed1b21e2c7c6ef46446ced47355056189c",
+    "actual_builds": 1,
+    "target_executions": 0,
+    "normalized_windows": 784,
+    "raw_windows": 398,
+    "total_windows": 785,
+    "selected_ordered_linux_raw_windows": 784,
+    "all_807_normalized_function_bodies_and_relocation_patterns_equal_linux_references": true,
+    "new_complete_windows": 0,
+    "canonical_source_or_selection_promotion": false,
+    "scope": "Artifact, source, native pre/post, SDK/vendor receipt, compiler and linker identities authenticated; one-build negative control only"
+  },
+  "thirteenth_review_batch": {
+    "summary": "research/contract-completion-20261028/pr-review-batch13-independent.json",
+    "sha256": "d67523541cf371de50cd5b542b15137839715924104fa3004aed5fa06670ef9c",
+    "reviewed_prs": 16,
+    "merged_prs": 16,
+    "pending_merge_receipts": [],
+    "fresh_amm_signed_executions": 654,
+    "separate_fresh_pump_sweep_signed_executions": 21,
+    "new_complete_windows": 0,
+    "maintained_goal_complete": false,
+    "hosted_ci": "Merge review used local evidence; hosted success is not established by these checks"
+  },
+  "fourteenth_review_batch": {
+    "summary": "research/contract-completion-20261028/pr-review-batch14-independent.json",
+    "sha256": "e0348e03c4d211cef955afeed6579af0e881fb291007973deef172817b9f6e39",
+    "reviewed_and_merged_prs": 2,
+    "fresh_amm_signed_executions": 153,
+    "new_complete_windows": 0
+  },
+  "post_accrual_review_outcome": {
+    "reviewed_and_merged_contract_prs": 18,
+    "fresh_amm_packets": 11,
+    "fresh_amm_fixture_records": 258,
+    "fresh_amm_signed_executions": 807,
+    "unique_wire_count_not_claimed": true,
+    "separate_fresh_pump_sweep_signed_executions": 21,
+    "integrated_saved_checks": 21,
+    "integrated_report": "research/contract-completion-20261028/pr-review-integrated-checks-20261028.json",
+    "integrated_report_sha256": "6960eb3316cc81df6fcc6351ab31ae85a413ba2e87d7aac5ccef758e64b56850",
+    "canonical_source_and_selection_unchanged": true,
+    "new_complete_windows": 0,
+    "goal_complete": false
+  },
+  "fifteenth_review_batch": {
+    "summary": "research/contract-completion-20261028/pr-review-batch15-independent.json",
+    "sha256": "a3485e4e0aa6a058258c2c7469456a82c5e736e5281f4e82ae2f86167dc89437",
+    "review_time_state": {
+      "730": "MERGED",
+      "731": "QUALIFIED_FOR_RESEARCH_PUBLICATION"
+    },
+    "fresh_pump_signed_executions": 36,
+    "new_complete_windows": 0
+  },
+  "sixteenth_review_batch": {
+    "summary": "research/contract-completion-20261028/pr-review-batch16-independent.json",
+    "sha256": "5777edd3f6737ed2ce613bae573bb3bf952eb0e475bc5d3f6cd0c9fa21593887",
+    "merged_prs": [
+      733
+    ],
+    "fresh_amm_signed_executions": 66,
+    "new_complete_windows": 0
+  },
+  "latest_research_review_totals": {
+    "reviewed_contract_prs": 21,
+    "review_time_merged_contract_prs": 20,
+    "qualified_research_proposal_awaiting_publication": [
+      731
+    ],
+    "fresh_amm_packets": 12,
+    "fresh_amm_fixture_records": 280,
+    "fresh_amm_signed_execution_fields": 873,
+    "separate_fresh_pump_execution_fields": 57,
+    "unique_transaction_count_not_claimed": true,
+    "complete_window_gain": 0,
+    "maintained_goal_complete": false
   }
 }
