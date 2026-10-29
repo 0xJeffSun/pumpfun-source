@@ -1,4 +1,6 @@
 import Fastify from "fastify";
+import { CALLOUTS_NATIVE_ROUTES, registerCalloutRoutes } from "./callouts-routes.js";
+import type { CalloutsStore } from "./callouts-store.js";
 import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 import { validateHeaderName, validateHeaderValue } from "node:http";
@@ -316,6 +318,8 @@ const NATIVE_ROUTES = new Set<string>([
 ]);
 
 export interface BuildAppOptions {
+  /** Explicit server-owned public callout materialization; absent retains fixture/501 behavior. */
+  calloutsStore?: CalloutsStore;
   /** Override the user store (for tests). */
   userStore?: UserStore;
   /** Override the post store (for tests). */
@@ -372,6 +376,7 @@ export function buildApp(fixtures: Fixture[] = [], opts: BuildAppOptions = {}) {
     registerPostRoutes(native, postStore);
     registerCompetitionRoutes(native, compStore);
     registerFollowingRoutes(native, followStore);
+    if (opts.calloutsStore) registerCalloutRoutes(native, opts.calloutsStore);
   });
 
   // Routing recognizes documented paths; no fabricated domain responses or live proxy fallback.
@@ -382,7 +387,8 @@ export function buildApp(fixtures: Fixture[] = [], opts: BuildAppOptions = {}) {
       ),
     )) {
       // Skip operations that a native handler already serves.
-      if (NATIVE_ROUTES.has(`${method.toUpperCase()} ${path}`)) continue;
+      if (NATIVE_ROUTES.has(`${method.toUpperCase()} ${path}`) ||
+        (opts.calloutsStore && CALLOUTS_NATIVE_ROUTES.has(`${method.toUpperCase()} ${path}`))) continue;
       app.route({
         method: method.toUpperCase() as "GET",
         url: "/v1" + path.replace(/\{([^}]+)\}/g, ":$1"),
