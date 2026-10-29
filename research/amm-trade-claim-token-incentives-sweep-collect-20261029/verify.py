@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 """Independent re-verification for amm-trade-claim-token-incentives-sweep-collect-20261029.
 
-Checks, from the packet files alone (plus the three program images):
+Checks, from the packet files alone (plus the three program images retained in the
+repository: evidence/original/pump_amm/deployed.so and the two
+candidate.so.gz artifacts named in IMAGE_PATHS):
 - MANIFEST.json lists every packet file with a matching sha256.
 - runtime/report.json.gz: 16 cases, 207 receipts, 21 parts
   (20x10 + 7), part sha256/byte counts match the part files.
@@ -25,12 +27,16 @@ Checks, from the packet files alone (plus the three program images):
   per-image site line in their logs. Site lines are checked per
   image, never compared across images, because original and rebuilt
   sources differ in line numbers.
+- Only token-claim steps change the incentive vault ATA or the user
+  incentive ATA, and no non-cashback trade, sweep or collect step
+  changes a user volume accumulator that existed before the step.
 - The observed surface of every case (step, error, event count, and
   snapshots with fee-payer lamports zeroed) is identical across the
   original, control, and candidate images.
 - The three program images hash to the values recorded in the report.
 
-Usage: python3 verify.py   (run from this packet directory)
+Usage (from the repository root):
+    python3 -I -B research/amm-trade-claim-token-incentives-sweep-collect-20261029/verify.py
 """
 import base64
 import gzip
@@ -44,12 +50,13 @@ from solders.pubkey import Pubkey
 from solders.transaction import Transaction
 
 ROOT = Path(__file__).resolve().parent
-WS = Path.home() / "workspace/slop-verify"
-SPARSE = Path.home() / "workspace/pumpfun-sparse"
+REPO = ROOT.parents[1]
+# The three program images are retained in the repository; the two
+# rebuilt images are stored gzip-compressed and hashed decompressed.
 IMAGE_PATHS = {
-    "original": SPARSE / "evidence/original/pump_amm/deployed.so",
-    "control": WS / "control.so",
-    "candidate": WS / "candidate.so",
+    "original": REPO / "evidence/original/pump_amm/deployed.so",
+    "control": REPO / "research/amm-multi-hop-group-slice-recovery/artifacts/candidate.so.gz",
+    "candidate": REPO / "research/amm-transfer-fee-diagnostic-recovery/artifacts/candidate.so.gz",
 }
 PAYER_KEY = Pubkey.from_string("DXyM8yAHqpMzDtvwz5DXoEUQmPxjJPMKCASCPhLMKpEx")
 POOL = Pubkey.from_string("GseMAnNDvntR5uFePZ51yZBXzNSn7GdFPkfHwfr6d77J")
@@ -222,7 +229,10 @@ def main():
     if report["mismatches"] != []:
         fail(f"mismatches recorded: {report['mismatches']}")
     for name, path in IMAGE_PATHS.items():
-        if sha(path.read_bytes()) != report["images"][name]:
+        data = path.read_bytes()
+        if path.suffix == ".gz":
+            data = gzip.decompress(data)
+        if sha(data) != report["images"][name]:
             fail(f"image hash mismatch {name}")
     receipts = []
     for part in report["parts"]:
@@ -284,6 +294,14 @@ def main():
                         fail(f"{tag}: volume should stay absent")
                 if rec["after"][str(GVA)] != rec["before"][str(GVA)]:
                     fail(f"{tag}: global volume accumulator changed")
+                if rec["step"] != "tclaim":
+                    for key in (GA_ATA, UA_ATA):
+                        if rec["after"][str(key)] != rec["before"][str(key)]:
+                            fail(f"{tag}: incentive ATA {key} changed outside a token claim")
+                if (rec["step"] in ("vbuy", "vsell", "vexact", "buy", "lsell", "swc", "col")
+                        and rec["before"][str(VOLUME)] is not None
+                        and rec["after"][str(VOLUME)] != rec["before"][str(VOLUME)]):
+                    fail(f"{tag}: pre-existing volume accumulator changed")
                 if exp.get("rollback"):
                     for k, b in rec["before"].items():
                         if k == str(PAYER_KEY):

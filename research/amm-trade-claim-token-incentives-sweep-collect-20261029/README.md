@@ -33,7 +33,9 @@ lamports, 137 bytes); later steps in the same VM reuse it and
 cost 5,000 only. The collect destination DEST is pre-created
 with 0 tokens.
 
-Event layouts (verified byte-for-byte):
+Event layouts (offsets as read by verify.py from the raw
+`Program data:` words; verify.py checks the fields it decodes,
+not every byte of each event):
 - BuyEvent (v2 buy, 500 bytes, disc `67f4521f2cf57777`): out
   @16, max @24, curve @64, lp_bps @72, lp_fee @80, proto_bps
   @88, proto_fee @96, quote @104, user_quote_in @112,
@@ -43,7 +45,8 @@ Event layouts (verified byte-for-byte):
   proto_bps @88, proto_fee @96, quote @104, user_out @112.
 - BuyEvent (v2 buy_exact, 515 bytes, disc `67f4521f2cf57777`):
   same slots as the v2 buy event.
-- BuyEvent (legacy buy, 497 bytes / buy_exact 512 bytes, disc
+- BuyEvent (legacy buy, 497 bytes; legacy buy_exact, 512 bytes,
+  is not exercised in this packet; disc
   `67f4521f2cf57777`): out @16, max @24, curve @64, lp_bps
   @72, lp_fee @80, proto_bps @88, proto_fee @96, quote @104,
   user_quote_in @112, creator_bps @344, creator_fee @352,
@@ -65,7 +68,9 @@ Event layouts (verified byte-for-byte):
   user @8..40, amount @40..48, timestamp @48..56,
   total_claimed @56..64, total_cashback_earned @64..72.
 - ClaimTokenIncentivesEvent, 104 bytes, disc
-  `1004471ccc01281b`: user @8..40, mint @40..72, amount
+  `4facf631cd5bcee8` (sha256("event:ClaimTokenIncentivesEvent");
+  `1004471ccc01281b` is the claim_token_incentives instruction
+  discriminator, not the event's): user @8..40, mint @40..72, amount
   @72, timestamp @80, total_claimed_tokens @88,
   current_sol_volume @96.
 
@@ -108,13 +113,14 @@ accumulator: needs 1, unclaimed 111, claimed 222, volume
   3,334,551, claimed 222 -> 3,334,773, volume -> 0, last ->
   21, needs -> 0, earned/cb_claimed untouched (555/666);
   vault 10^9 -> 996,665,449, user incentive ATA 17 ->
-  3,334,568. Then v2 buy (accumulator byte-identical),
+  3,334,568. Then v2 buy (accumulator snapshot unchanged),
   sweep 128,869, collect 128,869.
 - `b-v2buy-tclaim-swc-col`: trade first, then the identical
   token claim (same amount, same finals), then sweep/collect.
 - `b-v2buy-swc-col-tclaim`: trade, sweep, collect, then the
-  identical token claim -- the pipes never touch the
-  accumulator or the global accumulator.
+  identical token claim -- in these cases the trade, sweep
+  and collect steps leave the accumulator and the global
+  accumulator snapshots unchanged.
 - `b-tclaim-tclaim-v2buy-swc-col`: claim, then a second
   claim (zero: volume 0, unclaimed 0, last stays 21), then
   trade, sweep, collect -- all finals identical.
@@ -170,34 +176,44 @@ claim untouched):
 - A fresh trade feeds the token claim nothing: the trade
   creates a zeroed accumulator (volume 0, unclaimed 0), so
   the following token claim is a zero claim that only stamps
-  last_update_timestamp (0 -> 21) and pays nothing, on all
-  three trade paths (v2 buy, v2 sell, v2 exact, legacy
-  buy/sell). This is the chained confirmation of 2nd #48's
+  last_update_timestamp (0 -> 21) and pays nothing, on the
+  five trade paths measured (v2 buy, v2 sell, v2 exact,
+  legacy buy, legacy sell; the legacy sell case uses a
+  pre-seeded zeroed accumulator). This is the chained confirmation of 2nd #48's
   event-only track_volume finding.
-- The token pipe and the fee pipes are fully independent:
-  a seeded token claim pays exactly the same amount
+- In the measured orderings the token pipe and the fee pipes
+  do not interact: a seeded token claim pays the same amount
   (3,334,551) whether it runs before the trade, between the
-  trade and the sweep, or after the collect, and neither the
-  trade nor the sweep nor the collect ever changes the
-  accumulator, the global accumulator, or the incentive
-  ATAs. A second token claim after a paying claim is always
-  a zero claim.
-- Cashback and token claims touch disjoint fields: the token
-  claim never moves cashback_earned or total_cashback_claimed,
-  and the cashback claim never moves total_unclaimed,
-  total_claimed, current_sol_volume, or needs_claim -- and
-  the cashback claim does not stamp last_update_timestamp,
-  while the token claim does. The two claims plus the
-  collect conserve the non-cashback total exactly.
-- Failure isolation holds both ways: a failing token claim
-  (3012 missing global accumulator, Token custom 1 short
-  vault) rolls back fully and the following trade ->
-  sweep -> collect still drains the full bucket; a missing
+  trade and the sweep, or after the collect, and in this
+  packet no trade, sweep or collect step changed a
+  pre-existing accumulator snapshot, the global accumulator,
+  or the incentive ATAs. The one second token claim measured
+  after a paying claim (`b-tclaim-tclaim-v2buy-swc-col`) is a
+  zero claim.
+- In the measured cases the two claims touch disjoint fields:
+  the token claim (paying in Family B, zero in Family C) did
+  not move cashback_earned or total_cashback_claimed, and the
+  cashback claim did not move total_unclaimed, total_claimed,
+  current_sol_volume, or needs_claim -- though in Family C
+  those token fields are all 0, so this is only shown at zero.
+  The cashback claim did not stamp last_update_timestamp,
+  while the token claim did. In `c-cbbuy-*` the cashback claim
+  plus the collect (5,475 + 123,394) equals the 128,869 the
+  non-cashback v2 buy cases collect; in `c-cbsell-*`
+  548 + 123,394 equals the 123,942 collected in
+  `e-lsell-tclaim-swc-col`.
+- Failure isolation for the two failing token claims
+  measured (3012 missing global accumulator, Token custom 1
+  short vault): each rolls back every watched account except
+  the fee payer, and the following trade -> sweep -> collect
+  still drains the full bucket (no fee-pipe failure was
+  chained here); a missing
   user incentive ATA is created by init_if_needed and the
   claim lands.
-- The global volume accumulator is never written by any step
-  in this packet (asserted byte-identical before/after every
-  step): only the admin updater path writes it.
+- The global volume accumulator snapshot is unchanged
+  before/after every step in this packet (checked by
+  verify.py). Which other instructions write it is not
+  measured here.
 
 ## Limits
 
@@ -225,3 +241,19 @@ claim untouched):
   here, were not chained; the tf dimension for sweep chains
   was pinned in 3rd #5/#8/#9/#11/#15/#19 and the mode gates
   in 2nd #44.
+
+## Verify / provenance
+
+From the repository root:
+
+    python3 -I -B research/amm-trade-claim-token-incentives-sweep-collect-20261029/verify.py
+
+verify.py needs `solders` and the three program images retained in
+the repository (`evidence/original/pump_amm/deployed.so` plus the
+gzip `candidate.so.gz` artifacts under
+`research/amm-multi-hop-group-slice-recovery/artifacts/` (#424
+control) and `research/amm-transfer-fee-diagnostic-recovery/artifacts/`
+(#427 candidate), hashed decompressed). It re-checks the recorded
+receipts; it does not re-execute them. producer.py, which generated
+the receipts with LiteSVM, depends on a private `~/workspace` layout
+and is kept for provenance only.
