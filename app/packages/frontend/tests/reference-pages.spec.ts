@@ -227,3 +227,22 @@ test("emits no console errors", async ({ page }) => {
   }
   expect(errors).toEqual([]);
 });
+
+test("uncopied reference links use the official site without loading it", async ({
+  page,
+}) => {
+  const requests = watchRequests(page);
+  await page.goto("/docs/fees");
+  for (const path of ["/docs/charitycoins", "/docs/custom-pairs"]) {
+    const link = page.locator(
+      `.reference-document a[href="https://pump.fun${path}"]`,
+    );
+    await expect(link).toHaveAttribute("target", "_blank");
+    await expect(link).toHaveAttribute("rel", /noopener/);
+  }
+  await expect(
+    page.locator('.reference-document a[href="/docs/terms-and-conditions"]'),
+  ).toHaveCount(1);
+  expect(requests.external).toEqual([]);
+  expect(requests.mutations).toEqual([]);
+});
