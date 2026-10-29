@@ -3486,5 +3486,38 @@
     "canonical_source_and_selection_unchanged": true,
     "new_complete_windows": 0,
     "goal_complete": false
+  },
+  "fifteenth_review_batch": {
+    "summary": "research/contract-completion-20261028/pr-review-batch15-independent.json",
+    "sha256": "a3485e4e0aa6a058258c2c7469456a82c5e736e5281f4e82ae2f86167dc89437",
+    "review_time_state": {
+      "730": "MERGED",
+      "731": "QUALIFIED_FOR_RESEARCH_PUBLICATION"
+    },
+    "fresh_pump_signed_executions": 36,
+    "new_complete_windows": 0
+  },
+  "sixteenth_review_batch": {
+    "summary": "research/contract-completion-20261028/pr-review-batch16-independent.json",
+    "sha256": "5777edd3f6737ed2ce613bae573bb3bf952eb0e475bc5d3f6cd0c9fa21593887",
+    "merged_prs": [
+      733
+    ],
+    "fresh_amm_signed_executions": 66,
+    "new_complete_windows": 0
+  },
+  "latest_research_review_totals": {
+    "reviewed_contract_prs": 21,
+    "review_time_merged_contract_prs": 20,
+    "qualified_research_proposal_awaiting_publication": [
+      731
+    ],
+    "fresh_amm_packets": 12,
+    "fresh_amm_fixture_records": 280,
+    "fresh_amm_signed_execution_fields": 873,
+    "separate_fresh_pump_execution_fields": 57,
+    "unique_transaction_count_not_claimed": true,
+    "complete_window_gain": 0,
+    "maintained_goal_complete": false
   }
 }

@@ -158,3 +158,21 @@ checks pass; maintained source, selection and checkpoint gates remain byte
 identical to the qualified accrual merge. The boost packet explicitly retains
 eight historical Source-log differences and claims no full log parity. Exact
 heads and limitations are in [the follow-up review](pr-review-batch14-independent.json).
+
+The next CTO proposal (#730) and AMM accrued-fee packet (#733) are merged as
+research evidence. CTO retains 777 signed execution fields with strict parity;
+its replay refuses the foreign host at the exact Python pin before any VM
+execution. The AMM packet adds 22 fresh fixtures / 66 executions and corrects
+a README contradiction about the accrued-equals-raw sell rejection.
+
+The Clock snapshot proposal (#731) is qualified for research publication with
+its proposed source and actual native evidence retained. The maintained source
+stays at `734b`, preserving the selected C0 checkpoint. A single timestamp
+definition now matches the original event dataflow, while complete windows stay
+unchanged. The unchanged counter12 replay passes 36 executions, signatures and
+captured loads using two distinct signed messages. Eight corruption controls
+cover integrity failures, including a valid load from the wrong image; both
+entrypoints reject optimized Python explicitly. This proposal has one author
+cold build, finite runtime evidence, and no independent repeat or full 44-suite
+qualification. [Pump review](pr-review-batch15-independent.json) and
+[AMM review](pr-review-batch16-independent.json) record their exact scope.
