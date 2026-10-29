@@ -1,7 +1,10 @@
 {
-  "scope": "Only the 22-byte counted descriptor payload; no descriptor, padding or adjacent allocation credit.",
-  "prior_delta_sha256": "e7cae6dd26e406a43d34d428a5ea8ee87c8e2ec3d4fc852d183d06b98eaa722e",
-  "baseline_payload_bytes": 20747,
+  "scope": "Finite historical data attribution against common reviewed merged #846; no current-native/window/source-footprint credit.",
+  "reviewed_baseline_path": "research/mayhem-current437-bounded-index-tables-20261029/coverage-delta.json",
+  "reviewed_baseline_sha256": "f6efa470f1d18bcec99cab2c95ecf1fc650fe5606bcdbc73956986779e7cb282",
+  "baseline_payload_bytes": 21796,
+  "baseline_rodata_bytes": 14972,
+  "baseline_data_rel_ro_bytes": 6824,
   "sections": [
     {
       "section": ".rodata",
@@ -45,10 +48,6 @@
         ],
         [
           709245,
-          709739
-        ],
-        [
-          710331,
           710438
         ],
         [
@@ -124,7 +123,11 @@
           719929
         ],
         [
-          720306,
+          719932,
+          720219
+        ],
+        [
+          720248,
           720328
         ],
         [
@@ -196,10 +199,6 @@
         ],
         [
           709245,
-          709739
-        ],
-        [
-          710331,
           710438
         ],
         [
@@ -275,7 +274,11 @@
           719929
         ],
         [
-          720306,
+          719932,
+          720219
+        ],
+        [
+          720248,
           720328
         ],
         [
@@ -307,9 +310,9 @@
           725204
         ]
       ],
-      "raw_equal_bytes": 14057,
+      "raw_equal_bytes": 14994,
       "pointer_only_bytes": 0,
-      "covered_bytes": 14057,
+      "covered_bytes": 14994,
       "new_bytes": 22
     },
     {
@@ -381,6 +384,14 @@
           725788
         ],
         [
+          725800,
+          725808
+        ],
+        [
+          725816,
+          725824
+        ],
+        [
           725856,
           725860
         ],
@@ -391,6 +402,14 @@
         [
           725888,
           725904
+        ],
+        [
+          725912,
+          725920
+        ],
+        [
+          725928,
+          725936
         ],
         [
           725952,
@@ -411,6 +430,10 @@
         [
           726040,
           726056
+        ],
+        [
+          726064,
+          726072
         ],
         [
           726088,
@@ -613,7 +636,11 @@
           727416
         ],
         [
-          727448,
+          727424,
+          727432
+        ],
+        [
+          727440,
           727452
         ],
         [
@@ -1804,7 +1831,11 @@
         ],
         [
           725788,
-          725792
+          725800
+        ],
+        [
+          725808,
+          725816
         ],
         [
           725860,
@@ -1813,6 +1844,14 @@
         [
           725884,
           725888
+        ],
+        [
+          725904,
+          725912
+        ],
+        [
+          725920,
+          725928
         ],
         [
           725980,
@@ -1829,6 +1868,10 @@
         [
           726036,
           726040
+        ],
+        [
+          726056,
+          726064
         ],
         [
           726092,
@@ -2013,6 +2056,14 @@
         [
           727396,
           727400
+        ],
+        [
+          727416,
+          727424
+        ],
+        [
+          727432,
+          727440
         ],
         [
           727452,
@@ -3122,15 +3173,15 @@
         ],
         [
           725704,
-          725792
+          725824
         ],
         [
           725856,
-          725904
+          725936
         ],
         [
           725952,
-          726056
+          726072
         ],
         [
           726088,
@@ -3146,10 +3197,6 @@
         ],
         [
           727392,
-          727416
-        ],
-        [
-          727448,
           727592
         ],
         [
@@ -3205,13 +3252,13 @@
           733120
         ]
       ],
-      "raw_equal_bytes": 5360,
-      "pointer_only_bytes": 1352,
-      "covered_bytes": 6712,
+      "raw_equal_bytes": 5416,
+      "pointer_only_bytes": 1408,
+      "covered_bytes": 6824,
       "new_bytes": 0
     }
   ],
   "new_payload_bytes": 22,
-  "payload_covered_bytes": 20769,
+  "payload_covered_bytes": 21818,
   "payload_total_bytes": 26180
 }

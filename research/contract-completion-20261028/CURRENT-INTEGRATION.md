@@ -213,3 +213,26 @@ windows, with no gains/losses and two reversed loads remaining. It supplies no
 cold/runtime qualification or canonical promotion. Parallel audits and one
 private CTO guard-placement trial also gained no complete windows; the full
 reconstruction objective remains active with sixteen Pump and one AMM window.
+
+The next review integrates nine incoming contract research/tooling PRs (#666,
+#783, #812, #825, #827, #831, #846, #847 and #848). Corrected successors #872,
+#883 and #896 preserve their original ancestry; #880 repairs the already-merged
+legacy cashback proof while retaining its narrowed documentation and raw receipts.
+The named reviewed Mayhem data chain reaches 21,796/26,180 payload bytes; newer
+attribution packets remain outside that subtotal. [Exact outcomes and evidence
+limits](pr-review-batch18-independent.json) distinguish historical signed records,
+review-derived proof constraints and maintained runtime qualification.
+
+Two actual native V3 cost builds reproduce identical complete outputs with a
+qualified passive trace. The target matches the Linux proposal at 2,144 bytes,
+still 25 aligned slots from the original. The trace locates the extra branch,
+return-pointer spill and split error tail; it selects no further Rust patch.
+No complete windows are gained or lost, and the maintained D037/86dbc selections
+remain unchanged. The two-build allowance is exhausted; no VM, cold build or
+canonical promotion followed. The full reconstruction objective remains active.
+
+The [portable native trace packet](../pump-v3-final-native-trace-20261029/README.md)
+retains all 295 original native evidence members and their exact inner seal. Its
+saved reader and five corruption controls pass from physically copied published
+inputs only. Historical and corrected PR831 verifier views remain distinct; old
+recipes and verifiers are not executed or relabeled as current native provenance.
