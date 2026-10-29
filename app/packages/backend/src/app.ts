@@ -317,6 +317,22 @@ export interface BuildAppOptions {
   homeFeedStore?: HomeFeedStore;
 }
 
+/**
+ * Read the developer specification served verbatim at
+ * /__reconstruction/openapi.json and hashed at /__reconstruction/status.
+ * A lossy "utf8" read would silently replace a corrupted byte with U+FFFD:
+ * the JSON still parses when the byte sits inside a string value, so the app
+ * would start serving altered specification text while reporting a hash of
+ * the altered text rather than the file. Decode fatally so a malformed
+ * specification fails app construction instead, like the startup loaders in
+ * server.ts.
+ */
+export function readSpecificationText(specPath: string): string {
+  return new TextDecoder("utf-8", { fatal: true }).decode(
+    readFileSync(specPath),
+  );
+}
+
 export function buildApp(fixtures: Fixture[] = [], opts: BuildAppOptions = {}) {
   // Reject an invalid inventory before constructing an application that can listen.
   const fixtureMap = registerFixtures(fixtures);
@@ -324,7 +340,7 @@ export function buildApp(fixtures: Fixture[] = [], opts: BuildAppOptions = {}) {
   const specPath = fileURLToPath(
     new URL("../../../contracts/developer.openapi.json", import.meta.url),
   );
-  const specification = readFileSync(specPath, "utf8");
+  const specification = readSpecificationText(specPath);
   const spec = JSON.parse(specification) as {
     paths: Record<string, Record<string, unknown>>;
   };
