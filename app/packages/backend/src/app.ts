@@ -1,3 +1,5 @@
+import { CALLOUT_DISCUSSIONS_NATIVE_ROUTES, registerCalloutDiscussionRoutes } from "./callout-discussions-routes.js";
+import type { CalloutDiscussionsStore } from "./callout-discussions-store.js";
 import Fastify from "fastify";
 import { CALLOUTS_NATIVE_ROUTES, registerCalloutRoutes } from "./callouts-routes.js";
 import type { CalloutsStore } from "./callouts-store.js";
@@ -288,6 +290,7 @@ const NATIVE_ROUTES = new Set<string>([
 export interface BuildAppOptions {
   /** Explicit server-owned public callout materialization; absent retains fixture/501 behavior. */
   calloutsStore?: CalloutsStore;
+  calloutDiscussionsStore?: CalloutDiscussionsStore;
   /** Explicit local materialization; absent preserves the fixture/501 harness. */
   positionsStore?: PositionsStore;
   /** Explicit operator-owned spot trade history; absent retains fixture/501 behavior. */
@@ -365,6 +368,7 @@ export function buildApp(fixtures: Fixture[] = [], opts: BuildAppOptions = {}) {
     registerFollowingRoutes(native, followStore);
     registerLeaderboardRoutes(native, lbStore);
     if (opts.calloutsStore) registerCalloutRoutes(native, opts.calloutsStore);
+    if (opts.calloutDiscussionsStore) registerCalloutDiscussionRoutes(native, opts.calloutDiscussionsStore);
     if (opts.positionsStore) registerPositionsRoutes(native, opts.positionsStore);
     if (opts.userTradesStore) registerUserTradesRoutes(native, opts.userTradesStore);
   });
@@ -379,6 +383,7 @@ export function buildApp(fixtures: Fixture[] = [], opts: BuildAppOptions = {}) {
       // Skip operations that a native handler already serves.
       if (NATIVE_ROUTES.has(`${method.toUpperCase()} ${path}`) ||
         (opts.portfolioBalancesStore && PORTFOLIO_BALANCES_NATIVE_ROUTES.has(`${method.toUpperCase()} ${path}`)) ||
+        (opts.calloutDiscussionsStore && CALLOUT_DISCUSSIONS_NATIVE_ROUTES.has(`${method.toUpperCase()} ${path}`)) ||
         (opts.calloutsStore && CALLOUTS_NATIVE_ROUTES.has(`${method.toUpperCase()} ${path}`)) ||
         (opts.positionsStore && POSITIONS_NATIVE_ROUTES.has(`${method.toUpperCase()} ${path}`)) ||
         (opts.userTradesStore && USER_TRADES_NATIVE_ROUTES.has(`${method.toUpperCase()} ${path}`))) continue;

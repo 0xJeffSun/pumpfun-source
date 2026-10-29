@@ -196,7 +196,7 @@ function instant(value: unknown, label: string): void {
   if (new Date(value).toISOString() !== canonical)
     fail(`${label} has an invalid calendar date`);
 }
-function plainJson(value: unknown, depth = 0): void {
+export function assertCalloutJson(value: unknown, depth = 0): void {
   if (depth > 30) fail("nested input exceeds the local limit");
   if (
     value === null ||
@@ -212,7 +212,7 @@ function plainJson(value: unknown, depth = 0): void {
       const descriptor = Object.getOwnPropertyDescriptor(value, index);
       if (!descriptor || !Object.hasOwn(descriptor, "value"))
         fail("unsupported array field");
-      plainJson(descriptor.value, depth + 1);
+      assertCalloutJson(descriptor.value, depth + 1);
     }
     return;
   }
@@ -234,7 +234,7 @@ function plainJson(value: unknown, depth = 0): void {
       !descriptor.enumerable
     )
       fail("unsupported object field");
-    plainJson(descriptor.value, depth + 1);
+    assertCalloutJson(descriptor.value, depth + 1);
   }
 }
 const counters = new Set([
@@ -299,7 +299,7 @@ export class CalloutsStore {
   private readonly updates = new Map<string, CalloutUpdate[]>();
 
   constructor(input: unknown) {
-    plainJson(input);
+    assertCalloutJson(input);
     object(
       input,
       [
@@ -550,6 +550,20 @@ export class CalloutsStore {
         quotedCallout: null,
       },
     };
+  }
+  /** Public discussion context: absence/hidden/unmapped are distinct local states.
+   * Hidden author identity never leaves this accessor. Missing projection is not absence.
+   */
+  discussionContext(id: string) {
+    const row = this.callouts.get(id);
+    if (!row) return { kind: "unknown" } as const;
+    if (row.hidden || row.deleted) return { kind: "unavailable" } as const;
+    if (!row.facts) return { kind: "unmapped" } as const;
+    return {
+      kind: "visible",
+      authorId: row.authorId,
+      callout: structuredClone(this.quote(id)),
+    } as const;
   }
 }
 
