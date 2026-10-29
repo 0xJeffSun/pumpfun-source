@@ -182,6 +182,7 @@ export default function GoExplorer({
   const [retryVersion, setRetryVersion] = useState(0);
   const [isPending, startTransition] = useTransition();
   const requestSequence = useRef(0);
+  const pendingQuery = useRef<string | null>(null);
   const initialKey = useRef<string | undefined>(undefined);
   const cardRefs = useRef(new Map<string, HTMLButtonElement>());
 
@@ -222,13 +223,16 @@ export default function GoExplorer({
 
   const navigate = useCallback(
     (changes: Record<string, string | null>, replace = false) => {
-      const parameters = new URLSearchParams();
-      if (q) parameters.set("q", q);
-      if (status !== "ALL") parameters.set("status", status);
-      if (sort !== "createdAt") parameters.set("sort", sort);
-      if (order !== "desc") parameters.set("order", order);
-      if (cursor && cursor !== "c0") parameters.set("cursor", cursor);
-      if (selectedTask) parameters.set("task", selectedTask);
+      // Compose actions against the last requested query until navigation settles.
+      const parameters = new URLSearchParams(pendingQuery.current ?? "");
+      if (pendingQuery.current === null) {
+        if (q) parameters.set("q", q);
+        if (status !== "ALL") parameters.set("status", status);
+        if (sort !== "createdAt") parameters.set("sort", sort);
+        if (order !== "desc") parameters.set("order", order);
+        if (cursor && cursor !== "c0") parameters.set("cursor", cursor);
+        if (selectedTask) parameters.set("task", selectedTask);
+      }
       for (const [key, value] of Object.entries(changes)) {
         if (
           !value ||
@@ -240,6 +244,7 @@ export default function GoExplorer({
           parameters.delete(key);
         else parameters.set(key, value);
       }
+      pendingQuery.current = parameters.toString();
       const target = parameters.size ? `/go?${parameters}` : "/go";
       startTransition(() =>
         replace
@@ -249,6 +254,19 @@ export default function GoExplorer({
     },
     [cursor, order, q, router, selectedTask, sort, status],
   );
+
+  useEffect(() => {
+    // An earlier response must not replace a newer pending action.
+    if (!isPending) pendingQuery.current = null;
+  }, [isPending, searchParams]);
+
+  useEffect(() => {
+    const onPopState = () => {
+      pendingQuery.current = null;
+    };
+    window.addEventListener("popstate", onPopState);
+    return () => window.removeEventListener("popstate", onPopState);
+  }, []);
 
   useEffect(() => setDraftQuery(q), [q]);
 

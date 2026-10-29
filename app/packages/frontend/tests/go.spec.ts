@@ -1,4 +1,4 @@
-import { expect, test, type Page } from "@playwright/test";
+import { expect, test, type Page, type Route } from "@playwright/test";
 
 function monitorSafety(page: Page) {
   const unexpected: string[] = [];
@@ -272,5 +272,59 @@ test("interaction performs no external, wallet or mutation requests and excluded
   ]) {
     const response = await page.goto(route);
     expect(response?.status(), route).toBe(404);
+  }
+});
+
+test("filter changes compose while the previous navigation is pending", async ({
+  page,
+}) => {
+  await page.goto("/go", { waitUntil: "networkidle" });
+  const held: Route[] = [];
+  let holdNavigation = true;
+  await page.route("**/go?**", async (route) => {
+    if (
+      holdNavigation &&
+      new URL(route.request().url()).searchParams.has("_rsc")
+    ) {
+      held.push(route);
+    } else {
+      await route.continue();
+    }
+  });
+  try {
+    await page.getByLabel("Status at capture").selectOption("CLOSED");
+    await expect.poll(() => held.length).toBe(1);
+    await page.getByLabel("Direction").selectOption("asc");
+    await expect.poll(() => held.length).toBe(2);
+    // Release the earlier response while the newer navigation is still held.
+    await held[0].continue();
+    await page.getByLabel("Sort by").selectOption("submissionCount");
+    await expect.poll(() => held.length).toBe(3);
+    holdNavigation = false;
+    await Promise.all(held.slice(1).map((route) => route.continue()));
+    await expect(page).toHaveURL(
+      /\/go\?status=CLOSED&order=asc&sort=submissionCount$/,
+    );
+    await expect(page.getByLabel("Status at capture")).toHaveValue("CLOSED");
+    await expect(page.getByLabel("Direction")).toHaveValue("asc");
+    await expect(page.getByTestId("go-bounty-card").first()).toBeVisible();
+    await expect(
+      page.locator(".go-phase").filter({ hasNotText: "Closed" }),
+    ).toHaveCount(0);
+    await page.goBack();
+    await expect(page).toHaveURL(/\/go$/);
+    await page.goForward();
+    await expect(page.getByLabel("Status at capture")).toHaveValue("CLOSED");
+    await page.goBack();
+    await expect(page).toHaveURL(/\/go$/);
+    await page.getByLabel("Sort by").selectOption("submissionCount");
+    await expect(page).toHaveURL(/\/go\?sort=submissionCount$/);
+    await expect(page.getByLabel("Status at capture")).toHaveValue("ALL");
+    await page.getByRole("button", { name: "Reset", exact: true }).click();
+    await expect(page).toHaveURL(/\/go$/);
+    await page.getByLabel("Direction").selectOption("asc");
+    await expect(page).toHaveURL(/\/go\?order=asc$/);
+  } finally {
+    await page.unrouteAll({ behavior: "ignoreErrors" });
   }
 });
