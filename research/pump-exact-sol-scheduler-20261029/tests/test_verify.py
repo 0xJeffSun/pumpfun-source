@@ -1,5 +1,5 @@
 from pathlib import Path
-import copy,importlib.util,tempfile,unittest
+import copy,gzip,hashlib,importlib.util,json,shutil,tempfile,unittest
 P=Path(__file__).resolve().parents[1];R=P.parents[1]
 s=importlib.util.spec_from_file_location('scheduler_verify',P/'verify.py');v=importlib.util.module_from_spec(s);s.loader.exec_module(v)
 
@@ -28,5 +28,23 @@ class EvidenceTests(unittest.TestCase):
  def test_unknown_relocation_mask_rejected(self):
   rows=copy.deepcopy(self.reloc);rows[0]['type']=999
   with self.assertRaisesRegex(AssertionError,'unsupported'):v.normalize_object(self.raw,rows)
+
+ def test_resealed_wrong_sdk_features_rejected(self):
+  with tempfile.TemporaryDirectory() as tmp:
+   packet=Path(tmp)/'packet';shutil.copytree(P,packet)
+   for name in ['whole-module-launch.json.gz','whole-module-result.json.gz']:
+    path=packet/'observations/qualification03-sdk-features'/name;value=v.js(path)
+    value['command']=[arg.replace('-mattr=+store-imm,+jmp-ext','-mattr=-store-imm,-jmp-ext') for arg in value['command']]
+    path.write_bytes(gzip.compress((json.dumps(value,indent=2)+'\n').encode(),mtime=0))
+   files={p.relative_to(packet).as_posix():hashlib.sha256(p.read_bytes()).hexdigest() for p in packet.rglob('*') if p.is_file() and p.name!='MANIFEST.json'}
+   (packet/'MANIFEST.json').write_text(json.dumps(files,indent=2)+'\n')
+   with self.assertRaisesRegex(AssertionError,'SDK feature flags'):v.verify(R,packet)
+ def test_qualified_launch_result_mismatch_rejected(self):
+  with tempfile.TemporaryDirectory() as tmp:
+   packet=Path(tmp)/'packet';shutil.copytree(P,packet)
+   path=packet/'observations/qualification03-sdk-features/whole-module-result.json.gz';value=v.js(path);value['command'].append('-O0');path.write_bytes(gzip.compress((json.dumps(value,indent=2)+'\n').encode(),mtime=0))
+   files={p.relative_to(packet).as_posix():hashlib.sha256(p.read_bytes()).hexdigest() for p in packet.rglob('*') if p.is_file() and p.name!='MANIFEST.json'}
+   (packet/'MANIFEST.json').write_text(json.dumps(files,indent=2)+'\n')
+   with self.assertRaisesRegex(AssertionError,'launch/result mismatch'):v.verify(R,packet)
 
 if __name__=='__main__':unittest.main()

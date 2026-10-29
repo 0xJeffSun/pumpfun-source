@@ -63,6 +63,23 @@ def stock_boundary(trace):
  first=next(i for i,p in enumerate(parts) if '# Machine code for function' in p);require(first==276,'first captured machine boundary')
  require('%392 = extractvalue { i64, ptr } %391, 0' in parts[first-1] and '%393 = extractvalue { i64, ptr } %391, 1' in parts[first-1],'last LLVM extract order')
  m=parts[first];a=m.index('%81:gpr = LDD_V1 %stack.107, 8');b=m.index('%80:gpr = LDD_V1 %stack.107, 0');require(a<b,'first machine load order');return first
+def sdk_features(packet,build):
+ # The retained target specification omits cpu, whose recorded invocation uses
+ # generic; its explicit feature list must reach every qualified LLC command.
+ spec_path=packet/'inputs/stock-target-spec.json'
+ require(sha(spec_path.read_bytes())=='e078e6f5c261e3d472d5b04b4fc7e2c0bed0c108786e4ecebc359521121eefa6','stock SDK target specification changed')
+ spec=js(spec_path);require(spec['arch']=='sbf' and spec['llvm-target']=='sbf' and spec.get('cpu','generic')=='generic' and spec['features']=='+store-imm,+jmp-ext','stock SDK CPU/features changed')
+ expected_cpu='-mcpu='+spec.get('cpu','generic');expected_features='-mattr='+spec['features']
+ names=['observations/qualification03-sdk-features/whole-module-launch.json.gz','observations/extracted01/compile-launch.json.gz','observations/scheduler01/launch.json.gz',*[f'observations/extract-order02/{kind}-launch.json.gz' for kind in ['control','swapped']]]
+ for name in names:
+  launch=js(packet/name);command=launch['command']
+  require(launch['tool_sha256']==build['outputs']['llc.exe'],'qualified SDK-feature tool binding')
+  require([arg for arg in command if arg.startswith('-mcpu')]==[expected_cpu],'qualified SDK CPU flag')
+  require([arg for arg in command if arg.startswith('-mattr')]==[expected_features],'qualified SDK feature flags')
+  if 'qualification03-sdk-features' in name:
+   result=js(packet/'observations/qualification03-sdk-features/whole-module-result.json.gz')
+   require(all(result[key]==launch[key] for key in ['command','cwd','environment','tool_sha256']),'qualified launch/result mismatch')
+ return len(names)
 def verify(repo,packet=P):
  count=manifest(packet);pin=js(packet/'PROVENANCE.json');parent=repo/pin['source_packet']
  require(sha((parent/'MANIFEST.json').read_bytes())==pin['source_packet_manifest_sha256'],'parent seal changed')
@@ -92,6 +109,7 @@ def verify(repo,packet=P):
   b=row['content'].encode();require(sha(b)==row['sha256']==inventory[row['path']],'compiler source digest')
   require(hashlib.sha1(b'blob '+str(len(b)).encode()+b'\0'+b).hexdigest()==row['git_blob'],'compiler Git blob')
  build=js(packet/'build/diagnostic/build-result.json.gz');require(build['returncode']==0 and build['source_unchanged'],'diagnostic build result')
+ qualified_feature_commands=sdk_features(packet,build)
  cache=read(packet/'build/diagnostic/CMakeCache.txt.gz').decode();require('LLVM_ENABLE_ASSERTIONS:BOOL=ON' in cache and 'LLVM_TARGETS_TO_BUILD:STRING=SBF' in cache,'diagnostic build configuration')
  gitlink=js(packet/'build/diagnostic/sdk-gitlink.json.gz');require(gitlink['sha']==pin['llvm_source_revision'],'SDK LLVM gitlink')
  text_binding=js(packet/'observations/text-binding02/result.json.gz');text_launch=js(packet/'observations/text-binding02/launch.json.gz')
@@ -141,7 +159,7 @@ def verify(repo,packet=P):
   require(expected_sites=={(r['offset'],r['type']) for r in stock[1]},'original relocation-mask sites differ')
   for name in ['failed-triple.o','failed-features.o']:require(targets[name][0]!=stock[0] and len(targets[name][0])==13784,'failed LLC control not retained')
  control_steps=schedule(read(packet/'traces/control-scheduler.log.gz'),[0,8]);swapped_steps=schedule(read(packet/'traces/swapped-scheduler.log.gz'),[8,0])
- report={'sealed_files':count,'source_inputs':66,'locked_archives':254,'compiler_source_git_blobs':len(sources),'diagnostic_target_raw_bytes':13224,'diagnostic_target_relocations':144,'stock_first_machine_snapshot':first_machine,'extraction_data_symbol_prefix_changes':41,'ir_changed_lines':2,'changed_instruction_slots':slots,'changed_instruction_bytes':4,'control_bottom_up_loads':control_steps,'counterfactual_bottom_up_loads':swapped_steps,'counterfactual_normalized_sha256':sha(norm),'stock_capture_changed_sections':changed_sections,'canonical_artifact_or_count_updates':False,'target_executions':0,'scope':'Saved evidence consistency, not cryptographic execution attestation. Edited IR is a diagnostic counterfactual, not reconstructed Rust or a selected executable.'}
+ report={'sealed_files':count,'source_inputs':66,'qualified_SDK_feature_commands':qualified_feature_commands,'locked_archives':254,'compiler_source_git_blobs':len(sources),'diagnostic_target_raw_bytes':13224,'diagnostic_target_relocations':144,'stock_first_machine_snapshot':first_machine,'extraction_data_symbol_prefix_changes':41,'ir_changed_lines':2,'changed_instruction_slots':slots,'changed_instruction_bytes':4,'control_bottom_up_loads':control_steps,'counterfactual_bottom_up_loads':swapped_steps,'counterfactual_normalized_sha256':sha(norm),'stock_capture_changed_sections':changed_sections,'canonical_artifact_or_count_updates':False,'target_executions':0,'scope':'Saved evidence consistency, not cryptographic execution attestation. Edited IR is a diagnostic counterfactual, not reconstructed Rust or a selected executable.'}
  return report
 def main():
  ap=argparse.ArgumentParser(description=__doc__);ap.add_argument('--repo-root',type=Path,default=P.parents[1]);a=ap.parse_args();print(json.dumps(verify(a.repo_root.resolve()),indent=2))
