@@ -30,12 +30,12 @@ import sys
 from pathlib import Path
 
 import os
-os.chdir(Path.home() / "workspace/pumpfun-sparse")
+os.chdir(Path(__file__).resolve().parents[2])
 from solders.keypair import Keypair
 from solders.pubkey import Pubkey
 from solders.transaction import Transaction
 
-ROOT = Path.home() / "workspace/pumpfun-sparse"
+ROOT = Path(__file__).resolve().parents[2]
 PACKET = ROOT / "research/amm-admin-authority-rotation-20261029"
 PROGRAM = Pubkey.from_string('pAMMBay6oceH9fJKBRHGP5D4bD4sWpmSwMn52FMfXEA')
 EVENT = Pubkey.find_program_address([b'__event_authority'], PROGRAM)[0]
@@ -175,12 +175,15 @@ def main():
     assert report["counts"] == {"vms": 129, "transactions": 129,
                                 "signature_fields": 129}, report["counts"]
     for name, digest in report["input_sha256"].items():
-        assert sha((ROOT / name).read_bytes()) == digest, name
+        recorded = ROOT / name
+        if name.startswith("programs/pump-amm/"):
+            recorded = ROOT / "repro/pump_amm/v2-mint-clone-recovery-20261028/results/canonical-source" / name
+        assert sha(recorded.read_bytes()) == digest, name
     for name, digest in report["image_sha256"].items():
         path = {"original": ROOT / "evidence/original/pump_amm/deployed.so",
-                "control": Path.home() / "workspace/slop-verify/control.so",
-                "candidate": Path.home() / "workspace/slop-verify/candidate.so"}[name]
-        assert sha(path.read_bytes()) == digest, name
+                "control": ROOT / "research/amm-multi-hop-group-slice-recovery/artifacts/candidate.so.gz",
+                "candidate": ROOT / "research/amm-transfer-fee-diagnostic-recovery/artifacts/candidate.so.gz"}[name]
+        assert sha(gzip.decompress(path.read_bytes()) if path.suffix == ".gz" else path.read_bytes()) == digest, name
     assert [c["case"]["label"] for c in report["cases"]] == [l for l, _ in EXPECTED]
     receipts = []
     for part in report["transaction_receipts"]["parts"]:
