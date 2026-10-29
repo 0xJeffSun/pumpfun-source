@@ -15,10 +15,9 @@ failure lands after the transfers have already executed.
 ## Cases
 
 19 fresh-VM triples (original / #424 control / #427
-candidate), 57 signed executions on the repository's own
-create harness (`scripts/pump_amm_create_differential.py`).
+candidate), 57 signed executions built by producer.py's run_case() on the Harness from scripts/pump_amm_admin_differential.py, with fixtures and constants imported from `scripts/pump_amm_create_differential.py`.
 The clock is slot 100, epoch 0. `producer.py` reproduces
-every receipt from the repository files. Parts: 6 files
+every receipt once ~/workspace/pumpfun-sparse is a repo checkout and ~/workspace/slop-verify holds control.so (7a300434..., research/amm-multi-hop-group-slice-recovery/artifacts/candidate.so.gz) and candidate.so (d17a657b..., research/amm-transfer-fee-diagnostic-recovery/artifacts/candidate.so.gz); the error string format depends on the solders version. Parts: 6 files
 (10 receipts x 5, plus 7).
 
 Family A -- sqrt floor and the 100 lock, fresh vaults:
@@ -57,7 +56,7 @@ rollback):
 | liq-fail-pre-50 | 51 / 51 | 51 |
 | liq-fail-pre-98 | 99 / 99 | 99 |
 
-All three images behave identically in every case.
+All three images agree on committed account state, event fields, error code and payer charge in every case; compute-unit consumption and the 6003 error-site line (290 vs 144) differ.
 `verify.py` rechecks every receipt independently:
 signature validity, the CreatePoolEvent fields, the
 floor-sqrt identity, the pool account fields, the user LP
@@ -72,17 +71,14 @@ failures, and agreement across images.
   liq-100-10200 pins the floor: sqrt(1,020,000) = 1009
   (1010^2 = 1,020,100 already exceeds it), so lp_out is
   909, not 910. liq-3-1e9 pins it again: sqrt(3 x 10^9) =
-  54772, lp_out 54672. The u128 product means the
-  computation cannot overflow for u64 inputs: the
-  (10^15, 10^15) case mints 10^15 - 100 without error, and
-  no Truncation case is reachable from amounts alone.
+  54772, lp_out 54672. The (10^15, 10^15) case (product 10^30 > u64::MAX) mints 10^15 - 100 without error, so the product is computed wider than u64; by source reading (u128 product, u64::MAX^2 < 2^128) no Truncation should be reachable from amounts alone, but no near-u64::MAX case was executed.
 - **The 100 minimum liquidity is never minted.**
   lp_supply == init_liq in the pool account, while the
   user LP account and the LP mint supply both equal
   init_liq - 100. At exactly init_liq == 100 the create
   still succeeds and mints 0 LP (liq-100-100,
   liq-1-10000, liq-10000-1, liq-preboth-100 all land user
-  LP 0 with a live pool); below 100 it fails. The lock
+  LP 0 with a live pool); every executed case below 100 (init_liq 1, 2, 51, 99) fails. The lock
   is unminted supply, not a burn to a lock account --
   no account ever holds the 100.
 - **Liquidity reads post-transfer vault balances, not the
@@ -120,7 +116,7 @@ failures, and agreement across images.
   @124, pool_base_amount @132, pool_quote_amount @140,
   minimum_liquidity @148 (= 100 in every success),
   initial_liquidity @156, lp_token_amount_out @164.
-  Exactly 1 event on every success, 0 on every failure.
+  Exactly 1 `Program data:` CreatePoolEvent log (plus one emit_cpi self-invoke) on every success, 0 on every failure.
 
 Error sites (original / rebuilt):
 
@@ -132,6 +128,14 @@ Error sites (original / rebuilt):
 - liq-fail-pre-98: original programs/pump-amm/src/instructions/create_pool.rs:290. Error Code: TooLittlePoolTokenLiquidity. Error Number: 6003. Error Message: TooLittlePoolTokenLiquidity.; control programs/pump-amm/src/instructions/create_pool.rs:144. Error Code: TooLittlePoolTokenLiquidity. Error Number: 6003. Error Message: TooLittlePoolTokenLiquidity.; candidate programs/pump-amm/src/instructions/create_pool.rs:144. Error Code: TooLittlePoolTokenLiquidity. Error Number: 6003. Error Message: TooLittlePoolTokenLiquidity.
 
 ## Limits
+
+- `producer.py` regenerated these receipts on the author's machine: it hard-codes
+  `~/workspace/pumpfun-sparse` and reads the control/candidate images from
+  `~/workspace/slop-verify`, so it does not run from this packet unmodified. The control
+  and candidate are the gunzipped in-repo #424/#427 artifacts
+  (`research/amm-multi-hop-group-slice-recovery/artifacts/candidate.so.gz`,
+  `research/amm-transfer-fee-diagnostic-recovery/artifacts/candidate.so.gz`); `verify.py`
+  checks the recorded receipts and does not load the images.
 
 Offline LiteSVM synthetic fixtures only. No source change,
 build, or whole-program equivalence claim. Numbers are exact
