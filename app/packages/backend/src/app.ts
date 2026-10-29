@@ -11,6 +11,8 @@ import { registerCompetitionRoutes } from "./competitions-routes.js";
 import { CompetitionStore, defaultCompetitionStore } from "./competitions-store.js";
 import { registerFollowingRoutes } from "./following-routes.js";
 import { FollowingStore, defaultFollowingStore } from "./following-store.js";
+import { registerHomeFeedRoutes } from "./home-feed-routes.js";
+import { HomeFeedStore, defaultHomeFeedStore } from "./home-feed-store.js";
 
 export type Fixture = {
   method: string;
@@ -26,6 +28,9 @@ const reservedFixturePaths = new Set([
   "/health",
   "/__reconstruction/status",
   "/__reconstruction/openapi.json",
+  "/services/frontend/home-feed",
+  "/services/frontend/home-feed/new",
+  "/services/frontend/home-feed/new/count",
 ]);
 
 function compareKeys([left]: [string, string], [right]: [string, string]) {
@@ -319,6 +324,8 @@ export interface BuildAppOptions {
   competitionStore?: CompetitionStore;
   /** Override the follow-graph store (for tests). */
   followingStore?: FollowingStore;
+  /** Override the local Home Feed store (for tests). */
+  homeFeedStore?: HomeFeedStore;
 }
 
 export function buildApp(fixtures: Fixture[] = [], opts: BuildAppOptions = {}) {
@@ -358,6 +365,7 @@ export function buildApp(fixtures: Fixture[] = [], opts: BuildAppOptions = {}) {
   const followStore =
     opts.followingStore ??
     (opts.userStore ? new FollowingStore(store) : defaultFollowingStore);
+  registerHomeFeedRoutes(app, opts.homeFeedStore ?? defaultHomeFeedStore);
   app.register(async (native) => {
     native.addHook("preHandler", apiKeyGate);
     registerUserRoutes(native, store);
