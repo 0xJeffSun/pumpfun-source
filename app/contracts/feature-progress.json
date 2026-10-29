@@ -349,37 +349,57 @@
       "candidatePrefixes": [],
       "source": {
         "contract": {
-          "status": "pending",
-          "evidence": []
+          "status": "accepted",
+          "evidence": [
+            "packages/frontend/GO-EVIDENCE.md#observed"
+          ]
         },
         "logic": {
-          "status": "pending",
-          "evidence": []
+          "status": "accepted",
+          "evidence": [
+            "packages/frontend/src/app/go/page.tsx",
+            "packages/frontend/src/app/go/go-explorer.tsx"
+          ]
         },
         "adapters": {
-          "status": "pending",
-          "evidence": []
+          "status": "accepted",
+          "evidence": [
+            "packages/frontend/src/app/go/evidence.ts",
+            "packages/frontend/src/app/go/go-data.ts",
+            "packages/frontend/src/app/api/go-bounties/route.ts"
+          ]
         }
       },
       "completion": {
         "source": {
-          "status": "pending",
-          "evidence": []
+          "status": "accepted",
+          "evidence": [
+            "packages/frontend/GO-EVIDENCE.md#local-design"
+          ]
         },
         "success": {
-          "status": "pending",
-          "evidence": []
+          "status": "accepted",
+          "evidence": [
+            "packages/frontend/tests/go.spec.ts",
+            "tests/go_bounties.test.ts"
+          ]
         },
         "failure": {
-          "status": "pending",
-          "evidence": []
+          "status": "accepted",
+          "evidence": [
+            "packages/frontend/tests/go.spec.ts",
+            "tests/go_bounties.test.ts"
+          ]
         },
         "consistency": {
           "status": "pending",
-          "evidence": []
+          "evidence": [
+            "packages/frontend/tests/go.spec.ts",
+            "packages/frontend/visual/go-20261028/README.md"
+          ]
         }
       },
-      "note": "Route scaffold; campaign behavior and API binding unknown."
+      "note": "Authenticated 25-record historical bounty snapshot, fail-closed evidence adapter, local search/filter/sort/cursor state and unavailable account actions pass unit and browser tests. Current API compatibility, authenticated flows, mutations and original visual parity remain unqualified."
     },
     {
       "id": "mayhem",
