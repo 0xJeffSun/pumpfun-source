@@ -42,10 +42,14 @@ def render():
     script_progress=f'{100*verified/len(scripts):.0f}%' if scripts else 'N/A'
     factory_progress='100%' if recovered['modules'] else 'N/A'
     source_count=source_equal=0
+    expected_sources=set()
     with tarfile.open(ROOT/'evidence/sdk/pump-sdk-4.3.1.tgz') as archive:
         for m in archive:
             if m.isfile() and m.name.startswith('package/src/'):
+                expected_sources.add(m.name.removeprefix('package/src/'))
                 source_count+=1;source_equal+=archive.extractfile(m).read()==(ROOT/'packages/sdk'/m.name.removeprefix('package/')).read_bytes()
+    actual_sources={p.relative_to(ROOT/'packages/sdk/src').as_posix() for p in (ROOT/'packages/sdk/src').rglob('*') if p.is_file()}
+    require(actual_sources==expected_sources, 'SDK source inventory differs from archive')
     operations=[(path,method,op) for path,item in spec['paths'].items() for method,op in item.items() if method in {'get','post','put','patch','delete','head','options'}]
     scope_counts=collections.Counter(op['x-api-scope'] for _,_,op in operations)
     text=['## Application source and feature progress','',f'As of **{ledger["asOf"]}**. The [app workspace](app/README.md) contains the SDK, frontend and independent API-compatible backend. [PRD](app/PRD.md) · [Detailed ledger](app/contracts/feature-progress.json) · [Validation](app/evidence/validation.json).','',
