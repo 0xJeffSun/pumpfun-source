@@ -107,6 +107,9 @@ is a contract decision, not a bug fix.
 49. **UserStore hydration**: Competition entries and members hydrate profile information (username,
     profileImageUrl, walletAddress, isVerified) from the shared `UserStore` and its synthetic seed
     (`users-seed.json`), preventing divergent user identities. Squad rows set `walletAddress: null` per contract.
+50. **`leaderboard.startSec` and `endSec`**: `startSec` is `startsAt`. `endSec` is the scoring window end the
+    served legs were read at: the last board build (`builtAtMs`, in seconds) while the board is not final, and
+    `endsAt` once `isFinal` is true. Before the first build `builtAtMs` and `endSec` are both 0.
 
 ## Not implemented
 
