@@ -95,22 +95,20 @@ as in 2nd #13):
 - Recipients must be strictly ascending AND all nonzero, with
   nonzero checked before sorted. This is the exact opposite of
   `update_buyback_config` (#42), whose recipients land in input
-  order -- and it is the reason the legacy buy/sell/sweep
-  `binary_search` gate works at all.
-- Check order is the write order: lp, protocol, recipients
-  (nonzero, then sorted), creator, authority, then the event.
+  order. Family B executes only legacy sell, which accepts a member of the new sorted list and rejects the old recipient with 6013; legacy buy and sweep were not executed.
+- Executed check-order pairs: lp before recipients, protocol before recipients, recipients before creator, and nonzero before sorted. lp vs protocol and the authority position are not pinned. The event is emitted before the config write-back (truncation ghost).
   Every failure is atomic: all five fields roll back together.
 - Every success emits exactly one UpdateFeeConfigEvent (360 bytes,
-  discriminator 5a1741233ef4bcd0 = sha256("event:UpdateFeeConfigEvent")[:8],
-  timestamp 0 under the default LiteSVM clock): admin (the signer)
+  discriminator 5a1741233ef4bcd0 = sha256("event:UpdateFeeConfigEvent")[:8];
+  timestamp 0 in family A under the default LiteSVM clock, 1234567890 in
+  family B where the clock is set; the timestamp is not verified): admin (the signer)
   @16..48, lp @48, protocol @56, recipients @64..320, creator @320,
   authority @328..360 -- the event echoes the written values.
 - Truncation is a ghost event, not a silent failure: at 907 or 948
   bytes the event is emitted and then the write-back fails, so the
   logs show a success-shaped event for a transaction that changed
-  nothing. At 906 bytes there is no event at all. There is no
-  `extend_global_config` path in this instruction, so no short
-  config can ever be updated in place.
+  nothing. At 906 bytes there is no event at all. At the executed short lengths (906, 907, 948) update_fee_config alone
+  never updates the config; extending it first (e.g. extend_account) was not exercised.
 - The recipient binding is immediate and total: after one setter
   call, the new set is the only set a legacy sell accepts, and a
   failed setter call changes nothing for the next instruction.
@@ -124,6 +122,19 @@ as in 2nd #13):
   by account: global_config; 102 has no site marker.
 
 ## Limits
+
+- The five `programs/pump-amm` sources recorded in `runtime/report.json.gz` (`lib.rs`,
+  `instructions/admin/mod.rs`, `state/global_config.rs`, `instructions/swap/mod.rs`,
+  `instructions/swap/sell.rs`) are the versions at commit `6589dcaa9`; later commits change them
+  on main, so `inputs/` keeps those exact files and `verify.py` checks them there.
+
+- `producer.py` regenerated these receipts on the author's machine: it hard-codes
+  `~/workspace/pumpfun-sparse` and reads the control/candidate images from
+  `~/workspace/slop-verify`, so it does not run from this packet unmodified. The control
+  and candidate are the gunzipped in-repo #424/#427 artifacts
+  (`research/amm-multi-hop-group-slice-recovery/artifacts/candidate.so.gz`,
+  `research/amm-transfer-fee-diagnostic-recovery/artifacts/candidate.so.gz`); `verify.py`
+  checks the recorded receipts and does not load the images.
 
 - Offline LiteSVM reproduction on synthetic fixtures (original
   deployed image, #424 control, #427 candidate). No source change,
@@ -142,7 +153,6 @@ as in 2nd #13):
 - The ghost event is a failed-transaction log observation, not a
   claim about on-chain event indexing.
 - The IDL's `UpdateFeeConfigEvent` discriminator entry
-  ([90, 23, 65, 35, 62, 244, 188, 208]) does not match the emitted
-  event; the observed discriminator 5a1741233ef4bcd0 is the
-  sha256("event:UpdateFeeConfigEvent")[:8] value and is what the
-  receipts pin.
+  ([90, 23, 65, 35, 62, 244, 188, 208]) equals the emitted
+  discriminator 5a1741233ef4bcd0 (= sha256("event:UpdateFeeConfigEvent")[:8]),
+  which the receipts pin.

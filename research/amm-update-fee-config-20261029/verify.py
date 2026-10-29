@@ -4,8 +4,7 @@ Checks, independently of the producer:
 - packet manifest lists exactly the files present, with matching hashes;
 - repository inputs (images, harness scripts, fixtures, sources) hash to
   the recorded values;
-- 31 cases x 3 images = 108 receipts (26 admin cases x 1 step +
-  5 chain cases x 2 steps), ordered, with contexts matching the
+- 31 cases (36 case-steps: 26 admin x 1 + 5 chain x 2) x 3 images = 108 receipts, ordered, with contexts matching the
   report, stored as 11 parts (10 x 10 + 8), each under 25MB;
 - every transaction verifies (all signatures valid, 1 signature
   field each) and its sha256 matches;
@@ -29,8 +28,7 @@ Checks, independently of the producer:
   1 event on success, and zero deltas, unchanged pool, no event
   and payer 5,000 on the 6013 failure.
 
-Error sites are checked by error NAME, not line number: the
-producer records per-image site lines in its own run, and rebuilt
+Error sites are checked by error NAME, not line number: per-image site lines are present only in the raw receipt logs, and rebuilt
 images may report different lines for the same error (the #36
 precedent), so only the code and the name are asserted here.
 """
@@ -184,7 +182,10 @@ def main():
         assert r["transaction_sha256"] == sha(raw)
         assert r["signatures"] == [str(s) for s in tx.signatures]
     for n, want in report["input_sha256"].items():
-        got = sha((ROOT / n).read_bytes())
+        # programs/pump-amm sources are pinned at 6589dcaa9 and kept in inputs/,
+        # since later commits on main change the live tree.
+        source = HERE / "inputs" / n if n.startswith("programs/") else ROOT / n
+        got = sha(source.read_bytes())
         assert got == want, f"input mismatch {n}"
     # contexts must match the report cases, in order
     admin_exp = admin_expected()
@@ -287,7 +288,7 @@ def main():
                     assert obs["events"] == 0, (label, obs["events"])
                     assert obs["pool_unchanged"], (label, "pool moved")
                     assert obs["payer_delta"] == 5000, (label, obs["payer_delta"])
-    print("verify PASS: 31 cases x 3 images = 108 receipts, all checks passed")
+    print("verify PASS: 31 cases / 36 steps x 3 images = 108 receipts, all checks passed")
 
 
 if __name__ == "__main__":
