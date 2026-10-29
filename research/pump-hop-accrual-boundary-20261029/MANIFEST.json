@@ -1,0 +1,19 @@
+{
+  "publication_parent": "506921d658deeef506b281233d98b911d60e08c0",
+  "source_analysis_revision": "1285b5e9e3a29c1e2cf32246d6046035e5d66fad",
+  "proposal_source_sha256": "734bdae1189dd4e4f54a27fd215624611228f36b92d3877b63f00df19ccc9e44",
+  "packet_files_sha256": {
+    "PROPOSAL.json": "56b07c6fa2220cc65d421f4e1a1496af58aa3e2393cce7aefe28c7e95ef51044",
+    "README.md": "ddc7f27ba5f5cd619c1947b45c94ad4c80526f1a4ce58090814ec4f2de974056",
+    "accrual-original-callee.dis": "5d31e81e94a0e1884d3fc0a2260f2bfaf837f5fb808f5375f140538fcfa46955",
+    "accrual-original-caller.dis": "9b73cf930477747231419ecc5c4f294414d9e673fc6566cb9e0d4bd57d67f781",
+    "callee-ledger.json": "8788beb09c25b0af49eeacb91e80d9261748a202e67071c8f3cb6e90ff345afd",
+    "mayhem-existing-image-witness.json.gz": "05fd4dc4e105b4e35f9ff0ac440ffce2b6490a01f6220e681e5f884d3c4bdf81",
+    "mayhem-existing-image-witness.log": "02dbd67da6677f30dc5cf25f8a8b30fb9ed781a97cffaf7cb43cdbbba754a40a",
+    "mayhem_existing_image_witness.py": "8f05871963475bad7a7fba1a27498bb37cc2a0226bceba9108861c0ecb0c625e",
+    "proposal.diff": "7d5c127c03e05379a8ad923e9183f5fe58501ddb986c21e03709136e74b73227",
+    "source-before.rs": "679b34ae4965bf1cdc999e0f45f3ae5e171116c5f04173e7394c3b9e48a0fb43",
+    "verify.py": "6850a07bc73e0b3e7ddf99df36f490b4407206b3d58f183e3993b65ba3b70ad4"
+  },
+  "status": "uncompiled; inventory and runtime qualification pending"
+}
