@@ -53,7 +53,7 @@ class MayhemErrorDebugTables(unittest.TestCase):
             at = self.file_offset(entry['pointer_slot'])
             struct.pack_into('<I', blob, at, 1)
         elif kind == 'after_table':
-            blob[self.file_offset(713272)] ^= 1
+            blob[self.file_offset(self.rows[-1]['candidate']['length_slot'] + 8)] ^= 1
         else:
             raise AssertionError(kind)
         return blob
@@ -119,12 +119,19 @@ class MayhemErrorDebugTables(unittest.TestCase):
                 self.assertEqual(changed['bytes_hex'], row['name'].encode().hex())
 
     def test_table_end_is_not_counted(self):
-        tagged = self.traces()
-        mutated = proof.trace(
-            self.elf(self.mutate(self.rows[0], 'after_table')), self.window, self.rows[0]['observed_tag']
-        )
-        self.assertEqual(mutated['bytes_hex'], tagged[0]['bytes_hex'])
-        self.assertEqual(mutated['length'], tagged[0]['length'])
+        for end in (
+            self.rows[-1]['candidate']['length_slot'] + 8,
+            self.rows[-1]['candidate']['pointer_slot'] + 8,
+        ):
+            blob = bytearray(self.candidate)
+            blob[self.file_offset(end)] ^= 1
+            for row, tagged in zip(self.rows, self.traces()):
+                with self.subTest(table_end=end, tag=row['observed_tag']):
+                    mutated = proof.trace(
+                        self.elf(blob), self.window, row['observed_tag']
+                    )
+                    self.assertEqual(mutated['bytes_hex'], tagged['bytes_hex'])
+                    self.assertEqual(mutated['length'], tagged['length'])
 
     def test_length_entry_drops_owner_pair(self):
         row = self.rows[0]
@@ -276,6 +283,21 @@ class MayhemErrorDebugTables(unittest.TestCase):
             delta = json.loads((packet / 'coverage-delta.json').read_bytes())
             delta['new_payload_bytes'] += 1
             (packet / 'coverage-delta.json').write_text(json.dumps(delta))
+        self.copied(change, True)
+
+    def test_resealed_baseline_source_membership(self):
+        # This real historical member is redundant in the23-file union. Omitting
+        # it preserves every count, so only exact input membership rejects it.
+        omitted = 'research/mayhem-current437-bounded-encoding-20261029/coverage-delta.json'
+        def change(packet):
+            path = packet / proof.BASELINE
+            baseline = json.loads(path.read_bytes())
+            del baseline['deltas'][omitted]
+            path.write_text(json.dumps(baseline))
+            path = packet / 'coverage-delta.json'
+            delta = json.loads(path.read_bytes())
+            del delta['baseline_delta_sha256'][omitted]
+            path.write_text(json.dumps(delta))
         self.copied(change, True)
 
     def test_resealed_baseline(self):
