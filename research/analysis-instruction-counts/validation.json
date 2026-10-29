@@ -1,0 +1,47 @@
+{
+  "base_revision": "35505a12fccdef85b948032576597a12da4ea307",
+  "checks": {
+    "regressions": "2 passed",
+    "original_captures": "9 passed",
+    "comparator_tests": "6 passed"
+  },
+  "programs": {
+    "pump": {
+      "windows": 1035,
+      "previously_labelled_instructions": 224026,
+      "decoded_instructions": 215873,
+      "wide_continuations": 8153,
+      "summary_sha256": {
+        "before": "df4e9c559af57a787c2a867f70c82b7373b5e8fffe4e3705f796412e10e20bde",
+        "after": "72958f881fa4770a62927909241c4c8f5f5c6441904686f295b963fea922b5c3"
+      },
+      "all_existing_window_fields": "unchanged",
+      "before_and_after_packet_verifiers": "passed"
+    },
+    "pump_amm": {
+      "windows": 785,
+      "previously_labelled_instructions": 145255,
+      "decoded_instructions": 139524,
+      "wide_continuations": 5731,
+      "summary_sha256": {
+        "before": "0ff82e98c24c164d39bccc7b554efe7c00e49c5833d3f5f2fb6340298aaf5d5f",
+        "after": "191876ff1b7d9712abc2e6b33497204ab34e439f2c60f688874cead20e871abe"
+      },
+      "all_existing_window_fields": "unchanged",
+      "before_and_after_packet_verifiers": "passed"
+    },
+    "mayhem": {
+      "windows": 441,
+      "previously_labelled_instructions": 88343,
+      "decoded_instructions": 83947,
+      "wide_continuations": 4396,
+      "summary_sha256": {
+        "before": "b03d0812942f55a7fb499d7f9f6ffc7028a2e777c584898ff088311d8639724d",
+        "after": "ea54d71027c10785ca127c01af5ec73646e53a51bbed49c464667d03ec0e1882"
+      },
+      "all_existing_window_fields": "unchanged",
+      "before_and_after_packet_verifiers": "passed"
+    }
+  },
+  "limits": "Static decoded instructions, not execution or compute-unit counts; no source/runtime-equivalence or coverage claim."
+}
