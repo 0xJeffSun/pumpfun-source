@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 """Independent re-verification for amm-liquidity-sweep-collect-tf-chains-20261029.
 
-Checks, from the packet files alone (plus the three program images):
+Checks, from the packet files alone (plus the three program images retained in the
+repository: evidence/original/pump_amm/deployed.so and the two
+candidate.so.gz artifacts named in IMAGE_PATHS):
 - MANIFEST.json lists every packet file with a matching sha256.
 - runtime/report.json.gz: 14 cases, 153 receipts, 16 parts
   (15x10 + 3), part sha256/byte counts match the part files.
@@ -19,11 +21,20 @@ Checks, from the packet files alone (plus the three program images):
   the decoded event fields (deposit/withdraw base/quote, v2
   buy/sell, sweep amount/bucket/recipient, collect
   fee/creator/vault-ATA/dest).
+- Token deltas for every watched token account NOT listed in a
+  step's expected deltas are exactly zero.
+- Before each case's first step the protocol, creator, collect
+  destination and buyback Token-2022 ATAs are 182-byte accounts
+  holding 2,157,600 lamports.
+- Every deposit/withdraw instruction carries lp 10^9 and the
+  limits the README states: unlimited (u64::MAX caps / zero floors)
+  everywhere except the two limit cases (deposit max_quote
+  29,312,410; withdraw min_quote 29,312,409).
 - Failure steps roll back every watched account except the fee
   payer (fee 5,000) and carry the expected error code plus the
   recorded per-image site line in their logs. A second collect
-  after a full drain is a silent no-op (0 events, payer 5,000
-  only). Site lines are checked per image, never compared
+  after a full drain is a silent no-op: no error, 0 events, every
+  watched account except the fee payer unchanged, payer 5,000. Site lines are checked per image, never compared
   across images, because original and rebuilt sources differ in
   line numbers.
 - The observed surface of every case (step, error, event count,
@@ -31,7 +42,8 @@ Checks, from the packet files alone (plus the three program images):
   across the original, control, and candidate images.
 - The three program images hash to the values recorded in the report.
 
-Usage: python3 verify.py   (run from this packet directory)
+Usage (from the repository root):
+    python3 -I -B research/amm-liquidity-sweep-collect-tf-chains-20261029/verify.py
 """
 import base64
 import gzip
@@ -45,12 +57,13 @@ from solders.pubkey import Pubkey
 from solders.transaction import Transaction
 
 ROOT = Path(__file__).resolve().parent
-WS = Path.home() / "workspace/slop-verify"
-SPARSE = Path.home() / "workspace/pumpfun-sparse"
+REPO = ROOT.parents[1]
+# The three program images are retained in the repository; the two
+# rebuilt images are stored gzip-compressed and hashed decompressed.
 IMAGE_PATHS = {
-    "original": SPARSE / "evidence/original/pump_amm/deployed.so",
-    "control": WS / "control.so",
-    "candidate": WS / "candidate.so",
+    "original": REPO / "evidence/original/pump_amm/deployed.so",
+    "control": REPO / "research/amm-multi-hop-group-slice-recovery/artifacts/candidate.so.gz",
+    "candidate": REPO / "research/amm-transfer-fee-diagnostic-recovery/artifacts/candidate.so.gz",
 }
 PAYER_KEY = Pubkey.from_string("DXyM8yAHqpMzDtvwz5DXoEUQmPxjJPMKCASCPhLMKpEx")
 POOL = Pubkey.from_string("GseMAnNDvntR5uFePZ51yZBXzNSn7GdFPkfHwfr6d77J")
@@ -172,6 +185,26 @@ def decode_event(kind, rec):
     return None
 
 
+U64_MAX = (1 << 64) - 1
+DEPOSIT_DISC = bytes.fromhex("f223c68952e1f2b6")
+WITHDRAW_DISC = bytes.fromhex("b712469c946da122")
+LIMIT_ARGS = {
+    ("d-dep-limit-net-tf100", "dep"): (10**9, U64_MAX, 29312410),
+    ("d-wd-limit-gross-tf100", "wd"): (10**9, 0, 29312409),
+}
+DEFAULT_ARGS = {"dep": (10**9, U64_MAX, U64_MAX), "wd": (10**9, 0, 0)}
+SETUP_ATAS = (PROTOCOL_ATA, CREATOR_ATA, DEST, BBATA)
+
+
+def liquidity_args(tx, step):
+    disc = DEPOSIT_DISC if step == "dep" else WITHDRAW_DISC
+    found = [bytes(ix.data) for ix in tx.message.instructions
+             if bytes(ix.data)[:8] == disc and len(bytes(ix.data)) == 32]
+    if len(found) != 1:
+        return None
+    return struct.unpack_from("<3Q", found[0], 8)
+
+
 def main():
     manifest = json.loads((ROOT / "MANIFEST.json").read_text())
     for entry in manifest["files"]:
@@ -189,7 +222,10 @@ def main():
     if report["mismatches"] != []:
         fail(f"mismatches recorded: {report['mismatches']}")
     for name, path in IMAGE_PATHS.items():
-        if sha(path.read_bytes()) != report["images"][name]:
+        data = path.read_bytes()
+        if path.suffix == ".gz":
+            data = gzip.decompress(data)
+        if sha(data) != report["images"][name]:
             fail(f"image hash mismatch {name}")
     receipts = []
     for part in report["parts"]:
@@ -219,6 +255,15 @@ def main():
                 tx = Transaction.from_bytes(base64.b64decode(rec["transaction_base64"]))
                 if not all(tx.verify_with_results()):
                     fail(f"{tag}: signature verification failed")
+                if rec is recs[0]:
+                    for key in SETUP_ATAS:
+                        ent = rec["before"][str(key)]
+                        if ent is None or ent["lamports"] != 2157600 or len(ent["data_hex"]) != 364:
+                            fail(f"{tag}: setup ATA {key} not 182 bytes / 2,157,600 lamports")
+                if rec["step"] in ("dep", "wd"):
+                    want_args = LIMIT_ARGS.get((label, rec["step"]), DEFAULT_ARGS[rec["step"]])
+                    if liquidity_args(tx, rec["step"]) != want_args:
+                        fail(f"{tag}: liquidity args {liquidity_args(tx, rec['step'])} != {want_args}")
                 if exp["error"] is None:
                     if rec["error"] is not None:
                         fail(f"{tag}: unexpected error {rec['error']}")
@@ -232,6 +277,9 @@ def main():
                 for role, want in exp["deltas"].items():
                     if tok_delta(rec, ROLE_KEY[role]) != want:
                         fail(f"{tag}: delta {role} {tok_delta(rec, ROLE_KEY[role])} != {want}")
+                for role, key in ROLE_KEY.items():
+                    if role not in exp["deltas"] and tok_delta(rec, key) != 0:
+                        fail(f"{tag}: unlisted token delta {role} {tok_delta(rec, key)}")
                 for role, want in exp.get("lam_deltas", {}).items():
                     if lam_delta(rec, ROLE_KEY[role]) != want:
                         fail(f"{tag}: lam_delta {role} {lam_delta(rec, ROLE_KEY[role])} != {want}")
@@ -243,7 +291,13 @@ def main():
                     fail(f"{tag}: pool {pool_state(rec['after'][str(POOL)])} != {exp['pool_after']}")
                 if vol_state(rec["after"][str(VOLUME)]) != exp["volume"]:
                     fail(f"{tag}: volume {vol_state(rec['after'][str(VOLUME)])} != {exp['volume']}")
-                if exp.get("rollback"):
+                # A silent no-op collect (no error, 0 events) must leave every
+                # watched account except the fee payer unchanged and cost 5,000.
+                silent_noop = (rec["step"] == "col" and exp["error"] is None
+                               and exp["events"] == 0)
+                if silent_noop and exp["dPAYER"] != -5000:
+                    fail(f"{tag}: silent no-op collect expected dPAYER {exp['dPAYER']}")
+                if exp.get("rollback") or silent_noop:
                     for k, b in rec["before"].items():
                         if k == str(PAYER_KEY):
                             continue
@@ -281,7 +335,7 @@ def main():
             for rec, site in zip(recs, sites):
                 if site is not None and site not in "\n".join(rec["logs"]):
                     fail(f"{label}/{image}: recorded site line not in logs: {site}")
-    print("PASS: 14 cases, 153 receipts, 16 parts, 3 images agree (signatures, deltas, withheld, events, error codes/sites, rollback)")
+    print("PASS: 14 cases, 153 receipts, 16 parts, 3 images agree (signatures, deltas incl. unlisted zero, withheld, events, liquidity limits, setup ATAs, error codes/sites, rollback, silent no-op collect)")
 
 
 if __name__ == "__main__":
