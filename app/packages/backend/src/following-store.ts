@@ -85,7 +85,7 @@ export class FollowingStore {
 
   constructor(userStore: UserStore = defaultStore, seed: FollowEdge[] = edges) {
     this.users = userStore;
-    this.edges = seed;
+    this.edges = structuredClone(seed);
   }
 
   /** Number of edges pointing at `userId`. */
@@ -179,7 +179,7 @@ export class FollowingStore {
       .map((user) => ({ user, score: relevance(user, term) }))
       .filter((row) => row.score > 0)
       .sort((a, b) => (a.score !== b.score ? b.score - a.score : byUsername(a.user, b.user)))
-      .map((row) => row.user);
+      .map((row) => structuredClone(row.user));
   }
 }
 
