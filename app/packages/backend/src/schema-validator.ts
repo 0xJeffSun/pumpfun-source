@@ -131,11 +131,11 @@ export function validateAgainstSchema(
     issues.push({ path, message: `value ${JSON.stringify(value)} is not the required const ${JSON.stringify(schema.const)}` });
   }
 
-  for (const branch of schema.oneOf ?? []) {
-    if (validateAgainstSchema(value, branch, path, root).length === 0) return issues;
-  }
-  if (schema.oneOf && schema.oneOf.length > 0) {
-    issues.push({ path, message: 'value matched none of the oneOf branches' });
+  if (schema.oneOf) {
+    const matches = schema.oneOf.filter(branch => validateAgainstSchema(value, branch, path, root).length === 0).length;
+    if (matches !== 1) {
+      issues.push({ path, message: matches === 0 ? 'value matched none of the oneOf branches' : 'value matched multiple oneOf branches' });
+    }
   }
   if (schema.anyOf && schema.anyOf.length > 0) {
     const passed = schema.anyOf.some(branch => validateAgainstSchema(value, branch, path, root).length === 0);
