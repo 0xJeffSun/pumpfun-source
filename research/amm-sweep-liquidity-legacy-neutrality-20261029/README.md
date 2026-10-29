@@ -6,7 +6,8 @@ Two earlier packets invite a wrong inference when combined. 3rd #3
 pinned deposit/withdraw quote legs to AVAILABLE reserves (raw vault
 quote minus accrued fees), and 3rd #4 pinned v2 trade prices to
 EFFECTIVE reserves (raw vault quote plus virtual quote reserves) and
-showed a sweep leaves v2 trades byte-identical. But neither packet
+showed a sweep leaves v2 trade legs and decoded event fields
+unchanged. But neither packet
 chained a sweep into deposit, withdraw, or legacy buy -- and 3rd #3's
 Limits explicitly left the legacy buy/sell curve paths unchained.
 So the open question was concrete: 3rd #3's available formula says a
@@ -34,7 +35,9 @@ sweep costs only 5,000. Deposit/withdraw steps cost 5,000; the first
 trade step in a case costs 1,849,400 (volume rent 1,844,400 + fee
 5,000).
 
-Event layouts (verified byte-for-byte):
+Event layouts (offsets as read from the receipts; verify.py decodes
+only the fields named below plus the v2 buy/sell curve / fee / user
+fields; for the legacy buy event it checks only disc and length):
 - DepositEvent / WithdrawEvent, 264 bytes, disc `78f83d531f8e6b90` /
   `1609851aa02c47c0`: base leg @72, quote leg @80.
 - SweepPoolFeeEvent, 185 bytes, disc `82a42461e48287a5`:
@@ -106,10 +109,13 @@ Family R -- round trips with a sweep in the middle:
 Family T -- trade control arms (3rd #4's result, re-measured):
 - `t-both-buy-1e10`: both sweeps, then buy-1e10: spend 1,847,796,
   vault +1,839,310, buyback 8,486, pool (vq -13,962, pf 8,487,
-  cf 5,475) -- byte-identical to the fresh anchor.
+  cf 5,475) -- the same legs and decoded event fields as 3rd #4's
+  fresh anchor (the raw event bytes differ in reserve words).
 - `t-both-sell-1e10`: both sweeps, then sell-1e10: user
   +1,802,115, vault -1,810,601, buyback 8,486, pool (vq -13,961,
-  pf 8,486, cf 5,475) -- byte-identical to the fresh anchor.
+  pf 8,486, cf 5,475) -- the same legs and decoded event fields
+  as 3rd #4's fresh anchor (the raw event bytes differ in reserve
+  words).
 
 Family G -- legacy buy after a sweep (legacy variant, recipient
 ATAs pre-exist so sweeps cost 5,000):
@@ -123,13 +129,15 @@ ATAs pre-exist so sweeps cost 5,000):
 
 ## Result
 
-- A sweep is a pure relabeling for every downstream price. One
+- A sweep is a pure relabeling for every downstream price measured
+  here (deposit, withdraw, v2 buy/sell, legacy buy; legacy sell is
+  not covered -- see Limits). One
   sweep step performs three moves in lockstep: it debits the pool
   accrual by A, credits virtual quote reserves by A, and drains
   the quote vault by A. Both reserve definitions are therefore
   invariant: available = (raw - A) - (accrued - A) = raw - accrued,
   and effective = (raw - A) + (vq + A) = raw + vq. Since deposit /
-  withdraw price off available and trades (v2 and legacy) price
+  withdraw price off available and trades (v2, and legacy buy) price
   off a sweep-invariant reserve, no downstream leg moves -- at
   either scale, after either partial sweep, or after both.
 - The sharp form of the claim is the limit-gate family: after both
@@ -168,3 +176,27 @@ ATAs pre-exist so sweeps cost 5,000):
 - The legacy-variant recipient ATAs are pre-created with 0 tokens
   (as in 3rd #4 family D), so legacy-family sweeps cost 5,000
   rather than the fresh-ATA 2,044,280; token legs are unaffected.
+
+## Verify and provenance
+
+From the repository root:
+
+    python3 -I -B research/amm-sweep-liquidity-legacy-neutrality-20261029/verify.py
+
+`verify.py` needs only `solders` plus files in the repository: this
+packet, `evidence/original/pump_amm/deployed.so`, and the two
+retained rebuilt images
+`research/amm-multi-hop-group-slice-recovery/artifacts/candidate.so.gz`
+(control, #424) and
+`research/amm-transfer-fee-diagnostic-recovery/artifacts/candidate.so.gz`
+(candidate, #427), whose decompressed sha256 values match the
+`images` block of `runtime/report.json.gz`. It re-checks the
+recorded receipts against the report's expected values; it does
+not re-execute any transaction.
+
+`producer.py` is the script that generated the receipts and is
+kept as a provenance record. It is not runnable as committed: it
+hard-codes a private workspace layout (`~/workspace/pumpfun-sparse`
+for the harness scripts and `~/workspace/slop-verify` for the
+control/candidate `.so` files) and chdirs there on start.
+
