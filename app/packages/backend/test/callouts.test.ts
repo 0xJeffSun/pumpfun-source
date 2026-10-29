@@ -435,6 +435,28 @@ test("unsupported viewer and filter query semantics fail closed instead of being
   }
 });
 
+test("question marks inside the full callout query cannot bypass unsupported-query rejection", async () => {
+  const app = buildApp([], { calloutsStore: new CalloutsStore(dataset()) });
+  try {
+    for (const query of ["?userId=other", "&?userId=other"]) {
+      for (const method of ["GET", "HEAD"] as const) {
+        const response = await app.inject({
+          method,
+          url: `/v1/callout/a?${query}`,
+          headers,
+        });
+        assert.equal(response.statusCode, 501, `${method} ${query}`);
+        if (method === "GET") {
+          assert.equal(response.json().reason, "CALLOUT_QUERY_UNSUPPORTED");
+          assert.equal(Object.hasOwn(response.json(), "callout"), false);
+        } else assert.equal(response.body, "");
+      }
+    }
+  } finally {
+    await app.close();
+  }
+});
+
 const invalid: Array<[string, (data: any) => void]> = [
   ["unknown top-level fields", (d) => (d.private = true)],
   ["unknown author fields", (d) => (d.authors[0].email = "private")],
