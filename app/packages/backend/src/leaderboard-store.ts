@@ -109,7 +109,9 @@ export class LeaderboardStore {
   private userStore: UserStore;
 
   constructor(seed?: RawSeed, userStore?: UserStore) {
-    this.boards = seed ?? (seedData as unknown as RawSeed);
+    // The store documents deterministic read-only data: snapshot the seed so
+    // caller-owned rows (and the shared default seed) cannot corrupt later reads.
+    this.boards = structuredClone(seed ?? (seedData as unknown as RawSeed));
     this.userStore = userStore ?? defaultStore;
   }
 
@@ -164,7 +166,9 @@ export class LeaderboardStore {
       unrealizedPnlSol: entry.unrealizedPnlSol,
       unrealizedPnlUsd: entry.unrealizedPnlUsd,
       positionsCount: entry.positions.length,
-      topPositions: entry.positions.slice(0, positionsLimit),
+      // Clone each position: returning stored rows lets a caller rewrite a
+      // seed row's position for every later read.
+      topPositions: entry.positions.slice(0, positionsLimit).map((position) => ({ ...position })),
       walletAddress: entry.walletAddress,
       username: profile.username,
       profileImage: profile.profileImage,
