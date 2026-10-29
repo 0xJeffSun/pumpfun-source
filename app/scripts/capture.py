@@ -7,6 +7,12 @@ OBJECT_PATH = pathlib.PurePosixPath('evidence/web/objects')
 UA = 'Googlebot'
 PAGES = ['/', '/explore', '/leaderboard', '/live', '/go', '/mayhem', '/holder-rewards', '/create', '/perps', '/docs/fees', '/docs/privacy-policy', '/docs/terms-and-conditions']
 HEADERS = {'server','x-powered-by','x-vercel-id','x-vercel-cache','cf-ray','cf-cache-status','content-type','content-security-policy','location','via','x-cache','x-amz-cf-id','x-amz-cf-pop'}
+
+def public_asset(value,base,extensions):
+    resolved,_=urllib.parse.urldefrag(urllib.parse.urljoin(base,value))
+    parsed=urllib.parse.urlsplit(resolved)
+    if parsed.scheme=='https' and parsed.netloc=='pump.fun' and parsed.path.endswith(extensions):return resolved
+    return None
 def atomic_write(target, body):
     """Publish complete bytes on the same filesystem; retain the old file on failure."""
     target.parent.mkdir(parents=True, exist_ok=True)
@@ -105,7 +111,9 @@ def main():
     for r,b in pages:
         if r.get('status')!=200 or not r['url'].startswith('https://pump.fun'): continue
         s=b.decode(errors='replace')
-        assets.update('https://pump.fun'+p for p in re.findall(r'(?:src|href)="(/[^"?]+\.(?:js|css|woff2|svg|png))',s))
+        for value in re.findall(r'(?:src|href)="(/[^"\s]+)"',s):
+            asset=public_asset(html.unescape(value),r['url'],('.js','.css','.woff2','.svg','.png'))
+            if asset:assets.add(asset)
     done=set(); waves=0
     while assets-done and waves<8:
         batch=assets-done; done|=batch; waves+=1
@@ -114,13 +122,14 @@ def main():
             if r.get('status')!=200: continue
             s=b.decode(errors='replace')
             # Follow literal Turbopack chunk paths and local font/image dependencies only.
-            for path in re.findall(r'["\'(]((?:/_next/)?static/(?:immutable/)?(?:chunks|media)/[^"\'\s)]+\.(?:js|css|woff2))',s):
-                assets.add('https://pump.fun/'+path.lstrip('/') if path.startswith('/') else 'https://pump.fun/_next/'+path)
-            if r['url'].endswith('.css'):
+            for path in re.findall(r'["\'(]((?:/_next/)?static/(?:immutable/)?(?:chunks|media)/[^"\'\s)]+)',s):
+                asset=public_asset(path,'https://pump.fun/_next/',('.js','.css','.woff2'))
+                if asset:assets.add(asset)
+            if urllib.parse.urlsplit(r['url']).path.endswith('.css'):
                 for relative in re.findall(r'url\([\"\']?([^\s)\"\']+)',s):
                     if not relative.startswith('data:'):
-                        resolved=urllib.parse.urljoin(r['url'],relative)
-                        if resolved.startswith('https://pump.fun/') and resolved.endswith(('.woff2','.woff','.ttf','.png','.svg')):assets.add(resolved)
+                        resolved=public_asset(relative,r['url'],('.woff2','.woff','.ttf','.png','.svg'))
+                        if resolved:assets.add(resolved)
     OUT.mkdir(parents=True,exist_ok=True)
     manifest={'captured_at':datetime.datetime.now(datetime.timezone.utc).isoformat(),'user_agent':UA,'scope':PAGES,'exclusions':['support','terminal','mobile app','token/coin detail pages','pump-token'],'records':records,'limits':{'asset_discovery_waves':8,'waves_used':waves,'unfetched_discovered':sorted(assets-done)}}
     atomic_write(OUT/'manifest.json', (json.dumps(manifest,indent=2)+'\n').encode('utf-8'))
