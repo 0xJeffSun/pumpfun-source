@@ -43,7 +43,8 @@
   "localReadModels": {
     "callouts": {
       "operations": [
-        "GET /callout/{calloutId}"
+        "GET /callout/{calloutId}",
+        "GET /callout/list/{userId}"
       ],
       "status": "opt-in-public-spot-slice",
       "defaultEnabled": false,
@@ -51,9 +52,11 @@
       "evidence": [
         "packages/backend/CALLOUTS.md",
         "packages/backend/test/callouts.test.ts",
-        "packages/backend/test/callouts-evidence.test.ts"
+        "packages/backend/test/callouts-evidence.test.ts",
+        "packages/backend/CALLOUT-LIST.md",
+        "packages/backend/test/callout-list.test.ts"
       ],
-      "limits": "Server-owned materialization only; no production absence, ranking, prices, auth or complete operation compatibility claim."
+      "limits": "Server-owned public spot materialization only; single-author all-history list has local sorting/defaults/cursors, not upstream ranking or pagination. No member expansion, window computation, PnL calculation, production absence/auth or complete operation compatibility claim."
     },
     "userTrades": {
       "operations": [

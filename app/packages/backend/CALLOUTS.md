@@ -1,4 +1,4 @@
-# Opt-in public single-callout read model
+# Opt-in public callout read model
 
 This is a bounded, independently implemented backend feature, not original
 backend source or qualified Pump compatibility. `GET /v1/callout/:calloutId`
@@ -6,7 +6,8 @@ assembles public Solana/EVM spot-token callouts from an explicitly supplied,
 server-owned materialization. It joins author identity and visible author
 updates, and optionally projects a quoted callout one level deep. There is no
 default dataset, production request, database, price computation, wallet action,
-or write endpoint.
+or write endpoint. The same opt-in store now also serves a bounded canonical-author
+list; see [CALLOUT-LIST.md](CALLOUT-LIST.md) for its separate contract and limits.
 
 ## Evidence and scope
 
@@ -43,14 +44,18 @@ handlers: `/posts`, `/posts/{postId}`, and its `/replies` and `/quotes` reads.
 The post liker/reposter reads belong to another scope and do not increase this
 content denominator. This change adds only the bounded single-callout slice.
 
-The other 13 remain outside this implementation: `/callout/coin/{coin}`,
-`/callout/leaderboard-stats/{userId}`, `/callout/list/{userId}`,
+The initial single-callout implementation left 13 operations outside its scope.
+The later bounded `/callout/list/{userId}` slice is documented separately in
+`CALLOUT-LIST.md`; the remaining 12 stay outside this store: `/callout/coin/{coin}`,
+`/callout/leaderboard-stats/{userId}`,
 `/callout/replies/list/{userId}`, `/callout/replies/{replyId}/chain`,
 `/callout/reposts/list/{userId}`, `/callout/user/{userId}/mint/{coinMint}`,
 `/callout/{calloutId}/quotes`, `/callout/{calloutId}/replies`,
 `/callout/{calloutId}/tailers`, `/feed/video-feed`, `/home-feed`, and
-`/home-feed/new`. They retain the existing fixture/501 harness. No list ranking,
-pagination default, PnL, tailing algorithm, or new-feed cursor is invented.
+`/home-feed/new`. The developer operations retain the existing fixture/501 harness. The separate
+website home-feed adapter is not a developer `/home-feed` implementation. No
+upstream list ranking, pagination default, PnL, tailing algorithm, or new-feed
+cursor is inferred.
 
 ## Materialization contract (local design)
 
@@ -112,7 +117,7 @@ concurrent in-place writes are unsupported. A programmatic caller can supply
 Without a configured store, existing explicit fixtures and 501 responses are
 unchanged. With one, this route takes precedence over matching fixtures and
 uses the existing developer-key **shape** gate. That gate is not credential
-verification, scope enforcement or a website session. Viewer query parameters
+verification, scope enforcement or a website session. For the single-callout route, viewer query parameters
 and all other nonempty queries return a local explicit 501 instead of pretending
 their semantics are implemented. The entire suffix after the first `?` is checked,
 so additional `?` characters (for example, `/v1/callout/a??userId=other`)
@@ -138,7 +143,7 @@ visibility, optional knowledge, author-only updates, duplicate/dangling
 references, immutable reads, input privacy/admission, file loading, authentication
 boundary, fixture precedence, unsupported requests and source provenance.
 
-Verified on the patch:
+Historical single-callout patch checks (not a claim about the current aggregate):
 
 - Backend `tsc -p tsconfig.json` build and `tsc --noEmit`: passed.
 - `node --import tsx --test test/*.test.ts`: **348/348** backend tests passed,

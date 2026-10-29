@@ -355,7 +355,6 @@ test("opt-in route gates API keys, labels data, conforms to schema, and leaves o
     for (const url of [
       "/v1/callout/a/quotes",
       "/v1/callout/a/replies",
-      "/v1/callout/list/author-a",
     ]) {
       assert.equal((await app.inject({ url, headers })).statusCode, 501);
     }
