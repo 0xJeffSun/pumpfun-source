@@ -50,3 +50,15 @@ For a fresh build, use the unchanged maintained recipe and supplied source archi
 `runtime/execution.json` retains the exact local replay commands and input hashes. The two-state observer and unchanged producers are in `runtime/inputs`; the captured-loader implementation is retained with them. Use the repository's captured evidence and compatible solders runtime, with explicit trusted imports as recorded. No live RPC, production transaction or dependency download was used.
 
 Remaining target differences include earlier account/argument setup, stack offsets, error paths and later transfer flow. No further source-variant sweep was performed.
+
+## Qualification follow-up
+
+The verifier now reuses the finite correspondence checks accepted in PR896 for the related V3 costs packet. It pins the independently qualified 66-file source parent, joins source maps to archives and build controllers to launch receipts, retains the exact executed script/fixture bytes, and checks all 26 runtime input hashes and sizes against their actual receipt. Every one of the 28 case definitions and 84 signed instruction/account layouts is reconstructed from those fixed inputs without importing a producer or VM. The two copy cases additionally bind the complete initial accumulator data and metadata to the fixed fixture's zero/signer variant; signed payer and resulting user bytes are checked together.
+
+Nine resealed negative controls cover coherent source substitution, duplicated fixtures, a valid signed wrong-amount wire, incorrect synthetic pre-state/lamports/vault data, duplicated copy states, incorrect complete accumulator pre-state, and a wrong copy transaction. These controls originally passed the weaker verifier and now fail at the corresponding independent check. Run them with:
+
+```sh
+python -B research/pump-v3-key-copy-20261029/test_verify.py --repo-root .
+```
+
+This follow-up changes no source patch, build, binary, or runtime observation. It performs no new compiler or VM run. Historical paths and original input copies stay intact; `runtime/executed-scripts` identifies the exact scripts actually used, distinct from the earlier retained input copies.
