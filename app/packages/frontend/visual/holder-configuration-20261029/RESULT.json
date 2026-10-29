@@ -68,7 +68,18 @@
     "unchangedFactoryBodySha256": "49c42e491310e985a652dbfdcb553a9edfdbb58c16acd3005f63e7daafa41ab1",
     "related815": "Open separate holdings PR; its old whole-file witness needs explicit integration rebind, without altering historical receipts."
   },
-  "productionBuild": "Pending independently scheduled root check; not claimed by this receipt.",
+  "productionBuild": {
+    "head": "0726144070ac55ca438faaedc3123bb0554e3fa8",
+    "independentRoot": true,
+    "result": "production/checks.json",
+    "checks": [
+      "SDK/backend/Next production build",
+      "recursive typecheck",
+      "698 capture/npm/unchanged SDK verification",
+      "progress and eight tests"
+    ],
+    "passed": true
+  },
   "limits": [
     "No successful live-chain/provider oracle.",
     "Browser success payloads are synthetic protocol data.",

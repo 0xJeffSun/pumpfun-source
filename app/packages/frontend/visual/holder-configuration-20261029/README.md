@@ -26,6 +26,7 @@ open-state reference or live production response establishes parity.
 
 The producer, nine new groups, ten existing RPC groups, frontend TypeScript,
 698 immutable capture/npm/SDK checks and progress with eight tests pass at the
-same runtime revision. Production build qualification is recorded separately
-when complete. No original API, eligibility, accrued/claimable rewards, signing,
+same runtime revision. Independent SDK/backend/Next production build, recursive typecheck,698 app
+evidence/npm/SDK checks and progress pass at the same runtime revision.
+`production/checks.json` and raw compressed logs retain those independent checks. No original API, eligibility, accrued/claimable rewards, signing,
 authenticated wallet ownership or successful live provider read is claimed.
