@@ -125,13 +125,16 @@ test. In particular, the count response declares an integer `newCount` without
 a nonnegative restriction; its strings have no encoded token-format rule.
 The tests preserve these distinctions instead of inventing stricter checks.
 
-The producer uses the maintained **4,915-variant / 6,108-origin** index. The
-[bounded index comparison](original-home-feed-index-compatibility.json) also
+The producer was first built on the maintained **4,915-variant / 6,108-origin**
+index. The [bounded index comparison](original-home-feed-index-compatibility.json)
 checked its selected 31 complete factory entries against the separately owned
 **5,947-variant / 7,337-origin** expansion at
 `7b52e2cfb780e246fe98c656122d95be769e17a3`. Every selected complete entry and
-every variant set for its numeric IDs remained equal. The expanded index is
-comparison evidence, not a shipped dependency or recovery claimed here. It
+every variant set for its numeric IDs remained equal. Main has since adopted
+that expansion (#679 added factory files and index entries only), so the
+frozen `inventorySha256` now pins the expanded index and the producer requires
+the comparison witness to name it; the artifact's operations, fragments and
+factories are unchanged. The expansion is not a recovery claimed here. It
 does not rely on PR657's selected 909-factory graph. The overlap review read
 main `7261b795144e16d382c7b4a0522ca503fb0e2474`
 and open [PR657](https://github.com/lalalune/pumpfun-source/pull/657) head

@@ -41,3 +41,7 @@ corepack pnpm verify:evidence
 ```
 
 Root checks are `python3 scripts/verify_evidence.py` and `python3 scripts/test_tooling.py`. Current focused coverage is13 workflow/adaptation tests plus11 shared source tests, with deterministic fake client/storage/clock/controller capabilities. Tests do not use actual cookies, profiles, credentials, browser storage or production services. Full app gates remain pending until their recorded results are available; no green aggregate or visual-parity claim is made while pending.
+
+## Inventory anchor update
+
+`PROVENANCE.json` now binds `recovered/modules.json` sha256 `1d268ae7f2eb0f61eaaffd222269bf29d9ce06e9946372861721b2f159d868e2` (main after #679, which only added factory files and index entries) instead of `9631271006faa37ea6055a11be4ec1faf971b45e2c7cdb78fc08a6530e777a50`. Every cited factory and its complete index entry is byte-identical across both indexes, and `INDEX-COMPATIBILITY.json` is unchanged. The anchor was the only regenerated field (`recover.mjs --write`).

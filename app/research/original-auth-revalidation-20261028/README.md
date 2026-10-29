@@ -48,3 +48,7 @@ From the repository root, run `python3 scripts/verify_evidence.py` and `python3 
 ## Completed gates
 
 The22 focused tests, full app build, aggregate typecheck,698-object app evidence verification,9 root capture checks and6 tooling checks pass. The full app test run passes230 backend tests,60 app Node tests and every focused/Python suite; browser tests finish89/91. Failures are the unchanged leaderboard weekly/realized URL-state race tracked in PR663 and Explore test150 waiting for the no-results state. The latter passes1/1 when isolated. Relevant implementation/test bytes equal maintained main and are hashed in VALIDATION.json; complete stdout from the failed aggregate remains saved. No fully green aggregate result is claimed.
+
+## Inventory anchor update
+
+`PROVENANCE.json` now binds `recovered/modules.json` sha256 `1d268ae7f2eb0f61eaaffd222269bf29d9ce06e9946372861721b2f159d868e2` (main after #679, which only added factory files and index entries) instead of `9631271006faa37ea6055a11be4ec1faf971b45e2c7cdb78fc08a6530e777a50`. Every cited factory and its complete index entry is byte-identical across both indexes, and `INDEX-COMPATIBILITY.json` is unchanged. The anchor was the only regenerated field (`recover.mjs --write`).

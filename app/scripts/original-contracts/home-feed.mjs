@@ -6,7 +6,7 @@ import { createSchemaExtractor } from './schema.mjs';
 
 export const FROZEN_INPUTS = Object.freeze({
   manifestSha256: '9e0fc00719eb8c919dd4205d3c118eb48c4927e056c77e8343e26d6f7189bbb5',
-  inventorySha256: '9631271006faa37ea6055a11be4ec1faf971b45e2c7cdb78fc08a6530e777a50',
+  inventorySha256: '1d268ae7f2eb0f61eaaffd222269bf29d9ce06e9946372861721b2f159d868e2',
 });
 const operations = ['GET /home-feed', 'GET /home-feed/new', 'GET /home-feed/new/count'];
 const contractChunk = 'evidence/web/objects/2b47dd0b38a1608f.js';
@@ -211,7 +211,9 @@ export async function extractHomeFeed(root) {
   const compatibilityPath = 'contracts/original-home-feed-index-compatibility.json';
   const compatibilityBytes = await fs.readFile(path.join(root, compatibilityPath));
   const compatibility = JSON.parse(compatibilityBytes);
-  if (compatibility.maintainedInventorySha256 !== corpus.anchors.inventorySha256 ||
+  // Main adopted the #679 expansion; the witness proves the selected complete
+  // entries and numeric-ID variant sets are equal across both indexes.
+  if (compatibility.expandedInventorySha256 !== corpus.anchors.inventorySha256 ||
       compatibility.equalCompleteIndexEntries !== true) throw new Error('invalid index compatibility witness');
   const contextRanges = new Set([...fragments.values()].map((record) => `${record.source}:${record.utf16.join(':')}`));
   const selected = [...new Set([...factories.values()].map((entry) => entry.sha256).concat(
@@ -233,7 +235,7 @@ export async function extractHomeFeed(root) {
       inventoryCompatibility: { document: compatibilityPath, sha256: sha256(compatibilityBytes),
         selectedVariants: compatibility.selectedVariants, expandedInventoryCommit: compatibility.expandedInventoryCommit,
         expandedInventorySha256: compatibility.expandedInventorySha256,
-        note: 'The expanded inventory is separate comparison evidence; this producer requires only the maintained index' } },
+        note: 'Main now ships the expanded inventory (#679); the earlier maintained index is the comparison baseline' } },
     scope: operations,
     operations: result,
     transport: {

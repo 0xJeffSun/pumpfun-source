@@ -59,3 +59,7 @@ The focused run has24 auth tests plus11 shared source-authentication tests. Brow
 The full app test run passes230 backend tests,72 app Node tests, all focused/Python suites and90/91 Playwright tests. It exits1 because the unchanged leaderboard test selects weekly then realized but observes daily/realized. Both the implementation and test bytes equal maintained main; the independently reproduced existing fix is PR663. This unrelated fix is not included. Build/full-test inputs predate only the small static shared-helper outer-metadata correction; its final11-test suite passes separately, and no served route or auth adapter changed. No completely green aggregate test result is claimed.
 
 The earlier `VALIDATION.json` preserves the independent initial expanded-inventory qualification. The publication receipt and current `PROVENANCE.json` bind the maintained-index PR.
+
+## Inventory anchor update
+
+`PROVENANCE.json` now binds `recovered/modules.json` sha256 `1d268ae7f2eb0f61eaaffd222269bf29d9ce06e9946372861721b2f159d868e2` (main after #679, which only added factory files and index entries) instead of `9631271006faa37ea6055a11be4ec1faf971b45e2c7cdb78fc08a6530e777a50`. Every cited factory and its complete index entry is byte-identical across both indexes, and `INDEX-COMPATIBILITY.json` is unchanged. The anchor was the only regenerated field (`recover.mjs --write`).

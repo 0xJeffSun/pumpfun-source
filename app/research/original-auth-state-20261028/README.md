@@ -47,3 +47,7 @@ Focused tests are10 original predicate cases plus11 shared source cases. They us
 ## Gate results
 
 The focused21/21 tests, full app build, aggregate typecheck,698-object app verification,9 root capture checks and6 tooling checks pass. The full app test command passes230 backend tests,59 app Node tests and all focused/Python suites; Playwright finishes89/91. Failures are the unchanged leaderboard weekly/realized URL-state race tracked in PR663 and the Explore shell-search URL assertion. The latter passes1/1 when run in isolation; the failed full run is preserved. Relevant implementation/test bytes equal maintained main, with hashes in VALIDATION.json. No completely green aggregate test result is claimed.
+
+## Inventory anchor update
+
+`PROVENANCE.json` now binds `recovered/modules.json` sha256 `1d268ae7f2eb0f61eaaffd222269bf29d9ce06e9946372861721b2f159d868e2` (main after #679, which only added factory files and index entries) instead of `9631271006faa37ea6055a11be4ec1faf971b45e2c7cdb78fc08a6530e777a50`. Every cited factory and its complete index entry is byte-identical across both indexes, and `INDEX-COMPATIBILITY.json` is unchanged. The anchor was the only regenerated field (`recover.mjs --write`).
