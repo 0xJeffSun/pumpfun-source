@@ -213,13 +213,18 @@ function parseCreators(value: unknown, page: number): CreatorsData {
   };
 }
 
-function validateCompetitionPrizes(value: unknown, label: string): void {
-  for (const [index, prizeValue] of array(value, label, 100).entries()) {
+function parseCompetitionPrizes(
+  value: unknown,
+  label: string,
+): CompetitionSummary["prizes"] {
+  return array(value, label, 100).map((prizeValue, index) => {
     const prize = record(prizeValue, `${label}[${index}]`);
-    nonNegativeNumber(prize.rankFrom, `${label}[${index}].rankFrom`);
-    nonNegativeNumber(prize.rankTo, `${label}[${index}].rankTo`);
-    text(prize.amount, `${label}[${index}].amount`, 200);
-  }
+    return {
+      rankFrom: nonNegativeNumber(prize.rankFrom, `${label}[${index}].rankFrom`),
+      rankTo: nonNegativeNumber(prize.rankTo, `${label}[${index}].rankTo`),
+      amount: text(prize.amount, `${label}[${index}].amount`, 200),
+    };
+  });
 }
 
 function parseCompetitionEntry(
@@ -277,10 +282,8 @@ function parseCompetitionSummary(
   if (!["upcoming", "registration", "live", "ended"].includes(phase)) {
     throw new UpstreamValidationError(`${label}.phase is unsupported.`);
   }
-  validateCompetitionPrizes(competition.prizes, `${label}.prizes`);
+  const prizes = parseCompetitionPrizes(competition.prizes, `${label}.prizes`);
   nullableText(competition.imageUrl, `${label}.imageUrl`, 2048);
-  nonNegativeNumber(competition.minMembers, `${label}.minMembers`);
-  nonNegativeNumber(competition.maxMembers, `${label}.maxMembers`);
   for (const key of ["top", "winners"] as const) {
     array(competition[key], `${label}.${key}`, 100).forEach((entry, index) =>
       parseCompetitionEntry(entry, `${label}.${key}[${index}]`),
@@ -293,6 +296,9 @@ function parseCompetitionSummary(
     title: text(competition.title, `${label}.title`, 500),
     description: text(competition.description, `${label}.description`, 5000),
     prizeCopy: text(competition.prizeCopy, `${label}.prizeCopy`, 1000),
+    prizes,
+    minMembers: nonNegativeNumber(competition.minMembers, `${label}.minMembers`),
+    maxMembers: nonNegativeNumber(competition.maxMembers, `${label}.maxMembers`),
     registrationOpensAt: date(
       competition.registrationOpensAt,
       `${label}.registrationOpensAt`,
