@@ -16,8 +16,10 @@ was unmeasured. This packet measures the legacy wall directly.
 
 All cases legacy `buy` on the shared v1/v2 fixture, 3 images each.
 Pool base reserves b = 673,696,395,912,745 (vault base), raw vault
-quote 122,946,690,720, effective q = 122,946,438,956 (raw minus
-accrued fees 125,882 plus virtual -125,882). Limit is u64::MAX
+quote 122,946,690,720, effective q = 122,946,564,838 (raw quote
+plus virtual reserves -125,882). The separate available-reserve
+check subtracts accrued fees 125,882; effective curve reserves do
+not subtract those fees again. Limit is u64::MAX
 unless stated, so slippage never masks the wall; the user quote
 account is funded to u64::MAX (lamports u64::MAX, token amount
 u64::MAX - 2,039,280 rent), so balance never masks it either.
@@ -124,3 +126,5 @@ owner and extension bytes and only rewrite lamports and the
 amount field -- overwriting the account with a TOKEN-owned one
 gives IncorrectProgramId, a harness artifact, not handler
 behavior.
+
+The retained producer's narrative header and generated README template contain the earlier effective-quote value 122,946,438,956. That prose double-subtracts accrued fees. The producer logic and raw receipts are unchanged; their curve quotes and wall boundaries use 122,946,564,838, as independently rederived from the recorded pool and vault snapshots.
