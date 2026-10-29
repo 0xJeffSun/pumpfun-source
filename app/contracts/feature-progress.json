@@ -1242,7 +1242,10 @@
         },
         "logic": {
           "status": "pending",
-          "evidence": []
+          "evidence": [
+            "packages/backend/USER-TRADES.md",
+            "packages/backend/src/user-trades-store.ts"
+          ]
         },
         "adapters": {
           "status": "pending",
@@ -1267,7 +1270,7 @@
           "evidence": []
         }
       },
-      "note": "No local indexer, portfolio read models or reorg handling."
+      "note": "Opt-in materialized spot positions and user trade/transfer-history reads exist; contract/feature completion stays pending. No local chain indexer, financial derivation, production compatibility or reorg handling."
     },
     {
       "id": "settings",

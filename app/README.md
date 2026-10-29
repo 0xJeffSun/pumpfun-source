@@ -139,6 +139,17 @@ history are not implemented. See
 [`packages/frontend/PORTFOLIO-RPC.md`](packages/frontend/PORTFOLIO-RPC.md) for the
 contract, precision rules, live qualification, and limitations.
 
+## Opt-in materialized trade history
+
+The backend can serve `GET /v1/user-trades/:id` from an operator-owned
+`TRADES_FILE`. It computes person/raw-wallet selection, mint/chain/type filters,
+stable pages and page-specific metadata joins from supplied spot facts; no
+default history dataset, indexer or production proxy is enabled. The existing
+developer key-shape gate still applies and does not verify key scopes or
+revocation. This bounded read model is separate from the live portfolio UI and
+is not qualified Pump API compatibility. See
+[`packages/backend/USER-TRADES.md`](packages/backend/USER-TRADES.md).
+
 ## Refresh / inspect
 
 ```sh

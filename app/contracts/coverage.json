@@ -42,7 +42,9 @@
   "progressReport": "../PROGRESS.md",
   "localReadModels": {
     "callouts": {
-      "operations": ["GET /callout/{calloutId}"],
+      "operations": [
+        "GET /callout/{calloutId}"
+      ],
       "status": "opt-in-public-spot-slice",
       "defaultEnabled": false,
       "qualified": false,
@@ -52,6 +54,20 @@
         "packages/backend/test/callouts-evidence.test.ts"
       ],
       "limits": "Server-owned materialization only; no production absence, ranking, prices, auth or complete operation compatibility claim."
+    },
+    "userTrades": {
+      "operations": [
+        "GET /user-trades/{id}"
+      ],
+      "status": "opt-in-materialized-spot-history-slice",
+      "defaultEnabled": false,
+      "qualified": false,
+      "evidence": [
+        "packages/backend/USER-TRADES.md",
+        "packages/backend/test/user-trades.test.ts",
+        "packages/backend/test/user-trades-evidence.test.ts"
+      ],
+      "limits": "Computes selection/joins/keyset pages from explicit local facts; no production history/indexer, group/extra-chain lanes, authenticated-key scope or full operation compatibility claim."
     }
   }
 }
