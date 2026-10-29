@@ -6,6 +6,12 @@
     "analyze.py": "6edfba06846ff9d6ba930867078acbbe25c88f6dedf0b1c5ab57da01384de4e6",
     "verify_evidence.py": "95f9564d4b70985962f826e2b6a8a990ea665f39d698f43a50ae006bb61a4bed"
   },
+  "reviewed_source_sha256_lf": {
+    "capture.py": "16b2a6e9f747dee5a964afae25d90cdd974d5da76e0db3fdfd4bf018fe80b5f5",
+    "analyze.py": "dd7fb38d795d4dd72a25aab0d65c2223d9f6f75d8b3ecb0de1d87d6e102910ac",
+    "verify_evidence.py": "de254298e2a064711f1709f5c7827fd34c2cca12af90504620e364c88d511c23"
+  },
+  "reviewed_source_sha256_line_endings": "reviewed_source_sha256 hashes CRLF checkouts (Windows autocrlf); reviewed_source_sha256_lf hashes the same scripts as stored in Git / checked out on LF platforms. verify.py accepts both forms.",
   "checks": {
     "test_verify.py": "4 passed",
     "python -O test_verify.py": "4 passed",
