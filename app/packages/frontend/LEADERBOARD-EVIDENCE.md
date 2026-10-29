@@ -152,3 +152,39 @@ response type exposes the prior failure before the parser fix.
 `node --test tests/leaderboard-contract.test.mjs` passes all six tests after the
 fix. These are local contract regressions, not a successful production response,
 a native ranking implementation, or live compatibility qualification.
+
+### Confirmed-payout top-500 pagination boundary
+
+Factory 190491 and the pinned OpenAPI distinguish the capped served board from
+the **uncapped** `totalEarners`. The Creator UI previously calculated pages from
+the latter alone: 503 earners with page size 20 advertised 26 pages although only
+25 can contain rows. Its empty branch also removed navigation, including when
+a local filter matched nothing on an otherwise valid page.
+
+The UI now derives the available count as `min(totalEarners, 500)`, preserves the
+whole-board earner count, and labels the top-500 limit when relevant. Valid-page
+navigation remains visible with an empty filter result. An out-of-range bookmarked
+page is explicitly identified and offers a first-page recovery button instead of
+silently relabeling its empty response. Trader and competition pagination do not
+change. Creator pagination metadata must contain nonnegative/positive safe
+integers and a page size1–200 before this calculation runs; these admission bounds
+are local validation, not an upstream error-contract claim.
+
+The new synthetic test passes 503 supplied earners through `PayoutsStore`, the
+existing creator normalizer, and the page-count helper. A semantics-preserving
+extraction of the original arithmetic failed with 26 rather than 25 pages; the
+capped calculation passes. Other tests cover empty/below-cap/capped boards,
+out-of-range pages, metadata rejection and input immutability. The **3 new pure
+tests plus 6 existing adapter tests pass**, and full frontend JSX typecheck passes.
+Run `node --test tests/creator-pagination.test.mjs tests/leaderboard-contract.test.mjs`
+from `app`; the new `.test.mjs` file is included by the existing default test glob.
+Strict checked-JavaScript test-source validation also passes.
+
+Four added browser cases cover 390/1280px last-page limits, empty-filter navigation,
+and out-of-range bookmark recovery/reload. All 13 leaderboard cases collect;
+**browser execution remains unrun** in the blocked cloud environment. Their
+explicit synthetic interceptors abort unexpected origins or HTTP mutations.
+No browser launch/download retry, production request, credential acquisition or
+SDK/wallet operation was performed. The amendment's frontend build is not claimed:
+the known external advisory-fetch build block has not been bypassed or retried.
+These results add no visual, native, full-application or compatibility qualification.

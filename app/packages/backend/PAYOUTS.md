@@ -152,3 +152,12 @@ without that CLI listener. No sandbox setting was weakened. This is not an
 aggregate application/browser/evidence-gate pass, nor a production differential
 test. No backend compatibility count, feature milestone, native payout parity,
 security guarantee, or Slop workflow completion is claimed.
+
+The same payout work unit also corrects the existing Creator UI's page-count
+boundary: it preserves the whole-board count but offers at most the top500 rows,
+keeps navigation with empty local filters, and exposes recovery for out-of-range
+bookmarks. Three new pure frontend cases plus six existing adapter cases pass;
+full frontend JSX typecheck passes. Thirteen leaderboard browser cases collect
+(four new) but are **not executed**; the current frontend build is not qualified.
+See `../frontend/LEADERBOARD-EVIDENCE.md` for the red/green arithmetic reproduction,
+unchanged trader/competition boundary and the cloud verification limitations.

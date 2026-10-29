@@ -1,6 +1,10 @@
 "use client";
 
 import Link from "next/link";
+import {
+  creatorPagination,
+  CREATOR_LEADERBOARD_LIMIT,
+} from "./creator-pagination";
 import { useSearchParams } from "next/navigation";
 import {
   FormEvent,
@@ -628,24 +632,47 @@ export default function LeaderboardClient() {
         .filter(Boolean)
         .some((value) => value!.toLocaleLowerCase().includes(lowerQuery)),
     );
-    const totalPages = Math.max(
-      1,
-      Math.ceil(data.totalEarners / data.pageSize),
-    );
-    content = entries.length ? (
+    const { totalPages, outOfRange } = creatorPagination(data);
+    content = (
       <>
         <div className="leaderboard-summary">
           <span>{compact.format(data.totalEarners)} confirmed earners</span>
+          {data.totalEarners > CREATOR_LEADERBOARD_LIMIT ? (
+            <span>Top {CREATOR_LEADERBOARD_LIMIT} available</span>
+          ) : null}
           <span>
             Generated{" "}
             {data.generatedAt ? safeTime(data.generatedAt) : "unknown"}
           </span>
         </div>
-        <CreatorRows entries={entries} />
-        <Pagination page={data.page} totalPages={totalPages} onPage={setPage} />
+        {outOfRange ? (
+          <>
+            <EmptyState
+              message={`Page ${data.page} is outside the available payout board (pages 1–${totalPages}).`}
+            />
+            <button
+              className="leaderboard-button"
+              type="button"
+              onClick={() => setPage(1)}
+            >
+              Back to first payout page
+            </button>
+          </>
+        ) : (
+          <>
+            {entries.length ? (
+              <CreatorRows entries={entries} />
+            ) : (
+              <EmptyState message="No creator on this loaded page matches the local filter." />
+            )}
+            <Pagination
+              page={data.page}
+              totalPages={totalPages}
+              onPage={setPage}
+            />
+          </>
+        )}
       </>
-    ) : (
-      <EmptyState message="No creator on this loaded page matches the local filter." />
     );
   } else if (response?.ok && response.data.kind === "competitions") {
     const data: CompetitionsData = response.data;
