@@ -130,7 +130,7 @@ def main():
                       'original_accrual_calls_verified': 2, 'rejected_witness_cases': 2,
                       'saved_executions': 4, 'signature_occurrences_verified': signatures,
                       'new_builds': 0, 'new_replays': 0,
-                      'candidate_build_inventory_runtime': 'pending'}, indent=2))
+                      'scope': 'prebuild source/control proof; actual native proof is qualification/verify.py'}, indent=2))
 
 
 if __name__ == '__main__':
