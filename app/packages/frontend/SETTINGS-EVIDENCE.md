@@ -47,11 +47,13 @@ styled as a footer entry above Support/Terminal so they keep their captured posi
 dialog portalled to `document.body` after hydration. This avoids hiding the dialog
 under a mobile navigation ancestor's `aria-hidden`/`inert` state. Modal background
 scroll is locked temporarily, with the previous body overflow restored on close.
-Escape keydown stops propagation at the modal without preventing its default:
-the current shell and Live listeners are window bubble listeners, while native
-dialog cancellation still dispatches `cancel`. The cancel handler removes only
-the settings query keys. This ordering has a combined sidebar/settings/Live
-regression, but has not yet been exercised in a browser.
+Escape keydown explicitly closes through the existing URL update, prevents the
+input's default handling and stops propagation before shell/Live window listeners.
+Relying only on native `cancel` left the modal open when a populated search input
+consumed Escape. The native cancel handler remains as a fallback for cancellation
+not initiated by that keydown. Both paths remove only the settings query keys.
+The combined sidebar/settings/Live regression now presses Escape from the populated
+search field; its history, focus and scroll-lock assertions remain intact.
 
 Supported local interactions are query-open, section selection, search/clear and
 empty results, tab-key/arrow-key navigation, an exact known focus target,
@@ -147,3 +149,45 @@ Original authenticated screenshots were not supplied. No screenshot comparison,
 pixel parity, live settings success, full settings source completion or native
 notification compatibility is claimed. All completion milestones depending on
 those results must remain pending.
+
+## Escape follow-up
+
+An isolated browser run against the earlier combined settings/auth/Live candidate
+reported a repeatable failure in `Escape and repeated reopening clear local search
+and do not add history entries`: Escape from a populated search input left Settings
+open. Its local correction was not published with PR #675. The current source at
+`521266e9f8d98af5f71c55850a4b4db7fe68ee52` still contains the same native-cancel-only
+handler. This follow-up independently makes keydown dismissal explicit; it does not
+claim identity with the unavailable earlier patch or transfer that run's browser
+results to the current captured shell.
+
+The scrolling regression first completes an open/close interaction before changing
+`body.style.overflow`, rather than mutating server-rendered attributes before
+hydration. No timing delay, global listener, notification adapter or shared-shell
+change is introduced.
+
+Validation on that snapshot plus this three-file follow-up (build and typecheck
+were also rerun after refreshing backend sources to
+`20c2c8af785cfd3f1ab8c841e9e5eb029e5967d2`; frontend and dependency files were unchanged):
+
+- Passed: full `pnpm build` (SDK, backend, Next 16.4.1,
+  static page generation 16/16),
+  `pnpm typecheck` for all three packages, and all 39 focused settings model,
+  source-contract and notification state/action tests.
+- Passed: the repository-root `scripts/test_tooling.py` synthetic comparator
+  tests (6/6); its inspected source and imports match the upstream Git blobs.
+- Blocked: repository-root `scripts/verify_evidence.py` exits at the missing
+  `evidence/upstream/pump.json` input in the bounded local checkout. No binary
+  or captured-bundle execution was attempted.
+- Passed: formatting and collection of all 15 settings Playwright cases.
+  Collection is not browser execution; current-shell browser behavior remains
+  unverified in this environment.
+- Blocked by the partial local evidence checkout: `python3 scripts/verify-evidence.py`
+  reports missing manifest-referenced capture objects; `progress.py --check` first reports missing
+  `packages/frontend/visual/portfolio-live-20261028/live-verification.json`.
+  These are not passing evidence/progress gates, and the aggregate test command
+  has not run on this follow-up.
+
+Dependencies were reused from the pinned cache with the frozen lockfile, offline
+mode, scripts disabled and the existing minimum-release-age policy unchanged.
+No feature milestone, full workspace qualification or visual parity is implied.
