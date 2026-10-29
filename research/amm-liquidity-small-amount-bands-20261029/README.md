@@ -26,8 +26,7 @@ case, so the quote reserve is the raw vault quote
 122,946,690,720 (the owed-fee subtraction itself was pinned by
 the extremes packet); base vault 673,696,395,912,745, LP supply
 4,194,352,106,721, except where a case patches the pool or the
-LP mint supply. `producer.py` reproduces every receipt from the
-repository files.
+LP mint supply. `producer.py` regenerated these receipts on the author's machine: it hard-codes `~/workspace/pumpfun-sparse` and reads the control/candidate images from `~/workspace/slop-verify`, so it does not run from this packet unmodified. The control and candidate are the gunzipped in-repo #424/#427 artifacts (`research/amm-multi-hop-group-slice-recovery/artifacts/candidate.so.gz`, sha 7a300434..., and `research/amm-transfer-fee-diagnostic-recovery/artifacts/candidate.so.gz`, sha d17a657b...).
 
 ### Deposit small bands (ceil)
 
@@ -44,10 +43,10 @@ repository files.
 | dep-1-maxbase-160 | 6004 ExceededSlippage | | | | |
 | dep-1-maxquote-0 | 6004 ExceededSlippage | | | | |
 
-Deposit 0 is a silent no-op success (0 minted). The quote leg
+Deposit 0 succeeds with all five token deltas and the vq delta equal to 0; it still runs a 0-amount Token-2022 MintTo CPI and emits the deposit event (wd-zero likewise runs a 0-amount Burn and emits its event). The quote leg
 stays at 1 all the way through 34 LP and steps to 2 at 35 LP:
 ceil(122,946,690,720 x 34 / 4,194,352,106,721) = 1, ceil at 35
-= 2. The base leg steps every ~6.22 LP (161, 322, 482, ...).
+= 2. The base leg is ceil(LP x 160.62...): 161, 322, 482 base for 1, 2, 3 LP (dep-1..dep-3), 5,462 at 34 LP and 5,622 at 35 LP.
 
 ### Withdraw small bands (floor)
 
@@ -86,9 +85,7 @@ coming out than going in, and dep-1/wd-1 differ by 1 base and
 A 1-LP deposit moves virtual reserves by 0 (floor of
 10^9 / 4,194,352,106,721) while a 1-LP withdraw moves them by
 -1 (ceil of the same fraction). At 10^9 LP the pair drifts by
--1: deposit adds 238,415, withdraw subtracts 238,416. A vq of
-1 is erased by one 1-LP withdraw and never moved by a 1-LP
-deposit. At vq = 2^127-1 both paths fail 6023 Overflow in the
+-1: deposit adds 238,415, withdraw subtracts 238,416. A vq of 1 is taken to 0 by one 1-LP withdraw (wd-boost-vq1-1). No deposit at vq 1 was executed; the 1-LP deposit at vq 10^9 (dep-boost-1) moved vq by 0. At vq = 2^127-1 both paths fail 6023 Overflow in the
 virtual update itself (after the transfers, so the failure
 rolls everything back except the 5,000 fee).
 
@@ -118,19 +115,19 @@ order.
 
 ## Result
 
-- **Deposit rounds up, withdraw rounds down, at every step.**
+- **In every executed deposit/withdraw case, deposit amounts equal ceil and withdraw amounts equal floor of reserve x LP / supply.**
   Quote stays 1 through dep-34 and steps at dep-35; withdraw
   pays 0 quote through wd-34 and first pays at wd-35. The
   100-LP pair differs by exactly 1 base (16,062 in, 16,061
   out); the 1-LP pair differs by 1 base and 1 quote.
 - **Withdraw can burn LP for nothing on the quote leg.**
-  wd-1 through wd-34 burn LP and return base only; a
+  wd-1 and wd-34 (the only withdraws executed below 35 LP, plus the 1-LP boost withdraws) burn LP and return base only; intermediate amounts 2-33 are not executed; a
   min-quote of 1 on wd-1 fails 6004, so the dust is not
   hidden behind a limit default — it is the computed amount.
-- **The boost virtual update drifts -1 per round trip.**
+- **For the two pinned LP amounts at vq 10^9 (1 LP and 10^9 LP), the single-transaction deposit and withdraw vq deltas sum to -1 (0 vs -1; +238,415 vs -238,416); no deposit-then-withdraw round trip was executed.**
   Deposit floors, withdraw ceils; at 10^9 LP the drift is
   exactly 238,415 in vs 238,416 out, and at 1 LP it is 0 in
-  vs -1 out. A vq of 1 does not survive one small withdraw.
+  vs -1 out. A vq of 1 is taken to 0 by one 1-LP withdraw (wd-boost-vq1-1).
 - **SeedLock is withdraw-only, zero supply is a shared
   division gate at different sites.** Mint supply one above
   pool supply fails withdraw 6067 but deposits fine; pool
@@ -150,6 +147,18 @@ Error sites (log paths as emitted by each image):
 - wd-supply0: original Program log: AnchorError thrown in programs/pump-amm/src/curve/constant_product.rs:112. Error Code: DivisionByZero. Error Number: 6025. Error Message: DivisionByZero.; control Program log: AnchorError thrown in programs/pump-amm/src/curve/constant_product.rs:31. Error Code: DivisionByZero. Error Number: 6025. Error Message: DivisionByZero.; candidate Program log: AnchorError thrown in programs/pump-amm/src/curve/constant_product.rs:31. Error Code: DivisionByZero. Error Number: 6025. Error Message: DivisionByZero.
 
 ## Limits
+
+- `producer.py` regenerated these receipts on the author's machine: it hard-codes
+  `~/workspace/pumpfun-sparse` and reads the control/candidate images from
+  `~/workspace/slop-verify`, so it does not run from this packet unmodified. The control
+  and candidate are the gunzipped in-repo #424/#427 artifacts
+  (`research/amm-multi-hop-group-slice-recovery/artifacts/candidate.so.gz`,
+  `research/amm-transfer-fee-diagnostic-recovery/artifacts/candidate.so.gz`), which
+  `verify.py` reads directly.
+- The `scope` text inside `runtime/report.json.gz` says the first positive quote is at 35 LP
+  on both sides; the receipts show deposit quote is already 1 at 1 LP and steps to 2 at 35 LP,
+  while withdraw quote first becomes positive (1) at 35 LP. The receipts and the Cases table are
+  authoritative.
 
 - No source change, no build, no whole-program identity claim.
   All executions are offline LiteSVM replays with normally

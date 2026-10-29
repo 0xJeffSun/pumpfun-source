@@ -17,14 +17,11 @@ the zero-supply division gate. None of these were pinned before:
   reserve is the raw vault quote, isolating the ceil/floor
   rounding from the owed-fee subtraction.
 - The boost virtual update is floor on deposit and ceil on
-  withdraw (deposit.rs vs withdraw.rs), so a deposit/withdraw
-  pair of the same LP amount drifts the virtual reserves by -1.
+  withdraw (deposit.rs vs withdraw.rs), so for the two pinned LP amounts (1 and 10^9 at vq 10^9) the deposit and withdraw single-transaction vq deltas sum to -1.
   A 1-LP deposit moves virtual reserves by 0 while a 1-LP
-  withdraw moves them by -1, and a vq of 1 is erased by a
-  single 1-LP withdraw but never moved by a 1-LP deposit.
+  withdraw moves them by -1, and a vq of 1 is taken to 0 by a single 1-LP withdraw (no deposit at vq 1 was executed).
 - SeedLockViolation (6067) gates withdraw only: a mint supply
-  one above the pool supply fails withdraw, while the same
-  state deposits fine (deposit never reads the mint supply).
+  one above the pool supply fails withdraw, while the same state deposits fine (dep-seedlock succeeds: -161 / -1 / +1); deposit does not enforce the SeedLock check in this state.
 - Zero pool supply divides by zero on both paths, at different
   sites: deposit in ceil_div (fees.rs), withdraw in the floor
   ratio (constant_product.rs).
@@ -34,8 +31,7 @@ protocol/creator fees zeroed (quote reserve = raw vault quote
 122,946,690,720) and base vault 673,696,395,912,745, LP supply
 4,194,352,106,721, except where a case patches the pool (virtual
 reserves, pool supply) or the LP mint supply. Clock slot 100,
-epoch 0. All amounts below are measured, not computed by hand
-(the builder asserts every one against all three images).
+epoch 0. The CASES expected tuples are measured and asserted against all three images; statements in this docstring beyond those cases are arithmetic, not executions.
 """
 import base64
 import gzip
