@@ -1,5 +1,7 @@
+if not __debug__:
+ raise SystemExit('Run without -O; inherited readers require assertions.')
 from pathlib import Path
-import gzip,hashlib,importlib.util,json,shutil,tempfile,unittest
+import gzip,hashlib,importlib.util,json,shutil,subprocess,sys,tempfile,unittest
 P=Path(__file__).resolve().parents[1];R=P.parents[1]
 s=importlib.util.spec_from_file_location('queue_verify',P/'verify.py');v=importlib.util.module_from_spec(s);s.loader.exec_module(v)
 
@@ -39,5 +41,10 @@ class QueueEvidenceTests(unittest.TestCase):
   self.changed_packet('build/build-launch.json.gz',change,'derivative build command transformation')
  def test_resealed_complete_object_claim_rejected(self):
   self.changed_packet('captures/baseline/result.json.gz',lambda x:x.update(object_sha256='0'*64),'complete probe object equality')
+ def test_optimized_entrypoints_refuse(self):
+  for entry in [P/'verify.py',P/'tests/test_verify.py']:
+   result=subprocess.run([sys.executable,'-I','-O','-B',str(entry)],capture_output=True,text=True)
+   self.assertNotEqual(result.returncode,0)
+   self.assertEqual(result.stderr.strip(),'Run without -O; inherited readers require assertions.')
 
 if __name__=='__main__':unittest.main()

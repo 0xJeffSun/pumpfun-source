@@ -48,6 +48,8 @@ These commands use only local saved evidence. They require the reviewed parent
 `research/pump-exact-sol-scheduler-20261029`, its source parent
 `research/pump-exact-sol-guard-20261029`, and `evidence/original/pump/deployed.so`.
 They work after copying that dependency set into a different directory.
+Both entrypoints reject optimized Python (`-O`), preserving assertions in the
+inherited ELF readers before those readers are imported.
 
 The native build used existing qualified objects and libraries, recompiling
 only `ScheduleDAGRRList.cpp`, rebuilding its library, and linking a separate

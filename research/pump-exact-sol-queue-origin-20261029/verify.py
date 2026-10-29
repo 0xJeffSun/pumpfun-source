@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """Portable saved-evidence replay; no compiler, VM or target execution."""
+if not __debug__:
+ raise SystemExit('Run without -O; inherited readers require assertions.')
 from pathlib import Path, PureWindowsPath
 import argparse,gzip,hashlib,importlib.util,json,re,shlex,tempfile
 P=Path(__file__).resolve().parent
