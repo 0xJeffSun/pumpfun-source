@@ -1,6 +1,8 @@
 import Fastify from "fastify";
 import { CALLOUTS_NATIVE_ROUTES, registerCalloutRoutes } from "./callouts-routes.js";
 import type { CalloutsStore } from "./callouts-store.js";
+import { PositionsStore } from "./positions-store.js";
+import { registerPositionsRoutes, POSITIONS_NATIVE_ROUTES } from "./positions-routes.js";
 import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 import { validateHeaderName, validateHeaderValue } from "node:http";
@@ -320,6 +322,8 @@ const NATIVE_ROUTES = new Set<string>([
 export interface BuildAppOptions {
   /** Explicit server-owned public callout materialization; absent retains fixture/501 behavior. */
   calloutsStore?: CalloutsStore;
+  /** Explicit local materialization; absent preserves the fixture/501 harness. */
+  positionsStore?: PositionsStore;
   /** Override the user store (for tests). */
   userStore?: UserStore;
   /** Override the post store (for tests). */
@@ -377,6 +381,7 @@ export function buildApp(fixtures: Fixture[] = [], opts: BuildAppOptions = {}) {
     registerCompetitionRoutes(native, compStore);
     registerFollowingRoutes(native, followStore);
     if (opts.calloutsStore) registerCalloutRoutes(native, opts.calloutsStore);
+    if (opts.positionsStore) registerPositionsRoutes(native, opts.positionsStore);
   });
 
   // Routing recognizes documented paths; no fabricated domain responses or live proxy fallback.
@@ -388,7 +393,8 @@ export function buildApp(fixtures: Fixture[] = [], opts: BuildAppOptions = {}) {
     )) {
       // Skip operations that a native handler already serves.
       if (NATIVE_ROUTES.has(`${method.toUpperCase()} ${path}`) ||
-        (opts.calloutsStore && CALLOUTS_NATIVE_ROUTES.has(`${method.toUpperCase()} ${path}`))) continue;
+        (opts.calloutsStore && CALLOUTS_NATIVE_ROUTES.has(`${method.toUpperCase()} ${path}`)) ||
+        (opts.positionsStore && POSITIONS_NATIVE_ROUTES.has(`${method.toUpperCase()} ${path}`))) continue;
       app.route({
         method: method.toUpperCase() as "GET",
         url: "/v1" + path.replace(/\{([^}]+)\}/g, ":$1"),
