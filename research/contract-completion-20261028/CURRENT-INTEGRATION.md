@@ -54,12 +54,12 @@ saved object. Independent cryptographic checks cover 20,056 retained transaction
 and 39,062 signature fields. Historical source/host provenance and the admitted
 catalog-encoding caveat remain disclosed in its current proof.
 
-Pump selects the [qualified accrual successor](../pump-multihop-accrual-qualification-20261028/README.md),
+Pump selects the [qualified program-creator notice correction](../pump-program-creator-notice-qualification-20261028/README.md),
 which preserves the composed creation, admin-wallet, legacy-payment and multi-hop
 admission fixes. Its 65 standalone inputs map to 66 actual compiler inputs.
 Two actual builds—an ordinary build with fresh local crates and an independent
-portable empty-target build—repeat both c0e29/dd73 outputs. The cold build took
-57.538 seconds and authenticated 254 locked archives and 4,176 source files under
+portable empty-target build—repeat both d037/0f50 outputs. The cold build took
+62.437 seconds and authenticated 254 locked archives and 4,176 source files under
 the unchanged native macOS v1.44/Linux v1.44 SBPF library recipe. Coverage remains
 1,019 normalized / 188 raw windows, with the same sixteen residuals.
 
@@ -120,7 +120,8 @@ failures are resolved on the selected 199fd image; all eighteen cases pass with
 strict state, CPI, event, return and ordered program-message comparison. The prior
 acc5 selection is retained in pump-status-before-final-composition.json.
 
-PR #711 merged as `f57bbf0d`; Pump remains on the qualified accrual successor.
+PR #711 merged as `f57bbf0d` and selected the qualified accrual successor at
+that review; the later notice correction supersedes that selection.
 The `199fd` selection discussed above is historical. Its frozen records and
 executed controllers remain unchanged.
 
@@ -176,3 +177,83 @@ entrypoints reject optimized Python explicitly. This proposal has one author
 cold build, finite runtime evidence, and no independent repeat or full 44-suite
 qualification. [Pump review](pr-review-batch15-independent.json) and
 [AMM review](pr-review-batch16-independent.json) record their exact scope.
+
+The next source audit found a current C0 diagnostic gap: an executable creator
+skips the original program-creator notice. A minimal one-file correction
+preserves all 17 error/panic token positions and restores the notice, with no
+state or event change. An independent witness audit checks the authentic Fees
+program, signed transaction, full account metadata and literal captured loads.
+Warm and independent cold builds repeat D037/0f50. All 44 suites / 10,468 pairs,
+strict ordered logs, focused/captured cases and inherited accrual counter cases
+pass. The correction changes no complete-window membership: 16 Pump windows
+and one AMM sell window remain; meaningful ELF exactness remains three of five.
+
+The notice correction was merged as PR #761 at `18b569dd`, with final reviewed
+head `22a5ddd2` and the selected D037 packet unchanged. The Clock research
+proposal was also published as PR #731 at `3496af06`; its proposed timestamp
+source remains research-only. Earlier pending-publication entries describe
+the state at review time. Explicit publication outcomes are appended to
+[the review ledger](pr-review-results.json). Hosted checks were queued at the
+notice merge, so local qualification and merge do not establish hosted success.
+
+Three further contract research PRs (#768, #770 and #779) are merged. The admin
+setter packet now binds all 26 cases, three historical images, 111 retained
+signed receipts, signed accounts and chain continuity, with six corruption
+controls. The two Mayhem packets add disjoint 38- and 704-byte payload intervals;
+the combined historical payload union is 21,451/26,180 bytes, with descriptor
+pointer fields credited as mapped bytes. These saved/static reviews add no VM
+execution or complete code windows. [Exact heads and limits](pr-review-batch17-independent.json)
+are recorded separately from hosted checks, which were queued at the merge
+observations.
+
+The [native exact-SOL guard follow-up](../pump-exact-sol-guard-native-review-20261029/README.md)
+retains one actual warm build and all original sealed evidence. Portable saved
+verification reproduces the unchanged 1,019/1,035 normalized and 188 raw Pump
+windows, with no gains/losses and two reversed loads remaining. It supplies no
+cold/runtime qualification or canonical promotion. Parallel audits and one
+private CTO guard-placement trial also gained no complete windows; the full
+reconstruction objective remains active with sixteen Pump and one AMM window.
+
+The next review integrates nine incoming contract research/tooling PRs (#666,
+#783, #812, #825, #827, #831, #846, #847 and #848). Corrected successors #872,
+#883 and #896 preserve their original ancestry; #880 repairs the already-merged
+legacy cashback proof while retaining its narrowed documentation and raw receipts.
+The named reviewed Mayhem data chain reaches 21,796/26,180 payload bytes; newer
+attribution packets remain outside that subtotal. [Exact outcomes and evidence
+limits](pr-review-batch18-independent.json) distinguish historical signed records,
+review-derived proof constraints and maintained runtime qualification.
+
+Two actual native V3 cost builds reproduce identical complete outputs with a
+qualified passive trace. The target matches the Linux proposal at 2,144 bytes,
+still 25 aligned slots from the original. The trace locates the extra branch,
+return-pointer spill and split error tail; it selects no further Rust patch.
+No complete windows are gained or lost, and the maintained D037/86dbc selections
+remain unchanged. The two-build allowance is exhausted; no VM, cold build or
+canonical promotion followed. The full reconstruction objective remains active.
+
+The [portable native trace packet](../pump-v3-final-native-trace-20261029/README.md)
+retains all 295 original native evidence members and their exact inner seal. Its
+saved reader and five corruption controls pass from physically copied published
+inputs only. Historical and corrected PR831 verifier views remain distinct; old
+recipes and verifiers are not executed or relabeled as current native provenance.
+
+Ten further incoming contract proof/data PRs (#819, #821, #823, #851, #852,
+#879, #881, #884, #889 and #890) are merged, with #908 preserving #884's
+original ancestry. The eight Mayhem packets add 1,510 disjoint historical data
+bytes to the reviewed 21,796-byte baseline, reaching 23,306/26,180. This includes
+1,446 new raw-equal bytes and 64 mapped pointer bytes. The formatting-record
+claim is corrected from 18 to 16 bytes after following its actual branch path;
+seven other original observation reports remain byte exact. Saved positives,
+69 tests and 24 optimized-mode refusals pass on the composed reviewed trees.
+
+The accumulator-close lifecycle proof now binds all 16 cases, 102 signed
+receipts, eight wires, complete expected-step membership and 54 chain joins.
+Ten coherent corruption controls reject substitutions accepted by the old
+reader. Its historical images remain distinct from the selected AMM image.
+The sealed historical r37 packet is restored by moving an unrelated unchanged
+patch into its originating packet; its manifest and original evidence stay
+unchanged. [Exact heads, validation and limits](pr-review-batch19-independent.json)
+record these outcomes. No VM/compiler execution or source selection follows
+from these PR reviews, and no complete code window is added. The final observed
+main checks were queued; meaningful ELF exactness remains three of five, with
+sixteen Pump and one AMM function still unmatched.

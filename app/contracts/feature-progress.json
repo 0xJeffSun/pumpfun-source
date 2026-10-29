@@ -351,7 +351,8 @@
         "contract": {
           "status": "accepted",
           "evidence": [
-            "packages/frontend/GO-EVIDENCE.md#observed"
+            "packages/frontend/GO-EVIDENCE.md#observed",
+            "reconstruction/follow-counts/README.md"
           ]
         },
         "logic": {
@@ -479,7 +480,8 @@
           "status": "accepted",
           "evidence": [
             "packages/frontend/HOLDER-REWARDS-EVIDENCE.md#captured-factories",
-            "packages/frontend/HOLDER-REWARDS-EVIDENCE.md#published-sdk-contract"
+            "packages/frontend/HOLDER-REWARDS-EVIDENCE.md#published-sdk-contract",
+            "packages/frontend/HOLDER-CONFIGURATION.md"
           ]
         },
         "logic": {
@@ -493,7 +495,8 @@
           "status": "accepted",
           "evidence": [
             "packages/frontend/src/app/holder-rewards-derivation.ts",
-            "packages/frontend/src/components/rewards/RewardSummary.tsx"
+            "packages/frontend/src/components/rewards/RewardSummary.tsx",
+            "research/holder-rewards-config-20261029/SOURCE.json"
           ]
         }
       },
@@ -525,7 +528,7 @@
           ]
         }
       },
-      "note": "Published-SDK offline PDA derivation, validation and unavailable states pass unit and browser tests. Live account existence, balances, eligibility, claims and original visual parity remain unqualified."
+      "note": "Published-SDK PDA derivation now offers an explicit read of public SOL/token holdings through the existing mainnet RPC service. Holdings do not establish account existence, eligibility, accrued or claimable rewards. Claims and original visual/API parity remain unavailable or unqualified. See packages/frontend/HOLDER-PUBLIC-BALANCES.md."
     },
     {
       "id": "create",
@@ -603,7 +606,8 @@
         "contract": {
           "status": "accepted",
           "evidence": [
-            "packages/frontend/PROFILE-EVIDENCE.md#observed"
+            "packages/frontend/PROFILE-EVIDENCE.md#observed",
+            "contracts/ORIGINAL-FOLLOW-LIST.md"
           ]
         },
         "logic": {
@@ -692,7 +696,7 @@
           "evidence": []
         }
       },
-      "note": "No local authenticated UI or wallet workflow."
+      "note": "Sign-in remains unavailable. An opt-in Wallet Standard public-address connection/forget workflow is implemented with source witnesses and local protocol/UI tests; it supplies no authentication, signing or persisted identity. See packages/frontend/PUBLIC-WALLET-EVIDENCE.md. Full original auth/wallet parity remains pending."
     },
     {
       "id": "portfolio",

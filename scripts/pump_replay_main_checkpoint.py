@@ -20,7 +20,7 @@ def main():
     assert 1 <= args.shard <= args.shards
     verify(ROOT)
     selected = json.loads((ROOT / 'repro/status.json').read_text())['pump']
-    if selected['candidate_artifact'] in ['repro/pump/canonical-frontier-20261028/candidate.so', 'research/pump-create-used-boundaries-20261028/artifacts/candidate.so', 'research/pump-final-composition-673-20261028/artifacts/candidate.so', 'research/pump-multihop-accrual-qualification-20261028/artifacts/candidate.so']:
+    if selected['candidate_artifact'] in ['repro/pump/canonical-frontier-20261028/candidate.so', 'research/pump-create-used-boundaries-20261028/artifacts/candidate.so', 'research/pump-final-composition-673-20261028/artifacts/candidate.so', 'research/pump-multihop-accrual-qualification-20261028/artifacts/candidate.so', 'research/pump-program-creator-notice-qualification-20261028/artifacts/candidate.so']:
         if not __debug__:
             raise SystemExit('Replay requires normal Python; do not use -O.')
         package = (ROOT / selected['candidate_artifact']).parent
@@ -33,7 +33,7 @@ def main():
         workspace.resolve().relative_to(ROOT.resolve())
         # Use the actual compiled workspace and receipt. The sealed source
         # archive materializes that same workspace in a clean CI checkout.
-        archive_name = 'compiled-workspace.tar.gz' if selected['candidate_artifact'] == 'research/pump-multihop-accrual-qualification-20261028/artifacts/candidate.so' else 'compiled-source.tar.gz'
+        archive_name = 'compiled-workspace.tar.gz' if selected['candidate_artifact'] in ['research/pump-multihop-accrual-qualification-20261028/artifacts/candidate.so', 'research/pump-program-creator-notice-qualification-20261028/artifacts/candidate.so'] else 'compiled-source.tar.gz'
         with tarfile.open(package / 'builds/primary' / archive_name) as archive:
             for item in archive:
                 path = Path(item.name)
@@ -62,7 +62,7 @@ def main():
                         '--build-comparison', str(comparison), '--output', str(args.output),
                         '--captured-loader', '--workers', str(args.workers),
                         '--shard', str(args.shard), '--shards', str(args.shards)], cwd=ROOT, check=True)
-        if selected['candidate_artifact'] in ['research/pump-final-composition-673-20261028/artifacts/candidate.so', 'research/pump-multihop-accrual-qualification-20261028/artifacts/candidate.so']:
+        if selected['candidate_artifact'] in ['research/pump-final-composition-673-20261028/artifacts/candidate.so', 'research/pump-multihop-accrual-qualification-20261028/artifacts/candidate.so', 'research/pump-program-creator-notice-qualification-20261028/artifacts/candidate.so']:
             subprocess.run([sys.executable, '-O', '-B', str(ROOT / 'scripts/pump_strict_ordered_logs.py'),
                             '--report', str(args.output), '--candidate', str(ROOT / selected['candidate_artifact']),
                             '--output', str(args.output) + '.strict-logs.json'], cwd=ROOT, check=True)

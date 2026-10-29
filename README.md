@@ -23,15 +23,16 @@ percentage of engineering work completed.
 
 ## Current qualifications and remaining work
 
-- [Pump's composed source](research/pump-multihop-accrual-qualification-20261028/README.md)
+- [Pump's composed source](research/pump-program-creator-notice-qualification-20261028/README.md)
   preserves 1,019 normalized / 188 raw windows and the prior creation, admin,
-  legacy-payment and multi-hop admission fixes. It restores the two original
-  fee-accrual calls. Twelve synthetic counter fixtures agree with the original;
-  the prior selected image differs on three ordered Source lines. Two actual builds, including an independent empty-target
-  build, repeat both outputs. All 10,468 broad pairs and 106 strict focused case
-  records pass; separate legacy284 and extension126 pairs also pass. Historical
-  controls remain intact. Sixteen windows and whole meaningful ELF identity
-  remain open; this correction adds no matched window.
+  legacy-payment and multi-hop fixes. It also restores the original notice when
+  the creator is an executable program. The signed witness matches original
+  logs, state and events; the previous C0 image omitted the notice. Two actual
+  builds, including an independent empty-target build, repeat both outputs.
+  All 10,468 broad pairs and 106 strict focused records pass, together with the
+  inherited twelve counter fixtures and separate legacy and extension cases.
+  Sixteen windows and whole meaningful ELF identity remain open; this correction
+  adds no matched window.
 - [AMM's explicit layout recipe](research/amm-layout-closure-20261028/README.md)
   produces784 raw-identical physical windows. Every meaningful ELF byte outside
   sell's 9,024 bytes and 21 relocation-offset rows inside sell is literally equal,
@@ -108,10 +109,10 @@ Source acquisition/extraction is separate from editable feature reconstruction a
 | Live discovery / playback | 3/3 (100%) | 3/4 (75%) | Authenticated five-record historical discovery snapshot, fail-closed evidence adapter and local search/selection states pass unit and browser tests. Current livestream state, native API compatibility, playback, presence and original visual parity remain unqualified. |
 | GO | 3/3 (100%) | 3/4 (75%) | Authenticated 25-record historical bounty snapshot, fail-closed evidence adapter, local search/filter/sort/cursor state and unavailable account actions pass unit and browser tests. Current API compatibility, authenticated flows, mutations and original visual parity remain unqualified. |
 | Mayhem | 3/3 (100%) | 2/4 (50%) | Evidence-mapped state filters, sorting, strict validation and fail-closed offline states pass unit and browser tests. No archived Mayhem response, qualified live API compatibility or original visual parity is claimed. |
-| Holder rewards | 3/3 (100%) | 3/4 (75%) | Published-SDK offline PDA derivation, validation and unavailable states pass unit and browser tests. Live account existence, balances, eligibility, claims and original visual parity remain unqualified. |
+| Holder rewards | 3/3 (100%) | 3/4 (75%) | Published-SDK PDA derivation now offers an explicit read of public SOL/token holdings through the existing mainnet RPC service. Holdings do not establish account existence, eligibility, accrued or claimable rewards. Claims and original visual/API parity remain unavailable or unqualified. See packages/frontend/HOLDER-PUBLIC-BALANCES.md. |
 | Create coin / upload | 3/3 (100%) | 3/4 (75%) | Evidence-mapped offline metadata drafting, validation, local image preview and failure states pass browser tests. Upload, wallet signing, transaction creation, token launch and original visual parity remain unqualified. |
 | Profiles / social graph | 3/3 (100%) | 3/4 (75%) | Evidence-mapped, hash-bound synthetic profiles resolve by exact user id or wallet and render filtered authored posts with responsive browser coverage. Native profile compatibility, follow graph, authenticated behavior and original visual parity remain unqualified. |
-| Authentication / wallets | 0/3 (0%) | 0/4 (0%) | No local authenticated UI or wallet workflow. |
+| Authentication / wallets | 0/3 (0%) | 0/4 (0%) | Sign-in remains unavailable. An opt-in Wallet Standard public-address connection/forget workflow is implemented with source witnesses and local protocol/UI tests; it supplies no authentication, signing or persisted identity. See packages/frontend/PUBLIC-WALLET-EVIDENCE.md. Full original auth/wallet parity remains pending. |
 | Portfolio / positions | 3/3 (100%) | 3/4 (75%) | Live mainnet SOL, SPL Token and Token-2022 account reads pass unit, browser and actual-RPC checks. Pump positions/PnL compatibility and original visual parity remain unqualified. |
 | Settings / notifications | 0/3 (0%) | 0/4 (0%) | No local settings or notification UI. |
 | Legal / fee information | 3/3 (100%) | 3/4 (75%) | Authenticated archived fee, privacy and terms documents now render through a fail-closed offline adapter with responsive navigation and corruption tests. Current legal authority and original visual parity remain unqualified. |
