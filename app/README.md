@@ -28,7 +28,7 @@ pnpm verify:evidence
 pnpm dev
 ```
 
-Frontend: `http://localhost:3000`. Backend: `http://localhost:3001`. The frontend forwards `/api/compat/*` to the local backend. No credentials, wallet connection or production API proxy is enabled.
+Frontend: `http://localhost:3000`. Backend: `http://localhost:3001`. The frontend forwards `/api/compat/*` to the local backend. No credentials, authenticated sign-in or production API proxy is enabled. The Sign in chooser offers an explicit [public-address-only Wallet Standard connection](packages/frontend/PUBLIC-WALLET-EVIDENCE.md); it requests no signature, stores no address and does not authenticate an account.
 
 Replay the captured price snapshot (historical evidence, never a live price):
 

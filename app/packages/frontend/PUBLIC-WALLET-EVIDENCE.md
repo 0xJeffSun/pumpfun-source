@@ -20,12 +20,13 @@ The verifier reuses the maintained source primitive from #684. It parses origina
 
 The existing #701 display-restore/pending-logout code and other original auth declarations remain independent and unchanged. No restored cookie claim or saved wallet is trusted here. The newly inventoried **198825** (`292b9629fd07…`) is a modal-state context, not a wallet connection or authentication provider; its name `useConnectWallet` alone does not establish a server protocol.
 
-This is an independent implementation of the observed public protocol, **not recovered original TypeScript or original Privy/auth parity**. Deliberate local policies are stricter: opt-in discovery; no passive account reads; only protocol-v1 Solana wallets with connect/events; canonical 32-byte base58 first Solana account; no remote wallet icons, legacy `navigator.wallets` migration, mobile handoff or autoConnect. Wallet metadata is untrusted and cannot establish installation, ownership or authorization. Object identity, not a provider name, distinguishes registrations. A 15-second deadline and generation guards reject late approvals; a cancelled prompt may remain open in the extension because Wallet Standard supplies no cancellation port.
+This is an independent implementation of the observed public protocol, **not recovered original TypeScript or original Privy/auth parity**. Deliberate local policies are: opt-in discovery; no passive account reads; only protocol-v1 Solana wallets with connect/events; canonical 32-byte base58 first Solana account; no remote wallet icons, legacy `navigator.wallets` migration, mobile handoff or autoConnect. Wallet metadata is untrusted and cannot establish installation, ownership or authorization. Object identity, not a provider name, distinguishes registrations. A 15-second deadline and generation guards reject late approvals; a cancelled prompt may remain open in the extension because Wallet Standard supplies no cancellation port.
 
 ## Verification and reproducible checks
 
 ```sh
 corepack pnpm test:public-wallet
+node --test tests/public_wallet_protocol.test.mjs
 corepack pnpm --filter @pump-reconstruction/frontend exec tsc --noEmit --incremental false
 corepack pnpm --filter @pump-reconstruction/frontend exec playwright test tests/auth.spec.ts tests/public-wallet.spec.ts
 ```
@@ -35,3 +36,11 @@ The 11 controller cases cover explicit prompting, no passive account reads, no s
 The five product-browser cases exercise the actual SignInControl integration, declined prompts, late approval after close, unregistration, signed-out shell and unchanged storage/network boundaries. They capture local 320×640 and 1440×900 screenshots. The wallet fixture implements the public protocol with synthetic public addresses; it is not a live wallet, production account or authenticated upstream observation. Original open-dialog screenshots are unavailable, so no visual-equivalence claim is made. The existing archived `/explore` screenshot describes the closed signed-out page, not this new connection state.
 
 The auth feature ledger remains pending for complete source/success/failure/consistency parity. This bounded local connection is not evidence of an authenticated backend, permissions, trades, account linking or complete wallet support.
+
+## Recorded local result
+
+[Validation record](visual/public-wallet-20261029/validation.json) binds the actual tested implementation `f102a5c122e212f70131bf65d0d94373d03124f6`, raw command/results, logs and local screenshots. All five new product UI cases passed; the selected auth/portfolio/public-wallet target finished 17 passed and seven explicit skips. Build and recursive typecheck passed. After restoring unchanged captures and prior evidence excluded by the sparse validation checkout, app evidence verification passed all 698 objects/npm/SDK checks and progress verification passed eight tests. The initial sparse-checkout failure is retained. This evidence supplement changes no frontend runtime source.
+
+![Local mobile public-wallet panel](visual/public-wallet-20261029/public-wallet-320.png)
+
+![Local desktop public-wallet panel](visual/public-wallet-20261029/public-wallet-1440.png)
