@@ -552,19 +552,21 @@ export function normalizeGoQuery(parameters: URLSearchParams): {
 function compareOptionalNumbers(
   left: number | undefined,
   right: number | undefined,
+  direction: number,
 ): number {
   if (left === undefined) return right === undefined ? 0 : 1;
   if (right === undefined) return -1;
-  return left - right;
+  return (left - right) * direction;
 }
 
 function compareOptionalDates(
   left: string | undefined,
   right: string | undefined,
+  direction: number,
 ): number {
   if (left === undefined) return right === undefined ? 0 : 1;
   if (right === undefined) return -1;
-  return Date.parse(left) - Date.parse(right);
+  return (Date.parse(left) - Date.parse(right)) * direction;
 }
 
 export function queryArchivedBounties(
@@ -585,18 +587,19 @@ export function queryArchivedBounties(
   const sorted = [...filtered].sort((left, right) => {
     let result = 0;
     if (query.sort === "createdAt")
-      result = Date.parse(left.createdAt) - Date.parse(right.createdAt);
+      result = (Date.parse(left.createdAt) - Date.parse(right.createdAt)) * direction;
     else if (query.sort === "rewardTotalUsd")
       result = compareOptionalNumbers(
         left.rewardTotalUsdAtCapture,
         right.rewardTotalUsdAtCapture,
+        direction,
       );
     else if (query.sort === "expiresAt")
-      result = compareOptionalDates(left.expiresAt, right.expiresAt);
-    else result = left.submissionCount - right.submissionCount;
+      result = compareOptionalDates(left.expiresAt, right.expiresAt, direction);
+    else result = (left.submissionCount - right.submissionCount) * direction;
     return result === 0
       ? left.taskId.localeCompare(right.taskId, "en-US")
-      : result * direction;
+      : result;
   });
 
   const rawOffset = query.cursor

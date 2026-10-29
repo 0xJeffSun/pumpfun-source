@@ -7,6 +7,13 @@ import {
   readFileSync,
   readSync,
 } from "node:fs";
+import {
+  CalloutListError,
+  decodeCalloutPage,
+  encodeCalloutPage,
+  fingerprint,
+  parseCalloutListQuery,
+} from "./callout-list-query.js";
 import type { operations, components } from "./generated/developer-api.js";
 import { assertSchema, type SchemaNode } from "./schema-validator.js";
 
@@ -14,6 +21,30 @@ export type Callout = NonNullable<
   operations["get_callout_by_calloutId"]["responses"][200]["content"]["application/json"]["callout"]
 >;
 export type QuotedCallout = components["schemas"]["Shared_85bd3a13acc3"];
+export type CalloutListResponse =
+  operations["get_callout_list_by_userId"]["responses"][200]["content"]["application/json"];
+export type CalloutListItem = CalloutListResponse["callouts"][number];
+const tailFields = [
+  "tailBuyers",
+  "tailCohort1h",
+  "tailPnl1hUsd",
+  "tailCohort4h",
+  "tailPnl4hUsd",
+  "tailCohort24h",
+  "tailPnl24hUsd",
+  "tailPnlHist1h",
+  "tailPnlHist4h",
+  "tailPnlHist24h",
+  "tailAth1hUsd",
+  "tailAth4hUsd",
+  "tailAth24hUsd",
+  "tailAthHist1h",
+  "tailAthHist4h",
+  "tailAthHist24h",
+] as const;
+export type CalloutTailFacts = Partial<
+  Pick<CalloutListItem, (typeof tailFields)[number]>
+>;
 export type CalloutUpdate = Callout["updates"][number];
 const authorFields = [
   "userName",
@@ -54,6 +85,8 @@ export interface CalloutsDataset {
     facts: CalloutFacts | null;
     /** Optional separately materialized one-level quote projection. */
     quoteFacts?: QuoteFacts;
+    /** Optional list-only measurements. Omitted fields remain unknown (null), never computed. */
+    tailFacts?: CalloutTailFacts;
   }>;
   updates: Array<{
     calloutId: string;
@@ -73,6 +106,20 @@ const responseSchema: SchemaNode =
   spec.paths["/callout/{calloutId}"].get.responses[200].content[
     "application/json"
   ].schema;
+const listItemSchema: SchemaNode =
+  spec.paths["/callout/list/{userId}"].get.responses[200].content[
+    "application/json"
+  ].schema.properties.callouts.items;
+const tailFactsSchema: SchemaNode = {
+  type: "object",
+  additionalProperties: false,
+  properties: Object.fromEntries(
+    tailFields.map((key) => [key, listItemSchema.properties![key]]),
+  ),
+};
+const unknownTailFacts = Object.fromEntries(
+  tailFields.map((key) => [key, null]),
+) as Pick<CalloutListItem, (typeof tailFields)[number]>;
 const calloutSchema = responseSchema.properties!.callout;
 const quoteSchema: SchemaNode = spec.components.schemas.Shared_85bd3a13acc3;
 const quoteInnerSchema = quoteSchema.properties!.callout;
@@ -149,7 +196,7 @@ function instant(value: unknown, label: string): void {
   if (new Date(value).toISOString() !== canonical)
     fail(`${label} has an invalid calendar date`);
 }
-function plainJson(value: unknown, depth = 0): void {
+export function assertCalloutJson(value: unknown, depth = 0): void {
   if (depth > 30) fail("nested input exceeds the local limit");
   if (
     value === null ||
@@ -165,7 +212,7 @@ function plainJson(value: unknown, depth = 0): void {
       const descriptor = Object.getOwnPropertyDescriptor(value, index);
       if (!descriptor || !Object.hasOwn(descriptor, "value"))
         fail("unsupported array field");
-      plainJson(descriptor.value, depth + 1);
+      assertCalloutJson(descriptor.value, depth + 1);
     }
     return;
   }
@@ -187,7 +234,7 @@ function plainJson(value: unknown, depth = 0): void {
       !descriptor.enumerable
     )
       fail("unsupported object field");
-    plainJson(descriptor.value, depth + 1);
+    assertCalloutJson(descriptor.value, depth + 1);
   }
 }
 const counters = new Set([
@@ -248,10 +295,11 @@ export class CalloutsStore {
     string,
     CalloutsDataset["callouts"][number]
   >();
+  private readonly snapshot: string;
   private readonly updates = new Map<string, CalloutUpdate[]>();
 
   constructor(input: unknown) {
-    plainJson(input);
+    assertCalloutJson(input);
     object(
       input,
       [
@@ -285,7 +333,15 @@ export class CalloutsStore {
     for (const row of data.callouts) {
       object(
         row,
-        ["calloutId", "authorId", "hidden", "deleted", "facts", "quoteFacts"],
+        [
+          "calloutId",
+          "authorId",
+          "hidden",
+          "deleted",
+          "facts",
+          "quoteFacts",
+          "tailFacts",
+        ],
         "callout",
       );
       identity(row.calloutId, "calloutId");
@@ -321,6 +377,31 @@ export class CalloutsStore {
           row.quoteFacts.actingUser.userId !== row.quoteFacts.actingUserId
         )
           fail("acting identity mismatch");
+      }
+      if (row.tailFacts !== undefined) {
+        assertSchema(row.tailFacts, tailFactsSchema, "tail facts", spec);
+        // Counts and ATH totals have nonnegative semantics; PnL can legitimately be negative.
+        const checkCounts = (value: unknown): void => {
+          if (!value || typeof value !== "object") return;
+          for (const [key, child] of Object.entries(value)) {
+            if (
+              child !== null &&
+              (["tailBuyers", "tailers", "callouts"].includes(key) ||
+                key.startsWith("tailCohort"))
+            ) {
+              if (!Number.isSafeInteger(child) || (child as number) < 0)
+                fail("tail counts must be nonnegative safe integers");
+            }
+            if (
+              /^tailAth\d+hUsd$/.test(key) &&
+              child !== null &&
+              (child as number) < 0
+            )
+              fail("tail ATH totals must be nonnegative");
+            checkCounts(child);
+          }
+        };
+        checkCounts(row.tailFacts);
       }
       this.callouts.set(row.calloutId, row);
     }
@@ -359,6 +440,7 @@ export class CalloutsStore {
         const bt = b.createdAt === null ? -Infinity : Date.parse(b.createdAt);
         return (at === bt ? 0 : at > bt ? -1 : 1) || orderText(b.id, a.id);
       });
+    this.snapshot = fingerprint(data);
   }
 
   get(calloutId: string): { callout: Callout | null } {
@@ -378,6 +460,69 @@ export class CalloutsStore {
     };
     // Caller mutation cannot alter subsequent reads, including nested author/update/quote objects.
     return structuredClone({ callout: result });
+  }
+  /** Single-author full-history slice of this local public materialization only. */
+  list(userId: string, query = new URLSearchParams()): CalloutListResponse {
+    const { pageToken, ...options } = parseCalloutListQuery(query);
+    const author = this.authors.get(userId);
+    if (!author)
+      throw new CalloutListError(501, "CALLOUT_LIST_AUTHOR_UNAVAILABLE");
+    if (options.includeMembers && author.accountKind === "group")
+      throw new CalloutListError(501, "CALLOUT_LIST_MEMBERS_UNAVAILABLE");
+    const rows = [...this.callouts.values()].filter(
+      (row) =>
+        row.authorId === userId && !row.hidden && !row.deleted && row.facts,
+    );
+    const field = options.sortBy === "TIMESTAMP" ? "createdAt" : "multiple";
+    const direction = options.sortOrder === "ASC" ? 1 : -1;
+    // Numeric fact ordering and code-unit ID ties are local policy, not upstream ranking.
+    rows.sort((a, b) => {
+      const av = a.facts![field],
+        bv = b.facts![field];
+      return (
+        direction *
+        ((av === bv ? 0 : av < bv ? -1 : 1) ||
+          orderText(a.calloutId, b.calloutId))
+      );
+    });
+    const scope = fingerprint([userId, options]);
+    const offset = decodeCalloutPage(
+      pageToken,
+      this.snapshot,
+      scope,
+      options.limit,
+      rows.length,
+    );
+    const end = Math.min(rows.length, offset + options.limit);
+    const callouts = rows.slice(offset, end).map(
+      (row): CalloutListItem => ({
+        ...row.facts!,
+        user_uuid: "",
+        hasLiked: null,
+        hasReposted: null,
+        updates: this.updates.get(row.calloutId) ?? [],
+        quotedCallout: row.facts!.quotedCalloutId
+          ? this.quote(row.facts!.quotedCalloutId)
+          : null,
+        ...unknownTailFacts,
+        ...row.tailFacts,
+        ...(author.userName !== null
+          ? {
+              author: {
+                userId: author.authorId,
+                userName: author.userName,
+                profileImage: author.profileImage,
+                accountKind: author.accountKind,
+              },
+            }
+          : {}),
+      }),
+    );
+    return structuredClone({
+      callouts,
+      nextPageToken:
+        end < rows.length ? encodeCalloutPage(this.snapshot, scope, end) : "",
+    });
   }
   private live(id: string) {
     const row = this.callouts.get(id);
@@ -405,6 +550,20 @@ export class CalloutsStore {
         quotedCallout: null,
       },
     };
+  }
+  /** Public discussion context: absence/hidden/unmapped are distinct local states.
+   * Hidden author identity never leaves this accessor. Missing projection is not absence.
+   */
+  discussionContext(id: string) {
+    const row = this.callouts.get(id);
+    if (!row) return { kind: "unknown" } as const;
+    if (row.hidden || row.deleted) return { kind: "unavailable" } as const;
+    if (!row.facts) return { kind: "unmapped" } as const;
+    return {
+      kind: "visible",
+      authorId: row.authorId,
+      callout: structuredClone(this.quote(id)),
+    } as const;
   }
 }
 

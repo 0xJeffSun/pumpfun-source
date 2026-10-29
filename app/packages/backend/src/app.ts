@@ -1,3 +1,5 @@
+import { CALLOUT_DISCUSSIONS_NATIVE_ROUTES, registerCalloutDiscussionRoutes } from "./callout-discussions-routes.js";
+import type { CalloutDiscussionsStore } from "./callout-discussions-store.js";
 import Fastify from "fastify";
 import { CALLOUTS_NATIVE_ROUTES, registerCalloutRoutes } from "./callouts-routes.js";
 import type { CalloutsStore } from "./callouts-store.js";
@@ -5,6 +7,8 @@ import { PositionsStore } from "./positions-store.js";
 import { registerPositionsRoutes, POSITIONS_NATIVE_ROUTES } from "./positions-routes.js";
 import type { PayoutsStore } from "./payouts-store.js";
 import { registerPayoutRoutes, PAYOUTS_NATIVE_ROUTES } from "./payouts-routes.js";
+import type { UserTradesStore } from "./user-trades-store.js";
+import { registerUserTradesRoutes, USER_TRADES_NATIVE_ROUTES } from "./user-trades-routes.js";
 import { apiKeyGate } from "./api-key-gate.js";
 import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
@@ -23,6 +27,8 @@ import { LeaderboardStore, defaultLeaderboardStore } from "./leaderboard-store.j
 import { registerHomeFeedRoutes } from "./home-feed-routes.js";
 import { HomeFeedStore, defaultHomeFeedStore } from "./home-feed-store.js";
 import { registerLocalMediaRoutes, type LocalMediaOptions } from "./local-media-routes.js";
+import type { PortfolioBalancesStore } from "./portfolio-balances-store.js";
+import { registerPortfolioBalancesRoutes, PORTFOLIO_BALANCES_NATIVE_ROUTES } from "./portfolio-balances-routes.js";
 
 export type Fixture = {
   method: string;
@@ -241,7 +247,10 @@ function registerFixtures(fixtures: Fixture[]) {
         `Duplicate canonical fixture key keySha256=${keyDigest}: ${previous}; ${provenance}`,
       );
     }
-    fixtureMap.set(key, fixture);
+    const snapshot = structuredClone(fixture);
+    // structuredClone turns a Buffer into Uint8Array; preserve raw replay bodies.
+    if (Buffer.isBuffer(fixture.body)) snapshot.body = Buffer.from(fixture.body);
+    fixtureMap.set(key, snapshot);
     provenanceByKey.set(key, provenance);
   });
   return fixtureMap;
@@ -283,10 +292,13 @@ const NATIVE_ROUTES = new Set<string>([
 export interface BuildAppOptions {
   /** Explicit server-owned public callout materialization; absent retains fixture/501 behavior. */
   calloutsStore?: CalloutsStore;
+  calloutDiscussionsStore?: CalloutDiscussionsStore;
   /** Explicit local materialization; absent preserves the fixture/501 harness. */
   positionsStore?: PositionsStore;
   /** Explicit confirmed-payout facts; absent preserves fixture/501 behavior. */
   payoutsStore?: PayoutsStore;
+  /** Explicit operator-owned spot trade history; absent retains fixture/501 behavior. */
+  userTradesStore?: UserTradesStore;
   /** Explicit local/CLI-only capability; absent by default, independent of developer auth. */
   localMedia?: LocalMediaOptions;
   /** Override the user store (for tests). */
@@ -299,6 +311,8 @@ export interface BuildAppOptions {
   followingStore?: FollowingStore;
   /** Override the leaderboard store (for tests). */
   leaderboardStore?: LeaderboardStore;
+  /** Explicit server-owned public aggregate balance snapshot, disabled by default. */
+  portfolioBalancesStore?: PortfolioBalancesStore;
   /** Override the local Home Feed store (for tests). */
   homeFeedStore?: HomeFeedStore;
 }
@@ -351,14 +365,17 @@ export function buildApp(fixtures: Fixture[] = [], opts: BuildAppOptions = {}) {
   registerHomeFeedRoutes(app, opts.homeFeedStore ?? defaultHomeFeedStore);
   app.register(async (native) => {
     native.addHook("preHandler", apiKeyGate);
+    if (opts.portfolioBalancesStore) registerPortfolioBalancesRoutes(native, opts.portfolioBalancesStore);
     registerUserRoutes(native, store);
     registerPostRoutes(native, postStore);
     registerCompetitionRoutes(native, compStore);
     registerFollowingRoutes(native, followStore);
     registerLeaderboardRoutes(native, lbStore);
     if (opts.calloutsStore) registerCalloutRoutes(native, opts.calloutsStore);
+    if (opts.calloutDiscussionsStore) registerCalloutDiscussionRoutes(native, opts.calloutDiscussionsStore);
     if (opts.positionsStore) registerPositionsRoutes(native, opts.positionsStore);
     if (opts.payoutsStore) registerPayoutRoutes(native, opts.payoutsStore);
+    if (opts.userTradesStore) registerUserTradesRoutes(native, opts.userTradesStore);
   });
 
   // Routing recognizes documented paths; no fabricated domain responses or live proxy fallback.
@@ -370,9 +387,12 @@ export function buildApp(fixtures: Fixture[] = [], opts: BuildAppOptions = {}) {
     )) {
       // Skip operations that a native handler already serves.
       if (NATIVE_ROUTES.has(`${method.toUpperCase()} ${path}`) ||
+        (opts.portfolioBalancesStore && PORTFOLIO_BALANCES_NATIVE_ROUTES.has(`${method.toUpperCase()} ${path}`)) ||
+        (opts.calloutDiscussionsStore && CALLOUT_DISCUSSIONS_NATIVE_ROUTES.has(`${method.toUpperCase()} ${path}`)) ||
         (opts.calloutsStore && CALLOUTS_NATIVE_ROUTES.has(`${method.toUpperCase()} ${path}`)) ||
         (opts.positionsStore && POSITIONS_NATIVE_ROUTES.has(`${method.toUpperCase()} ${path}`)) ||
-        (opts.payoutsStore && PAYOUTS_NATIVE_ROUTES.has(`${method.toUpperCase()} ${path}`))) continue;
+        (opts.payoutsStore && PAYOUTS_NATIVE_ROUTES.has(`${method.toUpperCase()} ${path}`)) ||
+        (opts.userTradesStore && USER_TRADES_NATIVE_ROUTES.has(`${method.toUpperCase()} ${path}`))) continue;
       app.route({
         method: method.toUpperCase() as "GET",
         url: "/v1" + path.replace(/\{([^}]+)\}/g, ":$1"),

@@ -28,10 +28,11 @@ const PERIOD_SECONDS: Record<Period, number> = { daily: 86_400, weekly: 604_800,
 
 /**
  * Fixed window anchor so `windowStartSec` is deterministic across calls and
- * hosts. Chosen as 2026-10-01T00:00:00Z; the window start snaps the anchor down
- * to the period boundary.
+ * hosts. Chosen as 2025-10-01T00:00:00Z, the date the synthetic seed rows were
+ * authored around (their lastRefreshedAtMs values fall in September 2025); the
+ * window start snaps the anchor down to the period boundary.
  */
-const ANCHOR_SEC = 1_759_276_800;
+const ANCHOR_SEC = Date.parse('2025-10-01T00:00:00Z') / 1000; // 1_759_276_800
 
 export interface TopPosition {
   mint: string;
@@ -109,7 +110,9 @@ export class LeaderboardStore {
   private userStore: UserStore;
 
   constructor(seed?: RawSeed, userStore?: UserStore) {
-    this.boards = seed ?? (seedData as unknown as RawSeed);
+    // The store documents deterministic read-only data: snapshot the seed so
+    // caller-owned rows (and the shared default seed) cannot corrupt later reads.
+    this.boards = structuredClone(seed ?? (seedData as unknown as RawSeed));
     this.userStore = userStore ?? defaultStore;
   }
 
@@ -164,7 +167,9 @@ export class LeaderboardStore {
       unrealizedPnlSol: entry.unrealizedPnlSol,
       unrealizedPnlUsd: entry.unrealizedPnlUsd,
       positionsCount: entry.positions.length,
-      topPositions: entry.positions.slice(0, positionsLimit),
+      // Clone each position: returning stored rows lets a caller rewrite a
+      // seed row's position for every later read.
+      topPositions: entry.positions.slice(0, positionsLimit).map((position) => ({ ...position })),
       walletAddress: entry.walletAddress,
       username: profile.username,
       profileImage: profile.profileImage,

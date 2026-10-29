@@ -188,3 +188,10 @@ No browser launch/download retry, production request, credential acquisition or
 SDK/wallet operation was performed. The amendment's frontend build is not claimed:
 the known external advisory-fetch build block has not been bypassed or retried.
 These results add no visual, native, full-application or compatibility qualification.
+
+Maintainer review after merging current main: all 13 `tests/leaderboard.spec.ts`
+cases, including the four new Creator pagination cases, passed in a local
+headless-Chromium Playwright run against the Next dev server; backend 855/855,
+`creator-pagination`/`leaderboard-contract` 9/9 and frontend `tsc --noEmit` also
+passed. This supersedes the "browser execution remains unrun" note above for
+those 13 cases only; no production build or visual qualification is added.

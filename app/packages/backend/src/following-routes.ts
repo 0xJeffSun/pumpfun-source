@@ -106,13 +106,13 @@ export function registerFollowingRoutes(
         .code(400)
         .send(errorBody(400, 'INVALID_SEARCH_TERM', { parameter: 'searchTerm', reason: 'required' }));
     }
-    if (term.length > SEARCH_TERM_MAX) {
+    if ([...term].length > SEARCH_TERM_MAX) {
       return reply.code(400).send(
         errorBody(400, 'INVALID_SEARCH_TERM', {
           parameter: 'searchTerm',
           reason: 'too_long',
           maxLength: SEARCH_TERM_MAX,
-          received: term.length,
+          received: [...term].length,
         }),
       );
     }
@@ -135,13 +135,13 @@ export function registerFollowingRoutes(
         .code(400)
         .send(errorBody(400, 'INVALID_SEARCH_TERM', { parameter: 'searchTerm', reason: 'required' }));
     }
-    if (term.length > SEARCH_TERM_MAX) {
+    if ([...term].length > SEARCH_TERM_MAX) {
       return reply.code(400).send(
         errorBody(400, 'INVALID_SEARCH_TERM', {
           parameter: 'searchTerm',
           reason: 'too_long',
           maxLength: SEARCH_TERM_MAX,
-          received: term.length,
+          received: [...term].length,
         }),
       );
     }

@@ -3,7 +3,7 @@
 import { AuthControl } from "./auth-control";
 import { unavailableAuthAdapter } from "./auth-model";
 
-/** The product entrypoint has no configurable provider, session or test-mode input. */
+/** Sign-in stays unavailable; the opt-in wallet panel only reads a public address. */
 export function SignInControl({
   triggerClassName,
 }: {
@@ -13,6 +13,7 @@ export function SignInControl({
   return (
     <AuthControl
       adapter={unavailableAuthAdapter}
+      publicWallet
       triggerClassName={triggerClassName}
     />
   );

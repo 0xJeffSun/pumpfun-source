@@ -54,12 +54,15 @@ is a contract decision, not a bug fix.
 
 20. **Lookup miss on `GET /posts/{postId}` and sub-resources**: Returns `404 {"error":"NOT_FOUND"}`
     when `postId` does not exist, or when the post is marked `deleted: true` or `hidden: true`.
-    The OpenAPI specification documents only 200 and transport errors in its response table, but
+    `GET /posts/{postId}` also returns 404 for a repost whose target is unknown, deleted or hidden,
+    because `reposted` is "always present on a served repost" (unlike `quoted`, which is "null when
+    the target is hidden or deleted"). The OpenAPI specification documents only 200 and transport errors in its response table, but
     its prose descriptions explicitly mandate "404 for unknown, hidden or deleted posts" and
     "404 unless the post is live".
 21. **Omission in `GET /posts`**: Any requested id that is unknown, marked `deleted: true`, or
     `hidden: true` is omitted from the `posts` array without leaving a placeholder or error, matching
     the contract note ("Request order; unknown, hidden and deleted ids leave no placeholder").
+    A repost whose target is unknown, deleted or hidden is omitted the same way (item 20).
 22. **Request order preservation in `GET /posts`**: Posts are returned in the exact order specified
     in the `ids` query parameter.
 23. **Duplicate id collapse in `GET /posts`**: Duplicate IDs in `ids` collapse to their first

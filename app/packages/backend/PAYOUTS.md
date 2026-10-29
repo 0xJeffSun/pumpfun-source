@@ -158,6 +158,7 @@ boundary: it preserves the whole-board count but offers at most the top500 rows,
 keeps navigation with empty local filters, and exposes recovery for out-of-range
 bookmarks. Three new pure frontend cases plus six existing adapter cases pass;
 full frontend JSX typecheck passes. Thirteen leaderboard browser cases collect
-(four new) but are **not executed**; the current frontend build is not qualified.
+(four new); they were not executed by the author, and a later maintainer review
+ran all 13 on the merged tree (pass). The current frontend build is not qualified.
 See `../frontend/LEADERBOARD-EVIDENCE.md` for the red/green arithmetic reproduction,
 unchanged trader/competition boundary and the cloud verification limitations.
