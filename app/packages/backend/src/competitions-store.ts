@@ -233,9 +233,13 @@ export class CompetitionStore {
   /**
    * Rank entries in a competition:
    * Non-struck entries are ordered by pnlUsd descending, tie-breaking on registeredAt ascending, then entryId.
-   * Struck entries receive rank 0.
+   * All entries before the first build, and struck entries thereafter, receive rank 0.
    */
   private rankEntries(comp: RawCompetition): RankedEntry[] {
+    // builtAtMs is the maximum refresh time; 0 means no board has been built yet.
+    if (!comp.entries.some(entry => entry.lastRefreshedAtMs > 0)) {
+      return comp.entries.map(entry => ({ ...entry, rank: 0 }));
+    }
     const struck: RankedEntry[] = comp.entries.filter(e => e.struck).map(e => ({ ...e, rank: 0 }));
     const nonStruck = comp.entries.filter(e => !e.struck);
 
@@ -286,7 +290,8 @@ export class CompetitionStore {
     const isFinal = comp.isFinal;
 
     // Per contract: walletAddress is null for squads, walletless member, and rank-0 before build
-    const walletAddress = isPerson ? profile.walletAddress : null;
+    const walletAddress = isPerson && comp.entries.some(row => row.lastRefreshedAtMs > 0)
+      ? profile.walletAddress : null;
 
     // Per contract: positionsCount and topPositions are 0 / [] for squads and on final boards
     let positionsCount = 0;
@@ -337,7 +342,7 @@ export class CompetitionStore {
     // entriesCount: all registered entries, struck included
     const entriesCount = comp.entries.length;
     // participants: non-struck entries
-    const participants = nonStruckRanked.length;
+    const participants = comp.entries.filter(entry => !entry.struck).length;
 
     // top: ranks 1..3 for phase registration or live; [] otherwise
     let top: LeaderboardRow[] = [];
