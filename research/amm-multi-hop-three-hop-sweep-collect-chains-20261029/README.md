@@ -8,10 +8,10 @@ that intermediate pools' accruals were unaddressed -- the natural
 guess being that each hop accrues its own fees into its own pool,
 so a 3-hop trade would leave three sweepable buckets. This packet
 measures all three pools after 3-hop buy and sell trades, and the
-middle hop is the surprise: a 3-hop trade accrues fees into
-exactly TWO pools, and the middle pool's state is byte-identical
-before and after, in both directions. The packet then chains the
-3-hop trades through sweep -> collect the way #12 did for 1-hop:
+middle hop is the surprise: in every 3-hop trade measured here,
+fees accrued into exactly TWO pools, and the middle pool's account
+was byte-identical before and after, in both directions. The
+packet then chains the 3-hop trades through sweep -> collect the way #12 did for 1-hop:
 loops, sweep-first neutrality, limit gates, protocol-sweep
 no-ops, and a cross-direction (buy -> sell) chain, all in single
 VMs, one signed transaction per step, on three program images
@@ -41,8 +41,9 @@ vault ATAs and destinations use the NON-native token layout
 (like userbase), because BASE2/base are SPL mints, not the
 native SOL mint (see Limits for the native-flag probe artifact).
 
-Event layouts (verified byte-for-byte for sweep/collect;
-multi-hop trade events asserted by discriminator and length
+Event layouts (offsets as read from the receipts; verify.py
+decodes only the sweep/collect fields its expectations name, and
+asserts multi-hop trade events by discriminator and length
 only, three per trade -- one per hop):
 - Multi-hop buy event, 508 bytes, disc `67f4521f2cf57777`.
 - Multi-hop sell event, 449 bytes, disc `3e2f370aa503dc2a`.
@@ -67,9 +68,9 @@ Family A -- fresh 3-hop anchors:
   -5,315,084,721,958 / quote +5,356,844,515,538. Pools: main
   (-4,733,036, 4,609,642, 123,394), POOL2 (-125,882, 2,488,
   123,394) UNCHANGED, P3 (-2,671,868,783, 2,488,
-  2,671,866,295). Hop1 accrues protocol only (pf +4,607,154,
-  cf +0); the tail accrues creator only (cf +2,671,742,901,
-  pf +0); the middle accrues nothing.
+  2,671,866,295). Hop1 (main) accrues protocol only (pf
+  +4,607,154, cf +0); the tail (P3) accrues creator only (cf
+  +2,671,742,901, pf +0); the middle accrues nothing.
 - `a-mhsell3-1e9`: sell 10^9 BASE3: userquote +180,345,
   buyback +846. Vault legs: P3 base +10^9 / quote
   -997,499,001; POOL2 base +997,499,001 / quote
@@ -98,8 +99,10 @@ col P2 -> swc main -> col main -> mhbuy3 -> swc P3 -> col P3):
 - Second buy lands 5,121,405,353,567 U3 -- 193,679,368,391 less
   than the fresh anchor -- but its hop1 quote leg
   (+995,392,847), buyback (+4,607,153), and main protocol
-  delta (+4,607,154) are BYTE-IDENTICAL to the first buy's;
-  only the curve legs move. POOL2 is still unchanged after
+  delta (+4,607,154) are equal to the first buy's; the
+  other vault legs and the U3 out move (the raw hop events
+  differ, e.g. at words @16, @48, @56, @448 and @488 of
+  hop 1). POOL2 is still unchanged after
   the second buy; the second tail sweep moves exactly
   2,601,564,322 and the collect drains it (DEST3 total
   5,273,430,617). The main protocol bucket keeps accruing
@@ -112,38 +115,47 @@ mhsell3 -> swc P3 -> col P3 -> swp P3 -> col-noop):
   123,394 seed and the collect drains it. Second sell pays
   180,344 -- exactly 1 less than the anchor -- with buyback
   846 unchanged and main protocol delta +847 repeated. The
-  P3 sweep then moves exactly 1,123,393 (seed 123,394 + second
-  sell's hop1 creator accrual 499,999, vs the first sell's
-  500,000) and the collect drains it. The protocol sweep
+  P3 sweep then moves exactly 1,123,393: P3 was not swept
+  after the first sell, so this is the seed 123,394 + the
+  first sell's creator accrual 500,000 + the second sell's
+  499,999. The collect drains it. The protocol sweep
   moves 2,488 to the P3 protocol ATA (pool (0, 0, 0)); the
   following collect is a silent no-op (0 events, payer 5,000
-  only) -- protocol sweep output is NOT collectable, now
-  verified for the 3-hop tail/hop1 pool too.
+  only; verify.py checks that every watched account except
+  the fee payer is unchanged) -- protocol sweep output was
+  not collected by collect_coin_creator_fee here, observed
+  for the 3-hop pool P3 too.
 
 Family D -- sweep-first multi-hop trades (volume unfunded
 until the trade):
 - `d-sweeps-all-mhbuy3`: both sweeps on all three pools
   (each moves only its seed: creator 123,394, protocol
   2,488, pools to (0, 0, 0)), then buy 10^9: every token
-  delta is BYTE-IDENTICAL to the fresh anchor, and the pool
-  DELTAS are identical too (main vq -4,607,154 / pf
-  +4,607,154, P3 vq -2,671,742,901 / cf +2,671,742,901,
-  POOL2 +0). Sweeping every hop is price-neutral.
+  delta equals the fresh anchor's, and the pool deltas are
+  equal too (main vq -4,607,154 / pf +4,607,154, P3 vq
+  -2,671,742,901 / cf +2,671,742,901, POOL2 +0). The raw hop
+  events differ at words @56, @448, @456, @464 and @488,
+  which record post-sweep pool state. Sweeping all three
+  pools first left this buy's token legs unchanged.
 - `d-tail-sweeps-mhbuy3`: both sweeps on P3 only, then buy:
-  also byte-identical to the anchor (main/POOL2 pools end
-  exactly as the anchor's).
+  token deltas equal to the anchor's (main/POOL2 pools end
+  exactly as the anchor's; hops 1-2 raw events equal the
+  anchor's, hop 3 differs in the post-sweep pool-state
+  words).
 - `d-sweeps-all-mhsell3`: both sweeps on all three pools,
-  then sell 10^9: byte-identical to the fresh sell anchor
-  (main vq -847 / pf +847, P3 vq -500,000 / cf +500,000,
-  POOL2 +0).
+  then sell 10^9: token deltas equal to the fresh sell
+  anchor's (main vq -847 / pf +847, P3 vq -500,000 / cf
+  +500,000, POOL2 +0; the raw events differ at words @56,
+  @392, @400 and @432).
 - `d-sweeps-all-mhbuy3-limit-exact`: sweeps, then buy with
   limit exactly the anchor out (5,315,084,721,958): success
   with the anchor legs.
 - `d-sweeps-all-mhbuy3-limit-plus1`: sweeps, then buy with
   limit 5,315,084,721,959: 6004 ExceededSlippage, full
   rollback, payer -5,000 only -- but the three hop events
-  are already in the logs (ghost events on a rolled-back
-  trade: the limit check runs after the hops emit).
+  appear in the logs before the 6004 error (ghost events on
+  a rolled-back trade; the slippage check fired after all
+  three hops had emitted).
 
 Family E -- protocol no-op and middle-pool independence:
 - `e-mhbuy3-proto-noop`: buy, protocol-sweep P3 (2,488,
@@ -157,8 +169,10 @@ Family F -- cross-direction chain (mhbuy3 -> mhsell3 -> swc
 P3 -> col P3):
 - Buy matches the anchor; the sell of 10^9 U3 then pays
   187,229 quote -- 6,884 MORE than the fresh sell anchor
-  (180,345) -- because the buy moved all three pools'
-  vaults. The sell accrues 879 into the main protocol bucket
+  (180,345) -- after the buy had moved all three pools'
+  vaults (and the main/P3 virtual quote reserves); this
+  packet does not isolate which of those changes the
+  output. The sell accrues 879 into the main protocol bucket
   (4,609,642 -> 4,610,521, buyback 879) and 505,363 into the
   P3 creator bucket (2,671,866,295 -> 2,672,371,658) on top
   of the buy's buckets; POOL2 is still unchanged. The P3
@@ -167,35 +181,43 @@ P3 -> col P3):
 
 ## Result
 
-- A 3-hop trade accrues fees into exactly two pools: the
-  first hop and the tail hop. The middle pool accrues
-  nothing -- its (vq, pf, cf) is byte-identical before and
-  after every 3-hop buy and sell measured, at both sizes.
-  This corrects 3rd #12's Limits note, which assumed
-  per-hop fees accrue into intermediate pools: they do not,
-  so a middle-pool sweep moves only its 123,394 seed.
-- The fee geography is directional: a buy accrues protocol
-  at hop1 and creator at the tail; a sell accrues creator
-  at hop1 (exactly 500,000 at 10^9, 499,999 on the loop's
-  second sell, 500 at 10^6) and protocol at the tail. The
-  other bucket of each pool is untouched by the trade.
-- Every sweep converts its bucket into virtual quote
-  reserves 1:1: after a creator sweep, a pool's vq equals
-  exactly -(its protocol fees) (main after buy+sweep:
-  (-4,609,642, 4,609,642, 0); P3 after buy+sweep: (-2,488,
-  2,488, 0)).
+- In every 3-hop trade measured (buy and sell, at 10^9
+  and 10^6, fresh and after loops/sweeps), fees accrued
+  into exactly two pools: the first hop and the tail hop.
+  The middle pool accrued nothing -- its account is
+  byte-identical before and after every one of those trades
+  (verify.py checks this). On this fixture that answers 3rd
+  #12's open Limits note: a middle-pool sweep moved only its
+  123,394 seed.
+- The bucket each pool accrued did not depend on direction:
+  in every trade measured the main pool accrued protocol
+  only and P3 accrued creator only. Because main is hop1 on
+  a buy and the tail on a sell, that reads as protocol at
+  hop1 / creator at the tail for a buy and creator at hop1
+  (exactly 500,000 at 10^9, 499,999 on the loop's second
+  sell, 500 at 10^6) / protocol at the tail for a sell. The
+  other bucket of each pool was untouched by the trade.
+- In every sweep measured, the pool's vq rose by exactly the
+  amount swept: after a
+  creator sweep, a pool's vq equalled exactly -(its protocol
+  fees) (main after buy+sweep: (-4,609,642, 4,609,642, 0);
+  P3 after buy+sweep: (-2,488, 2,488, 0)).
 - Loops do not reset prices, but fee legs repeat: the second
-  buy's hop1 quote leg, buyback, and protocol delta repeat
-  byte-identically while the U3 out falls; the second sell
-  reprices by exactly 1. Sweep-first trades are price-neutral
-  at every hop, and the sweep-first limit gate binds at the
-  fresh anchor out to the unit -- with ghost hop events on
-  the failing trade.
-- Protocol sweep output is never collectable, for the 3-hop
-  pools as for the 1-hop pool. Collect drains the vault ATA,
-  never the pool, and the destination totals accumulate
-  across loops (DEST3 5,273,430,617 after the buy loop's
-  second collect).
+  buy's hop1 quote leg, buyback, and protocol delta are
+  equal to the first buy's while the U3 out falls; the
+  second sell pays exactly 1 less. In the three sweep-first
+  cases measured (all-pools buy, P3-only buy, all-pools
+  sell, each at 10^9), the trade's token deltas equalled the
+  fresh anchor's, and the sweep-first limit gate binds at
+  the fresh anchor out to the unit -- with ghost hop events
+  on the failing trade.
+- In both cases measured here (`c-mhsell3-loop`,
+  `e-mhbuy3-proto-noop`), the collect following a P3
+  protocol sweep was a silent no-op. In every collect
+  measured, only the creator vault ATA was drained (pool
+  states unchanged by collect), and the destination totals
+  accumulate across loops (DEST3 5,273,430,617 after the buy
+  loop's second collect).
 
 ## Limits
 
@@ -228,3 +250,26 @@ P3 -> col P3):
   packet covers the no-fee 3-hop route only.
 - Only 3-hop AMM routes are chained here; 5-hop routes
   (2nd #39) are not chained into sweep/collect.
+
+## Verify and provenance
+
+From the repository root:
+
+    python3 -I -B research/amm-multi-hop-three-hop-sweep-collect-chains-20261029/verify.py
+
+`verify.py` needs only `solders` plus files in the repository: this
+packet, `evidence/original/pump_amm/deployed.so`, and the two
+retained rebuilt images
+`research/amm-multi-hop-group-slice-recovery/artifacts/candidate.so.gz`
+(control, #424) and
+`research/amm-transfer-fee-diagnostic-recovery/artifacts/candidate.so.gz`
+(candidate, #427), whose decompressed sha256 values match the
+`images` block of `runtime/report.json.gz`. It re-checks the
+recorded receipts against the report's expected values; it does
+not re-execute any transaction.
+
+`producer.py` is the script that generated the receipts and is
+kept as a provenance record. It is not runnable as committed: it
+hard-codes a private workspace layout (`~/workspace/pumpfun-sparse`
+for the harness scripts and `~/workspace/slop-verify` for the
+control/candidate `.so` files) and chdirs there on start.
