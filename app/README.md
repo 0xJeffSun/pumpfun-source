@@ -116,6 +116,15 @@ mutation is used. See
 [`packages/frontend/PROFILE-EVIDENCE.md`](packages/frontend/PROFILE-EVIDENCE.md)
 for source provenance and the local-data contract.
 
+## Opt-in public balance batches
+
+The backend can serve the documented `POST /v1/portfolio-summary/balances`
+operation from an explicit `PORTFOLIO_BALANCES_FILE`. It batches supplied public
+aggregate facts, preserves null versus zero, and keeps owner-only holdings and
+perp cash unavailable on the API host. No default dataset, valuation engine or
+production provider is enabled. This is an unqualified local read capability;
+see [`packages/backend/PORTFOLIO-BALANCES.md`](packages/backend/PORTFOLIO-BALANCES.md).
+
 ## Live Solana portfolio
 
 `/portfolio` accepts a public Solana address and reads current mainnet account
