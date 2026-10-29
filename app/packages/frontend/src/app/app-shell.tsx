@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { SignInControl } from "./auth/sign-in-control";
+import SettingsControl from "../components/settings/settings-control";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
   FormEvent,
@@ -404,6 +405,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
           </Link>
         </div>
         <footer className="sidebar-footer">
+          <SettingsControl />
           <div className="legal-links" aria-label="Reference links">
             {legalNavigation.map((item) => (
               <Link
