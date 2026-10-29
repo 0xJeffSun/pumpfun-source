@@ -1,3 +1,5 @@
+> Current configuration extension: [HOLDER-CONFIGURATION.md](HOLDER-CONFIGURATION.md) adds opt-in public Global/curve observations through published SDK decoders. Missing legacy fields remain unknown; no eligibility or claim behavior is established.
+
 # Holder Rewards offline inspector evidence
 
 This document scopes the local `/holder-rewards` reconstruction. It supports

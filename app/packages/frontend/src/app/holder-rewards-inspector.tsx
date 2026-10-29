@@ -1,6 +1,7 @@
 "use client";
 
 import { type FormEvent, useState } from "react";
+import { HolderConfigurationPanel } from "./holder-rewards-config/panel";
 import { RewardSummary } from "../components/rewards/RewardSummary";
 import {
   deriveHolderRewardsAddress,
@@ -182,6 +183,8 @@ export default function HolderRewardsInspector() {
           </p>
         </section>
       )}
+
+      {result?.ok && <HolderConfigurationPanel key={result.mint} mint={result.mint} rewardsPda={result.holderRewardsPda} />}
 
       <section aria-labelledby="holder-rewards-status-heading">
         <div className="mb-3">
