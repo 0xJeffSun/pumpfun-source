@@ -15,8 +15,9 @@ import { buildApp } from './with-api-key.js';
 
 const POST_1 = '00000000-0000-4000-8000-000000000001';
 
-const INVALID_LIMIT_VALUES = ['1.5', '-1.5', 'NaN', 'Infinity', '-Infinity', 'abc', '9007199254740993'];
-const INVALID_OFFSET_VALUES = ['2.5', '-2.5', 'NaN', 'Infinity', 'abc', '9007199254740993'];
+// '' and whitespace: Number('') === 0, so an empty value must not read as 0.
+const INVALID_LIMIT_VALUES = ['', ' ', '1.5', '-1.5', 'NaN', 'Infinity', '-Infinity', 'abc', '9007199254740993'];
+const INVALID_OFFSET_VALUES = ['', ' ', '2.5', '-2.5', 'NaN', 'Infinity', 'abc', '9007199254740993'];
 
 describe('integer pagination on posts sub-resources', () => {
   test('non-integer limit is rejected on replies and quotes before any page is served', async () => {
