@@ -1,4 +1,5 @@
 import { usePathname } from "next/navigation";
+import { lockBodyScroll } from "@/lib/body-scroll-lock";
 import {
   useEffect,
   useId,
@@ -110,11 +111,7 @@ export function AuthControl({
 
   useEffect(() => {
     if (!open) return;
-    const previous = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = previous;
-    };
+    return lockBodyScroll();
   }, [open]);
 
   const expandWallets = () => {

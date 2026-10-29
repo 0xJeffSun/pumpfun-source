@@ -375,3 +375,35 @@ test("settings interaction makes no service requests, preference writes or permi
   expect(unexpectedRequests).toEqual([]);
   expect(errors).toEqual([]);
 });
+
+test("resizing an open mobile sidebar keeps Settings locked until it closes", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/");
+  const initialOverflow = await page.evaluate(
+    () => document.body.style.overflow,
+  );
+  await page.getByRole("button", { name: "Open navigation" }).click();
+  await expect(page.locator("[data-app-shell]")).toHaveAttribute(
+    "data-mobile-navigation",
+    "open",
+  );
+  await page.getByRole("button", { name: "Open settings" }).click();
+  const dialog = page.getByRole("dialog", { name: "Settings", exact: true });
+  await expect(dialog).toBeVisible();
+  await expect(page.locator("body")).toHaveCSS("overflow", "hidden");
+
+  await page.setViewportSize({ width: 1024, height: 768 });
+  await expect(page.locator("[data-app-shell]")).toHaveAttribute(
+    "data-mobile-navigation",
+    "closed",
+  );
+  await expect(dialog).toBeVisible();
+  await expect.soft(page.locator("body")).toHaveCSS("overflow", "hidden");
+  await dialog.getByRole("button", { name: "Done", exact: true }).click();
+  await expect(dialog).not.toBeVisible();
+  await expect
+    .poll(() => page.evaluate(() => document.body.style.overflow))
+    .toBe(initialOverflow);
+});
