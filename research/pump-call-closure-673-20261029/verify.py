@@ -168,7 +168,7 @@ def audit(original_bytes,candidate_bytes,inventory_bytes):
  per_window=[]
  for start,w in windows.items():
   rows=[by_pair[start,m['start']] for m in w['normalized_matches']]
-  per_window.append(dict(original=start,bytes=w['bytes'],normalized_candidate_count=len(rows),physical_candidate_count=len({r['candidate'] for r in rows}),candidates=[dict(start=r['candidate'],symbol=r['candidate_symbol'],direct_closure=r['direct_closure'],depth2_closure=r['depth2_closure'],edge_counts=r['edge_counts']) for r in rows],
+  per_window.append(dict(original=start,bytes=w['bytes'],normalized_candidate_count=len(rows),physical_candidate_count=len({r['candidate'] for r in rows}),candidates=[dict(start=r['candidate'],symbol=m['symbol'],direct_closure=r['direct_closure'],depth2_closure=r['depth2_closure'],edge_counts=r['edge_counts']) for r,m in zip(rows,w['normalized_matches'])],
    direct_closed_candidates=sum(r['direct_closure'] for r in rows),depth2_closed_candidates=sum(r['depth2_closure'] for r in rows)))
  return dict(schema=1,revision=REVISION,input_sha256=HASHES,official_counts=inventory['counts'],
   scope='Every published normalized candidate pair, actual decoded call operands and actual entry/import targets, bounded through depth2. Not layout recovery or an official count change.',

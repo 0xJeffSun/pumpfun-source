@@ -151,3 +151,13 @@ captured or compiler ELF is edited.
 `VALIDATION.json` and `COMMON-PYTHON-CHECKS.json` bind commands/tool hashes and local
 results. No compilation or VM execution is part of this evidence-only unit, and
 all stopped execution lanes remain untouched.
+
+## Per-window alias identity correction
+
+The physical-pair map shares edge qualification across same-address aliases. The
+per-window candidate list now keeps each original inventory symbol while using
+that shared physical edge result. This corrects duplicated representative symbols
+in 23 window lists and preserves all 47 alias extras. The complete pair graph,
+actual call edges, direct/depth-two qualification, counts and input hashes are
+unchanged. A regression checks every per-window candidate identity against the
+exact inventory. Earlier validation files remain records of their stated heads.

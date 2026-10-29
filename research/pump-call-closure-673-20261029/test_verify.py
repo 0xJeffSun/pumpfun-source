@@ -115,6 +115,12 @@ class ActualInputTests(unittest.TestCase):
   with self.assertRaises(AssertionError):v.qualify_pairs(bad)
   self.assertEqual(sum(len(rows)-1 for rows in grouped.values()),47)
 
+ def test_per_window_candidates_preserve_every_inventory_alias(self):
+  for window in self.report['windows']:
+   expected=self.windows[window['original']]['normalized_matches']
+   self.assertEqual([(m['start'],m['symbol']) for m in expected],
+                    [(m['start'],m['symbol']) for m in window['candidates']])
+
  def test_normalization_does_not_hide_register_or_branch_changes(self):
   raw=self.o.body(0x6fef8,self.windows[0x6fef8]['bytes']);baseline=self.o.normalize(raw)
   changed=bytearray(raw);changed[1]^=1
