@@ -459,7 +459,10 @@ export class CompetitionStore {
     }
 
     const startSec = comp.startsAt ? Math.trunc(new Date(comp.startsAt).getTime() / 1000) : 0;
-    const endSec = comp.endsAt ? Math.trunc(new Date(comp.endsAt).getTime() / 1000) : 0;
+    // Contract: the last build while live (0 before the first build, like builtAtMs), endsAt once final.
+    const endSec = comp.isFinal
+      ? (comp.endsAt ? Math.trunc(new Date(comp.endsAt).getTime() / 1000) : 0)
+      : Math.trunc(builtAtMs / 1000);
 
     const leaderboard: LeaderboardView = {
       builtAtMs,

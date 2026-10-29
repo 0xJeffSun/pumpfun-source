@@ -328,6 +328,33 @@ describe('GET /v1/competitions/:idOrSlug', () => {
       await app.close();
     }
   });
+
+  test('leaderboard.endSec is the last build while live and endsAt once final', async () => {
+    const app = buildApp([]);
+    try {
+      // Contract: "the last build while live, endsAt once final"; builtAtMs is "0 before the first build"
+      const cases: Array<[string, boolean, (json: any) => number]> = [
+        [LIVE_ID, false, json => Math.trunc(json.leaderboard.builtAtMs / 1000)],
+        [UPCOMING_ID, false, () => 0],
+        [TIE_ENDED_ID, true, json => Math.trunc(Date.parse(json.competition.endsAt) / 1000)],
+        [SQUAD_ENDED_ID, true, json => Math.trunc(Date.parse(json.competition.endsAt) / 1000)],
+      ];
+      for (const [id, isFinal, expectedEndSec] of cases) {
+        const res = await app.inject({ method: 'GET', url: `/v1/competitions/${id}` });
+        assert.equal(res.statusCode, 200);
+        const json = res.json();
+        assertSchema(json, documentedSchema('/competitions/{idOrSlug}', 'get', 200), `GET /competitions/${id}`, specRoot);
+        assert.equal(json.leaderboard.isFinal, isFinal);
+        assert.equal(json.leaderboard.startSec, Math.trunc(Date.parse(json.competition.startsAt) / 1000));
+        assert.equal(json.leaderboard.endSec, expectedEndSec(json), `endSec of ${id}`);
+      }
+      // The live seed board was built well before its endsAt
+      const live = (await app.inject({ method: 'GET', url: `/v1/competitions/${LIVE_ID}` })).json();
+      assert.ok(live.leaderboard.endSec < Math.trunc(Date.parse(live.competition.endsAt) / 1000));
+    } finally {
+      await app.close();
+    }
+  });
 });
 
 describe('GET /v1/competitions/:id/entries/:entryId', () => {
