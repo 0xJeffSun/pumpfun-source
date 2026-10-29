@@ -188,6 +188,8 @@ export async function GET(request: Request) {
     });
 
     if (!upstream.ok) {
+      // Release unused error bodies without replacing the HTTP failure.
+      await upstream.body?.cancel().catch(() => undefined);
       if (upstream.status === 429) {
         return failure(
           429,
