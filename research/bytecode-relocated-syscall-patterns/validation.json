@@ -1,0 +1,40 @@
+{
+  "baseRevision": "23f5e18e8ce316f893d57d77c2b27b497e4c9123",
+  "programs": {
+    "pump": {
+      "windows": 1035,
+      "beforeCpi": 0,
+      "afterCpi": 1,
+      "beforeMemcpy": 0,
+      "afterMemcpy": 2,
+      "beforePatternSha256": "b5314b0ab4c022d43819b6f991c961e5cd4e282207dc81746de24d9606733c64",
+      "afterPatternSha256": "c98ebfa37352841f85645b622290cd4a84afe2198aa43c4ea3ef3abe380d3b70"
+    },
+    "pump_amm": {
+      "windows": 785,
+      "beforeCpi": 0,
+      "afterCpi": 1,
+      "beforeMemcpy": 0,
+      "afterMemcpy": 2,
+      "beforePatternSha256": "ad2a8a11cb562d160f5a05fdb34d47db77d18d63650e1ca36cd0e3e4aa90bd45",
+      "afterPatternSha256": "b2dce0ff05fc8f495910b09167d9325d3c8b9f5e667e78b85e65707162b8c903"
+    },
+    "mayhem": {
+      "windows": 441,
+      "beforeCpi": 0,
+      "afterCpi": 1,
+      "beforeMemcpy": 0,
+      "afterMemcpy": 2,
+      "beforePatternSha256": "3d9a7a1380336e724d203e81bf442bf463f1677d91e1840f7fbd8d09f7d3b77b",
+      "afterPatternSha256": "b1cdb036c755d2b806a0e015e23f61845d07fc58804cce8fe5d2c21a3dfce726"
+    }
+  },
+  "checks": [
+    "four regressions pass",
+    "complete regenerated report packet passes all eleven file hashes"
+  ],
+  "limits": [
+    "static named-call detection, not executed CPI or full serializer qualification",
+    "root helper and historical outputs unchanged"
+  ]
+}
