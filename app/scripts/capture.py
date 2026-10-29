@@ -26,11 +26,14 @@ def capture(url):
     try:
         try: r = urllib.request.urlopen(urllib.request.Request(url, headers={'User-Agent': UA}), timeout=35)
         except urllib.error.HTTPError as e: r = e
-        body = r.read(); digest = hashlib.sha256(body).hexdigest()
-        # A fresh response must not overwrite bytes referenced by an older manifest.
-        target = OUT / 'objects' / (key + '-' + digest + (suffix if suffix in ['.js','.css','.woff2','.json','.txt','.svg','.png','.ttf','.woff'] else ''))
-        atomic_write(target, body)
-        return {'url':url,'final_url':r.url,'status':r.status,'path':target.relative_to(ROOT).as_posix(), 'bytes':len(body),'sha256':digest,'headers':{k.lower():v for k,v in r.headers.items() if k.lower() in HEADERS}}, body
+        try:
+            body = r.read(); digest = hashlib.sha256(body).hexdigest()
+            # A fresh response must not overwrite bytes referenced by an older manifest.
+            target = OUT / 'objects' / (key + '-' + digest + (suffix if suffix in ['.js','.css','.woff2','.json','.txt','.svg','.png','.ttf','.woff'] else ''))
+            atomic_write(target, body)
+            return {'url':url,'final_url':r.url,'status':r.status,'path':target.relative_to(ROOT).as_posix(), 'bytes':len(body),'sha256':digest,'headers':{k.lower():v for k,v in r.headers.items() if k.lower() in HEADERS}}, body
+        finally:
+            r.close()
     except Exception as e: return {'url':url,'error':str(e)}, b''
 class RetainedCaptureError(ValueError): pass
 def retained_id(url): return hashlib.sha256(str(url).encode('utf-8',errors='backslashreplace')).hexdigest()[:12]
