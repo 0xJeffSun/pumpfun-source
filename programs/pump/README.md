@@ -1,21 +1,21 @@
 # Maintained Pump Main reconstruction
 
-The [selected composed source](../../research/pump-multihop-accrual-qualification-20261028/README.md)
+The [selected composed source](../../research/pump-program-creator-notice-qualification-20261028/README.md)
 retains 1,019/1,035 normalized and 188 raw windows. Sixteen windows and whole
 meaningful ELF identity remain unresolved. It preserves the used creation
 boundaries, common admin wallet validation/CPI order, legacy payment/event
-ownership, and multi-hop quote-fee snapshot/shared vault admission. The latest
-correction restores the two original `BondingCurve::accrue_fees` calls and the
-post-fill field stores before the second call.
+ownership, and multi-hop quote-fee snapshot/shared vault admission. It retains the two original
+`BondingCurve::accrue_fees` calls and post-fill stores. The latest correction
+restores the original program-creator notice in admin CTO.
 
 Two actual source builds repeat both complete outputs: an ordinary build with
 fresh local crates and an independent portable build from an empty target.
 Their stripped output is
-`c0e29e2d41c30e854f3548b37e87798d516e4e0e7769f40b7d8d16e31429795f`
+`d0377d7cef5b7378063f8bfabac5dc9c08d29eeaaaaa14022d36909688ff5e1b`
 and symbols are
-`dd73afe77d90d289e9383ee1aa12cdb26608752eb1a1f8b3a4135c0af786cb17`.
+`0f50faa8c325104dc77898ed84866dec2ad1eec475b6abba72c475cf7bf9bab6`.
 The 65 standalone inputs map to 66 compiler-workspace inputs. The cold build took
-57.538 seconds and authenticated 254 locked registry archives and 4,176 source
+62.437 seconds and authenticated 254 locked registry archives and 4,176 source
 files, using native macOS v1.44 tools and authenticated Linux v1.44 SBPF libraries.
 Inputs are checked before and after compilation.
 
@@ -26,6 +26,14 @@ creator-counter overflow now reports the original `lib.rs:2554` location instead
 of `multi_hop_curve_swap.rs:64`. These starting states are synthetic; their
 mainnet reachability is unproven. This diagnostic correction adds no exact
 function window.
+
+A separate signed fixture uses the authentic Fees program as creator, with
+executable program metadata and a distinct payer/admin. Original and new images
+emit the same 45-byte notice before AdminCtoPool; the previous C0 image omits it.
+All checked state, events, errors and return values agree. Three executions,
+six signature fields, three literal captured Main loads and one distinct signed
+wire are independently verified. This is finite synthetic evidence, with no
+claim about reachable mainnet state or historical Rust spelling.
 
 The selected image passes all 44 maintained suites: 10,468 paired cases,
 18,343 serialized transaction fields and 27,875 signature fields. The strict
@@ -53,12 +61,12 @@ meaningful ELF equality remains false.
 
 ```sh
 python3 -O -B scripts/verify_current_checkpoint.py pump
-python3 -B research/pump-multihop-accrual-qualification-20261028/build.py \
+python3 -B research/pump-program-creator-notice-qualification-20261028/build.py \
   --source-directory programs/pump --sdk /absolute/path/to/native-v1.44-sdk \
   --cargo-home /absolute/path/to/authenticated-cargo-home \
   --target-library-profile linux-v1.44-sbpf \
   --target-libraries /absolute/path/to/linux-v1.44-sbpf-libraries \
-  --wrapper research/pump-multihop-accrual-qualification-20261028/tools/pump_physical_source_wrapper.py \
+  --wrapper research/pump-program-creator-notice-qualification-20261028/tools/pump_physical_source_wrapper.py \
   --target-directory work/new-empty-pump-target --output work/new-pump-build
 ```
 
