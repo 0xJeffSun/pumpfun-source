@@ -1,0 +1,89 @@
+{
+  "scope": "Independent compile measurements only; source recovery credit belongs to linked proposal authors.",
+  "measurements": [
+    {
+      "candidate": "cto",
+      "run_id": 40792775552,
+      "artifact_id": 12862253309,
+      "zip": "cto-40792775552.zip",
+      "zip_sha256": "ae51db24a49ab387651edf38c74842d898a087d2c7513f01c443d96e9687043a",
+      "result": {
+        "status": "compiled-measurement-only",
+        "candidate": "cto",
+        "base_commit": "1285b5e9e3a29c1e2cf32246d6046035e5d66fad",
+        "control_run": 40791064153,
+        "proposal": {
+          "source_path": "src/creator/admin_cto.rs",
+          "frozen_file": "cto.rs",
+          "before_sha256": "6353b1f7b9e613bb8d819000c504d44410b04f7da7dfbdc7fb2e5132df100180",
+          "after_sha256": "f4a2bb7d33431e0fb4911e39d5e03c8bb9f45c6f7a184da21d1a6762f9127955",
+          "state": "uncompiled independent proposal; not accepted coverage",
+          "source_proposal": "https://github.com/lalalune/pumpfun-source/pull/712",
+          "source_proposal_head": "89ecb2b0785c7157e696f4dcbe7d1dc0a5207a8c"
+        },
+        "candidate_sha256": "d537faf5907c594eeef6f3706d87e300e6f01509243b5dcf28b018f3c90a64c6",
+        "unstripped_sha256": "daa2772d4745d8488b357c6c1c088fadc77bf31d341c59f5b50c4706d7b54c78",
+        "control_hashes_equal": false,
+        "cold_empty_target": true,
+        "both_local_crates_compiled": true,
+        "limits": "No acceptance, census gain, runtime behavior or original whole-ELF identity claim."
+      }
+    },
+    {
+      "candidate": "perhop",
+      "run_id": 40792780769,
+      "artifact_id": 12862143750,
+      "zip": "perhop-40792780769.zip",
+      "zip_sha256": "28a3c4f85250b0018e0d79b79bea04a850190355feb8fa16ae66a09055cd2c6b",
+      "result": {
+        "status": "compiled-measurement-only",
+        "candidate": "perhop",
+        "base_commit": "1285b5e9e3a29c1e2cf32246d6046035e5d66fad",
+        "control_run": 40791064153,
+        "proposal": {
+          "source_path": "src/multi_hop_curve_swap.rs",
+          "frozen_file": "perhop.rs",
+          "before_sha256": "679b34ae4965bf1cdc999e0f45f3ae5e171116c5f04173e7394c3b9e48a0fb43",
+          "after_sha256": "734bdae1189dd4e4f54a27fd215624611228f36b92d3877b63f00df19ccc9e44",
+          "state": "uncompiled independent proposal; not accepted coverage",
+          "source_proposal": "https://github.com/lalalune/pumpfun-source/pull/711",
+          "source_proposal_head": "9c20f6a5316e3423345fee04206a7819a797af7c"
+        },
+        "candidate_sha256": "c0e29e2d41c30e854f3548b37e87798d516e4e0e7769f40b7d8d16e31429795f",
+        "unstripped_sha256": "dd73afe77d90d289e9383ee1aa12cdb26608752eb1a1f8b3a4135c0af786cb17",
+        "control_hashes_equal": false,
+        "cold_empty_target": true,
+        "both_local_crates_compiled": true,
+        "limits": "No acceptance, census gain, runtime behavior or original whole-ELF identity claim."
+      }
+    },
+    {
+      "candidate": "sweep",
+      "run_id": 40793129553,
+      "artifact_id": 12862154507,
+      "zip": "sweep-40793129553.zip",
+      "zip_sha256": "71a9f703fe80da290727f69164db2a7d92393fcfa6f23a8357940e345fd6c4f9",
+      "result": {
+        "status": "compiled-measurement-only",
+        "candidate": "sweep",
+        "base_commit": "1285b5e9e3a29c1e2cf32246d6046035e5d66fad",
+        "control_run": 40791064153,
+        "proposal": {
+          "source_path": "src/sweep_fees.rs",
+          "frozen_file": "sweep.rs",
+          "before_sha256": "8735adba8b670c3b4ee63a6fd716d1d639be6efa56269a15365c15ff2f44ba0c",
+          "after_sha256": "15dbbd46bdbe7af62c6b7bb436f657c45e290c080c185fc075b7a3c08e3df7e8",
+          "state": "uncompiled independent proposal; not accepted coverage",
+          "source_proposal": "https://github.com/lalalune/pumpfun-source/pull/713",
+          "source_proposal_head": "819609edf904d975550c6e13cd0987e1b76e141b"
+        },
+        "candidate_sha256": "21b0de29ebc71c692715a6bb863adb0ed19f06419eb3afbca02027b101bf6049",
+        "unstripped_sha256": "a8d26376c23b30b751ed2a8535bc1117cb129d51293495849f7138fe51f8cd39",
+        "control_hashes_equal": false,
+        "cold_empty_target": true,
+        "both_local_crates_compiled": true,
+        "limits": "No acceptance, census gain, runtime behavior or original whole-ELF identity claim."
+      }
+    }
+  ]
+}

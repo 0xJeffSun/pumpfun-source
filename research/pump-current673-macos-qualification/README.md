@@ -28,6 +28,35 @@ runtime replay or original whole-ELF equality is claimed. Each grounded source
 proposal must remain independently frozen and compared with this exact control
 before any composition.
 
+## Retained hosted proof
+
+The unchanged [control run40791064153](https://github.com/shawkkkkk/pumpfun-source/actions/runs/40791064153)
+passed on native Darwin arm64 and reproduced both complete hashes above from an
+empty target. `evidence/control-40791064153.zip` is the exact uploaded artifact,
+SHA-256 `b3e31aeb7512b6cec0e1aede4efbb16e72edf047451065a1e5b476223230a6ce`.
+It includes raw ELFs, actual compiler source, commands, logs and authentication
+receipts. No SDK or dependency target cache is included.
+
+Run `python3 -B research/pump-current673-macos-qualification/verify.py` to check
+the retained artifact hashes, actual65-to66 input projection, all254 locked
+registry archive bindings, native tools/target libraries, source-preservation
+receipts and genuine compilation of both local crates. The verifier also binds
+the three retained candidate artifacts to their sole source changes and explicit
+measurement adapter. It executes no captured program or compiler.
+
+| Independent compile | Hosted run | Stripped SHA-256 prefix |
+| --- | --- | --- |
+| CTO | [40792775552](https://github.com/shawkkkkk/pumpfun-source/actions/runs/40792775552) | `d537faf5907c594e` |
+| Per-hop | [40792780769](https://github.com/shawkkkkk/pumpfun-source/actions/runs/40792780769) | `c0e29e2d41c30e85` |
+| Sweep | [40793129553](https://github.com/shawkkkkk/pumpfun-source/actions/runs/40793129553) | `21b0de29ebc71c69` |
+
+All three raw artifacts and exact measured hashes are retained under `evidence`.
+The original Sweep attempt40792778116 failed before downloading SDKs or compiling:
+the shared host's unauthenticated control-run API quota returned403. Its log and
+metadata are preserved. The retry changed only control-proof retrieval to the
+pinned official artifact action; the frozen Sweep source and compiler recipe
+were unchanged.
+
 ## Independent candidate measurements
 
 The `proposal` dispatch input selects `cto`, `sweep` or `perhop`. These are
@@ -64,8 +93,8 @@ The authored source proposals are [CTO#712](https://github.com/lalalune/pumpfun-
 [per-hop#711](https://github.com/lalalune/pumpfun-source/pull/711). Their individual
 packets supply the source/call-data evidence and retain credit for that recovery.
 
-Two subsequent one-shot compiler proposals are frozen in the descriptors but
-not enabled as workflow choices yet: `sell-event` (used SellV2 key/snapshot order)
-after the first three, then `constructor` (used six-account array lifetime) after
-that fourth measurement. The SellV2 VM and old corrective/transfer-fee lanes remain
+The subsequent one-shot `sell-event` proposal (used SellV2 key/snapshot order)
+was dispatched after all three successful builds. The `constructor` proposal
+(used six-account array lifetime) is frozen but remains disabled until that fourth
+measurement completes. The SellV2 VM and old corrective/transfer-fee lanes remain
 stopped. These descriptors authorize no variants or composition.
