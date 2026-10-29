@@ -257,3 +257,39 @@ record these outcomes. No VM/compiler execution or source selection follows
 from these PR reviews, and no complete code window is added. The final observed
 main checks were queued; meaningful ELF exactness remains three of five, with
 sixteen Pump and one AMM function still unmatched.
+
+Three further incoming diagnostic/static contract research PRs are integrated:
+#899 through reviewed successor #930 (`6b0dd6bc`, merge `0d803507`), corrected
+#900 (`0c71e41e`, merge `916fbd02`), and #904 through reviewed successor #934
+(`3e47e548`, merge `0e0578cf`). Their original ancestry is preserved. The
+[batch20 review](pr-review-batch20-independent.json) records exact outcomes,
+retained evidence and saved-proof limits.
+
+The [exact-SOL return-origin packet](../pump-exact-sol-return-origin-20261029/README.md)
+adds passive MIR/LLVM and actual callee/data-reference provenance. Its retained
+addressable-return control is rejected; no complete window or current source
+selection changes. The [V3 key-copy proposal](../pump-v3-key-copy-20261029/README.md)
+recovers eight raw copy slots and changes an aligned diagnostic from 126 to 118,
+but its complete target remains unequal. Its retained Linux cohort stays at
+1,019 normalized / 183 raw windows; this is distinct from the maintained native
+188-raw cohort. The 28 triples, 84 signed execution fields and 85 loader records
+are retained bounded evidence, not fresh executions or native qualification in
+this review. Corrected saved readers bind source-owned inputs, complete case and
+expected-value membership, signed layouts and copy-state obligations.
+
+The [Mayhem digit-table/ellipsis packet](../mayhem-current437-digit-table-ellipsis-20261029/README.md)
+adds 208 raw historical bytes, disjoint from the earlier 23,306-byte union:
+combined bounded attribution is 23,514/26,180. The four exact register chains
+bound byte offsets to 0–199. Identical unsigned `JLT_REG` predicates select the
+ellipsis pointer and length together. The companion wording-only correction
+replaces the earlier signed-comparison description; its proof AST and all
+observations are unchanged, saved verification passes, and the new packet
+manifest is `2f085c5b598955da0f543bf563a5c1ea82adde2ee107f523debddcf9d647a636`.
+This changes neither code-window coverage nor current meaningful-ELF identity.
+
+No compiler or VM is run for these PR reviews or this documentation update.
+The maintained selections, three-of-five meaningful-ELF exactness, sixteen Pump
+residuals and one AMM residual remain unchanged. No hosted CI pass is established.
+Runtime packets #897, #907, #912, #915, #920 and #923 merged externally. Those
+exact merged versions still require our verification and contribute no verified
+execution or coverage credit to this batch.
