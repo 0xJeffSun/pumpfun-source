@@ -1,4 +1,5 @@
 name: Qualify CURRENT673 Pump on pinned native macOS v1.44
+run-name: CURRENT673 ${{ inputs.proposal || 'control' }} native v1.44
 on:
   workflow_dispatch:
     inputs:
