@@ -2,7 +2,7 @@
 
 Claims three static intervals inside the leftover gap after format-crumbs #889:
 
-- `[723444, 723447)` — early format crumb ` \\n{` bounded by lddw + mov-imm length 3
+- `[723444, 723447)` — early format crumb space-brace-newline bounded by lddw + mov-imm length 3
   at pc+24 (equal rigor to classic text sites; length is not at pc+16).
 - `[723458, 723658)` — 100 two-digit ASCII pairs `00`..`99` (200 bytes). Length comes
   from an index-table equal-rigor bound: `(n % 100) << 1` with and-mask, base pointer
