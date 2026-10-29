@@ -26,6 +26,12 @@ def module(name, path):
     return value
 
 
+def checkpoint_module(name, path, root):
+    # Keep sealed historical builders/verifiers intact, including their hashes.
+    reader = module('amm_checkpoint_modules', Path(__file__).with_name('amm_checkpoint_modules.py'))
+    return reader.load(name, path, root)
+
+
 def verify(root=ROOT, runtime=None):
     root = Path(root).resolve()
     selected = json.loads((root / 'repro/status.json').read_text())['pump_amm']
@@ -36,7 +42,7 @@ def verify(root=ROOT, runtime=None):
                 raise ValueError(message)
         packet = root / closure
         require(sha(packet / 'manifest.json') == selected['checkpoint_manifest_sha256'] == 'f942488a78df7ce4a839fe01ab70112a138eca3979208d83f5d08f511cd836d3', 'AMM layout packet seal')
-        report = module('current_amm_layout_closure', packet / 'verify.py').verify(root, runtime=runtime, signatures=True)
+        report = checkpoint_module('current_amm_layout_closure', packet / 'verify.py', root).verify(root, runtime=runtime, signatures=True)
         require(report['candidate_sha256'] == selected['candidate_sha256'] == sha(root / selected['candidate_artifact']), 'AMM selected layout image')
         require(selected['candidate_symbols_artifact'] == closure + '/results/build-a/symbols.so' and report['symbols_sha256'] == selected['symbols_sha256'] == sha(root / selected['candidate_symbols_artifact']), 'AMM selected layout symbols')
         require(report['normalized'] == selected['normalized_function_matches'] == 784 and report['raw'] == selected['raw_function_matches'] == 784, 'AMM literal window scope')
@@ -51,7 +57,7 @@ def verify(root=ROOT, runtime=None):
         packet = root / current
         require(sha(packet / 'MANIFEST.json') == 'd05b92a344e1e095e6f68276eb50ddc64a36a0792ac20cb0e7c31c6f6f384489', 'AMM canonical packet seal')
         require(selected['checkpoint_manifest_sha256'] == sha(packet / 'MANIFEST.json'), 'AMM selected packet seal')
-        report = module('current_canonical_amm', packet / 'verify.py').verify(root, runtime=runtime, signatures=True)
+        report = checkpoint_module('current_canonical_amm', packet / 'verify.py', root).verify(root, runtime=runtime, signatures=True)
         require(report['status'] == 'PASS', 'AMM current verification')
         require(report['candidate_sha256'] == selected['candidate_sha256'] == sha(root / selected['candidate_artifact']), 'AMM selected candidate')
         require(selected['candidate_symbols_artifact'] == current + '/results/build-a/symbols.so', 'AMM selected symbol path')

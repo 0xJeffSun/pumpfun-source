@@ -23,16 +23,15 @@ percentage of engineering work completed.
 
 ## Current qualifications and remaining work
 
-- [Pump's composed source](research/pump-final-composition-673-20261028/README.md)
-  preserves 1,019 normalized / 188 raw windows while fixing common admin wallet
-  validation/CPI order and multi-hop quote-fee snapshot/shared vault admission.
-  Two ordinary builds and an independent
-  [empty-target build](research/pump-final-composition-cold-20261028/README.md)
-  repeat both outputs. All 10,468 broad pairs and 106 strict focused case records
-  pass; separate legacy284 and extension126 pairs also pass. The historical acc5
-  eight-failure admin control is retained, and all eighteen witnesses pass on the
-  selected image. Deliberate Source-line alignment is disclosed; sixteen windows
-  and whole meaningful ELF identity remain open.
+- [Pump's composed source](research/pump-multihop-accrual-qualification-20261028/README.md)
+  preserves 1,019 normalized / 188 raw windows and the prior creation, admin,
+  legacy-payment and multi-hop admission fixes. It restores the two original
+  fee-accrual calls. Twelve synthetic counter fixtures agree with the original;
+  the prior selected image differs on three ordered Source lines. Two actual builds, including an independent empty-target
+  build, repeat both outputs. All 10,468 broad pairs and 106 strict focused case
+  records pass; separate legacy284 and extension126 pairs also pass. Historical
+  controls remain intact. Sixteen windows and whole meaningful ELF identity
+  remain open; this correction adds no matched window.
 - [AMM's explicit layout recipe](research/amm-layout-closure-20261028/README.md)
   produces784 raw-identical physical windows. Every meaningful ELF byte outside
   sell's 9,024 bytes and 21 relocation-offset rows inside sell is literally equal,

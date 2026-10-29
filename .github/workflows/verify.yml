@@ -16,6 +16,10 @@ jobs:
       max-parallel: 12
       matrix:
         include:
+          - suite: pump-claim-v2-account-boundaries
+            commands: |
+              python -I -B research/pump-claim-v2-account-boundaries/verify.py
+              python -I -B research/pump-claim-v2-account-boundaries/mutation_controls.py
           - suite: mayhem-canonical-exact
             commands: |
               python -O -B scripts/verify_current_checkpoint.py mayhem
@@ -28,10 +32,10 @@ jobs:
             commands: |
               python -B scripts/verify_current_checkpoint.py pump
               python -O -B scripts/test_pump_strict_ordered_logs.py
-              python -B research/pump-final-composition-673-20261028/replay_focused.py --candidate research/pump-final-composition-673-20261028/artifacts/candidate.so --output work/pump-canonical-focused
-              python -B research/pump-final-composition-673-20261028/verify_focused.py --candidate research/pump-final-composition-673-20261028/artifacts/candidate.so --reports work/pump-canonical-focused
-              python -B research/pump-create-captured-successor-20261028/replay.py --candidate research/pump-final-composition-673-20261028/artifacts/candidate.so --output work/pump-captured-create
-              python -O -B research/pump-create-captured-successor-20261028/verify.py --candidate research/pump-final-composition-673-20261028/artifacts/candidate.so --runtime-directory work/pump-captured-create
+              python -B research/pump-multihop-accrual-qualification-20261028/replay_focused.py --candidate research/pump-multihop-accrual-qualification-20261028/artifacts/candidate.so --output work/pump-canonical-focused
+              python -B research/pump-multihop-accrual-qualification-20261028/verify_focused.py --candidate research/pump-multihop-accrual-qualification-20261028/artifacts/candidate.so --reports work/pump-canonical-focused
+              python -B research/pump-multihop-accrual-qualification-20261028/replay_captured_create.py --candidate research/pump-multihop-accrual-qualification-20261028/artifacts/candidate.so --output work/pump-captured-create
+              python -O -B scripts/pump_verify_accrual_captured_create.py --candidate research/pump-multihop-accrual-qualification-20261028/artifacts/candidate.so --runtime-directory work/pump-captured-create
           - suite: relay-current-repeat
             commands: |
               python -O -B research/relay-current-repeat-20261028/verify.py --repo .
@@ -449,6 +453,7 @@ jobs:
               python -B research/amm-math-error-reference/test_verify.py
               python -B research/amm-transfer-fee-epoch/verify.py
               python -B research/amm-transfer-fee-epoch/test_verify.py
+              python -I -B scripts/test_amm_checkpoint_modules.py
               python -B scripts/verify_pump_amm_checkpoint.py
               python -B research/amm-layout-closure-20261028/replay.py --repo . --candidate research/amm-layout-closure-20261028/results/build-a/candidate.so --output work/pump-amm-current-replay
               python -B scripts/verify_pump_amm_checkpoint.py --runtime work/pump-amm-current-replay/receipts

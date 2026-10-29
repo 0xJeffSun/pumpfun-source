@@ -36,7 +36,15 @@
     610,
     611,
     612,
-    613
+    613,
+    699,
+    702,
+    703,
+    704,
+    714,
+    708,
+    710,
+    722
   ],
   "merges": [
     {
@@ -2823,5 +2831,594 @@
       ]
     },
     "qualification": "Current five source/artifact gates passed locally; Pump199f public shard1, public focus and captured creation replay/checker passed. Three meaningful ELFs complete;17windows remain. No hosted CI success claimed."
+  },
+  "ninth_review_batch": [
+    {
+      "number": 692,
+      "head": "ef5c194e5a1579e9ac919830c3e1606630f72325",
+      "merge": {
+        "sha": "5a7ebb0268e2b77d58905291eafc351e9cc2662d",
+        "merged": true,
+        "message": "Pull Request successfully merged"
+      },
+      "fresh_replay": {
+        "number": 692,
+        "head": "ef5c194e5a1579e9ac919830c3e1606630f72325",
+        "producer_sha256": "3d7c363dbc5bbd9b095e597b854bb96ab8c60537fd35dea4894dac7f8930d12c",
+        "adapted_sha256": "fee05a72341d015781fbe4c59da0fc0e2dfd58d66927053f8b2db6f750351fdf",
+        "path_only_changes": [
+          {
+            "kind": "host-path",
+            "before": "Path.home() / 'workspace/pumpfun-sparse/scripts'",
+            "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/scripts"
+          },
+          {
+            "kind": "host-path",
+            "before": "Path.home() / 'workspace/pumpfun-sparse'",
+            "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source"
+          },
+          {
+            "kind": "ROOT",
+            "before": "Path.home() / 'workspace/pumpfun-sparse'",
+            "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source"
+          },
+          {
+            "kind": "OUT",
+            "before": "ROOT / 'research/amm-collect-token22-transfer-fee-20261029'",
+            "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/work/contract-pr-review-20261028/replays/pr-692"
+          },
+          {
+            "kind": "WS",
+            "before": "Path.home() / 'workspace/slop-verify'",
+            "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/work/contract-pr-review-20261028/images"
+          }
+        ],
+        "actual_image_sha256": {
+          "original": "6a7ad34596d83b4c435b32f458a56e718e9f82eb4ad38e4316616d15d24d8ff7",
+          "control": "7a300434dced61413bde10788594b427d5649563e0223efcf09e6b214aff7ad3",
+          "candidate": "d17a657baf5cc19736a924c41e75424604411ddbe9f6e72cddf41ab72a695007"
+        },
+        "case_count": 19,
+        "returncode": 0,
+        "passed": true,
+        "fresh_report_sha256": "1066da1edc59897a7313b104752000bfd52b33c22e5d1e58a5f3828355145f2f",
+        "executions": 57
+      },
+      "portability_fix": {
+        "number": 692,
+        "prior_head": "5f5771752c4e2430ebae2c441031ae9c79e74391",
+        "new_head": "ef5c194e5a1579e9ac919830c3e1606630f72325",
+        "changed_paths": [
+          "research/amm-collect-token22-transfer-fee-20261029/verify.py",
+          "research/amm-collect-token22-transfer-fee-20261029/MANIFEST.json"
+        ]
+      },
+      "hosted_ci": "Not established by local review"
+    },
+    {
+      "number": 696,
+      "head": "6597907389aebf3ea5e6d8b2e4bd744a9a1cce81",
+      "merge": {
+        "sha": "b10bc4b53c8b615b47677e8776b338851b04ca53",
+        "merged": true,
+        "message": "Pull Request successfully merged"
+      },
+      "fresh_replay": {
+        "number": 696,
+        "head": "6597907389aebf3ea5e6d8b2e4bd744a9a1cce81",
+        "producer_sha256": "59fc28dc504ee7e044bc1df8d7f63f13b596d4ffe70f4e05480a456a13512ff5",
+        "adapted_sha256": "44652a6cc19fba7ac5b711aa584c50956c1ab2351221daa1b7e288fa97e7b8f4",
+        "path_only_changes": [
+          {
+            "kind": "host-path",
+            "before": "Path.home() / 'workspace/pumpfun-sparse/scripts'",
+            "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/scripts"
+          },
+          {
+            "kind": "host-path",
+            "before": "Path.home() / 'workspace/pumpfun-sparse'",
+            "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source"
+          },
+          {
+            "kind": "ROOT",
+            "before": "Path.home() / 'workspace/pumpfun-sparse'",
+            "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source"
+          },
+          {
+            "kind": "OUT",
+            "before": "ROOT / 'research/amm-transfer-v2-token22-20261029'",
+            "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/work/contract-pr-review-20261028/replays/pr-696"
+          },
+          {
+            "kind": "WS",
+            "before": "Path.home() / 'workspace/slop-verify'",
+            "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/work/contract-pr-review-20261028/images"
+          }
+        ],
+        "actual_image_sha256": {
+          "original": "6a7ad34596d83b4c435b32f458a56e718e9f82eb4ad38e4316616d15d24d8ff7",
+          "control": "7a300434dced61413bde10788594b427d5649563e0223efcf09e6b214aff7ad3",
+          "candidate": "d17a657baf5cc19736a924c41e75424604411ddbe9f6e72cddf41ab72a695007"
+        },
+        "case_count": 20,
+        "returncode": 0,
+        "passed": true,
+        "fresh_report_sha256": "d3211450b612df025de1be026e9cf0d90c6088c131d6610aa5aceaeb2679d8ed",
+        "executions": 60
+      },
+      "portability_fix": {
+        "number": 696,
+        "prior_head": "b1b37414dc54aa948a41eef9e5a9fd1a3b11b9a5",
+        "new_head": "6597907389aebf3ea5e6d8b2e4bd744a9a1cce81",
+        "changed_paths": [
+          "research/amm-transfer-v2-token22-20261029/verify.py",
+          "research/amm-transfer-v2-token22-20261029/MANIFEST.json"
+        ]
+      },
+      "hosted_ci": "Not established by local review"
+    }
+  ],
+  "strict_log_followup_merge": {
+    "number": 697,
+    "reviewed_head": "2f7fc2ae636c380178677a58275577cd2e8c1cfd",
+    "merge": {
+      "sha": "1285b5e9e3a29c1e2cf32246d6046035e5d66fad",
+      "merged": true,
+      "message": "Pull Request successfully merged"
+    },
+    "local_validation": {
+      "saved_strict_pairs": 10468,
+      "fresh_shard2_pairs": 2621,
+      "strict_mismatches": 0,
+      "negative_and_positive_tests": 9
+    },
+    "hosted_ci": "Queued when last observed before merge; no hosted success claimed"
+  },
+  "tenth_followup_batch": [
+    {
+      "number": 699,
+      "head": "a960b912d409523d7a93c219167b895e2806e8e1",
+      "merge": {
+        "sha": "6bef77c392a76853c65e6f7fe53be958e9256811",
+        "merged": true,
+        "message": "Pull Request successfully merged"
+      },
+      "static": {
+        "number": 699,
+        "head": "a960b912d409523d7a93c219167b895e2806e8e1",
+        "returncode": 0,
+        "passed": true,
+        "argv": [
+          "/Users/shawwalters/Documents/Codex/2026-10-24/pumpfun-source/work/test-env/bin/python",
+          "-B",
+          "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/work/contract-pr-review-20261028/batch10/projection/research/amm-transfer-v1-native-20261029/verify.py"
+        ],
+        "log": "work/contract-pr-review-20261028/batch10/pr-699-static.log"
+      },
+      "fresh_replay": {
+        "number": 699,
+        "head": "a960b912d409523d7a93c219167b895e2806e8e1",
+        "producer_sha256": "87d473975dd1bfb5933b6b954f923d00df280a2afcdccf216a24f27b2f828f1f",
+        "adapted_sha256": "74a1cfee229f83fd9e5fd700f0955d78c215cb9f5d88da4b423fc957e303f9b2",
+        "path_only_changes": [
+          {
+            "kind": "host-path",
+            "before": "Path.home() / 'workspace/pumpfun-sparse/scripts'",
+            "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/scripts"
+          },
+          {
+            "kind": "host-path",
+            "before": "Path.home() / 'workspace/pumpfun-sparse'",
+            "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source"
+          },
+          {
+            "kind": "ROOT",
+            "before": "Path.home() / 'workspace/pumpfun-sparse'",
+            "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source"
+          },
+          {
+            "kind": "OUT",
+            "before": "ROOT / 'research/amm-transfer-v1-native-20261029'",
+            "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/work/contract-pr-review-20261028/batch10/replays/pr-699"
+          },
+          {
+            "kind": "WS",
+            "before": "Path.home() / 'workspace/slop-verify'",
+            "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/work/contract-pr-review-20261028/batch10/images"
+          }
+        ],
+        "actual_image_sha256": {
+          "original": "6a7ad34596d83b4c435b32f458a56e718e9f82eb4ad38e4316616d15d24d8ff7",
+          "control": "7a300434dced61413bde10788594b427d5649563e0223efcf09e6b214aff7ad3",
+          "candidate": "d17a657baf5cc19736a924c41e75424604411ddbe9f6e72cddf41ab72a695007"
+        },
+        "case_count": 19,
+        "returncode": 0,
+        "passed": true,
+        "fresh_report_sha256": "793fe22bf837e4c223c7b9da4cce556cd6021bbd4310e8247ef3c3cec03155a9",
+        "executions": 60
+      },
+      "independent_audit": {
+        "path": "research/contract-completion-20261028/pr-review-batch10-independent.json",
+        "sha256": "3806f14badd23e56305698fa3a584b6fab0ada99db8e9b34ad258e613b6fc24a"
+      },
+      "review_receipt_sha256": "6bfd76ebb51cb6cdd1f32aef4b0b937aaf4c1a76fd7c43126db6e7f098ac3da8",
+      "portability_fix": {
+        "number": 699,
+        "prior_head": "0b807bce54e7cde850ed520611540af147376648",
+        "new_head": "a960b912d409523d7a93c219167b895e2806e8e1",
+        "changed_paths": [
+          "research/amm-transfer-v1-native-20261029/MANIFEST.json",
+          "research/amm-transfer-v1-native-20261029/README.md",
+          "research/amm-transfer-v1-native-20261029/verify.py"
+        ],
+        "adaptation": {
+          "kind": "established image locators plus README evidence qualifications",
+          "verify_sha256": "d032ff205fb01db171d79c01dd297b218da8225353e1b6d944cc0e685ecd8842",
+          "readme_sha256": "e0987b10886b5fbacdffb75dae31769e5cd4cc4376020c6f27a7ddb072bbcc62"
+        }
+      },
+      "evidence_limits": [
+        "Offline synthetic fixtures on three historical pinned AMM images; no new source/build/whole-program identity or production reachability claim.",
+        "Raw scope2009 typo and counts.vms receipt ordinal qualified in corrected README; actual case2023,57VM scenarios/60executions.",
+        "pFEES loaded_programs label is declarative and unused, not observed installation metadata."
+      ],
+      "hosted_ci": "77 queued checks observed before merge; no hosted pass established"
+    },
+    {
+      "number": 702,
+      "head": "c42a360644c5b91b4513eee95e0ba9111314afcf",
+      "merge": {
+        "sha": "506921d658deeef506b281233d98b911d60e08c0",
+        "merged": true,
+        "message": "Pull Request successfully merged"
+      },
+      "static": {
+        "number": 702,
+        "head": "c42a360644c5b91b4513eee95e0ba9111314afcf",
+        "returncode": 0,
+        "passed": true,
+        "argv": [
+          "/Users/shawwalters/Documents/Codex/2026-10-24/pumpfun-source/work/test-env/bin/python",
+          "-B",
+          "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/work/contract-pr-review-20261028/batch10/projection/research/amm-claim-cashback-token22-transfer-fee-20261029/verify.py"
+        ],
+        "log": "work/contract-pr-review-20261028/batch10/pr-702-static.log"
+      },
+      "fresh_replay": {
+        "number": 702,
+        "head": "c42a360644c5b91b4513eee95e0ba9111314afcf",
+        "producer_sha256": "b78bfcc81970b380aa10ee01c03bd7eb3d3b34600b283dc945f96eece4a24415",
+        "adapted_sha256": "d202c7a49677560d4fe6d6fa58c901985d7f855b03e1ff16b3bf7692478eb447",
+        "path_only_changes": [
+          {
+            "kind": "host-path",
+            "before": "Path.home() / 'workspace/pumpfun-sparse/scripts'",
+            "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/scripts"
+          },
+          {
+            "kind": "host-path",
+            "before": "Path.home() / 'workspace/pumpfun-sparse'",
+            "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source"
+          },
+          {
+            "kind": "ROOT",
+            "before": "Path.home() / 'workspace/pumpfun-sparse'",
+            "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source"
+          },
+          {
+            "kind": "OUT",
+            "before": "ROOT / 'research/amm-claim-cashback-token22-transfer-fee-20261029'",
+            "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/work/contract-pr-review-20261028/batch10/replays/pr-702"
+          },
+          {
+            "kind": "WS",
+            "before": "Path.home() / 'workspace/slop-verify'",
+            "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/work/contract-pr-review-20261028/batch10/images"
+          }
+        ],
+        "actual_image_sha256": {
+          "original": "6a7ad34596d83b4c435b32f458a56e718e9f82eb4ad38e4316616d15d24d8ff7",
+          "control": "7a300434dced61413bde10788594b427d5649563e0223efcf09e6b214aff7ad3",
+          "candidate": "d17a657baf5cc19736a924c41e75424604411ddbe9f6e72cddf41ab72a695007"
+        },
+        "case_count": 20,
+        "returncode": 0,
+        "passed": true,
+        "fresh_report_sha256": "52abf9b280b75f62dff49b07c6f49ba8a9690919c00f7d191d5872a7d4148531",
+        "executions": 60
+      },
+      "independent_audit": {
+        "path": "research/contract-completion-20261028/pr-review-batch10-independent.json",
+        "sha256": "3806f14badd23e56305698fa3a584b6fab0ada99db8e9b34ad258e613b6fc24a"
+      },
+      "review_receipt_sha256": "6bfd76ebb51cb6cdd1f32aef4b0b937aaf4c1a76fd7c43126db6e7f098ac3da8",
+      "portability_fix": {
+        "number": 702,
+        "prior_head": "ab5759d9ad041a5a319719b8dbbc18a97cd61725",
+        "new_head": "c42a360644c5b91b4513eee95e0ba9111314afcf",
+        "changed_paths": [
+          "research/amm-claim-cashback-token22-transfer-fee-20261029/MANIFEST.json",
+          "research/amm-claim-cashback-token22-transfer-fee-20261029/verify.py"
+        ],
+        "adaptation": {
+          "kind": "exactly three repository-relative host expressions; verifier logic unchanged",
+          "path_changes": [
+            {
+              "before": "Path.home() / 'workspace/pumpfun-sparse/scripts'",
+              "after": "Path(__file__).resolve().parents[2] / 'scripts'"
+            },
+            {
+              "before": "Path.home() / 'workspace/pumpfun-sparse'",
+              "after": "Path(__file__).resolve().parents[2]"
+            },
+            {
+              "before": "Path.home() / 'workspace/pumpfun-sparse'",
+              "after": "Path(__file__).resolve().parents[2]"
+            }
+          ],
+          "old_sha256": "378817856c42b993e2a80eaec3ce5cb18a375eb7ce033c5be6dd6f53d4974286",
+          "new_sha256": "21da87d481107c7bb3106065fcb0715e4ce4042ac358265c77f3e40ae59f9625"
+        }
+      },
+      "evidence_limits": [
+        "Offline synthetic fixtures on three historical pinned AMM images; no new source/build/whole-program identity or production reachability claim.",
+        "Retained verifier trusts some observed success fields; independent audit rederived all fields from raw snapshots/events and compared retained to fresh.",
+        "inner_instructions=[] is a placeholder; no actual inner-instruction parity is credited.",
+        "Transfer-fee mint/accounts are synthesized after fixture setup; ordinary mainnet reachability is unproven."
+      ],
+      "hosted_ci": "77 queued checks observed before merge; no hosted pass established"
+    },
+    {
+      "number": 703,
+      "head": "8ede02bb0f47d043834306cd00e1903441ce5105",
+      "merge": {
+        "sha": "7b3c33c12616d6dc05f5ab18fb11128fe4d74ea8",
+        "merged": true,
+        "message": "Pull Request successfully merged"
+      },
+      "static": {
+        "number": 703,
+        "head": "8ede02bb0f47d043834306cd00e1903441ce5105",
+        "returncode": 0,
+        "passed": true,
+        "argv": [
+          "/Users/shawwalters/Documents/Codex/2026-10-24/pumpfun-source/work/test-env/bin/python",
+          "-B",
+          "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/work/contract-pr-review-20261028/batch10/projection/research/amm-claim-token-incentives-token22-transfer-fee-20261029/verify.py"
+        ],
+        "log": "work/contract-pr-review-20261028/batch10/pr-703-static.log"
+      },
+      "fresh_replay": {
+        "number": 703,
+        "head": "8ede02bb0f47d043834306cd00e1903441ce5105",
+        "producer_sha256": "aca81f8b5c9d27bbb16482bbc41856fe130faeff2977904770dd760d854551bb",
+        "adapted_sha256": "a3ab39b4475216ff814f8ab32b6637791e53d51bcb761c6cf2a2b65ae2822758",
+        "path_only_changes": [
+          {
+            "kind": "host-path",
+            "before": "Path.home() / 'workspace/pumpfun-sparse/scripts'",
+            "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/scripts"
+          },
+          {
+            "kind": "host-path",
+            "before": "Path.home() / 'workspace/pumpfun-sparse'",
+            "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source"
+          },
+          {
+            "kind": "ROOT",
+            "before": "Path.home() / 'workspace/pumpfun-sparse'",
+            "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source"
+          },
+          {
+            "kind": "OUT",
+            "before": "ROOT / 'research/amm-claim-token-incentives-token22-transfer-fee-20261029'",
+            "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/work/contract-pr-review-20261028/batch10/replays/pr-703"
+          },
+          {
+            "kind": "WS",
+            "before": "Path.home() / 'workspace/slop-verify'",
+            "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/work/contract-pr-review-20261028/batch10/images"
+          }
+        ],
+        "actual_image_sha256": {
+          "original": "6a7ad34596d83b4c435b32f458a56e718e9f82eb4ad38e4316616d15d24d8ff7",
+          "control": "7a300434dced61413bde10788594b427d5649563e0223efcf09e6b214aff7ad3",
+          "candidate": "d17a657baf5cc19736a924c41e75424604411ddbe9f6e72cddf41ab72a695007"
+        },
+        "case_count": 21,
+        "returncode": 0,
+        "passed": true,
+        "fresh_report_sha256": "a63c692cbb39401507ab5f98e8b4c0e86b9453df0148f448822d663044ecd827",
+        "executions": 63
+      },
+      "independent_audit": {
+        "path": "research/contract-completion-20261028/pr-review-batch10-independent.json",
+        "sha256": "3806f14badd23e56305698fa3a584b6fab0ada99db8e9b34ad258e613b6fc24a"
+      },
+      "review_receipt_sha256": "6bfd76ebb51cb6cdd1f32aef4b0b937aaf4c1a76fd7c43126db6e7f098ac3da8",
+      "portability_fix": {
+        "number": 703,
+        "prior_head": "fd24070d5e164424e9bdf76715aa570a930eda4a",
+        "new_head": "8ede02bb0f47d043834306cd00e1903441ce5105",
+        "changed_paths": [
+          "research/amm-claim-token-incentives-token22-transfer-fee-20261029/MANIFEST.json",
+          "research/amm-claim-token-incentives-token22-transfer-fee-20261029/verify.py"
+        ],
+        "adaptation": {
+          "kind": "exactly three repository-relative host expressions; verifier logic unchanged",
+          "path_changes": [
+            {
+              "before": "Path.home() / 'workspace/pumpfun-sparse/scripts'",
+              "after": "Path(__file__).resolve().parents[2] / 'scripts'"
+            },
+            {
+              "before": "Path.home() / 'workspace/pumpfun-sparse'",
+              "after": "Path(__file__).resolve().parents[2]"
+            },
+            {
+              "before": "Path.home() / 'workspace/pumpfun-sparse'",
+              "after": "Path(__file__).resolve().parents[2]"
+            }
+          ],
+          "old_sha256": "e191a6523c6accc17e3c61a98dc49a8e40e9b77655cbe9ed3eef491cbc24e987",
+          "new_sha256": "6853ccd11738bca60cb005afbc063366b70e9451ec3f0d83b8b5f3c7dcc2d018"
+        }
+      },
+      "evidence_limits": [
+        "Offline synthetic fixtures on three historical pinned AMM images; no new source/build/whole-program identity or production reachability claim.",
+        "Retained verifier trusts some observed success fields; independent audit rederived all fields from raw snapshots/events and compared retained to fresh.",
+        "inner_instructions=[] is a placeholder; no actual inner-instruction parity is credited.",
+        "Transfer-fee mint/accounts are synthesized after fixture setup; ordinary mainnet reachability is unproven."
+      ],
+      "hosted_ci": "77 queued checks observed before merge; no hosted pass established"
+    }
+  ],
+  "eleventh_followup_batch": [
+    {
+      "number": 704,
+      "head": "2325789084d063c134a57a3807415aca16269ae9",
+      "merge": {
+        "sha": "a18e1e89b59bf9d734955550c92f321c97c95e62",
+        "merged": true,
+        "message": "Pull Request successfully merged"
+      },
+      "static": {
+        "number": 704,
+        "head": "2325789084d063c134a57a3807415aca16269ae9",
+        "returncode": 0,
+        "passed": true,
+        "argv": [
+          "/Users/shawwalters/Documents/Codex/2026-10-24/pumpfun-source/work/test-env/bin/python",
+          "-B",
+          "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/work/contract-pr-review-20261028/batch11/projection/research/amm-boost-buy-burn-vault-drain-20261029/verify.py"
+        ],
+        "log": "work/contract-pr-review-20261028/batch11/pr-704-static-1.log",
+        "prior_projection_preflight": "pr-704-static.log lacked the transitive fixture input, which was then copied unchanged and hash-pinned"
+      },
+      "fresh_replay": {
+        "number": 704,
+        "head": "2325789084d063c134a57a3807415aca16269ae9",
+        "producer_sha256": "d5f9f5069485c2ae87e6c96b5891261178f2a37b949c6140b632656da57004b5",
+        "adapted_sha256": "bf6b8ffbd9b6492f61e744b89966571631efabb8013aecb16ef38094314f75d3",
+        "path_only_changes": [
+          {
+            "kind": "host-path",
+            "before": "Path.home() / 'workspace/pumpfun-sparse/scripts'",
+            "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/scripts"
+          },
+          {
+            "kind": "host-path",
+            "before": "Path.home() / 'workspace/pumpfun-sparse'",
+            "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source"
+          },
+          {
+            "kind": "ROOT",
+            "before": "Path.home() / 'workspace/pumpfun-sparse'",
+            "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source"
+          },
+          {
+            "kind": "OUT",
+            "before": "ROOT / 'research/amm-boost-buy-burn-vault-drain-20261029'",
+            "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/work/contract-pr-review-20261028/batch11/replays/pr-704"
+          },
+          {
+            "kind": "WS",
+            "before": "Path.home() / 'workspace/slop-verify'",
+            "after": "/Users/shawwalters/.codex/worktrees/pump-swap-remaining-20261028/pumpfun-source/work/contract-pr-review-20261028/batch11/images"
+          }
+        ],
+        "actual_image_sha256": {
+          "original": "6a7ad34596d83b4c435b32f458a56e718e9f82eb4ad38e4316616d15d24d8ff7",
+          "control": "7a300434dced61413bde10788594b427d5649563e0223efcf09e6b214aff7ad3",
+          "candidate": "d17a657baf5cc19736a924c41e75424604411ddbe9f6e72cddf41ab72a695007"
+        },
+        "case_count": 20,
+        "returncode": 0,
+        "passed": true,
+        "fresh_report_sha256": "ec38de271c7ad7928fc55a43afe5b347cd59cd3f81c2ed6f2b3005498bf6e5a1",
+        "executions": 60
+      },
+      "independent_audit": {
+        "path": "research/contract-completion-20261028/pr-review-batch11-independent.json",
+        "sha256": "2c04b48b48358a60e44504b6af2f97f02bc1e58c38540fc0960b7a5869a3278b"
+      },
+      "review_receipt_sha256": "754eb33c6096b25e74adf0477d14ac8f9456014291326cb5254f782df6af875e",
+      "portability_fix": {
+        "number": 704,
+        "prior_head": "653f0c92e4912d6c600042e61fb86fc0e465c3e2",
+        "new_head": "2325789084d063c134a57a3807415aca16269ae9",
+        "changed_paths": [
+          "research/amm-boost-buy-burn-vault-drain-20261029/MANIFEST.json",
+          "research/amm-boost-buy-burn-vault-drain-20261029/verify.py"
+        ],
+        "adaptation": {
+          "kind": "exactly three repository-relative host expressions; verifier logic unchanged",
+          "path_changes": [
+            {
+              "before": "Path.home() / 'workspace/pumpfun-sparse/scripts'",
+              "after": "Path(__file__).resolve().parents[2] / 'scripts'"
+            },
+            {
+              "before": "Path.home() / 'workspace/pumpfun-sparse'",
+              "after": "Path(__file__).resolve().parents[2]"
+            },
+            {
+              "before": "Path.home() / 'workspace/pumpfun-sparse'",
+              "after": "Path(__file__).resolve().parents[2]"
+            }
+          ],
+          "old_sha256": "cce1422e49119fb08b6352e85c3474b8a341a84069ce282997204cce651c4071",
+          "new_sha256": "05cee4b8e4056366faa3b2381ece3327ce2649368347c47871dee3a7f1b2c1ec"
+        }
+      },
+      "evidence_limits": [
+        "finite synthetic fixtures and historical images; no source build or whole-program proof",
+        "inner_instructions=[] is a producer placeholder and does not attest actual inner instruction parity",
+        "quote mint supply is zero in the fixture; no harvest-related supply change is credited"
+      ],
+      "hosted_ci": "77 queued checks observed before merge; no hosted pass established"
+    }
+  ],
+  "research_coverage_change_from_latest_runtime_reviews": 0,
+  "windows_host_control_recipe": {
+    "path": "research/amm-r51-windows-host-control-20261028",
+    "status": "Reviewed default-only recipe; dispatch and actual Windows result tracked separately",
+    "source_inputs": 69,
+    "native_inputs_sha256": "24e416c49991394bda6374439d05d8f004144a6e5c93492fc5541a78c472a36e",
+    "new_windows_awarded": 0
+  },
+  "new_research_and_infrastructure_merges": [
+    {
+      "number": 714,
+      "head": "ba0524261f2140d7aee5d3290f681ad659a888e6",
+      "merge": "bff6f89a3ff0346ad3edd48e56979ff1b0bc9bff",
+      "scope": "Exact69 AMM Windows default host control recipe; first job40792092737 failed vendor checksum JSON before compiler, native24e reproduced; no coveragegain"
+    },
+    {
+      "number": 708,
+      "head": "c1a140f5cc41d27bf1c000c232851ea2717192b0",
+      "merge": "d58bb753597ae5b22bbccecd418ed15a128b06bf",
+      "scope": "Research only;72 freshfocusedexecutions independentlyaudited; no currentSource/imagepromotion or windowgain"
+    },
+    {
+      "number": 710,
+      "head": "dfcd0f3e5201a43e74403f14060bf637e662d8af",
+      "merge": "219e8502f012a379d86ce92bc602abfa081b8b3a",
+      "scope": "Saved AMM Windows path-key compatibility;13local tests passed,1native-Windows-onlytest skipped; saved17462pairs/35418signaturefields reverified; no new compiler/VMexecution"
+    },
+    {
+      "number": 722,
+      "head": "46a3b3c620e92e4f28e12dd7cd948196775afd33",
+      "merge": "e476d5ad1d1b762f3a8a4e681711752e96cc609d",
+      "scope": "Exact-pinned Windows vendor metadata successor;257archives/8437filepins localcontrol; manualjob40795170346 dispatched; no Windows success claimed"
+    }
+  ],
+  "pending_qualified_accrual_promotion": {
+    "review": "research/contract-completion-20261028/pump-accrual-promotion-review.json",
+    "sha256": "e2f1c88935a48b3983297fa2b9321c38900110b4e228a812f56e0042ed5ac011",
+    "candidate_sha256": "c0e29e2d41c30e854f3548b37e87798d516e4e0e7769f40b7d8d16e31429795f",
+    "packet_manifest_sha256": "d5a7e29ae52b385453e055cc619a1bee700f646123e86507daf35d9be5a2c9dd",
+    "new_windows": 0
   }
 }

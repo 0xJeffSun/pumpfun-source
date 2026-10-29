@@ -20,7 +20,7 @@ for name,status in json.loads((ROOT/'repro/status.json').read_text()).items():
  if name=='pump_amm' and status['candidate_artifact'] in ['repro/pump_amm/v2-mint-clone-recovery-20261028/results/build/candidate.so','repro/pump_amm/canonical-frontier-20261028/results/build-a/candidate.so','research/amm-layout-closure-20261028/results/build-a/candidate.so']:
   subprocess.run([sys.executable,'-B',str(ROOT/'scripts/verify_pump_amm_checkpoint.py')],check=True)
   continue
- if name=='pump' and status['candidate_artifact'] in ['repro/pump/main-contract-round47-20261027/candidate.so','repro/pump/canonical-frontier-20261028/candidate.so','research/pump-create-used-boundaries-20261028/artifacts/candidate.so', 'research/pump-final-composition-673-20261028/artifacts/candidate.so']:
+ if name=='pump' and status['candidate_artifact'] in ['repro/pump/main-contract-round47-20261027/candidate.so','repro/pump/canonical-frontier-20261028/candidate.so','research/pump-create-used-boundaries-20261028/artifacts/candidate.so', 'research/pump-final-composition-673-20261028/artifacts/candidate.so', 'research/pump-multihop-accrual-qualification-20261028/artifacts/candidate.so']:
   subprocess.run([sys.executable,'-B',str(ROOT/'scripts/verify_pump_main_checkpoint.py')],check=True)
   continue
  if name=='mayhem' and status['candidate_artifact']=='repro/mayhem/compiler-v154-main/main/candidate.so':
