@@ -32,10 +32,15 @@ jobs:
             commands: |
               python -B scripts/verify_current_checkpoint.py pump
               python -O -B scripts/test_pump_strict_ordered_logs.py
-              python -B research/pump-multihop-accrual-qualification-20261028/replay_focused.py --candidate research/pump-multihop-accrual-qualification-20261028/artifacts/candidate.so --output work/pump-canonical-focused
-              python -B research/pump-multihop-accrual-qualification-20261028/verify_focused.py --candidate research/pump-multihop-accrual-qualification-20261028/artifacts/candidate.so --reports work/pump-canonical-focused
-              python -B research/pump-multihop-accrual-qualification-20261028/replay_captured_create.py --candidate research/pump-multihop-accrual-qualification-20261028/artifacts/candidate.so --output work/pump-captured-create
-              python -O -B scripts/pump_verify_accrual_captured_create.py --candidate research/pump-multihop-accrual-qualification-20261028/artifacts/candidate.so --runtime-directory work/pump-captured-create
+              python -B research/pump-program-creator-notice-qualification-20261028/replay_focused.py --candidate research/pump-program-creator-notice-qualification-20261028/artifacts/candidate.so --output work/pump-canonical-focused
+              python -B research/pump-program-creator-notice-qualification-20261028/verify_focused.py --candidate research/pump-program-creator-notice-qualification-20261028/artifacts/candidate.so --reports work/pump-canonical-focused
+              python -B research/pump-program-creator-notice-qualification-20261028/replay_captured_create.py --candidate research/pump-program-creator-notice-qualification-20261028/artifacts/candidate.so --output work/pump-captured-create
+              python -B scripts/pump_verify_program_creator_captured_create.py --candidate research/pump-program-creator-notice-qualification-20261028/artifacts/candidate.so --runtime-directory work/pump-captured-create
+          - suite: pump-program-creator-notice
+            commands: |
+              python -B research/pump-multihop-accrual-qualification-20261028/verify.py
+              python -B research/pump-program-creator-notice-qualification-20261028/verify.py
+              python -B research/pump-program-creator-notice-qualification-20261028/integrity_controls.py --report work/pump-program-creator-notice-controls.json
           - suite: relay-current-repeat
             commands: |
               python -O -B research/relay-current-repeat-20261028/verify.py --repo .

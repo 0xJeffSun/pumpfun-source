@@ -23,15 +23,16 @@ percentage of engineering work completed.
 
 ## Current qualifications and remaining work
 
-- [Pump's composed source](research/pump-multihop-accrual-qualification-20261028/README.md)
+- [Pump's composed source](research/pump-program-creator-notice-qualification-20261028/README.md)
   preserves 1,019 normalized / 188 raw windows and the prior creation, admin,
-  legacy-payment and multi-hop admission fixes. It restores the two original
-  fee-accrual calls. Twelve synthetic counter fixtures agree with the original;
-  the prior selected image differs on three ordered Source lines. Two actual builds, including an independent empty-target
-  build, repeat both outputs. All 10,468 broad pairs and 106 strict focused case
-  records pass; separate legacy284 and extension126 pairs also pass. Historical
-  controls remain intact. Sixteen windows and whole meaningful ELF identity
-  remain open; this correction adds no matched window.
+  legacy-payment and multi-hop fixes. It also restores the original notice when
+  the creator is an executable program. The signed witness matches original
+  logs, state and events; the previous C0 image omitted the notice. Two actual
+  builds, including an independent empty-target build, repeat both outputs.
+  All 10,468 broad pairs and 106 strict focused records pass, together with the
+  inherited twelve counter fixtures and separate legacy and extension cases.
+  Sixteen windows and whole meaningful ELF identity remain open; this correction
+  adds no matched window.
 - [AMM's explicit layout recipe](research/amm-layout-closure-20261028/README.md)
   produces784 raw-identical physical windows. Every meaningful ELF byte outside
   sell's 9,024 bytes and 21 relocation-offset rows inside sell is literally equal,
@@ -74,7 +75,7 @@ Source acquisition/extraction is separate from editable feature reconstruction a
 | --- | ---: | ---: | --- |
 | Published SDK source | 31 / 31 files | 100% | Exact npm 4.3.1 source bytes; full behavior parity still unqualified |
 | Frontend JavaScript capture | 648 / 648 scripts | 100% | Known scripts in the captured route/asset graph only |
-| Frontend factory extraction | 4915 / 4915 inventoried variants | 100% | Extracted factories, not original source files; authenticated/unseen modules unknown |
+| Frontend factory extraction | 5947 / 5947 inventoried variants | 100% | Extracted factories, not original source files; authenticated/unseen modules unknown |
 | Public developer API contract | 67 / 67 documented operations | 100% | Specification captured; native compatibility 0 / 67 (0%) |
 | Original backend source | Not observable | N/A | Implement replacement behavior from API evidence |
 
@@ -106,7 +107,7 @@ Source acquisition/extraction is separate from editable feature reconstruction a
 | Explore / search | 3/3 (100%) | 3/4 (75%) | Authenticated one-record historical snapshot, fail-closed adapter and offline name/symbol/mint search pass unit and browser tests. Native market discovery, production ranking and original visual parity remain unqualified. |
 | Leaderboards / competitions | 3/3 (100%) | 2/4 (50%) | Contract-driven read-only interface and failure paths verified. Live API success and original visual parity remain unqualified. |
 | Live discovery / playback | 3/3 (100%) | 3/4 (75%) | Authenticated five-record historical discovery snapshot, fail-closed evidence adapter and local search/selection states pass unit and browser tests. Current livestream state, native API compatibility, playback, presence and original visual parity remain unqualified. |
-| GO | 0/3 (0%) | 0/4 (0%) | Route scaffold; campaign behavior and API binding unknown. |
+| GO | 3/3 (100%) | 3/4 (75%) | Authenticated 25-record historical bounty snapshot, fail-closed evidence adapter, local search/filter/sort/cursor state and unavailable account actions pass unit and browser tests. Current API compatibility, authenticated flows, mutations and original visual parity remain unqualified. |
 | Mayhem | 3/3 (100%) | 2/4 (50%) | Evidence-mapped state filters, sorting, strict validation and fail-closed offline states pass unit and browser tests. No archived Mayhem response, qualified live API compatibility or original visual parity is claimed. |
 | Holder rewards | 3/3 (100%) | 3/4 (75%) | Published-SDK offline PDA derivation, validation and unavailable states pass unit and browser tests. Live account existence, balances, eligibility, claims and original visual parity remain unqualified. |
 | Create coin / upload | 3/3 (100%) | 3/4 (75%) | Evidence-mapped offline metadata drafting, validation, local image preview and failure states pass browser tests. Upload, wallet signing, transaction creation, token launch and original visual parity remain unqualified. |

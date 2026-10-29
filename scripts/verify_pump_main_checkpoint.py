@@ -20,6 +20,51 @@ def sha(path):
 def verify(root):
     root = Path(root).resolve()
     selected = json.loads((root / 'repro/status.json').read_text())['pump']
+    notice = 'research/pump-program-creator-notice-qualification-20261028'
+    if selected['candidate_artifact'] == notice + '/artifacts/candidate.so':
+        def require(value, message):
+            if not value:
+                raise ValueError(message)
+        packet = root / notice
+        seal = 'ef50bb5262f67c59f4d1850f83e2821fa1e9c5f02649589cab356a6e28cffb49'
+        require(len(seal) == 64 and all(c in '0123456789abcdef' for c in seal), 'Pump program-creator notice final seal is not frozen')
+        require(sha(packet / 'MANIFEST.json') == selected['candidate_packet_manifest_sha256'] == selected['checkpoint_manifest_sha256'] == seal, 'Pump notice qualification seal')
+        result = subprocess.run([sys.executable, '-B', str(packet / 'verify.py'), '--source-directory', str(root / 'programs/pump')], cwd=root, capture_output=True, text=True, check=True)
+        report = json.loads(result.stdout)
+        require(report['passed'] and report['sealed'], 'Pump sealed notice qualification')
+        candidate = 'd0377d7cef5b7378063f8bfabac5dc9c08d29eeaaaaa14022d36909688ff5e1b'
+        symbols = '0f50faa8c325104dc77898ed84866dec2ad1eec475b6abba72c475cf7bf9bab6'
+        require(report['candidate_sha256'] == selected['candidate_sha256'] == sha(root / selected['candidate_artifact']) == candidate, 'Pump notice selected executable')
+        require(selected['candidate_symbols_artifact'] == notice + '/artifacts/unstripped.so' and selected['symbols_sha256'] == sha(root / selected['candidate_symbols_artifact']) == symbols, 'Pump notice selected symbols')
+        require(sha(packet / 'SOURCE65.json') == '61e9741da82f4bc28dcfa25c78e0160f25d9eaeb9c95e9b1d0af52e13a972003', 'Pump notice exact source65 map')
+        require(selected['canonical_source_inputs'] == len(json.loads((packet / 'SOURCE65.json').read_text())) == 65 and selected['materialized_workspace_inputs'] == 66, 'Pump notice compiler source scope')
+        require(report['normalized'] == selected['normalized_function_matches'] == 1019 and report['raw'] == selected['raw_function_matches'] == 188 and report['window_gain'] == 0, 'Pump unchanged complete-window scope')
+        require(report['actual_builds'] == 2 and report['cold_empty_target'] and selected['portable_empty_target_build'], 'Pump actual matching warm and cold builds')
+        full, focus, captured = report['full44'], report['focused'], report['captured_create']
+        require(full['pairs'] == selected['validated_cases'] == 10468 and full['transaction_fields'] == selected['runtime_transaction_fields'] == 18343 and full['signature_fields'] == selected['verified_transaction_signatures'] == 27875, 'Pump notice full runtime scope')
+        require(focus['strict_case_records'] == selected['focused_runtime_cases'] == 106 and focus['strict_outcome_executions'] == selected['focused_runtime_transactions'] == 318 and focus['strict_signature_fields_verified'] == selected['focused_runtime_signature_fields'] == 465, 'Pump notice focused scope')
+        require(focus['legacy_case_pairs'] == selected['legacy_runtime_cases'] == 284 and focus['legacy_signature_fields_verified'] == selected['legacy_runtime_signature_fields'] == 568, 'Pump notice legacy scope')
+        require(focus['extension_case_pairs'] == selected['extension_runtime_cases'] == 126 and focus['extension_signature_fields_verified'] == selected['extension_runtime_signature_fields'] == 252, 'Pump notice extension scope')
+        require(captured['cases'] == selected['captured_create_cases'] == 14 and captured['executions'] == captured['actual_captured_loads'] == 42 and captured['signature_fields'] == selected['captured_create_signature_fields'] == 84 and captured['source_normalization'] is None, 'Pump notice captured creation supplement')
+        require(selected['captured_create_packet_manifest_sha256'] == seal and report['counter_cases'] == selected['accrual_counter_cases'] == 12 and report['counter_executions'] == selected['accrual_counter_executions'] == 36 and report['parent_Source_differences'] == 3 and report['source_normalization'] is None, 'Pump inherited overflow diagnostic correction')
+        expected_notice = dict(cases=1, executions=3, signature_fields=6, actual_captured_loads=3, parent_notice_differences=1, candidate_notice_differences=0, strict_ordered_log_mismatches=0, source_normalization=None)
+        require(report['program_creator_notice'] == selected['program_creator_notice'] == expected_notice, 'Pump bounded executable-creator notice correction')
+        for key, path in [('source_recipe', '/build.py'), ('source_builder', '/build.py'), ('source_binding_verifier', '/verify.py'), ('comparison_report', '/builds/cold-01/build-comparison.json'), ('build_log', '/builds/cold-01/build.log'), ('validation_report', '/runtime/full44.json.gz'), ('strict_ordered_log_report', '/runtime/full44.strict-logs.json')]:
+            require(selected[key] == notice + path and (root / selected[key]).is_file(), 'Pump notice selected ' + key)
+        from pump_strict_ordered_logs import audit as audit_strict_logs
+        import gzip
+        checker = root / 'scripts/pump_strict_ordered_logs.py'
+        require(sha(checker) == selected['strict_ordered_log_checker_sha256'] == '459b40e04a730f01f257005ed705a4f7d576c04f55acd4eca6a3d37c5326cf5e', 'Pump strict ordered-log checker')
+        strict = audit_strict_logs(json.loads(gzip.decompress((root / selected['validation_report']).read_bytes())), candidate, 10468)
+        saved = json.loads((root / selected['strict_ordered_log_report']).read_text())
+        require(all(saved[key] == value for key, value in strict.items()) and saved['source_report_sha256'] == sha(root / selected['validation_report']) and saved['checker_sha256'] == sha(checker), 'Pump notice saved strict log audit')
+        require(strict['strict_ordered_log_mismatch_cases'] == 0 and selected['strict_ordered_log_pairs'] == strict['case_pairs'] == 10468, 'Pump notice unchanged Source/log scope')
+        prior = selected['prior_closure_selection']
+        require(sha(root / prior['path']) == prior['sha256'], 'Pump prior selection history')
+        for gap in selected['historical_behavior_gaps']:
+            require(sha(root / gap['report']) == gap['sha256'] and gap['candidate_sha256'] in {'acc5e6eba8c9295386443542847404e55a27d8e837402fb98de8ccffb679125f', '199fd7379b6881adefd9e54803f75902176c17bded1718bfc1c59b1cf5bc8473', 'c0e29e2d41c30e854f3548b37e87798d516e4e0e7769f40b7d8d16e31429795f'}, 'Pump historical failure evidence')
+        require(selected['known_behavior_gaps'] == [] and not selected['full_byte_equality'] and not selected['meaningful_elf_equal'] and not report['whole_elf_equal'] and report['goal_complete'] is False and selected.get('goal_complete', False) is False, 'Pump incomplete reconstruction scope')
+        return {**report, 'status': 'PASS', 'current_source_verified': True, 'independent_builds': 2, 'portable_empty_target_build': True, 'known_behavior_gaps': []}
     accrual = 'research/pump-multihop-accrual-qualification-20261028'
     if selected['candidate_artifact'] == accrual + '/artifacts/candidate.so':
         def require(value, message):

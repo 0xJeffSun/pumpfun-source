@@ -3,13 +3,15 @@
 An evidence-backed starting point for reconstructing the Pump website and APIs. This is separate from the Rust/on-chain reconstruction at the repository root.
 
 - `packages/sdk`: unchanged TypeScript sources from the official `@pump-fun/pump-sdk@4.3.1` npm archive, with a reconstructed tsup build.
-- `packages/frontend`: Next.js **16.4.1**, React **19.2.3**, Turbopack; evidence-mapped responsive shell, a hash-bound offline example feed, an offline historical Explore search, a live read-only Solana portfolio, and URL-backed navigation using captured color tokens and Geist fonts. Native feed, market-search and proprietary portfolio compatibility remain unimplemented.
+- `packages/frontend`: Next.js **16.4.1**, React **19.2.3**, Turbopack; evidence-mapped responsive shell, a hash-bound offline example feed, an offline historical Explore search, a live read-only Solana portfolio, and URL-backed navigation using captured color tokens and Geist fonts. Production feed, market-search and proprietary portfolio compatibility remain unimplemented.
 - `packages/backend`: independent Fastify compatibility harness. Documents 67 developer API operations, supports explicit read-only fixture replay, and returns **501** for unimplemented behavior.
 - `evidence`: original public bundles, HTML, styles, fonts, HTTP/DNS evidence, SDK archive and provenance.
 - `recovered/modules`: readable Turbopack factories, with module IDs, content hashes and exact source ranges in `recovered/modules.json`. These are not standalone original source files.
 - `contracts`: official OpenAPI snapshot, internal operation candidates, fixture format and coverage ledger.
 
 The developer contract ledger binds all 67 documented operations to the checked-in first-party `publicRead` contract, including exact method/path, scope, bearer-auth declaration, error-code contract, captured UTF-16 range, and any independently inventoried client literal. One additional captured route is recorded separately because it is absent from OpenAPI 0.294.0. These are offline contract bindings only: native implementation and compatibility qualification remain 0/67, and website request origins remain unresolved.
+
+The factory inventory now contains 5,947 variants and 7,337 captured occurrences. The [nested-registration recovery](research/nested-registration-20261028/README.md) follows the captured Turbopack runtime's actual recursive registration rule, restoring 1,032 previously omitted factory hashes across 89 existing captures, including the achievements client. Every previously indexed factory file, canonical path, ID and origin is retained. This is static source recovery; it does not execute the captured application or establish API compatibility.
 
 Start with [PRD.md](PRD.md) and [AGENTS.md](AGENTS.md). Every coverage claim must distinguish captured, reconstructed, implemented and qualified.
 
@@ -54,6 +56,34 @@ viewer or follow graph is invented. This feature performs no production API
 request or mutation and does not qualify the native feed service. See
 [`packages/frontend/HOME-FEED-EVIDENCE.md`](packages/frontend/HOME-FEED-EVIDENCE.md)
 for factory provenance and the local design boundary.
+
+## Native local Home Feed reads
+
+The backend exposes deterministic local reconstructions of the captured website
+reads at `/services/frontend/home-feed`, `/services/frontend/home-feed/new`, and
+`/services/frontend/home-feed/new/count`. They validate the captured query
+surface, project the declared response schema, implement stable ranked and
+chronological pagination, and bind pinned New-feed counts to tamper-detecting
+local cursors. The data source is a hash-bound synthetic callout seed; every
+successful response identifies it and marks compatibility as unqualified.
+
+These routes do not reproduce Pump ranking, cookies, personalization, realtime
+subjects, prices, users, or production records. They make no network request
+and are separate from the `/v1` developer API operations, whose native and
+qualified counts remain unchanged. See
+[`packages/backend/HOME-FEED-EVIDENCE.md`](packages/backend/HOME-FEED-EVIDENCE.md)
+for the captured hashes, website-origin attribution, local cursor/count policy,
+tests, and unsupported behavior.
+
+When the server explicitly sets `PUMP_LOCAL_HOME_FEED=enabled`, `/` also offers
+a separate Local Callouts view backed by PR #700's synthetic local read model at
+the fixed loopback origin `127.0.0.1:3001`. Next performs the requests on the
+server; the browser never contacts the backend directly. Every view remains
+labelled synthetic and local-unqualified, cursors stay opaque, and errors never
+fall back to production Pump.fun. The default remains the offline post feed.
+See
+[`packages/frontend/NATIVE-HOME-FEED.md`](packages/frontend/NATIVE-HOME-FEED.md)
+for the response, pagination, test, and trust boundaries.
 
 ## Offline Explore snapshot
 

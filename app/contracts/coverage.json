@@ -39,5 +39,19 @@
     "original frontend sources and exact full dependency tree"
   ],
   "featureProgress": "feature-progress.json",
-  "progressReport": "../PROGRESS.md"
+  "progressReport": "../PROGRESS.md",
+  "localReadModels": {
+    "callouts": {
+      "operations": ["GET /callout/{calloutId}"],
+      "status": "opt-in-public-spot-slice",
+      "defaultEnabled": false,
+      "qualified": false,
+      "evidence": [
+        "packages/backend/CALLOUTS.md",
+        "packages/backend/test/callouts.test.ts",
+        "packages/backend/test/callouts-evidence.test.ts"
+      ],
+      "limits": "Server-owned materialization only; no production absence, ranking, prices, auth or complete operation compatibility claim."
+    }
+  }
 }

@@ -1,4 +1,9 @@
 import Fastify from "fastify";
+import { CALLOUTS_NATIVE_ROUTES, registerCalloutRoutes } from "./callouts-routes.js";
+import type { CalloutsStore } from "./callouts-store.js";
+import { PositionsStore } from "./positions-store.js";
+import { registerPositionsRoutes, POSITIONS_NATIVE_ROUTES } from "./positions-routes.js";
+import { apiKeyGate } from "./api-key-gate.js";
 import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 import { validateHeaderName, validateHeaderValue } from "node:http";
@@ -13,6 +18,9 @@ import { registerFollowingRoutes } from "./following-routes.js";
 import { FollowingStore, defaultFollowingStore } from "./following-store.js";
 import { registerLeaderboardRoutes } from "./leaderboard-routes.js";
 import { LeaderboardStore, defaultLeaderboardStore } from "./leaderboard-store.js";
+import { registerHomeFeedRoutes } from "./home-feed-routes.js";
+import { HomeFeedStore, defaultHomeFeedStore } from "./home-feed-store.js";
+import { registerLocalMediaRoutes, type LocalMediaOptions } from "./local-media-routes.js";
 
 export type Fixture = {
   method: string;
@@ -28,6 +36,9 @@ const reservedFixturePaths = new Set([
   "/health",
   "/__reconstruction/status",
   "/__reconstruction/openapi.json",
+  "/services/frontend/home-feed",
+  "/services/frontend/home-feed/new",
+  "/services/frontend/home-feed/new/count",
 ]);
 
 function compareKeys([left]: [string, string], [right]: [string, string]) {
@@ -234,52 +245,6 @@ function registerFixtures(fixtures: Fixture[]) {
   return fixtureMap;
 }
 
-// Documented developer API key shape (contracts/developer.openapi.json,
-// components/securitySchemes/bearer): the prefix `pf_live_` followed by 43
-// base62 characters and a 6-character base62 checksum. The checksum algorithm
-// and the key store are not observable, so the gate validates the documented
-// shape only; a well-formed key is accepted as presented, never as a verified
-// credential. Scope, revocation and rate-limit outcomes need a key store and
-// stay unmodeled.
-const apiKeyPattern = /^pf_live_[0-9A-Za-z]{49}$/;
-
-async function apiKeyGate(
-  request: {
-    headers: Record<string, string | string[] | undefined>;
-    url: string;
-  },
-  reply: any,
-) {
-  const authorization = request.headers.authorization;
-  const alias = request.headers["x-api-key"];
-  let candidate: string | undefined;
-  if (typeof authorization === "string") {
-    const bearer = /^Bearer\s+(.+)$/i.exec(authorization.trim());
-    if (bearer) candidate = bearer[1];
-  }
-  if (candidate === undefined && typeof alias === "string") {
-    candidate = alias;
-  }
-  if (candidate !== undefined && apiKeyPattern.test(candidate)) return;
-  // The observed 401 envelope (evidence/api-probes.json, object
-  // 1837f7894abd389a) reports the path without the local /v1 prefix and names
-  // both key headers; the specification's examples diverge on both points, so
-  // the captured response wins. Only the timestamp is volatile.
-  const separator = request.url.indexOf("?");
-  const pathname =
-    separator < 0 ? request.url : request.url.slice(0, separator);
-  reply.code(401).send({
-    statusCode: 401,
-    timestamp: new Date().toISOString(),
-    path: pathname.startsWith("/v1/") ? pathname.slice(3) : pathname,
-    error: candidate === undefined ? "API_KEY_REQUIRED" : "API_KEY_INVALID",
-    message:
-      candidate === undefined
-        ? "Send Authorization: Bearer <key> or x-api-key: <key>"
-        : "The key is malformed (wrong prefix, length or checksum) or unknown.",
-  });
-}
-
 /**
  * Routes handled natively and therefore excluded from the generic replay loop.
  * Key: `METHOD /openapi-path` (the OpenAPI template path, not the Fastify param path).
@@ -314,6 +279,12 @@ const NATIVE_ROUTES = new Set<string>([
 ]);
 
 export interface BuildAppOptions {
+  /** Explicit server-owned public callout materialization; absent retains fixture/501 behavior. */
+  calloutsStore?: CalloutsStore;
+  /** Explicit local materialization; absent preserves the fixture/501 harness. */
+  positionsStore?: PositionsStore;
+  /** Explicit local/CLI-only capability; absent by default, independent of developer auth. */
+  localMedia?: LocalMediaOptions;
   /** Override the user store (for tests). */
   userStore?: UserStore;
   /** Override the post store (for tests). */
@@ -324,6 +295,8 @@ export interface BuildAppOptions {
   followingStore?: FollowingStore;
   /** Override the leaderboard store (for tests). */
   leaderboardStore?: LeaderboardStore;
+  /** Override the local Home Feed store (for tests). */
+  homeFeedStore?: HomeFeedStore;
 }
 
 export function buildApp(fixtures: Fixture[] = [], opts: BuildAppOptions = {}) {
@@ -352,6 +325,11 @@ export function buildApp(fixtures: Fixture[] = [], opts: BuildAppOptions = {}) {
       .digest("hex"),
     compatibility: "unqualified",
   }));
+  if (opts.localMedia) {
+    const { store } = opts.localMedia;
+    app.addHook("onClose", async () => { await store.close(); });
+    registerLocalMediaRoutes(app, opts.localMedia);
+  }
   // Register native handlers first. They win over a captured fixture for the same route.
   // They are documented /v1 operations too, so the same API-key gate runs before them.
   const store = opts.userStore ?? defaultStore;
@@ -366,6 +344,7 @@ export function buildApp(fixtures: Fixture[] = [], opts: BuildAppOptions = {}) {
   const lbStore =
     opts.leaderboardStore ??
     (opts.userStore ? new LeaderboardStore(undefined, store) : defaultLeaderboardStore);
+  registerHomeFeedRoutes(app, opts.homeFeedStore ?? defaultHomeFeedStore);
   app.register(async (native) => {
     native.addHook("preHandler", apiKeyGate);
     registerUserRoutes(native, store);
@@ -373,6 +352,8 @@ export function buildApp(fixtures: Fixture[] = [], opts: BuildAppOptions = {}) {
     registerCompetitionRoutes(native, compStore);
     registerFollowingRoutes(native, followStore);
     registerLeaderboardRoutes(native, lbStore);
+    if (opts.calloutsStore) registerCalloutRoutes(native, opts.calloutsStore);
+    if (opts.positionsStore) registerPositionsRoutes(native, opts.positionsStore);
   });
 
   // Routing recognizes documented paths; no fabricated domain responses or live proxy fallback.
@@ -383,7 +364,9 @@ export function buildApp(fixtures: Fixture[] = [], opts: BuildAppOptions = {}) {
       ),
     )) {
       // Skip operations that a native handler already serves.
-      if (NATIVE_ROUTES.has(`${method.toUpperCase()} ${path}`)) continue;
+      if (NATIVE_ROUTES.has(`${method.toUpperCase()} ${path}`) ||
+        (opts.calloutsStore && CALLOUTS_NATIVE_ROUTES.has(`${method.toUpperCase()} ${path}`)) ||
+        (opts.positionsStore && POSITIONS_NATIVE_ROUTES.has(`${method.toUpperCase()} ${path}`))) continue;
       app.route({
         method: method.toUpperCase() as "GET",
         url: "/v1" + path.replace(/\{([^}]+)\}/g, ":$1"),

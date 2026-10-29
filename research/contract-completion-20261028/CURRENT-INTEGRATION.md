@@ -54,12 +54,12 @@ saved object. Independent cryptographic checks cover 20,056 retained transaction
 and 39,062 signature fields. Historical source/host provenance and the admitted
 catalog-encoding caveat remain disclosed in its current proof.
 
-Pump selects the [qualified accrual successor](../pump-multihop-accrual-qualification-20261028/README.md),
+Pump selects the [qualified program-creator notice correction](../pump-program-creator-notice-qualification-20261028/README.md),
 which preserves the composed creation, admin-wallet, legacy-payment and multi-hop
 admission fixes. Its 65 standalone inputs map to 66 actual compiler inputs.
 Two actual builds—an ordinary build with fresh local crates and an independent
-portable empty-target build—repeat both c0e29/dd73 outputs. The cold build took
-57.538 seconds and authenticated 254 locked archives and 4,176 source files under
+portable empty-target build—repeat both d037/0f50 outputs. The cold build took
+62.437 seconds and authenticated 254 locked archives and 4,176 source files under
 the unchanged native macOS v1.44/Linux v1.44 SBPF library recipe. Coverage remains
 1,019 normalized / 188 raw windows, with the same sixteen residuals.
 
@@ -120,7 +120,8 @@ failures are resolved on the selected 199fd image; all eighteen cases pass with
 strict state, CPI, event, return and ordered program-message comparison. The prior
 acc5 selection is retained in pump-status-before-final-composition.json.
 
-PR #711 merged as `f57bbf0d`; Pump remains on the qualified accrual successor.
+PR #711 merged as `f57bbf0d` and selected the qualified accrual successor at
+that review; the later notice correction supersedes that selection.
 The `199fd` selection discussed above is historical. Its frozen records and
 executed controllers remain unchanged.
 
@@ -158,3 +159,31 @@ checks pass; maintained source, selection and checkpoint gates remain byte
 identical to the qualified accrual merge. The boost packet explicitly retains
 eight historical Source-log differences and claims no full log parity. Exact
 heads and limitations are in [the follow-up review](pr-review-batch14-independent.json).
+
+The next CTO proposal (#730) and AMM accrued-fee packet (#733) are merged as
+research evidence. CTO retains 777 signed execution fields with strict parity;
+its replay refuses the foreign host at the exact Python pin before any VM
+execution. The AMM packet adds 22 fresh fixtures / 66 executions and corrects
+a README contradiction about the accrued-equals-raw sell rejection.
+
+The Clock snapshot proposal (#731) is qualified for research publication with
+its proposed source and actual native evidence retained. The maintained source
+stays at `734b`, preserving the selected C0 checkpoint. A single timestamp
+definition now matches the original event dataflow, while complete windows stay
+unchanged. The unchanged counter12 replay passes 36 executions, signatures and
+captured loads using two distinct signed messages. Eight corruption controls
+cover integrity failures, including a valid load from the wrong image; both
+entrypoints reject optimized Python explicitly. This proposal has one author
+cold build, finite runtime evidence, and no independent repeat or full 44-suite
+qualification. [Pump review](pr-review-batch15-independent.json) and
+[AMM review](pr-review-batch16-independent.json) record their exact scope.
+
+The next source audit found a current C0 diagnostic gap: an executable creator
+skips the original program-creator notice. A minimal one-file correction
+preserves all 17 error/panic token positions and restores the notice, with no
+state or event change. An independent witness audit checks the authentic Fees
+program, signed transaction, full account metadata and literal captured loads.
+Warm and independent cold builds repeat D037/0f50. All 44 suites / 10,468 pairs,
+strict ordered logs, focused/captured cases and inherited accrual counter cases
+pass. The correction changes no complete-window membership: 16 Pump windows
+and one AMM sell window remain; meaningful ELF exactness remains three of five.

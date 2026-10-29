@@ -11,10 +11,13 @@ import {
   useState,
 } from "react";
 import type { ArchivedStream } from "./live-data";
-import { filterArchivedStreams } from "./live-filter";
+import {
+  filterArchivedStreams,
+  paginateArchivedStreams,
+  type LiveSort,
+} from "./live-filter";
 
 type SectionId = "most-viewers" | "other-sections";
-type SortId = "viewers" | "title";
 
 const sections: ReadonlyArray<{ id: SectionId; label: string }> = [
   { id: "most-viewers", label: "Most viewers" },
@@ -148,18 +151,22 @@ export default function LiveDiscovery({
     searchParams.get("section") === "other-sections"
       ? "other-sections"
       : "most-viewers";
-  const sort: SortId =
-    searchParams.get("sort") === "title" ? "title" : "viewers";
+  const sortValue = searchParams.get("sort");
+  const sort: LiveSort =
+    sortValue === "title" || sortValue === "viewers" ? sortValue : "captured";
   const query = searchParams.get("q") ?? "";
   const selectedId = searchParams.get("stream");
   const [draftQuery, setDraftQuery] = useState(query);
   const cardRefs = useRef(new Map<string, HTMLButtonElement>());
+  const searchRef = useRef<HTMLInputElement>(null);
   const selected = streams.find((stream) => stream.id === selectedId);
   const invalidSelection = selectedId !== null && selected === undefined;
   const results = useMemo(
     () => filterArchivedStreams(streams, query, sort),
     [query, sort, streams],
   );
+
+  const page = paginateArchivedStreams(results, searchParams.getAll("page"));
 
   useEffect(() => setDraftQuery(query), [query]);
 
@@ -180,15 +187,31 @@ export default function LiveDiscovery({
   const closeSelection = useCallback(() => {
     const previous = selectedId;
     navigate({ stream: null });
-    if (previous) {
-      requestAnimationFrame(() => cardRefs.current.get(previous)?.focus());
-    }
-  }, [navigate, selectedId]);
+    requestAnimationFrame(() => {
+      const target =
+        (previous ? cardRefs.current.get(previous) : undefined) ??
+        searchRef.current ??
+        document.getElementById(`live-section-${section}`);
+      target?.focus();
+    });
+  }, [navigate, selectedId, section]);
 
   useEffect(() => {
-    if (!selectedId) return;
+    if (selectedId === null) return;
     const closeOnEscape = (event: globalThis.KeyboardEvent) => {
-      if (event.key === "Escape") {
+      // A modal (for example, shell settings/search) owns Escape before the
+      // nonmodal metadata panel. Native dialog cancellation follows keydown;
+      // defaultPrevented alone therefore cannot identify that ownership.
+      const modalOwnsEvent =
+        event.target instanceof Element &&
+        event.target.closest(
+          'dialog[open], [role="dialog"][aria-modal="true"]',
+        );
+      if (
+        event.key === "Escape" &&
+        !event.defaultPrevented &&
+        !modalOwnsEvent
+      ) {
         event.preventDefault();
         closeSelection();
       }
@@ -199,13 +222,14 @@ export default function LiveDiscovery({
 
   function submitSearch(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    navigate({ q: draftQuery.trim() || null, stream: null });
+    navigate({ q: draftQuery.trim() || null, stream: null, page: null });
   }
 
   function selectSection(next: SectionId) {
     navigate({
       section: next === "most-viewers" ? null : next,
       stream: null,
+      page: null,
     });
   }
 
@@ -264,9 +288,9 @@ export default function LiveDiscovery({
               <p className="playback-kicker">Evidence boundary</p>
               <h2>Other section listings are unavailable</h2>
               <p>
-                The captured client names additional discovery sections, but
-                this reconstruction does not have a separately authenticated
-                dataset for their cards.
+                This adapter validates only the captured Most viewers section.
+                Other section payloads are not mapped or exposed by this local
+                view.
               </p>
               <button
                 type="button"
@@ -287,6 +311,7 @@ export default function LiveDiscovery({
                 <div className="live-control-row">
                   <input
                     id="live-search"
+                    ref={searchRef}
                     type="search"
                     value={draftQuery}
                     placeholder="Title, symbol, creator or mint"
@@ -299,7 +324,7 @@ export default function LiveDiscovery({
                       className="live-secondary-button"
                       onClick={() => {
                         setDraftQuery("");
-                        navigate({ q: null, stream: null });
+                        navigate({ q: null, stream: null, page: null });
                       }}
                     >
                       Clear
@@ -315,11 +340,16 @@ export default function LiveDiscovery({
                   value={sort}
                   onChange={(event) =>
                     navigate({
-                      sort: event.target.value === "title" ? "title" : null,
+                      sort:
+                        event.target.value === "captured"
+                          ? null
+                          : event.target.value,
                       stream: null,
+                      page: null,
                     })
                   }
                 >
+                  <option value="captured">Captured order</option>
                   <option value="viewers">Viewers at capture</option>
                   <option value="title">Title</option>
                 </select>
@@ -336,59 +366,121 @@ export default function LiveDiscovery({
                 {query ? <p>Query: {query}</p> : null}
               </div>
 
-              {results.length > 0 ? (
-                <div className="stream-grid" aria-label="Archived stream cards">
-                  {results.map((stream) => (
-                    <article
-                      className="live-card"
-                      key={stream.id}
-                      data-testid="archived-stream-card"
-                    >
-                      <StreamPlaceholder stream={stream} />
-                      <div className="live-card-body">
-                        <span className="archive-status">
-                          Captured snapshot — not current
-                        </span>
-                        <h3>{stream.title}</h3>
-                        <p className="live-symbol">{stream.symbol}</p>
-                        <dl>
-                          <div>
-                            <dt>Viewers at capture</dt>
-                            <dd>
-                              {stream.viewerCountAtCapture.toLocaleString(
-                                "en-US",
-                              )}
-                            </dd>
-                          </div>
-                          <div>
-                            <dt>Creator</dt>
-                            <dd title={stream.creatorAddress}>
-                              {shortAddress(stream.creatorAddress)}
-                            </dd>
-                          </div>
-                        </dl>
-                        <button
-                          type="button"
-                          ref={(node) => {
-                            if (node) cardRefs.current.set(stream.id, node);
-                            else cardRefs.current.delete(stream.id);
-                          }}
-                          aria-label={`Inspect archived stream ${stream.title} ${stream.symbol}`}
-                          aria-pressed={selected?.id === stream.id}
-                          onClick={() => navigate({ stream: stream.id })}
-                        >
-                          Inspect archived metadata
-                        </button>
-                      </div>
-                    </article>
-                  ))}
+              {!page.valid ? (
+                <div
+                  className="live-empty"
+                  data-testid="live-invalid-page"
+                  role="alert"
+                >
+                  <h2>Archive page unavailable</h2>
+                  <p>
+                    Choose a single page from 1 to {page.pageCount} for these
+                    results. No replacement page or production data was loaded.
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => navigate({ page: null, stream: null })}
+                  >
+                    Return to first page
+                  </button>
                 </div>
+              ) : results.length > 0 ? (
+                <>
+                  <nav
+                    className="live-pagination"
+                    aria-label="Archived stream pages"
+                  >
+                    <p aria-live="polite">
+                      Showing {page.start}–{page.end} of {page.total} captured
+                      records
+                    </p>
+                    <div>
+                      <button
+                        type="button"
+                        disabled={page.page === 1}
+                        onClick={() =>
+                          navigate({
+                            page:
+                              page.page === 2 ? null : String(page.page - 1),
+                            stream: null,
+                          })
+                        }
+                      >
+                        Previous page
+                      </button>
+                      <span aria-current="page">
+                        Page {page.page} of {page.pageCount}
+                      </span>
+                      <button
+                        type="button"
+                        disabled={page.page === page.pageCount}
+                        onClick={() =>
+                          navigate({
+                            page: String(page.page + 1),
+                            stream: null,
+                          })
+                        }
+                      >
+                        Next page
+                      </button>
+                    </div>
+                  </nav>
+                  <div
+                    className="stream-grid"
+                    aria-label="Archived stream cards"
+                  >
+                    {page.streams.map((stream) => (
+                      <article
+                        className="live-card"
+                        key={stream.id}
+                        data-testid="archived-stream-card"
+                      >
+                        <StreamPlaceholder stream={stream} />
+                        <div className="live-card-body">
+                          <span className="archive-status">
+                            Captured snapshot — not current
+                          </span>
+                          <h3>{stream.title}</h3>
+                          <p className="live-symbol">{stream.symbol}</p>
+                          <dl>
+                            <div>
+                              <dt>Viewers at capture</dt>
+                              <dd>
+                                {stream.viewerCountAtCapture.toLocaleString(
+                                  "en-US",
+                                )}
+                              </dd>
+                            </div>
+                            <div>
+                              <dt>Creator</dt>
+                              <dd title={stream.creatorAddress}>
+                                {shortAddress(stream.creatorAddress)}
+                              </dd>
+                            </div>
+                          </dl>
+                          <button
+                            type="button"
+                            ref={(node) => {
+                              if (node) cardRefs.current.set(stream.id, node);
+                              else cardRefs.current.delete(stream.id);
+                            }}
+                            aria-label={`Inspect archived stream ${stream.title} ${stream.symbol}`}
+                            aria-pressed={selected?.id === stream.id}
+                            onClick={() => navigate({ stream: stream.id })}
+                          >
+                            Inspect archived metadata
+                          </button>
+                        </div>
+                      </article>
+                    ))}
+                  </div>
+                </>
               ) : (
                 <div className="live-empty" data-testid="live-empty-results">
                   <h2>No matching captured record</h2>
                   <p>
-                    Nothing in this five-record archive matches the local query.
-                    This says nothing about current broadcasts.
+                    Nothing in this {streams.length}-record archive matches the
+                    local query. This says nothing about current broadcasts.
                   </p>
                 </div>
               )}

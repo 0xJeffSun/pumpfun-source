@@ -11,7 +11,7 @@
  */
 import type { FastifyInstance } from 'fastify';
 import { defaultFollowingStore, type FollowingStore } from './following-store.js';
-import { errorBody, sendSynthetic } from './users-routes.js';
+import { errorBody, sendSynthetic, rejectDuplicateQueryKeys, toDeveloperUser } from './users-routes.js';
 
 const LIST_PAGE = { min: 1, max: 1000, default: 20 } as const;
 const SEARCH_PAGE = { min: 1, max: 100, default: 20 } as const;
@@ -39,7 +39,7 @@ function parseListPage(
   let offset = 0;
   if (qs.offset !== undefined) {
     const parsed = Number(qs.offset);
-    if (!Number.isInteger(parsed) || parsed < 0) return 'INVALID_OFFSET';
+    if (!Number.isSafeInteger(parsed) || parsed < 0) return 'INVALID_OFFSET';
     offset = parsed;
   }
   let sort: 'followers' | 'recent' | undefined;
@@ -60,6 +60,7 @@ export function registerFollowingRoutes(
    * Returns: 200, { follow: FollowRelationship | null }
    */
   app.get('/v1/following/single/:id', async (request, reply) => {
+    if (rejectDuplicateQueryKeys(request, reply)) return reply;
     const { id } = request.params as { id: string };
     const qs = request.query as Record<string, string | undefined>;
     const viewer = qs.userId;
@@ -74,6 +75,7 @@ export function registerFollowingRoutes(
    * Returns: 200, { count: number }
    */
   app.get('/v1/following/v3/followers/count/:userId', async (request, reply) => {
+    if (rejectDuplicateQueryKeys(request, reply)) return reply;
     const { userId } = request.params as { userId: string };
     return sendSynthetic(reply, 200, { count: store.countFollowers(userId) });
   });
@@ -83,6 +85,7 @@ export function registerFollowingRoutes(
    * Returns: 200, { count: number }
    */
   app.get('/v1/following/v3/following/count/:userId', async (request, reply) => {
+    if (rejectDuplicateQueryKeys(request, reply)) return reply;
     const { userId } = request.params as { userId: string };
     return sendSynthetic(reply, 200, { count: store.countFollowing(userId) });
   });
@@ -94,6 +97,7 @@ export function registerFollowingRoutes(
    * never be mistaken for a userId.
    */
   app.get('/v1/following/v3/followers/search/:userId', async (request, reply) => {
+    if (rejectDuplicateQueryKeys(request, reply)) return reply;
     const { userId } = request.params as { userId: string };
     const qs = request.query as Record<string, string | undefined>;
     const term = qs.searchTerm;
@@ -117,11 +121,12 @@ export function registerFollowingRoutes(
       return reply.code(400).send(errorBody(400, page));
     }
     const matches = store.searchFollowers(userId, term);
-    return sendSynthetic(reply, 200, matches.slice(page.offset, page.offset + page.limit));
+    return sendSynthetic(reply, 200, matches.slice(page.offset, page.offset + page.limit).map(toDeveloperUser));
   });
 
   /** GET /v1/following/v3/following/search/:userId?searchTerm= — as above. */
   app.get('/v1/following/v3/following/search/:userId', async (request, reply) => {
+    if (rejectDuplicateQueryKeys(request, reply)) return reply;
     const { userId } = request.params as { userId: string };
     const qs = request.query as Record<string, string | undefined>;
     const term = qs.searchTerm;
@@ -145,7 +150,7 @@ export function registerFollowingRoutes(
       return reply.code(400).send(errorBody(400, page));
     }
     const matches = store.searchFollowing(userId, term);
-    return sendSynthetic(reply, 200, matches.slice(page.offset, page.offset + page.limit));
+    return sendSynthetic(reply, 200, matches.slice(page.offset, page.offset + page.limit).map(toDeveloperUser));
   });
 
   /**
@@ -153,6 +158,7 @@ export function registerFollowingRoutes(
    * Returns: 200, User[] — one page.
    */
   app.get('/v1/following/v3/followers/:userId', async (request, reply) => {
+    if (rejectDuplicateQueryKeys(request, reply)) return reply;
     const { userId } = request.params as { userId: string };
     const qs = request.query as Record<string, string | undefined>;
     const page = parseListPage(qs, LIST_PAGE);
@@ -164,6 +170,7 @@ export function registerFollowingRoutes(
 
   /** GET /v1/following/v3/following/{userId}?limit=&offset=&sort= — as above. */
   app.get('/v1/following/v3/following/:userId', async (request, reply) => {
+    if (rejectDuplicateQueryKeys(request, reply)) return reply;
     const { userId } = request.params as { userId: string };
     const qs = request.query as Record<string, string | undefined>;
     const page = parseListPage(qs, LIST_PAGE);

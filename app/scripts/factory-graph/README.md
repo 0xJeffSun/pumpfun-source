@@ -1,0 +1,53 @@
+# Factory graph analyzer
+
+This static analyzer ties recovered Turbopack factories back to authenticated capture objects, preserves factory variants, and builds deterministic route and API attribution reports. Captured JavaScript is parsed as inert text and is never evaluated.
+
+## Commands
+
+Run from `app/`:
+
+```sh
+pnpm graph:build
+pnpm graph:verify
+pnpm graph:summary
+pnpm graph:route -- /go
+pnpm graph:module -- 100281
+pnpm graph:operations -- auth/admins
+pnpm test:graph
+```
+
+`graph:build` transactionally replaces `research/turbopack-route-graph-20261028/`. `graph:verify` rejects missing, modified, extra, or symlinked generated records. Module lookup accepts an optional SHA-256 prefix and reports all matching identities so a colliding numeric ID cannot be presented as unique.
+
+## Source authentication
+
+For every recovered variant, the analyzer:
+
+1. Requires the origin to exist in `evidence/web/manifest.json`.
+2. rejects absolute paths, traversal, NUL bytes, and symlinks;
+3. verifies captured byte length and SHA-256;
+4. decodes UTF-8 with fatal error handling;
+5. slices the decoded source using the recorded UTF-16 half-open offsets; and
+6. verifies the factory content hash; and
+7. binds the recovered formatted file to that authenticated source before using it for graph extraction.
+
+The formatted binding first compares a complete canonical Babel factory AST. It ignores source locations, comments, parser tokens, raw literal spelling metadata, and empty no-op statements, while preserving identifiers, values, properties, optional/computed access, operators, calls, arguments, expressions, and executable statements. A small number of pinned formatter outputs change Babel AST shape; those variants are accepted only when their complete formatted bytes equal a fresh derivation through the same pinned inventory formatter. Canonical digests are cached per authenticated factory hash and full ASTs are not retained.
+
+The line census uses Babel token locations. It counts code lines once per unique factory content hash and excludes the recovery banner, blank lines, comment-only lines, and duplicate variants.
+
+## Resolution model
+
+Graph identity includes numeric module ID, factory hash, captured object, source range, and chunk URL. Calls through the actual top-level factory runtime parameter are recognized structurally:
+
+- `runtime.i(literal)` is a direct import boundary.
+- `runtime.A(literal)` is a dynamic import boundary.
+- `runtime.s(...)` supplies observed export names.
+
+An import is exact only when chunk context or the selected corpus leaves one identity. Multiple compatible identities remain `AMBIGUOUS`; missing selected targets remain `UNRESOLVED`; string runtime boundaries are `EXTERNAL`. The analyzer does not guess among collisions.
+
+Route attribution requires an authenticated route HTML record to reference an authenticated captured JavaScript asset. A seed is keyed by module ID, factory hash, captured source object, and UTF-16 source range. Identical factory bytes in another captured object therefore do not inherit the route. Reachability then follows exact graph edges only, including legitimate exact cross-chunk imports. Static API attribution maps the repository's existing internal and developer ledgers into enclosing authenticated factory ranges. It does not claim endpoint reachability, authentication, or live compatibility.
+
+## Reproducibility and limits
+
+Outputs use stable ordering, deterministic JSON, deterministic gzip headers, and a content manifest. Publication happens in a temporary sibling directory and is renamed only after every output is written. Verification authenticates the current inputs, rebuilds every report, and compares the regenerated content with the packet manifest. Because gzip output can differ between zlib builds bundled with different Node releases, each `.json.gz` record is additionally pinned by the sha256 and length of its decompressed content, and rebuild comparison uses that content identity rather than compressed bytes. The checked-in packet records no timestamps or machine-specific measurements, so repeat builds are content-identical.
+
+The selected corpus deliberately targets approximately 250,000 authenticated code lines rather than the entire recovered inventory. An unresolved edge may simply lead outside that selection. Exact route captures were not retained for `/profile/:id` or `/portfolio`; their reports fail closed with no attributed nodes. This is dependency evidence, not recovered original TypeScript and not proof of runtime behavior.
