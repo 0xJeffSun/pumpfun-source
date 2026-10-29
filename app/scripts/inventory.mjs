@@ -108,7 +108,7 @@ export async function buildInventory(
       if (createHash("sha256").update(bytes).digest("hex") !== record.sha256) {
         throw new Error("Captured source SHA-256 mismatch");
       }
-      source = bytes.toString("utf8");
+      source = new TextDecoder("utf-8", { fatal: true, ignoreBOM: true }).decode(bytes);
     } catch (error) {
       throw new Error(
         `Unable to read inventory source ${record.path ?? "<invalid path>"}: ${errorSummary(error)}`,
