@@ -52,10 +52,11 @@ measurement adapter. It executes no captured program or compiler.
 | SellV2 event order, compiler only | [40793772555](https://github.com/shawkkkkk/pumpfun-source/actions/runs/40793772555) | `844415f7d0615f0c` |
 | Constructor array lifetime | [40794358580](https://github.com/shawkkkkk/pumpfun-source/actions/runs/40794358580) | `199fd7379b6881ad` |
 | CTO used CPI flow | [40794982049](https://github.com/shawkkkkk/pumpfun-source/actions/runs/40794982049) | `df40382896c913ba` |
+| Per-hop common timestamp | [40795474496](https://github.com/shawkkkkk/pumpfun-source/actions/runs/40795474496) | `0bc4a222f4040ad4` |
 
-All six raw artifacts and exact measured hashes are retained under `evidence`.
+All seven raw artifacts and exact measured hashes are retained under `evidence`.
 The coordinator independently ran the unchanged official1035-window census for
-the first four. `evidence/census` retains those full outputs and input bindings: all preserve
+the six distinct changed images. `evidence/census` retains those full outputs and input bindings: all preserve
 1019 normalized and188 raw memberships, with no original-start gains or losses.
 The default verifier binds their symbol hashes and independently recomputes the
 retained membership deltas; it does not rerun the normalizer. Runtime qualification
