@@ -3,6 +3,8 @@ import { CALLOUTS_NATIVE_ROUTES, registerCalloutRoutes } from "./callouts-routes
 import type { CalloutsStore } from "./callouts-store.js";
 import { PositionsStore } from "./positions-store.js";
 import { registerPositionsRoutes, POSITIONS_NATIVE_ROUTES } from "./positions-routes.js";
+import type { PayoutsStore } from "./payouts-store.js";
+import { registerPayoutRoutes, PAYOUTS_NATIVE_ROUTES } from "./payouts-routes.js";
 import { apiKeyGate } from "./api-key-gate.js";
 import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
@@ -283,6 +285,8 @@ export interface BuildAppOptions {
   calloutsStore?: CalloutsStore;
   /** Explicit local materialization; absent preserves the fixture/501 harness. */
   positionsStore?: PositionsStore;
+  /** Explicit confirmed-payout facts; absent preserves fixture/501 behavior. */
+  payoutsStore?: PayoutsStore;
   /** Explicit local/CLI-only capability; absent by default, independent of developer auth. */
   localMedia?: LocalMediaOptions;
   /** Override the user store (for tests). */
@@ -354,6 +358,7 @@ export function buildApp(fixtures: Fixture[] = [], opts: BuildAppOptions = {}) {
     registerLeaderboardRoutes(native, lbStore);
     if (opts.calloutsStore) registerCalloutRoutes(native, opts.calloutsStore);
     if (opts.positionsStore) registerPositionsRoutes(native, opts.positionsStore);
+    if (opts.payoutsStore) registerPayoutRoutes(native, opts.payoutsStore);
   });
 
   // Routing recognizes documented paths; no fabricated domain responses or live proxy fallback.
@@ -366,7 +371,8 @@ export function buildApp(fixtures: Fixture[] = [], opts: BuildAppOptions = {}) {
       // Skip operations that a native handler already serves.
       if (NATIVE_ROUTES.has(`${method.toUpperCase()} ${path}`) ||
         (opts.calloutsStore && CALLOUTS_NATIVE_ROUTES.has(`${method.toUpperCase()} ${path}`)) ||
-        (opts.positionsStore && POSITIONS_NATIVE_ROUTES.has(`${method.toUpperCase()} ${path}`))) continue;
+        (opts.positionsStore && POSITIONS_NATIVE_ROUTES.has(`${method.toUpperCase()} ${path}`)) ||
+        (opts.payoutsStore && PAYOUTS_NATIVE_ROUTES.has(`${method.toUpperCase()} ${path}`))) continue;
       app.route({
         method: method.toUpperCase() as "GET",
         url: "/v1" + path.replace(/\{([^}]+)\}/g, ":$1"),
