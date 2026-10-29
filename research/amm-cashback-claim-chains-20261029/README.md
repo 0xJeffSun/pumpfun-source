@@ -27,7 +27,9 @@ fresh per case; its ATA (uvata) is present or fresh per case.
 Payer deltas are exactly -5,000 except account-creation steps
 (fresh accumulator rent 1,844,400, fresh ATA rent 2,039,280).
 
-Event layouts (all verified byte-for-byte):
+Event layouts (the fields listed are the ones verify.py decodes and
+checks; the claim event is decoded in full, the buy events only at
+the offsets named):
 - ClaimCashbackEvent, 72 bytes, disc = sha256(
   "event:ClaimCashbackEvent")[:8]: user @8..40, amount @40..48,
   timestamp @48..56, total_claimed @56..64 (this is
@@ -95,9 +97,11 @@ Family O — overflow chain (claimed = u64max - 100, uvata 1,000):
   rollback (uvata stays 6,475, claimed stays u64max - 100);
   a second identical claim fails 6023 again. The 6,475 tokens
   are claimable in principle but permanently blocked while
-  claimed sits at the edge. The transfer happens before the
-  checked add in the handler, so the rollback -- not a partial
-  payout -- is what the user observes.
+  claimed sits at the edge. In the repository source
+  (programs/pump-amm/src/instructions/token_incentives/claim.rs)
+  the transfer precedes the checked add; the receipts show only
+  the observable result, a full rollback rather than a partial
+  payout.
 
 Family T — transfer-fee chains (quote tf100, TOKEN22 ATA):
 - `t-tf-buy-claim`: tf buy credits earned += 5,475 (gross)
@@ -118,7 +122,8 @@ Family T — transfer-fee chains (quote tf100, TOKEN22 ATA):
 - A claim pays the accumulator ATA balance in full, never the
   earned-minus-claimed delta: after every buy/sell accrual the
   claim drains the ATA to 0 and claimed catches up to earned
-  exactly -- except under transfer fees, where the gap equals
+  exactly (in every successful non-overflow chain here) -- except
+  under transfer fees, where the gap equals
   the cumulative withheld and never closes.
 - Earned is cumulative and never reset by a claim; claimed is
   the running payout total. The claim event's total_claimed is
@@ -155,3 +160,27 @@ Family T — transfer-fee chains (quote tf100, TOKEN22 ATA):
   sell); its fields are not decoded in this packet.
 - Deposit/withdraw/boost paths do not touch cashback_earned in
   this tree and were not chained here.
+
+## Verify and provenance
+
+From the repository root:
+
+    python3 -I -B research/amm-cashback-claim-chains-20261029/verify.py
+
+`verify.py` needs only `solders` plus files in the repository: this
+packet, `evidence/original/pump_amm/deployed.so`, and the two
+retained rebuilt images
+`research/amm-multi-hop-group-slice-recovery/artifacts/candidate.so.gz`
+(control, #424) and
+`research/amm-transfer-fee-diagnostic-recovery/artifacts/candidate.so.gz`
+(candidate, #427), whose decompressed sha256 values match the
+`images` block of `runtime/report.json.gz`. It re-checks the
+recorded receipts against the report's expected values; it does
+not re-execute any transaction.
+
+`producer.py` is the script that generated the receipts and is
+kept as a provenance record. It is not runnable as committed: it
+hard-codes a private workspace layout (`~/workspace/pumpfun-sparse`
+for the harness scripts and `~/workspace/slop-verify` for the
+control/candidate `.so` files) and chdirs there on start.
+
