@@ -31,7 +31,8 @@ step also creates the user volume accumulator on the first trade
 of a VM (1,844,400 lamports, 137 bytes); later trades in the
 same VM reuse it and cost 5,000 only.
 
-Event layouts (verified byte-for-byte):
+Event layouts (offsets as read from the receipts; verify.py
+decodes only the fields its expectations name):
 - BuyEvent (v2), 500 bytes, disc `67f4521f2cf57777`: curve
   @64, lp_bps @72, lp_fee @80, protocol_bps @88, protocol_fee
   @96, quote_with_lp @104, user_quote_in @112.
@@ -64,7 +65,8 @@ Family A -- fresh anchors:
 
 Family B -- buy loop (buy -> swc -> col -> buy -> swc -> col
 -> swp -> col-noop):
-- First buy, sweep, and collect match the anchor exactly:
+- First buy, sweep, and collect match the anchor exactly (the
+  first buy's raw event is byte-identical to `a-buy-1e10`'s):
   sweep moves 128,869 (pool cf 0, vq -10,975), collect drains
   128,869 to DEST, pool untouched by collect.
 - Second buy costs 1,847,852 -- 56 MORE than the fresh anchor
@@ -80,8 +82,9 @@ Family B -- buy loop (buy -> swc -> col -> buy -> swc -> col
 - Protocol sweep moves 19,462 to the protocol ATA (pool
   (0, 0, 0)); the following collect is a silent no-op
   (0 events, payer 5,000 only), protocol ATA untouched --
-  protocol sweep output is NOT collectable, verified here
-  after the creator side was already drained twice.
+  protocol sweep output is NOT collected by
+  collect_coin_creator_fee (observed here after the creator
+  side was already drained twice).
 
 Family C -- sell loop (sell -> swc -> col -> sell -> swc ->
 col -> col-noop):
@@ -119,7 +122,8 @@ Family D -- exact loop (exact -> swc -> col -> exact -> swc
 - The loop does NOT reset the price. Second-leg deltas vs
   fresh anchors: buy +56 spend, sell -54 payout, exact
   -8,693,806 out. The sweep/collect pair is price-neutral
-  for a following trade (3rd #6/#7/#8/#9), but it does not
+  for a following trade (shown in 3rd #6/#7/#8/#9, not
+  re-measured here), but it does not
   rewind the curve move the previous trade itself caused --
   the next trade prices off the moved vaults, not off the
   drained fee accounts.
@@ -130,8 +134,8 @@ Family D -- exact loop (exact -> swc -> col -> exact -> swc
 - Protocol sweep output stays uncollectable after a full
   loop: the collect after the protocol sweep is a silent
   no-op, and a collect after a drained vault ATA is a
-  silent no-op too (0 events, payer 5,000 only, all other
-  accounts byte-identical).
+  silent no-op too (0 events, payer 5,000 only, every other
+  watched account snapshot unchanged).
 
 ## Limits
 
@@ -155,3 +159,26 @@ Family D -- exact loop (exact -> swc -> col -> exact -> swc
 - Trades under a transfer fee inside the loop were not chained
   here; the sweep/collect legs under tf were pinned in 3rd
   #5 and the sweep -> v2 trade legs under tf in 3rd #9.
+
+## Verify and provenance
+
+From the repository root:
+
+    python3 -I -B research/amm-trade-sweep-collect-loops-20261029/verify.py
+
+`verify.py` needs only `solders` plus files in the repository: this
+packet, `evidence/original/pump_amm/deployed.so`, and the two
+retained rebuilt images
+`research/amm-multi-hop-group-slice-recovery/artifacts/candidate.so.gz`
+(control, #424) and
+`research/amm-transfer-fee-diagnostic-recovery/artifacts/candidate.so.gz`
+(candidate, #427), whose decompressed sha256 values match the
+`images` block of `runtime/report.json.gz`. It re-checks the
+recorded receipts against the report's expected values; it does
+not re-execute any transaction.
+
+`producer.py` is the script that generated the receipts and is
+kept as a provenance record. It is not runnable as committed: it
+hard-codes a private workspace layout (`~/workspace/pumpfun-sparse`
+for the harness scripts and `~/workspace/slop-verify` for the
+control/candidate `.so` files) and chdirs there on start.
