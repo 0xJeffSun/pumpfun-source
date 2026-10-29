@@ -3,8 +3,46 @@
   "prerequisite": {
     "pullRequest": 870,
     "exactPublicCommit": "e46c14ea3857da7ef6eecc9f7945622f5dbcfc39",
-    "inheritedFiles": [],
-    "novelCredit": false
+    "inheritedFiles": [
+      {
+        "path": "app/reconstruction/profile-lookup/README.md",
+        "gitBlobSha": "eff1894917726b7fd415a9e57dd7199a8ce1a3ac",
+        "unchanged": true,
+        "novelCredit": false
+      },
+      {
+        "path": "app/reconstruction/profile-lookup/client.mjs",
+        "gitBlobSha": "cae1e3c17175b91f342316195cf5ab129a04904b",
+        "unchanged": true,
+        "novelCredit": false
+      },
+      {
+        "path": "app/reconstruction/profile-lookup/contract.json",
+        "gitBlobSha": "a30f2ab289b2ce38b1165f9562d70674e1147e37",
+        "unchanged": true,
+        "novelCredit": false
+      },
+      {
+        "path": "app/research/original-profile-lookup-20261029/VALIDATION.json",
+        "gitBlobSha": "ca9731a16e57d2387776e246eca9f7989f533577",
+        "unchanged": true,
+        "novelCredit": false
+      },
+      {
+        "path": "app/scripts/original-profile-lookup.mjs",
+        "gitBlobSha": "dc1220e86baba3b305381c356bdc1431e4827989",
+        "unchanged": true,
+        "novelCredit": false
+      },
+      {
+        "path": "app/tests/original_profile_lookup.test.mjs",
+        "gitBlobSha": "5ebbf16687213406389f2686e0ea33e294fbac55",
+        "unchanged": true,
+        "novelCredit": false
+      }
+    ],
+    "novelCredit": false,
+    "enumeration": "Six explicit paths from PR870, each checked against its exact Git tree; no parent-history traversal"
   },
   "scope": "Novel544930 strict batch-user read/parser/chunking only;782067 resolver and surrounding query/wallet consumers excluded",
   "testedFiles": [
@@ -80,6 +118,11 @@
     {
       "command": "git diff --check",
       "result": "PASS"
+    },
+    {
+      "command": "For each explicit inherited path: git hash-object PATH equals git rev-parse e46c14ea3857da7ef6eecc9f7945622f5dbcfc39:PATH; require exactly six entries",
+      "result": "PASS",
+      "files": 6
     }
   ],
   "limits": [
@@ -90,5 +133,6 @@
     "No782067 microbatch resolver, surrounding wallet/query implementation, UI/auth/server or production requests",
     "No full Next build/browser on this snapshot; aggregate qualification separate",
     "No ledger/compatibility credit"
-  ]
+  ],
+  "receiptCorrection": "Initial receipt listed zero inherited files because shallow Git history suppressed diff-tree enumeration. This revision verifies all six prerequisite blobs explicitly. Prior source, artifact, test and README hashes remain unchanged."
 }
