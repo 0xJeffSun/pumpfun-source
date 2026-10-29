@@ -28,11 +28,17 @@ Checks, independently of the producer:
 - receipts are stored as parts, each under 25MB, read in order;
 - all three images agree on every case's observed values.
 """
+if not __debug__:
+    raise SystemExit("Run without -O")
+
 import base64
 import gzip
 import hashlib
 import json
 import struct
+import importlib.util
+import sys
+sys.dont_write_bytecode = True
 from pathlib import Path
 
 from solders.transaction import Transaction
@@ -43,6 +49,12 @@ if not __debug__:
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 IMAGES = ("original", "control", "candidate")
+
+CASE_DEFINITIONS_SHA256 = '967369a1b3a00687b47b6de4cdcadf694d8cd7a602fed282a5abb7d3fd5d4845'
+CASE_INPUTS_SHA256 = '2a7a4248bb66b15e44ca474574ce0477661af4838865277949e100bd39965938'
+PRODUCER_SHA256 = 'fa9786b81ff126c016f5ffea8330ea585d753684f84ebd811bc6a0b6ff3cad83'
+ORIGINAL_INPUT_PINS = {'evidence/original/pump_amm/deployed.so': '6a7ad34596d83b4c435b32f458a56e718e9f82eb4ad38e4316616d15d24d8ff7', 'evidence/original/pump_fees/deployed.so': '4f2955d0f6b40cc9ff7daa18ccad7d19119ba1249759f4e7e3bb691beee6b35e', 'evidence/dependencies/spl_token/deployed.so': '8190d3f7ceb6cb7a7a8d8924bff89f9f611e15ce1f806f2b6237f3311a98f697', 'evidence/dependencies/spl_token_2022/deployed.so': '15a2e615a42e20f31714bbaaee43002ae6f1cda2e8d7118243117ab3c1342e2d', 'evidence/dependencies/associated_token/deployed.so': '6804554e69fd3a58caa191dc4a58f4c67223d30ca28ab8987f39fc18d2f7374d', 'scripts/pump_amm_legacy_buy_differential.py': 'f50117d8d9cfb15ab540c467a6bc50c135ad7878b84fba71adb370436ed1097d', 'scripts/pump_amm_legacy_sell_differential.py': 'f9c889069563cc133f29568d185ea068a3b106c67c3f6a75389af824dca8db66', 'scripts/pump_amm_trade_v2_differential.py': 'a66c8bac5eb610392aef041f716428038b297e42e24af0a54a4a4715d9c5c6bb', 'scripts/pump_amm_reusable_harness.py': '19b7b2439db913e8dd187deba0aa561aa537bfe06a35007470e0f215c94f1cf2'}
+CORRESPONDENCE_INPUT_PINS = {'evidence/original/pump_amm/deployed.so': '6a7ad34596d83b4c435b32f458a56e718e9f82eb4ad38e4316616d15d24d8ff7', 'evidence/original/pump_fees/deployed.so': '4f2955d0f6b40cc9ff7daa18ccad7d19119ba1249759f4e7e3bb691beee6b35e', 'evidence/dependencies/spl_token/deployed.so': '8190d3f7ceb6cb7a7a8d8924bff89f9f611e15ce1f806f2b6237f3311a98f697', 'evidence/dependencies/spl_token_2022/deployed.so': '15a2e615a42e20f31714bbaaee43002ae6f1cda2e8d7118243117ab3c1342e2d', 'evidence/dependencies/associated_token/deployed.so': '6804554e69fd3a58caa191dc4a58f4c67223d30ca28ab8987f39fc18d2f7374d', 'scripts/pump_amm_legacy_buy_differential.py': 'f50117d8d9cfb15ab540c467a6bc50c135ad7878b84fba71adb370436ed1097d', 'scripts/pump_amm_legacy_sell_differential.py': 'f9c889069563cc133f29568d185ea068a3b106c67c3f6a75389af824dca8db66', 'scripts/pump_amm_trade_v2_differential.py': 'a66c8bac5eb610392aef041f716428038b297e42e24af0a54a4a4715d9c5c6bb', 'scripts/pump_amm_reusable_harness.py': '19b7b2439db913e8dd187deba0aa561aa537bfe06a35007470e0f215c94f1cf2', 'evidence/upstream/pump_amm.json': 'b7d8c57a4d9c4dd0109a9ab893052352333252d4eedced10ac091d4d66cab89b', 'research/imported-lab/analysis/pump_fun/amm-v2-trade-fixture.json': '2e775505852caf55203c826ee08b9341aa275f52f59a933c4fb0740535ee316f', 'research/imported-lab/analysis/pump_fun/config-snapshot.json': '17b886a6b4aa7fdc89f2fca9a1b67b318d33998794da59fe4df1fe89ca70bd27', 'scripts/pump_amm_admin_differential.py': 'cc3834231f951e3dbf36f38504d85f3135c0edf3792fabecd12fae10c493a72b', 'scripts/pump_amm_liquidity_differential.py': '08449c9da8c560330eeb5b560a26cdd553d260084e78bd54d4dc7edb914320b4'}
 
 
 def sha(data):
@@ -83,7 +95,7 @@ def decode_buy_event(logs, exact):
     if len(lines) != 1:
         return None
     raw = base64.b64decode(lines[0].split("Program data: ", 1)[1].strip())
-    if len(raw) != (512 if exact else 497):
+    if raw[:8] != bytes.fromhex("67f4521f2cf57777") or len(raw) != (512 if exact else 497):
         return None
     ev = {"out": struct.unpack_from("<Q", raw, 16)[0],
           "max": struct.unpack_from("<Q", raw, 24)[0],
@@ -121,6 +133,7 @@ def main():
         assert sha((HERE / rel).read_bytes()) == digest, rel
     report = json.loads(gzip.decompress(
         (HERE / "runtime/report.json.gz").read_bytes()))
+    assert report["input_sha256"] == ORIGINAL_INPUT_PINS, "exact retained repository input map"
     assert report["case_count"] == 42, report["case_count"]
     assert report["mismatches"] == [] and report["divergent_cases"] == []
     for rel, digest in report["input_sha256"].items():
@@ -135,7 +148,12 @@ def main():
         receipts.extend(chunk)
     assert len(receipts) == 126, len(receipts)
     assert report["counts"] == {"vms": 126, "transactions": 126, "signature_fields": 126}
+    spec = importlib.util.spec_from_file_location("legacy_buy_correspondence", HERE / "correspondence.py")
+    proof = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(proof)
+    bound = proof.prepare(ROOT, HERE, report, receipts, CASE_DEFINITIONS_SHA256, CASE_INPUTS_SHA256, PRODUCER_SHA256, CORRESPONDENCE_INPUT_PINS)
     for seq, r in enumerate(receipts):
+        proof.check(r, report["cases"][seq // 3]["case"], bound)
         assert r["sequence"] == seq and r["vm"] == seq, seq
         assert r["all_signatures_verified"] is True and r["signature_fields"] == 1, seq
         tx = Transaction.from_bytes(base64.b64decode(r["transaction_base64"]))
@@ -181,7 +199,7 @@ def main():
             if exp["kind"] == "ok":
                 assert r["error"] is None, (label, image, r["error"])
                 assert r["metadata"]["events"] == 1, (label, image)
-                assert decode_buy_event(logs, exact) == obs["event"], (label, image)
+                assert decode_buy_event(logs, exact) == obs["event"], (label, image, "BuyEvent discriminator/fields")
                 deltas = {}
                 for name in obs["deltas"]:
                     key = roles[name]
@@ -218,4 +236,8 @@ def main():
 
 
 if __name__ == "__main__":
+    import argparse
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--repo-root", type=Path, default=ROOT)
+    ROOT = parser.parse_args().repo_root.resolve()
     main()
