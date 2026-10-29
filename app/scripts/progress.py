@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Render deterministic source/feature progress from evidence and an explicit ledger."""
 import argparse, collections, hashlib, json, pathlib, re, tarfile
+from urllib.parse import urlsplit
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 BEGIN = '<!-- app-progress:start -->'
 END = '<!-- app-progress:end -->'
@@ -36,7 +37,7 @@ def render():
                 require(set(row[category])==set(ledger['gates'][category]), 'Milestone gates differ from the ledger');score(row[category])
             if row['completion']['source']['status']=='accepted':
                 require(all(g['status'] in {'accepted','not-applicable'} for g in row['source'].values()), 'Source completion requires all source gates')
-    scripts=[r for r in manifest['records'] if r['url'].endswith('.js')]
+    scripts=[r for r in manifest['records'] if urlsplit(r['url']).path.endswith('.js')]
     verified=sum(r.get('status')==200 and hashlib.sha256((ROOT/r['path']).read_bytes()).hexdigest()==r['sha256'] for r in scripts)
     script_progress=f'{100*verified/len(scripts):.0f}%' if scripts else 'N/A'
     factory_progress='100%' if recovered['modules'] else 'N/A'
