@@ -31,6 +31,7 @@ import {
   type TraderEntry,
   type TradersData,
 } from "./types";
+import { CompetitionRules } from "./competition-rules";
 
 const PAGE_SIZE = 10;
 const SEARCH_LIMIT = 200;
@@ -715,6 +716,7 @@ export default function LeaderboardClient() {
           </span>
           <h2>{data.competition.title}</h2>
           <p>{data.competition.description}</p>
+          <CompetitionRules key={data.competition.id} competition={data.competition} />
           <dl>
             <div>
               <dt>Ranked entries</dt>
