@@ -1,11 +1,27 @@
 import struct
+from pathlib import Path
+import tempfile
 from types import SimpleNamespace
 import unittest
+from unittest.mock import patch
 
+import generate
 from generate import ROOT, corrected_module
 
 
 class RelativeCallTests(unittest.TestCase):
+    def test_reviewed_lf_and_crlf_checkouts_and_source_drift(self):
+        original = generate.SOURCE.read_bytes().replace(b'\r\n', b'\n')
+        with tempfile.TemporaryDirectory() as directory:
+            source = Path(directory) / 'deep_disassembly.py'
+            with patch.object(generate, 'SOURCE', source):
+                for data in (original, original.replace(b'\n', b'\r\n')):
+                    source.write_bytes(data)
+                    self.assertTrue(callable(corrected_module().decode_instruction))
+                source.write_bytes(original + b'\n# unexpected source drift\n')
+                with self.assertRaisesRegex(ValueError, 'reviewed disassembler source'):
+                    corrected_module()
+
     def test_register_nibble_and_loader_relocations(self):
         decoder = corrected_module().decode_instruction
         data = struct.pack('<BBhi', 0x85, 0x10, 0, 1)

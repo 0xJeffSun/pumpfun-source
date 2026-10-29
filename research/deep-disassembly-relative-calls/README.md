@@ -5,7 +5,8 @@ The archived deep disassembler decodes the source nibble as
 16. Every original relative call is consequently emitted as `call_extern ?`,
 with no `call_target`, and the generated internal-call totals become zero.
 
-This successor hash-checks the complete original Python helper, adapts only that
+This successor hash-checks the complete original Python helper (the exact Git/LF
+bytes or their CRLF checkout form), adapts only that
 comparison in memory, and uses the unchanged generation workflow. Source 1
 indicates a relative call here; relocation type 10 still identifies an external
 placeholder and is excluded from the relative-call interpretation. No captured
