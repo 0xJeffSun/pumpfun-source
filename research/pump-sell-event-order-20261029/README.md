@@ -6,8 +6,13 @@ with the default key, snapshots the event user and base-mint keys, and then call
 `Clock::get`. Selected composition 673 calls `Clock::get` first and only reads
 those values on its success path. The included source overlay expresses the
 captured order using the existing operations and their actual event consumers.
-**The overlay has not been compiled or executed. It is not a new matched window,
-a runtime-defect claim, or a change to the selected program source.**
+**One subsequent cold compiler measurement now emits this order, with no window gain. No SellV2 VM execution, runtime-defect claim or canonical source change is included.**
+
+The [compiler/static supplement](COMPILER-QUALIFICATION.md) binds that one emitted
+image and its full no-gain/no-loss census. The initial premeasurement proof and
+validation receipt remain unchanged in `STATIC-PROOF.json` and
+`measurement/PREMEASUREMENT-VALIDATION.json`; the original README is preserved
+verbatim at `measurement/PREMEASUREMENT-README.md`.
 
 ## Exact inputs
 
@@ -81,12 +86,11 @@ positioning remains explicitly inherited reconstruction, not a claim to original
 Rust spelling or authorship. No formatting or representation variants are proposed.
 
 The stopped **new SellV2 corrective/transfer-fee probe** stays stopped. **No SellV2
-VM execution is authorized or performed for this packet.** A later compiler
-measurement must first reproduce the exact selected control using the documented
-native macOS v1.44 compiler and authenticated Linux v1.44 SBPF libraries. It must
-freshly compile both local crates, bind all actual source/build inputs, retain the
-full official census and verify actual call targets. That future work is not
-claimed here, and this packet does not promote the overlay to maintained source.
+VM execution is authorized or performed for this packet.** The completed one-shot compiler
+measurement first reproduced the exact selected control using the documented
+native macOS v1.44 compiler and authenticated Linux v1.44 SBPF libraries. It freshly compiled both local crates, bound actual source/build inputs, retained
+the full official census and verified actual call targets; see the separate
+supplement. This packet does not promote the overlay to maintained source.
 
 ## Repeatable validation
 
