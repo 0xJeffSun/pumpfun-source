@@ -1,3 +1,5 @@
+if not __debug__:
+    raise SystemExit('Run without -O')
 """Mutation controls for the instruction/Display/error strings, descriptors and sites."""
 from pathlib import Path
 import copy, gzip, json, os, shutil, struct, tempfile, unittest
@@ -144,6 +146,68 @@ class InstructionDisplayAltCopy(unittest.TestCase):
             delta['new_payload_bytes'] += 1
             (packet / 'coverage-delta.json').write_text(json.dumps(delta))
         self.copied(change, True)
+
+
+
+class ReviewedBaselineControls(unittest.TestCase):
+    def test_reviewed_baseline_and_resealed_delta(self):
+        import gzip, hashlib, json, shutil, tempfile
+        packet = Path(__file__).resolve().parent
+        root = next(parent for parent in packet.parents if (parent / 'evidence/original/mayhem/deployed.so').is_file())
+        report = json.loads(gzip.decompress((packet / 'observations.json.gz').read_bytes()))
+        delta = proof._review_coverage(root, report)
+        self.assertEqual(delta['baseline_payload_bytes'], 21796)
+        self.assertEqual(delta['new_payload_bytes'], 367)
+        self.assertEqual(delta['payload_covered_bytes'], 21796 + 367)
+        with tempfile.TemporaryDirectory() as temporary:
+            view = Path(temporary)
+            (view / 'research').mkdir()
+            for entry in root.iterdir():
+                if entry.name != 'research': (view / entry.name).symlink_to(entry, target_is_directory=entry.is_dir())
+            for entry in (root / 'research').iterdir():
+                if entry.name != packet.name: (view / 'research' / entry.name).symlink_to(entry, target_is_directory=entry.is_dir())
+            trial = view / 'research' / packet.name
+            shutil.copytree(packet, trial)
+            changed = json.loads((trial / 'coverage-delta.json').read_bytes())
+            section = next(s for s in changed['sections'] if s['section'] == '.data.rel.ro')
+            section['raw_intervals'] = proof._review_union(section['raw_intervals'] + proof.REVIEW_ADDED_MAPPED['.data.rel.ro'])
+            section['raw_equal_bytes'] += 24
+            section['pointer_only_bytes'] -= 24
+            (trial / 'coverage-delta.json').write_text(json.dumps(changed))
+            pins = json.loads((trial / 'inputs.json').read_bytes())
+            for name in list(pins):
+                if name.startswith('research/' + packet.name + '/'):
+                    pins[name] = hashlib.sha256((view / name).read_bytes()).hexdigest()
+            (trial / 'inputs.json').write_text(json.dumps(pins))
+            inventory = {str(q.relative_to(trial)): hashlib.sha256(q.read_bytes()).hexdigest()
+                for q in sorted(trial.rglob('*')) if q.is_file() and q.name != 'manifest.json'}
+            (trial / 'manifest.json').write_text(json.dumps(inventory))
+            with self.assertRaisesRegex(AssertionError, 'coverage delta differs'):
+                proof.check(trial, view)
+
+    def test_every_pointer_argument_register_on_both_images(self):
+        import copy
+        packet = Path(__file__).resolve().parent
+        root = next(parent for parent in packet.parents if (parent / 'evidence/original/mayhem/deployed.so').is_file())
+        original = (root / 'evidence/original/mayhem/deployed.so').read_bytes()
+        _, left, right = proof.images(root, original, proof.candidate_bytes(root))
+        for side, image in enumerate((left, right)):
+            for row in proof.TEXT_SITES:
+                pc, pointer = row[side], row[2 + side]
+                changed = copy.copy(image)
+                blob = bytearray(image.b)
+                blob[pc + 1] ^= 1
+                changed.b = bytes(blob)
+                with self.subTest(side=side,pc=pc), self.assertRaisesRegex(AssertionError, 'pointer argument register'):
+                    proof.text_site(changed, pc, pointer, row[4], row[5])
+
+    def test_descriptor_pointer_halves_are_mapped_and_lengths_raw(self):
+        raw = {x for a,b in proof.REVIEW_ADDED_RAW['.data.rel.ro'] for x in range(a,b)}
+        mapped = {x for a,b in proof.REVIEW_ADDED_MAPPED['.data.rel.ro'] for x in range(a,b)}
+        for address, *_ in proof.DESCRIPTORS:
+            self.assertTrue(set(range(address,address+8)) <= mapped)
+            self.assertFalse(set(range(address,address+8)) & raw)
+            self.assertTrue(set(range(address+8,address+16)) <= raw)
 
 if __name__ == '__main__':
     unittest.main(verbosity=2)

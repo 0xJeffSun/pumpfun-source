@@ -1,9 +1,10 @@
 {
-  "scope": "Counted instruction/Display/error string bytes, 16-byte descriptors and classic lddw/mov text immediates only. No length table, binary blob, digit table, placeholder, NUL or adjacency bound, and no relocation-table credit.",
-  "baseline_delta_sha256": "e7cae6dd26e406a43d34d428a5ea8ee87c8e2ec3d4fc852d183d06b98eaa722e",
-  "baseline_payload_bytes": 20747,
-  "baseline_rodata_bytes": 14035,
-  "baseline_data_rel_ro_bytes": 6712,
+  "scope": "Finite historical data attribution against common reviewed merged #846; no current-native/window/source-footprint credit.",
+  "reviewed_baseline_path": "research/mayhem-current437-bounded-index-tables-20261029/coverage-delta.json",
+  "reviewed_baseline_sha256": "f6efa470f1d18bcec99cab2c95ecf1fc650fe5606bcdbc73956986779e7cb282",
+  "baseline_payload_bytes": 21796,
+  "baseline_rodata_bytes": 14972,
+  "baseline_data_rel_ro_bytes": 6824,
   "sections": [
     {
       "section": ".rodata",
@@ -47,10 +48,6 @@
         ],
         [
           709245,
-          709739
-        ],
-        [
-          710331,
           710438
         ],
         [
@@ -124,6 +121,14 @@
         [
           713704,
           719929
+        ],
+        [
+          719932,
+          720219
+        ],
+        [
+          720248,
+          720306
         ],
         [
           720376,
@@ -194,10 +199,6 @@
         ],
         [
           709245,
-          709739
-        ],
-        [
-          710331,
           710438
         ],
         [
@@ -273,6 +274,14 @@
           719929
         ],
         [
+          719932,
+          720219
+        ],
+        [
+          720248,
+          720306
+        ],
+        [
           720376,
           721473
         ],
@@ -301,9 +310,9 @@
           725204
         ]
       ],
-      "raw_equal_bytes": 14354,
+      "raw_equal_bytes": 15291,
       "pointer_only_bytes": 0,
-      "covered_bytes": 14354,
+      "covered_bytes": 15291,
       "new_bytes": 319
     },
     {
@@ -375,6 +384,14 @@
           725788
         ],
         [
+          725800,
+          725808
+        ],
+        [
+          725816,
+          725824
+        ],
+        [
           725856,
           725860
         ],
@@ -385,6 +402,14 @@
         [
           725888,
           725904
+        ],
+        [
+          725912,
+          725920
+        ],
+        [
+          725928,
+          725936
         ],
         [
           725952,
@@ -405,6 +430,10 @@
         [
           726040,
           726056
+        ],
+        [
+          726064,
+          726072
         ],
         [
           726088,
@@ -607,7 +636,11 @@
           727416
         ],
         [
-          727448,
+          727424,
+          727432
+        ],
+        [
+          727440,
           727452
         ],
         [
@@ -655,7 +688,7 @@
           727696
         ],
         [
-          727856,
+          727864,
           727872
         ],
         [
@@ -684,6 +717,10 @@
         ],
         [
           727968,
+          727984
+        ],
+        [
+          727992,
           728004
         ],
         [
@@ -792,6 +829,10 @@
         ],
         [
           728680,
+          728696
+        ],
+        [
+          728704,
           728716
         ],
         [
@@ -1794,7 +1835,11 @@
         ],
         [
           725788,
-          725792
+          725800
+        ],
+        [
+          725808,
+          725816
         ],
         [
           725860,
@@ -1803,6 +1848,14 @@
         [
           725884,
           725888
+        ],
+        [
+          725904,
+          725912
+        ],
+        [
+          725920,
+          725928
         ],
         [
           725980,
@@ -1819,6 +1872,10 @@
         [
           726036,
           726040
+        ],
+        [
+          726056,
+          726064
         ],
         [
           726092,
@@ -2005,6 +2062,14 @@
           727400
         ],
         [
+          727416,
+          727424
+        ],
+        [
+          727432,
+          727440
+        ],
+        [
           727452,
           727456
         ],
@@ -2041,6 +2106,10 @@
           727680
         ],
         [
+          727856,
+          727864
+        ],
+        [
           727884,
           727888
         ],
@@ -2063,6 +2132,10 @@
         [
           727964,
           727968
+        ],
+        [
+          727984,
+          727992
         ],
         [
           728004,
@@ -2167,6 +2240,10 @@
         [
           728676,
           728680
+        ],
+        [
+          728696,
+          728704
         ],
         [
           728716,
@@ -3112,15 +3189,15 @@
         ],
         [
           725704,
-          725792
+          725824
         ],
         [
           725856,
-          725904
+          725936
         ],
         [
           725952,
-          726056
+          726072
         ],
         [
           726088,
@@ -3136,10 +3213,6 @@
         ],
         [
           727392,
-          727416
-        ],
-        [
-          727448,
           727592
         ],
         [
@@ -3191,13 +3264,13 @@
           733120
         ]
       ],
-      "raw_equal_bytes": 5408,
-      "pointer_only_bytes": 1352,
-      "covered_bytes": 6760,
+      "raw_equal_bytes": 5440,
+      "pointer_only_bytes": 1432,
+      "covered_bytes": 6872,
       "new_bytes": 48
     }
   ],
   "new_payload_bytes": 367,
-  "payload_covered_bytes": 21114,
+  "payload_covered_bytes": 22163,
   "payload_total_bytes": 26180
 }

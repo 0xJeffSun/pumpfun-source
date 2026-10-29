@@ -1,6 +1,25 @@
+# Historical Mayhem data attribution: PR #851
+
+This packet independently bounds **367 new bytes** against the common reviewed,
+merged #846 data baseline: **21,796 / 26,180 bytes**. Its own bounded historical
+union with that baseline is **22,163 / 26,180**. Other open packets are not
+included in this per-packet baseline. The separate batch review deduplicates all
+eight additions; these figures are not a latest complete source footprint.
+
+The original and qualified437 candidate payload/descriptor/argument/index paths
+are checked. This adds finite historical data attribution only: no maintained
+code, normalized window or current-native-ELF progress is credited. Text and
+relocation-table bytes are proof evidence, not credited payload.
+
+Descriptor records credit each differing eight-byte pointer half as mapped
+bytes and its equal eight-byte length half as raw bytes. Classic text sites bind
+the pointer argument register immediately before the length register.
+
+## Retained attribution detail
+
 # Qualified437 instruction/Display/error strings, descriptors and text sites
 
-This packet counts **11 static literal strings totaling 319 `.rodata` bytes**, their **3 counted 16-byte descriptors totaling 48 `.data.rel.ro` bytes**, and **9 classic text sites** that load the pointer and length immediately before a call. All three kinds are checked on both the original and candidate images. This packet adds data evidence, not a function match.
+This packet counts **11 static literal strings totaling 319 `.rodata` bytes**, their **3 counted 16-byte descriptors totaling 48 `.data.rel.ro` bytes**, and **9 classic text sites** that bind relocated pointers and immediate lengths. All three kinds are checked on both the original and candidate images. This packet adds data evidence, not a function match.
 
 The prior obligations are preserved: **437 normalized functions, 141 raw functions, 431 closed windows and 581 candidate pairs**, with **0 rejected pairs**. No binary patch and no whole-binary equivalence is claimed.
 
@@ -11,12 +30,6 @@ Only static bytes are read. Each string is bounded by the immediate length carri
 The 16-byte descriptors live in `.data.rel.ro`. The layout is `u32 low = 0`, `u32 high = pointer`, `u64 length`, with exactly one type-8 relocation at the record start whose symbol index is 0. Some records sit on the ≡0 (mod 16) phase; they are still valid 16-byte descriptors, verified by relocation-at-offset rather than section-base stride. The candidate copies carry different `.rodata` pointers but the same lengths and the same bytes.
 
 The nine text sites decode the classic bounded pair grammar: `lddw` of a relocated `.rodata` pointer at `pc`, followed by a `mov` of the immediate length at `pc + 16`. There is no relocation on the continuation, the length `mov`, or the surrounding words. The pointed-to bytes must equal the counterpart and the recorded text. The sites stop at the immediate pair; no callee, callback target, output or runtime effect is claimed. Text sites are proof-only and add no payload credit.
-
-## Coverage
-
-The baseline is the prior bounded-error-strings packet at **20,747 / 26,180** payload bytes (`.rodata` 14,035 / 18,396, `.data.rel.ro` 6,712 / 7,784).
-
-These intervals were disjoint from that baseline. Payload coverage becomes **21,114 / 26,180 bytes (80.65%)**, leaving **5,066 unproved**. `.rodata` becomes **14,354 / 18,396** (+319). `.data.rel.ro` becomes **6,760 / 7,784** (+48). The 11 string intervals union to five spans totaling 319 bytes. The 3 descriptor records union to three spans totaling 48 bytes. No relocation-table byte is credited.
 
 The added `.rodata` union is `[713022,713108) + [713272,713383) + [713430,713442) + [713704,713808) + [713813,713819)`.
 
@@ -42,8 +55,6 @@ Relocation and section layout are unchanged. None of the leftover binary or toke
 PYTHONDONTWRITEBYTECODE=1 python3 -B research/mayhem-current437-instruction-display-alt-copy-20261029/verify.py --repo .
 PYTHONDONTWRITEBYTECODE=1 python3 -B research/mayhem-current437-instruction-display-alt-copy-20261029/test_verify.py
 ```
-
-Tests mutate every selected string byte, every descriptor length/pointer field and every text-site length immediate; each mutation must be rejected. A following byte in an unselected hole is not absorbed. Inventory, symlink, FIFO, and resealed report and coverage edits are rejected.
 
 ## Exact intervals
 
@@ -91,3 +102,12 @@ Ends are exclusive. String pointers and descriptor offsets are original addresse
 provider=OpenCode model=opencode/deepseek-v4.1-flash-free client=opencode CLI 1.19.5
 
 Made via @slopdotcash
+
+
+The original observations.json.gz is preserved byte-exact; only the derived
+coverage baseline/classification report and checker/docs/input seals are updated.
+
+Verification requires the already-merged #846 baseline at its pinned hash.
+Use normal Python: public entrypoints refuse `-O` because the retained proof
+chain uses assertions. Tests mutate in-memory analysis copies only; these are
+never compiler inputs or replacement artifacts.
