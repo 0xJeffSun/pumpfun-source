@@ -3528,5 +3528,90 @@
     "status": "QUALIFIED_PENDING_PUBLICATION",
     "new_complete_windows": 0,
     "maintained_goal_complete": false
+  },
+  "program_creator_notice_publication_outcome": {
+    "pr": 761,
+    "reviewed_final_head": "22a5ddd2b43c33972e67d1a67137943466c348dd",
+    "merge_commit": "18b569dd5814f4974fdce03e6d34a6d80ee86781",
+    "status": "MERGED",
+    "candidate_sha256": "d0377d7cef5b7378063f8bfabac5dc9c08d29eeaaaaa14022d36909688ff5e1b",
+    "packet_manifest_sha256": "ef50bb5262f67c59f4d1850f83e2821fa1e9c5f02649589cab356a6e28cffb49",
+    "publication_paths": 368,
+    "hosted_checks_at_merge": {
+      "QUEUED": 158
+    },
+    "hosted_pass_claim": false,
+    "complete_window_gain": 0,
+    "outcome": "Maintained one-file program-creator notice correction, qualified by warm/cold builds and full runtime evidence. Prior qualification object remains its immutable review-time pending-publication record.",
+    "maintained_goal_complete": false
+  },
+  "clock_snapshot_research_publication_outcome": {
+    "pr": 731,
+    "reviewed_final_head": "af39fe8e6f7eb05423c9ceb5a6106bb70eb9478b",
+    "merge_commit": "3496af06f0dff5e5f7bc61645ce5adae21c61015",
+    "status": "MERGED_RESEARCH_ONLY",
+    "canonical_clock_source_changed": false,
+    "complete_window_gain": 0,
+    "outcome": "Research proposal and actual native evidence merged; maintained734b clock source was restored before merge. Prior pending-publication review records retain their historical scope."
+  },
+  "seventeenth_review_batch": {
+    "review": "research/contract-completion-20261028/pr-review-batch17-independent.json",
+    "sha256": "9c0a52c86d7d2610f8893676904f55b333fd58dd69e7337ec681aa4553a1af44",
+    "reviewed_and_merged": [
+      768,
+      770,
+      779
+    ],
+    "native_guard_saved_review": "research/pump-exact-sol-guard-native-review-20261029/verify_saved.py",
+    "new_VM_runs": 0,
+    "new_complete_windows": 0,
+    "maintained_goal_complete": false
+  },
+  "eighteenth_review_batch": {
+    "review": "research/contract-completion-20261028/pr-review-batch18-independent.json",
+    "sha256": "0d0e07cada5cb9b92922b12acc655767d710f98f9763efaf23d98dcec0c6db41",
+    "incoming_integrated": [
+      666,
+      783,
+      812,
+      825,
+      827,
+      831,
+      846,
+      847,
+      848
+    ],
+    "correction_successors": [
+      872,
+      883,
+      896
+    ],
+    "already_merged_proof_repair": 880,
+    "new_VM_runs": 0,
+    "native_research_builds": 2,
+    "new_complete_windows": 0,
+    "maintained_goal_complete": false
+  },
+  "nineteenth_review_batch": {
+    "review": "research/contract-completion-20261028/pr-review-batch19-independent.json",
+    "sha256": "33a2fa8e3dc155e23b5978cffdb1e35c7528c7669c9b42d06e151bbb4ab57bbb",
+    "incoming_integrated": [
+      819,
+      821,
+      823,
+      851,
+      852,
+      879,
+      881,
+      884,
+      889,
+      890
+    ],
+    "correction_successors": [
+      908
+    ],
+    "new_VM_or_compiler_runs": 0,
+    "new_complete_windows": 0,
+    "maintained_goal_complete": false
   }
 }

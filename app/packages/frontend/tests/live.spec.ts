@@ -1,4 +1,4 @@
-import { expect, test, type Page } from "@playwright/test";
+import { expect, test, type Page, type Route } from "@playwright/test";
 
 const FIRST_MINT = "7bS1mH6MXbw1GnEkKTU6w5YLTywPkQ1w3YVZXWFupump";
 
@@ -350,6 +350,43 @@ test("selection dismisses on page changes and Escape has a visible fallback for 
   ).toBeFocused();
 });
 
+test("direct-visit details handle Escape as soon as they are exposed", async ({ page }) => {
+  await page.addInitScript(() => {
+    const probe = window as Window & {
+      firstDetailEscape?: { prevented: boolean };
+    };
+    // This runs at the first DOM exposure, before a later passive effect could
+    // make an otherwise-ready panel's missing keyboard handler pass by timing.
+    const observer = new MutationObserver(() => {
+      if (
+        probe.firstDetailEscape ||
+        !document.querySelector(
+          '[data-testid="playback-unavailable"], [data-testid="invalid-stream-selection"]',
+        )
+      ) return;
+      const event = new KeyboardEvent("keydown", {
+        key: "Escape", bubbles: true, cancelable: true,
+      });
+      probe.firstDetailEscape = { prevented: false };
+      window.dispatchEvent(event);
+      probe.firstDetailEscape.prevented = event.defaultPrevented;
+    });
+    observer.observe(document, { childList: true, subtree: true });
+  });
+
+  for (const selection of [FIRST_MINT, ""]) {
+    const response = await page.goto(`/live?page=4&stream=${selection}`);
+    await expect(page).toHaveURL(/\/live\?page=4$/);
+    expect(await response?.text()).toContain("Loading archived details…");
+    expect(await page.evaluate(() => (window as Window & {
+      firstDetailEscape?: { prevented: boolean };
+    }).firstDetailEscape)).toEqual({ prevented: true });
+    await expect(
+      page.getByRole("searchbox", { name: "Search captured streams" }),
+    ).toBeFocused();
+  }
+});
+
 test("Escape belongs to an open modal before the underlying nonmodal stream detail", async ({
   page,
 }) => {
@@ -389,4 +426,40 @@ test("a prevented Escape does not dismiss stream detail", async ({ page }) => {
   await expect(page.getByTestId("playback-unavailable")).toBeVisible();
   await page.keyboard.press("Escape");
   await expect(page).toHaveURL(/\/live$/);
+});
+
+test("search preserves a sort change while its navigation is pending", async ({
+  page,
+}) => {
+  await page.goto("/live");
+  const search = page.getByRole("searchbox", {
+    name: "Search captured streams",
+  });
+  await search.fill("$major");
+  const held: Route[] = [];
+  let holdNavigation = true;
+  await page.route("**/live?**", async (route) => {
+    if (
+      holdNavigation &&
+      new URL(route.request().url()).searchParams.has("_rsc")
+    ) {
+      held.push(route);
+    } else {
+      await route.continue();
+    }
+  });
+  try {
+    await page.getByLabel("Sort captured cards").selectOption("viewers");
+    await expect.poll(() => held.length).toBe(1);
+    await search.press("Enter");
+    await expect.poll(() => held.length).toBe(2);
+    holdNavigation = false;
+    await Promise.all(held.map((route) => route.continue()));
+    await expect(page).toHaveURL(/\/live\?sort=viewers&q=%24major$/);
+    await expect(page.getByLabel("Sort captured cards")).toHaveValue("viewers");
+    await expect(page.getByTestId("archived-stream-card")).toHaveCount(1);
+    await expect(search).toHaveValue("$major");
+  } finally {
+    await page.unrouteAll({ behavior: "ignoreErrors" });
+  }
 });

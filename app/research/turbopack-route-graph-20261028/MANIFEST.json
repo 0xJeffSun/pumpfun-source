@@ -30,10 +30,10 @@
     },
     {
       "path": "MODULE-IDENTITIES.json.gz",
-      "bytes": 153834,
-      "sha256": "1e8177d568fdb9a0254d7e2727ab8309ede8dea8a32f13afd7600fd3a067beed",
-      "contentBytes": 1231790,
-      "contentSha256": "aebb21a64287c2f57bf31a672c0242e04d388290e01527f2658f1c30940efb4a"
+      "bytes": 153265,
+      "sha256": "f6534a91a210f1e5dfcf88488a3bee841a61b3a5e34206526aedd2c702cfb11a",
+      "contentBytes": 1245388,
+      "contentSha256": "892f9c0964ebdca2fa247fd17e95a388e82a4ca8052d7c33680912f4bf4b88fa"
     },
     {
       "path": "README.md",

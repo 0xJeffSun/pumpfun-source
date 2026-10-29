@@ -381,3 +381,15 @@ test('invalid wallet input is rejected before reading or resolving RPC configura
 test('a valid wallet still reports missing RPC configuration',async()=>{
   await assert.rejects(readLivePortfolio('11111111111111111111111111111111',{rpcUrl:''}),(error:unknown)=>error instanceof PortfolioRpcError && error.code==='RPC_CONFIGURATION_INVALID');
 });
+
+test("rejects per-mint totals above u64 while preserving the exact boundary", async () => {
+  for (const first of ['18446744073709551615', '18446744073709551614']) {
+    const { call } = fixtureCall({ spl: [first, '1'].map((amount, index) => tokenAccount({ pubkey: index ? SPL_ACCOUNT_TWO : SPL_ACCOUNT_ONE, mint: MINT_ONE, amount, decimals: 6, programId: SPL_TOKEN_PROGRAM_ID, parser: 'spl-token' })) });
+    if (first.endsWith('615')) {
+      await assert.rejects(readPortfolioWithRpc(WALLET, call, 'rpc.example.com'), (error: unknown) => error instanceof PortfolioRpcError && error.code === 'RPC_RESPONSE_INVALID');
+    } else {
+      const result = await readPortfolioWithRpc(WALLET, call, 'rpc.example.com');
+      assert.equal(result.splToken.mints[0].rawAmount, '18446744073709551615');
+    }
+  }
+});
