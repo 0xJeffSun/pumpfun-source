@@ -23,15 +23,16 @@ percentage of engineering work completed.
 
 ## Current qualifications and remaining work
 
-- [Pump's composed source](research/pump-multihop-accrual-qualification-20261028/README.md)
+- [Pump's composed source](research/pump-program-creator-notice-qualification-20261028/README.md)
   preserves 1,019 normalized / 188 raw windows and the prior creation, admin,
-  legacy-payment and multi-hop admission fixes. It restores the two original
-  fee-accrual calls. Twelve synthetic counter fixtures agree with the original;
-  the prior selected image differs on three ordered Source lines. Two actual builds, including an independent empty-target
-  build, repeat both outputs. All 10,468 broad pairs and 106 strict focused case
-  records pass; separate legacy284 and extension126 pairs also pass. Historical
-  controls remain intact. Sixteen windows and whole meaningful ELF identity
-  remain open; this correction adds no matched window.
+  legacy-payment and multi-hop fixes. It also restores the original notice when
+  the creator is an executable program. The signed witness matches original
+  logs, state and events; the previous C0 image omitted the notice. Two actual
+  builds, including an independent empty-target build, repeat both outputs.
+  All 10,468 broad pairs and 106 strict focused records pass, together with the
+  inherited twelve counter fixtures and separate legacy and extension cases.
+  Sixteen windows and whole meaningful ELF identity remain open; this correction
+  adds no matched window.
 - [AMM's explicit layout recipe](research/amm-layout-closure-20261028/README.md)
   produces784 raw-identical physical windows. Every meaningful ELF byte outside
   sell's 9,024 bytes and 21 relocation-offset rows inside sell is literally equal,
