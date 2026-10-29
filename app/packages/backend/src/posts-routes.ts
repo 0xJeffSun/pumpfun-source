@@ -10,6 +10,32 @@ import { sendSynthetic, errorBody, rejectDuplicateQueryKeys } from './users-rout
 
 const POST_ID = /^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/;
 
+/**
+ * Pagination on the posts sub-resources is declared as integers in
+ * contracts/developer.openapi.json (limit minimum 1, offset minimum 0, both
+ * with maximum 9007199254740991; likers/reposters offset maximum 10000).
+ * The previous parsing silently truncated fractional values and silently
+ * fell back to the default for non-numeric or non-finite values, so
+ * limit=1.5 served one row and limit=abc served the default page, both
+ * with 200. A supplied value must parse to a safe integer. Out-of-range
+ * safe integers keep the existing clamp behavior (limit capped at 200,
+ * offset at 10000, negative offset at 0, as the existing negative-offset
+ * test documents). Returns null for an invalid supplied value.
+ */
+function pageValue(
+  qs: Record<string, string | undefined>,
+  field: string,
+  fallback: number,
+  minimum: number,
+  maximum: number,
+): number | null {
+  const raw = qs[field];
+  if (raw === undefined) return fallback;
+  const parsed = Number(raw);
+  if (!Number.isSafeInteger(parsed)) return null;
+  return Math.min(maximum, Math.max(minimum, parsed));
+}
+
 export function registerPostRoutes(app: FastifyInstance, store: PostStore = defaultPostStore): void {
   /**
    * GET /v1/posts
@@ -63,12 +89,9 @@ export function registerPostRoutes(app: FastifyInstance, store: PostStore = defa
     const { postId } = request.params as { postId: string };
     const qs = request.query as Record<string, string | undefined>;
 
-    let limit = 50;
-    if (qs.limit !== undefined) {
-      const parsed = Number(qs.limit);
-      if (Number.isFinite(parsed)) {
-        limit = Math.min(200, Math.max(1, Math.trunc(parsed)));
-      }
+    const limit = pageValue(qs, 'limit', 50, 1, 200);
+    if (limit === null) {
+      return reply.code(400).send(errorBody(400, 'INVALID_LIMIT'));
     }
 
     try {
@@ -96,20 +119,14 @@ export function registerPostRoutes(app: FastifyInstance, store: PostStore = defa
     const { postId } = request.params as { postId: string };
     const qs = request.query as Record<string, string | undefined>;
 
-    let limit = 50;
-    if (qs.limit !== undefined) {
-      const parsed = Number(qs.limit);
-      if (Number.isFinite(parsed)) {
-        limit = Math.min(200, Math.max(1, Math.trunc(parsed)));
-      }
+    const limit = pageValue(qs, 'limit', 50, 1, 200);
+    if (limit === null) {
+      return reply.code(400).send(errorBody(400, 'INVALID_LIMIT'));
     }
 
-    let offset = 0;
-    if (qs.offset !== undefined) {
-      const parsed = Number(qs.offset);
-      if (Number.isFinite(parsed)) {
-        offset = Math.min(10000, Math.max(0, Math.trunc(parsed)));
-      }
+    const offset = pageValue(qs, 'offset', 0, 0, 10000);
+    if (offset === null) {
+      return reply.code(400).send(errorBody(400, 'INVALID_OFFSET'));
     }
 
     const result = store.getLikers(postId, { limit, offset });
@@ -130,12 +147,9 @@ export function registerPostRoutes(app: FastifyInstance, store: PostStore = defa
     const { postId } = request.params as { postId: string };
     const qs = request.query as Record<string, string | undefined>;
 
-    let limit = 50;
-    if (qs.limit !== undefined) {
-      const parsed = Number(qs.limit);
-      if (Number.isFinite(parsed)) {
-        limit = Math.min(200, Math.max(1, Math.trunc(parsed)));
-      }
+    const limit = pageValue(qs, 'limit', 50, 1, 200);
+    if (limit === null) {
+      return reply.code(400).send(errorBody(400, 'INVALID_LIMIT'));
     }
 
     try {
@@ -163,20 +177,14 @@ export function registerPostRoutes(app: FastifyInstance, store: PostStore = defa
     const { postId } = request.params as { postId: string };
     const qs = request.query as Record<string, string | undefined>;
 
-    let limit = 50;
-    if (qs.limit !== undefined) {
-      const parsed = Number(qs.limit);
-      if (Number.isFinite(parsed)) {
-        limit = Math.min(200, Math.max(1, Math.trunc(parsed)));
-      }
+    const limit = pageValue(qs, 'limit', 50, 1, 200);
+    if (limit === null) {
+      return reply.code(400).send(errorBody(400, 'INVALID_LIMIT'));
     }
 
-    let offset = 0;
-    if (qs.offset !== undefined) {
-      const parsed = Number(qs.offset);
-      if (Number.isFinite(parsed)) {
-        offset = Math.min(10000, Math.max(0, Math.trunc(parsed)));
-      }
+    const offset = pageValue(qs, 'offset', 0, 0, 10000);
+    if (offset === null) {
+      return reply.code(400).send(errorBody(400, 'INVALID_OFFSET'));
     }
 
     const result = store.getReposters(postId, { limit, offset });
