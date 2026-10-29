@@ -303,5 +303,16 @@ test("performs no external browser request, mutation, signing or wallet action",
     name: /connect wallet|sign/i,
   });
   await expect(capturedSignIn).toHaveCount(1);
-  await expect(capturedSignIn).toBeDisabled();
+  // The original chooser is enabled; public reads do not authenticate or sign.
+  // This stale assertion correction is shared with #774, not a new wallet feature.
+  await expect(capturedSignIn).toBeEnabled();
+  await capturedSignIn.click();
+  const chooser = page.getByTestId("auth-dialog");
+  await expect(chooser).toBeVisible();
+  await expect(chooser).toContainText("sign-in is unavailable");
+  await expect(page.locator("html")).toHaveAttribute("data-pf-auth", "out");
+  await chooser.getByRole("button", { name: "Close", exact: true }).click();
+  await expect(capturedSignIn).toBeFocused();
+  expect(requests.filter(({ url }) => new URL(url).origin !== "http://127.0.0.1:3010")).toEqual([]);
+  expect(requests.some(({ method }) => ["POST", "PUT", "PATCH", "DELETE"].includes(method))).toBe(false);
 });

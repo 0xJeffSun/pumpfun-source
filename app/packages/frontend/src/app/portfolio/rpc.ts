@@ -40,7 +40,7 @@ export class PortfolioRpcError extends Error {
   }
 }
 
-type RpcMethod = "getGenesisHash" | "getBalance" | "getTokenAccountsByOwner";
+type RpcMethod = "getGenesisHash" | "getBalance" | "getTokenAccountsByOwner" | "getAccountInfo";
 export type RpcCall = (
   method: RpcMethod,
   params: readonly unknown[],
@@ -382,7 +382,7 @@ async function postPinnedJson(
   });
 }
 
-async function createPinnedRpcCall(
+export async function createPinnedRpcCall(
   rawUrl: string | undefined,
   timeoutMs: number,
 ): Promise<{ call: RpcCall; endpointHost: string }> {
