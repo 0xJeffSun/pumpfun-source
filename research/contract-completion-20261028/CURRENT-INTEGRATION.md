@@ -119,3 +119,42 @@ known-admin-wallet-guard-acc5.json.gz, bound to its actual old image. Its eight
 failures are resolved on the selected 199fd image; all eighteen cases pass with
 strict state, CPI, event, return and ordered program-message comparison. The prior
 acc5 selection is retained in pump-status-before-final-composition.json.
+
+PR #711 merged as `f57bbf0d`; Pump remains on the qualified accrual successor.
+The `199fd` selection discussed above is historical. Its frozen records and
+executed controllers remain unchanged.
+
+All sixteen remaining Pump main and PumpSwap contract PRs in the next review
+snapshot were reviewed and merged. Corrections make image locators portable,
+bind the native673 workflow to its authenticated archived source, preserve alias
+symbols in 23 call-closure window lists, and correct the legacy buy reserve
+explanation. The nine AMM packets pass 654 fresh signed execution records across
+207 fixture records; repeated signed wires are not unique transactions. Sweep
+adds seven separate fresh triples / 21 signed executions. The CTO replay refused
+a different host's exact Python pin before execution; that pin was retained.
+These packets add research and verification evidence without changing the
+maintained source or awarding a complete window. Exact heads, merges and limits
+are recorded in [the review ledger](pr-review-batch13-independent.json).
+
+The [authenticated Windows r51 control](amm-r51-windows-measurement-review.json)
+succeeded, matching 784 of 785 normalized windows and 398 raw windows. All 807
+retained normalized function bodies and relocation patterns equal both Linux
+references. The selected ordered Linux image retains 784 raw matches; the same
+sell window remains unresolved. One Windows build is authenticated, with no
+target execution or selection promotion.
+
+Maintained completion remains three of five meaningful ELFs exact, 3,321 of 3,338
+normalized windows, 2,490 raw windows and 96.4% text-byte coverage. Sixteen Pump
+windows and one AMM sell window remain. Local review and merge receipts do not
+establish hosted CI success or deployment; the full reconstruction objective
+remains active.
+
+Two further PumpSwap research PRs, #728 and #729, were reviewed and merged after
+portable locator and image-binding corrections. Their 51 fixtures add 153 fresh
+signed execution records. Across both review batches, 18 PRs are merged and
+11 AMM packets contain 807 fresh execution records across 258 fixture records.
+These counts include repeated signed wires. All 21 integrated saved-evidence
+checks pass; maintained source, selection and checkpoint gates remain byte
+identical to the qualified accrual merge. The boost packet explicitly retains
+eight historical Source-log differences and claims no full log parity. Exact
+heads and limitations are in [the follow-up review](pr-review-batch14-independent.json).
