@@ -18,7 +18,7 @@ an active runtime winner or establish rendered UI parity. Search dialog behavior
 and its other query hooks remain outside this unit.
 
 The exact prerequisite is **#870 public commit
-`e46c14ea3857da7ef6eecc9f7945622f5dbcfc39`**, retained as the parent. Its six files
+`e46c14ea3857da7ef6eecc9f7945622f5dbcfc39`**, retained unchanged in the prerequisite ancestry. Its six files
 are unchanged and receive zero new recovery credit. The implementation uses its
 real `UserFetchError`, user key and alias helper, preserving shared type/cache
 identity. The strict **544930/#901** reader is neither copied nor called here;

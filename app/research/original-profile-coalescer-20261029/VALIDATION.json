@@ -3,8 +3,46 @@
   "prerequisite": {
     "pullRequest": 870,
     "exactPublicCommit": "e46c14ea3857da7ef6eecc9f7945622f5dbcfc39",
-    "inheritedFiles": [],
-    "novelCredit": false
+    "inheritedFiles": [
+      {
+        "path": "app/reconstruction/profile-lookup/README.md",
+        "gitBlobSha": "eff1894917726b7fd415a9e57dd7199a8ce1a3ac",
+        "unchanged": true,
+        "novelCredit": false
+      },
+      {
+        "path": "app/reconstruction/profile-lookup/client.mjs",
+        "gitBlobSha": "cae1e3c17175b91f342316195cf5ab129a04904b",
+        "unchanged": true,
+        "novelCredit": false
+      },
+      {
+        "path": "app/reconstruction/profile-lookup/contract.json",
+        "gitBlobSha": "a30f2ab289b2ce38b1165f9562d70674e1147e37",
+        "unchanged": true,
+        "novelCredit": false
+      },
+      {
+        "path": "app/research/original-profile-lookup-20261029/VALIDATION.json",
+        "gitBlobSha": "ca9731a16e57d2387776e246eca9f7989f533577",
+        "unchanged": true,
+        "novelCredit": false
+      },
+      {
+        "path": "app/scripts/original-profile-lookup.mjs",
+        "gitBlobSha": "dc1220e86baba3b305381c356bdc1431e4827989",
+        "unchanged": true,
+        "novelCredit": false
+      },
+      {
+        "path": "app/tests/original_profile_lookup.test.mjs",
+        "gitBlobSha": "5ebbf16687213406389f2686e0ea33e294fbac55",
+        "unchanged": true,
+        "novelCredit": false
+      }
+    ],
+    "novelCredit": false,
+    "enumeration": "Six explicit paths from PR870 checked against exact tree; no parent-history traversal"
   },
   "scope": "Novel782067 profile coalescer/H/T/V/J only; strict544930/#901 and surrounding UI/query runtime excluded",
   "testedFiles": [
@@ -18,7 +56,7 @@
     },
     {
       "path": "app/reconstruction/profile-coalescer/README.md",
-      "sha256": "c3b88adf91bdbf11e3b8e13d7316613a8305cb2b97d72f84e27da9710df8e437"
+      "sha256": "f8fc09046065feee618d52838c93e20c15e829b79acdfcda96edfb23685a9392"
     },
     {
       "path": "app/scripts/original-profile-coalescer.mjs",
@@ -81,6 +119,11 @@
     {
       "command": "git diff --check",
       "result": "PASS"
+    },
+    {
+      "command": "For each explicit inherited path: git hash-object PATH equals git rev-parse e46c14ea3857da7ef6eecc9f7945622f5dbcfc39:PATH; require exactly six entries",
+      "result": "PASS",
+      "files": 6
     }
   ],
   "limits": [
@@ -90,5 +133,6 @@
     "Required HTTP/timer/cache capabilities; no TanStack/React slot scheduling/browser cookie reconstruction",
     "No production POST, server/auth/provider, mutation, UI mount or ledger/compatibility credit",
     "No full Next build/browser on this snapshot; aggregate qualification separate"
-  ]
+  ],
+  "receiptCorrection": "Initial receipt listed zero inherited files because shallow Git history suppressed diff-tree enumeration. This revision verifies all six prerequisite blobs explicitly. Source, artifact and test hashes are unchanged; README clarifies prerequisite ancestry."
 }
