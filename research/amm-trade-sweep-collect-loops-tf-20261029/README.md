@@ -17,7 +17,9 @@ per step, on three program images (original, #424 control, #427
 candidate). The question is sharp because every hop withholds:
 a sweep withholds on the vault ATA, a collect withholds again
 on the destination, and the next trade's gross-up has to price
-off vaults whose withheld balances never leave.
+off vaults whose withheld balances are never drained by
+any collect (they stay withheld on the account; the mint's
+withheld-withdraw path is not exercised here).
 
 ## Fixture
 
@@ -82,7 +84,8 @@ Family B -- buy loop tf100 (buy -> swc -> col -> buy -> swc
   (withheld 1,276), and the vault ATA keeps its 1,289
   after the drain (amount 0, withheld 1,289).
 - Second buy costs 1,866,432 -- 57 MORE than the anchor
-  (nofee loop: +56) -- with vault +1,839,366 and the same
+  (nofee loop: +56, from 3rd #10, not re-measured here) --
+  with vault +1,839,366 and the same
   buyback 8,401. Event: curve 1,825,037, lp 366, protocol
   gross 16,973, quote 1,825,403, uin 1,847,852.
 - Second sweep moves exactly 5,476 gross to net 5,421
@@ -103,7 +106,8 @@ swc -> col -> col-noop):
   net) match the anchor exactly (the first sell's raw event
   is byte-identical to `a-sell-tf100`'s).
 - Second sell pays 1,784,040 -- 53 LESS than the anchor
-  (nofee loop: -54) -- with vault -1,810,547 and the same
+  (nofee loop: -54, from 3rd #10, not re-measured here) --
+  with vault -1,810,547 and the same
   buyback 8,401. Event: curve 1,824,873, lp 365, protocol
   gross 16,972, quote 1,824,508, uout 1,802,061.
 - Second sweep moves 5,475 gross to net 5,420 (withheld
@@ -136,7 +140,8 @@ swc -> col):
   collect drains 64,434 to dest 32,217 (withheld
   32,217); vault withheld stays 64,435.
 - Second buy costs 3,687,218 -- 112 MORE than the first
-  (nofee +56, tf100 +57) -- with vault +1,839,366 and
+  (nofee +56 from 3rd #10, not re-measured here; tf100
+  +57) -- with vault +1,839,366 and
   buyback +4,243. Second sweep moves 5,476 gross to net
   2,738 (withheld 2,738), vault withheld 67,173; second
   collect drains 2,738 to dest +1,369 (withheld 1,369),
@@ -182,9 +187,11 @@ Family G -- tf10000 edges:
   withheld-withdraw path; that path is not exercised here.)
 - The loop does NOT reset the price, and the curve move
   grosses up with the fee rate: second-buy premium over
-  the anchor is +56 nofee, +57 at tf100, +112 at tf5000
+  the anchor is +56 nofee (3rd #10, not re-measured
+  here), +57 at tf100, +112 at tf5000
   (exactly 56 / (1 - rate) rounded up); the sell premium
-  runs the other way (-54 nofee, -53 tf100), because
+  runs the other way (-54 nofee from 3rd #10, -53
+  tf100), because
   withholding shrinks the payout loss. The sweep/collect
   pair is price-neutral for a following trade (shown in
   3rd #6-#9, not re-measured here) but never rewinds the curve move the previous trade
