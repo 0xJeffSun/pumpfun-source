@@ -275,6 +275,31 @@ test("four supported signatures and the exact image-byte boundary are local vali
   assert.equal(metadata.metadata.showName, false);
 });
 
+for (const [label, mime, bytes, offset] of [
+  ["PNG IHDR", "image/png", PNG, 12],
+  ["GIF header", "image/gif", Buffer.from("47494638396101000100", "hex"), 0],
+  ["WebP RIFF", "image/webp", Buffer.from("52494646080000005745425056503820", "hex"), 0],
+  ["WebP WEBP", "image/webp", Buffer.from("52494646080000005745425056503820", "hex"), 8],
+] as const) {
+  test(`high-bit ${label} aliases are rejected without publishing an image`, async (t) => {
+    const { app, store, directory } = await setup(t);
+    const valid = await store.putImage(bytes, mime);
+    const before = await readFile(join(directory, "media.json"));
+    const altered = Buffer.from(bytes);
+    altered[offset] |= 0x80;
+    const response = await app.inject({
+      method: "POST",
+      url: `${P}/images`,
+      headers: { ...AUTH, "content-type": mime },
+      payload: altered,
+    });
+    assert.equal(response.statusCode, 415);
+    assert.equal(response.json().code, "LOCAL_MEDIA_IMAGE_TYPE");
+    assert.deepEqual(await readFile(join(directory, "media.json")), before);
+    assert.deepEqual(store.getImage(valid.id).content, bytes);
+  });
+}
+
 test("metadata validates references, fields, text bounds, links and JSON byte cap", async (t) => {
   const { app, store } = await setup(t);
   const missing = await app.inject({
