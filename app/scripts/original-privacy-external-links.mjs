@@ -320,7 +320,7 @@ export async function recover(root = defaultRoot) {
       "UI rendering, React scheduling/hydration, popup policies and arbitrary reentrant application-port changes are outside the controller's settled-state model.",
       "Explicit storage/events/window-open ports; no production navigation, browser permission request, analytics service or implicit network.",
       "The source trusted-host list is preserved as client behavior, not a security clearance or scope expansion into excluded destinations.",
-      "675/773 settings modal and shared shell remain untouched; no visual parity, native compatibility or feature-ledger credit.",
+      "The device Settings row is local UI integration; modal dismissal and shared shell remain distinct. No visual parity, native compatibility or feature-ledger credit.",
       "Direct imports retain all available inventory variants; complete transitive closure remains unresolved.",
     ],
   };
@@ -375,6 +375,51 @@ export async function verifyBrowserReceipt(root = defaultRoot) {
     receipt.checks.length === 4, "browser receipt affected cases");
   return receipt;
 }
+export async function verifyAppBrowserReceipt(root = defaultRoot) {
+  const directory = path.join(
+    root,
+    "reconstruction/privacy-external-links/app-browser",
+  );
+  const receipt = JSON.parse(
+    await readFile(path.join(directory, "verification.json"), "utf8"),
+  );
+  const inputs = [
+    "reconstruction/privacy-external-links/client.mjs",
+    "reconstruction/privacy-external-links/client.d.mts",
+    outputPath,
+    "packages/frontend/src/components/settings/privacy-setting-control.tsx",
+    "packages/frontend/src/components/settings/privacy-setting-control.module.css",
+    "packages/frontend/src/components/settings/settings-control.tsx",
+    "tests/original_privacy_settings.browser.mjs",
+  ];
+  require(JSON.stringify(Object.keys(receipt.sourceInputs)) ===
+    JSON.stringify(inputs), "app receipt input set");
+  for (const relative of inputs)
+    require(receipt.sourceInputs[relative] ===
+      sha256(
+        await readFile(path.join(root, relative)),
+      ), `stale app receipt ${relative}`);
+  const screenshots = [
+    "settings-desktop.png",
+    "settings-mobile-storage-failure.png",
+  ];
+  require(JSON.stringify(Object.keys(receipt.screenshots)) ===
+    JSON.stringify(screenshots), "app receipt screenshot set");
+  for (const name of screenshots)
+    require(receipt.screenshots[name] ===
+      sha256(
+        await readFile(path.join(directory, name)),
+      ), `stale app screenshot ${name}`);
+  require(receipt.result === "PASS" &&
+    receipt.browserProcessRestarts === 2 &&
+    receipt.checks?.length === 4 &&
+    receipt.pageErrors?.length === 0 &&
+    receipt.externalRequests?.length === 0 &&
+    receipt.capturedCodeExecuted === false &&
+    receipt.outboundConsumersConnected === false &&
+    receipt.serverCompatibilityClaimed === false, "app receipt result/scope");
+  return receipt;
+}
 if (
   process.argv[1] &&
   path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)
@@ -383,8 +428,13 @@ if (
     at = args.indexOf("--root");
   require(args.every(
     (a, i) =>
-      ["--write", "--check", "--check-browser", "--root"].includes(a) ||
-      i === at + 1,
+      [
+        "--write",
+        "--check",
+        "--check-browser",
+        "--check-app-browser",
+        "--root",
+      ].includes(a) || i === at + 1,
   ), "unknown argument");
   const root = at < 0 ? defaultRoot : path.resolve(args[at + 1]);
   if (args.includes("--write")) {
@@ -396,6 +446,7 @@ if (
   }
   const value = await verify(root);
   if (args.includes("--check-browser")) await verifyBrowserReceipt(root);
+  if (args.includes("--check-app-browser")) await verifyAppBrowserReceipt(root);
   console.log(
     JSON.stringify({
       result: "PASS",
@@ -403,6 +454,7 @@ if (
       hooks: value.outbound.hooks.length,
       consumers: value.consumer.variants.length,
       browserReceiptChecked: args.includes("--check-browser"),
+      appBrowserReceiptChecked: args.includes("--check-app-browser"),
       capturedCodeExecuted: false,
       productionRequests: 0,
     }),

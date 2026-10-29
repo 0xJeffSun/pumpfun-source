@@ -1,6 +1,6 @@
 # Original external-link confirmation preference
 
-This recovers a backend-free **device preference** and its actual outbound-link consumer. It provides a maintained fixed-key preference runtime, an explicitly injected confirmation controller, reproducible source contract, and isolated browser/state checks. The product settings modal, shared shell and existing unavailable controls are unchanged; no native server, auth, production navigation or visual-parity claim is added.
+This recovers a backend-free **device preference** and its actual outbound-link consumer. It provides a maintained fixed-key preference runtime, an explicitly injected confirmation controller, reproducible source contract, isolated browser/state checks, and a working device switch in the existing Settings privacy row. The shared shell and modal dismissal behavior remain unchanged; no native server, auth, production navigation or visual-parity claim is added.
 
 The captured chain is **956718**'s `privacy.confirmExternalLinks` descriptor → **654506** JSON storage adapter → **547562** setting hook / **272700** registry → **225641** outbound confirmation → **634557** actual link consumer. **402732** is the `WEB_SETTINGS_HUB` gate. **671027** supplies initialization; this selected descriptor has no legacy adoption list. All **four** outbound-hook variants and **three** consumer variants are retained explicitly, without choosing an active page winner. Other registry settings are not implemented.
 
@@ -49,21 +49,37 @@ controller.dispose();
 
 Importing the module has no side effects. Constructing/using these explicit ports reads only the selected device key and subscribes as described. No implicit window-open, storage, flag service, credentials, browser permission, analytics or network implementation is supplied. The controller's observer/input API is local integration design, not a recovered server API or a claim about React interleavings.
 
+## Settings UI
+
+Open Settings → Privacy, or `/?settings=privacy&setting=privacy.confirmExternalLinks`. The switch uses this same fixed-key runtime through `useSyncExternalStore`, with a server snapshot and disabled loading state before hydration. It stores a device preference shared across accounts; it does not require a signed-in wallet. Only this previously unavailable row gains a control. Other account values remain unavailable unless the existing explicit notification adapter supplies them.
+
+The UI checks storage after a write before reporting “Saved in this browser.” A failed or unconfirmed write retains the original page-lifetime fallback and displays a warning; reload can restore the persisted choice. No server or browser-permission request is involved. The renderer and persistence feedback are authored integration, not a recovered pixel layout.
+
+**App-wide outbound links are not connected to this choice yet.** The row and Settings notice say so. The separately qualified confirmation controller still requires an explicitly supplied consumer/open port; storing false does not claim to bypass or enable a product-wide policy. Existing modal Escape/history/focus behavior is unchanged.
+
 ## Verify
 
 ```sh
-node app/scripts/original-privacy-external-links.mjs --check --check-browser
+node app/scripts/original-privacy-external-links.mjs --check --check-browser --check-app-browser
 node --test app/tests/original_privacy_external_links.test.mjs app/tests/original_source.test.mjs
 python3 app/scripts/verify-evidence.py
 # Rerun the authored isolated browser workflow with existing frontend Playwright:
 node app/tests/original_privacy_external_links.browser.mjs \
   --output app/reconstruction/privacy-external-links/browser-verification.json
+# With the actual frontend started separately on a loopback port:
+node app/tests/original_privacy_settings.browser.mjs \
+  --base-url http://127.0.0.1:3027 \
+  --output app/reconstruction/privacy-external-links/app-browser/verification.json
 ```
 
-`--write` regenerates only the source-derived contract. `--check-browser` checks the saved browser receipt's client/test/contract hashes and bounded result; it does not rerun the browser or make the receipt an independent oracle. Source or browser-module changes require renewed qualification, not just rewritten hashes.
+`--write` regenerates only the source-derived contract. `--check-browser` checks the isolated harness receipt; `--check-app-browser` checks the actual Settings receipt, exact renderer/runtime/script/contract inputs and desktop/mobile screenshot hashes. Neither reruns a browser or makes a receipt an independent oracle. Source or browser-module changes require renewed qualification, not just rewritten hashes.
 
 The Node tests cover coercion, failure fallback, failed removal, shared lifetime, subscriptions, exact URL/host behavior, hub gates, pending-dialog state, ordering and errors. Resealed source mutations, missing variants and invented durability/account claims fail. Receipt mutations and changes after execution also fail.
 
 The browser harness is authored synthetic test UI, not a captured-settings reconstruction. It uses an isolated temporary Chromium profile and real WebStorage/StorageEvents: explicit confirmation and JSON persistence, a **full browser-process restart**, a second page's native cross-tab storage event, and desktop/mobile viewport cancel/flag cases. Its explicit open port records arguments; no destination is opened. The checked-in receipt binds the actual executed bytes and reports no page errors or external requests. This is finite client workflow evidence, not popup behavior, product visual parity, current upstream availability or backend compatibility.
 
-No original capture, inventory, SDK/dependency/lock, feature ledger, settings modal, global shell or paused local backend prototype changes. Existing #675/#773 settings presentation/dismissal, #683 settings transport, #690/#764 notifications and #782 realtime state remain distinct.
+The separate actual-app browser driver opens the existing Settings modal, operates the real switch with a keyboard, verifies persistence on reload and full browser-process restart, observes a native cross-tab update, and checks a targeted storage-write failure at a mobile viewport. It preserves unrelated browser data and binds desktop/mobile screenshots. The failure is injected only into the selected key's `Storage.setItem` in the isolated test browser; no production failure or server oracle is claimed. The actual browser workflow must be run before its receipt is accepted.
+
+The committed actual-app receipt passes all four checks with zero page errors/external requests. Strict frontend typechecking and all 29 affected/shared-source Node tests pass. An additional run of the existing 15-case Settings suite stopped after three passes and a Back-dismissal failure (11 cases not run). The same Back case failed after temporarily restoring the exact pre-UI `SettingsControl` on the same server; the qualified privacy source was then restored byte-for-byte. `app-browser/additional-regression.json` and `baseline-back-failure.md` preserve this limit. This is not a full Settings-suite pass or a claim that history behavior was repaired. Initial working-directory/config invocation errors occurred before test execution and are disclosed separately in that record.
+
+No original capture, inventory, SDK/dependency/lock, feature ledger, global shell or paused local backend prototype changes. Existing #675/#773 modal presentation/dismissal, #683 settings transport, #690/#764 notifications and #782 realtime state remain distinct. This adds a row-specific device control and updates previously read-only copy to describe it truthfully.

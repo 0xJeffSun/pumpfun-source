@@ -3054,7 +3054,7 @@
     "UI rendering, React scheduling/hydration, popup policies and arbitrary reentrant application-port changes are outside the controller's settled-state model.",
     "Explicit storage/events/window-open ports; no production navigation, browser permission request, analytics service or implicit network.",
     "The source trusted-host list is preserved as client behavior, not a security clearance or scope expansion into excluded destinations.",
-    "675/773 settings modal and shared shell remain untouched; no visual parity, native compatibility or feature-ledger credit.",
+    "The device Settings row is local UI integration; modal dismissal and shared shell remain distinct. No visual parity, native compatibility or feature-ledger credit.",
     "Direct imports retain all available inventory variants; complete transitive closure remains unresolved."
   ]
 }

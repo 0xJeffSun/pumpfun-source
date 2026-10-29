@@ -9,6 +9,7 @@ import {
   recover,
   verify,
   verifyBrowserReceipt,
+  verifyAppBrowserReceipt,
   outputPath,
 } from "../scripts/original-privacy-external-links.mjs";
 import {
@@ -478,6 +479,51 @@ test("browser receipt binds actual executed client/test/contract bytes and canno
       await assert.rejects(
         verifyBrowserReceipt(dir),
         /stale browser receipt|scope\/result/,
+      );
+    } finally {
+      await fs.rm(dir, { recursive: true, force: true });
+    }
+  }
+});
+test("actual Settings receipt binds renderer/screenshots and rejects edits or global-policy claims", async () => {
+  const receipt = await verifyAppBrowserReceipt(root);
+  assert.equal(receipt.outboundConsumersConnected, false);
+  for (const mutation of ["renderer", "screenshot", "claim"]) {
+    const dir = await fs.mkdtemp(
+      path.join(os.tmpdir(), "pump-privacy-app-receipt-"),
+    );
+    try {
+      const folder = "reconstruction/privacy-external-links/app-browser";
+      for (const file of [
+        ...Object.keys(receipt.sourceInputs),
+        ...Object.keys(receipt.screenshots).map((name) => `${folder}/${name}`),
+        `${folder}/verification.json`,
+      ]) {
+        await fs.mkdir(path.dirname(path.join(dir, file)), { recursive: true });
+        await fs.copyFile(path.join(root, file), path.join(dir, file));
+      }
+      if (mutation === "renderer")
+        await fs.appendFile(
+          path.join(
+            dir,
+            "packages/frontend/src/components/settings/privacy-setting-control.tsx",
+          ),
+          "\n// changed after browser run\n",
+        );
+      else if (mutation === "screenshot")
+        await fs.appendFile(
+          path.join(dir, `${folder}/settings-desktop.png`),
+          "changed",
+        );
+      else {
+        const file = path.join(dir, `${folder}/verification.json`);
+        const value = JSON.parse(await fs.readFile(file));
+        value.outboundConsumersConnected = true;
+        await fs.writeFile(file, JSON.stringify(value));
+      }
+      await assert.rejects(
+        verifyAppBrowserReceipt(dir),
+        /stale app|app receipt result\/scope/,
       );
     } finally {
       await fs.rm(dir, { recursive: true, force: true });
