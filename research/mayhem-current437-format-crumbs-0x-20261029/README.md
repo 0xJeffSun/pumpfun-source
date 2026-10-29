@@ -1,3 +1,18 @@
+# Historical Mayhem data attribution: PR #889
+
+This packet independently bounds **11 new bytes** against the common reviewed,
+merged #846 data baseline: **21,796 / 26,180 bytes**. Its own bounded historical
+union with that baseline is **21,807 / 26,180**. Other open packets are not
+included in this per-packet baseline. The separate batch review deduplicates all
+eight additions; these figures are not a latest complete source footprint.
+
+The original and qualified437 candidate payload/descriptor/argument/index paths
+are checked. This adds finite historical data attribution only: no maintained
+code, normalized window or current-native-ELF progress is credited. Text and
+relocation-table bytes are proof evidence, not credited payload.
+
+## Retained attribution detail
+
 # Qualified437 format-crumb / `0x` text-site remainder
 
 This packet counts **7 static `.rodata` crumbs totaling 11 bytes** inside the assigned leftover gap `[723439, 723663)`, and proves **18 classic text sites** as proof sites only. All checks run on both the original and candidate images. This packet adds data evidence, not a function match.
@@ -9,12 +24,6 @@ The prior obligations are preserved: **437 normalized functions, 141 raw functio
 Only static bytes are read. Each crumb is bounded by the classic text-site grammar established in `research/mayhem-current437-rust-panic-messages-20261029/`: relocated `lddw` of a `.rodata` pointer followed immediately by `mov` of the exact length immediate. NUL, the following byte, and adjacency are not bounds. No descriptor is claimed.
 
 Counted texts: `,\n`, `}`, ` }`, `(`, `(\n`, `,`, `0x`.
-
-## Coverage
-
-The baseline is the option-seeds-paths packet at **21,451 / 26,180** payload bytes (`.rodata` 14,627 / 18,396, `.data.rel.ro` 6,824 / 7,784).
-
-These intervals were disjoint from that baseline. Payload coverage becomes **21,462 / 26,180 bytes (81.98%)**, leaving **4,718 unproved**. `.rodata` becomes **14,638 / 18,396** (+11). `.data.rel.ro` is unchanged. The added `.rodata` union is `[723447, 723458)`.
 
 ## Still open
 
@@ -37,3 +46,12 @@ PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3.12 -B scripts/test_tooling.
 ## Attribution
 
 provider=OpenCode model=opencode/deepseek-v4.1-flash-free client=opencode CLI 1.19.5
+
+
+The original observations.json.gz is preserved byte-exact; only the derived
+coverage baseline/classification report and checker/docs/input seals are updated.
+
+Verification requires the already-merged #846 baseline at its pinned hash.
+Use normal Python: public entrypoints refuse `-O` because the retained proof
+chain uses assertions. Tests mutate in-memory analysis copies only; these are
+never compiler inputs or replacement artifacts.

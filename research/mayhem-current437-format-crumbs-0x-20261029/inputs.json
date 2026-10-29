@@ -137,5 +137,6 @@
   "research/mayhem-current437-unicode-tables-20261028/source-context/printable.rs": "29836734466bfec58fd8735cc58659e8369814ffa2090c2239854d500439b59a",
   "research/mayhem-current437-unicode-tables-20261028/source-context/provenance.json": "d3dc223dd027b96a149591cf4873593c05a74c9311c816725e15716f6fdf30a6",
   "research/mayhem-current437-unicode-tables-20261028/test_verify.py": "3996f6f634fdfe0e43130c67e9e7ab6efe9ea19474e302d33da4c1155c1f2891",
-  "research/mayhem-current437-unicode-tables-20261028/verify.py": "68ec16eab9a1920b7f8bdcb66cfe55fd8d754e362bf66c8eff41646480c94e55"
+  "research/mayhem-current437-unicode-tables-20261028/verify.py": "68ec16eab9a1920b7f8bdcb66cfe55fd8d754e362bf66c8eff41646480c94e55",
+  "research/mayhem-current437-bounded-index-tables-20261029/coverage-delta.json": "f6efa470f1d18bcec99cab2c95ecf1fc650fe5606bcdbc73956986779e7cb282"
 }

@@ -64,6 +64,51 @@ TEXT_SITES = (
 )
 
 
+
+# Common reviewed merged #846 historical data baseline. No open-PR dependency.
+REVIEW_BASELINE = 'research/mayhem-current437-bounded-index-tables-20261029/coverage-delta.json'
+REVIEW_BASELINE_SHA256 = 'f6efa470f1d18bcec99cab2c95ecf1fc650fe5606bcdbc73956986779e7cb282'
+REVIEW_ADDED_RAW = {'.rodata': [[723447, 723458]], '.data.rel.ro': []}
+REVIEW_ADDED_MAPPED = {'.rodata': [], '.data.rel.ro': []}
+
+def _review_union(intervals):
+    out = []
+    for a,b in sorted(map(tuple, intervals)):
+        assert 0 <= a < b
+        if out and a <= out[-1][1]: out[-1][1] = max(out[-1][1], b)
+        else: out.append([a,b])
+    return out
+
+def _review_measure(intervals):
+    return sum(b-a for a,b in intervals)
+
+def _review_coverage(root, report):
+    observations = report['observations']
+    raw = {'.rodata': _review_union([[s['original_ptr'],s['original_ptr']+s['length']] for s in observations['strings']]),
+        '.data.rel.ro': _review_union([[d['original_offset']+8,d['original_offset']+16] for d in observations['descriptors']])}
+    mapped = {'.rodata': [], '.data.rel.ro': _review_union([[d['original_offset'],d['original_offset']+8] for d in observations['descriptors']])}
+    assert raw == REVIEW_ADDED_RAW and mapped == REVIEW_ADDED_MAPPED, 'actual attribution additions'
+    raw = (root / REVIEW_BASELINE).read_bytes()
+    assert sha(raw) == REVIEW_BASELINE_SHA256, 'reviewed merged baseline hash'
+    base = json.loads(raw)
+    assert (base['payload_covered_bytes'],base['payload_total_bytes']) == (21796,26180)
+    sections = []
+    for old in base['sections']:
+        name = old['section']
+        assert _review_union(old['raw_intervals'] + old['mapped_intervals']) == old['covered_intervals']
+        raw_intervals = _review_union(old['raw_intervals'] + REVIEW_ADDED_RAW[name])
+        mapped_intervals = _review_union(old['mapped_intervals'] + REVIEW_ADDED_MAPPED[name])
+        covered = _review_union(raw_intervals + mapped_intervals)
+        raw_count, total = _review_measure(raw_intervals), _review_measure(covered)
+        sections.append(dict(section=name,total_bytes=old['total_bytes'],raw_intervals=raw_intervals,
+            mapped_intervals=mapped_intervals,covered_intervals=covered,raw_equal_bytes=raw_count,
+            pointer_only_bytes=total-raw_count,covered_bytes=total,new_bytes=total-old['covered_bytes']))
+    return dict(scope='Finite historical data attribution against common reviewed merged #846; no current-native/window/source-footprint credit.',
+        reviewed_baseline_path=REVIEW_BASELINE,reviewed_baseline_sha256=REVIEW_BASELINE_SHA256,
+        baseline_payload_bytes=21796,baseline_rodata_bytes=14972,baseline_data_rel_ro_bytes=6824,
+        sections=sections,new_payload_bytes=sum(s['new_bytes'] for s in sections),
+        payload_covered_bytes=sum(s['covered_bytes'] for s in sections),payload_total_bytes=26180)
+
 def module(name, path):
     spec = importlib.util.spec_from_file_location(name, path)
     loaded = importlib.util.module_from_spec(spec)
@@ -121,7 +166,7 @@ def text_site(image, pc, pointer, length, length_register):
     reloc = image.rel[pc]
     assert reloc['type'] == 8 and reloc['symbol_index'] == 0
     opcode, register, branch, immediate = struct.unpack_from('<BBhi', image.b, pc)
-    assert opcode == 0x18 and branch == 0
+    assert opcode == 0x18 and branch == 0 and register == length_register - 1, 'pointer argument register'
     continuation, high = struct.unpack_from('<II', image.b, pc + 8)
     assert continuation == 0
     assert ((immediate & 0xffffffff) | (high << 32)) == pointer
@@ -235,57 +280,8 @@ def merged_priors(root):
 
 
 def coverage_delta(root, report):
-    del report
-    priors = merged_priors(root)
-    added = {
-        '.rodata': [tuple(span) for span in RODATA_SPANS],
-        '.data.rel.ro': [],
-    }
-    added_mapped = {'.rodata': [], '.data.rel.ro': []}
-    sections = []
-    baseline = {}
-    for name in ('.rodata', '.data.rel.ro'):
-        rows = [next(item for item in prior['sections'] if item['section'] == name) for prior in priors]
-        totals = {row['total_bytes'] for row in rows}
-        assert len(totals) == 1
-        total_bytes = totals.pop()
-        raw = union([interval for row in rows for interval in row['raw_intervals']] + added[name])
-        mapped = union(
-            [interval for row in rows for interval in row['mapped_intervals']] + added_mapped[name]
-        )
-        covered = union(raw + mapped)
-        previous = measure(union([interval for row in rows for interval in row['covered_intervals']]))
-        baseline[name] = previous
-        covered_bytes = measure(covered)
-        sections.append(dict(
-            section=name,
-            total_bytes=total_bytes,
-            raw_intervals=raw,
-            mapped_intervals=mapped,
-            covered_intervals=covered,
-            raw_equal_bytes=measure(raw),
-            pointer_only_bytes=covered_bytes - measure(raw),
-            covered_bytes=covered_bytes,
-            new_bytes=covered_bytes - previous,
-        ))
-    scope = (
-        'Counted static .rodata format-crumb and `0x` prefix bytes only, bounded by '
-        'classic lddw/mov text-site immediates. Text sites are proof-only for payload '
-        'credit of the pointed string bytes. No descriptor or relocation-table credit; '
-        'NUL and adjacency are not bounds. Early crumbs, the digit table and `[...]` '
-        'in the assigned gap are left open.'
-    )
-    return dict(
-        scope=scope,
-        prior_option_seeds_paths_delta_sha256=OPTION_SEEDS_SHA,
-        baseline_payload_bytes=sum(baseline.values()),
-        baseline_rodata_bytes=baseline['.rodata'],
-        baseline_data_rel_ro_bytes=baseline['.data.rel.ro'],
-        sections=sections,
-        new_payload_bytes=sum(section['new_bytes'] for section in sections),
-        payload_covered_bytes=sum(section['covered_bytes'] for section in sections),
-        payload_total_bytes=sum(section['total_bytes'] for section in sections),
-    )
+    return _review_coverage(root, report)
+
 
 
 def inventory(packet):
@@ -346,8 +342,8 @@ def check(packet, root):
         delta['baseline_payload_bytes'],
         delta['payload_covered_bytes'],
         delta['payload_total_bytes'],
-    ) == (21451, 21462, 26180)
-    assert (delta['baseline_rodata_bytes'], delta['baseline_data_rel_ro_bytes']) == (14627, 6824)
+    ) == (21796, 21807, 26180)
+    assert (delta['baseline_rodata_bytes'], delta['baseline_data_rel_ro_bytes']) == (14972, 6824)
     assert all(
         row['original_bytes_hex'] == row['candidate_bytes_hex']
         for row in report['observations']['strings']
