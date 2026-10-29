@@ -121,7 +121,7 @@ export class UserStore {
   private verifiedUsers: Set<string>;
 
   constructor(seed?: User[], verifiedIds?: string[] | Set<string>) {
-    this.users = seed ?? users;
+    this.users = structuredClone(seed ?? users);
     this.byAddress = new Map(this.users.map(u => [u.address, u]));
     this.byUserId = new Map(
       this.users.filter(u => u.userId !== undefined).map(u => [u.userId!, u])
@@ -158,7 +158,7 @@ export class UserStore {
 
     const offset = opts.offset ?? 0;
     const limit = opts.limit ?? result.length;
-    return result.slice(offset, offset + limit);
+    return structuredClone(result.slice(offset, offset + limit));
   }
 
   /** Search users with query filters, sorting, and pagination. */
@@ -196,7 +196,7 @@ export class UserStore {
 
     const offset = opts.offset ?? 0;
     const limit = opts.limit ?? result.length;
-    return result.slice(offset, offset + limit);
+    return structuredClone(result.slice(offset, offset + limit));
   }
 
   /** Check whether a user is verified (by address or userId). Returns false for unknown ids. */
@@ -239,7 +239,8 @@ export class UserStore {
 
   /** Get a single user by wallet address OR userId. Returns undefined for misses. */
   getById(id: string): User | undefined {
-    return this.byAddress.get(id) ?? this.byUserId.get(id);
+    const user = this.byAddress.get(id) ?? this.byUserId.get(id);
+    return user === undefined ? undefined : structuredClone(user);
   }
 
   /** Batch-fetch users by their wallet addresses. Missing entries are omitted. */
@@ -247,7 +248,7 @@ export class UserStore {
     const result: User[] = [];
     for (const addr of addresses) {
       const u = this.byAddress.get(addr);
-      if (u) result.push(u);
+      if (u) result.push(structuredClone(u));
     }
     return result;
   }

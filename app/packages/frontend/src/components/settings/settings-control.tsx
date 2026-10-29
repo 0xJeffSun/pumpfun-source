@@ -209,9 +209,12 @@ function SettingsControlContent({
 
   function trapFocus(event: KeyboardEvent<HTMLDialogElement>) {
     if (event.key === "Escape") {
-      // Own the modal key before bubble-phase shell/Live window listeners.
-      // Do not preventDefault here: the browser must still dispatch cancel.
+      // Search inputs can consume Escape to clear their value instead of
+      // dispatching the dialog's native cancel event. Own dismissal here and
+      // keep the same key from reaching the shell or Live window listeners.
+      event.preventDefault();
       event.stopPropagation();
+      select(null);
       return;
     }
     if (event.key !== "Tab") return;
