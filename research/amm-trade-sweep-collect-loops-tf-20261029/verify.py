@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 """Independent re-verification for amm-trade-sweep-collect-loops-tf-20261029.
 
-Checks, from the packet files alone (plus the three program images):
+Checks, from the packet files alone (plus the three program images retained in the
+repository: evidence/original/pump_amm/deployed.so and the two
+candidate.so.gz artifacts named in IMAGE_PATHS):
   - MANIFEST.json lists every packet file with a matching sha256.
 - runtime/report.json.gz: 10 cases, 123 receipts, 13 parts
   (12x10 + 3), part sha256/byte counts match the part files.
@@ -13,14 +15,16 @@ Checks, from the packet files alone (plus the three program images):
   override-converted accounts read at offset 170, 182-byte
   t22acct ATAs at offset 174), the pool state
   (virtual_quote_reserves i128, protocol_fees, creator_fees,
-  lp_supply), the user volume accumulator state (absent for sweep
-  and failed steps, 1,844,400 lamports / 137 bytes after the first
-  successful trade of a VM), and the decoded event fields
+  lp_supply), the user volume accumulator state (absent only after
+  the failed g-buy-tf10000 step, since every VM here starts with a
+  trade; 1,844,400 lamports / 137 bytes after the first successful
+  trade of a VM), and the decoded event fields
   (sweep amount/bucket/recipient, collect fee/vault ATA/dest,
   v2 buy/sell curve/lp/protocol/quote/user-quote-in/uout -- all
   pre-tf curve amounts, exact disc/len only).
-- Failure steps roll back every watched account except the fee payer
-  (fee 5,000) and carry the expected error code plus the recorded
+- Failure steps, and silent no-op collects (no error, 0 events),
+  leave every watched account except the fee payer unchanged
+  (fee 5,000); failure steps also carry the expected error code plus the recorded
   per-image site line in their logs. Site lines are checked per
   image, never compared across images, because original and rebuilt
   sources differ in line numbers.
@@ -29,7 +33,8 @@ Checks, from the packet files alone (plus the three program images):
   original, control, and candidate images.
 - The three program images hash to the values recorded in the report.
 
-Usage: python3 verify.py   (run from this packet directory)
+Usage (from the repository root):
+    python3 -I -B research/amm-trade-sweep-collect-loops-tf-20261029/verify.py
 """
 import base64
 import gzip
@@ -43,12 +48,13 @@ from solders.pubkey import Pubkey
 from solders.transaction import Transaction
 
 ROOT = Path(__file__).resolve().parent
-WS = Path.home() / "workspace/slop-verify"
-SPARSE = Path.home() / "workspace/pumpfun-sparse"
+REPO = ROOT.parents[1]
+# The three program images are retained in the repository; the two
+# rebuilt images are stored gzip-compressed and hashed decompressed.
 IMAGE_PATHS = {
-    "original": SPARSE / "evidence/original/pump_amm/deployed.so",
-    "control": WS / "control.so",
-    "candidate": WS / "candidate.so",
+    "original": REPO / "evidence/original/pump_amm/deployed.so",
+    "control": REPO / "research/amm-multi-hop-group-slice-recovery/artifacts/candidate.so.gz",
+    "candidate": REPO / "research/amm-transfer-fee-diagnostic-recovery/artifacts/candidate.so.gz",
 }
 PAYER_KEY = Pubkey.from_string("DXyM8yAHqpMzDtvwz5DXoEUQmPxjJPMKCASCPhLMKpEx")
 POOL = Pubkey.from_string("GseMAnNDvntR5uFePZ51yZBXzNSn7GdFPkfHwfr6d77J")
@@ -186,7 +192,10 @@ def main():
     if report["mismatches"] != []:
         fail(f"mismatches recorded: {report['mismatches']}")
     for name, path in IMAGE_PATHS.items():
-        if sha(path.read_bytes()) != report["images"][name]:
+        data = path.read_bytes()
+        if path.suffix == ".gz":
+            data = gzip.decompress(data)
+        if sha(data) != report["images"][name]:
             fail(f"image hash mismatch {name}")
     receipts = []
     for part in report["parts"]:
@@ -244,7 +253,11 @@ def main():
                     fail(f"{tag}: pool {pool_state(rec['after'][str(POOL)])} != {exp['pool_after']}")
                 if vol_state(rec["after"][str(VOLUME)]) != exp["volume"]:
                     fail(f"{tag}: volume {vol_state(rec['after'][str(VOLUME)])} != {exp['volume']}")
-                if exp.get("rollback"):
+                # A silent no-op collect (no error, 0 events) must leave every
+                # watched account except the fee payer unchanged.
+                silent_noop = (rec["step"] == "col" and exp["error"] is None
+                               and exp["events"] == 0)
+                if exp.get("rollback") or silent_noop:
                     for k, b in rec["before"].items():
                         if k == str(PAYER_KEY):
                             continue

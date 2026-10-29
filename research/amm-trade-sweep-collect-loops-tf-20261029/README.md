@@ -35,7 +35,8 @@ the override-converted vault/user accounts are 178 bytes with
 withheld at offset 170. Every case starts from the same
 fixture state; each case runs in a fresh VM per image.
 
-Event layouts (verified byte-for-byte):
+Event layouts (offsets as read from the receipts; verify.py
+decodes only the fields its expectations name):
 - BuyEvent (v2), 500 bytes, disc `67f4521f2cf57777`: curve
   @64, lp_bps @72, lp_fee @80, protocol_bps @88, protocol_fee
   @96, quote_with_lp @104, user_quote_in @112 (pre-tf curve
@@ -74,7 +75,8 @@ Family A -- tf100 anchors, no sweep/collect (3 cases):
 
 Family B -- buy loop tf100 (buy -> swc -> col -> buy -> swc
 -> col -> swp -> col-noop):
-- First buy, sweep, and collect match the anchor exactly:
+- First buy, sweep, and collect match the anchor exactly (the
+  first buy's raw event is byte-identical to `a-buy-tf100`'s):
   sweep moves 128,869 gross to net 127,580 (withheld
   1,289), collect drains 127,580 to dest 126,304
   (withheld 1,276), and the vault ATA keeps its 1,289
@@ -90,13 +92,16 @@ Family B -- buy loop tf100 (buy -> swc -> col -> buy -> swc
 - Protocol sweep moves 19,462 gross to net 19,267
   (withheld 195), pool (0, 0, 0); the following collect
   is a silent no-op (0 events, payer 5,000 only),
-  protocol ATA untouched -- protocol sweep output is NOT
-  collectable under tf either.
+  protocol ATA untouched -- protocol sweep output is not
+  collected by collect_coin_creator_fee under tf either
+  (observed here; verify.py checks that every watched
+  account except the fee payer is unchanged).
 
 Family C -- sell loop tf100 (sell -> swc -> col -> sell ->
 swc -> col -> col-noop):
 - First sell, sweep (127,580 net), and collect (126,304
-  net) match the anchor exactly.
+  net) match the anchor exactly (the first sell's raw event
+  is byte-identical to `a-sell-tf100`'s).
 - Second sell pays 1,784,040 -- 53 LESS than the anchor
   (nofee loop: -54) -- with vault -1,810,547 and the same
   buyback 8,401. Event: curve 1,824,873, lp 365, protocol
@@ -110,7 +115,9 @@ Family D -- exact loop tf100 (exact -> swc -> col -> exact
 -> swc -> col):
 - First exact, sweep (152,728 gross to net 151,200,
   withheld 1,528), and collect (dest 149,688, withheld
-  1,512) match the anchor exactly; vault withheld stays
+  1,512) match the anchor exactly (the first exact's raw
+  event is byte-identical to `a-exact-tf100`'s); vault
+  withheld stays
   1,528 after the drain.
 - Second exact lands 53,565,387,102 -- 8,520,819 BELOW
   its tf anchor -- at the same 9,999,541 spend, with
@@ -155,28 +162,32 @@ Family G -- tf10000 edges:
 - `h-sell-tf10000`: sell 10^10 succeeds with user net 0
   (gross 1,802,115 fully withheld, user withheld
   1,802,115; buyback net 0, withheld 8,486) while the
-  vault still moves -1,810,601 gross. Event identical
-  to the tf100 sell anchor (gross uout 1,802,115).
+  vault still moves -1,810,601 gross. The decoded event
+  fields (curve, lp, protocol, quote, uout 1,802,115 gross)
+  equal the tf100 sell anchor's; the raw event differs from
+  the anchor's at words @384 and @440.
 
 ## Result
 
 - Double withholding compounds across loops and the first
-  hop's withheld is stranded forever: every collect drains
+  hop's withheld stays on the vault ATA: every collect drains
   exactly the swept net and never touches the vault ATA's
   accumulated withheld (tf100: 1,289 -> 1,344 -> 1,399;
   tf5000: 64,435 -> 67,173), while the destination's own
   withheld climbs alongside it (tf100: 1,276 -> 1,331 ->
   1,386). The gap between the pool's gross accrual and
-  what the creator ever receives grows every iteration
-  and can never be reclaimed through collect.
+  what the creator receives grows every iteration and is
+  not reclaimed through collect. (Withheld Token-2022
+  balances are normally recoverable through the mint's
+  withheld-withdraw path; that path is not exercised here.)
 - The loop does NOT reset the price, and the curve move
   grosses up with the fee rate: second-buy premium over
   the anchor is +56 nofee, +57 at tf100, +112 at tf5000
   (exactly 56 / (1 - rate) rounded up); the sell premium
   runs the other way (-54 nofee, -53 tf100), because
   withholding shrinks the payout loss. The sweep/collect
-  pair is price-neutral for a following trade (3rd #6-#9)
-  but never rewinds the curve move the previous trade
+  pair is price-neutral for a following trade (shown in
+  3rd #6-#9, not re-measured here) but never rewinds the curve move the previous trade
   itself caused.
 - What DOES reset is the fee plumbing: every sweep moves
   exactly the current pool creator bucket (gross) and
@@ -187,7 +198,9 @@ Family G -- tf10000 edges:
 - tf10000 splits buy from sell: buy overflows (6023) and
   sells pay zero net while still moving the vault gross.
   Events never report the fee: buy uin and sell uout are
-  pre-tf curve amounts at every rate.
+  pre-tf curve amounts at every rate measured (the tf5000
+  first buy's raw event differs from the tf100 anchor's only
+  at @432 and @488, so uin @112 is unchanged).
 
 ## Limits
 
@@ -221,3 +234,26 @@ Family G -- tf10000 edges:
   with withheld at offset 174. verify.py reads each layout
   at its own offset; a reader that assumes one offset for
   both layouts will misread one side's withheld balance.
+
+## Verify and provenance
+
+From the repository root:
+
+    python3 -I -B research/amm-trade-sweep-collect-loops-tf-20261029/verify.py
+
+`verify.py` needs only `solders` plus files in the repository: this
+packet, `evidence/original/pump_amm/deployed.so`, and the two
+retained rebuilt images
+`research/amm-multi-hop-group-slice-recovery/artifacts/candidate.so.gz`
+(control, #424) and
+`research/amm-transfer-fee-diagnostic-recovery/artifacts/candidate.so.gz`
+(candidate, #427), whose decompressed sha256 values match the
+`images` block of `runtime/report.json.gz`. It re-checks the
+recorded receipts against the report's expected values; it does
+not re-execute any transaction.
+
+`producer.py` is the script that generated the receipts and is
+kept as a provenance record. It is not runnable as committed: it
+hard-codes a private workspace layout (`~/workspace/pumpfun-sparse`
+for the harness scripts and `~/workspace/slop-verify` for the
+control/candidate `.so` files) and chdirs there on start.
