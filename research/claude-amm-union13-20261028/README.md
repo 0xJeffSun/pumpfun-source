@@ -8,6 +8,14 @@ program's layout**, is regenerated.
 
 This is a research packet: the maintained `programs/` tree and `repro/status.json` are untouched.
 
+**Relation to main.** Main already holds 784/785 normalized with raw 267 source-only from
+[buy cashback recovery](../amm-cashback-buy-recovery-20261028/README.md) (#617) and
+[checked sell decoder](../amm-sell-checked-decoder-20261028/README.md) (#630). This packet's
+source-only build matches that count (784/267); its new result is the generated layout layer,
+where all 784 matched windows are raw-equal. Its archived `swap/sell.rs` (line 451) still calls
+`Account::<UserVolumeAccumulator>::try_from_unchecked`; #630 restored the original's checked
+`try_from`, which this composite does not include.
+
 | Linux v1.44 build (authenticated recipe) | normalized | raw |
 |---|---:|---:|
 | parent `research/claude-amm-union12-20261028` (symbols `36a94b38…`) | 783/785 | 236 |
