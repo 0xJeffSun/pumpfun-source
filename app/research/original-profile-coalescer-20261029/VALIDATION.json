@@ -1,0 +1,94 @@
+{
+  "schemaVersion": 1,
+  "prerequisite": {
+    "pullRequest": 870,
+    "exactPublicCommit": "e46c14ea3857da7ef6eecc9f7945622f5dbcfc39",
+    "inheritedFiles": [],
+    "novelCredit": false
+  },
+  "scope": "Novel782067 profile coalescer/H/T/V/J only; strict544930/#901 and surrounding UI/query runtime excluded",
+  "testedFiles": [
+    {
+      "path": "app/reconstruction/profile-coalescer/client.mjs",
+      "sha256": "366e61e6c5a62de3c28a2431d2c6789b2322394565cdc346c5a169240bfd320d"
+    },
+    {
+      "path": "app/reconstruction/profile-coalescer/contract.json",
+      "sha256": "cf92567fdefac73eb6eb9ab51518c08a3554de972bcf849a1c06d9b8321067ae"
+    },
+    {
+      "path": "app/reconstruction/profile-coalescer/README.md",
+      "sha256": "c3b88adf91bdbf11e3b8e13d7316613a8305cb2b97d72f84e27da9710df8e437"
+    },
+    {
+      "path": "app/scripts/original-profile-coalescer.mjs",
+      "sha256": "0380d29a4bcc146ae33eeaf0b838e8b39a3b3279e6af1b0889283d83f306a5fb"
+    },
+    {
+      "path": "app/tests/original_profile_coalescer.test.mjs",
+      "sha256": "d562d68702698f02ec7a7d60be1a49f54088e0f0db8a6dce99271e61dd94846e"
+    }
+  ],
+  "sourceInputs": {
+    "manifestSha256": "9e0fc00719eb8c919dd4205d3c118eb48c4927e056c77e8343e26d6f7189bbb5",
+    "inventorySha256": "1d268ae7f2eb0f61eaaffd222269bf29d9ce06e9946372861721b2f159d868e2"
+  },
+  "checks": [
+    {
+      "command": "cd app && node scripts/original-profile-coalescer.mjs --check && node scripts/original-profile-lookup.mjs --check",
+      "result": "PASS"
+    },
+    {
+      "command": "cd app && node --test tests/original_profile_coalescer.test.mjs tests/original_profile_lookup.test.mjs tests/original_source.test.mjs tests/original_schema.test.mjs tests/original_contract_http_errors.test.mjs tests/original_contract_http_error_source.test.mjs",
+      "result": "PASS",
+      "tests": 72,
+      "novelDomainTests": 16,
+      "prerequisiteDomainTests": 18,
+      "sharedTests": 38,
+      "novelRealLoopbackHttpScenarios": 3,
+      "realTimerScenario": true
+    },
+    {
+      "command": "cd app && corepack pnpm --filter @pump-reconstruction/frontend typecheck",
+      "result": "PASS"
+    },
+    {
+      "command": "cd app && corepack pnpm verify:evidence",
+      "result": "PASS",
+      "capturedObjects": 698,
+      "sdkSourceChanges": 0
+    },
+    {
+      "command": "cd app && corepack pnpm check:progress",
+      "result": "PASS",
+      "tests": 8,
+      "ledgerChanges": 0
+    },
+    {
+      "command": "python3 scripts/verify_evidence.py",
+      "result": "PASS",
+      "captures": 9
+    },
+    {
+      "command": "python3 scripts/test_tooling.py",
+      "result": "PASS",
+      "tests": 6
+    },
+    {
+      "command": "cd app && corepack pnpm exec prettier --check reconstruction/profile-coalescer/client.mjs reconstruction/profile-coalescer/README.md scripts/original-profile-coalescer.mjs tests/original_profile_coalescer.test.mjs",
+      "result": "PASS"
+    },
+    {
+      "command": "git diff --check",
+      "result": "PASS"
+    }
+  ],
+  "limits": [
+    "Exact870 prerequisite and six unchanged blobs; zero new parent credit",
+    "No original JS evaluated; authenticated AST only",
+    "All11 physical variants and7 actual caller variants retained; no runtime winner/rendered UI claim",
+    "Required HTTP/timer/cache capabilities; no TanStack/React slot scheduling/browser cookie reconstruction",
+    "No production POST, server/auth/provider, mutation, UI mount or ledger/compatibility credit",
+    "No full Next build/browser on this snapshot; aggregate qualification separate"
+  ]
+}
