@@ -176,8 +176,9 @@ export class FollowingStore {
   }
 
   private search(users: User[], rawTerm: string): User[] {
-    const term = rawTerm.trim().toLowerCase();
-    if (term.length < 2) return [];
+    const trimmed = rawTerm.trim();
+    if ([...trimmed].length < 2) return [];
+    const term = trimmed.toLowerCase();
     return users
       .map((user) => ({ user, score: relevance(user, term) }))
       .filter((row) => row.score > 0)
