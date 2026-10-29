@@ -299,7 +299,9 @@ test("performs no external browser request, mutation, signing or wallet action",
       "Only public account data is read. Never enter a private key or seed phrase.",
     ),
   ).toBeVisible();
-  await expect(
-    page.getByRole("button", { name: /connect wallet|sign/i }),
-  ).toHaveCount(0);
+  const capturedSignIn = page.getByRole("button", {
+    name: /connect wallet|sign/i,
+  });
+  await expect(capturedSignIn).toHaveCount(1);
+  await expect(capturedSignIn).toBeDisabled();
 });

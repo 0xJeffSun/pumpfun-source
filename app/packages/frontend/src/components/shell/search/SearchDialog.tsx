@@ -1,9 +1,10 @@
-'use client';
+"use client";
 
-import { useRouter } from 'next/navigation';
-import { useEffect, useRef, type FormEvent } from 'react';
-import { SearchMobileIcon } from '../captured-icons';
-import { onOpenSearch } from './search-events';
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useRef, useState, type FormEvent } from "react";
+import { useSidebar } from "@/components/ui/sidebar";
+import { SearchMobileIcon } from "../captured-icons";
+import { onOpenSearch } from "./search-events";
 
 /**
  * The shell's search entry point (the captured search box and ⌘K hint open it).
@@ -14,33 +15,44 @@ import { onOpenSearch } from './search-events';
 export function SearchDialog() {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const router = useRouter();
+  const pathname = usePathname();
+  const params = useSearchParams();
+  const currentQuery = params.get("q") ?? "";
+  const [query, setQuery] = useState(currentQuery);
+  const { closeMobile } = useSidebar();
+  useEffect(() => {
+    setQuery(currentQuery);
+  }, [currentQuery]);
 
   useEffect(() => {
     const open = () => {
+      closeMobile();
       const dialog = dialogRef.current;
       if (dialog && !dialog.open) dialog.showModal();
     };
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key.toLowerCase() === 'k' && (event.metaKey || event.ctrlKey)) {
+      if (event.key.toLowerCase() === "k" && (event.metaKey || event.ctrlKey)) {
         event.preventDefault();
         open();
       }
     };
-    window.addEventListener('keydown', onKeyDown);
+    window.addEventListener("keydown", onKeyDown);
     const stopListening = onOpenSearch(open);
     return () => {
-      window.removeEventListener('keydown', onKeyDown);
+      window.removeEventListener("keydown", onKeyDown);
       stopListening();
     };
-  }, []);
+  }, [closeMobile]);
 
   function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const form = event.currentTarget;
-    const query = String(new FormData(form).get('q') ?? '').trim();
+    const normalized = query.trim();
     dialogRef.current?.close();
-    form.reset();
-    router.push(query ? `/explore?q=${encodeURIComponent(query)}` : '/explore');
+    router.push(
+      normalized
+        ? `/explore?${new URLSearchParams({ q: normalized })}`
+        : "/explore",
+    );
   }
 
   return (
@@ -49,21 +61,51 @@ export function SearchDialog() {
       aria-label="Search for coins and users"
       className="mx-auto mt-[12vh] w-[min(560px,calc(100vw-32px))] overflow-hidden rounded-xl border border-border-tertiary bg-bg-secondary p-0 text-text-primary shadow-lg backdrop:bg-black/60"
     >
-      <form onSubmit={onSubmit} role="search" className="flex items-center gap-2 px-3">
+      <form
+        onSubmit={onSubmit}
+        role="search"
+        className="flex items-center gap-2 px-3"
+      >
         <SearchMobileIcon className="size-4 shrink-0 text-text-quaternary" />
         <input
+          id="global-search"
           name="q"
           type="search"
+          value={query}
+          onChange={(event) => setQuery(event.target.value)}
           autoFocus
           autoComplete="off"
           aria-label="Search for coins and users"
           placeholder="Search for coins and users..."
           className="h-12 w-full bg-transparent text-[14px] outline-none placeholder:text-text-quaternary"
         />
-        <kbd className="h-5 shrink-0 rounded-sm bg-bg-quaternary px-1.5 text-xs leading-5 text-text-quaternary">Esc</kbd>
+        {query ? (
+          <button
+            type="button"
+            aria-label="Clear search"
+            className="px-2 py-3 text-sm"
+            onClick={() => {
+              setQuery("");
+              if (pathname === "/explore" && currentQuery)
+                router.push("/explore");
+            }}
+          >
+            ×
+          </button>
+        ) : null}
+        <button
+          type="submit"
+          className="rounded-md bg-bg-accent px-3 py-2 text-sm text-text-on-accent"
+        >
+          Search
+        </button>
+        <kbd className="h-5 shrink-0 rounded-sm bg-bg-quaternary px-1.5 text-xs leading-5 text-text-quaternary">
+          Esc
+        </kbd>
       </form>
       <p className="border-t border-border-secondary px-3 py-2 text-xs text-text-tertiary">
-        Live results need the market-discovery API, which is not implemented locally. Press Enter to search on Explore.
+        Live results need the market-discovery API, which is not implemented
+        locally. Press Enter to search on Explore.
       </p>
     </dialog>
   );

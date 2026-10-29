@@ -1,4 +1,5 @@
 import { expect, test, type Page } from "@playwright/test";
+import { openShellSearch } from "./shell-controls";
 
 const MINT = "FwgY7679unGLV64cDpzYyfCtzocr7N2NNfbPnZhepump";
 
@@ -27,7 +28,10 @@ test("renders the exact verified one-record capture without remote imagery", asy
   await expect(page.getByText("$3,300.03", { exact: true })).toBeVisible();
   await expect(page.getByText(/exactly 1 historical record/)).toBeVisible();
   await expect(page.getByLabel("Local image placeholder")).toBeVisible();
-  await expect(page.locator("img")).toHaveCount(0);
+  await expect(page.locator("#main-content img")).toHaveCount(0);
+  await expect(page.locator('img:not([src="/pump-logomark.svg"])')).toHaveCount(
+    0,
+  );
   await expect(
     page.getByText(/never refreshed from a production service/),
   ).toBeVisible();
@@ -93,9 +97,7 @@ test("shared shell search interoperates with the offline Explore query", async (
   page,
 }) => {
   await page.goto("/");
-  const shellSearch = page.getByRole("searchbox", {
-    name: "Search for coins and users",
-  });
+  const shellSearch = await openShellSearch(page);
   await shellSearch.fill("MotoCrose");
   await shellSearch.press("Enter");
   await expect(page).toHaveURL(/\/explore\?q=MotoCrose$/);
