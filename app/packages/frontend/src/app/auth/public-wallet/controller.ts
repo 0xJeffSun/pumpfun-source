@@ -300,6 +300,11 @@ export class PublicWalletController {
         typeof feature.disconnect === "function"
       )
         await feature.disconnect();
+      else if (generation === this.generation)
+        this.publish({
+          message:
+            "Address forgotten. The wallet connection may remain active. Manage it in your wallet.",
+        });
     } catch {
       if (generation === this.generation)
         this.publish({

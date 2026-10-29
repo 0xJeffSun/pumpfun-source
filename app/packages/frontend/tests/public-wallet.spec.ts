@@ -11,7 +11,7 @@ type Probe = {
 };
 async function installWallet(
   page: Page,
-  mode: "success" | "pending" | "reject" = "success",
+  mode: "success" | "pending" | "reject" | "without-disconnect" = "success",
 ) {
   await page.addInitScript(
     ({ address, mode }) => {
@@ -84,6 +84,8 @@ async function installWallet(
           },
         },
       };
+      if (mode === "without-disconnect")
+        Reflect.deleteProperty(wallet.features, "standard:disconnect");
       window.addEventListener("wallet-standard:app-ready", ((
         event: CustomEvent,
       ) => {
@@ -250,3 +252,25 @@ for (const width of [320, 1440])
     await expect(page.getByTestId("public-wallet-address")).toHaveCount(0);
     await expect(panel).toContainText("Wallet is no longer available");
   });
+
+test("wallet without disconnect support forgets locally and discloses remaining wallet authorization", async ({
+  page,
+}) => {
+  await installWallet(page, "without-disconnect");
+  await open(page);
+  await page
+    .getByRole("button", {
+      name: "Connect Browser Protocol Wallet",
+      exact: true,
+    })
+    .click();
+  await expect(page.getByTestId("public-wallet-address")).toHaveText(ADDRESS);
+  await page
+    .getByRole("button", { name: "Disconnect and forget address" })
+    .click();
+  await expect(page.getByTestId("public-wallet-address")).toHaveCount(0);
+  await expect(
+    page.getByTestId("public-wallet-panel").getByRole("alert"),
+  ).toContainText("wallet connection may remain active");
+  expect((await probe(page)).calls).toEqual(["connect:0", "on:change", "off"]);
+});

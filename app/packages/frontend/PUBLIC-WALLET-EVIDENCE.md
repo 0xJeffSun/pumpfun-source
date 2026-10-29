@@ -31,9 +31,9 @@ corepack pnpm --filter @pump-reconstruction/frontend exec tsc --noEmit --increme
 corepack pnpm --filter @pump-reconstruction/frontend exec playwright test tests/auth.spec.ts tests/public-wallet.spec.ts
 ```
 
-The 11 controller cases cover explicit prompting, no passive account reads, no signing/icon capability access, duplicate identity, malformed metadata/accounts, provider error privacy, cancellation/disposal/unregister races, timeout, account changes/revocation and disconnect rejection. The real loopback HTTP + Chromium test imports the maintained controller over HTTP and exercises the event handshake, approval, account change and cleanup while asserting no auth request or browser persistence.
+The 12 controller cases cover explicit prompting, no passive account reads, no signing/icon capability access, duplicate identity, malformed metadata/accounts, provider error privacy, cancellation/disposal/unregister races, timeout, account changes/revocation and disconnect rejection. The real loopback HTTP + Chromium test imports the maintained controller over HTTP and exercises the event handshake, approval, account change and cleanup while asserting no auth request or browser persistence.
 
-The five product-browser cases exercise the actual SignInControl integration, declined prompts, late approval after close, unregistration, signed-out shell and unchanged storage/network boundaries. They capture local 320×640 and 1440×900 screenshots. The wallet fixture implements the public protocol with synthetic public addresses; it is not a live wallet, production account or authenticated upstream observation. Original open-dialog screenshots are unavailable, so no visual-equivalence claim is made. The existing archived `/explore` screenshot describes the closed signed-out page, not this new connection state.
+The six product-browser cases exercise the actual SignInControl integration, declined prompts, late approval after close, unregistration, signed-out shell and unchanged storage/network boundaries. They capture local 320×640 and 1440×900 screenshots. The wallet fixture implements the public protocol with synthetic public addresses; it is not a live wallet, production account or authenticated upstream observation. Original open-dialog screenshots are unavailable, so no visual-equivalence claim is made. The existing archived `/explore` screenshot describes the closed signed-out page, not this new connection state.
 
 The auth feature ledger remains pending for complete source/success/failure/consistency parity. This bounded local connection is not evidence of an authenticated backend, permissions, trades, account linking or complete wallet support.
 
@@ -44,3 +44,7 @@ The auth feature ledger remains pending for complete source/success/failure/cons
 ![Local mobile public-wallet panel](visual/public-wallet-20261029/public-wallet-320.png)
 
 ![Local desktop public-wallet panel](visual/public-wallet-20261029/public-wallet-1440.png)
+
+## Optional disconnect correction
+
+Wallet Standard's disconnect feature is optional, as the captured `tS.disconnect` feature guard shows. A supported connect/events-only wallet can share an address without implementing disconnect. The local controller always forgets its address first; it now explicitly reports that the wallet connection may remain active and can be managed in the wallet when no disconnect port exists. A new controller and product-browser case cover this actual protocol branch. The earlier f102/143 validation remains the preserved pre-correction checkpoint; new validation is recorded separately. No wallet authorization is inferred from local address forgetting.

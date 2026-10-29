@@ -286,3 +286,20 @@ test("malformed first account or event subscription fails closed", async () => {
   assert.equal(f.controller.getSnapshot().address, null);
   f.controller.dispose();
 });
+
+test("optional disconnect absence explicitly distinguishes local forgetting from wallet authorization", async () => {
+  const f = fixture();
+  Reflect.deleteProperty(f.features, "standard:disconnect");
+  f.controller.discover();
+  await f.controller.connect(0);
+  assert.equal(f.controller.getSnapshot().address, A);
+  await f.controller.disconnect();
+  assert.equal(f.controller.getSnapshot().address, null);
+  assert.equal(f.controller.getSnapshot().status, "choosing");
+  assert.match(
+    f.controller.getSnapshot().message!,
+    /wallet connection may remain active/,
+  );
+  assert.equal(f.counts.disconnects, 0);
+  f.controller.dispose();
+});
