@@ -66,6 +66,36 @@ canonical image or claim the parent's complete 44-suite checkpoint for this new
 source. Independent identical-source repetition is not claimed. Historical
 proposal descriptors remain dispatch-time evidence, not current qualification status.
 
-Draft pending completion of the portable final verifier and the unchanged
-maintained twelve-case counter replay. Source/build/census and the above finite
-runtime results are already concrete; no additional compiler variant is queued.
+The unchanged maintained twelve-counter corpus also passes separately on
+original/current c0e29/candidate 0bc4: 12 parameter cases, 36 executed outcomes /
+36 signature occurrences, two distinct serialized transactions. Exact saved
+prestates/messages are reused without further counter mutation; original Source
+and rollback observations agree literally. The authenticated original producers
+and counter inputs remain available for review. No mainnet reachability follows
+from these synthetic preexisting counter states.
+
+The portable verifier passes exact source/diff/guard-position checks, all 65
+current-main Git blob bindings, all 66 actual native workspace hashes, the full
+1,035-window census, both complete CFG timestamp def-use proofs, the precise two
+callee-count changes, and all saved strict replays/signatures/loader bindings.
+`qualification/reports/final-verification.log` retains the actual verification
+output. Required root capture/tooling gates are recorded on the exact final PR
+head in the PR description.
+
+Prepare and verify without new VM execution from the repository root:
+
+```sh
+python3 -B research/pump-hop-clock-snapshot-20261029/prepare_runtime.py \
+  --repository . \
+  --parent-packet research/pump-hop-accrual-boundary-20261029 \
+  --output /absolute/path/to/new-clock-runtime
+python3 -B research/pump-hop-clock-snapshot-20261029/verify.py \
+  --repository . \
+  --parent-packet research/pump-hop-accrual-boundary-20261029 \
+  --runtime-root /absolute/path/to/new-clock-runtime
+```
+
+Fresh replay commands are in [`COMMANDS.md`](COMMANDS.md). Source/fixtures and
+actual cold receipts remain authenticated; no historical expected-image guard is
+disabled, and current c0e29 is distinct from the historical 199fd SDK anchor. No
+additional compiler variant or broader compatibility/security claim is made.

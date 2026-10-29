@@ -8,5 +8,5 @@
   "candidate_sha256": "0bc4a222f4040ad49b7228cd5ce7476ce8a3c96725a4634c476bc07fd5f83c89",
   "symbols_sha256": "4f8f22984af1a35d9c6b0978e4d33b9e9bfe13a80188c6aabc41eb85fe3a0b14",
   "native_run": 40795474496,
-  "draft_pending": "portable final verifier and unchanged maintained counter12 replay"
+  "status": "One authenticated native build; exact source/main65/full1035/three-useCFG, strict27 plus separatecrossing8/counter12 PASS; zero gains/losses; no canonical promotion"
 }
