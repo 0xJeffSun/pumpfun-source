@@ -28,6 +28,8 @@ def main():
     receipt = read(P/'MEASUREMENT.json')
     for name, digest in receipt['files'].items():
         verify.require(sha((P/name).read_bytes()) == digest, 'retained measurement file: ' + name)
+    for name, digest in read(P/'native-build/MANIFEST.json').items():
+        verify.require(sha((P/'native-build'/name).read_bytes()) == digest, 'complete native artifact manifest: '+name)
     proof = verify.verify_source()
     build = read(P/'native-build/build-comparison.json')
     attempt = read(P/'native-build/build-attempt.json')
