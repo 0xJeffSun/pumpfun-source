@@ -2,9 +2,9 @@
   "baseRevision": "112062c087c21a92f6bbc1f8fcddd8d7186390c8",
   "archivedHelper": "scripts/verify_evidence.py",
   "archivedHelperSha256": {
-    "lf": "4aa1995f1670ce650ebcb1133c3fee2c6d033bc73e5cd29671a6e5c4614bd254",
-    "crlf": "def9115ea4627f55616d5dbf962b7fce0cdfb7c8f7045ea739978b6adffb1ed9",
-    "note": "git blob bytes of scripts/verify_evidence.py at baseRevision (LF) and the same bytes with LF->CRLF; corrected by maintainer review, the originally recorded digests matched neither"
+    "lf": "de254298e2a064711f1709f5c7827fd34c2cca12af90504620e364c88d511c23",
+    "crlf": "95f9564d4b70985962f826e2b6a8a990ea665f39d698f43a50ae006bb61a4bed",
+    "note": "sha256 of `git cat-file blob <baseRevision>:scripts/verify_evidence.py` (git blob 2f356954, unchanged on main) and of the same bytes with LF->CRLF; these are the originally recorded values, restored after an incorrect review edit"
   },
   "before": {
     "tool": "scripts/verify_evidence.py",
