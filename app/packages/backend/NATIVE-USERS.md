@@ -89,7 +89,8 @@ any of them is a contract decision, not a bug fix.
     empty, or whitespace-only `searchTerm` matches all eligible users.
 14. **`includeLabelledWallets` in `GET /users/search-v2`** defaults to `false`. When false (or
     omitted), users with a non-empty `wallet_label` are excluded from search results; when
-    `'true'` or `'1'`, they are included.
+    `'true'` or `'1'`, they are included. `'false'` and `'0'` are accepted as explicit false;
+    any other supplied value (including an empty one) returns `400 {"error":"INVALID_QUERY"}`.
 15. **Lookup miss on `GET /users/{id}/overview`** returns `404 {"error":"NOT_FOUND"}` when
     no user matches the requested `id`, consistent with `GET /users/{id}` and the OpenAPI spec
     note ("A user id with none is a 404").
