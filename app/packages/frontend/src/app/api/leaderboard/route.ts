@@ -55,6 +55,11 @@ function oneOf<T extends readonly string[]>(
 
 export async function GET(request: Request) {
   const requestUrl = new URL(request.url);
+  for (const key of ["category", "page", "period", "sort", "status", "id"]) {
+    if (requestUrl.searchParams.getAll(key).length > 1) {
+      return failure(400, "INVALID_QUERY", "Leaderboard parameters must occur once.", false);
+    }
+  }
   const category = oneOf(
     requestUrl.searchParams.get("category"),
     leaderboardCategories,
@@ -80,17 +85,6 @@ export async function GET(request: Request) {
       "INVALID_PAGE",
       `Page must be from 1 to ${MAX_PAGE}.`,
       false,
-    );
-  }
-
-  const apiKey = process.env.PUMPFUN_DEVELOPER_API_KEY?.trim();
-  if (!apiKey) {
-    return failure(
-      503,
-      "DATA_SOURCE_UNAVAILABLE",
-      "Live rankings require a developer API key. This local reconstruction does not ship credentials or substitute rankings.",
-      true,
-      "offline",
     );
   }
 
@@ -166,6 +160,17 @@ export async function GET(request: Request) {
       upstreamUrl.searchParams.set("limit", "100");
       upstreamUrl.searchParams.set("positionsLimit", "0");
     }
+  }
+
+  const apiKey = process.env.PUMPFUN_DEVELOPER_API_KEY?.trim();
+  if (!apiKey) {
+    return failure(
+      503,
+      "DATA_SOURCE_UNAVAILABLE",
+      "Live rankings require a developer API key. This local reconstruction does not ship credentials or substitute rankings.",
+      true,
+      "offline",
+    );
   }
 
   const timeoutSignal = AbortSignal.timeout(REQUEST_TIMEOUT_MS);
