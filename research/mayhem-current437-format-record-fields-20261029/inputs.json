@@ -7,5 +7,6 @@
   "research/mayhem-current437-program-error-messages-20261028/proof.py": "d6b03b6e3e119f625f29690ccc2aec3830dc76d2c9eaa026e127366500e12a7b",
   "research/mayhem-current437-program-error-messages-20261028/source-context/solana-program-error-3.0.1.crate": "4f04fa578707b3612b095f0c8e19b66a1233f7c42ca8082fcb3b745afcc0add6",
   "research/mayhem-current437-program-error-messages-20261028/test_verify.py": "c3cb1710206d50f2a8be0269b5959702508878b8a835ebe8ca6393cafcf403aa",
-  "research/mayhem-current437-program-error-messages-20261028/verify.py": "68ec16eab9a1920b7f8bdcb66cfe55fd8d754e362bf66c8eff41646480c94e55"
+  "research/mayhem-current437-program-error-messages-20261028/verify.py": "68ec16eab9a1920b7f8bdcb66cfe55fd8d754e362bf66c8eff41646480c94e55",
+  "research/mayhem-current437-bounded-index-tables-20261029/coverage-delta.json": "f6efa470f1d18bcec99cab2c95ecf1fc650fe5606bcdbc73956986779e7cb282"
 }

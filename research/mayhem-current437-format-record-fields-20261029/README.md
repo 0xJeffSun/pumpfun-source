@@ -1,19 +1,42 @@
-# Mayhem 格式化记录的有界字段
+# Historical Mayhem data attribution: PR #890
 
-本包新增证明 `.rodata` **18 字节**：`[720328,720330)`、`[720344,720348)` 和 `[720360,720372)`。原始程序中的记录地址为 720328，对应候选程序中的地址为 700768；每个字段的实际读取宽度由指令限定，内容逐字节相等。
+This packet independently bounds **16 new bytes** against the common reviewed,
+merged #846 data baseline: **21,796 / 26,180 bytes**. Its own bounded historical
+union with that baseline is **21,812 / 26,180**. Other open packets are not
+included in this per-packet baseline. The separate batch review deduplicates all
+eight additions; these figures are not a latest complete source footprint.
 
-`ProgramError` 的 Custom 分支把记录指针和数量 1 传给格式化函数；该函数读取记录偏移 16 的两字节值 2，因此跳至读取偏移 18；然后读取偏移 0 的两字节值 2，接着读取偏移 32 的八字节和偏移 40 的四字节。若前面的写入回调被调用，此路径以回调成功为条件。证明止于静态指令和读取字段，不声称回调行为、实际输出、整个记录或整个程序相等。未读取的 30 字节和可选的 `[719929,719932)` 均不计入；不凭相邻内容、零值或结构大小推断覆盖。
+The original and qualified437 candidate payload/descriptor/argument/index paths
+are checked. This adds finite historical data attribution only: no maintained
+code, normalized window or current-native-ELF progress is credited. Text and
+relocation-table bytes are proof evidence, not credited payload.
 
-基线验证使用已合并的 ProgramError 消息证据包，仅以本包列出的三个区间作为新增范围，不对其他未合并工作作覆盖统计。`observations.json.gz` 记录两份映像中的地址、字段和读取指令偏移；`inputs.json` 与 `manifest.json` 固定输入和包内文件的哈希值。
+The one formatting record has both concrete discriminants equal to2. Its
+actual conditional-success path loads record bytes[16,18),[0,2),[32,40) and
+[40,44). The old[18,20) credit followed an unreachable alternate load at344;
+those two bytes remain unclaimed. The corrected branch sequence is
+200,208,216,224,272,280,368,376,392,400. Count1 and stride48 close the loop after
+one record. Callback success is a static path condition, not an observed output.
 
-归属：OpenAI / gpt-6.1-terra / codex-cli / high。
+The derived observations are intentionally regenerated for the corrected16-byte
+scope and actual load/branch offsets. The original18-byte report remains in the
+private review provenance. No original payload, executable, producer or compiler
+input is changed.
 
-在仓库根目录执行：
+Original packet provenance: head `fa3e3d6263505d7a2addc49e3109b067a520892b`;
+original `proof.py` SHA-256 `f2afb944709907e2b6a0091422c176a3ec753b764f51a608d24f10eda12259f2`;
+original `observations.json.gz` SHA-256 `19b6ad8584aca6f57ca4f0dbc2dd95192313626ed8eeb94685aff72caf197c0c`.
+The original bytes remain recoverable at that parent commit and in the private
+review snapshot. This corrected checker produced the disclosed16-byte report.
+
+Original packet attribution (retained): OpenAI / gpt-6.1-terra / codex-cli / high.
 
 ```sh
-export PATH=/Library/Developer/CommandLineTools/usr/bin:/opt/homebrew/bin:$PATH
-PYTHONDONTWRITEBYTECODE=1 /opt/homebrew/bin/python3.12 -B research/mayhem-current437-format-record-fields-20261029/verify.py --repo .
-PYTHONDONTWRITEBYTECODE=1 /opt/homebrew/bin/python3.12 -B research/mayhem-current437-format-record-fields-20261029/test_verify.py
-PYTHONDONTWRITEBYTECODE=1 /opt/homebrew/bin/python3.12 -B scripts/verify_evidence.py
-PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts /opt/homebrew/bin/python3.12 -B scripts/test_tooling.py
+python3 -B research/mayhem-current437-format-record-fields-20261029/verify.py --repo .
+python3 -B research/mayhem-current437-format-record-fields-20261029/test_verify.py
 ```
+
+Verification requires the already-merged #846 baseline at its pinned hash.
+Use normal Python: public entrypoints refuse `-O` because the retained proof
+chain uses assertions. Tests mutate in-memory analysis copies only; these are
+never compiler inputs or replacement artifacts.
