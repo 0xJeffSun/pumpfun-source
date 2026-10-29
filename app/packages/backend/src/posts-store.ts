@@ -116,8 +116,8 @@ export function userToProfile(user: User, isVerified: boolean): UserProfile {
     headerImageUrl: user.header_image_url ?? '',
     followerCount: user.followers,
     followingCount: user.following,
-    createdAt: '2024-01-01T00:00:00.000Z',
-    updatedAt: '2024-01-01T00:00:00.000Z',
+    createdAt: null,
+    updatedAt: null,
     walletAddress: user.canonical_svm_wallet ?? user.address ?? null,
     socials: user.x_username ? [{ provider: 'twitter', username: user.x_username, linkedAt: null }] : [],
     isVerified,
@@ -178,7 +178,9 @@ export class PostStore {
   private userStore: UserStore;
 
   constructor(seed?: RawPost[], userStore?: UserStore) {
-    this.posts = seed ?? (seedData as RawPost[]);
+    // The store documents deterministic read-only data: snapshot the seed so
+    // caller-owned rows (and the shared default seed) cannot corrupt later reads.
+    this.posts = structuredClone(seed ?? (seedData as RawPost[]));
     this.byPostId = new Map(this.posts.map(p => [p.postId, p]));
     this.userStore = userStore ?? defaultStore;
   }
@@ -257,7 +259,9 @@ export class PostStore {
       replyCount: raw.replyCount,
       repostCount: raw.repostCount,
       quoteCount: raw.quoteCount,
-      mentions: raw.mentions ?? [],
+      // Clone the mentions array: returning the stored array lets a caller
+      // push into (or rewrite) the seed row's mentions for every later read.
+      mentions: structuredClone(raw.mentions ?? []),
       hasLiked: raw.kind === 'repost' ? false : null,
       hasReposted: raw.kind === 'repost' ? false : null,
       deleted: false,

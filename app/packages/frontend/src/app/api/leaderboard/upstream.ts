@@ -377,6 +377,7 @@ export function normalizeUpstreamResponse(
 export async function readBoundedJson(response: Response): Promise<unknown> {
   const declaredLength = Number(response.headers.get("content-length"));
   if (Number.isFinite(declaredLength) && declaredLength > MAX_UPSTREAM_BYTES) {
+    await response.body?.cancel();
     throw new UpstreamValidationError("The upstream response is too large.");
   }
   if (!response.body) {
@@ -386,15 +387,19 @@ export async function readBoundedJson(response: Response): Promise<unknown> {
   const reader = response.body.getReader();
   const chunks: Uint8Array[] = [];
   let total = 0;
-  while (true) {
-    const { done, value } = await reader.read();
-    if (done) break;
-    total += value.byteLength;
-    if (total > MAX_UPSTREAM_BYTES) {
-      await reader.cancel();
-      throw new UpstreamValidationError("The upstream response is too large.");
+  try {
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      total += value.byteLength;
+      if (total > MAX_UPSTREAM_BYTES) {
+        await reader.cancel();
+        throw new UpstreamValidationError("The upstream response is too large.");
+      }
+      chunks.push(value);
     }
-    chunks.push(value);
+  } finally {
+    reader.releaseLock();
   }
 
   const bytes = new Uint8Array(total);
@@ -404,7 +409,7 @@ export async function readBoundedJson(response: Response): Promise<unknown> {
     offset += chunk.byteLength;
   }
   try {
-    return JSON.parse(new TextDecoder().decode(bytes));
+    return JSON.parse(new TextDecoder("utf-8", { fatal: true }).decode(bytes));
   } catch {
     throw new UpstreamValidationError("The upstream response is not JSON.");
   }

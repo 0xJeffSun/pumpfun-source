@@ -222,7 +222,9 @@ export class CompetitionStore {
   private userStore: UserStore;
 
   constructor(seed?: RawCompetition[], userStore?: UserStore) {
-    this.competitions = seed ?? (seedData as unknown as RawCompetition[]);
+    // The store documents deterministic read-only data: snapshot the seed so
+    // caller-owned rows (and the shared default seed) cannot corrupt later reads.
+    this.competitions = structuredClone(seed ?? (seedData as unknown as RawCompetition[]));
     this.byId = new Map(this.competitions.map(c => [c.id, c]));
     this.bySlug = new Map(this.competitions.map(c => [c.slug.toLowerCase(), c]));
     this.userStore = userStore ?? defaultStore;
@@ -292,7 +294,11 @@ export class CompetitionStore {
     if (isPerson && !isFinal) {
       const positions = entry.positions ?? [];
       positionsCount = positions.length;
-      topPositions = positions.slice(0, Math.max(0, positionsLimit));
+      // Clone each position: returning stored rows lets a caller rewrite a
+      // seed row's position for every later read.
+      topPositions = positions
+        .slice(0, Math.max(0, positionsLimit))
+        .map((position) => ({ ...position }));
     }
 
     const memberCount = isPerson ? 1 : (entry.members ? entry.members.length : 0);
@@ -366,7 +372,9 @@ export class CompetitionStore {
       description: comp.description,
       prizeCopy: comp.prizeCopy,
       imageUrl: comp.imageUrl,
-      prizes: comp.prizes,
+      // Clone the prize tiers: returning the stored array lets a caller
+      // push into (or rewrite) the seed row's prizes for every later read.
+      prizes: structuredClone(comp.prizes),
       registrationOpensAt: comp.registrationOpensAt,
       registrationClosesAt: comp.registrationClosesAt,
       startsAt: comp.startsAt,
@@ -495,7 +503,7 @@ export class CompetitionStore {
         const profile = this.hydrateProfile(m.userId);
         members.push({
           userId: m.userId,
-          walletAddress: m.walletAddress ?? profile.walletAddress,
+          walletAddress: m.walletAddress === undefined ? profile.walletAddress : m.walletAddress,
           pnlUsd: m.pnlUsd,
           realizedPnlUsd: m.realizedPnlUsd,
           unrealizedPnlUsd: m.unrealizedPnlUsd,
@@ -556,7 +564,7 @@ export class CompetitionStore {
         const profile = this.hydrateProfile(m.userId);
         return {
           userId: m.userId,
-          walletAddress: m.walletAddress ?? profile.walletAddress,
+          walletAddress: m.walletAddress === undefined ? profile.walletAddress : m.walletAddress,
           pnlUsd: m.pnlUsd,
           realizedPnlUsd: m.realizedPnlUsd,
           unrealizedPnlUsd: m.unrealizedPnlUsd,
@@ -624,7 +632,7 @@ export class CompetitionStore {
               entryId: entry.entryId,
               rank: entry.rank,
               userId: member.userId,
-              walletAddress: member.walletAddress ?? profile.walletAddress,
+              walletAddress: member.walletAddress === undefined ? profile.walletAddress : member.walletAddress,
               pnlUsd: member.pnlUsd,
               realizedPnlUsd: member.realizedPnlUsd,
               unrealizedPnlUsd: member.unrealizedPnlUsd,
