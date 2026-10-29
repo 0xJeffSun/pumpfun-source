@@ -20,9 +20,14 @@ export function SearchDialog() {
   const params = useSearchParams();
   const currentQuery = params.get("q") ?? "";
   const [query, setQuery] = useState(currentQuery);
+  const pendingClear = useRef(false);
   const { closeMobile } = useSidebar();
   useEffect(() => {
-    setQuery(currentQuery);
+    // Clear already updated the input; its delayed URL commit must not erase
+    // text entered since that click. Other navigation still follows the URL.
+    const completedClear = pendingClear.current && currentQuery === "";
+    pendingClear.current = false;
+    if (!completedClear) setQuery(currentQuery);
   }, [currentQuery]);
 
   useEffect(() => {
@@ -45,9 +50,14 @@ export function SearchDialog() {
       { keys: ["Control", "k"], callback: toggle },
       { keys: ["/"], callback: toggle },
     ]);
+    const onPopState = () => {
+      pendingClear.current = false;
+    };
+    window.addEventListener("popstate", onPopState);
     window.addEventListener("keydown", onKeyDown);
     const stopListening = onOpenSearch(open);
     return () => {
+      window.removeEventListener("popstate", onPopState);
       window.removeEventListener("keydown", onKeyDown);
       stopListening();
     };
@@ -55,6 +65,7 @@ export function SearchDialog() {
 
   function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    pendingClear.current = false;
     const normalized = query.trim();
     dialogRef.current?.close();
     router.push(
@@ -103,8 +114,10 @@ export function SearchDialog() {
             className="px-2 py-3 text-sm"
             onClick={() => {
               setQuery("");
-              if (pathname === "/explore" && currentQuery)
+              if (pathname === "/explore" && currentQuery) {
+                pendingClear.current = true;
                 router.push("/explore");
+              }
             }}
           >
             ×
