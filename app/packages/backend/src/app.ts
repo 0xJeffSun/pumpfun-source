@@ -239,7 +239,10 @@ function registerFixtures(fixtures: Fixture[]) {
         `Duplicate canonical fixture key keySha256=${keyDigest}: ${previous}; ${provenance}`,
       );
     }
-    fixtureMap.set(key, fixture);
+    const snapshot = structuredClone(fixture);
+    // structuredClone turns a Buffer into Uint8Array; preserve raw replay bodies.
+    if (Buffer.isBuffer(fixture.body)) snapshot.body = Buffer.from(fixture.body);
+    fixtureMap.set(key, snapshot);
     provenanceByKey.set(key, provenance);
   });
   return fixtureMap;
