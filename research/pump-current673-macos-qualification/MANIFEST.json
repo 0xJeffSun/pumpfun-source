@@ -1,5 +1,5 @@
 {
-  "README.md": "cac3c8067352e3ec4c07b7f1d1362b434cf8d39474d0e635c393b19c493208ba",
+  "README.md": "f80f2c1057f0fb088301d2752114a5458d9e3cc1097f963ca39eda6ff9e59edf",
   "candidates/constructor.rs": "8cf97e31c958609aa5bbc07e2d4fb092fc980f724d4054d24af2163241e7a931",
   "candidates/cto-used-flow.rs": "5203d20c2e63be7337204491588e0ec69808f8ddd39d96b8b5fa1964d6ec201d",
   "candidates/cto.rs": "f4a2bb7d33431e0fb4911e39d5e03c8bb9f45c6f7a184da21d1a6762f9127955",
@@ -7,7 +7,7 @@
   "candidates/perhop.rs": "734bdae1189dd4e4f54a27fd215624611228f36b92d3877b63f00df19ccc9e44",
   "candidates/sell-event.rs": "f1f484c50a792c82fba414dff31b6bfc55f03cbec54d7115782c60ad5870b45d",
   "candidates/sweep.rs": "15dbbd46bdbe7af62c6b7bb436f657c45e290c080c185fc075b7a3c08e3df7e8",
-  "evidence/candidate-receipts.json": "18bea79745248adb86adce2fcef424948022cadbff23627818aaa58b6c0e71aa",
+  "evidence/candidate-receipts.json": "6b36e4e2417e779b679e16e85ab715ae2f9679facb563e8bd9ac6ac20a3fdd3f",
   "evidence/census/baseline-inventory.json.gz": "521ce42fe3c4e701897f42a59c39f3fff6d85c53c1070aac96360e42d18d3b7a",
   "evidence/census/cto-40792775552/delta.json": "ed1c269ee149fd0f046dfe5172e5dfa7ce1ef7325d01f8ce9c7269d4b5e9023d",
   "evidence/census/cto-40792775552/inventory.json.gz": "e0206c2e9c1557950adf8749b16ceaf3c3e34275c3d255839fb746ed3a6c2fe9",
@@ -18,6 +18,7 @@
   "evidence/census/sell-event-40793772555/inventory.json.gz": "67ac2e4218b91091d450025df72d2c262130ef4d30985908aad7d567946e2468",
   "evidence/census/sweep-40793129553/delta.json": "95739a9c28e0d261efcdeb46acb14a05d0eb183821102436142d3c58e5ab64e3",
   "evidence/census/sweep-40793129553/inventory.json.gz": "5d0f7117ef4fe1aa0f1252e0837f1515eb1171b57571203c568d7978df3c19a8",
+  "evidence/constructor-40794358580.zip": "ab8350156e0a058de7fd287cea1a284edccf07379e8c1066e1b194aec267edc3",
   "evidence/control-40791064153.zip": "b3e31aeb7512b6cec0e1aede4efbb16e72edf047451065a1e5b476223230a6ce",
   "evidence/control-hosted.log.gz": "617d7680e0d64da3a847b0d567e4b728f1dea8368637dc37f8ac17215c04366c",
   "evidence/control-run.json": "d3d2e267b4b859fe8a8877e6979e8096bd4cdb2676608ef640a28f487636746b",
@@ -29,5 +30,5 @@
   "evidence/sweep-precompile-api403-run.json": "8975c26a2f8b50aa03e87d9e3cfdf27c13487c75b294b688f8c61a0cc7d01fb7",
   "evidence/sweep-precompile-api403.log.gz": "1a0f7faefffff9fa6774fc0c7d0eda4cee549a0ee2930573e6038da87c32e9c7",
   "inputs.json": "40d1d18d9979d1039506dfebe6d86cbba5c67ec2b462c43e1ae890b035c804d2",
-  "verify.py": "3e130ecdfba9638aacd92c41ae42f161a7aecb9abde5f603b2fd87cda5c05fd4"
+  "verify.py": "1f8207e8ce9ad88f752981a9f930968bde7c8a0b0d669815ccdfb620e89ae956"
 }

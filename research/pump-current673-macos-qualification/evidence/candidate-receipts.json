@@ -110,6 +110,32 @@
         "both_local_crates_compiled": true,
         "limits": "No acceptance, census gain, runtime behavior or original whole-ELF identity claim."
       }
+    },
+    {
+      "candidate": "constructor",
+      "run_id": 40794358580,
+      "artifact_id": 12862922721,
+      "zip": "constructor-40794358580.zip",
+      "zip_sha256": "ab8350156e0a058de7fd287cea1a284edccf07379e8c1066e1b194aec267edc3",
+      "result": {
+        "status": "compiled-measurement-only",
+        "candidate": "constructor",
+        "base_commit": "1285b5e9e3a29c1e2cf32246d6046035e5d66fad",
+        "control_run": 40791064153,
+        "proposal": {
+          "source_path": "src/create_v2.rs",
+          "frozen_file": "constructor.rs",
+          "before_sha256": "afd072350a1febfb4c7e0b327a40f73556b3407d53bd609edf4b01f9ac1c198e",
+          "after_sha256": "8cf97e31c958609aa5bbc07e2d4fb092fc980f724d4054d24af2163241e7a931",
+          "state": "staged only; one compiler measurement after preceding cohort; no runtime authorization"
+        },
+        "candidate_sha256": "199fd7379b6881adefd9e54803f75902176c17bded1718bfc1c59b1cf5bc8473",
+        "unstripped_sha256": "49df399b8a36a0a60de03e8d55f1417261dc451e44845ca9d17a94040968c680",
+        "control_hashes_equal": true,
+        "cold_empty_target": true,
+        "both_local_crates_compiled": true,
+        "limits": "No acceptance, census gain, runtime behavior or original whole-ELF identity claim."
+      }
     }
   ]
 }

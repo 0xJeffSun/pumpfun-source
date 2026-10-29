@@ -50,14 +50,19 @@ measurement adapter. It executes no captured program or compiler.
 | Per-hop | [40792780769](https://github.com/shawkkkkk/pumpfun-source/actions/runs/40792780769) | `c0e29e2d41c30e85` |
 | Sweep | [40793129553](https://github.com/shawkkkkk/pumpfun-source/actions/runs/40793129553) | `21b0de29ebc71c69` |
 | SellV2 event order, compiler only | [40793772555](https://github.com/shawkkkkk/pumpfun-source/actions/runs/40793772555) | `844415f7d0615f0c` |
+| Constructor array lifetime | [40794358580](https://github.com/shawkkkkk/pumpfun-source/actions/runs/40794358580) | `199fd7379b6881ad` |
 
-All four raw artifacts and exact measured hashes are retained under `evidence`.
+All five raw artifacts and exact measured hashes are retained under `evidence`.
 The coordinator independently ran the unchanged official1035-window census for
-each. `evidence/census` retains those full outputs and input bindings: all preserve
+the first four. `evidence/census` retains those full outputs and input bindings: all preserve
 1019 normalized and188 raw memberships, with no original-start gains or losses.
 The default verifier binds their symbol hashes and independently recomputes the
 retained membership deltas; it does not rerun the normalizer. Runtime qualification
 belongs to the separate source proposals and is not inferred here.
+The constructor's genuinely compiled8cf source produces **both entire control
+ELFs unchanged**. It recovers no bytes; no additional array/spelling variant or
+runtime replay is justified by this result. This is control identity, not original
+program identity.
 The original Sweep attempt40792778116 failed before downloading SDKs or compiling:
 the shared host's unauthenticated control-run API quota returned403. Its log and
 metadata are preserved. The retry changed only control-proof retrieval to the
@@ -102,9 +107,10 @@ packets supply the source/call-data evidence and retain credit for that recovery
 
 The subsequent one-shot `sell-event` proposal (used SellV2 key/snapshot order)
 compiled successfully after all three builds. The `constructor` proposal
-(used six-account array lifetime) was dispatched after that fourth measurement.
-The sixth `cto-used-flow` proposal is staged for one separate measurement after
-the constructor: original used payout body and three CPI constructor orders,
+(used six-account array lifetime) compiled after that fourth measurement and
+reproduced the complete control outputs. The sixth `cto-used-flow` proposal was
+dispatched as one separate measurement after the constructor: original used payout
+body and three CPI constructor orders,
 retaining the first CTO changes. It remains a canonical673-to-one-file comparison;
 the immediate f4 source parent is additionally recorded. Its natural obsolete
 helper deletion moves `token_raw_amount` from line775 to772; this is disclosed for

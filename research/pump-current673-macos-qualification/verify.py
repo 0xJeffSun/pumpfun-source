@@ -75,6 +75,8 @@ def candidate_measurements(expected, projected, frozen_builder):
         assert record['unstripped_sha256'] == result['unstripped_sha256']
         assert record['comparison']['candidate_sha256'] == result['candidate_sha256']
         assert record['qualified_image_hashes_equal'] == result['control_hashes_equal']
+        assert result['control_hashes_equal'] == (result['candidate_sha256'] == expected['comparison']['candidate_sha256']
+                and result['unstripped_sha256'] == expected['unstripped_sha256'])
         log = gzip.decompress(files['build.log.gz'])
         assert digest(log) == record['build_log_sha256']
         assert b'--crate-name pump_recovered ' in log and b'--crate-name pump_token_ext ' in log
