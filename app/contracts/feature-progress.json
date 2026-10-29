@@ -351,7 +351,8 @@
         "contract": {
           "status": "accepted",
           "evidence": [
-            "packages/frontend/GO-EVIDENCE.md#observed"
+            "packages/frontend/GO-EVIDENCE.md#observed",
+            "reconstruction/follow-counts/README.md"
           ]
         },
         "logic": {
