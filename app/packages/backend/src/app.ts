@@ -11,6 +11,8 @@ import { registerCompetitionRoutes } from "./competitions-routes.js";
 import { CompetitionStore, defaultCompetitionStore } from "./competitions-store.js";
 import { registerFollowingRoutes } from "./following-routes.js";
 import { FollowingStore, defaultFollowingStore } from "./following-store.js";
+import { registerLeaderboardRoutes } from "./leaderboard-routes.js";
+import { LeaderboardStore, defaultLeaderboardStore } from "./leaderboard-store.js";
 
 export type Fixture = {
   method: string;
@@ -308,6 +310,7 @@ const NATIVE_ROUTES = new Set<string>([
   "GET /following/v3/following/search/{userId}",
   "GET /following/v3/followers/{userId}",
   "GET /following/v3/following/{userId}",
+  "GET /pnl-leaderboard",
 ]);
 
 export interface BuildAppOptions {
@@ -319,6 +322,8 @@ export interface BuildAppOptions {
   competitionStore?: CompetitionStore;
   /** Override the follow-graph store (for tests). */
   followingStore?: FollowingStore;
+  /** Override the leaderboard store (for tests). */
+  leaderboardStore?: LeaderboardStore;
 }
 
 export function buildApp(fixtures: Fixture[] = [], opts: BuildAppOptions = {}) {
@@ -358,12 +363,16 @@ export function buildApp(fixtures: Fixture[] = [], opts: BuildAppOptions = {}) {
   const followStore =
     opts.followingStore ??
     (opts.userStore ? new FollowingStore(store) : defaultFollowingStore);
+  const lbStore =
+    opts.leaderboardStore ??
+    (opts.userStore ? new LeaderboardStore(undefined, store) : defaultLeaderboardStore);
   app.register(async (native) => {
     native.addHook("preHandler", apiKeyGate);
     registerUserRoutes(native, store);
     registerPostRoutes(native, postStore);
     registerCompetitionRoutes(native, compStore);
     registerFollowingRoutes(native, followStore);
+    registerLeaderboardRoutes(native, lbStore);
   });
 
   // Routing recognizes documented paths; no fabricated domain responses or live proxy fallback.
