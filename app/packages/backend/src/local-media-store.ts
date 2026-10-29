@@ -264,7 +264,7 @@ export class LocalMediaStore {
         if (!stat.isFile() || stat.size > maxSnapshot)
           throw new Error("Invalid local media snapshot size/type.");
         store.state = store.validateSnapshot(
-          JSON.parse(await file.readFile("utf8")),
+          JSON.parse(new TextDecoder("utf-8", { fatal: true, ignoreBOM: true }).decode(await file.readFile())),
         );
       } finally {
         await file.close();
