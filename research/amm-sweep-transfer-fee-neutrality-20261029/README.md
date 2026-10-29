@@ -61,14 +61,17 @@ Family A -- tf anchors, no sweep (6 cases):
 - `a-lsell-tf5000`: user quote +90,106 (gross 180,212,
   withheld 90,106), protocol +424 (withheld 425), creator +274
   (withheld 274), buyback +424 (withheld 425), vault quote
-  -182,458, event identical to the tf100 anchor (gross).
+  -182,458, decoded event fields (curve, lp/protocol fees,
+  quote, uout) equal to the tf100 anchor's (gross); the raw
+  event bytes differ in two trailing words.
 
 Family S -- sweep -> deposit tf100 (3 cases):
 - `s-both-dep-tf100`: both sweeps, then deposit: sweep legs
   exactly as in 3rd #5 (protocol +2,463 net / withheld 25,
   vault -2,488, event gross 2,488; creator +122,160 net /
   withheld 1,234, vault -123,394, event gross 123,394), then
-  the deposit settles byte-identical to `a-dep-tf100`
+  the deposit settles with the same legs and decoded event
+  fields as `a-dep-tf100`
   (user quote -29,608,495, vault quote +29,312,410, vault
   withheld 296,085), pool (0, 0, 0, supply +10^9).
 - `s-proto-dep-tf100` / `s-creator-dep-tf100`: one sweep only,
@@ -77,21 +80,21 @@ Family S -- sweep -> deposit tf100 (3 cases):
 
 Family W -- sweep -> withdraw tf100 (3 cases):
 - `w-both-wd-tf100` / `w-proto-wd-tf100` /
-  `w-creator-wd-tf100`: the withdraw settles byte-identical
-  to `a-wd-tf100` (user quote +29,019,284, vault quote
+  `w-creator-wd-tf100`: the withdraw settles with the same
+  legs and decoded event fields as `a-wd-tf100` (user quote +29,019,284, vault quote
   -29,312,409, user withheld 293,125) after both, protocol-
   only, or creator-only sweeps.
 
 Family G -- sweep -> legacy sell (4 cases):
 - `g-both-lsell-tf100`: both sweeps, then sell: legs
-  byte-identical to `a-lsell-tf100`, with withheld
+  and decoded event fields equal to `a-lsell-tf100`, with withheld
   accumulating additively (protocol 25 -> 34, creator
   1,234 -> 1,240, buyback 0 -> 9).
 - `g-proto-lsell-tf100` / `g-creator-lsell-tf100`: one sweep
   only, then sell: legs identical to the anchor.
 - `g-both-lsell-tf5000`: both sweeps (protocol +1,244 /
   withheld 1,244, creator +61,697 / withheld 61,697), then
-  sell identical to `a-lsell-tf5000` (withheld protocol
+  sell legs equal to `a-lsell-tf5000` (withheld protocol
   1,244 -> 1,669, creator 61,697 -> 61,971, buyback 0 -> 425).
 
 Family L -- limit gates post-sweep tf100 (6 cases):
@@ -144,14 +147,21 @@ Family U -- underfunded 22 ATA rent asymmetry, tf100 (3 cases):
 
 - Sweep neutrality survives the transfer fee on every path
   measured: deposit, withdraw, and legacy sell after either
-  or both sweeps settle byte-identical to their tf anchors.
+  or both sweeps settle with the same token legs, withheld
+  amounts, and decoded event fields as their tf anchors.
+  The raw events are NOT byte-identical: the deposit and
+  withdraw events differ from the anchor in the word @64,
+  and the legacy sell events in the pool quote reserve word
+  @56 and some trailing words, which record the post-sweep
+  pool state.
   The sweep's withholding is confined to the sweep step
-  itself; it never leaks into the downstream leg, because the
+  itself; it never leaks into the downstream leg. Inference
+  (not separately checked by verify.py): this is because the
   sweep drains the vault by the gross swept amount while
   converting the accrual to virtual quote reserves 1:1, so
   both the available reserve (raw - accrued) and the
   effective reserve (raw + vq) are invariant -- the same
-  arithmetic as 3rd #6, now verified under withholding.
+  arithmetic as 3rd #6, now observed under withholding.
 - The gross/net split is fixed per direction: deposit
   grosses the user spend up and reports the vault receipt
   in the event; withdraw sends gross from the vault, nets
@@ -202,3 +212,26 @@ Family U -- underfunded 22 ATA rent asymmetry, tf100 (3 cases):
   behavior, not a reachable mainnet state. v2 trades under
   tf after a sweep were not chained here (3rd #4 + 2nd #7
   cover the two halves separately).
+
+## Verify and provenance
+
+From the repository root:
+
+    python3 -I -B research/amm-sweep-transfer-fee-neutrality-20261029/verify.py
+
+`verify.py` needs only `solders` plus files in the repository: this
+packet, `evidence/original/pump_amm/deployed.so`, and the two
+retained rebuilt images
+`research/amm-multi-hop-group-slice-recovery/artifacts/candidate.so.gz`
+(control, #424) and
+`research/amm-transfer-fee-diagnostic-recovery/artifacts/candidate.so.gz`
+(candidate, #427), whose decompressed sha256 values match the
+`images` block of `runtime/report.json.gz`. It re-checks the
+recorded receipts against the report's expected values; it does
+not re-execute any transaction.
+
+`producer.py` is the script that generated the receipts and is
+kept as a provenance record. It is not runnable as committed: it
+hard-codes a private workspace layout (`~/workspace/pumpfun-sparse`
+for the harness scripts and `~/workspace/slop-verify` for the
+control/candidate `.so` files) and chdirs there on start.
