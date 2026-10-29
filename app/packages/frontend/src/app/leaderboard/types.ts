@@ -179,6 +179,8 @@ function isTraderEntry(value: unknown): value is TraderEntry {
   if (!isRecord(value)) return false;
   return (
     typeof value.rank === "number" &&
+    Number.isFinite(value.rank) &&
+    value.rank >= 0 &&
     typeof value.walletAddress === "string" &&
     (typeof value.username === "string" || value.username === null) &&
     (typeof value.userId === "string" || value.userId === null) &&
@@ -201,6 +203,8 @@ function isCreatorEntry(value: unknown): value is CreatorEntry {
   if (!isRecord(value)) return false;
   return (
     typeof value.rank === "number" &&
+    Number.isFinite(value.rank) &&
+    value.rank >= 0 &&
     (typeof value.userId === "string" || value.userId === null) &&
     (typeof value.username === "string" || value.username === null) &&
     (typeof value.walletAddress === "string" || value.walletAddress === null) &&
