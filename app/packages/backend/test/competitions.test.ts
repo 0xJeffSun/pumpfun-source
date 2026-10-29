@@ -396,6 +396,83 @@ describe('GET /v1/competitions/:idOrSlug', () => {
   });
 });
 
+describe('competition before the first board build', () => {
+  function unbuiltCompetition(phase: 'registration' | 'live'): RawCompetition {
+    const seed = JSON.parse(readFileSync(new URL('../src/competitions-seed.json', import.meta.url), 'utf8')) as RawCompetition[];
+    const live = seed.find(c => c.id === LIVE_ID);
+    assert.ok(live);
+    return {
+      ...live,
+      phase,
+      entries: live.entries.map(entry => ({
+        ...entry,
+        pnlUsd: 0,
+        realizedPnlUsd: 0,
+        unrealizedPnlUsd: 0,
+        buySpendSol: 0,
+        membersFresh: 0,
+        lastRefreshedAtMs: 0,
+        positions: [],
+        highlightTokens: [],
+      })),
+    };
+  }
+
+  for (const phase of ['registration', 'live'] as const) {
+    test(`${phase} entries remain registered but unranked before the first build`, async () => {
+      const app = buildApp([], { competitionStore: new CompetitionStore([unbuiltCompetition(phase)]) });
+      try {
+        const detail = await app.inject({ method: 'GET', url: `/v1/competitions/${LIVE_ID}` });
+        assert.equal(detail.statusCode, 200);
+        const json = detail.json();
+        assertSchema(json, documentedSchema('/competitions/{idOrSlug}', 'get', 200), 'unbuilt competition', specRoot);
+        assert.equal(json.leaderboard.builtAtMs, 0);
+        assert.equal(json.leaderboard.endSec, 0);
+        assert.equal(json.leaderboard.totalRanked, 0);
+        assert.deepEqual(json.leaderboard.entries, []);
+        assert.equal(json.competition.entriesCount, 4);
+        assert.equal(json.competition.participants, 3); // Registered, non-struck entries still count.
+        assert.deepEqual(json.competition.top, []);
+        assert.deepEqual(json.competition.winners, []);
+
+        const list = await app.inject({ method: 'GET', url: '/v1/competitions' });
+        assert.equal(list.statusCode, 200);
+        assertSchema(list.json(), documentedSchema('/competitions', 'get', 200), 'unbuilt competition list', specRoot);
+        assert.deepEqual(list.json().live[0], json.competition);
+
+        const entry = await app.inject({ method: 'GET', url: `/v1/competitions/${LIVE_ID}/entries/${LIVE_ENTRY_1}` });
+        assert.equal(entry.statusCode, 200);
+        assertSchema(entry.json(), documentedSchema('/competitions/{id}/entries/{entryId}', 'get', 200), 'unbuilt entry', specRoot);
+        assert.equal(entry.json().entry.rank, 0);
+        assert.equal(entry.json().entry.walletAddress, null);
+      } finally {
+        await app.close();
+      }
+    });
+  }
+
+  test('a completed build ranks zero-PnL entries and retains the person wallet', async () => {
+    const competition = unbuiltCompetition('live');
+    for (const entry of competition.entries) entry.lastRefreshedAtMs = 1714560000000;
+    const app = buildApp([], { competitionStore: new CompetitionStore([competition]) });
+    try {
+      const detail = await app.inject({ method: 'GET', url: `/v1/competitions/${LIVE_ID}` });
+      assert.equal(detail.statusCode, 200);
+      const json = detail.json();
+      assert.equal(json.leaderboard.totalRanked, 3);
+      assert.deepEqual(json.leaderboard.entries.map((entry: { rank: number }) => entry.rank), [1, 2, 3]);
+      assert.equal(json.competition.top.length, 3);
+      assert.ok(json.leaderboard.entries[0].walletAddress);
+      const struck = await app.inject({ method: 'GET', url: `/v1/competitions/${LIVE_ID}/entries/${LIVE_STRUCK_ENTRY}` });
+      assert.equal(struck.statusCode, 200);
+      assert.equal(struck.json().entry.rank, 0);
+      assert.ok(struck.json().entry.walletAddress);
+    } finally {
+      await app.close();
+    }
+  });
+});
+
 describe('GET /v1/competitions/:id/entries/:entryId', () => {
   test('returns 200 with entry and members matching published schema', async () => {
     const app = buildApp([]);
