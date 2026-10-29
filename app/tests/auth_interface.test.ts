@@ -411,7 +411,20 @@ test("product entrypoint is fixed to unavailable adapter and contains no credent
     ),
     "utf8",
   );
-  assert.match(entry, /<AuthControl adapter=\{unavailableAuthAdapter\} \/>/);
+  // The entrypoint fixes the unavailable adapter; the only forwarded prop is
+  // the presentation-only trigger class used by the live shell's TopBar.
+  assert.match(
+    entry,
+    /<AuthControl\s+adapter=\{unavailableAuthAdapter\}\s+(?:triggerClassName=\{triggerClassName\}\s+)?\/>/,
+  );
+  assert.deepEqual(
+    [...entry.matchAll(/<AuthControl\b[^>]*>/g)].length,
+    1,
+  );
+  assert.match(
+    entry,
+    /export function SignInControl\(\{\s*triggerClassName,\s*\}: \{[^}]*triggerClassName\?: string;\s*\} = \{\}\)/,
+  );
   assert.doesNotMatch(
     entry,
     /syntheticTest|process\.env|localStorage|sessionStorage|fetch\(/,

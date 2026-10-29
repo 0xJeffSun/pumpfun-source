@@ -87,6 +87,10 @@ test("active layout reaches captured shell, generated assets and interactive pre
     "components/shell/MobileNav.tsx",
     "components/ui/sidebar.tsx",
     "components/shell/captured-icons.tsx",
+    "components/shell/AppSidebar.tsx",
+    "components/settings/settings-control.tsx",
+    "app/auth/sign-in-control.tsx",
+    "app/auth/auth-control.tsx",
   ])
     assert.ok(modules.has(resolve(frontend, path)), path);
   assert.ok(assets.has(resolve(frontend, "app/captured-shell.css")));

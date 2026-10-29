@@ -33,6 +33,8 @@ export type SettingsControlProps = {
   notificationAdapter?: NotificationAdapter;
   /** Local ownership token, not authentication or account discovery. */
   notificationSessionKey?: string;
+  /** Presentation only: lets the host shell style the launcher as its own footer entry. */
+  launcherClassName?: string;
 };
 
 function SettingsIcon() {
@@ -101,6 +103,7 @@ function SettingGroups({
 function SettingsControlContent({
   notificationAdapter,
   notificationSessionKey,
+  launcherClassName,
 }: SettingsControlProps) {
   const pathname = usePathname();
   const router = useRouter();
@@ -247,7 +250,7 @@ function SettingsControlContent({
       sessionKey={notificationSessionKey}
     >
       <button
-        className={styles.launcher}
+        className={launcherClassName ?? styles.launcher}
         type="button"
         ref={launcher}
         aria-label="Open settings"
@@ -424,7 +427,7 @@ export default function SettingsControl(props: SettingsControlProps = {}) {
       fallback={
         <button
           type="button"
-          className={styles.launcher}
+          className={props.launcherClassName ?? styles.launcher}
           aria-label="Open settings"
           disabled
         >

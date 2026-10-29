@@ -98,13 +98,15 @@ retained verbatim as **Continue with GitHub**.
 
 ## Local implementation and deliberate differences
 
-- `SignInControl` is the sole product entrypoint, with no props, environment
+- `SignInControl` is the sole product entrypoint, with no environment
   flag, query override or browser-global injection. It always chooses
-  `unavailableAuthAdapter`.
-- The shared shell mounts it immediately after search. It keeps its intrinsic
-  width in the desktop flex header and aligns to the end of its own mobile
-  grid row; no unrelated shell/global stylesheet is changed. The extra mobile
-  row is a local responsive choice, not a pixel-parity claim.
+  `unavailableAuthAdapter`; its only prop is a presentation-only trigger class.
+- The live captured shell (`components/shell/TopBar.tsx`, reached from the root
+  layout since PR #685) mounts it in the signed-out `data-pf-auth-slot="out"`
+  position that previously held the disabled captured `prepaint` Sign in button,
+  reusing that button's captured geometry and classes. The legacy
+  `src/app/app-shell.tsx` mount is unreachable from the root layout. No
+  pixel-parity claim is made for the interactive trigger.
 - The adapter only has `read(AbortSignal)`. It returns a named wallet catalogue
   with `readiness: unavailable`, no recent wallet and `session: unavailable`.
   It has no login, logout, connect, detect, challenge, sign or submit method.

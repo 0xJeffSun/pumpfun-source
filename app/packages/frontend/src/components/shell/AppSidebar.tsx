@@ -12,6 +12,7 @@ import {
 } from "@/config/navigation";
 import { DropdownMenu } from "@/components/ui/dropdown-menu";
 import { pumpButtonClass } from "@/components/ui/pump-button";
+import SettingsControl from "@/components/settings/settings-control";
 import {
   FOOTER_BUTTON_CLASS,
   NAV_BUTTON_CLASS,
@@ -106,6 +107,14 @@ export function AppSidebar() {
       </SidebarContent>
       <SidebarFooter className="border-t border-border-secondary px-3 py-2">
         <SidebarMenu>
+          {/*
+           * Local query-driven settings modal (SETTINGS-EVIDENCE.md); its upstream host is
+           * feature-flag gated, so no captured placement exists. Placed above the captured
+           * entries so Support and Terminal keep their captured bottom-anchored positions.
+           */}
+          <SidebarMenuItem>
+            <SettingsControl launcherClassName={FOOTER_BUTTON_CLASS} />
+          </SidebarMenuItem>
           <SidebarMenuItem>
             <button
               type="button"

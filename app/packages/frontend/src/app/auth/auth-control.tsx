@@ -17,6 +17,8 @@ type Props = {
   adapter: AuthPresentationAdapter;
   /** Only the external browser-test fixture passes this; product entrypoint cannot. */
   syntheticTest?: boolean;
+  /** Presentation only: lets the host shell match its captured sign-in button. */
+  triggerClassName?: string;
 };
 
 function Arrow({ back = false }: { back?: boolean }) {
@@ -38,7 +40,11 @@ function Arrow({ back = false }: { back?: boolean }) {
 }
 
 /** Internal client component. No auth commands exist on its read-only adapter. */
-export function AuthControl({ adapter, syntheticTest = false }: Props) {
+export function AuthControl({
+  adapter,
+  syntheticTest = false,
+  triggerClassName,
+}: Props) {
   const controller = useMemo(
     () => new AuthDialogController(adapter, { allowSynthetic: syntheticTest }),
     [adapter, syntheticTest],
@@ -130,7 +136,7 @@ export function AuthControl({ adapter, syntheticTest = false }: Props) {
       <button
         ref={trigger}
         type="button"
-        className={styles.trigger}
+        className={triggerClassName ?? styles.trigger}
         data-testid="sign-in-button"
         aria-haspopup="dialog"
         aria-expanded={open}

@@ -6,7 +6,13 @@ test("query-open survives SSR and hydration without server-rendering a portal", 
 }) => {
   const response = await request.get("/?settings=notifications");
   expect(response.status()).toBe(200);
-  expect(await response.text()).not.toContain("<dialog");
+  // The live shell server-renders its closed native search dialog; no other dialog may be SSR'd.
+  const dialogs = (await response.text()).match(/<dialog\b[^>]*>/g) ?? [];
+  expect(
+    dialogs.filter(
+      (tag) => !tag.includes('aria-label="Search for coins and users"'),
+    ),
+  ).toEqual([]);
   const errors: string[] = [];
   page.on("pageerror", (error) => errors.push(error.message));
   await page.goto("/?settings=notifications");
@@ -21,7 +27,7 @@ test("mobile deep link escapes the hidden sidebar and restores focus to main", a
 }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/?settings=notifications");
-  await expect(page.locator(".sidebar")).toHaveAttribute("inert", "");
+  await expect(page.locator("#app-sidebar")).toHaveAttribute("inert", "");
   const dialog = page.getByRole("dialog", { name: "Settings", exact: true });
   await expect(dialog).toBeVisible();
   expect(
@@ -41,7 +47,12 @@ for (const dismissal of ["Escape", "Back"] as const) {
     await page.setViewportSize({ width: 390, height: 844 });
     const mint = "7bS1mH6MXbw1GnEkKTU6w5YLTywPkQ1w3YVZXWFupump";
     await page.goto(`/live?stream=${mint}`);
-    await expect(page.getByTestId("playback-unavailable")).toBeVisible();
+    // Streaming can briefly leave a hidden pre-swap copy of the page outside
+    // the live shell's <main>; scope to the rendered page.
+    const playback = page
+      .locator("#main-content")
+      .getByTestId("playback-unavailable");
+    await expect(playback).toBeVisible();
     const initialOverflow = await page.evaluate(
       () => document.body.style.overflow,
     );
@@ -67,13 +78,13 @@ for (const dismissal of ["Escape", "Back"] as const) {
     if (dismissal === "Escape") await page.keyboard.press("Escape");
     else await page.goBack();
     await expect(dialog).not.toBeVisible();
-    await expect(page.locator(".app-shell")).toHaveAttribute(
+    await expect(page.locator("[data-app-shell]")).toHaveAttribute(
       "data-mobile-navigation",
       "open",
     );
     expect(new URL(page.url()).searchParams.get("stream")).toBe(mint);
     expect(new URL(page.url()).searchParams.has("settings")).toBe(false);
-    await expect(page.getByTestId("playback-unavailable")).toBeVisible();
+    await expect(playback).toBeVisible();
     await expect(launcher).toBeFocused();
     expect(await page.evaluate(() => document.body.style.overflow)).toBe(
       sidebarOverflow,
@@ -81,7 +92,7 @@ for (const dismissal of ["Escape", "Back"] as const) {
     await page
       .getByRole("button", { name: "Close navigation", exact: true })
       .click();
-    await expect(page.locator(".app-shell")).toHaveAttribute(
+    await expect(page.locator("[data-app-shell]")).toHaveAttribute(
       "data-mobile-navigation",
       "closed",
     );

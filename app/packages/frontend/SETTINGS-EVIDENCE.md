@@ -42,7 +42,8 @@ model tests bind the rendered general-setting definitions to those strings.
 ## Local design
 
 `src/components/settings/settings-control.tsx` exports one `SettingsControl`,
-mounted once in the shared shell's sidebar footer. It contains its own Suspense boundary, a launcher, and a native
+mounted once in the live captured shell's sidebar footer (`components/shell/AppSidebar.tsx`,
+styled as a footer entry above Support/Terminal so they keep their captured positions; no captured placement exists because the upstream host is flag-gated). It contains its own Suspense boundary, a launcher, and a native
 dialog portalled to `document.body` after hydration. This avoids hiding the dialog
 under a mobile navigation ancestor's `aria-hidden`/`inert` state. Modal background
 scroll is locked temporarily, with the previous body overflow restored on close.
