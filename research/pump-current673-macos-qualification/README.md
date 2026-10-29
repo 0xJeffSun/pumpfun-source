@@ -54,3 +54,14 @@ network access or compilation. A successful candidate job establishes a compiled
 measurement only. The independent official census must still compare gained and
 lost original starts for both normalized and raw membership, followed by the
 relevant genuine signed runtime cases. Neither happens implicitly in this job.
+
+The authored source proposals are [CTO#712](https://github.com/lalalune/pumpfun-source/pull/712),
+[Sweep#713](https://github.com/lalalune/pumpfun-source/pull/713) and
+[per-hop#711](https://github.com/lalalune/pumpfun-source/pull/711). Their individual
+packets supply the source/call-data evidence and retain credit for that recovery.
+
+Two subsequent one-shot compiler proposals are frozen in the descriptors but
+not enabled as workflow choices yet: `sell-event` (used SellV2 key/snapshot order)
+after the first three, then `constructor` (used six-account array lifetime) after
+that fourth measurement. The SellV2 VM and old corrective/transfer-fee lanes remain
+stopped. These descriptors authorize no variants or composition.
