@@ -187,3 +187,29 @@ Warm and independent cold builds repeat D037/0f50. All 44 suites / 10,468 pairs,
 strict ordered logs, focused/captured cases and inherited accrual counter cases
 pass. The correction changes no complete-window membership: 16 Pump windows
 and one AMM sell window remain; meaningful ELF exactness remains three of five.
+
+The notice correction was merged as PR #761 at `18b569dd`, with final reviewed
+head `22a5ddd2` and the selected D037 packet unchanged. The Clock research
+proposal was also published as PR #731 at `3496af06`; its proposed timestamp
+source remains research-only. Earlier pending-publication entries describe
+the state at review time. Explicit publication outcomes are appended to
+[the review ledger](pr-review-results.json). Hosted checks were queued at the
+notice merge, so local qualification and merge do not establish hosted success.
+
+Three further contract research PRs (#768, #770 and #779) are merged. The admin
+setter packet now binds all 26 cases, three historical images, 111 retained
+signed receipts, signed accounts and chain continuity, with six corruption
+controls. The two Mayhem packets add disjoint 38- and 704-byte payload intervals;
+the combined historical payload union is 21,451/26,180 bytes, with descriptor
+pointer fields credited as mapped bytes. These saved/static reviews add no VM
+execution or complete code windows. [Exact heads and limits](pr-review-batch17-independent.json)
+are recorded separately from hosted checks, which were queued at the merge
+observations.
+
+The [native exact-SOL guard follow-up](../pump-exact-sol-guard-native-review-20261029/README.md)
+retains one actual warm build and all original sealed evidence. Portable saved
+verification reproduces the unchanged 1,019/1,035 normalized and 188 raw Pump
+windows, with no gains/losses and two reversed loads remaining. It supplies no
+cold/runtime qualification or canonical promotion. Parallel audits and one
+private CTO guard-placement trial also gained no complete windows; the full
+reconstruction objective remains active with sixteen Pump and one AMM window.
