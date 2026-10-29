@@ -68,9 +68,13 @@ Family S — sweeps -> v2 trades, tf100 (6 cases):
   byte-identical: the pool quote reserve word @56 and several
   trailing words record the post-sweep pool state.
 - `s-proto-buy-tf100`: proto-only sweep, then buy 10^6:
-  identical to the anchor (creator fees 123,394 stay accrued).
+  token and pool deltas equal to the anchor's (creator fees
+  123,394 stay accrued); the raw event differs from the
+  anchor's at word @56 and @440.
 - `s-creat-buy-tf100`: creator-only sweep, then buy 10^6:
-  identical to the anchor (protocol fees 2,488 stay accrued).
+  token and pool deltas equal to the anchor's (protocol fees
+  2,488 stay accrued); the raw event differs from the
+  anchor's at words @56, @440 and @480.
 - `s-chain-tf100`: both sweeps, then buy, sell, exact in one
   VM. The buy matches its anchor; the sell matches its anchor
   with payer -5,000 (volume accumulator already funded, still
