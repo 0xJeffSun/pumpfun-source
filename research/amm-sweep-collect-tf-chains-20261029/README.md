@@ -42,7 +42,10 @@ collect costs 5,000 (the destination is always pre-created except
 in the missing-destination case, because collect requires it to
 exist -- see below).
 
-Event layouts (verified byte-for-byte):
+Event layouts (offsets as read from the receipts; verify.py decodes
+only the discriminator, length, sweep timestamp / recipient / amount /
+bucket, and collect timestamp / creator / fee / vault ATA /
+destination -- the other offsets below are informational):
 - SweepPoolFeeEvent, 185 bytes, disc `82a42461e48287a5`:
   timestamp @8, pool @16, base mint @48, quote mint @80, recipient
   @112, payer @144, amount @176, bucket @184 (0 protocol,
@@ -134,8 +137,9 @@ Family M -- missing vault ATA:
   nothing.
 - Caps bind per hop, not per pipeline: maxfee 100 withholds 100
   at the sweep and 100 again at the collect.
-- Collect's account requirements are strict and ordered: a
-  missing vault ATA errors 3012 (vault account), a missing
+- Collect's account requirements are strict (each failure was
+  measured on its own; no case combines two missing accounts, so
+  no check ordering is claimed): a missing vault ATA errors 3012 (vault account), a missing
   destination errors 3012 (token account), and a destination
   without extension space errors 0xd -- all with full rollback
   except the 5,000 payer fee.
@@ -168,3 +172,27 @@ Family M -- missing vault ATA:
   here.
 - The t-accrual128869 pool state is a patch simulating the 3rd
   #4 v2-buy accrual, not a trade executed in this packet.
+
+## Verify and provenance
+
+From the repository root:
+
+    python3 -I -B research/amm-sweep-collect-tf-chains-20261029/verify.py
+
+`verify.py` needs only `solders` plus files in the repository: this
+packet, `evidence/original/pump_amm/deployed.so`, and the two
+retained rebuilt images
+`research/amm-multi-hop-group-slice-recovery/artifacts/candidate.so.gz`
+(control, #424) and
+`research/amm-transfer-fee-diagnostic-recovery/artifacts/candidate.so.gz`
+(candidate, #427), whose decompressed sha256 values match the
+`images` block of `runtime/report.json.gz`. It re-checks the
+recorded receipts against the report's expected values; it does
+not re-execute any transaction.
+
+`producer.py` is the script that generated the receipts and is
+kept as a provenance record. It is not runnable as committed: it
+hard-codes a private workspace layout (`~/workspace/pumpfun-sparse`
+for the harness scripts and `~/workspace/slop-verify` for the
+control/candidate `.so` files) and chdirs there on start.
+
