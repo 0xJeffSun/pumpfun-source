@@ -56,6 +56,22 @@ export interface ValidationIssue {
 
 export type SchemaRoot = Record<string, unknown>;
 
+/** Equality of decoded JSON values, independent of object key order. */
+function jsonEqual(left: unknown, right: unknown): boolean {
+  if (left === right) return true;
+  if (Array.isArray(left) || Array.isArray(right)) {
+    return Array.isArray(left) && Array.isArray(right) && left.length === right.length &&
+      left.every((item, index) => jsonEqual(item, right[index]));
+  }
+  if (left !== null && right !== null && typeof left === 'object' && typeof right === 'object') {
+    const a = left as Record<string, unknown>;
+    const b = right as Record<string, unknown>;
+    const keys = Object.keys(a);
+    return keys.length === Object.keys(b).length && keys.every(key => Object.hasOwn(b, key) && jsonEqual(a[key], b[key]));
+  }
+  return false;
+}
+
 function typeMatches(value: unknown, type: string): boolean {
   switch (type) {
     case 'null':
@@ -124,10 +140,10 @@ export function validateAgainstSchema(
     }
   }
 
-  if (schema.enum && !schema.enum.includes(value)) {
+  if (schema.enum && !schema.enum.some(candidate => jsonEqual(candidate, value))) {
     issues.push({ path, message: `value ${JSON.stringify(value)} is not one of ${JSON.stringify(schema.enum)}` });
   }
-  if ('const' in schema && schema.const !== value) {
+  if ('const' in schema && !jsonEqual(schema.const, value)) {
     issues.push({ path, message: `value ${JSON.stringify(value)} is not the required const ${JSON.stringify(schema.const)}` });
   }
 
