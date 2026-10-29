@@ -27,6 +27,7 @@ import {
   type SettingsSection,
 } from "./settings-model";
 import styles from "./settings.module.css";
+import { PrivacySettingControl } from "./privacy-setting-control";
 
 export type SettingsControlProps = {
   /** Explicit client-side local/test injection only; no runtime adapter is supplied. */
@@ -67,7 +68,13 @@ function SettingRow({ setting }: { setting: SettingDefinition }) {
       <NotificationSettingControl
         settingId={setting.id}
         label={setting.label}
-        fallback={<span className={styles.unavailable}>Unavailable</span>}
+        fallback={
+          setting.id === "privacy.confirmExternalLinks" ? (
+            <PrivacySettingControl label={setting.label} />
+          ) : (
+            <span className={styles.unavailable}>Unavailable</span>
+          )
+        }
       />
     </div>
   );
@@ -202,9 +209,12 @@ function SettingsControlContent({
 
   function trapFocus(event: KeyboardEvent<HTMLDialogElement>) {
     if (event.key === "Escape") {
-      // Own the modal key before bubble-phase shell/Live window listeners.
-      // Do not preventDefault here: the browser must still dispatch cancel.
+      // Search inputs can consume Escape to clear their value instead of
+      // dispatching the dialog's native cancel event. Own dismissal here and
+      // keep the same key from reaching the shell or Live window listeners.
+      event.preventDefault();
       event.stopPropagation();
+      select(null);
       return;
     }
     if (event.key !== "Tab") return;
@@ -285,7 +295,7 @@ function SettingsControlContent({
                     <div>
                       <h2 id={`${id}-title`}>Settings</h2>
                       <span className={styles.badge}>
-                        <NotificationSettingsModeLabel fallback="Read-only reconstruction" />
+                        <NotificationSettingsModeLabel fallback="Device privacy preference" />
                       </span>
                     </div>
                     <button
@@ -354,9 +364,10 @@ function SettingsControlContent({
                     fallback={
                       <p className={styles.notice} id={`${id}-description`}>
                         These settings are mapped from captured client code.
-                        Account values are unavailable, not off. Nothing here
-                        changes preferences, subscribes to notifications or
-                        requests browser permission.
+                        Account values are unavailable, not off. The
+                        external-link choice is stored on this browser; app
+                        links are not yet connected to it. No browser permission
+                        is requested.
                       </p>
                     }
                   />
@@ -406,7 +417,9 @@ function SettingsControlContent({
                   </div>
                 </div>
                 <footer className={styles.footer}>
-                  <p>No account or device changes</p>
+                  <p>
+                    Device privacy choice only · account settings unavailable
+                  </p>
                   <button type="button" onClick={() => select(null)}>
                     Done
                   </button>

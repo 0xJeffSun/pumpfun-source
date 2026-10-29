@@ -180,6 +180,8 @@ const enrichmentDates = new Set([
 function publicCallout(value: unknown, quoteDepth = 0): void {
   if (!value || typeof value !== "object") return;
   for (const [field, child] of Object.entries(value)) {
+    if (field === "updates" && Array.isArray(child) && child.length > 0)
+      fail("callout updates must come from the separate update relation");
     if (["hasLiked", "hasReposted"].includes(field) && child !== null)
       fail("viewer-specific callout state is not public");
     if (["perp", "collectible"].includes(field) && child !== null)
@@ -267,8 +269,6 @@ export class PositionsStore {
       assertSchema(item.body, calloutSchema, "callout", spec);
       if (typeof item.updatesComplete !== "boolean")
         fail("callout updates completeness must be explicit");
-      if (item.body.updates.length)
-        fail("callout updates must come from the separate update relation");
       if (item.body.assetClass && item.body.assetClass !== "ASSET_CLASS_TOKEN")
         fail("non-spot callout");
       publicCallout(item.body);

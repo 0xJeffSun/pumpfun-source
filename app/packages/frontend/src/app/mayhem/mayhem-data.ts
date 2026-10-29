@@ -170,7 +170,9 @@ export function buildMayhemQuery({
 }
 
 function descending(left: number | undefined, right: number | undefined) {
-  return (right ?? 0) - (left ?? 0);
+  if (left === undefined) return right === undefined ? 0 : 1;
+  if (right === undefined) return -1;
+  return right - left;
 }
 
 export function sortMayhemCoins(

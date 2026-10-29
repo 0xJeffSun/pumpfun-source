@@ -41,9 +41,22 @@ export function registerLocalMediaRoutes(
         ) {
           return reply.code(403).send({ code: "LOCAL_MEDIA_ORIGIN_FORBIDDEN" });
         }
+        // Node may discard later Authorization fields while normalizing headers.
+        // This capability has exactly one source; never select one duplicate,
+        // even when the repeated values are identical.
+        let authorizationFields = 0;
+        for (let index = 0; index < request.raw.rawHeaders.length; index += 2) {
+          if (request.raw.rawHeaders[index].toLowerCase() === "authorization")
+            authorizationFields += 1;
+        }
         const auth = request.headers.authorization;
-        const token = auth?.startsWith("Bearer ") ? auth.slice(7) : "";
+        const token =
+          typeof auth === "string" && auth.startsWith("Bearer ")
+            ? auth.slice(7)
+            : "";
         if (
+          authorizationFields !== 1 ||
+          typeof auth !== "string" ||
           token.length > 256 ||
           !timingSafeEqual(
             createHash("sha256").update(token).digest(),

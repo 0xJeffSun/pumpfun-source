@@ -75,8 +75,12 @@ for (const dismissal of ["Escape", "Back"] as const) {
     const dialog = page.getByRole("dialog", { name: "Settings", exact: true });
     await expect(dialog).toBeVisible();
     await expect(page.locator("body")).toHaveCSS("overflow", "hidden");
-    if (dismissal === "Escape") await page.keyboard.press("Escape");
-    else await page.goBack();
+    if (dismissal === "Escape") {
+      const search = dialog.getByRole("searchbox", { name: "Search settings" });
+      await search.fill("group chats");
+      await expect(search).toBeFocused();
+      await search.press("Escape");
+    } else await page.goBack();
     await expect(dialog).not.toBeVisible();
     await expect(page.locator("[data-app-shell]")).toHaveAttribute(
       "data-mobile-navigation",
@@ -106,11 +110,18 @@ test("modal temporarily locks body scrolling and restores the previous style", a
   page,
 }) => {
   await page.goto("/");
+  const launcher = page.getByRole("button", { name: "Open settings" });
+  const dialog = page.getByRole("dialog", { name: "Settings", exact: true });
+  // A completed interaction proves hydration before mutating server-rendered
+  // body attributes; an enabled SSR button alone does not establish readiness.
+  await launcher.click();
+  await expect(dialog).toBeVisible();
+  await dialog.getByRole("button", { name: "Done", exact: true }).click();
+  await expect(dialog).not.toBeVisible();
   await page.evaluate(() => {
     document.body.style.overflow = "clip";
   });
-  await page.getByRole("button", { name: "Open settings" }).click();
-  const dialog = page.getByRole("dialog", { name: "Settings", exact: true });
+  await launcher.click();
   await expect(dialog).toBeVisible();
   await expect(page.locator("body")).toHaveCSS("overflow", "hidden");
   await dialog.getByRole("button", { name: "Done", exact: true }).click();

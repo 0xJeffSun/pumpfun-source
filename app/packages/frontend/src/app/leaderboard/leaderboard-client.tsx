@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { CompetitionCountdown } from "../../components/leaderboard/CompetitionCountdown";
 import { useSearchParams } from "next/navigation";
 import {
   FormEvent,
@@ -31,6 +32,7 @@ import {
   type TraderEntry,
   type TradersData,
 } from "./types";
+import { CompetitionRules } from "./competition-rules";
 
 const PAGE_SIZE = 10;
 const SEARCH_LIMIT = 200;
@@ -400,6 +402,7 @@ function CompetitionCards({
               <dd>{safeDate(competition.endsAt)}</dd>
             </div>
           </dl>
+          <CompetitionCountdown competition={competition} />
           <Link className="competition-link" href={detailHref(competition)}>
             View ranked entries
           </Link>
@@ -715,6 +718,7 @@ export default function LeaderboardClient() {
           </span>
           <h2>{data.competition.title}</h2>
           <p>{data.competition.description}</p>
+          <CompetitionRules key={data.competition.id} competition={data.competition} />
           <dl>
             <div>
               <dt>Ranked entries</dt>

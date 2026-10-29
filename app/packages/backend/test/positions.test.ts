@@ -853,6 +853,29 @@ for (const [name, mutate] of quotedAdmissionCases)
     data.callouts[0].body.quotedCallout = quote;
     assert.throws(() => new PositionsStore(data));
   });
+test("quoted callout updates cannot bypass the separate update relation", () => {
+  const data = dataset();
+  const quote = quoted();
+  quote.callout.updates = [
+    {
+      ...update("unjoined-quoted-update", now),
+      parentMessageId: quote.callout.calloutId,
+    },
+  ];
+  data.callouts[0].body.quotedCallout = quote;
+  assertSchema(
+    data.callouts[0].body,
+    spec.components.schemas.Shared_fceda4efe6cd,
+    "schema-valid quoted updates",
+    spec,
+  );
+  // Embedded replies bypass author/visibility joins, even with updatesLimit=0.
+  assert.throws(
+    () => new PositionsStore(data),
+    /updates must come from the separate update relation/,
+  );
+});
+
 test("a valid one-level spot quote retains its nullable/unknown fields and zero counters", () => {
   const data = dataset();
   data.callouts[0].body.quotedCallout = quoted();

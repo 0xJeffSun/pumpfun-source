@@ -114,7 +114,9 @@ unchanged. With one, this route takes precedence over matching fixtures and
 uses the existing developer-key **shape** gate. That gate is not credential
 verification, scope enforcement or a website session. Viewer query parameters
 and all other nonempty queries return a local explicit 501 instead of pretending
-their semantics are implemented.
+their semantics are implemented. The entire suffix after the first `?` is checked,
+so additional `?` characters (for example, `/v1/callout/a??userId=other`)
+cannot silently discard unsupported query input. This applies to GET and HEAD.
 
 A configured store returns `200 {"callout":null}` for absence in **that local
 materialization**, hidden/deleted rows and explicitly unmappable rows. The
