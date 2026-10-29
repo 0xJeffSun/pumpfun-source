@@ -95,6 +95,41 @@ class OptionSeedsPaths(unittest.TestCase):
                 with self.assertRaises(AssertionError):
                     proof.verify_images(self.original_elf, self.mutated_path(row))
 
+    def test_every_path_pointer_length_binding(self):
+        for side, image in (('original', self.original_elf), ('candidate', self.candidate_elf)):
+            for row in self.path_sites:
+                pc = row['original_pc'] if side == 'original' else row['candidate_pc']
+                pointer = row['original_ptr'] if side == 'original' else row['candidate_ptr']
+                length_pc = row['original_length_pc'] if side == 'original' else row['length_pc']
+                edits = ((pc + 1, 1), (pc + 17, 16), (pc + 18, 1), (length_pc + 1, 1), (length_pc + 2, 1))
+                for at, bit in edits:
+                    with self.subTest(side=side, pc=pc, at=at):
+                        changed = copy.copy(image)
+                        blob = bytearray(image.b)
+                        blob[at] ^= bit
+                        changed.b = bytes(blob)
+                        with self.assertRaises(AssertionError):
+                            proof.path_site(changed, pc, pointer, row['length'])
+
+    def test_text_pointer_argument_register(self):
+        for row in self.text_sites:
+            blob = bytearray(self.candidate)
+            blob[self.file_offset(row['candidate_pc']) + 1] ^= 1
+            with self.assertRaises(AssertionError):
+                proof.verify_images(self.original_elf, self.elf(blob))
+
+    def test_descriptor_pointer_credit_is_mapped(self):
+        report = proof.inspect(P, self.original, self.candidate, R)
+        delta = proof.coverage_delta(R, report)
+        section = next(row for row in delta['sections'] if row['section'] == '.data.rel.ro')
+        raw = {i for a,b in section['raw_intervals'] for i in range(a,b)}
+        mapped = {i for a,b in section['mapped_intervals'] for i in range(a,b)}
+        for row in self.descriptors:
+            start = row['original_offset']
+            self.assertTrue(set(range(start, start + 8)) <= mapped)
+            self.assertFalse(set(range(start, start + 8)) & raw)
+            self.assertTrue(set(range(start + 8, start + 16)) <= raw)
+
     def test_following_byte_is_not_absorbed(self):
         intervals = [
             (row['candidate_ptr'], row['candidate_ptr'] + row['length'])

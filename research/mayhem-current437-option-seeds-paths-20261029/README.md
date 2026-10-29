@@ -8,15 +8,15 @@ The prior obligations are preserved: **437 normalized functions, 141 raw functio
 
 Only static bytes are read. Each string is bounded by the immediate length carried by its descriptor or its text/seed site. A NUL byte, the following byte, and adjacent strings are not bounds. No relocation-table byte is credited.
 
-The 16-byte descriptors live in `.data.rel.ro`. The layout is `u32 low = 0`, `u32 high = pointer`, `u64 length`, with exactly one type-8 relocation at the record start whose symbol index is 0. The candidate copies carry different `.rodata` pointers but the same lengths and the same bytes.
+The 16-byte descriptors live in `.data.rel.ro`. The layout is `u32 low = 0`, `u32 high = pointer`, `u64 length`, with exactly one type-8 relocation at the record start whose symbol index is 0. The candidate copies carry different `.rodata` pointers but the same lengths and the same referenced string bytes. Each descriptor credits its pointer field as 8 mapped bytes and its equal length field as 8 raw bytes; differing pointer bytes are not called raw equality.
 
-The two mov sites decode `lddw` of a relocated `.rodata` pointer followed at `pc + 16` by a `mov` of the immediate length. The eight path/seed sites decode `lddw` of a relocated pointer followed within the next 12 instructions by an `stxdw` whose immediate is the exact length. No relocation is present on the continuation, the length store, or the surrounding words. The sites stop at the pointer/length pair; no callee, callback target, output or runtime effect is claimed.
+The two mov sites decode `lddw` of a relocated `.rodata` pointer followed at `pc + 16` by a `mov` of the immediate length. The eight path/seed sites decode `lddw` of a relocated pointer and the immediate `stxdw` of that same register to the stack. Before any branch or overwrite, a store of the exact length must target the adjacent eight-byte stack field within the next 12 instructions. No relocation is present on the continuation, the length store, or the surrounding words. The sites stop at the pointer/length pair; no callee, callback target, output or runtime effect is claimed.
 
 ## Coverage
 
-The baseline is the union of the three merged deltas: rust-panic-messages, mayhemerror-debug-names and programerror-debug-copy. It is **20,709 / 26,180** payload bytes (`.rodata` 13,997 / 18,396, `.data.rel.ro` 6,712 / 7,784).
+The baseline is the union of four merged deltas: rust-panic-messages, mayhemerror-debug-names, programerror-debug-copy and bounded-error-strings (#770). It is **20,747 / 26,180** payload bytes (`.rodata` 14,035 / 18,396, `.data.rel.ro` 6,712 / 7,784).
 
-These intervals were disjoint from that baseline. Payload coverage becomes **21,413 / 26,180 bytes (81.79%)**, leaving **4,767 unproved**. `.rodata` becomes **14,589 / 18,396** (+592). `.data.rel.ro` becomes **6,824 / 7,784** (+112). The 16 string intervals union to the single span `[709739, 710331)`. The 7 descriptor records union to four spans totaling 112 bytes.
+These intervals were disjoint from that baseline. Payload coverage becomes **21,451 / 26,180 bytes (81.94%)**, leaving **4,729 unproved**. `.rodata` becomes **14,627 / 18,396** (+592). `.data.rel.ro` becomes **6,824 / 7,784** (+112). The 16 string intervals union to the single span `[709739, 710331)`. The 7 descriptor records union to four spans totaling 112 bytes.
 
 The added `.data.rel.ro` union is `[725792, 725824) + [725904, 725936) + [726056, 726072) + [727416, 727448)`.
 
@@ -33,7 +33,7 @@ PYTHONDONTWRITEBYTECODE=1 python3 -B scripts/verify_evidence.py
 PYTHONDONTWRITEBYTECODE=1 python3 -B scripts/test_tooling.py
 ```
 
-Tests mutate every selected string byte and every descriptor length/pointer field, every mov length immediate, and every path/seed length `stxdw` immediate; each mutation must be rejected. A following byte in an unselected candidate gap is not absorbed. Inventory, symlink, FIFO, and resealed report and coverage edits are rejected.
+Tests also reject broken pointer/store registers, stack-field offsets and text argument registers, and verify the mapped/raw descriptor split. Tests mutate every selected string byte and every descriptor length/pointer field, every mov length immediate, and every path/seed length `stxdw` immediate; each mutation must be rejected. A following byte in an unselected candidate gap is not absorbed. Inventory, symlink, FIFO, and resealed report and coverage edits are rejected.
 
 ## Exact intervals
 

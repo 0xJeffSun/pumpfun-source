@@ -3,8 +3,9 @@
   "prior_rust_panic_delta_sha256": "839174494ffefa29fab70b027aea1b2672777ea5efd69ad194cf9c7c8eaef5e4",
   "prior_mayhemerror_debug_names_delta_sha256": "e36281cc8703789ef01fbdd127181d10075c1c2f786fedec3621dad3f4b3d77a",
   "prior_programerror_debug_copy_delta_sha256": "2922e4eb065a5db22ad5299ee34a192567e0a6205c4859c23905dfb2bae38cb2",
-  "baseline_payload_bytes": 20709,
-  "baseline_rodata_bytes": 13997,
+  "prior_bounded_error_strings_delta_sha256": "e7cae6dd26e406a43d34d428a5ea8ee87c8e2ec3d4fc852d183d06b98eaa722e",
+  "baseline_payload_bytes": 20747,
+  "baseline_rodata_bytes": 14035,
   "baseline_data_rel_ro_bytes": 6712,
   "sections": [
     {
@@ -112,11 +113,15 @@
           713022
         ],
         [
-          713819,
-          714313
+          713383,
+          713388
         ],
         [
-          714341,
+          713808,
+          713813
+        ],
+        [
+          713819,
           719929
         ],
         [
@@ -251,11 +256,15 @@
           713022
         ],
         [
-          713819,
-          714313
+          713383,
+          713388
         ],
         [
-          714341,
+          713808,
+          713813
+        ],
+        [
+          713819,
           719929
         ],
         [
@@ -287,9 +296,9 @@
           725204
         ]
       ],
-      "raw_equal_bytes": 14589,
+      "raw_equal_bytes": 14627,
       "pointer_only_bytes": 0,
-      "covered_bytes": 14589,
+      "covered_bytes": 14627,
       "new_bytes": 592
     },
     {
@@ -361,7 +370,11 @@
           725788
         ],
         [
-          725792,
+          725800,
+          725808
+        ],
+        [
+          725816,
           725824
         ],
         [
@@ -374,6 +387,14 @@
         ],
         [
           725888,
+          725904
+        ],
+        [
+          725912,
+          725920
+        ],
+        [
+          725928,
           725936
         ],
         [
@@ -394,6 +415,10 @@
         ],
         [
           726040,
+          726056
+        ],
+        [
+          726064,
           726072
         ],
         [
@@ -594,6 +619,14 @@
         ],
         [
           727400,
+          727416
+        ],
+        [
+          727424,
+          727432
+        ],
+        [
+          727440,
           727452
         ],
         [
@@ -1784,7 +1817,11 @@
         ],
         [
           725788,
-          725792
+          725800
+        ],
+        [
+          725808,
+          725816
         ],
         [
           725860,
@@ -1793,6 +1830,14 @@
         [
           725884,
           725888
+        ],
+        [
+          725904,
+          725912
+        ],
+        [
+          725920,
+          725928
         ],
         [
           725980,
@@ -1809,6 +1854,10 @@
         [
           726036,
           726040
+        ],
+        [
+          726056,
+          726064
         ],
         [
           726092,
@@ -1993,6 +2042,14 @@
         [
           727396,
           727400
+        ],
+        [
+          727416,
+          727424
+        ],
+        [
+          727432,
+          727440
         ],
         [
           727452,
@@ -3181,13 +3238,13 @@
           733120
         ]
       ],
-      "raw_equal_bytes": 5472,
-      "pointer_only_bytes": 1352,
+      "raw_equal_bytes": 5416,
+      "pointer_only_bytes": 1408,
       "covered_bytes": 6824,
       "new_bytes": 112
     }
   ],
   "new_payload_bytes": 704,
-  "payload_covered_bytes": 21413,
+  "payload_covered_bytes": 21451,
   "payload_total_bytes": 26180
 }

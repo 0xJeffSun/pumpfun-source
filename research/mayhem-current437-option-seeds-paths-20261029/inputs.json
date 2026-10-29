@@ -75,10 +75,10 @@
   "research/mayhem-current437-mayhem-error-display-20261028/test_verify.py": "9df2b31c8bb7965923ec7203f732832b3e4514897728222ba1dc6573305334b3",
   "research/mayhem-current437-mayhem-error-display-20261028/verify.py": "fd8c9ea9e5fbe54a72cf8a283cedbbd5e03e2803f29e0a8aa893f09a0d39ad6d",
   "research/mayhem-current437-mayhemerror-debug-names-20261029/coverage-delta.json": "e36281cc8703789ef01fbdd127181d10075c1c2f786fedec3621dad3f4b3d77a",
-  "research/mayhem-current437-option-seeds-paths-20261029/coverage-delta.json": "2698dcc31acbc0103c44708ff96d767bff02f96a2e07029f6333e0116cee567b",
-  "research/mayhem-current437-option-seeds-paths-20261029/observations.json.gz": "6447d8fa9968456f37c9c77ea6a821a327ff6c02bba53c0dcf69d07d60343a92",
-  "research/mayhem-current437-option-seeds-paths-20261029/proof.py": "2d6f189003175233a34b732367864ea60e8fcfc784aececbdf71c73f4bdc0a17",
-  "research/mayhem-current437-option-seeds-paths-20261029/test_verify.py": "3bf9a6712e46c3641fb5481ff5d6481c59093d54905f09063c9a07afa6519eb9",
+  "research/mayhem-current437-option-seeds-paths-20261029/coverage-delta.json": "e8f6c7f03f18b6e8ce94d778cc9c4aaa56de798ad5a634412e8cf79ce9dedf2d",
+  "research/mayhem-current437-option-seeds-paths-20261029/observations.json.gz": "0dc15b84222db309a219cb0df5fa0e55ae9a23562d341d715b4a0b94b6d51e64",
+  "research/mayhem-current437-option-seeds-paths-20261029/proof.py": "813e07b3147043cfa109f8660245f05c75cb5df1f03a5be554b178cb68d87638",
+  "research/mayhem-current437-option-seeds-paths-20261029/test_verify.py": "45d4508e9412f3ae8788f76c6c2017aa0549aaccb2dacb00dd7ff3a7e41fd9db",
   "research/mayhem-current437-option-seeds-paths-20261029/verify.py": "fd8c9ea9e5fbe54a72cf8a283cedbbd5e03e2803f29e0a8aa893f09a0d39ad6d",
   "research/mayhem-current437-program-error-messages-20261028/README.md": "b4b44c1c53ccaecac3391a8817de7aa3dbdcad9594beb00a5bf71f99f9a6116c",
   "research/mayhem-current437-program-error-messages-20261028/coverage-delta.json": "096f9980252a6e69c3eec3bb6d58c6996dc7fc1250936a759fa68e514cfd1262",
@@ -132,5 +132,6 @@
   "research/mayhem-current437-unicode-tables-20261028/source-context/printable.rs": "29836734466bfec58fd8735cc58659e8369814ffa2090c2239854d500439b59a",
   "research/mayhem-current437-unicode-tables-20261028/source-context/provenance.json": "d3dc223dd027b96a149591cf4873593c05a74c9311c816725e15716f6fdf30a6",
   "research/mayhem-current437-unicode-tables-20261028/test_verify.py": "3996f6f634fdfe0e43130c67e9e7ab6efe9ea19474e302d33da4c1155c1f2891",
-  "research/mayhem-current437-unicode-tables-20261028/verify.py": "68ec16eab9a1920b7f8bdcb66cfe55fd8d754e362bf66c8eff41646480c94e55"
+  "research/mayhem-current437-unicode-tables-20261028/verify.py": "68ec16eab9a1920b7f8bdcb66cfe55fd8d754e362bf66c8eff41646480c94e55",
+  "research/mayhem-current437-bounded-error-strings-20261029/coverage-delta.json": "e7cae6dd26e406a43d34d428a5ea8ee87c8e2ec3d4fc852d183d06b98eaa722e"
 }

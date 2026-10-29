@@ -36,3 +36,5 @@ Tests flip every selected string byte, every descriptor length and pointer field
 provider=OpenCode model=opencode/deepseek-v4.1-flash-free client=opencode CLI 1.19.5
 
 Made via @slopdotcash
+
+Reviewer corrections bind pointer/length stack fields and text argument registers, classify descriptor pointers as mapped bytes, and include merged #770 in the baseline. The new contribution stays 704 bytes; the combined payload union is 21,451/26,180 bytes. No code-window gain or runtime claim.

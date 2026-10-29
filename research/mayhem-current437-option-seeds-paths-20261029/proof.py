@@ -2,8 +2,8 @@
 
 Only fixed pointer/length immediates, 16-byte counted descriptors and fixed
 lddw/mov/stxdw text sites are read. NUL bytes, the following byte and adjacent
-strings are not bounds. No relocation-table byte and no path seed is claimed as
-payload. Only static bytes are inspected.
+strings are not bounds. No relocation-table byte or text instruction is claimed
+as payload. Only static bytes are inspected.
 """
 from pathlib import Path
 import gzip, hashlib, importlib.util, json, struct
@@ -19,10 +19,13 @@ PROGRAMERROR_DELTA = 'research/mayhem-current437-programerror-debug-copy-2026102
 RUST_PANIC_SHA = '839174494ffefa29fab70b027aea1b2672777ea5efd69ad194cf9c7c8eaef5e4'
 MAYHEMERROR_SHA = 'e36281cc8703789ef01fbdd127181d10075c1c2f786fedec3621dad3f4b3d77a'
 PROGRAMERROR_SHA = '2922e4eb065a5db22ad5299ee34a192567e0a6205c4859c23905dfb2bae38cb2'
+BOUNDED_ERROR_DELTA = 'research/mayhem-current437-bounded-error-strings-20261029/coverage-delta.json'
+BOUNDED_ERROR_SHA = 'e7cae6dd26e406a43d34d428a5ea8ee87c8e2ec3d4fc852d183d06b98eaa722e'
 MERGE = (
     (RUST_PANIC_DELTA, RUST_PANIC_SHA),
     (MAYHEMERROR_DELTA, MAYHEMERROR_SHA),
     (PROGRAMERROR_DELTA, PROGRAMERROR_SHA),
+    (BOUNDED_ERROR_DELTA, BOUNDED_ERROR_SHA),
 )
 sha = lambda data: hashlib.sha256(data).hexdigest()
 
@@ -140,7 +143,7 @@ def text_site(image, pc, pointer, length, length_register):
     reloc = image.rel[pc]
     assert reloc['type'] == 8 and reloc['symbol_index'] == 0
     opcode, register, branch, immediate = struct.unpack_from('<BBhi', image.b, pc)
-    assert opcode == 0x18 and branch == 0
+    assert (opcode, register, branch) == (0x18, 1, 0), 'text pointer argument register'
     continuation, high = struct.unpack_from('<II', image.b, pc + 8)
     assert continuation == 0
     assert ((immediate & 0xffffffff) | (high << 32)) == pointer
@@ -148,26 +151,36 @@ def text_site(image, pc, pointer, length, length_register):
     return image.b[pc:pc + 24]
 
 def path_site(image, pc, pointer, length):
-    """lddw pointer at pc; an stxdw of the exact length within the next 12 instructions."""
+    """A relocated pointer and its adjacent stack length field, before any branch."""
     end = pc + 16 + 12 * 8
     assert image.lo <= pc and end <= image.hi
     assert sorted(reloc for reloc in image.rel if pc <= reloc < end) == [pc]
     reloc = image.rel[pc]
     assert reloc['type'] == 8 and reloc['symbol_index'] == 0
     opcode, register, branch, immediate = struct.unpack_from('<BBhi', image.b, pc)
-    assert opcode == 0x18 and branch == 0
+    assert opcode == 0x18 and branch == 0 and register < 11, 'path pointer register'
     continuation, high = struct.unpack_from('<II', image.b, pc + 8)
     assert continuation == 0
     assert ((immediate & 0xffffffff) | (high << 32)) == pointer
+    pointer_opcode, pointer_registers, pointer_offset, pointer_immediate = struct.unpack_from('<BBhi', image.b, pc + 16)
+    assert (pointer_opcode, pointer_registers, pointer_immediate) == (0x7b, (register << 4) | 10, 0), 'pointer stack store'
     stores = []
     for index in range(12):
         at = pc + 16 + index * 8
-        stored_opcode, _register, _offset, stored_length = struct.unpack_from('<BBhi', image.b, at)
+        stored_opcode, stored_registers, stored_offset, stored_length = struct.unpack_from('<BBhi', image.b, at)
         if stored_opcode == 0x7a and stored_length == length:
             stores.append(at)
     assert len(stores) == 1
     at = stores[0]
-    return image.b[pc:pc + 16] + image.b[at:at + 8], at
+    assert struct.unpack_from('<BBhi', image.b, at) == (0x7a, 10, pointer_offset + 8, length), 'adjacent stack length'
+    widths = {0: 4, 8: 2, 16: 1, 24: 8}
+    for previous in range(pc + 24, at, 8):
+        op, regs, offset, _ = struct.unpack_from('<BBhi', image.b, previous)
+        assert op & 7 not in (5, 6), 'branch before pointer/length pair'
+        if op & 7 in (2, 3) and regs & 15 == 10:
+            width = widths[op & 24]
+            assert offset + width <= pointer_offset or pointer_offset + 16 <= offset, 'overwritten pointer/length pair'
+    return image.b[pc:pc + 24] + image.b[at:at + 8], at
 
 def text_for():
     return {item[0]: (item[1], item[3]) for item in STRINGS}
@@ -311,9 +324,13 @@ def coverage_delta(root, report):
             for row in report['observations']['strings']
         ],
         '.data.rel.ro': [
-            (row['original_offset'], row['original_offset'] + 16)
+            (row['original_offset'] + 8, row['original_offset'] + 16)
             for row in report['observations']['descriptors']
         ],
+    }
+    added_mapped = {
+        '.rodata': [],
+        '.data.rel.ro': [(row['original_offset'], row['original_offset'] + 8) for row in report['observations']['descriptors']],
     }
     sections = []
     baseline = {}
@@ -325,7 +342,7 @@ def coverage_delta(root, report):
         raw = union(
             [interval for row in rows for interval in row['raw_intervals']] + added[name]
         )
-        mapped = union([interval for row in rows for interval in row['mapped_intervals']])
+        mapped = union([interval for row in rows for interval in row['mapped_intervals']] + added_mapped[name])
         covered = union(raw + mapped)
         previous = measure(union([interval for row in rows for interval in row['covered_intervals']]))
         baseline[name] = previous
@@ -351,6 +368,7 @@ def coverage_delta(root, report):
         prior_rust_panic_delta_sha256=RUST_PANIC_SHA,
         prior_mayhemerror_debug_names_delta_sha256=MAYHEMERROR_SHA,
         prior_programerror_debug_copy_delta_sha256=PROGRAMERROR_SHA,
+        prior_bounded_error_strings_delta_sha256=BOUNDED_ERROR_SHA,
         baseline_payload_bytes=sum(baseline.values()),
         baseline_rodata_bytes=baseline['.rodata'],
         baseline_data_rel_ro_bytes=baseline['.data.rel.ro'],
@@ -398,10 +416,10 @@ def check(packet, root):
     assert (summary['string_count'], summary['descriptor_count'], summary['text_site_count'], summary['path_site_count']) == (16, 7, 2, 8)
     assert (summary['literal_bytes'], summary['descriptor_bytes'], summary['new_payload_bytes']) == (592, 112, 704)
     assert summary['rejected_pairs'] == 0
-    assert (delta['baseline_payload_bytes'], delta['payload_covered_bytes'], delta['payload_total_bytes']) == (20709, 21413, 26180)
-    assert (delta['baseline_rodata_bytes'], delta['baseline_data_rel_ro_bytes']) == (13997, 6712)
+    assert (delta['baseline_payload_bytes'], delta['payload_covered_bytes'], delta['payload_total_bytes']) == (20747, 21451, 26180)
+    assert (delta['baseline_rodata_bytes'], delta['baseline_data_rel_ro_bytes']) == (14035, 6712)
     by_section = {section['section']: section for section in delta['sections']}
-    assert (by_section['.rodata']['new_bytes'], by_section['.rodata']['covered_bytes'], by_section['.rodata']['total_bytes']) == (592, 14589, 18396)
+    assert (by_section['.rodata']['new_bytes'], by_section['.rodata']['covered_bytes'], by_section['.rodata']['total_bytes']) == (592, 14627, 18396)
     assert (by_section['.data.rel.ro']['new_bytes'], by_section['.data.rel.ro']['covered_bytes'], by_section['.data.rel.ro']['total_bytes']) == (112, 6824, 7784)
     assert all(
         row['original_bytes_hex'] == row['candidate_bytes_hex']
