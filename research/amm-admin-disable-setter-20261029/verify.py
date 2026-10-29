@@ -4,7 +4,7 @@ Checks, independently of the producer:
 - packet manifest lists exactly the files present, with matching hashes;
 - repository inputs (images, harness scripts, evidence programs)
   hash to the recorded values;
-- 26 cases x 3 images = 111 receipts (family A: 21 cases x 1 step;
+- 26 cases across 3 historical images, 111 receipts (family A: 21 cases x 1 step;
   family B: 5 chains x 3-4 steps), ordered, with contexts matching
   the report;
 - every transaction verifies (all signatures valid, 1 signature field);
@@ -42,6 +42,9 @@ Checks, independently of the producer:
 - receipts are stored as parts, each under 25MB, read in order;
 - all three images agree on every case-step's observed values.
 """
+if not __debug__:
+    raise SystemExit("Run without -O")
+
 import base64
 import gzip
 import hashlib
@@ -53,9 +56,6 @@ from pathlib import Path
 from solders.pubkey import Pubkey
 from solders.transaction import Transaction
 
-if not __debug__:
-    raise SystemExit("Run without -O")
-
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 IMAGES = ("original", "control", "candidate")
@@ -65,6 +65,148 @@ CREATE_DISC = "b1310cd2a076a774"
 
 def sha(data):
     return hashlib.sha256(data).hexdigest()
+
+
+IMAGE_BINDINGS = {
+    "original": ("evidence/original/pump_amm/deployed.so", "6a7ad34596d83b4c435b32f458a56e718e9f82eb4ad38e4316616d15d24d8ff7"),
+    "control": ("research/amm-multi-hop-group-slice-recovery/artifacts/candidate.so.gz", "7a300434dced61413bde10788594b427d5649563e0223efcf09e6b214aff7ad3"),
+    "candidate": ("research/amm-transfer-fee-diagnostic-recovery/artifacts/candidate.so.gz", "d17a657baf5cc19736a924c41e75424604411ddbe9f6e72cddf41ab72a695007"),
+}
+CHAIN_STEPS = {
+    "chain-buy-gate": ("disable", "buy_v2", "sell_v2"),
+    "chain-sell-gate": ("disable", "sell_v2", "buy_v2"),
+    "chain-deposit-gate": ("disable", "deposit", "withdraw"),
+    "chain-withdraw-gate": ("disable", "withdraw", "deposit"),
+    "chain-create-gate": ("disable", "create_pool", "disable", "create_pool"),
+}
+EXPECTED_CASES = tuple(("A", name) for name in (
+    "dis-all-false", "dis-all-true", "dis-create-only", "dis-deposit-only",
+    "dis-withdraw-only", "dis-buy-only", "dis-sell-only", "dis-preset224-false",
+    "dis-preset224-true", "dis-preset31-false", "dis-bool2", "dis-args-empty",
+    "dis-args-4bytes", "dis-trailing", "dis-trunc-906", "dis-trunc-907",
+    "dis-trunc-948", "dis-outsider", "dis-unsigned", "dis-readonly",
+    "dis-wrongowner")) + tuple(("B", name) for name in CHAIN_STEPS)
+# Pins the 26 retained case definitions, including payloads and expected fixture
+# parameters. These definitions are not evidence that a prior VM executed them.
+CASE_DEFINITIONS_SHA256 = "4d061cea178af1a0cc8404f3e7aa316046d599dc7ab2d58c49f1ce5841b9711f"
+ROLE_ACCOUNTS = {
+    "global_config": "global_config", "pool": "pool", "base_mint": "base_mint",
+    "quote_mint": "quote_mint", "lp_mint": "lp_mint",
+    "userbase": "user_base_token_account", "userquote": "user_quote_token_account",
+    "userlp": "user_pool_token_account", "vaultbase": "pool_base_token_account",
+    "vaultquote": "pool_quote_token_account", "buyback": "buyback_fee_recipient",
+    "volume": "user_volume_accumulator", "feeconfig": "fee_config",
+}
+TRADE_ROLES = {"fee_payer", "global_config", "pool", "userbase", "userquote",
+               "vaultbase", "vaultquote", "buyback", "volume", "feeconfig"}
+LIQ_ROLES = {"fee_payer", "global_config", "pool", "base_mint", "quote_mint",
+             "lp_mint", "userbase", "userquote", "userlp", "vaultbase", "vaultquote"}
+CREATE_ROLES = {"fee_payer", "global_config", "pool", "lp_mint", "userbase",
+                "userquote", "userlp", "vaultbase", "vaultquote"}
+
+
+def signed_accounts(message, ix, descriptor, case):
+    assert len(ix.accounts) == len(descriptor["accounts"]), "exact signed account count"
+    assert len(set(message.account_keys)) == len(message.account_keys), "unique signed keys"
+    header, keys = message.header, message.account_keys
+    expected = {0: (True, True)}  # The single fee payer is writable even if IDL user is read-only.
+    accounts = {}
+    for entry, index in zip(descriptor["accounts"], ix.accounts):
+        name = entry["name"]
+        assert name not in accounts, "unique IDL account names"
+        accounts[name] = str(keys[index])
+        signer, writable = bool(entry.get("signer")), bool(entry.get("writable"))
+        if descriptor["name"] == "disable":
+            if name == "admin" and case["label"] == "dis-unsigned":
+                signer = False
+            if name == "global_config" and case["label"] == "dis-readonly":
+                writable = False
+        prior = expected.get(index, (False, False))
+        expected[index] = (prior[0] or signer, prior[1] or writable)
+    expected.setdefault(ix.program_id_index, (False, False))
+    assert set(expected) == set(range(len(keys))), "exact signed key membership"
+    for index, privileges in expected.items():
+        signer = index < header.num_required_signatures
+        writable = (index < header.num_required_signatures - header.num_readonly_signed_accounts) if signer else (index < len(keys) - header.num_readonly_unsigned_accounts)
+        assert (signer, writable) == privileges, "signed account privileges"
+    return accounts
+
+
+def watched_bindings(steps, case, account_maps):
+    roles = steps[0]["roles"]
+    assert all(row["roles"] == roles for row in steps), "same chain roles"
+    if case["family"] == "A":
+        expected_roles = {"fee_payer", "global_config"}
+        watched = set(roles.values())
+    else:
+        gate = case["label"].split("-")[1]
+        expected_roles = TRADE_ROLES if gate in ("buy", "sell") else CREATE_ROLES if gate == "create" else LIQ_ROLES
+        downstream = [accounts for row, accounts in zip(steps, account_maps)
+                      if row["context"]["step_name"] != "disable"]
+        # Trade and liquidity producers watch every downstream instruction key.
+        # Create watches only these nine state/payer/config roles. These sets are
+        # retained on setter steps too, although disable itself uses four keys.
+        watched = set(roles.values()) if gate == "create" else set().union(*(set(accounts.values()) for accounts in downstream))
+    assert set(roles) == expected_roles, "exact watched role membership"
+    for role, key in roles.items():
+        if role == "fee_payer":
+            continue  # Bound to key zero independently for every signed wire.
+        name = ROLE_ACCOUNTS[role]
+        matches = [accounts[name] for accounts in account_maps if name in accounts]
+        assert matches and all(value == key for value in matches), "signed watched role: " + role
+    for row in steps:
+        assert set(row["before"]) == set(row["after"]) == watched, "exact watched snapshot membership"
+
+
+def verify_wire(r, case, idl):
+    raw = base64.b64decode(r["transaction_base64"], validate=True)
+    tx = Transaction.from_bytes(raw)
+    assert bytes(tx) == raw and len(tx.signatures) == 1, "canonical single-signature wire"
+    message = tx.message
+    assert len(message.instructions) == 1, "one declared instruction"
+    ix = message.instructions[0]
+    keys = message.account_keys
+    assert str(keys[0]) == r["roles"]["fee_payer"], "signed payer role"
+    assert str(keys[ix.program_id_index]) == "pAMMBay6oceH9fJKBRHGP5D4bD4sWpmSwMn52FMfXEA", "signed AMM program"
+    ctx = r["context"]
+    name = "disable" if case["family"] == "A" else ctx["step_name"]
+    descriptor = next(row for row in idl["instructions"] if row["name"] == name)
+    accounts = signed_accounts(message, ix, descriptor, case)
+    if name == "disable":
+        if case["family"] == "A":
+            payload = bytes(case["payload"])
+        else:
+            gate = case["label"].split("-")[1]
+            flags = [int(gate == value) for value in ("create", "deposit", "withdraw", "buy", "sell")]
+            payload = bytes(flags if ctx["step"] == 0 else [0] * 5)
+    elif name in ("buy_v2", "sell_v2"):
+        payload = struct.pack("<QQ", 10**6, (2**64 - 1) if name == "buy_v2" else 1)
+    elif name in ("deposit", "withdraw"):
+        limit = (2**64 - 1) if name == "deposit" else 0
+        payload = struct.pack("<QQQ", 10**9, limit, limit)
+    else:
+        payload = struct.pack("<HQQ", 0, 100, 10200) + bytes(keys[0]) + b"\0"
+    assert bytes(ix.data) == bytes(descriptor["discriminator"]) + payload, "signed instruction payload"
+    positions = [i for i, account in enumerate(descriptor["accounts"]) if account["name"] == "global_config"]
+    assert len(positions) == 1 and str(keys[ix.accounts[positions[0]]]) == r["roles"]["global_config"], "signed config role"
+    config_index = ix.accounts[positions[0]]
+    header = message.header
+    writable = (config_index < header.num_required_signatures - header.num_readonly_signed_accounts) if config_index < header.num_required_signatures else (config_index < len(keys) - header.num_readonly_unsigned_accounts)
+    if name == "disable":
+        assert writable == (case["label"] != "dis-readonly"), "signed config privilege"
+        admin = str(keys[ix.accounts[0]])
+        expected_admin = r["roles"]["fee_payer"] if case["label"] == "dis-outsider" else str(Pubkey.from_bytes(bytes.fromhex(r["before"][r["roles"]["global_config"]]["data_hex"])[8:40]))
+        assert admin == expected_admin, "signed admin role"
+        assert (ix.accounts[0] < message.header.num_required_signatures) == (case["label"] != "dis-unsigned"), "signed admin privilege"
+        if r["error"] is None:
+            cfg = r["roles"]["global_config"]
+            before, after = r["before"][cfg], r["after"][cfg]
+            old, new = bytes.fromhex(before["data_hex"]), bytes.fromhex(after["data_hex"])
+            flags = (old[56] & 224) | sum(value << shift for shift, value in enumerate(payload[:5]))
+            assert new == old[:56] + bytes([flags]) + old[57:] and before["lamports"] == after["lamports"], "exact disable write footprint"
+    payer = r["roles"]["fee_payer"]
+    assert r["before"][payer]["lamports"] - r["after"][payer]["lamports"] == r["payer_delta_lamports"], "actual payer delta"
+    return accounts
 
 
 def amount_at(data_hex, offset=64):
@@ -128,9 +270,18 @@ def main():
     report = json.loads(gzip.decompress(
         (HERE / "runtime/report.json.gz").read_bytes()))
     assert report["case_count"] == 26, report["case_count"]
+    assert tuple((row["case"]["family"], row["case"]["label"]) for row in report["cases"]) == EXPECTED_CASES, "exact case membership"
+    assert sha(json.dumps([row["case"] for row in report["cases"]], sort_keys=True, separators=(",", ":")).encode()) == CASE_DEFINITIONS_SHA256, "exact case definitions"
     assert report["mismatches"] == [] and report["divergent_cases"] == []
     for rel, digest in report["input_sha256"].items():
         assert sha((ROOT / rel).read_bytes()) == digest, rel
+    expected_images = {label: digest for label, (_, digest) in IMAGE_BINDINGS.items()}
+    assert report["image_sha256"] == expected_images, "declared historical image binding"
+    for label, (name, digest) in IMAGE_BINDINGS.items():
+        raw = (ROOT / name).read_bytes()
+        raw = gzip.decompress(raw) if name.endswith(".gz") else raw
+        assert sha(raw) == digest, "authenticated historical image " + label
+    idl = json.loads((ROOT / "evidence/upstream/pump_amm.json").read_text())
     receipts = []
     for part in report["transaction_receipts"]["parts"]:
         data = (HERE / part["path"]).read_bytes()
@@ -149,18 +300,43 @@ def main():
         assert str(tx.signatures[0]) == r["signatures"][0], seq
         assert r["transaction_sha256"] == sha(base64.b64decode(r["transaction_base64"])), seq
         assert r["payer_delta_lamports"] == r["observed"]["payer_paid"], seq
+        ctx = r["context"]
+        assert ctx["image"] in IMAGES, "exact image membership"
+        assert (ctx["family"], ctx["label"]) == EXPECTED_CASES[ctx["index"]], "receipt case membership"
+        assert ctx["instruction"] == ("disable" if ctx["family"] == "A" else "disable-chain"), "receipt instruction family"
+        if ctx["family"] == "A":
+            assert ctx.get("step", 0) == 0, "single setter step"
     by_case = {}
     for r in receipts:
         ctx = r["context"]
         by_case.setdefault(ctx["label"], {}).setdefault(ctx["image"], []).append(r)
     assert len(by_case) == 26, len(by_case)
-    for case in report["cases"]:
+    assert len(report["cases"]) == len({row["case"]["label"] for row in report["cases"]}) == 26, "unique case membership"
+    wires = {}
+    for r in receipts:
+        key = (r["context"]["label"], r["context"].get("step", 0))
+        wires.setdefault(key, set()).add(r["transaction_base64"])
+    assert all(len(values) == 1 for values in wires.values()), "same signed wire across images"
+    consumed = set()
+    for case_index, case in enumerate(report["cases"]):
         label = case["case"]["label"]
         family = case["case"]["family"]
         exp = case["case"]["expected"] if family == "A" else None
         obs_seen = {}
         for image in IMAGES:
             steps = sorted(by_case[label][image], key=lambda r: r["context"].get("step", 0))
+            assert set(by_case[label]) == set(IMAGES), "exact case image membership"
+            assert {r["context"]["index"] for r in steps} == {case_index}, "case index binding"
+            assert all(r["context"]["family"] == family for r in steps), "case family binding"
+            if family == "B":
+                assert tuple(r["context"]["step_name"] for r in steps) == CHAIN_STEPS[label], "exact downstream chain"
+                for previous, current in zip(steps, steps[1:]):
+                    assert previous["after"] == current["before"], "chained account continuity"
+            for receipt in steps:
+                assert receipt["sequence"] not in consumed, "receipt consumed once"
+                consumed.add(receipt["sequence"])
+            account_maps = [verify_wire(receipt, case["case"], idl) for receipt in steps]
+            watched_bindings(steps, case["case"], account_maps)
             if family == "A":
                 assert len(steps) == 1, (label, image)
                 r = steps[0]
@@ -276,7 +452,8 @@ def main():
                         raise AssertionError((label, image, step_index, ctx))
         for key, s in obs_seen.items():
             assert len(s) == 1, (label, key, "images must agree", s)
-    print("verify PASS: 26 cases x 3 images = 111 receipts, all checks passed")
+    assert consumed == set(range(111)), "all receipts consumed exactly once"
+    print("verify PASS: 26 cases across 3 historical images, 111 signed receipts, all checks passed")
 
 
 if __name__ == "__main__":

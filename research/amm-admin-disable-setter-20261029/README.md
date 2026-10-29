@@ -16,8 +16,11 @@ been chained at all.
 
 ## Cases
 
-26 cases x 3 images (original / #424 control / #427 candidate),
-111 signed receipts, independently verified by verify.py (PASS).
+26 cases across 3 historical images (original / #424 control / #427 candidate),
+111 signed executions and receipts, independently verified by verify.py (PASS).
+The producer constructs 78 VM instances: 63 fresh family-A VMs and 15 chained
+family-B VMs. The retained `counts.vms` and per-receipt `vm` fields are receipt
+sequence labels, not a count of distinct constructed VMs.
 
 Family A (admin-only VM, 21 cases, 1 step each): the setter alone.
 Family B (chained VMs, 5 cases): disable, then the gated
@@ -61,8 +64,8 @@ failed create, re-enable, successful create).
   instruction arguments. Family A runs on the default LiteSVM
   clock (timestamp 0); family B chains run at clock timestamp
   1234567890 and the event echoes that.
-- **Arguments**: exactly five Borsh bools. A byte other than
-  0/1 anywhere, or fewer than five bytes (empty, 4 bytes),
+- **Arguments**: five Borsh bools. The tested invalid byte 2
+  in the first bool, or fewer than five bytes (empty, 4 bytes),
   fails 102 InstructionDidNotDeserialize before any state
   change, with 0 events and full rollback. A trailing byte is
   ignored and the write succeeds.
@@ -118,3 +121,37 @@ values. The `disable` instruction writes no other config byte
 and performs no fee or rent accounting beyond the 5,000
 transaction fee (setter steps) and the downstream instruction's
 own costs.
+
+
+## Retained proof integrity
+
+The verifier pins the declared original/control/candidate hashes to authentic
+repository artifacts, including the existing hash-equivalent compressed historical
+control and candidate images. These two rebuilt images are historical controls;
+this packet does not execute the AMM image selected at review
+`86dbc2c64e81988dead173039b61fa01ba5f68a00fbb6f6dd49f2cda0afec37f`.
+The raw receipts contain image-role declarations, not captured loader records or
+cryptographic VM execution attestation. Image hash binding authenticates those
+declarations and available artifacts; it cannot attest which code a prior VM loaded.
+The retained producer loads the selected files through the pinned harness.
+
+Signed instruction data, program and payer/config/admin roles are decoded and
+bound to each case. The exact 26 case labels, families and fixture definitions,
+three image roles, per-image steps and all 111 consumed receipts are checked.
+Every instruction account's effective signer/writable privilege is checked,
+including the explicit unsigned-admin and read-only-config cases and the fee
+payer's implicit writable privilege. Pool, mint, token, volume and fee roles used
+by the state checks are bound to their decoded downstream instruction positions.
+Roles stay equal across the entire chain. Watched snapshot membership is exact:
+family A watches config/payer; trade and liquidity chains watch all downstream
+instruction keys; create watches its nine declared state/payer/config roles.
+Setter steps retain those same chain accounts even though `disable` itself uses
+only four instruction accounts. Chain step order and complete watched-account
+continuity are checked between adjacent receipts. These checks establish saved
+proof correspondence, without authenticating prior VM execution. The retained `clock` receipt metadata is a
+producer annotation; family A's actual default-clock timestamp is established by
+its emitted timestamp 0, while family B events contain 1234567890.
+`python -B research/amm-admin-disable-setter-20261029/test_verify.py` exercises
+repinned image, valid-wire substitution, chained-state, invalid-signature,
+off-wire watched-pool and missing-gate membership negative controls
+without a VM or compiler. Original producer and raw receipt bytes are unchanged.
