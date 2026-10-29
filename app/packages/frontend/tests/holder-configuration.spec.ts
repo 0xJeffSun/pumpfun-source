@@ -1,8 +1,6 @@
 import { expect, test, type Page } from "@playwright/test";
-import { createRequire } from "node:module";
-const require = createRequire(import.meta.url);
-const { PublicKey } = require("@solana/web3.js");
-const sdk = require("@pump-fun/pump-sdk");
+import { PublicKey } from "@solana/web3.js";
+import * as sdk from "@pump-fun/pump-sdk";
 const MINT = "So11111111111111111111111111111111111111112";
 const mint = new PublicKey(MINT),
   rewardsPda = sdk.holderRewardsPda(mint).toBase58();
