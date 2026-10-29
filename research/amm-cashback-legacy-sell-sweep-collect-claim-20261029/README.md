@@ -11,10 +11,11 @@ question is sharp because the cashback flag reroutes the sell's
 creator leg: on a cashback pool the 548 goes to the user volume
 accumulator's ATA as cashback earned, NOT to the creator vault
 ATA. So a collect after a cashback sell should find nothing to
-drain even though the sell paid a creator leg -- and the swept
-pool accrual is the only thing collect ever sees. The claim pipe
-is where the 548 lives, and the two pipes together conserve the
-non-cashback total exactly. This packet chains all of it on three
+drain even though the sell paid a creator leg -- and in the
+cashback cases measured here the swept pool accrual is the only
+thing collect drained. The claim pipe is where the 548 lives,
+and in the cases measured the two pipes together sum to the
+non-cashback total. This packet chains all of it on three
 program images (original, #424 control, #427 candidate).
 
 ## Fixture
@@ -36,7 +37,8 @@ buyback dest]. The claim uses `claim_cashback` with keys
 [payer, accumulator PDA, quote mint, token program, accumulator
 ATA, user quote ATA, default, event authority, program].
 
-Event layouts (verified byte-for-byte):
+Event layouts (offsets as read from the receipts; verify.py
+decodes only the fields its expectations name):
 - SellEvent (legacy, shares the v2 sell disc), 449 bytes, disc
   `3e2f370aa503dc2a`: curve @64, lp_fee @80, protocol_fee @96
   (GROSS: net protocol 849 + buyback 849 = 1,698 for sell 10^9),
@@ -109,7 +111,8 @@ Family M -- mayhem sell fails, pipe intact:
   InvalidProtocolFeeRecipient, full rollback, 0 events (the
   protocol recipient is not on the reserved list), then
   sweep creator 123,394 and collect 123,394. The failed sell
-  accrues nothing and disturbs nothing.
+  leaves every watched account except the fee payer unchanged
+  (verify.py checks the rollback).
 - `m-sellfail-sweep-proto-fail`: mayhem sell -> 6013, then
   the PROTOCOL SWEEP itself fails 6013 with full rollback,
   then creator sweep 123,394 and collect 123,394. The mayhem
@@ -119,24 +122,26 @@ Family M -- mayhem sell fails, pipe intact:
   pool -> 6013, full rollback. The gate is standalone: it
   does not need a preceding failed sell.
 - `m-sweep-creator-mayhem-collect`: creator sweep alone on a
-  mayhem pool moves 123,394 and collect drains 123,394. The
-  gate is recipient-side: the creator bucket is ungated while
-  the protocol bucket is gated.
+  mayhem pool moves 123,394 and collect drains 123,394. In the
+  cases measured, the protocol-bucket sweep failed 6013 on a
+  mayhem pool while the creator-bucket sweep succeeded.
 
 ## Result
 
 - The cashback flag reroutes the legacy sell's creator leg out
   of the collect pipe and into the claim pipe: collect after
   a cashback sell is a silent no-op, collect after a
-  non-cashback sell drains the leg directly, and the two
-  pipes together always sum to the non-cashback total
-  (123,942 for sell 10^9 + the pool's 123,394 accrual).
-- Pipe order does not matter: sell -> sweep -> collect ->
-  claim and sell -> claim -> sweep -> collect end at the
-  same DEST 123,394 + user quote +548.
+  non-cashback sell drains the leg directly, and in every
+  case measured the two pipes together summed to the
+  non-cashback total (123,942 for sell 10^9 + the pool's
+  123,394 accrual).
+- The two pipe orders measured, sell -> sweep -> collect ->
+  claim and sell -> claim -> sweep -> collect, end at the
+  same final watched-account state (DEST 123,394, user quote
+  +548); other orders were not run.
 - Earned accumulates across sells (548 -> 1,096) and a single
-  claim pays the full accumulation; sweep/collect legs are
-  untouched by the second sell.
+  claim pays the full accumulation; the second sell again
+  leaves the creator vault ATA unchanged (delta 0).
 - The mayhem reserved-recipient gate is not trade-only: a
   protocol sweep on a mayhem pool fails 6013 while a creator
   sweep succeeds and collects normally, with or without a
@@ -168,3 +173,26 @@ Family M -- mayhem sell fails, pipe intact:
   chained into sweep/collect, were not executed here; the
   buy-side cashback chain is 3rd #2 (claim only) plus 2nd #47
   (accrual only).
+
+## Verify and provenance
+
+From the repository root:
+
+    python3 -I -B research/amm-cashback-legacy-sell-sweep-collect-claim-20261029/verify.py
+
+`verify.py` needs only `solders` plus files in the repository: this
+packet, `evidence/original/pump_amm/deployed.so`, and the two
+retained rebuilt images
+`research/amm-multi-hop-group-slice-recovery/artifacts/candidate.so.gz`
+(control, #424) and
+`research/amm-transfer-fee-diagnostic-recovery/artifacts/candidate.so.gz`
+(candidate, #427), whose decompressed sha256 values match the
+`images` block of `runtime/report.json.gz`. It re-checks the
+recorded receipts against the report's expected values; it does
+not re-execute any transaction.
+
+`producer.py` is the script that generated the receipts and is
+kept as a provenance record. It is not runnable as committed: it
+hard-codes a private workspace layout (`~/workspace/pumpfun-sparse`
+for the harness scripts and `~/workspace/slop-verify` for the
+control/candidate `.so` files) and chdirs there on start.
