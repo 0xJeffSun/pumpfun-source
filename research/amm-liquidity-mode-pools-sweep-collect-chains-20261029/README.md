@@ -8,8 +8,8 @@ accepts cashback pools but rejects mayhem pools with 6013
 InvalidProtocolFeeRecipient, and mayhem v2 trades force the
 buyback leg to 0. 3rd #18 chained liquidity-first sweep/collect
 on a plain pool. Nobody chained LIQUIDITY on a mode-flagged
-pool into the fee pipes: deposit and withdraw take no mode
-check at all, so on a cashback pool a deposit should still move
+pool into the fee pipes. If deposit and withdraw take no mode
+check, then on a cashback pool a deposit should still move
 exactly the seed buckets into sweep/collect even though the
 very next v2 trade fails 6079, and on a mayhem pool a deposit
 should still sweep/collect the seed even though the protocol
@@ -41,7 +41,8 @@ with (amount, minquote); the cashback remaining layout is
 [accumulator ATA, accumulator PDA, pool-v2 PDA, buyback owner,
 buyback dest] for both.
 
-Event layouts (verified byte-for-byte):
+Event layouts (offsets as read from the receipts; verify.py
+decodes only the fields its expectations name):
 - DepositEvent / WithdrawEvent, 264 bytes, disc `78f83d531f8e6b90` /
   `1609851aa02c47c0`: base leg @72, quote leg @80.
 - BuyEvent (v2), 500 bytes, disc `67f4521f2cf57777`: curve @64,
@@ -89,22 +90,24 @@ accumulator fields 0/0 throughout unless a legacy trade runs):
 - `a-dep-swp-colnoop`: dep-1e9, protocol sweep 2,488 (pool
   (-123,394, 0, 123,394)) -- the protocol sweep SUCCEEDS on a
   cashback pool -- then collect is a SILENT NO-OP (0 events,
-  payer 5,000 only, DEST 0). Collect never touches the
-  protocol bucket.
+  payer 5,000 only, DEST 0; verify.py checks every other
+  watched account is unchanged). The swept 2,488 stays in the
+  protocol ATA.
 - `a-wd-swp-swc-col`: wd-1e9, protocol sweep 2,488, creator
   sweep 123,394 (pool (0, 0, 0)), collect 123,394. The two
-  sweeps compose; the protocol leg stays stranded.
+  sweeps compose; collect moves only the creator leg (creator
+  vault ATA -123,394, DEST +123,394).
 
 Family B -- mayhem liquidity (volume absent; no trade runs):
 - `b-dep-swc-col`: dep-1e9, sweep creator 123,394, collect
-  123,394 -- the mayhem flag does not touch liquidity or the
-  creator sweep.
+  123,394 -- the same legs and amounts as the cashback case
+  `a-dep-swc-col`.
 - `b-wd-swc-col`: wd-1e9, sweep 123,394, collect 123,394.
 - `b-dep-swp-fail-swc-col`: dep-1e9, protocol sweep fails
   6013 InvalidProtocolFeeRecipient with full rollback
   (payer -5,000 only, pool unchanged), then creator sweep
-  123,394, collect 123,394. The failed protocol sweep does
-  not disturb the creator pipe.
+  123,394, collect 123,394. The creator sweep and collect
+  moved the same amounts as in `b-dep-swc-col`.
 - `b-wd-swp-fail-colnoop`: wd-1e9, protocol sweep fails
   6013, collect is a silent no-op (creator vault ATA empty).
 
@@ -116,9 +119,10 @@ pre-created; the failed trades fund nothing):
 - `c-wd-sell-fail-swc-col`: wd-1e9, sell_v2 10^10 fails
   6079, sweep 123,394, collect 123,394.
 - `c-dep-exact-fail-swc-col`: dep-1e9, buy_exact_quote_in_v2
-  10^7 fails 6079, sweep 123,394, collect 123,394. All three
-  v2 entry points reject the cashback pool after liquidity
-  exactly as they do before it.
+  10^7 fails 6079, sweep 123,394, collect 123,394. Each of
+  the three v2 entry points measured here (buy and exact after
+  a deposit, sell after a withdraw) failed 6079, the code 2nd
+  #44 recorded for them without a preceding liquidity step.
 
 Family D -- mayhem v2 trades into sweep/collect (volume
 funded by the first trade, 1,844,400 lamports, 137 bytes):
@@ -126,22 +130,23 @@ funded by the first trade, 1,844,400 lamports, 137 bytes):
   1,847,796, vault takes the FULL spend (+1,847,796),
   buyback 0, pool (-148,330, 19,461, 128,869). Sweep creator
   128,869 (pool (-19,461, 19,461, 0)), collect 128,869.
-- `d-dep-buy-swc-col`: dep-1e9, then the buy settles
-  byte-identical to the fresh mayhem buy (same spend,
-  same vault legs, same pool deltas; only LP supply
-  differs), sweep 128,869, collect 128,869. Proportional
-  liquidity is invisible to the mayhem trade, as on plain
-  pools.
+- `d-dep-buy-swc-col`: dep-1e9, then the buy settles with
+  the same token deltas, pool deltas and decoded event
+  fields as the fresh mayhem buy in `d-buy-swc-col` (only LP
+  supply differs), sweep 128,869, collect 128,869.
 - `d-dep-sell-swc-col`: dep-1e9, sell_v2 10^10: receipt
-  1,802,115 -- the same receipt as the plain-pool sell --
-  but the vault sends ONLY the receipt (-1,802,115, no
+  1,802,115 (the receipt the plain-pool sell 10^10 recorded
+  in research/amm-trade-sweep-collect-loops-20261029; no
+  fresh mayhem sell is run here), and the vault sends only
+  the receipt (-1,802,115, no
   buyback leg), buyback 0, pool (-148,329, 19,460, 128,869).
   Sweep 128,869, collect 128,869.
 - `d-dep-buy-buy-swc-col`: dep-1e9, buy, second buy (spend
   1,847,852, curve 1,825,037, pool (-170,779, 36,434,
-  134,345)), sweep 134,345, collect 134,345. The loop
-  accrual matches the plain-pool loop (second buy accrual
-  5,476); only the buyback split differs.
+  134,345)), sweep 134,345, collect 134,345. The second
+  buy's creator accrual is 5,476 (134,345 - 128,869), the
+  same figure research/amm-trade-sweep-collect-loops-20261029
+  recorded for its plain-pool second buy; buyback is 0 here.
 
 Family E -- cashback legacy trades after a deposit (volume
 pre-created; pool fields never move under legacy trades):
@@ -150,7 +155,8 @@ pre-created; pool fields never move under legacy trades):
   buyback +8,486, uvata +5,475, earned 5,475, pool fields
   unchanged), claim pays 5,475 (claimed 5,475), sweep
   123,394, collect 123,394. Total: 5,475 + 123,394 =
-  128,869, the non-cashback total, conserved.
+  128,869, equal to what sweep/collect drained after the
+  non-cashback (mayhem) buy in `d-buy-swc-col`.
 - `e-cbbuy-dep-claim-swc-col`: cashback buy first, then
   dep-1e9 with MOVED legs (base 160,617,511,066 / quote
   29,312,845 -- the post-buy available legs, as in 3rd #18)
@@ -161,48 +167,55 @@ pre-created; pool fields never move under legacy trades):
   (receipt 180,212, vault -182,458, protocol ATA +849,
   buyback +849, uvata +548, earned 548, creator leg 0),
   claim pays 548, sweep 123,394, collect 123,394. Total:
-  548 + 123,394 = 123,942.
+  548 + 123,394 = 123,942, equal to the non-cashback sell
+  total recorded in
+  research/amm-cashback-legacy-sell-sweep-collect-claim-20261029
+  (not re-run here).
 
 Family F -- both flags, and mayhem legacy sell after a
 deposit:
 - `f-dep-buy-fail-swc-col`: both flags set, dep-1e9,
-  buy_v2 fails 6079 (cashback wins over mayhem), sweep
+  buy_v2 fails 6079 (the cashback code, not 6013), sweep
   123,394, collect 123,394.
 - `f-dep-msell-fail-swc-col`: mayhem pool, dep-1e9, legacy
-  sell 10^9 fails 6013 with full rollback (the mayhem
-  reserved-recipient gate binds the legacy sell even after
-  a deposit), sweep 123,394, collect 123,394.
+  sell 10^9 fails 6013 with full rollback after a
+  deposit, sweep 123,394, collect 123,394.
 
 ## Result
 
-- Deposit and withdraw ignore both mode flags entirely: on
-  cashback, mayhem, and both-flags pools, dep-1e9 and wd-1e9
-  settle with the fresh legs, accrue nothing into either
-  bucket, and the following creator sweep moves exactly the
-  123,394 seed, drained in full by collect. A dep->wd round
-  trip leaves the seed intact.
-- The protocol sweep is the mode-sensitive step: it succeeds
-  on a cashback pool (2,488, then collect no-op) and fails
-  6013 on a mayhem pool with full rollback, in liquidity
-  order exactly as in trade order -- and the failure never
-  disturbs the creator pipe.
-- The v2 cashback gate survives liquidity: buy, sell, and
-  buy_exact all fail 6079 after a deposit or withdraw, with
-  full rollback and the seed sweep/collect intact. With
-  both flags set, cashback wins (6079).
-- Mayhem v2 trades chain cleanly into the pipes: the buyback
-  leg is forced to 0, so the buy's vault leg is the full
-  spend and the sell's vault leg is exactly the receipt,
-  while the pool accrues the full protocol fee (buy:
-  pf 2,488 -> 19,461; sell: pf 2,488 -> 19,460) and the
-  creator fee as usual (5,475 per trade). Deposit before
-  either trade leaves every leg byte-identical.
-- Cashback legacy trades are untouched by a neighboring
-  deposit: dep->cbbuy and dep->cbsell match their fresh
-  anchors to the unit, cbbuy->dep moves only the deposit
-  legs (available reserves), and claim + sweep + collect
-  conserve the non-cashback totals exactly (128,869 buy /
-  123,942 sell).
+- In every case measured, dep-1e9 and wd-1e9 settled with
+  the same legs on cashback and mayhem pools (dep-1e9 also on
+  the both-flags pool; wd was not run there), left the pool
+  fee buckets unchanged, and the following creator sweep
+  moved the 123,394 seed, drained in full by collect. The
+  dep->wd round trip measured left the seed intact.
+- The protocol sweep was the mode-sensitive step measured: it
+  succeeded on the cashback pool (2,488, then collect no-op)
+  and failed 6013 on the mayhem pool with full rollback after
+  a deposit or withdraw, matching what
+  research/amm-cashback-legacy-sell-sweep-collect-claim-20261029
+  recorded after trades; the creator sweep and collect after
+  the failure moved the same amounts as without it.
+- The v2 cashback gate held after liquidity in the three
+  orders run (dep->buy, wd->sell, dep->exact): each failed
+  6079 with full rollback and the seed sweep/collect
+  unchanged. With both flags set, buy_v2 failed 6079.
+- Mayhem v2 trades chained into the pipes with buyback 0:
+  the buy's vault quote leg is the full spend and the sell's
+  vault quote leg is exactly the receipt, while the pool
+  accrued the full protocol fee (buy: pf 2,488 -> 19,461;
+  sell: pf 2,488 -> 19,460) and a 5,475 creator fee per first
+  trade (5,476 on the second buy). A deposit before the buy
+  left the buy's token deltas, pool deltas and event fields
+  equal to the fresh buy; no fresh mayhem sell was run for
+  comparison.
+- Cashback legacy trades next to a deposit: cbbuy before and
+  after a deposit produced the same buy deltas and event
+  fields; cbbuy->dep moved only the deposit legs (available
+  reserves) and left the fee buckets unchanged; claim +
+  sweep + collect summed to 128,869 for the buy (the mayhem
+  v2 buy total measured here) and 123,942 for the sell (the
+  non-cashback sell total from the earlier sell packet).
 
 ## Limits
 
@@ -230,3 +243,33 @@ deposit:
   gates in 2nd #44.
 - Multi-hop trades on mode pools were pinned in 2nd #44 and
   are not re-chained here.
+
+## Verify and provenance
+
+From the repository root:
+
+    python3 -I -B research/amm-liquidity-mode-pools-sweep-collect-chains-20261029/verify.py
+
+`verify.py` needs only `solders` plus files in the repository: this
+packet, `evidence/original/pump_amm/deployed.so`, and the two
+retained rebuilt images
+`research/amm-multi-hop-group-slice-recovery/artifacts/candidate.so.gz`
+(control, #424) and
+`research/amm-transfer-fee-diagnostic-recovery/artifacts/candidate.so.gz`
+(candidate, #427), whose decompressed sha256 values match the
+`images` block of `runtime/report.json.gz`. It re-checks the
+recorded receipts against the report's expected values; it does
+not re-execute any transaction.
+
+`producer.py` is the script that generated the receipts and is
+kept as a provenance record. It is not runnable as committed: it
+hard-codes a private workspace layout (`~/workspace/pumpfun-sparse`
+for the harness scripts and `~/workspace/slop-verify` for the
+control/candidate `.so` files) and chdirs there on start. Run in a
+staged copy of that layout (solders 0.26.0), all of its per-image
+assertions passed and it regenerated the same transactions, logs,
+errors, events and snapshots, except that the absent user volume
+accumulator in mayhem cases was recorded as a 0-lamport empty
+account instead of `null` (a LiteSVM/solders version difference);
+the gzip part files differ in bytes because gzip headers carry a
+timestamp.

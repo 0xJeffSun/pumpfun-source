@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 """Independent re-verification for amm-liquidity-mode-pools-sweep-collect-chains-20261029.
 
-Checks, from the packet files alone (plus the three program images):
+Checks, from the packet files alone (plus the three program images retained in the
+repository: evidence/original/pump_amm/deployed.so and the two
+candidate.so.gz artifacts named in IMAGE_PATHS):
 - MANIFEST.json lists every packet file with a matching sha256.
 - runtime/report.json.gz: 21 cases, 243 receipts, 25 parts
   (24x10 + 3), part sha256/byte counts match the part files.
@@ -21,6 +23,8 @@ Checks, from the packet files alone (plus the three program images):
   per-image site line in their logs. Site lines are checked per
   image, never compared across images, because original and rebuilt
   sources differ in line numbers.
+- Silent no-op collects (no error, 0 events) leave every watched
+  account except the fee payer unchanged; the payer pays 5,000.
 - The observed surface of every case (step, error, event count, and
   snapshots with fee-payer lamports zeroed) is identical across the
   original, control, and candidate images.
@@ -29,7 +33,11 @@ Checks, from the packet files alone (plus the three program images):
 Receipts are stored per case in image order (original, then
 control, then candidate), each block in case step order.
 
-Usage: python3 verify.py   (run from this packet directory)
+Usage (from the repository root):
+    python3 -I -B research/amm-liquidity-mode-pools-sweep-collect-chains-20261029/verify.py
+
+It re-checks the recorded receipts against the report's expected
+values; it does not re-execute any transaction.
 """
 import base64
 import gzip
@@ -43,12 +51,13 @@ from solders.pubkey import Pubkey
 from solders.transaction import Transaction
 
 ROOT = Path(__file__).resolve().parent
-WS = Path.home() / "workspace/slop-verify"
-SPARSE = Path.home() / "workspace/pumpfun-sparse"
+REPO = ROOT.parents[1]
+# The three program images are retained in the repository; the two
+# rebuilt images are stored gzip-compressed and hashed decompressed.
 IMAGE_PATHS = {
-    "original": SPARSE / "evidence/original/pump_amm/deployed.so",
-    "control": WS / "control.so",
-    "candidate": WS / "candidate.so",
+    "original": REPO / "evidence/original/pump_amm/deployed.so",
+    "control": REPO / "research/amm-multi-hop-group-slice-recovery/artifacts/candidate.so.gz",
+    "candidate": REPO / "research/amm-transfer-fee-diagnostic-recovery/artifacts/candidate.so.gz",
 }
 PAYER_KEY = Pubkey.from_string("DXyM8yAHqpMzDtvwz5DXoEUQmPxjJPMKCASCPhLMKpEx")
 POOL = Pubkey.from_string("GseMAnNDvntR5uFePZ51yZBXzNSn7GdFPkfHwfr6d77J")
@@ -232,7 +241,10 @@ def main():
     if report["mismatches"] != []:
         fail(f"mismatches recorded: {report['mismatches']}")
     for name, path in IMAGE_PATHS.items():
-        if sha(path.read_bytes()) != report["images"][name]:
+        data = path.read_bytes()
+        if path.suffix == ".gz":
+            data = gzip.decompress(data)
+        if sha(data) != report["images"][name]:
             fail(f"image hash mismatch {name}")
     receipts = []
     for part in report["parts"]:
@@ -258,8 +270,6 @@ def main():
             pos += nsteps
             if len(block) != nsteps:
                 fail(f"{label}/{image}: short receipt block")
-            if [r["step"] for r in block] != [None] * 0 and False:
-                pass
             by_image[image] = block
             for rec, exp in zip(block, expect):
                 tag = f"{label}/{image}/{rec['step']}"
@@ -279,6 +289,14 @@ def main():
                             continue
                         if rec["after"][k] != b:
                             fail(f"{tag}: rollback violated for {k}")
+                # A silent no-op collect (no error, 0 events) must leave every
+                # watched account except the fee payer unchanged.
+                if rec["step"] == "col" and exp["error"] is None and exp["events"] == 0:
+                    if lam_delta(rec, PAYER_KEY) != -5000:
+                        fail(f"{tag}: silent no-op collect payer delta {lam_delta(rec, PAYER_KEY)}")
+                    for k, b in rec["before"].items():
+                        if k != str(PAYER_KEY) and rec["after"][k] != b:
+                            fail(f"{tag}: silent no-op collect changed {k}")
                 if exp["events"] is not None and len(rec["events"]) != exp["events"]:
                     fail(f"{tag}: events {len(rec['events'])} != {exp['events']}")
                 if lam_delta(rec, PAYER_KEY) != exp["dPAYER"]:
@@ -331,7 +349,7 @@ def main():
                 fail(f"{label}: {image} surface differs from original")
     if pos != len(receipts):
         fail(f"consumed {pos} of {len(receipts)} receipts")
-    print("PASS: 21 cases, 243 receipts, 25 parts, 3 images agree (signatures, deltas, uva, events, error codes/sites, rollback)")
+    print("PASS: 21 cases, 243 receipts, 25 parts, 3 images agree (signatures, deltas, uva, events, error codes/sites, rollback, silent no-op collects)")
 
 
 if __name__ == "__main__":
