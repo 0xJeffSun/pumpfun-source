@@ -412,10 +412,10 @@ test("product entrypoint is fixed to unavailable adapter and contains no credent
     "utf8",
   );
   // The entrypoint fixes the unavailable adapter; the only forwarded prop is
-  // the presentation-only trigger class used by the live shell's TopBar.
+  // presentation-only trigger class and the fixed public-address-only panel.
   assert.match(
     entry,
-    /<AuthControl\s+adapter=\{unavailableAuthAdapter\}\s+(?:triggerClassName=\{triggerClassName\}\s+)?\/>/,
+    /<AuthControl\s+adapter=\{unavailableAuthAdapter\}\s+publicWallet\s+(?:triggerClassName=\{triggerClassName\}\s+)?\/>/,
   );
   assert.deepEqual(
     [...entry.matchAll(/<AuthControl\b[^>]*>/g)].length,
